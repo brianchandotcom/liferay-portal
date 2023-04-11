@@ -1422,6 +1422,11 @@ public class UserWrapper
 	}
 
 	@Override
+	public boolean isServiceAccountUser() {
+		return model.isServiceAccountUser();
+	}
+
+	@Override
 	public boolean isSetupComplete() {
 		return model.isSetupComplete();
 	}

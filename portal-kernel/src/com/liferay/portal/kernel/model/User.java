@@ -356,6 +356,8 @@ public interface User extends PersistedModel, UserModel {
 
 	public boolean isReminderQueryComplete();
 
+	public boolean isServiceAccountUser();
+
 	public boolean isSetupComplete();
 
 	public boolean isTermsOfUseComplete();

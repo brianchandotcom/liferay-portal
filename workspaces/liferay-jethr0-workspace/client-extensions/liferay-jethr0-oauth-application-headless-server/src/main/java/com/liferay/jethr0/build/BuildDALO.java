@@ -20,14 +20,11 @@ import com.liferay.jethr0.dalo.BuildToBuildParametersDALO;
 import com.liferay.jethr0.dalo.BuildToBuildRunsDALO;
 import com.liferay.jethr0.dalo.BuildToTasksDALO;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectRepository;
+import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.task.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -95,20 +92,8 @@ public class BuildDALO extends BaseEntityDALO<Build> {
 	}
 
 	@Override
-	protected String getObjectDefinitionLabel() {
-		return "Build";
-	}
-
-	@Override
-	protected Build newEntity(JSONObject jsonObject) {
-		Project project = _projectRepository.getById(
-			jsonObject.getLong("r_projectToBuilds_c_projectId"));
-
-		Build build = _buildFactory.newBuild(jsonObject);
-
-		build.setProject(project);
-
-		return build;
+	protected EntityFactory<Build> getEntityFactory() {
+		return _buildFactory;
 	}
 
 	@Autowired
@@ -122,8 +107,5 @@ public class BuildDALO extends BaseEntityDALO<Build> {
 
 	@Autowired
 	private BuildToTasksDALO _buildToTasksDALO;
-
-	@Autowired
-	private ProjectRepository _projectRepository;
 
 }

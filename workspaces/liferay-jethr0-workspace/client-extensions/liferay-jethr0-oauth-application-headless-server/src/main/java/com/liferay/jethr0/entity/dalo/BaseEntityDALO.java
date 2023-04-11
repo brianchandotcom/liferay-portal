@@ -16,6 +16,7 @@ package com.liferay.jethr0.entity.dalo;
 
 import com.liferay.jethr0.dalo.BaseDALO;
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.jethr0.util.ThreadUtil;
 
@@ -105,36 +106,19 @@ public abstract class BaseEntityDALO<T extends Entity>
 		return entity;
 	}
 
-	protected abstract String getObjectDefinitionLabel();
+	protected abstract EntityFactory<T> getEntityFactory();
 
-	protected String getObjectDefinitionPluralLabel() {
-		return StringUtil.combine(getObjectDefinitionLabel(), "s");
+	protected T newEntity(JSONObject jsonObject) {
+		EntityFactory<T> entityFactory = getEntityFactory();
+
+		return entityFactory.newEntity(jsonObject);
 	}
-
-	protected String getObjectDefinitionURLPath() {
-		String objectDefinitionPluralLabel = getObjectDefinitionPluralLabel();
-
-		objectDefinitionPluralLabel = objectDefinitionPluralLabel.replaceAll(
-			"\\s+", "");
-		objectDefinitionPluralLabel = StringUtil.toLowerCase(
-			objectDefinitionPluralLabel);
-
-		return StringUtil.combine("/o/c/", objectDefinitionPluralLabel);
-	}
-
-	protected String getObjectEntryURLPath(long objectEntryId) {
-		return StringUtil.combine(
-			getObjectDefinitionURLPath(), "/", objectEntryId);
-	}
-
-	protected abstract T newEntity(JSONObject jsonObject);
 
 	private JSONObject _create(JSONObject requestJSONObject) {
 		for (int i = 0; i <= _RETRY_COUNT; i++) {
 			try {
 				String response = WebClient.create(
-					StringUtil.combine(
-						_liferayPortalURL, getObjectDefinitionURLPath())
+					StringUtil.combine(_liferayPortalURL, _getEntityURLPath())
 				).post(
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -159,7 +143,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
-							"Created ", getObjectDefinitionLabel(), " ",
+							"Created ", _getEntityLabel(), " ",
 							responseJSONObject.getLong("id")));
 				}
 
@@ -169,9 +153,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Unable to create ",
-							getObjectDefinitionPluralLabel(), ". Retry in ",
-							_RETRY_DELAY_DURATION, "ms: ",
+							"Unable to create ", _getEntityPluralLabel(),
+							". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}
 
@@ -191,7 +174,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 			try {
 				WebClient.create(
 					StringUtil.combine(
-						_liferayPortalURL, getObjectEntryURLPath(objectEntryId))
+						_liferayPortalURL, _getEntityURLPath(objectEntryId))
 				).delete(
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -206,8 +189,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
-							"Deleted ", getObjectDefinitionLabel(), " ",
-							objectEntryId));
+							"Deleted ", _getEntityLabel(), " ", objectEntryId));
 				}
 
 				break;
@@ -216,10 +198,9 @@ public abstract class BaseEntityDALO<T extends Entity>
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Unable to delete ", getObjectDefinitionLabel(),
-							" ", objectEntryId, ". Retry in ",
-							_RETRY_DELAY_DURATION, "ms: ",
-							exception.getMessage()));
+							"Unable to delete ", _getEntityLabel(), " ",
+							objectEntryId, ". Retry in ", _RETRY_DELAY_DURATION,
+							"ms: ", exception.getMessage()));
 				}
 
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
@@ -240,7 +221,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 				try {
 					String response = WebClient.create(
 						StringUtil.combine(
-							_liferayPortalURL, getObjectDefinitionURLPath())
+							_liferayPortalURL, _getEntityURLPath())
 					).get(
 					).uri(
 						uriBuilder -> uriBuilder.queryParam(
@@ -281,9 +262,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringUtil.combine(
-								"Unable to retrieve ",
-								getObjectDefinitionPluralLabel(), ". Retry in ",
-								_RETRY_DELAY_DURATION, "ms: ",
+								"Unable to retrieve ", _getEntityPluralLabel(),
+								". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
 								exception.getMessage()));
 					}
 
@@ -302,10 +282,35 @@ public abstract class BaseEntityDALO<T extends Entity>
 			_log.debug(
 				StringUtil.combine(
 					"Retrieved ", jsonObjects.size(), " ",
-					getObjectDefinitionPluralLabel()));
+					_getEntityPluralLabel()));
 		}
 
 		return jsonObjects;
+	}
+
+	private String _getEntityLabel() {
+		EntityFactory<T> entityFactory = getEntityFactory();
+
+		return entityFactory.getEntityLabel();
+	}
+
+	private String _getEntityPluralLabel() {
+		EntityFactory<T> entityFactory = getEntityFactory();
+
+		return entityFactory.getEntityPluralLabel();
+	}
+
+	private String _getEntityURLPath() {
+		String entityPluralLabel = _getEntityPluralLabel();
+
+		entityPluralLabel = entityPluralLabel.replaceAll("\\s+", "");
+		entityPluralLabel = StringUtil.toLowerCase(entityPluralLabel);
+
+		return StringUtil.combine("/o/c/", entityPluralLabel);
+	}
+
+	private String _getEntityURLPath(long objectEntryId) {
+		return StringUtil.combine(_getEntityURLPath(), "/", objectEntryId);
 	}
 
 	private JSONObject _update(JSONObject requestJSONObject) {
@@ -316,7 +321,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 				String response = WebClient.create(
 					StringUtil.combine(
 						_liferayPortalURL,
-						getObjectEntryURLPath(requestObjectEntryId))
+						_getEntityURLPath(requestObjectEntryId))
 				).put(
 				).accept(
 					MediaType.APPLICATION_JSON
@@ -345,14 +350,14 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 					throw new RuntimeException(
 						StringUtil.combine(
-							"Updated wrong ", getObjectDefinitionLabel(), " ",
+							"Updated wrong ", _getEntityLabel(), " ",
 							responseObjectEntryId));
 				}
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
-							"Updated ", getObjectDefinitionLabel(), " ",
+							"Updated ", _getEntityLabel(), " ",
 							requestObjectEntryId));
 				}
 
@@ -362,8 +367,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
-							"Unable to update ", getObjectDefinitionLabel(),
-							" ", requestObjectEntryId, ". Retry in ",
+							"Unable to update ", _getEntityLabel(), " ",
+							requestObjectEntryId, ". Retry in ",
 							_RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}

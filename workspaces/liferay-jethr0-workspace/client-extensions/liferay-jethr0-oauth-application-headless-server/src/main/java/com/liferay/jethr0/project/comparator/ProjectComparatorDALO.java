@@ -15,9 +15,7 @@
 package com.liferay.jethr0.project.comparator;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerRepository;
-
-import org.json.JSONObject;
+import com.liferay.jethr0.entity.factory.EntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -29,21 +27,11 @@ import org.springframework.context.annotation.Configuration;
 public class ProjectComparatorDALO extends BaseEntityDALO<ProjectComparator> {
 
 	@Override
-	public ProjectComparator newEntity(JSONObject jsonObject) {
-		long projectPrioritizerId = jsonObject.getLong(
-			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId");
-
-		return ProjectComparatorFactory.newProjectComparator(
-			_projectPrioritizerRepository.getById(projectPrioritizerId),
-			jsonObject);
-	}
-
-	@Override
-	protected String getObjectDefinitionLabel() {
-		return "Project Comparator";
+	public EntityFactory<ProjectComparator> getEntityFactory() {
+		return _projectComparatorFactory;
 	}
 
 	@Autowired
-	private ProjectPrioritizerRepository _projectPrioritizerRepository;
+	private ProjectComparatorFactory _projectComparatorFactory;
 
 }

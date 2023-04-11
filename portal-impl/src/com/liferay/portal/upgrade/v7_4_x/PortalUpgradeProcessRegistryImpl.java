@@ -293,6 +293,12 @@ public class PortalUpgradeProcessRegistryImpl
 			new UpgradeUsersUserGroups());
 
 		upgradeVersionTreeMap.put(new Version(26, 0, 0), new UpgradeUserType());
+
+		upgradeVersionTreeMap.put(
+			new Version(26, 1, 0),
+			UpgradeProcessFactory.addColumns(
+				"Company", "indexNameCur VARCHAR(75)",
+				"indexNameNext VARCHAR(75)"));
 	}
 
 }

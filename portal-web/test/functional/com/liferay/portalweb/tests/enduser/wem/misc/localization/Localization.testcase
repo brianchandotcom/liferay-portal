@@ -38,6 +38,8 @@ definition {
 
 	@priority = 4
 	test CheckLocalizationChinese {
+		property ci.retries.disabled = "true";
+
 		Click(locator1 = "TestLocalized#CHINESE_LOCALIZATION");
 
 		AssertTextEquals(
@@ -101,6 +103,8 @@ definition {
 
 	@priority = 4
 	test CheckLocalizationFrench {
+		property ci.retries.disabled = "true";
+
 		Click(locator1 = "TestLocalized#FRENCH_LOCALIZATION");
 
 		AssertTextEquals(
@@ -164,6 +168,8 @@ definition {
 
 	@priority = 4
 	test CheckLocalizationSpanish {
+		property ci.retries.disabled = "true";
+
 		Click(locator1 = "TestLocalized#SPANISH_LOCALIZATION");
 
 		AssertTextEquals(

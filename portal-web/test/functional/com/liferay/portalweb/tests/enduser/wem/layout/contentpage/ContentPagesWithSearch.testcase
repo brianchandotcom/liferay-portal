@@ -363,6 +363,7 @@ definition {
 	@description = "This is a use case for LPS-164924. Able to search page with workflow by inline text or map content."
 	@priority = 4
 	test SearchPageWithWorkflowByInlineTextAndMapContent {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWithWorkflowByInlineTextAndMapContent";
 
 		task ("Given enable workflow for Content Pages") {

@@ -575,6 +575,8 @@ definition {
 	@description = "This is a test for LPS-128810. View collection items on content page when select segment."
 	@priority = 4
 	test ViewCollectionItemsOnContentPageWhenSelectSegment {
+		property ci.retries.disabled = "true";
+
 		task ("Add a segment with a Regular Role field") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
 

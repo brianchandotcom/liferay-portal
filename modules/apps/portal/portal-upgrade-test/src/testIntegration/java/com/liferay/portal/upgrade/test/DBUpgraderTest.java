@@ -28,12 +28,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -55,19 +52,15 @@ public class DBUpgraderTest {
 	public static void setUpClass() throws SQLException {
 		_currentBuildNumber = _getReleaseColumnValue("buildNumber");
 		_currentState = _getReleaseColumnValue("state_");
-		_originalStopWatch = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_stopWatch");
+
+		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
+			StartupHelperUtil.class, "_upgrading", true);
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_stopWatch", _originalStopWatch);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
+			StartupHelperUtil.class, "_upgrading", _upgrading);
 	}
 
 	@After
@@ -81,13 +74,7 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_GOOD);
 
-		boolean upgrading = StartupHelperUtil.isUpgrading();
-
-		StartupHelperUtil.setUpgrading(true);
-
 		DBUpgrader.upgradePortal();
-
-		StartupHelperUtil.setUpgrading(upgrading);
 	}
 
 	@Test
@@ -96,19 +83,12 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
-		boolean upgrading = StartupHelperUtil.isUpgrading();
-
-		StartupHelperUtil.setUpgrading(true);
-
 		try {
 			DBUpgrader.upgradePortal();
 
 			Assert.fail();
 		}
 		catch (IllegalStateException illegalStateException) {
-		}
-		finally {
-			StartupHelperUtil.setUpgrading(upgrading);
 		}
 	}
 
@@ -118,13 +98,7 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
-		boolean upgrading = StartupHelperUtil.isUpgrading();
-
-		StartupHelperUtil.setUpgrading(true);
-
 		DBUpgrader.upgradePortal();
-
-		StartupHelperUtil.setUpgrading(upgrading);
 	}
 
 	private static int _getReleaseColumnValue(String columnName) {
@@ -149,6 +123,6 @@ public class DBUpgraderTest {
 
 	private static int _currentBuildNumber;
 	private static int _currentState;
-	private static StopWatch _originalStopWatch;
+	private static boolean _upgrading;
 
 }

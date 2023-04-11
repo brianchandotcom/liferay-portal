@@ -121,9 +121,6 @@ public class SXPBlueprintInfoCollectionProvider
 							collectionQuery.getInfoFilter(
 								CategoriesInfoFilter.class);
 
-						// TODO Added isEmpty check for consistency
-						// with TagsInfoFilter
-
 						if ((categoriesInfoFilter != null) &&
 							!ArrayUtil.isEmpty(
 								categoriesInfoFilter.getCategoryIds())) {
@@ -138,9 +135,6 @@ public class SXPBlueprintInfoCollectionProvider
 
 						TagsInfoFilter tagsInfoFilter =
 							collectionQuery.getInfoFilter(TagsInfoFilter.class);
-
-						// TODO Added isEmpty check, otherwise getting
-						// ArrayIndexOutOfBoundsException
 
 						if ((tagsInfoFilter != null) &&
 							!ArrayUtil.isEmpty(tagsInfoFilter.getTagNames())) {
@@ -221,14 +215,10 @@ public class SXPBlueprintInfoCollectionProvider
 		).build();
 	}
 
-	// TODO Better name?
-
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "blueprint");
 	}
-
-	// TODO Check why the Tags filter does not show up on screen.
 
 	@Override
 	public List<InfoFilter> getSupportedInfoFilters() {
@@ -241,8 +231,6 @@ public class SXPBlueprintInfoCollectionProvider
 	public boolean isAvailable() {
 		return FeatureFlagManagerUtil.isEnabled("LPS-129412");
 	}
-
-	// TODO Add more logging
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintInfoCollectionProvider.class);

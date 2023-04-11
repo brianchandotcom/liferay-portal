@@ -17,6 +17,7 @@ package com.liferay.notification.web.internal.portlet.action;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -71,7 +72,8 @@ public class GetParentObjectFieldNotificationTemplateTermsMVCResourceCommand
 			getTermsJSONArray(
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId()),
-				objectRelationship.getName(),
+				ObjectRelationshipUtil.getNotificationTermPrefix(
+					objectDefinition, objectRelationship),
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY)));
 	}

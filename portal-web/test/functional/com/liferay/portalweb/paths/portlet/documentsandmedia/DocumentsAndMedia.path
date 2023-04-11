@@ -204,7 +204,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS_SPECIFIC</td>
-	<td>//dd[contains(.,"${key_dmDocumentTitle}")]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//dd[contains(.,"${key_dmDocumentTitle}")]//div[contains(@class,'dropdown-action')]</td>
 	<td></td>
 </tr>
 <tr>

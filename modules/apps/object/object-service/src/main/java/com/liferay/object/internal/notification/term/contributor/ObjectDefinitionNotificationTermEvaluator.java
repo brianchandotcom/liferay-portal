@@ -309,32 +309,31 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return null;
 		}
 
-		if (!objectDefinition.isSystem()) {
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				GetterUtil.getLong(termValues.get(objectField2.getName())));
-
+		if (objectDefinition.isSystem()) {
 			return MapUtil.getString(
-				HashMapBuilder.putAll(
-					objectEntry.getValues()
-				).put(
-					"createDate", objectEntry.getCreateDate()
-				).put(
-					"externalReferenceCode",
-					objectEntry.getExternalReferenceCode()
-				).put(
-					"id", objectEntry.getObjectEntryId()
-				).put(
-					"modifiedDate", objectEntry.getModifiedDate()
-				).put(
-					"status", objectEntry.getStatus()
-				).build(),
+				_objectEntryLocalService.getSystemModelAttributes(
+					objectDefinition,
+					GetterUtil.getLong(termValues.get(objectField2.getName()))),
 				objectFieldName);
 		}
 
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			GetterUtil.getLong(termValues.get(objectField2.getName())));
+
 		return MapUtil.getString(
-			_objectEntryLocalService.getSystemModelAttributes(
-				objectDefinition,
-				GetterUtil.getLong(termValues.get(objectField2.getName()))),
+			HashMapBuilder.putAll(
+				objectEntry.getValues()
+			).put(
+				"createDate", objectEntry.getCreateDate()
+			).put(
+				"externalReferenceCode", objectEntry.getExternalReferenceCode()
+			).put(
+				"id", objectEntry.getObjectEntryId()
+			).put(
+				"modifiedDate", objectEntry.getModifiedDate()
+			).put(
+				"status", objectEntry.getStatus()
+			).build(),
 			objectFieldName);
 	}
 

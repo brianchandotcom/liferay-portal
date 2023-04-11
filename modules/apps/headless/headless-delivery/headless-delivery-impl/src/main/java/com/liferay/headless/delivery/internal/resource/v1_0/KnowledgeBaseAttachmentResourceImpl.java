@@ -193,12 +193,11 @@ public class KnowledgeBaseAttachmentResourceImpl
 
 		return _toKnowledgeBaseAttachment(
 			_portletFileRepository.addPortletFileEntry(
-				_getKnowledgeBaseAttachmentExternalReferenceCode(multipartBody),
-				kbArticle.getGroupId(), contextUser.getUserId(),
-				KBArticle.class.getName(), kbArticle.getClassPK(),
-				KBConstants.SERVICE_NAME, kbArticle.getAttachmentsFolderId(),
-				binaryFile.getInputStream(), binaryFile.getFileName(),
-				binaryFile.getFileName(), false));
+				externalReferenceCode, kbArticle.getGroupId(),
+				contextUser.getUserId(), KBArticle.class.getName(),
+				kbArticle.getClassPK(), KBConstants.SERVICE_NAME,
+				kbArticle.getAttachmentsFolderId(), binaryFile.getInputStream(),
+				binaryFile.getFileName(), binaryFile.getFileName(), false));
 	}
 
 	private String _getKnowledgeBaseAttachmentExternalReferenceCode(

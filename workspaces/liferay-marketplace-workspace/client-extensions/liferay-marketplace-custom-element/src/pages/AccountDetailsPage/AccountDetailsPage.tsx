@@ -16,14 +16,14 @@ import {DashboardListItems} from '../DashBoardPage/DashboardPage';
 
 interface AccountDetailsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
-	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 	selectedAccount: Account;
+	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 }
 
 export function AccountDetailsPage({
 	dashboardNavigationItems,
-	setDashboardNavigationItems,
 	selectedAccount,
+	setDashboardNavigationItems,
 }: AccountDetailsPageProps) {
 	const [selectedAccountAddress, setSelectedAccountAddress] =
 		useState<AccountPostalAddresses[]>();
@@ -246,9 +246,9 @@ export function AccountDetailsPage({
 					</DetailedCard>
 
 					<DetailedCard
-						cardIcon={phoneIcon}
 						cardIconAltText="Agreements Icon"
 						cardTitle="Agreements"
+						clayIcon="info-book"
 						sizing="lg"
 					>
 						<table className="account-details-body-table">

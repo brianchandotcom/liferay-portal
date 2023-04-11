@@ -280,8 +280,10 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
+		Navigator.gotoNavTab(navTab = "JavaScript");
+
 		AssertElementPresent(
-			key_fieldLabel = "Paste JavaScript code that is executed at the bottom of the page.",
+			key_fieldLabel = "JavaScript",
 			locator1 = "FormFields#LABEL");
 
 		Type(

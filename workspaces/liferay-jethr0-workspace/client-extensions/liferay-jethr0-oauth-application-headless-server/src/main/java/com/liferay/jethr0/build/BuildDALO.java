@@ -14,17 +14,8 @@
 
 package com.liferay.jethr0.build;
 
-import com.liferay.jethr0.build.parameter.BuildParameter;
-import com.liferay.jethr0.build.run.BuildRun;
-import com.liferay.jethr0.dalo.BuildToBuildParametersDALO;
-import com.liferay.jethr0.dalo.BuildToBuildRunsDALO;
-import com.liferay.jethr0.dalo.BuildToTasksDALO;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.task.Task;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -36,76 +27,11 @@ import org.springframework.context.annotation.Configuration;
 public class BuildDALO extends BaseEntityDALO<Build> {
 
 	@Override
-	public Build create(Build build) {
-		build = super.create(build);
-
-		_buildToBuildParametersDALO.updateRelationships(build);
-		_buildToBuildRunsDALO.updateRelationships(build);
-		_buildToTasksDALO.updateRelationships(build);
-
-		return build;
-	}
-
-	@Override
-	public void delete(Build build) {
-		for (BuildParameter buildParameter : build.getBuildParameters()) {
-			_buildToBuildParametersDALO.deleteRelationship(
-				build, buildParameter);
-		}
-
-		for (BuildRun buildRun : build.getBuildRuns()) {
-			_buildToBuildRunsDALO.deleteRelationship(build, buildRun);
-		}
-
-		for (Task task : build.getTasks()) {
-			_buildToTasksDALO.deleteRelationship(build, task);
-		}
-
-		super.delete(build);
-	}
-
-	@Override
-	public List<Build> getAll() {
-		List<Build> builds = new ArrayList<>();
-
-		for (Build build : super.getAll()) {
-			build.addBuildParameters(
-				_buildToBuildParametersDALO.retrieveBuildParameters(build));
-			build.addBuildRuns(_buildToBuildRunsDALO.retrieveBuildRuns(build));
-			build.addTasks(_buildToTasksDALO.retrieveTasks(build));
-
-			builds.add(build);
-		}
-
-		return builds;
-	}
-
-	@Override
-	public Build update(Build build) {
-		build = super.update(build);
-
-		_buildToBuildParametersDALO.updateRelationships(build);
-		_buildToBuildRunsDALO.updateRelationships(build);
-		_buildToTasksDALO.updateRelationships(build);
-
-		return build;
-	}
-
-	@Override
 	protected EntityFactory<Build> getEntityFactory() {
 		return _buildFactory;
 	}
 
 	@Autowired
 	private BuildFactory _buildFactory;
-
-	@Autowired
-	private BuildToBuildParametersDALO _buildToBuildParametersDALO;
-
-	@Autowired
-	private BuildToBuildRunsDALO _buildToBuildRunsDALO;
-
-	@Autowired
-	private BuildToTasksDALO _buildToTasksDALO;
 
 }

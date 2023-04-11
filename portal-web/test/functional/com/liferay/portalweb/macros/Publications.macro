@@ -539,6 +539,19 @@ definition {
 			value1 = "Published");
 	}
 
+	macro viewPublicationTimeline {
+		Click(locator1 = "Publications#PUBLICATION_TIMELINE_BUTTON");
+
+		if (${isEmpty} == "true") {
+			AssertElementPresent(locator1 = "Publications#PUBLICATION_TIMELINE_EMPTY");
+		}
+		else {
+			var key_publicationName = ${publicationName};
+
+			AssertElementPresent(locator1 = "Publications#PUBLICATION_TIMELINE_PANEL");
+		}
+	}
+
 	macro viewSandboxedPublication {
 		var key_publicationName = ${sandboxedPublicationName};
 

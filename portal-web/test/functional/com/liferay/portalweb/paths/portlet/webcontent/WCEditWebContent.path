@@ -159,16 +159,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TIMELINE_TAB</td>
-	<td>//li[@data-tab-name='timeline']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TIMELINE_ENTRY_SPECIFIC</td>
-	<td>//div[contains(@class,'sidebar-section')]//div[${key_index}]//strong[contains(.,'${key_publicationName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_DETAIL_TITLE</td>
 	<td>//label[contains(.,'${key_userSegmentDetailTitle}')]</td>
 	<td></td>

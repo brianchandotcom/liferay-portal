@@ -57,10 +57,10 @@ definition {
 			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
-	@description = "This is the use case for LPS-161035."
+	@description = "This is the use case for LPS-161037."
 	@priority = 4
 	test CanViewWebContentTimelineOverMultiplePublications {
-		property custom.properties = "feature.flag.LPS-161038=true";
+		property custom.properties = "feature.flag.LPS-161033=true";
 
 		task ("Add new web content on new added site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -77,14 +77,12 @@ definition {
 			JSONPublications.selectPublication(publicationName = "Publication Name 1");
 		}
 
-		task ("View Publication timeline") {
+		task ("Assert there are no changes in the Publication timeline") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-			WebContent.viewPublicationTimelineEntry(
-				index = 1,
-				publicationName = "Publication Name 1");
+			Publications.viewPublicationTimeline(isEmpty = "true");
 		}
 
 		task ("Edit the web content") {
@@ -111,13 +109,7 @@ definition {
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edit 1");
 
-			WebContent.viewPublicationTimelineEntry(
-				index = 1,
-				publicationName = "Production");
-
-			WebContent.viewPublicationTimelineEntry(
-				index = 2,
-				publicationName = "Publication Name 1");
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
 		}
 
 		task ("View Publication timeline in Publication") {
@@ -125,13 +117,7 @@ definition {
 
 			Refresh();
 
-			WebContent.viewPublicationTimelineEntry(
-				index = 1,
-				publicationName = "Publication Name 2");
-
-			WebContent.viewPublicationTimelineEntry(
-				index = 2,
-				publicationName = "Publication Name 1");
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
 		}
 	}
 

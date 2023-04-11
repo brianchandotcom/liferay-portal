@@ -2374,15 +2374,6 @@ definition {
 			value1 = ${webContentContent});
 	}
 
-	macro viewPublicationTimelineEntry {
-		Click(locator1 = "WCEditWebContent#TIMELINE_TAB");
-
-		AssertElementPresent(
-			key_index = ${index},
-			key_publicationName = ${publicationName},
-			locator1 = "WCEditWebContent#TIMELINE_ENTRY_SPECIFIC");
-	}
-
 	macro viewRepeatedField {
 		AssertElementPresent(locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div)");
 

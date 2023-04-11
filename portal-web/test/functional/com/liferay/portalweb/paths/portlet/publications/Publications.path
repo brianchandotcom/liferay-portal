@@ -161,6 +161,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATION_TIMELINE_BUTTON</td>
+	<td>//button[contains(@class,'change-tracking-timeline-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_TIMELINE_EMPTY</td>
+	<td>//div[contains(@class,'publication-timeline') and normalize-space(text())='No publications were found.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_TIMELINE_PANEL</td>
+	<td>//div[contains(@class,'publication-timeline')]//span[normalize-space(text())='${key_publicationName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(.,'Publish')]</td>
 	<td></td>

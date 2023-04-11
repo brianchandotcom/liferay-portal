@@ -45,6 +45,13 @@ public class ObjectEntryValuesExceptionMapper
 			messageKey = objectEntryValuesException.getMessage();
 		}
 
+		if (objectEntryValuesException.getArguments() == null) {
+			return new Problem(
+				Response.Status.BAD_REQUEST,
+				_language.get(
+					_acceptLanguage.getPreferredLocale(), messageKey));
+		}
+
 		return new Problem(
 			Response.Status.BAD_REQUEST,
 			_language.format(

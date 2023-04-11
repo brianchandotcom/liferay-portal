@@ -1299,7 +1299,7 @@ public class LayoutsAdminDisplayContext {
 			return LanguageUtil.get(
 				httpServletRequest,
 				"this-page-is-using-a-different-theme-than-the-one-set-for-" +
-					"pages");
+					"all-pages");
 		}
 
 		return LanguageUtil.format(

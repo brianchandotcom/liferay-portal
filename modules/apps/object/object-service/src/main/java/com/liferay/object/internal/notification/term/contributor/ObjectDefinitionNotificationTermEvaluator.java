@@ -182,15 +182,12 @@ public class ObjectDefinitionNotificationTermEvaluator
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition = null;
-		User user = null;
-
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipLocalService.
 					getObjectRelationshipsByObjectDefinitionId2(
 						_objectDefinition.getObjectDefinitionId())) {
 
-			objectDefinition =
+			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
@@ -204,15 +201,9 @@ public class ObjectDefinitionNotificationTermEvaluator
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectRelationship.getObjectFieldId2());
 
-			if (!objectDefinition.isSystem()) {
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						GetterUtil.getLong(
-							termValues.get(objectField.getName())));
+			User user = null;
 
-				user = _userLocalService.getUser(objectEntry.getUserId());
-			}
-			else {
+			if (objectDefinition.isSystem()) {
 				user = _userLocalService.getUser(
 					MapUtil.getLong(
 						_objectEntryLocalService.getSystemModelAttributes(
@@ -220,6 +211,14 @@ public class ObjectDefinitionNotificationTermEvaluator
 							GetterUtil.getLong(
 								termValues.get(objectField.getName()))),
 						"creator"));
+			}
+			else {
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.getObjectEntry(
+						GetterUtil.getLong(
+							termValues.get(objectField.getName())));
+
+				user = _userLocalService.getUser(objectEntry.getUserId());
 			}
 
 			return _getTermValue(

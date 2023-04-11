@@ -330,6 +330,14 @@ definition {
 				fail("New upgrade report contains unexpected upgrades.");
 			}
 		}
+
+		task ("Verify upgrade report is not generated in console output in log context format") {
+			var fileContent = Log.getLogFileContent();
+
+			if (contains(${fileContent}, "upgrade.component=")) {
+				fail("Upgrade report is present in portal log.");
+			}
+		}
 	}
 
 	@description = "LPS-158743: Upgrade report is generated in the console using log context format"
@@ -342,13 +350,7 @@ definition {
 		property upgrade.reports.enabled = "false";
 
 		task ("Check report is generated console") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "copy-log-file");
-
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			var fileContent = FileUtil.read("${liferayHome}/liferay.log");
+			var fileContent = Log.getLogFileContent();
 
 			if (!(contains(${fileContent}, "upgrade.report.execution.time="))) {
 				fail("upgrade.report.execution.time is not present in portal log.");
@@ -412,6 +414,8 @@ definition {
 		}
 
 		task ("Check report file is generated") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
 			var reportFileExists = FileUtil.exists("${liferayHome}/reports/upgrade_report.info");
 
 			if (${reportFileExists} != "true") {

@@ -791,8 +791,6 @@ definition {
 	@description = "This is a test for LRQA-69301. Verify the status is changed to pending after a checkout is cancelled"
 	@priority = 3
 	test StatusPendingAfterCheckoutCancel {
-		property portal.upstream = "quarantine";
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",

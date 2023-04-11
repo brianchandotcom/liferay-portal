@@ -601,9 +601,9 @@ definition {
 
 		task ("View WebContent Article Publish on default Company") {
 
-			// Pausing 120 seconds due to LRQA-75909
+			// Pausing 150 seconds due to LRQA-75909
 
-			Pause(locator1 = 120000);
+			Pause(locator1 = 150000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -618,9 +618,9 @@ definition {
 		task ("New Company publish it's WebContent Article") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			// Pausing 120 seconds due to LRQA-75909
+			// Pausing 150 seconds due to LRQA-75909
 
-			Pause(locator1 = 120000);
+			Pause(locator1 = 150000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",

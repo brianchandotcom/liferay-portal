@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -32,23 +32,21 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.NoSuchSkuContributorCPDefinitionOptionRelExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPDefinitionMetaKeywordsExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class NoSuchSkuContributorCPDefinitionOptionRelExceptionMapper
-	extends BaseExceptionMapper
-		<NoSuchSkuContributorCPDefinitionOptionRelException> {
+public class CPDefinitionMetaKeywordsExceptionMapper
+	extends BaseExceptionMapper<CPDefinitionMetaKeywordsException> {
 
 	@Override
 	protected Problem getProblem(
-		NoSuchSkuContributorCPDefinitionOptionRelException
-			noSuchSkuContributorCPDefinitionOptionRelException) {
+		CPDefinitionMetaKeywordsException cpDefinitionMetaKeywordsException) {
 
 		return new Problem(
-			Response.Status.NOT_FOUND,
-			noSuchSkuContributorCPDefinitionOptionRelException.getMessage());
+			Response.Status.BAD_REQUEST,
+			cpDefinitionMetaKeywordsException.getMessage());
 	}
 
 }

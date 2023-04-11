@@ -14,41 +14,37 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
- * @author Zoltán Takács
+ * @author Stefano Motta
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.NoSuchSkuContributorCPDefinitionOptionRelExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.CPDefinitionVirtualSettingSampleExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-@Provider
-public class NoSuchSkuContributorCPDefinitionOptionRelExceptionMapper
-	extends BaseExceptionMapper
-		<NoSuchSkuContributorCPDefinitionOptionRelException> {
+public class CPDefinitionVirtualSettingSampleExceptionMapper
+	extends BaseExceptionMapper<CPDefinitionVirtualSettingSampleException> {
 
 	@Override
 	protected Problem getProblem(
-		NoSuchSkuContributorCPDefinitionOptionRelException
-			noSuchSkuContributorCPDefinitionOptionRelException) {
+		CPDefinitionVirtualSettingSampleException
+			cpDefinitionVirtualSettingSampleException) {
 
 		return new Problem(
-			Response.Status.NOT_FOUND,
-			noSuchSkuContributorCPDefinitionOptionRelException.getMessage());
+			Response.Status.BAD_REQUEST,
+			cpDefinitionVirtualSettingSampleException.getMessage());
 	}
 
 }

@@ -14,41 +14,35 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
- * @author Zoltán Takács
+ * @author Brian I. Kim
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Catalog.NoSuchSkuContributorCPDefinitionOptionRelExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.NoSuchCPOptionExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-@Provider
-public class NoSuchSkuContributorCPDefinitionOptionRelExceptionMapper
-	extends BaseExceptionMapper
-		<NoSuchSkuContributorCPDefinitionOptionRelException> {
+public class NoSuchCPOptionExceptionMapper
+	extends BaseExceptionMapper<NoSuchCPOptionException> {
 
 	@Override
 	protected Problem getProblem(
-		NoSuchSkuContributorCPDefinitionOptionRelException
-			noSuchSkuContributorCPDefinitionOptionRelException) {
+		NoSuchCPOptionException noSuchCPOptionException) {
 
 		return new Problem(
-			Response.Status.NOT_FOUND,
-			noSuchSkuContributorCPDefinitionOptionRelException.getMessage());
+			Response.Status.NOT_FOUND, noSuchCPOptionException.getMessage());
 	}
 
 }

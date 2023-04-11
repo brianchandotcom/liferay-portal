@@ -135,6 +135,11 @@
 	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//button[*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUBNODE_ITEM</td>
+	<td>//div[contains(@class,'collapse show')]//li[contains(@class,'treeview-item')]//*[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

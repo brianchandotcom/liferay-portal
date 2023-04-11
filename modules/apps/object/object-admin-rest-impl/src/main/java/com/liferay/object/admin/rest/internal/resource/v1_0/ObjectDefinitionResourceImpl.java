@@ -239,7 +239,7 @@ public class ObjectDefinitionResourceImpl
 		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 
-			throw new ObjectDefinitionModifiableException();
+			throw new ObjectDefinitionModifiableException.InvalidOperation();
 		}
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
@@ -403,7 +403,7 @@ public class ObjectDefinitionResourceImpl
 		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 
-			throw new ObjectDefinitionModifiableException();
+			throw new ObjectDefinitionModifiableException.InvalidOperation();
 		}
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&

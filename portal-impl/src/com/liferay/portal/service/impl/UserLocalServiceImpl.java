@@ -2264,6 +2264,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userPersistence.countByCompanyId(companyId);
 	}
 
+	@Override
+	public User getDefaultServiceAccountUser(long companyId) {
+		return userPersistence.fetchByC_T_First(
+			companyId, UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT, null);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #getGuestUser(long)}

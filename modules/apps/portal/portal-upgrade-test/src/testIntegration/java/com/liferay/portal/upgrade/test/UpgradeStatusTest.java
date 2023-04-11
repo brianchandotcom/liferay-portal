@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -104,19 +105,26 @@ public class UpgradeStatusTest {
 
 	@Test
 	public void testFailureUpgradesPending() {
-		String bundleSymbolicName = "com.liferay.asset.service";
+		List<Release> releases = _releaseLocalService.getReleases(0, 1);
 
-		Version currentSchemaVersion = _getReleaseSchemaVersion(
-			bundleSymbolicName);
+		Release release = releases.get(0);
 
-		_setReleaseSchemaVersion(bundleSymbolicName, "1.0.0");
+		String schemaVersion = release.getSchemaVersion();
 
-		StartupHelperUtil.setUpgrading(true);
+		try {
+			release.setSchemaVersion("0.0.0");
 
-		StartupHelperUtil.setUpgrading(false);
+			release = _releaseLocalService.updateRelease(release);
 
-		_setReleaseSchemaVersion(
-			bundleSymbolicName, currentSchemaVersion.toString());
+			StartupHelperUtil.setUpgrading(true);
+
+			StartupHelperUtil.setUpgrading(false);
+		}
+		finally {
+			release.setSchemaVersion(schemaVersion);
+
+			_releaseLocalService.updateRelease(release);
+		}
 
 		Assert.assertEquals("failure", _upgradeStatus.getState());
 
@@ -177,89 +185,85 @@ public class UpgradeStatusTest {
 		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
 	}
 
-	private Version _getReleaseSchemaVersion(String bundleSymbolicName) {
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-		return Version.parseVersion(release.getSchemaVersion());
-	}
-
-	private void _setReleaseSchemaVersion(
-		String bundleSymbolicName, String schemaVersion) {
-
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-		release.setSchemaVersion(schemaVersion);
-
-		_releaseLocalService.updateRelease(release);
-	}
-
 	private void _testUpgradeType(String type) {
-		String majorBundleSymbolicName = "com.liferay.asset.service";
-		String minorBundleSymbolicName = "com.liferay.journal.service";
-		String microBundleSymbolicName = "com.liferay.object.service";
-		String qualifierBundleSymbolicName = "com.liferay.calendar.service";
+		List<Release> releases = _releaseLocalService.getReleases(0, 4);
 
-		Version currentMajorSchemaVersion = _getReleaseSchemaVersion(
-			majorBundleSymbolicName);
-		Version currentMinorSchemaVersion = _getReleaseSchemaVersion(
-			minorBundleSymbolicName);
-		Version currentMicroSchemaVersion = _getReleaseSchemaVersion(
-			microBundleSymbolicName);
+		Release majorRelease = releases.get(0);
+		Release microRelease = releases.get(1);
+		Release minorRelease = releases.get(2);
+		Release qualifierRelease = releases.get(3);
 
-		Version currentQualifierSchemaVersion = _getReleaseSchemaVersion(
-			qualifierBundleSymbolicName);
+		Version majorSchemaVersion = Version.parseVersion(
+			majorRelease.getSchemaVersion());
 
-		_setReleaseSchemaVersion(
-			qualifierBundleSymbolicName,
-			currentQualifierSchemaVersion.toString() + ".step-2");
+		Version minorSchemaVersion = Version.parseVersion(
+			minorRelease.getSchemaVersion());
 
-		StartupHelperUtil.setUpgrading(true);
+		Version microSchemaVersion = Version.parseVersion(
+			microRelease.getSchemaVersion());
 
-		if (type.equals("major")) {
-			_setReleaseSchemaVersion(
-				majorBundleSymbolicName,
-				StringBundler.concat(
-					String.valueOf(currentMajorSchemaVersion.getMajor() + 1),
-					StringPool.PERIOD,
-					String.valueOf(currentMajorSchemaVersion.getMinor()),
-					StringPool.PERIOD,
-					String.valueOf(currentMajorSchemaVersion.getMicro())));
+		String qualifierSchemaVersion = qualifierRelease.getSchemaVersion();
+
+		try {
+			qualifierRelease.setSchemaVersion(
+				qualifierSchemaVersion + ".step-2");
+
+			qualifierRelease = _releaseLocalService.updateRelease(
+				qualifierRelease);
+
+			StartupHelperUtil.setUpgrading(true);
+
+			if (type.equals("major")) {
+				majorRelease.setSchemaVersion(
+					StringBundler.concat(
+						String.valueOf(majorSchemaVersion.getMajor() + 1),
+						StringPool.PERIOD,
+						String.valueOf(majorSchemaVersion.getMinor()),
+						StringPool.PERIOD,
+						String.valueOf(majorSchemaVersion.getMicro())));
+
+				majorRelease = _releaseLocalService.updateRelease(majorRelease);
+			}
+
+			if (type.equals("minor")) {
+				minorRelease.setSchemaVersion(
+					StringBundler.concat(
+						String.valueOf(minorSchemaVersion.getMajor()),
+						StringPool.PERIOD,
+						String.valueOf(minorSchemaVersion.getMinor() + 1),
+						StringPool.PERIOD,
+						String.valueOf(minorSchemaVersion.getMicro())));
+
+				minorRelease = _releaseLocalService.updateRelease(minorRelease);
+			}
+
+			if (type.equals("micro")) {
+				microRelease.setSchemaVersion(
+					StringBundler.concat(
+						String.valueOf(microSchemaVersion.getMajor()),
+						StringPool.PERIOD,
+						String.valueOf(microSchemaVersion.getMinor()),
+						StringPool.PERIOD,
+						String.valueOf(microSchemaVersion.getMicro() + 1)));
+
+				microRelease = _releaseLocalService.updateRelease(microRelease);
+			}
+
+			qualifierRelease.setSchemaVersion(qualifierSchemaVersion);
+
+			_releaseLocalService.updateRelease(qualifierRelease);
+
+			StartupHelperUtil.setUpgrading(false);
 		}
+		finally {
+			majorRelease.setSchemaVersion(majorSchemaVersion.toString());
+			microRelease.setSchemaVersion(microSchemaVersion.toString());
+			minorRelease.setSchemaVersion(minorSchemaVersion.toString());
 
-		if (type.equals("minor")) {
-			_setReleaseSchemaVersion(
-				minorBundleSymbolicName,
-				StringBundler.concat(
-					String.valueOf(currentMinorSchemaVersion.getMajor()),
-					StringPool.PERIOD,
-					String.valueOf(currentMinorSchemaVersion.getMinor() + 1),
-					StringPool.PERIOD,
-					String.valueOf(currentMinorSchemaVersion.getMicro())));
+			_releaseLocalService.updateRelease(majorRelease);
+			_releaseLocalService.updateRelease(microRelease);
+			_releaseLocalService.updateRelease(minorRelease);
 		}
-
-		if (type.equals("micro")) {
-			_setReleaseSchemaVersion(
-				microBundleSymbolicName,
-				StringBundler.concat(
-					String.valueOf(currentMicroSchemaVersion.getMajor()),
-					StringPool.PERIOD,
-					String.valueOf(currentMicroSchemaVersion.getMinor()),
-					StringPool.PERIOD,
-					String.valueOf(currentMicroSchemaVersion.getMicro() + 1)));
-		}
-
-		_setReleaseSchemaVersion(
-			qualifierBundleSymbolicName,
-			currentQualifierSchemaVersion.toString());
-
-		StartupHelperUtil.setUpgrading(false);
-
-		_setReleaseSchemaVersion(
-			majorBundleSymbolicName, currentMajorSchemaVersion.toString());
-		_setReleaseSchemaVersion(
-			minorBundleSymbolicName, currentMinorSchemaVersion.toString());
-		_setReleaseSchemaVersion(
-			microBundleSymbolicName, currentMicroSchemaVersion.toString());
 	}
 
 	private static Map<String, Map<String, Integer>> _originalErrorMessages;

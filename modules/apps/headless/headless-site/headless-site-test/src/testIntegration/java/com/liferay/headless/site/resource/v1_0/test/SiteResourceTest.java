@@ -121,7 +121,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("INTERNAL_SERVER_ERROR", problem.getStatus());
+			Assert.assertEquals("CONFLICT", problem.getStatus());
+
+			Assert.assertEquals(
+				"There is already a site with the same key",
+				problem.getTitle());
 		}
 	}
 

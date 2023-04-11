@@ -892,6 +892,8 @@ definition {
 		task ("Assert can change master from Blank to custom master") {
 			Click(locator1 = "ControlMenu#EDIT_COG");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
@@ -941,6 +943,8 @@ definition {
 			WaitForPageLoad();
 
 			Click(locator1 = "ControlMenu#EDIT_COG");
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 

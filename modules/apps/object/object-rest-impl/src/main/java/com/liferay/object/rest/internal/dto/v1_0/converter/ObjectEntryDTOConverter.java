@@ -32,6 +32,8 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.AuditEvent;
 import com.liferay.object.rest.dto.v1_0.AuditFieldChange;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
@@ -252,13 +254,23 @@ public class ObjectEntryDTOConverter
 		ObjectRelationship objectRelationship) {
 
 		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition.getClassName(),
+						objectDefinition.getCompanyId(),
+						objectRelationship.getType());
+
 			return _toObjectEntries(
 				dtoConverterContext, nestedFieldNames, nestedFieldsDepth,
-				_objectEntryLocalService.getManyToManyObjectEntries(
+				objectRelatedModelsProvider.getRelatedModels(
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getObjectEntryId(), true,
-					objectRelationship.isReverse(), QueryUtil.ALL_POS,
+					objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS));
 		}
 		catch (PortalException portalException) {
@@ -312,12 +324,23 @@ public class ObjectEntryDTOConverter
 		ObjectRelationship objectRelationship) {
 
 		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition.getClassName(),
+						objectDefinition.getCompanyId(),
+						objectRelationship.getType());
+
 			return _toObjectEntries(
 				dtoConverterContext, nestedFieldNames, nestedFieldsDepth,
-				_objectEntryLocalService.getOneToManyObjectEntries(
+				objectRelatedModelsProvider.getRelatedModels(
 					objectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getObjectEntryId(), true, QueryUtil.ALL_POS,
+					objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS));
 		}
 		catch (PortalException portalException) {
@@ -719,6 +742,10 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

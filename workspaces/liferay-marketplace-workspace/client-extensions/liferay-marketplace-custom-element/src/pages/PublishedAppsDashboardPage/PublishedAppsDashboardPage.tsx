@@ -357,7 +357,7 @@ export function PublishedAppsDashboardPage() {
 				if (selectedNavigationItem === 'Apps') {
 					return (
 						<DashboardPage
-							accountAppsNumber="4"
+							accountAppsNumber={apps.length.toString()}
 							accountLogo={accountLogo}
 							accounts={accounts}
 							buttonMessage="+ New App"
@@ -389,7 +389,7 @@ export function PublishedAppsDashboardPage() {
 				else if (selectedNavigationItem === 'Members') {
 					return (
 						<DashboardPage
-							accountAppsNumber="4"
+							accountAppsNumber={apps.length.toString()}
 							accountLogo={accountLogo}
 							accounts={accounts}
 							currentAccount={selectedAccount}

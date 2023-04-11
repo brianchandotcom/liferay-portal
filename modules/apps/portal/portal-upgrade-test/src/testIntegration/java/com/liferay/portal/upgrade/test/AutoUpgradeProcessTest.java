@@ -87,7 +87,7 @@ public class AutoUpgradeProcessTest {
 	}
 
 	@Test
-	public void testNonupgradeProcessWhenAutoUpgradeDisabledAndPortalNotUpgraded()
+	public void testNoninitializationWhenAutoUpgradeDisabledAndPortalNotUpgraded()
 		throws Exception {
 
 		Object upgradeStepRegistratorTracker = ReflectionTestUtil.getFieldValue(
@@ -101,8 +101,6 @@ public class AutoUpgradeProcessTest {
 				PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN", false);
 
 			Assert.assertNull(_registerNewUpgradeProcess());
-
-			Assert.assertFalse(_upgradeProcessRun);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

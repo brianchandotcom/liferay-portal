@@ -74,7 +74,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -90,7 +89,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -118,9 +116,7 @@ public class ObjectEntryDTOConverter
 		throws Exception {
 
 		return _toDTO(
-			dtoConverterContext,
-			_getNestedFieldsDepth(dtoConverterContext.getUriInfo()),
-			objectEntry);
+			dtoConverterContext, _getNestedFieldsDepth(), objectEntry);
 	}
 
 	private void _addNestedFields(
@@ -273,19 +269,15 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
-	private int _getNestedFieldsDepth(UriInfo uriInfo) {
-		if (uriInfo == null) {
+	private int _getNestedFieldsDepth() {
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		if (nestedFieldsContext == null) {
 			return _NESTED_FIELDS_DEFAULT_DEPTH;
 		}
 
-		MultivaluedMap<String, String> queryParameters =
-			uriInfo.getQueryParameters();
-
-		return Math.min(
-			GetterUtil.getInteger(
-				queryParameters.getFirst("nestedFieldsDepth"),
-				_NESTED_FIELDS_DEFAULT_DEPTH),
-			PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH);
+		return nestedFieldsContext.getDepth();
 	}
 
 	private ObjectDefinition _getObjectDefinition(

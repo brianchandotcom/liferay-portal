@@ -91,6 +91,7 @@ public class ContentTemplateResourceTest
 	public void testGetSiteContentTemplatesPageWithFilterStringEquals() {
 	}
 
+	@Override
 	@Test
 	public void testGetSiteContentTemplatesPageWithSortInteger()
 		throws Exception {

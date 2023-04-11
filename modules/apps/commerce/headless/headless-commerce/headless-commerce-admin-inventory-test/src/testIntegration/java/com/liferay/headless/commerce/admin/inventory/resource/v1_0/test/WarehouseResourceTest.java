@@ -82,6 +82,7 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 	public void testGraphQLGetWarehousesPage() throws Exception {
 	}
 
+	@Override
 	@Test
 	public void testPatchWarehouseByExternalReferenceCode() throws Exception {
 		Warehouse postWarehouse = _addWarehouse();
@@ -100,6 +101,7 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 		assertEquals(postWarehouse, patchWarehouse);
 	}
 
+	@Override
 	@Test
 	public void testPatchWarehouseId() throws Exception {
 		Warehouse postWarehouse = _addWarehouse();

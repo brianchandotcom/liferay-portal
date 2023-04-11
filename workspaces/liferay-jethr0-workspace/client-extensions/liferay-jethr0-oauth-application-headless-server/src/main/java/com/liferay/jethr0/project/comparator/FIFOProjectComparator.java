@@ -26,6 +26,10 @@ import org.json.JSONObject;
  */
 public class FIFOProjectComparator extends BaseProjectComparator {
 
+	public FIFOProjectComparator(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	public FIFOProjectComparator(
 		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
 

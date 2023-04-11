@@ -37,6 +37,8 @@ public interface ProjectComparator extends Entity {
 
 	public void setPosition(int position);
 
+	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer);
+
 	public void setValue(String value);
 
 	public static enum Type {

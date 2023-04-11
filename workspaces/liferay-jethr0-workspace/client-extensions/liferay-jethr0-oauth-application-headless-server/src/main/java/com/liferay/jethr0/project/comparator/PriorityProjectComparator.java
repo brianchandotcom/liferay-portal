@@ -24,6 +24,10 @@ import org.json.JSONObject;
  */
 public class PriorityProjectComparator extends BaseProjectComparator {
 
+	public PriorityProjectComparator(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	public PriorityProjectComparator(
 		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
 

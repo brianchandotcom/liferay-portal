@@ -33,18 +33,23 @@ public abstract class BaseProjectComparator
 		JSONObject jsonObject = super.getJSONObject();
 
 		ProjectComparator.Type type = getType();
-		ProjectPrioritizer projectPrioritizer = getProjectPrioritizer();
 
 		jsonObject.put(
 			"position", getPosition()
-		).put(
-			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
-			projectPrioritizer.getId()
 		).put(
 			"type", type.getJSONObject()
 		).put(
 			"value", getValue()
 		);
+
+		ProjectPrioritizer projectPrioritizer = getProjectPrioritizer();
+
+		if (projectPrioritizer != null) {
+			jsonObject.put(
+				"r_projectPrioritizerToProjectComparators_c_" +
+					"projectPrioritizerId",
+				projectPrioritizer.getId());
+		}
 
 		return jsonObject;
 	}
@@ -75,8 +80,21 @@ public abstract class BaseProjectComparator
 	}
 
 	@Override
+	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer) {
+		_projectPrioritizer = projectPrioritizer;
+	}
+
+	@Override
 	public void setValue(String value) {
 		_value = value;
+	}
+
+	protected BaseProjectComparator(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_position = jsonObject.getInt("position");
+		_type = Type.get(jsonObject.getJSONObject("type"));
+		_value = jsonObject.optString("value");
 	}
 
 	protected BaseProjectComparator(
@@ -94,7 +112,7 @@ public abstract class BaseProjectComparator
 	}
 
 	private int _position;
-	private final ProjectPrioritizer _projectPrioritizer;
+	private ProjectPrioritizer _projectPrioritizer;
 	private final Type _type;
 	private String _value;
 

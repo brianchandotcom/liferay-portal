@@ -27,7 +27,7 @@ import {createNewGroup, getSupportedOperatorsFromType} from '../../utils/utils';
 import BooleanInput from '../inputs/BooleanInput';
 import CollectionInput from '../inputs/CollectionInput';
 import DateTimeInput from '../inputs/DateTimeInput';
-import DecimalInput from '../inputs/DecimalInput.es';
+import DecimalInput from '../inputs/DecimalInput';
 import IntegerInput from '../inputs/IntegerInput';
 import SelectEntityInput from '../inputs/SelectEntityInput.es';
 import StringInput from '../inputs/StringInput';

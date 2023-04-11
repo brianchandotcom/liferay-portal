@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>ANY_WITH_SPAN</td>
-	<td>//button/span[contains(.,'${key_text}')]</td>
+	<td>//button/span[contains(.,'${key_text}')] | //button[contains(@class, 'select-button')]/parent::div//span[contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

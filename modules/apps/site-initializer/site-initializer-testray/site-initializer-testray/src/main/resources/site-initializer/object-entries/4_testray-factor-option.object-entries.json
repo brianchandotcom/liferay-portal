@@ -1,1038 +1,1297 @@
 {
 	"object-entries": [
 		{
+			"externalReferenceCode": "TRFOPT-001",
 			"name": "Any App Server",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-002",
 			"name": "Geronimo 2.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-003",
 			"name": "Geronimo 3.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-004",
 			"name": "Glassfish 3.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-005",
 			"name": "IBM Websphere (Liberty) 8.5.x",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-006",
 			"name": "JBoss",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-007",
 			"name": "JBoss 6.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-008",
 			"name": "JBoss 6.4",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-009",
 			"name": "JBoss 7.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-010",
 			"name": "JBoss 7.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-011",
 			"name": "JBoss 7.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-012",
 			"name": "JBoss 7.3",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-013",
 			"name": "JBoss 7.4",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-014",
 			"name": "JBoss AS 6.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-015",
 			"name": "JBoss AS 7.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-016",
 			"name": "JBoss AS 7.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-017",
 			"name": "JBoss EAP 5.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-018",
 			"name": "JBoss EAP 5.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-019",
 			"name": "JBoss EAP 6.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-020",
 			"name": "JBoss EAP 6.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-021",
 			"name": "JBoss EAP 6.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-022",
 			"name": "JBoss EAP 6.3",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-023",
 			"name": "JBoss EAP 6.4",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-024",
 			"name": "JBoss EAP 7.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-025",
 			"name": "JBoss EAP 7.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-026",
 			"name": "JBoss EAP 7.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-027",
 			"name": "JBoss EAP 7.3",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-028",
 			"name": "JOnAS 5.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-029",
 			"name": "Jetty 7.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-030",
 			"name": "Jetty 8.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-031",
 			"name": "Jetty 8.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-032",
 			"name": "Jetty 9.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-033",
 			"name": "Oracle Weblogic Server 12cR2 (12.2.x)",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-034",
 			"name": "Resin 4.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-035",
 			"name": "TCat 7.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-036",
 			"name": "Tc Server 3.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-037",
 			"name": "TcServer 2.8",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-038",
 			"name": "TcServer 2.9",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-039",
 			"name": "TcServer 3.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-040",
 			"name": "TomEE 1.5.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-041",
 			"name": "Tomcat",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-042",
 			"name": "Tomcat 6.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-043",
 			"name": "Tomcat 7.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-044",
 			"name": "Tomcat 8.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-045",
 			"name": "Tomcat 8.5",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-046",
 			"name": "Tomcat 9.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-047",
 			"name": "WebSphere",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-048",
 			"name": "WebSphere 8.5",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-049",
 			"name": "Weblogic",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-050",
 			"name": "Weblogic 10.3",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-051",
 			"name": "Weblogic 11g",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-052",
 			"name": "Weblogic 12c",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-053",
 			"name": "Websphere 7.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-054",
 			"name": "Websphere 8.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-055",
 			"name": "Websphere 8.5.5.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-056",
 			"name": "Websphere 8.5.5.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-057",
 			"name": "Websphere 8.5.5.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-058",
 			"name": "Websphere 8.5.5.x",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-059",
 			"name": "Websphere 9.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-060",
 			"name": "WildFly 11.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-061",
 			"name": "WildFly 14.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-062",
 			"name": "WildFly 16.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-063",
 			"name": "WildFly 17.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-064",
 			"name": "WildFly 18.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-065",
 			"name": "WildFly 22.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-066",
 			"name": "WildFly 23.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-067",
 			"name": "Wildfly",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-068",
 			"name": "Wildfly 10.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-069",
 			"name": "Wildfly 10.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-070",
 			"name": "tc Server",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-071",
 			"name": "tc Server 2.6",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-072",
 			"name": "tc Server 3.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-073",
 			"name": "tc Server 4.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-001$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-074",
 			"name": "Any Browser",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-075",
 			"name": "Chrome 34.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-076",
 			"name": "Chrome 44.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-077",
 			"name": "Chrome 57",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-078",
 			"name": "Chrome 65.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-079",
 			"name": "Chrome 86.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-080",
 			"name": "Chrome x",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-081",
 			"name": "Edge 20.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-082",
 			"name": "Edge 40.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-083",
 			"name": "Edge latest",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-084",
 			"name": "Firefox 22.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-085",
 			"name": "Firefox 29.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-086",
 			"name": "Firefox 38.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-087",
 			"name": "Firefox 45.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-088",
 			"name": "Firefox 52.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-089",
 			"name": "Firefox latest",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-090",
 			"name": "Firefox x",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-091",
 			"name": "IE x",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-092",
 			"name": "Internet Explorer 10",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-093",
 			"name": "Internet Explorer 11",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-094",
 			"name": "Internet Explorer 6",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-095",
 			"name": "Internet Explorer 7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-096",
 			"name": "Internet Explorer 8",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-097",
 			"name": "Internet Explorer 9",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-098",
 			"name": "Microsoft Edge",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-099",
 			"name": "Safari 10",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-100",
 			"name": "Safari 11",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-101",
 			"name": "Safari 12",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-102",
 			"name": "Safari 13",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-103",
 			"name": "Safari 8",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-104",
 			"name": "Safari Latest",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-002$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-105",
 			"name": "AWS Aurora 5.6.10a",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-106",
 			"name": "AWS Aurora 5.7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-107",
 			"name": "Any ",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-108",
 			"name": "Aurora MySQL 5.6",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-109",
 			"name": "Aurora MySQL 5.7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-110",
 			"name": "Hypersonic",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-111",
 			"name": "IBM DB2 10.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-112",
 			"name": "IBM DB2 10.5",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-113",
 			"name": "IBM DB2 11.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-114",
 			"name": "IBM DB2 11.5",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-115",
 			"name": "IBM DB2 9.7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-116",
 			"name": "Maria DB 10.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-117",
 			"name": "MariaDB 10.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-118",
 			"name": "MariaDB 10.0.18",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-119",
 			"name": "MariaDB 10.1.14",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-120",
 			"name": "MariaDB 10.1.8",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-121",
 			"name": "MariaDB 10.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-122",
 			"name": "MariaDB 10.4",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-123",
 			"name": "Microsoft SQL Server 2005",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-124",
 			"name": "Microsoft SQL Server 2008",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-125",
 			"name": "Microsoft SQL Server 2008 R2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-126",
 			"name": "Microsoft SQL Server 2008r2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-127",
 			"name": "Microsoft SQL Server 2012",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-128",
 			"name": "Microsoft SQL Server 2014",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-129",
 			"name": "Microsoft SQL Server 2016",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-130",
 			"name": "Microsoft SQL Server 2017",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-131",
 			"name": "Microsoft SQL Server 2019",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-132",
 			"name": "MySQL 5.5",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-133",
 			"name": "MySQL 5.6",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-134",
 			"name": "MySQL 5.7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-135",
 			"name": "MySQL 8.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-136",
 			"name": "Oracle 12c Release 2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-137",
 			"name": "Oracle ",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-138",
 			"name": "Oracle ",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-139",
 			"name": "Oracle ",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-140",
 			"name": "Oracle ",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-141",
 			"name": "Oracle ",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-142",
 			"name": "PostgreSQL 10",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-143",
 			"name": "PostgreSQL 10.3",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-144",
 			"name": "PostgreSQL 11",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-145",
 			"name": "PostgreSQL 12",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-146",
 			"name": "PostgreSQL 12.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-147",
 			"name": "PostgreSQL 13.4",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-148",
 			"name": "PostgreSQL 8.4",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-149",
 			"name": "PostgreSQL 9.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-150",
 			"name": "PostgreSQL 9.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-151",
 			"name": "PostgreSQL 9.3",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-152",
 			"name": "PostgreSQL 9.4",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-153",
 			"name": "PostgreSQL 9.6",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-154",
 			"name": "Sybase 15.5",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-155",
 			"name": "Sybase 15.7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-156",
 			"name": "Sybase 16.0",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-003$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-157",
 			"name": "Adopt OpenJDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-158",
 			"name": "Adopt OpenJDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-159",
 			"name": "AdoptOpenJDK8",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-160",
 			"name": "Any JDK",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-161",
 			"name": "Azul Open JDK 11",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-162",
 			"name": "Azul Zulu JDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-163",
 			"name": "Azul Zulu JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-164",
 			"name": "IBM J9 - OpenJDK8-OPENJ9",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-165",
 			"name": "IBM J9 2.6",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-166",
 			"name": "IBM J9 JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-167",
 			"name": "JRockit 1.6.0_24 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-168",
 			"name": "Java Adopt Open JDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-169",
 			"name": "Java Adopt Open JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-170",
 			"name": "Java IBM J9 JDK 8 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-171",
 			"name": "Java IBM J9 JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-172",
 			"name": "Java JDK 7 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-173",
 			"name": "Java JDK 7 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-174",
 			"name": "Java JDK 8 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-175",
 			"name": "Java Open JDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-176",
 			"name": "Java Open JDK 8 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-177",
 			"name": "Java Open JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-178",
 			"name": "Java Oracle JDK 7 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-179",
 			"name": "Java Oracle JDK 8 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-180",
 			"name": "Java Oracle JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-181",
 			"name": "Java Redhat Open JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-182",
 			"name": "Java Zulu Open JDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-183",
 			"name": "Java Zulu Open JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-184",
 			"name": "Open JDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-185",
 			"name": "Open JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-186",
 			"name": "Open JDK8",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-187",
 			"name": "Oracle JDK 11",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-188",
 			"name": "Oracle JDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-189",
 			"name": "Oracle JDK 6 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-190",
 			"name": "Oracle JDK 6 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-191",
 			"name": "Oracle JDK 7 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-192",
 			"name": "Oracle JDK 7 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-193",
 			"name": "Oracle JDK 8 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-194",
 			"name": "Oracle JDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-195",
 			"name": "Oracle Open JDK 11",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-196",
 			"name": "Red Hat OpenJDK 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-197",
 			"name": "Red Hat OpenJDK 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-004$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-198",
 			"name": "Liferay DXP 7.3 EP2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-005$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-199",
 			"name": "Liferay DXP 7.3 EP3",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-005$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-200",
 			"name": "Liferay DXP Fix Pack 13",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-005$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-201",
 			"name": "Google Chrome 18",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-006$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-202",
 			"name": "ASUS Nexus 7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-007$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-203",
 			"name": "Samsung Galaxy Nexus 7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-007$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-204",
 			"name": "iPad (3rd Generation)",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-007$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-205",
 			"name": "iPod Touch (4th Generation)",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-007$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-206",
 			"name": "Android 4.2.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-008$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-207",
 			"name": "Alpine Linux 3.10 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-208",
 			"name": "Alpine Linux 3.8",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-209",
 			"name": "Alpine Linux 3.8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-210",
 			"name": "Amazon Linux 2 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-211",
 			"name": "Any OS",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-212",
 			"name": "CentOS 5 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-213",
 			"name": "CentOS 6 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-214",
 			"name": "CentOS 6.7 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-215",
 			"name": "CentOS 7 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-216",
 			"name": "Debian 10",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-217",
 			"name": "Debian 6",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-218",
 			"name": "Debian 7 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-219",
 			"name": "Debian 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-220",
 			"name": "Debian 9 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-221",
 			"name": "IBM AIX 6.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-222",
 			"name": "IBM AIX 7.1",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-223",
 			"name": "IBM AIX 7.2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-224",
 			"name": "OSX 10.10 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-225",
 			"name": "OSX 10.12 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-226",
 			"name": "OSX 10.13 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-227",
 			"name": "OSX 12.2 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-228",
 			"name": "Oracle Linux 6 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-229",
 			"name": "Oracle Linux 7 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-230",
 			"name": "Oracle Linux 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-231",
 			"name": "Red Hat 8 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-232",
 			"name": "Red Hat Enterprise Linux 7",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-233",
 			"name": "SUSE 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-234",
 			"name": "SUSE 12 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-235",
 			"name": "SUSE 15",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-236",
 			"name": "SUSE 15 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-237",
 			"name": "SUSE Enterprise Linux 12 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-238",
 			"name": "Solaris 10 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-239",
 			"name": "Solaris 11 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-240",
 			"name": "Ubuntu 14 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-241",
 			"name": "Ubuntu 16 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-242",
 			"name": "Ubuntu 16.4 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-243",
 			"name": "Ubuntu 18 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-244",
 			"name": "Ubuntu 18.04",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-245",
 			"name": "Ubuntu 20 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-246",
 			"name": "Windows 10 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-247",
 			"name": "Windows 7 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-248",
 			"name": "Windows Server 2008",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-249",
 			"name": "Windows Server 2012",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-250",
 			"name": "Windows Server 2012 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-251",
 			"name": "Windows Server 2012 R2",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-252",
 			"name": "Windows Server 2012r2 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-253",
 			"name": "Windows Server 2016",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-254",
 			"name": "Windows Server 2016 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-255",
 			"name": "Windows Server 2019",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-256",
 			"name": "Windows Server 2019 64-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-257",
 			"name": "Windows XP 32-Bit",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-009$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-258",
 			"name": "DXP",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-011$]"
 		},
 		{
+			"externalReferenceCode": "TRFOPT-259",
 			"name": "Portal",
 			"r_factorCategoryToOptions_c_factorCategoryId": "[$FactorCategory#TRFCAT-011$]"
 		}

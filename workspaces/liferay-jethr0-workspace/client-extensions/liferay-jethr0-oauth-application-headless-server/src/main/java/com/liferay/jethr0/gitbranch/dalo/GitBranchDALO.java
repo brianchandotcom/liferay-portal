@@ -12,32 +12,28 @@
  * details.
  */
 
-package com.liferay.jethr0.gitbranch;
+package com.liferay.jethr0.gitbranch.dalo;
 
-import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.gitbranch.GitBranchFactory;
 
-import org.json.JSONObject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitBranchFactory extends BaseEntityFactory<GitBranch> {
+public class GitBranchDALO extends BaseEntityDALO<GitBranch> {
 
 	@Override
-	public String getEntityPluralLabel() {
-		return "Git Branches";
+	protected EntityFactory<GitBranch> getEntityFactory() {
+		return _gitBranchFactory;
 	}
 
-	@Override
-	public GitBranch newEntity(JSONObject jsonObject) {
-		return new DefaultGitBranch(jsonObject);
-	}
-
-	protected GitBranchFactory() {
-		super(GitBranch.class);
-	}
+	@Autowired
+	private GitBranchFactory _gitBranchFactory;
 
 }

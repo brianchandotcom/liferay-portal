@@ -1,0 +1,56 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-163716 - Verify it's not possible to apply the default value when updating an existing object entry"
+	@priority = 3
+	test CannotSetForExistingObjectEntry {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-163716 - Verify it's possible to create an object entry with the Picklist default value set via Expression Builder"
+	@priority = 5
+	test CanSetPicklistViaExpressionBuilder {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-163716 - Verify it's possible to create an object entry with the Picklist default value set via Input as Value"
+	@priority = 5
+	test CanSetPicklistViaInputAsValue {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "LPS-163716 - Verify updating the default value configuration for the Picklist field affects the object entries"
+	@priority = 4
+	test CanUpdateObjectEntryByUpdatingConfiguration {
+
+		// TODO pending implementation
+
+	}
+
+}

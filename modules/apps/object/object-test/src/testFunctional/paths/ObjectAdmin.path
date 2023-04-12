@@ -601,6 +601,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FORMULA_BUILDER_OPERATORS</td>
+		<td>//div[contains(@class, 'code-editor-sidebar')]//span[contains(text(), '${key_tabName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_SEARCHABLE_SECTION_ENABLED</td>
 		<td>//h3[(@class='lfr-objects__card-title') and text()='Searchable']/../..//label[contains(@class,'toggle-switch simple-toggle-switch')]</td>
 		<td></td>

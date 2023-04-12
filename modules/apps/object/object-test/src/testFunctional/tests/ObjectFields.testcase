@@ -2222,6 +2222,62 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
 	}
 
+	@description = "LPS-176828 - Verify that the Formula Builder has same structure as Expression Builder and contains only the principal math operations"
+	@priority = 5
+	test CanSeeAllOperations {
+		task ("Given a custom object with a formula field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176828",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects 176828");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176828");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Formula Field",
+				fieldType = "Formula",
+				formulaFieldOption = "Decimal");
+		}
+
+		task ("When using the Formula Builder for the formula field") {
+			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
+
+			Click(
+				key_text = "code",
+				locator1 = "Icon#ANY");
+		}
+
+		task ("Then the Formula Builder contains the principal math operations") {
+			AssertElementPresent(
+				key_tab = "Divided By",
+				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
+
+			AssertElementPresent(
+				key_tab = "Minus",
+				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
+
+			AssertElementPresent(
+				key_tab = "Plus",
+				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
+
+			AssertElementPresent(
+				key_tab = "Times",
+				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
+
+			AssertElementNotPresent(
+				key_userName = "And",
+				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
+
+			AssertElementNotPresent(
+				key_userName = "Or",
+				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
+		}
+	}
+
 	@description = "LPS-162177 - Verify the ERC element is included in Actions - Expression Builder"
 	@priority = 5
 	test CanSeeERCFieldOnActionSidebar {

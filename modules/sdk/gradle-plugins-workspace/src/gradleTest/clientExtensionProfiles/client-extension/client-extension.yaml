@@ -1,0 +1,6 @@
+assemble:
+    - include: foo.txt
+      into: static
+foo-client-extension:
+    key: foo
+    type: customElement

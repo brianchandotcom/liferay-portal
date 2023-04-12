@@ -17,18 +17,15 @@ package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -43,15 +40,9 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 	public boolean canTransformURL(File artifact) {
 		String name = artifact.getName();
 
-		if (name.endsWith(".war")) {
-			if (!_hasResources(artifact)) {
-				return true;
-			}
+		if (name.endsWith(".war") ||
+			(name.endsWith(".zip") && _isClientExtensionZip(artifact))) {
 
-			return true;
-		}
-
-		if (name.endsWith(".zip") && _isClientExtensionZip(artifact)) {
 			return true;
 		}
 
@@ -67,41 +58,6 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 
 	@Override
 	public void uninstall(File file) {
-	}
-
-	private boolean _hasResources(File artifact) {
-		try (ZipFile zipFile = new ZipFile(artifact)) {
-			if ((zipFile.getEntry("WEB-INF/classes/resources-importer/") !=
-					null) ||
-				(zipFile.getEntry("WEB-INF/classes/templates-importer/") !=
-					null)) {
-
-				return true;
-			}
-
-			ZipEntry zipEntry = zipFile.getEntry(
-				"WEB-INF/liferay-plugin-package.properties");
-
-			if (zipEntry == null) {
-				return false;
-			}
-
-			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
-				Properties properties = new Properties();
-
-				properties.load(inputStream);
-
-				return Validator.isNotNull(
-					properties.getProperty("resources-importer-external-dir"));
-			}
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to check if  " + artifact + " has resources",
-				ioException);
-		}
-
-		return false;
 	}
 
 	private boolean _isClientExtensionZip(File artifact) {

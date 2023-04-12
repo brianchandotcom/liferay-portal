@@ -114,7 +114,6 @@ export default function MoveModal({
 				handleSearchChange={handleSearchChange}
 				items={searchItems}
 			/>
-
 			{!searchActive && (
 				<ClayTreeView
 					defaultItems={items}

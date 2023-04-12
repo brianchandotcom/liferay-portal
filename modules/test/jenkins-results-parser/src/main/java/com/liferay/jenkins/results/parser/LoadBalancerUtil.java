@@ -80,22 +80,20 @@ public class LoadBalancerUtil {
 			}
 		}
 
-		if (clock) {
-			List<String> goodClockList = _getGoodClockList(properties, verbose);
-		}
-
 		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
 			allJenkinsMasters.size());
 
+		List<String> goodClockList = _getGoodClockList(properties, verbose);
+			
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
 			if (blacklist.contains(jenkinsMaster.getName()) ||
-				(clock && !goodClockList.contains(jenkinsMaster.getName())) ||
-				(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
-				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
-
+			(clock && !goodClockList.contains(jenkinsMaster.getName())) ||
+			(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
+			(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
+				
 				continue;
 			}
-
+			
 			availableJenkinsMasters.add(jenkinsMaster);
 		}
 
@@ -158,7 +156,7 @@ public class LoadBalancerUtil {
 				}
 
 				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
-					masterPrefix, blacklistString, clock, minimumRAM,
+					masterPrefix, blacklistString, minimumRAM,
 					maximumSlavesPerHost, properties, verbose);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(

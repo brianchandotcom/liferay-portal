@@ -15,7 +15,6 @@
 package com.liferay.jethr0;
 
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectFactory;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 
@@ -45,11 +44,8 @@ public class Jethr0RestController {
 
 		requestJSONObject.put("state", Project.State.OPENED.getJSONObject());
 
-		Project project = _projectFactory.newEntity(requestJSONObject);
-
-		_projectRepository.add(project);
-
-		return new ResponseEntity<>(project, HttpStatus.CREATED);
+		return new ResponseEntity<>(
+			_projectRepository.add(requestJSONObject), HttpStatus.CREATED);
 	}
 
 	@PostMapping(
@@ -72,9 +68,6 @@ public class Jethr0RestController {
 
 		return new ResponseEntity<>(project, HttpStatus.CREATED);
 	}
-
-	@Autowired
-	private ProjectFactory _projectFactory;
 
 	@Autowired
 	private ProjectQueue _projectQueue;

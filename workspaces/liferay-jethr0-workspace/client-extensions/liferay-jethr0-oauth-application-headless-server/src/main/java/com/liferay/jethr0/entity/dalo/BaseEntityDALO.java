@@ -46,6 +46,11 @@ public abstract class BaseEntityDALO<T extends Entity>
 	implements EntityDALO<T> {
 
 	@Override
+	public T create(JSONObject jsonObject) {
+		return create(newEntity(jsonObject));
+	}
+
+	@Override
 	public T create(T entity) {
 		JSONObject responseJSONObject = _create(entity.getJSONObject());
 

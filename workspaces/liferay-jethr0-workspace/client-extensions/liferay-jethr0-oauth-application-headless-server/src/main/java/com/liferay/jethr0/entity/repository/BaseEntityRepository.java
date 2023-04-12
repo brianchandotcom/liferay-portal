@@ -26,11 +26,20 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class BaseEntityRepository<T extends Entity>
 	implements EntityRepository<T> {
+
+	@Override
+	public T add(JSONObject jsonObject) {
+		EntityDALO<T> entityDALO = getEntityDALO();
+
+		return add(entityDALO.create(jsonObject));
+	}
 
 	@Override
 	public T add(T entity) {

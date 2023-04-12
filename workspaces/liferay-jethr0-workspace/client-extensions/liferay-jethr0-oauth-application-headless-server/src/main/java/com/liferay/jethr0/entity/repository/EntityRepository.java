@@ -19,10 +19,14 @@ import com.liferay.jethr0.entity.dalo.EntityDALO;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public interface EntityRepository<T extends Entity> {
+
+	public T add(JSONObject jsonObject);
 
 	public T add(T entity);
 

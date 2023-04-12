@@ -202,8 +202,10 @@ public class NavItemUtil {
 							rootLayoutUuid, layout.getGroupId(), true);
 				}
 
-				rootNavItem = new NavItem(
-					httpServletRequest, themeDisplay, rootLayout);
+				if (rootLayout != null) {
+					rootNavItem = new NavItem(
+						httpServletRequest, themeDisplay, rootLayout);
+				}
 			}
 			else {
 				navItems = _fromLayouts(

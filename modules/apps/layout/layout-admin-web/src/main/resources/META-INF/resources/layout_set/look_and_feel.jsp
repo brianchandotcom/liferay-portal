@@ -18,22 +18,24 @@
 
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
-%>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="look-and-feel"
-/>
-
-<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />
-
-<aui:input name="devices" type="hidden" value="regular" />
-
-<%
 List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
 %>
 
-<div class="mt-5">
+<clay:sheet-section
+	cssClass="mb-5"
+>
+	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="customization" /></h3>
+
+	<liferay-ui:error-marker
+		key="<%= WebKeys.ERROR_SECTION %>"
+		value="look-and-feel"
+	/>
+
+	<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />
+
+	<aui:input name="devices" type="hidden" value="regular" />
+
 	<clay:tabs
 		tabsItems="<%= tabsItems %>"
 	>
@@ -51,4 +53,4 @@ List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
 		%>
 
 	</clay:tabs>
-</div>
+</clay:sheet-section>

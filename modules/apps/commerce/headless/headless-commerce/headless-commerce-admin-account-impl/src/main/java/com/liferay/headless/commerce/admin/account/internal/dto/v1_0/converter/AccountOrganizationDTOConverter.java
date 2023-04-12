@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "dto.class.name=com.liferay.account.model.impl.AccountEntryOrganizationRel",
+	property = "dto.class.name=com.liferay.account.model.AccountEntryOrganizationRel",
 	service = DTOConverter.class
 )
 public class AccountOrganizationDTOConverter

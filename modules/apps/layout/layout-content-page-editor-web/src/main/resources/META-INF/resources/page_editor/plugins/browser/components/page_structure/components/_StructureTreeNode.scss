@@ -5,8 +5,8 @@ $treeNodeNameMappedColor: #954cff;
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__page-structure__clay-tree-node {
-			width: initial;
 			min-width: 100%;
+			width: initial;
 
 			&.treeview-link {
 				width: fit-content;

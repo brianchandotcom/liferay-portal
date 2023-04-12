@@ -1,5 +1,23 @@
 import gql from 'graphql-tag';
-import {AUDIENCE_REPORT_FRAGMENT} from 'shared/queries/fragments';
+
+const AudienceReportFragment = gql`
+	fragment audienceReportFragment on Metric {
+		audienceReport {
+			anonymousUsersCount
+			knownUsersCount
+			nonsegmentedKnownUsersCount
+			segmentedAnonymousUsersCount
+			segmentedKnownUsersCount
+		}
+		segment {
+			metrics {
+				value
+				valueKey
+			}
+			total
+		}
+	}
+`;
 
 export const PageAudienceReportQuery = ({metricName, name}) => gql`
 	query ${name}AudienceReportQuery(
@@ -28,7 +46,7 @@ export const PageAudienceReportQuery = ({metricName, name}) => gql`
 		}
 	}
 
-	${AUDIENCE_REPORT_FRAGMENT}
+	${AudienceReportFragment}
 `;
 
 export const AssetAudienceReportQuery = ({metricName, name}) => gql`
@@ -63,5 +81,5 @@ export const AssetAudienceReportQuery = ({metricName, name}) => gql`
 		}
 	}
 
-	${AUDIENCE_REPORT_FRAGMENT}
+	${AudienceReportFragment}
 `;

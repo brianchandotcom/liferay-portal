@@ -1,5 +1,4 @@
 import {
-	AUDIENCE_REPORT_FRAGMENT,
 	BROWSER_FRAGMENT,
 	DEVICE_FRAGMENT,
 	GEOLOCATION_FRAGMENT,
@@ -43,7 +42,6 @@ export default gql`
 				...metricFragment
 			}
 			viewsMetric {
-				...audienceReportFragment
 				...browserFragment
 				...deviceFragment
 				...geolocationFragment
@@ -55,7 +53,6 @@ export default gql`
 		}
 	}
 
-	${AUDIENCE_REPORT_FRAGMENT}
 	${BROWSER_FRAGMENT}
 	${DEVICE_FRAGMENT}
 	${GEOLOCATION_FRAGMENT}

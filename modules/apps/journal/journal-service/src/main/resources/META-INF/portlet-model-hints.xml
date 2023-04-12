@@ -108,6 +108,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="DDMStructureId" type="long" />
 		<field name="DDMStructureKey" type="String" />
 		<field name="DDMTemplateKey" type="String" />
 		<field name="DDMRendererTemplateKey" type="String" />

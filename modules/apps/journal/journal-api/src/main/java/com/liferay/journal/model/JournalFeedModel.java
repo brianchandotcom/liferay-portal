@@ -284,6 +284,20 @@ public interface JournalFeedModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the ddm structure ID of this journal feed.
+	 *
+	 * @return the ddm structure ID of this journal feed
+	 */
+	public long getDDMStructureId();
+
+	/**
+	 * Sets the ddm structure ID of this journal feed.
+	 *
+	 * @param DDMStructureId the ddm structure ID of this journal feed
+	 */
+	public void setDDMStructureId(long DDMStructureId);
+
+	/**
 	 * Returns the ddm structure key of this journal feed.
 	 *
 	 * @return the ddm structure key of this journal feed

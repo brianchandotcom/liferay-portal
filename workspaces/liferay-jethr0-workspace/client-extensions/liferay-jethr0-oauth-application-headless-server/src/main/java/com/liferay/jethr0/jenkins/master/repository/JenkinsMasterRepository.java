@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.jethr0.jenkins.master;
+package com.liferay.jethr0.jenkins.master.repository;
 
-import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.jenkins.master.JenkinsMaster;
+import com.liferay.jethr0.jenkins.master.dalo.JenkinsMasterDALO;
 
-import org.json.JSONObject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsMasterFactory extends BaseEntityFactory<JenkinsMaster> {
+public class JenkinsMasterRepository
+	extends BaseEntityRepository<JenkinsMaster> {
 
 	@Override
-	public JenkinsMaster newEntity(JSONObject jsonObject) {
-		return new DefaultJenkinsMaster(jsonObject);
+	public JenkinsMasterDALO getEntityDALO() {
+		return _jenkinsMasterDALO;
 	}
 
-	protected JenkinsMasterFactory() {
-		super(JenkinsMaster.class);
-	}
+	@Autowired
+	private JenkinsMasterDALO _jenkinsMasterDALO;
 
 }

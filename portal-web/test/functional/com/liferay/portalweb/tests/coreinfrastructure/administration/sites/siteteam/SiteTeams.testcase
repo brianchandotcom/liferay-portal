@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 	}
 
 	tearDown {
@@ -478,7 +478,7 @@ definition {
 		property testray.component.names = "Permissions,Sites Administration";
 
 		task ("Add a site team and a public page basing on Search page template") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -633,7 +633,7 @@ definition {
 		property testray.component.names = "Sites Administration,XSS";
 
 		task ("Add a site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a site team with alert") {

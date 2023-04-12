@@ -17,7 +17,7 @@ definition {
 		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = ${privateLayout});
 		var layoutSetPrototypeUuid = JSONSiteTemplateAPI._getSiteTemplateUuidByName(siteTemplateName = ${siteTemplateName});
 
-		JSONGroup.addGroup(groupName = ${groupName});
+		HeadlessSite.addSite(siteName = ${groupName});
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 

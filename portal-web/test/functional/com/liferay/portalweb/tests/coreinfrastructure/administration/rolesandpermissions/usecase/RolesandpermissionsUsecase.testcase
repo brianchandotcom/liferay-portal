@@ -192,7 +192,7 @@ definition {
 		}
 
 		task ("Add the DM portlet with a file to a public page on a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -410,7 +410,7 @@ definition {
 	@description = "This is a use case for LPS-124190."
 	@priority = 3
 	test ExportRoleWithSiteAssignee {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONRole.addRegularRole(
 			roleKey = "Web Content Comment Reviewer",

@@ -69,7 +69,7 @@ definition {
 	@description = "This is a use case for LPS-95340."
 	@priority = 4
 	test AddUserAfterPublishContentPageWithAP {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -1542,7 +1542,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		User.openUsersAdmin();
 
@@ -2826,7 +2826,7 @@ definition {
 			emailAddress = "test@liferay.com",
 			emailSenderName = "Joe Bloggs");
 
-		JSONGroup.addGroup(groupName = "My Site");
+		HeadlessSite.addSite(siteName = "My Site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "My Site",

@@ -202,7 +202,7 @@ definition {
 	test AssignRoleToUsersOfDifferentSites {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Site Name 1");
+		HeadlessSite.addSite(siteName = "Site Name 1");
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
@@ -357,7 +357,7 @@ definition {
 			userGroupDescription = "UG User Group Description",
 			userGroupName = "UG User Group");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONGroup.assignUserGroupToGroup(
 			groupName = "Site Name",
@@ -520,7 +520,7 @@ definition {
 
 		UserGroup.assignAllMembersCP(userGroupName = "UG UserGroup Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

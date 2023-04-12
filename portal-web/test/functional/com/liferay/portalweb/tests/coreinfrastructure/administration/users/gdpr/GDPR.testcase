@@ -299,7 +299,7 @@ definition {
 	@description = "This test anonymizes all staged data from an application, test with DM entries."
 	@priority = 3
 	test CanAnonymizeAllStagedDataFromDM {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -472,7 +472,7 @@ definition {
 	@priority = 3
 	test CanAnonymizeASingleStagedAndLiveWebContentEntry {
 		task ("Given Publish the staged web content entries to live as a new admin user") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -909,7 +909,7 @@ definition {
 	@description = "This test deletes all entries when filtered by Regular Sites scope"
 	@priority = 4
 	test CanDeleteAllEntriesFromRegularSitesScope {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -953,7 +953,7 @@ definition {
 	@description = "This test deletes multiple staged data from an application, tests with Blogs and DM entries."
 	@priority = 3
 	test CanDeleteAllStagedDataFromAnApplication {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1248,7 +1248,7 @@ definition {
 		property test.name.skip.portal.instance = "GDPR#CanDeleteASingleStagedAndLiveBlogsEntry";
 
 		task ("Given Publish the staged blogs entries to live as a new admin user") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -1874,7 +1874,7 @@ definition {
 	@priority = 3
 	test CanPublishToLiveADeletedLiveEntry {
 		task ("Given add staged entry with related asset and publish to live this entry.") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",

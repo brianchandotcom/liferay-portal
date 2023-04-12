@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("Add CP") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add user group CP") {

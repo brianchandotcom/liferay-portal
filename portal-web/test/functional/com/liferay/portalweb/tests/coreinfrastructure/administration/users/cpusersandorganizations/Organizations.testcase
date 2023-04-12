@@ -1135,7 +1135,7 @@ definition {
 	@priority = 3
 	test OrganizationDropDownItems {
 		for (var siteName : list "Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 		}
 
 		ApplicationsMenu.gotoPortlet(

@@ -165,7 +165,7 @@ definition {
 		task ("Given: Create a site page with a Cookies Banner Configuration widget and add a new virtual host as SiteURL") {
 			CookieBanner.cookiesBannerDeclineAll();
 
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet(groupName = "Site Name");
 

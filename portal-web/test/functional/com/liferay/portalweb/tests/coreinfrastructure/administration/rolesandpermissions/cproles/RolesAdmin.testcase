@@ -272,7 +272,7 @@ definition {
 					userLastName = "user${userNum}",
 					userScreenName = "user${userNum}");
 
-				JSONGroup.addGroup(groupName = "Site${userNum}");
+				HeadlessSite.addSite(siteName = "Site${userNum}");
 
 				JSONGroup.assignUserToGroup(
 					groupName = "Site${userNum}",
@@ -647,7 +647,7 @@ definition {
 	test SiteCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -914,7 +914,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		User.openUsersAdmin();
 

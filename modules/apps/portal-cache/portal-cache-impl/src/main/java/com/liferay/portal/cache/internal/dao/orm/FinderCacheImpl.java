@@ -87,7 +87,7 @@ public class FinderCacheImpl
 		_clearCache(_getCacheNameWithPagination(className));
 		_clearCache(_getCacheNameWithoutPagination(className));
 
-		_clearDSLQueryCache(className);
+		clearDSLQueryCache(className);
 	}
 
 	@Override
@@ -364,7 +364,7 @@ public class FinderCacheImpl
 		_clearCache(_getCacheNameWithPagination(className));
 		_clearCache(_getCacheNameWithoutPagination(className));
 
-		_clearDSLQueryCache(className);
+		clearDSLQueryCache(className);
 
 		for (FinderPath finderPath : _getFinderPaths(className)) {
 			removeResult(
@@ -440,7 +440,7 @@ public class FinderCacheImpl
 
 		_clearCache(_getCacheNameWithPagination(className));
 
-		_clearDSLQueryCache(className);
+		clearDSLQueryCache(className);
 
 		Set<FinderPath> finderPaths = new HashSet<>();
 

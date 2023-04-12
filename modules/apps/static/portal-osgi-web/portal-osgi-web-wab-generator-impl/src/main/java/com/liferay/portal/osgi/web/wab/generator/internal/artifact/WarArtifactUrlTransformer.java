@@ -29,7 +29,6 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -40,10 +39,6 @@ import java.util.zip.ZipFile;
  */
 public class WarArtifactUrlTransformer implements FileInstaller {
 
-	public WarArtifactUrlTransformer(AtomicBoolean portalIsReady) {
-		_portalIsReady = portalIsReady;
-	}
-
 	@Override
 	public boolean canTransformURL(File artifact) {
 		String name = artifact.getName();
@@ -53,7 +48,7 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 				return true;
 			}
 
-			return _portalIsReady.get();
+			return true;
 		}
 
 		if (name.endsWith(".zip") && _isClientExtensionZip(artifact)) {
@@ -140,7 +135,5 @@ public class WarArtifactUrlTransformer implements FileInstaller {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WarArtifactUrlTransformer.class);
-
-	private final AtomicBoolean _portalIsReady;
 
 }

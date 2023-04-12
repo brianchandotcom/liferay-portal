@@ -14,46 +14,24 @@
 
 package com.liferay.jethr0.task.run;
 
-import com.liferay.jethr0.task.Task;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
 import org.json.JSONObject;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class TaskRunFactory {
+@Configuration
+public class TaskRunFactory extends BaseEntityFactory<TaskRun> {
 
-	public static TaskRun newTaskRun(Task task, JSONObject jsonObject) {
-		long id = jsonObject.getLong("id");
-
-		TaskRun taskRun = null;
-
-		synchronized (_taskRuns) {
-			if (_taskRuns.containsKey(id)) {
-				return _taskRuns.get(id);
-			}
-
-			taskRun = new DefaultTaskRun(task, jsonObject);
-
-			_taskRuns.put(taskRun.getId(), taskRun);
-		}
-
-		return taskRun;
+	@Override
+	public TaskRun newEntity(JSONObject jsonObject) {
+		return new DefaultTaskRun(jsonObject);
 	}
 
-	public static void removeTaskRun(TaskRun taskRun) {
-		if (taskRun == null) {
-			return;
-		}
-
-		synchronized (_taskRuns) {
-			_taskRuns.remove(taskRun.getId());
-		}
+	protected TaskRunFactory() {
+		super(TaskRun.class);
 	}
-
-	private static final Map<Long, TaskRun> _taskRuns = new HashMap<>();
 
 }

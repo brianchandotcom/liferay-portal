@@ -14,8 +14,6 @@
 
 package com.liferay.jethr0.task.run;
 
-import com.liferay.jethr0.task.Task;
-
 import org.json.JSONObject;
 
 /**
@@ -23,8 +21,8 @@ import org.json.JSONObject;
  */
 public class DefaultTaskRun extends BaseTaskRun {
 
-	protected DefaultTaskRun(Task task, JSONObject jsonObject) {
-		super(task, jsonObject);
+	protected DefaultTaskRun(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 }

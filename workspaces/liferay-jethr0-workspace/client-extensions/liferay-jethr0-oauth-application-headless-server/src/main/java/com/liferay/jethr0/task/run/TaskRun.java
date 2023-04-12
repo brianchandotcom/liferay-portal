@@ -37,6 +37,8 @@ public interface TaskRun extends Entity {
 
 	public void setResult(Result result);
 
+	public void setTask(Task task);
+
 	public enum Result {
 
 		FAILED("failed"), PASSED("passed");

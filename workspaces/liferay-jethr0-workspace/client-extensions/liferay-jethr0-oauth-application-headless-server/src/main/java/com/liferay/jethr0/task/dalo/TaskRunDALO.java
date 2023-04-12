@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.jethr0.environment;
+package com.liferay.jethr0.task.dalo;
 
-import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.task.run.TaskRun;
+import com.liferay.jethr0.task.run.TaskRunFactory;
 
-import org.json.JSONObject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
-public class EnvironmentFactory extends BaseEntityFactory<Environment> {
+public class TaskRunDALO extends BaseEntityDALO<TaskRun> {
 
 	@Override
-	public Environment newEntity(JSONObject jsonObject) {
-		return new DefaultEnvironment(jsonObject);
+	protected EntityFactory<TaskRun> getEntityFactory() {
+		return _taskRunFactory;
 	}
 
-	protected EnvironmentFactory() {
-		super(Environment.class);
-	}
+	@Autowired
+	private TaskRunFactory _taskRunFactory;
 
 }

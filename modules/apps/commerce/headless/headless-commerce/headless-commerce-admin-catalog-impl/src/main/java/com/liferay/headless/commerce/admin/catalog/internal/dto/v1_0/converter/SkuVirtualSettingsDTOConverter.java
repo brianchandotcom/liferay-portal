@@ -18,11 +18,12 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettings;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Status;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.journal.model.JournalArticle;
@@ -40,23 +41,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(
-	property = "dto.class.name=com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettings",
-	service = {DTOConverter.class, ProductVirtualSettingsDTOConverter.class}
+	property = "dto.class.name=com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettings",
+	service = {DTOConverter.class, SkuVirtualSettingsDTOConverter.class}
 )
-public class ProductVirtualSettingsDTOConverter
-	implements DTOConverter<CPDefinition, ProductVirtualSettings> {
+public class SkuVirtualSettingsDTOConverter
+	implements DTOConverter<CPInstance, SkuVirtualSettings> {
 
 	@Override
 	public String getContentType() {
-		return ProductVirtualSettings.class.getSimpleName();
+		return SkuVirtualSettings.class.getSimpleName();
 	}
 
 	@Override
-	public ProductVirtualSettings toDTO(DTOConverterContext dtoConverterContext)
+	public SkuVirtualSettings toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(
 			(Long)dtoConverterContext.getId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		if (!VirtualCPTypeConstants.NAME.equals(
 				cpDefinition.getProductTypeName())) {
@@ -66,19 +69,20 @@ public class ProductVirtualSettingsDTOConverter
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			_cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSetting(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+				CPInstance.class.getName(), cpInstance.getCPInstanceId());
 
 		if (cpDefinitionVirtualSetting == null) {
 			return null;
 		}
 
-		return new ProductVirtualSettings() {
+		return new SkuVirtualSettings() {
 			{
 				activationStatus =
 					cpDefinitionVirtualSetting.getActivationStatus();
 				duration = TimeUnit.MILLISECONDS.toDays(
 					cpDefinitionVirtualSetting.getDuration());
 				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
+				override = cpDefinitionVirtualSetting.isOverride();
 				sampleUrl = cpDefinitionVirtualSetting.getSampleUrl();
 				termsOfUseContent = LanguageUtils.getLanguageIdMap(
 					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
@@ -117,8 +121,8 @@ public class ProductVirtualSettingsDTOConverter
 
 						return _commerceMediaResolver.
 							getDownloadVirtualProductSampleURL(
-								CPDefinition.class.getName(),
-								cpDefinition.getCPDefinitionId(),
+								CPInstance.class.getName(),
+								cpInstance.getCPInstanceId(),
 								CommerceAccountConstants.ACCOUNT_ID_ADMIN,
 								fileEntry.getFileEntryId());
 					});
@@ -133,8 +137,8 @@ public class ProductVirtualSettingsDTOConverter
 
 						return _commerceMediaResolver.
 							getDownloadVirtualProductURL(
-								CPDefinition.class.getName(),
-								cpDefinition.getCPDefinitionId(),
+								CPInstance.class.getName(),
+								cpInstance.getCPInstanceId(),
 								CommerceAccountConstants.ACCOUNT_ID_ADMIN,
 								fileEntry.getFileEntryId());
 					});
@@ -158,11 +162,11 @@ public class ProductVirtualSettingsDTOConverter
 	private CommerceMediaResolver _commerceMediaResolver;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
 	private CPDefinitionVirtualSettingService
 		_cpDefinitionVirtualSettingService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private Language _language;

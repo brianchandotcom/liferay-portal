@@ -28,30 +28,36 @@ if (!virtualHostnames.containsKey(PortalUtil.getHost(request))) {
 }
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="siteMap"
-/>
-
-<liferay-util:buffer
-	var="linkContent"
+<clay:sheet-section
+	cssClass="mb-5"
 >
-	<aui:a href="http://www.sitemaps.org" target="_blank">http://www.sitemaps.org</aui:a>
-</liferay-util:buffer>
+	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="sitemap" /></h3>
 
-<div class="text-muted">
-	<liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" translateArguments="<%= false %>" />
+	<liferay-ui:error-marker
+		key="<%= WebKeys.ERROR_SECTION %>"
+		value="siteMap"
+	/>
 
-	<br /><br />
+	<liferay-util:buffer
+		var="linkContent"
+	>
+		<aui:a href="http://www.sitemaps.org" target="_blank">http://www.sitemaps.org</aui:a>
+	</liferay-util:buffer>
 
-	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"}, false) %>
+	<div class="text-muted">
+		<liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" translateArguments="<%= false %>" />
 
-	<ul>
-		<li>
-			<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Google</aui:a>
-		</li>
-		<li>
-			<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-log-in" />)
-		</li>
-	</ul>
-</div>
+		<br /><br />
+
+		<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"}, false) %>
+
+		<ul>
+			<li>
+				<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Google</aui:a>
+			</li>
+			<li>
+				<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-log-in" />)
+			</li>
+		</ul>
+	</div>
+</clay:sheet-section>

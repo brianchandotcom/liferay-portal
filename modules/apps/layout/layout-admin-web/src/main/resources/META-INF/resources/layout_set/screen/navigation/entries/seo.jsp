@@ -62,6 +62,12 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<h2 class="sheet-title"><liferay-ui:message key="seo" /></h2>
 
 	<liferay-frontend:edit-form-body>
+		<liferay-util:include page="/layout_set/robots.jsp" servletContext="<%= application %>" />
+
+		<hr class="mb-5 separator" />
+
+		<liferay-util:include page="/layout_set/sitemap.jsp" servletContext="<%= application %>" />
+
 		<liferay-frontend:form-navigator
 			formModelBean="<%= selLayoutSet %>"
 			id="<%= LayoutAdminFormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET_SEO %>"

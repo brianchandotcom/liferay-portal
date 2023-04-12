@@ -22,18 +22,24 @@ LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 String virtualHostname = layoutsAdminDisplayContext.getVirtualHostname();
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="robots"
-/>
+<clay:sheet-section
+	cssClass="mb-5"
+>
+	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="robots" /></h3>
 
-<c:choose>
-	<c:when test="<%= Validator.isNotNull(virtualHostname) %>">
-		<aui:input helpMessage="robots-txt-help" label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="please-set-the-virtual-host-before-you-set-the-robots-txt" />
-		</div>
-	</c:otherwise>
-</c:choose>
+	<liferay-ui:error-marker
+		key="<%= WebKeys.ERROR_SECTION %>"
+		value="robots"
+	/>
+
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(virtualHostname) %>">
+			<aui:input helpMessage="robots-txt-help" label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
+		</c:when>
+		<c:otherwise>
+			<div class="alert alert-info">
+				<liferay-ui:message key="please-set-the-virtual-host-before-you-set-the-robots-txt" />
+			</div>
+		</c:otherwise>
+	</c:choose>
+</clay:sheet-section>

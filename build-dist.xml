@@ -2606,7 +2606,7 @@ plugins.includes=</echo>
 		</antelope:stringutil>
 
 		<if>
-			<available file="${zip.executable.dir}/../data" />
+			<available file="${zip.executable.dir}/../osgi" />
 			<then>
 				<copy
 					preservelastmodified="true"
@@ -2649,14 +2649,19 @@ plugins.includes=</echo>
 					/>
 				</copy>
 
-				<copy
-					preservelastmodified="true"
-					todir="dist/${tstamp.value}/liferay-portal-${lp.version}/data"
-				>
-					<fileset
-						dir="${zip.executable.dir}/../data"
-					/>
-				</copy>
+				<if>
+					<available file="${zip.executable.dir}/../data" />
+					<then>
+						<copy
+							preservelastmodified="true"
+							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/data"
+						>
+							<fileset
+								dir="${zip.executable.dir}/../data"
+							/>
+						</copy>
+					</then>
+				</if>
 
 				<if>
 					<available file="${zip.executable.dir}/../deploy" />

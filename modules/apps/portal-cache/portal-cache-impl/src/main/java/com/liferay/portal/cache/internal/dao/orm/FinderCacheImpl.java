@@ -523,6 +523,8 @@ public class FinderCacheImpl
 		Set<String> dslQueryCacheNames = _dslQueryCacheNamesMap.get(tableName);
 
 		if (dslQueryCacheNames != null) {
+			clearLocalCache();
+
 			for (String dslQueryCacheName : dslQueryCacheNames) {
 				_clearCache(dslQueryCacheName);
 			}

@@ -44,7 +44,7 @@ public class CommerceTaxMethodDetailScreenNavigationCategory
 		return language.get(
 			locale,
 			CommerceTaxScreenNavigationConstants.
-				ENTRY_KEY_COMMERCE_TAX_METHOD_DETAIL);
+				CATEGORY_KEY_COMMERCE_TAX_METHOD_DETAIL);
 	}
 
 	@Override

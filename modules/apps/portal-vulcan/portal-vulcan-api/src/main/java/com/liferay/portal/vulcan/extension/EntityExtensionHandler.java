@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.internal.extension;
+package com.liferay.portal.vulcan.extension;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.vulcan.extension.ExtensionProvider;
-import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
 
 import java.io.Serializable;

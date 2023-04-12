@@ -15,9 +15,9 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.resolver;
 
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
-import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
-import com.liferay.portal.vulcan.internal.extension.util.ExtensionUtil;
+import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.ContextResolver;

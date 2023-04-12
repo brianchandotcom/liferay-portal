@@ -26,6 +26,7 @@ import com.liferay.object.exception.ObjectFieldListTypeDefinitionIdException;
 import com.liferay.object.exception.ObjectFieldLocalizedException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
+import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
@@ -138,7 +139,8 @@ public class ObjectFieldLocalServiceImpl
 					dbTableName, objectField.getDBColumnName(), dbType));
 		}
 
-		_addOrUpdateObjectFieldSettings(objectField, null, objectFieldSettings);
+		_addOrUpdateObjectFieldSettings(
+			objectDefinition, objectField, null, objectFieldSettings);
 
 		return objectField;
 	}
@@ -610,7 +612,8 @@ public class ObjectFieldLocalServiceImpl
 			newObjectField = objectFieldPersistence.update(newObjectField);
 
 			_addOrUpdateObjectFieldSettings(
-				newObjectField, oldObjectField, objectFieldSettings);
+				objectDefinition, newObjectField, oldObjectField,
+				objectFieldSettings);
 
 			return newObjectField;
 		}
@@ -627,7 +630,8 @@ public class ObjectFieldLocalServiceImpl
 		newObjectField = objectFieldPersistence.update(newObjectField);
 
 		_addOrUpdateObjectFieldSettings(
-			newObjectField, oldObjectField, objectFieldSettings);
+			objectDefinition, newObjectField, oldObjectField,
+			objectFieldSettings);
 
 		return newObjectField;
 	}
@@ -734,7 +738,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _addOrUpdateObjectFieldSettings(
-			ObjectField newObjectField, ObjectField oldObjectField,
+			ObjectDefinition objectDefinition, ObjectField newObjectField,
+			ObjectField oldObjectField,
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
@@ -744,6 +749,9 @@ public class ObjectFieldLocalServiceImpl
 
 		objectFieldBusinessType.validateObjectFieldSettings(
 			newObjectField, objectFieldSettings);
+
+		Set<String> unmodifiablObjectFieldSettingsNames =
+			objectFieldBusinessType.getUnmodifiablObjectFieldSettingsNames();
 
 		for (ObjectFieldSetting oldObjectFieldSetting :
 				_objectFieldSettingPersistence.findByObjectFieldId(
@@ -765,6 +773,14 @@ public class ObjectFieldLocalServiceImpl
 			}
 
 			if (objectFieldSetting == null) {
+				if (objectDefinition.isApproved() &&
+					unmodifiablObjectFieldSettingsNames.contains(
+						oldObjectFieldSetting.getName())) {
+
+					throw new ObjectFieldSettingValueException.
+						UnmodifiableValue(oldObjectFieldSetting.getName());
+				}
+
 				_objectFieldSettingLocalService.deleteObjectFieldSetting(
 					oldObjectFieldSetting.getObjectFieldSettingId());
 			}
@@ -778,6 +794,18 @@ public class ObjectFieldLocalServiceImpl
 				_objectFieldSettingPersistence.fetchByOFI_N(
 					newObjectField.getObjectFieldId(),
 					newObjectFieldSetting.getName());
+
+			if (objectDefinition.isApproved() && (oldObjectField != null) &&
+				unmodifiablObjectFieldSettingsNames.contains(
+					newObjectFieldSetting.getName()) &&
+				((oldObjectFieldSetting == null) ||
+				 !StringUtil.equalsIgnoreCase(
+					 oldObjectFieldSetting.getValue(),
+					 newObjectFieldSetting.getValue()))) {
+
+				throw new ObjectFieldSettingValueException.UnmodifiableValue(
+					newObjectFieldSetting.getName());
+			}
 
 			ObjectFieldSettingContributor objectFieldSettingContributor =
 				_objectFieldSettingContributorRegistry.

@@ -15,6 +15,11 @@
 import {StatusBadgeType} from '../../components/StatusBadge/StatusBadge';
 import {DescriptionType} from '../../types';
 
+export type ActionPermissionProperties = {
+	href: string;
+	method: string;
+};
+
 type Facets = {
 	facetCriteria: string;
 	facetValues: {
@@ -27,8 +32,15 @@ export type FacetAggregation = {
 	facets: Facets[];
 };
 
+type ObjectActions = {
+	create?: ActionPermissionProperties;
+	createBatch?: ActionPermissionProperties;
+	deleteBatch?: ActionPermissionProperties;
+	updateBatch?: ActionPermissionProperties;
+};
+
 export type APIResponse<Query = any> = {
-	actions: Object;
+	actions: ObjectActions;
 	facets: Facets[];
 	items: Query[];
 	lastPage: number;
@@ -53,10 +65,7 @@ export type UserGroup = {
 	id: number;
 	name: string;
 };
-export type ActionPermissionProperties = {
-	href: string;
-	method: string;
-};
+
 export type UserActions = {
 	'delete-user-account': ActionPermissionProperties;
 	'get-my-user-account': ActionPermissionProperties;

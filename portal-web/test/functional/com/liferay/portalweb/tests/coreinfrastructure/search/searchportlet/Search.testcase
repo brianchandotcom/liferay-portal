@@ -1869,62 +1869,82 @@ definition {
 	@description = "This is a use case for LPS-130126 and LPS-145648."
 	@priority = 4
 	test EmptyDDMFieldNotDisplayedWithCustomFacet {
-		WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
+		task ("Create a web content structure with a text DDM field") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
 
-		WebContentStructures.addCP(structureName = "Test Structure");
+			WebContentStructures.addCP(structureName = "Test Structure");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		WebContentStructures.saveCP(structureName = "Test Structure");
+			WebContentStructures.saveCP(structureName = "Test Structure");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		task ("Create a web content article using the structure and leave the text DDM field blank") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
 
-		WebContent.addWithStructureCP(
-			structureName = "Test Structure",
-			webContentTitle = "WC Title");
+			WebContent.addWithStructureCP(
+				structureName = "Test Structure",
+				webContentTitle = "WC Title");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		Search.openSearchPage(searchTerm = "WC Title");
+		task ("Go to the Search page and execute a search for the web content article") {
+			Search.openSearchPage(searchTerm = "WC Title");
+		}
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		task ("Add the Custom Facet to the page") {
+			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		}
 
-		var port = Elasticsearch.getServerPort();
-		var portalHostname = PropsUtil.get("portal.hostname");
+		task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
+			var port = Elasticsearch.getServerPort();
+			var portalHostname = PropsUtil.get("portal.hostname");
 
-		var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
+			var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
 
-		var journalArticleDocumentType = JSONCurlUtil.get(${curl});
+			var journalArticleDocumentType = JSONCurlUtil.get(${curl});
 
-		var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmValueFieldName\"", 1);
+			var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmValueFieldName\"", 1);
+		}
 
-		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+		task ("Configure the Custom Facet widget aggregation field with the DDM field name") {
+			SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+		}
 
-		Refresh();
+		task ("Refresh the page to allow the changes to take effect") {
+			Refresh();
+		}
 
-		AssertElementNotPresent(
-			key_facetType = "Custom Facet",
-			key_termValue = "",
-			locator1 = "Search#FACET_TERM");
+		task ("Assert that the Custom Facet does not display any facet terms for the web content article since its text field is empty") {
+			AssertElementNotPresent(
+				key_facetType = "Custom Facet",
+				key_termValue = "",
+				locator1 = "Search#FACET_TERM");
+		}
 
-		WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
+		task ("Update the text field in the web content structure to be a repeatable field") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Test Structure");
+			WebContentNavigator.gotoEditStructure(structureName = "Test Structure");
 
-		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
 
-		WebContentStructures.saveCP(structureName = "Test Structure");
+			WebContentStructures.saveCP(structureName = "Test Structure");
+		}
 
-		Search.openSearchPage(searchTerm = "WC Title");
+		task ("Perform a search and assert that the Custom Facet does not display any facet terms for the web content article since its repeatable text field is empty") {
+			Search.openSearchPage(searchTerm = "WC Title");
 
-		AssertElementNotPresent(
-			key_facetType = "Custom Facet",
-			key_termValue = "",
-			locator1 = "Search#FACET_TERM");
+			AssertElementNotPresent(
+				key_facetType = "Custom Facet",
+				key_termValue = "",
+				locator1 = "Search#FACET_TERM");
+		}
 	}
 
 	@description = "This is a use case for LPS-167195. Facet selection and search results should match after using browser back button"

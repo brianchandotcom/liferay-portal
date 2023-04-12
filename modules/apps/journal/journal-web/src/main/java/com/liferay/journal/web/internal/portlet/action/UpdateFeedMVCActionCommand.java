@@ -53,8 +53,8 @@ public class UpdateFeedMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
 		String ddmTemplateKey = ParamUtil.getString(
 			actionRequest, "ddmTemplateKey");
 		String ddmRendererTemplateKey = ParamUtil.getString(
@@ -79,7 +79,7 @@ public class UpdateFeedMVCActionCommand extends BaseMVCActionCommand {
 			JournalFeed.class.getName(), actionRequest);
 
 		_journalFeedService.updateFeed(
-			groupId, feedId, name, description, ddmStructureKey, ddmTemplateKey,
+			groupId, feedId, name, description, ddmStructureId, ddmTemplateKey,
 			ddmRendererTemplateKey, delta, orderByCol, orderByType,
 			targetLayoutFriendlyUrl, targetPortletId, contentField, feedFormat,
 			feedVersion, serviceContext);

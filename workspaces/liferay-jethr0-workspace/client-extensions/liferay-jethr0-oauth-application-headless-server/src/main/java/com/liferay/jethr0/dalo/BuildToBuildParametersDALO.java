@@ -18,9 +18,9 @@ import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.build.parameter.BuildParameterFactory;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -42,8 +42,8 @@ public class BuildToBuildParametersDALO extends BaseRelationshipDALO {
 		delete("/o/c/builds", build.getId(), buildParameter.getId());
 	}
 
-	public List<BuildParameter> retrieveBuildParameters(Build build) {
-		List<BuildParameter> buildParameters = new ArrayList<>();
+	public Set<BuildParameter> retrieveBuildParameters(Build build) {
+		Set<BuildParameter> buildParameters = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/builds", build.getId())) {
@@ -57,7 +57,7 @@ public class BuildToBuildParametersDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(Build build) {
-		List<BuildParameter> remoteBuildParameters = retrieveBuildParameters(
+		Set<BuildParameter> remoteBuildParameters = retrieveBuildParameters(
 			build);
 
 		for (BuildParameter buildParameter : build.getBuildParameters()) {

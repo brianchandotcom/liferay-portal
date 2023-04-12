@@ -20,9 +20,9 @@ import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.run.TaskRun;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -33,27 +33,21 @@ public class BaseTask extends BaseEntity implements Task {
 
 	@Override
 	public void addEnvironment(Environment environment) {
-		addEnvironments(Arrays.asList(environment));
+		addEnvironments(Collections.singleton(environment));
 	}
 
 	@Override
-	public void addEnvironments(List<Environment> environments) {
-		for (Environment environment : environments) {
-			if (_environments.contains(environment)) {
-				continue;
-			}
-
-			_environments.add(environment);
-		}
+	public void addEnvironments(Set<Environment> environments) {
+		_environments.addAll(environments);
 	}
 
 	@Override
 	public void addTaskRun(TaskRun taskRun) {
-		addTaskRuns(Arrays.asList(taskRun));
+		addTaskRuns(Collections.singleton(taskRun));
 	}
 
 	@Override
-	public void addTaskRuns(List<TaskRun> taskRuns) {
+	public void addTaskRuns(Set<TaskRun> taskRuns) {
 		for (TaskRun taskRun : taskRuns) {
 			if (_taskRuns.contains(taskRun)) {
 				continue;
@@ -69,7 +63,7 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	@Override
-	public List<Environment> getEnvironments() {
+	public Set<Environment> getEnvironments() {
 		return _environments;
 	}
 
@@ -99,7 +93,7 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	@Override
-	public List<TaskRun> getTaskRuns() {
+	public Set<TaskRun> getTaskRuns() {
 		return null;
 	}
 
@@ -109,7 +103,7 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	@Override
-	public void removeEnvironments(List<Environment> environments) {
+	public void removeEnvironments(Set<Environment> environments) {
 		_environments.removeAll(environments);
 	}
 
@@ -119,7 +113,7 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	@Override
-	public void removeTaskRuns(List<TaskRun> taskRuns) {
+	public void removeTaskRuns(Set<TaskRun> taskRuns) {
 		_taskRuns.removeAll(taskRuns);
 	}
 
@@ -155,9 +149,9 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	private Build _build;
-	private final List<Environment> _environments = new ArrayList<>();
+	private final Set<Environment> _environments = new HashSet<>();
 	private String _name;
 	private Project _project;
-	private final List<TaskRun> _taskRuns = new ArrayList<>();
+	private final Set<TaskRun> _taskRuns = new HashSet<>();
 
 }

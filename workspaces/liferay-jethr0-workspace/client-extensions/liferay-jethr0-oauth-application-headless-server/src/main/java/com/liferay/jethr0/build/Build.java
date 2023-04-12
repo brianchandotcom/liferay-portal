@@ -22,8 +22,8 @@ import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -34,31 +34,31 @@ public interface Build extends Entity {
 
 	public void addBuildParameter(BuildParameter buildParameter);
 
-	public void addBuildParameters(List<BuildParameter> buildParameters);
+	public void addBuildParameters(Set<BuildParameter> buildParameters);
 
 	public void addBuildRun(BuildRun buildRun);
 
-	public void addBuildRuns(List<BuildRun> buildRuns);
+	public void addBuildRuns(Set<BuildRun> buildRuns);
 
 	public void addEnvironment(Environment environment);
 
-	public void addEnvironments(List<Environment> environments);
+	public void addEnvironments(Set<Environment> environments);
 
 	public void addTask(Task task);
 
-	public void addTasks(List<Task> tasks);
+	public void addTasks(Set<Task> tasks);
 
 	public String getBuildName();
 
 	public BuildParameter getBuildParameter(String name);
 
-	public List<BuildParameter> getBuildParameters();
+	public Set<BuildParameter> getBuildParameters();
 
-	public List<BuildRun> getBuildRuns();
+	public Set<BuildRun> getBuildRuns();
 
-	public List<Build> getChildBuilds();
+	public Set<Build> getChildBuilds();
 
-	public List<Environment> getEnvironments();
+	public Set<Environment> getEnvironments();
 
 	public String getJobName();
 
@@ -66,13 +66,13 @@ public interface Build extends Entity {
 
 	public int getMinSlaveRAM();
 
-	public List<Build> getParentBuilds();
+	public Set<Build> getParentBuilds();
 
 	public Project getProject();
 
 	public State getState();
 
-	public List<Task> getTasks();
+	public Set<Task> getTasks();
 
 	public boolean isChildBuild(Build parentBuild);
 
@@ -80,19 +80,19 @@ public interface Build extends Entity {
 
 	public void removeBuildParameter(BuildParameter buildParameter);
 
-	public void removeBuildParameters(List<BuildParameter> buildParameters);
+	public void removeBuildParameters(Set<BuildParameter> buildParameters);
 
 	public void removeBuildRun(BuildRun buildRun);
 
-	public void removeBuildRuns(List<BuildRun> buildRuns);
+	public void removeBuildRuns(Set<BuildRun> buildRuns);
 
 	public void removeEnvironment(Environment environment);
 
-	public void removeEnvironments(List<Environment> environments);
+	public void removeEnvironments(Set<Environment> environments);
 
 	public void removeTask(Task task);
 
-	public void removeTasks(List<Task> tasks);
+	public void removeTasks(Set<Task> tasks);
 
 	public boolean requiresGoodBattery();
 

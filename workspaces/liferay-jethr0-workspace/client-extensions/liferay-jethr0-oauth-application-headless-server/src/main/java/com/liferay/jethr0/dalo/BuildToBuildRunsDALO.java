@@ -18,9 +18,9 @@ import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.build.run.BuildRunFactory;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -40,8 +40,8 @@ public class BuildToBuildRunsDALO extends BaseRelationshipDALO {
 		delete("/o/c/builds", build.getId(), buildRun.getId());
 	}
 
-	public List<BuildRun> retrieveBuildRuns(Build build) {
-		List<BuildRun> buildRuns = new ArrayList<>();
+	public Set<BuildRun> retrieveBuildRuns(Build build) {
+		Set<BuildRun> buildRuns = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/builds", build.getId())) {
@@ -54,7 +54,7 @@ public class BuildToBuildRunsDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(Build build) {
-		List<BuildRun> remoteBuildRuns = retrieveBuildRuns(build);
+		Set<BuildRun> remoteBuildRuns = retrieveBuildRuns(build);
 
 		for (BuildRun buildRun : build.getBuildRuns()) {
 			if (remoteBuildRuns.contains(buildRun)) {

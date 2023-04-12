@@ -21,8 +21,8 @@ import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -33,23 +33,23 @@ public interface Project extends Entity {
 
 	public void addBuild(Build build);
 
-	public void addBuilds(List<Build> builds);
+	public void addBuilds(Set<Build> builds);
 
 	public void addGitBranch(GitBranch gitBranch);
 
-	public void addGitBranches(List<GitBranch> gitBranches);
+	public void addGitBranches(Set<GitBranch> gitBranches);
 
 	public void addTask(Task task);
 
-	public void addTasks(List<Task> tasks);
+	public void addTasks(Set<Task> tasks);
 
 	public void addTestSuite(TestSuite testSuite);
 
-	public void addTestSuites(List<TestSuite> testSuites);
+	public void addTestSuites(Set<TestSuite> testSuites);
 
-	public List<Build> getBuilds();
+	public Set<Build> getBuilds();
 
-	public List<GitBranch> getGitBranches();
+	public Set<GitBranch> getGitBranches();
 
 	public String getName();
 
@@ -57,27 +57,27 @@ public interface Project extends Entity {
 
 	public State getState();
 
-	public List<Task> getTasks();
+	public Set<Task> getTasks();
 
-	public List<TestSuite> getTestSuites();
+	public Set<TestSuite> getTestSuites();
 
 	public Type getType();
 
 	public void removeBuild(Build build);
 
-	public void removeBuilds(List<Build> builds);
+	public void removeBuilds(Set<Build> builds);
 
 	public void removeGitBranch(GitBranch gitBranch);
 
-	public void removeGitBranches(List<GitBranch> gitBranches);
+	public void removeGitBranches(Set<GitBranch> gitBranches);
 
 	public void removeTask(Task task);
 
-	public void removeTasks(List<Task> tasks);
+	public void removeTasks(Set<Task> tasks);
 
 	public void removeTestSuite(TestSuite testSuite);
 
-	public void removeTestSuites(List<TestSuite> testSuites);
+	public void removeTestSuites(Set<TestSuite> testSuites);
 
 	public void setName(String name);
 

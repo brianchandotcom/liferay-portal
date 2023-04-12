@@ -19,9 +19,9 @@ import com.liferay.jethr0.gitbranch.GitBranchFactory;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectFactory;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -42,8 +42,8 @@ public class ProjectsToGitBranchesDALO extends BaseRelationshipDALO {
 		delete("/o/c/projects", project.getId(), gitBranch.getId());
 	}
 
-	public List<GitBranch> retrieveGitBranches(Project project) {
-		List<GitBranch> gitBranches = new ArrayList<>();
+	public Set<GitBranch> retrieveGitBranches(Project project) {
+		Set<GitBranch> gitBranches = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/projects", project.getId())) {
@@ -54,8 +54,8 @@ public class ProjectsToGitBranchesDALO extends BaseRelationshipDALO {
 		return gitBranches;
 	}
 
-	public List<Project> retrieveProjects(GitBranch gitBranch) {
-		List<Project> projects = new ArrayList<>();
+	public Set<Project> retrieveProjects(GitBranch gitBranch) {
+		Set<Project> projects = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/gitbranches", gitBranch.getId())) {
@@ -67,7 +67,7 @@ public class ProjectsToGitBranchesDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(GitBranch gitBranch) {
-		List<Project> remoteProjects = retrieveProjects(gitBranch);
+		Set<Project> remoteProjects = retrieveProjects(gitBranch);
 
 		for (Project project : gitBranch.getProjects()) {
 			if (remoteProjects.contains(project)) {
@@ -85,7 +85,7 @@ public class ProjectsToGitBranchesDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(Project project) {
-		List<GitBranch> remoteGitBranches = retrieveGitBranches(project);
+		Set<GitBranch> remoteGitBranches = retrieveGitBranches(project);
 
 		for (GitBranch gitBranch : project.getGitBranches()) {
 			if (remoteGitBranches.contains(gitBranch)) {

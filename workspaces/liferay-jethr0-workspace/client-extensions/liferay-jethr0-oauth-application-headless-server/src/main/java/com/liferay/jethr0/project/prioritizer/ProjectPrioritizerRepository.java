@@ -18,8 +18,8 @@ import com.liferay.jethr0.dalo.ProjectPrioritizerToProjectComparatorsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -72,7 +72,7 @@ public class ProjectPrioritizerRepository
 	protected ProjectPrioritizer updateEntityRelationshipsFromDatabase(
 		ProjectPrioritizer projectPrioritizer) {
 
-		List<ProjectComparator> projectComparators =
+		Set<ProjectComparator> projectComparators =
 			_projectPrioritizerToProjectComparatorsDALO.getChildEntities(
 				projectPrioritizer);
 

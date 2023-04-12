@@ -17,7 +17,7 @@ package com.liferay.jethr0.entity.dalo;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -28,11 +28,11 @@ public interface EntityRelationshipDALO<T extends Entity, U extends Entity> {
 
 	public void delete(T parentEntity, U childEntity);
 
-	public List<U> getChildEntities(T parentEntity);
+	public Set<U> getChildEntities(T parentEntity);
 
 	public EntityFactory<U> getChildEntityFactory();
 
-	public List<T> getParentEntities(U childEntity);
+	public Set<T> getParentEntities(U childEntity);
 
 	public EntityFactory<T> getParentEntityFactory();
 

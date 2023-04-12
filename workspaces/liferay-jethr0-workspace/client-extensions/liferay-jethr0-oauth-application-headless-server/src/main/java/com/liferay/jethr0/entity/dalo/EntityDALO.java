@@ -16,7 +16,7 @@ package com.liferay.jethr0.entity.dalo;
 
 import com.liferay.jethr0.entity.Entity;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -29,7 +29,7 @@ public interface EntityDALO<T extends Entity> {
 
 	public T get(long id);
 
-	public List<T> getAll();
+	public Set<T> getAll();
 
 	public T update(T entity);
 

@@ -35,7 +35,7 @@ public class BuildQueue {
 			return;
 		}
 
-		_builds.add(build);
+		_sortedBuilds.add(build);
 
 		_sort();
 	}
@@ -51,7 +51,7 @@ public class BuildQueue {
 			return;
 		}
 
-		_builds.addAll(builds);
+		_sortedBuilds.addAll(builds);
 
 		_sort();
 	}
@@ -69,7 +69,7 @@ public class BuildQueue {
 	}
 
 	public List<Build> getBuilds() {
-		return _builds;
+		return _sortedBuilds;
 	}
 
 	public ProjectQueue getProjectQueue() {
@@ -77,10 +77,10 @@ public class BuildQueue {
 	}
 
 	public Build nextBuild(JenkinsMaster jenkinsMaster) {
-		synchronized (_builds) {
+		synchronized (_sortedBuilds) {
 			Build nextBuild = null;
 
-			for (Build build : _builds) {
+			for (Build build : _sortedBuilds) {
 				if (!jenkinsMaster.isCompatible(build)) {
 					continue;
 				}
@@ -88,7 +88,7 @@ public class BuildQueue {
 				nextBuild = build;
 			}
 
-			_builds.remove(nextBuild);
+			_sortedBuilds.remove(nextBuild);
 
 			return nextBuild;
 		}
@@ -118,12 +118,12 @@ public class BuildQueue {
 	}
 
 	private void _sort() {
-		_builds.clear();
+		_sortedBuilds.clear();
 
 		_projectQueue.sort();
 
 		for (Project project : _projectQueue.getProjects()) {
-			List<Build> builds = project.getBuilds();
+			List<Build> builds = new ArrayList<>(project.getBuilds());
 
 			builds.removeAll(Collections.singleton(null));
 
@@ -134,12 +134,12 @@ public class BuildQueue {
 					continue;
 				}
 
-				_builds.add(build);
+				_sortedBuilds.add(build);
 			}
 		}
 	}
 
-	private final List<Build> _builds = new ArrayList<>();
 	private ProjectQueue _projectQueue;
+	private final List<Build> _sortedBuilds = new ArrayList<>();
 
 }

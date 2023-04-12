@@ -20,7 +20,7 @@ import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.run.TaskRun;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -29,29 +29,29 @@ public interface Task extends Entity {
 
 	public void addEnvironment(Environment environment);
 
-	public void addEnvironments(List<Environment> environments);
+	public void addEnvironments(Set<Environment> environments);
 
 	public void addTaskRun(TaskRun taskRun);
 
-	public void addTaskRuns(List<TaskRun> taskRuns);
+	public void addTaskRuns(Set<TaskRun> taskRuns);
 
 	public Build getBuild();
 
-	public List<Environment> getEnvironments();
+	public Set<Environment> getEnvironments();
 
 	public String getName();
 
 	public Project getProject();
 
-	public List<TaskRun> getTaskRuns();
+	public Set<TaskRun> getTaskRuns();
 
 	public void removeEnvironment(Environment environment);
 
-	public void removeEnvironments(List<Environment> environments);
+	public void removeEnvironments(Set<Environment> environments);
 
 	public void removeTaskRun(TaskRun taskRun);
 
-	public void removeTaskRuns(List<TaskRun> taskRuns);
+	public void removeTaskRuns(Set<TaskRun> taskRuns);
 
 	public void setBuild(Build build);
 

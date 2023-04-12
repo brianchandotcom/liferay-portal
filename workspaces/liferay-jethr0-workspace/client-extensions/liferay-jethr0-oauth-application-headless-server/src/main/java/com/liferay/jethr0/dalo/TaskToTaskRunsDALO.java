@@ -18,9 +18,9 @@ import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.task.run.TaskRun;
 import com.liferay.jethr0.task.run.TaskRunFactory;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -40,8 +40,8 @@ public class TaskToTaskRunsDALO extends BaseRelationshipDALO {
 		delete("/o/c/tasks", task.getId(), taskRun.getId());
 	}
 
-	public List<TaskRun> retrieveTaskRuns(Task task) {
-		List<TaskRun> taskRuns = new ArrayList<>();
+	public Set<TaskRun> retrieveTaskRuns(Task task) {
+		Set<TaskRun> taskRuns = new HashSet<>();
 
 		for (JSONObject jsonObject : retrieve("/o/c/tasks", task.getId())) {
 			taskRuns.add(TaskRunFactory.newTaskRun(task, jsonObject));
@@ -51,7 +51,7 @@ public class TaskToTaskRunsDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(Task task) {
-		List<TaskRun> remoteTaskRuns = retrieveTaskRuns(task);
+		Set<TaskRun> remoteTaskRuns = retrieveTaskRuns(task);
 
 		for (TaskRun taskRun : task.getTaskRuns()) {
 			if (remoteTaskRuns.contains(taskRun)) {

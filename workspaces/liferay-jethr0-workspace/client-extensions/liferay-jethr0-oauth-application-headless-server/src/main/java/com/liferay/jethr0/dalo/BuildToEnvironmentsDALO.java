@@ -18,8 +18,8 @@ import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.environment.EnvironmentFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -39,8 +39,8 @@ public class BuildToEnvironmentsDALO extends BaseRelationshipDALO {
 		delete("/o/c/builds", build.getId(), environment.getId());
 	}
 
-	public List<Environment> retrieveEnvironments(Build build) {
-		List<Environment> environments = new ArrayList<>();
+	public Set<Environment> retrieveEnvironments(Build build) {
+		Set<Environment> environments = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/builds", build.getId())) {
@@ -53,7 +53,7 @@ public class BuildToEnvironmentsDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(Build build) {
-		List<Environment> remoteEnvironments = retrieveEnvironments(build);
+		Set<Environment> remoteEnvironments = retrieveEnvironments(build);
 
 		for (Environment environment : build.getEnvironments()) {
 			if (remoteEnvironments.contains(environment)) {

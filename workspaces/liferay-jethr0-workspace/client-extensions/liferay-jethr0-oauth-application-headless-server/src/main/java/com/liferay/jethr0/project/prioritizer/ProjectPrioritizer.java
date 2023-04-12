@@ -17,7 +17,7 @@ package com.liferay.jethr0.project.prioritizer;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -27,11 +27,11 @@ public interface ProjectPrioritizer extends Entity {
 	public void addProjectComparator(ProjectComparator projectComparator);
 
 	public void addProjectComparators(
-		List<ProjectComparator> projectComparators);
+		Set<ProjectComparator> projectComparators);
 
 	public String getName();
 
-	public List<ProjectComparator> getProjectComparators();
+	public Set<ProjectComparator> getProjectComparators();
 
 	public void removeProjectComparator(ProjectComparator projectComparator);
 

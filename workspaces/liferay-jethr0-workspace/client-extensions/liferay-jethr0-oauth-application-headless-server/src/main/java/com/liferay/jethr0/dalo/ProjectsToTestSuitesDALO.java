@@ -19,9 +19,9 @@ import com.liferay.jethr0.project.ProjectFactory;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.testsuite.TestSuiteFactory;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -42,8 +42,8 @@ public class ProjectsToTestSuitesDALO extends BaseRelationshipDALO {
 		delete("/o/c/projects", project.getId(), testSuite.getId());
 	}
 
-	public List<Project> retrieveProjects(TestSuite testSuite) {
-		List<Project> projects = new ArrayList<>();
+	public Set<Project> retrieveProjects(TestSuite testSuite) {
+		Set<Project> projects = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/testsuites", testSuite.getId())) {
@@ -54,8 +54,8 @@ public class ProjectsToTestSuitesDALO extends BaseRelationshipDALO {
 		return projects;
 	}
 
-	public List<TestSuite> retrieveTestSuites(Project project) {
-		List<TestSuite> testSuites = new ArrayList<>();
+	public Set<TestSuite> retrieveTestSuites(Project project) {
+		Set<TestSuite> testSuites = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/projects", project.getId())) {
@@ -67,7 +67,7 @@ public class ProjectsToTestSuitesDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(Project project) {
-		List<TestSuite> remoteTestSuites = retrieveTestSuites(project);
+		Set<TestSuite> remoteTestSuites = retrieveTestSuites(project);
 
 		for (TestSuite testSuite : project.getTestSuites()) {
 			if (remoteTestSuites.contains(testSuite)) {
@@ -86,7 +86,7 @@ public class ProjectsToTestSuitesDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(TestSuite testSuite) {
-		List<Project> remoteProjects = retrieveProjects(testSuite);
+		Set<Project> remoteProjects = retrieveProjects(testSuite);
 
 		for (Project project : testSuite.getProjects()) {
 			if (remoteProjects.contains(project)) {

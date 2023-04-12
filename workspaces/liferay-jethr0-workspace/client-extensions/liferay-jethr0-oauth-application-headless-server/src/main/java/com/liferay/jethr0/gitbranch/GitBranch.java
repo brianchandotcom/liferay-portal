@@ -19,7 +19,7 @@ import com.liferay.jethr0.project.Project;
 
 import java.net.URL;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -28,13 +28,13 @@ public interface GitBranch extends Entity {
 
 	public void addProject(Project project);
 
-	public void addProjects(List<Project> projects);
+	public void addProjects(Set<Project> projects);
 
 	public String getBranchName();
 
 	public String getBranchSHA();
 
-	public List<Project> getProjects();
+	public Set<Project> getProjects();
 
 	public boolean getRebased();
 
@@ -48,7 +48,7 @@ public interface GitBranch extends Entity {
 
 	public void removeProject(Project project);
 
-	public void removeProjects(List<Project> projects);
+	public void removeProjects(Set<Project> projects);
 
 	public void setBranchName(String branchName);
 

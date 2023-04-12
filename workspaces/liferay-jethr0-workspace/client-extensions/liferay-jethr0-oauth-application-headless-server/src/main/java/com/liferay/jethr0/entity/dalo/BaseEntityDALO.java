@@ -20,9 +20,9 @@ import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.jethr0.util.ThreadUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -83,8 +83,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 	}
 
 	@Override
-	public List<T> getAll() {
-		List<T> entities = new ArrayList<>();
+	public Set<T> getAll() {
+		Set<T> entities = new HashSet<>();
 
 		for (JSONObject jsonObject : _get()) {
 			T entity = newEntity(jsonObject);
@@ -208,8 +208,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 		}
 	}
 
-	private List<JSONObject> _get() {
-		List<JSONObject> jsonObjects = new ArrayList<>();
+	private Set<JSONObject> _get() {
+		Set<JSONObject> jsonObjects = new HashSet<>();
 
 		int currentPage = 1;
 		int lastPage = -1;

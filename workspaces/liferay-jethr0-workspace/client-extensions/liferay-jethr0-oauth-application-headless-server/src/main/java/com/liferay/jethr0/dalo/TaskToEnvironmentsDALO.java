@@ -18,9 +18,9 @@ import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.environment.EnvironmentFactory;
 import com.liferay.jethr0.task.Task;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -40,8 +40,8 @@ public class TaskToEnvironmentsDALO extends BaseRelationshipDALO {
 		delete("/o/c/tasks", task.getId(), environment.getId());
 	}
 
-	public List<Environment> retrieveEnvironments(Task task) {
-		List<Environment> environments = new ArrayList<>();
+	public Set<Environment> retrieveEnvironments(Task task) {
+		Set<Environment> environments = new HashSet<>();
 
 		for (JSONObject responseJSONObject :
 				retrieve("/o/c/tasks", task.getId())) {
@@ -54,7 +54,7 @@ public class TaskToEnvironmentsDALO extends BaseRelationshipDALO {
 	}
 
 	public void updateRelationships(Task task) {
-		List<Environment> remoteEnvironments = retrieveEnvironments(task);
+		Set<Environment> remoteEnvironments = retrieveEnvironments(task);
 
 		for (Environment environment : task.getEnvironments()) {
 			if (remoteEnvironments.contains(environment)) {

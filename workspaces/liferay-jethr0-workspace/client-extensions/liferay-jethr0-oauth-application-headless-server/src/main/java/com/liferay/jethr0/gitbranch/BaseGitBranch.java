@@ -20,9 +20,9 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -33,18 +33,12 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 
 	@Override
 	public void addProject(Project project) {
-		addProjects(Arrays.asList(project));
+		addProjects(Collections.singleton(project));
 	}
 
 	@Override
-	public void addProjects(List<Project> projects) {
-		for (Project project : projects) {
-			if (_projects.contains(project)) {
-				continue;
-			}
-
-			_projects.add(project);
-		}
+	public void addProjects(Set<Project> projects) {
+		_projects.addAll(projects);
 	}
 
 	@Override
@@ -81,7 +75,7 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 	}
 
 	@Override
-	public List<Project> getProjects() {
+	public Set<Project> getProjects() {
 		return _projects;
 	}
 
@@ -116,7 +110,7 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 	}
 
 	@Override
-	public void removeProjects(List<Project> projects) {
+	public void removeProjects(Set<Project> projects) {
 		_projects.removeAll(projects);
 	}
 
@@ -169,7 +163,7 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 
 	private String _branchName;
 	private String _branchSHA;
-	private final List<Project> _projects = new ArrayList<>();
+	private final Set<Project> _projects = new HashSet<>();
 	private boolean _rebased;
 	private String _repositoryName;
 	private String _upstreamBranchName;

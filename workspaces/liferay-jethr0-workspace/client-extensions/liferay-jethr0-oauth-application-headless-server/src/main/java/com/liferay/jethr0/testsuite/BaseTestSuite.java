@@ -17,9 +17,9 @@ package com.liferay.jethr0.testsuite;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.project.Project;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -30,18 +30,12 @@ public class BaseTestSuite extends BaseEntity implements TestSuite {
 
 	@Override
 	public void addProject(Project project) {
-		addProjects(Arrays.asList(project));
+		addProjects(Collections.singleton(project));
 	}
 
 	@Override
-	public void addProjects(List<Project> projects) {
-		for (Project project : projects) {
-			if (_projects.contains(project)) {
-				continue;
-			}
-
-			_projects.add(project);
-		}
+	public void addProjects(Set<Project> projects) {
+		_projects.addAll(projects);
 	}
 
 	@Override
@@ -59,7 +53,7 @@ public class BaseTestSuite extends BaseEntity implements TestSuite {
 	}
 
 	@Override
-	public List<Project> getProjects() {
+	public Set<Project> getProjects() {
 		return _projects;
 	}
 
@@ -69,7 +63,7 @@ public class BaseTestSuite extends BaseEntity implements TestSuite {
 	}
 
 	@Override
-	public void removeProjects(List<Project> projects) {
+	public void removeProjects(Set<Project> projects) {
 		_projects.removeAll(projects);
 	}
 
@@ -85,6 +79,6 @@ public class BaseTestSuite extends BaseEntity implements TestSuite {
 	}
 
 	private String _name;
-	private final List<Project> _projects = new ArrayList<>();
+	private final Set<Project> _projects = new HashSet<>();
 
 }

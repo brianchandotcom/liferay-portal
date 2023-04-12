@@ -20,7 +20,7 @@ import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 
-import java.util.List;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -37,7 +37,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void addBuilds(List<Build> builds) {
+	public void addBuilds(Set<Build> builds) {
 		for (Build build : builds) {
 			addBuild(build);
 		}
@@ -49,7 +49,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void addGitBranches(List<GitBranch> gitBranches) {
+	public void addGitBranches(Set<GitBranch> gitBranches) {
 		addRelatedEntities(gitBranches);
 	}
 
@@ -59,7 +59,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void addTasks(List<Task> tasks) {
+	public void addTasks(Set<Task> tasks) {
 		addRelatedEntities(tasks);
 	}
 
@@ -69,17 +69,17 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void addTestSuites(List<TestSuite> testSuites) {
+	public void addTestSuites(Set<TestSuite> testSuites) {
 		addRelatedEntities(testSuites);
 	}
 
 	@Override
-	public List<Build> getBuilds() {
+	public Set<Build> getBuilds() {
 		return getRelatedEntities(Build.class);
 	}
 
 	@Override
-	public List<GitBranch> getGitBranches() {
+	public Set<GitBranch> getGitBranches() {
 		return getRelatedEntities(GitBranch.class);
 	}
 
@@ -119,12 +119,12 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public List<Task> getTasks() {
+	public Set<Task> getTasks() {
 		return getRelatedEntities(Task.class);
 	}
 
 	@Override
-	public List<TestSuite> getTestSuites() {
+	public Set<TestSuite> getTestSuites() {
 		return getRelatedEntities(TestSuite.class);
 	}
 
@@ -139,7 +139,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void removeBuilds(List<Build> builds) {
+	public void removeBuilds(Set<Build> builds) {
 		removeRelatedEntities(builds);
 	}
 
@@ -149,7 +149,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void removeGitBranches(List<GitBranch> gitBranches) {
+	public void removeGitBranches(Set<GitBranch> gitBranches) {
 		removeRelatedEntities(gitBranches);
 	}
 
@@ -158,7 +158,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 		removeRelatedEntity(task);
 	}
 
-	public void removeTasks(List<Task> tasks) {
+	public void removeTasks(Set<Task> tasks) {
 		removeRelatedEntities(tasks);
 	}
 
@@ -168,7 +168,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void removeTestSuites(List<TestSuite> testSuites) {
+	public void removeTestSuites(Set<TestSuite> testSuites) {
 		removeRelatedEntities(testSuites);
 	}
 

@@ -22,9 +22,9 @@ import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -39,7 +39,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void addBuildParameters(List<BuildParameter> buildParameters) {
+	public void addBuildParameters(Set<BuildParameter> buildParameters) {
 		addRelatedEntities(buildParameters);
 	}
 
@@ -49,7 +49,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void addBuildRuns(List<BuildRun> buildRuns) {
+	public void addBuildRuns(Set<BuildRun> buildRuns) {
 		addRelatedEntities(buildRuns);
 	}
 
@@ -59,7 +59,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void addEnvironments(List<Environment> environments) {
+	public void addEnvironments(Set<Environment> environments) {
 		addRelatedEntities(environments);
 	}
 
@@ -69,7 +69,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void addTasks(List<Task> tasks) {
+	public void addTasks(Set<Task> tasks) {
 		addRelatedEntities(tasks);
 	}
 
@@ -90,22 +90,22 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public List<BuildParameter> getBuildParameters() {
+	public Set<BuildParameter> getBuildParameters() {
 		return getRelatedEntities(BuildParameter.class);
 	}
 
 	@Override
-	public List<BuildRun> getBuildRuns() {
+	public Set<BuildRun> getBuildRuns() {
 		return getRelatedEntities(BuildRun.class);
 	}
 
 	@Override
-	public List<Build> getChildBuilds() {
+	public Set<Build> getChildBuilds() {
 		return _childBuilds;
 	}
 
 	@Override
-	public List<Environment> getEnvironments() {
+	public Set<Environment> getEnvironments() {
 		return getRelatedEntities(Environment.class);
 	}
 
@@ -165,7 +165,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		return Integer.valueOf(value);
 	}
 
-	public List<Build> getParentBuilds() {
+	public Set<Build> getParentBuilds() {
 		return _parentBuilds;
 	}
 
@@ -180,20 +180,20 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public List<Task> getTasks() {
+	public Set<Task> getTasks() {
 		return getRelatedEntities(Task.class);
 	}
 
 	@Override
 	public boolean isChildBuild(Build parentBuild) {
-		List<Build> parentBuilds = _getAllParentBuilds();
+		Set<Build> parentBuilds = _getAllParentBuilds();
 
 		return parentBuilds.contains(parentBuild);
 	}
 
 	@Override
 	public boolean isParentBuild(Build childBuild) {
-		List<Build> childBuilds = _getAllChildBuilds();
+		Set<Build> childBuilds = _getAllChildBuilds();
 
 		return childBuilds.contains(childBuild);
 	}
@@ -204,7 +204,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void removeBuildParameters(List<BuildParameter> buildParameters) {
+	public void removeBuildParameters(Set<BuildParameter> buildParameters) {
 		removeRelatedEntities(buildParameters);
 	}
 
@@ -214,7 +214,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void removeBuildRuns(List<BuildRun> buildRuns) {
+	public void removeBuildRuns(Set<BuildRun> buildRuns) {
 		removeRelatedEntities(buildRuns);
 	}
 
@@ -224,7 +224,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void removeEnvironments(List<Environment> environments) {
+	public void removeEnvironments(Set<Environment> environments) {
 		removeRelatedEntities(environments);
 	}
 
@@ -234,7 +234,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public void removeTasks(List<Task> tasks) {
+	public void removeTasks(Set<Task> tasks) {
 		removeRelatedEntities(tasks);
 	}
 
@@ -282,8 +282,8 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
-	private List<Build> _getAllChildBuilds() {
-		List<Build> childBuilds = new ArrayList<>(_childBuilds);
+	private Set<Build> _getAllChildBuilds() {
+		Set<Build> childBuilds = new HashSet<>(_childBuilds);
 
 		for (Build childBuild : _childBuilds) {
 			childBuilds.addAll(childBuild.getChildBuilds());
@@ -292,8 +292,8 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		return childBuilds;
 	}
 
-	private List<Build> _getAllParentBuilds() {
-		List<Build> parentBuilds = new ArrayList<>(_parentBuilds);
+	private Set<Build> _getAllParentBuilds() {
+		Set<Build> parentBuilds = new HashSet<>(_parentBuilds);
 
 		for (Build parentBuild : _parentBuilds) {
 			parentBuilds.addAll(parentBuild.getParentBuilds());
@@ -307,9 +307,9 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	private static final int _DEFAULT_MIN_SLAVE_RAM = 12;
 
 	private final String _buildName;
-	private final List<Build> _childBuilds = new ArrayList<>();
+	private final Set<Build> _childBuilds = new HashSet<>();
 	private String _jobName;
-	private final List<Build> _parentBuilds = new ArrayList<>();
+	private final Set<Build> _parentBuilds = new HashSet<>();
 	private Project _project;
 	private State _state;
 

@@ -76,8 +76,13 @@ public class ProjectQueue {
 
 		_projects.removeAll(Collections.singleton(null));
 
+		_sortedProjectComparators.clear();
+
+		_sortedProjectComparators.addAll(
+			_projectPrioritizer.getProjectComparators());
+
 		Collections.sort(
-			_projectPrioritizer.getProjectComparators(),
+			_sortedProjectComparators,
 			Comparator.comparingInt(ProjectComparator::getPosition));
 
 		_projects.sort(new PrioritizedProjectComparator());
@@ -85,13 +90,15 @@ public class ProjectQueue {
 
 	private ProjectPrioritizer _projectPrioritizer;
 	private final List<Project> _projects = new ArrayList<>();
+	private final List<ProjectComparator> _sortedProjectComparators =
+		new ArrayList<>();
 
 	private class PrioritizedProjectComparator implements Comparator<Project> {
 
 		@Override
 		public int compare(Project project1, Project project2) {
 			for (ProjectComparator projectComparator :
-					_projectPrioritizer.getProjectComparators()) {
+					_sortedProjectComparators) {
 
 				if (!(projectComparator instanceof BaseProjectComparator)) {
 					continue;

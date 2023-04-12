@@ -16,13 +16,14 @@ package com.liferay.jethr0.entity;
 
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -76,10 +77,10 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	@Override
-	public List<Entity> getRelatedEntities() {
-		List<Entity> relatedEntities = new ArrayList<>();
+	public Set<Entity> getRelatedEntities() {
+		Set<Entity> relatedEntities = new HashSet<>();
 
-		for (List<Entity> entities : _relatedEntitiesMap.values()) {
+		for (Set<Entity> entities : _relatedEntitiesMap.values()) {
 			relatedEntities.addAll(entities);
 		}
 
@@ -106,23 +107,21 @@ public abstract class BaseEntity implements Entity {
 		_id = jsonObject.optLong("id");
 	}
 
-	protected void addRelatedEntities(List<? extends Entity> entities) {
+	protected void addRelatedEntities(Collection<? extends Entity> entities) {
 		for (Entity entity : entities) {
 			addRelatedEntity(entity);
 		}
 	}
 
 	protected void addRelatedEntity(Entity entity) {
-		List<Entity> relatedEntities = _getRelatedEntities(
+		Set<Entity> relatedEntities = _getRelatedEntities(
 			_getEntityClass(entity.getClass()));
 
-		if (!relatedEntities.contains(entity)) {
-			relatedEntities.add(entity);
-		}
+		relatedEntities.add(entity);
 	}
 
-	protected <T extends Entity> List<T> getRelatedEntities(Class<T> clazz) {
-		List<T> relatedEntities = new ArrayList<>();
+	protected <T extends Entity> Set<T> getRelatedEntities(Class<T> clazz) {
+		Set<T> relatedEntities = new HashSet<>();
 
 		for (Entity relatedEntity : _getRelatedEntities(clazz)) {
 			relatedEntities.add(clazz.cast(relatedEntity));
@@ -131,14 +130,14 @@ public abstract class BaseEntity implements Entity {
 		return relatedEntities;
 	}
 
-	protected void removeRelatedEntities(List<? extends Entity> entities) {
+	protected void removeRelatedEntities(Set<? extends Entity> entities) {
 		for (Entity entity : entities) {
 			removeRelatedEntity(entity);
 		}
 	}
 
 	protected void removeRelatedEntity(Entity entity) {
-		List<Entity> relatedEntities = _getRelatedEntities(
+		Set<Entity> relatedEntities = _getRelatedEntities(
 			_getEntityClass(entity.getClass()));
 
 		relatedEntities.removeAll(Arrays.asList(entity));
@@ -166,13 +165,13 @@ public abstract class BaseEntity implements Entity {
 		return _getEntityClass(entityClass.getSuperclass());
 	}
 
-	private List<Entity> _getRelatedEntities(Class<?> clazz) {
+	private Set<Entity> _getRelatedEntities(Class<?> clazz) {
 		Class<? extends Entity> entityClass = _getEntityClass(clazz);
 
-		List<Entity> relatedEntities = _relatedEntitiesMap.get(entityClass);
+		Set<Entity> relatedEntities = _relatedEntitiesMap.get(entityClass);
 
 		if (relatedEntities == null) {
-			relatedEntities = new ArrayList<>();
+			relatedEntities = new HashSet<>();
 
 			_relatedEntitiesMap.put(entityClass, relatedEntities);
 		}
@@ -182,7 +181,7 @@ public abstract class BaseEntity implements Entity {
 
 	private Date _createdDate;
 	private long _id;
-	private final Map<Class<? extends Entity>, List<Entity>>
+	private final Map<Class<? extends Entity>, Set<Entity>>
 		_relatedEntitiesMap = new HashMap<>();
 
 }

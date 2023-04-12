@@ -19,9 +19,9 @@ import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.jethr0.util.ThreadUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,8 +55,8 @@ public abstract class BaseEntityRelationshipDALO
 	}
 
 	@Override
-	public List<U> getChildEntities(T parentEntity) {
-		List<U> children = new ArrayList<>();
+	public Set<U> getChildEntities(T parentEntity) {
+		Set<U> children = new HashSet<>();
 
 		EntityFactory<U> childEntityFactory = getChildEntityFactory();
 
@@ -70,8 +70,8 @@ public abstract class BaseEntityRelationshipDALO
 	}
 
 	@Override
-	public List<T> getParentEntities(U childEntity) {
-		List<T> parentEntities = new ArrayList<>();
+	public Set<T> getParentEntities(U childEntity) {
+		Set<T> parentEntities = new HashSet<>();
 
 		EntityFactory<T> parentEntityFactory = getParentEntityFactory();
 
@@ -90,7 +90,7 @@ public abstract class BaseEntityRelationshipDALO
 
 		Class<U> childEntityClass = childEntityFactory.getEntityClass();
 
-		List<U> childEntities = getChildEntities(parentEntity);
+		Set<U> childEntities = getChildEntities(parentEntity);
 
 		for (Entity childEntity : parentEntity.getRelatedEntities()) {
 			if (!childEntityClass.isInstance(childEntity)) {
@@ -117,7 +117,7 @@ public abstract class BaseEntityRelationshipDALO
 
 		Class<T> parentEntityClass = parentEntityFactory.getEntityClass();
 
-		List<T> parentEntities = getParentEntities(childEntity);
+		Set<T> parentEntities = getParentEntities(childEntity);
 
 		for (Entity parentEntity : childEntity.getRelatedEntities()) {
 			if (!parentEntityClass.isInstance(parentEntity)) {
@@ -241,14 +241,14 @@ public abstract class BaseEntityRelationshipDALO
 		}
 	}
 
-	private List<JSONObject> _get(
+	private Set<JSONObject> _get(
 		String objectDefinitionURLPath, long objectEntryId) {
 
 		String objectRelationshipURL = StringUtil.combine(
 			_liferayPortalURL, objectDefinitionURLPath, "/", objectEntryId, "/",
 			getObjectRelationshipName());
 
-		List<JSONObject> jsonObjects = new ArrayList<>();
+		Set<JSONObject> jsonObjects = new HashSet<>();
 
 		int currentPage = 1;
 		int lastPage = -1;

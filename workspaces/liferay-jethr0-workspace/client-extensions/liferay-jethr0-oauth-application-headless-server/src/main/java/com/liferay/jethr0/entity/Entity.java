@@ -15,7 +15,7 @@
 package com.liferay.jethr0.entity;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -30,7 +30,7 @@ public interface Entity {
 
 	public JSONObject getJSONObject();
 
-	public List<Entity> getRelatedEntities();
+	public Set<Entity> getRelatedEntities();
 
 	public void setCreatedDate(Date createdDate);
 

@@ -12,7 +12,7 @@ class HeaderWebComponent extends HTMLElement {
 	}
 }
 
-const HEADER_ELEMENT_ID = 'header-liferay-sample-multi-extension-container-with-shared-code';
+const HEADER_ELEMENT_ID = 'liferay-sample-etc-frontend-2-header';
 
 if (!customElements.get(HEADER_ELEMENT_ID)) {
 	customElements.define(HEADER_ELEMENT_ID, HeaderWebComponent);

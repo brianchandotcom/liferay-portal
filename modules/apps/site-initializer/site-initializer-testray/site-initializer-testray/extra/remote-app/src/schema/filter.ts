@@ -162,7 +162,7 @@ const baseFilters: Filter = {
 	project: {
 		label: i18n.translate('project'),
 		name: 'projectId',
-		resource: '/projects?fields=id,name',
+		resource: '/projects?fields=id,name&pageSize=100',
 		transformData(item) {
 			return dataToOptions(transformData<TestrayProject>(item));
 		},

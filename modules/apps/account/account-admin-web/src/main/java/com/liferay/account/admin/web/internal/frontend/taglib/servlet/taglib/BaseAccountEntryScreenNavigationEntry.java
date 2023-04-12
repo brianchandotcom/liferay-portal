@@ -36,6 +36,11 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationEntry<AccountEntry> {
 
+	@Override
+	public String getEntryKey() {
+		return getCategoryKey();
+	}
+
 	public abstract String getJspPath();
 
 	@Override

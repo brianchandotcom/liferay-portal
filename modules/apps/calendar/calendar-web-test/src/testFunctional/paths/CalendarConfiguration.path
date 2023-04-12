@@ -33,7 +33,7 @@
 
 <tr>
 	<td>NAVIGATION_DISPLAY_SETTINGS</td>
-	<td>//ul[contains(@class,'nav nav-underline')]//a[contains(.,'Display Settings')]</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]//a[contains(.,'Display Settings')]</td>
 	<td></td>
 </tr>
 <tr>

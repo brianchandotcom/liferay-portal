@@ -317,7 +317,7 @@
 </tr>
 <tr>
 	<td>PAGE_TABS_CHANGE_PARENT</td>
-	<td>//ul[contains(@class,'nav nav-underline')]//li/a[contains(.,'Change Parent')]</td>
+	<td>//ul[contains(@class,'nav nav-tabs')]//li/a[contains(.,'Change Parent')]</td>
 	<td></td>
 </tr>
 <tr>

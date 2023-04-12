@@ -1,0 +1,85 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "feature.flag.LPS-165493=true";
+	property osgi.modules.includes = "site-initializer-raylife-ap";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Raylife AP";
+
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Raylife AP Site") {
+			Site.openSitesAdmin();
+
+			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+			Raylife.createRaylifeSite(siteName = "Raylife AP");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
+
+		RaylifeAP.tearDownCP();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "Story ID: LPS-160816 | Test Summary: Verify if the user can access the policy details page through policy number link."
+	@ignore = "Test Stub"
+	@priority = 4
+	test CanUserAccessPolicyDetails {
+		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserAccessPolicyDetails";
+
+		// TODO LPS-181068 CanUserAccessPolicyDetails pending implementation
+
+	}
+
+	@description = "Story ID: LPS-160816 | Test Summary: Verify if the user can navigate back to the Claims dashboard in the upper left corner."
+	@ignore = "Test Stub"
+	@priority = 4
+	test CanUserCanGoBackToClaimsPage {
+		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserCanGoBackToClaimsPage";
+
+		// TODO LPS-181067 CanUserCanGoBackToClaimsPage pending implementation
+
+	}
+
+	@description = "Story ID: LPS-160816 | Test Summary: Verify if a claim with the settled status, the status is displayed green and theres settled date and settled amount displayed."
+	@ignore = "Test Stub"
+	@priority = 4
+	test VerifyDisplayedStatusGreen {
+		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyDisplayedStatusGreen";
+
+		// TODO LPS-181069 VerifyDisplayedStatusGreen pending implementation
+
+	}
+
+	@description = "Story ID: LPS-160816 | Test Summary: Verify if a claim with the Not Settled status, only the submitted date appears."
+	@ignore = "Test Stub"
+	@priority = 4
+	test VerifyStatusNotSettled {
+		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyStatusNotSettled";
+
+		// TODO LPS-181070 VerifyStatusNotSettled pending implementation
+
+	}
+
+}

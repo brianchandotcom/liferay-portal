@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.base.AccountGroupServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -28,8 +29,12 @@ import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -76,6 +81,23 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 	}
 
 	@Override
+	public AccountGroup fetchAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		AccountGroup accountGroup =
+			accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (accountGroup != null) {
+			_accountGroupModelResourcePermission.check(
+				getPermissionChecker(), accountGroup, ActionKeys.VIEW);
+		}
+
+		return accountGroup;
+	}
+
+	@Override
 	public AccountGroup getAccountGroup(long accountGroupId)
 		throws PortalException {
 
@@ -83,6 +105,31 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 			getPermissionChecker(), accountGroupId, ActionKeys.VIEW);
 
 		return accountGroupLocalService.getAccountGroup(accountGroupId);
+	}
+
+	@Override
+	public List<AccountGroup> getAccountGroupsByAccountId(
+			long accountEntryId, int start, int end)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.VIEW_ACCOUNT_GROUPS);
+
+		return accountGroupLocalService.getAccountGroupsByAccountId(
+			accountEntryId, start, end);
+	}
+
+	@Override
+	public int getAccountGroupsByAccountIdCount(long accountEntryId)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.VIEW_ACCOUNT_GROUPS);
+
+		return accountGroupLocalService.getAccountGroupsByAccountIdCount(
+			accountEntryId);
 	}
 
 	@Override
@@ -125,6 +172,14 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 		return accountGroupLocalService.updateExternalReferenceCode(
 			accountGroupId, externalReferenceCode);
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private volatile ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.account.model.AccountGroup)"

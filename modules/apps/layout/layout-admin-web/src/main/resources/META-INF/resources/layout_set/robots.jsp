@@ -29,7 +29,9 @@ String virtualHostname = layoutsAdminDisplayContext.getVirtualHostname();
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(virtualHostname) %>">
-		<aui:input helpMessage="robots-txt-help" label="set-the-robots-txt" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
+		<p class="text-secondary" id="<portlet:namespace />robotsDescription"><liferay-ui:message key="robots-txt-help" /></p>
+
+		<aui:input aria-describedby="<portlet:namespace />robotsDescription" label="robots" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

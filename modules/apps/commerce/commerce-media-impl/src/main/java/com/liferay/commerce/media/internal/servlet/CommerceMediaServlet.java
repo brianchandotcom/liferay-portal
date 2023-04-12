@@ -478,9 +478,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				return;
 			}
 
-			if (commerceAccountId ==
-					CommerceAccountConstants.ACCOUNT_ID_ADMIN) {
-
+			if (commerceAccountId == AccountConstants.ACCOUNT_ENTRY_ID_ADMIN) {
 				_commerceCatalogModelResourcePermission.check(
 					PermissionThreadLocal.getPermissionChecker(),
 					cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);

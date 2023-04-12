@@ -14,12 +14,13 @@
 
 package com.liferay.headless.commerce.admin.account.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AdminAccountGroup;
 import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -77,44 +79,58 @@ public class AdminAccountGroupResourceTest
 	public void testGetAccountByExternalReferenceCodeAccountGroupsPage()
 		throws Exception {
 
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addCommerceAccount(
-				RandomTestUtil.randomString(), 0,
-				RandomTestUtil.randomString() + "@liferay.com", null, 2, true,
-				RandomTestUtil.randomString(), _serviceContext);
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			_serviceContext.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			AccountConstants.ACCOUNT_GROUP_NAME_GUEST,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		CommerceAccountGroup commerceAccountGroup1 =
-			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
-				RandomTestUtil.randomString(), _serviceContext);
+		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(
+			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
+			_serviceContext);
 
-		_commerceAccountGroupCommerceAccountRelLocalService.
-			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup1.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), _serviceContext);
+		accountGroup1.setExternalReferenceCode(null);
+		accountGroup1.setDefaultAccountGroup(false);
+		accountGroup1.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
+		accountGroup1.setExpandoBridgeAttributes(_serviceContext);
 
-		CommerceAccountGroup commerceAccountGroup2 =
-			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
-				RandomTestUtil.randomString(), _serviceContext);
+		accountGroup1 = _accountGroupLocalService.updateAccountGroup(
+			accountGroup1);
 
-		_commerceAccountGroupCommerceAccountRelLocalService.
-			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup2.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), _serviceContext);
+		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+			accountGroup1.getAccountGroupId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		AccountGroup accountGroup2 = _accountGroupLocalService.addAccountGroup(
+			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
+			_serviceContext);
+
+		accountGroup2.setExternalReferenceCode(null);
+		accountGroup2.setDefaultAccountGroup(false);
+		accountGroup2.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
+		accountGroup2.setExpandoBridgeAttributes(_serviceContext);
+
+		accountGroup2 = _accountGroupLocalService.updateAccountGroup(
+			accountGroup2);
+
+		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+			accountGroup2.getAccountGroupId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
 
 		Page<AdminAccountGroup> page =
 			adminAccountGroupResource.
 				getAccountByExternalReferenceCodeAccountGroupsPage(
-					commerceAccount.getExternalReferenceCode(),
+					accountEntry.getExternalReferenceCode(),
 					Pagination.of(1, 20));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		List<Long> accountGroupIds = new ArrayList<>();
 
-		accountGroupIds.add(commerceAccountGroup1.getCommerceAccountGroupId());
-		accountGroupIds.add(commerceAccountGroup2.getCommerceAccountGroupId());
+		accountGroupIds.add(accountGroup1.getAccountGroupId());
+		accountGroupIds.add(accountGroup2.getAccountGroupId());
 
 		for (AdminAccountGroup adminAccountGroup : page.getItems()) {
 			Assert.assertTrue(
@@ -132,48 +148,60 @@ public class AdminAccountGroupResourceTest
 	@Override
 	@Test
 	public void testGetAccountIdAccountGroupsPage() throws Exception {
-		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addCommerceAccount(
-				RandomTestUtil.randomString(), 0,
-				RandomTestUtil.randomString() + "@liferay.com", null, 2, true,
-				RandomTestUtil.randomString(), _serviceContext);
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			_serviceContext.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			AccountConstants.ACCOUNT_GROUP_NAME_GUEST,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		CommerceAccountGroup commerceAccountGroup1 =
-			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
-				RandomTestUtil.randomString(), _serviceContext);
+		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(
+			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
+			_serviceContext);
 
-		_commerceAccountGroupCommerceAccountRelLocalService.
-			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup1.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), _serviceContext);
+		accountGroup1.setExternalReferenceCode(null);
+		accountGroup1.setDefaultAccountGroup(false);
+		accountGroup1.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
+		accountGroup1.setExpandoBridgeAttributes(_serviceContext);
 
-		CommerceAccountGroup commerceAccountGroup2 =
-			_commerceAccountGroupLocalService.addCommerceAccountGroup(
-				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
-				RandomTestUtil.randomString(), _serviceContext);
+		accountGroup1 = _accountGroupLocalService.updateAccountGroup(
+			accountGroup1);
 
-		_commerceAccountGroupCommerceAccountRelLocalService.
-			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup2.getCommerceAccountGroupId(),
-				commerceAccount.getCommerceAccountId(), _serviceContext);
+		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+			accountGroup1.getAccountGroupId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		AccountGroup accountGroup2 = _accountGroupLocalService.addAccountGroup(
+			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
+			_serviceContext);
+
+		accountGroup2.setExternalReferenceCode(null);
+		accountGroup2.setDefaultAccountGroup(false);
+		accountGroup2.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
+		accountGroup2.setExpandoBridgeAttributes(_serviceContext);
+
+		accountGroup2 = _accountGroupLocalService.updateAccountGroup(
+			accountGroup2);
+
+		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+			accountGroup2.getAccountGroupId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
 
 		Page<AdminAccountGroup> page =
 			adminAccountGroupResource.getAccountIdAccountGroupsPage(
-				commerceAccount.getCommerceAccountId(), Pagination.of(1, 20));
+				accountEntry.getAccountEntryId(), Pagination.of(1, 20));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
-		List<Long> commerceAccountGroupsIds = new ArrayList<>();
+		List<Long> accountGroupsIds = new ArrayList<>();
 
-		commerceAccountGroupsIds.add(
-			commerceAccountGroup1.getCommerceAccountGroupId());
-		commerceAccountGroupsIds.add(
-			commerceAccountGroup2.getCommerceAccountGroupId());
+		accountGroupsIds.add(accountGroup1.getAccountGroupId());
+		accountGroupsIds.add(accountGroup2.getAccountGroupId());
 
 		for (AdminAccountGroup adminAccountGroup : page.getItems()) {
 			Assert.assertTrue(
-				commerceAccountGroupsIds.contains(adminAccountGroup.getId()));
+				accountGroupsIds.contains(adminAccountGroup.getId()));
 		}
 	}
 
@@ -307,14 +335,10 @@ public class AdminAccountGroupResourceTest
 	}
 
 	@Inject
-	private CommerceAccountGroupCommerceAccountRelLocalService
-		_commerceAccountGroupCommerceAccountRelLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
-	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
-
-	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	private ServiceContext _serviceContext;
 	private User _user;

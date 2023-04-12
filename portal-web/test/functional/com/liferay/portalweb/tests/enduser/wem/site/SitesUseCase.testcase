@@ -917,12 +917,16 @@ definition {
 		}
 
 		task ("Add tags to the new site") {
-			Site.openSiteSettingsAdmin(siteURLKey = "world-cup-russia-2018");
-
-			Tag.addViaSiteCP(tagNameList = "World Cup,Russia,2018");
+			for (var tagName : list "World Cup,Russia,2018") {
+				JSONAssettag.addTag(
+					groupName = "World Cup - Russia 2018",
+					tagName = ${tagName});
+			}
 		}
 
 		task ("Add virtual host for public page and private page") {
+			Navigator.gotoBack();
+
 			Site.addVirtualHostsURLCP(
 				privatePageVirtualHostURL = "www.baker.com",
 				privateVirtualHosts = "true",
@@ -1041,19 +1045,16 @@ definition {
 		}
 
 		task ("Assign created site to the user") {
-			User.openUsersAdmin();
-
-			User.editUserSiteCP(
-				siteName = "World Cup - Russia 2018",
-				userScreenName = "usersn");
+			JSONUser.addUserToSite(
+				groupName = "World Cup - Russia 2018",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign site administrator to the user") {
-			User.openUsersAdmin();
-
-			User.assignSiteRoleCP(
-				siteRoleName = "Site Administrator",
-				userScreenName = "usersn");
+			JSONRole.assignSiteRoleToUser(
+				groupName = "World Cup - Russia 2018",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Log out and assert log out") {

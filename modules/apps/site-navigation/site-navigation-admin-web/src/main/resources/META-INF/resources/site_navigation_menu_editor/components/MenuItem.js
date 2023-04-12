@@ -51,7 +51,12 @@ export function MenuItem({item, onMenuItemRemoved}) {
 	} = useConstants();
 
 	const items = useItems();
-	const {siteNavigationMenuItemId, title, type} = item;
+	const {
+		parentSiteNavigationMenuItemId,
+		siteNavigationMenuItemId,
+		title,
+		type,
+	} = item;
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 	const selected = useSelectedMenuItemId() === siteNavigationMenuItemId;
 
@@ -150,10 +155,20 @@ export function MenuItem({item, onMenuItemRemoved}) {
 			event.stopPropagation();
 
 			if (isKeyboardDragging) {
+				let nextOrder = keyboardDragLayer.order;
+
+				if (
+					parentSiteNavigationMenuItemId ===
+						keyboardDragLayer.parentSiteNavigationMenuItemId &&
+					keyboardDragLayer.order > order
+				) {
+					nextOrder -= 1;
+				}
+
 				updateMenuItem({
 					editSiteNavigationMenuItemParentURL,
 					itemId: keyboardDragLayer.siteNavigationMenuItemId,
-					order: keyboardDragLayer.order,
+					order: nextOrder,
 					parentId: keyboardDragLayer.parentSiteNavigationMenuItemId,
 					portletNamespace,
 				}).then(({siteNavigationMenuItems}) => {

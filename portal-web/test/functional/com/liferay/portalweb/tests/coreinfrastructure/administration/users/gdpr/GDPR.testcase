@@ -2188,6 +2188,8 @@ definition {
 					for (var exportEntries : list "Blogs,Documents and Media,Message Boards,Web Content") {
 						LexiconEntry.viewNoEntry(rowEntry = ${exportEntries});
 					}
+
+					Click(locator1 = "Pagination#PREVIOUS_LINK");
 				}
 				else {
 					Pagination.viewResults(results = "Showing 1 to 5 of 5 entries.");

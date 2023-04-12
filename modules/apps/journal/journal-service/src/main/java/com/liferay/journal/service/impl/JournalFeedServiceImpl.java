@@ -42,7 +42,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	@Override
 	public JournalFeed addFeed(
 			long groupId, String feedId, boolean autoFeedId, String name,
-			String description, String ddmStructureKey, String ddmTemplateKey,
+			String description, long ddmStructureId, String ddmTemplateKey,
 			String ddmRendererTemplateKey, int delta, String orderByCol,
 			String orderByType, String targetLayoutFriendlyUrl,
 			String targetPortletId, String contentField, String feedType,
@@ -54,7 +54,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 
 		return journalFeedLocalService.addFeed(
 			getUserId(), groupId, feedId, autoFeedId, name, description,
-			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
+			ddmStructureId, ddmTemplateKey, ddmRendererTemplateKey, delta,
 			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
 			contentField, feedType, feedVersion, serviceContext);
 	}
@@ -102,7 +102,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	@Override
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
-			String ddmStructureKey, String ddmTemplateKey,
+			long ddmStructureId, String ddmTemplateKey,
 			String ddmRendererTemplateKey, int delta, String orderByCol,
 			String orderByType, String targetLayoutFriendlyUrl,
 			String targetPortletId, String contentField, String feedType,
@@ -115,7 +115,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 			getPermissionChecker(), feed, ActionKeys.UPDATE);
 
 		return journalFeedLocalService.updateFeed(
-			groupId, feedId, name, description, ddmStructureKey, ddmTemplateKey,
+			groupId, feedId, name, description, ddmStructureId, ddmTemplateKey,
 			ddmRendererTemplateKey, delta, orderByCol, orderByType,
 			targetLayoutFriendlyUrl, targetPortletId, contentField, feedType,
 			feedVersion, serviceContext);

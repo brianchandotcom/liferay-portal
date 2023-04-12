@@ -32,7 +32,6 @@ import com.liferay.journal.exception.FeedContentFieldException;
 import com.liferay.journal.exception.FeedIdException;
 import com.liferay.journal.exception.FeedNameException;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.base.JournalFeedLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
@@ -75,7 +74,7 @@ public class JournalFeedLocalServiceImpl
 	@Override
 	public JournalFeed addFeed(
 			long userId, long groupId, String feedId, boolean autoFeedId,
-			String name, String description, String ddmStructureKey,
+			String name, String description, long ddmStructureId,
 			String ddmTemplateKey, String ddmRendererTemplateKey, int delta,
 			String orderByCol, String orderByType,
 			String targetLayoutFriendlyUrl, String targetPortletId,
@@ -88,9 +87,12 @@ public class JournalFeedLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 		feedId = StringUtil.toUpperCase(StringUtil.trim(feedId));
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
 		_validate(
 			user.getCompanyId(), groupId, feedId, autoFeedId, name,
-			ddmStructureKey, targetLayoutFriendlyUrl, contentField);
+			ddmStructure, targetLayoutFriendlyUrl, contentField);
 
 		if (autoFeedId) {
 			feedId = String.valueOf(counterLocalService.increment());
@@ -108,7 +110,8 @@ public class JournalFeedLocalServiceImpl
 		feed.setFeedId(feedId);
 		feed.setName(name);
 		feed.setDescription(description);
-		feed.setDDMStructureKey(ddmStructureKey);
+		feed.setDDMStructureId(ddmStructure.getStructureId());
+		feed.setDDMStructureKey(ddmStructure.getStructureKey());
 		feed.setDDMTemplateKey(ddmTemplateKey);
 		feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
 		feed.setDelta(delta);
@@ -138,13 +141,6 @@ public class JournalFeedLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority());
-
-		// DDM Structure Link
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			groupId,
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
 
 		_ddmStructureLinkLocalService.addStructureLink(
 			_classNameLocalService.getClassNameId(JournalFeed.class),
@@ -221,9 +217,7 @@ public class JournalFeedLocalServiceImpl
 		// DDM Structure Link
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			feed.getGroupId(),
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			feed.getDDMStructureKey(), true);
+			feed.getDDMStructureId());
 
 		_ddmStructureLinkLocalService.deleteStructureLink(
 			_classNameLocalService.getClassNameId(JournalFeed.class),
@@ -323,7 +317,7 @@ public class JournalFeedLocalServiceImpl
 	@Override
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
-			String ddmStructureKey, String ddmTemplateKey,
+			long ddmStructureId, String ddmTemplateKey,
 			String ddmRendererTemplateKey, int delta, String orderByCol,
 			String orderByType, String targetLayoutFriendlyUrl,
 			String targetPortletId, String contentField, String feedFormat,
@@ -334,13 +328,17 @@ public class JournalFeedLocalServiceImpl
 
 		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
 		_validate(
-			feed.getCompanyId(), groupId, name, ddmStructureKey,
-			targetLayoutFriendlyUrl, contentField);
+			feed.getCompanyId(), name, ddmStructure, targetLayoutFriendlyUrl,
+			contentField);
 
 		feed.setName(name);
 		feed.setDescription(description);
-		feed.setDDMStructureKey(ddmStructureKey);
+		feed.setDDMStructureId(ddmStructure.getStructureId());
+		feed.setDDMStructureKey(ddmStructure.getStructureKey());
 		feed.setDDMTemplateKey(ddmTemplateKey);
 		feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
 		feed.setDelta(delta);
@@ -380,11 +378,6 @@ public class JournalFeedLocalServiceImpl
 		DDMStructureLink ddmStructureLink =
 			_ddmStructureLinkLocalService.getUniqueStructureLink(
 				classNameId, feed.getPrimaryKey());
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			groupId,
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
 
 		_ddmStructureLinkLocalService.updateStructureLink(
 			ddmStructureLink.getStructureLinkId(), classNameId,
@@ -441,8 +434,8 @@ public class JournalFeedLocalServiceImpl
 
 	private void _validate(
 			long companyId, long groupId, String feedId, boolean autoFeedId,
-			String name, String ddmStructureKey, String targetLayoutFriendlyUrl,
-			String contentField)
+			String name, DDMStructure ddmStructure,
+			String targetLayoutFriendlyUrl, String contentField)
 		throws PortalException {
 
 		if (!autoFeedId) {
@@ -464,12 +457,12 @@ public class JournalFeedLocalServiceImpl
 		}
 
 		_validate(
-			companyId, groupId, name, ddmStructureKey, targetLayoutFriendlyUrl,
+			companyId, name, ddmStructure, targetLayoutFriendlyUrl,
 			contentField);
 	}
 
 	private void _validate(
-			long companyId, long groupId, String name, String ddmStructureKey,
+			long companyId, String name, DDMStructure ddmStructure,
 			String targetLayoutFriendlyUrl, String contentField)
 		throws PortalException {
 
@@ -492,11 +485,6 @@ public class JournalFeedLocalServiceImpl
 
 			return;
 		}
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			groupId,
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 

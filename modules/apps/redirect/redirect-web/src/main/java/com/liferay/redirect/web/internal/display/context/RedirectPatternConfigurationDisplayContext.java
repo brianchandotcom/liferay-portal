@@ -14,6 +14,8 @@
 
 package com.liferay.redirect.web.internal.display.context;
 
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -98,6 +100,27 @@ public class RedirectPatternConfigurationDisplayContext {
 				"relativeURL",
 				PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL
 			).build()
+		).put(
+			"userAgents",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label", LanguageUtil.get(_httpServletRequest, "all")
+				).put(
+					"value", "all"
+				)
+			).put(
+				JSONUtil.put(
+					"label", LanguageUtil.get(_httpServletRequest, "bot")
+				).put(
+					"value", "bot"
+				)
+			).put(
+				JSONUtil.put(
+					"label", LanguageUtil.get(_httpServletRequest, "human")
+				).put(
+					"value", "human"
+				)
+			)
 		).build();
 	}
 

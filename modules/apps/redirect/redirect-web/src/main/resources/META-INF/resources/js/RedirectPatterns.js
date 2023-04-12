@@ -27,21 +27,6 @@ const REGEX_URL_ALLOW_RELATIVE = /((([A-Za-z]{3,9}:(?:\/\/)?)|\/(?:[-;:&=+$,\w]+
 
 const urlAllowRelative = (url) => REGEX_URL_ALLOW_RELATIVE.test(url);
 
-const USER_AGENT_OPTIONS = [
-	{
-		label: Liferay.Language.get('all'),
-		value: 'all',
-	},
-	{
-		label: Liferay.Language.get('bot'),
-		value: 'bot',
-	},
-	{
-		label: Liferay.Language.get('human'),
-		value: 'human',
-	},
-];
-
 const PatternFieldWithUserAgent = ({
 	destinationURL: initialDestinationUrl,
 	error,
@@ -53,6 +38,7 @@ const PatternFieldWithUserAgent = ({
 	portletNamespace,
 	strings,
 	userAgent: initialUserAgent,
+	userAgents,
 }) => {
 	const [destinationUrl, setDestinationUrl] = useState(initialDestinationUrl);
 	const [userAgent, setUserAgent] = useState(initialUserAgent);
@@ -176,7 +162,7 @@ const PatternFieldWithUserAgent = ({
 						}
 						value={userAgent}
 					>
-						{USER_AGENT_OPTIONS.map((item) => (
+						{userAgents.map((item) => (
 							<ClaySelect.Option
 								key={item.value}
 								label={item.label}
@@ -323,6 +309,7 @@ const RedirectPattern = ({
 	patterns: initialPatternsList,
 	portletNamespace,
 	strings,
+	userAgents,
 }) => {
 	const emptyRow = () => ({
 		destinationURL: '',
@@ -391,6 +378,7 @@ const RedirectPattern = ({
 							portletNamespace={portletNamespace}
 							strings={strings}
 							userAgent={item.userAgent}
+							userAgents={userAgents}
 						/>
 					))}
 				</div>
@@ -422,6 +410,7 @@ RedirectPattern.propTypes = {
 		absoluteURL: PropTypes.string,
 		relativeURL: PropTypes.string,
 	}),
+	userAgents: PropTypes.array.isRequired,
 };
 
 export default RedirectPattern;

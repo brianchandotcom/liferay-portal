@@ -57,7 +57,7 @@ function filterEmptyGroups(items) {
 		);
 }
 
-export default function normalizeDropdownItems(items = []) {
+function normalizeItems(items = []) {
 	const transformedItems = KBDropdownPropsTransformer({
 		items: items.map((item) => {
 			return {
@@ -73,4 +73,16 @@ export default function normalizeDropdownItems(items = []) {
 	const filteredItems = filterEmptyGroups(transformedItems);
 
 	return addSeparators(filteredItems);
+}
+
+export default function normalizeDropdownItems(items) {
+	if (items) {
+		return items.map((item) => {
+			return {
+				...item,
+				actions: normalizeItems(item.actions),
+				children: normalizeDropdownItems(item.children),
+			};
+		});
+	}
 }

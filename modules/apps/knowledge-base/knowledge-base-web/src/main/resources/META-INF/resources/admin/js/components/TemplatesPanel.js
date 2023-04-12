@@ -20,24 +20,12 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
-import normalizeDropdownItems from '../utils/normalizeDropdownItems';
+import normalizeItems from '../utils/normalizeItems';
 import ActionsDropdown from './ActionsDropdown';
 
 const ITEM_TYPES_SYMBOL = {
 	folder: 'folder',
 	template: 'document-text',
-};
-
-const normalizeItems = (items) => {
-	if (items) {
-		return items.map((item) => {
-			return {
-				...item,
-				actions: normalizeDropdownItems(item.actions),
-				children: normalizeItems(item.children),
-			};
-		});
-	}
 };
 
 export default function TemplatesPanel({items: initialItems, selectedItemId}) {

@@ -1,0 +1,56 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Lima Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CannotPostRatingToNonexistentFolder {
+		task ("When a post request is made using a non-existent folder ID") {
+			var response = DocumentFolderAPI.postRatingWithFolderID(
+				folderId = 12345,
+				ratingValue = 1);
+		}
+
+		echo(${response});
+
+		task ("Then there should be a 404 response telling me this folder is non-existent.") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "No Folder exists with the key");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CannotPutRatingToNonexistentFolder {
+		task ("When a put request is made using a nonexistent folder ID") {
+			var response = DocumentFolderAPI.putRatingWithFolderID(
+				folderId = 12345,
+				ratingValue = "0.5");
+		}
+
+		echo(${response});
+
+		task ("Then there should be a 404 response telling me this folder is non-existent.") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "No Folder exists with the key");
+		}
+	}
+
+}

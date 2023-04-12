@@ -512,11 +512,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("Add Web Content 1 as related asset for Web Contetn 2") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
-
+		task ("Add Web Content 1 as related asset for Web Content 2") {
 			WebContent.addExistingRelatedAssetCP(
 				assetTitle = "Web Content Title 1",
 				assetType = "Basic Web Content",
@@ -524,31 +520,40 @@ definition {
 		}
 
 		task ("Add a private page with an Asset Publisher that shows Web Content 1") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
+			JSONLayout.addPrivateLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Private Page Name",
+				site = "false");
 
-			PagesAdmin.addPrivatePage(pageName = "Private Page Name");
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Private Page Name",
+				site = "false",
+				widgetName = "Asset Publisher");
 
 			Navigator.gotoPrivateStagedSitePage(
 				pageName = "Private Page Name",
 				siteName = "Site Name");
-
-			Portlet.addPG(portletName = "Asset Publisher");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "Web Content Title 1",
 				assetType = "Basic Web Content");
 		}
 
-		task ("Configure asset publisher template to use Fill Content one") {
+		task ("Configure asset publisher template to use Full Content one") {
 			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Full Content");
 		}
 
 		task ("Add and configure related assets portlet") {
+			JSONLayout.addWidgetToPrivateLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Private Page Name",
+				site = "false",
+				widgetName = "Related Assets");
+
 			Navigator.gotoPrivateStagedSitePage(
 				pageName = "Private Page Name",
 				siteName = "Site Name");
-
-			Portlet.addPG(portletName = "Related Assets");
 
 			AssetPublisherPortlet.configureCategoriesFilterPG(
 				categoryName = "Category Name",

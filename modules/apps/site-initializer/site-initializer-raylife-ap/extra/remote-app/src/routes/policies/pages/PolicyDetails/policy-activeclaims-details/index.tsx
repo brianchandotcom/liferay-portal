@@ -53,8 +53,8 @@ export type RowContentType = {
 };
 
 export type RowType = {
-	rowContent: RowContentType;
-	rowIndex: number;
+	content: RowContentType;
+	index: number;
 };
 
 type ClaimTableElements = {
@@ -125,21 +125,18 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [policyId]);
 
-	const ComponentRow = ({rowContent, rowIndex}: RowType) => {
+	const ComponentRow = ({content, index}: RowType) => {
 		return (
 			<>
 				<ClayTable.Row>
 					{HEADERS.map((item, index) => (
 						<ClayTable.Cell className="border-0 px-5" key={index}>
-							<span>{rowContent[item.key]}</span>
+							<span>{content[item.key]}</span>
 						</ClayTable.Cell>
 					))}
 				</ClayTable.Row>
 
-				<Alert
-					claimNumber={rowContent.claim as number}
-					index={rowIndex}
-				/>
+				<Alert claimNumber={content.claim as number} index={index} />
 			</>
 		);
 	};
@@ -175,18 +172,13 @@ const PolicyActiveClaims = ({dataJSON, id}: PolicyItems) => {
 						</ClayTable.Head>
 
 						<ClayTable.Body>
-							{claimsTable.map(
-								(
-									rowContent: RowContentType,
-									rowIndex: number
-								) => (
-									<ComponentRow
-										key={rowIndex}
-										rowContent={rowContent}
-										rowIndex={rowIndex}
-									/>
-								)
-							)}
+							{claimsTable.map((rowContent, rowIndex) => (
+								<ComponentRow
+									content={rowContent}
+									index={rowIndex}
+									key={rowIndex}
+								/>
+							))}
 						</ClayTable.Body>
 					</ClayTable>
 				</div>

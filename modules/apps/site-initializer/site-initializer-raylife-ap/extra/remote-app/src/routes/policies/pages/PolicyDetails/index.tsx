@@ -90,36 +90,34 @@ const PolicyDetails = () => {
 	};
 
 	return (
-		<>
-			<div className="policy-details-container">
-				<div className="policy-detail-content">
-					{policy && (
-						<div className="row">
-							<div className="col-xl-3 d-flex">
-								<div className="mb-4 summary-policy-content w-100">
-									<PolicySummary summaryData={summaryData} />
-								</div>
-							</div>
-
-							<div className="col-xl-9 d-flex mb-4">
-								<PolicyDetail
-									dataJSON={application?.dataJSON}
-									email={application?.email}
-									phone={application?.phone}
-								/>
+		<div className="policy-details-container">
+			<div className="policy-detail-content">
+				{policy && (
+					<div className="row">
+						<div className="col-xl-3 d-flex">
+							<div className="mb-4 summary-policy-content w-100">
+								<PolicySummary summaryData={summaryData} />
 							</div>
 						</div>
-					)}
 
-					<PolicyActiveClaims
-						dataJSON={policy?.data?.dataJSON}
-						id={policy?.data?.id}
-					/>
+						<div className="col-xl-9 d-flex mb-4">
+							<PolicyDetail
+								dataJSON={application?.dataJSON}
+								email={application?.email}
+								phone={application?.phone}
+							/>
+						</div>
+					</div>
+				)}
 
-					<PolicyDetailsActivities />
-				</div>
+				<PolicyActiveClaims
+					dataJSON={policy?.data?.dataJSON}
+					id={policy?.data?.id}
+				/>
+
+				<PolicyDetailsActivities />
 			</div>
-		</>
+		</div>
 	);
 };
 

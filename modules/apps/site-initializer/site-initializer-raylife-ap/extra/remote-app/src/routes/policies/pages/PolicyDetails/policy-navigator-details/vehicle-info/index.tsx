@@ -22,19 +22,17 @@ type VehicleNavigatorType = {
 	dataJSON: {form: []};
 };
 
-const VehicleInfo = ({dataJSON}: VehicleNavigatorType) => {
-	const applicationData = dataJSON;
-
+const VehicleInfo = ({dataJSON: applicationData}: VehicleNavigatorType) => {
 	return (
 		<div>
 			{applicationData?.form.map(
-				(currentVehicle: PolicyDetailsType, indexVehicle: number) => (
+				(currentVehicle: PolicyDetailsType, index) => (
 					<div
 						className="bg-neutral-0 h-100 pl-6 policy-detail-border pr-6 py-6"
-						key={indexVehicle}
+						key={index}
 					>
 						<div className="d-flex flex-row flex-wrap justify-content-between">
-							{indexVehicle !== 0 && (
+							{index !== 0 && (
 								<div className="align-self-start col-12 layout-line mb-6 mt-1"></div>
 							)}
 

@@ -18,10 +18,10 @@ import './index.scss';
 import {useEffect, useState} from 'react';
 
 import NavigationBar from '../../../../../common/components/navigation-bar';
-import sortedByDate from '../../../../../common/utils/sortedByDate';
+import sortedDateByDescOrder from '../../../../../common/utils/sortedDateByDescOrder';
 import DriverInfo from './driver-info';
 import HistoryInfo from './history-info';
-import arrayOfHistory from './policyNavigatorDataHistory';
+import policyHistory from './policyNavigatorDataHistory';
 import {ApplicationPolicyDetailsType, dataJSONType} from './types';
 import VehicleInfo from './vehicle-info';
 
@@ -47,22 +47,17 @@ const PolicyDetail = ({
 
 	useEffect(() => {
 		try {
-			const newDataJSON = JSON.parse(dataJSON);
-			setApplicationData(newDataJSON);
+			setApplicationData(JSON.parse(dataJSON));
 		}
 		catch (error) {
 			console.warn(error);
 		}
 	}, [dataJSON, email, phone]);
 
-	const arraySortedByDate = arrayOfHistory.sort(sortedByDate);
+	const policyHistorySortedByDate = policyHistory.sort(sortedDateByDescOrder);
 
 	useEffect(() => {
-		const supportArray = arrayOfHistory.map(() => {
-			return false;
-		});
-
-		setShowPanel(supportArray);
+		setShowPanel(policyHistory.map(() => false));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -93,7 +88,7 @@ const PolicyDetail = ({
 				)}
 				{active === NavBarLabel.History && (
 					<HistoryInfo
-						arraySortedByDate={arraySortedByDate}
+						InfoPanels={policyHistorySortedByDate}
 						setShowPanel={setShowPanel}
 						showPanel={showPanel}
 					/>

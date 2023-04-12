@@ -16,22 +16,22 @@ import PanelComponent from '../../../../../../common/components/panel';
 import {InfoPanelType} from '../types';
 
 type HistoryInfoType = {
-	arraySortedByDate: InfoPanelType[];
+	InfoPanels: InfoPanelType[];
 	setShowPanel: (panel: boolean[]) => void;
 	showPanel: boolean[];
 };
 
+const ContentDescription = ({description}: {description: string}) => (
+	<div className="d-flex justify-content-between">
+		<div>{description}</div>
+	</div>
+);
+
 const HistoryInfo = ({
-	arraySortedByDate,
+	InfoPanels,
 	setShowPanel,
 	showPanel,
 }: HistoryInfoType) => {
-	const ContentDescription = ({description}: {description: string}) => (
-		<div className="d-flex justify-content-between">
-			<div>{description}</div>
-		</div>
-	);
-
 	const displayHistoryPanel = (index: number) => {
 		const supportArray = [...showPanel];
 
@@ -42,7 +42,7 @@ const HistoryInfo = ({
 
 	return (
 		<div>
-			{arraySortedByDate?.map((item: InfoPanelType, index: number) => {
+			{InfoPanels?.map((item: InfoPanelType, index: number) => {
 				return (
 					<div
 						className="bg-neutral-0 dotted-line flex-row history-detail-border p-6 position-relative"
@@ -60,7 +60,7 @@ const HistoryInfo = ({
 											description={item.description}
 										/>
 									}
-									hasExpandedButton={true}
+									hasExpandedButton
 									isPanelExpanded={showPanel[index]}
 									key={index}
 									setIsPanelExpanded={() =>

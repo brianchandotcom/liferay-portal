@@ -19,7 +19,7 @@ import {ClaimComponentsType} from '../Types';
 import InsuranceInfo from './insurance-info';
 
 import './index.scss';
-import DamageSummary from './damage-summary/index';
+import DamageSummary from './damage-summary';
 import IncidentDetail from './incident-details';
 
 enum NavBarLabel {
@@ -28,13 +28,14 @@ enum NavBarLabel {
 	DamageSummary = 'Damage Summary',
 }
 
+const navbarLabel = [
+	NavBarLabel.InsuranceInfo,
+	NavBarLabel.IncidentDetail,
+	NavBarLabel.DamageSummary,
+];
+
 const ClaimNavigator = ({claimData}: ClaimComponentsType) => {
-	const navbarLabel = [
-		NavBarLabel.InsuranceInfo,
-		NavBarLabel.IncidentDetail,
-		NavBarLabel.DamageSummary,
-	];
-	const [active, setActive] = useState(navbarLabel[2]);
+	const [active, setActive] = useState(navbarLabel[0]);
 
 	return (
 		<div className="bg-neutral-0 claims-details-nav-container h-100 mb-6 rounded w-100">

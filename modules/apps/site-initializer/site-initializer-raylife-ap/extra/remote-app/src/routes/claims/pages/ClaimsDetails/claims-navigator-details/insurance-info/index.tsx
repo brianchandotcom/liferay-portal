@@ -22,6 +22,13 @@ import './index.scss';
 
 type ClaimTypeJSON = {[keys: string]: string};
 
+function addSecurityMask(input: string): string {
+	const lastDigits = input.substring(input.length - 4);
+	const hiddenDigits = '*'.repeat(input.length - 4);
+
+	return hiddenDigits + lastDigits;
+}
+
 const InsuranceInfo = (claimData: ClaimComponentsType) => {
 	const [claimDetails, setClaimDetails] = useState<ClaimTypeJSON>();
 
@@ -73,7 +80,7 @@ const InsuranceInfo = (claimData: ClaimComponentsType) => {
 
 							<div className="list-subtext pb-2">
 								VIN#:
-								{claimDetails.InsuredVIN}
+								{addSecurityMask(claimDetails.InsuredVIN)}
 							</div>
 						</div>
 

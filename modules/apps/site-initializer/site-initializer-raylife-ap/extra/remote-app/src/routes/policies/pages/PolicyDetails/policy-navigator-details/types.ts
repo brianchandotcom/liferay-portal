@@ -21,6 +21,7 @@ export type ApplicationPolicyDetailsType = {
 export type PolicyDetailsType = {
 	annualMileage: number;
 	creditRating: string;
+	dateOfBirth: string;
 	features: string;
 	firstName: string;
 	gender: string;

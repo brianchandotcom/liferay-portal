@@ -13,6 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
 import './index.scss';
@@ -29,7 +30,7 @@ const Galerry: React.FC<DamageSummaryProps> = ({images, size}) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [activeImage, setActiveImage] = useState(0);
 
-	const hasNextImage = activeImage < images?.length - 1;
+	const hasNextImage = activeImage < images.length - 1;
 	const hasPreviousImage = activeImage > 0;
 
 	const handleImageClick = (index: number) => {
@@ -55,9 +56,9 @@ const Galerry: React.FC<DamageSummaryProps> = ({images, size}) => {
 
 	return (
 		<div className="d-flex flex-wrap gallery-container">
-			{images?.map((image, index) => (
+			{images.map((image, index) => (
 				<div
-					className="10px; image-container m-3"
+					className="image-container m-3"
 					key={index}
 					onClick={() => handleImageClick(index)}
 				>
@@ -82,9 +83,7 @@ const Galerry: React.FC<DamageSummaryProps> = ({images, size}) => {
 
 					<div className="bg-neutral-0 d-flex flex-column justify-content-between modal-content p-3 position-relative rounded-sm">
 						<div className="align-items-center d-flex justify-content-between text-brand-secondary-darken-5">
-							<div>
-								{activeImage + 1}/{images?.length}
-							</div>
+							<div>{`${activeImage + 1}/${images.length}`}</div>
 
 							<div
 								className="modal-close"
@@ -95,29 +94,39 @@ const Galerry: React.FC<DamageSummaryProps> = ({images, size}) => {
 						</div>
 
 						<div
-							className={`modal-prev position-absolute p-1 display-4
-							${!hasPreviousImage ? 'button-unable' : ''}`}
+							className={classNames(
+								'modal-prev position-absolute p-1 display-4',
+								{
+									'button-unable': !hasPreviousImage,
+								}
+							)}
 							onClick={handlePrevClick}
 						>
 							<ClayIcon symbol="angle-left" />
 						</div>
 
 						<div
-							className={`modal-next position-absolute p-1 display-4
-							${!hasNextImage ? 'button-unable' : ''}`}
+							className={classNames(
+								'modal-next position-absolute p-1 display-4',
+								{
+									'button-unable': !hasNextImage,
+								}
+							)}
 							onClick={handleNextClick}
 						>
 							<ClayIcon symbol="angle-right" />
 						</div>
 
 						<div className="align-items-center d-flex h-100 justify-content-center modal-carousel-container overflow-hidden position-relative w-100">
-							{images?.map((image, index) => (
+							{images.map((image, index) => (
 								<div
-									className={`align-items-center d-flex h-100 justify-content-center modal-carousel-container overflow-hidden position-absolute w-100 ${
-										index === activeImage
-											? 'slide--active'
-											: ''
-									}`}
+									className={classNames(
+										'align-items-center d-flex h-100 justify-content-center modal-carousel-container overflow-hidden position-absolute w-100',
+										{
+											'slide--active':
+												index === activeImage,
+										}
+									)}
 									key={index}
 								>
 									{index === activeImage && (
@@ -132,13 +141,12 @@ const Galerry: React.FC<DamageSummaryProps> = ({images, size}) => {
 						</div>
 
 						<div className="bg-brand-primary-lighten-6 d-flex gallery-modal-preview-bar justify-content-center">
-							{images?.map((image, index) => (
+							{images.map((image, index) => (
 								<div
-									className={`item m-2 ${
-										index === activeImage
-											? 'active rounded-sm'
-											: ''
-									}`}
+									className={classNames('item m-2', {
+										'active rounded-sm':
+											index === activeImage,
+									})}
 									key={index}
 									onClick={() => setActiveImage(index)}
 								>

@@ -160,7 +160,7 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 		).and(
 		).authorizeHttpRequests(
 			customizer -> customizer.antMatchers(
-				"/"
+				"/ready"
 			).permitAll(
 			).anyRequest(
 			).authenticated()

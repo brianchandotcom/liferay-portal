@@ -14,8 +14,6 @@
 
 package com.liferay.portal.configuration.module.configuration.internal.model.listener;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.internal.ConfigurationOverrideInstance;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -23,15 +21,14 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationEvent;
 import org.osgi.service.cm.ConfigurationListener;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -78,30 +75,6 @@ public class PortletPreferencesModelListener
 		_clearConfigurationOverrideInstance(portletPreferences);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_stringConfigurationPidMappingServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ConfigurationPidMapping.class, null,
-				(serviceReference, emitter) -> {
-					ConfigurationPidMapping configurationPidMapping =
-						bundleContext.getService(serviceReference);
-
-					Class<?> clazz =
-						configurationPidMapping.getConfigurationBeanClass();
-
-					if (clazz.getAnnotation(Settings.Config.class) == null) {
-						emitter.emit(
-							configurationPidMapping.getConfigurationPid());
-					}
-				});
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_stringConfigurationPidMappingServiceTrackerMap.close();
-	}
-
 	private void _clearConfigurationOverrideInstance(
 		PortletPreferences portletPreferences) {
 
@@ -112,8 +85,7 @@ public class PortletPreferencesModelListener
 		}
 
 		ConfigurationPidMapping configurationPidMapping =
-			_stringConfigurationPidMappingServiceTrackerMap.getService(
-				portletPreferences.getPortletId());
+			_getConfigurationPidMapping(portletPreferences.getPortletId());
 
 		if (configurationPidMapping == null) {
 			return;
@@ -123,7 +95,26 @@ public class PortletPreferencesModelListener
 			configurationPidMapping.getConfigurationBeanClass());
 	}
 
-	private ServiceTrackerMap<String, ConfigurationPidMapping>
-		_stringConfigurationPidMappingServiceTrackerMap;
+	private ConfigurationPidMapping _getConfigurationPidMapping(
+		String configurationId) {
+
+		ConfigurationPidMapping configurationPidMapping =
+			_settingsLocatorHelper.getConfigurationPidMapping(configurationId);
+
+		if (configurationPidMapping == null) {
+			return null;
+		}
+
+		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
+
+		if (clazz.getAnnotation(Settings.Config.class) == null) {
+			return configurationPidMapping;
+		}
+
+		return null;
+	}
+
+	@Reference
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -126,7 +127,7 @@ public class SavePortalSettingsFormMVCActionCommand
 			settings.getModifiableSettings();
 
 		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(getSettingsId());
+			SettingsLocatorHelperUtil.getSettingsDescriptor(getSettingsId());
 
 		Set<String> multiValuedKeys = new HashSet<>(
 			settingsDescriptor.getMultiValuedKeys());

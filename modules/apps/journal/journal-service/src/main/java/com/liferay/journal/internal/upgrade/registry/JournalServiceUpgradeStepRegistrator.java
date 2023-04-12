@@ -94,7 +94,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -148,7 +148,7 @@ public class JournalServiceUpgradeStepRegistrator
 				_portletPreferencesLocalService),
 			new UpgradeJournalDisplayPreferences(),
 			new UpgradeLastPublishDate(),
-			new UpgradePortletSettings(_settingsFactory),
+			new UpgradePortletSettings(_settingsLocatorHelper),
 			dbProcessContext -> {
 				try {
 					_deleteTempImages();
@@ -513,7 +513,7 @@ public class JournalServiceUpgradeStepRegistrator
 	private ResourceLocalService _resourceLocalService;
 
 	@Reference
-	private SettingsFactory _settingsFactory;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 	@Reference
 	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;

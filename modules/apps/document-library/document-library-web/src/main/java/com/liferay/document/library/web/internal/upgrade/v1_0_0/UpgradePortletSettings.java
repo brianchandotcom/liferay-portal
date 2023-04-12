@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
@@ -25,8 +25,8 @@ import com.liferay.portlet.documentlibrary.constants.DLConstants;
 public class UpgradePortletSettings
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
 
-	public UpgradePortletSettings(SettingsFactory settingsFactory) {
-		super(settingsFactory);
+	public UpgradePortletSettings(SettingsLocatorHelper settingsLocatorHelper) {
+		super(settingsLocatorHelper);
 	}
 
 	@Override

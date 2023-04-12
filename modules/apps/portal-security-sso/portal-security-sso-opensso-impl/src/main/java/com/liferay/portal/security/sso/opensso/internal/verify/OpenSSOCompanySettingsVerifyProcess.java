@@ -16,6 +16,7 @@ package com.liferay.portal.security.sso.opensso.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
@@ -101,10 +102,18 @@ public class OpenSSOCompanySettingsVerifyProcess
 		return OpenSSOConstants.SERVICE_NAME;
 	}
 
+	@Override
+	protected SettingsLocatorHelper getSettingsLocatorHelper() {
+		return _settingsLocatorHelper;
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private SettingsFactory _settingsFactory;
+
+	@Reference
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

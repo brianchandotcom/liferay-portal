@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -297,7 +298,7 @@ public abstract class SettingsConfigurationAction
 
 	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
 		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(
+			SettingsLocatorHelperUtil.getSettingsDescriptor(
 				getSettingsId(actionRequest));
 
 		Set<String> multiValuedKeys = settingsDescriptor.getMultiValuedKeys();

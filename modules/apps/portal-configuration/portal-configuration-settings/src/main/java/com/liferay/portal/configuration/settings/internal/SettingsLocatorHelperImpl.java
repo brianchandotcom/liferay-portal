@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.settings.LocationVariableResolver;
 import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.PropertiesSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -62,7 +63,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
@@ -71,7 +71,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.cm.ManagedServiceFactory;
@@ -81,7 +80,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera
@@ -113,21 +111,22 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getConfigurationBeanSettings(String configurationPid) {
-		String ocdPid = _configurationPidMappingServiceTrackerMap.getService(
-			configurationPid);
-
-		if (ocdPid == null) {
-			ocdPid = configurationPid;
-		}
-
 		Settings configurationBeanSettings = _configurationBeanSettings.get(
-			ocdPid);
+			_toOCDPid(configurationPid));
 
 		if (configurationBeanSettings == null) {
 			return _portalPropertiesSettings;
 		}
 
 		return configurationBeanSettings;
+	}
+
+	@Override
+	public ConfigurationPidMapping getConfigurationPidMapping(
+		String configurationId) {
+
+		return _configurationPidMappingServiceTrackerMap.getService(
+			configurationId);
 	}
 
 	@Override
@@ -200,6 +199,22 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		return getConfigurationBeanSettings(settingsId);
 	}
 
+	@Override
+	public SettingsDescriptor getSettingsDescriptor(String settingsId) {
+		settingsId = PortletIdCodec.decodePortletName(settingsId);
+
+		ConfigurationPidMapping configurationPidMapping =
+			_configurationPidMappingServiceTrackerMap.getService(settingsId);
+
+		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
+
+		if (clazz.getAnnotation(Settings.Config.class) == null) {
+			return new ConfigurationBeanClassSettingsDescriptor(clazz);
+		}
+
+		return new AnnotatedSettingsDescriptor(clazz);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_portalPropertiesSettings = new PropertiesSettings(
@@ -222,58 +237,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 				bundleContext, ConfigurationPidMapping.class, null,
 				ServiceReferenceMapperFactory.createFromFunction(
 					bundleContext,
-					ConfigurationPidMapping::getConfigurationPid),
-				new ServiceTrackerCustomizer
-					<ConfigurationPidMapping, String>() {
-
-					@Override
-					public String addingService(
-						ServiceReference<ConfigurationPidMapping>
-							serviceReference) {
-
-						ConfigurationPidMapping configurationPidMapping =
-							bundleContext.getService(serviceReference);
-
-						Class<?> clazz =
-							configurationPidMapping.getConfigurationBeanClass();
-
-						if (clazz.getAnnotation(Settings.Config.class) ==
-								null) {
-
-							String mappedPid =
-								configurationPidMapping.getConfigurationPid();
-							String ocdPid =
-								ConfigurationPidUtil.getConfigurationPid(
-									configurationPidMapping.
-										getConfigurationBeanClass());
-
-							if (!Objects.equals(mappedPid, ocdPid)) {
-								return ocdPid;
-							}
-						}
-
-						bundleContext.ungetService(serviceReference);
-
-						return null;
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<ConfigurationPidMapping>
-							serviceReference,
-						String ocdPid) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<ConfigurationPidMapping>
-							serviceReference,
-						String ocdPid) {
-
-						bundleContext.ungetService(serviceReference);
-					}
-
-				});
+					ConfigurationPidMapping::getConfigurationPid));
 	}
 
 	@Deactivate
@@ -455,6 +419,24 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		};
 	}
 
+	private String _toOCDPid(String configurationPid) {
+		ConfigurationPidMapping configurationPidMapping =
+			_configurationPidMappingServiceTrackerMap.getService(
+				configurationPid);
+
+		if (configurationPidMapping == null) {
+			return configurationPid;
+		}
+
+		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
+
+		if (clazz.getAnnotation(Settings.Config.class) != null) {
+			return configurationPid;
+		}
+
+		return ConfigurationPidUtil.getConfigurationPid(clazz);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SettingsLocatorHelperImpl.class);
 
@@ -462,7 +444,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private BundleTracker<List<SafeCloseable>> _bundleTracker;
 	private final Map<String, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
-	private ServiceTrackerMap<String, String>
+	private ServiceTrackerMap<String, ConfigurationPidMapping>
 		_configurationPidMappingServiceTrackerMap;
 
 	@Reference

@@ -16,7 +16,7 @@ package com.liferay.wiki.internal.upgrade.registry;
 
 import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -57,7 +57,7 @@ public class WikiServiceUpgradeStepRegistrator
 		registry.register(
 			"0.0.3", "1.0.0", new UpgradeCompanyId(),
 			new UpgradeLastPublishDate(), new UpgradePortletPreferences(),
-			new UpgradePortletSettings(_settingsFactory),
+			new UpgradePortletSettings(_settingsLocatorHelper),
 			new WikiPageResourceUpgradeProcess(), new WikiPageUpgradeProcess());
 
 		registry.register("1.0.0", "1.1.0", new WikiNodeUpgradeProcess());
@@ -115,7 +115,7 @@ public class WikiServiceUpgradeStepRegistrator
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private SettingsFactory _settingsFactory;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

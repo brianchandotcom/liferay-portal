@@ -45,10 +45,6 @@ public class SettingsFactoryUtil {
 		return _settingsFactory.getSettings(settingsLocator);
 	}
 
-	public static SettingsDescriptor getSettingsDescriptor(String settingsId) {
-		return _settingsFactory.getSettingsDescriptor(settingsId);
-	}
-
 	public static SettingsFactory getSettingsFactory() {
 		return _settingsFactory;
 	}

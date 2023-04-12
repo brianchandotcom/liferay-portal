@@ -18,7 +18,7 @@ import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.web.internal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.upgrade.BaseStagingGroupTypeSettingsUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -36,7 +36,8 @@ public class MBWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.registerInitialization();
 
 		registry.register(
-			"0.0.1", "1.0.0", new UpgradePortletSettings(_settingsFactory));
+			"0.0.1", "1.0.0",
+			new UpgradePortletSettings(_settingsLocatorHelper));
 
 		registry.register(
 			"1.0.0", "1.0.1",
@@ -53,6 +54,6 @@ public class MBWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private SettingsFactory _settingsFactory;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

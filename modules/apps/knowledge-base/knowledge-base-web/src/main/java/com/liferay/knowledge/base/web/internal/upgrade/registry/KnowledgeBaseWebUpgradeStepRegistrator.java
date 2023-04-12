@@ -18,7 +18,7 @@ import com.liferay.knowledge.base.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.knowledge.base.web.internal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.knowledge.base.web.internal.upgrade.v1_1_0.UpgradePortletPreferences;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,7 +38,7 @@ public class KnowledgeBaseWebUpgradeStepRegistrator
 
 		registry.register(
 			"0.0.1", "1.0.0", new UpgradePortletId(),
-			new UpgradePortletSettings(_settingsFactory));
+			new UpgradePortletSettings(_settingsLocatorHelper));
 
 		registry.register("1.0.0", "1.1.0", new UpgradePortletPreferences());
 
@@ -52,6 +52,6 @@ public class KnowledgeBaseWebUpgradeStepRegistrator
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
-	private SettingsFactory _settingsFactory;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

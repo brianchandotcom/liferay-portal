@@ -32,6 +32,4 @@ public interface SettingsFactory {
 	public Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException;
 
-	public SettingsDescriptor getSettingsDescriptor(String settingsId);
-
 }

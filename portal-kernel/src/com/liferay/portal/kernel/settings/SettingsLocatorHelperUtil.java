@@ -50,6 +50,10 @@ public class SettingsLocatorHelperUtil {
 				portletId, configurationPid, parentSettings);
 	}
 
+	public static SettingsDescriptor getSettingsDescriptor(String settingsId) {
+		return _settingsLocatorHelper.getSettingsDescriptor(settingsId);
+	}
+
 	public static SettingsLocatorHelper getSettingsLocatorHelper() {
 		return _settingsLocatorHelper;
 	}

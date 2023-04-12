@@ -16,7 +16,7 @@ package com.liferay.blogs.web.internal.upgrade.v1_0_0;
 
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.PortletKeys;
 public class UpgradePortletSettings
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
 
-	public UpgradePortletSettings(SettingsFactory settingsFactory) {
-		super(settingsFactory);
+	public UpgradePortletSettings(SettingsLocatorHelper settingsLocatorHelper) {
+		super(settingsLocatorHelper);
 	}
 
 	@Override

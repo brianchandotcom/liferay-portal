@@ -24,7 +24,7 @@ import com.liferay.knowledge.base.internal.upgrade.v4_4_0.KBGroupServiceConfigur
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -133,7 +133,7 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 		registry.register(
 			"2.0.0", "2.0.1",
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_1.
-				UpgradePortletSettings(_settingsFactory));
+				UpgradePortletSettings(_settingsLocatorHelper));
 
 		registry.register("2.0.1", "2.0.2", new KBArticleUpgradeProcess());
 
@@ -204,7 +204,7 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
-	private SettingsFactory _settingsFactory;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

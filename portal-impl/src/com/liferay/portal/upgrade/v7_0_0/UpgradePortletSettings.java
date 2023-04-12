@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -37,8 +37,8 @@ import java.util.Set;
  */
 public abstract class UpgradePortletSettings extends UpgradeProcess {
 
-	public UpgradePortletSettings(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	public UpgradePortletSettings(SettingsLocatorHelper settingsLocatorHelper) {
+		_settingsLocatorHelper = settingsLocatorHelper;
 	}
 
 	protected void copyPortletSettingsAsServiceSettings(
@@ -164,7 +164,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			}
 
 			SettingsDescriptor settingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(serviceName);
+				_settingsLocatorHelper.getSettingsDescriptor(serviceName);
 
 			resetPortletPreferencesValues(
 				portletId, ownerType, settingsDescriptor);
@@ -190,7 +190,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 			if (resetPortletInstancePreferences) {
 				SettingsDescriptor portletInstanceSettingsDescriptor =
-					_settingsFactory.getSettingsDescriptor(portletId);
+					_settingsLocatorHelper.getSettingsDescriptor(portletId);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -207,7 +207,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			}
 
 			SettingsDescriptor serviceSettingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(serviceName);
+				_settingsLocatorHelper.getSettingsDescriptor(serviceName);
 
 			resetPortletPreferencesValues(
 				portletId, ownerType, serviceSettingsDescriptor);
@@ -264,6 +264,6 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePortletSettings.class);
 
-	private final SettingsFactory _settingsFactory;
+	private final SettingsLocatorHelper _settingsLocatorHelper;
 
 }

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -269,7 +270,7 @@ public class AnalyticsMessageSenderClientImpl
 			new CompanyServiceSettingsLocator(companyId, ocd.id()));
 
 		SettingsDescriptor settingsDescriptor =
-			_settingsFactory.getSettingsDescriptor(ocd.id());
+			_settingsLocatorHelper.getSettingsDescriptor(ocd.id());
 
 		if (settingsDescriptor == null) {
 			return configurationProperties;
@@ -308,5 +309,8 @@ public class AnalyticsMessageSenderClientImpl
 
 	@Reference
 	private SettingsFactory _settingsFactory;
+
+	@Reference
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

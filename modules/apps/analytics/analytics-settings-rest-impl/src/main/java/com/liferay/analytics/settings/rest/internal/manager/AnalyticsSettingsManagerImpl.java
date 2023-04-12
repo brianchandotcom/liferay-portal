@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -542,7 +542,8 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		}
 
 		SettingsDescriptor settingsDescriptor =
-			_settingsFactory.getSettingsDescriptor(_getConfigurationPid());
+			_settingsLocatorHelper.getSettingsDescriptor(
+				_getConfigurationPid());
 
 		Set<String> allKeys = settingsDescriptor.getAllKeys();
 
@@ -745,6 +746,6 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 	private Portal _portal;
 
 	@Reference
-	private SettingsFactory _settingsFactory;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

@@ -29,7 +29,7 @@ export default function useGetActivationKeysData(project, initialFilter) {
 	);
 
 	useEffect(() => {
-		if (!loading) {
+		if (!loading && data.getActivationKeys) {
 			setActivationKeys(data.getActivationKeys.items);
 		}
 	}, [data, loading]);

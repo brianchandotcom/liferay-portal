@@ -216,11 +216,11 @@ export async function getCatalogs() {
 	return response.json();
 }
 
-export async function getCatalogByExternalReferenceCode(
-	externalReferenceCode: string
+export async function getCatalog(
+	catalogId: number
 ) {
 	const response = await fetch(
-		`/o/headless-commerce-admin-catalog/v1.0/catalog/by-externalReferenceCode/${externalReferenceCode}`,
+		`/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId}`,
 		{headers, method: 'GET'}
 	);
 

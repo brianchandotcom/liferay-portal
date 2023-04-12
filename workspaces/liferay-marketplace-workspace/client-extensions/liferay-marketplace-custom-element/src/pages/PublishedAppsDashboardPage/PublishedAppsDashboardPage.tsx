@@ -11,10 +11,10 @@ import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/Pu
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
 	getAccounts,
-	getCatalogByExternalReferenceCode,
 	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
+	getCatalog,
 } from '../../utils/api';
 import {
 	DashboardListItems,
@@ -69,6 +69,7 @@ const memberTableHeaders = [
 
 const initialAccountsState: Account[] = [
 	{
+		customFields: {CatalogId: 0},
 		externalReferenceCode: '',
 		id: 0,
 		name: '',
@@ -95,6 +96,7 @@ export function PublishedAppsDashboardPage() {
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
 	const [selectedAccount, setSelectedAccount] = useState<Account>({
+		customFields: {CatalogId: 0},
 		externalReferenceCode: '',
 		id: 0,
 		name: '',
@@ -213,6 +215,7 @@ export function PublishedAppsDashboardPage() {
 			const accountsList = accountsResponse.items.map(
 				(account: Account) => {
 					return {
+						customFields: account.customFields,
 						externalReferenceCode: account.externalReferenceCode,
 						id: account.id,
 						name: account.name,
@@ -227,16 +230,10 @@ export function PublishedAppsDashboardPage() {
 
 	useEffect(() => {
 		(async () => {
-			const accountERC = selectedAccount.externalReferenceCode;
+			const accountCatalogId = selectedAccount.customFields.CatalogId;
 
-			if (accountERC) {
-				const currentCatalog = await getCatalogByExternalReferenceCode(
-					selectedAccount.externalReferenceCode
-				);
-
-				const currentCatalogId = currentCatalog.id;
-
-				if (currentCatalogId !== 0) {
+			if (accountCatalogId) {
+				if (accountCatalogId !== 0) {
 					const appList = await getProducts();
 
 					const appListProductIds: number[] =
@@ -251,7 +248,7 @@ export function PublishedAppsDashboardPage() {
 
 					appList.items.forEach(
 						(product: ProductResponseProps, index: number) => {
-							if (product.catalogId === currentCatalogId) {
+							if (product.catalogId === accountCatalogId) {
 								newAppList.push({
 									catalogId: product.catalogId,
 									externalReferenceCode:

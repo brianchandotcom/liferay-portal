@@ -1,4 +1,5 @@
 type Account = {
+	customFields: {[key: string]: number};
 	externalReferenceCode: string;
 	id: number;
 	name: string;

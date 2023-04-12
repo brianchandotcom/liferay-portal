@@ -25,6 +25,7 @@ import com.liferay.commerce.order.rule.model.COREntryTable;
 import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.commerce.order.rule.service.base.COREntryLocalServiceBaseImpl;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -54,12 +55,10 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -592,14 +591,12 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 				accountGroupIds = new long[] {0};
 			}
 
-			LongStream longStream = Arrays.stream(accountGroupIds);
+			List<Long> accountGroupIdList = TransformUtil.transformToList(
+				accountGroupIds, Long::valueOf);
 
 			predicate = predicate.and(
 				accountGroupCOREntryRel.classPK.in(
-					longStream.boxed(
-					).toArray(
-						Long[]::new
-					)));
+					accountGroupIdList.toArray(new Long[0])));
 		}
 		else {
 			predicate = predicate.and(

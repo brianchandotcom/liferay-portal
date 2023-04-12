@@ -596,7 +596,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "approve-button"
+																"key": "approve-button-mdf-request"
 															},
 															"fragmentConfig": {
 																"channelAccountManager": true,
@@ -615,7 +615,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "pending-marketing-review-button"
+																"key": "pending-marketing-review-button-mdf-request"
 															},
 															"fragmentConfig": {
 																"channelAccountManager": true,
@@ -634,7 +634,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "request-more-info-button"
+																"key": "request-more-info-button-mdf-request"
 															},
 															"fragmentConfig": {
 																"channelAccountManager": true,
@@ -653,7 +653,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "marketing-director-review-button"
+																"key": "marketing-director-review-button-mdf-request"
 															},
 															"fragmentConfig": {
 																"channelAccountManager": true,
@@ -672,7 +672,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "reject-button"
+																"key": "reject-button-mdf-request"
 															},
 															"fragmentConfig": {
 																"channelAccountManager": true,

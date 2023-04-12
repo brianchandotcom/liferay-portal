@@ -230,7 +230,7 @@ public class AdminAccountGroupResourceTest
 	protected AdminAccountGroup testDeleteAccountGroup_addAdminAccountGroup()
 		throws Exception {
 
-		return _postAccountGroup(randomAccountGroup());
+		return _postAccountGroup(randomAdminAccountGroup());
 	}
 
 	@Override
@@ -238,7 +238,7 @@ public class AdminAccountGroupResourceTest
 			testDeleteAccountGroupByExternalReferenceCode_addAdminAccountGroup()
 		throws Exception {
 
-		return _postAccountGroup(randomAccountGroup());
+		return _postAccountGroup(randomAdminAccountGroup());
 	}
 
 	@Override
@@ -247,7 +247,7 @@ public class AdminAccountGroupResourceTest
 		throws Exception {
 
 		AdminAccountGroup adminAccountGroup = _postAccountGroup(
-			randomAccountGroup());
+			randomAdminAccountGroup());
 
 		return adminAccountGroup.getExternalReferenceCode();
 	}
@@ -256,7 +256,7 @@ public class AdminAccountGroupResourceTest
 	protected AdminAccountGroup testGetAccountGroup_addAdminAccountGroup()
 		throws Exception {
 
-		return _postAccountGroup(randomAccountGroup());
+		return _postAccountGroup(randomAdminAccountGroup());
 	}
 
 	@Override
@@ -264,7 +264,7 @@ public class AdminAccountGroupResourceTest
 			testGetAccountGroupByExternalReferenceCode_addAdminAccountGroup()
 		throws Exception {
 
-		return _postAccountGroup(randomAccountGroup());
+		return _postAccountGroup(randomAdminAccountGroup());
 	}
 
 	@Override
@@ -278,7 +278,7 @@ public class AdminAccountGroupResourceTest
 	@Override
 	protected Long testGetAccountIdAccountGroupsPage_getId() throws Exception {
 		AdminAccountGroup adminAccountGroup = _postAccountGroup(
-			randomAccountGroup());
+			randomAdminAccountGroup());
 
 		return adminAccountGroup.getId();
 	}
@@ -288,7 +288,7 @@ public class AdminAccountGroupResourceTest
 			testGraphQLAdminAccountGroup_addAdminAccountGroup()
 		throws Exception {
 
-		return _postAccountGroup(randomAccountGroup());
+		return _postAccountGroup(randomAdminAccountGroup());
 	}
 
 	@Override

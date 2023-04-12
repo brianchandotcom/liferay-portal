@@ -91,6 +91,10 @@ public class TextObjectFieldBusinessType extends BaseObjectFieldBusinessType {
 		Map<String, String> objectFieldSettingsValues =
 			getObjectFieldSettingsValues(objectFieldSettings);
 
+		validateBooleanObjectFieldSetting(
+			objectField.getName(),
+			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
+			objectFieldSettingsValues);
 		validateRelatedObjectFieldSettings(
 			objectField, ObjectFieldSettingConstants.NAME_SHOW_COUNTER,
 			ObjectFieldSettingConstants.NAME_MAX_LENGTH,

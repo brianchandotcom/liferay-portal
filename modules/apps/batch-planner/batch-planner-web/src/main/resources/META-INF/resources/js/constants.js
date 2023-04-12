@@ -24,13 +24,33 @@ export const HEADERS = new Headers({
 });
 
 export const CREATE_STRATEGIES = [
-	{default: false, label: 'only-add-new-records', name: 'INSERT'},
-	{default: false, label: 'only-update-records', name: 'UPDATE'},
-	{default: true, label: 'add-or-update-records', name: 'UPSERT'},
+	{
+		default: false,
+		label: Liferay.Language.get('only-add-new-records'),
+		name: 'INSERT',
+	},
+	{
+		default: false,
+		label: Liferay.Language.get('only-update-records'),
+		name: 'UPDATE',
+	},
+	{
+		default: true,
+		label: Liferay.Language.get('add-or-update-records'),
+		name: 'UPSERT',
+	},
 ];
 export const UPDATE_STRATEGIES = [
-	{default: false, label: 'update-changed-record-fields', name: 'INSERT'},
-	{default: true, label: 'overwrite-records', name: 'UPDATE'},
+	{
+		default: false,
+		label: Liferay.Language.get('update-changed-record-fields'),
+		name: 'INSERT',
+	},
+	{
+		default: true,
+		label: Liferay.Language.get('overwrite-records'),
+		name: 'UPDATE',
+	},
 ];
 export const HEADLESS_BATCH_PLANNER_URL = '/o/batch-planner/v1.0';
 export const HEADLESS_BATCH_ENGINE_URL = '/o/headless-batch-engine/v1.0';

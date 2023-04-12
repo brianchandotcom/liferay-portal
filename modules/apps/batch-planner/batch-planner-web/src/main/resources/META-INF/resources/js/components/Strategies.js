@@ -70,7 +70,7 @@ function StrategyItems({portletNamespace}) {
 			.map((strategy) => (
 				<ClaySelect.Option
 					key={strategy.name}
-					label={Liferay.Language.get(strategy.label)}
+					label={strategy.label}
 					value={strategy.name}
 				/>
 			));

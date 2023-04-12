@@ -19,7 +19,7 @@ definition {
 	test VerifyDisplayFrequencies {
 		property portal.acceptance = "true";
 
-		var facetValueNameList = "1 Year Unlimited Mileage Warranty,Limited Lifetime,3 Year Unlimited Mileage Warranty,Steel,Rubber,Aluminum,Cast Iron,Neoprene,Ceramic,Plastic";
+		var facetTermList = "1 Year Unlimited Mileage Warranty,Limited Lifetime,3 Year Unlimited Mileage Warranty,Steel,Rubber,Aluminum,Cast Iron,Neoprene,Ceramic,Plastic";
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -29,10 +29,11 @@ definition {
 
 		IFrame.closeFrame();
 
-		for (var facetValueName : list ${facetValueNameList}) {
+		for (var facetTerm : list ${facetTermList}) {
 			AssertElementNotPresent(
-				facetValueName = ${facetValueName},
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+				key_facetType = "Specification Facet",
+				key_termValue = ${facetTerm},
+				locator1 = "Search#FACET_TERM_FREQUENCIES");
 		}
 	}
 

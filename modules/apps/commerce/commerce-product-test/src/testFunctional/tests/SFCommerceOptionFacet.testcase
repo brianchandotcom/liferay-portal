@@ -19,7 +19,7 @@ definition {
 	test VerifyDisplayFrequencies {
 		property portal.acceptance = "false";
 
-		var facetValueNameList = "6,12,24,48,112";
+		var facetTermList = "6,12,24,48,112";
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
@@ -29,10 +29,11 @@ definition {
 
 		IFrame.closeFrame();
 
-		for (var facetValueName : list ${facetValueNameList}) {
+		for (var facetTerm : list ${facetTermList}) {
 			AssertElementNotPresent(
-				facetValueName = ${facetValueName},
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+				key_facetType = "Option Facet",
+				key_termValue = ${facetTerm},
+				locator1 = "Search#FACET_TERM_FREQUENCIES");
 		}
 	}
 

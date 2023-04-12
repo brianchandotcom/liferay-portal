@@ -34,35 +34,41 @@ definition {
 		}
 
 		task ("Then assert the new ranges with the correct counts are shown") {
-			AssertElementPresent(
-				facetValueCount = 23,
-				facetValueName = "$ 0.00 - $ 59.99",
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+			AssertTextEquals.assertPartialText(
+				key_facetType = "Price Range Facet",
+				key_termValue = "$ 0.00 - $ 59.99",
+				locator1 = "Search#FACET_TERM_FREQUENCIES",
+				value1 = 23);
 
-			AssertElementPresent(
-				facetValueCount = 10,
-				facetValueName = "$ 60.00 - $ 99.99",
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+			AssertTextEquals.assertPartialText(
+				key_facetType = "Price Range Facet",
+				key_termValue = "$ 60.00 - $ 99.99",
+				locator1 = "Search#FACET_TERM_FREQUENCIES",
+				value1 = 10);
 
-			AssertElementPresent(
-				facetValueCount = 10,
-				facetValueName = "$ 100.00 - $ 199.99",
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+			AssertTextEquals.assertPartialText(
+				key_facetType = "Price Range Facet",
+				key_termValue = "$ 100.00 - $ 199.99",
+				locator1 = "Search#FACET_TERM_FREQUENCIES",
+				value1 = 10);
 
-			AssertElementPresent(
-				facetValueCount = 4,
-				facetValueName = "$ 200.00 - $ 499.99",
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+			AssertTextEquals.assertPartialText(
+				key_facetType = "Price Range Facet",
+				key_termValue = "$ 200.00 - $ 499.99",
+				locator1 = "Search#FACET_TERM_FREQUENCIES",
+				value1 = 4);
 
-			AssertElementPresent(
-				facetValueCount = 2,
-				facetValueName = "$ 500.00 - $ 999.99",
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+			AssertTextEquals.assertPartialText(
+				key_facetType = "Price Range Facet",
+				key_termValue = "$ 500.00 - $ 999.99",
+				locator1 = "Search#FACET_TERM_FREQUENCIES",
+				value1 = 2);
 
-			AssertElementPresent(
-				facetValueCount = 0,
-				facetValueName = "$ 1,000.00+",
-				locator1 = "Search#FACET_DISPLAY_FREQUENCIES_COUNT");
+			AssertTextEquals.assertPartialText(
+				key_facetType = "Price Range Facet",
+				key_termValue = "$ 1,000.00+",
+				locator1 = "Search#FACET_TERM_FREQUENCIES",
+				value1 = 0);
 		}
 
 		task ("And then the user is able to filter products using the first two ranges on the newly set Price Range Facet widget") {

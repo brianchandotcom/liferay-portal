@@ -106,13 +106,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FACET_DISPLAY_FREQUENCIES</td>
-	<td>//small[contains(@class,'term-count')]/preceding-sibling::span[contains(.,'${facetValueName}')]</td>
+	<td>FACET_TERM</td>
+	<td>//section[contains(@class,'portlet') and contains(.,'${key_facetType}')]//li[contains(@class,'facet-value')]//label[contains(.,'${key_termValue}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FACET_DISPLAY_FREQUENCIES_COUNT</td>
-	<td>//small[contains(@class,'term-count')]/preceding-sibling::span[contains(.,'${facetValueName}')]//following-sibling::small[contains(.,'${facetValueCount}')]</td>
+	<td>FACET_TERM_FREQUENCIES</td>
+	<td>//section[contains(@class,'portlet') and contains(.,'${key_facetType}')]//li[contains(@class,'facet-value') and descendant::label[contains(.,'${key_termValue}')]]//small[contains(@class,'term-count')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -193,11 +193,6 @@
 <tr>
 	<td>SEARCH_SUGGESTED_SPELLING</td>
 	<td>//div[contains(@class,'search-suggested-spelling')]//li[contains(.,'Did you mean:')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_TYPE_FACET_TERM_COUNT</td>
-	<td>//li[@class='facet-value']//small[@class='term-count']</td>
 	<td></td>
 </tr>
 <tr>

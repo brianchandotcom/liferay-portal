@@ -5874,7 +5874,10 @@ definition {
 
 		Pagination.viewResults(results = "Showing 1 to 2 of 3 entries.");
 
-		AssertElementNotPresent(locator1 = "Search#SEARCH_TYPE_FACET_TERM_COUNT");
+		AssertElementNotPresent(
+			key_facetType = "Type Facet",
+			key_termValue = "",
+			locator1 = "Search#FACET_TERM_FREQUENCIES");
 	}
 
 	macro viewSharedBlog {

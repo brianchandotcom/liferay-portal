@@ -1920,8 +1920,9 @@ definition {
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
 		AssertElementNotPresent(
-			facetValueName = "Custom Facet",
-			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+			key_facetType = "Custom Facet",
+			key_termValue = "",
+			locator1 = "Search#FACET_TERM");
 	}
 
 	@priority = 4
@@ -1980,8 +1981,9 @@ definition {
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
 		AssertElementNotPresent(
-			facetValueName = "Custom Facet",
-			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+			key_facetType = "Custom Facet",
+			key_termValue = "",
+			locator1 = "Search#FACET_TERM");
 	}
 
 	@description = "This is a use case for LPS-167195. Facet selection and search results should match after using browser back button"
@@ -4151,8 +4153,9 @@ definition {
 		Refresh();
 
 		AssertElementNotPresent(
-			facetValueName = "DM Folder Name 1",
-			locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+			key_facetType = "Folder Facet",
+			key_termValue = "DM Folder Name 1",
+			locator1 = "Search#FACET_TERM_FREQUENCIES");
 	}
 
 	@priority = 4

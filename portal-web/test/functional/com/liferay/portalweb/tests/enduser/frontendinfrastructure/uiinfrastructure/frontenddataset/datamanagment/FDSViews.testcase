@@ -144,6 +144,69 @@ definition {
 		}
 	}
 
+	@description = "LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
+	@priority = 5
+	test CanAssertPagination {
+		task ("When The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "Channel");
+		}
+
+		task ("And Add a 6 views") {
+			FrontendDataSetAdmin.createDataSetView(
+				dataSetName = "Test Dataset",
+				description = "Description Test",
+				key_name = "View Test 1");
+
+			FrontendDataSetAdmin.addDataSetView(
+				description = "Description Test",
+				key_name = "View Test 2");
+
+			FrontendDataSetAdmin.addDataSetView(
+				description = "Description Test",
+				key_name = "View Test 3");
+
+			FrontendDataSetAdmin.addDataSetView(
+				description = "Description Test",
+				key_name = "View Test 4");
+
+			FrontendDataSetAdmin.addDataSetView(
+				description = "Description Test",
+				key_name = "View Test 5");
+
+			FrontendDataSetAdmin.addDataSetView(
+				description = "Description Test",
+				key_name = "View Test 6");
+		}
+
+		task ("And Change the pagination to 4 items") {
+			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
+		}
+
+		task ("Then Confirm that 2 pages are shown") {
+			AssertElementPresent(locator1 = "Pagination#NEXT_LINK");
+
+			for (var num : list "1,2,3,4") {
+				AssertElementPresent(
+					entryName = "View Test ${num}",
+					locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+		}
+
+		task ("When the user deletes two Views") {
+			for (var num : list "1,2") {
+				FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test");
+			}
+		}
+
+		task ("Then Confirm that only one page is displayed") {
+			Pagination.viewResults(results = "Showing 1 to 4 of 4 entries.");
+		}
+	}
+
 	@description = "LPS-180898. Confirm that the user can cancel deletion when clicking close (X) button"
 	@priority = 3
 	test CanCancelDeletionOnCloseButton {

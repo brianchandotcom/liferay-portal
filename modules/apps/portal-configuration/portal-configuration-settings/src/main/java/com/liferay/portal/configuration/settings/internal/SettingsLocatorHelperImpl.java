@@ -19,6 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -111,6 +112,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	@Override
 	public Settings getConfigurationBeanSettings(String configurationPid) {
+		_bundleTrackerDCLSingleton.getSingleton(this::_createBundleTracker);
+
 		Settings configurationBeanSettings = _configurationBeanSettings.get(
 			_toOCDPid(configurationPid));
 
@@ -124,6 +127,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	@Override
 	public ConfigurationPidMapping getConfigurationPidMapping(
 		String configurationId) {
+
+		_bundleTrackerDCLSingleton.getSingleton(this::_createBundleTracker);
 
 		return _configurationPidMappingServiceTrackerMap.getService(
 			configurationId);
@@ -204,7 +209,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		settingsId = PortletIdCodec.decodePortletName(settingsId);
 
 		ConfigurationPidMapping configurationPidMapping =
-			_configurationPidMappingServiceTrackerMap.getService(settingsId);
+			getConfigurationPidMapping(settingsId);
 
 		Class<?> clazz = configurationPidMapping.getConfigurationBeanClass();
 
@@ -226,12 +231,6 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		_bundleContext = bundleContext;
 
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE,
-			new ConfigurationBeanClassBundleTrackerCustomizer());
-
-		_bundleTracker.open();
-
 		_configurationPidMappingServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ConfigurationPidMapping.class, null,
@@ -244,7 +243,17 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	protected void deactivate() {
 		_configurationPidMappingServiceTrackerMap.close();
 
-		_bundleTracker.close();
+		_bundleTrackerDCLSingleton.destroy(BundleTracker::close);
+	}
+
+	private BundleTracker<?> _createBundleTracker() {
+		BundleTracker<?> bundleTracker = new BundleTracker<>(
+			_bundleContext, Bundle.ACTIVE,
+			new ConfigurationBeanClassBundleTrackerCustomizer());
+
+		bundleTracker.open();
+
+		return bundleTracker;
 	}
 
 	private PortletPreferences _getPortletInstancePortletPreferences(
@@ -272,6 +281,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private Settings _getScopedConfigurationBeanSettings(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK,
 		String configurationPid, Settings parentSettings) {
+
+		_bundleTrackerDCLSingleton.getSingleton(this::_createBundleTracker);
 
 		ScopedConfigurationManagedServiceFactory
 			scopedConfigurationManagedServiceFactory =
@@ -421,8 +432,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 	private String _toOCDPid(String configurationPid) {
 		ConfigurationPidMapping configurationPidMapping =
-			_configurationPidMappingServiceTrackerMap.getService(
-				configurationPid);
+			getConfigurationPidMapping(configurationPid);
 
 		if (configurationPidMapping == null) {
 			return configurationPid;
@@ -441,7 +451,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		SettingsLocatorHelperImpl.class);
 
 	private BundleContext _bundleContext;
-	private BundleTracker<List<SafeCloseable>> _bundleTracker;
+	private final DCLSingleton<BundleTracker<?>> _bundleTrackerDCLSingleton =
+		new DCLSingleton<>();
 	private final Map<String, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
 	private ServiceTrackerMap<String, ConfigurationPidMapping>

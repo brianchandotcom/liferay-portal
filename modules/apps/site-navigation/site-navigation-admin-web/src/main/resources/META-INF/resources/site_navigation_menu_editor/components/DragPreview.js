@@ -13,7 +13,7 @@
  */
 
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDragLayer} from 'react-dnd';
 
 import {useConstants} from '../contexts/ConstantsContext';
@@ -24,8 +24,8 @@ import getDescendantsCount from '../utils/getDescendantsCount';
 const PREVIEW_HEIGHT = 64;
 const HANDLER_OFFSET = 10;
 
-const getItemStyles = (wrapperElement, currentOffset, ref, rtl) => {
-	if (!currentOffset || !ref.current) {
+const getItemStyles = (wrapperElement, currentOffset, element, rtl) => {
+	if (!currentOffset || !element) {
 		return {
 			display: 'none',
 		};
@@ -59,7 +59,7 @@ const getItemStyles = (wrapperElement, currentOffset, ref, rtl) => {
 };
 
 export default function DragPreview({wrapperRef}) {
-	const ref = useRef();
+	const [itemElement, setItemElement] = useState();
 
 	const {languageId, portletNamespace} = useConstants();
 
@@ -109,7 +109,7 @@ export default function DragPreview({wrapperRef}) {
 
 	useEffect(() => {
 		if (keyboardDragLayer) {
-			ref.current?.scrollIntoView({
+			itemElement?.scrollIntoView({
 				behavior: 'auto',
 				block: 'center',
 				inline: 'center',
@@ -131,11 +131,11 @@ export default function DragPreview({wrapperRef}) {
 
 			<div
 				className="site-navigation__drag-preview__content"
-				ref={ref}
+				ref={setItemElement}
 				style={getItemStyles(
 					wrapperRef.current,
 					currentOffset,
-					ref,
+					itemElement,
 					rtl
 				)}
 			>

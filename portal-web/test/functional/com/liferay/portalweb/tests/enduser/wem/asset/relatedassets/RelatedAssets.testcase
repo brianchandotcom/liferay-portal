@@ -540,14 +540,6 @@ definition {
 		}
 
 		task ("Configure asset publisher template to use Fill Content one") {
-			Navigator.gotoPrivateStagedSitePage(
-				pageName = "Private Page Name",
-				siteName = "Site Name");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Asset Publisher",
-				portletOption = "Configuration");
-
 			AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Full Content");
 		}
 

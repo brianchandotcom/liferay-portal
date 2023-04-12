@@ -233,7 +233,7 @@ public class IllegalImportsCheck extends BaseFileCheck {
 				}
 
 				if (isAttributeValue(_AVOID_STREAM_KEY, absolutePath) &&
-					line.contains("java.util.stream.Stream")) {
+					line.contains("java.util.stream")) {
 
 					addMessage(
 						fileName,

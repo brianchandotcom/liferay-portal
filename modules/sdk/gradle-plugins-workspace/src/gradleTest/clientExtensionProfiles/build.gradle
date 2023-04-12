@@ -1,0 +1,25 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":client-extension:deployDev"
+
+	doLast {
+		def clientExtensionProject = project ":client-extension"
+
+		def clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
+
+		def clientExtensionConfigJSONFile = new File(clientExtensionBuildDir, "client-extension.client-extension-config.json")
+
+		assert !clientExtensionConfigJSONFile.text.contains("key=foo")
+
+		assert clientExtensionConfigJSONFile.text.contains("key=bar")
+
+		def fooFile = new File(clientExtensionBuildDir, "static/foo.txt")
+
+		assert !fooFile.exists()
+
+		def barFile = new File(clientExtensionBuildDir, "static/bar.txt")
+
+		assert barFile.exists()
+	}
+}

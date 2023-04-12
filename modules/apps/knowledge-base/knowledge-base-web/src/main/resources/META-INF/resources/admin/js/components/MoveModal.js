@@ -15,14 +15,13 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-import {fetch, navigate, objectToFormData, openToast} from 'frontend-js-web';
+import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import getSearchItems from '../utils/getSearchItems';
 import normalizeItems from '../utils/normalizeItems';
 import showSuccessMessage from '../utils/showSuccessMessage';
-import ActionsDropdown from './ActionsDropdown';
 import SearchField from './SearchField';
 
 const ITEM_TYPES_SYMBOL = {
@@ -35,7 +34,7 @@ const ITEM_TYPES = {
 	folder: 'folder',
 };
 
-export default function NavigationPanel({
+export default function MoveModal({
 	items: initialItems,
 	moveKBObjectURL,
 	portletNamespace,
@@ -48,17 +47,6 @@ export default function NavigationPanel({
 	]);
 
 	const [searchActive, setSearchActive] = useState(false);
-
-	const handleClickItem = (event, item) => {
-		if (event.defaultPrevented) {
-			return;
-		}
-
-		event.stopPropagation();
-		event.preventDefault();
-
-		navigate(item.href);
-	};
 
 	const handleItemMove = (item, parentItem, index) => {
 		if (
@@ -126,7 +114,6 @@ export default function NavigationPanel({
 				handleSearchChange={handleSearchChange}
 				items={searchItems}
 			/>
-
 			{!searchActive && (
 				<ClayTreeView
 					defaultItems={items}
@@ -139,19 +126,12 @@ export default function NavigationPanel({
 					{(item) => {
 						return (
 							<ClayTreeView.Item
-								actions={ActionsDropdown({
-									actions: item.actions,
+								className={classnames({
+									'knowledge-base-navigation-item-active':
+										item.id === selectedItemId,
 								})}
-								onClick={(event) => {
-									handleClickItem(event, item);
-								}}
 							>
-								<ClayTreeView.ItemStack
-									className={classnames({
-										'knowledge-base-navigation-item-active':
-											item.id === selectedItemId,
-									})}
-								>
+								<ClayTreeView.ItemStack>
 									<ClayIcon
 										symbol={ITEM_TYPES_SYMBOL[item.type]}
 									/>
@@ -162,17 +142,7 @@ export default function NavigationPanel({
 								<ClayTreeView.Group items={item.children}>
 									{(item) => {
 										return (
-											<ClayTreeView.Item
-												actions={ActionsDropdown({
-													actions: item.actions,
-												})}
-												onClick={(event) => {
-													handleClickItem(
-														event,
-														item
-													);
-												}}
-											>
+											<ClayTreeView.Item>
 												<ClayIcon
 													symbol={
 														ITEM_TYPES_SYMBOL[
@@ -205,7 +175,7 @@ const itemShape = {
 
 itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 
-NavigationPanel.propTypes = {
+MoveModal.propTypes = {
 	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
 	selectedItemId: PropTypes.string,
 };

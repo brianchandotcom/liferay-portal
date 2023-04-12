@@ -101,6 +101,40 @@ public class KBAdminNavigationDisplayContext {
 			).build());
 	}
 
+	public JSONArray getKBFolderDataJSONArray() throws PortalException {
+		return JSONUtil.put(
+			JSONUtil.put(
+				"actions",
+				_kbDropdownItemsProvider.getKBFolderDropdownItems(null)
+			).put(
+				"children",
+				_getKBFolderDataJSONArray(
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+			).put(
+				"classNameId",
+				PortalUtil.getClassNameId(KBFolderConstants.getClassName())
+			).put(
+				"href",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view.jsp"
+				).buildString()
+			).put(
+				"id", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID
+			).put(
+				"name", _themeDisplay.translate("home")
+			).put(
+				"type", "folder"
+			));
+	}
+
+	public long getSelectedItemId() {
+		return ParamUtil.getLong(
+			_httpServletRequest, "selectedItemId",
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
 	public List<JSONObject> getVerticalNavigationJSONObjects()
 		throws PortalException {
 
@@ -125,7 +159,7 @@ public class KBAdminNavigationDisplayContext {
 					"/knowledge_base/view_kb_templates")) {
 
 				active = true;
-				navigationItemsJSONArray = _getChildrenJSONArray();
+				navigationItemsJSONArray = getKBFolderDataJSONArray();
 			}
 
 			verticalNavigationItems.add(
@@ -273,35 +307,15 @@ public class KBAdminNavigationDisplayContext {
 		return childrenJSONArray;
 	}
 
-	private JSONArray _getChildrenJSONArray() throws PortalException {
-		return JSONUtil.put(
-			JSONUtil.put(
-				"actions",
-				_kbDropdownItemsProvider.getKBFolderDropdownItems(null)
-			).put(
-				"children",
-				_getChildrenJSONArray(
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID)
-			).put(
-				"classNameId",
-				PortalUtil.getClassNameId(KBFolderConstants.getClassName())
-			).put(
-				"href",
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCPath(
-					"/admin/view.jsp"
-				).buildString()
-			).put(
-				"id", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID
-			).put(
-				"name", _themeDisplay.translate("home")
-			).put(
-				"type", "folder"
-			));
+	private KBFolder _getKBFolder(long kbFolderId) throws PortalException {
+		if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return KBFolderServiceUtil.getKBFolder(kbFolderId);
+		}
+
+		return null;
 	}
 
-	private JSONArray _getChildrenJSONArray(long parentFolderId)
+	private JSONArray _getKBFolderDataJSONArray(long parentFolderId)
 		throws PortalException {
 
 		JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
@@ -322,7 +336,8 @@ public class KBAdminNavigationDisplayContext {
 					_kbDropdownItemsProvider.getKBFolderDropdownItems(
 						kbFolder, _selectedItemAncestorIds)
 				).put(
-					"children", _getChildrenJSONArray(kbFolder.getKbFolderId())
+					"children",
+					_getKBFolderDataJSONArray(kbFolder.getKbFolderId())
 				).put(
 					"classNameId", kbFolder.getClassNameId()
 				).put(
@@ -375,14 +390,6 @@ public class KBAdminNavigationDisplayContext {
 		}
 
 		return childrenJSONArray;
-	}
-
-	private KBFolder _getKBFolder(long kbFolderId) throws PortalException {
-		if (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return KBFolderServiceUtil.getKBFolder(kbFolderId);
-		}
-
-		return null;
 	}
 
 	private JSONArray _getKBTemplateChildrenJSONArray() {

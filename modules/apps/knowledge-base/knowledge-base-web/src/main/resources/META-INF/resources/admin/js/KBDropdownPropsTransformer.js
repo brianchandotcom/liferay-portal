@@ -28,6 +28,25 @@ const ACTIONS = {
 		});
 	},
 
+	move({moveItemUrl}) {
+		openModal({
+			buttons: [
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('move'),
+					type: 'confirm',
+				},
+			],
+			title: Liferay.Language.get('move'),
+			url: moveItemUrl,
+		});
+	},
+
 	permissions({permissionsURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

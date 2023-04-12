@@ -38,6 +38,7 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.KBFo
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -735,6 +736,29 @@ public class KBDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMoveActionUnsafeConsumer(KBArticle kbArticle) {
 
+		if (FeatureFlagManagerUtil.isEnabled("LPS-180292")) {
+			return dropdownItem -> {
+				dropdownItem.putData("action", "move");
+				dropdownItem.putData(
+					"moveItemUrl",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/common/move_object_modal.jsp"
+					).setParameter(
+						"selectedItemId", kbArticle.getResourcePrimKey()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
+
+				dropdownItem.setIcon("move-folder");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						"move"));
+			};
+		}
+
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				PortletURLBuilder.create(
@@ -766,6 +790,28 @@ public class KBDropdownItemsProvider {
 
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMoveActionUnsafeConsumer(KBFolder kbFolder) {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-180292")) {
+			return dropdownItem -> {
+				dropdownItem.putData("action", "move");
+				dropdownItem.putData(
+					"moveItemUrl",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/common/move_object_modal.jsp"
+					).setParameter(
+						"selectedItemId", kbFolder.getKbFolderId()
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString());
+				dropdownItem.setIcon("move-folder");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_liferayPortletRequest.getHttpServletRequest(),
+						"move"));
+			};
+		}
 
 		return dropdownItem -> {
 			dropdownItem.setHref(

@@ -51,7 +51,6 @@ definition {
 			var pages = selenium.getElementValue("//tr[td[contains(@class,'line-content')][contains(.,'textAlign = \"right\"')]]/td[contains(@class,'line-number')]");
 			var camelCase = StringUtil.replace(${camelCase}, " ", "");
 			var payload = StringUtil.replace(${payload}, ${payload}, "${payload}}");
-			var parameters = JSONUtil2._addJSONObject(JSON = ${parameters}, key = "virtualHost", value = "\"${virtualHost}\"");
 
 			ProductMenu.gotoPortlet(
 				category = "Content",

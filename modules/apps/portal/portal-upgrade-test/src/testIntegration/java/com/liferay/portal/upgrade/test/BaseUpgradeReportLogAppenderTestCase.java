@@ -263,7 +263,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			_appender.stop();
 
 			_assertReport(
-				"The document library storage size is " +
+				"Document library storage size: " +
 					LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US));
 		}
 	}
@@ -293,7 +293,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			_appender.stop();
 
 			_assertReport(
-				"The document library storage size is " +
+				"Document library storage size: " +
 					LanguageUtil.formatStorageSize(1048576, LocaleUtil.US));
 		}
 	}

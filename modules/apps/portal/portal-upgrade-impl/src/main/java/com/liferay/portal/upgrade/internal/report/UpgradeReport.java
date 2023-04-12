@@ -348,8 +348,7 @@ public class UpgradeReport {
 				String formattedStorageSize = LanguageUtil.formatStorageSize(
 					_documentLibrarySize, LocaleUtil.US);
 
-				return "The document library storage size is " +
-					formattedStorageSize;
+				return formattedStorageSize;
 			}
 		).put(
 			"tables.initial.final.rows",

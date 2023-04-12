@@ -99,14 +99,13 @@ definition {
 		}
 
 		task ("Add an URL type item to navigation menu") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
-
-			NavigationMenusAdmin.addItem(
-				item = "URL",
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "url",
 				url = "https://www.liferay.com",
-				urlName = "Liferay");
+				useNewTab = "false");
 		}
 
 		task ("Enable Local Live") {

@@ -129,15 +129,19 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 			"The value '" + componentName + "' is not a valid OSGi component");
 	}
 
-	private synchronized Map<String, String> _getBundleSymbolicNamesMap(
+	private Map<String, String> _getBundleSymbolicNamesMap(
 		String absolutePath) {
 
-		if (_bundleSymbolicNamesMap == null) {
-			_bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
+		Map<String, String> bundleSymbolicNamesMap = _bundleSymbolicNamesMap;
+
+		if (bundleSymbolicNamesMap == null) {
+			bundleSymbolicNamesMap = BNDSourceUtil.getBundleSymbolicNamesMap(
 				_getRootDirName(absolutePath));
+
+			_bundleSymbolicNamesMap = bundleSymbolicNamesMap;
 		}
 
-		return _bundleSymbolicNamesMap;
+		return bundleSymbolicNamesMap;
 	}
 
 	private String _getComponentName(
@@ -230,12 +234,16 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		return javaClass;
 	}
 
-	private synchronized String _getRootDirName(String absolutePath) {
-		if (_rootDirName == null) {
-			_rootDirName = JavaSourceUtil.getRootDirName(absolutePath);
+	private String _getRootDirName(String absolutePath) {
+		String rootDirName = _rootDirName;
+
+		if (rootDirName == null) {
+			rootDirName = JavaSourceUtil.getRootDirName(absolutePath);
+
+			_rootDirName = rootDirName;
 		}
 
-		return _rootDirName;
+		return rootDirName;
 	}
 
 	private static final String _IGNORE_TARGET_ATTRIBUTE_VALUES_KEY =
@@ -246,9 +254,9 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 	private static final Pattern _componentNamePattern = Pattern.compile(
 		"\\(component\\.name=([^)]+)\\)");
 
-	private Map<String, String> _bundleSymbolicNamesMap;
+	private volatile Map<String, String> _bundleSymbolicNamesMap;
 	private final Map<String, JavaClass> _javaClassMap =
 		new ConcurrentHashMap<>();
-	private String _rootDirName;
+	private volatile String _rootDirName;
 
 }

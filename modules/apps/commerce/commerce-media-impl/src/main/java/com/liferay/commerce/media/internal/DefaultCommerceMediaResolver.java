@@ -22,6 +22,7 @@ import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
@@ -96,30 +97,49 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Override
 	public String getDownloadVirtualProductSampleURL(
-			long commerceAccountId, long cpDefinitionId, long fileEntryId)
+			String className, long classPK, long commerceAccountId,
+			long fileEntryId)
 		throws PortalException {
+
+		if (className.equals(CPInstance.class.getName())) {
+			return StringBundler.concat(
+				_portal.getPathModule(), StringPool.SLASH,
+				CommerceMediaConstants.SERVLET_PATH, "/accounts/",
+				commerceAccountId,
+				CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_SKU_SAMPLE,
+				classPK, CommerceMediaConstants.URL_SEPARATOR_FILE,
+				fileEntryId);
+		}
 
 		return StringBundler.concat(
 			_portal.getPathModule(), StringPool.SLASH,
 			CommerceMediaConstants.SERVLET_PATH, "/accounts/",
 			commerceAccountId,
 			CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_PRODUCT_SAMPLE,
-			cpDefinitionId, CommerceMediaConstants.URL_SEPARATOR_FILE,
-			fileEntryId);
+			classPK, CommerceMediaConstants.URL_SEPARATOR_FILE, fileEntryId);
 	}
 
 	@Override
 	public String getDownloadVirtualProductURL(
-			long commerceAccountId, long cpDefinitionId, long fileEntryId)
+			String className, long classPK, long commerceAccountId,
+			long fileEntryId)
 		throws PortalException {
+
+		if (className.equals(CPInstance.class.getName())) {
+			return StringBundler.concat(
+				_portal.getPathModule(), StringPool.SLASH,
+				CommerceMediaConstants.SERVLET_PATH, "/accounts/",
+				commerceAccountId,
+				CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_SKU, classPK,
+				CommerceMediaConstants.URL_SEPARATOR_FILE, fileEntryId);
+		}
 
 		return StringBundler.concat(
 			_portal.getPathModule(), StringPool.SLASH,
 			CommerceMediaConstants.SERVLET_PATH, "/accounts/",
 			commerceAccountId,
-			CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_PRODUCT,
-			cpDefinitionId, CommerceMediaConstants.URL_SEPARATOR_FILE,
-			fileEntryId);
+			CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_PRODUCT, classPK,
+			CommerceMediaConstants.URL_SEPARATOR_FILE, fileEntryId);
 	}
 
 	@Override

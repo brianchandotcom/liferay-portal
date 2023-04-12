@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 
 import {criteriaShape, propertyShape} from '../../utils/types.es';
 import {
@@ -24,32 +24,17 @@ import {
 } from '../../utils/utils';
 import CriteriaGroup from './CriteriaGroup.es';
 
-class CriteriaBuilder extends Component {
-	static propTypes = {
-		criteria: criteriaShape,
-		editing: PropTypes.bool.isRequired,
-		emptyContributors: PropTypes.bool.isRequired,
-
-		/**
-		 * Name of the entity that a set of properties belongs to, for example,
-		 * "User". This value it not displayed anywhere. Only used in
-		 * CriteriaRow for requesting a field value's name.
-		 * @default undefined
-		 * @type {?(string|undefined)}
-		 */
-		entityName: PropTypes.string.isRequired,
-
-		/**
-		 * Name displayed to label a contributor and its' properties.
-		 * @default undefined
-		 * @type {?(string|undefined)}
-		 */
-		modelLabel: PropTypes.string,
-		onChange: PropTypes.func,
-		propertyKey: PropTypes.string.isRequired,
-		renderEmptyValuesErrors: PropTypes.bool,
-		supportedProperties: PropTypes.arrayOf(propertyShape).isRequired,
-	};
+export default function CriteriaBuilder({
+	criteria,
+	editing,
+	emptyContributors,
+	entityName,
+	modelLabel,
+	onChange,
+	propertyKey,
+	renderEmptyValuesErrors,
+	supportedProperties,
+}) {
 
 	/**
 	 * Cleans criteria items by performing the following:
@@ -61,7 +46,7 @@ class CriteriaBuilder extends Component {
 	 * to clean.
 	 * @returns {*}
 	 */
-	_cleanCriteriaMapItems(criteriaItems, root) {
+	const _cleanCriteriaMapItems = (criteriaItems, root) => {
 		const criteria = criteriaItems
 			.filter(({items}) => {
 				return items ? items.length : true;
@@ -77,9 +62,7 @@ class CriteriaBuilder extends Component {
 							cleanedItem = {
 								conjunctionName: soloItem.conjunctionName,
 								groupId: soloItem.groupId,
-								items: this._cleanCriteriaMapItems(
-									soloItem.items
-								),
+								items: _cleanCriteriaMapItems(soloItem.items),
 							};
 						}
 						else {
@@ -89,7 +72,7 @@ class CriteriaBuilder extends Component {
 					else {
 						cleanedItem = {
 							...item,
-							items: this._cleanCriteriaMapItems(item.items),
+							items: _cleanCriteriaMapItems(item.items),
 						};
 					}
 				}
@@ -98,16 +81,16 @@ class CriteriaBuilder extends Component {
 			});
 
 		return criteria;
-	}
+	};
 
 	/**
 	 * Cleans and updates the criteria with the newer criteria.
 	 * @param {Object} newCriteria The criteria with the most recent changes.
 	 */
-	_handleCriteriaChange = (newCriteria) => {
-		const items = this._cleanCriteriaMapItems([newCriteria], true);
+	const _handleCriteriaChange = (newCriteria) => {
+		const items = _cleanCriteriaMapItems([newCriteria], true);
 
-		this.props.onChange(items[items.length - 1], this.props.propertyKey);
+		onChange(items[items.length - 1], propertyKey);
 	};
 
 	/**
@@ -122,13 +105,10 @@ class CriteriaBuilder extends Component {
 	 * @param {boolean} replace True if the destIndex should replace rather than
 	 * insert.
 	 */
-	_handleCriterionMove = (...args) => {
-		const newCriteria = this._searchAndUpdateCriteria(
-			this.props.criteria,
-			...args
-		);
+	const _handleCriterionMove = (...args) => {
+		const newCriteria = _searchAndUpdateCriteria(criteria, ...args);
 
-		this._handleCriteriaChange(newCriteria);
+		_handleCriteriaChange(newCriteria);
 	};
 
 	/**
@@ -137,9 +117,9 @@ class CriteriaBuilder extends Component {
 	 * @param {object} item The criteria item to check.
 	 * @returns True if the item is a group.
 	 */
-	_isGroupItem(item) {
+	const _isGroupItem = (item) => {
 		return item.items && item.items.length;
-	}
+	};
 
 	/**
 	 * Searches through the criteria object and adds or replaces and removes
@@ -158,7 +138,7 @@ class CriteriaBuilder extends Component {
 	 * @param {boolean} replace True if the destIndex should replace rather than
 	 * insert.
 	 */
-	_searchAndUpdateCriteria = (
+	const _searchAndUpdateCriteria = (
 		criteria,
 		startGroupId,
 		startIndex,
@@ -189,8 +169,8 @@ class CriteriaBuilder extends Component {
 		return {
 			...criteria,
 			items: updatedCriteriaItems.map((item) => {
-				return this._isGroupItem(item)
-					? this._searchAndUpdateCriteria(
+				return _isGroupItem(item)
+					? _searchAndUpdateCriteria(
 							item,
 							startGroupId,
 							startIndex,
@@ -204,47 +184,58 @@ class CriteriaBuilder extends Component {
 		};
 	};
 
-	render() {
-		const {
-			criteria,
-			editing,
-			emptyContributors,
-			entityName,
-			modelLabel,
-			propertyKey,
-			renderEmptyValuesErrors,
-			supportedProperties,
-		} = this.props;
-
-		return (
-			<div className="criteria-builder-root">
-				<h3 className="sheet-subtitle">
-					{sub(
-						Liferay.Language.get('x-with-property-x'),
-						[modelLabel, ''],
-						false
-					)}
-				</h3>
-
-				{(!emptyContributors || editing) && (
-					<CriteriaGroup
-						criteria={criteria}
-						editing={editing}
-						emptyContributors={emptyContributors}
-						entityName={entityName}
-						groupId={criteria && criteria.groupId}
-						modelLabel={modelLabel}
-						onChange={this._handleCriteriaChange}
-						onMove={this._handleCriterionMove}
-						propertyKey={propertyKey}
-						renderEmptyValuesErrors={renderEmptyValuesErrors}
-						root
-						supportedProperties={supportedProperties}
-					/>
+	return (
+		<div className="criteria-builder-root">
+			<h3 className="sheet-subtitle">
+				{sub(
+					Liferay.Language.get('x-with-property-x'),
+					[modelLabel, ''],
+					false
 				)}
-			</div>
-		);
-	}
+			</h3>
+
+			{(!emptyContributors || editing) && (
+				<CriteriaGroup
+					criteria={criteria}
+					editing={editing}
+					emptyContributors={emptyContributors}
+					entityName={entityName}
+					groupId={criteria && criteria.groupId}
+					modelLabel={modelLabel}
+					onChange={_handleCriteriaChange}
+					onMove={_handleCriterionMove}
+					propertyKey={propertyKey}
+					renderEmptyValuesErrors={renderEmptyValuesErrors}
+					root
+					supportedProperties={supportedProperties}
+				/>
+			)}
+		</div>
+	);
 }
 
-export default CriteriaBuilder;
+CriteriaBuilder.propTypes = {
+	criteria: criteriaShape,
+	editing: PropTypes.bool.isRequired,
+	emptyContributors: PropTypes.bool.isRequired,
+
+	/**
+	 * Name of the entity that a set of properties belongs to, for example,
+	 * "User". This value it not displayed anywhere. Only used in
+	 * CriteriaRow for requesting a field value's name.
+	 * @default undefined
+	 * @type {?(string|undefined)}
+	 */
+	entityName: PropTypes.string.isRequired,
+
+	/**
+	 * Name displayed to label a contributor and its' properties.
+	 * @default undefined
+	 * @type {?(string|undefined)}
+	 */
+	modelLabel: PropTypes.string,
+	onChange: PropTypes.func,
+	propertyKey: PropTypes.string.isRequired,
+	renderEmptyValuesErrors: PropTypes.bool,
+	supportedProperties: PropTypes.arrayOf(propertyShape).isRequired,
+};

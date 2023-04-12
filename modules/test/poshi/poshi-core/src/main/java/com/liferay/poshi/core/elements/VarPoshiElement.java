@@ -516,16 +516,6 @@ public class VarPoshiElement extends PoshiElement {
 				methodParameterValue = StringUtil.replace(
 					methodParameterValue, "&quot;", "\"");
 
-				Matcher matcher = _varMacroMethodPattern.matcher(
-					methodParameterValue);
-
-				if (matcher.find()) {
-					sb.append(methodParameterValue);
-					sb.append(", ");
-
-					continue;
-				}
-
 				methodParameterValue = StringUtil.replace(
 					methodParameterValue, "\"", "\\\"");
 
@@ -615,8 +605,6 @@ public class VarPoshiElement extends PoshiElement {
 		"(?<cdata1><.+]])(?<cdata2>>.*>?)");
 	private static final Pattern _partialStatementPattern;
 	private static final Pattern _statementPattern;
-	private static final Pattern _varMacroMethodPattern = Pattern.compile(
-		"^.*\\s=\\s(\\$\\{.*\\}|\\\".*\")$");
 	private static final Pattern _varValueMathExpressionPattern;
 
 	static {

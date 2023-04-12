@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.internal.display.context;
+package com.liferay.roles.admin.web.internal.display.util;
 
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;

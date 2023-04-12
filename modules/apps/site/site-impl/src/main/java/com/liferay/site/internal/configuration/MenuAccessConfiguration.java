@@ -27,20 +27,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.site.internal.configuration.MenuAccessConfiguration",
-	localization = "content/Language", name = "menu-access-configuration-name"
+	localization = "content/Language"
 )
 public interface MenuAccessConfiguration {
 
-	@Meta.AD(
-		deflt = "false", description = "show-control-menu-by-role-description",
-		name = "show-control-menu-by-role-name", required = false
-	)
+	@Meta.AD(deflt = "false", required = false)
 	public boolean showControlMenuByRole();
 
-	@Meta.AD(
-		deflt = "", description = "roles-can-see-control-menu-description",
-		name = "roles-can-see-control-menu-name", required = false
-	)
+	@Meta.AD(deflt = "", required = false)
 	public String[] rolesCanSeeControlMenu();
 
 }

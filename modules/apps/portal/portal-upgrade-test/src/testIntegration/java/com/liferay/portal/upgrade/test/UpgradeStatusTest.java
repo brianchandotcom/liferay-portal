@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -284,12 +285,15 @@ public class UpgradeStatusTest {
 	private class ErrorUpgradeProcess extends UpgradeProcess {
 
 		@Override
-		protected void doUpgrade() throws Exception {
-			_log.error("Error on upgrade");
-		}
+		protected void doUpgrade() {
+			Map<String, Map<String, Integer>> errorMessages =
+				ReflectionTestUtil.getFieldValue(
+					_upgradeStatus, "_errorMessages");
 
-		private final Log _log = LogFactoryUtil.getLog(
-			ErrorUpgradeProcess.class);
+			errorMessages.put(
+				"ErrorUpgradeProcess",
+				Collections.singletonMap("Error on upgrade", 0));
+		}
 
 	}
 

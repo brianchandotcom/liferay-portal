@@ -105,6 +105,11 @@
 	<td>//button[contains(@class,'btn-monospaced')]/*[name()='svg'][contains(@class,'icon-pencil')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EDIT_MDF_BUTTON</td>
+	<td>//div[contains(@class,'edit-button-mdf')]/div</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

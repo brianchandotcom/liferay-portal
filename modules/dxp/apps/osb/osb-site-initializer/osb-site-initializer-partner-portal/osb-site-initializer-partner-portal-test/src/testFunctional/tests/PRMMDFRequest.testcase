@@ -87,9 +87,25 @@ definition {
 	@description = "This is a test for LPS-178087. Verify that it is possible to edit a created MDF"
 	@priority = 5
 	test CanEditMDF {
-		task ("Given I go to add a new MDF Request") {
-			JSONPRM.createMDFRequest();
-		}
+		PRMMarketing.gotoAddNewMDF();
+
+		PRMMDFRequest.createNewRequest(
+			accountName = "Company Name 1",
+			activityDescription = "Activity Description",
+			activityName = "Activity Name 1",
+			budgetList = "Sponsorship Fee-2000",
+			campaignDescription = "Campaign Description",
+			campaignName = "Campaign Name",
+			countryName = "Global",
+			followUpStrategy = "test",
+			goalsOptions = "Lead generation",
+			leadFollowUpList = "Other",
+			leadList = "No",
+			tactic = "Other",
+			targetMarketOptions = "Education,Energy",
+			targetOfLeads = "test",
+			targetRolesOptions = "Administrator",
+			typeOfActivity = "Miscellaneous Marketing");
 
 		task ("When the manager go to see the submitted MDF") {
 			User.logoutAndLoginPG(
@@ -106,7 +122,9 @@ definition {
 				campaignDescription = "Campaign Description Edited",
 				campaignName = "Campaign Name Edited");
 
-			PRMMDFRequest.editMDFActivity(newActivityName = "Activity Name Edited");
+			PRMMDFRequest.editMDFActivity(
+				leadList = "No",
+				newActivityName = "Activity Name Edited");
 		}
 
 		task ("And the user can verify that some informations were edited") {
@@ -114,7 +132,7 @@ definition {
 
 			PRMMDFRequest.viewMDFActivityDetails(
 				activityName = "Activity Name Edited",
-				activityName = "Activity Name Edited");
+				activityNameButton = "Activity Name Edited");
 
 			PRMMDFRequest.viewMDFCompanyDetails(campaignName = "Campaign Name Edited");
 		}
@@ -595,7 +613,6 @@ definition {
 
 			PRMMDFRequest.viewMDFActivityDetails(
 				activityDescription = ${activityDescription},
-				activityName = ${activityName},
 				activityName = ${activityName},
 				budget = ${budget},
 				endDate = ${endDate},

@@ -98,7 +98,6 @@ definition {
 			key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
 			locator1 = "PRMMDFRequest#INPUT_BUTTON");
 
-
 		Button.click(button = "Continue");
 
 		Button.click(button = "Continue");
@@ -108,7 +107,7 @@ definition {
 
 	@summary = "Verify that is possible edit some MDF informations "
 	macro editMDFinformations {
-		Click(locator1="PRMMDFRequest#EDIT_MDF_BUTTON");
+		Click(locator1 = "PRMMDFRequest#EDIT_MDF_BUTTON");
 
 		PRMMDFRequest.fillGoalsPage(
 			accountName = ${accountName},

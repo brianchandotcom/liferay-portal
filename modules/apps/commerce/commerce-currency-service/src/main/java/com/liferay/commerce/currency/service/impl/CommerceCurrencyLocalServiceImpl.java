@@ -213,7 +213,8 @@ public class CommerceCurrencyLocalServiceImpl
 	}
 
 	@Override
-	public void importDefaultValues(ServiceContext serviceContext)
+	public void importDefaultValues(
+			boolean updateExchangeRate, ServiceContext serviceContext)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -270,13 +271,16 @@ public class CommerceCurrencyLocalServiceImpl
 			}
 		}
 
-		for (String exchangeRateProviderKey :
-				_exchangeRateProviderRegistry.getExchangeRateProviderKeys()) {
+		if (updateExchangeRate) {
+			for (String exchangeRateProviderKey :
+					_exchangeRateProviderRegistry.
+						getExchangeRateProviderKeys()) {
 
-			_updateExchangeRates(
-				serviceContext.getCompanyId(), exchangeRateProviderKey);
+				_updateExchangeRates(
+					serviceContext.getCompanyId(), exchangeRateProviderKey);
 
-			break;
+				break;
+			}
 		}
 	}
 

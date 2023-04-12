@@ -200,13 +200,14 @@ public class CalendarUtil {
 			"firstReminder", calendarBooking.getFirstReminder()
 		).put(
 			"firstReminderType", calendarBooking.getFirstReminderType()
-		);
+		).put(
+			"hasChildCalendarBookings",
+			() -> {
+				List<CalendarBooking> childCalendarBookings =
+					calendarBooking.getChildCalendarBookings();
 
-		List<CalendarBooking> childCalendarBookings =
-			calendarBooking.getChildCalendarBookings();
-
-		jsonObject.put(
-			"hasChildCalendarBookings", childCalendarBookings.size() > 1
+				return childCalendarBookings.size() > 1;
+			}
 		).put(
 			"hasWorkflowInstanceLink",
 			() -> {
@@ -228,28 +229,31 @@ public class CalendarUtil {
 			calendarBooking.getParentCalendarBookingId()
 		);
 
-		CalendarBookingService calendarBookingService =
-			_calendarBookingServiceSnapshot.get();
-
-		CalendarBooking lastInstanceCalendarBooking =
-			calendarBookingService.getLastInstanceCalendarBooking(
-				calendarBooking.getCalendarBookingId());
-
-		String recurrence = lastInstanceCalendarBooking.getRecurrence();
-
 		java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
 			calendarBooking.getStartTime(), timeZone);
 
-		if (Validator.isNotNull(recurrence)) {
-			Recurrence recurrenceObj = RecurrenceUtil.inTimeZone(
-				lastInstanceCalendarBooking.getRecurrenceObj(),
-				startTimeJCalendar, timeZone);
-
-			recurrence = RecurrenceSerializer.serialize(recurrenceObj);
-		}
-
 		jsonObject.put(
-			"recurrence", recurrence
+			"recurrence",
+			() -> {
+				CalendarBookingService calendarBookingService =
+					_calendarBookingServiceSnapshot.get();
+
+				CalendarBooking lastInstanceCalendarBooking =
+					calendarBookingService.getLastInstanceCalendarBooking(
+						calendarBooking.getCalendarBookingId());
+
+				String recurrence = lastInstanceCalendarBooking.getRecurrence();
+
+				if (Validator.isNotNull(recurrence)) {
+					Recurrence recurrenceObj = RecurrenceUtil.inTimeZone(
+						lastInstanceCalendarBooking.getRecurrenceObj(),
+						startTimeJCalendar, timeZone);
+
+					return RecurrenceSerializer.serialize(recurrenceObj);
+				}
+
+				return recurrence;
+			}
 		).put(
 			"recurringCalendarBookingId",
 			calendarBooking.getRecurringCalendarBookingId()

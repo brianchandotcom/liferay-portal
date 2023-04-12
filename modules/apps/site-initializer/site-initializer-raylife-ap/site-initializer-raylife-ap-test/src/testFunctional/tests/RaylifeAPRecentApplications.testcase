@@ -39,6 +39,8 @@ definition {
 	test AllApplicationsRedirectedToApplicationsPage {
 		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#AllApplicationsRedirectedToApplicationsPage";
 
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		task ("Given Site RaylifeAP is open") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}
@@ -56,6 +58,8 @@ definition {
 	@priority = 4
 	test AssertCanDeleteRecentApplications {
 		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#CanDeleteRecentApplications";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given I go to Site RaylifeAP") {
 			RaylifeAP.goToRaylifeAPSiteWithRefresh();
@@ -75,6 +79,8 @@ definition {
 	@priority = 5
 	test AssertChangeFromIncompletetToBound {
 		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#ChangeFromIncompletetToBound";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given a user navigates to RaylifeD2C and starts a new flow") {
 			RaylifePaymentMethod.enablePayPalPayment();
@@ -160,6 +166,8 @@ definition {
 	test AssertChangeFromOpenToQuoted {
 		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#ChangeFromOpenToQuoted";
 
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		task ("Given a user navigates to RaylifeD2C and starts a new flow") {
 			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
 
@@ -215,6 +223,8 @@ definition {
 	@priority = 4
 	test AssertifStatusdBoundIsAddInRecentApplications {
 		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#AssertifStatusdBoundIsAddInRecentApplications";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given the PayPalPayment method is enable and the user go to raylife D2C") {
 			RaylifePaymentMethod.enablePayPalPayment();

@@ -51,6 +51,10 @@ definition {
 	@description = "Story ID: LPS-146336 | Test Summary: Verify if that the Review quote button is enabled when all required fields are filled in"
 	@priority = 5
 	test IfReviewQuoteButtonIsEnableWhenFieldsFilled {
+		property test.name.skip.portal.instance = "RaylifeAPCoverages#IfReviewQuoteButtonIsEnableWhenFieldsFilled";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
 		task ("Given that I go to the Coverage Info form") {
 			ApplicationsMenu.gotoSite(site = "Raylife AP");
 

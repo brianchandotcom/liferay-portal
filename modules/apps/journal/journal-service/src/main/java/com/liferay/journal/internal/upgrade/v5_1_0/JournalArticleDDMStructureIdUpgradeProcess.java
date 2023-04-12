@@ -51,13 +51,13 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Map<String, Map<Long, Long>> ddmStructureKeysMap =
+		Map<String, Map<Long, Long>> ddmStructureIdsMap =
 			new ConcurrentHashMap<>();
 
 		Map<Long, long[]> ancestorSiteAndDepotGroupIdsMap =
 			new ConcurrentHashMap<>();
 
-		Map<Long, Long> siteGroupIdsMap = new ConcurrentHashMap<>();
+		Map<Long, Long> siteGroupIds = new ConcurrentHashMap<>();
 
 		long journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
@@ -80,35 +80,35 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 					String ddmStructureKey = (String)values[1];
 
-					Map<Long, Long> groupIdsMap =
-						ddmStructureKeysMap.computeIfAbsent(
+					Map<Long, Long> ddmStructureIds =
+						ddmStructureIdsMap.computeIfAbsent(
 							ddmStructureKey, key -> new ConcurrentHashMap<>());
 
-					Long ddmStructureId = groupIdsMap.get(groupId);
+					Long ddmStructureId = ddmStructureIds.get(groupId);
 
 					if (ddmStructureId == null) {
-						Long siteGroupId = siteGroupIdsMap.get(groupId);
+						Long siteGroupId = siteGroupIds.get(groupId);
 
 						if (siteGroupId == null) {
 							siteGroupId = _getSiteGroupId(
 								groupId, layoutClassNameId);
 
-							siteGroupIdsMap.put(groupId, siteGroupId);
+							siteGroupIds.put(groupId, siteGroupId);
 						}
 
-						ddmStructureId = groupIdsMap.get(siteGroupId);
+						ddmStructureId = ddmStructureIds.get(siteGroupId);
 
 						if (ddmStructureId == null) {
 							ddmStructureId = _getDDMStructureId(
 								ancestorSiteAndDepotGroupIdsMap,
-								ddmStructureKey, groupIdsMap,
+								ddmStructureKey, ddmStructureIds,
 								journalArticleClassNameId, siteGroupId);
 
-							groupIdsMap.put(siteGroupId, ddmStructureId);
+							ddmStructureIds.put(siteGroupId, ddmStructureId);
 						}
 
 						if (groupId != siteGroupId) {
-							groupIdsMap.put(groupId, ddmStructureId);
+							ddmStructureIds.put(groupId, ddmStructureId);
 						}
 					}
 
@@ -137,7 +137,7 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 	private Long _getDDMStructureId(
 			Map<Long, long[]> ancestorSiteAndDepotGroupIdsMap,
-			String ddmStructureKey, Map<Long, Long> groupIdsMap,
+			String ddmStructureKey, Map<Long, Long> ddmStructureIds,
 			long journalArticleClassNameId, Long siteGroupId)
 		throws PortalException, SQLException {
 
@@ -161,7 +161,7 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 		}
 
 		for (long ancestorSiteAndDepotGroupId : ancestorSiteAndDepotGroupIds) {
-			ddmStructureId = groupIdsMap.get(ancestorSiteAndDepotGroupId);
+			ddmStructureId = ddmStructureIds.get(ancestorSiteAndDepotGroupId);
 
 			if (ddmStructureId == null) {
 				ddmStructureId = _getDDMStructureId(
@@ -173,7 +173,7 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			groupIdsMap.put(ancestorSiteAndDepotGroupId, ddmStructureId);
+			ddmStructureIds.put(ancestorSiteAndDepotGroupId, ddmStructureId);
 
 			return ddmStructureId;
 		}

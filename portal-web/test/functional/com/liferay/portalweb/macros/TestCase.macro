@@ -105,11 +105,21 @@ definition {
 	}
 
 	macro getSiteName {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ((${siteName} == "Liferay") || !(isSet(siteName))) {
 			if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
+				var portalURL = PropsUtil.get("portal.url");
+
+				var portalURL = StringUtil.replace(${portalURL}, "http://", "");
+
+				var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
+
+				return ${portalURL};
+			}
+			else if (${testLiferayVirtualInstance} == "true") {
 				var portalURL = PropsUtil.get("portal.url");
 
 				var portalURL = StringUtil.replace(${portalURL}, "http://", "");
@@ -178,6 +188,22 @@ definition {
 				SignIn.signInPortalInstanceSetUp();
 			}
 		}
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
+
+			var portalInstanceId = StringUtil.replace(${portalURL}, ":8080", "");
+
+			HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = ${portalInstanceId});
+
+			if (${testPortalInstance} == "true") {
+				SignIn.signInPortalInstanceSetUp();
+			}
+		}
 	}
 
 	macro setUpPortalInstance {
@@ -185,6 +211,16 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (!(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
+			HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
+
+			if (${testPortalInstance} == "true") {
+				SignIn.signInPortalInstanceSetUp();
+			}
+		}
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
 			HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 
 			if (${testPortalInstance} == "true") {
@@ -199,6 +235,12 @@ definition {
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 
 		if (${testPortalInstance} == "true") {
+			SignIn.signInPortalInstanceSetUp();
+		}
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
 			SignIn.signInPortalInstanceSetUp();
 		}
 	}

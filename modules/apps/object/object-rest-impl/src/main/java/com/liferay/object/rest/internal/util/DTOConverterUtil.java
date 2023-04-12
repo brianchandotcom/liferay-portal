@@ -23,6 +23,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Collections;
+import java.util.Locale;
 
 import javax.ws.rs.InternalServerErrorException;
 
@@ -52,10 +53,16 @@ public class DTOConverterUtil {
 					systemObjectDefinitionManager.getModelClassName());
 		}
 
+		Locale locale = null;
+
+		if (user != null) {
+			locale = user.getLocale();
+		}
+
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				false, Collections.emptyMap(), dtoConverterRegistry,
-				baseModel.getPrimaryKeyObj(), user.getLocale(), null, user);
+				baseModel.getPrimaryKeyObj(), locale, null, user);
 
 		return dtoConverter.toDTO(defaultDTOConverterContext);
 	}

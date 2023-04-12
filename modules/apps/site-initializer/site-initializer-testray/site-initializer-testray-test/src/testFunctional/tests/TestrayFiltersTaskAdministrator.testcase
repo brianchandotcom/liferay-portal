@@ -385,4 +385,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should not see task that don't exist when I try filtering for them"
+	@priority = 3
+	test AdminCanNotFilterForNonExistentTask {
+		task ("Given that the user has two tasks that existent in the table") {
+			AssertElementPresent(
+				key_projectName = "Task_1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Task_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When filtering a task by his non-existent name") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.typeFilter(
+				label = "Task Name",
+				value = "Task_3");
+		}
+
+		task ("Then the user is not present in the task table") {
+			AssertElementNotPresent(
+				key_projectName = "Task_3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

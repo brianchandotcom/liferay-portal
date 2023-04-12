@@ -14,6 +14,85 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-10279. Users can verify that the list price is shown on the checkout summary rather than the promotion price that is higher than the list price."
+	@priority = 5
+	test CanAssertListPriceRatherThanHigherPromotionPriceAtCheckout {
+		property portal.acceptance = "true";
+
+		task ("Given a Commerce Account and Buyer User are created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a promotion price entry for U-Joint is set higher than price list") {
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 40,
+				productSKU = "MIN55861",
+				promotionName = "Minium Base Promotion");
+		}
+
+		task ("And Buyer User logged in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the U-Joint price is the base price (24.00)") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "24.00");
+		}
+
+		task ("And buyer user add a product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 3);
+		}
+
+		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 3,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+
+			AssertElementNotPresent(
+				key_productPrice = "40.00",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10178. Select a product with no promotion, no discount, no tier pricing, no bulk pricing link and do a checkout"
 	@priority = 3
 	test CanCheckoutAMiniumProduct {
@@ -200,81 +279,6 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 7,
 				productUnitPrice = 50,
-				shippingMethod = "Standard");
-
-			AssertTextEquals(
-				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
-				value1 = "Success! Your order has been processed.");
-		}
-	}
-
-	@description = "This is a test for COMMERCE-10277."
-	@priority = 5
-	test CanCheckoutProductWithPromotionPriceHigherThenPricelist {
-		property portal.acceptance = "true";
-
-		task ("Given a Commerce Account and Buyer User are created") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And given a promotion price entry for U-Joint is set higher than price list") {
-			CommercePromotions.openPromotionsAdmin();
-
-			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = 40,
-				productSKU = "MIN55861",
-				promotionName = "Minium Base Promotion");
-		}
-
-		task ("And Buyer User logged in") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And the U-Joint price is the base price (24.00)") {
-			AssertTextEquals.assertPartialText(
-				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-				value1 = "24.00");
-		}
-
-		task ("And buyer user add a product to the cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 3);
-		}
-
-		task ("Then by clicking Submit button from minicart, the checkout process is completed") {
-			CommerceCheckout.gotoCheckoutViaMiniCart();
-
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				productName = "U-Joint",
-				productQuantity = 3,
-				productUnitPrice = 24,
 				shippingMethod = "Standard");
 
 			AssertTextEquals(

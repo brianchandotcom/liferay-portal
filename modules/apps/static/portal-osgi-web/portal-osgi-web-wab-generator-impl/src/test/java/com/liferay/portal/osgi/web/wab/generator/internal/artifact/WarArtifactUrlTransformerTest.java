@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 
 import java.nio.file.Files;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -55,7 +54,7 @@ public class WarArtifactUrlTransformerTest {
 		_zipDirToFile(dir, file);
 
 		WarArtifactUrlTransformer warArtifactUrlTransformer =
-			new WarArtifactUrlTransformer(new AtomicBoolean(true));
+			new WarArtifactUrlTransformer();
 
 		Assert.assertTrue(warArtifactUrlTransformer.canTransformURL(file));
 	}
@@ -68,7 +67,7 @@ public class WarArtifactUrlTransformerTest {
 		clientExtensionZipFile.createNewFile();
 
 		WarArtifactUrlTransformer warArtifactUrlTransformer =
-			new WarArtifactUrlTransformer(new AtomicBoolean(true));
+			new WarArtifactUrlTransformer();
 
 		Assert.assertFalse(
 			warArtifactUrlTransformer.canTransformURL(clientExtensionZipFile));

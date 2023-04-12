@@ -71,9 +71,14 @@ public class ObjectRelationshipExtensionProvider
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-		if (nestedFieldsContext == null) {
+		if ((nestedFieldsContext == null) ||
+			(nestedFieldsContext.getCurrentDepth() >=
+				nestedFieldsContext.getDepth())) {
+
 			return Collections.emptyMap();
 		}
+
+		nestedFieldsContext.incrementCurrentDepth();
 
 		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
@@ -104,6 +109,8 @@ public class ObjectRelationshipExtensionProvider
 				objectRelationship.getName(),
 				(Serializable)relatedObjectEntriesPage.getItems());
 		}
+
+		nestedFieldsContext.decrementCurrentDepth();
 
 		return extendedProperties;
 	}

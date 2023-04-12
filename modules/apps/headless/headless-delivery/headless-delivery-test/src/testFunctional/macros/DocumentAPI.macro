@@ -278,6 +278,58 @@ definition {
 		return ${documentId};
 	}
 
+	macro getRatedDocumentsWithDepotID {
+		Variables.assertDefined(parameterList = ${depotId});
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${depotId}/documents/rated-by-me \
+				-H 'Content-Type: application/json' \
+				-u '${userEmailAddress}:${userPassword}'
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro getRatedDocumentsWithSiteID {
+		Variables.assertDefined(parameterList = ${siteId});
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/documents/rated-by-me \
+				-H 'Content-Type: application/json' \
+				-u '${userEmailAddress}:${userPassword}'
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
 	macro getTitleOfDocument {
 		var documentTitle = JSONUtil.getWithJSONPath(${responseToParse}, "$.['title']");
 

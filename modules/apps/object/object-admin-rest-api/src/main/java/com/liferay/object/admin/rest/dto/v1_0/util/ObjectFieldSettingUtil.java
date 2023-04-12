@@ -53,7 +53,9 @@ public class ObjectFieldSettingUtil {
 					ObjectFieldSettingConstants.NAME_SHOW_COUNTER) ||
 				 objectFieldSetting.compareName(
 					 ObjectFieldSettingConstants.
-						 NAME_SHOW_FILES_IN_DOCS_AND_MEDIA)) {
+						 NAME_SHOW_FILES_IN_DOCS_AND_MEDIA) ||
+				 objectFieldSetting.compareName(
+					 ObjectFieldSettingConstants.NAME_UNIQUE_VALUES)) {
 
 			return GetterUtil.getBoolean(objectFieldSetting.getValue());
 		}

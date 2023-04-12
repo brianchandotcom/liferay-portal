@@ -11,6 +11,7 @@
  */
 
 const ROLE = {
+	EMPLOYEE: 'Employee',
 	EVP_MANAGER: 'EVP Manager',
 };
 
@@ -106,10 +107,16 @@ const ignoreFields = [
 const organizationUpdate = async () => {
 	const organizationForm = getOrganizationFormValues();
 
-	organizationForm.organizationStatus = {
-		key: 'verified',
-		name: 'Verified',
-	};
+	organizationForm.organizationStatus =
+		userRoles === ROLE.EMPLOYEE
+			? {
+					key: 'awaitingApprovalOnEvp',
+					name: 'Awaiting Approval On EVP',
+			  }
+			: {
+					key: 'verified',
+					name: 'Verified',
+			  };
 
 	await fetch(`${liferayUrl}/o/c/evporganizations/${organizationId}`, {
 		body: JSON.stringify(organizationForm),

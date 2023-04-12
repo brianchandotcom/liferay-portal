@@ -32,6 +32,7 @@
 		},
 		{
 			"actionIds": [
+				"VIEW"
 			],
 			"roleName": "Employee",
 			"scope": 4

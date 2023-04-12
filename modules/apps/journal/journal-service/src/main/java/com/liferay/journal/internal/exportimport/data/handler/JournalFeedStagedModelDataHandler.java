@@ -27,7 +27,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -104,8 +103,7 @@ public class JournalFeedStagedModelDataHandler
 		Element feedElement = portletDataContext.getExportDataElement(feed);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			feed.getGroupId(), _portal.getClassNameId(JournalArticle.class),
-			feed.getDDMStructureKey(), true);
+			feed.getDDMStructureId());
 
 		if (ddmStructure != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -115,8 +113,8 @@ public class JournalFeedStagedModelDataHandler
 		else {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to find DDM structure with key " +
-						feed.getDDMStructureKey());
+					"Unable to find DDM structure with id " +
+						feed.getDDMStructureId());
 			}
 		}
 
@@ -199,13 +197,13 @@ public class JournalFeedStagedModelDataHandler
 			}
 		}
 
-		Map<String, String> ddmStructureKeys =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class + ".ddmStructureKey");
+		Map<Long, Long> ddmStructureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class);
 
-		String parentDDMStructureKey = MapUtil.getString(
-			ddmStructureKeys, feed.getDDMStructureKey(),
-			feed.getDDMStructureKey());
+		long parentDDMStructureId = MapUtil.getLong(
+			ddmStructureIds, feed.getDDMStructureId(),
+			feed.getDDMStructureId());
 
 		Map<String, String> ddmTemplateKeys =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
@@ -234,7 +232,7 @@ public class JournalFeedStagedModelDataHandler
 					importedFeed = _journalFeedLocalService.addFeed(
 						userId, portletDataContext.getScopeGroupId(), feedId,
 						autoFeedId, feed.getName(), feed.getDescription(),
-						parentDDMStructureKey, parentDDMTemplateKey,
+						parentDDMStructureId, parentDDMTemplateKey,
 						parentRendererDDMTemplateKey, feed.getDelta(),
 						feed.getOrderByCol(), feed.getOrderByType(),
 						feed.getTargetLayoutFriendlyUrl(),
@@ -246,7 +244,7 @@ public class JournalFeedStagedModelDataHandler
 					importedFeed = _journalFeedLocalService.updateFeed(
 						existingFeed.getGroupId(), existingFeed.getFeedId(),
 						feed.getName(), feed.getDescription(),
-						parentDDMStructureKey, parentDDMTemplateKey,
+						parentDDMStructureId, parentDDMTemplateKey,
 						parentRendererDDMTemplateKey, feed.getDelta(),
 						feed.getOrderByCol(), feed.getOrderByType(),
 						feed.getTargetLayoutFriendlyUrl(),
@@ -259,7 +257,7 @@ public class JournalFeedStagedModelDataHandler
 				importedFeed = _journalFeedLocalService.addFeed(
 					userId, portletDataContext.getScopeGroupId(), feedId,
 					autoFeedId, feed.getName(), feed.getDescription(),
-					parentDDMStructureKey, parentDDMTemplateKey,
+					parentDDMStructureId, parentDDMTemplateKey,
 					parentRendererDDMTemplateKey, feed.getDelta(),
 					feed.getOrderByCol(), feed.getOrderByType(),
 					feed.getTargetLayoutFriendlyUrl(),

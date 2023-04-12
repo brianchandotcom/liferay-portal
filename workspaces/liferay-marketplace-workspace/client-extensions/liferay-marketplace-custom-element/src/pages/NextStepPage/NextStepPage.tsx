@@ -6,23 +6,19 @@ import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 
 import './NextStepPage.scss';
-interface NextStepPageProps {
-	accountLogo: string;
-	accountName: string;
-	appCategory: string;
-	appLogo: string;
-	appName: string;
-	orderId: number;
-}
 
-export function NextStepPage({
-	accountLogo,
-	accountName,
-	appCategory,
-	appLogo,
-	appName,
-	orderId,
-}: NextStepPageProps) {
+export function NextStepPage() {
+	const queryString = window.location.search;
+
+	const urlParams = new URLSearchParams(queryString);
+
+	const accountLogo = urlParams.get('logoURL') as string;
+	const accountName = urlParams.get('accountName') as string;
+	const appCategory = urlParams.get('appCategory') as string;
+	const appLogo = urlParams.get('appLogoURL') as string;
+	const appName = urlParams.get('appName') as string;
+	const orderId = urlParams.get('orderId') as string;
+
 	return (
 		<>
 			<div className="next-step-page-container">
@@ -40,7 +36,7 @@ export function NextStepPage({
 						/>
 
 						<AccountAndAppCard
-							category="Console"
+							category="DXP Console"
 							logo={accountLogo}
 							title={accountName}
 						></AccountAndAppCard>

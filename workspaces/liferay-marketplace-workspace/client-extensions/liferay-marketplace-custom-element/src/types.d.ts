@@ -76,7 +76,7 @@ type CommerceOption = {
 
 type PaymentMethodMode = 'PayPal';
 
-type PaymentMethodSelector = 'trial' | 'pay' | 'order';
+type PaymentMethodSelector = 'order' | 'pay' | 'trial' | null;
 
 interface PlacedOrder {
 	account: string;

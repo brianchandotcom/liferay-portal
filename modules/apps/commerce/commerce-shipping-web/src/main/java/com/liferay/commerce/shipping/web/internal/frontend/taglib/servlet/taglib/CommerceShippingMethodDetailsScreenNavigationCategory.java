@@ -44,7 +44,7 @@ public class CommerceShippingMethodDetailsScreenNavigationCategory
 		return language.get(
 			locale,
 			CommerceShippingScreenNavigationConstants.
-				ENTRY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS);
+				CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS);
 	}
 
 	@Override

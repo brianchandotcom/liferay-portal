@@ -38,6 +38,14 @@ public class NestedFieldsContext {
 		_queryParameters = queryParameters;
 	}
 
+	public void decrementCurrentDepth() {
+		--_currentDepth;
+	}
+
+	public int getCurrentDepth() {
+		return _currentDepth;
+	}
+
 	public int getDepth() {
 		return _depth;
 	}
@@ -62,6 +70,11 @@ public class NestedFieldsContext {
 		return _resourceVersion;
 	}
 
+	public void incrementCurrentDepth() {
+		++_currentDepth;
+	}
+
+	private int _currentDepth;
 	private final int _depth;
 	private final List<String> _fieldNames;
 	private final Message _message;

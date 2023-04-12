@@ -51,10 +51,7 @@ public class FrontendJSReactWebJSImportmapsContributor
 		}
 	}
 
-	private static final String[] _MODULE_NAMES = {
-		"classnames", "formik", "prop-types", "react", "react-dnd",
-		"react-dnd-html5-backend", "react-dom"
-	};
+	private static final String[] _MODULE_NAMES = {"react", "react-dom"};
 
 	private JSONObject _importmapsJSONObject;
 

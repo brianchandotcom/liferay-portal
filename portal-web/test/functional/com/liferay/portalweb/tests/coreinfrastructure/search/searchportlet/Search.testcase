@@ -1866,17 +1866,12 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-130126 and LPS-145648."
 	@priority = 4
 	test EmptyDDMFieldNotDisplayedWithCustomFacet {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Test Structure Description",
-			structureName = "Test Structure");
+		WebContentStructures.addCP(structureName = "Test Structure");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -1884,9 +1879,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Test Structure");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
 
@@ -1896,15 +1889,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Search.openSearchPage();
-
-		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
-
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article");
+		Search.openSearchPage(searchTerm = "WC Title");
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
@@ -1918,67 +1903,23 @@ definition {
 		var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmValueFieldName\"", 1);
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+
+		Refresh();
 
 		AssertElementNotPresent(
 			key_facetType = "Custom Facet",
 			key_termValue = "",
 			locator1 = "Search#FACET_TERM");
-	}
 
-	@priority = 4
-	test EmptyRepeatableDDMFieldNotDisplayedWithCustomFacet {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Test Structure Description",
-			structureName = "Test Structure");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		WebContentNavigator.gotoEditStructure(structureName = "Test Structure");
 
 		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
 
 		WebContentStructures.saveCP(structureName = "Test Structure");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
-
-		WebContent.addWithStructureCP(
-			structureName = "Test Structure",
-			webContentTitle = "WC Title");
-
-		PortletEntry.publish();
-
-		Search.openSearchPage();
-
-		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
-
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
-
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title",
-			searchAssetType = "Web Content Article");
-
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
-
-		var port = Elasticsearch.getServerPort();
-		var portalHostname = PropsUtil.get("portal.hostname");
-
-		var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
-
-		var journalArticleDocumentType = JSONCurlUtil.get(${curl});
-
-		var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmValueFieldName\"", 1);
-
-		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+		Search.openSearchPage(searchTerm = "WC Title");
 
 		AssertElementNotPresent(
 			key_facetType = "Custom Facet",

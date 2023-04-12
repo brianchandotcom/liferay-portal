@@ -12,8 +12,13 @@
  * details.
  */
 
-import {Card, Input, InputLocalized} from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import {
+	API,
+	Card,
+	Input,
+	InputLocalized,
+} from '@liferay/object-js-components-web';
+import React, {useEffect, useState} from 'react';
 
 import PicklistDefaultValueSelect from '../../../../components/ObjectField/DefaultValueFields/PicklistDefaultValueSelect';
 import {updateFieldSettings} from '../../../../utils/fieldSettings';
@@ -75,6 +80,9 @@ export function BasicInfo({
 	values,
 	workflowStatusJSONArray,
 }: BasicInfoProps) {
+	const [objectDefinition, setObjectDefinition] = useState<
+		Partial<ObjectDefinition>
+	>({enableLocalization: false});
 	const [
 		objectDefinitionExternalReferenceCode2,
 		setObjectDefinitionExternalReferenceCode2,
@@ -100,6 +108,18 @@ export function BasicInfo({
 				{name, value}
 			),
 		});
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
+			);
+
+			setObjectDefinition(objectDefinitionResponse);
+		};
+
+		makeFetch();
+	}, [objectDefinitionExternalReferenceCode]);
 
 	return (
 		<>
@@ -211,6 +231,7 @@ export function BasicInfo({
 
 			{Liferay.FeatureFlags['LPS-146755'] && (
 				<TranslationOptionsContainer
+					objectDefinition={objectDefinition}
 					published={isApproved}
 					setValues={setValues}
 					values={values}

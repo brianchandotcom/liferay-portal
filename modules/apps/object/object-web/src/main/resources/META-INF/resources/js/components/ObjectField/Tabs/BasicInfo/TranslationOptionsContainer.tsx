@@ -13,22 +13,23 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {Card} from '@liferay/object-js-components-web';
+import {Card, Toggle} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import './TranslationOptionsContainer.scss';
 
 interface TranslationOptionsContainerProps {
+	objectDefinition: Partial<ObjectDefinition>;
 	published: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
 
 export function TranslationOptionsContainer({
+	objectDefinition,
 	published,
 	setValues,
 	values,
@@ -57,8 +58,12 @@ export function TranslationOptionsContainer({
 			)}
 
 			<div className="lfr__objects-translation-options-container">
-				<ClayToggle
-					disabled={published || !translatableField}
+				<Toggle
+					disabled={
+						published ||
+						!translatableField ||
+						!objectDefinition.enableLocalization
+					}
 					label={Liferay.Language.get('enable-entry-translations')}
 					onToggle={() =>
 						setValues({

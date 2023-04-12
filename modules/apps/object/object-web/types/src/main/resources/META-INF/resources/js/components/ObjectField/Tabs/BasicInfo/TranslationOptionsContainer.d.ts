@@ -16,11 +16,13 @@
 
 import './TranslationOptionsContainer.scss';
 interface TranslationOptionsContainerProps {
+	objectDefinition: Partial<ObjectDefinition>;
 	published: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
 export declare function TranslationOptionsContainer({
+	objectDefinition,
 	published,
 	setValues,
 	values,

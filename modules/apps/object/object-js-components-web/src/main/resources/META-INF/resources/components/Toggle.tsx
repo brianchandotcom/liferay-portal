@@ -19,6 +19,16 @@ import React from 'react';
 
 import './Toggle.scss';
 
+interface ToggleProps {
+	disabled?: boolean;
+	label: string;
+	name?: string;
+	onToggle?: (val: boolean) => void;
+	toggled?: boolean;
+	tooltip?: string;
+	tooltipAlign?: 'bottom' | 'left' | 'right' | 'top';
+}
+
 export function Toggle({
 	disabled,
 	label,
@@ -27,7 +37,7 @@ export function Toggle({
 	toggled,
 	tooltip,
 	tooltipAlign,
-}: IProps) {
+}: ToggleProps) {
 	return (
 		<>
 			<ClayToggle
@@ -53,14 +63,4 @@ export function Toggle({
 			)}
 		</>
 	);
-}
-
-interface IProps {
-	disabled?: boolean;
-	label: string;
-	name: string;
-	onToggle?: (val: boolean) => void;
-	toggled?: boolean;
-	tooltip?: string;
-	tooltipAlign?: 'bottom' | 'left' | 'right' | 'top';
 }

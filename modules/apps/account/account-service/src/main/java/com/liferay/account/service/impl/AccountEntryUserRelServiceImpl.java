@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelServiceBaseImpl;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -131,6 +133,102 @@ public class AccountEntryUserRelServiceImpl
 
 		accountEntryUserRelLocalService.deleteAccountEntryUserRels(
 			accountEntryId, accountUserIds);
+	}
+
+	@Override
+	public AccountEntryUserRel fetchAccountEntryUserRel(
+			long accountEntryUserRelId)
+		throws PortalException {
+
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				accountEntryUserRelId);
+
+		if (accountEntryUserRel != null) {
+			_modelResourcePermission.check(
+				getPermissionChecker(), accountEntryUserRel.getAccountEntryId(),
+				AccountActionKeys.VIEW_USERS);
+		}
+
+		return accountEntryUserRel;
+	}
+
+	@Override
+	public AccountEntryUserRel fetchAccountEntryUserRel(
+			long accountEntryId, long accountUserId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.VIEW_USERS);
+
+		return accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+			accountEntryId, accountUserId);
+	}
+
+	@Override
+	public AccountEntryUserRel getAccountEntryUserRel(
+			long accountEntryId, long accountUserId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.VIEW_USERS);
+
+		return accountEntryUserRelLocalService.getAccountEntryUserRel(
+			accountEntryId, accountUserId);
+	}
+
+	@Override
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
+			long accountEntryId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.VIEW_USERS);
+
+		return accountEntryUserRelLocalService.
+			getAccountEntryUserRelsByAccountEntryId(accountEntryId);
+	}
+
+	@Override
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
+			long accountEntryId, int start, int end)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.VIEW_USERS);
+
+		return accountEntryUserRelLocalService.
+			getAccountEntryUserRelsByAccountEntryId(accountEntryId, start, end);
+	}
+
+	@Override
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountUserId(
+			long accountUserId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountUserId,
+			AccountActionKeys.VIEW_USERS);
+
+		return accountEntryUserRelLocalService.
+			getAccountEntryUserRelsByAccountUserId(accountUserId);
+	}
+
+	@Override
+	public long getAccountEntryUserRelsCountByAccountEntryId(
+			long accountEntryId)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.VIEW_USERS);
+
+		return accountEntryUserRelLocalService.
+			getAccountEntryUserRelsCountByAccountEntryId(accountEntryId);
 	}
 
 	@Override

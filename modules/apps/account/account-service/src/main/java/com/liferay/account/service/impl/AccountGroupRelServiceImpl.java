@@ -71,6 +71,23 @@ public class AccountGroupRelServiceImpl extends AccountGroupRelServiceBaseImpl {
 	}
 
 	@Override
+	public AccountGroupRel deleteAccountGroupRel(long accountGroupRelId)
+		throws PortalException {
+
+		AccountGroupRel accountGroupRel =
+			accountGroupRelLocalService.fetchAccountGroupRel(accountGroupRelId);
+
+		if (accountGroupRel != null) {
+			_accountGroupModelResourcePermission.check(
+				getPermissionChecker(), accountGroupRel.getAccountGroupId(),
+				AccountActionKeys.ASSIGN_ACCOUNTS);
+		}
+
+		return accountGroupRelLocalService.deleteAccountGroupRel(
+			accountGroupRelId);
+	}
+
+	@Override
 	public void deleteAccountGroupRels(
 			long accountGroupId, String className, long[] classPKs)
 		throws PortalException {
@@ -83,6 +100,21 @@ public class AccountGroupRelServiceImpl extends AccountGroupRelServiceBaseImpl {
 
 		accountGroupRelLocalService.deleteAccountGroupRels(
 			accountGroupId, className, classPKs);
+	}
+
+	@Override
+	public AccountGroupRel fetchAccountGroupRel(
+			long accountGroupId, String className, long classPK)
+		throws PortalException {
+
+		if (Objects.equals(AccountEntry.class.getName(), className)) {
+			_accountGroupModelResourcePermission.check(
+				getPermissionChecker(), accountGroupId,
+				AccountActionKeys.VIEW_ACCOUNTS);
+		}
+
+		return accountGroupRelLocalService.fetchAccountGroupRel(
+			accountGroupId, className, classPK);
 	}
 
 	@Reference(

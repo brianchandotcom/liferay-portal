@@ -14,7 +14,6 @@
 
 package com.liferay.jethr0.entity.dalo;
 
-import com.liferay.jethr0.dalo.BaseDALO;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.util.StringUtil;
@@ -389,7 +388,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	private static final long _RETRY_DELAY_DURATION = 1000;
 
-	private static final Log _log = LogFactory.getLog(BaseDALO.class);
+	private static final Log _log = LogFactory.getLog(BaseEntityDALO.class);
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;

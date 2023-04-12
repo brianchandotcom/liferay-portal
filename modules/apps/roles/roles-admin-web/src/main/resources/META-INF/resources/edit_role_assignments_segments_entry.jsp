@@ -48,7 +48,7 @@
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand-smallest table-cell-minw-150"
 			name="scope"
-			value="<%= HtmlUtil.escape(SegmentsEntryDisplayContext.getGroupDescriptiveName(segmentsEntry, locale)) %>"
+			value="<%= HtmlUtil.escape(SegmentsEntryDisplayUtil.getGroupDescriptiveName(segmentsEntry, locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-date
@@ -70,7 +70,7 @@
 				>
 					<liferay-ui:icon
 						label="<%= true %>"
-						message="<%= String.valueOf(SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
+						message="<%= String.valueOf(SegmentsEntryDisplayUtil.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
 						onClick='<%= liferayPortletResponse.getNamespace() + "openViewMembersDialog(event);" %>'
 						url="<%= viewMembersURL %>"
 					/>
@@ -96,7 +96,7 @@
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest table-cell-minw-150"
 					name="members"
-					value="<%= String.valueOf(SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
+					value="<%= String.valueOf(SegmentsEntryDisplayUtil.getSegmentsEntryUsersCount(segmentsEntry.getSegmentsEntryId())) %>"
 				/>
 			</c:otherwise>
 		</c:choose>

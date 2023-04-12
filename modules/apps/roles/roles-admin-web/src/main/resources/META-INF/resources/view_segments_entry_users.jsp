@@ -26,11 +26,11 @@ long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 	<liferay-ui:search-container
 		emptyResultsMessage="no-users-have-been-assigned-to-this-segment"
 		iteratorURL="<%= currentURLObj %>"
-		total="<%= SegmentsEntryDisplayContext.getSegmentsEntryUsersCount(segmentsEntryId) %>"
+		total="<%= SegmentsEntryDisplayUtil.getSegmentsEntryUsersCount(segmentsEntryId) %>"
 		var="segmentsEntryUsersSearchContainer"
 	>
 		<liferay-ui:search-container-results
-			results="<%= SegmentsEntryDisplayContext.getSegmentsEntryUsers(segmentsEntryId, segmentsEntryUsersSearchContainer.getStart(), segmentsEntryUsersSearchContainer.getEnd()) %>"
+			results="<%= SegmentsEntryDisplayUtil.getSegmentsEntryUsers(segmentsEntryId, segmentsEntryUsersSearchContainer.getStart(), segmentsEntryUsersSearchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

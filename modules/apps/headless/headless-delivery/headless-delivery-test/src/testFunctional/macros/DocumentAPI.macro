@@ -198,6 +198,17 @@ definition {
 		return ${response};
 	}
 
+	macro addDocumentWithFileInSite {
+		Variables.assertDefined(parameterList = "${siteId},${filePath}");
+
+		var response = DocumentAPI._addDocument(
+			externalReferenceCode = ${externalReferenceCode},
+			filePath = ${filePath},
+			siteId = ${siteId});
+
+		return ${response};
+	}
+
 	macro assertExternalReferenceCodeWithCorrectValue {
 		if (!(isSet(expectedExternalReferenceCodeValue))) {
 			var expectedExternalReferenceCodeValue = DocumentAPI.getUuidOfCreatedDocument(responseToParse = ${responseToParse});

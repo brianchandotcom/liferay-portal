@@ -729,7 +729,7 @@ public class JournalTestUtil {
 	}
 
 	public static JournalFeed addFeed(
-			long groupId, long plid, String name, String ddmStructureKey,
+			long groupId, long plid, String name, long ddmStructureId,
 			String ddmTemplateKey, String rendererTemplateKey)
 		throws Exception {
 
@@ -753,7 +753,7 @@ public class JournalTestUtil {
 
 		return JournalFeedLocalServiceUtil.addFeed(
 			userId, groupId, feedId, autoFeedId, name, description,
-			ddmStructureKey, ddmTemplateKey, rendererTemplateKey, delta,
+			ddmStructureId, ddmTemplateKey, rendererTemplateKey, delta,
 			orderByCol, orderByType, friendlyURL, targetPortletId, contentField,
 			feedFormat, feedVersion, serviceContext);
 	}

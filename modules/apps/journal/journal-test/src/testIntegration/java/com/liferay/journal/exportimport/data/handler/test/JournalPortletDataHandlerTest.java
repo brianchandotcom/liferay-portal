@@ -174,7 +174,7 @@ public class JournalPortletDataHandlerTest
 
 		JournalTestUtil.addFeed(
 			stagingGroup.getGroupId(), layout.getPlid(),
-			RandomTestUtil.randomString(), ddmStructure.getStructureKey(),
+			RandomTestUtil.randomString(), ddmStructure.getStructureId(),
 			ddmTemplate.getTemplateKey(), rendererDDMTemplate.getTemplateKey());
 	}
 

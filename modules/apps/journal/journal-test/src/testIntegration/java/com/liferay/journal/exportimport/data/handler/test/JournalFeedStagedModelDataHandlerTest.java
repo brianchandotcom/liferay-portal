@@ -277,7 +277,7 @@ public class JournalFeedStagedModelDataHandlerTest
 
 		return JournalTestUtil.addFeed(
 			group.getGroupId(), _layout.getPlid(),
-			RandomTestUtil.randomString(), ddmStructure.getStructureKey(),
+			RandomTestUtil.randomString(), ddmStructure.getStructureId(),
 			ddmTemplate.getTemplateKey(), rendererDDMTemplate.getTemplateKey());
 	}
 

@@ -478,9 +478,13 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			siteScope = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Child SiteName");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Child SiteName",
+			layoutName = "WC Test Page",
+			parentGroupName = "Site Name",
+			widgetName = "Asset Publisher");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		Navigator.openSiteURL(siteName = "Child SiteName");
 
 		AssetPublisherPortlet.configureSiteScopePG(
 			siteName = "Site Name",

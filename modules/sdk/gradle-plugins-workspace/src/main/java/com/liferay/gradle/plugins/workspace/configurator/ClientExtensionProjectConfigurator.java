@@ -498,7 +498,7 @@ public class ClientExtensionProjectConfigurator
 							}
 						}
 
-						copySpec.exclude(CLIENT_EXTENSION_BUILD_DIR);
+						copySpec.exclude("**/" + CLIENT_EXTENSION_BUILD_DIR);
 
 						if (intoJsonNode != null) {
 							copySpec.into(intoJsonNode.asText());

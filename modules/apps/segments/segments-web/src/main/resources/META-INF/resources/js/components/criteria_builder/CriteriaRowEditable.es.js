@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {PropTypes} from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 
 import {
 	PROPERTY_TYPES,
@@ -32,43 +32,31 @@ import IntegerInput from '../inputs/IntegerInput';
 import SelectEntityInput from '../inputs/SelectEntityInput';
 import StringInput from '../inputs/StringInput';
 
-class CriteriaRowEditable extends Component {
-	static propTypes = {
-		connectDragSource: PropTypes.func,
-		criterion: PropTypes.object.isRequired,
-		error: PropTypes.bool,
-		index: PropTypes.number.isRequired,
-		onAdd: PropTypes.func.isRequired,
-		onChange: PropTypes.func.isRequired,
-		onDelete: PropTypes.func.isRequired,
-		renderEmptyValuesErrors: PropTypes.bool,
-		selectedOperator: PropTypes.object,
-		selectedProperty: PropTypes.object.isRequired,
-	};
-
-	static defaultProps = {
-		criterion: {},
-	};
-
-	_handleDelete = (event) => {
+export default function CriteriaRowEditable({
+	connectDragSource,
+	criterion = {},
+	error,
+	index,
+	onAdd,
+	onChange,
+	onDelete,
+	renderEmptyValuesErrors,
+	selectedOperator,
+	selectedProperty,
+}) {
+	const _handleDelete = (event) => {
 		event.preventDefault();
-
-		const {index, onDelete} = this.props;
 
 		onDelete(index);
 	};
 
-	_handleDuplicate = (event) => {
+	const _handleDuplicate = (event) => {
 		event.preventDefault();
-
-		const {criterion, index, onAdd} = this.props;
 
 		onAdd(index + 1, criterion);
 	};
 
-	_handleInputChange = (propertyName) => (event) => {
-		const {criterion, onChange} = this.props;
-
+	const _handleInputChange = (propertyName) => (event) => {
 		onChange({
 			...criterion,
 			[propertyName]: event.target.value,
@@ -83,9 +71,7 @@ class CriteriaRowEditable extends Component {
 	 * @param {Array|object} value The properties or list of objects with
 	 * properties to update.
 	 */
-	_handleTypedInputChange = (value) => {
-		const {criterion, onChange} = this.props;
-
+	const _handleTypedInputChange = (value) => {
 		if (Array.isArray(value)) {
 			const items = value.map((item) => ({
 				...criterion,
@@ -102,7 +88,7 @@ class CriteriaRowEditable extends Component {
 		}
 	};
 
-	_renderEditableProperty = ({
+	const _renderEditableProperty = ({
 		error,
 		propertyLabel,
 		selectedOperator,
@@ -110,8 +96,6 @@ class CriteriaRowEditable extends Component {
 		value,
 	}) => {
 		const disabledInput = !!error;
-
-		const renderEmptyValuesErrors = this.props.renderEmptyValuesErrors;
 
 		const propertyType = selectedProperty ? selectedProperty.type : '';
 
@@ -131,9 +115,9 @@ class CriteriaRowEditable extends Component {
 					aria-label={`${propertyLabel}: ${Liferay.Language.get(
 						'select-property-operator-option'
 					)}`}
-					className="criterion-input form-control operator-input"
+					className="criterion-input operator-input"
 					disabled={disabledInput}
-					onChange={this._handleInputChange('operatorName')}
+					onChange={_handleInputChange('operatorName')}
 					options={filteredSupportedOperators.map(
 						({label, name}) => ({
 							label,
@@ -143,7 +127,7 @@ class CriteriaRowEditable extends Component {
 					value={selectedOperator && selectedOperator.name}
 				/>
 
-				{this._renderValueInput(
+				{_renderValueInput(
 					disabledInput,
 					propertyLabel,
 					renderEmptyValuesErrors,
@@ -154,7 +138,7 @@ class CriteriaRowEditable extends Component {
 		);
 	};
 
-	_renderValueInput = (
+	const _renderValueInput = (
 		disabled,
 		propertyLabel,
 		renderEmptyValuesErrors,
@@ -179,8 +163,8 @@ class CriteriaRowEditable extends Component {
 		return (
 			<InputComponent
 				disabled={disabled}
-				displayValue={this.props.criterion.displayValue || ''}
-				onChange={this._handleTypedInputChange}
+				displayValue={criterion.displayValue || ''}
+				onChange={_handleTypedInputChange}
 				options={selectedProperty.options}
 				propertyLabel={propertyLabel}
 				propertyType={selectedProperty.type}
@@ -191,79 +175,78 @@ class CriteriaRowEditable extends Component {
 		);
 	};
 
-	render() {
-		const {
-			connectDragSource,
-			criterion,
-			error,
-			selectedOperator,
-			selectedProperty,
-		} = this.props;
+	const value = criterion.value;
 
-		const value = criterion.value;
+	const propertyLabel = selectedProperty ? selectedProperty.label : '';
 
-		const propertyLabel = selectedProperty ? selectedProperty.label : '';
+	return (
+		<div className="edit-container">
+			{connectDragSource(
+				<div className="drag-icon">
+					<ClayIcon symbol="drag" />
+				</div>
+			)}
 
-		return (
-			<div className="edit-container">
-				{connectDragSource(
-					<div className="drag-icon">
-						<ClayIcon symbol="drag" />
-					</div>
-				)}
+			{_renderEditableProperty({
+				error,
+				propertyLabel,
+				selectedOperator,
+				selectedProperty,
+				value,
+			})}
 
-				{this._renderEditableProperty({
-					error,
-					propertyLabel,
-					selectedOperator,
-					selectedProperty,
-					value,
-				})}
-
-				{error ? (
+			{error ? (
+				<ClayButton
+					className="btn-outline-danger btn-sm"
+					displayType=""
+					onClick={_handleDelete}
+				>
+					{Liferay.Language.get('delete-segment-property')}
+				</ClayButton>
+			) : (
+				<>
 					<ClayButton
-						className="btn-outline-danger btn-sm"
-						displayType=""
-						onClick={this._handleDelete}
+						aria-label={Liferay.Language.get(
+							'duplicate-segment-property'
+						)}
+						className="btn-outline-borderless btn-sm mr-1"
+						displayType="secondary"
+						monospaced
+						onClick={_handleDuplicate}
+						title={Liferay.Language.get(
+							'duplicate-segment-property'
+						)}
 					>
-						{Liferay.Language.get('delete-segment-property')}
+						<ClayIcon symbol="paste" />
 					</ClayButton>
-				) : (
-					<>
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'duplicate-segment-property'
-							)}
-							className="btn-outline-borderless btn-sm mr-1"
-							displayType="secondary"
-							monospaced
-							onClick={this._handleDuplicate}
-							title={Liferay.Language.get(
-								'duplicate-segment-property'
-							)}
-						>
-							<ClayIcon symbol="paste" />
-						</ClayButton>
 
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'delete-segment-property'
-							)}
-							className="btn-outline-borderless btn-sm"
-							displayType="secondary"
-							monospaced
-							onClick={this._handleDelete}
-							title={Liferay.Language.get(
-								'delete-segment-property'
-							)}
-						>
-							<ClayIcon symbol="times-circle" />
-						</ClayButton>
-					</>
-				)}
-			</div>
-		);
-	}
+					<ClayButton
+						aria-label={Liferay.Language.get(
+							'delete-segment-property'
+						)}
+						className="btn-outline-borderless btn-sm"
+						displayType="secondary"
+						monospaced
+						onClick={_handleDelete}
+						title={Liferay.Language.get('delete-segment-property')}
+					>
+						<ClayIcon symbol="times-circle" />
+					</ClayButton>
+				</>
+			)}
+		</div>
+	);
 }
 
-export default CriteriaRowEditable;
+CriteriaRowEditable.propTypes = {
+	connectDragSource: PropTypes.func,
+	criterion: PropTypes.object.isRequired,
+	error: PropTypes.bool,
+	index: PropTypes.number.isRequired,
+	onAdd: PropTypes.func.isRequired,
+	onChange: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired,
+	renderEmptyValuesErrors: PropTypes.bool,
+	selectedOperator: PropTypes.object,
+	selectedProperty: PropTypes.object.isRequired,
+};

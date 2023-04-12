@@ -323,4 +323,66 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter task using multiple filtering options"
+	@priority = 5
+	test AdminCanFilterTaskWithMultipleOptions {
+		task ("Given that task 1 is assigned to user userfn userln") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			Testray.selectUsers(listUserName = "userfn userln");
+		}
+
+		task ("And that task 2 is assigned to user Test") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_2");
+
+			Testray.selectUsers(listUserName = "Test Test");
+		}
+
+		task ("And that task 2 is completed") {
+			Button.click(button = "Complete");
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("When the user filter multiple options by: task name, build name and status in the filter") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Build Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Build 2");
+
+			Click.clickAtNotVisible(
+				key_label = "Status",
+				key_status = "Complete",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
+
+			TestrayFilter.typeFilter(
+				label = "Task Name",
+				value = "Task_2");
+		}
+
+		task ("Then can see only build 2 and complete status in the table") {
+			AssertElementPresent(
+				key_projectName = "Build 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayTestflow.assertStatus(
+				label = "Tasks",
+				status = "Complete");
+		}
+
+		task ("And do not see the Task_1 and build 1 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Build 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementNotPresent(
+				key_projectName = "Task_1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

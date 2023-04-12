@@ -73,6 +73,10 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
+			String className, long classPK)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
 			String className, long classPK)

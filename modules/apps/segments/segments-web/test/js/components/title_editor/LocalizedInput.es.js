@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import LocalizedInput from '../../../../src/main/resources/META-INF/resources/js/components/title_editor/LocalizedInput.es';
+import LocalizedInput from '../../../../src/main/resources/META-INF/resources/js/components/title_editor/LocalizedInput';
 
 const LOCALIZED_DROPDOWN_BUTTON = 'localized-dropdown-button';
 

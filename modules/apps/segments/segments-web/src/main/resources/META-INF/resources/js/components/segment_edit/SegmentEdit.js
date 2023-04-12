@@ -38,7 +38,7 @@ import {initialContributorShape} from '../../utils/types.es';
 import {sub} from '../../utils/utils';
 import ContributorInputs from '../criteria_builder/ContributorInputs.es';
 import ContributorsBuilder from '../criteria_builder/ContributorsBuilder.es';
-import LocalizedInput from '../title_editor/LocalizedInput.es';
+import LocalizedInput from '../title_editor/LocalizedInput';
 
 function SegmentEdit({
 	availableLocales,

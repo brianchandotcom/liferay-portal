@@ -1362,7 +1362,7 @@ definition {
 				value1 = "Draft");
 		}
 		else {
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 	}
 

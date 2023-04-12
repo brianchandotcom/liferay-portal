@@ -79,6 +79,9 @@ public class CookiesManagerImpl implements CookiesManager {
 		if (httpServletRequest != null) {
 			secure = _portal.isSecure(httpServletRequest);
 		}
+		else if (cookie != null) {
+			secure = cookie.getSecure();
+		}
 
 		return addCookie(
 			cookie, httpServletRequest, httpServletResponse, secure);
@@ -219,7 +222,7 @@ public class CookiesManagerImpl implements CookiesManager {
 
 		return addCookie(
 			CookiesConstants.CONSENT_TYPE_NECESSARY, cookieSupportCookie, null,
-			httpServletResponse, httpServletRequest.isSecure());
+			httpServletResponse, _portal.isSecure(httpServletRequest));
 	}
 
 	@Override

@@ -29,8 +29,6 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 <aui:input name="devices" type="hidden" value="regular" />
 
-<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
-
 <%
 List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
 %>

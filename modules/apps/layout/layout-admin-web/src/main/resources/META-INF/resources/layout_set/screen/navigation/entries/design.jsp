@@ -62,6 +62,25 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<h2 class="sheet-title"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
+		<clay:sheet-section
+			cssClass="mb-5"
+		>
+			<h3 class="mb-4 text-uppercase"><liferay-ui:message key="theme" /></h3>
+
+			<c:choose>
+				<c:when test='<%= ParamUtil.getBoolean(request, "editable", true) %>'>
+					<div id="<portlet:namespace />currentThemeContainer">
+						<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/look_and_feel_themes_info.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
+		</clay:sheet-section>
+
+		<hr class="mb-5 separator" />
+
 		<liferay-frontend:form-navigator
 			formModelBean="<%= selLayoutSet %>"
 			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"

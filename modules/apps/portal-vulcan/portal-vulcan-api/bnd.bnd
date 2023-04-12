@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.batch.engine.resource,\
 	com.liferay.portal.vulcan.dto.converter,\
 	com.liferay.portal.vulcan.extension,\
+	com.liferay.portal.vulcan.extension.util,\
 	com.liferay.portal.vulcan.extension.validation,\
 	com.liferay.portal.vulcan.fields,\
 	com.liferay.portal.vulcan.graphql.annotation,\

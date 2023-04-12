@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.internal.extension.util;
+package com.liferay.portal.vulcan.extension.util;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
-import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 
 import java.util.List;
 

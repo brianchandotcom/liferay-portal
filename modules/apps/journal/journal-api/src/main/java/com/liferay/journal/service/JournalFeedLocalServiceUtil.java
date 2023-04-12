@@ -46,7 +46,7 @@ public class JournalFeedLocalServiceUtil {
 	 */
 	public static JournalFeed addFeed(
 			long userId, long groupId, String feedId, boolean autoFeedId,
-			String name, String description, String ddmStructureKey,
+			String name, String description, long ddmStructureId,
 			String ddmTemplateKey, String ddmRendererTemplateKey, int delta,
 			String orderByCol, String orderByType,
 			String targetLayoutFriendlyUrl, String targetPortletId,
@@ -56,7 +56,7 @@ public class JournalFeedLocalServiceUtil {
 
 		return getService().addFeed(
 			userId, groupId, feedId, autoFeedId, name, description,
-			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
+			ddmStructureId, ddmTemplateKey, ddmRendererTemplateKey, delta,
 			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
 			contentField, feedFormat, feedVersion, serviceContext);
 	}
@@ -463,7 +463,7 @@ public class JournalFeedLocalServiceUtil {
 
 	public static JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,
-			String ddmStructureKey, String ddmTemplateKey,
+			long ddmStructureId, String ddmTemplateKey,
 			String ddmRendererTemplateKey, int delta, String orderByCol,
 			String orderByType, String targetLayoutFriendlyUrl,
 			String targetPortletId, String contentField, String feedFormat,
@@ -472,7 +472,7 @@ public class JournalFeedLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateFeed(
-			groupId, feedId, name, description, ddmStructureKey, ddmTemplateKey,
+			groupId, feedId, name, description, ddmStructureId, ddmTemplateKey,
 			ddmRendererTemplateKey, delta, orderByCol, orderByType,
 			targetLayoutFriendlyUrl, targetPortletId, contentField, feedFormat,
 			feedVersion, serviceContext);

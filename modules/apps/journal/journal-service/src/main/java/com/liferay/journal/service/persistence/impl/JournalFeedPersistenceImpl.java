@@ -3434,6 +3434,7 @@ public class JournalFeedPersistenceImpl
 		ctStrictColumnNames.add("feedId");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
+		ctStrictColumnNames.add("DDMStructureId");
 		ctStrictColumnNames.add("DDMStructureKey");
 		ctStrictColumnNames.add("DDMTemplateKey");
 		ctStrictColumnNames.add("DDMRendererTemplateKey");

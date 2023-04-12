@@ -58,6 +58,8 @@ public class JournalFeedTable extends BaseTable<JournalFeedTable> {
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<JournalFeedTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<JournalFeedTable, Long> DDMStructureId = createColumn(
+		"DDMStructureId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<JournalFeedTable, String> DDMStructureKey =
 		createColumn(
 			"DDMStructureKey", String.class, Types.VARCHAR,

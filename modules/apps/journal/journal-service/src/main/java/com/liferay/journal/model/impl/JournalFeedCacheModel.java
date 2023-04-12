@@ -77,7 +77,7 @@ public class JournalFeedCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -105,6 +105,8 @@ public class JournalFeedCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", DDMStructureId=");
+		sb.append(DDMStructureId);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", DDMTemplateKey=");
@@ -194,6 +196,8 @@ public class JournalFeedCacheModel
 		else {
 			journalFeedImpl.setDescription(description);
 		}
+
+		journalFeedImpl.setDDMStructureId(DDMStructureId);
 
 		if (DDMStructureKey == null) {
 			journalFeedImpl.setDDMStructureKey("");
@@ -294,6 +298,8 @@ public class JournalFeedCacheModel
 		feedId = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		DDMStructureId = objectInput.readLong();
 		DDMStructureKey = objectInput.readUTF();
 		DDMTemplateKey = objectInput.readUTF();
 		DDMRendererTemplateKey = objectInput.readUTF();
@@ -361,6 +367,8 @@ public class JournalFeedCacheModel
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(DDMStructureId);
 
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF("");
@@ -444,6 +452,7 @@ public class JournalFeedCacheModel
 	public String feedId;
 	public String name;
 	public String description;
+	public long DDMStructureId;
 	public String DDMStructureKey;
 	public String DDMTemplateKey;
 	public String DDMRendererTemplateKey;

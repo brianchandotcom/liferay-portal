@@ -22,3 +22,7 @@
 		props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
 	/>
 </div>
+
+<c:if test="<%= company.isSiteLogo() %>">
+	<liferay-util:include page="/layout_set/logo.jsp" servletContext="<%= application %>" />
+</c:if>

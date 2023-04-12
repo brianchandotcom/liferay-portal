@@ -85,7 +85,7 @@ public class JournalFeedTypeUpgradeProcessTest {
 
 		_journalFeed = JournalTestUtil.addFeed(
 			_group.getGroupId(), _layout.getPlid(),
-			RandomTestUtil.randomString(), ddmStructure.getStructureKey(),
+			RandomTestUtil.randomString(), ddmStructure.getStructureId(),
 			ddmTemplate.getTemplateKey(), rendererDDMTemplate.getTemplateKey());
 
 		_journalFeedClassNameId = _classNameLocalService.getClassNameId(

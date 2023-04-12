@@ -25,6 +25,69 @@ definition {
 		}
 	}
 
+	@description = "Add style book and apply it within Publications"
+	@priority = 3
+	test CanAddStyleBookAndApplyItWithinPublications {
+		task ("Create Publication and Site") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+
+			JSONGroup.addGroup(groupName = "Test Site");
+		}
+
+		task ("Create Style Book with times as Font Family Base") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
+
+			StyleBooks.selectForm(formName = "Typography");
+
+			Type(
+				key_fieldLabel = "Font Family Base",
+				key_groupLabel = "Font Family",
+				locator1 = "TextInput#GROUPED_TEXT_INPUT",
+				value1 = "times");
+
+			StyleBooks.clickManagementBar();
+
+			StyleBooks.waitForAutoSave();
+
+			StyleBooks.clickPublish();
+		}
+
+		task ("Create Content Page and select Test Style Book Name") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site");
+
+			ContentPages.addPage(pageName = "Example Page");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+
+			StyleBooks.selectStyleBookViaPageDesignOptions(styleBookName = "Test Style Book Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert Style Book is applied to Content Page and publish") {
+			Navigator.gotoSitePage(
+				pageName = "Example Page",
+				siteName = "Test Site");
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "times");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			Publications.publishPublication(publicationName = "Test Publication");
+		}
+	}
+
 	@description = "Create content page template into a Publication and publish"
 	@priority = 3
 	test CanCreateContentPageTemplateAndPublish {

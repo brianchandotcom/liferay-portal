@@ -110,13 +110,13 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 			label="web-content-constraints"
 		>
 			<div class="form-group">
-				<aui:input name="ddmStructureKey" required="<%= true %>" type="hidden" value="<%= editJournalFeedDisplayContext.getDDMStructureKey() %>" />
+				<aui:input name="ddmStructureId" required="<%= true %>" type="hidden" value="<%= editJournalFeedDisplayContext.getDDMStructureId() %>" />
 
 				<aui:input name="structure" required="<%= true %>" type="resource" value="<%= editJournalFeedDisplayContext.getDDMStructureName() %>" />
 
 				<aui:button name="selectDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>' value="select" />
 
-				<aui:button disabled="<%= Validator.isNull(editJournalFeedDisplayContext.getDDMStructureKey()) %>" name="removeDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
+				<aui:button disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>" name="removeDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
 			</div>
 
 			<%
@@ -293,16 +293,16 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				if (
 					document.<portlet:namespace />fm
-						.<portlet:namespace />ddmStructureKey.value !=
-					itemValue.ddmstructurekey
+						.<portlet:namespace />ddmStructureId.value !=
+					itemValue.ddmstructureid
 				) {
 					Liferay.Util.openConfirmModal({
 						message:
 							'<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>',
 						onConfirm: (isConfirmed) => {
 							if (isConfirmed) {
-								document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
-									itemValue.ddmstructurekey;
+								document.<portlet:namespace />fm.<portlet:namespace />ddmStructureId.value =
+									itemValue.ddmstructureid;
 								document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
 									'';
 								document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
@@ -336,8 +336,8 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 	}
 
 	function <portlet:namespace />removeDDMStructure() {
-		document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
-			'';
+		document.<portlet:namespace />fm.<portlet:namespace />ddmStructureId.value =
+			'0';
 		document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
 			'';
 		document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =

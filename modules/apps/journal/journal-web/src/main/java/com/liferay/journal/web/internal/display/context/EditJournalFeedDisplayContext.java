@@ -28,7 +28,6 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.constants.JournalFeedConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFeedPermission;
@@ -208,21 +207,21 @@ public class EditJournalFeedDisplayContext {
 		return _ddmRendererTemplateKey;
 	}
 
-	public String getDDMStructureKey() {
-		if (_ddmStructureKey != null) {
-			return _ddmStructureKey;
+	public Long getDDMStructureId() {
+		if (_ddmStructureId != null) {
+			return _ddmStructureId;
 		}
 
-		String ddmStructureKey = ParamUtil.getString(
-			_httpServletRequest, "ddmStructureKey");
+		long ddmStructureId = ParamUtil.getLong(
+			_httpServletRequest, "ddmStructureId");
 
-		if (Validator.isNull(ddmStructureKey) && (_journalFeed != null)) {
-			ddmStructureKey = _journalFeed.getDDMStructureKey();
+		if ((ddmStructureId == 0) && (_journalFeed != null)) {
+			ddmStructureId = _journalFeed.getDDMStructureId();
 		}
 
-		_ddmStructureKey = ddmStructureKey;
+		_ddmStructureId = ddmStructureId;
 
-		return _ddmStructureKey;
+		return _ddmStructureId;
 	}
 
 	public String getDDMStructureName() {
@@ -399,13 +398,12 @@ public class EditJournalFeedDisplayContext {
 	}
 
 	private DDMStructure _getDDMStructure() {
-		if (Validator.isNull(getDDMStructureKey())) {
+		if (getDDMStructureId() == 0) {
 			return null;
 		}
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-			_themeDisplay.getSiteGroupId(), _getJournalArticleClassNameId(),
-			getDDMStructureKey(), true);
+			getDDMStructureId());
 
 		if (ddmStructure == null) {
 			DDMTemplate ddmTemplate = _getDDMTemplate();
@@ -442,23 +440,12 @@ public class EditJournalFeedDisplayContext {
 			getDDMTemplateKey(), true);
 	}
 
-	private long _getJournalArticleClassNameId() {
-		if (_journalArticleClassNameId != null) {
-			return _journalArticleClassNameId;
-		}
-
-		_journalArticleClassNameId = PortalUtil.getClassNameId(
-			JournalArticle.class);
-
-		return _journalArticleClassNameId;
-	}
-
 	private Long _assetCategoryId;
 	private String _assetCategoryName;
 	private String _contentField;
 	private String _ddmRendererTemplateKey;
 	private Long _ddmStructureClassNameId;
-	private String _ddmStructureKey;
+	private Long _ddmStructureId;
 	private String _ddmStructureName;
 	private String _ddmTemplateKey;
 	private String _feedId;
@@ -467,7 +454,6 @@ public class EditJournalFeedDisplayContext {
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
-	private Long _journalArticleClassNameId;
 	private final JournalFeed _journalFeed;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _newFeedId;

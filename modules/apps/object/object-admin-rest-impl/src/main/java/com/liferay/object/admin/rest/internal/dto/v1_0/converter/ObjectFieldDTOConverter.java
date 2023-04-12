@@ -18,10 +18,14 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
-import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
+import com.liferay.object.admin.rest.dto.v1_0.util.ObjectStateFlowUtil;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.filter.util.ObjectFilterUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -81,9 +85,8 @@ public class ObjectFieldDTOConverter
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),
-					objectFieldSetting ->
-						ObjectFieldSettingUtil.toObjectFieldSetting(
-							objectField.getBusinessType(), objectFieldSetting),
+					objectFieldSetting -> _toObjectFieldSetting(
+						objectFieldSetting),
 					ObjectFieldSetting.class);
 				relationshipType = ObjectField.RelationshipType.create(
 					objectField.getRelationshipType());
@@ -109,10 +112,58 @@ public class ObjectFieldDTOConverter
 		};
 	}
 
+	private ObjectFieldSetting _toObjectFieldSetting(
+		com.liferay.object.model.ObjectFieldSetting
+			serviceBuilderObjectFieldSetting) {
+
+		if ((serviceBuilderObjectFieldSetting == null) ||
+			(!FeatureFlagManagerUtil.isEnabled("LPS-163716") &&
+			 (serviceBuilderObjectFieldSetting.compareName(
+				 ObjectFieldSettingConstants.NAME_DEFAULT_VALUE) ||
+			  serviceBuilderObjectFieldSetting.compareName(
+				  ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE)))) {
+
+			return null;
+		}
+
+		return new ObjectFieldSetting() {
+			{
+				name = serviceBuilderObjectFieldSetting.getName();
+
+				setValue(
+					() -> {
+						if (serviceBuilderObjectFieldSetting.compareName(
+								ObjectFieldSettingConstants.NAME_FILTERS)) {
+
+							return ObjectFilterUtil.getObjectFiltersJSONArray(
+								serviceBuilderObjectFieldSetting.
+									getObjectFilters());
+						}
+						else if (serviceBuilderObjectFieldSetting.compareName(
+									ObjectFieldSettingConstants.
+										NAME_STATE_FLOW)) {
+
+							return ObjectStateFlowUtil.toObjectStateFlow(
+								_objectStateFlowLocalService.
+									fetchObjectStateFlow(
+										GetterUtil.getLong(
+											serviceBuilderObjectFieldSetting.
+												getValue())));
+						}
+
+						return serviceBuilderObjectFieldSetting.getValue();
+					});
+			}
+		};
+	}
+
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Reference
+	private ObjectStateFlowLocalService _objectStateFlowLocalService;
 
 }

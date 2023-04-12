@@ -14,6 +14,7 @@
 
 package com.liferay.segments.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,10 +33,6 @@ import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
@@ -109,22 +106,12 @@ public class PreviewSegmentsEntryUsersDisplayContext {
 			}
 			else if ((criteria == null) && (segmentsEntry != null)) {
 				userSearchContainer.setResultsAndTotal(
-					() -> {
-						LongStream segmentsEntryClassPKsLongStream =
-							Arrays.stream(
-								_segmentsEntryProviderRegistry.
-									getSegmentsEntryClassPKs(
-										segmentsEntry.getSegmentsEntryId(),
-										userSearchContainer.getStart(),
-										userSearchContainer.getEnd()));
-
-						return segmentsEntryClassPKsLongStream.boxed(
-						).map(
-							_userLocalService::fetchUser
-						).collect(
-							Collectors.toList()
-						);
-					},
+					() -> TransformUtil.transformToList(
+						_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+							segmentsEntry.getSegmentsEntryId(),
+							userSearchContainer.getStart(),
+							userSearchContainer.getEnd()),
+						_userLocalService::fetchUser),
 					_segmentsEntryProviderRegistry.
 						getSegmentsEntryClassPKsCount(
 							segmentsEntry.getSegmentsEntryId()));

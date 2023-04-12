@@ -59,7 +59,7 @@ export default function ThemeSpritemapCETsConfiguration({
 					{Liferay.Language.get('theme-spritemap-client-extension')}
 				</label>
 
-				<ClayInput.Group className="w-50" small>
+				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
 							id={`${portletNamespace}themeSpritemapExtensionNameInput`}
@@ -79,7 +79,6 @@ export default function ThemeSpritemapCETsConfiguration({
 									className="mr-2"
 									displayType="secondary"
 									onClick={onClick}
-									small
 									symbol="change"
 								/>
 
@@ -90,7 +89,6 @@ export default function ThemeSpritemapCETsConfiguration({
 										setExtensionName('');
 										setCETExternalReferenceCode('');
 									}}
-									small
 									symbol="trash"
 								/>
 							</>
@@ -99,7 +97,6 @@ export default function ThemeSpritemapCETsConfiguration({
 								aria-label={Liferay.Language.get('select')}
 								displayType="secondary"
 								onClick={onClick}
-								small
 								symbol="plus"
 							/>
 						)}

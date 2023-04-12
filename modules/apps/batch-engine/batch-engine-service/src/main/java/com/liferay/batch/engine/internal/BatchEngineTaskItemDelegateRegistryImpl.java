@@ -21,13 +21,19 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Igor Beslic
@@ -40,31 +46,64 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 	public BatchEngineTaskItemDelegate<?> getBatchEngineTaskItemDelegate(
 		String itemClassName, String taskItemDelegateName) {
 
-		return _batchEngineTaskItemDelegateServiceTrackerMap.getService(
+		return _serviceTrackerMap.getService(
 			_encodeKey(itemClassName, taskItemDelegateName));
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_batchEngineTaskItemDelegateServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<BatchEngineTaskItemDelegate<?>>)
-					(Class<?>)BatchEngineTaskItemDelegate.class,
-				null,
-				(serviceReference, emitter) -> {
-					BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
-						bundleContext.getService(serviceReference);
-
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, null,
+			"(|(batch.engine.task.item.delegate=true)(objectClass=" +
+				BatchEngineTaskItemDelegate.class.getName() + "))",
+			(serviceReference, emitter) -> {
+				try {
 					Class<?> itemClass = _getItemClass(
-						batchEngineTaskItemDelegate);
+						bundleContext, serviceReference);
 
 					emitter.emit(
 						_encodeKey(
 							itemClass.getName(),
 							(String)serviceReference.getProperty(
 								"batch.engine.task.item.delegate.name")));
-				});
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			},
+			new ServiceTrackerCustomizer
+				<String, BatchEngineTaskItemDelegate<?>>() {
+
+				@Override
+				public BatchEngineTaskItemDelegate<?> addingService(
+					ServiceReference<String> serviceReference) {
+
+					return _toBatchEngineTaskItemDelegate(
+						bundleContext.getService(serviceReference));
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<String> serviceReference,
+					BatchEngineTaskItemDelegate<?>
+						batchEngineTaskItemDelegate) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<String> serviceReference,
+					BatchEngineTaskItemDelegate<?>
+						batchEngineTaskItemDelegate) {
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	private String _encodeKey(
@@ -79,7 +118,11 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 	}
 
 	private Class<?> _getItemClass(
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate) {
+		BundleContext bundleContext, ServiceReference<?> serviceReference) {
+
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_toBatchEngineTaskItemDelegate(
+				bundleContext.getService(serviceReference));
 
 		Class<?> itemClass = batchEngineTaskItemDelegate.getItemClass();
 
@@ -144,7 +187,26 @@ public class BatchEngineTaskItemDelegateRegistryImpl
 		return _getItemClass((ParameterizedType)genericSuperclassType);
 	}
 
+	private BatchEngineTaskItemDelegate<?> _toBatchEngineTaskItemDelegate(
+		Object service) {
+
+		if (service instanceof BatchEngineTaskItemDelegate) {
+			return (BatchEngineTaskItemDelegate<?>)service;
+		}
+
+		if (service instanceof VulcanBatchEngineTaskItemDelegate) {
+			return _vulcanBatchEngineTaskItemDelegateAdaptorFactory.create(
+				(VulcanBatchEngineTaskItemDelegate<?>)service);
+		}
+
+		throw new IllegalArgumentException("Unknown service :" + service);
+	}
+
 	private ServiceTrackerMap<String, BatchEngineTaskItemDelegate<?>>
-		_batchEngineTaskItemDelegateServiceTrackerMap;
+		_serviceTrackerMap;
+
+	@Reference
+	private VulcanBatchEngineTaskItemDelegateAdaptorFactory
+		_vulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 }

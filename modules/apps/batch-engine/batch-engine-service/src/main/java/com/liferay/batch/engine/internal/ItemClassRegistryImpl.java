@@ -18,6 +18,8 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -27,6 +29,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -37,8 +40,7 @@ public class ItemClassRegistryImpl implements ItemClassRegistry {
 
 	@Override
 	public Class<?> getItemClass(String itemClassName) {
-		Class<?> itemClass = _itemClassServiceTrackerMap.getService(
-			itemClassName);
+		Class<?> itemClass = _serviceTrackerMap.getService(itemClassName);
 
 		if (itemClass == null) {
 			throw new IllegalStateException("Unknown class: " + itemClassName);
@@ -49,55 +51,62 @@ public class ItemClassRegistryImpl implements ItemClassRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_itemClassServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<BatchEngineTaskItemDelegate<Object>>)
-					(Class<?>)BatchEngineTaskItemDelegate.class,
-				null,
-				(serviceReference, emitter) -> {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, null,
+			"(|(batch.engine.task.item.delegate=true)(objectClass=" +
+				BatchEngineTaskItemDelegate.class.getName() + "))",
+			(serviceReference, emitter) -> {
+				try {
 					Class<?> itemClass = _getItemClass(
 						bundleContext, serviceReference);
 
 					emitter.emit(itemClass.getName());
-				},
-				new ServiceTrackerCustomizer
-					<BatchEngineTaskItemDelegate<Object>, Class<?>>() {
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			},
+			new ServiceTrackerCustomizer
+				<BatchEngineTaskItemDelegate<Object>, Class<?>>() {
 
-					@Override
-					public Class<?> addingService(
-						ServiceReference<BatchEngineTaskItemDelegate<Object>>
-							serviceReference) {
+				@Override
+				public Class<?> addingService(
+					ServiceReference<BatchEngineTaskItemDelegate<Object>>
+						serviceReference) {
 
-						return _getItemClass(bundleContext, serviceReference);
-					}
+					return _getItemClass(bundleContext, serviceReference);
+				}
 
-					@Override
-					public void modifiedService(
-						ServiceReference<BatchEngineTaskItemDelegate<Object>>
-							serviceReference,
-						Class<?> itemClass) {
-					}
+				@Override
+				public void modifiedService(
+					ServiceReference<BatchEngineTaskItemDelegate<Object>>
+						serviceReference,
+					Class<?> itemClass) {
+				}
 
-					@Override
-					public void removedService(
-						ServiceReference<BatchEngineTaskItemDelegate<Object>>
-							serviceReference,
-						Class<?> itemClass) {
+				@Override
+				public void removedService(
+					ServiceReference<BatchEngineTaskItemDelegate<Object>>
+						serviceReference,
+					Class<?> itemClass) {
 
-						bundleContext.ungetService(serviceReference);
-					}
+					bundleContext.ungetService(serviceReference);
+				}
 
-				});
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_itemClassServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private Class<?> _getItemClass(
-		BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate) {
+		BundleContext bundleContext, ServiceReference<?> serviceReference) {
+
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_toBatchEngineTaskItemDelegate(
+				bundleContext.getService(serviceReference));
 
 		Class<?> itemClass = batchEngineTaskItemDelegate.getItemClass();
 
@@ -123,17 +132,6 @@ public class ItemClassRegistryImpl implements ItemClassRegistry {
 		}
 
 		return itemClass;
-	}
-
-	private Class<?> _getItemClass(
-		BundleContext bundleContext,
-		ServiceReference<BatchEngineTaskItemDelegate<Object>>
-			serviceReference) {
-
-		BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate =
-			bundleContext.getService(serviceReference);
-
-		return _getItemClass(batchEngineTaskItemDelegate);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -174,6 +172,25 @@ public class ItemClassRegistryImpl implements ItemClassRegistry {
 		return _getItemClass((ParameterizedType)genericSuperclassType);
 	}
 
-	private ServiceTrackerMap<String, Class<?>> _itemClassServiceTrackerMap;
+	private BatchEngineTaskItemDelegate<?> _toBatchEngineTaskItemDelegate(
+		Object service) {
+
+		if (service instanceof BatchEngineTaskItemDelegate) {
+			return (BatchEngineTaskItemDelegate<?>)service;
+		}
+
+		if (service instanceof VulcanBatchEngineTaskItemDelegate) {
+			return _vulcanBatchEngineTaskItemDelegateAdaptorFactory.create(
+				(VulcanBatchEngineTaskItemDelegate<?>)service);
+		}
+
+		throw new IllegalArgumentException("Unknown service :" + service);
+	}
+
+	private ServiceTrackerMap<String, Class<?>> _serviceTrackerMap;
+
+	@Reference
+	private VulcanBatchEngineTaskItemDelegateAdaptorFactory
+		_vulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 }

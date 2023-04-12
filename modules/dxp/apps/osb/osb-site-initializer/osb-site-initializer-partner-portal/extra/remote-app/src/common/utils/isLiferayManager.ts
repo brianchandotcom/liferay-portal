@@ -28,5 +28,7 @@ export function isLiferayManager(roles: Role[]) {
 		RoleTypes.CHANNEL_FINANCE_MANAGER,
 	];
 
-	return roles.some((role) => allowedRoles.includes(role.name as RoleTypes));
+	return Boolean(
+		roles?.some((role) => allowedRoles.includes(role.name as RoleTypes))
+	);
 }

@@ -32,10 +32,9 @@ import javax.ws.rs.InternalServerErrorException;
  */
 public class DTOConverterUtil {
 
-	public static Object toDTO(
-			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
-			SystemObjectDefinitionManager systemObjectDefinitionManager,
-			User user)
+	public static DTOConverter<BaseModel<?>, ?> getDTOConverter(
+			DTOConverterRegistry dtoConverterRegistry,
+			SystemObjectDefinitionManager systemObjectDefinitionManager)
 		throws Exception {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
@@ -52,6 +51,18 @@ public class DTOConverterUtil {
 				"No DTO converter found for " +
 					systemObjectDefinitionManager.getModelClassName());
 		}
+
+		return dtoConverter;
+	}
+
+	public static Object toDTO(
+			BaseModel<?> baseModel, DTOConverterRegistry dtoConverterRegistry,
+			SystemObjectDefinitionManager systemObjectDefinitionManager,
+			User user)
+		throws Exception {
+
+		DTOConverter<BaseModel<?>, ?> dtoConverter = getDTOConverter(
+			dtoConverterRegistry, systemObjectDefinitionManager);
 
 		Locale locale = null;
 

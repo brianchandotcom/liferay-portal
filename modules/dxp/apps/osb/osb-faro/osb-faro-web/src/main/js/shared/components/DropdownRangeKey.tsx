@@ -39,11 +39,10 @@ type Item = {
 interface DropdownRangeKeyIProps {
 	className: string;
 	disabled: boolean;
-	filterRangeKeys: [];
-	rangeKeys: Array<RangeKeyTimeRanges>;
 	items: Array<Item>;
 	legacy: boolean;
 	onChange: (rangeSelectors: RangeSelectors) => void;
+	rangeKeys: Array<RangeKeyTimeRanges>;
 	rangeSelectors: RangeSelectors;
 }
 
@@ -106,7 +105,7 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 			return items.filter(
 				item =>
 					!initialRangeKeys
-						.filter(x => !rangeKeys.includes(x))
+						.filter(value => !rangeKeys.includes(value))
 						.includes(item.value)
 			);
 		}

@@ -2,6 +2,7 @@ import Card from 'shared/components/Card';
 import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import React from 'react';
 import {compose} from 'redux';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {withRangeKey} from 'shared/hoc';
 import {WithRangeKeyProps} from 'shared/hoc/WithRangeKey';
 
@@ -11,7 +12,7 @@ interface ICardWithRangeKeyProps
 	children: (val) => React.ReactNode;
 	label: string;
 	legacyDropdownRangeKey: boolean;
-	rangeKeys?: string[];
+	rangeKeys?: Array<RangeKeyTimeRanges>;
 }
 
 const CardWithRangeKey = compose(withRangeKey)(

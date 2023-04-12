@@ -820,9 +820,11 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "SEO");
+			Navigator.gotoNavTab(navTab = "Design");
 
-			Panel.expandPanel(panel = "JavaScript");
+			Panel.expandPanel(panel = "Look and Feel");
+
+			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			Select(
 				key_tableEntry = "FontSize",

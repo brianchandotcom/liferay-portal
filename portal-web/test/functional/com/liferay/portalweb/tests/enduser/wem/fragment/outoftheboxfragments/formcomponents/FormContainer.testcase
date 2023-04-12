@@ -2176,74 +2176,7 @@ definition {
 
 	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
 	@priority = 4
-	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragments {
-		task ("Given a page designer has a Form Container with a hidden Container containing a required input fragment on content page") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Region",
-				fieldName = "region",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "PurchaseOrder");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name 1",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				panel = "General");
-
-			for (var fragmentName : list "Text Input,Submit Button") {
-				PageEditor.removeFragment(fragmentName = ${fragmentName});
-			}
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Submit Button",
-				height = "Tall",
-				targetFragmentName = "Container");
-
-			PageEditor.addElementToContainer(
-				collectionName = "Form Components",
-				fragmentName = "Text Input",
-				navTab = "Fragments");
-
-			PageEditor.editInput(
-				field = "Region",
-				fragmentName = "Text Input",
-				markAsRequired = "true");
-
-			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
-		}
-
-		task ("When the page designer publishes the content page") {
-			Button.click(button = "Publish");
-		}
-
-		task ("Then the page designer could see Required Fields Hidden warning message") {
-			AssertTextEquals(
-				locator1 = "Modal#HEADER",
-				value1 = "Required Fields Hidden");
-
-			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
-		}
-
+	test ViewWarningMessageWhenPublishContentPageWithHiddenInputFragmentMappedToRequiredFieldInsideContainer {
 		task ("Given a page designer has a Form Container with a hidden Container containing an input fragment mapped to a required field on content page") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
@@ -2253,13 +2186,15 @@ definition {
 				isRequired = "true",
 				objectName = "PurchaseOrder");
 
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name 2",
+				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name 2",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -2269,10 +2204,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
-
-			PageEditor.removeFragment(
-				fragmentName = "Text Input",
-				index = 2);
 
 			for (var fragmentName : list "Text Input,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2311,15 +2242,29 @@ definition {
 
 			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
 		}
+	}
 
-		task ("Given a page designer has a Form Container with a hidden Grid containing a required input fragment on content page") {
+	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
+	@priority = 4
+	test ViewWarningMessageWhenPublishContentPageWithHiddenInputFragmentMappedToRequiredFieldInsideGrid {
+		task ("Given a page designer has a Form Container with a hidden Grid containing an input fragment mapped to a required field on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name 3",
+				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name 3",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -2329,10 +2274,6 @@ definition {
 			PageEditor.editFormContainer(
 				contentType = "Purchase Order",
 				panel = "General");
-
-			PageEditor.removeFragment(
-				fragmentName = "Text Input",
-				index = 2);
 
 			for (var fragmentName : list "Text Input,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2344,18 +2285,9 @@ definition {
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Text Input",
+				fragmentName = "Submit Button",
 				height = "Tall",
 				targetFragmentName = "Grid");
-
-			PageEditor.editInput(
-				field = "Name*",
-				fragmentName = "Text Input");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Submit Button",
-				targetFragmentName = "Text Input");
 
 			PageEditor.addElementToColumn(
 				collectionName = "Form Components",
@@ -2364,9 +2296,8 @@ definition {
 				navTab = "Fragments");
 
 			PageEditor.editInput(
-				field = "Region",
-				fragmentName = "Text Input",
-				markAsRequired = "true");
+				field = "Name*",
+				fragmentName = "Text Input");
 
 			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
 		}
@@ -2382,15 +2313,29 @@ definition {
 
 			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
 		}
+	}
 
-		task ("Given a page designer has a Form Container with a hidden Grid containing an input fragment mapped to a required field on content page") {
+	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
+	@priority = 4
+	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragmentInsideContainer {
+		task ("Given a page designer has a Form Container with a hidden Container containing a required input fragment on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Page Name 4",
+				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name 4",
+				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
@@ -2401,9 +2346,76 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.removeFragment(
+			for (var fragmentName : list "Text Input,Submit Button") {
+				PageEditor.removeFragment(fragmentName = ${fragmentName});
+			}
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button",
+				height = "Tall",
+				targetFragmentName = "Container");
+
+			PageEditor.addElementToContainer(
+				collectionName = "Form Components",
 				fragmentName = "Text Input",
-				index = 2);
+				navTab = "Fragments");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input",
+				markAsRequired = "true");
+
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
+		}
+
+		task ("When the page designer publishes the content page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer could see Required Fields Hidden warning message") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Required Fields Hidden");
+
+			Modal.publish(warningMessage = "Purchase Order form contains one or more hidden fragments mapped to required fields. A form with missing required fields will not generate a valid entry. Are you sure you want to publish it?");
+		}
+	}
+
+	@description = "This is a test for LPS-157998. The page creator should see warning message when publish the content page with hidden required input fragment."
+	@priority = 4
+	test ViewWarningMessageWhenPublishContentPageWithHiddenRequiredInputFragmentInsideGrid {
+		task ("Given a page designer has a Form Container with a hidden Grid containing a required input fragment on content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
 
 			for (var fragmentName : list "Text Input,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
@@ -2426,8 +2438,9 @@ definition {
 				navTab = "Fragments");
 
 			PageEditor.editInput(
-				field = "Name*",
-				fragmentName = "Text Input");
+				field = "Region",
+				fragmentName = "Text Input",
+				markAsRequired = "true");
 
 			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
 		}

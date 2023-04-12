@@ -9,7 +9,6 @@ export const AUDIENCE_REPORT_FRAGMENT = gql`
 			segmentedAnonymousUsersCount
 			segmentedKnownUsersCount
 		}
-
 		segment {
 			metrics {
 				value

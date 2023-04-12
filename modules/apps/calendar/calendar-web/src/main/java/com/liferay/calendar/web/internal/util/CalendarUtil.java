@@ -97,23 +97,13 @@ public class CalendarUtil {
 			for (int i = 0; i <= days; i++) {
 				int year = startTimeJCalendar.get(java.util.Calendar.YEAR);
 
-				Map<Integer, List<Integer>> rulesMonth = rulesMap.get(year);
-
-				if (rulesMonth == null) {
-					rulesMonth = new HashMap<>();
-
-					rulesMap.put(year, rulesMonth);
-				}
+				Map<Integer, List<Integer>> rulesMonth =
+					rulesMap.computeIfAbsent(year, key -> new HashMap<>());
 
 				int month = startTimeJCalendar.get(java.util.Calendar.MONTH);
 
-				List<Integer> rulesDay = rulesMonth.get(month);
-
-				if (rulesDay == null) {
-					rulesDay = new ArrayList<>();
-
-					rulesMonth.put(month, rulesDay);
-				}
+				List<Integer> rulesDay = rulesMonth.computeIfAbsent(
+					month, key -> new ArrayList<>());
 
 				int day = startTimeJCalendar.get(
 					java.util.Calendar.DAY_OF_MONTH);

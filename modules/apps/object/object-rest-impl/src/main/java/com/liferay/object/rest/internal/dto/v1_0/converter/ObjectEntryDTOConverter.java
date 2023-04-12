@@ -297,6 +297,10 @@ public class ObjectEntryDTOConverter
 					_objectDefinitionLocalService.getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());
 
+				if (!relatedObjectDefinition.isActive()) {
+					continue;
+				}
+
 				ObjectRelatedModelsProvider objectRelatedModelsProvider =
 					_objectRelatedModelsProviderRegistry.
 						getObjectRelatedModelsProvider(

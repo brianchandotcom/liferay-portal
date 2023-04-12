@@ -72,6 +72,14 @@ public class CPDefinitionVirtualSettingServiceUtil {
 			termsOfUseJournalArticleResourcePrimKey, serviceContext);
 	}
 
+	public static CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
+			String className, long classPK)
+		throws PortalException {
+
+		return getService().deleteCPDefinitionVirtualSetting(
+			className, classPK);
+	}
+
 	public static CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
 			String className, long classPK)
 		throws PortalException {

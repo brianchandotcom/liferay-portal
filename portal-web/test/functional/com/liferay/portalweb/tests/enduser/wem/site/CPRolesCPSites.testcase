@@ -310,10 +310,9 @@ definition {
 		}
 
 		task ("Go to add a child site to the Site Name site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
+
+			WaitForPageLoad();
 
 			var key_siteName = "Site Name";
 
@@ -327,7 +326,7 @@ definition {
 
 			PortletEntry.inputName(name = "Child SiteName2");
 
-			Button.clickAdd();
+			Button.click(button = "Add");
 
 			SelectFrameTop();
 
@@ -335,10 +334,9 @@ definition {
 		}
 
 		task ("Go to add a child site to the Child SiteName1 site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
+
+			WaitForPageLoad();
 
 			var key_siteName = "Child SiteName1";
 
@@ -376,12 +374,9 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.openURL();
+			Site.openSitesAdmin();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			WaitForPageLoad();
 
 			var key_site = "Child SiteName1";
 
@@ -393,12 +388,9 @@ definition {
 				locator1 = "Portlet#HEADER",
 				value1 = "Child SiteName1");
 
-			Navigator.openURL();
+			Site.openSitesAdmin();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			WaitForPageLoad();
 
 			var key_site = "Child SiteName2";
 
@@ -424,12 +416,9 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Navigator.openURL();
+			Site.openSitesAdmin();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			WaitForPageLoad();
 
 			var key_siteName = "Child SiteName1";
 

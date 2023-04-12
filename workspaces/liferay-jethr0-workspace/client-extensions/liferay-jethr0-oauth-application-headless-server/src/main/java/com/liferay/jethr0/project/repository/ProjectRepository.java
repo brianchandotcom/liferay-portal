@@ -15,7 +15,6 @@
 package com.liferay.jethr0.project.repository;
 
 import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.dalo.ProjectToTasksDALO;
 import com.liferay.jethr0.dalo.ProjectsToGitBranchesDALO;
 import com.liferay.jethr0.dalo.ProjectsToTestSuitesDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
@@ -23,6 +22,7 @@ import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectDALO;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
+import com.liferay.jethr0.project.dalo.ProjectToTasksDALO;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 
@@ -64,7 +64,7 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 	public Project updateEntityRelationshipsInDatabase(Project project) {
 		_projectToBuildsDALO.updateChildEntities(project);
 		_projectsToGitBranchesDALO.updateRelationships(project);
-		_projectToTasksDALO.updateRelationships(project);
+		_projectToTasksDALO.updateChildEntities(project);
 		_projectsToTestSuitesDALO.updateRelationships(project);
 
 		return project;
@@ -86,7 +86,7 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 			gitBranch.addProject(project);
 		}
 
-		for (Task task : _projectToTasksDALO.retrieveTasks(project)) {
+		for (Task task : _projectToTasksDALO.getChildEntities(project)) {
 			project.addTask(task);
 
 			task.setProject(project);

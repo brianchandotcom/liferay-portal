@@ -132,18 +132,8 @@ public class BaseTask extends BaseEntity implements Task {
 		_project = project;
 	}
 
-	protected BaseTask(Build build, JSONObject jsonObject) {
+	protected BaseTask(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_build = build;
-
-		_name = jsonObject.getString("name");
-	}
-
-	protected BaseTask(Project project, JSONObject jsonObject) {
-		super(jsonObject);
-
-		_project = project;
 
 		_name = jsonObject.getString("name");
 	}

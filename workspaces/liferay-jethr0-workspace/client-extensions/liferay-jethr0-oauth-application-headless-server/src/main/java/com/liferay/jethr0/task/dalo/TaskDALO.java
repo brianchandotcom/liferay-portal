@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.jethr0.task;
+package com.liferay.jethr0.task.dalo;
 
-import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskFactory;
 
-import org.json.JSONObject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskFactory extends BaseEntityFactory<Task> {
+public class TaskDALO extends BaseEntityDALO<Task> {
 
 	@Override
-	public Task newEntity(JSONObject jsonObject) {
-		return new DefaultTask(jsonObject);
+	protected EntityFactory<Task> getEntityFactory() {
+		return _taskFactory;
 	}
 
-	protected TaskFactory() {
-		super(Task.class);
-	}
+	@Autowired
+	private TaskFactory _taskFactory;
 
 }

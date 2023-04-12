@@ -18,7 +18,7 @@ import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.dalo.BuildDALO;
 import com.liferay.jethr0.build.dalo.BuildToBuildParametersDALO;
 import com.liferay.jethr0.build.dalo.BuildToBuildRunsDALO;
-import com.liferay.jethr0.dalo.BuildToTasksDALO;
+import com.liferay.jethr0.build.dalo.BuildToTasksDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
@@ -49,7 +49,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 		build.addBuildParameters(
 			_buildToBuildParametersDALO.getChildEntities(build));
 		build.addBuildRuns(_buildToBuildRunsDALO.getChildEntities(build));
-		build.addTasks(_buildToTasksDALO.retrieveTasks(build));
+		build.addTasks(_buildToTasksDALO.getChildEntities(build));
 
 		return build;
 	}
@@ -58,7 +58,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 	protected Build updateEntityRelationshipsInDatabase(Build build) {
 		_buildToBuildParametersDALO.updateChildEntities(build);
 		_buildToBuildRunsDALO.updateChildEntities(build);
-		_buildToTasksDALO.updateRelationships(build);
+		_buildToTasksDALO.updateChildEntities(build);
 		_projectToBuildsDALO.updateParentEntities(build);
 
 		return build;

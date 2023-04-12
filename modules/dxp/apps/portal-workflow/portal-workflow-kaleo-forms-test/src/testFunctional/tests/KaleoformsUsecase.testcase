@@ -1055,6 +1055,11 @@ definition {
 			resourceName = "com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			roleTitle = "KaleoRegRole Name");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "KaleoRegRole Name");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

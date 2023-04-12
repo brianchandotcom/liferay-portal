@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -115,7 +114,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 
@@ -718,15 +716,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public boolean isLayoutRevisionInReview(Layout layout) {
-		List<LayoutRevision> layoutRevisions =
-			_layoutRevisionLocalService.getLayoutRevisions(layout.getPlid());
-
-		Stream<LayoutRevision> layoutRevisionsStream = layoutRevisions.stream();
-
-		if (layoutRevisionsStream.anyMatch(
+		if (ListUtil.exists(
+				_layoutRevisionLocalService.getLayoutRevisions(
+					layout.getPlid()),
 				layoutRevision ->
-					layoutRevision.getStatus() ==
-						WorkflowConstants.STATUS_PENDING)) {
+					WorkflowConstants.STATUS_PENDING ==
+						layoutRevision.getStatus())) {
 
 			return true;
 		}

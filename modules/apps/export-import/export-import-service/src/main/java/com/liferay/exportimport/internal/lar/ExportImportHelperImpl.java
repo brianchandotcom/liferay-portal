@@ -35,6 +35,7 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -147,12 +148,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public Map<Long, Boolean> getAllLayoutIdsMap(
 		long groupId, boolean privateLayout) {
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
 		Map<Long, Boolean> layoutIdMap = new HashMap<>();
 
-		for (Layout layout : layouts) {
+		for (Layout layout :
+				_layoutLocalService.getLayouts(
+					groupId, privateLayout,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
+
 			layoutIdMap.put(layout.getPlid(), true);
 		}
 
@@ -175,9 +177,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		Map<Integer, List<Portlet>> rankedPortletsMap = new TreeMap<>();
 
-		List<Portlet> portlets = _portletLocalService.getPortlets(companyId);
-
-		for (Portlet portlet : portlets) {
+		for (Portlet portlet : _portletLocalService.getPortlets(companyId)) {
 			if (!portlet.isActive()) {
 				continue;
 			}
@@ -272,24 +272,23 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
 		throws PortalException {
 
-		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<>();
-
 		String layoutIdsJSON = GetterUtil.getString(
 			portletRequest.getAttribute("layoutIdMap"));
 
 		if (Validator.isNull(layoutIdsJSON)) {
-			return layoutIdMap;
+			return Collections.emptyMap();
 		}
+
+		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<>();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(layoutIdsJSON);
 
 		for (int i = 0; i < jsonArray.length(); ++i) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			long plid = jsonObject.getLong("plid");
-			boolean includeChildren = jsonObject.getBoolean("includeChildren");
-
-			layoutIdMap.put(plid, includeChildren);
+			layoutIdMap.put(
+				jsonObject.getLong("plid"),
+				jsonObject.getBoolean("includeChildren"));
 		}
 
 		return layoutIdMap;
@@ -297,15 +296,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public long[] getLayoutIds(List<Layout> layouts) {
-		long[] layoutIds = new long[layouts.size()];
-
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
-
-			layoutIds[i] = layout.getLayoutId();
-		}
-
-		return layoutIds;
+		return TransformUtil.transformToLongArray(layouts, Layout::getLayoutId);
 	}
 
 	@Override
@@ -593,12 +584,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
 		long[] selectedPlids = StringUtil.split(selectedNodes, 0L);
 
-		for (Layout layout : layouts) {
+		for (Layout layout :
+				_layoutLocalService.getLayouts(
+					groupId, privateLayout,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
+
 			_populateLayoutsJSON(jsonArray, layout, selectedPlids);
 		}
 

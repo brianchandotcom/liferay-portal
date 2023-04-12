@@ -77,6 +77,19 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 	}
 
+	public static class UnmodifiableValue
+		extends ObjectFieldSettingValueException {
+
+		public UnmodifiableValue(String objectFieldSettingName) {
+			super(
+				String.format(
+					"The value of setting %s is unmodifiable when object " +
+						"definition is published",
+					objectFieldSettingName));
+		}
+
+	}
+
 	private ObjectFieldSettingValueException(String msg) {
 		super(msg);
 	}

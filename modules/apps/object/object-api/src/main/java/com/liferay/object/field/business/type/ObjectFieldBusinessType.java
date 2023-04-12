@@ -75,6 +75,10 @@ public interface ObjectFieldBusinessType {
 		return Collections.emptySet();
 	}
 
+	public default Set<String> getUnmodifiablObjectFieldSettingsNames() {
+		return Collections.emptySet();
+	}
+
 	public default Object getValue(
 			ObjectField objectField, Map<String, Object> values)
 		throws PortalException {

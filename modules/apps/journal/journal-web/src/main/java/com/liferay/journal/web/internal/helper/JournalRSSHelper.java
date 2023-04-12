@@ -523,12 +523,10 @@ public class JournalRSSHelper {
 
 		searchContext.setAttributes(attributes);
 
-		if (Validator.isNotNull(feed.getDDMStructureKey())) {
+		if (feed.getDDMStructureId() > 0) {
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					feed.getGroupId(),
-					_portal.getClassNameId(JournalArticle.class),
-					feed.getDDMStructureKey(), true);
+					feed.getDDMStructureId());
 
 			if (ddmStructure != null) {
 				searchContext.setClassTypeIds(

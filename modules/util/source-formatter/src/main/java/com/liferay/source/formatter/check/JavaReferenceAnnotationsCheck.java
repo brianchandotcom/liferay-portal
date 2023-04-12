@@ -25,9 +25,9 @@ import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -208,28 +208,26 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		return null;
 	}
 
-	private synchronized JavaClass _getJavaClass(
+	private JavaClass _getJavaClass(
 			String absolutePath, String fullyQualifiedName)
 		throws Exception {
 
-		if (_javaClassMap.containsKey(fullyQualifiedName)) {
-			return _javaClassMap.get(fullyQualifiedName);
+		JavaClass javaClass = _javaClassMap.get(fullyQualifiedName);
+
+		if (javaClass == null) {
+			File javaFile = JavaSourceUtil.getJavaFile(
+				fullyQualifiedName, _getRootDirName(absolutePath),
+				_getBundleSymbolicNamesMap(absolutePath));
+
+			if (javaFile != null) {
+				javaClass = JavaClassParser.parseJavaClass(
+					javaFile.getName(), FileUtil.read(javaFile));
+
+				_javaClassMap.put(fullyQualifiedName, javaClass);
+			}
 		}
 
-		File javaFile = JavaSourceUtil.getJavaFile(
-			fullyQualifiedName, _getRootDirName(absolutePath),
-			_getBundleSymbolicNamesMap(absolutePath));
-
-		JavaClass javaClass = null;
-
-		if (javaFile != null) {
-			javaClass = JavaClassParser.parseJavaClass(
-				javaFile.getName(), FileUtil.read(javaFile));
-		}
-
-		_javaClassMap.put(fullyQualifiedName, javaClass);
-
-		return _javaClassMap.get(fullyQualifiedName);
+		return javaClass;
 	}
 
 	private synchronized String _getRootDirName(String absolutePath) {
@@ -249,7 +247,8 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		"\\(component\\.name=([^)]+)\\)");
 
 	private Map<String, String> _bundleSymbolicNamesMap;
-	private final Map<String, JavaClass> _javaClassMap = new HashMap<>();
+	private final Map<String, JavaClass> _javaClassMap =
+		new ConcurrentHashMap<>();
 	private String _rootDirName;
 
 }

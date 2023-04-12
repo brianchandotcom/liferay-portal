@@ -95,6 +95,17 @@ public class CPDefinitionVirtualSettingServiceImpl
 	}
 
 	@Override
+	public CPDefinitionVirtualSetting deleteCPDefinitionVirtualSetting(
+			String className, long classPK)
+		throws PortalException {
+
+		_checkPermission(className, classPK, ActionKeys.UPDATE);
+
+		return cpDefinitionVirtualSettingLocalService.
+			deleteCPDefinitionVirtualSetting(className, classPK);
+	}
+
+	@Override
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
 			String className, long classPK)
 		throws PortalException {

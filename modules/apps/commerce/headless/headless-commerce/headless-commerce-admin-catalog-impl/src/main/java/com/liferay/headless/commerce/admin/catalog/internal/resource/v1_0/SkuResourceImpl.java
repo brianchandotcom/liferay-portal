@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -24,15 +25,21 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeRegistry;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuSubscriptionConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.SkuHelper;
 import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.SkuEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
+import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuVirtualSettingsUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -56,6 +63,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
 
@@ -274,6 +282,8 @@ public class SkuResourceImpl
 				sku.getPromoPrice(), cpInstance.getPromoPrice()),
 			serviceContext);
 
+		_updateNestedResources(sku, cpInstance, serviceContext);
+
 		return _toSku(cpInstance.getCPInstanceId());
 	}
 
@@ -290,6 +300,37 @@ public class SkuResourceImpl
 				_dtoConverterRegistry, cpInstanceId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
+	}
+
+	private CPInstance _updateNestedResources(
+			Sku sku, CPInstance cpInstance, ServiceContext serviceContext)
+		throws Exception {
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CPType cpType = _cpTypeRegistry.getCPType(
+			cpDefinition.getProductTypeName());
+
+		if (cpType == null) {
+			return cpInstance;
+		}
+
+		// Virtual
+
+		SkuVirtualSettings skuVirtualSettings = sku.getSkuVirtualSettings();
+
+		if (skuVirtualSettings != null) {
+			if (!VirtualCPTypeConstants.NAME.equals(cpType.getName())) {
+				throw new CPDefinitionProductTypeNameException();
+			}
+
+			SkuVirtualSettingsUtil.addOrUpdateSkuVirtualSettings(
+				cpInstance, skuVirtualSettings,
+				_cpDefinitionVirtualSettingService, _uniqueFileNameProvider,
+				serviceContext);
+		}
+
+		return cpInstance;
 	}
 
 	private Sku _updateSKU(CPInstance cpInstance, Sku sku) throws Exception {
@@ -523,6 +564,8 @@ public class SkuResourceImpl
 				sku.getPromoPrice(), cpInstance.getPromoPrice()),
 			serviceContext);
 
+		_updateNestedResources(sku, cpInstance, serviceContext);
+
 		return _toSku(cpInstance.getCPInstanceId());
 	}
 
@@ -548,7 +591,14 @@ public class SkuResourceImpl
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
+	private CPDefinitionVirtualSettingService
+		_cpDefinitionVirtualSettingService;
+
+	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CPTypeRegistry _cpTypeRegistry;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
@@ -561,5 +611,8 @@ public class SkuResourceImpl
 
 	@Reference
 	private SkuHelper _skuHelper;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

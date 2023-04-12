@@ -45,7 +45,6 @@ import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
 import com.liferay.object.rest.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.object.rest.internal.util.DTOConverterUtil;
-import com.liferay.object.rest.internal.vulcan.extension.v1_0.ObjectEntryExtensionProvider;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -78,7 +77,9 @@ import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
+import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
@@ -257,6 +258,8 @@ public class ObjectEntryDTOConverter
 			return map;
 		}
 
+		nestedFieldsContext.incrementCurrentDepth();
+
 		List<String> nestedFieldNames = nestedFieldsContext.getFieldNames();
 
 		List<ObjectRelationship> objectRelationships =
@@ -295,8 +298,6 @@ public class ObjectEntryDTOConverter
 						groupId, objectRelationship.getObjectRelationshipId(),
 						primaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				nestedFieldsContext.incrementCurrentDepth();
-
 				if (relatedObjectDefinition.isSystem()) {
 					SystemObjectDefinitionManager
 						systemObjectDefinitionManager =
@@ -310,7 +311,6 @@ public class ObjectEntryDTOConverter
 							relatedModels,
 							relatedModel -> _toExtendedEntity(
 								(BaseModel<?>)relatedModel, dtoConverterContext,
-								groupId, nestedFieldsContext,
 								relatedObjectDefinition,
 								systemObjectDefinitionManager),
 							Object.class));
@@ -334,10 +334,10 @@ public class ObjectEntryDTOConverter
 							},
 							ObjectEntry.class));
 				}
-
-				nestedFieldsContext.decrementCurrentDepth();
 			}
 		}
+
+		nestedFieldsContext.decrementCurrentDepth();
 
 		return map;
 	}
@@ -543,15 +543,9 @@ public class ObjectEntryDTOConverter
 
 	private ExtendedEntity _toExtendedEntity(
 			BaseModel<?> baseModel, DTOConverterContext dtoConverterContext,
-			long groupId, NestedFieldsContext nestedFieldsContext,
 			ObjectDefinition objectDefinition,
 			SystemObjectDefinitionManager systemObjectDefinitionManager)
 		throws Exception {
-
-		Map<String, Serializable> nestedFieldsRelatedProperties =
-			_getNestedFieldsRelatedProperties(
-				dtoConverterContext, groupId, nestedFieldsContext,
-				objectDefinition, (Long)baseModel.getPrimaryKeyObj());
 
 		DTOConverter<BaseModel<?>, ?> dtoConverter =
 			DTOConverterUtil.getDTOConverter(
@@ -562,14 +556,17 @@ public class ObjectEntryDTOConverter
 			baseModel, dtoConverterContext.getDTOConverterRegistry(),
 			systemObjectDefinitionManager, dtoConverterContext.getUser());
 
-		if (_objectEntryExtensionProvider.isApplicableExtension(
-				objectDefinition.getCompanyId(),
-				dtoConverter.getExternalDTOClassName())) {
+		Map<String, Serializable> nestedFieldsRelatedProperties = null;
 
-			nestedFieldsRelatedProperties.putAll(
-				_objectEntryExtensionProvider.getExtendedProperties(
-					objectDefinition.getCompanyId(),
-					dtoConverter.getExternalDTOClassName(), dto));
+		EntityExtensionHandler entityExtensionHandler =
+			ExtensionUtil.getEntityExtensionHandler(
+				dtoConverter.getExternalDTOClassName(),
+				objectDefinition.getCompanyId(), _extensionProviderRegistry);
+
+		if (entityExtensionHandler != null) {
+			nestedFieldsRelatedProperties =
+				entityExtensionHandler.getExtendedProperties(
+					objectDefinition.getCompanyId(), dto);
 		}
 
 		return ExtendedEntity.extend(dto, nestedFieldsRelatedProperties, null);
@@ -737,9 +734,6 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryExtensionProvider _objectEntryExtensionProvider;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

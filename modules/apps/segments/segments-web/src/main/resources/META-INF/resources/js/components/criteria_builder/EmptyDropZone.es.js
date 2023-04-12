@@ -14,10 +14,9 @@
 
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
 
-import ThemeContext from '../../ThemeContext.es';
 import {DragTypes} from '../../utils/drag-types';
 import EmptyPlaceholder from './EmptyPlaceholder.es';
 
@@ -48,60 +47,46 @@ function drop(props, monitor) {
 	props.onCriterionAdd(0, criterion);
 }
 
-class EmptyDropZone extends Component {
-	static contextType = ThemeContext;
+function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
+	const displayEmptyDropZone = canDrop || !emptyContributors;
 
-	static propTypes = {
-		canDrop: PropTypes.bool,
-		connectDropTarget: PropTypes.func,
-		emptyContributors: PropTypes.bool,
-		hover: PropTypes.bool,
-		onCriterionAdd: PropTypes.func.isRequired,
-		propertyKey: PropTypes.string.isRequired,
-	};
+	const emptyZoneClasses = getCN('empty-drop-zone-root', {
+		'empty-drop-zone-dashed border-primary rounded':
+			displayEmptyDropZone && (!canDrop || !hover),
+	});
 
-	render() {
-		const {
-			canDrop,
-			connectDropTarget,
-			emptyContributors,
-			hover,
-		} = this.props;
+	const targetClasses = getCN(
+		emptyContributors ? 'empty-drop-zone-target' : 'drop-zone-target p-5',
+		{
+			'empty-drop-zone-target-solid dnd-hover border-primary rounded':
+				canDrop && hover,
+		}
+	);
 
-		const displayEmptyDropZone = canDrop || !emptyContributors;
-
-		const emptyZoneClasses = getCN('empty-drop-zone-root', {
-			'empty-drop-zone-dashed border-primary rounded':
-				displayEmptyDropZone && (!canDrop || !hover),
-		});
-
-		const targetClasses = getCN(
-			emptyContributors
-				? 'empty-drop-zone-target'
-				: 'drop-zone-target p-5',
-			{
-				'empty-drop-zone-target-solid dnd-hover border-primary rounded':
-					canDrop && hover,
-			}
-		);
-
-		return (
-			<div className={emptyZoneClasses}>
-				{connectDropTarget(
-					displayEmptyDropZone ? (
-						<div className={targetClasses}>
-							<div className="empty-drop-zone-indicator" />
-						</div>
-					) : (
-						<div>
-							<EmptyPlaceholder />
-						</div>
-					)
-				)}
-			</div>
-		);
-	}
+	return (
+		<div className={emptyZoneClasses}>
+			{connectDropTarget(
+				displayEmptyDropZone ? (
+					<div className={targetClasses}>
+						<div className="empty-drop-zone-indicator" />
+					</div>
+				) : (
+					<div>
+						<EmptyPlaceholder />
+					</div>
+				)
+			)}
+		</div>
+	);
 }
+EmptyDropZone.propTypes = {
+	canDrop: PropTypes.bool,
+	connectDropTarget: PropTypes.func,
+	emptyContributors: PropTypes.bool,
+	hover: PropTypes.bool,
+	onCriterionAdd: PropTypes.func.isRequired,
+	propertyKey: PropTypes.string.isRequired,
+};
 
 export default dropTarget(
 	DragTypes.PROPERTY,

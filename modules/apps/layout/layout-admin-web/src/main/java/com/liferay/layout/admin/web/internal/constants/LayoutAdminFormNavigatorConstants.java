@@ -19,7 +19,7 @@ package com.liferay.layout.admin.web.internal.constants;
  */
 public class LayoutAdminFormNavigatorConstants {
 
-	public static final String FORM_NAVIGATOR_ID_LAYOUT_SET_ADVANCED =
-		"layout.set.form.advanced";
+	public static final String FORM_NAVIGATOR_ID_LAYOUT_SET_SEO =
+		"layout.set.form.seo";
 
 }

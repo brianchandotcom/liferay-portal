@@ -41,7 +41,7 @@ public class LayoutSetRobotsFormNavigatorEntry
 	@Override
 	public String getFormNavigatorId() {
 		return LayoutAdminFormNavigatorConstants.
-			FORM_NAVIGATOR_ID_LAYOUT_SET_ADVANCED;
+			FORM_NAVIGATOR_ID_LAYOUT_SET_SEO;
 	}
 
 	@Override

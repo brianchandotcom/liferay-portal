@@ -31,7 +31,7 @@
 
 ### Testing
 
-* [POSHI-501](https://issues.liferay.com/browse/POSHI-501) - Add unit tests for poshi script parser error handling 
+* [POSHI-501](https://issues.liferay.com/browse/POSHI-501) - Add unit tests for poshi script parser error handling
 
 ### Utils
 
@@ -55,7 +55,7 @@
 * [POSHI-500](https://issues.liferay.com/browse/POSHI-500) - Add method to maximize window size
 * [POSHI-504](https://issues.liferay.com/browse/POSHI-504) - Add getHtmlNodeText into Liferay Selenium
 * [POSHI-507](https://issues.liferay.com/browse/POSHI-507) - Encode URLs when being passed into Open
-* [POSHI-512](https://issues.liferay.com/browse/POSHI-512) - Fix behavior for LiferaySelenium.isTestName 
+* [POSHI-512](https://issues.liferay.com/browse/POSHI-512) - Fix behavior for LiferaySelenium.isTestName
 
 ## 1.0.405
 

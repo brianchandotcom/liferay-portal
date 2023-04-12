@@ -57,7 +57,8 @@ public class CurrenciesCommerceHealthHttpStatus
 			httpServletRequest);
 
 		try {
-			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+			_commerceCurrencyLocalService.importDefaultValues(
+				true, serviceContext);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

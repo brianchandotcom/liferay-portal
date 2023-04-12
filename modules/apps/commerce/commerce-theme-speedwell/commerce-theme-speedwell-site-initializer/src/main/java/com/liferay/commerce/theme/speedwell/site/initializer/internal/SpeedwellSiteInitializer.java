@@ -306,7 +306,7 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 		_groupLocalService.updateGroup(group);
 
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+		_commerceCurrencyLocalService.importDefaultValues(true, serviceContext);
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
 		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);

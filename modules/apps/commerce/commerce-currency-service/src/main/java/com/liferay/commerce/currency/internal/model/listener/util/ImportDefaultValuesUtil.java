@@ -54,7 +54,7 @@ public class ImportDefaultValuesUtil {
 					serviceContext.setUserId(guestUser.getUserId());
 
 					commerceCurrencyLocalService.importDefaultValues(
-						serviceContext);
+						false, serviceContext);
 
 					return null;
 				}

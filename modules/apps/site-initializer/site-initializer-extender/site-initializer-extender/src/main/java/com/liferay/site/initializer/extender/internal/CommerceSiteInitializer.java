@@ -696,7 +696,7 @@ public class CommerceSiteInitializer {
 
 		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
 
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+		_commerceCurrencyLocalService.importDefaultValues(true, serviceContext);
 
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 

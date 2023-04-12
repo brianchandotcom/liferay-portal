@@ -189,13 +189,9 @@ public class ObjectRelationshipExtensionProvider
 
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.
-					fetchObjectRelationshipByObjectDefinitionId1(
+					getObjectRelationshipByObjectDefinitionId(
 						objectDefinition.getObjectDefinitionId(),
 						entry.getKey());
-
-			if (objectRelationship == null) {
-				return;
-			}
 
 			ObjectDefinition relatedObjectDefinition =
 				_getRelatedObjectDefinition(

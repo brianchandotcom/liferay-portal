@@ -58,7 +58,7 @@ export default function ThemeCSSReplacementSelector({
 					{Liferay.Language.get('theme-css')}
 				</label>
 
-				<ClayInput.Group className="w-50" small>
+				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
 							id={`${portletNamespace}themeCSSReplacementExtension`}
@@ -78,7 +78,6 @@ export default function ThemeCSSReplacementSelector({
 									className="mr-2"
 									displayType="secondary"
 									onClick={onClick}
-									small
 									symbol="change"
 								/>
 
@@ -89,7 +88,6 @@ export default function ThemeCSSReplacementSelector({
 										setExtensionName('');
 										setCETExternalReferenceCode('');
 									}}
-									small
 									symbol="trash"
 								/>
 							</>
@@ -98,7 +96,6 @@ export default function ThemeCSSReplacementSelector({
 								aria-label={Liferay.Language.get('select')}
 								displayType="secondary"
 								onClick={onClick}
-								small
 								symbol="plus"
 							/>
 						)}

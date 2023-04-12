@@ -28,7 +28,7 @@ import ManagementToolbarRight from './ManagementToolbarRight';
 export type ManagementToolbarProps = {
 	actions: any;
 	addButton?: () => void;
-	buttons?: ReactNode;
+	buttons?: ReactNode | ((actions: any) => ReactNode);
 	display?: {
 		columns?: boolean;
 	};
@@ -64,7 +64,11 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				<ManagementToolbarRight
 					actions={actions}
 					addButton={addButton}
-					buttons={buttons}
+					buttons={
+						typeof buttons === 'function'
+							? buttons(actions)
+							: buttons
+					}
 					columns={tableProps.columns}
 					disabled={disabled}
 					display={display}

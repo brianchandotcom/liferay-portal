@@ -52,7 +52,7 @@ export type IItem = {
 type ManagementToolbarRightProps = {
 	actions: any;
 	addButton?: () => void;
-	buttons?: ReactNode;
+	buttons?: ReactNode | ((actions: any) => ReactNode);
 	columns: Column[];
 	disabled: boolean;
 	display?: {
@@ -147,7 +147,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 				</ClayPopover>
 			)}
 
-			{buttons}
+			{typeof buttons === 'function' ? buttons(actions) : buttons}
 
 			{actions?.create && addButton && (
 				<ClayManagementToolbar.Item

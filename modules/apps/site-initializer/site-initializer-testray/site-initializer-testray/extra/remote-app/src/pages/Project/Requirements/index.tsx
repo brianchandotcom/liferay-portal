@@ -53,19 +53,24 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 		<ListView
 			managementToolbarProps={{
 				addButton: () => navigate('create'),
-				buttons: (
-					<>
-						<Button displayType="secondary" symbol="redo" toolbar>
-							{i18n.translate('import-jira-issues')}
-						</Button>
-
-						<ClayManagementToolbar.Item className="ml-2">
-							<Button displayType="secondary" symbol="upload">
-								{i18n.translate('upload-csv')}
+				buttons: (actions) =>
+					actions?.create && (
+						<>
+							<Button
+								displayType="secondary"
+								symbol="redo"
+								toolbar
+							>
+								{i18n.translate('import-jira-issues')}
 							</Button>
-						</ClayManagementToolbar.Item>
-					</>
-				),
+
+							<ClayManagementToolbar.Item className="ml-2">
+								<Button displayType="secondary" symbol="upload">
+									{i18n.translate('upload-csv')}
+								</Button>
+							</ClayManagementToolbar.Item>
+						</>
+					),
 				filterSchema: 'requirements',
 				title: i18n.translate('requirements'),
 			}}

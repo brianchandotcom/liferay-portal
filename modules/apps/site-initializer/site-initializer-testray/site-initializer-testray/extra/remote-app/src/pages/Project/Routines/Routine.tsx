@@ -53,7 +53,10 @@ const Routine = () => {
 					},
 				}}
 				managementToolbarProps={{
-					buttons: <BuildAddButton routineId={routineId as string} />,
+					buttons: (actions) =>
+						actions?.create && (
+							<BuildAddButton routineId={routineId as string} />
+						),
 					filterSchema: 'builds',
 					title: i18n.translate('build-history'),
 				}}

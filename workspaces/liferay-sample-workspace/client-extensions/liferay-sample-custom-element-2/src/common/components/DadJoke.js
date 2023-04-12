@@ -9,13 +9,15 @@ class DadJoke extends React.Component {
 	}
 
 	componentDidMount() {
-		this._request = this.oAuth2Client.fetch(
-			'/dad/joke'
-		).then(response => response.text()
-		).then(text => {
-			this._request = null;
-			this.setState({"joke": text});
-		});
+		if (this.oAuth2Client) {
+			this._request = this.oAuth2Client.fetch(
+				'/dad/joke'
+			).then(response => response.text()
+			).then(text => {
+				this._request = null;
+				this.setState({"joke": text});
+			});
+		}
 	}
 
 	componentWillUnmount() {

@@ -36,9 +36,15 @@ class WebComponent extends HTMLElement {
 	constructor() {
 		super();
 
-		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'liferay-sample-oauth-application-user-agent'
-		);
+		try {
+			this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+				'liferay-sample-oauth-application-user-agent'
+			);
+		}
+		catch (error) {
+			console.log("Unable to find user agent application");
+		}
+
 	}
 
 	connectedCallback() {

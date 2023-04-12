@@ -110,13 +110,15 @@ class DadJoke extends React.Component {
 	}
 
 	componentDidMount() {
-		this._request = this.oAuth2Client.fetch(
-			'/dad/joke'
-		).then(response => response.text()
-		).then(text => {
-			this._request = null;
-			this.setState({"joke": text});
-		});
+		if (this.oAuth2Client) {
+			this._request = this.oAuth2Client.fetch(
+				'/dad/joke'
+			).then(response => response.text()
+			).then(text => {
+				this._request = null;
+				this.setState({"joke": text});
+			});
+		}
 	}
 
 	componentWillUnmount() {
@@ -177,9 +179,14 @@ class WebComponent extends HTMLElement {
 	constructor() {
 		super();
 
-		this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-			'liferay-sample-oauth-application-user-agent'
-		);
+		try {
+			this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+				'liferay-sample-oauth-application-user-agent'
+			);
+		}
+		catch (error) {
+			console.warning("Unable to get user agent application");
+		}
 	}
 
 	connectedCallback() {

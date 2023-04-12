@@ -1071,23 +1071,14 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
 
-		User.editUserSiteCP(
-			siteName = ${siteName},
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Site Content Reviewer",
-			userScreenName = "usersn");
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Content Reviewer",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "KaleoRegRole Name",

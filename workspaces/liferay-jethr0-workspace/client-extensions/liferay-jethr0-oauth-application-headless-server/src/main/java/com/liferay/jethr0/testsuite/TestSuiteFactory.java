@@ -14,46 +14,25 @@
 
 package com.liferay.jethr0.testsuite;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
 import org.json.JSONObject;
+
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-public class TestSuiteFactory {
+@Configuration
+public class TestSuiteFactory extends BaseEntityFactory<TestSuite> {
 
-	public static TestSuite newTestSuite(JSONObject jsonObject) {
-		long id = jsonObject.getLong("id");
-
-		TestSuite testSuite = null;
-
-		synchronized (_testSuites) {
-			if (_testSuites.containsKey(id)) {
-				return _testSuites.get(id);
-			}
-
-			testSuite = new DefaultTestSuite(jsonObject);
-
-			_testSuites.put(testSuite.getId(), testSuite);
-		}
-
-		return testSuite;
+	@Override
+	public TestSuite newEntity(JSONObject jsonObject) {
+		return new DefaultTestSuite(jsonObject);
 	}
 
-	public static void removeTestSuite(TestSuite testSuite) {
-		if (testSuite == null) {
-			return;
-		}
-
-		synchronized (_testSuites) {
-			_testSuites.remove(testSuite.getId());
-		}
+	protected TestSuiteFactory() {
+		super(TestSuite.class);
 	}
-
-	private static final Map<Long, TestSuite> _testSuites =
-		Collections.synchronizedMap(new HashMap<>());
 
 }

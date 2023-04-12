@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.jethr0.task.run;
+package com.liferay.jethr0.testsuite.dalo;
 
-import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.testsuite.TestSuite;
+import com.liferay.jethr0.testsuite.TestSuiteFactory;
 
-import org.json.JSONObject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskRunFactory extends BaseEntityFactory<TaskRun> {
+public class TestSuiteDALO extends BaseEntityDALO<TestSuite> {
 
 	@Override
-	public TaskRun newEntity(JSONObject jsonObject) {
-		return new DefaultTaskRun(jsonObject);
+	protected EntityFactory<TestSuite> getEntityFactory() {
+		return _testSuiteFactory;
 	}
 
-	protected TaskRunFactory() {
-		super(TaskRun.class);
-	}
+	@Autowired
+	private TestSuiteFactory _testSuiteFactory;
 
 }

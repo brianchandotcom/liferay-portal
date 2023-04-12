@@ -216,9 +216,7 @@ export async function getCatalogs() {
 	return response.json();
 }
 
-export async function getCatalog(
-	catalogId: number
-) {
+export async function getCatalog(catalogId: number) {
 	const response = await fetch(
 		`/o/headless-commerce-admin-catalog/v1.0/catalog/${catalogId}`,
 		{headers, method: 'GET'}

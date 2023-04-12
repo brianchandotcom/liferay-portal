@@ -11,10 +11,10 @@ import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/Pu
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
 	getAccounts,
+	getCatalog,
 	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
-	getCatalog,
 } from '../../utils/api';
 import {
 	DashboardListItems,

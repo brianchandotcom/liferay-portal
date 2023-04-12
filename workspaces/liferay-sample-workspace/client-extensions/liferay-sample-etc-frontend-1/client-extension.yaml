@@ -1,0 +1,35 @@
+assemble:
+    - from: assets
+      into: static
+liferay-sample-etc-frontend-1-header:
+    cssURLs:
+        - Header.css
+    friendlyURLMapping:
+    htmlElementName: liferay-sample-etc-frontend-1-header
+    instanceable: false
+    name: Liferay Sample Etc Frontend Header
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - Header.js
+    useESM: true
+liferay-sample-etc-frontend-1-fds-cell-renderer:
+    name: Liferay Sample Etc Frontend Data Set Cell Renderer
+    type: fdsCellRenderer
+    url: FDSIconCell.js
+liferay-sample-etc-frontend-1-sidebar:
+    cssURLs:
+        - Sidebar.css
+    friendlyURLMapping:
+    htmlElementName: liferay-sample-etc-frontend-1-sidebar
+    instanceable: false
+    name: Liferay Sample Etc Frontend Sidebar
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - Sidebar.js
+    useESM: true
+liferay-sample-etc-frontend-1-theme-spritemap:
+    name: Liferay Sample Etc Frontend Theme Spritemap
+    type: themeSpritemap
+    url: spritemap.svg

@@ -1,0 +1,8 @@
+liferay-sample-etc-frontend-1-header:
+    baseURL: http://localhost:3000/assets
+liferay-sample-etc-frontend-1-fds-cell-renderer:
+    baseURL: http://localhost:3000/assets
+liferay-sample-etc-frontend-1-sidebar:
+    baseURL: http://localhost:3000/assets
+liferay-sample-etc-frontend-1-theme-spritemap:
+    baseURL: http://localhost:3000/assets

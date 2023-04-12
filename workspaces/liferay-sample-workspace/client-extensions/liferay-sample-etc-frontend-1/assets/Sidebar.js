@@ -10,7 +10,7 @@ class SidebarWebComponent extends HTMLElement {
 	}
 }
 
-const SIDEBAR_ELEMENT_ID = 'sidebar-liferay-sample-multi-extension-container';
+const SIDEBAR_ELEMENT_ID = 'liferay-sample-etc-frontend-1-sidebar';
 
 if (!customElements.get(SIDEBAR_ELEMENT_ID)) {
 	customElements.define(SIDEBAR_ELEMENT_ID, SidebarWebComponent);

@@ -247,4 +247,41 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by routine name"
+	@priority = 3
+	test AdminCanFilterTasksByRoutineName {
+		task ("Given that the user has two routine different in the table") {
+			AssertElementPresent(
+				key_projectName = "Routine 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Routine 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user select the routine 2 in the filter") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Routine Name",
+				label = "Routine Name",
+				listMultiSelect = "Routine 2");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only routine 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Routine 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the routine 1 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Routine 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

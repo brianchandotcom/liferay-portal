@@ -74,9 +74,7 @@ import com.liferay.site.display.context.GroupDisplayContextHelper;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
@@ -217,14 +215,14 @@ public class LayoutsSEODisplayContext {
 			return defaultPageTitleMap;
 		}
 
-		Set<Map.Entry<Locale, String>> set = defaultPageTitleMap.entrySet();
+		Map<Locale, String> defaultPageTitleWithSuffixMap = new HashMap<>();
 
-		Stream<Map.Entry<Locale, String>> stream = set.stream();
+		for (Map.Entry<Locale, String> entry : defaultPageTitleMap.entrySet()) {
+			defaultPageTitleWithSuffixMap.put(
+				entry.getKey(), entry.getValue() + " - " + pageTitleSuffix);
+		}
 
-		return stream.collect(
-			Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> entry.getValue() + " - " + pageTitleSuffix));
+		return defaultPageTitleWithSuffixMap;
 	}
 
 	public PortletURL getEditCustomMetaTagsURL() {

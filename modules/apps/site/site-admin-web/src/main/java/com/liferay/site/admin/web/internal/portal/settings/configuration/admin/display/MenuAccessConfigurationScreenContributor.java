@@ -52,7 +52,7 @@ public class MenuAccessConfigurationScreenContributor
 
 	@Override
 	public String getKey() {
-		return "menu-access";
+		return "site-configuration-menu-access";
 	}
 
 	@Override

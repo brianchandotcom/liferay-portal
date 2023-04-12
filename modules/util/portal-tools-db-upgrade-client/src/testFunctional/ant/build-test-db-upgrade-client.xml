@@ -14,8 +14,9 @@
 				<arg value="pkill -f db.upgrade" />
 			</exec>
 
-			<delete file="${db.upgrade.client.log}" />
-			<delete file="temp.log" />
+			<delete failonerror="false" file="${db.upgrade.client.log}" />
+			<delete failonerror="false" file="temp.log" />
+			<delete failonerror="false" file="${user.home}/portal-ext.properties" />
 		</sequential>
 	</macrodef>
 

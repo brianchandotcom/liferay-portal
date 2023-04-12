@@ -32,8 +32,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.uuid.PortalUUID;
@@ -104,7 +104,11 @@ public class QuartzSchedulerEngineTest {
 
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
 
-		_quartzSchedulerEngine.setProps(_setUpPropsUtil());
+		ReflectionTestUtil.setFieldValue(
+			_quartzSchedulerEngine, "_props",
+			PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "false"));
+
+		_quartzSchedulerEngine.activate();
 
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_jsonFactory", _setUpJSONFactory());
@@ -206,26 +210,9 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testDescriptionMaxLength() {
-		int descriptionMaxLength =
-			_quartzSchedulerEngine.getDescriptionMaxLength() +
-				RandomTestUtil.randomInt();
-
-		_quartzSchedulerEngine.setProps(
-			PropsTestUtil.setProps(
-				PropsKeys.SCHEDULER_DESCRIPTION_MAX_LENGTH,
-				String.valueOf(descriptionMaxLength)));
-
-		Assert.assertEquals(
-			descriptionMaxLength,
-			_quartzSchedulerEngine.getDescriptionMaxLength());
-	}
-
-	@Test
 	public void testDisableScheduler() {
-		_quartzSchedulerEngine.deactivate();
-
-		_quartzSchedulerEngine.setProps(
+		ReflectionTestUtil.setFieldValue(
+			_quartzSchedulerEngine, "_props",
 			PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "true"));
 
 		_quartzSchedulerEngine.activate();
@@ -237,7 +224,8 @@ public class QuartzSchedulerEngineTest {
 
 		_quartzSchedulerEngine.deactivate();
 
-		_quartzSchedulerEngine.setProps(
+		ReflectionTestUtil.setFieldValue(
+			_quartzSchedulerEngine, "_props",
 			PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "false"));
 
 		_quartzSchedulerEngine.activate();
@@ -246,21 +234,6 @@ public class QuartzSchedulerEngineTest {
 			_quartzSchedulerEngine, "_schedulerEngineEnabled");
 
 		Assert.assertFalse(schedulerEngineEnabled);
-	}
-
-	@Test
-	public void testGroupNameMaxLength() {
-		int groupNameMaxLength =
-			_quartzSchedulerEngine.getGroupNameMaxLength() +
-				RandomTestUtil.randomInt();
-
-		_quartzSchedulerEngine.setProps(
-			PropsTestUtil.setProps(
-				PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH,
-				String.valueOf(groupNameMaxLength)));
-
-		Assert.assertEquals(
-			groupNameMaxLength, _quartzSchedulerEngine.getGroupNameMaxLength());
 	}
 
 	@Test
@@ -298,16 +271,40 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testJobNameMaxLength() {
+	public void testMaxLengthValues() {
+		int descriptionMaxLength =
+			_quartzSchedulerEngine.getDescriptionMaxLength() +
+				RandomTestUtil.randomInt();
+		int groupNameMaxLength =
+			_quartzSchedulerEngine.getGroupNameMaxLength() +
+				RandomTestUtil.randomInt();
 		int jobNameMaxLength =
 			_quartzSchedulerEngine.getJobNameMaxLength() +
 				RandomTestUtil.randomInt();
 
-		_quartzSchedulerEngine.setProps(
+		ReflectionTestUtil.setFieldValue(
+			_quartzSchedulerEngine, "_props",
 			PropsTestUtil.setProps(
-				PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH,
-				String.valueOf(jobNameMaxLength)));
+				HashMapBuilder.<String, Object>put(
+					PropsKeys.SCHEDULER_DESCRIPTION_MAX_LENGTH,
+					String.valueOf(descriptionMaxLength)
+				).put(
+					PropsKeys.SCHEDULER_ENABLED, "false"
+				).put(
+					PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH,
+					String.valueOf(groupNameMaxLength)
+				).put(
+					PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH,
+					String.valueOf(jobNameMaxLength)
+				).build()));
 
+		_quartzSchedulerEngine.activate();
+
+		Assert.assertEquals(
+			descriptionMaxLength,
+			_quartzSchedulerEngine.getDescriptionMaxLength());
+		Assert.assertEquals(
+			groupNameMaxLength, _quartzSchedulerEngine.getGroupNameMaxLength());
 		Assert.assertEquals(
 			jobNameMaxLength, _quartzSchedulerEngine.getJobNameMaxLength());
 	}
@@ -563,10 +560,6 @@ public class QuartzSchedulerEngineTest {
 		);
 
 		portalUUIDUtil.setPortalUUID(portalUUID);
-	}
-
-	private Props _setUpPropsUtil() {
-		return PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "true");
 	}
 
 	private static final int _DEFAULT_INTERVAL = 10;

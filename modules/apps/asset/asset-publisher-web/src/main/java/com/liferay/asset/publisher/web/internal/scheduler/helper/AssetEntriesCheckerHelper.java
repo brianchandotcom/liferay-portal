@@ -309,8 +309,8 @@ public class AssetEntriesCheckerHelper {
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to get segments entry IDs for " +
-							"asset list entry " + assetListEntryId);
+						"Unable to get segments entry IDs for asset list " +
+							"entry " + assetListEntryId);
 				}
 
 				if (_log.isDebugEnabled()) {

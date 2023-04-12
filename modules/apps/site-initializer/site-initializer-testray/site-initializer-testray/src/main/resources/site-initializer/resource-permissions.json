@@ -114,10 +114,10 @@
 			"UPDATE",
 			"VIEW"
 		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"primKey": "[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Testray Administrator",
-		"scope": 1
+		"scope": 4
 	},
 	{
 		"actionIds": [
@@ -401,6 +401,15 @@
 			"VIEW"
 		],
 		"primKey": "0",
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition",
+		"roleName": "Testray Analyst",
+		"scope": 4
+	},
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
 		"roleName": "Testray Analyst",
 		"scope": 1
@@ -593,10 +602,10 @@
 			"UPDATE",
 			"VIEW"
 		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"primKey": "[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Testray Lead",
-		"scope": 1
+		"scope": 4
 	},
 	{
 		"actionIds": [
@@ -805,6 +814,15 @@
 			"VIEW"
 		],
 		"primKey": "0",
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition",
+		"roleName": "Testray User",
+		"scope": 4
+	},
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
 		"roleName": "Testray User",
 		"scope": 1

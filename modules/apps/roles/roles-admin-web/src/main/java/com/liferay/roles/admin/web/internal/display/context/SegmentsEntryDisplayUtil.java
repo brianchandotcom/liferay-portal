@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pei-Jung Lan
  */
-public class SegmentsEntryDisplayContext {
+public class SegmentsEntryDisplayUtil {
 
 	public static String getGroupDescriptiveName(
 			SegmentsEntry segmentsEntry, Locale locale)
@@ -113,21 +113,20 @@ public class SegmentsEntryDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsEntryDisplayContext.class);
+		SegmentsEntryDisplayUtil.class);
 
 	private static final Snapshot<GroupLocalService>
 		_groupLocalServiceSnapshot = new Snapshot<>(
-			SegmentsEntryDisplayContext.class, GroupLocalService.class);
+			SegmentsEntryDisplayUtil.class, GroupLocalService.class);
 	private static final Snapshot<SegmentsConfigurationProvider>
 		_segmentsConfigurationProviderSnapshot = new Snapshot<>(
-			SegmentsEntryDisplayContext.class,
+			SegmentsEntryDisplayUtil.class,
 			SegmentsConfigurationProvider.class);
 	private static final Snapshot<SegmentsEntryProviderRegistry>
 		_segmentsEntryProviderRegistrySnapshot = new Snapshot<>(
-			SegmentsEntryDisplayContext.class,
+			SegmentsEntryDisplayUtil.class,
 			SegmentsEntryProviderRegistry.class);
 	private static final Snapshot<UserLocalService> _userLocalServiceSnapshot =
-		new Snapshot<>(
-			SegmentsEntryDisplayContext.class, UserLocalService.class);
+		new Snapshot<>(SegmentsEntryDisplayUtil.class, UserLocalService.class);
 
 }

@@ -221,7 +221,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 								PropsValues.class,
 								"UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT");
 
-							sleep((timeout + 1) * Time.SECOND);
+							sleep((timeout + 5) * Time.SECOND);
 						}
 						catch (InterruptedException interruptedException) {
 							throw new RuntimeException(interruptedException);

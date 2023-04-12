@@ -391,10 +391,11 @@ public class CommerceCurrencyLocalServiceUtil {
 	}
 
 	public static void importDefaultValues(
+			boolean updateExchangeRate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
-		getService().importDefaultValues(serviceContext);
+		getService().importDefaultValues(updateExchangeRate, serviceContext);
 	}
 
 	public static CommerceCurrency setActive(

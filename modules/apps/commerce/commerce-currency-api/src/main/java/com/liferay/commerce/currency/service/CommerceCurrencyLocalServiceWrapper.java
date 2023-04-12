@@ -454,10 +454,12 @@ public class CommerceCurrencyLocalServiceWrapper
 
 	@Override
 	public void importDefaultValues(
+			boolean updateExchangeRate,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+		_commerceCurrencyLocalService.importDefaultValues(
+			updateExchangeRate, serviceContext);
 	}
 
 	@Override

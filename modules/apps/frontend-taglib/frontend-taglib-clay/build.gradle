@@ -1,3 +1,15 @@
+task copyPackageJson(type: Copy)
+
+classes {
+	dependsOn copyPackageJson
+}
+
+copyPackageJson {
+	from "."
+	include "package.json"
+	into file("classes/com/liferay/frontend/taglib/clay/internal/importmap/dependencies")
+}
+
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"

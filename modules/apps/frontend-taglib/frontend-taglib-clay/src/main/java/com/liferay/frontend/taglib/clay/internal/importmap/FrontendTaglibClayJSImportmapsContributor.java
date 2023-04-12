@@ -16,8 +16,13 @@ package com.liferay.frontend.taglib.clay.internal.importmap;
 
 import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.ServletContext;
 
@@ -38,12 +43,21 @@ public class FrontendTaglibClayJSImportmapsContributor
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate() throws IOException, JSONException {
 		_importmapsJSONObject = _jsonFactory.createJSONObject();
+
+		JSONObject packageJSONObject = _getPackageJSONObject();
+
+		JSONObject dependenciesJSONObject = packageJSONObject.getJSONObject(
+			"dependencies");
 
 		String contextPath = _servletContext.getContextPath();
 
-		for (String moduleName : _MODULE_NAMES) {
+		for (String moduleName : dependenciesJSONObject.keySet()) {
+			if (!moduleName.startsWith("@clayui/")) {
+				continue;
+			}
+
 			_importmapsJSONObject.put(
 				moduleName,
 				StringBundler.concat(
@@ -52,22 +66,16 @@ public class FrontendTaglibClayJSImportmapsContributor
 		}
 	}
 
-	private static final String[] _MODULE_NAMES = {
-		"@clayui/alert", "@clayui/autocomplete", "@clayui/badge",
-		"@clayui/breadcrumb", "@clayui/button", "@clayui/card",
-		"@clayui/charts", "@clayui/color-picker", "@clayui/core", "@clayui/css",
-		"@clayui/data-provider", "@clayui/date-picker", "@clayui/drop-down",
-		"@clayui/empty-state", "@clayui/form", "@clayui/icon", "@clayui/label",
-		"@clayui/layout", "@clayui/link", "@clayui/list",
-		"@clayui/loading-indicator", "@clayui/localized-input",
-		"@clayui/management-toolbar", "@clayui/modal", "@clayui/multi-select",
-		"@clayui/multi-step-nav", "@clayui/nav", "@clayui/navigation-bar",
-		"@clayui/pagination", "@clayui/pagination-bar", "@clayui/panel",
-		"@clayui/popover", "@clayui/progress-bar", "@clayui/shared",
-		"@clayui/slider", "@clayui/sticker", "@clayui/table", "@clayui/tabs",
-		"@clayui/time-picker", "@clayui/toolbar", "@clayui/tooltip",
-		"@clayui/upper-toolbar"
-	};
+	private JSONObject _getPackageJSONObject()
+		throws IOException, JSONException {
+
+		try (InputStream inputStream =
+				FrontendTaglibClayJSImportmapsContributor.class.
+					getResourceAsStream("dependencies/package.json")) {
+
+			return _jsonFactory.createJSONObject(StringUtil.read(inputStream));
+		}
+	}
 
 	private JSONObject _importmapsJSONObject;
 

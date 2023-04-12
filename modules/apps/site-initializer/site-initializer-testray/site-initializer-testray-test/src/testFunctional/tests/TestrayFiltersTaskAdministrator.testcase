@@ -284,4 +284,43 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by status"
+	@priority = 3
+	test AdminCanFilterTasksByStatus {
+		task ("Given that task 1 is assigned to user Test Test") {
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			Testray.selectUsers(listUserName = "Test Test");
+		}
+
+		task ("And that task 1 is abandoned") {
+			Button.click(button = "Abandon");
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("When the user filter task by status in the filter") {
+			TestrayFilter.clickFilter();
+
+			Click.clickAtNotVisible(
+				key_label = "Status",
+				key_status = "Abandoned",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can see only abandoned status in the table") {
+			TestrayTestflow.assertStatus(
+				label = "Tasks",
+				status = "Abandoned");
+		}
+
+		task ("And do not see the complete status in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Complete",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

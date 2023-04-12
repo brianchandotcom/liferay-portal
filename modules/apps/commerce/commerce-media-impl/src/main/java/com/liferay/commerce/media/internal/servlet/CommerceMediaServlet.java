@@ -21,10 +21,12 @@ import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
@@ -381,8 +383,9 @@ public class CommerceMediaServlet extends HttpServlet {
 			if (CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_PRODUCT.contains(
 					pathArray[2])) {
 
-				_sendVirtualProductMediaBytes(
-					httpServletRequest, httpServletResponse, false, pathArray);
+				_sendVirtualSettingsMediaBytes(
+					httpServletRequest, httpServletResponse,
+					CPDefinition.class.getName(), false, pathArray);
 
 				return;
 			}
@@ -390,8 +393,27 @@ public class CommerceMediaServlet extends HttpServlet {
 						URL_SEPARATOR_VIRTUAL_PRODUCT_SAMPLE.contains(
 							pathArray[2])) {
 
-				_sendVirtualProductMediaBytes(
-					httpServletRequest, httpServletResponse, true, pathArray);
+				_sendVirtualSettingsMediaBytes(
+					httpServletRequest, httpServletResponse,
+					CPDefinition.class.getName(), true, pathArray);
+
+				return;
+			}
+			else if (CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_SKU.contains(
+						pathArray[2])) {
+
+				_sendVirtualSettingsMediaBytes(
+					httpServletRequest, httpServletResponse,
+					CPInstance.class.getName(), false, pathArray);
+
+				return;
+			}
+			else if (CommerceMediaConstants.URL_SEPARATOR_VIRTUAL_SKU_SAMPLE.
+						contains(pathArray[2])) {
+
+				_sendVirtualSettingsMediaBytes(
+					httpServletRequest, httpServletResponse,
+					CPInstance.class.getName(), true, pathArray);
 
 				return;
 			}
@@ -457,27 +479,44 @@ public class CommerceMediaServlet extends HttpServlet {
 		}
 	}
 
-	private void _sendVirtualProductMediaBytes(
+	private void _sendVirtualSettingsMediaBytes(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, boolean sample,
-			String[] pathArray)
+			HttpServletResponse httpServletResponse, String className,
+			boolean sample, String[] pathArray)
 		throws IOException {
 
 		long commerceAccountId = GetterUtil.getLongStrict(pathArray[1]);
-		long cpDefinitionId = GetterUtil.getLongStrict(pathArray[3]);
+		long classPK = GetterUtil.getLongStrict(pathArray[3]);
 		long fileEntryId = GetterUtil.getLongStrict(pathArray[5]);
 
 		try {
-			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
+			CPDefinition cpDefinition = null;
 
-			if (cpDefinition == null) {
-				_sendError(
-					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-					"The commerce product definition " + cpDefinitionId +
-						" does not exist");
+			if (className.equals(CPInstance.class.getName())) {
+				CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+					classPK);
 
-				return;
+				if (cpInstance == null) {
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The SKU " + classPK + " does not exist");
+
+					return;
+				}
+
+				cpDefinition = cpInstance.getCPDefinition();
+			}
+			else {
+				cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
+					classPK);
+
+				if (cpDefinition == null) {
+					_sendError(
+						httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
+						"The product " + classPK + " does not exist");
+
+					return;
+				}
 			}
 
 			if (commerceAccountId ==
@@ -506,14 +545,12 @@ public class CommerceMediaServlet extends HttpServlet {
 
 			CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 				_cpDefinitionVirtualSettingLocalService.
-					fetchCPDefinitionVirtualSetting(
-						CPDefinition.class.getName(), cpDefinitionId);
+					fetchCPDefinitionVirtualSetting(className, classPK);
 
 			if (cpDefinitionVirtualSetting == null) {
 				_sendError(
 					httpServletResponse, HttpServletResponse.SC_NOT_FOUND,
-					"The commerce product definition " + cpDefinitionId +
-						" is not virtual");
+					"The product " + classPK + " is not virtual");
 
 				return;
 			}
@@ -603,6 +640,9 @@ public class CommerceMediaServlet extends HttpServlet {
 	@Reference
 	private CPDefinitionVirtualSettingLocalService
 		_cpDefinitionVirtualSettingLocalService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

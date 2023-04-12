@@ -60,10 +60,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-47619 and LPS-67326. Add assets via Asset Publisher then add associated widgets to page."
+	@description = "This is a use case for LPS-47619. Add assets via Asset Publisher then add associated widgets to page."
 	@priority = 5
 	@uitest
-	test AddAssetsViaAssetPublisherThenAddAssociatedWidgetsToPage {
+	test AddBlogsEntryViaAssetPublisherThenAddAssociatedWidgetToPage {
 		property portal.acceptance = "true";
 
 		task ("Add a blogs entry via Asset Publisher") {
@@ -81,6 +81,21 @@ definition {
 				entryTitle = "Blogs Entry Title");
 		}
 
+		task ("Add associated widget to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Blogs");
+		}
+	}
+
+	@description = "This is a use case for LPS-47619. Add assets via Asset Publisher then add associated widgets to page."
+	@priority = 5
+	@uitest
+	test AddCalenderEventViaAssetPublisherThenAddAssociatedWidgetToPage {
+		property portal.acceptance = "true";
+
 		task ("Add a calendar event via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -93,24 +108,20 @@ definition {
 				eventTitle = "Calendar Event Title");
 		}
 
-		task ("Add a document via Asset Publisher") {
+		task ("Add associated widget to page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			DMDocument.addPGViaAPWithValidationPosition(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.doc",
-				dmDocumentTitle = "DM Document Title");
-
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			DMDocument.viewPGViaAP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title");
+			Portlet.addPG(portletName = "Calendar");
 		}
+	}
+
+	@description = "This is a use case for LPS-47619. Add assets via Asset Publisher then add associated widgets to page."
+	@priority = 5
+	@uitest
+	test AddDDLViaAssetPublisherThenAddAssociatedWidgetToPage {
+		property portal.acceptance = "true";
 
 		task ("Add a Data Definition entry") {
 			DDLList.openDynamicDataListsAdmin(siteURLKey = "test-site-name");
@@ -149,6 +160,55 @@ definition {
 				ddlRecordFieldData = "Text Field");
 		}
 
+		task ("Add associated widget to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Dynamic Data Lists Display");
+		}
+	}
+
+	@description = "This is a use case for LPS-47619 and LPS-67326. Add assets via Asset Publisher then add associated widgets to page."
+	@priority = 5
+	@uitest
+	test AddDocumentViaAssetPublisherThenAddAssociatedWidgetToPage {
+		property portal.acceptance = "true";
+
+		task ("Add a document via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			DMDocument.addPGViaAPWithValidationPosition(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.doc",
+				dmDocumentTitle = "DM Document Title");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			DMDocument.viewPGViaAP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("Add associated widget to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Blogs");
+		}
+	}
+
+	@description = "This is a use case for LPS-47619. Add assets via Asset Publisher then add associated widgets to page."
+	@priority = 5
+	@uitest
+	test AddKBArticleViaAssetPublisherThenAddAssociatedWidgetToPage {
+		property portal.acceptance = "true";
+
 		task ("Add a KBArticle via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -167,6 +227,21 @@ definition {
 				kbArticleTitle = "Knowledge Base Article Title");
 		}
 
+		task ("Add associated widget to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Knowledge Base Article");
+		}
+	}
+
+	@description = "This is a use case for LPS-47619. Add assets via Asset Publisher then add associated widgets to page."
+	@priority = 5
+	@uitest
+	test AddWebContentViaAssetPublisherThenAddAssociatedWidgetToPage {
+		property portal.acceptance = "true";
+
 		task ("Add a web content via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -181,14 +256,12 @@ definition {
 				webContentTitle = "WC Webcontent Title");
 		}
 
-		task ("Add associated widgets to page") {
+		task ("Add associated widget to page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			for (var portletName : list "Blogs,Calendar,Documents and Media,Dynamic Data Lists Display,Knowledge Base Article,Web Content Display") {
-				Portlet.addPG(portletName = ${portletName});
-			}
+			Portlet.addPG(portletName = "Web Content Display");
 		}
 	}
 

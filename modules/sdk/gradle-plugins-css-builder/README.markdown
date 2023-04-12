@@ -100,7 +100,7 @@ issues when building your Sass files (e.g., when building a theme). It's
 recommended to switch to using the Oracle JDK, but if you prefer using the IBM
 JDK, you must use the fallback Ruby compiler. You can do this two ways:
 
-- If you're working in a [Liferay Workspace](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/liferay-workspace)
+- If you're working in a [Liferay Workspace](https://learn.liferay.com/web/guest/w/dxp/building-applications/tooling/liferay-workspace)
   or using the [Liferay Gradle Plugins](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins)
   plugin, set `sass.compiler.class.name=ruby` in your `gradle.properties` file.
 - Otherwise, set `buildCSS.sassCompilerClassName='ruby'` in the project's

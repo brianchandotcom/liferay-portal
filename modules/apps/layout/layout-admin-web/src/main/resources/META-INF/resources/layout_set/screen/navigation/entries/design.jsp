@@ -81,6 +81,23 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 
 		<hr class="mb-5 separator" />
 
+		<clay:sheet-section
+			cssClass="mb-5"
+		>
+			<h3 class="mb-4 text-uppercase"><liferay-ui:message key="basic-settings" /></h3>
+
+			<div class="form-group">
+				<react:component
+					module="js/layout/look_and_feel/Favicon"
+					props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
+				/>
+			</div>
+
+			<liferay-util:include page="/layout_set/logo.jsp" servletContext="<%= application %>" />
+		</clay:sheet-section>
+
+		<hr class="mb-5 separator" />
+
 		<liferay-frontend:form-navigator
 			formModelBean="<%= selLayoutSet %>"
 			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"

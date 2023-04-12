@@ -73,6 +73,11 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	}
 
 	@Override
+	public void setBuild(Build build) {
+		_build = build;
+	}
+
+	@Override
 	public void setBuildURL(URL buildURL) {
 		_buildURL = buildURL;
 	}
@@ -92,10 +97,8 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 		_state = state;
 	}
 
-	protected BaseBuildRun(Build build, JSONObject jsonObject) {
+	protected BaseBuildRun(JSONObject jsonObject) {
 		super(jsonObject);
-
-		_build = build;
 
 		_buildURL = StringUtil.toURL(jsonObject.getString("buildURL"));
 		_duration = jsonObject.getLong("duration");
@@ -103,7 +106,7 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
-	private final Build _build;
+	private Build _build;
 	private URL _buildURL;
 	private long _duration;
 	private Result _result;

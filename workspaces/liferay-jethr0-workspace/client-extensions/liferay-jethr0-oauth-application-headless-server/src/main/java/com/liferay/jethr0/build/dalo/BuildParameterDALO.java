@@ -12,26 +12,28 @@
  * details.
  */
 
-package com.liferay.jethr0.build.run;
+package com.liferay.jethr0.build.dalo;
 
-import com.liferay.jethr0.entity.factory.BaseEntityFactory;
+import com.liferay.jethr0.build.parameter.BuildParameter;
+import com.liferay.jethr0.build.parameter.BuildParameterFactory;
+import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.factory.EntityFactory;
 
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildRunFactory extends BaseEntityFactory<BuildRun> {
+public class BuildParameterDALO extends BaseEntityDALO<BuildParameter> {
 
 	@Override
-	public BuildRun newEntity(JSONObject jsonObject) {
-		return new DefaultBuildRun(jsonObject);
+	protected EntityFactory<BuildParameter> getEntityFactory() {
+		return _buildParameterFactory;
 	}
 
-	protected BuildRunFactory() {
-		super(BuildRun.class);
-	}
+	@Autowired
+	private BuildParameterFactory _buildParameterFactory;
 
 }

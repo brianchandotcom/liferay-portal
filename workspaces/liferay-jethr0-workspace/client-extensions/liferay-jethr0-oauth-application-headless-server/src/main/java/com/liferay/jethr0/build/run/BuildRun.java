@@ -39,6 +39,8 @@ public interface BuildRun extends Entity {
 
 	public State getState();
 
+	public void setBuild(Build build);
+
 	public void setBuildURL(URL buildURL);
 
 	public void setDuration(long duration);

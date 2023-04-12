@@ -43,7 +43,7 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class.getName());
-		Map<Long, Map<Long, List<Long>>> ddmStructureIdsMaps =
+		Map<Long, Map<Long, List<Long>>> entryIdsMaps =
 			new ConcurrentHashMap<>();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -73,11 +73,11 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 
 					preparedStatement.addBatch();
 
-					Map<Long, List<Long>> ddmStructureIdsMap =
-						ddmStructureIdsMaps.computeIfAbsent(
+					Map<Long, List<Long>> entryIdsMap =
+						entryIdsMaps.computeIfAbsent(
 							classTypeId, key -> new ConcurrentHashMap<>());
 
-					List<Long> entryIds = ddmStructureIdsMap.computeIfAbsent(
+					List<Long> entryIds = entryIdsMap.computeIfAbsent(
 						ddmStructureId, key -> new ArrayList<>());
 
 					entryIds.add(entryId);
@@ -85,17 +85,17 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 				"Unable to set asset entry class type ID");
 		}
 
-		if (_log.isDebugEnabled() && ddmStructureIdsMaps.isEmpty()) {
+		if (_log.isDebugEnabled() && entryIdsMaps.isEmpty()) {
 			_log.debug(
 				"No asset entries with the wrong class type ID were found");
 		}
 
-		if (!_log.isWarnEnabled() || ddmStructureIdsMaps.isEmpty()) {
+		if (!_log.isWarnEnabled() || entryIdsMaps.isEmpty()) {
 			return;
 		}
 
 		for (Map.Entry<Long, Map<Long, List<Long>>> entry1 :
-				ddmStructureIdsMaps.entrySet()) {
+				entryIdsMaps.entrySet()) {
 
 			long classTypeId = entry1.getKey();
 
@@ -103,12 +103,9 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 				"Asset entries with the wrong class type ID " + classTypeId +
 					" were found");
 
-			Map<Long, List<Long>> ddmStructureIdAssetEntryIdsMap =
-				entry1.getValue();
+			Map<Long, List<Long>> entryIdsMap = entry1.getValue();
 
-			for (Map.Entry<Long, List<Long>> entry2 :
-					ddmStructureIdAssetEntryIdsMap.entrySet()) {
-
+			for (Map.Entry<Long, List<Long>> entry2 : entryIdsMap.entrySet()) {
 				long ddmStructureId = entry2.getKey();
 				List<Long> entryIds = entry2.getValue();
 

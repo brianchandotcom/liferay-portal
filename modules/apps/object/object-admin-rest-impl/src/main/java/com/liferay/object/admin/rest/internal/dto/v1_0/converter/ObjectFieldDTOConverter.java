@@ -18,9 +18,9 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
+import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectStateFlowUtil;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
-import com.liferay.object.filter.util.ObjectFilterUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -133,15 +133,7 @@ public class ObjectFieldDTOConverter
 				setValue(
 					() -> {
 						if (serviceBuilderObjectFieldSetting.compareName(
-								ObjectFieldSettingConstants.NAME_FILTERS)) {
-
-							return ObjectFilterUtil.getObjectFiltersJSONArray(
-								serviceBuilderObjectFieldSetting.
-									getObjectFilters());
-						}
-						else if (serviceBuilderObjectFieldSetting.compareName(
-									ObjectFieldSettingConstants.
-										NAME_STATE_FLOW)) {
+								ObjectFieldSettingConstants.NAME_STATE_FLOW)) {
 
 							return ObjectStateFlowUtil.toObjectStateFlow(
 								_objectStateFlowLocalService.
@@ -151,7 +143,8 @@ public class ObjectFieldDTOConverter
 												getValue())));
 						}
 
-						return serviceBuilderObjectFieldSetting.getValue();
+						return ObjectFieldSettingUtil.getValue(
+							serviceBuilderObjectFieldSetting);
 					});
 			}
 		};

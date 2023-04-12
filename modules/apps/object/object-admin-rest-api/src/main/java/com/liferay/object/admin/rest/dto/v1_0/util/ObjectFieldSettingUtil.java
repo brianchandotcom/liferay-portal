@@ -15,7 +15,6 @@
 package com.liferay.object.admin.rest.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectStateFlow;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.filter.util.ObjectFilterUtil;
 import com.liferay.object.model.ObjectField;
@@ -31,12 +30,54 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Objects;
-
 /**
  * @author Feliphe Marinho
  */
 public class ObjectFieldSettingUtil {
+
+	public static Object getValue(ObjectFieldSetting objectFieldSetting) {
+		if (objectFieldSetting.compareName(
+				ObjectFieldSettingConstants.NAME_FILTERS)) {
+
+			return ObjectFilterUtil.getObjectFiltersJSONArray(
+				objectFieldSetting.getObjectFilters());
+		}
+		else if (objectFieldSetting.compareName(
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE) ||
+				 objectFieldSetting.compareName(
+					 ObjectFieldSettingConstants.NAME_MAX_LENGTH)) {
+
+			return GetterUtil.getInteger(objectFieldSetting.getValue());
+		}
+		else if (objectFieldSetting.compareName(
+					ObjectFieldSettingConstants.NAME_SHOW_COUNTER) ||
+				 objectFieldSetting.compareName(
+					 ObjectFieldSettingConstants.
+						 NAME_SHOW_FILES_IN_DOCS_AND_MEDIA)) {
+
+			return GetterUtil.getBoolean(objectFieldSetting.getValue());
+		}
+		else if (objectFieldSetting.compareName(
+					ObjectFieldSettingConstants.NAME_STATE_FLOW)) {
+
+			ObjectStateFlow objectStateFlow =
+				ObjectStateFlowUtil.toObjectStateFlow(
+					ObjectStateFlowLocalServiceUtil.fetchObjectStateFlow(
+						GetterUtil.getLong(objectFieldSetting.getValue())));
+
+			try {
+				return JSONFactoryUtil.createJSONObject(
+					objectStateFlow.toString());
+			}
+			catch (JSONException jsonException) {
+				_log.error(jsonException);
+
+				return null;
+			}
+		}
+
+		return objectFieldSetting.getValue();
+	}
 
 	public static JSONArray toJSONObject(ObjectField objectField) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -60,84 +101,11 @@ public class ObjectFieldSettingUtil {
 					).put(
 						"objectFieldId", objectFieldSetting.getObjectFieldId()
 					).put(
-						"value",
-						_getValue(
-							objectField.getBusinessType(), objectFieldSetting)
+						"value", getValue(objectFieldSetting)
 					));
 			});
 
 		return jsonArray;
-	}
-
-	private static Object _getValue(
-		String businessType, ObjectFieldSetting objectFieldSetting) {
-
-		if (Objects.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION, businessType) &&
-			Objects.equals(
-				objectFieldSetting.getName(),
-				ObjectFieldSettingConstants.NAME_FILTERS)) {
-
-			return ObjectFilterUtil.getObjectFiltersJSONArray(
-				objectFieldSetting.getObjectFilters());
-		}
-		else if (Objects.equals(
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-					businessType)) {
-
-			if (Objects.equals(
-					objectFieldSetting.getName(), "maximumFileSize")) {
-
-				return GetterUtil.getInteger(objectFieldSetting.getValue());
-			}
-			else if (Objects.equals(
-						objectFieldSetting.getName(),
-						"showFilesInDocumentsAndMedia")) {
-
-				return GetterUtil.getBoolean(objectFieldSetting.getValue());
-			}
-		}
-		else if (Objects.equals(
-					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-					businessType) ||
-				 Objects.equals(
-					 ObjectFieldConstants.BUSINESS_TYPE_TEXT, businessType)) {
-
-			if (Objects.equals(objectFieldSetting.getName(), "maxLength")) {
-				return GetterUtil.getInteger(objectFieldSetting.getValue());
-			}
-			else if (Objects.equals(
-						objectFieldSetting.getName(), "showCounter")) {
-
-				return GetterUtil.getBoolean(objectFieldSetting.getValue());
-			}
-		}
-		else if (Objects.equals(
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-					businessType)) {
-
-			if (Objects.equals(
-					objectFieldSetting.getName(),
-					ObjectFieldSettingConstants.NAME_STATE_FLOW)) {
-
-				ObjectStateFlow objectStateFlow =
-					ObjectStateFlowUtil.toObjectStateFlow(
-						ObjectStateFlowLocalServiceUtil.fetchObjectStateFlow(
-							GetterUtil.getLong(objectFieldSetting.getValue())));
-
-				try {
-					return JSONFactoryUtil.createJSONObject(
-						objectStateFlow.toString());
-				}
-				catch (JSONException jsonException) {
-					_log.error(jsonException);
-
-					return null;
-				}
-			}
-		}
-
-		return objectFieldSetting.getValue();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

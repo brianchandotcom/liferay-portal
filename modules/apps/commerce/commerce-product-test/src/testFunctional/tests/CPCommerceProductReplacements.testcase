@@ -38,11 +38,11 @@ definition {
 		}
 
 		task ("And given a discontinued product with an End of Life date") {
-			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM/dd/yy", "UTC");
+			var productEndOfLifeDate = DateUtil.getFormattedCurrentDate("MM/dd/yy", "UTC");
 
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
-				discontinued = "True",
+				discontinued = "true",
 				productName = "Test Simple Product",
 				productType = "Simple",
 				sku = "SKU1002");
@@ -61,7 +61,7 @@ definition {
 
 		task ("Then the product is labeled as Discontinued and the End of Life date is shown") {
 			FrontStore.assertProductDetails(
-				endOfLifeDate = ${endOfLifeDate},
+				endOfLifeDate = ${productEndOfLifeDate},
 				productAvailability = "Discontinued");
 		}
 	}

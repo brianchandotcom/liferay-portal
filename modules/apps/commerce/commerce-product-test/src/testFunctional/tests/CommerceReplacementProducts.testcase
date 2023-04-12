@@ -277,7 +277,7 @@ definition {
 		task ("Given a simple product with a SKU") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
-				discontinued = "True",
+				discontinued = "true",
 				productName = "Test Simple Product Replacement",
 				productType = "Simple",
 				sku = "SKU1001");
@@ -286,7 +286,7 @@ definition {
 		task ("And given a simple product with a SKU marked as discontinued with a replacement product set") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
-				discontinued = "True",
+				discontinued = "true",
 				productName = "Test Simple Product",
 				productType = "Simple",
 				replacementSKU = "SKU1001",
@@ -307,10 +307,10 @@ definition {
 		}
 
 		task ("Then all the warnings about the discontinued product are shown") {
-			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM/dd/yy", "UTC");
+			var productEndOfLifeDate = DateUtil.getFormattedCurrentDate("MM/dd/yy", "UTC");
 
 			FrontStore.assertProductDetails(
-				endOfLifeDate = ${endOfLifeDate},
+				endOfLifeDate = ${productEndOfLifeDate},
 				productAvailability = "Discontinued");
 		}
 

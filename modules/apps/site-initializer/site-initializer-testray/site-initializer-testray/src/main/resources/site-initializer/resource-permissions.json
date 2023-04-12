@@ -410,6 +410,15 @@
 		"roleName": "Testray Analyst",
 		"scope": 4
 	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
 		"roleName": "Testray Analyst",
 		"scope": 1
@@ -814,6 +823,15 @@
 			"VIEW"
 		],
 		"primKey": "0",
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
 	{
 		"actionIds": [
 			"VIEW"

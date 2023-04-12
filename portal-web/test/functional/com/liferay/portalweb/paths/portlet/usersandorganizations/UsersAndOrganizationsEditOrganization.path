@@ -38,7 +38,7 @@
 </tr>
 <tr>
 	<td>PARENT_ORGANIZATION_SELECT_BUTTON</td>
-	<td>//span[@class='modify-link']/a/span</td>
+	<td>//button[contains(@class,'modify-link') and contains(@aria-label,'Change Parent Organization')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -10,10 +10,140 @@ definition {
 	}
 
 	tearDown {
+		for (var documentFolderName : list "Document%20Folder%20Name,Document%20Folder%20Name2") {
+			DocumentFolderAPI.deleteDocumentFolderByName(
+				documentFolderName = ${documentFolderName},
+				groupName = "Guest");
+		}
+
+		JSONUser.tearDownNonAdminUsersNoSelenium();
+
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CannotGetRatedEntryByOtherUsersInDepot {
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
+
+		task ("Given two rated folders by different users in depot") {
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "test2",
+				emailAddress = "test2@liferay.com",
+				familyName = "test2fn",
+				fieldName = "password",
+				fieldValue = "test",
+				givenName = "test2gn");
+
+			UserAccountAPI.createUserRoleByUserAccountId(
+				roleName = "Administrator",
+				streetNumber = 1,
+				userAccountId = ${staticUserAccountId});
+
+			var responseFromFolder1 = DocumentFolderAPI.addDocumentFolder(
+				depotName = "Test Depot Name",
+				name = "Document Folder Name");
+
+			var documentFolderId1 = JSONPathUtil.getIdValue(response = ${responseFromFolder1});
+			var responseFromFolder2 = DocumentFolderAPI.addDocumentFolder(
+				depotName = "Test Depot Name",
+				name = "Document Folder Name2");
+
+			var documentFolderId2 = JSONPathUtil.getIdValue(response = ${responseFromFolder2});
+			var response = DocumentFolderAPI.postRatingWithFolderID(
+				folderId = ${documentFolderId1},
+				ratingValue = 1);
+			var response = DocumentFolderAPI.postRatingWithFolderID(
+				folderId = ${documentFolderId2},
+				ratingValue = 1,
+				userEmailAddress = "test2@liferay.com",
+				userPassword = "test");
+		}
+
+		echo(${response});
+
+		task ("When get the rated folders by current user") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = DocumentFolderAPI.getRatedFoldersWithDepotID(depotId = ${depotId});
+		}
+
+		echo(${response});
+
+		task ("Then only the rated folder by current user is returned") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Document Folder Name");
+
+			TestUtils.assertNotEquals(
+				actual = ${response},
+				expected = "Document Folder Name2");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CannotGetRatedEntryByOtherUsersInSite {
+		task ("Given two rated folders by different users in a site") {
+			UserAccountAPI.setUpGlobalUserAccountId(
+				alternateName = "test2",
+				emailAddress = "test2@liferay.com",
+				familyName = "test2fn",
+				fieldName = "password",
+				fieldValue = "test",
+				givenName = "test2gn");
+
+			UserAccountAPI.createUserRoleByUserAccountId(
+				roleName = "Administrator",
+				streetNumber = 1,
+				userAccountId = ${staticUserAccountId});
+
+			var responseFromFolder1 = DocumentFolderAPI.addDocumentFolder(
+				groupName = "Guest",
+				name = "Document Folder Name");
+
+			var documentFolderId1 = JSONPathUtil.getIdValue(response = ${responseFromFolder1});
+			var responseFromFolder2 = DocumentFolderAPI.addDocumentFolder(
+				groupName = "Guest",
+				name = "Document Folder Name2");
+
+			var documentFolderId2 = JSONPathUtil.getIdValue(response = ${responseFromFolder2});
+			var response = DocumentFolderAPI.postRatingWithFolderID(
+				folderId = ${documentFolderId1},
+				ratingValue = 1);
+			var response = DocumentFolderAPI.postRatingWithFolderID(
+				folderId = ${documentFolderId2},
+				ratingValue = 1,
+				userEmailAddress = "test2@liferay.com",
+				userPassword = "test");
+		}
+
+		echo(${response});
+
+		task ("When get the rated folders by current user") {
+			var siteId = JSONUtil.getWithJSONPath(${responseFromFolder1}, "$.siteId");
+
+			var response = DocumentFolderAPI.getRatedFoldersWithSiteID(siteId = ${siteId});
+		}
+
+		echo(${response});
+
+		task ("Then only the rated folder by current user is returned") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Document Folder Name");
+
+			TestUtils.assertNotEquals(
+				actual = ${response},
+				expected = "Document Folder Name2");
 		}
 	}
 

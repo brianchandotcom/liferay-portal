@@ -20,6 +20,7 @@ import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,9 +48,13 @@ public class EntityExtensionHandler {
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
-			extendedProperties.putAll(
+			Map<String, Serializable> extendedPropertiesMap =
 				extensionProvider.getExtendedProperties(
-					companyId, _className, entity));
+					companyId, _className, entity);
+
+			if (extendedPropertiesMap != null) {
+				extendedProperties.putAll(extendedPropertiesMap);
+			}
 		}
 
 		return extendedProperties;
@@ -62,9 +67,13 @@ public class EntityExtensionHandler {
 		Map<String, PropertyDefinition> propertyDefinitions = new HashMap<>();
 
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
-			propertyDefinitions.putAll(
+			Map<String, PropertyDefinition> extendedPropertyDefinitionsMap =
 				extensionProvider.getExtendedPropertyDefinitions(
-					companyId, className));
+					companyId, className);
+
+			if (extendedPropertyDefinitionsMap != null) {
+				propertyDefinitions.putAll(extendedPropertyDefinitionsMap);
+			}
 		}
 
 		return propertyDefinitions;
@@ -74,8 +83,12 @@ public class EntityExtensionHandler {
 		Set<String> filteredPropertyNames = new HashSet<>();
 
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
-			filteredPropertyNames.addAll(
-				extensionProvider.getFilteredPropertyNames(companyId, entity));
+			Collection<String> filteredPropertyNamesCollection =
+				extensionProvider.getFilteredPropertyNames(companyId, entity);
+
+			if (filteredPropertyNamesCollection != null) {
+				filteredPropertyNames.addAll(filteredPropertyNamesCollection);
+			}
 		}
 
 		return filteredPropertyNames;
@@ -87,12 +100,16 @@ public class EntityExtensionHandler {
 		throws Exception {
 
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
-			Map<String, Serializable> extensionProviderExtendedProperties =
-				new HashMap<>();
-
 			Map<String, PropertyDefinition> extendedPropertyDefinitions =
 				extensionProvider.getExtendedPropertyDefinitions(
 					companyId, _className);
+
+			if (extendedPropertyDefinitions == null) {
+				continue;
+			}
+
+			Map<String, Serializable> extensionProviderExtendedProperties =
+				new HashMap<>();
 
 			for (Map.Entry<String, Serializable> entry :
 					extendedProperties.entrySet()) {
@@ -117,9 +134,13 @@ public class EntityExtensionHandler {
 		Map<String, PropertyDefinition> propertyDefinitions = new HashMap<>();
 
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
-			propertyDefinitions.putAll(
+			Map<String, PropertyDefinition> extendedPropertyDefinitionsMap =
 				extensionProvider.getExtendedPropertyDefinitions(
-					companyId, _className));
+					companyId, _className);
+
+			if (extendedPropertyDefinitionsMap != null) {
+				propertyDefinitions.putAll(extendedPropertyDefinitionsMap);
+			}
 		}
 
 		List<String> unknownPropertyNames = new ArrayList<>();

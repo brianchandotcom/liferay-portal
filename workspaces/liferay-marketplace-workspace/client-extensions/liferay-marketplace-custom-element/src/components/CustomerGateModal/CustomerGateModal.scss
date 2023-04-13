@@ -1,0 +1,33 @@
+.customer-gate-modal-container .modal {
+	&-header {
+		border-width: 0;
+		height: auto;
+		padding-bottom: 1rem;
+		padding-top: 1.5rem;
+
+		h1 {
+			color: #282934;
+			font-size: 1.8rem;
+			font-weight: 700;
+			line-height: 2.5rem;
+		}
+	}
+	&-body {
+		align-items: center;
+		border-top: 0;
+		justify-content: center;
+
+		a {
+			font-weight: 600;
+		}
+
+		p {
+			color: #282934;
+			font-size: 15.7px;
+			line-height: 24px;
+		}
+	}
+	&-footer {
+		border-top: 0;
+	}
+}

@@ -24,21 +24,21 @@
 	<aui:script sandbox="<%= true %>" use="aui-base,liferay-store">
 		var storeTask = A.debounce(Liferay.Store, 100);
 
-		function onFieldsetShow(event) {
-			if (event.panel.getAttribute('id') === '<%= id %>Content') {
-				var task = {};
-
-				task['<%= id %>'] = false;
-
-				storeTask(task);
-			}
-		}
-
 		function onFieldsetHide(event) {
 			if (event.panel.getAttribute('id') === '<%= id %>Content') {
 				var task = {};
 
 				task['<%= id %>'] = true;
+
+				storeTask(task);
+			}
+		}
+
+		function onFieldsetShow(event) {
+			if (event.panel.getAttribute('id') === '<%= id %>Content') {
+				var task = {};
+
+				task['<%= id %>'] = false;
 
 				storeTask(task);
 			}

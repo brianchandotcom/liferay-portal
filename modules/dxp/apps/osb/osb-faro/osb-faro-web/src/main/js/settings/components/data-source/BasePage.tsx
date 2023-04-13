@@ -9,6 +9,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {DataSource, User} from 'shared/util/records';
 import {deleteDataSource} from 'shared/actions/data-sources';
+import {ENABLE_DELETE_DATA_SOURCE_BUTTON} from 'shared/util/constants';
 import {
 	getDataSourceDisplayObject,
 	hasLegacyDXPConnection
@@ -131,7 +132,10 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 			} - ${Liferay.Language.get('data-sources')}`}
 			groupId={groupId}
 			pageActions={
-				id && showDelete && currentUser.isAdmin()
+				ENABLE_DELETE_DATA_SOURCE_BUTTON &&
+				id &&
+				showDelete &&
+				currentUser.isAdmin()
 					? [
 							{
 								displayType: 'secondary',

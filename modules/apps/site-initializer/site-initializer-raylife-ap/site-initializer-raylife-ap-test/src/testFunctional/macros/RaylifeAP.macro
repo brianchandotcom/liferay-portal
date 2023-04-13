@@ -42,6 +42,15 @@ definition {
 		AssertVisible(locator1 = "RaylifeAP#ASSERT_QUANTITY");
 	}
 
+	@summary = "Assert element present in the table"
+	macro assertTableElement {
+		AssertElementPresent(
+			key_column = ${column},
+			key_line = ${line},
+			key_text = ${text},
+			locator1 = "RaylifeAP#TABLE_ELEMENT_BY_POSITION");
+	}
+
 	macro assertTableValue {
 		AssertElementPresent(
 			key_product = ${product},

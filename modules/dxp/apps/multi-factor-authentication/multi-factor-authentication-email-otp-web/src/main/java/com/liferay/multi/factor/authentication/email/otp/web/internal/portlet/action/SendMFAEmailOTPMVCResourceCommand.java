@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
 
@@ -201,18 +201,19 @@ public class SendMFAEmailOTPMVCResourceCommand implements MVCResourceCommand {
 			"[$FROM_ADDRESS$]", mfaEmailOTPConfiguration.emailFromAddress());
 		mailTemplateContextBuilder.put(
 			"[$FROM_NAME$]",
-			HtmlUtil.escape(mfaEmailOTPConfiguration.emailFromName()));
+			new EscapableObject<>(mfaEmailOTPConfiguration.emailFromName()));
 		mailTemplateContextBuilder.put(
-			"[$ONE_TIME_PASSWORD$]", HtmlUtil.escape(generatedMFAEmailOTP));
+			"[$ONE_TIME_PASSWORD$]",
+			new EscapableObject<>(generatedMFAEmailOTP));
 		mailTemplateContextBuilder.put(
 			"[$PORTAL_URL$]", _portal.getPortalURL(httpServletRequest));
 		mailTemplateContextBuilder.put(
 			"[$REMOTE_ADDRESS$]", httpServletRequest.getRemoteAddr());
 		mailTemplateContextBuilder.put(
 			"[$REMOTE_HOST$]",
-			HtmlUtil.escape(httpServletRequest.getRemoteHost()));
+			new EscapableObject<>(httpServletRequest.getRemoteHost()));
 		mailTemplateContextBuilder.put(
-			"[$TO_NAME$]", HtmlUtil.escape(user.getFullName()));
+			"[$TO_NAME$]", new EscapableObject<>(user.getFullName()));
 
 		_sendNotificationEmail(
 			mfaEmailOTPConfiguration.emailFromAddress(),

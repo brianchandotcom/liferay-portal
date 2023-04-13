@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -557,12 +557,13 @@ public class AccountEntryUserRelLocalServiceImpl
 				_accountEntryLocalService.getAccountEntry(accountEntryId);
 
 			mailTemplateContextBuilder.put(
-				"[$ACCOUNT_NAME$]", HtmlUtil.escape(accountEntry.getName()));
+				"[$ACCOUNT_NAME$]",
+				new EscapableObject<>(accountEntry.getName()));
 
 			mailTemplateContextBuilder.put("[$CREATE_ACCOUNT_URL$]", url);
 			mailTemplateContextBuilder.put(
 				"[$INVITE_SENDER_NAME$]",
-				HtmlUtil.escape(inviter.getFullName()));
+				new EscapableObject<>(inviter.getFullName()));
 
 			MailTemplateContext mailTemplateContext =
 				mailTemplateContextBuilder.build();

@@ -33,7 +33,7 @@ definition {
 	}
 
 	macro searchProvider {
-		var searchTerm = "${key_provider}";
+		var searchTerm = ${key_provider};
 
 		Click(
 			dropdownLabel = "Choose an Option",

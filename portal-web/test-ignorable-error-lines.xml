@@ -320,6 +320,10 @@
 			<contains>Unknown column 'userimpl0_.type_' in 'field list'</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-180463">
+			<contains></contains>
+			<matches>.*Ignored unknown user group: .*</matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

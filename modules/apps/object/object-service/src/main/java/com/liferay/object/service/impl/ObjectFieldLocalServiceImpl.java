@@ -1054,7 +1054,9 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		if (!objectDefinition.isEnableLocalization()) {
-			throw new ObjectDefinitionEnableLocalizationException();
+			throw new ObjectDefinitionEnableLocalizationException(
+				"To have localized fields the object definition must be " +
+					"localized");
 		}
 	}
 

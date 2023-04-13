@@ -23,6 +23,31 @@ export async function getCatalogId() {
 	return catalogs[0].id;
 }
 
+export async function userAccountChecker(verifiedAccounts: string[]) {
+	const response = await getUserAccountsById();
+
+	if (response.ok) {
+		const userAccounts = (await response.json()) as UserAccount;
+
+		const userHasPublisherGroup = await Promise.all(
+			userAccounts.accountBriefs.map(async (currentAccount) => {
+				const accountGroup = await getAccountGroup(currentAccount.id);
+
+				const accountGroupPublisher = accountGroup.some(
+					(currentAccountGroup) =>
+						verifiedAccounts.includes(currentAccountGroup.name)
+				);
+
+				return accountGroupPublisher;
+			})
+		);
+
+		return userHasPublisherGroup.some((item) => item);
+	}
+
+	return false;
+}
+
 async function submitSpecification(
 	appId: string,
 	productId: number,

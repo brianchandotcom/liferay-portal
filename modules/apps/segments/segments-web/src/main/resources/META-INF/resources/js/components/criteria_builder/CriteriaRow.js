@@ -31,8 +31,8 @@ import {
 	getSupportedOperatorsFromType,
 	objectToFormData,
 } from '../../utils/utils';
-import CriteriaRowEditable from './CriteriaRowEditable.es';
-import CriteriaRowReadable from './CriteriaRowReadable.es';
+import CriteriaRowEditable from './CriteriaRowEditable';
+import CriteriaRowReadable from './CriteriaRowReadable';
 
 const acceptedDragTypes = [DragTypes.CRITERIA_ROW, DragTypes.PROPERTY];
 

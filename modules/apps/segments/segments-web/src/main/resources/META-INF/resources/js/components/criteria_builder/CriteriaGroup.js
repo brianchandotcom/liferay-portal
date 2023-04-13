@@ -32,9 +32,9 @@ import {
 	replaceAtIndex,
 } from '../../utils/utils';
 import Conjunction from './Conjunction.es';
-import CriteriaRow from './CriteriaRow.es';
-import DropZone from './DropZone.es';
-import EmptyDropZone from './EmptyDropZone.es';
+import CriteriaRow from './CriteriaRow';
+import DropZone from './DropZone';
+import EmptyDropZone from './EmptyDropZone';
 
 /**
  * Passes the required values to the drop target.

@@ -22,7 +22,7 @@ import {
 	replaceAtIndex,
 	sub,
 } from '../../utils/utils';
-import CriteriaGroup from './CriteriaGroup.es';
+import CriteriaGroup from './CriteriaGroup';
 
 export default function CriteriaBuilder({
 	criteria,

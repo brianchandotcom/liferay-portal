@@ -26,7 +26,7 @@ import {contributorShape, propertyGroupShape} from '../../utils/types.es';
 import {getPluralMessage} from '../../utils/utils';
 import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar';
 import Conjunction from './Conjunction.es';
-import CriteriaBuilder from './CriteriaBuilder.es';
+import CriteriaBuilder from './CriteriaBuilder';
 import EmptyPlaceholder from './EmptyPlaceholder.es';
 
 export default function ContributorBuilder({

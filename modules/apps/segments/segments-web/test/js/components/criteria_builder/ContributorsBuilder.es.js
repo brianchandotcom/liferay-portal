@@ -17,7 +17,7 @@ import {cleanup, render} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 
-import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder.es';
+import ContributorsBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/ContributorsBuilder';
 import {CONJUNCTIONS} from '../../../../src/main/resources/META-INF/resources/js/utils/constants';
 
 const initialContributors = [

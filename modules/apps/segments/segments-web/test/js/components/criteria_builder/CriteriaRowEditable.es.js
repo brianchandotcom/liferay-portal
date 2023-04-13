@@ -15,7 +15,7 @@
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import CriteriaRowEditable from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaRowEditable.es';
+import CriteriaRowEditable from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaRowEditable';
 
 import '@testing-library/jest-dom/extend-expect';
 import {format, parse} from 'date-fns';

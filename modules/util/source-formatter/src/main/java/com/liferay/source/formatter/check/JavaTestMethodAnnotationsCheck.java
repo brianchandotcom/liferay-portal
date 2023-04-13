@@ -165,7 +165,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				JavaSourceUtil.getMethodCall(javaTermContent, x));
 
-			if (parameterList.size() > 1) {
+			if (parameterList.size() != 1) {
 				continue;
 			}
 

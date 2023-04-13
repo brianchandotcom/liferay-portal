@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.react.servlet.taglib.util;
 
-import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 

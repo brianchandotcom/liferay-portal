@@ -66,7 +66,12 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(service = {ReleaseManager.class, ReleaseManagerImpl.class})
 public class ReleaseManagerImpl implements ReleaseManager {
 
-	public boolean check() throws Exception {
+	public Set<String> getBundleSymbolicNames() {
+		return _serviceTrackerMap.keySet();
+	}
+
+	@Override
+	public boolean getMessage() throws Exception {
 		try (Connection connection = DataAccess.getConnection()) {
 			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
 				_isPendingModuleUpgrades()) {
@@ -76,10 +81,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		}
 
 		return _checkUnsatisfiedUpgradeComponents();
-	}
-
-	public Set<String> getBundleSymbolicNames() {
-		return _serviceTrackerMap.keySet();
 	}
 
 	public String getSchemaVersionString(String bundleSymbolicName) {

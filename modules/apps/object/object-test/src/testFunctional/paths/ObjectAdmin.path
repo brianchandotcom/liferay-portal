@@ -371,6 +371,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SIDEBAR_ADVANCED_TAB</td>
+		<td>//div[contains(@class,'lfr-objects')]//button[contains(text(),'Advanced')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SIDEBAR_ELEMENT_BUTTON</td>
 		<td>//button[contains(@class, 'sidebar-element-button')and contains(.,'${key_element}')]</td>
 		<td></td>

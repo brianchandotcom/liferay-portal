@@ -16,8 +16,6 @@ package com.liferay.site.configuration;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
-import java.io.IOException;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -33,7 +31,8 @@ public interface MenuAccessConfigurationProvider {
 		throws ConfigurationException;
 
 	public void updateMenuAccessConfiguration(
-			String[] rolesCanSeeControlMenu, boolean showControlMenuByRole)
-		throws IOException;
+			long groupId, String[] rolesCanSeeControlMenu,
+			boolean showControlMenuByRole)
+		throws Exception;
 
 }

@@ -154,12 +154,11 @@ public class DDMStructureLayoutLocalServiceImpl
 			long classNameId, DDMStructureVersion ddmStructureVersion)
 		throws PortalException {
 
-		List<DDMStructureLayout> ddmStructureLayouts =
-			ddmStructureLayoutPersistence.findByG_C_SV(
-				ddmStructureVersion.getGroupId(), classNameId,
-				ddmStructureVersion.getStructureVersionId());
+		for (DDMStructureLayout ddmStructureLayout :
+				ddmStructureLayoutPersistence.findByG_C_SV(
+					ddmStructureVersion.getGroupId(), classNameId,
+					ddmStructureVersion.getStructureVersionId())) {
 
-		for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
 			deleteDDMStructureLayout(ddmStructureLayout);
 		}
 	}

@@ -222,9 +222,11 @@ const NewApplicationAuto = ({children}: DriverInfoProps) => {
 
 		if (state.hasFormChanges) {
 			statusMessage = 'Unsaved Changes';
-		} else if (!state.hasFormChanges && !saveChanges) {
+		}
+		else if (!state.hasFormChanges && !saveChanges) {
 			statusMessage = 'No Changes Made';
-		} else if (saveChanges && !state.hasFormChanges) {
+		}
+		else if (saveChanges && !state.hasFormChanges) {
 			statusMessage = 'All Changes Saved';
 		}
 

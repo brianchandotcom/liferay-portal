@@ -128,7 +128,8 @@ export async function createOrUpdateRaylifeApplication(
 			},
 			status
 		);
-	} catch (error) {
+	}
+	catch (error) {
 		return axios.post(`${DeliveryAPI}/`, payload);
 	}
 }

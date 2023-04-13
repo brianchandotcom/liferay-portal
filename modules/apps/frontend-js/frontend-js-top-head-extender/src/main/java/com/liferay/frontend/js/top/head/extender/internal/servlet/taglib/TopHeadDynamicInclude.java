@@ -184,15 +184,13 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			return null;
 		}
 
-		ResourceURLsBag resourceURLsBag = new ResourceURLsBag();
+		List<String> allJsResourceURLs = new ArrayList<>();
+		List<String> jsResourceURLs = new ArrayList<>();
 
 		_addPortalBundles(
-			resourceURLsBag._allJsResourceURLs,
-			PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
+			allJsResourceURLs, PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
 
-		_addPortalBundles(
-			resourceURLsBag._jsResourceURLs,
-			PropsKeys.JAVASCRIPT_BAREBONE_FILES);
+		_addPortalBundles(jsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
 
 		for (ServiceReference<TopHeadResources>
 				topHeadResourcesServiceReference :
@@ -217,15 +215,14 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 					String url = urlPrefix + jsResourcePath;
 
-					resourceURLsBag._allJsResourceURLs.add(url);
-					resourceURLsBag._jsResourceURLs.add(url);
+					allJsResourceURLs.add(url);
+					jsResourceURLs.add(url);
 				}
 
 				for (String jsResourcePath :
 						topHeadResources.getAuthenticatedJsResourcePaths()) {
 
-					resourceURLsBag._allJsResourceURLs.add(
-						urlPrefix + jsResourcePath);
+					allJsResourceURLs.add(urlPrefix + jsResourcePath);
 				}
 			}
 			finally {
@@ -233,7 +230,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			}
 		}
 
-		return resourceURLsBag;
+		return new ResourceURLsBag(allJsResourceURLs, jsResourceURLs);
 	}
 
 	private void _renderBundleComboURLs(
@@ -312,8 +309,15 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 	private static class ResourceURLsBag {
 
-		private final List<String> _allJsResourceURLs = new ArrayList<>();
-		private final List<String> _jsResourceURLs = new ArrayList<>();
+		private ResourceURLsBag(
+			List<String> allJsResourceURLs, List<String> jsResourceURLs) {
+
+			_allJsResourceURLs = allJsResourceURLs;
+			_jsResourceURLs = jsResourceURLs;
+		}
+
+		private final List<String> _allJsResourceURLs;
+		private final List<String> _jsResourceURLs;
 
 	}
 

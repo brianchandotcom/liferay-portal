@@ -36,9 +36,7 @@ public class BundleUtil {
 			}
 		}
 
-		throw new IllegalArgumentException(
-			"Module with symbolic name " + bundleSymbolicName +
-				" does not exist");
+		return null;
 	}
 
 	public static boolean isLiferayServiceBundle(Bundle bundle) {

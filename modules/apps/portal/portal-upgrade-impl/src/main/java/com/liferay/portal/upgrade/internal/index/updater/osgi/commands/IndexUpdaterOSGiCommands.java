@@ -62,6 +62,12 @@ public class IndexUpdaterOSGiCommands {
 		Bundle bundle = BundleUtil.getBundle(
 			_bundleContext, bundleSymbolicName);
 
+		if (bundle == null) {
+			throw new IllegalArgumentException(
+				"Module with symbolic name " + bundleSymbolicName +
+					" does not exist");
+		}
+
 		if (BundleUtil.isLiferayServiceBundle(bundle)) {
 			IndexUpdaterUtil.updateIndexes(bundle);
 

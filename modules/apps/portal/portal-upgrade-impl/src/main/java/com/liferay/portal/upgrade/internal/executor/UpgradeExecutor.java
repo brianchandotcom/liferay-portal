@@ -229,6 +229,12 @@ public class UpgradeExecutor {
 		Bundle bundle = BundleUtil.getBundle(
 			_bundleContext, bundleSymbolicName);
 
+		if (bundle == null) {
+			throw new IllegalArgumentException(
+				"Module with symbolic name " + bundleSymbolicName +
+					" does not exist");
+		}
+
 		if (_requiresUpdateIndexes(bundle, upgradeInfos)) {
 			try {
 				IndexUpdaterUtil.updateIndexes(bundle);

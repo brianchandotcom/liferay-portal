@@ -22,7 +22,7 @@ type sort = {
 	[keys: string]: boolean;
 };
 
-export type TableRowContentType = {[keys: string]: string | number};
+export type TableRowContentType = {[keys: string]: any};
 
 export type TableHeaders = {
 	bold?: boolean;
@@ -41,7 +41,7 @@ export type TableHeaders = {
 
 type TableProps = {
 	actions: ActionObject[];
-	data: {[keys: string]: string}[];
+	data: {[keys: string]: string | boolean}[];
 	headers: TableHeaders[];
 	onClickRules?: (
 		item: TableHeaders,
@@ -162,9 +162,9 @@ const Table: React.FC<TableProps> = ({
 								>
 									{item.type === 'hasBubble' && (
 										<div
-											className={`${rowContent[
-												item.key
-											].toLowerCase()} flex-shrink-0 mr-2 rounded-circle status-color`}
+											className={`${rowContent[item.key]
+												.toString()
+												.toLowerCase()} flex-shrink-0 mr-2 rounded-circle status-color`}
 										></div>
 									)}
 
@@ -201,7 +201,7 @@ const Table: React.FC<TableProps> = ({
 							>
 								<SettingsButton
 									actions={actions}
-									identifier={rowContent.key}
+									identifier={rowContent.key.toString()}
 								/>
 							</Cell>
 						)}

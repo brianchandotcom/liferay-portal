@@ -46,7 +46,7 @@ type Policy = {
 	termPremium: number;
 };
 
-type TableContent = {[keys: string]: string};
+type TableContent = {[keys: string]: string | boolean};
 
 type TableItemType = {
 	centered?: boolean;
@@ -353,7 +353,8 @@ const PoliciesTable = () => {
 					);
 				})
 			);
-		} else {
+		}
+		else {
 			setFilterProductCheck(
 				filterProductCheck.filter((productName: string) => {
 					return productName !== `'${currentFilterName}'`;
@@ -567,7 +568,7 @@ const PoliciesTable = () => {
 					policiesList.push({
 						commission: `$${commissionValue.toFixed(2)}`,
 						externalReferenceCode,
-						isClickable: productName === 'Auto' ? 'true' : 'false',
+						isClickable: productName === 'Auto' ? true : false,
 						isExpiring: (renewalDue < 0).toString(),
 						isRedLine: (
 							renewalDue >= 0 &&

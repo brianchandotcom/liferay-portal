@@ -66,10 +66,10 @@ const ClaimDetailsActivities = ({claimData}: ClaimComponentsType) => {
 		: [];
 
 	const BodyElement = () => (
-		<div className="ml-3">
+		<div className="ml-3 text-paragraph-sm">
 			<div className="font-weight-bold"> Detail below:</div>
 
-			<div className="claim-activities-body-element">
+			<div>
 				<div className="d-flex justify-content-between">
 					<div>
 						<div className="mt-3 text-neutral-6">Mechanic</div>

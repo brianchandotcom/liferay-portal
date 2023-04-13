@@ -451,10 +451,9 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			return;
 		}
 
-		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
-			"url");
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormFieldValuesMap.get("url")) {
 
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			Value value = ddmFormFieldValue.getValue();
 
 			for (Locale locale : value.getAvailableLocales()) {

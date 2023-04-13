@@ -41,6 +41,7 @@
 /benchmarks/benchmarks-actual.properties
 /benchmarks/benchmarks.*.properties
 /benchmarks/liferay
+/benchmarks/output
 /bin
 /build
 /build.*.properties

@@ -345,10 +345,8 @@ public class UpgradeReport {
 							"manually";
 				}
 
-				String formattedStorageSize = LanguageUtil.formatStorageSize(
+				return LanguageUtil.formatStorageSize(
 					_documentLibrarySize, LocaleUtil.US);
-
-				return formattedStorageSize;
 			}
 		).put(
 			"tables.initial.final.rows",

@@ -36,10 +36,12 @@ if (!virtualHostnames.containsKey(PortalUtil.getHost(request))) {
 <liferay-util:buffer
 	var="linkContent"
 >
-	<aui:a href="http://www.sitemaps.org" target="_blank">http://www.sitemaps.org</aui:a>
+	<a href="http://www.sitemaps.org" target="_blank">
+		http://www.sitemaps.org
+	</a>
 </liferay-util:buffer>
 
-<div class="text-muted">
+<div class="text-secondary">
 	<liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" translateArguments="<%= false %>" />
 
 	<br /><br />
@@ -48,10 +50,23 @@ if (!virtualHostnames.containsKey(PortalUtil.getHost(request))) {
 
 	<ul>
 		<li>
-			<aui:a href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Google</aui:a>
+			<clay:link
+				href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>'
+				label="Google"
+				target="_blank"
+			/>
 		</li>
 		<li>
-			<aui:a href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>' target="_blank">Yahoo!</aui:a> (<liferay-ui:message key="requires-log-in" />)
+			<div class="d-flex">
+				<clay:link
+					cssClass="mr-2"
+					href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>'
+					label="Yahoo!"
+					target="_blank"
+				/>
+
+				<liferay-ui:message key="requires-log-in" />
+			</div>
 		</li>
 	</ul>
 </div>

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -321,10 +322,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		String resourceName = ResourceActionsUtil.getCompositeModelName(
 			Layout.class.getName(), "false");
 
+		if (!StringUtil.startsWith(friendlyUrlPath, StringPool.FORWARD_SLASH)) {
+			friendlyUrlPath = StringPool.FORWARD_SLASH + friendlyUrlPath;
+		}
+
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
-				groupId, _portal.getClassNameId(resourceName),
-				StringPool.FORWARD_SLASH + friendlyUrlPath);
+				groupId, _portal.getClassNameId(resourceName), friendlyUrlPath);
 
 		return _layoutLocalService.getLayout(
 			friendlyURLEntryLocalization.getClassPK());

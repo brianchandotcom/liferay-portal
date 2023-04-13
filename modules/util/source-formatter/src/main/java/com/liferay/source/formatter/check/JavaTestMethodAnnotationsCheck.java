@@ -162,8 +162,11 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				break;
 			}
 
+			String propsUtilAddPropertiesMethodCall =
+				JavaSourceUtil.getMethodCall(javaTerm.getContent(), x);
+
 			List<String> parameterList = JavaSourceUtil.getParameterList(
-				JavaSourceUtil.getMethodCall(javaTermContent, x));
+				propsUtilAddPropertiesMethodCall);
 
 			if (parameterList.size() != 1) {
 				continue;
@@ -177,35 +180,23 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			parameterList = JavaSourceUtil.getParameterList(
-				JavaSourceUtil.getMethodCall(parameter, 0));
+			String unicodePropertiesBuilderSetPropertyMethodCall =
+				JavaSourceUtil.getMethodCall(parameter, 0);
 
-			if (parameterList.size() != 2) {
+			parameterList = JavaSourceUtil.getParameterList(
+				unicodePropertiesBuilderSetPropertyMethodCall);
+
+			if ((parameterList.size() != 2) ||
+				!StringUtil.startsWith(
+					parameterList.get(0), "\"feature.flag.")) {
+
 				continue;
 			}
 
-			String firstParameter = StringUtil.unquote(parameterList.get(0));
-			String secondParameter = StringUtil.unquote(parameterList.get(1));
-
-			if (firstParameter.matches("feature\\.flag\\.[\\w-]+") &&
-				secondParameter.equals("true")) {
-
-				String methodName = javaTerm.getName();
-
-				String scope = "method";
-
-				if (StringUtil.equals(methodName, "setUp") ||
-					StringUtil.equals(methodName, "setUpClass")) {
-
-					scope = "class";
-				}
-
-				addMessage(
-					fileName,
-					"Use '@FeatureFlags' on " + scope + " definition");
-
-				return;
-			}
+			addMessage(
+				fileName,
+				"Use annotation @FeatureFlags instead of PropsUtil." +
+					"addProperties for feature flag for " + javaTerm.getName());
 		}
 	}
 

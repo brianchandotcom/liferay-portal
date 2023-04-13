@@ -65,11 +65,13 @@ export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 			}) || [],
 		additionalOption: mdfRequest.additionalOption,
 		company: mdfRequest.r_accToMDFReqs_accountEntry,
-		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.split(
-			'; '
-		).filter(request => request !== ""),
+		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals
+			?.split('; ')
+			.filter((request) => request !== ''),
 		mdfRequestStatus: mdfRequest.mdfRequestStatus,
-		targetAudienceRoles: mdfRequest.targetAudienceRoles?.split('; ').filter(request => request !== ""),
+		targetAudienceRoles: mdfRequest.targetAudienceRoles
+			?.split('; ')
+			.filter((request) => request !== ''),
 		targetMarkets: mdfRequest.targetMarkets?.split('; '),
 	};
 }

@@ -32,6 +32,7 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
+		property test.name.skip.portal.instance = "ObjectUpgrade#ViewObjectDefinitionDetailsAfterUpgrade7413U33";
 
 		task ("View an Object Definition Details after Upgrade") {
 			ObjectAdmin.openObjectAdmin();
@@ -112,6 +113,7 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
+		property test.name.skip.portal.instance = "ObjectUpgrade#ViewObjectRelationshipAfterUpgrade7413U33";
 
 		task ("View Object Relationships after Upgrade") {
 			ObjectAdmin.openObjectAdmin();
@@ -187,6 +189,7 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
+		property test.name.skip.portal.instance = "ObjectUpgrade#ViewPicklistAfterUpgrade7413U33";
 
 		task ("View a Picklist after Upgrade") {
 			Picklist.gotoPicklists();

@@ -129,6 +129,7 @@ definition {
 			idpEntityId = ${idpEntityId},
 			idpKeepAliveURL = ${idpKeepAliveURL},
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
+			idpMetadataURLRaw = ${idpMetadataURLRaw},
 			idpNameId = ${idpEntityId},
 			idpUserMembershipsAttributeMapping = ${idpUserMembershipsAttributeMapping},
 			idpUserMembershipsAttributeMappingText = ${idpUserMembershipsAttributeMappingText},

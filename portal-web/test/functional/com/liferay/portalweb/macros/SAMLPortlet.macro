@@ -39,6 +39,11 @@ definition {
 
 			echo("## * IdP Metadata XML File Name: ${idPMetadataXML}");
 		}
+		else if (isSet(idpMetadataURLRaw)) {
+			Type(
+				locator1 = "TextInput#SAML_METADATA_URL_FIELD",
+				value1 = ${idpMetadataURLRaw});
+		}
 		else {
 			Type(
 				locator1 = "TextInput#SAML_METADATA_URL_FIELD",

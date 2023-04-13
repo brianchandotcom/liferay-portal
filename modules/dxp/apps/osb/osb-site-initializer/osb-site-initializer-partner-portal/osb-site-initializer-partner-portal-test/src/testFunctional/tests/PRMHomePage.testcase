@@ -70,6 +70,7 @@ definition {
 	@description = "This is a test for LPS-172458. User can access Deal Registration Listing through Quick Links"
 	@priority = 4
 	test CanAccessDealListingViaQuickLinks {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMHomePage#CanAccessDealListingViaQuickLinks";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -88,6 +89,7 @@ definition {
 	@description = "This is a test for LPS-171642. User can access MDF Request Listing through Quick Links"
 	@priority = 4
 	test CanAccessMDFRequestListingViaQuickLinks {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMHomePage#CanAccessMDFRequestListingViaQuickLinks";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052

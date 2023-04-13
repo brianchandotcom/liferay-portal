@@ -95,6 +95,7 @@ definition {
 	@description = "This is a test for LPS-175292. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportAllVisibleClaims {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportAllVisibleClaims";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -296,6 +297,7 @@ definition {
 	@description = "This is a test for LPS-178117. Verify that is possible to export all Claims searched."
 	@priority = 4
 	test CanExportSearchedClaims {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFClaim#CanExportSearchedClaims";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -382,6 +384,7 @@ definition {
 	@description = "This is a test for LPS-175611. Verify that is possible to submit a full claim"
 	@priority = 5
 	test CanSubmitFullClaim {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFClaim#CanSubmitFullClaim";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -428,6 +431,7 @@ definition {
 	@description = "This is a test for LPS-173720. Verify that is possible to submit a partial claim"
 	@priority = 5
 	test CanSubmitPartialClaim {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFClaim#CanSubmitPartialClaim";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052

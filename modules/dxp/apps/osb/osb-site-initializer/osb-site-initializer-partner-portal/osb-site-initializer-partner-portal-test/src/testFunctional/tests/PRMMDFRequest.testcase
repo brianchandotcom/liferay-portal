@@ -244,6 +244,7 @@ definition {
 	@description = "This is a test for LPS-173817. Verify that is possible to export all visible MDFs"
 	@priority = 5
 	test CanExportAllVisibleMDFs {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#CanExportAllVisibleMDFs";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -358,6 +359,8 @@ definition {
 	@description = "This is a test for LPS-173731. Verify that is possible to export filtered MDFs"
 	@priority = 4
 	test CanExportSearchedMDFs {
+		property solutions.acceptance = "true";
+
 		task ("Given a new account is created") {
 			JSONPRM.addAccount(accountName = "Company Name 2");
 
@@ -416,6 +419,7 @@ definition {
 	@description = "This is a test for LPS-171637. Verify that an alert will appear when user don't fill a mandatory* field and that “Continue” button only will be clickable after fill all mandatory fields"
 	@priority = 5
 	test CannotContinueWithoutFillRequiredField {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#CannotContinueWithoutFillRequiredField";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -475,6 +479,7 @@ definition {
 	@description = "This is for LPS-174826. Verify that is not possible to put a value higher than the Total MDF Request Amount"
 	@priority = 5
 	test CannotExceedTheValueOfMDFRequestedAmount {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#CannotExceedTheValueOfMDFRequestedAmount";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -558,6 +563,7 @@ definition {
 	@description = "This is a test for LPS-173507. Verify that the detail page displays all the information the partner entered on MDF Request Form"
 	@priority = 5
 	test DetailPageDisplaysAllMDFInformation {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#DetailPageDisplaysAllMDFInformation";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -637,6 +643,7 @@ definition {
 	@description = "This is a test for LPS-172479. Verify that the difference between the start date and end date cannot be higher than six months."
 	@priority = 5
 	test DifferenceBetweenStartAndEndDateCannotExceedSixMonths {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#DifferenceBetweenStartAndEndDateCannotExceedSixMonths";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -684,6 +691,7 @@ definition {
 	@description = "This is a test for LPS-174501. Verify that the only user with the right roles can see/change the state manager"
 	@priority = 5
 	test OnlyManagersCanSeeStateManager {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#OnlyManagersCanSeeStateManager";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -758,6 +766,7 @@ definition {
 	@description = "This is for LPS-172427. Verify that the value of Total MDF Requested Amount* will be according to the Total cost and Claim percent"
 	@priority = 5
 	test RequestedValueIsEqualsTo50PercentOfTotalCost {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#RequestedValueIsEqualsTo50PercentOfTotalCost";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -800,6 +809,7 @@ definition {
 	@description = "This is a test for LPS-172957. Verify that the review page displays all the information the partner user entered to the activity"
 	@priority = 5
 	test ReviewPageDisplaysAllInputedInformation {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#ReviewPageDisplaysAllInputedInformation";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -883,6 +893,7 @@ definition {
 	@description = "This is test is for LPS-173510. Verify that the start date cannot be before the current date"
 	@priority = 5
 	test StartDateCannotBeBeforeToCurrentDate {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#StartDateCannotBeBeforeToCurrentDate";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -924,6 +935,7 @@ definition {
 	@description = "This is a test for LPS-172891. Verify that the start date cannot be equals to the current date"
 	@priority = 5
 	test StartDateCannotBeEqualsToCurrentDate {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#StartDateCannotBeEqualsToCurrentDate";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -963,6 +975,7 @@ definition {
 	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
 	@priority = 5
 	test SubmittedMDFAppearsOnListing {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFRequest#SubmittedMDFAppearsOnListing";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052

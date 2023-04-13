@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.site.configuration.MenuAccessConfiguration;
 import com.liferay.site.configuration.MenuAccessConfigurationProvider;
 
 import java.io.IOException;

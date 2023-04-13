@@ -58,10 +58,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -270,17 +267,17 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			return new HashMap<>();
 		}
 
-		Set<Map.Entry<String, String>> properties =
-			unicodeProperties.entrySet();
+		Map<Locale, String> properties = new HashMap<>();
 
-		Stream<Map.Entry<String, String>> propertiesStream =
-			properties.stream();
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
+			if (!_isNameProperty(entry)) {
+				continue;
+			}
 
-		return propertiesStream.filter(
-			this::_isNameProperty
-		).collect(
-			Collectors.toMap(this::_getLocaleFromProperty, Map.Entry::getValue)
-		);
+			properties.put(_getLocaleFromProperty(entry), entry.getValue());
+		}
+
+		return properties;
 	}
 
 	private String _getName(
@@ -682,23 +679,25 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		if (navigationMenuItems != null) {
 			for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
-				Stream<SiteNavigationMenuItem> stream =
-					siteNavigationMenuItems.stream();
-
 				Long navigationMenuItemId = navigationMenuItem.getId();
 
-				Optional<SiteNavigationMenuItem>
-					siteNavigationMenuItemOptional = stream.filter(
-						siteNavigationMenuItem -> Objects.equals(
+				SiteNavigationMenuItem existingSiteNavigationMenuItem = null;
+
+				for (SiteNavigationMenuItem siteNavigationMenuItem :
+						siteNavigationMenuItems) {
+
+					if (Objects.equals(
+							navigationMenuItemId,
 							siteNavigationMenuItem.
-								getSiteNavigationMenuItemId(),
-							navigationMenuItemId)
-					).findFirst();
+								getSiteNavigationMenuItemId())) {
 
-				if (siteNavigationMenuItemOptional.isPresent()) {
-					SiteNavigationMenuItem existingSiteNavigationMenuItem =
-						siteNavigationMenuItemOptional.get();
+						existingSiteNavigationMenuItem = siteNavigationMenuItem;
 
+						break;
+					}
+				}
+
+				if (existingSiteNavigationMenuItem != null) {
 					SiteNavigationMenuItem siteNavigationMenuItem =
 						_siteNavigationMenuItemService.
 							updateSiteNavigationMenuItem(

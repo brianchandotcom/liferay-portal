@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -152,11 +151,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		_topHeadResourcesServiceTracker.close();
 	}
 
-	private void _addPortalBundles(List<String> urls, String propsKey) {
-		Collections.addAll(
-			urls, Arrays.asList(JavaScriptBundleUtil.getFileNames(propsKey)));
-	}
-
 	private ResourceURLsBag _getResourceURLsBag() {
 		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
 
@@ -187,10 +181,15 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		List<String> allJsResourceURLs = new ArrayList<>();
 		List<String> jsResourceURLs = new ArrayList<>();
 
-		_addPortalBundles(
-			allJsResourceURLs, PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
+		Collections.addAll(
+			allJsResourceURLs,
+			JavaScriptBundleUtil.getFileNames(
+				PropsKeys.JAVASCRIPT_EVERYTHING_FILES));
 
-		_addPortalBundles(jsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
+		Collections.addAll(
+			jsResourceURLs,
+			JavaScriptBundleUtil.getFileNames(
+				PropsKeys.JAVASCRIPT_BAREBONE_FILES));
 
 		for (ServiceReference<TopHeadResources>
 				topHeadResourcesServiceReference :
@@ -205,10 +204,8 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 				String proxyPath = _portal.getPathProxy();
 
-				String unproxiedBundleContextPath = bundleContextPath.substring(
-					proxyPath.length());
-
-				String urlPrefix = proxyPath + unproxiedBundleContextPath;
+				String urlPrefix =
+					proxyPath + bundleContextPath.substring(proxyPath.length());
 
 				for (String jsResourcePath :
 						topHeadResources.getJsResourcePaths()) {

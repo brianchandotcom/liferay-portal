@@ -137,6 +137,10 @@ public class CommerceAccountsImporter {
 			email, null, taxId, accountType, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 
+		accountEntry = _accountEntryLocalService.updateExternalReferenceCode(
+			accountEntry.getAccountEntryId(),
+			_friendlyURLNormalizer.normalize(accountEntry.getName()));
+
 		String twoLetterISOCode = jsonObject.getString("country");
 
 		Country country = getCountry(twoLetterISOCode);

@@ -4,7 +4,7 @@
 			"Gold Accounts",
 			"North American Accounts"
 		],
-		"accountType": "Business",
+		"accountType": "business",
 		"city": "Los Angeles",
 		"companyLogo": "minium_logos_9.png",
 		"country": "US",
@@ -21,7 +21,7 @@
 		"accountGroups": [
 			"European Accounts"
 		],
-		"accountType": "Business",
+		"accountType": "business",
 		"city": "Milan",
 		"companyLogo": "minium_logos_10.png",
 		"country": "IT",
@@ -37,7 +37,7 @@
 			"Gold Accounts",
 			"North American Accounts"
 		],
-		"accountType": "Business",
+		"accountType": "business",
 		"city": "Oxnard",
 		"companyLogo": "minium_logos_4.png",
 		"country": "US",
@@ -51,7 +51,7 @@
 		"accountGroups": [
 			"North American Accounts"
 		],
-		"accountType": "Business",
+		"accountType": "business",
 		"city": "Chicago",
 		"companyLogo": "minium_logos_8.png",
 		"country": "US",
@@ -65,7 +65,7 @@
 		"accountGroups": [
 			"North American Accounts"
 		],
-		"accountType": "Business",
+		"accountType": "business",
 		"city": "Toronto",
 		"companyLogo": "minium_logos_7.png",
 		"country": "CA",
@@ -78,7 +78,7 @@
 		"accountGroups": [
 			"North American Accounts"
 		],
-		"accountType": "Business",
+		"accountType": "business",
 		"city": "Edmonton",
 		"companyLogo": "minium_logos_3.png",
 		"country": "CA",

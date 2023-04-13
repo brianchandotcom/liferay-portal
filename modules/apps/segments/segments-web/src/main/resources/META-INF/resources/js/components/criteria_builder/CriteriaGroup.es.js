@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
-import React, {Component, Fragment} from 'react';
+import React, {Fragment, useMemo} from 'react';
 import {DragSource as dragSource} from 'react-dnd';
 
 import {
@@ -71,41 +71,28 @@ const withDragSource = dragSource(
 	})
 );
 
-class CriteriaGroup extends Component {
-	static propTypes = {
-		connectDragPreview: PropTypes.func,
-		connectDragSource: PropTypes.func,
-		criteria: PropTypes.object,
-		dragging: PropTypes.bool,
-		editing: PropTypes.bool,
-		emptyContributors: PropTypes.bool,
-		entityName: PropTypes.string,
-		groupId: PropTypes.string,
-		index: PropTypes.number,
-		modelLabel: PropTypes.string,
-		onChange: PropTypes.func,
-		onMove: PropTypes.func,
-		parentGroupId: PropTypes.string,
-		propertyKey: PropTypes.string.isRequired,
-		renderEmptyValuesErrors: PropTypes.bool,
-		root: PropTypes.bool,
-		supportedProperties: PropTypes.array,
-	};
+function CriteriaGroup({
+	connectDragPreview,
+	connectDragSource,
+	criteria,
+	dragging,
+	editing,
+	emptyContributors,
+	entityName,
+	groupId,
+	modelLabel,
+	onChange,
+	onMove,
+	propertyKey,
+	renderEmptyValuesErrors = false,
+	root = false,
+	supportedProperties,
+}) {
+	const NestedCriteriaGroupWithDrag = useMemo(() => {
+		return withDragSource(CriteriaGroup);
+	}, []);
 
-	static defaultProps = {
-		renderEmptyValuesErrors: false,
-		root: false,
-	};
-
-	constructor(props) {
-		super(props);
-
-		this.NestedCriteriaGroupWithDrag = withDragSource(CriteriaGroup);
-	}
-
-	_handleConjunctionSelect = (conjunctionName) => {
-		const {criteria, onChange} = this.props;
-
+	const _handleConjunctionSelect = (conjunctionName) => {
 		onChange({
 			...criteria,
 			conjunctionName,
@@ -120,9 +107,7 @@ class CriteriaGroup extends Component {
 	 * @param {object} criterion The criterion that will be added.
 	 * @memberof CriteriaGroup
 	 */
-	_handleCriterionAdd = (index, criterion) => {
-		const {criteria, onChange, root} = this.props;
-
+	const _handleCriterionAdd = (index, criterion) => {
 		const {
 			defaultValue = '',
 			operatorName,
@@ -161,39 +146,31 @@ class CriteriaGroup extends Component {
 		}
 	};
 
-	_handleCriterionChange = (index) => (newCriterion) => {
-		const {criteria, onChange} = this.props;
-
+	const _handleCriterionChange = (index) => (newCriterion) => {
 		onChange({
 			...criteria,
 			items: replaceAtIndex(newCriterion, criteria.items, index),
 		});
 	};
 
-	_handleCriterionDelete = (index) => {
-		const {criteria, onChange} = this.props;
-
+	const _handleCriterionDelete = (index) => {
 		onChange({
 			...criteria,
 			items: criteria.items.filter((fItem, fIndex) => fIndex !== index),
 		});
 	};
 
-	_isCriteriaEmpty = () => {
-		const {criteria} = this.props;
-
+	const _isCriteriaEmpty = () => {
 		return criteria ? !criteria.items.length : true;
 	};
 
-	_renderConjunction = (index) => {
-		const {criteria, editing, groupId, onMove, propertyKey} = this.props;
-
+	const _renderConjunction = (index) => {
 		return (
 			<>
 				<DropZone
 					dropIndex={index}
 					groupId={groupId}
-					onCriterionAdd={this._handleCriterionAdd}
+					onCriterionAdd={_handleCriterionAdd}
 					onMove={onMove}
 					propertyKey={propertyKey}
 				/>
@@ -201,14 +178,14 @@ class CriteriaGroup extends Component {
 				<Conjunction
 					conjunctionName={criteria.conjunctionName}
 					editing={editing}
-					onSelect={this._handleConjunctionSelect}
+					onSelect={_handleConjunctionSelect}
 				/>
 
 				<DropZone
 					before
 					dropIndex={index}
 					groupId={groupId}
-					onCriterionAdd={this._handleCriterionAdd}
+					onCriterionAdd={_handleCriterionAdd}
 					onMove={onMove}
 					propertyKey={propertyKey}
 				/>
@@ -216,19 +193,7 @@ class CriteriaGroup extends Component {
 		);
 	};
 
-	_renderCriterion = (criterion, index) => {
-		const {
-			editing,
-			entityName,
-			groupId,
-			modelLabel,
-			onMove,
-			propertyKey,
-			renderEmptyValuesErrors,
-			root,
-			supportedProperties,
-		} = this.props;
-
+	const _renderCriterion = (criterion, index) => {
 		const classes = getCN('criterion', {
 			'criterion-group': criterion.items,
 		});
@@ -236,14 +201,14 @@ class CriteriaGroup extends Component {
 		return (
 			<div className={classes}>
 				{criterion.items ? (
-					<this.NestedCriteriaGroupWithDrag
+					<NestedCriteriaGroupWithDrag
 						criteria={criterion}
 						editing={editing}
 						entityName={entityName}
 						groupId={criterion.groupId}
 						index={index}
 						modelLabel={modelLabel}
-						onChange={this._handleCriterionChange(index)}
+						onChange={_handleCriterionChange(index)}
 						onMove={onMove}
 						parentGroupId={groupId}
 						propertyKey={propertyKey}
@@ -258,9 +223,9 @@ class CriteriaGroup extends Component {
 						groupId={groupId}
 						index={index}
 						modelLabel={modelLabel}
-						onAdd={this._handleCriterionAdd}
-						onChange={this._handleCriterionChange(index)}
-						onDelete={this._handleCriterionDelete}
+						onAdd={_handleCriterionAdd}
+						onChange={_handleCriterionChange(index)}
+						onDelete={_handleCriterionDelete}
 						onMove={onMove}
 						propertyKey={propertyKey}
 						renderEmptyValuesErrors={renderEmptyValuesErrors}
@@ -272,7 +237,7 @@ class CriteriaGroup extends Component {
 				<DropZone
 					dropIndex={index + 1}
 					groupId={groupId}
-					onCriterionAdd={this._handleCriterionAdd}
+					onCriterionAdd={_handleCriterionAdd}
 					onMove={onMove}
 					propertyKey={propertyKey}
 				/>
@@ -280,80 +245,80 @@ class CriteriaGroup extends Component {
 		);
 	};
 
-	render() {
-		const {
-			connectDragPreview,
-			connectDragSource,
-			criteria,
-			dragging,
-			editing,
-			emptyContributors,
-			groupId,
-			onMove,
-			propertyKey,
-			root,
-		} = this.props;
+	const classes = getCN(
+		{
+			'criteria-group-root': criteria,
+		},
+		`criteria-group-item${root ? '-root' : ''}`,
+		`color--${propertyKey}`,
+		{
+			'dnd-drag': dragging,
+		}
+	);
+	const singleRow = criteria && criteria.items && criteria.items.length === 1;
 
-		const classes = getCN(
-			{
-				'criteria-group-root': criteria,
-			},
-			`criteria-group-item${root ? '-root' : ''}`,
-			`color--${propertyKey}`,
-			{
-				'dnd-drag': dragging,
-			}
-		);
-		const singleRow =
-			criteria && criteria.items && criteria.items.length === 1;
-
-		return connectDragPreview(
-			<div className={classes}>
-				{this._isCriteriaEmpty() ? (
-					<EmptyDropZone
-						emptyContributors={emptyContributors}
-						onCriterionAdd={this._handleCriterionAdd}
+	return connectDragPreview(
+		<div className={classes}>
+			{_isCriteriaEmpty() ? (
+				<EmptyDropZone
+					emptyContributors={emptyContributors}
+					onCriterionAdd={_handleCriterionAdd}
+					propertyKey={propertyKey}
+				/>
+			) : (
+				<>
+					<DropZone
+						before
+						dropIndex={0}
+						groupId={groupId}
+						onCriterionAdd={_handleCriterionAdd}
+						onMove={onMove}
 						propertyKey={propertyKey}
 					/>
-				) : (
-					<>
-						<DropZone
-							before
-							dropIndex={0}
-							groupId={groupId}
-							onCriterionAdd={this._handleCriterionAdd}
-							onMove={onMove}
-							propertyKey={propertyKey}
-						/>
 
-						{editing &&
-							singleRow &&
-							!root &&
-							connectDragSource(
-								<div className="criteria-group-drag-icon drag-icon">
-									<ClayIcon symbol="drag" />
-								</div>
-							)}
+					{editing &&
+						singleRow &&
+						!root &&
+						connectDragSource(
+							<div className="criteria-group-drag-icon drag-icon">
+								<ClayIcon symbol="drag" />
+							</div>
+						)}
 
-						{criteria.items &&
-							criteria.items.map((criterion, index) => {
-								return (
-									<Fragment key={index}>
-										{index !== 0 &&
-											this._renderConjunction(index)}
+					{criteria.items &&
+						criteria.items.map((criterion, index) => {
+							return (
+								<Fragment key={index}>
+									{index !== 0 && _renderConjunction(index)}
 
-										{this._renderCriterion(
-											criterion,
-											index
-										)}
-									</Fragment>
-								);
-							})}
-					</>
-				)}
-			</div>
-		);
-	}
+									{_renderCriterion(criterion, index)}
+								</Fragment>
+							);
+						})}
+				</>
+			)}
+		</div>
+	);
 }
+
+CriteriaGroup.propTypes = {
+	connectDragPreview: PropTypes.func,
+	connectDragSource: PropTypes.func,
+	criteria: PropTypes.object,
+	dragging: PropTypes.bool,
+	editing: PropTypes.bool,
+	emptyContributors: PropTypes.bool,
+	entityName: PropTypes.string,
+	groupId: PropTypes.string,
+	index: PropTypes.number,
+	modelLabel: PropTypes.string,
+	onChange: PropTypes.func,
+	onMove: PropTypes.func,
+	parentGroupId: PropTypes.string,
+	propertyKey: PropTypes.string.isRequired,
+	renderEmptyValuesErrors: PropTypes.bool,
+	root: PropTypes.bool,
+	supportedProperties: PropTypes.array,
+};
 
 export default withDragSource(CriteriaGroup);

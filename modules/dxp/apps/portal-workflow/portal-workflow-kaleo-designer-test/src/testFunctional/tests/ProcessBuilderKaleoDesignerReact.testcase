@@ -4411,30 +4411,6 @@ definition {
 			nodeLabel = "Start");
 	}
 
-	@description = "Verify that the Role ID is a read only field"
-	@priority = 3
-	test NodeNameIsReadyOnly {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeNameIsReadyOnly";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "0,0");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
-			assignmentType = "Role",
-			roleName = "Administrator");
-
-		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
-			propertyName = "Assignments",
-			propertyValue = "Role:Administrator");
-
-		ProcessBuilderKaleoDesignerReact.viewRoleIDDisabled();
-	}
-
 	@description = "LPS-139387 - Verify that the node info is displayed when the node is selected"
 	@priority = 4
 	test NodeInfoIsDisplayedWhenNodeIsSelected {
@@ -4473,6 +4449,30 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewActiveNodeHighlighted(nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.viewInactiveNodeNotHighlighted(nodeType = "end");
+	}
+
+	@description = "Verify that the Role ID is a read only field"
+	@priority = 3
+	test NodeNameIsReadyOnly {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeNameIsReadyOnly";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Role",
+			roleName = "Administrator");
+
+		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
+			propertyName = "Assignments",
+			propertyValue = "Role:Administrator");
+
+		ProcessBuilderKaleoDesignerReact.viewRoleIDDisabled();
 	}
 
 	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
@@ -4613,28 +4613,6 @@ definition {
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
-	@description = "LPS-139387 - Verify that the Node Name is a required field"
-	@priority = 3
-	test StepNameIsRequired {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepNameIsRequired";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Name",
-			infoValue = " ");
-
-		ProcessBuilderKaleoDesignerReact.viewRequiredField(
-			requiredField = "nodeName",
-			save = "true");
-	}
-
 	@description = "LPS-139387 - Verify that the user can not use the same name for more than one node"
 	@priority = 5
 	test StepIDIsUnique {
@@ -4676,6 +4654,28 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
 			requiredField = "nodeLabel",
+			save = "true");
+	}
+
+	@description = "LPS-139387 - Verify that the Node Name is a required field"
+	@priority = 3
+	test StepNameIsRequired {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepNameIsRequired";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Name",
+			infoValue = " ");
+
+		ProcessBuilderKaleoDesignerReact.viewRequiredField(
+			requiredField = "nodeName",
 			save = "true");
 	}
 

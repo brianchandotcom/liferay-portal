@@ -33,6 +33,8 @@ definition {
 				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
 			Alert.viewErrorMessage(errorMessage = "The maximum number of 2 nodes licensed for this cluster has been exceeded. Please shut down excess nodes as soon as possible. An additional 2 nodes are temporarily permitted during the grace period");
 
 			Alert.viewErrorMessage(errorMessage = "This current node is within the licensed node count and will not be automatically deactivated nor shut down after the grace period expires.");
@@ -42,6 +44,8 @@ definition {
 			password = "test",
 			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
+
+		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 		Alert.viewErrorMessage(errorMessage = "This current node is within the temporarily permitted node count and will be automatically deactivated after the grace period expires");
 
@@ -304,6 +308,8 @@ definition {
 				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
 
 			Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
@@ -357,6 +363,8 @@ definition {
 				password = "test",
 				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
+
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
 

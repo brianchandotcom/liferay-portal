@@ -14,6 +14,9 @@
 
 package com.liferay.notification.internal.type.test;
 
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipientSetting;
@@ -27,6 +30,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -53,6 +57,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -84,6 +89,8 @@ public class BaseNotificationTypeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		listTypeEntryKey = RandomTestUtil.randomString();
+
 		randomObjectEntryValues =
 			LinkedHashMapBuilder.<String, Serializable>put(
 				"booleanObjectField", RandomTestUtil.randomBoolean()
@@ -92,11 +99,17 @@ public class BaseNotificationTypeTest {
 			).put(
 				"integerObjectField", RandomTestUtil.nextInt()
 			).put(
+				"picklistObjectField", listTypeEntryKey
+			).put(
 				"textObjectField", RandomTestUtil.randomString()
 			).build();
 
+		listTypeEntryValue = RandomTestUtil.randomString();
+
 		termValues = LinkedHashMapBuilder.putAll(
 			randomObjectEntryValues
+		).put(
+			"picklistObjectField", listTypeEntryValue
 		).put(
 			"dateObjectField",
 			() -> {
@@ -136,6 +149,17 @@ public class BaseNotificationTypeTest {
 
 	@Before
 	public void setUp() throws Exception {
+		ListTypeDefinition listTypeDefinition =
+			listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				Collections.singletonList(
+					ListTypeEntryUtil.createListTypeEntry(
+						listTypeEntryKey,
+						Collections.singletonMap(
+							LocaleUtil.US, listTypeEntryValue))));
+
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), false, false,
@@ -169,6 +193,17 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"integerObjectField"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build(),
+					new PicklistObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"picklistObjectField"
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
 					).objectFieldSettings(
 						Collections.emptyList()
 					).build(),
@@ -259,7 +294,8 @@ public class BaseNotificationTypeTest {
 			ListUtil.fromMapKeys(_currentUserTermValues),
 			Arrays.asList(
 				getTerm("booleanObjectField"), getTerm("dateObjectField"),
-				getTerm("integerObjectField"), getTerm("textObjectField")));
+				getTerm("integerObjectField"), getTerm("picklistObjectField"),
+				getTerm("textObjectField")));
 	}
 
 	protected List<Object> getTermValues() throws Exception {
@@ -281,6 +317,9 @@ public class BaseNotificationTypeTest {
 		notificationType.sendNotification(notificationContext);
 	}
 
+	protected static String listTypeEntryKey;
+	protected static String listTypeEntryValue;
+
 	@DeleteAfterTestRun
 	protected static ObjectDefinition objectDefinition;
 
@@ -290,6 +329,9 @@ public class BaseNotificationTypeTest {
 	protected static LinkedHashMap<String, Serializable> termValues;
 	protected static User user1;
 	protected static User user2;
+
+	@Inject
+	protected ListTypeDefinitionLocalService listTypeDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	protected NotificationQueueEntry notificationQueueEntry;

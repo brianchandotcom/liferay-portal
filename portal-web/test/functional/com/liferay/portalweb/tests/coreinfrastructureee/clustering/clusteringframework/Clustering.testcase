@@ -446,16 +446,12 @@ definition {
 			categoryLevel = "DEBUG",
 			categoryName = "com.liferay.portal.cluster");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
 		for (var serverPort : list "8080,9080,10080") {
+			User.loginPG(
+				nodePort = ${serverPort},
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Send multicast message",
 				nodePort = ${serverPort});

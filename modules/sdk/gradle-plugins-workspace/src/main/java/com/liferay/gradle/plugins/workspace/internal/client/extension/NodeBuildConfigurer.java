@@ -23,7 +23,6 @@ import groovy.json.JsonSlurper;
 import java.io.File;
 
 import java.util.Map;
-import java.util.Optional;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -39,7 +38,7 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 
 	@Override
 	public void apply(
-		Project project, Optional<ClientExtension> clientExtensionOptional,
+		Project project,
 		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
 
 		if (!_hasFrontendBuildScript(project)) {

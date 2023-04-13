@@ -30,8 +30,6 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtensionConfigurer;
-import com.liferay.gradle.plugins.workspace.internal.client.extension.ConfigurationTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.NodeBuildConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
@@ -52,15 +50,11 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -111,31 +105,6 @@ public class ClientExtensionProjectConfigurator
 
 	public ClientExtensionProjectConfigurator(Settings settings) {
 		super(settings);
-
-		NodeBuildConfigurer nodeBuildConfigurer = new NodeBuildConfigurer();
-
-		_clientExtensionConfigurers.put(
-			"configuration",
-			Collections.singletonList(new ConfigurationTypeConfigurer()));
-		_clientExtensionConfigurers.put(
-			"customElement", Collections.singletonList(nodeBuildConfigurer));
-		_clientExtensionConfigurers.put(
-			"fdsCellRenderer", Collections.singletonList(nodeBuildConfigurer));
-		_clientExtensionConfigurers.put(
-			"globalCSS", Collections.singletonList(nodeBuildConfigurer));
-		_clientExtensionConfigurers.put(
-			"globalJS", Collections.singletonList(nodeBuildConfigurer));
-		_clientExtensionConfigurers.put(
-			"staticContent", Collections.singletonList(nodeBuildConfigurer));
-		_clientExtensionConfigurers.put(
-			"themeCSS",
-			Arrays.asList(nodeBuildConfigurer, new ThemeCSSTypeConfigurer()));
-		_clientExtensionConfigurers.put(
-			"themeFavicon", Collections.singletonList(nodeBuildConfigurer));
-		_clientExtensionConfigurers.put(
-			"themeJS", Collections.singletonList(nodeBuildConfigurer));
-		_clientExtensionConfigurers.put(
-			"themeSpritemap", Collections.singletonList(nodeBuildConfigurer));
 
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
@@ -221,17 +190,16 @@ public class ClientExtensionProjectConfigurator
 									addClientExtensionProfile(
 										profileName, clientExtension));
 
-						List<ClientExtensionConfigurer>
-							clientExtensionTypeConfigurers =
-								_clientExtensionConfigurers.getOrDefault(
-									clientExtension.type,
-									Collections.emptyList());
-
-						clientExtensionTypeConfigurers.forEach(
-							clientExtensionTypeConfigurer ->
-								clientExtensionTypeConfigurer.apply(
-									project, Optional.of(clientExtension),
-									assembleClientExtensionTaskProvider));
+						if (clientExtension.type.equals("configuration")) {
+							assembleClientExtensionTaskProvider.configure(
+								copy -> copy.from(
+									"src",
+									copySpec -> copySpec.include("**/*")));
+						}
+						else if (clientExtension.type.equals("themeCSS")) {
+							_themeCSSTypeConfigurer.apply(
+								project, assembleClientExtensionTaskProvider);
+						}
 					}
 					catch (JsonProcessingException jsonProcessingException) {
 						throw new GradleException(
@@ -240,6 +208,9 @@ public class ClientExtensionProjectConfigurator
 					}
 				});
 		}
+
+		_nodeBuildConfigurer.apply(
+			project, assembleClientExtensionTaskProvider);
 
 		_addDockerTasks(project, assembleClientExtensionTaskProvider);
 	}
@@ -815,10 +786,12 @@ public class ClientExtensionProjectConfigurator
 	private static final Pattern _overrideClientExtensionYamlPattern =
 		Pattern.compile("client-extension\\.([a-z]+)\\.yaml");
 
-	private final Map<String, List<ClientExtensionConfigurer>>
-		_clientExtensionConfigurers = new HashMap<>();
 	private Properties _clientExtensionProperties;
 	private final boolean _defaultRepositoryEnabled;
+	private final NodeBuildConfigurer _nodeBuildConfigurer =
+		new NodeBuildConfigurer();
+	private final ThemeCSSTypeConfigurer _themeCSSTypeConfigurer =
+		new ThemeCSSTypeConfigurer();
 	private final ObjectMapper _yamlObjectMapper = new ObjectMapper(
 		new YAMLFactory());
 

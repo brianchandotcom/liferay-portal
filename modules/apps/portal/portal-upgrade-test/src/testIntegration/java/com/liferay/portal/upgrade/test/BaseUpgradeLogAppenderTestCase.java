@@ -511,22 +511,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_db.runSQL(
 			"create table UpgradeReportTable2 (id_ LONG not null primary key)");
 
-		_originalUpgradeClient = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_upgradeClient");
-
-		ReflectionTestUtil.setFieldValue(
+		_originalUpgradeClient = ReflectionTestUtil.getAndSetFieldValue(
 			DBUpgrader.class, "_upgradeClient", upgradeClient);
 
-		_originalUpgradeLogContextEnabled = ReflectionTestUtil.getFieldValue(
-			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED");
+		_originalUpgradeLogContextEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
-
-		_originalUpgradeReportEnabled = ReflectionTestUtil.getFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_ENABLED");
-
-		ReflectionTestUtil.setFieldValue(
+		_originalUpgradeReportEnabled = ReflectionTestUtil.getAndSetFieldValue(
 			PropsValues.class, "UPGRADE_REPORT_ENABLED", true);
 
 		_originalErrorMessages = ReflectionTestUtil.getFieldValue(

@@ -17,7 +17,6 @@ package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -137,10 +136,8 @@ public class ShippingAddressResourceTest
 				user.getUserId(), commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(), null, 1, 1,
 				new TestCommerceContext(
-					commerceCurrency, commerceChannel, user, testGroup,
-					_commerceAccountLocalService.getCommerceAccount(
-						accountEntry.getAccountEntryId()),
-					commerceOrder),
+					accountEntry, commerceCurrency, commerceChannel, user,
+					testGroup, commerceOrder),
 				serviceContext);
 
 		_commerceOrderItemLocalService.updateCommerceOrderItemInfo(
@@ -249,9 +246,6 @@ public class ShippingAddressResourceTest
 
 	@Inject
 	private AddressLocalService _addressLocalService;
-
-	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
 
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;

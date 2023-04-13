@@ -15,8 +15,8 @@
 import classNames from 'classnames';
 import {Fragment, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
+import {HeaderTitle} from '~/atoms';
 
-import {HeaderTitle} from '../../context/HeaderContext';
 import {defaultEntities} from '../../hooks/useBreadcrumb';
 import i18n from '../../i18n';
 import useBreadcrumbFinder from './useBreadcrumbFinder';

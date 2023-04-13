@@ -16,8 +16,7 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import React, {ReactElement, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-
-import {Dropdown} from '../../context/HeaderContext';
+import {Dropdown} from '~/atoms';
 
 type DropDownProps = {
 	items: Dropdown;

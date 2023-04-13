@@ -22,6 +22,7 @@ import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
 import {
 	TestrayCase,
+	TestrayProject,
 	TestrayRequirementCase,
 	testrayCaseRequirementsImpl,
 } from '../../../services/rest';
@@ -30,9 +31,12 @@ import useCaseRequirementActions from './useCaseRequirementActions';
 
 const CaseRequirement = () => {
 	const {
-		projectId,
 		testrayCase,
-	}: {projectId: number; testrayCase: TestrayCase} = useOutletContext();
+		testrayProject,
+	}: {
+		testrayCase: TestrayCase;
+		testrayProject: TestrayProject;
+	} = useOutletContext();
 
 	const {formModal} = useCaseRequirementActions({caseId: testrayCase.id});
 
@@ -131,7 +135,7 @@ const CaseRequirement = () => {
 						},
 					],
 					navigateTo: ({requirement}: TestrayRequirementCase) =>
-						`/project/${projectId}/requirements/${requirement?.id}`,
+						`/project/${testrayProject.id}/requirements/${requirement?.id}`,
 				}}
 				transformData={(response) =>
 					testrayCaseRequirementsImpl.transformDataFromList(response)
@@ -140,14 +144,12 @@ const CaseRequirement = () => {
 					filter: SearchBuilder.eq('caseId', testrayCase.id),
 				}}
 			>
-				{(response) => {
-					return (
-						<CaseRequirementLinkModal
-							items={response?.items}
-							modal={formModal}
-						/>
-					);
-				}}
+				{(response) => (
+					<CaseRequirementLinkModal
+						items={response?.items}
+						modal={formModal}
+					/>
+				)}
 			</ListView>
 		</Container>
 	);

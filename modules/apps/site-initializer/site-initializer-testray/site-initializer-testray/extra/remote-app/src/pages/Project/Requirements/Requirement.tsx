@@ -14,7 +14,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {useEffect} from 'react';
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import Button from '../../../components/Button';
@@ -23,7 +22,6 @@ import ListView from '../../../components/ListView';
 import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
 import SearchBuilder from '../../../core/SearchBuilder';
-import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 import {
 	TestrayRequirement,
@@ -41,22 +39,6 @@ const Requirement = () => {
 		testrayRequirement,
 	}: {testrayRequirement: TestrayRequirement} = useOutletContext();
 	const {actions, formModal} = useRequirementCaseActions(testrayRequirement);
-
-	const {context, setHeading, setTabs} = useHeader({shouldUpdate: false});
-
-	const maxHeads = context.heading.length === 2;
-
-	useEffect(() => {
-		if (testrayRequirement && !maxHeads) {
-			setTimeout(() => {
-				setHeading([{title: testrayRequirement.key}], true);
-			}, 0);
-		}
-	}, [setHeading, testrayRequirement, maxHeads]);
-
-	useEffect(() => {
-		setTabs([]);
-	}, [setTabs]);
 
 	return (
 		<>

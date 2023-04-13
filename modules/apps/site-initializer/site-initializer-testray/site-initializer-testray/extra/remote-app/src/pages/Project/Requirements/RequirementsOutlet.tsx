@@ -50,20 +50,18 @@ const RequirementsOutlet = () => {
 
 	useEffect(() => {
 		if (testrayRequirement && testrayProject) {
-			setTimeout(() => {
-				setHeading([
-					{
-						category: i18n.translate('project').toUpperCase(),
-						path: `/project/${testrayProject.id}/requirements`,
-						title: testrayProject.name,
-					},
-					{
-						category: i18n.translate('requirement').toUpperCase(),
-						path: `/project/${testrayProject.id}/requirements/${testrayRequirement.id}`,
-						title: testrayRequirement?.key,
-					},
-				]);
-			}, 0);
+			setHeading([
+				{
+					category: i18n.translate('project').toUpperCase(),
+					path: `/project/${testrayProject.id}/requirements`,
+					title: testrayProject.name,
+				},
+				{
+					category: i18n.translate('requirement').toUpperCase(),
+					path: `/project/${testrayProject.id}/requirements/${testrayRequirement.id}`,
+					title: testrayRequirement?.key,
+				},
+			]);
 		}
 	}, [testrayProject, setHeading, testrayRequirement]);
 

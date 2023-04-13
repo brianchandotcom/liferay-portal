@@ -123,11 +123,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Daniel Kocsis
  * @author Máté Thurzó
  */
-@Component(
-	service = {
-		JournalArticleStagedModelDataHandler.class, StagedModelDataHandler.class
-	}
-)
+@Component(service = StagedModelDataHandler.class)
 public class JournalArticleStagedModelDataHandler
 	extends BaseStagedModelDataHandler<JournalArticle> {
 

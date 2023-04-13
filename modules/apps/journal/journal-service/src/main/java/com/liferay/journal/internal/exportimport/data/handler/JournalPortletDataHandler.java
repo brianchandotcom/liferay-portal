@@ -37,6 +37,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerChoice;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -772,8 +773,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
-	@Reference
-	private JournalArticleStagedModelDataHandler
+	@Reference(
+		target = "(component.name=com.liferay.journal.internal.exportimport.data.handler.JournalArticleStagedModelDataHandler)"
+	)
+	private StagedModelDataHandler<JournalArticle>
 		_journalArticleStagedModelDataHandler;
 
 	@Reference

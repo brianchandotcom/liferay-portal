@@ -211,7 +211,7 @@ definition {
 
 			FDSCustomView.selectColumn(key_itemName = "Description");
 
-			Pagination.changePagination(itemsPerPage = "4 items");
+			Pagination.changePagination(itemsPerPage = "4 Items");
 		}
 
 		task ("And Click Save as button, provide a name") {

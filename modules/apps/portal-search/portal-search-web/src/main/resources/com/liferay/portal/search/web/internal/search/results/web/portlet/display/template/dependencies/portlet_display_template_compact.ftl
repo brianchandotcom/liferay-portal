@@ -26,4 +26,15 @@
 			</#list>
 		</ul>
 	</div>
+
+	<@liferay_aui.form
+		action="#"
+		useNamespace=false
+	>
+		<@liferay_ui["search-paginator"]
+			id="${namespace + 'searchContainerTag'}"
+			markupView="lexicon"
+			searchContainer=searchContainer
+		/>
+	</@liferay_aui.form>
 </#if>

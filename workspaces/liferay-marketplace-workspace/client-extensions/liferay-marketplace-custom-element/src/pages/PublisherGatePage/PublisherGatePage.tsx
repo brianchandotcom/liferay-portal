@@ -24,7 +24,10 @@ export function PublisherGatePage() {
 						svg: cloudUpload,
 					}}
 					label="Free"
-					link="Learn More"
+					link={{
+						href: '',
+						label: 'Learn More',
+					}}
 					title="Publish Apps to the Liferay Marketplace"
 				/>
 
@@ -34,7 +37,10 @@ export function PublisherGatePage() {
 						description: 'Cash',
 						svg: cash,
 					}}
-					link="Learn More"
+					link={{
+						href: '',
+						label: 'Learn More',
+					}}
 					title="Monetize Your Apps and Solutions"
 				/>
 

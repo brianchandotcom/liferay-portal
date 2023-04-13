@@ -128,6 +128,70 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-148254. Unable to create private pages from Site Template."
+	@priority = 4
+	@uitest
+	test CreateDefaultPageAsPrivateFromSiteTemplate {
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+
+		task ("Given a page creator has a site with a page from a site template") {
+			task ("Add a site template") {
+				JSONSiteTemplate.addSiteTemplate(
+					description = "Site description",
+					siteTemplateName = "Site Template Name");
+
+				SiteTemplates.addSitePageViaSiteTemplateCP(
+					masterLayoutName = "Blank",
+					pageName = "Content Page Name",
+					sitePageType = "Content Page",
+					siteTemplateName = "Site Template Name");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When page creator checks the checkbox of Create default pages as private") {
+			task ("Navigate to the Sites admin") {
+				Site.openSitesAdmin();
+			}
+
+			task ("Add a new site based on Test Site Name") {
+				LexiconEntry.gotoAdd();
+
+				Site.selectSiteTemplateTab(siteTemplateTab = "Custom Site Templates");
+
+				LexiconCard.clickCard(card = "Site Template Name");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				PortletEntry.inputName(name = "Test Site Name");
+
+				Check(
+					checkboxName = "Create default pages as private (available only to members). If unchecked, they will be public (available to anyone).",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				Button.click(button = "Add");
+			}
+		}
+
+		task ("Then there's no view permission for guest user") {
+			task ("View page is not shown for guest") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Content Page Name",
+					privateLayout = "true",
+					siteName = "Test Site Name");
+
+				User.logoutPG();
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "group/test-site-name");
+
+				AssertTextNotPresent(
+					locator1 = "Home#PAGE_2_GUEST_VIEW",
+					value1 = "Content Page Name");
+			}
+		}
+	}
+
 	@description = "Able to delete site."
 	@priority = 5
 	@uitest

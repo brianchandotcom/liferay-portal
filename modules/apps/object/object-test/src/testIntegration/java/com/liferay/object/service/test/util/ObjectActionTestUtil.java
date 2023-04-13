@@ -40,12 +40,13 @@ public class ObjectActionTestUtil {
 					return key;
 				}
 				else if (Objects.equals(
-					method.getName(), "getObjectDefinitionNames")) {
+							method.getName(), "getObjectDefinitionNames")) {
 
 					return objectDefinitionNames;
 				}
 
-				return "Proxy" +  ObjectActionExecutor.class.getName();
+				return "Proxy" + ObjectActionExecutor.class.getName();
 			});
 	}
+
 }

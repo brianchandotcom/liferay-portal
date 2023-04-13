@@ -88,6 +88,13 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	@Override
+	public int hashCode() {
+		JSONObject jsonObject = getJSONObject();
+
+		return jsonObject.hashCode();
+	}
+
+	@Override
 	public void setCreatedDate(Date createdDate) {
 		_createdDate = createdDate;
 	}

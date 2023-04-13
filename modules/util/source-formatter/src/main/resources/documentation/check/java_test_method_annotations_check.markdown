@@ -24,3 +24,85 @@ Annotation | Method Name
 `@BeforeAll` | `setUpClass`
 `@BeforeEach` | `setUp`
 `@Test` | `test*`
+
+---
+
+Use `@FeatureFlags` on class and method to simplify code, when possible:
+
+### Example
+
+Incorrect:
+
+```java
+@RunWith(Arquillian.class)
+public class ObjectEntryResourceTest {
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        PropsUtil.addProperties(
+            UnicodePropertiesBuilder.setProperty(
+                "feature.flag.LPS-153117", "true"
+            ).build());
+        PropsUtil.addProperties(
+            UnicodePropertiesBuilder.setProperty(
+                "feature.flag.LPS-154672", "true"
+            ).build());
+
+        TaxonomyCategoryResource.Builder builder =
+            axonomyCategoryResource.builder();
+
+...
+
+    }
+}
+```
+
+Correct:
+
+```java
+@FeatureFlags({"LPS-153117", "LPS-154672"})
+@RunWith(Arquillian.class)
+public class ObjectEntryResourceTest {
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        TaxonomyCategoryResource.Builder builder =
+            axonomyCategoryResource.builder();
+
+...
+
+    }
+}
+```
+
+---
+
+Incorrect:
+
+```java
+@Test
+public void testImportFragmentsWithFolderResources() throws Exception {
+    PropsUtil.addProperties(
+        UnicodePropertiesBuilder.setProperty(
+            "feature.flag.LPS-158675", "true"
+        ).build());
+
+    File fileWithFolderResources = _generateZipFileWithFolderResources();
+
+...
+
+}
+```
+
+Correct:
+
+```java
+@FeatureFlags("LPS-158675")
+@Test
+public void testImportFragmentsWithFolderResources() throws Exception {
+    File fileWithFolderResources = _generateZipFileWithFolderResources();
+
+...
+
+}
+```

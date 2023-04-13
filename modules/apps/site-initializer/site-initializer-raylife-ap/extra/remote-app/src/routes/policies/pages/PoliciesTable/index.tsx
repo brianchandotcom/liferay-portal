@@ -353,8 +353,7 @@ const PoliciesTable = () => {
 					);
 				})
 			);
-		}
-		else {
+		} else {
 			setFilterProductCheck(
 				filterProductCheck.filter((productName: string) => {
 					return productName !== `'${currentFilterName}'`;
@@ -568,7 +567,7 @@ const PoliciesTable = () => {
 					policiesList.push({
 						commission: `$${commissionValue.toFixed(2)}`,
 						externalReferenceCode,
-						isClickable: 'true',
+						isClickable: productName === 'Auto' ? 'true' : 'false',
 						isExpiring: (renewalDue < 0).toString(),
 						isRedLine: (
 							renewalDue >= 0 &&

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
-import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -32,6 +31,7 @@ import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
+import com.liferay.object.internal.action.executor.util.ObjectActionExecutorUtil;
 import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -449,22 +448,10 @@ public class ObjectActionLocalServiceImpl
 			return;
 		}
 
-		ObjectActionExecutor objectActionExecutor =
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				objectActionExecutorKey);
-
-		if ((objectActionExecutor.getCompanyId() != 0) &&
-			(objectActionExecutor.getCompanyId() !=
-				CompanyThreadLocal.getCompanyId())) {
-
-			return;
-		}
-
-		List<String> objectDefinitionNames =
-			objectActionExecutor.getObjectDefinitionNames();
-
-		if (objectDefinitionNames.isEmpty() ||
-			objectDefinitionNames.contains(objectDefinitionName)) {
+		if (ObjectActionExecutorUtil.isRestrictionCriteriaMet(
+				_objectActionExecutorRegistry.getObjectActionExecutor(
+					objectActionExecutorKey),
+				objectDefinitionName)) {
 
 			return;
 		}

@@ -1553,7 +1553,7 @@
 		</check>
 		<check name="UpgradeVelocityCommentMigrationCheck">
 			<category name="Upgrade" />
-			<description name="Run code migration of comments from a `velocity` file to a `fremarker` file with the syntax replacements" />
+			<description name="Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements" />
 		</check>
 	</source-processor>
 	<source-processor name="XMLSourceProcessor">

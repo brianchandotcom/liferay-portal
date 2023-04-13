@@ -47,7 +47,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"the variable assignment for 'type'",
 				33
 			).addExpectedMessage(
-				"The variable assignment for 'type' shoud come before the " +
+				"The variable assignment for 'type' should come before the " +
 					"method calling 'setName'",
 				42
 			).addExpectedMessage(

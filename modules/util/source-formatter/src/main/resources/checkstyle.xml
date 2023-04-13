@@ -418,7 +418,7 @@
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks the order of variable assignments and set* calls in the instance initializer." />
 			<message key="assign.incorrect.order" value="The variable assignment for ''{0}'' should come before the variable assignment for ''{1}''" />
-			<message key="assign.move.before.method.call" value="The variable assignment for ''{0}'' shoud come before the method calling ''{1}''" />
+			<message key="assign.move.before.method.call" value="The variable assignment for ''{0}'' should come before the method calling ''{1}''" />
 			<message key="method.call.incorrect.order" value="The method calling ''{0}'' should come before the method calling ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceofOrderCheck">

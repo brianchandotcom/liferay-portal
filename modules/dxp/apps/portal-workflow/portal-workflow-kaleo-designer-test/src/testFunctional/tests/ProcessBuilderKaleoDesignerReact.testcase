@@ -1792,32 +1792,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow. Go Check it!''');
 	}
 
-	@description = "LPS-139387 - Verify that the user is able to view and edit the nodes ID in the sidebar"
-	@priority = 4
-	test CanEditStepID {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditStepID";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-100");
-
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
-
-		ProcessBuilderKaleoDesignerReact.viewFieldPresentOnSideBar(fieldName = "Node ID");
-
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
-			infoValue = "task_22");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			idValue = "task_22",
-			nodeType = "task");
-	}
-
 	@description = "LPS-139387 - Verify that the user is able to view and edit the node's Label in the sidebar"
 	@priority = 4
 	test CanEditStepLabel {
@@ -1841,6 +1815,32 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewSpecificNodeLabel(
 			nodeLabel = "QA Test 2022",
+			nodeType = "task");
+	}
+
+	@description = "LPS-139387 - Verify that the user is able to view and edit the nodes name in the sidebar"
+	@priority = 4
+	test CanEditStepName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditStepID";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-100");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewFieldPresentOnSideBar(fieldName = "Node Name");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Name",
+			infoValue = "task_22");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			nameValue = "task_22",
 			nodeType = "task");
 	}
 
@@ -2105,10 +2105,10 @@ definition {
 			propertyValue = "Recurrence: 5 minute");
 	}
 
-	@description = "LPS-140056 - Verify that the user is able to edit the transition ID"
+	@description = "LPS-140056 - Verify that the user is able to edit the transition Name"
 	@priority = 4
-	test CanEditTransitionID {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTransitionID";
+	test CanEditTransitionName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTransitionName";
 
 		Workflow.openWorkflowListView();
 
@@ -2122,13 +2122,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
 			connectorLabel = "START-END CONNECTOR",
-			nodeId = "New ID");
+			nodeName = "New Name");
 
 		Button.clickPublish();
 
-		ProcessBuilderKaleoDesignerReact.viewConnectorID(
+		ProcessBuilderKaleoDesignerReact.viewConnectorName(
 			connectorLabel = "START-END CONNECTOR",
-			nodeId = "New ID");
+			nodeName = "New Name");
 	}
 
 	@description = "LPS-139387 - Verify that the user can hide/show the information area"
@@ -2145,20 +2145,20 @@ definition {
 			nodePosition = "0,-200");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			defaultIdValue = "true",
+			defaultNameValue = "true",
 			descriptionValue = "Execute conditional logic.",
 			labelValue = "Condition",
 			nodeType = "condition",
-			scriptValue = '''returnValue = "Transition ID"''');
+			scriptValue = '''returnValue = "Transition Name"''');
 
 		ProcessBuilderKaleoDesignerReact.hideSidebarFields(property = "Information");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfoNotVisible(
-			defaultIdValue = "true",
+			defaultNameValue = "true",
 			descriptionValue = "Execute conditional logic.",
 			labelValue = "Condition",
 			nodeType = "condition",
-			scriptValue = '''returnValue = "Transition ID"''');
+			scriptValue = '''returnValue = "Transition Name"''');
 	}
 
 	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."
@@ -2352,8 +2352,8 @@ definition {
 
 	@description = "LPS-139388 - Verify that is not possible to save a process with node ID not unique"
 	@priority = 4
-	test CanNotSaveProcessWithDuplicatedNodeID {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithDuplicatedNodeID";
+	test CanNotSaveProcessWithDuplicatedNodeName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithDuplicatedNodeName";
 
 		Workflow.openWorkflowListView();
 
@@ -2361,13 +2361,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
-		var nodeIdValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_ID_GETTER");
+		var nodeNameValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_NAME_GETTER");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
-			infoValue = ${nodeIdValue});
+			infoOption = "Name",
+			infoValue = ${nodeNameValue});
 
 		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
 
@@ -2378,8 +2378,8 @@ definition {
 
 	@description = "LPS-139388 - Verify that is not possible to save a process with the node ID not filled"
 	@priority = 4
-	test CanNotSaveProcessWithEmptyNodeID {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithEmptyNodeID";
+	test CanNotSaveProcessWithEmptyNodeName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithEmptyNodeName";
 
 		Workflow.openWorkflowListView();
 
@@ -2390,11 +2390,11 @@ definition {
 			nodePosition = "-20,-100");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "");
 
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
-			requiredField = "nodeId",
+			requiredField = "nodeName",
 			save = "true");
 	}
 
@@ -3971,7 +3971,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			defaultIdValue = "true",
+			defaultNameValue = "true",
 			labelValue = "Task",
 			nodeType = "task");
 	}
@@ -4413,8 +4413,8 @@ definition {
 
 	@description = "Verify that the Role ID is a read only field"
 	@priority = 3
-	test NodeIDIsReadyOnly {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeIDIsReadyOnly";
+	test NodeNameIsReadyOnly {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeNameIsReadyOnly";
 
 		Workflow.openWorkflowListView();
 
@@ -4449,11 +4449,11 @@ definition {
 			nodePosition = "20,-500");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "TaskId01");
 
 		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			idValue = "TaskId01",
+			nameValue = "TaskId01",
 			nodeType = "task");
 	}
 
@@ -4613,10 +4613,10 @@ definition {
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
-	@description = "LPS-139387 - Verify that the Node ID is a required field"
+	@description = "LPS-139387 - Verify that the Node Name is a required field"
 	@priority = 3
-	test StepIDIsRequired {
-		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepIDIsRequired";
+	test StepNameIsRequired {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepNameIsRequired";
 
 		Workflow.openWorkflowListView();
 
@@ -4627,11 +4627,11 @@ definition {
 			nodePosition = "-20,-40");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = " ");
 
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
-			requiredField = "nodeId",
+			requiredField = "nodeName",
 			save = "true");
 	}
 
@@ -4646,13 +4646,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
-		var nodeIdValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_ID_GETTER");
+		var nodeNameValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_NAME_GETTER");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
-			infoValue = ${nodeIdValue});
+			infoOption = "Name",
+			infoValue = ${nodeNameValue});
 
 		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
 	}
@@ -4745,7 +4745,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "Liferay01");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "START-TASK CONNECTOR");

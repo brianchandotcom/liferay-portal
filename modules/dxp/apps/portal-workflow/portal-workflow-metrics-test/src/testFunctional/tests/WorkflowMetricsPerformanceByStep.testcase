@@ -247,7 +247,7 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "review2");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
@@ -256,7 +256,7 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "update2");
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
@@ -534,7 +534,7 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "review2");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
@@ -543,7 +543,7 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "update2");
 
 		Button.clickUpdate();
@@ -614,7 +614,7 @@ definition {
 				nodeType = "task");
 
 			ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-				infoOption = "Id",
+				infoOption = "Name",
 				infoValue = "review2");
 
 			WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
@@ -623,7 +623,7 @@ definition {
 				nodeType = "task");
 
 			ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-				infoOption = "Id",
+				infoOption = "Name",
 				infoValue = "update2");
 
 			ProcessBuilderKaleoDesignerReact.editConnector(
@@ -928,7 +928,7 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "review2");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeLabel(
@@ -937,7 +937,7 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Id",
+			infoOption = "Name",
 			infoValue = "update2");
 
 		ProcessBuilderKaleoDesignerReact.editConnector(

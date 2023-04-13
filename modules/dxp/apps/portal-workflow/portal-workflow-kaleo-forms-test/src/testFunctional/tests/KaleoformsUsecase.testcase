@@ -1938,7 +1938,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
 			connectorLabel = "APPROVE",
-			nodeId = "Approve");
+			nodeName = "Approve");
 
 		PortletEntry.publish();
 
@@ -3041,7 +3041,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
 			connectorLabel = "APPROVE",
-			nodeId = "Approve");
+			nodeName = "Approve");
 
 		PortletEntry.publish();
 

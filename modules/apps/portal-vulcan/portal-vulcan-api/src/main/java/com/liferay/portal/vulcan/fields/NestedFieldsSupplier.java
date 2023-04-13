@@ -26,11 +26,6 @@ import java.util.Map;
  */
 public class NestedFieldsSupplier<T> {
 
-	public NestedFieldsSupplier() {
-		_nestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
-	}
-
 	public <T> T supply(
 			String fieldName,
 			UnsafeFunction<String, T, Exception> unsafeFunction)
@@ -79,6 +74,10 @@ public class NestedFieldsSupplier<T> {
 		_nestedFieldsContext.decrementCurrentDepth();
 
 		return nestedFields;
+	}
+
+	protected NestedFieldsSupplier(NestedFieldsContext nestedFieldsContext) {
+		_nestedFieldsContext = nestedFieldsContext;
 	}
 
 	private boolean _mustProcessNestedFields(

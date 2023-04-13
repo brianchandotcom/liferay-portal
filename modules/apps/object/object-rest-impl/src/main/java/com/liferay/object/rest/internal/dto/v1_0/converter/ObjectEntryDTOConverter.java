@@ -80,6 +80,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -128,7 +129,7 @@ public class ObjectEntryDTOConverter
 		throws Exception {
 
 		NestedFieldsSupplier<Map<String, Serializable>> nestedFieldsSupplier =
-			new NestedFieldsSupplier<>();
+			NestedFieldsContextThreadLocal.getNestedFieldsSupplier();
 
 		String objectFieldNameNestedField = StringUtil.replaceLast(
 			objectFieldName.substring(
@@ -285,7 +286,7 @@ public class ObjectEntryDTOConverter
 		throws Exception {
 
 		NestedFieldsSupplier<Map<String, Serializable>> nestedFieldsSupplier =
-			new NestedFieldsSupplier<>();
+			NestedFieldsContextThreadLocal.getNestedFieldsSupplier();
 
 		return nestedFieldsSupplier.supply(
 			nestedFieldName -> {
@@ -405,7 +406,7 @@ public class ObjectEntryDTOConverter
 		throws Exception {
 
 		NestedFieldsSupplier<AuditEvent[]> nestedFieldsSupplier =
-			new NestedFieldsSupplier<>();
+			NestedFieldsContextThreadLocal.getNestedFieldsSupplier();
 
 		return nestedFieldsSupplier.supply(
 			"auditEvents",

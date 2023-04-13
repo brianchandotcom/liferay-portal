@@ -25,14 +25,12 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -112,7 +110,7 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
-				ObjectActionExecutor.ALL_COMPANIES, "_objectActionExecutor1",
+				ObjectActionExecutor.UNRESTRICTED_BY_COMPANY, "_objectActionExecutor1",
 				Arrays.asList("Account", "Address"));
 
 		_assertObjectActionExecutors(
@@ -128,7 +126,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		ObjectActionExecutor objectActionExecutor2 =
 			_registerObjectActionExecutor(
 				_companyId1, "_objectActionExecutor2",
-				ObjectActionExecutor.ALL_OBJECT_DEFINITIONS);
+				ObjectActionExecutor.UNRESTRICTED_BY_OBJECT_DEFINITIONS);
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),

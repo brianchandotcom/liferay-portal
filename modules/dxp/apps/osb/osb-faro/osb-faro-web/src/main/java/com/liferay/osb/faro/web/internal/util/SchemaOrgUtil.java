@@ -38,7 +38,9 @@ public class SchemaOrgUtil {
 			return FieldMappingConstants.TYPE_BOOLEAN;
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					type, FieldMappingConstants.TYPE_DATE)) {
+					displayType, FieldMappingConstants.TYPE_DATE) ||
+				 StringUtil.equalsIgnoreCase(
+					 type, FieldMappingConstants.TYPE_DATE)) {
 
 			return FieldMappingConstants.TYPE_DATE;
 		}

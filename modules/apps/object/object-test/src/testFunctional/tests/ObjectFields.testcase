@@ -2185,6 +2185,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		WaitForElementPresent(
+			key_entry = "Custom Object 153414",
+			locator1 = "ObjectPortlet#ENTRY_VALUE");
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 153414");
 
 		ObjectAdmin.goToFieldsTab();

@@ -744,7 +744,7 @@ definition {
 		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -780,7 +780,7 @@ definition {
 		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -869,7 +869,7 @@ definition {
 	test CanDownloadMultipleFilesSimultaneously {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site_1");
+		HeadlessSite.addSite(siteName = "Site_1");
 
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1486,7 +1486,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "DocumentsandMedia_portlet.lar");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -1559,7 +1559,7 @@ definition {
 	test CanMoveDocumentToRecycleBin {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1718,7 +1718,7 @@ definition {
 		property custom.properties = "dl.actions.visible=true";
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1947,7 +1947,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -2650,7 +2650,7 @@ definition {
 	test CanViewDocumentWithEditedDisplayPageTemplate {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 

@@ -89,7 +89,7 @@ definition {
 		property custom.properties = "dl.actions.visible=true";
 		property test.name.skip.portal.instance = "DMAutoTagging#CanAssertImageAutoTagAfterPublishToLive";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -139,7 +139,7 @@ definition {
 	test CanDeleteAutoTaggedDocument {
 		property test.name.skip.portal.instance = "DMAutoTagging#CanDeleteAutoTaggedDocument";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",

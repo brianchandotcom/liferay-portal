@@ -264,13 +264,13 @@ definition {
 	test CanConfigureImageAutoTaggingPerSite {
 		property test.name.skip.portal.instance = "AutoTaggingFramework#CanConfigureImageAutoTaggingPerSite";
 
-		JSONGroup.addGroup(groupName = "Site Name AutoTag Enabled");
+		HeadlessSite.addSite(siteName = "Site Name AutoTag Enabled");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name AutoTag Enabled",
 			layoutName = "AutoTag Enabled Site Page");
 
-		JSONGroup.addGroup(groupName = "Site Name AutoTag Disabled");
+		HeadlessSite.addSite(siteName = "Site Name AutoTag Disabled");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name AutoTag Disabled",
@@ -354,7 +354,7 @@ definition {
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		AutoTagging.disableAutoTagging(
 			disableAutoTaggingFor = "Site Settings",

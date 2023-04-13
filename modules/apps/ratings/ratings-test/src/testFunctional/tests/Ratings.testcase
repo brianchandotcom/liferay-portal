@@ -62,7 +62,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanCommentAndRateBlogsEntryOnLiveSite {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -111,7 +111,7 @@ definition {
 
 		LAR.exportPortlet(larFileName = "Export.Blogs.With.Comment.Rate.portlet.lar");
 
-		JSONGroup.addGroup(groupName = "Second Site");
+		HeadlessSite.addSite(siteName = "Second Site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Second Site",
@@ -146,7 +146,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanCommentAndRateWikiFrontPageOnLiveSite {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -198,7 +198,7 @@ definition {
 			larFileName = "Wiki.portlet.lar",
 			wikiPortlet = "true");
 
-		JSONGroup.addGroup(groupName = "Second Site");
+		HeadlessSite.addSite(siteName = "Second Site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Second Site",

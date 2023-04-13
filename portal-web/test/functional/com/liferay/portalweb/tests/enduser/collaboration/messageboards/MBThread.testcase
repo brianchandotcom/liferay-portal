@@ -293,7 +293,7 @@ definition {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 		property portal.acceptance = "false";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONMBMessage.addMessage(
 			groupName = "Site Name",

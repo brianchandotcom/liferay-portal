@@ -162,7 +162,7 @@ definition {
 	@description = "This test ensures that multiple Japanese files can be downloaded simultaneously."
 	@priority = 5
 	test CanSimultaneouslyDownloadMultipleJapaneseFiles {
-		JSONGroup.addGroup(groupName = "Site_1");
+		HeadlessSite.addSite(siteName = "Site_1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM文書記述",

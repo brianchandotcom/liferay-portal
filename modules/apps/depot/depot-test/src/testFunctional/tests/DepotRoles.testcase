@@ -127,7 +127,7 @@ definition {
 	test CanAddSiteMemberWithPermissionsAfterConnectingSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -592,7 +592,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUserToSite(
 			groupName = "Site Name",

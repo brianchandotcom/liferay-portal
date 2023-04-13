@@ -209,7 +209,7 @@ definition {
 	test CanMarkNotificationAsReadAndAcceptRequest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -373,7 +373,7 @@ definition {
 	test CanViewEditedArticleNotificationInStagingEnvironment {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Subscribe Site");
+		HeadlessSite.addSite(siteName = "Subscribe Site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Subscribe Site",
@@ -446,7 +446,7 @@ definition {
 	test CanViewFolderArticleNotification {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -569,7 +569,7 @@ definition {
 	test CanViewNotificationAfterRestoring {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

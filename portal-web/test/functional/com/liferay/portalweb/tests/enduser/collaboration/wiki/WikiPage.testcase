@@ -597,7 +597,7 @@ definition {
 	@priority = 4
 	test CanImportPageBetweenDifferentSites {
 		for (var siteName : list "Site Name 1,Site Name 2") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 		}
 
 		JSONWiki.addWikiPage(

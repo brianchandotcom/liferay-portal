@@ -69,7 +69,7 @@ definition {
 	test CanLimitSizeOnlyInCurrentSite {
 		property test.name.skip.portal.instance = "DMMimeTypeLimits#CanLimitSizeOnlyInCurrentSite";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		DMDocument.updateMimeTypeSizeLimit(
 			maximumFileSizeValue = 20480,

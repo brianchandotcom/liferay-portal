@@ -378,7 +378,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test DisabledResolutionsWillNotAdaptNewImages {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		AdaptiveMedia.openToAddImageResolution();
 

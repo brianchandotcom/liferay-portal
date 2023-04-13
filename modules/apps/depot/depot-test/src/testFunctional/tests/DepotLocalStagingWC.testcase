@@ -14,7 +14,7 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -696,7 +696,7 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Embedded Video Depot Name");
 
-		JSONGroup.addGroup(groupName = "Test Embedded Video Site Name");
+		HeadlessSite.addSite(siteName = "Test Embedded Video Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Embedded Video Site Name",

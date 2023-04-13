@@ -27,7 +27,7 @@ definition {
 			keepCachedAppServerData = "true",
 			nodePort = 8080);
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

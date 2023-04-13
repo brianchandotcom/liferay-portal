@@ -26,7 +26,7 @@ definition {
 	@description = "This test covers LPS-121201. It ensures that a site can be exported after a user sets a custom canonical URL at the page level."
 	@priority = 4
 	test ExportSiteWithCustomURL {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -120,7 +120,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
@@ -160,7 +160,7 @@ definition {
 	@description = "This test covers LPS-122797. It ensures that the Canonical URL does not have a limit of 75 characters."
 	@priority = 4
 	test SetCustomURLWith76Characters {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

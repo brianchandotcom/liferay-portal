@@ -12,8 +12,8 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via headless API") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Add a Page via JSON") {

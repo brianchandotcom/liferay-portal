@@ -83,7 +83,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanNotSelectDisabledAssetsFromItemSelector {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -246,7 +246,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test DisabledImageRemainsInBlogs {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -288,7 +288,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test DisabledWCRemainsInWCD {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

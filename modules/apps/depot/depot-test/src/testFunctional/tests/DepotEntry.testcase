@@ -459,7 +459,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CannotAddNameThatDuplicatesSite {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -671,7 +671,7 @@ definition {
 	@refactordone
 	test CanViewConnectionsInCardView {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 		}
 
 		JSONDepot.addDepot(
@@ -724,7 +724,7 @@ definition {
 	@refactordone
 	test CanViewConnectionsInTableView {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 		}
 
 		JSONDepot.addDepot(

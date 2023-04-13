@@ -83,7 +83,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPreviewMultipleImagesInDM {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		for (var documentTitle : list "Document_1,Document_2,Document_3") {
 			JSONDocument.addFileWithUploadedFile(

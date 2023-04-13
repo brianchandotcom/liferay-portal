@@ -74,7 +74,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanChangeSelectedPageForNavigationMenu {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		for (var i : list "1,2") {
 			JSONLayout.addPublicLayout(
@@ -119,7 +119,7 @@ definition {
 			site = "false",
 			title = "Web Content From Depot");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Site",
@@ -164,7 +164,7 @@ definition {
 	@priority = 4
 	test CanDisplaySitePaginationCorrectly {
 		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
-			JSONGroup.addGroup(groupName = "Site Name ${i}");
+			HeadlessSite.addSite(siteName = "Site Name ${i}");
 		}
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
@@ -190,7 +190,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanFilterByCurrentSite {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -351,7 +351,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanFilterWCByCurrentSite {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -539,7 +539,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CannotViewWCDraftViaFilterResults {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -590,7 +590,7 @@ definition {
 	test CanPreviewFacebookVideo {
 		property test.name.skip.portal.instance = "ItemSelector#PreviewFacebookVideo";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -666,7 +666,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanPreviewSVG {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -692,7 +692,7 @@ definition {
 	test CanPreviewTwitchVideo {
 		property test.name.skip.portal.instance = "ItemSelector#PreviewTwitchVideo";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -834,7 +834,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanSelectBackgroundImageForFragment {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -930,7 +930,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewCorrectFilterResultsInSpecificBreadcrumb {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -995,7 +995,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanViewCorrectWCLocationInfo {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -1040,7 +1040,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanViewDocumentsCorrectLocationInfo {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -1107,7 +1107,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewFolderImageViaFilterResults {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -1144,7 +1144,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewFolderWCViaFilterResults {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -1207,7 +1207,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanViewVideoThumbnailsViaWC {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -1271,7 +1271,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test FilePaginationDisplaysCorrectCount {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		for (var documentTitle : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1317,7 +1317,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test FilePaginationForFilteredResultsDisplaysCorrectCount {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -1423,11 +1423,11 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(
-			groupName = "Site A",
-			membershipType = "Private");
+		HeadlessSite.addSite(
+			membershipType = "Private",
+			siteName = "Site A");
 
-		JSONGroup.addGroup(groupName = "Site X");
+		HeadlessSite.addSite(siteName = "Site X");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
 	tearDown {
@@ -170,7 +170,7 @@ definition {
 		property test.name.skip.portal.instance = "FriendlyURL#ViewFriendlyURLWithSharedLocalesButDifferentLanguages";
 
 		for (var siteName : list "USA Site Name,France Site Name,Canada Site Name") {
-			JSONGroup.addGroup(groupName = ${siteName});
+			HeadlessSite.addSite(siteName = ${siteName});
 
 			JSONLayout.addPublicLayout(
 				groupName = ${siteName},

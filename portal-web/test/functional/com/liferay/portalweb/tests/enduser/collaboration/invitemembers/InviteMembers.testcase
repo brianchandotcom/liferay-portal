@@ -44,7 +44,7 @@ definition {
 	test CanViewNewSiteMember {
 		property test.name.skip.portal.instance = "InviteMembers#CanViewNewSiteMember";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

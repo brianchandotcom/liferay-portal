@@ -214,7 +214,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUserToSite(
 			groupName = "Site Name",
@@ -323,7 +323,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Documents and Media Page",
@@ -372,7 +372,7 @@ definition {
 	@description = "This is a test for LPS-155227. It checks that a user can not receive notifications without the subscribe permission of the folder."
 	@priority = 4
 	test CannotReceiveNotificationsWithoutFolderSubscriptionPermissions {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -455,7 +455,7 @@ definition {
 	test CannotViewDocumentAsGuestWithoutPermissions {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -555,7 +555,7 @@ definition {
 	test CannotViewDocumentWithOwnerAccessOnly {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -640,7 +640,7 @@ definition {
 	test CannotViewFolderAsGuestWithNoPermissions {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -781,7 +781,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -885,7 +885,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUserToSite(
 			groupName = "Site Name",
@@ -1008,7 +1008,7 @@ definition {
 	test CanViewFolderAsGuestWithPermissions {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1378,7 +1378,7 @@ definition {
 	@description = "This is a test for LPS-136838. It checks that a guest cannot view a folder without permissions."
 	@priority = 3
 	test GuestCannotViewFolder {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1408,7 +1408,7 @@ definition {
 	@description = "This is a test for LPS-136832. It checks that a guest can access an image in a folder through the URL when he has permissions."
 	@priority = 3
 	test GuestWithAccessToFolderCanAccessImageThroughURL {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1481,7 +1481,7 @@ definition {
 			dmDocumentFile = "Document_1.png",
 			dmDocumentTitle = "Document_1.png");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1777,7 +1777,7 @@ definition {
 	@description = "This is a test for LPS-136846. It checks that a site member cannot delete a shortcut without permissions."
 	@priority = 3
 	test SiteMemberCannotDeleteShortcut {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2168,7 +2168,7 @@ definition {
 	@description = "This is a test for LPS-136851. It checks that a site member cannot view a file without permissions."
 	@priority = 3
 	test SiteMemberCannotViewFile {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2222,7 +2222,7 @@ definition {
 	@description = "This is a test for LPS-136840. It checks that a site member can access an image in a folder through the URL with permissions."
 	@priority = 3
 	test SiteMemberWithAccessToFolderCanAccessImageThroughURL {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

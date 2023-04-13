@@ -100,7 +100,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -178,7 +178,7 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -267,7 +267,7 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name 2");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Depot Regrole Name",
@@ -518,7 +518,7 @@ definition {
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -618,7 +618,7 @@ definition {
 			roleTitle = "Remove MG Role",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -724,7 +724,7 @@ definition {
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -828,7 +828,7 @@ definition {
 			roleTitle = "Update MG Role",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -968,7 +968,7 @@ definition {
 	@description = "This ensures that assets stored in the asset library folder cannot be viewed without permissions Via DM on a connected site."
 	@priority = 4
 	test CannotViewFileInDMWidgetWithoutPermission {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
@@ -1020,7 +1020,7 @@ definition {
 	test CannotViewImageInMGAsGuest {
 		var portalURL = PropsUtil.get("portal.url");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1498,7 +1498,7 @@ definition {
 			dmDocumentTitle = "Depot DM Document Title",
 			groupName = "Test Depot Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1632,7 +1632,7 @@ definition {
 			roleTitle = "Depot Regrole Name",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONUser.addUserToSite(
 			groupName = "Site Name",

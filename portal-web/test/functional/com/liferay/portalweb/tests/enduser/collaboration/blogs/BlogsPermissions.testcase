@@ -427,7 +427,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotAddEntryWhenTeamRoleHasNoPermissions {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -980,7 +980,7 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenTeamRoleHasNoPermissions {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

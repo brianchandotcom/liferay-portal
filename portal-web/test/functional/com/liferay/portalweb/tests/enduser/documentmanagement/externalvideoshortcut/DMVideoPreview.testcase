@@ -16,7 +16,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -303,7 +303,7 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "Site Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -361,7 +361,7 @@ definition {
 
 		JSONGroup.deleteGroupByName(groupName = "Site Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 

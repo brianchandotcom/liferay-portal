@@ -915,7 +915,7 @@ definition {
 	test CanImportEntryWithImageBetweenDifferentSites {
 		property portal.acceptance = "false";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		var imageId = JSONBlog.uploadBlogImage(
 			groupName = "Guest",
@@ -1028,7 +1028,7 @@ definition {
 	test CanImportEntryWithSmallImageBetweenDifferentSites {
 		property portal.acceptance = "false";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",

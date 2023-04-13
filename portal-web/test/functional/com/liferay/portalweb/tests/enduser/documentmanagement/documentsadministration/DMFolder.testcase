@@ -444,7 +444,7 @@ definition {
 	test CanMoveFolderToRecycleBin {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

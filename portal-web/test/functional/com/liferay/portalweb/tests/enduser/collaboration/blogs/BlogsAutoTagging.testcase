@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -200,7 +200,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BlogsAutoTagging#CanDisableAutoTaggingForSite";
 
-		JSONGroup.addGroup(groupName = "Site AutoTag Disabled");
+		HeadlessSite.addSite(siteName = "Site AutoTag Disabled");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site AutoTag Disabled",

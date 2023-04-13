@@ -23,7 +23,7 @@ definition {
 			remotePort = 9080,
 			site = "false");
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

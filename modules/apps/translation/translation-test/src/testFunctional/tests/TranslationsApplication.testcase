@@ -442,7 +442,7 @@ definition {
 	@description = "This test covers LPS-142411. It ensures that a translation entry is not shown after deleting translated content page with new experience."
 	@priority = 4
 	test EntryIsNotShownAfterDeletingTranslatedPage {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

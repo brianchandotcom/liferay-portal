@@ -463,7 +463,7 @@ definition {
 	@description = "This ensures that the shortcuts permissions can be edited via bulk editing."
 	@priority = 5
 	test CanEditShortcutsPermissions {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -524,7 +524,7 @@ definition {
 	@description = "This test selects multiple documents and moves them into one folder."
 	@priority = 5
 	test CanMoveDocumentsToFolder {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -608,7 +608,7 @@ definition {
 	@description = "This ensures that users can not edit file and shortcut permissions simultaneously."
 	@priority = 4
 	test CannotEditFileAndShortcutPermissionsSimultaneously {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

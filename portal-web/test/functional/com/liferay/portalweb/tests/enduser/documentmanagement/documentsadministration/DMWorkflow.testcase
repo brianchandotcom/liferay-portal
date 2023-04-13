@@ -31,7 +31,7 @@ definition {
 	test CannotAddPendingFileToAsset {
 		property portal.acceptance = "true";
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -112,7 +112,7 @@ definition {
 	@description = "This is a test for LPS-136854. It checks that the single approver workflow can be removed from a folder."
 	@priority = 3
 	test CanRemoveWorkflowFromFolder {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

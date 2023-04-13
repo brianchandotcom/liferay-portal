@@ -32,7 +32,7 @@ definition {
 	@description = "This ensures that an image in the WC content field can be rendered correctly when publication is enabled."
 	@priority = 5
 	test CanViewImageInWC {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -85,7 +85,7 @@ definition {
 	@description = "This ensures that an external video in the WC content field can be rendered correctly when publication is enabled."
 	@priority = 5
 	test CanViewVideoInWC {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 

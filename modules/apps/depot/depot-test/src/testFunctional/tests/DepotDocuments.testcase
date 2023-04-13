@@ -34,7 +34,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanAccessShortcut {
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",

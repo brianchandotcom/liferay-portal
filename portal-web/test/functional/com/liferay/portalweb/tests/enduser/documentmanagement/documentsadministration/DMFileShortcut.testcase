@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 	}
 
 	tearDown {
@@ -32,7 +32,7 @@ definition {
 	@description = "This is a test for LPS-136839. It checks that a shortcut can still be accessed after the target is moved."
 	@priority = 4
 	test CanAccessAfterMovingTarget {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -221,7 +221,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONDocument.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",
@@ -250,7 +250,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONDocument.addShortcut(
 			dmDocumentTitle = "Document_1.jpg",

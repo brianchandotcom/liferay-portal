@@ -370,7 +370,7 @@ definition {
 	@description = "This ensures that a button on a content page can be translated and published properly."
 	@priority = 5
 	test CanPublishTranslatedHeadingAfterReview {
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

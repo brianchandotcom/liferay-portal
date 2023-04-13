@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -47,13 +47,13 @@ definition {
 			groupName = "Child Site Name",
 			parentGroupName = "Site Name");
 
-		JSONGroup.addGroup(
-			groupName = "Private Site Name",
-			membershipType = "Private");
+		HeadlessSite.addSite(
+			membershipType = "Private",
+			siteName = "Private Site Name");
 
-		JSONGroup.addGroup(
-			groupName = "Restricted Site Name",
-			membershipType = "Restricted");
+		HeadlessSite.addSite(
+			membershipType = "Restricted",
+			siteName = "Restricted Site Name");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

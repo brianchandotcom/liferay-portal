@@ -42,6 +42,8 @@ const ACTIONS = {
 					type: 'confirm',
 				},
 			],
+			height: '50vh',
+			size: 'md',
 			title: Liferay.Language.get('move'),
 			url: moveItemUrl,
 		});

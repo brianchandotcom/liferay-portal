@@ -144,7 +144,7 @@ public class ProductDTOConverter
 						cpDefinition.getCPDefinitionId()),
 					AssetTag::getName, String.class);
 				thumbnail = cpDefinition.getDefaultImageThumbnailSrc(
-					AccountConstants.ACCOUNT_ID_ADMIN);
+					AccountConstants.ACCOUNT_ENTRY_ID_ADMIN);
 				urls = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));

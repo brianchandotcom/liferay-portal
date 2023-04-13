@@ -184,8 +184,8 @@ public class WishListItemResourceImpl
 
 			if (commerceAccountIds.length == 0) {
 				AccountEntry accountEntry =
-					_accountEntryLocalService.getGuestCommerceAccount(
-						contextUser.getCompanyId());
+					_accountEntryLocalService.getGuestAccountEntry(
+						contextCompany.getCompanyId());
 
 				commerceAccountIds = new long[] {
 					accountEntry.getAccountEntryId()

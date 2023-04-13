@@ -50,9 +50,11 @@ public class PriceListAccountGroupUtil {
 				priceListAccountGroup.getAccountGroupId());
 		}
 		else {
-			accountGroup = accountGroupService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(),
-				priceListAccountGroup.getAccountGroupExternalReferenceCode());
+			accountGroup =
+				accountGroupService.fetchAccountGroupByExternalReferenceCode(
+					priceListAccountGroup.
+						getAccountGroupExternalReferenceCode(),
+					serviceContext.getCompanyId());
 
 			if (accountGroup == null) {
 				String accountGroupExternalReferenceCode =

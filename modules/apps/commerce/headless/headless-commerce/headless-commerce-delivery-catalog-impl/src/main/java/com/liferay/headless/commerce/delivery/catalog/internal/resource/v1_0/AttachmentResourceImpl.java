@@ -121,7 +121,7 @@ public class AttachmentResourceImpl
 
 			if (accountIds.length == 0) {
 				AccountEntry accountEntry =
-					_accountEntryLocalService.getGuestCommerceAccount(
+					_accountEntryLocalService.getGuestAccountEntry(
 						contextCompany.getCompanyId());
 
 				accountIds = new long[] {accountEntry.getAccountEntryId()};

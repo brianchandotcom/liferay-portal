@@ -135,7 +135,7 @@ public class AccountOrganizationResourceImpl
 				accountEntry.getAccountEntryId(), pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		int totalItems =
+		long totalItems =
 			_accountEntryOrganizationRelService.
 				getAccountEntryOrganizationRelsCount(
 					accountEntry.getAccountEntryId());
@@ -170,7 +170,7 @@ public class AccountOrganizationResourceImpl
 			_accountEntryOrganizationRelService.getAccountEntryOrganizationRels(
 				id, pagination.getStartPosition(), pagination.getEndPosition());
 
-		int totalItems =
+		long totalItems =
 			_accountEntryOrganizationRelService.
 				getAccountEntryOrganizationRelsCount(id);
 

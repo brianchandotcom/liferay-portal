@@ -159,9 +159,11 @@ public class OrderRuleAccountGroupResourceImpl
 				orderRuleAccountGroup.getAccountGroupId());
 		}
 		else {
-			accountGroup = _accountGroupService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(),
-				orderRuleAccountGroup.getAccountGroupExternalReferenceCode());
+			accountGroup =
+				_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+					orderRuleAccountGroup.
+						getAccountGroupExternalReferenceCode(),
+					contextCompany.getCompanyId());
 		}
 
 		return accountGroup;

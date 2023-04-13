@@ -53,9 +53,10 @@ public class DiscountAccountGroupUtil {
 				discountAccountGroup.getAccountGroupId());
 		}
 		else {
-			accountGroup = accountGroupService.fetchByExternalReferenceCode(
-				serviceContext.getCompanyId(),
-				discountAccountGroup.getAccountGroupExternalReferenceCode());
+			accountGroup =
+				accountGroupService.fetchAccountGroupByExternalReferenceCode(
+					discountAccountGroup.getAccountGroupExternalReferenceCode(),
+					serviceContext.getCompanyId());
 
 			if (accountGroup == null) {
 				String accountGroupExternalReferenceCode =

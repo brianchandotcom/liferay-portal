@@ -29,6 +29,126 @@ definition {
 
 	}
 
+	@description = "LPS-181204 - Verify updating the default value configuration for the Picklist field only affects new object entries"
+	@priority = 4
+	test CanOnlyAffectNewEntriesByUpdatingConfiguration {
+		property custom.properties = "feature.flag.LPS-163716=true";
+
+		task ("Given a picklist with two items") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist 181204");
+
+			for (var itemNumber : list "1,2") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = ${itemNumber},
+					itemName = "Item Test ${itemNumber}",
+					picklistName = "Custom Picklist 181204");
+			}
+		}
+
+		task ("And given a Custom Object with a picklist field that has the default value with item 1") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 181204",
+				objectName = "CustomObject181204",
+				pluralLabelName = "Custom Objects 181204");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Picklist Field",
+				fieldName = "picklistField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject181204",
+				picklistName = "Custom Picklist 181204");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject181204");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject181204");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 181204");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Picklist Field");
+
+			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Use Default Value",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Click(
+				key_optionDefaulValue = "Input as Value",
+				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
+
+			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
+
+			Click(
+				key_dropdownItem = "Item Test 1",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			Button.clickSave();
+		}
+
+		task ("And given an object entry with a default value saved") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject181204",
+				value = "Entry Test");
+		}
+
+		task ("When the default value configuration is updated to Input as Value with item 2") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 181204");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Picklist Field");
+
+			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Use Default Value",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Click(
+				key_optionDefaulValue = "Input as Value",
+				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
+
+			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
+
+			Click(
+				key_dropdownItem = "Item Test 2",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			Button.clickSave();
+		}
+
+		task ("Then the default value is only applied to new object entries") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject181204");
+
+			ObjectPortlet.viewEntry(entry = "Item Test 1");
+
+			AssertElementNotPresent(
+				key_entry = "Item Test 2",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "New Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject181204");
+
+			ObjectPortlet.viewEntry(entry = "Item Test 1");
+		}
+	}
+
 	@description = "LPS-163716 - Verify it's possible to create an object entry with the Picklist default value set via Expression Builder"
 	@priority = 5
 	test CanSetPicklistViaExpressionBuilder {
@@ -207,14 +327,6 @@ definition {
 
 			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
 		}
-	}
-
-	@description = "LPS-163716 - Verify updating the default value configuration for the Picklist field affects the object entries"
-	@priority = 4
-	test CanUpdateObjectEntryByUpdatingConfiguration {
-
-		// TODO pending implementation
-
 	}
 
 }

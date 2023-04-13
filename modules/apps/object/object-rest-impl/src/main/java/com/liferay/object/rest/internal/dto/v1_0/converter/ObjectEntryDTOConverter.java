@@ -80,8 +80,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
-import com.liferay.portal.vulcan.fields.NestedFieldsContext;
-import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -91,6 +90,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -123,65 +123,98 @@ public class ObjectEntryDTOConverter
 
 	private void _addNestedFields(
 			DTOConverterContext dtoConverterContext, Map<String, Object> map,
-			NestedFieldsContext nestedFieldsContext, String objectFieldName,
-			ObjectRelationship objectRelationship, long primaryKey)
+			String objectFieldName, ObjectRelationship objectRelationship,
+			long primaryKey)
 		throws Exception {
 
-		if (!_mustProcessNestedFields(nestedFieldsContext)) {
-			return;
-		}
-
-		Object value = null;
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		if (objectDefinition.isUnmodifiableSystemObject()) {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-172094")) {
-				SystemObjectDefinitionManager systemObjectDefinitionManager =
-					_systemObjectDefinitionManagerRegistry.
-						getSystemObjectDefinitionManager(
-							objectDefinition.getName());
-
-				value = DTOConverterUtil.toDTO(
-					systemObjectDefinitionManager.
-						getBaseModelByExternalReferenceCode(
-							systemObjectDefinitionManager.
-								getExternalReferenceCode(primaryKey),
-							objectDefinition.getCompanyId()),
-					dtoConverterContext.getDTOConverterRegistry(),
-					systemObjectDefinitionManager,
-					dtoConverterContext.getUser());
-			}
-			else {
-				value = _objectEntryLocalService.getSystemModelAttributes(
-					objectDefinition, primaryKey);
-			}
-		}
-		else {
-			nestedFieldsContext.incrementCurrentDepth();
-
-			value = _toDTO(
-				_getDTOConverterContext(dtoConverterContext, primaryKey),
-				_objectEntryLocalService.getObjectEntry(primaryKey));
-
-			nestedFieldsContext.decrementCurrentDepth();
-		}
+		NestedFieldsSupplier<Map<String, Serializable>> nestedFieldsSupplier =
+			new NestedFieldsSupplier<>();
 
 		String objectFieldNameNestedField = StringUtil.replaceLast(
 			objectFieldName.substring(
 				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
 			"Id", "");
 
-		for (String nestedFieldName : nestedFieldsContext.getFieldNames()) {
-			if (nestedFieldName.contains(objectFieldNameNestedField)) {
-				map.put(
-					StringUtil.replaceLast(objectFieldName, "Id", ""), value);
+		AtomicReference<Serializable> nestedObjectEntry =
+			new AtomicReference<>();
+
+		Map<String, Serializable> nestedFieldValues =
+			nestedFieldsSupplier.supply(
+				nestedFieldName -> {
+					if (!nestedFieldName.contains(objectFieldNameNestedField) &&
+						!nestedFieldName.equals(objectRelationship.getName())) {
+
+						return null;
+					}
+
+					if (nestedObjectEntry.get() != null) {
+						return nestedObjectEntry.get();
+					}
+
+					ObjectDefinition objectDefinition =
+						_objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId1());
+
+					if (objectDefinition.isUnmodifiableSystemObject()) {
+						if (FeatureFlagManagerUtil.isEnabled("LPS-172094")) {
+							SystemObjectDefinitionManager
+								systemObjectDefinitionManager =
+									_systemObjectDefinitionManagerRegistry.
+										getSystemObjectDefinitionManager(
+											objectDefinition.getName());
+
+							nestedObjectEntry.set(
+								(Serializable)DTOConverterUtil.toDTO(
+									systemObjectDefinitionManager.
+										getBaseModelByExternalReferenceCode(
+											systemObjectDefinitionManager.
+												getExternalReferenceCode(
+													primaryKey),
+											objectDefinition.getCompanyId()),
+									dtoConverterContext.
+										getDTOConverterRegistry(),
+									systemObjectDefinitionManager,
+									dtoConverterContext.getUser()));
+						}
+						else {
+							nestedObjectEntry.set(
+								(Serializable)
+									_objectEntryLocalService.
+										getSystemModelAttributes(
+											objectDefinition, primaryKey));
+						}
+					}
+					else {
+						nestedObjectEntry.set(
+							toDTO(
+								_getDTOConverterContext(
+									dtoConverterContext, primaryKey),
+								_objectEntryLocalService.getObjectEntry(
+									primaryKey)));
+					}
+
+					return nestedObjectEntry.get();
+				});
+
+		if (nestedFieldValues == null) {
+			return;
+		}
+
+		for (Map.Entry<String, Serializable> entry :
+				nestedFieldValues.entrySet()) {
+
+			String nestedFieldName = entry.getKey();
+
+			if (StringUtil.equals(
+					nestedFieldName, objectRelationship.getName())) {
+
+				map.put(nestedFieldName, entry.getValue());
 			}
 
-			if (nestedFieldName.equals(objectRelationship.getName())) {
-				map.put(nestedFieldName, value);
+			if (nestedFieldName.contains(objectFieldNameNestedField)) {
+				map.put(
+					StringUtil.removeLast(objectFieldName, "Id"),
+					entry.getValue());
 			}
 		}
 	}
@@ -248,42 +281,37 @@ public class ObjectEntryDTOConverter
 
 	private Map<String, Serializable> _getNestedFieldsRelatedProperties(
 			DTOConverterContext dtoConverterContext, long groupId,
-			NestedFieldsContext nestedFieldsContext,
 			ObjectDefinition objectDefinition, long primaryKey)
 		throws Exception {
 
-		Map<String, Serializable> map = new HashMap<>();
+		NestedFieldsSupplier<Map<String, Serializable>> nestedFieldsSupplier =
+			new NestedFieldsSupplier<>();
 
-		if (!_mustProcessNestedFields(nestedFieldsContext)) {
-			return map;
-		}
+		return nestedFieldsSupplier.supply(
+			nestedFieldName -> {
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectDefinitionId1(
+							objectDefinition.getObjectDefinitionId(),
+							nestedFieldName);
 
-		nestedFieldsContext.incrementCurrentDepth();
+				if ((objectRelationship == null) ||
+					(!Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
+					 !Objects.equals(
+						 objectRelationship.getType(),
+						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
 
-		List<String> nestedFieldNames = nestedFieldsContext.getFieldNames();
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getObjectRelationships(
-				objectDefinition.getObjectDefinitionId());
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			if (!nestedFieldNames.contains(objectRelationship.getName())) {
-				continue;
-			}
-
-			if (Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
-				Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+					return null;
+				}
 
 				ObjectDefinition relatedObjectDefinition =
 					_objectDefinitionLocalService.getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());
 
 				if (!relatedObjectDefinition.isActive()) {
-					continue;
+					return null;
 				}
 
 				ObjectRelatedModelsProvider objectRelatedModelsProvider =
@@ -305,41 +333,29 @@ public class ObjectEntryDTOConverter
 								getSystemObjectDefinitionManager(
 									relatedObjectDefinition.getName());
 
-					map.put(
-						objectRelationship.getName(),
-						TransformUtil.transformToArray(
-							relatedModels,
-							relatedModel -> _toExtendedEntity(
-								(BaseModel<?>)relatedModel, dtoConverterContext,
-								relatedObjectDefinition,
-								systemObjectDefinitionManager),
-							Object.class));
+					return TransformUtil.transformToArray(
+						relatedModels,
+						relatedModel -> _toExtendedEntity(
+							(BaseModel<?>)relatedModel, dtoConverterContext,
+							relatedObjectDefinition,
+							systemObjectDefinitionManager),
+						Object.class);
 				}
-				else {
-					map.put(
-						objectRelationship.getName(),
-						TransformUtil.transformToArray(
-							relatedModels,
-							relatedModel -> {
-								com.liferay.object.model.ObjectEntry
-									objectEntry =
-										(com.liferay.object.model.ObjectEntry)
-											relatedModel;
 
-								return _toDTO(
-									_getDTOConverterContext(
-										dtoConverterContext,
-										objectEntry.getObjectEntryId()),
-									objectEntry);
-							},
-							ObjectEntry.class));
-				}
-			}
-		}
+				return TransformUtil.transformToArray(
+					relatedModels,
+					relatedModel -> {
+						com.liferay.object.model.ObjectEntry objectEntry =
+							(com.liferay.object.model.ObjectEntry)relatedModel;
 
-		nestedFieldsContext.decrementCurrentDepth();
-
-		return map;
+						return _toDTO(
+							_getDTOConverterContext(
+								dtoConverterContext,
+								objectEntry.getObjectEntryId()),
+							objectEntry);
+					},
+					ObjectEntry.class);
+			});
 	}
 
 	private ObjectDefinition _getObjectDefinition(
@@ -382,61 +398,52 @@ public class ObjectEntryDTOConverter
 		return null;
 	}
 
-	private boolean _mustProcessNestedFields(
-		NestedFieldsContext nestedFieldsContext) {
-
-		if ((nestedFieldsContext != null) &&
-			(nestedFieldsContext.getCurrentDepth() <
-				nestedFieldsContext.getDepth()) &&
-			ListUtil.isNotEmpty(nestedFieldsContext.getFieldNames())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private AuditEvent[] _toAuditEvents(
 			DTOConverterContext dtoConverterContext,
-			NestedFieldsContext nestedFieldsContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		if (nestedFieldsContext == null) {
-			return null;
-		}
+		NestedFieldsSupplier<AuditEvent[]> nestedFieldsSupplier =
+			new NestedFieldsSupplier<>();
 
-		List<String> nestedFieldNames = nestedFieldsContext.getFieldNames();
+		return nestedFieldsSupplier.supply(
+			"auditEvents",
+			nestedFieldNames -> {
+				if (!objectDefinition.isEnableObjectEntryHistory() ||
+					!_objectEntryService.hasModelResourcePermission(
+						objectDefinition.getObjectDefinitionId(),
+						objectEntry.getObjectEntryId(),
+						ObjectActionKeys.OBJECT_ENTRY_HISTORY)) {
 
-		if (!objectDefinition.isEnableObjectEntryHistory() ||
-			!nestedFieldNames.contains("auditEvents") ||
-			!_objectEntryService.hasModelResourcePermission(
-				objectDefinition.getObjectDefinitionId(),
-				objectEntry.getObjectEntryId(),
-				ObjectActionKeys.OBJECT_ENTRY_HISTORY)) {
-
-			return null;
-		}
-
-		return TransformUtil.transformToArray(
-			_auditEventLocalService.getAuditEvents(
-				0, 0, null, null, null, null, null,
-				String.valueOf(objectEntry.getObjectEntryId()), null, null,
-				null, 0, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			auditEvent -> new AuditEvent() {
-				{
-					auditFieldChanges = _toAuditFieldChanges(
-						auditEvent.getAdditionalInfo(),
-						auditEvent.getEventType());
-					creator = CreatorUtil.toCreator(
-						_portal, dtoConverterContext.getUriInfo(),
-						_userLocalService.fetchUser(auditEvent.getUserId()));
-					dateCreated = auditEvent.getCreateDate();
-					eventType = auditEvent.getEventType();
+					return null;
 				}
-			},
-			AuditEvent.class);
+
+				return TransformUtil.transformToArray(
+					_auditEventLocalService.getAuditEvents(
+						0, 0, null, null, null, null, null,
+						String.valueOf(objectEntry.getObjectEntryId()), null,
+						null, null, 0, null, false, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					auditEvent -> {
+						AuditEvent event = new AuditEvent();
+
+						event.setAuditFieldChanges(
+							_toAuditFieldChanges(
+								auditEvent.getAdditionalInfo(),
+								auditEvent.getEventType()));
+						event.setCreator(
+							CreatorUtil.toCreator(
+								_portal, dtoConverterContext.getUriInfo(),
+								_userLocalService.fetchUser(
+									auditEvent.getUserId())));
+						event.setDateCreated(auditEvent.getCreateDate());
+						event.setEventType(auditEvent.getEventType());
+
+						return event;
+					},
+					AuditEvent.class);
+			});
 	}
 
 	private AuditFieldChange[] _toAuditFieldChanges(
@@ -476,9 +483,6 @@ public class ObjectEntryDTOConverter
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		NestedFieldsContext nestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
-
 		ObjectDefinition objectDefinition = _getObjectDefinition(
 			dtoConverterContext, objectEntry);
 
@@ -486,8 +490,7 @@ public class ObjectEntryDTOConverter
 			{
 				actions = dtoConverterContext.getActions();
 				auditEvents = _toAuditEvents(
-					dtoConverterContext, nestedFieldsContext, objectDefinition,
-					objectEntry);
+					dtoConverterContext, objectDefinition, objectEntry);
 				creator = CreatorUtil.toCreator(
 					_portal, dtoConverterContext.getUriInfo(),
 					_userLocalService.fetchUser(objectEntry.getUserId()));
@@ -505,8 +508,7 @@ public class ObjectEntryDTOConverter
 				}
 
 				properties = _toProperties(
-					dtoConverterContext, nestedFieldsContext, objectDefinition,
-					objectEntry);
+					dtoConverterContext, objectDefinition, objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
 				status = new Status() {
 					{
@@ -574,7 +576,6 @@ public class ObjectEntryDTOConverter
 
 	private Map<String, Object> _toProperties(
 			DTOConverterContext dtoConverterContext,
-			NestedFieldsContext nestedFieldsContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
@@ -675,8 +676,8 @@ public class ObjectEntryDTOConverter
 
 				if (primaryKey > 0) {
 					_addNestedFields(
-						dtoConverterContext, map, nestedFieldsContext,
-						objectFieldName, objectRelationship, primaryKey);
+						dtoConverterContext, map, objectFieldName,
+						objectRelationship, primaryKey);
 				}
 
 				_addObjectRelationshipNames(
@@ -690,11 +691,14 @@ public class ObjectEntryDTOConverter
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
-		map.putAll(
+		Map<String, Serializable> nestedFieldsRelatedProperties =
 			_getNestedFieldsRelatedProperties(
-				dtoConverterContext, objectEntry.getGroupId(),
-				nestedFieldsContext, objectDefinition,
-				objectEntry.getObjectEntryId()));
+				dtoConverterContext, objectEntry.getGroupId(), objectDefinition,
+				objectEntry.getObjectEntryId());
+
+		if (nestedFieldsRelatedProperties != null) {
+			map.putAll(nestedFieldsRelatedProperties);
+		}
 
 		return map;
 	}

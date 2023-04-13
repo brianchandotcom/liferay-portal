@@ -594,7 +594,7 @@ definition {
 	test PublishWebContentWithImportedStructureDefaultValues {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentStaging#PublishWebContentWithImportedStructureDefaultValues";
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(

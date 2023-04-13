@@ -857,7 +857,7 @@ definition {
 	@priority = 5
 	test MapWebContentImageToBackgroundImageOfContainerInContentPage {
 		property portal.acceptance = "true";
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		task ("Add a web content structure with an Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

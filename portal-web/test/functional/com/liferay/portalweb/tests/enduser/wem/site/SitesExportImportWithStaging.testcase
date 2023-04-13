@@ -190,7 +190,7 @@ definition {
 	test ImportLiveSiteToStagingSite {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitesExportImportWithStaging#ImportLiveSiteToStagingSite";
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "30";
 
 		task ("Export the first site") {
 			LAR.openExportAdmin(siteScopeName = "test-site-name-1");

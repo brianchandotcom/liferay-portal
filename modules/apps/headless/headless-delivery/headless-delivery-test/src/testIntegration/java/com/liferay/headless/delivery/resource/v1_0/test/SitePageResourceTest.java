@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -43,7 +44,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -51,6 +54,8 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.InputStream;
+
+import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -189,29 +194,40 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"title"};
+		return new String[] {"title", "friendlyUrlPath"};
 	}
 
 	@Override
-	protected SitePage testGetSiteSitePagesPage_addSitePage(
-			Long siteId, SitePage sitePage)
+	protected Collection<EntityField> getEntityFields() throws Exception {
+		return super.getEntityFields();
+	}
+
+	@Override
+	protected SitePage randomSitePage() {
+		return new SitePage() {
+			{
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				datePublished = RandomTestUtil.nextDate();
+				friendlyUrlPath =
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				pageType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				siteId = testGroup.getGroupId();
+				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	@Override
+	protected String
+			testGraphQLGetSiteSitePageExperienceExperienceKey_getExperienceKey()
 		throws Exception {
 
-		Layout layout = _addLayout(
-			_groupLocalService.fetchGroup(siteId), false, sitePage.getTitle());
-
-		sitePage.setDateCreated(layout.getCreateDate());
-		sitePage.setDateModified(layout.getModifiedDate());
-		sitePage.setDatePublished(layout.getPublishDate());
-
-		String friendlyURL = layout.getFriendlyURL();
-
-		sitePage.setFriendlyUrlPath(friendlyURL.substring(1));
-
-		sitePage.setSiteId(siteId);
-		sitePage.setUuid(layout.getUuid());
-
-		return sitePage;
+		return SegmentsEntryConstants.KEY_DEFAULT;
 	}
 
 	private Layout _addLayout(Group group) throws Exception {

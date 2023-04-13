@@ -181,9 +181,7 @@ public class ClientExtensionProjectConfigurator
 				entry -> {
 					String id = entry.getKey();
 
-					if (!Objects.equals(profileName, "default") &&
-						Objects.equals(id, "runtime")) {
-
+					if (Objects.equals(id, "runtime")) {
 						return;
 					}
 
@@ -193,79 +191,52 @@ public class ClientExtensionProjectConfigurator
 						_configureAssembleClientExtensionTask(
 							project, assembleClientExtensionTaskProvider,
 							assembleJsonNode, profileName);
+
+						return;
 					}
-					else if (Objects.equals(id, "runtime")) {
-						JsonNode runtimeJsonNode = entry.getValue();
 
-						JsonNode runtimeTypeJsonNode = runtimeJsonNode.get(
-							"type");
+					JsonNode clientExtensionJsonNode = entry.getValue();
 
-						if (runtimeTypeJsonNode != null) {
-							createClientExtensionConfigTaskProvider.configure(
-								createClientExtensionConfigTask ->
-									createClientExtensionConfigTask.setType(
-										runtimeTypeJsonNode.asText()));
+					try {
+						ClientExtension clientExtension =
+							_yamlObjectMapper.treeToValue(
+								clientExtensionJsonNode, ClientExtension.class);
 
-							List<ClientExtensionConfigurer>
-								clientExtensionTypeConfigurers =
-									_clientExtensionConfigurers.getOrDefault(
-										runtimeTypeJsonNode.asText(),
-										Collections.emptyList());
+						clientExtension.id = id;
 
-							clientExtensionTypeConfigurers.forEach(
-								clientExtensionTypeConfigurer ->
-									clientExtensionTypeConfigurer.apply(
-										project, Optional.empty(),
-										assembleClientExtensionTaskProvider));
+						if (Validator.isNull(clientExtension.type)) {
+							clientExtension.type = id;
 						}
+
+						clientExtension.classification = _getClassification(
+							clientExtension.id, clientExtension.type);
+
+						clientExtension.projectName = project.getName();
+
+						_validateClientExtension(clientExtension);
+
+						createClientExtensionConfigTaskProvider.configure(
+							createClientExtensionConfigTask ->
+								createClientExtensionConfigTask.
+									addClientExtensionProfile(
+										profileName, clientExtension));
+
+						List<ClientExtensionConfigurer>
+							clientExtensionTypeConfigurers =
+								_clientExtensionConfigurers.getOrDefault(
+									clientExtension.type,
+									Collections.emptyList());
+
+						clientExtensionTypeConfigurers.forEach(
+							clientExtensionTypeConfigurer ->
+								clientExtensionTypeConfigurer.apply(
+									project, Optional.of(clientExtension),
+									assembleClientExtensionTaskProvider));
 					}
-					else {
-						JsonNode clientExtensionJsonNode = entry.getValue();
-
-						try {
-							ClientExtension clientExtension =
-								_yamlObjectMapper.treeToValue(
-									clientExtensionJsonNode,
-									ClientExtension.class);
-
-							clientExtension.id = id;
-
-							if (Validator.isNull(clientExtension.type)) {
-								clientExtension.type = id;
-							}
-
-							clientExtension.classification = _getClassification(
-								clientExtension.id, clientExtension.type);
-
-							clientExtension.projectName = project.getName();
-
-							_validateClientExtension(clientExtension);
-
-							createClientExtensionConfigTaskProvider.configure(
-								createClientExtensionConfigTask ->
-									createClientExtensionConfigTask.
-										addClientExtensionProfile(
-											profileName, clientExtension));
-
-							List<ClientExtensionConfigurer>
-								clientExtensionTypeConfigurers =
-									_clientExtensionConfigurers.getOrDefault(
-										clientExtension.type,
-										Collections.emptyList());
-
-							clientExtensionTypeConfigurers.forEach(
-								clientExtensionTypeConfigurer ->
-									clientExtensionTypeConfigurer.apply(
-										project, Optional.of(clientExtension),
-										assembleClientExtensionTaskProvider));
-						}
-						catch (JsonProcessingException
-									jsonProcessingException) {
-
-							throw new GradleException(
-								"Failed to parse client-extension " + id,
-								jsonProcessingException);
-						}
+					catch (JsonProcessingException jsonProcessingException) {
+						throw new GradleException(
+							"Failed to parse client-extension " + id,
+							jsonProcessingException);
 					}
 				});
 		}

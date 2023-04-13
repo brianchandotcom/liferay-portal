@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.punchout.internal.resource.v1_0;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceOrder;
@@ -272,7 +273,7 @@ public class PunchOutSessionResourceImpl
 			throw new InternalServerErrorException(logMessage);
 		}
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRels(
+		_commerceAccountHelper.addAccountEntryUserRels(
 			accountEntry.getAccountEntryId(), new long[] {userId}, null,
 			new long[] {role.getRoleId()},
 			_serviceContextHelper.getServiceContext(groupId));
@@ -485,6 +486,9 @@ public class PunchOutSessionResourceImpl
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

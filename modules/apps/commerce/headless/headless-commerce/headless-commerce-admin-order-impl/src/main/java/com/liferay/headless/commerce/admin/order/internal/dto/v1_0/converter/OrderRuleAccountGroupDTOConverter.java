@@ -49,15 +49,15 @@ public class OrderRuleAccountGroupDTOConverter
 		COREntryRel corEntryRel = _corEntryRelService.getCOREntryRel(
 			(Long)dtoConverterContext.getId());
 
-		AccountGroup accountGroup = _accountGroupService.getAccountGroup(
-			corEntryRel.getClassPK());
+		AccountGroup orderRuleAccountGroup =
+			_accountGroupService.getAccountGroup(corEntryRel.getClassPK());
 		COREntry corEntry = corEntryRel.getCOREntry();
 
 		return new OrderRuleAccountGroup() {
 			{
 				accountGroupExternalReferenceCode =
-					accountGroup.getExternalReferenceCode();
-				accountGroupId = accountGroup.getAccountGroupId();
+					orderRuleAccountGroup.getExternalReferenceCode();
+				accountGroupId = orderRuleAccountGroup.getAccountGroupId();
 				actions = dtoConverterContext.getActions();
 				orderRuleAccountGroupId = corEntryRel.getCOREntryRelId();
 				orderRuleExternalReferenceCode =

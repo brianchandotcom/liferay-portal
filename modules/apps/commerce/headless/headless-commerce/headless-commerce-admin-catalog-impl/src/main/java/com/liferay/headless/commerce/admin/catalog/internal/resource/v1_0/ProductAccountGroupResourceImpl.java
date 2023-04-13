@@ -16,7 +16,8 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
-import com.liferay.account.service.AccountGroupRelService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
@@ -49,7 +50,7 @@ public class ProductAccountGroupResourceImpl
 
 	@Override
 	public void deleteProductAccountGroup(Long id) throws Exception {
-		_accountGroupRelService.deleteAccountGroupRel(id);
+		_accountGroupRelLocalService.deleteAccountGroupRel(id);
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class ProductAccountGroupResourceImpl
 		throws Exception {
 
 		return toProductAccountGroup(
-			_accountGroupRelService.getAccountGroupRel(id));
+			_accountGroupRelLocalService.getAccountGroupRel(id));
 	}
 
 	@Override
@@ -77,14 +78,14 @@ public class ProductAccountGroupResourceImpl
 
 		return Page.of(
 			transform(
-				_accountGroupRelService.getAccountGroupRels(
+				_accountGroupRelLocalService.getAccountGroupRels(
 					CPDefinition.class.getName(),
 					cpDefinition.getCPDefinitionId(),
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				this::toProductAccountGroup),
 			pagination,
-			_accountGroupRelService.getAccountGroupRelsCount(
+			_accountGroupRelLocalService.getAccountGroupRelsCount(
 				CPDefinition.class.getName(),
 				cpDefinition.getCPDefinitionId()));
 	}
@@ -104,14 +105,14 @@ public class ProductAccountGroupResourceImpl
 
 		return Page.of(
 			transform(
-				_accountGroupRelService.getAccountGroupRels(
+				_accountGroupRelLocalService.getAccountGroupRels(
 					CPDefinition.class.getName(),
 					cpDefinition.getCPDefinitionId(),
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				this::toProductAccountGroup),
 			pagination,
-			_accountGroupRelService.getAccountGroupRelsCount(
+			_accountGroupRelLocalService.getAccountGroupRelsCount(
 				CPDefinition.class.getName(),
 				cpDefinition.getCPDefinitionId()));
 	}
@@ -120,7 +121,8 @@ public class ProductAccountGroupResourceImpl
 			AccountGroupRel accountGroupRel)
 		throws Exception {
 
-		AccountGroup accountGroup = accountGroupRel.getAccountGroup();
+		AccountGroup accountGroup = _accountGroupLocalService.getAccountGroup(
+			accountGroupRel.getAccountGroupId());
 
 		return new ProductAccountGroup() {
 			{
@@ -133,7 +135,10 @@ public class ProductAccountGroupResourceImpl
 	}
 
 	@Reference
-	private AccountGroupRelService _accountGroupRelService;
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

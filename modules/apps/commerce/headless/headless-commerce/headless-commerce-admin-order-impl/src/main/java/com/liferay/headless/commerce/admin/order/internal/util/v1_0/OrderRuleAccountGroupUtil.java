@@ -44,9 +44,11 @@ public class OrderRuleAccountGroupUtil {
 				orderRuleAccountGroup.getAccountGroupId());
 		}
 		else {
-			accountGroup = accountGroupService.fetchByExternalReferenceCode(
-				corEntry.getCompanyId(),
-				orderRuleAccountGroup.getAccountGroupExternalReferenceCode());
+			accountGroup =
+				accountGroupService.fetchAccountGroupByExternalReferenceCode(
+					orderRuleAccountGroup.
+						getAccountGroupExternalReferenceCode(),
+					corEntry.getCompanyId());
 
 			if (accountGroup == null) {
 				String accountGroupExternalReferenceCode =

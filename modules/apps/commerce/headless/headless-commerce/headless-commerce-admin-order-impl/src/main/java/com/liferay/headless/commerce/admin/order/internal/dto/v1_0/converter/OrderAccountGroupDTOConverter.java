@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupService;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderAccountGroup;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -29,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "dto.class.name=com.liferay.account.model.AccountGroup",
 	service = DTOConverter.class
 )
-public class AccountGroupDTOConverter
-	implements DTOConverter<AccountGroup, AccountGroup> {
+public class OrderAccountGroupDTOConverter
+	implements DTOConverter<AccountGroup, OrderAccountGroup> {
 
 	@Override
 	public String getContentType() {
@@ -38,13 +39,13 @@ public class AccountGroupDTOConverter
 	}
 
 	@Override
-	public AccountGroup toDTO(DTOConverterContext dtoConverterContext)
+	public OrderAccountGroup toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
 		AccountGroup accountGroup = _accountGroupService.getAccountGroup(
 			(Long)dtoConverterContext.getId());
 
-		return new AccountGroup() {
+		return new OrderAccountGroup() {
 			{
 				id = accountGroup.getAccountGroupId();
 				name = accountGroup.getName();

@@ -142,6 +142,8 @@ public class OpenAPIResourceImpl {
 
 			add(ProductTaxConfigurationResourceImpl.class);
 
+			add(ProductVirtualSettingsResourceImpl.class);
+
 			add(RelatedProductResourceImpl.class);
 
 			add(SkuResourceImpl.class);

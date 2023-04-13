@@ -26,11 +26,15 @@ import com.liferay.jethr0.project.repository.ProjectComparatorRepository;
 import com.liferay.jethr0.project.repository.ProjectPrioritizerRepository;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 
@@ -46,12 +50,37 @@ public class Jethr0SpringBootApplication {
 	}
 
 	@Bean
+	public ActiveMQConnectionFactory getActiveMQConnectionFactory() {
+		ActiveMQConnectionFactory activeMQConnectionFactory =
+			new ActiveMQConnectionFactory();
+
+		activeMQConnectionFactory.setBrokerURL(_jmsBrokerURL);
+		activeMQConnectionFactory.setPassword(_jmsUserPassword);
+		activeMQConnectionFactory.setUserName(_jmsUserName);
+
+		return activeMQConnectionFactory;
+	}
+
+	@Bean
 	public BuildQueue getBuildQueue(ProjectQueue projectQueue) {
 		BuildQueue buildQueue = new BuildQueue();
 
 		buildQueue.setProjectQueue(projectQueue);
 
 		return buildQueue;
+	}
+
+	@Bean
+	public JmsListenerContainerFactory getJmsListenerContainerFactory(
+		ActiveMQConnectionFactory activeMQConnectionFactory) {
+
+		DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory =
+			new DefaultJmsListenerContainerFactory();
+
+		defaultJmsListenerContainerFactory.setConnectionFactory(
+			activeMQConnectionFactory);
+
+		return defaultJmsListenerContainerFactory;
 	}
 
 	@Bean
@@ -113,6 +142,15 @@ public class Jethr0SpringBootApplication {
 
 		return projectPrioritizer;
 	}
+
+	@Value("${jms.broker.url}")
+	private String _jmsBrokerURL;
+
+	@Value("${jms.user.name}")
+	private String _jmsUserName;
+
+	@Value("${jms.user.password}")
+	private String _jmsUserPassword;
 
 	@Value("${liferay.oauth.application.external.reference.codes}")
 	private String _liferayOAuthApplicationExternalReferenceCodes;

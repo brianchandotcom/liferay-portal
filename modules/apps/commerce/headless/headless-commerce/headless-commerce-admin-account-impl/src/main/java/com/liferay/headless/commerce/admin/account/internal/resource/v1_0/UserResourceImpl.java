@@ -142,9 +142,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			}
 		}
 
-		_commerceAccountHelper.addAccountEntryUserRels(
-			accountEntry.getAccountEntryId(),
-			new long[] {invitedUser.getUserId()}, null, roleIds,
+		_commerceAccountHelper.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), invitedUser.getUserId(), roleIds,
 			serviceContext);
 
 		return _userDTOConverter.toDTO(

@@ -74,8 +74,33 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Override
 	public AccountEntryUserRel addAccountEntryUserRel(
-			long accountEntryId, long accountEntryUserId,
+			long accountEntryId, long userId, long[] roleIds,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		AccountEntryUserRel accountEntryUserRel = addAccountEntryUserRel(
+			accountEntryId, userId, serviceContext);
+
+		if (roleIds != null) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
+
+			Group group = accountEntry.getAccountEntryGroup();
+
+			if (group == null) {
+				throw new PortalException();
+			}
+
+			_userGroupRoleLocalService.addUserGroupRoles(
+				userId, group.getGroupId(), roleIds);
+		}
+
+		return accountEntryUserRel;
+	}
+
+	@Override
+	public AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long userId, ServiceContext serviceContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
@@ -84,7 +109,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		if (accountEntry.isPersonalAccount()) {
 			List<AccountEntryUserRel> accountEntryUserRels =
 				_accountEntryUserRelLocalService.
-					getAccountEntryUserRelsByAccountUserId(accountEntryUserId);
+					getAccountEntryUserRelsByAccountUserId(userId);
 
 			for (AccountEntryUserRel accountEntryUserRel :
 					accountEntryUserRels) {
@@ -101,9 +126,9 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 		AccountEntryUserRel accountEntryUserRel =
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntryId, accountEntryUserId);
+				accountEntryId, userId);
 
-		addDefaultRoles(accountEntryUserId);
+		addDefaultRoles(userId);
 
 		return accountEntryUserRel;
 	}

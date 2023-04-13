@@ -60,9 +60,9 @@ public class AccountMemberUtil {
 			PermissionThreadLocal.getPermissionChecker(),
 			accountEntry.getAccountEntryId(), AccountActionKeys.ASSIGN_USERS);
 
-		commerceAccountHelper.addAccountEntryUserRels(
-			accountEntry.getAccountEntryId(), new long[] {user.getUserId()},
-			null, roleIds, serviceContext);
+		commerceAccountHelper.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), user.getUserId(), roleIds,
+			serviceContext);
 
 		return accountEntryUserRelService.getAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), user.getUserId());

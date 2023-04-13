@@ -109,11 +109,12 @@ export default function MoveModal({
 	};
 
 	return (
-		<>
+		<div className="container-fluid p-3">
 			<SearchField
 				handleSearchChange={handleSearchChange}
 				items={searchItems}
 			/>
+
 			{!searchActive && (
 				<ClayTreeView
 					defaultItems={items}
@@ -161,7 +162,7 @@ export default function MoveModal({
 					}}
 				</ClayTreeView>
 			)}
-		</>
+		</div>
 	);
 }
 

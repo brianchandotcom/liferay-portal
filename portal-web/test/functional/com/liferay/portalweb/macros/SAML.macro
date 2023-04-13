@@ -1,5 +1,34 @@
 definition {
 
+	macro accountSignInOkta {
+		if (!(isSet(specificURL))) {
+			Navigator.openURL();
+		}
+		else {
+			Navigator.openSpecificURL(url = ${specificURL});
+		}
+
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		Type(
+			locator1 = "OktaLogin#LOGIN_EMAIL_FIELD",
+			value1 = ${userEmailAddress});
+
+		if (IsElementPresent(locator1 = "OktaLogin#LOGIN_NEXT_BUTTON")) {
+			Click(locator1 = "OktaLogin#LOGIN_NEXT_BUTTON");
+		}
+
+		Type(
+			locator1 = "OktaLogin#LOGIN_PASSWORD_FIELD",
+			value1 = ${userPassword});
+
+		if (IsElementPresent(locator1 = "OktaLogin#VERIFY_BUTTON")) {
+			Click(locator1 = "OktaLogin#VERIFY_BUTTON");
+		}
+	}
+
 	@description = "Creating new user on the IdP portal and syncing his data by logging in on the SP portal then verify the user data on the My Account page"
 	macro addAndSyncNewUser {
 		JSONUser.addUser(
@@ -101,6 +130,8 @@ definition {
 			idpKeepAliveURL = ${idpKeepAliveURL},
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
 			idpNameId = ${idpEntityId},
+			idpUserMembershipsAttributeMapping = ${idpUserMembershipsAttributeMapping},
+			idpUserMembershipsAttributeMappingText = ${idpUserMembershipsAttributeMappingText},
 			nameIdentifierFormat = ${nameIdentifierFormat},
 			uploadMetadataXML = ${uploadMetadataXML},
 			userMatchingAttributeIndex = ${userMatchingAttributeIndex},

@@ -356,8 +356,7 @@ public class DataGuardTestRuleUtil {
 				ClassLoader classLoader =
 					persistedModelLocalServiceClass.getClassLoader();
 
-				Class<?> modelClass = classLoader.loadClass(
-					_sanitizeClassName(className));
+				Class<?> modelClass = classLoader.loadClass(className);
 
 				List<BaseModel<?>> currentBaseModels = entry.getValue();
 
@@ -523,10 +522,27 @@ public class DataGuardTestRuleUtil {
 	private static Map<String, PersistedModelLocalService>
 		_getPersistedModelLocalServices() {
 
-		return ReflectionTestUtil.getFieldValue(
-			PersistedModelLocalServiceRegistryUtil.
-				getPersistedModelLocalServiceRegistry(),
-			"_persistedModelLocalServices");
+		Map<String, PersistedModelLocalService>
+			scrubbedPersistedModelLocalServices = new HashMap<>();
+
+		Map<String, PersistedModelLocalService> persistedModelLocalServices =
+			ReflectionTestUtil.getFieldValue(
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalServiceRegistry(),
+				"_persistedModelLocalServices");
+
+		for (Map.Entry<String, PersistedModelLocalService> entry :
+				persistedModelLocalServices.entrySet()) {
+
+			String className = entry.getKey();
+
+			if (className.indexOf(CharPool.POUND) == -1) {
+				scrubbedPersistedModelLocalServices.put(
+					className, entry.getValue());
+			}
+		}
+
+		return scrubbedPersistedModelLocalServices;
 	}
 
 	private static String _getSymbolicName(ClassLoader classLoader) {
@@ -630,14 +646,6 @@ public class DataGuardTestRuleUtil {
 
 		return () -> ReflectionTestUtil.setFieldValue(
 			basePersistence, "_sessionFactory", originalSessionFactory);
-	}
-
-	private static String _sanitizeClassName(String className) {
-		if (!className.contains(StringPool.POUND)) {
-			return className;
-		}
-
-		return className.substring(0, className.indexOf(CharPool.POUND));
 	}
 
 	private static final ThreadLocal<Map<String, Map<Serializable, String>>>

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -487,8 +488,17 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			ddmFieldAttribute.setAttributeName(
 				ddmFieldAttributeInfo._attributeName);
 			ddmFieldAttribute.setLanguageId(ddmFieldAttributeInfo._languageId);
-			ddmFieldAttribute.setAttributeValue(
-				ddmFieldAttributeInfo._attributeValue);
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				ddmFieldAttributeInfo._ddmFieldInfo._fieldName);
+
+			if ((ddmFormField == null) ||
+				!GetterUtil.getBoolean(
+					ddmFormField.getProperty("persistReadOnlyValue"))) {
+
+				ddmFieldAttribute.setAttributeValue(
+					ddmFieldAttributeInfo._attributeValue);
+			}
 
 			_ddmFieldAttributePersistence.update(ddmFieldAttribute);
 		}

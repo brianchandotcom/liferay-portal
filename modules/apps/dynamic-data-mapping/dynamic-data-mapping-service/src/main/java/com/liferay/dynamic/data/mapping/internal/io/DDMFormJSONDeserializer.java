@@ -78,15 +78,15 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 					jsonObject.getString("definitionSchemaVersion"));
 			}
 
-			setDDMFormAvailableLocales(
+			_setDDMFormAvailableLocales(
 				jsonObject.getJSONArray("availableLanguageIds"), ddmForm);
-			setDDMFormDefaultLocale(
+			_setDDMFormDefaultLocale(
 				jsonObject.getString("defaultLanguageId"), ddmForm);
-			setDDMFormFields(jsonObject.getJSONArray("fields"), ddmForm);
+			_setDDMFormFields(jsonObject.getJSONArray("fields"), ddmForm);
 
-			setDDMFormLocalizedValuesDefaultLocale(ddmForm);
-			setDDMFormRules(jsonObject.getJSONArray("rules"), ddmForm);
-			setDDMFormSuccessPageSettings(
+			_setDDMFormLocalizedValuesDefaultLocale(ddmForm);
+			_setDDMFormRules(jsonObject.getJSONArray("rules"), ddmForm);
+			_setDDMFormSuccessPageSettings(
 				jsonObject.getJSONObject("successPage"), ddmForm);
 
 			return builder.build();
@@ -102,7 +102,19 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		return builder.build();
 	}
 
-	protected LocalizedValue deserializeLocalizedValue(
+	@Reference(unbind = "-")
+	protected void setDDMFormFieldTypeServicesRegistry(
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry) {
+
+		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	private LocalizedValue _deserializeLocalizedValue(
 			String value, Locale defaultLocale)
 		throws PortalException {
 
@@ -127,7 +139,7 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		return localizedValue;
 	}
 
-	protected void setDDMFormAvailableLocales(
+	private void _setDDMFormAvailableLocales(
 		JSONArray jsonArray, DDMForm ddmForm) {
 
 		Set<Locale> availableLocales = new HashSet<>();
@@ -142,13 +154,13 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		ddmForm.setAvailableLocales(availableLocales);
 	}
 
-	protected void setDDMFormDefaultLocale(
+	private void _setDDMFormDefaultLocale(
 		String defaultLanguageId, DDMForm ddmForm) {
 
 		ddmForm.setDefaultLocale(LocaleUtil.fromLanguageId(defaultLanguageId));
 	}
 
-	protected void setDDMFormFieldLocalizedValueDefaultLocale(
+	private void _setDDMFormFieldLocalizedValueDefaultLocale(
 		LocalizedValue localizedValue, Locale defaultLocale) {
 
 		if (localizedValue == null) {
@@ -158,19 +170,19 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		localizedValue.setDefaultLocale(defaultLocale);
 	}
 
-	protected void setDDMFormFieldLocalizedValuesDefaultLocale(
+	private void _setDDMFormFieldLocalizedValuesDefaultLocale(
 		DDMFormField ddmFormField, Locale defaultLocale) {
 
-		setDDMFormFieldLocalizedValueDefaultLocale(
+		_setDDMFormFieldLocalizedValueDefaultLocale(
 			ddmFormField.getLabel(), defaultLocale);
 
-		setDDMFormFieldLocalizedValueDefaultLocale(
+		_setDDMFormFieldLocalizedValueDefaultLocale(
 			ddmFormField.getPredefinedValue(), defaultLocale);
 
-		setDDMFormFieldLocalizedValueDefaultLocale(
+		_setDDMFormFieldLocalizedValueDefaultLocale(
 			ddmFormField.getStyle(), defaultLocale);
 
-		setDDMFormFieldLocalizedValueDefaultLocale(
+		_setDDMFormFieldLocalizedValueDefaultLocale(
 			ddmFormField.getTip(), defaultLocale);
 
 		DDMFormFieldOptions ddmFormFieldOptions =
@@ -183,12 +195,12 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField.getNestedDDMFormFields()) {
 
-			setDDMFormFieldLocalizedValuesDefaultLocale(
+			_setDDMFormFieldLocalizedValuesDefaultLocale(
 				nestedDDMFormField, defaultLocale);
 		}
 	}
 
-	protected void setDDMFormFields(JSONArray jsonArray, DDMForm ddmForm)
+	private void _setDDMFormFields(JSONArray jsonArray, DDMForm ddmForm)
 		throws PortalException {
 
 		ddmForm.setDDMFormFields(
@@ -196,21 +208,14 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 				_ddmFormFieldTypeServicesRegistry, jsonArray, _jsonFactory));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesRegistry(
-		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry) {
-
-		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
-	}
-
-	protected void setDDMFormLocalizedValuesDefaultLocale(DDMForm ddmForm) {
+	private void _setDDMFormLocalizedValuesDefaultLocale(DDMForm ddmForm) {
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			setDDMFormFieldLocalizedValuesDefaultLocale(
+			_setDDMFormFieldLocalizedValuesDefaultLocale(
 				ddmFormField, ddmForm.getDefaultLocale());
 		}
 	}
 
-	protected void setDDMFormRules(JSONArray jsonArray, DDMForm ddmForm) {
+	private void _setDDMFormRules(JSONArray jsonArray, DDMForm ddmForm) {
 		if ((jsonArray == null) || (jsonArray.length() == 0)) {
 			return;
 		}
@@ -219,7 +224,7 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 			DDMFormRuleJSONDeserializer.deserialize(jsonArray));
 	}
 
-	protected void setDDMFormSuccessPageSettings(
+	private void _setDDMFormSuccessPageSettings(
 			JSONObject jsonObject, DDMForm ddmForm)
 		throws PortalException {
 
@@ -231,18 +236,13 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			new DDMFormSuccessPageSettings(
-				deserializeLocalizedValue(
+				_deserializeLocalizedValue(
 					jsonObject.getString("body"), defaultLocale),
-				deserializeLocalizedValue(
+				_deserializeLocalizedValue(
 					jsonObject.getString("title"), defaultLocale),
 				jsonObject.getBoolean("enabled"));
 
 		ddmForm.setDDMFormSuccessPageSettings(ddmFormSuccessPageSettings);
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

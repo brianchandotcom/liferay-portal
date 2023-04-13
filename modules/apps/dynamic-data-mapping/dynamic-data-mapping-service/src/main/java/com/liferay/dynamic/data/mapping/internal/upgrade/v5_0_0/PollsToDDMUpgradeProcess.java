@@ -740,6 +740,8 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long _getActionIds(long oldActionIds) {
+		long sum = 0;
+
 		Set<String> actionsIds = new HashSet<>();
 
 		for (ResourceAction resourceAction :
@@ -756,8 +758,6 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 				MapUtil.getString(
 					_resourceActionIds, resourceAction.getActionId()));
 		}
-
-		long sum = 0;
 
 		for (String actionId : actionsIds) {
 			sum += MapUtil.getLong(

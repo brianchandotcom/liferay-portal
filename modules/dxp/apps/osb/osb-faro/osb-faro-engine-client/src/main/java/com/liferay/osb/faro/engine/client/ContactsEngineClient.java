@@ -408,8 +408,8 @@ public interface ContactsEngineClient {
 
 	public Results<Interest> getInterests(
 		FaroProject faroProject, String ownerId, String ownerType, String name,
-		String query, Date startDate, Date endDate, String expand, int cur,
-		int delta, List<OrderByField> orderByFields);
+		String query, String expand, int cur, int delta,
+		List<OrderByField> orderByFields);
 
 	public Interest getLatestInterest(
 		FaroProject faroProject, String ownerId, String ownerType, String query,

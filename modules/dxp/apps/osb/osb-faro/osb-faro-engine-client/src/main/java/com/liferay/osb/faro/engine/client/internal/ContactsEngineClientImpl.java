@@ -2178,8 +2178,8 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<Interest> getInterests(
 		FaroProject faroProject, String ownerId, String ownerType, String name,
-		String query, Date startDate, Date endDate, String expand, int cur,
-		int delta, List<OrderByField> orderByFields) {
+		String query, String expand, int cur, int delta,
+		List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields);
@@ -2188,14 +2188,6 @@ public class ContactsEngineClientImpl
 
 		FilterBuilder filterBuilder = new FilterBuilder();
 
-		filterBuilder.addFilter(
-			"dateRecorded",
-			FilterConstants.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL,
-			getDate(startDate, false));
-		filterBuilder.addFilter(
-			"dateRecorded",
-			FilterConstants.COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL,
-			getDate(endDate, true));
 		filterBuilder.addFilter(
 			"name", FilterConstants.COMPARISON_OPERATOR_EQUALS, name);
 		filterBuilder.addFilter(
@@ -2223,7 +2215,7 @@ public class ContactsEngineClientImpl
 		int cur, int delta, List<OrderByField> orderByFields) {
 
 		Results<Interest> results = getInterests(
-			faroProject, ownerId, ownerType, null, null, null, null, null, 1, 1,
+			faroProject, ownerId, ownerType, null, null, null, 1, 1,
 			Collections.singletonList(
 				new OrderByField("dateRecorded", "desc", true)));
 

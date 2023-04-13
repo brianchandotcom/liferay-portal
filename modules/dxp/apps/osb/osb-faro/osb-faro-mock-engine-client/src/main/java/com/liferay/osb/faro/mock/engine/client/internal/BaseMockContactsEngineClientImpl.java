@@ -855,12 +855,12 @@ public abstract class BaseMockContactsEngineClientImpl
 	@Override
 	public Results<Interest> getInterests(
 		FaroProject faroProject, String ownerId, String ownerType, String name,
-		String query, Date startDate, Date endDate, String expand, int cur,
-		int delta, List<OrderByField> orderByFields) {
+		String query, String expand, int cur, int delta,
+		List<OrderByField> orderByFields) {
 
 		return contactsEngineClient.getInterests(
-			faroProject, ownerId, ownerType, name, query, startDate, endDate,
-			expand, cur, delta, orderByFields);
+			faroProject, ownerId, ownerType, name, query, expand, cur, delta,
+			orderByFields);
 	}
 
 	@Override

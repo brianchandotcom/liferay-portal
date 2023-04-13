@@ -47,7 +47,6 @@ public class InterestUtil {
 
 		Results<Interest> results = contactsEngineClient.getInterests(
 			faroProject, contactsEntityId, null, null, query,
-			interest.getDateRecorded(), interest.getDateRecorded(),
 			Rels.Interests.PAGES_VISITED, cur, delta, orderByFields);
 
 		Function<Interest, InterestDisplay> function = InterestDisplay::new;

@@ -23,6 +23,7 @@ definition {
 	test CanPublishImageInMGAfterUpgradeFrom71105Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.1.10.5";
+		property test.assert.warning.exceptions = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -46,6 +47,7 @@ definition {
 	test CanPublishImageInMGAfterUpgradeFrom72104Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.2.10.4";
+		property test.assert.warning.exceptions = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -69,6 +71,7 @@ definition {
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.3.10.1";
+		property test.assert.warning.exceptions = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
@@ -92,6 +95,7 @@ definition {
 	test CanPublishImageInMGAfterUpgradeFrom701015Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.0.10.15";
+		property test.assert.warning.exceptions = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

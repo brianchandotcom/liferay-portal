@@ -16,11 +16,11 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {Dropdown} from '~/atoms';
 import {BuildStatuses} from '~/util/statuses';
 
 import Form from '../../../../components/Form';
 import Tooltip from '../../../../components/Tooltip';
-import {Dropdown} from '../../../../context/HeaderContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import useDebounce from '../../../../hooks/useDebounce';
 import {useFetch} from '../../../../hooks/useFetch';
@@ -31,6 +31,22 @@ import {testrayBuildImpl} from '../../../../services/rest/TestrayBuild';
 type BuildAddButtonProps = {
 	routineId: string;
 };
+
+const dropDownItems: Dropdown = [
+	{
+		items: [
+			{
+				label: i18n.translate('new-build'),
+				path: './create',
+			},
+			{
+				label: i18n.sub('new-x', 'template'),
+				path: './create/template/true',
+			},
+		],
+		title: i18n.translate('create'),
+	},
+];
 
 const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 	const navigate = useNavigate();
@@ -74,22 +90,6 @@ const BuildAddButton: React.FC<BuildAddButtonProps> = ({routineId}) => {
 
 	const buildTemplates = buildResponseWithSearch?.items || [];
 	const templatesCount = buildResponse?.totalCount || 0;
-
-	const dropDownItems: Dropdown = [
-		{
-			items: [
-				{
-					label: i18n.translate('new-build'),
-					path: './create',
-				},
-				{
-					label: i18n.sub('new-x', 'template'),
-					path: './create/template/true',
-				},
-			],
-			title: i18n.translate('create'),
-		},
-	];
 
 	return (
 		<ClayDropDown

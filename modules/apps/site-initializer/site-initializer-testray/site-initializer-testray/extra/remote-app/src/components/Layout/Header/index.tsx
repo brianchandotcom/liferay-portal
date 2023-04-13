@@ -12,25 +12,20 @@
  * details.
  */
 
-import {Outlet} from 'react-router-dom';
+import HeaderBreadcrumb from './HeaderBreadcrumb';
+import HeaderDropDown from './HeaderDropDown';
+import HeaderTabs from './HeaderTabs';
 
-import Sidebar from '../Sidebar';
-import Header from './Header';
+const Header = () => (
+	<header className="tr-header-container">
+		<div className="d-flex">
+			<HeaderDropDown />
 
-const Layout = () => (
-	<main className="tr-main">
-		<div className="tr-main__body">
-			<Sidebar />
-
-			<div className="tr-main__body__page">
-				<Header />
-
-				<section className="tr-main__body__page__content">
-					<Outlet />
-				</section>
-			</div>
+			<HeaderBreadcrumb />
 		</div>
-	</main>
+
+		<HeaderTabs />
+	</header>
 );
 
-export default Layout;
+export default Header;

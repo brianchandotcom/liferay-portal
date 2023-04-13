@@ -44,6 +44,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Produc
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.RelatedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuSubscriptionConfigurationResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuVirtualSettingsResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SpecificationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
@@ -73,6 +74,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductVirtualS
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.RelatedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuSubscriptionConfigurationResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuVirtualSettingsResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -210,6 +212,8 @@ public class ServletDataImpl implements ServletData {
 			_skuResourceComponentServiceObjects);
 		Query.setSkuSubscriptionConfigurationResourceComponentServiceObjects(
 			_skuSubscriptionConfigurationResourceComponentServiceObjects);
+		Query.setSkuVirtualSettingsResourceComponentServiceObjects(
+			_skuVirtualSettingsResourceComponentServiceObjects);
 		Query.setSpecificationResourceComponentServiceObjects(
 			_specificationResourceComponentServiceObjects);
 	}
@@ -1240,6 +1244,16 @@ public class ServletDataImpl implements ServletData {
 							SkuSubscriptionConfigurationResourceImpl.class,
 							"getIdSkuSubscriptionConfiguration"));
 					put(
+						"query#skuByExternalReferenceCodeSkuVirtualSettings",
+						new ObjectValuePair<>(
+							SkuVirtualSettingsResourceImpl.class,
+							"getSkuByExternalReferenceCodeSkuVirtualSettings"));
+					put(
+						"query#skuIdSkuVirtualSettings",
+						new ObjectValuePair<>(
+							SkuVirtualSettingsResourceImpl.class,
+							"getSkuIdSkuVirtualSettings"));
+					put(
 						"query#specifications",
 						new ObjectValuePair<>(
 							SpecificationResourceImpl.class,
@@ -1300,6 +1314,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							MappedProductResourceImpl.class,
 							"getProductByExternalReferenceCodeMappedProductsPage"));
+					put(
+						"query#Catalog.skuByExternalReferenceCodeSkuVirtualSettings",
+						new ObjectValuePair<>(
+							SkuVirtualSettingsResourceImpl.class,
+							"getSkuByExternalReferenceCodeSkuVirtualSettings"));
 					put(
 						"query#Catalog.productByExternalReferenceCodeDiagram",
 						new ObjectValuePair<>(
@@ -1537,5 +1556,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SkuSubscriptionConfigurationResource>
 		_skuSubscriptionConfigurationResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SkuVirtualSettingsResource>
+		_skuVirtualSettingsResourceComponentServiceObjects;
 
 }

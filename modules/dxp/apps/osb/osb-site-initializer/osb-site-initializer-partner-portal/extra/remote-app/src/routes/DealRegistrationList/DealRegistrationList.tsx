@@ -10,7 +10,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -22,11 +21,8 @@ import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
 import Search from '../../common/components/TableHeader/Search';
 import {DealRegistrationColumnKey} from '../../common/enums/dealRegistrationColumnKey';
-import {PRMPageRoute} from '../../common/enums/prmPageRoute';
-import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import {DealRegistrationListItem} from '../../common/interfaces/dealRegistrationListItem';
-import {Liferay} from '../../common/services/liferay';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
 import useFilters from './hooks/useFilters';
@@ -53,7 +49,6 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 		sort
 	);
 	const filteredData = data.items && getFilteredItems(data.items);
-	const siteURL = useLiferayNavigate();
 	const columns = [
 		{
 			columnKey: DealRegistrationColumnKey.ACCOUNT_NAME,
@@ -166,17 +161,6 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 							Export Deal Registrations
 						</CSVLink>
 					)}
-
-					<ClayButton
-						className="mb-2 mb-lg-0 mr-2"
-						onClick={() =>
-							Liferay.Util.navigate(
-								`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`
-							)
-						}
-					>
-						Register New Deal
-					</ClayButton>
 				</div>
 			</TableHeader>
 

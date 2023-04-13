@@ -91,7 +91,7 @@ public class AccountDTOConverter
 				name = accountEntry.getName();
 				root =
 					accountEntry.getParentAccountEntryId() ==
-						CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID;
+						AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT;
 				taxId = accountEntry.getTaxIdNumber();
 				type = _toCommerceAccountType(accountEntry.getType());
 			}

@@ -17,7 +17,7 @@ package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.account.service.CommerceAccountUserRelService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.UserResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -142,8 +142,9 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			}
 		}
 
-		_commerceAccountUserRelService.addCommerceAccountUserRel(
-			accountEntry.getAccountEntryId(), invitedUser.getUserId(), roleIds,
+		_commerceAccountHelper.addAccountEntryUserRels(
+			accountEntry.getAccountEntryId(),
+			new long[] {invitedUser.getUserId()}, null, roleIds,
 			serviceContext);
 
 		return _userDTOConverter.toDTO(
@@ -156,7 +157,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	private AccountEntryService _accountEntryService;
 
 	@Reference
-	private CommerceAccountUserRelService _commerceAccountUserRelService;
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

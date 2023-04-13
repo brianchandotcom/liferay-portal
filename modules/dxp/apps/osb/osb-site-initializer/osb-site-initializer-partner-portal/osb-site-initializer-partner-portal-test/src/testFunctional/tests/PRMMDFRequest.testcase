@@ -1095,4 +1095,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177043. Verify that If all claims (two) were made, so the message 'No more claim can be submitted' and the claim button will be not displayed anymore"
+	@priority = 5
+	test VerifyMessageWhenTwoClaimsWasMade {
+		property test.name.skip.portal.instance = "PRMMDFRequest#VerifyMessageWhenTwoClaimsWasMade";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that a partner submit a new MDF Request") {
+			JSONPRM.createMDFRequest(
+				secondActivityName = "Activity Name 2",
+				secondBudgetValueList = 1000);
+		}
+
+		task ("When a manager approves the submitted MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.changeMDFStatus(key_statusButton = "Approve");
+		}
+
+		task ("And a partner makes two claims") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.createNewClaim(
+				activityIndex = 1,
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+		}
+
+		task ("Then I can see the message") {
+			PRMMDFRequest.assertClaimMessage(claimMessage = "You already submitted 2 claims.");
+		}
+	}
+
 }

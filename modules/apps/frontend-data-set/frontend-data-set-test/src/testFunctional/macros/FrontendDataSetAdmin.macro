@@ -33,13 +33,15 @@ definition {
 	}
 
 	macro searchProvider {
+		var searchTerm = "${key_provider}";
+
 		Click(
 			dropdownLabel = "Choose an Option",
 			locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 
 		Type(
-			locator1 = "ContentDashboard#SEARCH_FIELD",
-			value1 = ${key_provider});
+			locator1 = "MenuItem#SEARCH_FIELD",
+			value1 = ${searchTerm});
 	}
 
 	macro selectProvider {

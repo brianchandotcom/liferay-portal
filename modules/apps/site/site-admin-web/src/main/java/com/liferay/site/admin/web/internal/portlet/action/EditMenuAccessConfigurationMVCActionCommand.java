@@ -17,7 +17,9 @@ package com.liferay.site.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.configuration.MenuAccessConfigurationProvider;
 
 import javax.portlet.ActionRequest;
@@ -44,7 +46,11 @@ public class EditMenuAccessConfigurationMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_menuAccessConfigurationProvider.updateMenuAccessConfiguration(
+			themeDisplay.getScopeGroupId(),
 			ParamUtil.getStringValues(
 				actionRequest, "roleSearchContainerPrimaryKeys"),
 			ParamUtil.getBoolean(actionRequest, "showControlMenuByRole"));

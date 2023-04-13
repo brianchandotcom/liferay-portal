@@ -138,9 +138,75 @@ definition {
 	@description = "LPS-163716 - Verify it's possible to create an object entry with the Picklist default value set via Input as Value"
 	@priority = 5
 	test CanSetPicklistViaInputAsValue {
+		property custom.properties = "feature.flag.LPS-163716=true";
+		property portal.acceptance = "true";
 
-		// TODO pending implementation
+		task ("Given a picklist with several items") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
+			for (var itemNumber : list "1,2,3,4,5") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "picklistItem${itemNumber}",
+					itemName = "Picklist Item ${itemNumber}",
+					picklistName = "Custom Picklist");
+			}
+		}
+
+		task ("And given a custom object with a picklist field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 181202",
+				objectName = "CustomObject181202",
+				pluralLabelName = "Custom Objects 181202");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Field Picklist",
+				fieldName = "fieldPicklist",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject181202",
+				picklistName = "Custom Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject181202");
+		}
+
+		task ("And given the default value is set via Input As Value") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 181202");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
+
+			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Use Default Value",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
+
+			Click(
+				key_dropdownItem = "Picklist Item 1",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			PortletEntry.save();
+		}
+
+		task ("When creating an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject181202");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.save();
+		}
+
+		task ("Then the default value is seen and the object entry is created with the default value") {
+			Navigator.gotoBack();
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
+		}
 	}
 
 	@description = "LPS-163716 - Verify updating the default value configuration for the Picklist field affects the object entries"

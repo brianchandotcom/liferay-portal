@@ -144,8 +144,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_portal.getLocale(httpServletRequest), getClass());
 
-		values.put(
-			"title", _html.escape(_language.get(resourceBundle, "page-audit")));
+		values.put("title", _language.get(resourceBundle, "page-audit"));
 
 		IconTag iconTag = new IconTag();
 
@@ -333,8 +332,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			StringBundler sb = new StringBundler(25);
 
 			sb.append("<div aria-label=\"");
-			sb.append(
-				_html.escape(_language.get(resourceBundle, "page-audit")));
+			sb.append(_language.get(resourceBundle, "page-audit"));
 			sb.append("\" class=\"");
 
 			if (isPanelStateOpen(httpServletRequest)) {
@@ -353,11 +351,9 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			sb.append("<div class=\"autofit-row autofit-row-center\"><div ");
 			sb.append("class=\"autofit-col autofit-col-expand\">");
 			sb.append("<h1 class=\"sr-only\">");
-			sb.append(
-				_html.escape(_language.get(resourceBundle, "page-audit")));
+			sb.append(_language.get(resourceBundle, "page-audit"));
 			sb.append("</h1><span>");
-			sb.append(
-				_html.escape(_language.get(resourceBundle, "page-audit")));
+			sb.append(_language.get(resourceBundle, "page-audit"));
 			sb.append("</span></div>");
 			sb.append("<div class=\"autofit-col\">");
 

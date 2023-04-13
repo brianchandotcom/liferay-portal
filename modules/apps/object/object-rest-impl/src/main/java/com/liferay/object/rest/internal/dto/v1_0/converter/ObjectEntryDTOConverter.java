@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -79,6 +80,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
+import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -263,14 +265,13 @@ public class ObjectEntryDTOConverter
 		return nestedFieldsContext.getDepth();
 	}
 
-	private Map<String, Object> _getNestedFieldsRelatedProperties(
-			DTOConverterContext dtoConverterContext,
+	private Map<String, Serializable> _getNestedFieldsRelatedProperties(
+			DTOConverterContext dtoConverterContext, long groupId,
 			List<String> nestedFieldNames, int nestedFieldsDepth,
-			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, long primaryKey)
 		throws Exception {
 
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Serializable> map = new HashMap<>();
 
 		if ((nestedFieldsDepth == 0) || ListUtil.isEmpty(nestedFieldNames)) {
 			return map;
@@ -303,25 +304,64 @@ public class ObjectEntryDTOConverter
 							relatedObjectDefinition.getCompanyId(),
 							objectRelationship.getType());
 
-				List<com.liferay.object.model.ObjectEntry>
-					relatedObjectEntries =
-						objectRelatedModelsProvider.getRelatedModels(
-							objectEntry.getGroupId(),
-							objectRelationship.getObjectRelationshipId(),
-							objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS);
+				List<?> relatedModels =
+					objectRelatedModelsProvider.getRelatedModels(
+						groupId, objectRelationship.getObjectRelationshipId(),
+						primaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				map.put(
-					objectRelationship.getName(),
-					TransformUtil.transformToArray(
-						relatedObjectEntries,
-						relatedObjectEntry -> _toDTO(
-							_getDTOConverterContext(
-								dtoConverterContext,
-								relatedObjectEntry.getObjectEntryId()),
-							nestedFieldNames, nestedFieldsDepth - 1,
-							objectEntry),
-						ObjectEntry.class));
+				if (relatedObjectDefinition.isSystem()) {
+					SystemObjectDefinitionManager
+						systemObjectDefinitionManager =
+							_systemObjectDefinitionManagerRegistry.
+								getSystemObjectDefinitionManager(
+									relatedObjectDefinition.getName());
+
+					map.put(
+						objectRelationship.getName(),
+						TransformUtil.transformToArray(
+							relatedModels,
+							relatedModel -> {
+								BaseModel<?> baseModel =
+									(BaseModel<?>)relatedModel;
+
+								Map<String, Serializable>
+									nestedFieldsRelatedProperties =
+										_getNestedFieldsRelatedProperties(
+											dtoConverterContext, groupId,
+											nestedFieldNames,
+											nestedFieldsDepth - 1,
+											relatedObjectDefinition,
+											(Long)baseModel.getPrimaryKeyObj());
+
+								return ExtendedEntity.extend(
+									DTOConverterUtil.toDTO(
+										baseModel, _dtoConverterRegistry,
+										systemObjectDefinitionManager,
+										dtoConverterContext.getUser()),
+									nestedFieldsRelatedProperties, null);
+							},
+							Object.class));
+				}
+				else {
+					map.put(
+						objectRelationship.getName(),
+						TransformUtil.transformToArray(
+							relatedModels,
+							relatedModel -> {
+								com.liferay.object.model.ObjectEntry
+									objectEntry =
+										(com.liferay.object.model.ObjectEntry)
+											relatedModel;
+
+								return _toDTO(
+									_getDTOConverterContext(
+										dtoConverterContext,
+										objectEntry.getObjectEntryId()),
+									nestedFieldNames, nestedFieldsDepth - 1,
+									objectEntry);
+							},
+							ObjectEntry.class));
+				}
 			}
 		}
 
@@ -625,8 +665,9 @@ public class ObjectEntryDTOConverter
 
 		map.putAll(
 			_getNestedFieldsRelatedProperties(
-				dtoConverterContext, nestedFieldNames, nestedFieldsDepth,
-				objectDefinition, objectEntry));
+				dtoConverterContext, objectEntry.getGroupId(), nestedFieldNames,
+				nestedFieldsDepth, objectDefinition,
+				objectEntry.getObjectEntryId()));
 
 		return map;
 	}

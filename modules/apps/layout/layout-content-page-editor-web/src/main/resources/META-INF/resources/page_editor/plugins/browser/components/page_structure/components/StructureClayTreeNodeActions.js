@@ -75,7 +75,7 @@ export default function StructureClayTreeNodeActions({
 				aria-haspopup="true"
 				aria-label={Liferay.Language.get('options')}
 				className={classNames(
-					'page-editor__page-structure__tree-node__actions-button',
+					'ml-0 page-editor__page-structure__tree-node__actions-button',
 					{
 						'page-editor__page-structure__tree-node__actions-button--visible': visible,
 					}

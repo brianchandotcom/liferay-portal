@@ -47,8 +47,6 @@ html#{$cadmin-selector} {
 			.page-editor__page-structure__tree-node__actions-button,
 			.page-editor__page-structure__tree-node__visibility-button {
 				color: $cadmin-secondary;
-				margin-left: 0;
-				transform: translateY(1px);
 				visibility: hidden;
 
 				&--visible {

@@ -228,13 +228,10 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 			_appender.stop();
 
-			String errorMessage =
-				"Unable to determine since the document library size is too " +
-					"large. Increase the timeout or check manually.";
-
 			_assertLogContextContains(
-				"upgrade.report.document.library.storage.size", errorMessage);
-			_assertReport(errorMessage);
+				"upgrade.report.document.library.storage.size",
+				"Unable to determine");
+			_assertReport("Unable to determine");
 		}
 	}
 

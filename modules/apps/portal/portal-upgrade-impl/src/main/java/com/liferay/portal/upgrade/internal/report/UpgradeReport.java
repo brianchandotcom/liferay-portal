@@ -338,9 +338,14 @@ public class UpgradeReport {
 				}
 
 				if (_documentLibrarySizeThread.isAlive()) {
-					return "Unable to determine since the document library " +
-						"size is too large. Increase the timeout or check " +
-							"manually.";
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Unable to determine the document library size " +
+								"probably because it is too large. Increase " +
+									"the timeout or check it manually.");
+					}
+
+					return "Unable to determine";
 				}
 
 				return LanguageUtil.formatStorageSize(

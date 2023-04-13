@@ -194,7 +194,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"title", "friendlyUrlPath"};
+		return new String[] {"friendlyUrlPath", "title"};
 	}
 
 	@Override

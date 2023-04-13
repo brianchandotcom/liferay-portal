@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_LINK_HEADER</td>
-	<td>//span[contains(.,'Body with Password Link')]</td>
+	<td>//span[contains(@class,'control-label') and contains(.,'Body With Password Link')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER</td>
-	<td>//span[contains(.,'Body without Password')]</td>
+	<td>//span[contains(@class,'control-label') and contains(.,'Body Without Password')]</td>
 	<td></td>
 </tr>
 <tr>

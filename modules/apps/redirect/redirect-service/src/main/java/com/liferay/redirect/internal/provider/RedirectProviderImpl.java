@@ -179,7 +179,7 @@ public class RedirectProviderImpl
 		}
 
 		for (String crawlerUserAgent : _getCrawlerUserAgents()) {
-			if (userAgent.contains(StringUtil.toLowerCase(crawlerUserAgent))) {
+			if (userAgent.contains(crawlerUserAgent)) {
 				return true;
 			}
 		}

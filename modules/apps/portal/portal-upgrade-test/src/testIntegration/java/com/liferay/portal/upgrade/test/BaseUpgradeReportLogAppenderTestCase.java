@@ -201,7 +201,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	}
 
 	@Test
-	public void testGetDLStorageInfoAfterTimeout() throws Exception {
+	public void testGetDLStorageSizeAfterTimeout() throws Exception {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =
@@ -239,7 +239,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	}
 
 	@Test
-	public void testGetDLStorageInfoInGbBeforeTimeout() throws Exception {
+	public void testGetDLStorageSizeInGb() throws Exception {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =
@@ -269,7 +269,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	}
 
 	@Test
-	public void testGetDLStorageInfoInMbBeforeTimeout() throws Exception {
+	public void testGetDLStorageSizeInMb() throws Exception {
 		_appender.start();
 
 		try (SafeCloseable safeCloseable =

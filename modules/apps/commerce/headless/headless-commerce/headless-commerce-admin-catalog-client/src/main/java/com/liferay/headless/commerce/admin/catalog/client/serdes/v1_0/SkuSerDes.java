@@ -366,6 +366,16 @@ public class SkuSerDes {
 			sb.append(String.valueOf(sku.getSkuSubscriptionConfiguration()));
 		}
 
+		if (sku.getSkuVirtualSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuVirtualSettings\": ");
+
+			sb.append(String.valueOf(sku.getSkuVirtualSettings()));
+		}
+
 		if (sku.getUnspsc() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -611,6 +621,15 @@ public class SkuSerDes {
 				String.valueOf(sku.getSkuSubscriptionConfiguration()));
 		}
 
+		if (sku.getSkuVirtualSettings() == null) {
+			map.put("skuVirtualSettings", null);
+		}
+		else {
+			map.put(
+				"skuVirtualSettings",
+				String.valueOf(sku.getSkuVirtualSettings()));
+		}
+
 		if (sku.getUnspsc() == null) {
 			map.put("unspsc", null);
 		}
@@ -813,6 +832,15 @@ public class SkuSerDes {
 				if (jsonParserFieldValue != null) {
 					sku.setSkuSubscriptionConfiguration(
 						SkuSubscriptionConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "skuVirtualSettings")) {
+
+				if (jsonParserFieldValue != null) {
+					sku.setSkuVirtualSettings(
+						SkuVirtualSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

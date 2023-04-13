@@ -788,6 +788,36 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuSubscriptionConfiguration skuSubscriptionConfiguration;
 
+	@Schema
+	@Valid
+	public SkuVirtualSettings getSkuVirtualSettings() {
+		return skuVirtualSettings;
+	}
+
+	public void setSkuVirtualSettings(SkuVirtualSettings skuVirtualSettings) {
+		this.skuVirtualSettings = skuVirtualSettings;
+	}
+
+	@JsonIgnore
+	public void setSkuVirtualSettings(
+		UnsafeSupplier<SkuVirtualSettings, Exception>
+			skuVirtualSettingsUnsafeSupplier) {
+
+		try {
+			skuVirtualSettings = skuVirtualSettingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SkuVirtualSettings skuVirtualSettings;
+
 	@Schema(example = "1234567890")
 	public String getUnspsc() {
 		return unspsc;
@@ -1204,6 +1234,16 @@ public class Sku implements Serializable {
 			sb.append("\"skuSubscriptionConfiguration\": ");
 
 			sb.append(String.valueOf(skuSubscriptionConfiguration));
+		}
+
+		if (skuVirtualSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuVirtualSettings\": ");
+
+			sb.append(String.valueOf(skuVirtualSettings));
 		}
 
 		if (unspsc != null) {

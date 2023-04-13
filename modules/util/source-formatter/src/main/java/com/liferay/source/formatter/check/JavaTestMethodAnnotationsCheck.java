@@ -65,7 +65,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			"BeforeClass");
 		_checkAnnotationForMethod(fileName, javaTerm, "^test", false, "Test");
 
-		_checkUseFeatureFlags(fileName, javaTerm);
+		_checkFeatureFlagsAnnotation(fileName, javaTerm);
 
 		return javaTerm.getContent();
 	}
@@ -150,7 +150,9 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private void _checkUseFeatureFlags(String fileName, JavaTerm javaTerm) {
+	private void _checkFeatureFlagsAnnotation(
+		String fileName, JavaTerm javaTerm) {
+
 		String javaTermContent = javaTerm.getContent();
 
 		int x = -1;

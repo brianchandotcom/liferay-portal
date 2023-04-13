@@ -5,6 +5,7 @@
 
 	&:focus,
 	&:focus-within,
+	&:hover,
 	&.active {
 		outline: none;
 
@@ -61,14 +62,6 @@
 		opacity: 0;
 
 		&:focus {
-			opacity: 1;
-		}
-	}
-
-	&:hover {
-		.delete-item-button,
-		.menu-item-options-button,
-		.site_navigation_menu_editor_MenuItem-add-button {
 			opacity: 1;
 		}
 	}

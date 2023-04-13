@@ -1422,22 +1422,6 @@ public class ObjectDefinitionLocalServiceTest {
 		// After Update a modifiable system object definition check its
 		// properties
 
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		objectDefinition =
-			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				_objectDefinitionLocalService,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
-
 		objectDefinition =
 			_objectDefinitionLocalService.publishSystemObjectDefinition(
 				TestPropsValues.getUserId(),

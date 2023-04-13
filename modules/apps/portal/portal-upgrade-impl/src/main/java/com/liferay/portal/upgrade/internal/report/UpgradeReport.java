@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.upgrade.internal.status.UpgradeStatusImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -78,14 +78,14 @@ public class UpgradeReport {
 
 	public void generateReport(
 		PersistenceManager persistenceManager, ReleaseManager releaseManager,
-		UpgradeStatus upgradeStatus) {
+		UpgradeStatusImpl upgradeStatusImpl) {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Starting upgrade report generation");
 		}
 
 		Map<String, Object> reportData = _getReportData(
-			persistenceManager, releaseManager, upgradeStatus);
+			persistenceManager, releaseManager, upgradeStatusImpl);
 
 		_printToLogContext(reportData);
 		_writeToFile(reportData);
@@ -146,7 +146,7 @@ public class UpgradeReport {
 
 	private Map<String, Object> _getReportData(
 		PersistenceManager persistenceManager, ReleaseManager releaseManager,
-		UpgradeStatus upgradeStatus) {
+		UpgradeStatusImpl upgradeStatusImpl) {
 
 		return LinkedHashMapBuilder.<String, Object>put(
 			"execution.date",
@@ -173,7 +173,7 @@ public class UpgradeReport {
 				"initial.schema.version",
 				() -> {
 					String initialSchemaVersion =
-						upgradeStatus.getInitialSchemaVersion(
+						upgradeStatusImpl.getInitialSchemaVersion(
 							ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 					if ((initialSchemaVersion != null) &&
@@ -198,8 +198,9 @@ public class UpgradeReport {
 			).put(
 				"final.schema.version",
 				() -> {
-					String schemaVersion = upgradeStatus.getFinalSchemaVersion(
-						ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+					String schemaVersion =
+						upgradeStatusImpl.getFinalSchemaVersion(
+							ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 					if (schemaVersion != null) {
 						return schemaVersion;
@@ -232,9 +233,9 @@ public class UpgradeReport {
 				}
 			).build()
 		).put(
-			"type", upgradeStatus.getType()
+			"type", upgradeStatusImpl.getType()
 		).put(
-			"result", upgradeStatus.getState()
+			"result", upgradeStatusImpl.getState()
 		).put(
 			"database.version",
 			() -> {
@@ -386,7 +387,7 @@ public class UpgradeReport {
 			"longest.upgrade.processes",
 			() -> {
 				Map<String, ArrayList<String>> eventMessages =
-					upgradeStatus.getUpgradeProcessMessages();
+					upgradeStatusImpl.getUpgradeProcessMessages();
 
 				List<String> messages = eventMessages.get(
 					UpgradeProcess.class.getName());
@@ -449,9 +450,10 @@ public class UpgradeReport {
 				return longestRunningUpgradeProcesses;
 			}
 		).put(
-			"errors", _getMessagesPrinters(upgradeStatus.getErrorMessages())
+			"errors", _getMessagesPrinters(upgradeStatusImpl.getErrorMessages())
 		).put(
-			"warnings", _getMessagesPrinters(upgradeStatus.getWarningMessages())
+			"warnings",
+			_getMessagesPrinters(upgradeStatusImpl.getWarningMessages())
 		).put(
 			"osgi.status",
 			() -> {

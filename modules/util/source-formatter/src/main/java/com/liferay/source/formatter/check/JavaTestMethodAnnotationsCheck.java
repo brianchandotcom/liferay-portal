@@ -162,14 +162,14 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				break;
 			}
 
-			List<String> parameters = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				JavaSourceUtil.getMethodCall(javaTermContent, x));
 
-			if (parameters.size() > 1) {
+			if (parameterList.size() > 1) {
 				continue;
 			}
 
-			String parameter = parameters.get(0);
+			String parameter = parameterList.get(0);
 
 			if (!parameter.startsWith(
 					"UnicodePropertiesBuilder.setProperty(")) {
@@ -177,15 +177,15 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			parameters = JavaSourceUtil.getParameterList(
+			parameterList = JavaSourceUtil.getParameterList(
 				JavaSourceUtil.getMethodCall(parameter, 0));
 
-			if (parameters.size() != 2) {
+			if (parameterList.size() != 2) {
 				continue;
 			}
 
-			String firstParameter = StringUtil.unquote(parameters.get(0));
-			String secondParameter = StringUtil.unquote(parameters.get(1));
+			String firstParameter = StringUtil.unquote(parameterList.get(0));
+			String secondParameter = StringUtil.unquote(parameterList.get(1));
 
 			if (firstParameter.matches("feature\\.flag\\.[\\w-]+") &&
 				secondParameter.equals("true")) {

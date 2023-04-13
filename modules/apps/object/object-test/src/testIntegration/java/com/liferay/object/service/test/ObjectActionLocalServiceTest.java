@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
+import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
@@ -48,6 +49,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.test.util.ObjectActionTestUtil;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -60,6 +62,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -79,6 +82,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -122,6 +126,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -188,6 +193,43 @@ public class ObjectActionLocalServiceTest {
 				"Error message is null for locale " +
 					LocaleUtil.US.getDisplayName(),
 				objectActionErrorMessageException.getMessage());
+		}
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectActionLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String objectActionExecutorKey = RandomTestUtil.randomString();
+
+		ServiceRegistration<ObjectActionExecutor> serviceRegistration =
+			bundleContext.registerService(
+				ObjectActionExecutor.class,
+				ObjectActionTestUtil.createProxyObjectActionExecutor(
+					CompanyThreadLocal.getCompanyId(), objectActionExecutorKey,
+					Collections.singletonList(_objectDefinition.getName())),
+				new HashMapDictionary<>());
+
+		try {
+			_objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_userObjectDefinition.getObjectDefinitionId(), true,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), objectActionExecutorKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				new UnicodeProperties());
+		}
+		catch (ObjectActionExecutorKeyException
+					objectActionExecutorKeyException) {
+
+			Assert.assertEquals(
+				objectActionExecutorKeyException.getMessage(),
+				StringBundler.concat(
+					"The object action executor key ", objectActionExecutorKey,
+					" is not allowed for object definition ",
+					_userObjectDefinition.getName()));
 		}
 
 		try {
@@ -476,6 +518,15 @@ public class ObjectActionLocalServiceTest {
 				originalPermissionChecker);
 		}
 
+		// Add object action with new object action executor key
+
+		_addObjectAction(
+			RandomTestUtil.randomString(), objectActionExecutorKey,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			new UnicodeProperties());
+
+		serviceRegistration.unregister();
+
 		// Delete object actions
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);
@@ -483,39 +534,6 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction3);
 		_objectActionLocalService.deleteObjectAction(objectAction4);
 		_objectActionLocalService.deleteObjectAction(objectAction5);
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			ObjectActionLocalServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		String objectActionExecutorKey = RandomTestUtil.randomString();
-
-		try {
-			_objectActionLocalService.addObjectAction(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_userObjectDefinition.getObjectDefinitionId(), true,
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, objectActionExecutorKey,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-				unicodeProperties);
-		}
-		catch (ObjectActionExecutorKeyException
-					objectActionExecutorKeyException) {
-
-			Assert.assertEquals(
-				objectActionExecutorKeyException.getMessage(),
-				StringBundler.concat(
-					"The object action executor key ", objectActionExecutorKey,
-					" is not allowed for object definition ",
-					_userObjectDefinition.getName()));
-		}
-
-		_addObjectAction(
-			RandomTestUtil.randomString(), objectActionExecutorKey,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, unicodeProperties);
 	}
 
 	@Test

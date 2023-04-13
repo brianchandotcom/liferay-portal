@@ -21,6 +21,7 @@ import {
 	paymentDueDate,
 	yearToYear,
 } from '../utils/dateFormatter';
+import {externalReferenceCodeGenerator} from '../utils/externalReferenceCodeGenerator';
 import {axios} from './liferay/api';
 import {Liferay} from './liferay/liferay';
 
@@ -117,6 +118,7 @@ const adaptPolicyRequest = (
 	currencyType: 'USD',
 	dataJSON: applicationData.dataJSON,
 	endDate,
+	externalReferenceCode: externalReferenceCodeGenerator('POL'),
 	lastPaymentDate,
 	paymentDueDate,
 	policyCreateDate: nowDate,

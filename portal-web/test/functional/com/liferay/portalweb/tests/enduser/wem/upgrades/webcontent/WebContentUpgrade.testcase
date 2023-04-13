@@ -918,7 +918,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126653. Upgrade 7.0.4 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher704 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -929,7 +929,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = "false");
 	}
 
-	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126654. Upgrade 7.1.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher713 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -940,7 +940,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126655. Upgrade 7.2.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher721 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -951,7 +951,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126656. Upgrade 7.3.5 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher735 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -962,7 +962,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126656. Upgrade 7.3.10 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher7310 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -973,7 +973,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126654. Upgrade 7.1.10.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher71103 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -984,7 +984,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126655. Upgrade 7.2.10.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher72101 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -995,7 +995,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126653. Upgrade 7.0.10.14 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWCStructureWCTemplateAndViewInWCDAndAssetPublisher701014 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1006,7 +1006,7 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = "false");
 	}
 
-	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126653. Upgrade 7.0.4 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher704 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1017,7 +1017,7 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126654. Upgrade 7.1.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher713 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1028,7 +1028,7 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126655. Upgrade 7.2.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher721 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1039,7 +1039,7 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126656. Upgrade 7.3.5 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher735 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1050,7 +1050,7 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126656. Upgrade 7.3.10 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher7310 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1061,7 +1061,7 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126654. Upgrade 7.1.10.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher71103 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1072,7 +1072,7 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126655. Upgrade 7.2.10.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher72101 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1083,7 +1083,7 @@ definition {
 		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126653. Upgrade 7.0.10.14 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test EditWebContentAndViewInWCDAndAssetPublisher701014 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1147,7 +1147,7 @@ definition {
 		Upgrade.viewSpecificDisplayPageTemplateViaAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126653. Upgrade 7.0.4 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher704 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1158,7 +1158,7 @@ definition {
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher(webContentColor = "false");
 	}
 
-	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126654. Upgrade 7.1.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher713 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1169,7 +1169,7 @@ definition {
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126655. Upgrade 7.2.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher721 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1180,7 +1180,7 @@ definition {
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126656. Upgrade 7.3.5 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher735 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1191,7 +1191,7 @@ definition {
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126656. Upgrade 7.3.10 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher7310 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1202,7 +1202,7 @@ definition {
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126654. Upgrade 7.1.10.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher71103 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1213,7 +1213,7 @@ definition {
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126655. Upgrade 7.2.10.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher72101 {
 		property data.archive.type = "data-archive-web-content-with-fields";
@@ -1224,7 +1224,7 @@ definition {
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@description = "This is a test for LPS-126653. Upgrade 7.0.10.14 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = 5
 	test ViewWebContentWCStructureWCTemplateWCDAndAssetPublisher701014 {
 		property data.archive.type = "data-archive-web-content-with-fields";

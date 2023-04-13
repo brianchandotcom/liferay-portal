@@ -168,20 +168,16 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				propsUtilAddPropertiesMethodCall);
 
-			if (parameterList.size() != 1) {
-				continue;
-			}
-
-			String parameter = parameterList.get(0);
-
-			if (!parameter.startsWith(
+			if ((parameterList.size() != 1) ||
+				!StringUtil.startsWith(
+					parameterList.get(0),
 					"UnicodePropertiesBuilder.setProperty(")) {
 
 				continue;
 			}
 
 			String unicodePropertiesBuilderSetPropertyMethodCall =
-				JavaSourceUtil.getMethodCall(parameter, 0);
+				JavaSourceUtil.getMethodCall(parameterList.get(0), 0);
 
 			parameterList = JavaSourceUtil.getParameterList(
 				unicodePropertiesBuilderSetPropertyMethodCall);

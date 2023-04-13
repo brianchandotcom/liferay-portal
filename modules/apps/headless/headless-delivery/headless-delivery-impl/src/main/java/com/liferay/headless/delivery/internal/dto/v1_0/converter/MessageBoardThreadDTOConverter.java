@@ -48,9 +48,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
-import java.util.List;
-import java.util.stream.Stream;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -97,15 +94,11 @@ public class MessageBoardThreadDTOConverter
 				dateModified = mbMessage.getModifiedDate();
 				encodingFormat = mbMessage.getFormat();
 				friendlyUrlPath = mbMessage.getUrlSubject();
-				hasValidAnswer = Stream.of(
+				hasValidAnswer = ListUtil.exists(
 					_mbMessageLocalService.getChildMessages(
 						mbMessage.getMessageId(),
-						WorkflowConstants.STATUS_APPROVED)
-				).flatMap(
-					List::stream
-				).anyMatch(
-					MBMessage::isAnswer
-				);
+						WorkflowConstants.STATUS_APPROVED),
+					MBMessage::isAnswer);
 				headline = mbMessage.getSubject();
 				id = mbThread.getThreadId();
 				keywords = ListUtil.toArray(

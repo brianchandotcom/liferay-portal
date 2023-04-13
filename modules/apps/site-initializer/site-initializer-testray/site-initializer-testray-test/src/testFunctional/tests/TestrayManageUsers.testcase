@@ -128,9 +128,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "changedfirstname Updateln");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+			Testray.goToProjectPage(projectName = "changedfirstname Updateln");
 		}
 
 		task ("Then the account information is displayed in Manage Users and Manage Account") {

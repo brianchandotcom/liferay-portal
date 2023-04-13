@@ -240,26 +240,7 @@ public class WebServerServlet extends HttpServlet {
 				}
 			}
 
-			String objectDefinitionExternalReferenceCode = ParamUtil.getString(
-				httpServletRequest, "objectDefinitionExternalReferenceCode");
-
-			if (Validator.isNotNull(objectDefinitionExternalReferenceCode)) {
-				Message message = new Message();
-
-				message.put("companyId", user.getCompanyId());
-				message.put(
-					"objectDefinitionExternalReferenceCode",
-					objectDefinitionExternalReferenceCode);
-				message.put(
-					"objectEntryExternalReferenceCode",
-					ParamUtil.getString(
-						httpServletRequest,
-						"objectEntryExternalReferenceCode"));
-				message.put("userId", user.getUserId());
-
-				_messageBus.sendMessage(
-					DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);
-			}
+			sendMessageObjectEntryAttachmentDownload(httpServletRequest, user);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -274,6 +255,46 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @see com.liferay.portal.servlet.filters.virtualhost.VirtualHostFilter
+	 */
+	public static void sendMessageObjectEntryAttachmentDownload(
+		HttpServletRequest httpServletRequest, User user) {
+
+		String objectDefinitionExternalReferenceCode = ParamUtil.getString(
+			httpServletRequest, "objectDefinitionExternalReferenceCode");
+
+		if (Validator.isNull(objectDefinitionExternalReferenceCode)) {
+			return;
+		}
+
+		try {
+			if (user == null) {
+				user = _getUser(httpServletRequest);
+			}
+
+			Message message = new Message();
+
+			message.put("companyId", user.getCompanyId());
+			message.put(
+				"objectDefinitionExternalReferenceCode",
+				objectDefinitionExternalReferenceCode);
+			message.put(
+				"objectEntryExternalReferenceCode",
+				ParamUtil.getString(
+					httpServletRequest, "objectEntryExternalReferenceCode"));
+			message.put("userId", user.getUserId());
+
+			_messageBus.sendMessage(
+				DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 	}
 
 	@Override

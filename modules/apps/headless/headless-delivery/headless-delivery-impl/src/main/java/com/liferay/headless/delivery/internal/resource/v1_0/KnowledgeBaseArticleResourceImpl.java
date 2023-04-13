@@ -72,7 +72,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -667,6 +666,19 @@ public class KnowledgeBaseArticleResourceImpl
 			KBArticle kbArticle, KnowledgeBaseArticle knowledgeBaseArticle)
 		throws Exception {
 
+		Long[] taxonomyCategoryIds =
+			knowledgeBaseArticle.getTaxonomyCategoryIds();
+
+		if (taxonomyCategoryIds == null) {
+			taxonomyCategoryIds = new Long[0];
+		}
+
+		String[] keywords = knowledgeBaseArticle.getKeywords();
+
+		if (keywords == null) {
+			keywords = new String[0];
+		}
+
 		return _toKnowledgeBaseArticle(
 			_kbArticleService.updateKBArticle(
 				kbArticle.getResourcePrimKey(), knowledgeBaseArticle.getTitle(),
@@ -674,16 +686,7 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getDescription(), null, null, null, null,
 				null, null,
 				ServiceContextRequestUtil.createServiceContext(
-					Optional.ofNullable(
-						knowledgeBaseArticle.getTaxonomyCategoryIds()
-					).orElse(
-						new Long[0]
-					),
-					Optional.ofNullable(
-						knowledgeBaseArticle.getKeywords()
-					).orElse(
-						new String[0]
-					),
+					taxonomyCategoryIds, keywords,
 					_getExpandoBridgeAttributes(knowledgeBaseArticle),
 					kbArticle.getGroupId(), contextHttpServletRequest,
 					knowledgeBaseArticle.getViewableByAsString())));

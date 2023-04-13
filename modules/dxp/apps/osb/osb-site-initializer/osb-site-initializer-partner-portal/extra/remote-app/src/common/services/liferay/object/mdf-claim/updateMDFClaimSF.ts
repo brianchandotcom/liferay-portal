@@ -13,7 +13,7 @@ import {Liferay} from '../..';
 import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
 import LiferayFile from '../../../../interfaces/liferayFile';
 import MDFClaim from '../../../../interfaces/mdfClaim';
-import {getDTOFromMDFClaim} from '../../../../utils/dto/mdf-claim/getDTOFromMDFClaim';
+import {getSFDTOFromMDFClaim} from '../../../../utils/dto/mdf-claim/getSFDTOFromMDFClaim';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
@@ -28,6 +28,6 @@ export default async function updateMDFClaimSF(
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCode}`,
 		Liferay.authToken,
-		getDTOFromMDFClaim(mdfClaim, mdfRequest)
+		getSFDTOFromMDFClaim(mdfClaim, mdfRequest)
 	);
 }

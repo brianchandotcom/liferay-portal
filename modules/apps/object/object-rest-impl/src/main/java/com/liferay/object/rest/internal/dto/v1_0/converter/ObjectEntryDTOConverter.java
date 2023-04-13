@@ -265,6 +265,62 @@ public class ObjectEntryDTOConverter
 		return nestedFieldsContext.getDepth();
 	}
 
+	private Map<String, Object> _getNestedFieldsRelatedProperties(
+			DTOConverterContext dtoConverterContext,
+			List<String> nestedFieldNames, int nestedFieldsDepth,
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Object> map = new HashMap<>();
+
+		if ((nestedFieldsDepth == 0) || ListUtil.isEmpty(nestedFieldNames)) {
+			return map;
+		}
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			if (!nestedFieldNames.contains(objectRelationship.getName())) {
+				continue;
+			}
+
+			if (Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
+				Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							relatedObjectDefinition.getClassName(),
+							relatedObjectDefinition.getCompanyId(),
+							objectRelationship.getType());
+
+				map.put(
+					objectRelationship.getName(),
+					_toObjectEntries(
+						dtoConverterContext, nestedFieldNames,
+						nestedFieldsDepth,
+						objectRelatedModelsProvider.getRelatedModels(
+							objectEntry.getGroupId(),
+							objectRelationship.getObjectRelationshipId(),
+							objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS)));
+			}
+		}
+
+		return map;
+	}
+
 	private ObjectDefinition _getObjectDefinition(
 			DTOConverterContext dtoConverterContext,
 			com.liferay.object.model.ObjectEntry objectEntry)
@@ -586,49 +642,10 @@ public class ObjectEntryDTOConverter
 
 		values.remove(objectDefinition.getPKObjectFieldName());
 
-		if ((nestedFieldsDepth == 0) || ListUtil.isEmpty(nestedFieldNames)) {
-			return map;
-		}
-
-		List<ObjectRelationship> objectRelationships =
-			_objectRelationshipLocalService.getObjectRelationships(
-				objectDefinition.getObjectDefinitionId());
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			if (!nestedFieldNames.contains(objectRelationship.getName())) {
-				continue;
-			}
-
-			if (Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
-				Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-				ObjectDefinition relatedObjectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId2());
-
-				ObjectRelatedModelsProvider objectRelatedModelsProvider =
-					_objectRelatedModelsProviderRegistry.
-						getObjectRelatedModelsProvider(
-							relatedObjectDefinition.getClassName(),
-							relatedObjectDefinition.getCompanyId(),
-							objectRelationship.getType());
-
-				map.put(
-					objectRelationship.getName(),
-					_toObjectEntries(
-						dtoConverterContext, nestedFieldNames,
-						nestedFieldsDepth,
-						objectRelatedModelsProvider.getRelatedModels(
-							objectEntry.getGroupId(),
-							objectRelationship.getObjectRelationshipId(),
-							objectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS)));
-			}
-		}
+		map.putAll(
+			_getNestedFieldsRelatedProperties(
+				dtoConverterContext, nestedFieldNames, nestedFieldsDepth,
+				objectDefinition, objectEntry));
 
 		return map;
 	}

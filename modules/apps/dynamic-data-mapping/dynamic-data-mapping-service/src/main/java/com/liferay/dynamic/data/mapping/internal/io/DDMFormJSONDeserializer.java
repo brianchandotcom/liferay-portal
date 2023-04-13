@@ -248,8 +248,7 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormJSONDeserializer.class);
 
-	private static DDMFormFieldTypeServicesRegistry
-		_ddmFormFieldTypeServicesRegistry;
-	private static JSONFactory _jsonFactory;
+	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
+	private JSONFactory _jsonFactory;
 
 }

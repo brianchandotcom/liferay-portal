@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.CSVUtil;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -70,25 +68,29 @@ public class DDMFormInstanceRecordCSVWriter
 	protected String writeRecords(
 		List<Map<String, String>> ddmFormFieldValues) {
 
-		Stream<Map<String, String>> stream = ddmFormFieldValues.stream();
+		StringBundler sb = new StringBundler(ddmFormFieldValues.size() * 2);
 
-		return stream.map(
-			Map::values
-		).map(
-			this::writeValues
-		).collect(
-			Collectors.joining(StringPool.NEW_LINE)
-		);
+		for (Map<String, String> ddmFormFieldValue : ddmFormFieldValues) {
+			sb.append(writeValues(ddmFormFieldValue.values()));
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	protected String writeValues(Collection<String> values) {
-		Stream<String> stream = values.stream();
+		StringBundler sb = new StringBundler(values.size() * 2);
 
-		return stream.map(
-			CSVUtil::encode
-		).collect(
-			Collectors.joining(StringPool.COMMA)
-		);
+		for (String value : values) {
+			sb.append(CSVUtil.encode(value));
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 }

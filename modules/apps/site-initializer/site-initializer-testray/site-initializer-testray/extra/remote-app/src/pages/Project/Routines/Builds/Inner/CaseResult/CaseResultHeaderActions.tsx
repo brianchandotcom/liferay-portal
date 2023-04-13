@@ -53,7 +53,6 @@ const CaseResultHeaderActions: React.FC<{
 	].includes(caseResult.dueStatus.key as CaseResultStatuses);
 
 	const workflowDisabled = assignedUserId <= 0 || assignedUserId !== userId;
-
 	const buttonValidations = {
 		completeTest:
 			workflowDisabled ||
@@ -62,8 +61,7 @@ const CaseResultHeaderActions: React.FC<{
 		reopenTest: workflowDisabled || isReopened,
 	};
 
-	const buttonMustBeVisible =
-		Object.keys(caseResult.actions).length >= 3 ?? false;
+	const hasCaseResultEditPermission = !!caseResult.actions?.updateBatch;
 
 	return (
 		<>
@@ -71,7 +69,7 @@ const CaseResultHeaderActions: React.FC<{
 
 			<ClayButton.Group
 				className="mb-3 ml-3"
-				hidden={!buttonMustBeVisible}
+				hidden={!hasCaseResultEditPermission}
 				spaced
 			>
 				<ClayButton

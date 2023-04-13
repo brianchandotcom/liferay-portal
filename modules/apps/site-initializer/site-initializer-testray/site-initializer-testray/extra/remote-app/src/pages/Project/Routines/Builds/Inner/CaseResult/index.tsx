@@ -57,8 +57,7 @@ const CaseResult = () => {
 		[caseResult.attachments]
 	);
 
-	const buttonMustBeVisible =
-		Object.keys(caseResult.actions).length >= 3 ?? false;
+	const hasCaseResultEditPermission = !!caseResult?.actions?.updateBatch;
 
 	return (
 		<>
@@ -235,7 +234,7 @@ const CaseResult = () => {
 											}
 										/>
 									),
-									visible: buttonMustBeVisible,
+									visible: hasCaseResultEditPermission,
 								},
 								{
 									divider: true,

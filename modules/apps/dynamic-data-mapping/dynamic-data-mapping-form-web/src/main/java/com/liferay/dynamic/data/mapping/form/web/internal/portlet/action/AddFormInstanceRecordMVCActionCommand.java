@@ -17,6 +17,9 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceNotPublishedException;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -31,8 +34,10 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -114,9 +119,32 @@ public class AddFormInstanceRecordMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			_ddmFormEvaluator.evaluate(
+				DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
+					ddmForm, ddmFormValues,
+					LocaleUtil.fromLanguageId(
+						_language.getLanguageId(actionRequest))
+				).withCompanyId(
+					_portal.getCompanyId(actionRequest)
+				).withDDMFormInstanceId(
+					ParamUtil.getLong(actionRequest, "formInstanceId")
+				).withGroupId(
+					ParamUtil.getLong(actionRequest, "groupId")
+				).withTimeZoneId(
+					_getTimeZoneId(themeDisplay)
+				).withUserId(
+					_portal.getUserId(actionRequest)
+				).build());
+
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
 		_addFormInstanceMVCCommandHelper.updateNonevaluableDDMFormFields(
-			actionRequest, ddmForm, ddmFormValues,
-			LocaleUtil.fromLanguageId(_language.getLanguageId(actionRequest)));
+			ddmForm.getDDMFormFieldsMap(true),
+			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges(),
+			ddmFormValues.getDDMFormFieldValuesMap(true),
+			ddmStructure.getDDMFormLayout(),
+			ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);
@@ -168,6 +196,16 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		return ddmStructure.getDDMForm();
+	}
+
+	private String _getTimeZoneId(ThemeDisplay themeDisplay) {
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
+		User user = themeDisplay.getUser();
+
+		return user.getTimeZoneId();
 	}
 
 	private void _updateFormInstanceRecord(
@@ -247,6 +285,9 @@ public class AddFormInstanceRecordMVCActionCommand
 	@Reference
 	private AddFormInstanceRecordMVCCommandHelper
 		_addFormInstanceMVCCommandHelper;
+
+	@Reference
+	private DDMFormEvaluator _ddmFormEvaluator;
 
 	@Reference
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;

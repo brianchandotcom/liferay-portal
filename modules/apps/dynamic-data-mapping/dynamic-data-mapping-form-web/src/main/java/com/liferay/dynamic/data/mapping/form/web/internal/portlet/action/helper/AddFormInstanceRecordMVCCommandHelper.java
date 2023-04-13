@@ -16,35 +16,24 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper
 
 import com.liferay.dynamic.data.mapping.exception.FormInstanceExpiredException;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSubmissionLimitException;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceExpirationStatusUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceSubmissionLimitStatusUtil;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashSet;
@@ -53,11 +42,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -66,26 +53,84 @@ import org.osgi.service.component.annotations.Reference;
 public class AddFormInstanceRecordMVCCommandHelper {
 
 	public void updateNonevaluableDDMFormFields(
-			ActionRequest actionRequest, DDMForm ddmForm,
-			DDMFormValues ddmFormValues, Locale locale)
+			Map<String, DDMFormField> ddmFormFieldsMap,
+			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				ddmFormFieldsPropertyChanges,
+			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
+			DDMFormLayout ddmFormLayout, Set<Integer> disabledPagesIndexes)
 		throws Exception {
 
-		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
-			_evaluate(actionRequest, ddmForm, ddmFormValues, locale);
+		Set<String> nonevaluableFieldNames = new HashSet<>();
 
-		Set<String> nonevaluableFieldNames = _getNonevaluableFieldNames(
-			ddmFormEvaluatorEvaluateResponse);
+		for (Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				entry : ddmFormFieldsPropertyChanges.entrySet()) {
 
-		nonevaluableFieldNames.addAll(
-			_getFieldNamesFromDisabledPages(
-				_getDDMFormLayout(actionRequest),
-				ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes()));
+			if (!MapUtil.getBoolean(entry.getValue(), "readOnly") &&
+				MapUtil.getBoolean(entry.getValue(), "visible", true)) {
 
-		_removeDDMFormFieldValues(
-			ddmFormValues.getDDMFormFieldValuesMap(true),
-			nonevaluableFieldNames);
-		_updateNonevaluableDDMFormFields(
-			ddmForm.getDDMFormFieldsMap(true), nonevaluableFieldNames);
+				continue;
+			}
+
+			DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey =
+				entry.getKey();
+
+			nonevaluableFieldNames.add(
+				ddmFormEvaluatorFieldContextKey.getName());
+		}
+
+		for (Integer disabledPagesIndex : disabledPagesIndexes) {
+			DDMFormLayoutPage ddmFormLayoutPage =
+				ddmFormLayout.getDDMFormLayoutPage(disabledPagesIndex);
+
+			for (DDMFormLayoutRow ddmFormLayoutRow :
+					ddmFormLayoutPage.getDDMFormLayoutRows()) {
+
+				for (DDMFormLayoutColumn ddmFormLayoutColumn :
+						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
+
+					nonevaluableFieldNames.addAll(
+						ddmFormLayoutColumn.getDDMFormFieldNames());
+				}
+			}
+		}
+
+		for (String nonevaluableFieldName : nonevaluableFieldNames) {
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				nonevaluableFieldName);
+
+			if (ddmFormField == null) {
+				continue;
+			}
+
+			ddmFormField.setDDMFormFieldValidation(null);
+			ddmFormField.setRequired(false);
+
+			for (DDMFormFieldValue ddmFormFieldValue :
+					ddmFormFieldValuesMap.get(ddmFormField.getName())) {
+
+				Value value = ddmFormFieldValue.getValue();
+
+				if (value == null) {
+					continue;
+				}
+
+				if (ddmFormField.isLocalizable()) {
+					LocalizedValue localizedValue = new LocalizedValue(
+						value.getDefaultLocale());
+
+					for (Locale availableLocale : value.getAvailableLocales()) {
+						localizedValue.addString(
+							availableLocale, StringPool.BLANK);
+					}
+
+					ddmFormFieldValue.setValue(localizedValue);
+				}
+				else {
+					ddmFormFieldValue.setValue(
+						new UnlocalizedValue(StringPool.BLANK));
+				}
+			}
+		}
 	}
 
 	public void validateExpirationStatus(
@@ -125,170 +170,5 @@ public class AddFormInstanceRecordMVCCommandHelper {
 					ddmFormInstance.getFormInstanceId()));
 		}
 	}
-
-	private DDMFormEvaluatorEvaluateResponse _evaluate(
-			ActionRequest actionRequest, DDMForm ddmForm,
-			DDMFormValues ddmFormValues, Locale locale)
-		throws Exception {
-
-		DDMFormEvaluatorEvaluateRequest.Builder builder =
-			DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
-				ddmForm, ddmFormValues, locale);
-
-		return _ddmFormEvaluator.evaluate(
-			builder.withCompanyId(
-				_portal.getCompanyId(actionRequest)
-			).withDDMFormInstanceId(
-				ParamUtil.getLong(actionRequest, "formInstanceId")
-			).withGroupId(
-				ParamUtil.getLong(actionRequest, "groupId")
-			).withTimeZoneId(
-				_getTimeZoneId(actionRequest)
-			).withUserId(
-				_portal.getUserId(actionRequest)
-			).build());
-	}
-
-	private DDMFormLayout _getDDMFormLayout(ActionRequest actionRequest)
-		throws Exception {
-
-		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceService.getFormInstance(
-				ParamUtil.getLong(actionRequest, "formInstanceId"));
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			ddmFormInstance.getStructureId());
-
-		return ddmStructure.getDDMFormLayout();
-	}
-
-	private Set<String> _getFieldNamesFromDisabledPages(
-		DDMFormLayout ddmFormLayout, Set<Integer> disabledPagesIndexes) {
-
-		Set<String> fieldNamesFromDisabledPages = new HashSet<>();
-
-		for (Integer disabledPagesIndex : disabledPagesIndexes) {
-			fieldNamesFromDisabledPages.addAll(
-				_getFieldNamesFromPage(
-					ddmFormLayout.getDDMFormLayoutPage(disabledPagesIndex)));
-		}
-
-		return fieldNamesFromDisabledPages;
-	}
-
-	private Set<String> _getFieldNamesFromPage(
-		DDMFormLayoutPage ddmFormLayoutPage) {
-
-		Set<String> fieldNames = new HashSet<>();
-
-		for (DDMFormLayoutRow ddmFormLayoutRow :
-				ddmFormLayoutPage.getDDMFormLayoutRows()) {
-
-			for (DDMFormLayoutColumn ddmFormLayoutColumn :
-					ddmFormLayoutRow.getDDMFormLayoutColumns()) {
-
-				fieldNames.addAll(ddmFormLayoutColumn.getDDMFormFieldNames());
-			}
-		}
-
-		return fieldNames;
-	}
-
-	private Set<String> _getNonevaluableFieldNames(
-		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse) {
-
-		Set<String> nonevaluableFieldNames = new HashSet<>();
-
-		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
-			ddmFormFieldsPropertyChanges =
-				ddmFormEvaluatorEvaluateResponse.
-					getDDMFormFieldsPropertyChanges();
-
-		for (Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
-				entry : ddmFormFieldsPropertyChanges.entrySet()) {
-
-			if (MapUtil.getBoolean(entry.getValue(), "readOnly") ||
-				!MapUtil.getBoolean(entry.getValue(), "visible", true)) {
-
-				DDMFormEvaluatorFieldContextKey key = entry.getKey();
-
-				nonevaluableFieldNames.add(key.getName());
-			}
-		}
-
-		return nonevaluableFieldNames;
-	}
-
-	private String _getTimeZoneId(ActionRequest actionRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay == null) {
-			return StringPool.BLANK;
-		}
-
-		User user = themeDisplay.getUser();
-
-		return user.getTimeZoneId();
-	}
-
-	private void _removeDDMFormFieldValue(DDMFormFieldValue ddmFormFieldValue) {
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		if (ddmFormField.isLocalizable()) {
-			Value value = ddmFormFieldValue.getValue();
-
-			LocalizedValue localizedValue = new LocalizedValue(
-				value.getDefaultLocale());
-
-			for (Locale availableLocale : value.getAvailableLocales()) {
-				localizedValue.addString(availableLocale, StringPool.BLANK);
-			}
-
-			ddmFormFieldValue.setValue(localizedValue);
-		}
-		else {
-			ddmFormFieldValue.setValue(new UnlocalizedValue(StringPool.BLANK));
-		}
-	}
-
-	private void _removeDDMFormFieldValues(
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
-		Set<String> nonevaluableFieldNames) {
-
-		for (String nonevaluableFieldName : nonevaluableFieldNames) {
-			for (DDMFormFieldValue ddmFormFieldValue :
-					ddmFormFieldValuesMap.get(nonevaluableFieldName)) {
-
-				if (ddmFormFieldValue.getValue() != null) {
-					_removeDDMFormFieldValue(ddmFormFieldValue);
-				}
-			}
-		}
-	}
-
-	private void _updateNonevaluableDDMFormFields(
-		Map<String, DDMFormField> ddmFormFieldsMap,
-		Set<String> nonevaluableFieldNames) {
-
-		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-			if (nonevaluableFieldNames.contains(ddmFormField.getName())) {
-				ddmFormField.setDDMFormFieldValidation(null);
-				ddmFormField.setRequired(false);
-			}
-		}
-	}
-
-	@Reference
-	private DDMFormEvaluator _ddmFormEvaluator;
-
-	@Reference
-	private DDMFormInstanceService _ddmFormInstanceService;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

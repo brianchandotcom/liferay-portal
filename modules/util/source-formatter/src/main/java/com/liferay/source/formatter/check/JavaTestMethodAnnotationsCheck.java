@@ -182,17 +182,16 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			parameterList = JavaSourceUtil.getParameterList(
 				unicodePropertiesBuilderSetPropertyMethodCall);
 
-			if ((parameterList.size() != 2) ||
-				!StringUtil.startsWith(
+			if ((parameterList.size() == 2) &&
+				StringUtil.startsWith(
 					parameterList.get(0), "\"feature.flag.")) {
 
-				continue;
+				addMessage(
+					fileName,
+					"Use annotation @FeatureFlags instead of PropsUtil." +
+						"addProperties for feature flag for " +
+							javaTerm.getName());
 			}
-
-			addMessage(
-				fileName,
-				"Use annotation @FeatureFlags instead of PropsUtil." +
-					"addProperties for feature flag for " + javaTerm.getName());
 		}
 	}
 

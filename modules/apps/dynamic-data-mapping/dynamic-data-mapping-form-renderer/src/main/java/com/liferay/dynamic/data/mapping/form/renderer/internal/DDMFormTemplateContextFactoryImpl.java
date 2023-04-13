@@ -103,15 +103,14 @@ public class DDMFormTemplateContextFactoryImpl
 					_ddmFormFieldTypeServicesRegistry,
 					ddmFormLayoutDDMFormField.getType());
 
-			List<DDMFormField> visualPropertiesDDMFormFields = ListUtil.filter(
-				new ArrayList<>(settingsDDMFormFieldsMap.values()),
-				visualPropertyDDMFormField ->
-					visualPropertyDDMFormField.isVisualProperty() &&
-					!StringUtil.equals(
-						visualPropertyDDMFormField.getName(), "required"));
-
 			for (DDMFormField visualPropertyDDMFormField :
-					visualPropertiesDDMFormFields) {
+					ListUtil.filter(
+						new ArrayList<>(settingsDDMFormFieldsMap.values()),
+						visualPropertyDDMFormField1 ->
+							visualPropertyDDMFormField1.isVisualProperty() &&
+							!StringUtil.equals(
+								visualPropertyDDMFormField1.getName(),
+								"required"))) {
 
 				Object value = ddmFormLayoutDDMFormField.getProperty(
 					visualPropertyDDMFormField.getName());
@@ -169,16 +168,12 @@ public class DDMFormTemplateContextFactoryImpl
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		List<ResourceBundle> resourceBundles = new ArrayList<>();
 
-		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
-
-		resourceBundles.add(portalResourceBundle);
+		resourceBundles.add(_portal.getResourceBundle(locale));
 
 		_collectResourceBundles(getClass(), resourceBundles, locale);
 
-		ResourceBundle[] resourceBundlesArray = resourceBundles.toArray(
-			new ResourceBundle[0]);
-
-		return new AggregateResourceBundle(resourceBundlesArray);
+		return new AggregateResourceBundle(
+			resourceBundles.<ResourceBundle>toArray(new ResourceBundle[0]));
 	}
 
 	protected String getTemplateNamespace(DDMFormLayout ddmFormLayout) {
@@ -221,6 +216,8 @@ public class DDMFormTemplateContextFactoryImpl
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
+		Map<String, Object> templateContext = new HashMap<>();
+
 		String containerId = ddmFormRenderingContext.getContainerId();
 
 		if (Validator.isNull(containerId)) {
@@ -234,8 +231,6 @@ public class DDMFormTemplateContextFactoryImpl
 		if (locale == null) {
 			locale = LocaleThreadLocal.getSiteDefaultLocale();
 		}
-
-		Map<String, Object> templateContext = new HashMap<>();
 
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 

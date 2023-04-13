@@ -18,26 +18,24 @@ import com.liferay.map.MapProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.Collection;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Jürgen Kappler
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static GroupLocalService getGroupLocalService() {
-		return _groupLocalService;
+		return _groupLocalServiceSnapshot.get();
 	}
 
 	public static MapProvider getMapProvider(String mapProviderKey) {
@@ -49,37 +47,28 @@ public class ServletContextUtil {
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContext;
+		return _servletContextSnapshot.get();
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final Snapshot<GroupLocalService>
+		_groupLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, GroupLocalService.class);
+	private static final ServiceTrackerMap<String, MapProvider> _mapProviders;
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.map.taglib)");
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ServletContextUtil.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		_mapProviders = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, MapProvider.class, null,
 			ServiceReferenceMapperFactory.create(
 				bundleContext,
 				(mapProvider, emitter) -> emitter.emit(mapProvider.getKey())));
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_mapProviders.close();
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.map.taglib)", unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private static GroupLocalService _groupLocalService;
-	private static ServiceTrackerMap<String, MapProvider> _mapProviders;
-	private static ServletContext _servletContext;
 
 }

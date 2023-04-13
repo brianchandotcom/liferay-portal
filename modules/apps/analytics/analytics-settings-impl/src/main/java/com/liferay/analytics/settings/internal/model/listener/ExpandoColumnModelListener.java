@@ -16,10 +16,12 @@ package com.liferay.analytics.settings.internal.model.listener;
 
 import com.liferay.analytics.batch.exportimport.model.listener.BaseAnalyticsDXPEntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -27,6 +29,9 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.io.Serializable;
 
 import java.util.Objects;
 
@@ -39,6 +44,46 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ModelListener.class)
 public class ExpandoColumnModelListener
 	extends BaseAnalyticsDXPEntityModelListener<ExpandoColumn> {
+
+	@Override
+	public void onAfterRemove(ExpandoColumn expandoColumn) {
+		if (!FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
+			try {
+				AnalyticsConfiguration analyticsConfiguration =
+					_analyticsSettingsManager.getAnalyticsConfiguration(
+						expandoColumn.getCompanyId());
+
+				String[] syncedUserFieldNames1 =
+					analyticsConfiguration.syncedUserFieldNames();
+
+				String[] syncedUserFieldNames2 =
+					new String[syncedUserFieldNames1.length - 1];
+
+				int i = 0;
+
+				for (String syncedUserFieldName : syncedUserFieldNames1) {
+					if (!syncedUserFieldName.equals(expandoColumn.getName())) {
+						syncedUserFieldNames2[i] = syncedUserFieldName;
+						i++;
+					}
+				}
+
+				_analyticsSettingsManager.updateCompanyConfiguration(
+					expandoColumn.getCompanyId(),
+					new HashMapBuilder<>().<String, Object>put(
+						"previousSyncedUserFieldNames", syncedUserFieldNames1
+					).<String, Serializable>put(
+						"syncedUserFieldNames", syncedUserFieldNames2
+					).build());
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+		}
+		else {
+			super.onAfterRemove(expandoColumn);
+		}
+	}
 
 	@Override
 	protected boolean isTracked(ExpandoColumn expandoColumn) {
@@ -101,6 +146,9 @@ public class ExpandoColumnModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExpandoColumnModelListener.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

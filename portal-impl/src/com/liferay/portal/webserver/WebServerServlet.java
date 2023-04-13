@@ -1553,7 +1553,8 @@ public class WebServerServlet extends HttpServlet {
 				FileEntry.class.getName());
 
 		fileEntryModelResourcePermission.check(
-			permissionChecker, fileEntry.getFileEntryId(), ActionKeys.DOWNLOAD);
+			permissionChecker, fileEntry.getFileEntryId(),
+			_getActionId(httpServletRequest));
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -1704,6 +1705,49 @@ public class WebServerServlet extends HttpServlet {
 
 			return null;
 		};
+	}
+
+	private String _getActionId(HttpServletRequest httpServletRequest) {
+		int imageThumbnail = ParamUtil.getInteger(
+			httpServletRequest, "imageThumbnail");
+
+		if ((imageThumbnail > 0) && (imageThumbnail <= 3)) {
+			return ActionKeys.VIEW;
+		}
+
+		int documentThumbnail = ParamUtil.getInteger(
+			httpServletRequest, "documentThumbnail");
+
+		if ((documentThumbnail > 0) && (documentThumbnail <= 3)) {
+			return ActionKeys.VIEW;
+		}
+
+		int previewFileIndex = ParamUtil.getInteger(
+			httpServletRequest, "previewFileIndex");
+
+		if (previewFileIndex > 0) {
+			return ActionKeys.VIEW;
+		}
+
+		boolean audioPreview = ParamUtil.getBoolean(
+			httpServletRequest, "audioPreview");
+		boolean imagePreview = ParamUtil.getBoolean(
+			httpServletRequest, "imagePreview");
+		boolean videoPreview = ParamUtil.getBoolean(
+			httpServletRequest, "videoPreview");
+
+		if (audioPreview || imagePreview || videoPreview) {
+			return ActionKeys.VIEW;
+		}
+
+		int videoThumbnail = ParamUtil.getInteger(
+			httpServletRequest, "videoThumbnail");
+
+		if ((videoThumbnail > 0) && (videoThumbnail <= 3)) {
+			return ActionKeys.VIEW;
+		}
+
+		return ActionKeys.DOWNLOAD;
 	}
 
 	private FileEntry _getFileEntry(

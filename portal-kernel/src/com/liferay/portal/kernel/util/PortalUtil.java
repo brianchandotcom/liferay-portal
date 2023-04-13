@@ -1684,11 +1684,10 @@ public class PortalUtil {
 
 	public static UploadServletRequest getUploadServletRequest(
 		HttpServletRequest httpServletRequest, int fileSizeThreshold,
-		String location, long maxRequestSize, long maxFileSize) {
+		String location) {
 
 		return _portal.getUploadServletRequest(
-			httpServletRequest, fileSizeThreshold, location, maxRequestSize,
-			maxFileSize);
+			httpServletRequest, fileSizeThreshold, location);
 	}
 
 	public static Date getUptime() {

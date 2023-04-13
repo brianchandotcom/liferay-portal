@@ -5578,13 +5578,13 @@ public class PortalImpl implements Portal {
 	public UploadServletRequest getUploadServletRequest(
 		HttpServletRequest httpServletRequest) {
 
-		return getUploadServletRequest(httpServletRequest, 0, null, 0, 0);
+		return getUploadServletRequest(httpServletRequest, 0, null);
 	}
 
 	@Override
 	public UploadServletRequest getUploadServletRequest(
 		HttpServletRequest httpServletRequest, int fileSizeThreshold,
-		String location, long maxRequestSize, long maxFileSize) {
+		String location) {
 
 		List<PersistentHttpServletRequestWrapper>
 			persistentHttpServletRequestWrappers = new ArrayList<>();
@@ -5640,8 +5640,7 @@ public class PortalImpl implements Portal {
 		}
 
 		return new UploadServletRequestImpl(
-			currentHttpServletRequest, fileSizeThreshold, location,
-			maxRequestSize, maxFileSize);
+			currentHttpServletRequest, fileSizeThreshold, location);
 	}
 
 	@Override

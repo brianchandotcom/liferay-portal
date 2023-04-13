@@ -76,8 +76,6 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 		int fileSizeThreshold = 0;
 		String location = null;
-		long maxRequestSize = 0;
-		long maxFileSize = 0;
 
 		if (Validator.isNotNull(portletId)) {
 			Portlet portlet = _portletLocalService.getPortletById(
@@ -103,15 +101,12 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 				fileSizeThreshold = portlet.getMultipartFileSizeThreshold();
 				location = portlet.getMultipartLocation();
-				maxRequestSize = portlet.getMultipartMaxRequestSize();
-				maxFileSize = portlet.getMultipartMaxFileSize();
 			}
 		}
 
 		UploadServletRequest uploadServletRequest =
 			_portal.getUploadServletRequest(
-				httpServletRequest, fileSizeThreshold, location, maxRequestSize,
-				maxFileSize);
+				httpServletRequest, fileSizeThreshold, location);
 
 		try {
 			processFilter(

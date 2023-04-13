@@ -1060,7 +1060,7 @@ public interface Portal {
 
 	public UploadServletRequest getUploadServletRequest(
 		HttpServletRequest httpServletRequest, int fileSizeThreshold,
-		String location, long maxRequestSize, long maxFileSize);
+		String location);
 
 	public Date getUptime();
 

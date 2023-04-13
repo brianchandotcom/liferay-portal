@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upload.internal;
 
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.upload.ServletFileUpload;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import javax.ws.rs.BadRequestException;
 
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadException;
@@ -38,8 +42,8 @@ public class ServletFileUploadImpl implements ServletFileUpload {
 
 	@Override
 	public List<FileItem> parseRequest(
-			HttpServletRequest httpServletRequest, long sizeMax,
-			long fileSizeMax, String location, int fileSizeThreshold)
+			HttpServletRequest httpServletRequest, String location,
+			int fileSizeThreshold)
 		throws UploadException {
 
 		List<FileItem> fileItems = new ArrayList<>();
@@ -51,8 +55,11 @@ public class ServletFileUploadImpl implements ServletFileUpload {
 						new File(location), fileSizeThreshold,
 						httpServletRequest.getCharacterEncoding()));
 
-		servletFileUpload.setFileSizeMax(fileSizeMax);
-		servletFileUpload.setSizeMax(sizeMax);
+		long fileMaxSize = DLValidatorUtil.getMaxAllowableSize(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, null);
+
+		servletFileUpload.setFileSizeMax(fileMaxSize);
+		servletFileUpload.setSizeMax(fileMaxSize);
 
 		try {
 			for (org.apache.commons.fileupload.FileItem fileItem :
@@ -62,6 +69,14 @@ public class ServletFileUploadImpl implements ServletFileUpload {
 			}
 
 			return fileItems;
+		}
+		catch (FileUploadBase.SizeLimitExceededException
+					sizeLimitExceededException) {
+
+			throw new BadRequestException(
+				"Please enter a file with a valid file size no larger than " +
+					fileMaxSize,
+				sizeLimitExceededException);
 		}
 		catch (FileUploadException fileUploadException) {
 			UploadException uploadException = new UploadException(

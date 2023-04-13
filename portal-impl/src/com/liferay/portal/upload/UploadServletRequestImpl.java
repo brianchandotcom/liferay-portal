@@ -60,12 +60,12 @@ public class UploadServletRequestImpl
 	extends HttpServletRequestWrapper implements UploadServletRequest {
 
 	public UploadServletRequestImpl(HttpServletRequest httpServletRequest) {
-		this(httpServletRequest, 0, null, 0, 0);
+		this(httpServletRequest, 0, null);
 	}
 
 	public UploadServletRequestImpl(
 		HttpServletRequest httpServletRequest, int fileSizeThreshold,
-		String location, long maxRequestSize, long maxFileSize) {
+		String location) {
 
 		super(httpServletRequest);
 
@@ -85,21 +85,12 @@ public class UploadServletRequestImpl
 			long uploadServletRequestImplMaxSize =
 				UploadServletRequestConfigurationProviderUtil.getMaxSize();
 
-			if (maxRequestSize <= 0) {
-				maxRequestSize = uploadServletRequestImplMaxSize;
-			}
-
-			if (maxFileSize <= 0) {
-				maxFileSize = uploadServletRequestImplMaxSize;
-			}
-
 			location = GetterUtil.getString(
 				location,
 				UploadServletRequestConfigurationProviderUtil.getTempDir());
 
 			List<FileItem> fileItemsList = _servletFileUpload.parseRequest(
-				liferayServletRequest, maxRequestSize, maxFileSize, location,
-				fileSizeThreshold);
+				liferayServletRequest, location, fileSizeThreshold);
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
 

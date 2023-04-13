@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface ServletFileUpload {
 
 	public List<FileItem> parseRequest(
-			HttpServletRequest httpServletRequest, long sizeMax,
-			long fileSizeMax, String location, int fileSizeThreshold)
+			HttpServletRequest httpServletRequest, String location,
+			int fileSizeThreshold)
 		throws UploadException;
 
 }

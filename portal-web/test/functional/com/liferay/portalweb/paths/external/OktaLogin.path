@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>OktaLogin</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OktaLogin</td></tr>
+</thead>
+
+<tbody>
+
+<!--LOGIN-->
+
+<tr>
+	<td>LOGIN_EMAIL_FIELD</td>
+	<td>//input[contains(@name,'identifier')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_NEXT_BUTTON</td>
+	<td>//input[contains(@value,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_PASSWORD_FIELD</td>
+	<td>//input[contains(@type,'password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERIFY_BUTTON</td>
+	<td>//input[contains(@value,'Verify')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

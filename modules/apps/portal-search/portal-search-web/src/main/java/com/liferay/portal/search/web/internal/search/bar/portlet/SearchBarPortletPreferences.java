@@ -16,8 +16,6 @@ package com.liferay.portal.search.web.internal.search.bar.portlet;
 
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 
-import java.util.Optional;
-
 /**
  * @author André de Oliveira
  */
@@ -56,7 +54,7 @@ public interface SearchBarPortletPreferences {
 
 	public String getDestination();
 
-	public Optional<String> getDestinationOptional();
+	public String getDestinationString();
 
 	public String getFederatedSearchKey();
 

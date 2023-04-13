@@ -11,6 +11,6 @@ UpgradeDeprecatedAPICheck | .java | Finds calls to deprecated classes, construct
 UpgradeGradleIncludeResourceCheck | .bnd, .gradle, .java or .vm | Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file. |
 UpgradeJavaCheck | .bnd, .gradle, .java or .vm | Performs upgrade checks for `java` files |
 UpgradeRemovedAPICheck | .java | Finds cases where calls are made to removed API after an upgrade. |
-UpgradeVelocityCommentMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of comments from a `velocity` file to a `fremarker` file with the syntax replacements |
+UpgradeVelocityCommentMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements |
 XMLUpgradeDTDVersionCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks and upgrades the DTD version in `*.xml` file. |
 XMLUpgradeRemovedDefinitionsCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds removed XML definitions when upgrading. |

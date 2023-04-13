@@ -259,7 +259,7 @@ exports[`View should render a Liferay data-source old page 1`] = `
       </li>
     </ol>
     <div
-      class="content-header has-page-actions"
+      class="content-header"
     >
       <div
         class="header-text"
@@ -287,14 +287,7 @@ exports[`View should render a Liferay data-source old page 1`] = `
       </div>
       <div
         class="page-actions-container"
-      >
-        <button
-          class="button-root btn btn-secondary"
-          type="button"
-        >
-          Delete Data Source
-        </button>
-      </div>
+      />
     </div>
     <div>
       <div
@@ -344,7 +337,7 @@ exports[`View should render a Liferay data-source page 1`] = `
       </li>
     </ol>
     <div
-      class="content-header has-page-actions"
+      class="content-header"
     >
       <div
         class="header-text"
@@ -372,14 +365,7 @@ exports[`View should render a Liferay data-source page 1`] = `
       </div>
       <div
         class="page-actions-container"
-      >
-        <button
-          class="button-root btn btn-secondary"
-          type="button"
-        >
-          Delete Data Source
-        </button>
-      </div>
+      />
     </div>
     <div>
       <div
@@ -651,7 +637,7 @@ exports[`View should render a Salesforce data-source page 1`] = `
       </li>
     </ol>
     <div
-      class="content-header has-page-actions"
+      class="content-header"
     >
       <div
         class="header-text"
@@ -679,14 +665,7 @@ exports[`View should render a Salesforce data-source page 1`] = `
       </div>
       <div
         class="page-actions-container"
-      >
-        <button
-          class="button-root btn btn-secondary"
-          type="button"
-        >
-          Delete Data Source
-        </button>
-      </div>
+      />
     </div>
     <div>
       <div

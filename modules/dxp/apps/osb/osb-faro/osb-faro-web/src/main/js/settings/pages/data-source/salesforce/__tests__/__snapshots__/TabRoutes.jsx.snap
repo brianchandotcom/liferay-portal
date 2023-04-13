@@ -32,7 +32,7 @@ exports[`SalesforceTabRoutes should render 1`] = `
       </li>
     </ol>
     <div
-      class="content-header has-page-actions"
+      class="content-header"
     >
       <div
         class="header-text"
@@ -60,14 +60,7 @@ exports[`SalesforceTabRoutes should render 1`] = `
       </div>
       <div
         class="page-actions-container"
-      >
-        <button
-          class="button-root btn btn-secondary"
-          type="button"
-        >
-          Delete Data Source
-        </button>
-      </div>
+      />
     </div>
     <div>
       <div

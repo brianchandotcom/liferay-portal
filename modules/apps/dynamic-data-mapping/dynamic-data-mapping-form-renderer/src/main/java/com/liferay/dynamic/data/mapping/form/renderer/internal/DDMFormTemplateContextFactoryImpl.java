@@ -33,6 +33,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -59,8 +60,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -406,14 +405,10 @@ public class DDMFormTemplateContextFactoryImpl
 		HashMap<String, Object> map = new HashMap<>();
 
 		for (String key : _serviceTrackerMap.keySet()) {
-			List<DDMValidation> ddmValidations = _serviceTrackerMap.getService(
-				key);
-
-			Stream<DDMValidation> stream = ddmValidations.stream();
-
 			map.put(
 				key,
-				stream.map(
+				TransformUtil.transformToArray(
+					_serviceTrackerMap.getService(key),
 					ddmValidation -> HashMapBuilder.put(
 						"label", ddmValidation.getLabel(locale)
 					).put(
@@ -423,8 +418,8 @@ public class DDMFormTemplateContextFactoryImpl
 						ddmValidation.getParameterMessage(locale)
 					).put(
 						"template", ddmValidation.getTemplate()
-					).build()
-				).toArray());
+					).build(),
+					Object.class));
 		}
 
 		return map;
@@ -462,13 +457,7 @@ public class DDMFormTemplateContextFactoryImpl
 			return Collections.emptyList();
 		}
 
-		Stream<DDMFormRule> stream = ddmFormRules.stream();
-
-		return stream.map(
-			this::_toMap
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(ddmFormRules, this::_toMap);
 	}
 
 	@Reference

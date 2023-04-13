@@ -61,7 +61,7 @@ const CaseResultHeaderActions: React.FC<{
 		reopenTest: workflowDisabled || isReopened,
 	};
 
-	const hasCaseResultEditPermission = !!caseResult.actions?.updateBatch;
+	const hasCaseResultEditPermission = !!caseResult.actions?.update;
 
 	return (
 		<>

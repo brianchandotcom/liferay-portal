@@ -39,6 +39,13 @@ type ObjectActions = {
 	updateBatch?: ActionPermissionProperties;
 };
 
+type ObjectActionsItems = {
+	delete?: ActionPermissionProperties;
+	get?: ActionPermissionProperties;
+	replace?: ActionPermissionProperties;
+	update?: ActionPermissionProperties;
+};
+
 export type APIResponse<Query = any> = {
 	actions: ObjectActions;
 	facets: Facets[];
@@ -151,7 +158,7 @@ export type TestrayCase = {
 };
 
 export type TestrayCaseResult = {
-	actions: ObjectActions;
+	actions: ObjectActionsItems;
 	assignedUserId: string;
 	attachments: string;
 	build?: TestrayBuild;

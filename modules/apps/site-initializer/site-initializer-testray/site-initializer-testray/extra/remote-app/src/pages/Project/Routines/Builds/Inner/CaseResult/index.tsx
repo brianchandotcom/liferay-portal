@@ -57,7 +57,7 @@ const CaseResult = () => {
 		[caseResult.attachments]
 	);
 
-	const hasCaseResultEditPermission = !!caseResult?.actions?.updateBatch;
+	const hasCaseResultEditPermission = !!caseResult?.actions?.update;
 
 	return (
 		<>

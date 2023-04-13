@@ -12,10 +12,8 @@
  * details.
  */
 
-import escape from 'lodash.escape';
 import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
-import unescape from 'lodash.unescape';
 
 import DynamicSelect from './DynamicSelect';
 import BREAKPOINTS from './breakpoints';
@@ -201,7 +199,24 @@ Liferay.Util.disableEsc = () => {
 	}
 };
 
-Liferay.Util.escape = escape;
+const htmlEscapes = {
+	'"': '&quot;',
+	'&': '&amp;',
+	"'": '&#39;',
+	'<': '&lt;',
+	'>': '&gt;',
+}
+
+const reUnescapedHtml = /[&<>"']/g
+const reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
+
+Liferay.Util.escape = (string) => {
+	return (string && reHasUnescapedHtml.test(string))
+		? string.replace(reUnescapedHtml, (chr) => htmlEscapes[chr])
+		: (string || '')
+}
+
+;
 Liferay.Util.escapeHTML = escapeHTML;
 Liferay.Util.fetch = fetch;
 
@@ -329,7 +344,24 @@ Liferay.Util.toggleBoxes = toggleBoxes;
 Liferay.Util.toggleControls = toggleControls;
 Liferay.Util.toggleRadio = toggleRadio;
 Liferay.Util.toggleSelectBox = toggleSelectBox;
-Liferay.Util.unescape = unescape;
+
+const htmlUnescapes = {
+	'&#39;': "'",
+	'&amp;': '&',
+	'&gt;': '>',
+	'&lt;': '<',
+	'&quot;': '"',
+}
+
+const reEscapedHtml = /&(?:amp|lt|gt|quot|#(0+)?39);/g
+const reHasEscapedHtml = RegExp(reEscapedHtml.source)
+
+Liferay.Util.unescape = (string) => {
+	return (string && reHasEscapedHtml.test(string))
+		? string.replace(reEscapedHtml, (entity) => (htmlUnescapes[entity] || "'"))
+		: (string || '')
+}
+
 Liferay.Util.unescapeHTML = unescapeHTML;
 
 Liferay.Util.Cookie = Cookie;

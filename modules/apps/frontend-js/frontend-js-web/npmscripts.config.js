@@ -14,10 +14,8 @@
 
 module.exports = {
 	bridges: [
-		'lodash.escape',
 		'lodash.groupby',
 		'lodash.isequal',
-		'lodash.unescape',
 		'svg4everybody',
 	],
 	build: {

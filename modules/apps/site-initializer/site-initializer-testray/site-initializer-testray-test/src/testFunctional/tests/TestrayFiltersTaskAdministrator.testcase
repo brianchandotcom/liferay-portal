@@ -247,6 +247,43 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by project name"
+	@priority = 3
+	test AdminCanFilterTasksByProjectName {
+		task ("Given that the user has two project different in the table") {
+			AssertElementPresent(
+				key_projectName = "Project 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Project 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user select the project 2 in the filter") {
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.multiSelect(
+				header = "Project Name",
+				label = "Project Name",
+				listMultiSelect = "Project 2");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only project 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Project 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the project 1 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Project 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by routine name"
 	@priority = 3
 	test AdminCanFilterTasksByRoutineName {

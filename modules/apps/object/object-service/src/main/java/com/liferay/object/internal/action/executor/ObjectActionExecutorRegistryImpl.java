@@ -16,9 +16,9 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
+import com.liferay.object.internal.action.executor.util.ObjectActionExecutorUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -68,20 +68,9 @@ public class ObjectActionExecutorRegistryImpl
 		return ListUtil.sort(
 			ListUtil.filter(
 				new ArrayList<>(objectActionExecutorsCollection),
-				objectActionExecutor -> {
-					if ((objectActionExecutor.getCompanyId() != 0) &&
-						(objectActionExecutor.getCompanyId() !=
-							CompanyThreadLocal.getCompanyId())) {
-
-						return false;
-					}
-
-					List<String> objectDefinitionNames =
-						objectActionExecutor.getObjectDefinitionNames();
-
-					return objectDefinitionNames.isEmpty() ||
-						   objectDefinitionNames.contains(objectDefinitionName);
-				}),
+				objectActionExecutor ->
+					ObjectActionExecutorUtil.isRestrictionCriteriaMet(
+						objectActionExecutor, objectDefinitionName)),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {
 

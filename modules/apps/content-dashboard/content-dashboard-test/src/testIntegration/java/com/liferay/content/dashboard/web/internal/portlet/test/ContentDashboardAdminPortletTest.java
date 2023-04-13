@@ -67,10 +67,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -499,8 +501,17 @@ public class ContentDashboardAdminPortletTest {
 
 		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			_user.getUserId(), _group.getGroupId(), 0);
+
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			_user.getUserId(), _group.getGroupId(), 0);
+
+		journalArticle2.setModifiedDate(
+			DateUtil.newDate(System.currentTimeMillis() + Time.SECOND));
+
+		JournalTestUtil.updateArticle(
+			journalArticle2, journalArticle2.getTitleMap(),
+			journalArticle2.getContent(), true, true,
+			ServiceContextTestUtil.getServiceContext());
 
 		searchContainer = _getSearchContainer(
 			_getMockLiferayPortletRenderRequest());

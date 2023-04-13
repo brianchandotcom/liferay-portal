@@ -45,7 +45,7 @@ RedirectDisplayContext redirectDisplayContext = (RedirectDisplayContext)request.
 			/>
 		</div>
 
-		<c:if test="<%= SessionErrors.contains(renderRequest, ConfigurationModelListenerException.class) %>">
+		<c:if test='<%= SessionErrors.contains(renderRequest, "redirectPatternInvalid") %>'>
 			<aui:script>
 				Liferay.Util.openToast({
 					message:

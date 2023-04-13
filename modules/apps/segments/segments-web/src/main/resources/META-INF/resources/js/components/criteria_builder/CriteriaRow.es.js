@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import getCN from 'classnames';
 import {fetch} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
-import React, {Component} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 
 import ThemeContext from '../../ThemeContext.es';
@@ -140,70 +140,35 @@ function beginDrag({criterion, groupId, index, propertyKey}) {
 	return {criterion, groupId, index, propertyKey};
 }
 
-class CriteriaRow extends Component {
-	static contextType = ThemeContext;
+function CriteriaRow({
+	canDrop,
+	connectDragPreview,
+	connectDragSource,
+	connectDropTarget,
+	criterion = {},
+	dragging,
+	editing = true,
+	entityName,
+	hover,
+	index,
+	onAdd,
+	onChange,
+	onDelete,
+	renderEmptyValuesErrors = false,
+	supportedProperties = [],
+}) {
+	const themeContext = useContext(ThemeContext);
 
-	static propTypes = {
-		canDrop: PropTypes.bool,
-		connectDragPreview: PropTypes.func,
-		connectDragSource: PropTypes.func,
-		connectDropTarget: PropTypes.func,
-		criterion: PropTypes.object,
-		dragging: PropTypes.bool,
-		editing: PropTypes.bool,
-		entityName: PropTypes.string,
-		groupId: PropTypes.string.isRequired,
-		hover: PropTypes.bool,
-		index: PropTypes.number.isRequired,
-		modelLabel: PropTypes.string,
-		onAdd: PropTypes.func.isRequired,
-		onChange: PropTypes.func.isRequired,
-		onDelete: PropTypes.func.isRequired,
-		onMove: PropTypes.func.isRequired,
-		propertyKey: PropTypes.string.isRequired,
-		renderEmptyValuesErrors: PropTypes.bool,
-		supportedProperties: PropTypes.array,
-	};
-
-	static defaultProps = {
-		criterion: {},
-		editing: true,
-		renderEmptyValuesErrors: false,
-		supportedProperties: [],
-	};
-
-	componentDidMount() {
-		const {
-			criterion: {displayValue, propertyName, value},
-			supportedProperties,
-		} = this.props;
-
-		this._selectedProperty = this._getSelectedItem(
-			supportedProperties,
-			propertyName
-		);
-
-		if (
-			this._selectedProperty.type === PROPERTY_TYPES.ID &&
-			value &&
-			!displayValue
-		) {
-			this._fetchEntityName();
-		}
-	}
-
-	_fetchEntityName = () => {
-		const {criterion, entityName, onChange} = this.props;
-
+	const _fetchEntityName = useCallback(() => {
 		const {propertyName, value} = criterion;
 
-		const data = Liferay.Util.ns(this.context.namespace, {
+		const data = Liferay.Util.ns(themeContext.namespace, {
 			entityName,
 			fieldName: propertyName,
 			fieldValue: value,
 		});
 
-		fetch(this.context.requestFieldValueNameURL, {
+		fetch(themeContext.requestFieldValueNameURL, {
 			body: objectToFormData(data),
 			method: 'POST',
 		})
@@ -227,7 +192,22 @@ class CriteriaRow extends Component {
 					onChange({...criterion, displayValue: value});
 				}
 			});
-	};
+	}, [criterion, onChange, themeContext, entityName]);
+
+	useEffect(() => {
+		const _selectedProperty = _getSelectedItem(
+			supportedProperties,
+			criterion.propertyName
+		);
+
+		if (
+			_selectedProperty.type === PROPERTY_TYPES.ID &&
+			criterion.value &&
+			!criterion.displayValue
+		) {
+			_fetchEntityName();
+		}
+	}, [criterion, supportedProperties, _fetchEntityName]);
 
 	/**
 	 * Gets the selected item object with a `name` and `label` property for a
@@ -237,7 +217,7 @@ class CriteriaRow extends Component {
 	 * @param {string} idSelected The name to match in each object in the list.
 	 * @return {object} An object with a `name`, `label` and `type` property.
 	 */
-	_getSelectedItem = (list, idSelected) => {
+	const _getSelectedItem = (list, idSelected) => {
 		const selectedItem = list.find((item) => item.name === idSelected);
 
 		return selectedItem
@@ -250,8 +230,7 @@ class CriteriaRow extends Component {
 			  };
 	};
 
-	_renderErrorMessages({errorOnProperty, unknownEntityError}) {
-		const {editing} = this.props;
+	const _renderErrorMessages = ({errorOnProperty, unknownEntityError}) => {
 		const errors = [];
 		if (errorOnProperty) {
 			const message = editing
@@ -285,10 +264,9 @@ class CriteriaRow extends Component {
 				</ClayAlert>
 			);
 		});
-	}
+	};
 
-	_renderWarningMessages() {
-		const {editing} = this.props;
+	const _renderWarningMessages = () => {
 		const warnings = [];
 		const message = editing
 			? Liferay.Language.get('criteria-warning-message-edit')
@@ -310,126 +288,128 @@ class CriteriaRow extends Component {
 				</ClayAlert>
 			);
 		});
-	}
+	};
 
-	render() {
-		const {
-			canDrop,
-			connectDragPreview,
-			connectDragSource,
-			connectDropTarget,
-			criterion,
-			dragging,
-			editing,
-			hover,
-			index,
-			onAdd,
-			onChange,
-			onDelete,
-			renderEmptyValuesErrors,
-			supportedProperties,
-		} = this.props;
+	const {unknownEntity} = criterion;
 
-		const {unknownEntity} = criterion;
+	const selectedOperator = _getSelectedItem(
+		SUPPORTED_OPERATORS,
+		criterion.operatorName
+	);
 
-		const selectedOperator = this._getSelectedItem(
-			SUPPORTED_OPERATORS,
-			criterion.operatorName
-		);
+	const selectedProperty = _getSelectedItem(
+		supportedProperties,
+		criterion.propertyName
+	);
 
-		const selectedProperty = this._getSelectedItem(
-			supportedProperties,
-			criterion.propertyName
-		);
+	const value = criterion ? criterion.value : '';
+	const errorOnProperty = selectedProperty.notFound;
+	const error = errorOnProperty || unknownEntity;
+	const warningOnProperty =
+		selectedProperty.options === undefined
+			? false
+			: !selectedProperty.options?.length
+			? false
+			: selectedProperty.options.find((option) => {
+					return (
+						option.value === value && option.disabled === undefined
+					);
+			  });
+	const warning = !(warningOnProperty || warningOnProperty === false);
 
-		const value = criterion ? criterion.value : '';
-		const errorOnProperty = selectedProperty.notFound;
-		const error = errorOnProperty || unknownEntity;
-		const warningOnProperty =
-			selectedProperty.options === undefined
-				? false
-				: !selectedProperty.options?.length
-				? false
-				: selectedProperty.options.find((option) => {
-						return (
-							option.value === value &&
-							option.disabled === undefined
-						);
-				  });
-		const warning = !(warningOnProperty || warningOnProperty === false);
-
-		if (
-			selectedProperty.options !== undefined &&
-			!!selectedProperty.options?.length &&
-			selectedProperty.options.find((option) => {
-				return option.value === value;
-			}) === undefined &&
-			warning
-		) {
-			selectedProperty.options.unshift({
-				disabled: true,
-				label: value,
-				value,
-			});
-		}
-
-		const classes = getCN('criterion-row-root', {
-			'criterion-row-root-error': error,
-			'criterion-row-root-warning': warning,
-			'dnd-drag': dragging,
-			'dnd-hover': hover && canDrop,
+	if (
+		selectedProperty.options !== undefined &&
+		!!selectedProperty.options?.length &&
+		selectedProperty.options.find((option) => {
+			return option.value === value;
+		}) === undefined &&
+		warning
+	) {
+		selectedProperty.options.unshift({
+			disabled: true,
+			label: value,
+			value,
 		});
-
-		return (
-			<>
-				{connectDropTarget(
-					connectDragPreview(
-						<div className={classes}>
-							{editing ? (
-								<CriteriaRowEditable
-									connectDragSource={connectDragSource}
-									criterion={criterion}
-									error={error}
-									index={index}
-									onAdd={onAdd}
-									onChange={onChange}
-									onDelete={onDelete}
-									renderEmptyValuesErrors={
-										renderEmptyValuesErrors
-									}
-									selectedOperator={selectedOperator}
-									selectedProperty={selectedProperty}
-								/>
-							) : (
-								<CriteriaRowReadable
-									criterion={criterion}
-									selectedOperator={selectedOperator}
-									selectedProperty={selectedProperty}
-								/>
-							)}
-						</div>
-					)
-				)}
-				{error &&
-					this._renderErrorMessages({
-						errorOnProperty,
-						unknownEntityError: unknownEntity,
-					})}
-				{warning && this._renderWarningMessages()}
-				{!value && renderEmptyValuesErrors && (
-					<ClayAlert
-						className="pr-6 text-right"
-						displayType="danger"
-						title={Liferay.Language.get(
-							'a-value-needs-to-be-added-or-selected-in-the-blank-field'
-						)}
-						variant="feedback"
-					/>
-				)}
-			</>
-		);
 	}
+
+	const classes = getCN('criterion-row-root', {
+		'criterion-row-root-error': error,
+		'criterion-row-root-warning': warning,
+		'dnd-drag': dragging,
+		'dnd-hover': hover && canDrop,
+	});
+
+	return (
+		<>
+			{connectDropTarget(
+				connectDragPreview(
+					<div className={classes}>
+						{editing ? (
+							<CriteriaRowEditable
+								connectDragSource={connectDragSource}
+								criterion={criterion}
+								error={error}
+								index={index}
+								onAdd={onAdd}
+								onChange={onChange}
+								onDelete={onDelete}
+								renderEmptyValuesErrors={
+									renderEmptyValuesErrors
+								}
+								selectedOperator={selectedOperator}
+								selectedProperty={selectedProperty}
+							/>
+						) : (
+							<CriteriaRowReadable
+								criterion={criterion}
+								selectedOperator={selectedOperator}
+								selectedProperty={selectedProperty}
+							/>
+						)}
+					</div>
+				)
+			)}
+			{error &&
+				_renderErrorMessages({
+					errorOnProperty,
+					unknownEntityError: unknownEntity,
+				})}
+			{warning && _renderWarningMessages()}
+			{!value && renderEmptyValuesErrors && (
+				<ClayAlert
+					className="pr-6 text-right"
+					displayType="danger"
+					title={Liferay.Language.get(
+						'a-value-needs-to-be-added-or-selected-in-the-blank-field'
+					)}
+					variant="feedback"
+				/>
+			)}
+		</>
+	);
 }
+
+CriteriaRow.propTypes = {
+	canDrop: PropTypes.bool,
+	connectDragPreview: PropTypes.func,
+	connectDragSource: PropTypes.func,
+	connectDropTarget: PropTypes.func,
+	criterion: PropTypes.object,
+	dragging: PropTypes.bool,
+	editing: PropTypes.bool,
+	entityName: PropTypes.string,
+	groupId: PropTypes.string.isRequired,
+	hover: PropTypes.bool,
+	index: PropTypes.number.isRequired,
+	modelLabel: PropTypes.string,
+	onAdd: PropTypes.func.isRequired,
+	onChange: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired,
+	onMove: PropTypes.func.isRequired,
+	propertyKey: PropTypes.string.isRequired,
+	renderEmptyValuesErrors: PropTypes.bool,
+	supportedProperties: PropTypes.array,
+};
 
 const CriteriaRowWithDrag = dragSource(
 	DragTypes.CRITERIA_ROW,

@@ -127,8 +127,6 @@ const organizationUpdate = async () => {
 		method: 'PUT',
 	});
 	localStorage.setItem('sucess', 'Sucess');
-
-	window.location = `${liferayUrl}/web/evp/organization`;
 };
 
 const formInputName = document.querySelector('.submit-button');

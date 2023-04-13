@@ -84,7 +84,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	public void finish() {
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setFinal(schemaVersion));
+				moduleSchemaVersions._setFinal(schemaVersion));
 
 		_state = _calculateState();
 		_type = _calculateType();
@@ -131,7 +131,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			return null;
 		}
 
-		return schemaVersions.getFinal();
+		return schemaVersions._getFinal();
 	}
 
 	public String getInitialSchemaVersion(String servletContextName) {
@@ -142,7 +142,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			return null;
 		}
 
-		return schemaVersions.getInitial();
+		return schemaVersions._getInitial();
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions.setInitial(schemaVersion));
+				moduleSchemaVersions._setInitial(schemaVersion));
 	}
 
 	private String _calculateState() {
@@ -205,14 +205,14 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 
 			SchemaVersions schemaVersions = schemaVersionsEntry.getValue();
 
-			if (schemaVersions.getInitial() == null) {
+			if (schemaVersions._getInitial() == null) {
 				continue;
 			}
 
 			Version initialVersion = Version.parseVersion(
-				schemaVersions.getInitial());
+				schemaVersions._getInitial());
 			Version finalVersion = Version.parseVersion(
-				schemaVersions.getFinal());
+				schemaVersions._getFinal());
 
 			if (initialVersion.equals(finalVersion)) {
 				continue;
@@ -326,19 +326,19 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			_initial = initial;
 		}
 
-		public String getFinal() {
+		private String _getFinal() {
 			return _final;
 		}
 
-		public String getInitial() {
+		private String _getInitial() {
 			return _initial;
 		}
 
-		public void setFinal(String aFinal) {
+		private void _setFinal(String aFinal) {
 			_final = aFinal;
 		}
 
-		public void setInitial(String initial) {
+		private void _setInitial(String initial) {
 			if (initial == null) {
 				_initial = "0.0.0";
 

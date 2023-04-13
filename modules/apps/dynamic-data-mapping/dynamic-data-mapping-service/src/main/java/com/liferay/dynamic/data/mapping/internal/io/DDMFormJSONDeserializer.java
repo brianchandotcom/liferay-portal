@@ -127,7 +127,9 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		return localizedValue;
 	}
 
-	protected Set<Locale> getAvailableLocales(JSONArray jsonArray) {
+	protected void setDDMFormAvailableLocales(
+		JSONArray jsonArray, DDMForm ddmForm) {
+
 		Set<Locale> availableLocales = new HashSet<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -137,13 +139,7 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 			availableLocales.add(availableLocale);
 		}
 
-		return availableLocales;
-	}
-
-	protected void setDDMFormAvailableLocales(
-		JSONArray jsonArray, DDMForm ddmForm) {
-
-		ddmForm.setAvailableLocales(getAvailableLocales(jsonArray));
+		ddmForm.setAvailableLocales(availableLocales);
 	}
 
 	protected void setDDMFormDefaultLocale(

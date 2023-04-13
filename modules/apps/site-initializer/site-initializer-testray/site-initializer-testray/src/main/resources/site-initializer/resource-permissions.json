@@ -121,14 +121,23 @@
 	},
 	{
 		"actionIds": [
-			"DELETE",
-			"UPDATE",
 			"VIEW"
 		],
 		"primKey": "[$OBJECT_DEFINITION_ID:FactorCategory$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Testray Administrator",
 		"scope": 4
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
 	},
 	{
 		"actionIds": [

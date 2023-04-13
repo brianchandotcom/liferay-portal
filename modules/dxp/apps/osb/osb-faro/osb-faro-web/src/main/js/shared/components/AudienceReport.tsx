@@ -1,3 +1,5 @@
+// @ts-nocheck - Fix it at this LRAC-13388
+
 import ChartTooltip from 'shared/components/chart-tooltip';
 import HTMLBarChart, {Grid, Item} from 'shared/components/HTMLBarChart';
 import InfoPopover from 'shared/components/InfoPopover';

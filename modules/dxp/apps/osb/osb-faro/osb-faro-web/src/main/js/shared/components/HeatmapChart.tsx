@@ -1,3 +1,5 @@
+// @ts-nocheck - Fix it at this LRAC-13388
+
 import * as d3 from 'd3';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';

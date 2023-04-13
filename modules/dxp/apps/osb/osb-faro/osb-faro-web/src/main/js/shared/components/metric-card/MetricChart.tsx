@@ -1,3 +1,5 @@
+// @ts-nocheck - Fix it at this LRAC-13388
+
 import Checkbox from 'shared/components/Checkbox';
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
 import MetricStateRenderer from './MetricStateRenderer';

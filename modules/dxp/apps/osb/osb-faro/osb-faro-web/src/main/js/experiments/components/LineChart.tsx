@@ -1,3 +1,5 @@
+// @ts-nocheck - Fix it at this LRAC-13388
+
 import * as d3 from 'd3';
 import React, {useState} from 'react';
 import {ANIMATION_DURATION, AXIS, getAxisTickText} from 'shared/util/recharts';

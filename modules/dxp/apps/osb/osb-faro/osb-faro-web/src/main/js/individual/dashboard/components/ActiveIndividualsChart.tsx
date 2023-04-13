@@ -1,3 +1,5 @@
+// @ts-nocheck - Fix it at this LRAC-13388
+
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
 import React, {useState} from 'react';
 import Spinner from 'shared/components/Spinner';

@@ -1,7 +1,6 @@
 [#assign mdfClaimId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 [#assign userRoles = permissionChecker.getUserBag().getRoles()/]
-
-[#assign approvedRoles =[""] /]
+[#assign approvedRoles = [""] /]
 
 [#if configuration.channelAccountManager]
 	[#assign approvedRoles = approvedRoles + ["Channel Account Manager"] /]
@@ -34,12 +33,12 @@
 	[#assign site_url = (themeDisplay.getURLCurrent()?keep_before("/l/${mdfClaimId}"))! /]
 	[#assign userRoles = userRoles + (myUserAccount.accountBriefs?filter(account_brief -> account_brief.id == accountEntryId)?first.roleBriefs)! /]
 
-[#list userRoles as userRoles]
+	[#list userRoles as userRoles]
 	[#if approvedRoles?seq_contains(userRoles.name)]
-		<button class="border-brand-secondary-darken-3 btn btn-secondary d-none mr-2 mt-2" id="status-in-finance-review">
-			In Finance Review
-		</button>
-		[#break]
+	<button class="border-success btn btn-secondary d-none mr-2 mt-2" id="status-approved">
+		Approve
+	</button>
+	[#break]
 	[/#if]
-[/#list]
-[/#if]
+	[/#list]
+	[/#if]

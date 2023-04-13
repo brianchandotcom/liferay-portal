@@ -15,13 +15,13 @@
 package com.liferay.site.internal.configuration;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.site.configuration.MenuAccessConfiguration;
 import com.liferay.site.configuration.MenuAccessConfigurationProvider;
 
-import java.io.IOException;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
 
@@ -61,22 +61,48 @@ public class MenuAccessConfigurationProviderImpl
 
 	@Override
 	public void updateMenuAccessConfiguration(
-			String[] rolesCanSeeControlMenu, boolean showControlMenuByRole)
-		throws IOException {
+			long groupId, String[] rolesCanSeeControlMenu,
+			boolean showControlMenuByRole)
+		throws Exception {
 
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			MenuAccessConfiguration.class.getName(), StringPool.QUESTION);
+		Dictionary<String, Object> properties;
+		Configuration configuration = _getScopedConfiguration(groupId);
 
-		Dictionary<String, Object> properties = configuration.getProperties();
+		if (configuration == null) {
+			configuration = _configurationAdmin.createFactoryConfiguration(
+				MenuAccessConfiguration.class.getName() + ".scoped",
+				StringPool.QUESTION);
 
-		if (properties == null) {
-			properties = new HashMapDictionary<>();
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				groupId
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
 		}
 
 		properties.put("rolesCanSeeControlMenu", rolesCanSeeControlMenu);
 		properties.put("showControlMenuByRole", showControlMenuByRole);
 
 		configuration.update(properties);
+	}
+
+	private Configuration _getScopedConfiguration(long groupId)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			String.format(
+				"(&(service.factoryPid=%s)(%s=%d))",
+				MenuAccessConfiguration.class.getName() + ".scoped",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				groupId));
+
+		if (configurations == null) {
+			return null;
+		}
+
+		return configurations[0];
 	}
 
 	@Reference

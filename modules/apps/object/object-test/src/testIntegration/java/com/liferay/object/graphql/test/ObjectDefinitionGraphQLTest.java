@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -191,26 +193,30 @@ public class ObjectDefinitionGraphQLTest {
 				"JSONObject/create" + _parentObjectDefinitionName,
 				"Object/" + _objectFieldName));
 
-		Assert.assertEquals(
-			"Bad Request",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"mutation",
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"notprivacysafe.graphql.GraphQL", LoggerTestUtil.ERROR)) {
+
+			Assert.assertEquals(
+				"Bad Request",
+				JSONUtil.getValueAsString(
+					_invoke(
 						new GraphQLField(
-							"c",
+							"mutation",
 							new GraphQLField(
-								"create" + _parentObjectDefinitionName,
-								HashMapBuilder.<String, Object>put(
-									_parentObjectDefinitionName,
-									StringBundler.concat(
-										"{", _objectFieldName, ": \"",
-										RandomTestUtil.randomString(), "\"",
-										", status: draft }")
-								).build(),
-								new GraphQLField(_objectFieldName))))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+								"c",
+								new GraphQLField(
+									"create" + _parentObjectDefinitionName,
+									HashMapBuilder.<String, Object>put(
+										_parentObjectDefinitionName,
+										StringBundler.concat(
+											"{", _objectFieldName, ": \"",
+											RandomTestUtil.randomString(), "\"",
+											", status: draft }")
+									).build(),
+									new GraphQLField(_objectFieldName))))),
+					"JSONArray/errors", "Object/0", "JSONObject/extensions",
+					"Object/code"));
+		}
 	}
 
 	@Test

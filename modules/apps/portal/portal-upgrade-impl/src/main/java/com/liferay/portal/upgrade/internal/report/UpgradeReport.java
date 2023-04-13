@@ -334,15 +334,13 @@ public class UpgradeReport {
 						"Unable to determine the document library size",
 						exception);
 
-					return "Unable to determine the document library storage " +
-						"size because of an error. Check log for more " +
-							"details. You can check the size manually";
+					return "Unable to determine";
 				}
 
 				if (_documentLibrarySizeThread.isAlive()) {
-					return "Unable to determine the document library storage " +
-						"size because it is too large. You can check it " +
-							"manually";
+					return "Unable to determine since the document library " +
+						"size is too large. Increase the timeout or check " +
+							"manually.";
 				}
 
 				return LanguageUtil.formatStorageSize(

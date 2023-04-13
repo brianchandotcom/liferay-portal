@@ -233,8 +233,8 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			_appender.stop();
 
 			_assertReport(
-				"Unable to determine the document library storage size " +
-					"because it is too large. You can check it manually");
+				"Unable to determine since the document library size is too " +
+					"large. Increase the timeout or check manually.");
 		}
 	}
 

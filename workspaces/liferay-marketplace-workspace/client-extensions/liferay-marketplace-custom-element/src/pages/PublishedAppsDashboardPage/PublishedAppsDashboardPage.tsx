@@ -16,6 +16,7 @@ import {
 	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
+	getMyUserAccount,
 } from '../../utils/api';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {
@@ -334,6 +335,32 @@ export function PublishedAppsDashboardPage() {
 	useEffect(() => {
 		(async () => {
 			if (selectedNavigationItem === 'Members') {
+				const currentUserAccountResponse = await getMyUserAccount();
+
+				const currentUserAccount = {
+					accountBriefs: currentUserAccountResponse.accountBriefs,
+					isCustomerAccount: false,
+					isPublisherAccount: false
+				};
+
+				const currentUserAccountRoleBriefs = currentUserAccount.accountBriefs.find((accountBrief: { name: string; }) => accountBrief.name === selectedAccount.name).roleBriefs;
+
+				const customerRoles = ["Account Administrator", "Project Installer", "Account Buyer", "Account Member"];
+
+				const publisherRoles = ["Owner", "Account Administrator", "App Editor", "Sales Manager"];
+
+				customerRoles.forEach(customerRole => {
+					if (currentUserAccountRoleBriefs.find((role: { name: string; }) => role.name === customerRole)) {
+						currentUserAccount.isCustomerAccount = true;
+					}
+				});
+
+				publisherRoles.forEach(publisherRole => {
+					if (currentUserAccountRoleBriefs.find((role: { name: string; }) => role.name === publisherRole)) {
+						currentUserAccount.isPublisherAccount = true;
+					}
+				});
+
 				const accountsListResponse = await getUserAccounts();
 
 				const membersList = accountsListResponse.items.map(
@@ -343,6 +370,8 @@ export function PublishedAppsDashboardPage() {
 							dateCreated: member.dateCreated,
 							email: member.emailAddress,
 							image: member.image,
+							isCustomerAccount: false,
+							isPublisherAccount: false,
 							lastLoginDate: member.lastLoginDate,
 							name: member.name,
 							role: getRolesList(member.accountBriefs),
@@ -350,6 +379,24 @@ export function PublishedAppsDashboardPage() {
 						} as MemberProps;
 					}
 				);
+
+				membersList.forEach(
+					(member: MemberProps) => {
+						const rolesList = member.role.split(', ');
+
+						customerRoles.forEach(customerRole => {
+							if (rolesList.find(role => role === customerRole)) {
+								member.isCustomerAccount = true;
+							}
+						});
+
+						publisherRoles.forEach(publisherRole => {
+							if (rolesList.find(role => role === publisherRole)) {
+								member.isPublisherAccount = true;
+							}
+						});
+					}
+				)
 
 				let filteredMembersList: MemberProps[] = [];
 
@@ -360,7 +407,7 @@ export function PublishedAppsDashboardPage() {
 								(accountBrief: AccountBriefProps) =>
 									accountBrief.externalReferenceCode ===
 									selectedAccount.externalReferenceCode
-							)
+							) && member.isPublisherAccount
 						) {
 							return true;
 						}

@@ -46,6 +46,8 @@ export type MemberProps = {
 	dateCreated: string;
 	email: string;
 	image: string;
+	isCustomerAccount: boolean;
+	isPublisherAccount: boolean;
 	lastLoginDate: string;
 	name: string;
 	role: string;
@@ -77,7 +79,7 @@ export type RoleBriefProps = {
 };
 
 export type UserAccountProps = {
-	accountBriefs: AccountBriefProps[];
+	accountBriefs: AccountBrief[];
 	dateCreated: string;
 	emailAddress: string;
 	id: number;

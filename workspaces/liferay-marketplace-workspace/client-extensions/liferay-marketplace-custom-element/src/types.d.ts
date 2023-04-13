@@ -10,6 +10,7 @@ type AccountBrief = {
 	externalReferenceCode: string;
 	id: number;
 	logoURL?: string;
+	roleBriefs: RoleBrief[];
 	name: string;
 };
 
@@ -114,6 +115,11 @@ type ProductOptionItem = {
 	optionId: number;
 };
 
+type RoleBrief = {
+	id: number;
+	name: string;
+};
+
 type SKU = {
 	cost: number;
 	externalReferenceCode: string;
@@ -130,4 +136,6 @@ type Specification = {
 
 type UserAccount = {
 	accountBriefs: AccountBrief[];
+	isCustomerAccount: boolean;
+	isPublisherAccount: boolean;
 };

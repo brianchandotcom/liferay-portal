@@ -22,4 +22,109 @@
 			todir="${liferay.home}/osgi/configs"
 		/>
 	</target>
+
+	<target depends="setup-yarn" name="start-oauth2-application">
+		<property location="${project.dir}/oauth2" name="oauth2.application.dir" />
+
+		<basename file="${oauth2.application.url}" property="oauth2.application.file.name" />
+
+		<trycatch>
+			<try>
+				<mirrors-get
+					dest="${oauth2.application.dir}/${oauth2.application.file.name}"
+					src="${oauth2.application.url}"
+				/>
+			</try>
+			<catch>
+				<mkdir dir="${oauth2.application.dir}" />
+
+				<execute dir="${oauth2.application.dir}">
+					curl ${oauth2.application.url} --output ${oauth2.application.file.name}
+				</execute>
+
+				<propertyregex
+					input="${oauth2.application.url}"
+					property="oauth2.application.mirrors.dir"
+					regexp="https?://(mirrors[^/]+/)?(.+)/[^/]+"
+					replace="\2"
+				/>
+
+				<mkdir dir="${mirrors.cache.dir}/${oauth2.application.mirrors.dir}" />
+
+				<copy
+					file="${oauth2.application.dir}/${oauth2.application.file.name}"
+					tofile="${mirrors.cache.dir}/${oauth2.application.mirrors.dir}/${oauth2.application.file.name}"
+				/>
+			</catch>
+		</trycatch>
+
+		<decompress
+			dest="${oauth2.application.dir}"
+			src="${oauth2.application.dir}/${oauth2.application.file.name}"
+		/>
+
+		<delete file="${oauth2.application.dir}/${oauth2.application.file.name}" />
+
+		<parallel>
+			<daemons>
+				<sequential>
+					<local name="start.oauth2.bash.file" />
+
+					<property location="start_oauth2.sh" name="start.oauth2.bash.file" />
+
+					<echo file="${start.oauth2.bash.file}">
+						<![CDATA[
+							#!/bin/bash
+
+							export PATH="${node.home}/bin:${node.home}/lib/node_modules/corepack/shims:${env.PATH}"
+
+							${npx.exec} serve -s ${oauth2.application.dir}/liferay-${oauth2.application.zip.id}/${oauth2.application.zip.id}-custom-element/build
+						]]>
+					</echo>
+
+					<exec executable="/bin/bash">
+						<arg line="${start.oauth2.bash.file}" />
+					</exec>
+
+					<delete file="${start.oauth2.bash.file}" />
+				</sequential>
+			</daemons>
+
+			<waitfor checkevery="5" checkeveryunit="second" maxwait="5" maxwaitunit="minute" timeoutproperty="wait.for.oauth2">
+				<http url="http://localhost:3000" />
+			</waitfor>
+		</parallel>
+	</target>
+
+	<target name="stop-oauth2-application">
+		<if>
+			<os family="unix" />
+			<then>
+				<local name="stop.oauth2.bash.file" />
+
+				<property location="stop_oauth2.sh" name="stop.oauth2.bash.file" />
+
+				<echo file="${stop.oauth2.bash.file}">
+					<![CDATA[
+						#!/bin/bash
+
+						ps -o pid,args -e | grep npx | grep liferay-${oauth2.application.zip.id} | grep -v grep
+
+						for i in `ps -o pid,args -e | grep npx | grep liferay-${oauth2.application.zip.id} | grep -v grep | cut -c1-5`
+						do
+							echo "Killing $i"
+
+							kill -9 $i
+						done
+					]]>
+				</echo>
+
+				<exec executable="/bin/bash">
+					<arg line="${stop.oauth2.bash.file}" />
+				</exec>
+
+				<delete file="${stop.oauth2.bash.file}" />
+			</then>
+		</if>
+	</target>
 </project>

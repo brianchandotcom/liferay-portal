@@ -15542,6 +15542,15 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="oauth2.application.enabled" />
+
+		<if>
+			<equals arg1="${oauth2.application.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-oauth2.xml" target="start-oauth2-application" />
+			</then>
+		</if>
+
 		<if>
 			<isset property="workspace.name" />
 			<then>
@@ -15557,6 +15566,15 @@ mail.send.blacklist=</echo>
 			<equals arg1="${analytics.cloud.enabled}" arg2="true" />
 			<then>
 				<ant antfile="build-test-analytics-cloud.xml" target="stop-analytics-cloud" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="oauth2.application.enabled" />
+
+		<if>
+			<equals arg1="${oauth2.application.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-oauth2.xml" target="stop-oauth2-application" />
 			</then>
 		</if>
 

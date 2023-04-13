@@ -568,6 +568,28 @@ public class Sku implements Cloneable, Serializable {
 
 	protected SkuSubscriptionConfiguration skuSubscriptionConfiguration;
 
+	public SkuVirtualSettings getSkuVirtualSettings() {
+		return skuVirtualSettings;
+	}
+
+	public void setSkuVirtualSettings(SkuVirtualSettings skuVirtualSettings) {
+		this.skuVirtualSettings = skuVirtualSettings;
+	}
+
+	public void setSkuVirtualSettings(
+		UnsafeSupplier<SkuVirtualSettings, Exception>
+			skuVirtualSettingsUnsafeSupplier) {
+
+		try {
+			skuVirtualSettings = skuVirtualSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SkuVirtualSettings skuVirtualSettings;
+
 	public String getUnspsc() {
 		return unspsc;
 	}

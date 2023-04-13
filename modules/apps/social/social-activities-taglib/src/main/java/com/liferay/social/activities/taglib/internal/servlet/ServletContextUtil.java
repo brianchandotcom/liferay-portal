@@ -14,33 +14,28 @@
 
 package com.liferay.social.activities.taglib.internal.servlet;
 
-import javax.servlet.ServletContext;
+import com.liferay.osgi.util.service.Snapshot;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import javax.servlet.ServletContext;
 
 /**
  * @author Sergio González
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static String getContextPath() {
-		return _servletContext.getContextPath();
+		ServletContext servletContext = _servletContextSnapshot.get();
+
+		return servletContext.getContextPath();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContext;
+		return _servletContextSnapshot.get();
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.social.activities.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private static ServletContext _servletContext;
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.social.activities.taglib)");
 
 }

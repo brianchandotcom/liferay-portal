@@ -431,13 +431,11 @@ public class DDMDataProviderInstanceLocalServiceImpl
 				for (String inputParameterName :
 						inputParameterNameValuesMap.values()) {
 
-					if (inputParameterNames.contains(inputParameterName)) {
+					if (!inputParameterNames.add(inputParameterName)) {
 						throw new DuplicateDataProviderInstanceInputParameterNameException(
 							"Duplicate data provider input parameter name: " +
 								inputParameterName);
 					}
-
-					inputParameterNames.add(inputParameterName);
 				}
 			}
 		}

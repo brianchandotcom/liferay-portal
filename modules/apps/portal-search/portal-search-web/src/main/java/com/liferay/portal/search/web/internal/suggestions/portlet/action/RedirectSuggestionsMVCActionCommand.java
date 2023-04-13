@@ -125,10 +125,11 @@ public class RedirectSuggestionsMVCActionCommand extends BaseMVCActionCommand {
 
 		String path = url.substring(0, url.indexOf(friendlyURL));
 
-		Optional<String> destinationOptional =
-			searchBarPortletPreferences.getDestinationOptional();
+		String destination = searchBarPortletPreferences.getDestination();
 
-		String destination = destinationOptional.orElse(friendlyURL);
+		if (destination == null) {
+			destination = friendlyURL;
+		}
 
 		return _getPath(path, destination);
 	}

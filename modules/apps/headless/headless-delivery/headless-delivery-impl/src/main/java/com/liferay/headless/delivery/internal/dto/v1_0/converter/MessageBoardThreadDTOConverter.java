@@ -163,9 +163,9 @@ public class MessageBoardThreadDTOConverter
 		MBGroupServiceSettings mbGroupServiceSettings =
 			MBGroupServiceSettings.getInstance(siteId);
 
-		String[] priorities = mbGroupServiceSettings.getPriorities(languageId);
+		for (String priorityString :
+				mbGroupServiceSettings.getPriorities(languageId)) {
 
-		for (String priorityString : priorities) {
 			String[] parts = StringUtil.split(priorityString, StringPool.PIPE);
 
 			if (priority == GetterUtil.getDouble(parts[2])) {

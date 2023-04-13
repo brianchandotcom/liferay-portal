@@ -10,8 +10,8 @@ type AccountBrief = {
 	externalReferenceCode: string;
 	id: number;
 	logoURL?: string;
-	roleBriefs: RoleBrief[];
 	name: string;
+	roleBriefs: RoleBrief[];
 };
 
 type AccountGroup = {

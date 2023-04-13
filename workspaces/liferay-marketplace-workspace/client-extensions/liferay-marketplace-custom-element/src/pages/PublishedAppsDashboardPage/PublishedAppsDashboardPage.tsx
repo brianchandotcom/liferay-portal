@@ -12,11 +12,10 @@ import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/Pu
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
 	getAccounts,
-	getCatalog,
+	getMyUserAccount,
 	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
-	getMyUserAccount,
 } from '../../utils/api';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {
@@ -29,7 +28,6 @@ import {
 	MemberProps,
 	ProductResponseProps,
 	ProductSpecificationProps,
-	RoleBriefProps,
 	UserAccountProps,
 	initialDashboardNavigationItems,
 } from './PublishedDashboardPageUtil';
@@ -208,7 +206,9 @@ export function PublishedAppsDashboardPage() {
 	function getRolesList(accountBriefs: AccountBrief[]) {
 		const rolesList: string[] = [];
 
-		const accountBrief = accountBriefs.find(accountBrief => accountBrief.name === selectedAccount.name);
+		const accountBrief = accountBriefs.find(
+			(accountBrief) => accountBrief.name === selectedAccount.name
+		);
 
 		accountBrief?.roleBriefs.forEach((role) => {
 			rolesList.push(role.name);
@@ -340,23 +340,46 @@ export function PublishedAppsDashboardPage() {
 				const currentUserAccount = {
 					accountBriefs: currentUserAccountResponse.accountBriefs,
 					isCustomerAccount: false,
-					isPublisherAccount: false
+					isPublisherAccount: false,
 				};
 
-				const currentUserAccountRoleBriefs = currentUserAccount.accountBriefs.find((accountBrief: { name: string; }) => accountBrief.name === selectedAccount.name).roleBriefs;
+				const currentUserAccountRoleBriefs =
+					currentUserAccount.accountBriefs.find(
+						(accountBrief: {name: string}) =>
+							accountBrief.name === selectedAccount.name
+					).roleBriefs;
 
-				const customerRoles = ["Account Administrator", "Project Installer", "Account Buyer", "Account Member"];
+				const customerRoles = [
+					'Account Administrator',
+					'Project Installer',
+					'Account Buyer',
+					'Account Member',
+				];
 
-				const publisherRoles = ["Owner", "Account Administrator", "App Editor", "Sales Manager"];
+				const publisherRoles = [
+					'Owner',
+					'Account Administrator',
+					'App Editor',
+					'Sales Manager',
+				];
 
-				customerRoles.forEach(customerRole => {
-					if (currentUserAccountRoleBriefs.find((role: { name: string; }) => role.name === customerRole)) {
+				customerRoles.forEach((customerRole) => {
+					if (
+						currentUserAccountRoleBriefs.find(
+							(role: {name: string}) => role.name === customerRole
+						)
+					) {
 						currentUserAccount.isCustomerAccount = true;
 					}
 				});
 
-				publisherRoles.forEach(publisherRole => {
-					if (currentUserAccountRoleBriefs.find((role: { name: string; }) => role.name === publisherRole)) {
+				publisherRoles.forEach((publisherRole) => {
+					if (
+						currentUserAccountRoleBriefs.find(
+							(role: {name: string}) =>
+								role.name === publisherRole
+						)
+					) {
 						currentUserAccount.isPublisherAccount = true;
 					}
 				});
@@ -380,23 +403,21 @@ export function PublishedAppsDashboardPage() {
 					}
 				);
 
-				membersList.forEach(
-					(member: MemberProps) => {
-						const rolesList = member.role.split(', ');
+				membersList.forEach((member: MemberProps) => {
+					const rolesList = member.role.split(', ');
 
-						customerRoles.forEach(customerRole => {
-							if (rolesList.find(role => role === customerRole)) {
-								member.isCustomerAccount = true;
-							}
-						});
+					customerRoles.forEach((customerRole) => {
+						if (rolesList.find((role) => role === customerRole)) {
+							member.isCustomerAccount = true;
+						}
+					});
 
-						publisherRoles.forEach(publisherRole => {
-							if (rolesList.find(role => role === publisherRole)) {
-								member.isPublisherAccount = true;
-							}
-						});
-					}
-				)
+					publisherRoles.forEach((publisherRole) => {
+						if (rolesList.find((role) => role === publisherRole)) {
+							member.isPublisherAccount = true;
+						}
+					});
+				});
 
 				let filteredMembersList: MemberProps[] = [];
 
@@ -407,7 +428,8 @@ export function PublishedAppsDashboardPage() {
 								(accountBrief: AccountBriefProps) =>
 									accountBrief.externalReferenceCode ===
 									selectedAccount.externalReferenceCode
-							) && member.isPublisherAccount
+							) &&
+							member.isPublisherAccount
 						) {
 							return true;
 						}

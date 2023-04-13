@@ -18,32 +18,21 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.test.action.executor.TestObjectActionExecutorImpl;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.object.service.test.util.ObjectActionTestUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -59,7 +48,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
 /**
- * @author Murilo Stodolni
+ * @author Feliphe Marinho, Murilo Stodolni
  */
 @RunWith(Arquillian.class)
 public class ObjectActionExecutorRegistryImplTest {
@@ -71,143 +60,165 @@ public class ObjectActionExecutorRegistryImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_objectDefinition = _addObjectDefinition(TestPropsValues.getUserId());
-
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			ObjectActionExecutorRegistryImplTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			ObjectActionExecutor.class,
-			new TestObjectActionExecutorImpl(
-				SetUtil.fromArray(_objectDefinition.getName(), "AccountEntry"),
-				CompanyThreadLocal.getCompanyId(),
-				_CUSTOM_OBJECT_ACTION_EXECUTOR_KEY),
-			new HashMapDictionary<>());
+		_companyId1 = CompanyThreadLocal.getCompanyId();
+
+		Company company = CompanyTestUtil.addCompany();
+
+		_companyId2 = company.getCompanyId();
+
+		_ootbObjectActionExecutors = Arrays.asList(
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY),
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				ObjectActionExecutorConstants.KEY_GROOVY),
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				ObjectActionExecutorConstants.KEY_NOTIFICATION),
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY),
+			_objectActionExecutorRegistry.getObjectActionExecutor(
+				ObjectActionExecutorConstants.KEY_WEBHOOK));
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_serviceRegistration.unregister();
+	public static void tearDownClass() {
+		CompanyThreadLocal.setCompanyId(_companyId1);
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-	}
-
-	@Test
-	public void testGetObjectActionExecutor() {
-		Assert.assertNotNull(
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY));
-		Assert.assertNotNull(
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				ObjectActionExecutorConstants.KEY_GROOVY));
-		Assert.assertNotNull(
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				ObjectActionExecutorConstants.KEY_NOTIFICATION));
-		Assert.assertNotNull(
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY));
-		Assert.assertNotNull(
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				ObjectActionExecutorConstants.KEY_WEBHOOK));
-		Assert.assertNotNull(
-			_objectActionExecutorRegistry.getObjectActionExecutor(
-				_CUSTOM_OBJECT_ACTION_EXECUTOR_KEY));
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
 	}
 
 	@Test
 	public void testGetObjectActionExecutors() throws Exception {
-		_assertObjectActionExecutors(false, 5, "User");
-		_assertObjectActionExecutors(true, 6, "AccountEntry");
-		_assertObjectActionExecutors(true, 6, _objectDefinition.getName());
 
-		Company company = CompanyTestUtil.addCompany();
+		// Available for all companies' object definitions
 
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_ootbObjectActionExecutors);
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					company.getCompanyId())) {
+		CompanyThreadLocal.setCompanyId(_companyId2);
 
-			User user = UserTestUtil.getAdminUser(company.getCompanyId());
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_ootbObjectActionExecutors);
 
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-			PrincipalThreadLocal.setName(user.getUserId());
+		// Available for all companies' restricted object definitions
 
-			_assertObjectActionExecutors(false, 5, "User");
-			_assertObjectActionExecutors(false, 5, "AccountEntry");
+		CompanyThreadLocal.setCompanyId(_companyId1);
 
-			ObjectDefinition objectDefinition = _addObjectDefinition(
-				user.getUserId());
+		ObjectActionExecutor objectActionExecutor1 =
+			_registerObjectActionExecutor(
+				ObjectActionExecutor.ALL_COMPANIES, "_objectActionExecutor1",
+				Arrays.asList("Account", "Address"));
 
-			_assertObjectActionExecutors(false, 5, objectDefinition.getName());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
-		}
-	}
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_concatOOTBObjectActionExecutors(objectActionExecutor1));
 
-	private static ObjectDefinition _addObjectDefinition(long userId)
-		throws PortalException {
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("User"),
+			_ootbObjectActionExecutors);
 
-		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			userId, false, false,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			_OBJECT_DEFINITION_NAME, null, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, null);
+		// Available for a restricted company's object definitions
+
+		ObjectActionExecutor objectActionExecutor2 =
+			_registerObjectActionExecutor(
+				_companyId1, "_objectActionExecutor2",
+				ObjectActionExecutor.ALL_OBJECT_DEFINITIONS);
+
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_concatOOTBObjectActionExecutors(
+				objectActionExecutor1, objectActionExecutor2));
+
+		CompanyThreadLocal.setCompanyId(_companyId2);
+
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+
+		// Available for a restricted company's restricted object definitions
+
+		CompanyThreadLocal.setCompanyId(_companyId1);
+
+		ObjectActionExecutor objectActionExecutor3 =
+			_registerObjectActionExecutor(
+				_companyId1, "_objectActionExecutor3",
+				Arrays.asList("Account", "Address"));
+
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_concatOOTBObjectActionExecutors(
+				objectActionExecutor1, objectActionExecutor2,
+				objectActionExecutor3));
+
+		CompanyThreadLocal.setCompanyId(_companyId2);
+
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("User"),
+			_ootbObjectActionExecutors);
 	}
 
 	private void _assertObjectActionExecutors(
-		boolean existingCustomObjectExecutor, int expectSizeObjectExecutors,
-		String objectDefinitionName) {
-
-		List<ObjectActionExecutor> objectActionExecutors =
-			_objectActionExecutorRegistry.getObjectActionExecutors(
-				objectDefinitionName);
+		List<ObjectActionExecutor> expectedObjectActionExecutors,
+		List<ObjectActionExecutor> actualObjectActionExecutors) {
 
 		Assert.assertEquals(
-			objectActionExecutors.toString(), expectSizeObjectExecutors,
-			objectActionExecutors.size());
+			actualObjectActionExecutors.toString(),
+			expectedObjectActionExecutors.size(),
+			actualObjectActionExecutors.size());
 
-		List<String> objectActionExecutorsKeys = ListUtil.toList(
-			objectActionExecutors, ObjectActionExecutor::getKey);
+		for (int i = 0; i < expectedObjectActionExecutors.size(); i++) {
+			ObjectActionExecutor actualObjectActionExecutor =
+				actualObjectActionExecutors.get(i);
+			ObjectActionExecutor expectedObjectActionExecutor =
+				expectedObjectActionExecutors.get(i);
 
-		Assert.assertEquals(
-			existingCustomObjectExecutor,
-			objectActionExecutorsKeys.contains(
-				_CUSTOM_OBJECT_ACTION_EXECUTOR_KEY));
+			Assert.assertEquals(
+				expectedObjectActionExecutor.getKey(),
+				actualObjectActionExecutor.getKey());
+		}
 	}
 
-	private static final String _CUSTOM_OBJECT_ACTION_EXECUTOR_KEY =
-		RandomTestUtil.randomString();
+	private List<ObjectActionExecutor> _concatOOTBObjectActionExecutors(
+		ObjectActionExecutor... objectActionExecutors) {
 
-	private static final String _OBJECT_DEFINITION_NAME =
-		"A" + RandomTestUtil.randomString();
+		return ListUtil.concat(
+			Arrays.asList(objectActionExecutors), _ootbObjectActionExecutors);
+	}
 
-	private static ObjectDefinition _objectDefinition;
+	private ObjectActionExecutor _registerObjectActionExecutor(
+		long companyId, String key, List<String> objectDefinitionNames) {
+
+		ServiceRegistration<ObjectActionExecutor> serviceRegistration =
+			_bundleContext.registerService(
+				ObjectActionExecutor.class,
+				ObjectActionTestUtil.createProxyObjectActionExecutor(
+					companyId, key, objectDefinitionNames),
+				new HashMapDictionary<>());
+
+		_serviceRegistrations.add(serviceRegistration);
+
+		return _bundleContext.getService(serviceRegistration.getReference());
+	}
+
+	private static BundleContext _bundleContext;
+	private static long _companyId1;
+	private static long _companyId2;
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private static ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 
-	private static PermissionChecker _originalPermissionChecker;
-	private static ServiceRegistration<ObjectActionExecutor>
-		_serviceRegistration;
-
-	@Inject
-	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;
+	private static List<ObjectActionExecutor> _ootbObjectActionExecutors;
+	private static final List<ServiceRegistration<ObjectActionExecutor>>
+		_serviceRegistrations = new ArrayList<>();
 
 }

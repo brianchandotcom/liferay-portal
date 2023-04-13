@@ -16,12 +16,16 @@ package com.liferay.site.internal.configuration;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.MenuAccessConfiguration;
 import com.liferay.site.configuration.MenuAccessConfigurationProvider;
-
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
 
@@ -36,6 +40,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = MenuAccessConfigurationProvider.class)
 public class MenuAccessConfigurationProviderImpl
 	implements MenuAccessConfigurationProvider {
+
+	@Override
+	public void addRoleToMenuAccess(Role role) throws Exception {
+		_manageRoleOfMenuAccess(true, role);
+	}
+
+	@Override
+	public void deleteRoleFromMenuAccess(Role role) throws Exception {
+		_manageRoleOfMenuAccess(false, role);
+	}
 
 	@Override
 	public String[] getRolesCanSeeControlMenu(long groupId)
@@ -105,10 +119,67 @@ public class MenuAccessConfigurationProviderImpl
 		return configurations[0];
 	}
 
+	private void _manageRoleOfMenuAccess(boolean add, Role role)
+		throws Exception {
+
+		for (Group group :
+				_groupLocalService.getGroups(
+					role.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
+					true)) {
+
+			Dictionary<String, Object> properties;
+			Configuration configuration = _getScopedConfiguration(
+				group.getGroupId());
+
+			if (configuration == null) {
+				configuration = _configurationAdmin.createFactoryConfiguration(
+					MenuAccessConfiguration.class.getName() + ".scoped",
+					StringPool.QUESTION);
+
+				properties = HashMapDictionaryBuilder.<String, Object>put(
+					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+					group.getGroupId()
+				).build();
+			}
+			else {
+				properties = configuration.getProperties();
+			}
+
+			String roleId = String.valueOf(role.getRoleId());
+			String[] rolesCanSeeControlMenu = (String[])properties.get(
+				"rolesCanSeeControlMenu");
+
+			if (add) {
+				if (rolesCanSeeControlMenu == null) {
+					rolesCanSeeControlMenu = new String[] {roleId};
+				}
+				else if (!ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
+					rolesCanSeeControlMenu = ArrayUtil.append(
+						rolesCanSeeControlMenu, roleId);
+				}
+			}
+			else {
+				if ((rolesCanSeeControlMenu != null) &&
+					!ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
+
+					rolesCanSeeControlMenu = ArrayUtil.remove(
+						rolesCanSeeControlMenu, roleId);
+				}
+			}
+
+			properties.put("rolesCanSeeControlMenu", rolesCanSeeControlMenu);
+
+			configuration.update(properties);
+		}
+	}
+
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -555,15 +555,10 @@ public class MessageBoardThreadResourceImpl
 	private ServiceContext _createServiceContext(
 		long groupId, MessageBoardThread messageBoardThread) {
 
-		String[] keywords = messageBoardThread.getKeywords();
-
-		if (keywords == null) {
-			keywords = new String[0];
-		}
-
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
-				messageBoardThread.getTaxonomyCategoryIds(), keywords,
+				messageBoardThread.getTaxonomyCategoryIds(),
+				GetterUtil.getStringValues(messageBoardThread.getKeywords()),
 				_getExpandoBridgeAttributes(messageBoardThread), groupId,
 				contextHttpServletRequest,
 				messageBoardThread.getViewableByAsString());

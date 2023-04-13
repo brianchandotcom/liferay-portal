@@ -190,9 +190,7 @@ public class MessageBoardMessageResourceImpl
 				status = WorkflowConstants.STATUS_ANY;
 			}
 
-			if (flatten == null) {
-				flatten = false;
-			}
+			flatten = GetterUtil.getBoolean(flatten);
 
 			return Page.of(
 				actions,

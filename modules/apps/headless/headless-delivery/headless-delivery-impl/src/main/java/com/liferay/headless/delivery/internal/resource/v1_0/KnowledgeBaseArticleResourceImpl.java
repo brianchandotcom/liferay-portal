@@ -673,12 +673,6 @@ public class KnowledgeBaseArticleResourceImpl
 			taxonomyCategoryIds = new Long[0];
 		}
 
-		String[] keywords = knowledgeBaseArticle.getKeywords();
-
-		if (keywords == null) {
-			keywords = new String[0];
-		}
-
 		return _toKnowledgeBaseArticle(
 			_kbArticleService.updateKBArticle(
 				kbArticle.getResourcePrimKey(), knowledgeBaseArticle.getTitle(),
@@ -686,7 +680,9 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getDescription(), null, null, null, null,
 				null, null,
 				ServiceContextRequestUtil.createServiceContext(
-					taxonomyCategoryIds, keywords,
+					taxonomyCategoryIds,
+					GetterUtil.getStringValues(
+						knowledgeBaseArticle.getKeywords()),
 					_getExpandoBridgeAttributes(knowledgeBaseArticle),
 					kbArticle.getGroupId(), contextHttpServletRequest,
 					knowledgeBaseArticle.getViewableByAsString())));

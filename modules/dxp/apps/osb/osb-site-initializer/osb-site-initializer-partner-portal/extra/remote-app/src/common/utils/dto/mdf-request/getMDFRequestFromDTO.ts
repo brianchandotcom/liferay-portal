@@ -72,6 +72,8 @@ export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 		targetAudienceRoles: mdfRequest.targetAudienceRoles
 			?.split('; ')
 			.filter((request) => request !== ''),
-		targetMarkets: mdfRequest.targetMarkets?.split('; '),
+		targetMarkets: mdfRequest.targetMarkets
+			?.split('; ')
+			.filter((request) => request !== ''),
 	};
 }

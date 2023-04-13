@@ -410,32 +410,34 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			return;
 		}
 
-		Set<String> inputParameterNamesSet = new HashSet<>();
+		Set<String> inputParameterNames = new HashSet<>();
 
-		for (DDMFormFieldValue inputParameter :
+		for (DDMFormFieldValue inputParametersDDMFormFieldValue :
 				ddmFormFieldValuesMap.get("inputParameters")) {
 
-			Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValues =
-				inputParameter.getNestedDDMFormFieldValuesMap();
+			Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
+				inputParametersDDMFormFieldValue.
+					getNestedDDMFormFieldValuesMap();
 
-			for (DDMFormFieldValue ddmFormFieldValue :
-					nestedDDMFormFieldValues.get("inputParameterName")) {
+			for (DDMFormFieldValue inputParameterNameDDMFormFieldValue :
+					nestedDDMFormFieldValuesMap.get("inputParameterName")) {
 
-				Value inputParameterNameValue = ddmFormFieldValue.getValue();
+				Value inputParameterNameValue =
+					inputParameterNameDDMFormFieldValue.getValue();
 
-				Map<Locale, String> inputParameterNameValues =
+				Map<Locale, String> inputParameterNameValuesMap =
 					inputParameterNameValue.getValues();
 
 				for (String inputParameterName :
-						inputParameterNameValues.values()) {
+						inputParameterNameValuesMap.values()) {
 
-					if (inputParameterNamesSet.contains(inputParameterName)) {
+					if (inputParameterNames.contains(inputParameterName)) {
 						throw new DuplicateDataProviderInstanceInputParameterNameException(
 							"Duplicate data provider input parameter name: " +
 								inputParameterName);
 					}
 
-					inputParameterNamesSet.add(inputParameterName);
+					inputParameterNames.add(inputParameterName);
 				}
 			}
 		}

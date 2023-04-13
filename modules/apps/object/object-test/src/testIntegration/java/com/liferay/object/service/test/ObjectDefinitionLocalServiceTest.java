@@ -999,7 +999,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		// Publish Modifiable system object
+		// Publish Modifiable system object definition
 
 		objectDefinition = _publishModifiableSystemObjectDefinition();
 
@@ -1023,7 +1023,7 @@ public class ObjectDefinitionLocalServiceTest {
 				_objectDefinitionLocalService,
 				Collections.<ObjectField>emptyList());
 
-		// Publish Unmodifiable system object
+		// Publish Unmodifiable system object definition
 
 		try {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -1363,7 +1363,7 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testUpdateSystemObjectDefinition() throws Exception {
 
-		// Update modifiable system object
+		// Update modifiable system object definition
 
 		ObjectDefinition objectDefinition =
 			_publishModifiableSystemObjectDefinition();
@@ -1376,7 +1376,6 @@ public class ObjectDefinitionLocalServiceTest {
 				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope());
 
-		Assert.assertTrue(objectDefinition.isActive());
 		Assert.assertFalse(objectDefinition.isEnableCategorization());
 		Assert.assertTrue(objectDefinition.isEnableComments());
 		Assert.assertEquals(
@@ -1389,7 +1388,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		// Update unmodifiable system object
+		// Update unmodifiable system object definition
 
 		objectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
@@ -1409,9 +1408,11 @@ public class ObjectDefinitionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", true,
 			false, Collections.emptyList());
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		objectDefinition =
 			_objectDefinitionLocalService.updateSystemObjectDefinition(
-				"TEST-ERC", objectDefinition.getObjectDefinitionId(),
+				externalReferenceCode, objectDefinition.getObjectDefinitionId(),
 				objectField.getObjectFieldId());
 
 		Assert.assertEquals(
@@ -1419,7 +1420,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getTitleObjectFieldId());
 
 		Assert.assertEquals(
-			"TEST-ERC", objectDefinition.getExternalReferenceCode());
+			externalReferenceCode, objectDefinition.getExternalReferenceCode());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}

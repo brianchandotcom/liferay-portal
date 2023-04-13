@@ -66,9 +66,8 @@ public class ServletContextUtil {
 
 		_mapProviders = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, MapProvider.class, null,
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(mapProvider, emitter) -> emitter.emit(mapProvider.getKey())));
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext, MapProvider::getKey));
 	}
 
 }

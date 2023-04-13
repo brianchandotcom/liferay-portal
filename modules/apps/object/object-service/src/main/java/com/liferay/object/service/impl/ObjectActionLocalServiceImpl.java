@@ -75,7 +75,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -461,11 +460,11 @@ public class ObjectActionLocalServiceImpl
 			return;
 		}
 
-		Set<String> allowedObjectDefinitionNames =
-			objectActionExecutor.getAllowedObjectDefinitionNames();
+		List<String> objectDefinitionNames =
+			objectActionExecutor.getObjectDefinitionNames();
 
-		if (allowedObjectDefinitionNames.isEmpty() ||
-			allowedObjectDefinitionNames.contains(objectDefinitionName)) {
+		if (objectDefinitionNames.isEmpty() ||
+			objectDefinitionNames.contains(objectDefinitionName)) {
 
 			return;
 		}

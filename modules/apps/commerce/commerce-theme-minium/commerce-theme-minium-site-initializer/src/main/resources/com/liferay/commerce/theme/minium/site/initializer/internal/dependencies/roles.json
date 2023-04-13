@@ -133,6 +133,9 @@
 			{
 				"actionIds": [
 					"ACCESS_IN_CONTROL_PANEL",
+					"CONFIGURATION",
+					"PERMISSIONS",
+					"PREFERENCES",
 					"VIEW"
 				],
 				"resource": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet"
@@ -140,9 +143,29 @@
 			{
 				"actionIds": [
 					"ADD_CATEGORY",
-					"ADD_VOCABULARY"
+					"ADD_VOCABULARY",
+					"PERMISSIONS"
 				],
 				"resource": "com.liferay.asset.categories"
+			},
+			{
+				"actionIds": [
+					"DELETE",
+					"PERMISSIONS",
+					"UPDATE",
+					"VIEW"
+				],
+				"resource": "com.liferay.asset.kernel.model.AssetVocabulary"
+			},
+			{
+				"actionIds": [
+					"ADD_CATEGORY",
+					"DELETE",
+					"PERMISSIONS",
+					"UPDATE",
+					"VIEW"
+				],
+				"resource": "com.liferay.asset.kernel.model.AssetCategory"
 			},
 			{
 				"actionIds": [

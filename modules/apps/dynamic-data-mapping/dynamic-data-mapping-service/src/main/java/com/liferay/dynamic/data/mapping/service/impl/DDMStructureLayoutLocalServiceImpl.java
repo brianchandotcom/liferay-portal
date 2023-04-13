@@ -93,18 +93,16 @@ public class DDMStructureLayoutLocalServiceImpl
 		DDMStructureLayout structureLayout =
 			ddmStructureLayoutPersistence.create(structureLayoutId);
 
-		if (structureLayoutKey == null) {
-			structureLayoutKey = String.valueOf(
-				counterLocalService.increment());
-		}
-
 		structureLayout.setUuid(serviceContext.getUuid());
 		structureLayout.setGroupId(groupId);
 		structureLayout.setCompanyId(user.getCompanyId());
 		structureLayout.setUserId(user.getUserId());
 		structureLayout.setUserName(user.getFullName());
 		structureLayout.setClassNameId(classNameId);
-		structureLayout.setStructureLayoutKey(structureLayoutKey);
+		structureLayout.setStructureLayoutKey(
+			GetterUtil.getString(
+				structureLayoutKey,
+				String.valueOf(counterLocalService.increment())));
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setDefinition(_serialize(ddmFormLayout));
 
@@ -127,11 +125,6 @@ public class DDMStructureLayoutLocalServiceImpl
 		DDMStructureLayout structureLayout =
 			ddmStructureLayoutPersistence.create(structureLayoutId);
 
-		if (structureLayoutKey == null) {
-			structureLayoutKey = String.valueOf(
-				counterLocalService.increment());
-		}
-
 		structureLayout.setUuid(serviceContext.getUuid());
 		structureLayout.setGroupId(groupId);
 		structureLayout.setCompanyId(user.getCompanyId());
@@ -140,7 +133,10 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setCreateDate(new Date());
 		structureLayout.setModifiedDate(new Date());
 		structureLayout.setClassNameId(classNameId);
-		structureLayout.setStructureLayoutKey(structureLayoutKey);
+		structureLayout.setStructureLayoutKey(
+			GetterUtil.getString(
+				structureLayoutKey,
+				String.valueOf(counterLocalService.increment())));
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setNameMap(name);
 		structureLayout.setDescriptionMap(description);

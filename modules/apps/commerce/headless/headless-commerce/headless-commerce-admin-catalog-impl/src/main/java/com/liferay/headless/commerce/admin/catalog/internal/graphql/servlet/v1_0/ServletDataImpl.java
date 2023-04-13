@@ -1179,15 +1179,15 @@ public class ServletDataImpl implements ServletData {
 							ProductTaxConfigurationResourceImpl.class,
 							"getProductIdTaxConfiguration"));
 					put(
-						"query#productByExternalReferenceCodeVirtualSettings",
+						"query#productByExternalReferenceCodeProductVirtualSettings",
 						new ObjectValuePair<>(
 							ProductVirtualSettingsResourceImpl.class,
-							"getProductByExternalReferenceCodeVirtualSettings"));
+							"getProductByExternalReferenceCodeProductVirtualSettings"));
 					put(
-						"query#productIdVirtualSettings",
+						"query#productIdProductVirtualSettings",
 						new ObjectValuePair<>(
 							ProductVirtualSettingsResourceImpl.class,
-							"getProductIdVirtualSettings"));
+							"getProductIdProductVirtualSettings"));
 					put(
 						"query#productByExternalReferenceCodeRelatedProducts",
 						new ObjectValuePair<>(

@@ -598,6 +598,16 @@ public class ProductSerDes {
 			sb.append("\"");
 		}
 
+		if (product.getProductVirtualSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productVirtualSettings\": ");
+
+			sb.append(String.valueOf(product.getProductVirtualSettings()));
+		}
+
 		if (product.getRelatedProducts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -748,16 +758,6 @@ public class ProductSerDes {
 			sb.append("\"version\": ");
 
 			sb.append(product.getVersion());
-		}
-
-		if (product.getVirtualSettings() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"virtualSettings\": ");
-
-			sb.append(String.valueOf(product.getVirtualSettings()));
 		}
 
 		if (product.getWorkflowStatusInfo() != null) {
@@ -1088,6 +1088,15 @@ public class ProductSerDes {
 				String.valueOf(product.getProductTypeI18n()));
 		}
 
+		if (product.getProductVirtualSettings() == null) {
+			map.put("productVirtualSettings", null);
+		}
+		else {
+			map.put(
+				"productVirtualSettings",
+				String.valueOf(product.getProductVirtualSettings()));
+		}
+
 		if (product.getRelatedProducts() == null) {
 			map.put("relatedProducts", null);
 		}
@@ -1173,15 +1182,6 @@ public class ProductSerDes {
 		}
 		else {
 			map.put("version", String.valueOf(product.getVersion()));
-		}
-
-		if (product.getVirtualSettings() == null) {
-			map.put("virtualSettings", null);
-		}
-		else {
-			map.put(
-				"virtualSettings",
-				String.valueOf(product.getVirtualSettings()));
 		}
 
 		if (product.getWorkflowStatusInfo() == null) {
@@ -1562,6 +1562,15 @@ public class ProductSerDes {
 					product.setProductTypeI18n((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "productVirtualSettings")) {
+
+				if (jsonParserFieldValue != null) {
+					product.setProductVirtualSettings(
+						ProductVirtualSettingsSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "relatedProducts")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
@@ -1649,13 +1658,6 @@ public class ProductSerDes {
 				if (jsonParserFieldValue != null) {
 					product.setVersion(
 						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "virtualSettings")) {
-				if (jsonParserFieldValue != null) {
-					product.setVirtualSettings(
-						ProductVirtualSettingsSerDes.toDTO(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

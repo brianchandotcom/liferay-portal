@@ -1418,6 +1418,16 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"productVirtualSettings", additionalAssertFieldName)) {
+
+				if (product.getProductVirtualSettings() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("relatedProducts", additionalAssertFieldName)) {
 				if (product.getRelatedProducts() == null) {
 					valid = false;
@@ -1504,14 +1514,6 @@ public abstract class BaseProductResourceTestCase {
 
 			if (Objects.equals("version", additionalAssertFieldName)) {
 				if (product.getVersion() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("virtualSettings", additionalAssertFieldName)) {
-				if (product.getVirtualSettings() == null) {
 					valid = false;
 				}
 
@@ -2049,6 +2051,19 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"productVirtualSettings", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						product1.getProductVirtualSettings(),
+						product2.getProductVirtualSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("relatedProducts", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getRelatedProducts(),
@@ -2160,17 +2175,6 @@ public abstract class BaseProductResourceTestCase {
 			if (Objects.equals("version", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getVersion(), product2.getVersion())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("virtualSettings", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						product1.getVirtualSettings(),
-						product2.getVirtualSettings())) {
 
 					return false;
 				}
@@ -2601,6 +2605,11 @@ public abstract class BaseProductResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("productVirtualSettings")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("relatedProducts")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2661,11 +2670,6 @@ public abstract class BaseProductResourceTestCase {
 			sb.append(String.valueOf(product.getVersion()));
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("virtualSettings")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("workflowStatusInfo")) {

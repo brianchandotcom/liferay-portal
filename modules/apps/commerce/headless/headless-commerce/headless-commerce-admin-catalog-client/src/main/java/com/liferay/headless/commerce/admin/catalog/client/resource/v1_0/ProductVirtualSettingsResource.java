@@ -38,20 +38,20 @@ public interface ProductVirtualSettingsResource {
 	}
 
 	public ProductVirtualSettings
-			getProductByExternalReferenceCodeVirtualSettings(
+			getProductByExternalReferenceCodeProductVirtualSettings(
 				String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getProductByExternalReferenceCodeVirtualSettingsHttpResponse(
+			getProductByExternalReferenceCodeProductVirtualSettingsHttpResponse(
 				String externalReferenceCode)
 		throws Exception;
 
-	public ProductVirtualSettings getProductIdVirtualSettings(Long id)
+	public ProductVirtualSettings getProductIdProductVirtualSettings(Long id)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProductIdVirtualSettingsHttpResponse(
-			Long id)
+	public HttpInvoker.HttpResponse
+			getProductIdProductVirtualSettingsHttpResponse(Long id)
 		throws Exception;
 
 	public static class Builder {
@@ -160,12 +160,12 @@ public interface ProductVirtualSettingsResource {
 		implements ProductVirtualSettingsResource {
 
 		public ProductVirtualSettings
-				getProductByExternalReferenceCodeVirtualSettings(
+				getProductByExternalReferenceCodeProductVirtualSettings(
 					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProductByExternalReferenceCodeVirtualSettingsHttpResponse(
+				getProductByExternalReferenceCodeProductVirtualSettingsHttpResponse(
 					externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -207,7 +207,7 @@ public interface ProductVirtualSettingsResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getProductByExternalReferenceCodeVirtualSettingsHttpResponse(
+				getProductByExternalReferenceCodeProductVirtualSettingsHttpResponse(
 					String externalReferenceCode)
 			throws Exception {
 
@@ -235,7 +235,7 @@ public interface ProductVirtualSettingsResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/virtual-settings");
+						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/product-virtual-settings");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -245,11 +245,12 @@ public interface ProductVirtualSettingsResource {
 			return httpInvoker.invoke();
 		}
 
-		public ProductVirtualSettings getProductIdVirtualSettings(Long id)
+		public ProductVirtualSettings getProductIdProductVirtualSettings(
+				Long id)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProductIdVirtualSettingsHttpResponse(id);
+				getProductIdProductVirtualSettingsHttpResponse(id);
 
 			String content = httpResponse.getContent();
 
@@ -289,8 +290,8 @@ public interface ProductVirtualSettingsResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getProductIdVirtualSettingsHttpResponse(
-				Long id)
+		public HttpInvoker.HttpResponse
+				getProductIdProductVirtualSettingsHttpResponse(Long id)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -317,7 +318,7 @@ public interface ProductVirtualSettingsResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/virtual-settings");
+						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/product-virtual-settings");
 
 			httpInvoker.path("id", id);
 

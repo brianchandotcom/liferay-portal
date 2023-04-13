@@ -29,6 +29,7 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -56,6 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -142,7 +144,7 @@ public class ObjectDefinitionGraphQLTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		ObjectEntryLocalServiceUtil.addObjectEntry(
+		_childObjectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			childObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -154,6 +156,12 @@ public class ObjectDefinitionGraphQLTest {
 				_objectFieldName, "igor@liferay.com"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@After
+	public void tearDown() throws PortalException {
+		ObjectEntryLocalServiceUtil.deleteObjectEntry(_childObjectEntry);
+		ObjectEntryLocalServiceUtil.deleteObjectEntry(_parentObjectEntry);
 	}
 
 	@Test
@@ -501,6 +509,7 @@ public class ObjectDefinitionGraphQLTest {
 	}
 
 	private String _childObjectDefinitionName;
+	private ObjectEntry _childObjectEntry;
 	private String _listFieldName;
 	private String _listFieldValueKey;
 	private String _objectFieldName;

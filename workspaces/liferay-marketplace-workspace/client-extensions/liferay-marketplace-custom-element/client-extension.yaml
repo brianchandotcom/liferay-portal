@@ -37,6 +37,8 @@ liferay-marketplace-custom-element-published-apps:
     instanceable: false
     name: Liferay Marketplace Published Apps
     portletCategoryName: category.client-extensions
+    properties:
+        route: published-apps
     type: customElement
     urls:
         - .*.js

@@ -1,9 +1,9 @@
 import BaseCard from 'cerebro-shared/components/base-card';
 import Card from 'shared/components/Card';
-import gql from 'graphql-tag';
 import MetricChart from './MetricChart';
 import MetricTabs from './MetricTabs';
 import React, {createContext, useContext, useReducer} from 'react';
+import {DocumentNode} from 'graphql';
 import {getMetricsChartData} from './util';
 import {Interval, RangeSelectors, Router} from 'shared/types';
 import {Metric} from './metrics';
@@ -47,9 +47,9 @@ interface IMetricBaseCardProps<TChartData>
 	chartDataMapFn?: TChartData | typeof getMetricsChartData;
 	metrics: Metric[];
 	queries: {
-		MetricQuery: typeof gql;
+		MetricQuery: (metricName: string) => DocumentNode;
 		name: string;
-		TabsQuery: typeof gql;
+		TabsQuery: DocumentNode;
 	};
 	variables: (commonVariables: {
 		filters: Object;

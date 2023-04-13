@@ -76,6 +76,8 @@ module.exports = {
 						'moment/min/moment-with-locales': '*',
 						'qrcode': '*',
 						'qs': '*',
+						'react-helmet': '*',
+						'react-router-dom': '*',
 						'react-text-mask': '*',
 						'react-transition-group': '*',
 						'text-mask-addons': '*',

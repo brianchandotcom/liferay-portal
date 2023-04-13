@@ -38,6 +38,8 @@ module.exports = {
 			{name: 'react-text-mask', symbols: 'auto'},
 			{name: 'text-mask-addons', symbols: 'auto'},
 			{name: 'text-mask-core', symbols: 'auto'},
+			"react-helmet",
+			"react-router-dom"
 		],
 	},
 };

@@ -1,0 +1,1274 @@
+{
+	"actions": {
+		"createBatch": {
+			"href": "/o/object-admin/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "POST"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPS-167253",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": false,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "liferay-fds-view",
+			"label": {
+				"en_US": "FDSView"
+			},
+			"name": "FDSView",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-view-custom-views-enabled",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "customViewsEnabled"
+					},
+					"name": "customViewsEnabled",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-view-deltas",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "deltas"
+					},
+					"name": "deltas",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-view-description",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "liferay-fds-view-initial-delta",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "initialDelta"
+					},
+					"name": "initialDelta",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-view-name",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-view-selection-type",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "selectionType"
+					},
+					"name": "selectionType",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-view-show-management-bar",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "showManagementBar"
+					},
+					"name": "showManagementBar",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-view-show-pagination",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "showPagination"
+					},
+					"name": "showPagination",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-view-show-search",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "showSearch"
+					},
+					"name": "showSearch",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "viewModes"
+					},
+					"name": "viewModes",
+					"objectDefinitionExternalReferenceCode1": "liferay-fds-view",
+					"objectDefinitionExternalReferenceCode2": "liferay-fds-view-mode",
+					"objectDefinitionName2": "FDSViewMode",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "sorts"
+					},
+					"name": "sorts",
+					"objectDefinitionExternalReferenceCode1": "liferay-fds-view",
+					"objectDefinitionExternalReferenceCode2": "liferay-fds-sort",
+					"objectDefinitionName2": "FDSSort",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				}
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "FDSViews"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/fdsviews",
+			"scope": "company",
+			"status": {
+				"code": 2,
+				"label": "draft",
+				"label_i18n": "Draft"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": false,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "liferay-fds-view-mode",
+			"label": {
+				"en_US": "FDSViewMode"
+			},
+			"name": "FDSViewMode",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-view-mode-content-renderer",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "contentRenderer"
+					},
+					"name": "contentRenderer",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-view-mode-content-renderer-config",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "contentRendererConfig"
+					},
+					"name": "contentRendererConfig",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-view-mode-default",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "default"
+					},
+					"name": "default",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-view-mode-label",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "label"
+					},
+					"name": "label",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-view-mode-name",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "name"
+					},
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-view-mode-quick-actions-enabled",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "quickActionsEnabled"
+					},
+					"name": "quickActionsEnabled",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-view-mode-thumbnail",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "thumbnail"
+					},
+					"name": "thumbnail",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "fieldMappings"
+					},
+					"name": "fieldMappings",
+					"objectDefinitionExternalReferenceCode1": "liferay-fds-view-mode",
+					"objectDefinitionExternalReferenceCode2": "liferay-fds-field-mapping",
+					"objectDefinitionName2": "FDSFieldMapping",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				}
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "FDSViewModes"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/fdsviewmodes",
+			"scope": "company",
+			"status": {
+				"code": 2,
+				"label": "draft",
+				"label_i18n": "Draft"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": false,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "liferay-fds-sort",
+			"label": {
+				"en_US": "FDSSort"
+			},
+			"name": "FDSSort",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-sort-field-name",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "fieldName"
+					},
+					"name": "fieldName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "1418cfcc-9ae8-f6cf-0997-20eac5324039",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "order"
+					},
+					"listTypeDefinitionExternalReferenceCode": "liferay-fds-sort-order",
+					"name": "order",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "liferay-fds-sort-priority",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "priority"
+					},
+					"name": "priority",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "FDSSorts"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/fdssorts",
+			"scope": "company",
+			"status": {
+				"code": 2,
+				"label": "draft",
+				"label_i18n": "Draft"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": false,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "liferay-fds-field-mapping",
+			"label": {
+				"en_US": "FDSFieldMapping"
+			},
+			"name": "FDSFieldMapping",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-field-mapping-content-renderer",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "contentRenderer"
+					},
+					"name": "contentRenderer",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-field-mapping-content-renderer-config",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "contentRendererConfig"
+					},
+					"name": "contentRendererConfig",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-field-mapping-field-name",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "fieldName"
+					},
+					"name": "fieldName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-field-mapping-label",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "label"
+					},
+					"name": "label",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-field-mapping-localize-label",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "localizeLabel"
+					},
+					"name": "localizeLabel",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "liferay-fds-field-mapping-sortable",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "sortable"
+					},
+					"name": "sortable",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "FDSFieldMappings"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/fdsfieldmappings",
+			"scope": "company",
+			"status": {
+				"code": 2,
+				"label": "draft",
+				"label_i18n": "Draft"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": false,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "liferay-fds-action",
+			"label": {
+				"en_US": "FDSAction"
+			},
+			"name": "FDSAction",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-action-confirmation-message",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "confirmationMessage"
+					},
+					"name": "confirmationMessage",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-action-href",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "href"
+					},
+					"name": "href",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-action-icon",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "icon"
+					},
+					"name": "icon",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-action-label",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "label"
+					},
+					"name": "label",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-action-method",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "method"
+					},
+					"name": "method",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-action-permission-key",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "permissionKey"
+					},
+					"name": "permissionKey",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "liferay-fds-action-priority",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "priority"
+					},
+					"name": "priority",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-action-target",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "target"
+					},
+					"name": "target",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "FDSActions"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/fdsactions",
+			"scope": "company",
+			"status": {
+				"code": 2,
+				"label": "draft",
+				"label_i18n": "Draft"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"actions": {
+				"delete": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"publish": {
+				},
+				"update": {
+				}
+			},
+			"active": false,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "liferay-fds-filter",
+			"label": {
+				"en_US": "FDSFilter"
+			},
+			"name": "FDSFilter",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-filter-entity-field-type",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "entityFieldType"
+					},
+					"name": "entityFieldType",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-filter-filter-properties",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "filterProperties"
+					},
+					"name": "filterProperties",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-filter-label",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "label"
+					},
+					"name": "label",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-filter-preloaded-data",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "preloadedData"
+					},
+					"name": "preloadedData",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "liferay-fds-filter-type",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "type"
+					},
+					"name": "type",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "filters"
+					},
+					"name": "filters",
+					"objectDefinitionExternalReferenceCode1": "liferay-fds-filter",
+					"objectDefinitionExternalReferenceCode2": "liferay-fds-view",
+					"objectDefinitionName2": "FDSView",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "manyToMany"
+				}
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "FDSFilters"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/fdsfilters",
+			"scope": "company",
+			"status": {
+				"code": 2,
+				"label": "draft",
+				"label_i18n": "Draft"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"accountEntryRestrictedObjectFieldName": "",
+			"actions": {
+				"delete": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"publish": {
+				},
+				"update": {
+				}
+			},
+			"active": false,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "liferay-fds-entry",
+			"label": {
+				"en_US": "FDSEntry"
+			},
+			"name": "FDSEntry",
+			"objectActions": [
+			],
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-entry-endpoint-url",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "endpointURL"
+					},
+					"name": "endpointURL",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-entry-name",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "name"
+					},
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-entry-open-api-url",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "openAPIURL"
+					},
+					"name": "openAPIURL",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "liferay-fds-entry-schema-name",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "schemaName"
+					},
+					"name": "schemaName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "entryviews"
+					},
+					"name": "entryviews",
+					"objectDefinitionExternalReferenceCode1": "liferay-fds-entry",
+					"objectDefinitionExternalReferenceCode2": "liferay-fds-view",
+					"objectDefinitionName2": "FDSView",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "manyToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "creationMenuPrimaryActions"
+					},
+					"name": "creationMenuPrimaryActions",
+					"objectDefinitionExternalReferenceCode1": "liferay-fds-entry",
+					"objectDefinitionExternalReferenceCode2": "liferay-fds-action",
+					"objectDefinitionName2": "FDSAction",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "creationMenuSecondaryActions"
+					},
+					"name": "creationMenuSecondaryActions",
+					"objectDefinitionExternalReferenceCode1": "liferay-fds-entry",
+					"objectDefinitionExternalReferenceCode2": "liferay-fds-action",
+					"objectDefinitionName2": "FDSAction",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				}
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "FDSEntry"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/fdsentries",
+			"scope": "company",
+			"status": {
+				"code": 2,
+				"label": "draft",
+				"label_i18n": "Draft"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	]
+}

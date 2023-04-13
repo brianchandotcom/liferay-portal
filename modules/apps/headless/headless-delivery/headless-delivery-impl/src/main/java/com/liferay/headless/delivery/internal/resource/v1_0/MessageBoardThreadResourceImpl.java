@@ -93,7 +93,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotAuthorizedException;
@@ -556,14 +555,15 @@ public class MessageBoardThreadResourceImpl
 	private ServiceContext _createServiceContext(
 		long groupId, MessageBoardThread messageBoardThread) {
 
+		String[] keywords = messageBoardThread.getKeywords();
+
+		if (keywords == null) {
+			keywords = new String[0];
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
-				messageBoardThread.getTaxonomyCategoryIds(),
-				Optional.ofNullable(
-					messageBoardThread.getKeywords()
-				).orElse(
-					new String[0]
-				),
+				messageBoardThread.getTaxonomyCategoryIds(), keywords,
 				_getExpandoBridgeAttributes(messageBoardThread), groupId,
 				contextHttpServletRequest,
 				messageBoardThread.getViewableByAsString());

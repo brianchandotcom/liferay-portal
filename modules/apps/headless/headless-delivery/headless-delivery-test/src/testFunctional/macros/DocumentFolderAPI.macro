@@ -176,6 +176,38 @@ definition {
 		return ${response};
 	}
 
+	macro postRatingWithFolderID {
+		var portalURL = JSONCompany.getPortalURL();
+		var body = '''"creator": "","ratingValue": "${ratingValue}"''';
+		var curlWithoutBody = '''
+			${portalURL}/o/headless-delivery/v1.0/document-folders/${folderId}/my-rating \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		var curl = StringUtil.add(${curlWithoutBody}, "-d {${body}}", " ");
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro putRatingWithFolderID {
+		var portalURL = JSONCompany.getPortalURL();
+		var body = '''"creator": "","ratingValue": "${ratingValue}"''';
+		var curlWithoutBody = '''
+			${portalURL}/o/headless-delivery/v1.0/document-folders/${folderId}/my-rating \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		var curl = StringUtil.add(${curlWithoutBody}, "-d {${body}}", " ");
+
+		var response = JSONCurlUtil.put(${curl});
+
+		return ${response};
+	}
+
 	macro staticDoucmentFolderErc {
 		Variables.assertDefined(parameterList = ${response});
 

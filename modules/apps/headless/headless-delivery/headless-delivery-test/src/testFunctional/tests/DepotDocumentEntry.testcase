@@ -1,0 +1,88 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Lima Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CannotGetRatedEntryByOtherUsers {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given two rated documents by different users in a depot") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				depotName = "Test Depot Name",
+				filePath = ${filePath});
+
+			DocumentAPI.postRatingWithDocumentID(
+				documentId = ${documentId},
+				ratingValue = 1);
+
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpg");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				depotName = "Test Depot Name",
+				filePath = ${filePath});
+
+			var response = DocumentAPI.postRatingWithDocumentID(
+				documentId = ${documentId},
+				ratingValue = 1,
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
+
+		echo(${response});
+
+		task ("When get the rated document by current user") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = DocumentAPI.getRatedDocumentsWithDepotID(depotId = ${depotId});
+		}
+
+		echo(${response});
+
+		task ("Then only the rated document by current user is returned") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Document_1.jpg");
+
+			TestUtils.assertNotEquals(
+				actual = ${response},
+				expected = "Document_2.jpg");
+		}
+	}
+
+}

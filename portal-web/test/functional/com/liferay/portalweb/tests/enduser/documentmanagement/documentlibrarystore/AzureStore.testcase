@@ -28,6 +28,55 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-129271."
+	@priority = 4
+	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
+		property test.name.skip.portal.instance = "AzureStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
+
+		var containerId = PropsUtil.get("azure.container.id");
+		var companyId = JSONCompany.getCompanyId();
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name",
+			site = "true");
+
+		AntCommands.runCommand("build-test-azure.xml", "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		AntCommands.runCommand("build-test-azure.xml", "assert-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+
+		LAR.exportSiteCP(siteScopeName = "Test Site Name");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Test Site Name 1");
+
+		var groupId1 = JSONGroupAPI._getGroupIdByName(
+			groupName = "Test Site Name 1",
+			site = "true");
+
+		AntCommand(
+			locator1 = "build-test-azure.xml",
+			value1 = "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId1}");
+
+		LAR.importSiteCP(
+			larFileName = ${larFileName},
+			siteName = "Test Site Name 1");
+
+		AntCommand(
+			locator1 = "build-test-azure.xml",
+			value1 = "assert-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId1}");
+
+		AssertConsoleTextNotPresent(value1 = "java.io.IOException");
+	}
+
 	@description = "Verify a data migration can be executed from the default store to Azure store."
 	@priority = 3
 	test AzureStoreDataMigration {

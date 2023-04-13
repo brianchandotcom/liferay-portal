@@ -10,6 +10,7 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {sessionStorage} from 'frontend-js-web';
 import {useCallback, useState} from 'react';
 
 import {jsonStorage} from '../util/storage.es';
@@ -47,7 +48,6 @@ const useStorage = (storageType, key) => {
 
 const setStorage = (storage) => (key) => useStorage(storage, key);
 
-const useLocalStorage = setStorage(localStorage);
 const useSessionStorage = setStorage(sessionStorage);
 
-export {useLocalStorage, useSessionStorage};
+export {useSessionStorage};

@@ -1,12 +1,12 @@
-liferay-sample-iframe-baseball:
+liferay-sample-iframe-2-baseball:
     name: Baseball
     type: iframe
     url: https://en.wikipedia.org/wiki/Baseball
-liferay-sample-iframe-football:
+liferay-sample-iframe-2-football:
     name: Football
     type: iframe
     url: https://en.wikipedia.org/wiki/Football
-liferay-sample-iframe-hockey:
+liferay-sample-iframe-2-hockey:
     name: Hockey
     type: iframe
     url: https://en.wikipedia.org/wiki/Hockey

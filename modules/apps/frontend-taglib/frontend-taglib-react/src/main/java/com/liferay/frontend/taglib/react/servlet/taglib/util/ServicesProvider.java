@@ -23,16 +23,10 @@ import com.liferay.portal.template.react.renderer.ReactRenderer;
  */
 public class ServicesProvider {
 
-	public static JSModuleResolver getJSModuleResolver() {
-		return _jsModuleResolverSnapshot.get();
-	}
-
 	public static ReactRenderer getReactRenderer() {
 		return _reactRendererSnapshot.get();
 	}
 
-	private static final Snapshot<JSModuleResolver> _jsModuleResolverSnapshot =
-		new Snapshot<>(ServicesProvider.class, JSModuleResolver.class);
 	private static final Snapshot<ReactRenderer> _reactRendererSnapshot =
 		new Snapshot<>(ServicesProvider.class, ReactRenderer.class);
 

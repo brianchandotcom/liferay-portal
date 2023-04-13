@@ -17,20 +17,19 @@ package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRel;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelService;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.account.service.AccountEntryUserRelService;
+import com.liferay.account.service.AccountGroupRelService;
+import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel;
-import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
-import com.liferay.commerce.account.model.CommerceAccountUserRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelService;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
-import com.liferay.commerce.account.service.CommerceAccountOrganizationRelService;
-import com.liferay.commerce.account.service.CommerceAccountUserRelService;
-import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
-import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -54,6 +53,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
@@ -81,6 +81,8 @@ import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -129,11 +131,11 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			String accountExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
-		CommerceAccountGroup commerceAccountGroup =
-			_commerceAccountGroupService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+		AccountGroup accountGroup =
+			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
-		if (commerceAccountGroup == null) {
+		if (accountGroup == null) {
 			throw new NoSuchAccountGroupException(
 				"Unable to find account group with external reference code " +
 					externalReferenceCode);
@@ -149,17 +151,13 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					accountExternalReferenceCode);
 		}
 
-		CommerceAccountGroupCommerceAccountRel
-			commerceAccountGroupCommerceAccountRel =
-				_commerceAccountGroupCommerceAccountRelService.
-					getCommerceAccountGroupCommerceAccountRel(
-						commerceAccountGroup.getCommerceAccountGroupId(),
-						accountEntry.getAccountEntryId());
+		AccountGroupRel accountGroupRel =
+			_accountGroupRelService.fetchAccountGroupRel(
+				accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+				accountEntry.getAccountEntryId());
 
-		_commerceAccountGroupCommerceAccountRelService.
-			deleteCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroupCommerceAccountRel.
-					getCommerceAccountGroupCommerceAccountRelId());
+		_accountGroupRelService.deleteAccountGroupRel(
+			accountGroupRel.getAccountGroupRelId());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -327,11 +325,11 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			String externalReferenceCode, Account account)
 		throws Exception {
 
-		CommerceAccountGroup commerceAccountGroup =
-			_commerceAccountGroupService.fetchByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+		AccountGroup accountGroup =
+			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
 
-		if (commerceAccountGroup == null) {
+		if (accountGroup == null) {
 			throw new NoSuchAccountGroupException(
 				"Unable to find account group with external reference code " +
 					externalReferenceCode);
@@ -356,11 +354,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					account.getExternalReferenceCode());
 		}
 
-		_commerceAccountGroupCommerceAccountRelService.
-			addCommerceAccountGroupCommerceAccountRel(
-				commerceAccountGroup.getCommerceAccountGroupId(),
-				accountEntry.getAccountEntryId(),
-				_serviceContextHelper.getServiceContext());
+		_accountGroupRelService.addAccountGroupRel(
+			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -656,19 +652,18 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					_userLocalService, accountMember,
 					contextCompany.getCompanyId());
 
-				CommerceAccountUserRel commerceAccountUserRel =
-					_commerceAccountUserRelService.fetchCommerceAccountUserRel(
-						new CommerceAccountUserRelPK(
-							accountEntry.getAccountEntryId(),
-							user.getUserId()));
+				AccountEntryUserRel accountEntryUserRel =
+					_accountEntryUserRelService.fetchAccountEntryUserRel(
+						accountEntry.getAccountEntryId(), user.getUserId());
 
-				if (commerceAccountUserRel != null) {
+				if (accountEntryUserRel != null) {
 					continue;
 				}
 
-				AccountMemberUtil.addCommerceAccountUserRel(
-					_commerceAccountUserRelService, accountMember, accountEntry,
-					user, serviceContext);
+				AccountMemberUtil.addAccountEntryUserRel(
+					_accountEntryModelResourcePermission,
+					_accountEntryUserRelService, accountMember, accountEntry,
+					_commerceAccountHelper, user, serviceContext);
 			}
 		}
 
@@ -685,21 +680,18 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					_organizationLocalService, accountOrganization,
 					contextCompany.getCompanyId());
 
-				CommerceAccountOrganizationRel commerceAccountOrganizationRel =
-					_commerceAccountOrganizationRelService.
-						fetchCommerceAccountOrganizationRel(
-							new CommerceAccountOrganizationRelPK(
-								accountEntry.getAccountEntryId(),
-								organizationId));
+				AccountEntryOrganizationRel accountEntryOrganizationRel =
+					_accountEntryOrganizationRelService.
+						fetchAccountEntryOrganizationRel(
+							accountEntry.getAccountEntryId(), organizationId);
 
-				if (commerceAccountOrganizationRel != null) {
+				if (accountEntryOrganizationRel != null) {
 					continue;
 				}
 
-				_commerceAccountOrganizationRelService.
-					addCommerceAccountOrganizationRel(
-						accountEntry.getAccountEntryId(), organizationId,
-						serviceContext);
+				_accountEntryOrganizationRelService.
+					addAccountEntryOrganizationRel(
+						accountEntry.getAccountEntryId(), organizationId);
 			}
 		}
 
@@ -719,22 +711,32 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private volatile ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
+	@Reference
+	private AccountEntryOrganizationRelService
+		_accountEntryOrganizationRelService;
+
 	@Reference
 	private AccountEntryService _accountEntryService;
 
 	@Reference
-	private CommerceAccountGroupCommerceAccountRelService
-		_commerceAccountGroupCommerceAccountRelService;
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private AccountGroupRelService _accountGroupRelService;
 
 	@Reference
-	private CommerceAccountOrganizationRelService
-		_commerceAccountOrganizationRelService;
+	private AccountGroupService _accountGroupService;
 
 	@Reference
-	private CommerceAccountUserRelService _commerceAccountUserRelService;
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

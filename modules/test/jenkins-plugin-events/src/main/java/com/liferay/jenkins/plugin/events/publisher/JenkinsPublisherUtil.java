@@ -20,15 +20,18 @@ import hudson.model.Build;
 import hudson.model.Computer;
 import hudson.model.Executor;
 import hudson.model.Job;
+import hudson.model.Node;
 import hudson.model.ParameterValue;
 import hudson.model.ParametersAction;
 import hudson.model.Queue;
+import hudson.model.labels.LabelAtom;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import jenkins.model.Jenkins;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -153,6 +156,16 @@ public class JenkinsPublisherUtil {
 		).put(
 			"online", computer.isOnline()
 		);
+
+		Node node = computer.getNode();
+
+		JSONArray labelsJSONArray = new JSONArray();
+
+		for (LabelAtom labelAtom : node.getAssignedLabels()) {
+			labelsJSONArray.put(labelAtom.getName());
+		}
+
+		jsonObject.put("labels", labelsJSONArray);
 
 		return jsonObject;
 	}

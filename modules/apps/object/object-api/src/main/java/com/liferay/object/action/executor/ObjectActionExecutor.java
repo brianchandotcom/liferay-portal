@@ -17,8 +17,7 @@ package com.liferay.object.action.executor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -26,19 +25,23 @@ import java.util.Set;
  */
 public interface ObjectActionExecutor {
 
+	public static int UNRESTRICTED_BY_COMPANY = 0;
+
+	public static List<String> UNRESTRICTED_BY_OBJECT_DEFINITIONS = null;
+
 	public void execute(
 			long companyId, UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
 		throws Exception;
 
-	public default Set<String> getAllowedObjectDefinitionNames() {
-		return Collections.emptySet();
-	}
-
 	public default long getCompanyId() {
-		return 0;
+		return UNRESTRICTED_BY_COMPANY;
 	}
 
 	public String getKey();
+
+	public default List<String> getObjectDefinitionNames() {
+		return UNRESTRICTED_BY_OBJECT_DEFINITIONS;
+	}
 
 }

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -70,19 +69,19 @@ public class ObjectActionExecutorRegistryImpl
 			ListUtil.filter(
 				new ArrayList<>(objectActionExecutorsCollection),
 				objectActionExecutor -> {
-					if ((objectActionExecutor.getCompanyId() != 0) &&
+					if ((objectActionExecutor.getCompanyId() !=
+						 ObjectActionExecutor.UNRESTRICTED_BY_COMPANY) &&
 						(objectActionExecutor.getCompanyId() !=
 							CompanyThreadLocal.getCompanyId())) {
 
 						return false;
 					}
 
-					Set<String> allowedObjectDefinitionNames =
-						objectActionExecutor.getAllowedObjectDefinitionNames();
+					List<String> objectDefinitionNames =
+						objectActionExecutor.getObjectDefinitionNames();
 
-					return allowedObjectDefinitionNames.isEmpty() ||
-						   allowedObjectDefinitionNames.contains(
-							   objectDefinitionName);
+					return (objectDefinitionNames == ObjectActionExecutor.UNRESTRICTED_BY_OBJECT_DEFINITIONS) ||
+						   objectDefinitionNames.contains(objectDefinitionName);
 				}),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {

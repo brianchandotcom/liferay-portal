@@ -63,7 +63,6 @@ module.exports = {
 
 					'@liferay/frontend-js-dependencies-web': {
 						'/': '*',
-
 						'clipboard': '*',
 						'cropperjs': '*',
 						'cropperjs/dist/cropper.css': '*',
@@ -73,6 +72,8 @@ module.exports = {
 						'fuzzy': '*',
 						'image-promise': '*',
 						'liferay-ckeditor': '*',
+						'moment': '*',
+						'moment/min/moment-with-locales': '*',
 						'qrcode': '*',
 						'qs': '*',
 						'react-text-mask': '*',
@@ -449,6 +450,8 @@ module.exports = {
 				'fuzzy',
 				'image-promise',
 				'liferay-ckeditor',
+				'moment',
+				'moment/min/moment-with-locales',
 				'qrcode',
 				'qs',
 				'react-text-mask',
@@ -872,7 +875,6 @@ module.exports = {
 			'clipboard',
 			'codemirror',
 			'core-js',
-			'cropperjs',
 			'custom-event-polyfill',
 			'dagre',
 			'date-fns',
@@ -904,7 +906,6 @@ module.exports = {
 			'lodash.unescape',
 			'md5',
 			'mini-css-extract-plugin',
-			'moment',
 			'numeral',
 			'object-hash',
 			'os-browserify',

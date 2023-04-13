@@ -19,6 +19,8 @@ module.exports = {
 			'@liferay/js-api/data-set',
 			'cropperjs',
 			'cropperjs/dist/cropper.css',
+			{name: 'moment', symbols: 'auto'},
+			{name: 'moment/min/moment-with-locales', symbols: 'auto'},
 			'date-fns',
 			'qrcode',
 			'react-transition-group',

@@ -29,10 +29,12 @@ const DefaultComponent = props => (
 
 describe('SalesforceAuthorization', () => {
 	it('should render', () => {
-		const {container, queryByText} = render(<DefaultComponent />);
+		const {container} = render(<DefaultComponent />);
 
-		expect(queryByText('Delete Data Source')).toBeTruthy();
-		expect(queryByText('Edit')).toBeTruthy();
+		// TODO: uncomment lines below when Delete Property and Delete Data Source btns are back in the UI (LRAC-13389)
+		// expect(queryByText('Delete Data Source')).toBeTruthy();
+		// expect(queryByText('Edit')).toBeTruthy();
+
 		expect(container).toMatchSnapshot();
 	});
 

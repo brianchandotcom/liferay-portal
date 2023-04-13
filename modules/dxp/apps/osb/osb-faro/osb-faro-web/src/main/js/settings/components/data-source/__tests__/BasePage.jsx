@@ -33,7 +33,9 @@ describe('BaseDataSourcePage', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render a delete button if showDelete is true', () => {
+	// TODO: remove "skip" on test below when Delete Property and Delete Data Source btns are back in the UI (LRAC-13389)
+
+	it.skip('should render a delete button if showDelete is true', () => {
 		const {queryByText} = render(
 			<StaticRouter>
 				<Provider store={mockStore()}>

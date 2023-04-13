@@ -20,33 +20,34 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Albert Lee
+ * @author Pei-Jung Lan
  */
 @Component(
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class AccountUserInformationScreenNavigationEntry
+public class AlertsAndAnnouncementsDeliveryAccountUserScreenNavigationEntry
 	extends BaseAccountUserScreenNavigationEntry {
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/edit_user";
+		return "/users_admin/update_announcements_deliveries";
 	}
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_PREFERENCES;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION;
+		return AccountScreenNavigationEntryConstants.
+			ENTRY_KEY_ALERTS_AND_ANNOUNCEMENTS_DELIVERY;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/user/information.jsp";
+		return "/user/announcements.jsp";
 	}
 
 }

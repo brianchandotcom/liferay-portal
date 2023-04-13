@@ -17,13 +17,11 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,32 +32,39 @@ import org.osgi.service.component.annotations.Component;
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class AccountEntryUsersScreenNavigationEntry
+public class AddressesAccountEntryScreenNavigationEntry
 	extends BaseAccountEntryScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_ADDRESSES;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/account_entries_admin/account_entry/view_account_users.jsp";
+		return "/account_entries_admin/account_entry/addresses.jsp";
 	}
 
 	@Override
 	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (accountEntry.isNew() ||
-			!Objects.equals(
-				accountEntry.getType(),
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
-
+		if (accountEntry.isNew()) {
 			return false;
 		}
 
-		return AccountEntryPermission.contains(
-			PermissionCheckerFactoryUtil.create(user),
-			accountEntry.getAccountEntryId(), AccountActionKeys.VIEW_USERS);
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		if (AccountEntryPermission.contains(
+				permissionChecker, accountEntry.getAccountEntryId(),
+				AccountActionKeys.MANAGE_ADDRESSES) ||
+			AccountEntryPermission.contains(
+				permissionChecker, accountEntry.getAccountEntryId(),
+				AccountActionKeys.VIEW_ADDRESSES)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

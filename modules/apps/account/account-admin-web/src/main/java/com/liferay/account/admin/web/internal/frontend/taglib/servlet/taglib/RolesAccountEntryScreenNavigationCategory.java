@@ -20,20 +20,18 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Erick Monteiro
- * @author Alessio Antonio Rendina
+ * @author Joao Victor Alves
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=35",
+	property = "screen.navigation.category.order:Integer=60",
 	service = ScreenNavigationCategory.class
 )
-public class AccountEntryAccountGroupsScreenNavigationCategory
+public class RolesAccountEntryScreenNavigationCategory
 	extends BaseAccountEntryScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.
-			CATEGORY_KEY_ACCOUNT_GROUPS;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_ROLES;
 	}
 
 }

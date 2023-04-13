@@ -15,48 +15,24 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
+ * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
-	service = ScreenNavigationEntry.class
+	property = "screen.navigation.category.order:Integer=30",
+	service = ScreenNavigationCategory.class
 )
-public class AccountUserAddressesScreenNavigationEntry
-	extends BaseAccountUserScreenNavigationEntry {
-
-	@Override
-	public String getActionCommandName() {
-		return "/users_admin/update_contact_information";
-	}
+public class OrganizationsAccountEntryScreenNavigationCategory
+	extends BaseAccountEntryScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT;
-	}
-
-	@Override
-	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.ENTRY_KEY_ADDRESSES;
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/user/addresses.jsp";
-	}
-
-	@Override
-	public boolean isShowControls() {
-		return false;
-	}
-
-	@Override
-	public boolean isShowTitle() {
-		return false;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS;
 	}
 
 }

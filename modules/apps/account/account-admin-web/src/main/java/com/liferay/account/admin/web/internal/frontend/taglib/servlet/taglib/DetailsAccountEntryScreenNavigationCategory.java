@@ -15,34 +15,23 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Joao Victor Alves
+ * @author Albert Lee
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
-	service = ScreenNavigationEntry.class
+	property = "screen.navigation.category.order:Integer=10",
+	service = ScreenNavigationCategory.class
 )
-public class AccountRoleDefineGroupScopePermissionsScreenNavigationEntry
-	extends BaseAccountRoleDefinePermissionsScreenNavigationEntry {
+public class DetailsAccountEntryScreenNavigationCategory
+	extends BaseAccountEntryScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.
-			CATEGORY_KEY_DEFINE_GROUP_SCOPE_PERMISSIONS;
-	}
-
-	@Override
-	protected String doGetTabs1() {
-		return getCategoryKey();
-	}
-
-	@Override
-	protected boolean doIsAccountRoleGroupScope() {
-		return true;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_DETAILS;
 	}
 
 }

@@ -15,12 +15,7 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
-import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,30 +26,23 @@ import org.osgi.service.component.annotations.Component;
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class AccountEntryOrganizationsScreenNavigationEntry
-	extends BaseAccountEntryScreenNavigationEntry {
+public class GroupScopeAccountRoleDefinePermissionsScreenNavigationEntry
+	extends BaseAccountRoleDefinePermissionsScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS;
+		return AccountScreenNavigationEntryConstants.
+			CATEGORY_KEY_DEFINE_GROUP_SCOPE_PERMISSIONS;
 	}
 
 	@Override
-	public String getJspPath() {
-		return "/account_entries_admin/account_entry" +
-			"/view_account_organizations.jsp";
+	protected String doGetTabs1() {
+		return getCategoryKey();
 	}
 
 	@Override
-	public boolean isVisible(User user, AccountEntry accountEntry) {
-		if (accountEntry.isNew()) {
-			return false;
-		}
-
-		return AccountEntryPermission.contains(
-			PermissionCheckerFactoryUtil.create(user),
-			accountEntry.getAccountEntryId(),
-			AccountActionKeys.VIEW_ORGANIZATIONS);
+	protected boolean doIsAccountRoleGroupScope() {
+		return true;
 	}
 
 }

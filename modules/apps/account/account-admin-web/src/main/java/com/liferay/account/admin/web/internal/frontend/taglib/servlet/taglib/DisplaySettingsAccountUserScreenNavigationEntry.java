@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
-public class AccountUserDisplaySettingsScreenNavigationEntry
+public class DisplaySettingsAccountUserScreenNavigationEntry
 	extends BaseAccountUserScreenNavigationEntry {
 
 	@Override

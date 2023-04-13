@@ -15,24 +15,39 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
- * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=15",
-	service = ScreenNavigationCategory.class
+	property = "screen.navigation.entry.order:Integer=20",
+	service = ScreenNavigationEntry.class
 )
-public class AccountEntryAddressesScreenNavigationCategory
-	extends BaseAccountEntryScreenNavigationCategory {
+public class ContactInformationAccountUserScreenNavigationEntry
+	extends BaseAccountUserScreenNavigationEntry {
+
+	@Override
+	public String getActionCommandName() {
+		return "/users_admin/update_user_contact_information_form";
+	}
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_ADDRESSES;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT;
+	}
+
+	@Override
+	public String getEntryKey() {
+		return AccountScreenNavigationEntryConstants.
+			ENTRY_KEY_CONTACT_INFORMATION;
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/user/contact_information.jsp";
 	}
 
 }

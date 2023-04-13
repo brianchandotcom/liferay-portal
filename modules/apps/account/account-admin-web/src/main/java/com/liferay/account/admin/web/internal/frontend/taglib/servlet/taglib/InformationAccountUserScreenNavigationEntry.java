@@ -20,34 +20,33 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Albert Lee
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=20",
+	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class AccountUserContactInformationScreenNavigationEntry
+public class InformationAccountUserScreenNavigationEntry
 	extends BaseAccountUserScreenNavigationEntry {
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/update_user_contact_information_form";
+		return "/users_admin/edit_user";
 	}
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_CONTACT;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.
-			ENTRY_KEY_CONTACT_INFORMATION;
+		return AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/user/contact_information.jsp";
+		return "/user/information.jsp";
 	}
 
 }

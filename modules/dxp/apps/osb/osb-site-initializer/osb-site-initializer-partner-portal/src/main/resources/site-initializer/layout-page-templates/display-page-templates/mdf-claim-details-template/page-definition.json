@@ -467,6 +467,9 @@
 															},
 															{
 																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
 																	"indexed": true,
 																	"layout": {
 																		"align": "Center",
@@ -541,6 +544,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
 															"indexed": true,
 															"layout": {
 																"align": "Center",
@@ -563,7 +569,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "approve-button"
+																		"key": "approve-button-mdf-claim"
 																	},
 																	"fragmentConfig": {
 																		"channelAccountManager": true,
@@ -571,44 +577,7 @@
 																		"channelGeneralManager": true,
 																		"channelGlobalMarketingManager": true,
 																		"channelRegionalMarketingManager": true,
-																		"user": false
-																	},
-																	"fragmentFields": [
-																	],
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "pending-marketing-review-button"
-																	},
-																	"fragmentConfig": {
-																		"channelAccountManager": true,
-																		"channelFinanceManager": true,
-																		"channelGeneralManager": true,
-																		"channelGlobalMarketingManager": true,
-																		"channelRegionalMarketingManager": true,
-																		"user": false
-																	},
-																	"fragmentFields": [
-																	],
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "request-more-info-button"
-																	},
-																	"fragmentConfig": {
-																		"channelAccountManager": true,
-																		"channelFinanceManager": true,
-																		"channelGeneralManager": true,
-																		"channelGlobalMarketingManager": true,
-																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
 																		"user": false
 																	},
 																	"fragmentFields": [
@@ -628,6 +597,27 @@
 																		"channelGeneralManager": true,
 																		"channelGlobalMarketingManager": true,
 																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
+																		"user": false
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "pending-marketing-review-button-mdf-claim"
+																	},
+																	"fragmentConfig": {
+																		"channelAccountManager": true,
+																		"channelFinanceManager": true,
+																		"channelGeneralManager": true,
+																		"channelGlobalMarketingManager": true,
+																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
 																		"user": false
 																	},
 																	"fragmentFields": [
@@ -647,6 +637,7 @@
 																		"channelGeneralManager": true,
 																		"channelGlobalMarketingManager": true,
 																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
 																		"user": false
 																	},
 																	"fragmentFields": [
@@ -666,6 +657,7 @@
 																		"channelGeneralManager": true,
 																		"channelGlobalMarketingManager": true,
 																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
 																		"user": false
 																	},
 																	"fragmentFields": [
@@ -677,7 +669,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "reject-button"
+																		"key": "reject-button-mdf-claim"
 																	},
 																	"fragmentConfig": {
 																		"channelAccountManager": true,
@@ -685,6 +677,27 @@
 																		"channelGeneralManager": true,
 																		"channelGlobalMarketingManager": true,
 																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
+																		"user": false
+																	},
+																	"fragmentFields": [
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "request-more-info-button-mdf-claim"
+																	},
+																	"fragmentConfig": {
+																		"channelAccountManager": true,
+																		"channelFinanceManager": true,
+																		"channelGeneralManager": true,
+																		"channelGlobalMarketingManager": true,
+																		"channelRegionalMarketingManager": true,
+																		"partnerManager": true,
 																		"user": false
 																	},
 																	"fragmentFields": [

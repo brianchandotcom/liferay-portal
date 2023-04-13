@@ -46,7 +46,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,18 +93,18 @@ public class DDMStructureLayoutLocalServiceImpl
 		DDMStructureLayout structureLayout =
 			ddmStructureLayoutPersistence.create(structureLayoutId);
 
+		if (structureLayoutKey == null) {
+			structureLayoutKey = String.valueOf(
+				counterLocalService.increment());
+		}
+
 		structureLayout.setUuid(serviceContext.getUuid());
 		structureLayout.setGroupId(groupId);
 		structureLayout.setCompanyId(user.getCompanyId());
 		structureLayout.setUserId(user.getUserId());
 		structureLayout.setUserName(user.getFullName());
 		structureLayout.setClassNameId(classNameId);
-		structureLayout.setStructureLayoutKey(
-			Optional.ofNullable(
-				structureLayoutKey
-			).orElseGet(
-				() -> String.valueOf(counterLocalService.increment())
-			));
+		structureLayout.setStructureLayoutKey(structureLayoutKey);
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setDefinition(_serialize(ddmFormLayout));
 
@@ -128,6 +127,11 @@ public class DDMStructureLayoutLocalServiceImpl
 		DDMStructureLayout structureLayout =
 			ddmStructureLayoutPersistence.create(structureLayoutId);
 
+		if (structureLayoutKey == null) {
+			structureLayoutKey = String.valueOf(
+				counterLocalService.increment());
+		}
+
 		structureLayout.setUuid(serviceContext.getUuid());
 		structureLayout.setGroupId(groupId);
 		structureLayout.setCompanyId(user.getCompanyId());
@@ -136,12 +140,7 @@ public class DDMStructureLayoutLocalServiceImpl
 		structureLayout.setCreateDate(new Date());
 		structureLayout.setModifiedDate(new Date());
 		structureLayout.setClassNameId(classNameId);
-		structureLayout.setStructureLayoutKey(
-			Optional.ofNullable(
-				structureLayoutKey
-			).orElseGet(
-				() -> String.valueOf(counterLocalService.increment())
-			));
+		structureLayout.setStructureLayoutKey(structureLayoutKey);
 		structureLayout.setStructureVersionId(structureVersionId);
 		structureLayout.setNameMap(name);
 		structureLayout.setDescriptionMap(description);

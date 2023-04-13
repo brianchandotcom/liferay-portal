@@ -1,21 +1,18 @@
-import {DocumentNode} from 'graphql';
 import {pickBy} from 'lodash';
 import {RangeKeyTimeRanges} from './constants';
 import {RangeSelectors} from 'shared/types';
 
-export type GQLQuery =
-	| {
-			definitions: {
-				variableDefinitions: {
-					variable: {
-						name: {
-							value: string;
-						};
-					};
-				}[];
-			}[];
-	  }
-	| DocumentNode;
+export type GQLQuery = {
+	definitions: {
+		variableDefinitions: {
+			variable: {
+				name: {
+					value: string;
+				};
+			};
+		}[];
+	}[];
+};
 
 /**
  * Returns an object of variable keys used in the graphQL query.

@@ -58,8 +58,8 @@ export const Colors = {
 };
 
 export const dateRangeFormatter = (
-	dateStart: number,
-	dateEnd: number,
+	dateStart: Date,
+	dateEnd: Date,
 	withYear: boolean = false
 ): string => {
 	// TODO: Add timezone param
@@ -96,10 +96,10 @@ export const formatTooltipDate = (date, rangeKey) => {
 };
 
 export const formatXAxisDate = (
-	dateKey: number,
+	dateKey: Date,
 	rangeKey: string,
 	interval: Interval,
-	dateKeysIMap: Map<number, [number, number?]>
+	dateKeysIMap: Map<Date, [Date, Date?]>
 ) => {
 	// display date and month
 	let formatter = d3.utcFormat('%b %-d');
@@ -283,7 +283,7 @@ export const getDataFormatter = type => {
  * @param {string} rangeKey
  */
 export const getDateTitle = (
-	dates: [number, number?],
+	dates: [Date, Date?],
 	rangeKey: RangeKeyTimeRanges,
 	interval: Interval
 ): string => {

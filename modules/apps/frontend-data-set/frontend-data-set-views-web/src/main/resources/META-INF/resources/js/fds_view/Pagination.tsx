@@ -44,6 +44,10 @@ function Pagination({
 		setIncompatibleDefaultPageSizeValidationError,
 	] = useState(false);
 	const [
+		invalidNumberInPageSizesValidationError,
+		setInvalidNumberInPageSizesValidationError,
+	] = useState(false);
+	const [
 		requiredDefaultPageSizeValidationError,
 		setRequiredDefaultPageSizeValidationError,
 	] = useState(false);
@@ -51,14 +55,43 @@ function Pagination({
 		requiredPageSizesValidationError,
 		setRequiredPageSizesValidationError,
 	] = useState(false);
+	const [
+		invalidPageSizesLengthValidationError,
+		setInvalidPageSizesLengthValidationError,
+	] = useState(false);
 
 	const fdsViewPageSizesRef = useRef<HTMLInputElement>(null);
 	const fdsViewDefaultPageSizeRef = useRef<HTMLInputElement>(null);
 
-	const compatibilityValidation = () => {
-		const paginationArray = pageSizes.split(', ');
+	const getPageSizesArray = (): string[] => {
+		return pageSizes.trim().split(/\s*(?:,|$)\s*/);
+	};
 
-		if (!paginationArray.includes(defaultPageSize)) {
+	const pageSizesFieldValidation = (pageSizesArray: string[]) => {
+		if (pageSizesArray.length > 25) {
+			setInvalidPageSizesLengthValidationError(true);
+		}
+		else {
+			setInvalidPageSizesLengthValidationError(false);
+		}
+
+		const invalidNumber = pageSizesArray.some((element) => {
+			const isNumber = /^\d+$/.test(element);
+			const pageSize: number = parseInt(element, 10);
+
+			return !isNumber || pageSize < 1 || pageSize > 1000;
+		});
+
+		if (invalidNumber) {
+			setInvalidNumberInPageSizesValidationError(true);
+		}
+		else {
+			setInvalidNumberInPageSizesValidationError(false);
+		}
+	};
+
+	const compatibilityValidation = (pageSizesArray: string[]) => {
+		if (!pageSizesArray.includes(defaultPageSize)) {
 			setIncompatibleDefaultPageSizeValidationError(true);
 		}
 		else {
@@ -67,10 +100,22 @@ function Pagination({
 	};
 
 	const handleSaveClick = async () => {
+		const getPageSizesString = () => {
+			const uniquePageSizesArray = [...new Set(getPageSizesArray())];
+
+			const sortedPageSizesArray = uniquePageSizesArray
+				.map((element) => parseInt(element, 10))
+				.sort((a, b) => a - b);
+
+			return sortedPageSizesArray.join(', ');
+		};
+
+		const pageSizesString = getPageSizesString();
+
 		const body = {
 			defaultPageSize,
 			label: fdsView.label,
-			pageSizes,
+			pageSizes: pageSizesString,
 		};
 
 		const response = await fetch(
@@ -94,6 +139,7 @@ function Pagination({
 				),
 				type: 'success',
 			});
+			setPageSizes(pageSizesString);
 		}
 		else {
 			openToast({
@@ -104,6 +150,11 @@ function Pagination({
 			});
 		}
 	};
+
+	const pageSizesValidationError =
+		requiredPageSizesValidationError ||
+		invalidNumberInPageSizesValidationError ||
+		invalidPageSizesLengthValidationError;
 
 	return (
 		<ClayLayout.Sheet className="mt-3" size="lg">
@@ -122,7 +173,7 @@ function Pagination({
 			<ClayLayout.SheetSection>
 				<ClayForm.Group
 					className={classnames(
-						requiredPageSizesValidationError && 'has-error'
+						pageSizesValidationError && 'has-error'
 					)}
 				>
 					<label htmlFor={`${namespace}fdsViewPageSizesTextarea`}>
@@ -135,7 +186,11 @@ function Pagination({
 						component="textarea"
 						id={`${namespace}fdsViewPageSizesTextarea`}
 						onBlur={() => {
-							compatibilityValidation();
+							const pageSizesArray = getPageSizesArray();
+
+							pageSizesFieldValidation(pageSizesArray);
+
+							compatibilityValidation(pageSizesArray);
 
 							setRequiredPageSizesValidationError(
 								!fdsViewPageSizesRef.current?.value
@@ -148,12 +203,25 @@ function Pagination({
 						value={pageSizes}
 					/>
 
-					{requiredPageSizesValidationError && (
+					{pageSizesValidationError && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{Liferay.Language.get('this-field-is-required')}
+								{requiredPageSizesValidationError &&
+									Liferay.Language.get(
+										'this-field-is-required'
+									)}
+
+								{invalidNumberInPageSizesValidationError &&
+									Liferay.Language.get(
+										'this-field-contains-an-invalid-number-error'
+									)}
+
+								{invalidPageSizesLengthValidationError &&
+									Liferay.Language.get(
+										'this-field-contains-a-very-long-list-error'
+									)}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}
@@ -177,7 +245,7 @@ function Pagination({
 					<ClayInput
 						id={`${namespace}fdsViewPaginationDefaultPageSizeInput`}
 						onBlur={() => {
-							compatibilityValidation();
+							compatibilityValidation(getPageSizesArray());
 
 							setRequiredDefaultPageSizeValidationError(
 								!fdsViewDefaultPageSizeRef.current?.value

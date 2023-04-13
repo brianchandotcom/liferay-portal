@@ -17,33 +17,40 @@ package com.liferay.source.formatter.dependencies;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.util.PropsUtil;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Qi Zhang
  */
-public class FeatureFlagsAnnotation2Test {
+public class FeatureFlagsAnnotationTest {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-180713", "true"
+			).setProperty(
+				"feature.flag.LPS-180714", "true"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-180713", "false"
+			).setProperty(
+				"feature.flag.LPS-180714", "false"
+			).build());
+	}
 
 	@Test
 	public void testMethod() {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-180713", "true"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-180714", "true"
-			).build());
-
-		System.out.println("test");
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-180713", "false"
-			).build());
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-180714", "false"
+				"feature.flag.LPS-180715", "true"
 			).build());
 	}
 

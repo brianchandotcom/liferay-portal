@@ -197,11 +197,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testFeatureFlagsAnnotation() throws Exception {
-		test("FeatureFlagsAnnotation1Test.testjava",
-				"Use '@FeatureFlags' on class definition");
-		test("FeatureFlagsAnnotation2Test.testjava",
-				"Use '@FeatureFlags' on method definition");
+	public void testFeatureFlagsAnnotationTest() throws Exception {
+		test(
+			"FeatureFlagsAnnotationTest.testjava",
+			new String[] {
+				"Use annotation @FeatureFlags instead of PropsUtil." +
+					"addProperties for feature flag for setUpClass",
+				"Use annotation @FeatureFlags instead of PropsUtil." +
+					"addProperties for feature flag for tearDownClass",
+				"Use annotation @FeatureFlags instead of PropsUtil." +
+					"addProperties for feature flag for testMethod"
+			},
+			new Integer[] {31, 41, 51});
 	}
 
 	@Test

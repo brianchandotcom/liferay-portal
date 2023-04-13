@@ -54,15 +54,12 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -413,45 +410,34 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			return;
 		}
 
-		List<DDMFormFieldValue> inputParameters = ddmFormFieldValuesMap.get(
-			"inputParameters");
-
-		Stream<DDMFormFieldValue> inputParametersStream =
-			inputParameters.stream();
-
-		List<DDMFormFieldValue> inputParameterNamesList =
-			inputParametersStream.flatMap(
-				inputParameter -> inputParameter.getNestedDDMFormFieldValuesMap(
-				).get(
-					"inputParameterName"
-				).stream()
-			).collect(
-				Collectors.toList()
-			);
-
-		Stream<DDMFormFieldValue> inputParameterNamesStream =
-			inputParameterNamesList.stream();
-
-		Collection<String> inputParameterNames =
-			inputParameterNamesStream.flatMap(
-				inputParameterName -> inputParameterName.getValue(
-				).getValues(
-				).values(
-				).stream()
-			).collect(
-				Collectors.toList()
-			);
-
 		Set<String> inputParameterNamesSet = new HashSet<>();
 
-		for (String inputParameterName : inputParameterNames) {
-			if (inputParameterNamesSet.contains(inputParameterName)) {
-				throw new DuplicateDataProviderInstanceInputParameterNameException(
-					"Duplicate data provider input parameter name: " +
-						inputParameterName);
-			}
+		for (DDMFormFieldValue inputParameter :
+				ddmFormFieldValuesMap.get("inputParameters")) {
 
-			inputParameterNamesSet.add(inputParameterName);
+			Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValues =
+				inputParameter.getNestedDDMFormFieldValuesMap();
+
+			for (DDMFormFieldValue ddmFormFieldValue :
+					nestedDDMFormFieldValues.get("inputParameterName")) {
+
+				Value inputParameterNameValue = ddmFormFieldValue.getValue();
+
+				Map<Locale, String> inputParameterNameValues =
+					inputParameterNameValue.getValues();
+
+				for (String inputParameterName :
+						inputParameterNameValues.values()) {
+
+					if (inputParameterNamesSet.contains(inputParameterName)) {
+						throw new DuplicateDataProviderInstanceInputParameterNameException(
+							"Duplicate data provider input parameter name: " +
+								inputParameterName);
+					}
+
+					inputParameterNamesSet.add(inputParameterName);
+				}
+			}
 		}
 	}
 

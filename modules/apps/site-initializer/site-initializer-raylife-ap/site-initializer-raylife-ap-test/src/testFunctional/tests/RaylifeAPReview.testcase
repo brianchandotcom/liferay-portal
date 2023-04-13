@@ -71,4 +71,48 @@ definition {
 				text = "Testing Model");
 		}
 	}
+
+	@description = "LPS-161329 - Verify if user can delete a application made in New Applications."
+	@priority = 3
+	test CanDeleteIncompleteApplication {
+		property test.name.skip.portal.instance = "RaylifeAPReview#CanDeleteNewApplication";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that an user created an uncompleted new application") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationVehicleInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields();
+
+			RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields();
+
+			Button.click(button = "Exit");
+		}
+
+		task ("When the user delete the new incompleted application") {
+			RaylifeAP.clickInApplicationKebabOption(
+				option = "Delete",
+				product = "Auto",
+				status = "Incomplete");
+		}
+
+		task ("Then assert if the application was deleted") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+			RaylifeAP.search(searchTerm = "Testing Model");
+
+			AssertElementNotPresent(
+				key_quantity = "Applications (1)",
+				locator1 = "RaylifeAP#ASSERT_QUANTITY");
+		}
+	}
+
 }

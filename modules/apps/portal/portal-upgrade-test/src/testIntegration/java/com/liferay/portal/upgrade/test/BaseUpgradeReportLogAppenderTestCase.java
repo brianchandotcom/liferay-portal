@@ -232,9 +232,13 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 			_appender.stop();
 
-			_assertReport(
+			String errorMessage =
 				"Unable to determine since the document library size is too " +
-					"large. Increase the timeout or check manually.");
+					"large. Increase the timeout or check manually.";
+
+			_assertLogContextContains(
+				"upgrade.report.document.library.storage.size", errorMessage);
+			_assertReport(errorMessage);
 		}
 	}
 
@@ -259,9 +263,11 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertReport(
-			"Document library storage size: " +
-				LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US));
+		String size = LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US);
+
+		_assertLogContextContains(
+			"upgrade.report.document.library.storage.size", size);
+		_assertReport("Document library storage size: " + size);
 	}
 
 	@Test
@@ -285,9 +291,11 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 
 		_appender.stop();
 
-		_assertReport(
-			"Document library storage size: " +
-				LanguageUtil.formatStorageSize(1048576, LocaleUtil.US));
+		String size = LanguageUtil.formatStorageSize(1048576, LocaleUtil.US);
+
+		_assertLogContextContains(
+			"upgrade.report.document.library.storage.size", size);
+		_assertReport("Document library storage size: " + size);
 	}
 
 	@Test

@@ -130,7 +130,7 @@ public class KnowledgeBaseAttachmentResourceImpl
 				KBArticle.class.getName(), kbArticle.getClassPK(),
 				KBConstants.SERVICE_NAME, kbArticle.getAttachmentsFolderId(),
 				binaryFile.getInputStream(), binaryFile.getFileName(),
-				binaryFile.getFileName(), false));
+				binaryFile.getContentType(), false));
 	}
 
 	@Override
@@ -221,9 +221,8 @@ public class KnowledgeBaseAttachmentResourceImpl
 
 		return new KnowledgeBaseAttachment() {
 			{
-				contentUrl = _dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, "", false,
-					false);
+				contentUrl = _portletFileRepository.getPortletFileEntryURL(
+					null, fileEntry, null);
 				contentValue = ContentValueUtil.toContentValue(
 					"contentValue", fileEntry::getContentStream,
 					contextUriInfo);

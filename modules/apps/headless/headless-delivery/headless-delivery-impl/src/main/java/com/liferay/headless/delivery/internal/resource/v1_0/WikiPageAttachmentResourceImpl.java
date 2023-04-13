@@ -157,7 +157,7 @@ public class WikiPageAttachmentResourceImpl
 				contextUser.getUserId(), WikiPage.class.getName(),
 				wikiPage.getResourcePrimKey(), WikiConstants.SERVICE_NAME,
 				folder.getFolderId(), binaryFile.getInputStream(),
-				binaryFile.getFileName(), binaryFile.getFileName(), false));
+				binaryFile.getFileName(), binaryFile.getContentType(), true));
 	}
 
 	private WikiPageAttachment _toWikiPageAttachment(FileEntry fileEntry)
@@ -165,9 +165,8 @@ public class WikiPageAttachmentResourceImpl
 
 		return new WikiPageAttachment() {
 			{
-				contentUrl = _dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, "", false,
-					false);
+				contentUrl = _portletFileRepository.getPortletFileEntryURL(
+					null, fileEntry, null);
 				contentValue = ContentValueUtil.toContentValue(
 					"contentValue", fileEntry::getContentStream,
 					contextUriInfo);

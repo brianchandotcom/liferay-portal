@@ -32,6 +32,11 @@ AUI.add(
 
 		const SpreadSheet = A.Component.create({
 			ATTRS: {
+				addRecordURL: {
+					validator: Lang.isString,
+					value: STR_EMPTY,
+				},
+
 				portletNamespace: {
 					validator: Lang.isString,
 					value: STR_EMPTY,
@@ -85,16 +90,23 @@ AUI.add(
 				'textarea': A.TextAreaCellEditor,
 			},
 
-			addRecord(recordsetId, displayIndex, fieldsMap, callback) {
+			addRecord(
+				addRecordURL,
+				callback,
+				ddmFormValues,
+				displayIndex,
+				portletNamespace,
+				recordsetId
+			) {
 				const instance = this;
 
 				callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
 
-				Liferay.Service(
-					'/ddl.ddlrecord/add-record',
-					{
+				// eslint-disable-next-line @liferay/aui/no-io
+				A.io.request(addRecordURL, {
+					data: Liferay.Util.ns(portletNamespace, {
+						ddmFormValues: JSON.stringify(ddmFormValues),
 						displayIndex,
-						fieldsMap: JSON.stringify(fieldsMap),
 						groupId: themeDisplay.getScopeGroupId(),
 						recordSetId: recordsetId,
 						serviceContext: JSON.stringify({
@@ -102,9 +114,15 @@ AUI.add(
 							userId: themeDisplay.getUserId(),
 							workflowAction: Liferay.Workflow.ACTION_PUBLISH,
 						}),
+					}),
+					dataType: 'JSON',
+					method: 'POST',
+					on: {
+						success() {
+							callback();
+						},
 					},
-					callback
-				);
+				});
 			},
 
 			buildDataTableColumns(columns, locale, structure, editable) {
@@ -652,16 +670,18 @@ AUI.add(
 						}
 						else {
 							SpreadSheet.addRecord(
-								recordsetId,
-								recordIndex,
-								fieldsMap,
+								instance.get('addRecordURL'),
 								(json) => {
 									if (json.recordId > 0) {
 										record.set('recordId', json.recordId, {
 											silent: true,
 										});
 									}
-								}
+								},
+								fieldsMap,
+								recordIndex,
+								instance.get('portletNamespace'),
+								recordsetId
 							);
 						}
 					}

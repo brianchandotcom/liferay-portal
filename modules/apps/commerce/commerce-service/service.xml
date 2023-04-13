@@ -331,6 +331,7 @@
 		<column name="CPInstanceId" type="long" />
 		<column name="CPMeasurementUnitId" type="long" />
 		<column name="CProductId" type="long" />
+		<column name="customerCommerceOrderItemId" type="long" />
 		<column name="parentCommerceOrderItemId" type="long" />
 		<column name="shippingAddressId" type="long" />
 		<column name="decimalQuantity" type="BigDecimal" />

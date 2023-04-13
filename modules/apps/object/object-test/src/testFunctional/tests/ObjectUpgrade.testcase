@@ -97,15 +97,110 @@ definition {
 		}
 	}
 
-	@ignore = "Test Stub"
 	@priority = 5
 	test ViewObjectEntryAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
+		property test.name.skip.portal.instance = "ObjectUpgrade#ViewObjectEntryAfterUpgrade7413U33";
 
-		// TODO LPS-174662 ViewObjectEntryAfterUpgrade7413U33
+		task ("View Object Entry after Upgrade") {
+			Navigator.openURL();
 
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Custom Objects1",
+				site = "Liferay DXP");
+
+			ObjectPortlet.viewEntryDetails(entry = "Notification Test");
+
+			Navigator.gotoNavTab(navTab = "Account Tab");
+
+			ObjectPortlet.viewEntry(entry = "Account Test");
+
+			Navigator.gotoNavTab(navTab = "Custom Object2 Tab");
+
+			ObjectPortlet.viewEntry(entry = "Document_1.jpg");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject2");
+
+			ObjectPortlet.viewEntry(entry = "Document_1.jpg");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject3");
+
+			for (var columns : list "Custom Field Boolean,Custom Field Date,Custom Field Decimal,Custom Field Integer,Custom Field Long Integer,Custom Field Long Text,Custom Field Picklist,Custom Field Precision Decimal,Custom Field Rich Text") {
+				AssertElementPresent(
+					key_column = ${columns},
+					locator1 = "ObjectPortlet#ENTRY_COLUMN");
+			}
+
+			for (var entries : list "Yes,5.5,123456789,1234567890123456,Picklist Item 1,3.1415,Rich Text Entry") {
+				ObjectPortlet.viewEntry(entry = ${entries});
+			}
+
+			ObjectPortlet.viewEntry(entry = "Jan 1, 1970");
+
+			ObjectPortlet.viewEntry(entry = "Lorem ipsum dolor sit amet, an senserit appellantur vis, ea usu facilis admodum facilisi. Doctus admodum maiorum duo ex, dignissim reformidans ut mei, at his cibo eloquentiam. Has ei unum legimus constituto, stet labore has et. No audire pertinacia pri, vix possit vocibus facilisi eu.");
+		}
+
+		task ("Edit Object Entry after Upgrade") {
+			ObjectPortlet.viewEntryDetails(entry = "Rich Text Entry");
+
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Custom Field Boolean",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field Decimal",
+				entry = "7.4");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field Precision Decimal",
+				entry = "1.2345");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field Integer",
+				entry = 987654321);
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field Long Integer",
+				entry = 6543210123456789);
+
+			Type(
+				key_text = "LongText",
+				locator1 = "TextArea#ANY",
+				value1 = "Lorem ipsum dolor sit amet, an senserit appellantur vis, ea usu facilis admodum facilisi. Doctus admodum maiorum duo ex, dignissim reformidans ut mei, at his cibo eloquentiam. Has ei unum legimus constituto, stet labore has et. No audire pertinacia pri, vix possit vocibus facilisi eu. - Edit After Upgrade");
+
+			FormFields.editDate(
+				fieldName = "customFieldDate",
+				fieldValue = "06/15/2023");
+
+			ObjectAdmin.changePicklistFieldEntry(
+				entrySelected = "Picklist Item 1",
+				newPicklistOption = "Picklist Item 2");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "Rich Text Entry - Edit After Upgrade");
+
+			PortletEntry.save();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject3");
+
+			for (var entries : list "No,7.4,987654321,6543210123456789,Picklist Item,1.2345,Rich Text Entry - Edit After Upgrade") {
+				ObjectPortlet.viewEntry(entry = ${entries});
+			}
+
+			ObjectPortlet.viewEntry(entry = "Jun 15, 2023");
+
+			ObjectPortlet.viewEntry(entry = "Lorem ipsum dolor sit amet, an senserit appellantur vis, ea usu facilis admodum facilisi. Doctus admodum maiorum duo ex, dignissim reformidans ut mei, at his cibo eloquentiam. Has ei unum legimus constituto, stet labore has et. No audire pertinacia pri, vix possit vocibus facilisi eu. - Edit After Upgrade");
+		}
+
+		task ("Delete Object Entry after Upgrade") {
+			ObjectPortlet.deleteEntry(entry = "Rich Text Entry - Edit After Upgrade");
+
+			ObjectPortlet.assertEntryNotPresent(entry = "Rich Text Entry - Edit After Upgrade");
+		}
 	}
 
 	@priority = 5

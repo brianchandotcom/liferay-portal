@@ -153,12 +153,17 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 	private void _checkUseFeatureFlags(String fileName, JavaTerm javaTerm) {
 		String javaTermContent = javaTerm.getContent();
 
-		Matcher matcher = _propsUtilAddPropertiesPattern.matcher(
-			javaTermContent);
+		int x = -1;
 
-		while (matcher.find()) {
+		while (true) {
+			x = javaTermContent.indexOf("PropsUtil.addProperties(", x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
 			List<String> parameters = JavaSourceUtil.getParameterList(
-				JavaSourceUtil.getMethodCall(javaTermContent, matcher.start()));
+				JavaSourceUtil.getMethodCall(javaTermContent, x));
 
 			if (parameters.size() > 1) {
 				continue;
@@ -203,8 +208,5 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			}
 		}
 	}
-
-	private static final Pattern _propsUtilAddPropertiesPattern =
-		Pattern.compile("PropsUtil\\.addProperties\\(");
 
 }

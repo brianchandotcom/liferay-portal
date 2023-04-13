@@ -117,6 +117,10 @@ public class UpgradeReport {
 		PersistenceManager persistenceManager,
 		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Starting upgrade report generation");
+		}
+
 		filterMessages();
 
 		Map<String, Object> reportData = _getReportData(
@@ -317,16 +321,35 @@ public class UpgradeReport {
 						"\"rootDir\" was not set";
 				}
 
-				double size = 0;
+				_documentLibrarySize = 0;
 
 				try {
-					size = FileUtils.sizeOfDirectory(new File(_rootDir));
+					_documentLibrarySizeThread.start();
+					_documentLibrarySizeThread.join(
+						PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT *
+							Time.SECOND);
 				}
 				catch (Exception exception) {
-					return exception.getMessage();
+					_log.error(
+						"Unable to determine the document library size",
+						exception);
+
+					return "Unable to determine";
 				}
 
-				return LanguageUtil.formatStorageSize(size, LocaleUtil.US);
+				if (_documentLibrarySizeThread.isAlive()) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Unable to determine the document library size " +
+								"probably because it is too large. Increase " +
+									"the timeout or check it manually.");
+					}
+
+					return "Unable to determine";
+				}
+
+				return LanguageUtil.formatStorageSize(
+					_documentLibrarySize, LocaleUtil.US);
 			}
 		).put(
 			"tables.initial.final.rows",
@@ -741,6 +764,8 @@ public class UpgradeReport {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
+	private double _documentLibrarySize;
+	private final Thread _documentLibrarySizeThread = new DLSizeThread();
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
@@ -752,6 +777,16 @@ public class UpgradeReport {
 	private String _rootDir;
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
+
+	private class DLSizeThread extends Thread {
+
+		@Override
+		public void run() {
+			_documentLibrarySize = FileUtils.sizeOfDirectory(
+				new File(_rootDir));
+		}
+
+	}
 
 	private class MessagesPrinter {
 

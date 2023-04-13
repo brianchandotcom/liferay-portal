@@ -15,10 +15,12 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -28,9 +30,11 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -194,6 +198,97 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_assertLogContextContains(
 			"upgrade.report.tables.initial.final.rows",
 			"UpgradeReportTable2:1:0");
+	}
+
+	@Test
+	public void testGetDLStorageSizeAfterTimeout() throws Exception {
+		_appender.start();
+
+		try (SafeCloseable safeCloseable =
+				_setUpgradeReportDLStorageInfoTimeout(1)) {
+
+			Object upgradeReport = ReflectionTestUtil.getFieldValue(
+				_appender, "_upgradeReport");
+
+			ReflectionTestUtil.setFieldValue(
+				upgradeReport, "_documentLibrarySizeThread",
+				new Thread() {
+
+					@Override
+					public void run() {
+						try {
+							sleep(5 * Time.SECOND);
+						}
+						catch (InterruptedException interruptedException) {
+							throw new RuntimeException(interruptedException);
+						}
+					}
+
+				});
+
+			_appender.stop();
+
+			_assertLogContextContains(
+				"upgrade.report.document.library.storage.size",
+				"Unable to determine");
+			_assertReport("Unable to determine");
+		}
+	}
+
+	@Test
+	public void testGetDLStorageSizeInGb() throws Exception {
+		_appender.start();
+
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
+
+		ReflectionTestUtil.setFieldValue(
+			upgradeReport, "_documentLibrarySizeThread",
+			new Thread() {
+
+				@Override
+				public void run() {
+					ReflectionTestUtil.setFieldValue(
+						upgradeReport, "_documentLibrarySize", 1073742000);
+				}
+
+			});
+
+		_appender.stop();
+
+		String size = LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US);
+
+		_assertLogContextContains(
+			"upgrade.report.document.library.storage.size", size);
+		_assertReport("Document library storage size: " + size);
+	}
+
+	@Test
+	public void testGetDLStorageSizeInMb() throws Exception {
+		_appender.start();
+
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
+
+		ReflectionTestUtil.setFieldValue(
+			upgradeReport, "_documentLibrarySizeThread",
+			new Thread() {
+
+				@Override
+				public void run() {
+					ReflectionTestUtil.setFieldValue(
+						upgradeReport, "_documentLibrarySize", 1048576);
+				}
+
+			});
+
+		_appender.stop();
+
+		String size = LanguageUtil.formatStorageSize(1048576, LocaleUtil.US);
+
+		_assertLogContextContains(
+			"upgrade.report.document.library.storage.size", size);
+		_assertReport("Document library storage size: " + size);
 	}
 
 	@Test
@@ -466,7 +561,13 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			"(?s)INFO - Upgrade report generated in " + file.getAbsolutePath() +
 				"\\n\\s+\\{(.+)\\}");
 
-		Matcher matcher = pattern.matcher(_getLogContextContent());
+		int index = _getLogContextContent().indexOf(
+			"INFO - Upgrade report generated in " + file.getAbsolutePath());
+
+		String substringLogContextContent = _getLogContextContent().substring(
+			index);
+
+		Matcher matcher = pattern.matcher(substringLogContextContent);
 
 		Assert.assertTrue(matcher.matches());
 
@@ -502,6 +603,17 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		Assert.assertTrue(reportFile.exists());
 
 		return FileUtil.read(reportFile);
+	}
+
+	private SafeCloseable _setUpgradeReportDLStorageInfoTimeout(long timeout) {
+		long originalUpgradeReportDLStorageInfoTimeout =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT",
+				timeout);
+
+		return () -> ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT",
+			originalUpgradeReportDLStorageInfoTimeout);
 	}
 
 	private static DB _db;

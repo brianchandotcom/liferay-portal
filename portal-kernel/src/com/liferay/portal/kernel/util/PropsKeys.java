@@ -2716,6 +2716,9 @@ public interface PropsKeys {
 	public static final String UPGRADE_LOG_CONTEXT_ENABLED =
 		"upgrade.log.context.enabled";
 
+	public static final String UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT =
+		"upgrade.report.dl.storage.size.timeout";
+
 	public static final String UPGRADE_REPORT_ENABLED =
 		"upgrade.report.enabled";
 

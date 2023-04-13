@@ -1,0 +1,155 @@
+definition {
+
+    macro viewClassicSearchPortletConfiguration {
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
+
+		ClassicSearch.gotoOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			key_scopeName = "Everything",
+			locator1 = "Select#SCOPE_SELECTED",
+			value1 = "Everything");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "UserSearchFacet");
+
+		Navigator.gotoNavTab(navTab = "Spell Check Settings");
+
+		FormFields.viewCheckboxChecked(fieldName = "collatedSpellCheckResultEnabled");
+
+		IFrame.closeFrame();
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
+
+		ClassicSearch.search(searchTerm = "WC Title");
+
+		ClassicSearch.viewSearchResultPG(
+			searchAssetTitle = "WC Title 1",
+			searchAssetType = "Web Content Article");
+
+		ClassicSearch.viewSearchResultPG(
+			searchAssetTitle = "WC Title 2",
+			searchAssetType = "Web Content Article");
+
+		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
+	}
+
+	macro viewResultRankingsEntry {
+		SearchTuning.openResultRankingsAdmin();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Article");
+
+		AssertElementPresent(
+			key_assetTitle = "Article 4",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Article 2",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+	}
+
+	macro viewSearchBarWidgetTemplate {
+		Navigator.openURL();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "//label[@class='control-label']",
+			value1 = "Start filtering");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		NavigationMenusAdmin.viewDisplayTemplate(displayTemplate = "Search Bar Test ADT");
+
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+
+		AssertElementPresent(
+			key_tableEntry = "Search Bar Test ADT",
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+	}
+
+	macro viewSearchPortletsConfiguration {
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
+
+		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewTextValue(
+			fieldName = "destination",
+			fieldValue = "site-page");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Result",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewTextValue(
+			fieldName = "paginationDelta",
+			fieldValue = 2);
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Options",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewCheckboxChecked(fieldName = "allowEmptySearches");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Suggestion",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewCheckboxChecked(fieldName = "spellCheckSuggestionEnabled");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Type Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "frequenciesVisible");
+
+		IFrame.closeFrame();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		Pagination.viewResults(results = "Showing 1 to 2 of 3 entries.");
+
+		AssertElementNotPresent(
+			key_facetType = "Type Facet",
+			key_termValue = "",
+			locator1 = "Search#FACET_TERM_FREQUENCIES");
+	}
+
+	macro viewSynonymsEntry {
+		SearchTuning.openSynonymsAdmin();
+
+		AssertElementPresent(
+			key_synonyms = "apple, banana",
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
+	}
+		
+}

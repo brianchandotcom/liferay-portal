@@ -1,0 +1,315 @@
+definition {
+
+    macro addContentPage {
+		task ("Add a content page in Test Site Name site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPublicPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Title fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title");
+		}
+
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
+		}
+
+		task ("Add a Button fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Button",
+				targetFragmentName = "Rich Text");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.publish();
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		}
+
+		task ("Assert the Title fragment is present") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Lorem ipsum dolor sit amet");
+		}
+
+		task ("Assert the Rich Text fragment is present") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		}
+
+		task ("Assert the Button fragment is present") {
+			var n = 1;
+
+			for (var text : list "Submit,Cancel") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "footer",
+					position = ${n},
+					text = ${text});
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Navigate to regular content page from 7.1") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-regular-content-page");
+		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Edit the Title fragment's editable text") {
+			PageEditor.editFragmentText(
+				className = "header",
+				contributed = "false",
+				fragmentName = "Title",
+				text = "New editable fragment text");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.publish();
+		}
+
+		task ("Assert the Title fragment is updated") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "New editable fragment text");
+		}
+
+		task ("Navigate to content page created from page template from 7.1") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-template-content-page");
+		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.gotoPageEditor();
+		}
+
+		task ("Add a Rich Text fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text",
+				targetFragmentName = "Button");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.publish();
+		}
+
+		task ("Assert the Button fragment is present") {
+			var n = 1;
+
+			for (var text : list "Submit,Cancel") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "footer",
+					position = ${n},
+					text = ${text});
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the Rich Text fragment is present") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		}
+	}
+
+	macro viewAndEditContentPageReview {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.gotoPageEditor();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		PageEditor.clickConfigurableField(fragmentName = "Static Text");
+
+		PageEditor.viewComment(fragmentComment = "This is a fragment comment");
+
+		PageEditor.viewCommentReply(
+			commentReply = "Fragment Comment 1",
+			user = "Test Test");
+
+		PageEditor.deleteComment(fragmentComment = "This is a fragment comment");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.gotoPageEditor();
+
+		PageEditor.addComment(
+			fragmentComment = "This is a new fragment comment",
+			fragmentName = "Static Text");
+
+		PageEditor.replyToComment(commentReply = "Fragment Comment 2");
+
+		PageEditor.publish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.gotoPageEditor();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		PageEditor.clickConfigurableField(fragmentName = "Static Text");
+
+		PageEditor.viewComment(fragmentComment = "This is a new fragment comment");
+
+		PageEditor.viewCommentReply(
+			commentReply = "Fragment Comment 2",
+			user = "Test Test");
+	}
+
+	macro viewMSBUpgrade {
+		task ("Assert the fragments survived") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Content");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Button");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Multiple Editables");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Static Text");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image 2");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Rich Text");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Title 2");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Title");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Button",
+				item = "Edit");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+
+			AssertElementPresent(locator1 = "Button#SUBMIT");
+
+			AssertElementPresent(locator1 = "Button#CANCEL");
+
+			SelectFrameTop();
+		}
+
+		task ("Assert the content page template survived") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			var n = 1;
+
+			for (var text : list "Submit,Cancel") {
+				PageEditor.viewFragmentEditableText(
+					className = "footer",
+					contributed = "false",
+					editableText = ${text},
+					fragmentName = "Button",
+					position = ${n});
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the content pages and Navigation Menu widget configuration survived") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			Click(
+				key_pageName = "Test Template Content Page",
+				locator1 = "Home#PAGE");
+
+			var n = 1;
+
+			for (var text : list "Submit,Cancel") {
+				ContentPages.viewFragmentText(
+					contributed = "false",
+					fragmentName = "footer",
+					position = ${n},
+					text = ${text});
+
+				var n = ${n} + 1;
+			}
+
+			Click(
+				key_pageName = "Test Regular Content Page",
+				locator1 = "Home#PAGE");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Lorem ipsum dolor sit amet");
+
+			AssertVisible(
+				key_href = "https://www.liferay.com/",
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE_HREF");
+		}
+
+		task ("Assert the navigation menu survived") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			AssertVisible(
+				key_rowEntry = "Test Navigation Menu Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
+		}
+
+		task ("Assert the display page survived") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Non-Default Display Page");
+		}
+
+		task ("Assert the web content articles that use display pages are viewable through display page template") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title-1");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Webcontent Title 1");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Webcontent Content 1");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title-2");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "rich-text",
+				text = "Webcontent Content 2");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "header",
+				text = "Lorem ipsum dolor sit amet");
+		}
+
+		task ("Assert the web content article that has no display page is not viewable through display page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title-3");
+
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+		}
+	}
+		
+}

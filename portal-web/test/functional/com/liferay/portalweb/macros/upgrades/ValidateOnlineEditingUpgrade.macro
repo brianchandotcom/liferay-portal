@@ -1,0 +1,119 @@
+definition {
+
+    macro addOneDriveDocument {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = ${dmDocumentTypeName});
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			dmDocumentTypeName = ${dmDocumentTypeName});
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals.assertPartialText(
+			key_dmDocumentTitle = "${dmDocumentTypeName} Title After Upgrade",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTypeName} Title After Upgrade");
+	}
+
+	macro viewAndDeleteGoogleDriveDocuments {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Edited Google Document");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Edited Google Sheet");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Edited Google Slide");
+	}
+
+	macro viewAndDeleteOneDriveDocument {
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "OneDrive ${dmDocumentTypeName} Title");
+
+		DMDocument.deletePG(dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title");
+	}
+
+	macro viewAndEditGoogleDriveDocuments {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		var key_dmDocumentTitle = "Untitled (1)";
+
+		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit in Google Sheets");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Sheet");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Edited Google Sheet",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Edited Google Sheet");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		GoogleDoc.gotoEdit(
+			dmDocumentTitle = "Untitled (2)",
+			dmDocumentTypeName = "Google Slides");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Slide");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Edited Google Slide",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Edited Google Slide");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		GoogleDoc.gotoEdit(
+			dmDocumentTitle = "Untitled",
+			dmDocumentTypeName = "Google Docs");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Document");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Edited Google Document",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Edited Google Document");
+	}
+		
+}

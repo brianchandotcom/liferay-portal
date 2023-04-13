@@ -1,0 +1,300 @@
+definition {
+		
+    macro addAutoTaggedBlogsEntry {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		Blogs.addEntry(
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle});
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		AssertClick.assertTextClickAt(
+			key_entryTitle = ${entryTitle},
+			locator1 = "BlogsEntry#TITLE_LINK",
+			value1 = ${entryTitle});
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = ${entryTitle},
+			tagName = ${tagName});
+	}
+
+	macro addAutoTaggedDM {
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = ${dmDocumentFile},
+			dmDocumentTitle = ${dmDocumentTitle});
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		DMDocument.viewTagInfo(tagName = ${tagName});
+	}
+
+	macro addAutoTaggedWebContent {
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
+
+		WebContentNavigator.gotoAddCP();
+
+		PortletEntry.inputTitle(title = ${webContentTitle});
+
+		CKEditor.addContentInWebContent(
+			content = ${webContentContent},
+			fieldLabel = "content");
+
+		PortletEntry.publish();
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
+
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssertTextEquals(
+			key_tagName = ${tagName},
+			locator1 = "AssetCategorization#TAG",
+			value1 = ${tagName});
+	}
+
+	macro addAutoTagViaGogoShell {
+		var companyId = JSONCompany.getCompanyId();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "assetAutoTagger:tagAllUntagged ${companyId}");
+
+		if (isSet(blogEntryTitle)) {
+			GogoShell.viewOutput(outputContent = "Added ${blogTagNum} tags to asset entry ${blogEntryTitle}");
+		}
+
+		GogoShell.viewOutput(outputContent = "Added ${dmTagNum} tags to asset entry ${dmDocumentTitle}");
+
+		GogoShell.viewOutput(outputContent = "Added ${wcTagNum} tags to asset entry ${webContentTitleXml}");
+
+		if (isSet(blogEntryTitle)) {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			BlogsNavigator.gotoEntryCP(entryTitle = ${blogEntryTitle});
+
+			Panel.expandPanel(panel = "Categorization");
+
+			for (var tagName : list ${blogTagName}) {
+				AssetCategorization.viewTag(tagName = ${tagName});
+			}
+		}
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		for (var tagName : list ${dmTagName}) {
+			DMDocument.viewTagInfo(tagName = ${tagName});
+		}
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		}
+
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list ${wcTagName}) {
+			AssetCategorization.viewTag(tagName = ${tagName});
+		}
+	}
+
+	macro editTagsAndDeleteAutoTaggedBlogsEntry {
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = ${entryTitleKey},
+			layoutName = "test-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = ${entryTitle},
+			tagName = ${tagName});
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoEditCP(entryTitle = ${entryTitle});
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = ${tagName});
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = ${entryTitleKey},
+			layoutName = "test-page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewNoTag(
+			entryTitle = ${entryTitle},
+			tagName = ${tagName});
+
+		BlogsEntry.viewAutoTag(
+			entryTitle = ${entryTitle},
+			tagName = "new tag");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
+
+		BlogsEntry.moveToRecycleBinPG(
+			assetType = "Blogs Entry",
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle});
+
+		BlogsEntry.viewNoPG(
+			entryContent = ${entryContent},
+			entryTitle = ${entryTitle});
+	}
+
+	macro editTagsAndDeleteAutoTaggedDM {
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		DMDocument.viewTagInfo(tagName = ${tagName});
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.selectDocuments(dmDocumentTitle = ${dmDocumentTitle});
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(tagName = "new tag");
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
+
+		DMDocument.viewTagInfo(tagName = "new tag");
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
+
+		DMDocument.deleteCP(dmDocumentTitle = ${dmDocumentTitle});
+	}
+
+	macro editTagsAndDeleteAutoTaggedWebContent {
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
+
+		WaitForPageLoad();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
+
+		WaitForPageLoad();
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.viewTag(tagName = ${tagName});
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
+
+		WaitForPageLoad();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
+
+		WaitForPageLoad();
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.removeTag(tagName = ${tagName});
+
+		AssetCategorization.addTag(tagName = "new tag");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.viewNoTag(tagName = ${tagName});
+
+		AssetCategorization.viewTag(tagName = "new tag");
+
+		if (isSet(depotName)) {
+			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		}
+		else {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+		}
+
+		WaitForPageLoad();
+
+		WebContent.moveToRecycleBinCP(webContentTitle = ${webContentTitle});
+	}
+
+}

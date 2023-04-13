@@ -1,0 +1,275 @@
+definition {
+
+    macro approveWorkflow {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Workflow.viewWebContentWithWorkflowCP(
+			webContentTitle = "WC Workflow Title",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Workflow.viewWebContentWithWorkflowCP(
+			webContentTitle = "WC Workflow Title",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Workflow Title");
+
+		Workflow.viewWebContentWithWorkflowStatus(
+			webContentStatus = "Approved",
+			webContentTitle = "WC Workflow Title");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "WC Workflow Title");
+
+		WebContent.viewEntryAsWorkflowAsset(
+			webContentContent = "WC Workflow Content",
+			webContentTitle = "WC Workflow Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Workflow Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		BlogsEntry.viewEntryTable(entryTitle = "Blogs Workflow Title");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Workflow Title");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Workflow Content",
+			entryTitle = "Blogs Workflow Title");
+
+		BlogsEntry.viewStatus(entryStatus = "Approved");
+	}
+
+	macro publishWorkflowDefinition {
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if (${testRunEnvironment} == "EE") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Draft");
+
+			Workflow.publishExistingWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Draft");
+
+			Navigator.gotoBack();
+
+			Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition Draft");
+		}
+	}
+
+	macro submitNewWorkflow {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "New Blog After Upgrade");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "New Blog After Upgrade",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		BlogsEntry.viewWithWorkflowCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "New Blog After Upgrade",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Blogs");
+
+		BlogsEntry.viewEntryTable(entryTitle = "New Blog After Upgrade");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "New Blog After Upgrade");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "New Blog After Upgrade");
+
+		BlogsEntry.viewEntryAsWorkflowAsset(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "New Blog After Upgrade");
+	}
+		
+}

@@ -994,8 +994,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Status
 
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, objectDefinition.getStatus());
+		Assert.assertTrue(objectDefinition.isApproved());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 

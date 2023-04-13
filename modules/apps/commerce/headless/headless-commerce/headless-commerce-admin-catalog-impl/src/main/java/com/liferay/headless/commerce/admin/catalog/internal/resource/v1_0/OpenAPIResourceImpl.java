@@ -150,6 +150,8 @@ public class OpenAPIResourceImpl {
 
 			add(SkuSubscriptionConfigurationResourceImpl.class);
 
+			add(SkuVirtualSettingsResourceImpl.class);
+
 			add(SpecificationResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

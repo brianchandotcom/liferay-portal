@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<state>
-		<id>6e5369b6-10e1-43ff-9b65-ef75d0b2ca51</id>
+		<name>6e5369b6-10e1-43ff-9b65-ef75d0b2ca51</name>
 		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -31,14 +31,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>dead142c-7e4b-42f9-95c5-85d23cf1df9e</id>
+				<name>dead142c-7e4b-42f9-95c5-85d23cf1df9e</name>
 				<target>1eaff04f-3f79-4c2c-8a2c-fe9bd7906761</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<id>83145a95-8365-4ccf-adee-987c7502e8e2</id>
+		<name>83145a95-8365-4ccf-adee-987c7502e8e2</name>
 		<description>Conclude the workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -58,7 +58,7 @@
 		</labels>
 	</state>
 	<fork>
-		<id>1eaff04f-3f79-4c2c-8a2c-fe9bd7906761</id>
+		<name>1eaff04f-3f79-4c2c-8a2c-fe9bd7906761</name>
 		<description>Split the workflow into multiple paths.</description>
 		<metadata>
 			<![CDATA[
@@ -82,14 +82,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>d943a6f9-1280-4d55-9122-e20148ae9eef</id>
+				<name>d943a6f9-1280-4d55-9122-e20148ae9eef</name>
 				<target>67eb58b9-4db3-49bd-9fe9-d6bd7c974e5d</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</fork>
 	<task>
-		<id>67eb58b9-4db3-49bd-9fe9-d6bd7c974e5d</id>
+		<name>67eb58b9-4db3-49bd-9fe9-d6bd7c974e5d</name>
 		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
@@ -116,14 +116,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>012edc0f-5063-4992-8511-b1956a3f0c4d</id>
+				<name>012edc0f-5063-4992-8511-b1956a3f0c4d</name>
 				<target>f871fd6d-597b-4464-bd6c-0b3c4292369b</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<join>
-		<id>f871fd6d-597b-4464-bd6c-0b3c4292369b</id>
+		<name>f871fd6d-597b-4464-bd6c-0b3c4292369b</name>
 		<description>All interactions need to be closed.</description>
 		<metadata>
 			<![CDATA[
@@ -147,7 +147,7 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>e6e1b28c-ab74-46fb-9f16-0eb8fd476cea</id>
+				<name>e6e1b28c-ab74-46fb-9f16-0eb8fd476cea</name>
 				<target>83145a95-8365-4ccf-adee-987c7502e8e2</target>
 				<default>true</default>
 			</transition>

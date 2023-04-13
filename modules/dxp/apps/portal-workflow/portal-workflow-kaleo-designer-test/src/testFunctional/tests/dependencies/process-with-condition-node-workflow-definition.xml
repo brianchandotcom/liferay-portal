@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<state>
-		<id>f9da8eb7-1351-4c0c-a0dc-c3938f6b32d8</id>
+		<name>f9da8eb7-1351-4c0c-a0dc-c3938f6b32d8</name>
 		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -31,14 +31,14 @@
 						Start-Condition
 					</label>
 				</labels>
-				<id>9f7ea4cb-7d05-4f1d-b4b1-bec5f2236ab6</id>
+				<name>9f7ea4cb-7d05-4f1d-b4b1-bec5f2236ab6</name>
 				<target>d8c0d67e-6d34-4a5b-ad09-df9d6297e1d7</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<id>94b6b594-6f53-4485-9b8a-37ccd4179cf9</id>
+		<name>94b6b594-6f53-4485-9b8a-37ccd4179cf9</name>
 		<description>Conclude the workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -58,7 +58,7 @@
 		</labels>
 	</state>
 	<condition>
-		<id>d8c0d67e-6d34-4a5b-ad09-df9d6297e1d7</id>
+		<name>d8c0d67e-6d34-4a5b-ad09-df9d6297e1d7</name>
 		<description>Execute conditional logic.</description>
 		<metadata>
 			<![CDATA[
@@ -86,7 +86,7 @@
 						Condition-Task-One
 					</label>
 				</labels>
-				<id>7e41ff0e-c095-446b-b423-42067ae5dab1</id>
+				<name>7e41ff0e-c095-446b-b423-42067ae5dab1</name>
 				<target>b8e8950b-ebe8-41db-bbed-5de5ed71bd16</target>
 				<default>true</default>
 			</transition>
@@ -96,14 +96,14 @@
 						Condition-Task-Two
 					</label>
 				</labels>
-				<id>9a7dd0f9-5718-42d2-b4cf-7299d4f9f9e9</id>
+				<name>9a7dd0f9-5718-42d2-b4cf-7299d4f9f9e9</name>
 				<target>f62e85f1-bad0-4ab9-a699-b6175c4081b8</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</condition>
 	<task>
-		<id>b8e8950b-ebe8-41db-bbed-5de5ed71bd16</id>
+		<name>b8e8950b-ebe8-41db-bbed-5de5ed71bd16</name>
 		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
@@ -130,14 +130,14 @@
 						Task-End-One
 					</label>
 				</labels>
-				<id>b94d1013-4e19-4393-bd8d-a944d9a64488</id>
+				<name>b94d1013-4e19-4393-bd8d-a944d9a64488</name>
 				<target>94b6b594-6f53-4485-9b8a-37ccd4179cf9</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>f62e85f1-bad0-4ab9-a699-b6175c4081b8</id>
+		<name>f62e85f1-bad0-4ab9-a699-b6175c4081b8</name>
 		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
@@ -164,7 +164,7 @@
 						Task-End-Two
 					</label>
 				</labels>
-				<id>71253214-5533-460d-a10b-6edb87df5827</id>
+				<name>71253214-5533-460d-a10b-6edb87df5827</name>
 				<target>94b6b594-6f53-4485-9b8a-37ccd4179cf9</target>
 				<default>true</default>
 			</transition>

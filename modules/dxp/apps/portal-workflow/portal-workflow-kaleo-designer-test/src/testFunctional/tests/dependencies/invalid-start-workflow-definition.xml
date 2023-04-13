@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<state>
-		<id>c8e69f2f-35cf-4293-8ebe-aeb67c0300cb</id>
+		<name>c8e69f2f-35cf-4293-8ebe-aeb67c0300cb</name>
 		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -31,14 +31,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>79815f50-bc17-4ac9-8423-04fd028c7536</id>
+				<name>79815f50-bc17-4ac9-8423-04fd028c7536</name>
 				<target>95068fdb-bb1d-4449-b6a5-05777f432b6f</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<id>95068fdb-bb1d-4449-b6a5-05777f432b6f</id>
+		<name>95068fdb-bb1d-4449-b6a5-05777f432b6f</name>
 		<description>Conclude the workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -58,7 +58,7 @@
 		</labels>
 	</state>
 	<state>
-		<id>df0c6790-fbd4-4202-820d-3b782dfc4a4d</id>
+		<name>df0c6790-fbd4-4202-820d-3b782dfc4a4d</name>
 		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -83,7 +83,7 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>65510664-4678-4ee4-a70b-e18a41e13c0d</id>
+				<name>65510664-4678-4ee4-a70b-e18a41e13c0d</name>
 				<target>95068fdb-bb1d-4449-b6a5-05777f432b6f</target>
 				<default>true</default>
 			</transition>

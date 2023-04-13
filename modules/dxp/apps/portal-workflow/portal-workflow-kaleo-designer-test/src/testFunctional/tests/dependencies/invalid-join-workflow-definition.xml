@@ -6,7 +6,7 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<state>
-		<id>c5c593b2-fffe-49c6-8324-f7748aad7493</id>
+		<name>c5c593b2-fffe-49c6-8324-f7748aad7493</name>
 		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -31,14 +31,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>71529275-a376-427f-b23e-2d9c79a92214</id>
+				<name>71529275-a376-427f-b23e-2d9c79a92214</name>
 				<target>974e0f61-2cab-4610-9612-5ea5422774c1</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<id>46d36986-d4b3-4ca2-9935-b9c546e8555f</id>
+		<name>46d36986-d4b3-4ca2-9935-b9c546e8555f</name>
 		<description>Conclude the workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -58,7 +58,7 @@
 		</labels>
 	</state>
 	<fork>
-		<id>974e0f61-2cab-4610-9612-5ea5422774c1</id>
+		<name>974e0f61-2cab-4610-9612-5ea5422774c1</name>
 		<description>Split the workflow into multiple paths.</description>
 		<metadata>
 			<![CDATA[
@@ -82,7 +82,7 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>6008c303-95f1-4491-9647-ab25de0bcfea</id>
+				<name>6008c303-95f1-4491-9647-ab25de0bcfea</name>
 				<target>14f9b30a-7fcb-40e9-b78e-1e10a1eba8d8</target>
 				<default>true</default>
 			</transition>
@@ -92,14 +92,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>e24bce07-78db-45ad-bc42-a5f4796a1a1e</id>
+				<name>e24bce07-78db-45ad-bc42-a5f4796a1a1e</name>
 				<target>57552a76-0886-4496-9348-bb59b01d0a2a</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</fork>
 	<task>
-		<id>14f9b30a-7fcb-40e9-b78e-1e10a1eba8d8</id>
+		<name>14f9b30a-7fcb-40e9-b78e-1e10a1eba8d8</name>
 		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
@@ -126,14 +126,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>33855aa7-37e0-40f4-bc6d-1712f6a85b22</id>
+				<name>33855aa7-37e0-40f4-bc6d-1712f6a85b22</name>
 				<target>dc63d2f8-cc46-456d-b377-46d9541a50d9</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>57552a76-0886-4496-9348-bb59b01d0a2a</id>
+		<name>57552a76-0886-4496-9348-bb59b01d0a2a</name>
 		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
@@ -160,14 +160,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>889ae8a5-1105-402a-be2d-3c84cdf18198</id>
+				<name>889ae8a5-1105-402a-be2d-3c84cdf18198</name>
 				<target>46d36986-d4b3-4ca2-9935-b9c546e8555f</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<join>
-		<id>dc63d2f8-cc46-456d-b377-46d9541a50d9</id>
+		<name>dc63d2f8-cc46-456d-b377-46d9541a50d9</name>
 		<description>All interactions need to be closed.</description>
 		<metadata>
 			<![CDATA[
@@ -191,7 +191,7 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>a069c848-7879-4250-a223-7c87cfb14cc9</id>
+				<name>a069c848-7879-4250-a223-7c87cfb14cc9</name>
 				<target>46d36986-d4b3-4ca2-9935-b9c546e8555f</target>
 				<default>true</default>
 			</transition>

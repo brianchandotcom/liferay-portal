@@ -14,26 +14,13 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 /**
  * @author Alberto Chaparro
  */
 public interface UpgradeStatus {
 
-	public Map<String, Map<String, Integer>> getErrorMessages();
-
-	public String getFinalSchemaVersion(String servletContextName);
-
-	public String getInitialSchemaVersion(String servletContextName);
-
 	public String getState();
 
 	public String getType();
-
-	public Map<String, ArrayList<String>> getUpgradeProcessMessages();
-
-	public Map<String, Map<String, Integer>> getWarningMessages();
 
 }

@@ -98,8 +98,10 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 
 				// Determine whether hover is on left or right side of hovered AttributeChip
 				if (_wrapperRef.current) {
-					const {right, width} =
-						_wrapperRef.current.getBoundingClientRect();
+					const {
+						right,
+						width
+					} = _wrapperRef.current.getBoundingClientRect();
 
 					const targetMiddleX = width / 2;
 

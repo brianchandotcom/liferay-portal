@@ -15,8 +15,13 @@ export default class Radio extends React.Component {
 	};
 
 	render() {
-		const {checked, className, displayInline, label, ...otherProps} =
-			this.props;
+		const {
+			checked,
+			className,
+			displayInline,
+			label,
+			...otherProps
+		} = this.props;
 
 		const classes = getCN('custom-control', 'custom-radio', className, {
 			['custom-control-inline']: displayInline

@@ -17,8 +17,7 @@ export default class PropertyGroup
 		propertyKey: '',
 		propertySubgroups: List()
 	})
-	implements IPropertyGroup
-{
+	implements IPropertyGroup {
 	entityName?: string;
 	label: string;
 	name?: string;

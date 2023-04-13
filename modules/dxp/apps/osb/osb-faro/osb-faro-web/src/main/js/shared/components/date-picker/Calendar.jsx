@@ -130,8 +130,13 @@ class Day extends React.Component {
 	}
 
 	render() {
-		const {className, date, outsideMonth, selected, ...otherProps} =
-			this.props;
+		const {
+			className,
+			date,
+			outsideMonth,
+			selected,
+			...otherProps
+		} = this.props;
 
 		const classes = getCN('day-root', className, {
 			'outside-month': outsideMonth,

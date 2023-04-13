@@ -1,6 +1,5 @@
-jest.mock(
-	'shared/hoc/WithAction',
-	() => () => wrappedComponent => wrappedComponent
+jest.mock('shared/hoc/WithAction', () => () => wrappedComponent =>
+	wrappedComponent
 );
 
 import withIndividual from '../WithIndividual';

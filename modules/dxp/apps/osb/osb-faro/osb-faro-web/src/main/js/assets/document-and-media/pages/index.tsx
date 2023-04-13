@@ -72,7 +72,8 @@ const DocumentAndMedia: React.FC<{
 						{
 							exact: true,
 							label: Liferay.Language.get('known-individuals'),
-							route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_KNOWN_INDIVIDUALS
+							route:
+								Routes.ASSETS_DOCUMENTS_AND_MEDIA_KNOWN_INDIVIDUALS
 						}
 					]}
 					routeParams={{

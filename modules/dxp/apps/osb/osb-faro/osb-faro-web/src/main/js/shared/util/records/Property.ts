@@ -23,8 +23,7 @@ export default class Property
 		propertyKey: '',
 		type: null
 	})
-	implements IProperty
-{
+	implements IProperty {
 	entityName: string;
 	entityType: string;
 	id: string;

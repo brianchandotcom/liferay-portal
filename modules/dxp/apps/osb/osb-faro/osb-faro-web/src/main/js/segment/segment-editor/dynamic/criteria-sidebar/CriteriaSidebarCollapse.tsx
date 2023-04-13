@@ -232,8 +232,12 @@ const CriteriaSidebarCollapse: React.FC<ICriteriaSidebarCollapseProps> = ({
 						) : (
 							<ul className='properties-list'>
 								{properties.map((property, i) => {
-									const {label, name, propertyKey, type} =
-										property;
+									const {
+										label,
+										name,
+										propertyKey,
+										type
+									} = property;
 
 									return (
 										<CriteriaSidebarItem

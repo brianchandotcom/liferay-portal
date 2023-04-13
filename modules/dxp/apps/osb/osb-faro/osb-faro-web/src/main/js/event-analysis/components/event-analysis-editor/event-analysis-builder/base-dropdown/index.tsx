@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import SearchableList from './SearchableList';
 
 interface IBaseDropdownProps extends React.HTMLAttributes<HTMLDivElement> {
-	alignmentPosition?: (typeof Align)[keyof typeof Align];
+	alignmentPosition?: typeof Align[keyof typeof Align];
 	trigger: React.ReactElement;
 	onActiveChange?: (active: boolean) => void;
 }

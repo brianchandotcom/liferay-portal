@@ -30,8 +30,14 @@ export const MembershipChart = withRequest(
 		};
 
 		render() {
-			const {channelId, data, groupId, id, individualCounts, timeZoneId} =
-				this.props;
+			const {
+				channelId,
+				data,
+				groupId,
+				id,
+				individualCounts,
+				timeZoneId
+			} = this.props;
 
 			return (
 				<SegmentGrowthWithList

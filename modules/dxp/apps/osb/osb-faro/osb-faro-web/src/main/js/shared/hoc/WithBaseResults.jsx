@@ -31,8 +31,9 @@ const withBaseResults = (withData, configs) => {
 	const TableWithData = compose(
 		withData(),
 		withQueryOptions,
-		WrappedComponent => props =>
-			<WrappedComponent {...props} columns={getColumns(props)} />,
+		WrappedComponent => props => (
+			<WrappedComponent {...props} columns={getColumns(props)} />
+		),
 		withSelection,
 		withToolbar({
 			disableSearch,

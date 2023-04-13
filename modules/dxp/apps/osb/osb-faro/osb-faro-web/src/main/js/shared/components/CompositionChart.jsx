@@ -113,8 +113,15 @@ export default class CompositionChart extends React.Component {
 	}
 
 	attachChart() {
-		const {arcGap, arcWidth, height, innerData, outerData, total, width} =
-			this.props;
+		const {
+			arcGap,
+			arcWidth,
+			height,
+			innerData,
+			outerData,
+			total,
+			width
+		} = this.props;
 
 		const innerValue = get(innerData, 'value', 0);
 

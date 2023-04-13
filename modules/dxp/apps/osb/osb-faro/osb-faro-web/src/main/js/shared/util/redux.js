@@ -8,12 +8,10 @@ import {RemoteData} from './records';
  * @param {boolean} options.loading - If the entity is still loading.
  * @returns {Function}
  */
-export const setState =
-	({error, loading}) =>
-	(state, action) =>
-		state.update(action.payload.id, (item = new RemoteData()) =>
-			item.merge({error, loading})
-		);
+export const setState = ({error, loading}) => (state, action) =>
+	state.update(action.payload.id, (item = new RemoteData()) =>
+		item.merge({error, loading})
+	);
 
 /**
  * A reducer that handles the "loading" case.

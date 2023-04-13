@@ -223,8 +223,7 @@ const Summary: React.FC<ISummaryProps> = ({
 					{includePreviousPeriod && (
 						<tr
 							className={getCN({
-								'insufficient-events':
-									notEnoughActivitiesWithPrevious
+								'insufficient-events': notEnoughActivitiesWithPrevious
 							})}
 						>
 							<td className='summary-name table-cell-expand including-previous-period'>

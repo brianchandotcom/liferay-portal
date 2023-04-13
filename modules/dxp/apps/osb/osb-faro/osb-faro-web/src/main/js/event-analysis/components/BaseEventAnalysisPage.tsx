@@ -180,8 +180,9 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 
 				close();
 
-				const {alertType, message} =
-					ERRORS[graphQLErrors[0].messageKey];
+				const {alertType, message} = ERRORS[
+					graphQLErrors[0].messageKey
+				];
 
 				addAlert({
 					alertType,

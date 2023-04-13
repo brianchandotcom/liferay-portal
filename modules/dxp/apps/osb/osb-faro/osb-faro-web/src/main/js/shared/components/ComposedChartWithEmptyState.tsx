@@ -9,9 +9,12 @@ interface IComposedChartWithEmptyStateProps
 	showEmptyState?: boolean;
 }
 
-const ComposedChartWithEmptyState: React.FC<
-	IComposedChartWithEmptyStateProps
-> = ({children, emptyDescription, emptyTitle, showEmptyState = false}) => (
+const ComposedChartWithEmptyState: React.FC<IComposedChartWithEmptyStateProps> = ({
+	children,
+	emptyDescription,
+	emptyTitle,
+	showEmptyState = false
+}) => (
 	<div
 		className={getCN('composed-chart-with-empty-state', {
 			'composed-chart-with-empty-state--show': showEmptyState

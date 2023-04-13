@@ -368,8 +368,14 @@ export default class Chart extends React.Component {
 	}
 
 	render() {
-		const {className, data, loading, onPointSelect, y2Label, yLabel} =
-			this.props;
+		const {
+			className,
+			data,
+			loading,
+			onPointSelect,
+			y2Label,
+			yLabel
+		} = this.props;
 
 		const classes = getCN('chart-root', className, {
 			selectable: onPointSelect

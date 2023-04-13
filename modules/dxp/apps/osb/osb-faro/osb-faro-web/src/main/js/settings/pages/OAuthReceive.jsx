@@ -34,8 +34,13 @@ export default class OAuthReceive extends React.Component {
 
 	componentDidMount() {
 		/* eslint-disable camelcase */
-		const {code, error, error_description, oauth_token, oauth_verifier} =
-			this.props;
+		const {
+			code,
+			error,
+			error_description,
+			oauth_token,
+			oauth_verifier
+		} = this.props;
 
 		if (error) {
 			emitError({message: `${error}: ${error_description}`});

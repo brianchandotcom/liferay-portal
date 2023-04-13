@@ -6,10 +6,9 @@ import React from 'react';
  * TODO: Remove clay-charts-react dir and replace with clay-charts-react package once updated
  */
 
-const setType =
-	type =>
-	({data, ...otherProps}) =>
-		<ClayChart {...otherProps} data={{...data, type}} />;
+const setType = type => ({data, ...otherProps}) => (
+	<ClayChart {...otherProps} data={{...data, type}} />
+);
 
 export const AreaLineChart = setType('area-line');
 export const AreaSplineChart = setType('area-spline');

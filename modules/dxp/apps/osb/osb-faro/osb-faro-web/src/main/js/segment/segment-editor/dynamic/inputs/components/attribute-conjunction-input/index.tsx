@@ -44,9 +44,7 @@ interface IAttributeFilterConjunctionInputProps {
 	};
 }
 
-const AttributeFilterConjunctionInput: React.FC<
-	IAttributeFilterConjunctionInputProps
-> = ({
+const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInputProps> = ({
 	addEntity,
 	attributes,
 	conjunctionCriterion,
@@ -102,8 +100,7 @@ const AttributeFilterConjunctionInput: React.FC<
 
 		onChange({
 			criterion: {
-				operatorName:
-					defaultAttributeOperator as Criterion['operatorName'],
+				operatorName: defaultAttributeOperator as Criterion['operatorName'],
 				propertyName: `attribute/${attribute.id}`,
 				value: defaultAttributeValue
 			},

@@ -279,17 +279,16 @@ const SegmentEditStatic: React.FC<ISegmentEditStaticProps> = ({
 					onOrderIOMapChange={onOrderIOMapChange}
 					onPageChange={onPageChange}
 					onQueryChange={onQueryChange}
-					onSelectEntirePage={(items: any[]) =>
-						(checked: boolean) => {
-							selectionDispatch({
-								payload: {
-									items
-								},
-								type: checked
-									? ActionTypes.Add
-									: ActionTypes.Remove
-							});
-						}}
+					onSelectEntirePage={(items: any[]) => (
+						checked: boolean
+					) => {
+						selectionDispatch({
+							payload: {
+								items
+							},
+							type: checked ? ActionTypes.Add : ActionTypes.Remove
+						});
+					}}
 					onSelectItemsChange={item =>
 						selectionDispatch({
 							payload: {item},

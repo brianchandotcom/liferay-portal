@@ -25,8 +25,7 @@ export default class Account
 		status: null,
 		type: EntityTypes.Account
 	})
-	implements IAccount
-{
+	implements IAccount {
 	activitiesCount: number;
 	createTime?: string;
 	id?: string;

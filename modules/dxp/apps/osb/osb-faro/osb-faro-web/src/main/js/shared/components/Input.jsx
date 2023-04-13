@@ -153,8 +153,15 @@ class Input extends React.Component {
 	}
 
 	render() {
-		const {checked, className, inset, size, type, value, ...otherProps} =
-			this.props;
+		const {
+			checked,
+			className,
+			inset,
+			size,
+			type,
+			value,
+			...otherProps
+		} = this.props;
 
 		const classes = getCN('input-root', 'form-control', className, {
 			['input-group-inset']: inset,

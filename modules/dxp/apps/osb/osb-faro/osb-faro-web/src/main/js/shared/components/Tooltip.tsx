@@ -29,7 +29,7 @@ const ALIGNMENTS_MAP = {
 	'top-right': Align.TopRight
 };
 
-type Alignments = (typeof ALIGNMENTS_MAP)[keyof typeof ALIGNMENTS_MAP];
+type Alignments = typeof ALIGNMENTS_MAP[keyof typeof ALIGNMENTS_MAP];
 
 interface ITooltipProps extends React.HTMLAttributes<HTMLDivElement> {
 	initialAlignment: Alignments;

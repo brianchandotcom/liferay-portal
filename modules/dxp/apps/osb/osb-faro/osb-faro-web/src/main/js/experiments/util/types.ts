@@ -35,7 +35,9 @@ export type FormatYAxisFn = (metricUnit: string) => (value: number) => string;
 
 export type GetDateFn = (date: Date) => string;
 
-export type GetFormattedDataTooltip = (dataPoint: Array<DataPoint>) => {
+export type GetFormattedDataTooltip = (
+	dataPoint: Array<DataPoint>
+) => {
 	header: {columns: Column[]}[];
 	rows: {columns: Column[]}[];
 };
@@ -133,7 +135,9 @@ export type ModalCompleteFn = (
 	title: string;
 };
 
-export type ModalDeleteFn = (experimentId: string) => {
+export type ModalDeleteFn = (
+	experimentId: string
+) => {
 	Component: React.ReactNode;
 	props: {
 		experimentId: string;

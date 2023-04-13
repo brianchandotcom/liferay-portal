@@ -71,8 +71,11 @@ describe('useChannelContext', () => {
 	it('should return context', () => {
 		const successMsg = 'has channel context!';
 		const ChildComponent = () => {
-			const {channelDispatch, channels, selectedChannel} =
-				useChannelContext();
+			const {
+				channelDispatch,
+				channels,
+				selectedChannel
+			} = useChannelContext();
 
 			return channels && selectedChannel && channelDispatch && successMsg;
 		};

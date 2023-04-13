@@ -224,18 +224,16 @@ export const ReferencedObjectsProvider = ({
 	);
 };
 
-export const withReferencedObjectsProvider = WrappedComponent => props =>
-	(
-		<ReferencedObjectsProvider segment={props.segment}>
-			<WrappedComponent {...props} />
-		</ReferencedObjectsProvider>
-	);
+export const withReferencedObjectsProvider = WrappedComponent => props => (
+	<ReferencedObjectsProvider segment={props.segment}>
+		<WrappedComponent {...props} />
+	</ReferencedObjectsProvider>
+);
 
-export const withReferencedObjectsConsumer = WrappedComponent => props =>
-	(
-		<ReferencedObjectsContext.Consumer>
-			{referencedObjects => (
-				<WrappedComponent {...props} {...referencedObjects} />
-			)}
-		</ReferencedObjectsContext.Consumer>
-	);
+export const withReferencedObjectsConsumer = WrappedComponent => props => (
+	<ReferencedObjectsContext.Consumer>
+		{referencedObjects => (
+			<WrappedComponent {...props} {...referencedObjects} />
+		)}
+	</ReferencedObjectsContext.Consumer>
+);

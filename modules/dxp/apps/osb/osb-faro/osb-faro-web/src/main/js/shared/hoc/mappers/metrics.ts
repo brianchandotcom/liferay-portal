@@ -12,50 +12,51 @@ type GraphQLOptions = {variables: {[key: string]: any}};
 export const getMapPropsToOptions: (
 	gqlQuery: GQLQuery,
 	options?: object
-) => (props: {[key: string]: any}) => GraphQLOptions =
-	(gqlQuery, options = {}) =>
-	({
-		delta,
+) => (props: {[key: string]: any}) => GraphQLOptions = (
+	gqlQuery,
+	options = {}
+) => ({
+	delta,
+	filters,
+	interestId,
+	orderIOMap,
+	page,
+	query,
+	rangeSelectors,
+	router: {params, query: routerQuery}
+}) => {
+	const {variables} = getVariables({
 		filters,
-		interestId,
-		orderIOMap,
-		page,
-		query,
-		rangeSelectors,
-		router: {params, query: routerQuery}
-	}) => {
-		const {variables} = getVariables({
-			filters,
-			params,
-			rangeSelectors
-		});
+		params,
+		rangeSelectors
+	});
 
-		// LRAC-6976 POC TEMP
-		const useDB = get(routerQuery, 'useDB', null) === 'true';
+	// LRAC-6976 POC TEMP
+	const useDB = get(routerQuery, 'useDB', null) === 'true';
 
-		let unfilteredVariables: any = {
-			...variables,
-			keywords: query,
-			size: delta,
-			sort: getSortFromOrderIOMap(orderIOMap),
-			start: (page - 1) * delta,
-			terms: interestId
-		};
-
-		// LRAC-6976 POC TEMP
-		if (useDB) {
-			unfilteredVariables = {...unfilteredVariables, useDB};
-		}
-
-		const validVariables = gqlQuery ? getVariableDefinitions(gqlQuery) : [];
-
-		return {
-			variables: isEmpty(validVariables)
-				? unfilteredVariables
-				: removeUnusedVariables(unfilteredVariables, validVariables),
-			...options
-		};
+	let unfilteredVariables: any = {
+		...variables,
+		keywords: query,
+		size: delta,
+		sort: getSortFromOrderIOMap(orderIOMap),
+		start: (page - 1) * delta,
+		terms: interestId
 	};
+
+	// LRAC-6976 POC TEMP
+	if (useDB) {
+		unfilteredVariables = {...unfilteredVariables, useDB};
+	}
+
+	const validVariables = gqlQuery ? getVariableDefinitions(gqlQuery) : [];
+
+	return {
+		variables: isEmpty(validVariables)
+			? unfilteredVariables
+			: removeUnusedVariables(unfilteredVariables, validVariables),
+		...options
+	};
+};
 
 export const getMapResultToProps = (
 	getResults: (result: any) => {items: any; total: any}

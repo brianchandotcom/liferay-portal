@@ -48,9 +48,13 @@ interface TGraphQlVariables extends RawRangeSelectors {
 	channelId: string;
 }
 
-const CommerceCardWithStatesRenderer: React.FC<
-	ICommerceMetricCardWithStatesRendererProps
-> = ({children, empty = false, emptyTitle, error, loading = false}) => (
+const CommerceCardWithStatesRenderer: React.FC<ICommerceMetricCardWithStatesRendererProps> = ({
+	children,
+	empty = false,
+	emptyTitle,
+	error,
+	loading = false
+}) => (
 	<StatesRenderer empty={empty} error={!!error} loading={loading}>
 		<StatesRenderer.Loading displayCard />
 		<StatesRenderer.Empty

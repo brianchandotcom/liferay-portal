@@ -57,15 +57,13 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 	open,
 	timeZoneId
 }) => {
-	const openModal =
-		({dataSources, fieldName}) =>
-		() => {
-			open(modalTypes.INDIVIDUAL_ATTRIBUTES_MODAL, {
-				dataSources,
-				fieldName,
-				onClose: close
-			});
-		};
+	const openModal = ({dataSources, fieldName}) => () => {
+		open(modalTypes.INDIVIDUAL_ATTRIBUTES_MODAL, {
+			dataSources,
+			fieldName,
+			onClose: close
+		});
+	};
 
 	const authorized = currentUser.isAdmin();
 

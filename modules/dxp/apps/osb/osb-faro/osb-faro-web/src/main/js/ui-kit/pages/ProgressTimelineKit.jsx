@@ -11,7 +11,8 @@ class ProgressTimelineKit extends React.Component {
 						activeIndex={1}
 						items={[
 							{
-								title: 'This is a really long title for this step'
+								title:
+									'This is a really long title for this step'
 							},
 							{title: 'Step 2'},
 							{title: 'Step 3'},

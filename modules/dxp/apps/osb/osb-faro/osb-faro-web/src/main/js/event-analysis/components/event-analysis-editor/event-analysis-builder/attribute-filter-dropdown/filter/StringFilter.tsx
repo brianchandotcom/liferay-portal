@@ -93,12 +93,14 @@ const StringFilter: React.FC<IFilterProps> = ({
 										) => {
 											if (data) {
 												return {
-													data: data
-														.eventAttributeValues
-														.eventAttributeValues,
-													total: data
-														.eventAttributeValues
-														.total
+													data:
+														data
+															.eventAttributeValues
+															.eventAttributeValues,
+													total:
+														data
+															.eventAttributeValues
+															.total
 												};
 											}
 
@@ -110,8 +112,7 @@ const StringFilter: React.FC<IFilterProps> = ({
 										query: EventAttributeValuesQuery,
 										variables: {
 											channelId,
-											eventAttributeDefinitionId:
-												attributeId,
+											eventAttributeDefinitionId: attributeId,
 											eventDefinitionId: eventId,
 											size: delta,
 											start: (page - 1) * delta

@@ -31,7 +31,7 @@ const connector = connect(null, {close, open});
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IAttributeBreakdownDropdownProps extends PropsFromRedux {
-	alignmentPosition?: (typeof Align)[keyof typeof Align];
+	alignmentPosition?: typeof Align[keyof typeof Align];
 	attribute?: Attribute;
 	breakdown?: Breakdown;
 	disabledIds: string[];
@@ -41,9 +41,7 @@ interface IAttributeBreakdownDropdownProps extends PropsFromRedux {
 	uneditableIds: string[];
 }
 
-const AttributeBreakdownDropdown: React.FC<
-	IAttributeBreakdownDropdownProps
-> = ({
+const AttributeBreakdownDropdown: React.FC<IAttributeBreakdownDropdownProps> = ({
 	alignmentPosition = Align.RightTop,
 	attribute,
 	breakdown,
@@ -55,8 +53,10 @@ const AttributeBreakdownDropdown: React.FC<
 	trigger,
 	uneditableIds
 }) => {
-	const [attributeOwnerType, setAttributeOwnerType] =
-		useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
+	const [
+		attributeOwnerType,
+		setAttributeOwnerType
+	] = useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
 	const [query, setQuery] = useState('');
 	const [selectedAttribute, setSelectedAttribute] = useState<Attribute>(
 		breakdown ? attribute : null
@@ -148,21 +148,20 @@ const AttributeBreakdownDropdown: React.FC<
 											eventAttributeDefinitions: Attribute[];
 										};
 									}) => {
-										const modifieldEventAttributeDefinitions =
-											attribute
-												? eventAttributeDefinitions.map(
-														eventAttributeDefinition => {
-															if (
-																attribute.id ===
-																eventAttributeDefinition.id
-															) {
-																return attribute;
-															}
-
-															return eventAttributeDefinition;
+										const modifieldEventAttributeDefinitions = attribute
+											? eventAttributeDefinitions.map(
+													eventAttributeDefinition => {
+														if (
+															attribute.id ===
+															eventAttributeDefinition.id
+														) {
+															return attribute;
 														}
-												  )
-												: eventAttributeDefinitions;
+
+														return eventAttributeDefinition;
+													}
+											  )
+											: eventAttributeDefinitions;
 
 										return (
 											<BaseDropdown.SearchableList
@@ -178,8 +177,7 @@ const AttributeBreakdownDropdown: React.FC<
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
 															id: attribute.id,
-															mutation:
-																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
 															showTypecast: true
@@ -206,10 +204,8 @@ const AttributeBreakdownDropdown: React.FC<
 													onAttributeSelect({
 														attribute,
 														breakdown: breakdownFn({
-															attributeId:
-																newAttributeId,
-															attributeType:
-																attributeOwnerType,
+															attributeId: newAttributeId,
+															attributeType: attributeOwnerType,
 															description,
 															displayName
 														}),
@@ -261,9 +257,9 @@ const AttributeBreakdownDropdown: React.FC<
 													open(
 														modalTypes.EDIT_ATTRIBUTE_EVENT_MODAL,
 														{
-															id: selectedAttribute.id,
-															mutation:
-																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
+															id:
+																selectedAttribute.id,
+															mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
 															showTypecast: true

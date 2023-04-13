@@ -22,40 +22,39 @@ export default compose(
 			renderErrorPage: props => <WorkspaceNotFound {...props} />
 		}
 	),
-	WrappedComponent =>
-		({className, groupId, project, ...otherProps}) => {
-			switch (project.state) {
-				case ProjectStates.Ready:
-				case ProjectStates.Scheduled:
-					return (
-						<WrappedComponent
-							{...otherProps}
-							className={className}
-							groupId={groupId}
-						/>
-					);
+	WrappedComponent => ({className, groupId, project, ...otherProps}) => {
+		switch (project.state) {
+			case ProjectStates.Ready:
+			case ProjectStates.Scheduled:
+				return (
+					<WrappedComponent
+						{...otherProps}
+						className={className}
+						groupId={groupId}
+					/>
+				);
 
-				case ProjectStates.Deactivated:
-				case ProjectStates.Maintenance:
-				case ProjectStates.Unavailable:
-					return (
-						<WorkspacesErrorDisplay
-							className={className}
-							errorType={project.state}
-						/>
-					);
+			case ProjectStates.Deactivated:
+			case ProjectStates.Maintenance:
+			case ProjectStates.Unavailable:
+				return (
+					<WorkspacesErrorDisplay
+						className={className}
+						errorType={project.state}
+					/>
+				);
 
-				case ProjectStates.Activating:
-					return <ActivatingDisplay groupId={project.groupId} />;
+			case ProjectStates.Activating:
+				return <ActivatingDisplay groupId={project.groupId} />;
 
-				default:
-					return (
-						<SuccessDisplay
-							friendlyURL={
-								project.friendlyURL || `/${project.groupId}`
-							}
-						/>
-					);
-			}
+			default:
+				return (
+					<SuccessDisplay
+						friendlyURL={
+							project.friendlyURL || `/${project.groupId}`
+						}
+					/>
+				);
 		}
+	}
 );

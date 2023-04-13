@@ -257,8 +257,9 @@ const View: React.FC<IViewProps> = ({
 												</p>
 											</>
 										),
-										deleteButtonLabel:
-											Liferay.Language.get('clear-data'),
+										deleteButtonLabel: Liferay.Language.get(
+											'clear-data'
+										),
 										deleteConfirmationText: sub(
 											Liferay.Language.get('clear-x'),
 											[name]
@@ -271,10 +272,9 @@ const View: React.FC<IViewProps> = ({
 													ids: [id]
 												})
 												.then(() => {
-													const clearedMessage =
-														Liferay.Language.get(
-															'data-from-x-has-been-cleared'
-														);
+													const clearedMessage = Liferay.Language.get(
+														'data-from-x-has-been-cleared'
+													);
 
 													addAlert({
 														alertType:
@@ -330,10 +330,9 @@ const View: React.FC<IViewProps> = ({
 													ids: [id]
 												})
 												.then(() => {
-													const deletedMessage =
-														Liferay.Language.get(
-															'x-has-been-deleted'
-														);
+													const deletedMessage = Liferay.Language.get(
+														'x-has-been-deleted'
+													);
 
 													close();
 
@@ -360,8 +359,7 @@ const View: React.FC<IViewProps> = ({
 														defaultChannelId === id
 													) {
 														updateDefaultChannelId({
-															defaultChannelId:
-																null,
+															defaultChannelId: null,
 															groupId
 														});
 

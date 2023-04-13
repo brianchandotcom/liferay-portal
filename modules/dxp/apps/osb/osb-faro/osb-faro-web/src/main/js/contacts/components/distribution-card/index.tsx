@@ -82,8 +82,13 @@ class DistributionCard extends React.Component<
 
 	@autobind
 	handleAddTab(tab: DistributionTab) {
-		const {addAlert, addDistributionTab, distributionKey, groupId, id} =
-			this.props;
+		const {
+			addAlert,
+			addDistributionTab,
+			distributionKey,
+			groupId,
+			id
+		} = this.props;
 
 		return addDistributionTab({
 			distributionKey,
@@ -109,8 +114,12 @@ class DistributionCard extends React.Component<
 
 	@autobind
 	handleDeleteTab(tabId: string) {
-		const {distributionKey, groupId, id, removeDistributionTab} =
-			this.props;
+		const {
+			distributionKey,
+			groupId,
+			id,
+			removeDistributionTab
+		} = this.props;
 
 		this.setState({selectedTabIndex: 0}, () =>
 			removeDistributionTab({
@@ -124,8 +133,12 @@ class DistributionCard extends React.Component<
 
 	@autobind
 	handleFetchDistributionTabs() {
-		const {distributionKey, fetchDistributionTabs, groupId, id} =
-			this.props;
+		const {
+			distributionKey,
+			fetchDistributionTabs,
+			groupId,
+			id
+		} = this.props;
 
 		fetchDistributionTabs({distributionKey, groupId, id});
 	}

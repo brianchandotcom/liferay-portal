@@ -128,25 +128,21 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 			params: {channelId}
 		}
 	} = useContext(BasePage.Context);
-	const {
-		data,
-		error,
-		loading = false
-	} = useQuery<SitesTopPagesQueryData, SitesTopPagesQueryVariables>(
-		SitesTopPagesQuery,
-		{
-			variables: {
-				...getSafeRangeSelectors(rangeSelectors),
-				channelId,
-				size: 5,
-				sort: {
-					column: activeTabId,
-					type: OrderByDirections.Descending
-				},
-				start: 0
-			}
+	const {data, error, loading = false} = useQuery<
+		SitesTopPagesQueryData,
+		SitesTopPagesQueryVariables
+	>(SitesTopPagesQuery, {
+		variables: {
+			...getSafeRangeSelectors(rangeSelectors),
+			channelId,
+			size: 5,
+			sort: {
+				column: activeTabId,
+				type: OrderByDirections.Descending
+			},
+			start: 0
 		}
-	);
+	});
 
 	const {getColumns, rowIdentifier} = tabs.find(
 		({tabId}) => tabId === activeTabId
@@ -205,9 +201,12 @@ interface ITopPagesCardWithStatesRendererProps
 	loading?: boolean;
 }
 
-const TopPagesCardWithStatesRenderer: React.FC<
-	ITopPagesCardWithStatesRendererProps
-> = ({children, empty, error, loading}) => (
+const TopPagesCardWithStatesRenderer: React.FC<ITopPagesCardWithStatesRendererProps> = ({
+	children,
+	empty,
+	error,
+	loading
+}) => (
 	<StatesRenderer empty={empty} error={!!error} loading={loading}>
 		<StatesRenderer.Loading displayCard />
 		<StatesRenderer.Empty

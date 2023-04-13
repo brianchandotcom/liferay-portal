@@ -117,8 +117,13 @@ interface ICriteriaSidebarItemProps {
 
 export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemProps> {
 	render() {
-		const {className, connectDragSource, dragging, label, type} =
-			this.props;
+		const {
+			className,
+			connectDragSource,
+			dragging,
+			label,
+			type
+		} = this.props;
 
 		const classes = getCN(
 			'criteria-sidebar-item-root',

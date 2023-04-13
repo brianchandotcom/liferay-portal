@@ -278,8 +278,9 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 				<div className={`${CLASSNAME}-interval`}>
 					{hasItems(intervals) &&
 						intervals.map(({end, start}, index) => {
-							const startPosition =
-								getIntervalStartPosition(start);
+							const startPosition = getIntervalStartPosition(
+								start
+							);
 							const width = getIntervalWidth({end, start});
 
 							return (

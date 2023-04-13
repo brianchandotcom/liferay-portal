@@ -12,8 +12,7 @@ export default class CustomValue
 		operator: null,
 		value: null
 	})
-	implements ICustomValue
-{
+	implements ICustomValue {
 	criterionGroup?: Map<string, any>;
 	operator?: string;
 	value?: string | number;

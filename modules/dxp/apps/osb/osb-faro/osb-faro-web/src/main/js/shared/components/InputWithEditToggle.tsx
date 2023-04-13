@@ -44,8 +44,10 @@ export default class InputWithEditToggle extends React.Component<
 	handleSubmit(values) {
 		const {name, onSubmit} = this.props;
 
-		const {resetForm, setSubmitting} =
-			this._formRef.current.getFormikActions();
+		const {
+			resetForm,
+			setSubmitting
+		} = this._formRef.current.getFormikActions();
 
 		if (onSubmit) {
 			onSubmit(values[name], name)

@@ -98,17 +98,14 @@ const data = {
 
 describe('Shared HOCs Mappers - Metrics', () => {
 	it('should map metrics information', () => {
-		const mapper = getMetricsMapper(
-			result => result.forms,
-			[
-				{
-					name: 'views',
-					title: 'Views',
-					tooltipTitle: 'Avg. Views',
-					type: 'number'
-				}
-			]
-		);
+		const mapper = getMetricsMapper(result => result.forms, [
+			{
+				name: 'views',
+				title: 'Views',
+				tooltipTitle: 'Avg. Views',
+				type: 'number'
+			}
+		]);
 
 		expect(
 			mapper.props({

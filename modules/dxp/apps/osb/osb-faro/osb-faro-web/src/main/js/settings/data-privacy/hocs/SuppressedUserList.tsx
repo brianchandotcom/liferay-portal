@@ -44,71 +44,69 @@ const withData = () =>
 		)
 	);
 
-const withQueryOptions =
-	Component =>
-	({
-		addAlert,
-		currentUser,
-		refetch,
-		...otherProps
-	}: Pick<ISuppressedUserListProps, 'addAlert' | 'currentUser'> & {
-		refetch: () => Promise<any>;
-	}) => {
-		const [unsuppressUser] = useMutation(DataControlRequest);
+const withQueryOptions = Component => ({
+	addAlert,
+	currentUser,
+	refetch,
+	...otherProps
+}: Pick<ISuppressedUserListProps, 'addAlert' | 'currentUser'> & {
+	refetch: () => Promise<any>;
+}) => {
+	const [unsuppressUser] = useMutation(DataControlRequest);
 
-		return (
-			<Component
-				{...otherProps}
-				renderInlineRowActions={({
-					data: {dataControlTaskStatus, emailAddress}
-				}) =>
-					dataControlTaskStatus !== GDPRRequestStatuses.Pending && (
-						<ClayButton
-							className='unsuppress'
-							displayType='secondary'
-							onClick={() => {
-								unsuppressUser({
-									variables: {
-										emailAddresses: [emailAddress],
-										ownerId: currentUser.id,
-										types: [GDPRRequestTypes.Unsuppress]
-									}
-								})
-									.then(() => {
-										addAlert({
-											alertType: Alert.Types.Success,
-											message: sub(
-												Liferay.Language.get(
-													'x-has-been-successfully-unsuppressed'
-												),
-												[emailAddress]
-											) as string
-										});
-
-										refetch();
-									})
-									.catch(() => {
-										addAlert({
-											alertType: Alert.Types.Error,
-											message: sub(
-												Liferay.Language.get(
-													'there-was-an-error-unsuppressing-x.-please-try-again'
-												),
-												[emailAddress]
-											) as string,
-											timeout: false
-										});
+	return (
+		<Component
+			{...otherProps}
+			renderInlineRowActions={({
+				data: {dataControlTaskStatus, emailAddress}
+			}) =>
+				dataControlTaskStatus !== GDPRRequestStatuses.Pending && (
+					<ClayButton
+						className='unsuppress'
+						displayType='secondary'
+						onClick={() => {
+							unsuppressUser({
+								variables: {
+									emailAddresses: [emailAddress],
+									ownerId: currentUser.id,
+									types: [GDPRRequestTypes.Unsuppress]
+								}
+							})
+								.then(() => {
+									addAlert({
+										alertType: Alert.Types.Success,
+										message: sub(
+											Liferay.Language.get(
+												'x-has-been-successfully-unsuppressed'
+											),
+											[emailAddress]
+										) as string
 									});
-							}}
-							small
-						>
-							{Liferay.Language.get('unsuppress')}
-						</ClayButton>
-					)
-				}
-			/>
-		);
-	};
+
+									refetch();
+								})
+								.catch(() => {
+									addAlert({
+										alertType: Alert.Types.Error,
+										message: sub(
+											Liferay.Language.get(
+												'there-was-an-error-unsuppressing-x.-please-try-again'
+											),
+											[emailAddress]
+										) as string,
+										timeout: false
+									});
+								});
+						}}
+						small
+					>
+						{Liferay.Language.get('unsuppress')}
+					</ClayButton>
+				)
+			}
+		/>
+	);
+};
 
 const SuppressedListWithData = withBaseResults(withData, {
 	getColumns: ({timeZoneId}) => [

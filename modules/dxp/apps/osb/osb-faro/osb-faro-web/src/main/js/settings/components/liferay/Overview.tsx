@@ -77,8 +77,14 @@ class LiferayOverview extends React.Component<ILiferayOverviewProps> {
 
 	@autobind
 	handleDisconnectClick() {
-		const {addAlert, close, fetchDataSource, groupId, id, open} =
-			this.props;
+		const {
+			addAlert,
+			close,
+			fetchDataSource,
+			groupId,
+			id,
+			open
+		} = this.props;
 
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (

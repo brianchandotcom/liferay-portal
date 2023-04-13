@@ -48,7 +48,7 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 
 	const handleSubmit = (formValues: {
 		name: string;
-		type: (typeof TYPES)[number];
+		type: typeof TYPES[number];
 	}) => {
 		API.fieldMappings
 			.create({

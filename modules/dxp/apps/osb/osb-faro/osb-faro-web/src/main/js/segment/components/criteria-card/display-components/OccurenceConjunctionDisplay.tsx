@@ -9,9 +9,10 @@ interface IOccurenceConjunctionDisplayProps {
 	value: number;
 }
 
-const OccurenceConjunctionDisplay: React.FC<
-	IOccurenceConjunctionDisplayProps
-> = ({operatorName, value}) => {
+const OccurenceConjunctionDisplay: React.FC<IOccurenceConjunctionDisplayProps> = ({
+	operatorName,
+	value
+}) => {
 	const {label = ''} =
 		OCCURENCE_OPTIONS.find(({value}) => value === operatorName) || {};
 

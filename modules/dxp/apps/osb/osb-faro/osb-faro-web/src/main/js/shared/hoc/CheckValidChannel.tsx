@@ -22,54 +22,54 @@ interface IWrappedComponentProps {
 	location: Location;
 }
 
-const checkValidChannel =
-	(WrappedComponent: React.ComponentType<IWrappedComponentProps>) =>
-	({
-		channelId,
-		channels,
-		defaultChannelId,
-		groupId,
-		history,
-		location,
-		...otherProps
-	}) => {
-		useEffect(() => {
-			const isHome = matchPath(location.pathname, {
-				exact: true,
-				path: Routes.WORKSPACE_WITH_ID
-			});
+const checkValidChannel = (
+	WrappedComponent: React.ComponentType<IWrappedComponentProps>
+) => ({
+	channelId,
+	channels,
+	defaultChannelId,
+	groupId,
+	history,
+	location,
+	...otherProps
+}) => {
+	useEffect(() => {
+		const isHome = matchPath(location.pathname, {
+			exact: true,
+			path: Routes.WORKSPACE_WITH_ID
+		});
 
-			if (isHome) {
-				const channel = getDefaultChannel(defaultChannelId, channels);
+		if (isHome) {
+			const channel = getDefaultChannel(defaultChannelId, channels);
 
-				history.replace(
-					toRoute(Routes.SITES, {
-						...(channel && {channelId: channel.id}),
-						groupId
-					})
-				);
-			}
-		}, []);
-
-		if (
-			channelId &&
-			!!channels.length &&
-			!channels.some(({id}) => id === channelId)
-		) {
-			return <ErrorPage />;
+			history.replace(
+				toRoute(Routes.SITES, {
+					...(channel && {channelId: channel.id}),
+					groupId
+				})
+			);
 		}
+	}, []);
 
-		return (
-			<WrappedComponent
-				{...otherProps}
-				channelId={channelId}
-				channels={channels}
-				defaultChannelId={channelId}
-				groupId={groupId}
-				history={history}
-				location={location}
-			/>
-		);
-	};
+	if (
+		channelId &&
+		!!channels.length &&
+		!channels.some(({id}) => id === channelId)
+	) {
+		return <ErrorPage />;
+	}
+
+	return (
+		<WrappedComponent
+			{...otherProps}
+			channelId={channelId}
+			channels={channels}
+			defaultChannelId={channelId}
+			groupId={groupId}
+			history={history}
+			location={location}
+		/>
+	);
+};
 
 export default checkValidChannel;

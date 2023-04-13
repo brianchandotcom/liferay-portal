@@ -15,8 +15,9 @@ import {withReferencedObjectsProvider} from 'segment/segment-editor/dynamic/cont
 jest.unmock('react-dom');
 
 describe('BehaviorDisplay', () => {
-	const WrappedBehaviorDisplay =
-		withReferencedObjectsProvider(BehaviorDisplay);
+	const WrappedBehaviorDisplay = withReferencedObjectsProvider(
+		BehaviorDisplay
+	);
 
 	const mockSegment = data.getImmutableMock(Segment, data.mockSegment, 0, {
 		referencedObjects: {

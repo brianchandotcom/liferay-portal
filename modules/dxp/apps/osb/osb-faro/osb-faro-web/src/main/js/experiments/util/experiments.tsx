@@ -100,10 +100,9 @@ export const TOOLTIP_METRICS: Array<TooltipMetric> = [
 		title: Liferay.Language.get('median')
 	},
 	{
-		dataRenderer:
-			({improvement}) =>
-			() =>
-				<ImprovementTooltip improvement={improvement} />,
+		dataRenderer: ({improvement}) => () => (
+			<ImprovementTooltip improvement={improvement} />
+		),
 		name: 'lift',
 		title: null
 	}
@@ -177,13 +176,10 @@ export const getFormattedProbabilityToWin = value => {
 	return value;
 };
 
-export const getFormattedVariantHistogram: GetFormattedVariantHistogramFn =
-	histogram => ({
-		key: histogram.map(({processedDate}) =>
-			formatProcessedDate(processedDate)
-		),
-		value: histogram.map(({median}) => median || 0)
-	});
+export const getFormattedVariantHistogram: GetFormattedVariantHistogramFn = histogram => ({
+	key: histogram.map(({processedDate}) => formatProcessedDate(processedDate)),
+	value: histogram.map(({median}) => median || 0)
+});
 
 export const getMetricName: GetMetricNameFn = metric =>
 	METRICS_NAMES.get(metric);

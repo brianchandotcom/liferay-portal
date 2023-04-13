@@ -44,8 +44,14 @@ class Item extends React.Component {
 	}
 
 	render() {
-		const {active, children, className, disabled, href, ...otherProps} =
-			this.props;
+		const {
+			active,
+			children,
+			className,
+			disabled,
+			href,
+			...otherProps
+		} = this.props;
 
 		let content = children;
 

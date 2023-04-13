@@ -113,8 +113,9 @@ const AddReport: React.FC<IAddReportProps> = ({
 	isEmptyDashboard = false,
 	onGetReport
 }) => {
-	const [displayFormAddReport, setDisplayFormAddReport] =
-		useState<boolean>(false);
+	const [displayFormAddReport, setDisplayFormAddReport] = useState<boolean>(
+		false
+	);
 	const [isEnableToSave, setIsEnableToSave] = useState<boolean>(false);
 	const [report, setReport] = useState<Report>({
 		chartType: '',

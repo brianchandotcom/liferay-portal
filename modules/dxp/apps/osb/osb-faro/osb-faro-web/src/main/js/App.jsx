@@ -274,8 +274,7 @@ export default class App extends React.Component {
 										value={{
 											setShowOAuthUpgradeWarning: value =>
 												this.setState({
-													showOAuthUpgradeWarning:
-														value
+													showOAuthUpgradeWarning: value
 												}),
 											showOAuthUpgradeWarning
 										}}

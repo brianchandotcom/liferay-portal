@@ -622,31 +622,47 @@ describe('getAxisFormatter', () => {
 describe('getDataFormatter', () => {
 	it('should be return the value to any', () => {
 		expect(getDataFormatter()([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1,
+			100,
+			1000,
+			10000
 		]);
 	});
 
 	it('should be return the data formatted to percentage', () => {
 		expect(getDataFormatter('percentage')([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1,
+			100,
+			1000,
+			10000
 		]);
 	});
 
 	it('should be return the data formatted to time', () => {
 		expect(getDataFormatter('time')([1, 100, 500, 1000, 10000])).toEqual([
-			0, 0, 1000, 1000, 10000
+			0,
+			0,
+			1000,
+			1000,
+			10000
 		]);
 	});
 
 	it('should be return the data formatted to numbers', () => {
 		expect(getDataFormatter('numbers')([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1,
+			100,
+			1000,
+			10000
 		]);
 	});
 
 	it('should be return the data formatted to ratings', () => {
 		expect(getDataFormatter('ratings')([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1,
+			100,
+			1000,
+			10000
 		]);
 	});
 });

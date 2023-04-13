@@ -52,8 +52,7 @@ export default class Segment
 		type: EntityTypes.IndividualsSegment,
 		userName: null
 	})
-	implements ISegment
-{
+	implements ISegment {
 	activeIndividualCount: number;
 	activitiesCount: number;
 	anonymousIndividualCount: number;

@@ -25,8 +25,7 @@ export default class Individual
 		properties: Map(),
 		type: EntityTypes.Individual
 	})
-	implements IIndividual
-{
+	implements IIndividual {
 	accountNames: string[] | null;
 	activitiesCount: number;
 	dateCreated: string;

@@ -11,8 +11,11 @@ export default class CompositionCard extends React.Component {
 	};
 
 	render() {
-		const {activeIndividualCount, individualCount, knownIndividualCount} =
-			this.props;
+		const {
+			activeIndividualCount,
+			individualCount,
+			knownIndividualCount
+		} = this.props;
 
 		return (
 			<Card className='composition-card-root'>

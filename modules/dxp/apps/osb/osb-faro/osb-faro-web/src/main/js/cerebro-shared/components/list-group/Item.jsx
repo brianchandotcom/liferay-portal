@@ -23,8 +23,14 @@ class Item extends React.Component {
 	 * Lifecycle Render - ReactJS
 	 */
 	render() {
-		const {accentColor, children, className, flex, header, ...otherProps} =
-			this.props;
+		const {
+			accentColor,
+			children,
+			className,
+			flex,
+			header,
+			...otherProps
+		} = this.props;
 
 		const classes = getCN(className, {
 			'list-group-header': header,

@@ -54,8 +54,9 @@ function TouchpointRoutes({className, router}) {
 	const {channelId, groupId, title, touchpoint} = router.params;
 
 	const [filters, setFilters] = useState({});
-	const [pathRangeSelectors, setPathRangeSelectors] =
-		useState(rangeSelectors);
+	const [pathRangeSelectors, setPathRangeSelectors] = useState(
+		rangeSelectors
+	);
 
 	const {selectedChannel} = useChannelContext();
 

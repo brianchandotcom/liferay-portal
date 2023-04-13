@@ -20,8 +20,9 @@ const withOnboarding = (
 		withCurrentUser,
 		graphql(SitesDashboardQuery, {options: {variables: {type: null}}})
 	)(({close, currentUser, data, groupId, open, ...otherProps}) => {
-		const {onboardingTriggered, setOnboardingTriggered} =
-			useContext(OnboardingContext);
+		const {onboardingTriggered, setOnboardingTriggered} = useContext(
+			OnboardingContext
+		);
 
 		useEffect(() => {
 			const {dataSources, loading} = data;

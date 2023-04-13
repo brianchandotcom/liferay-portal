@@ -9,8 +9,9 @@ const withTableData = (
 ) => {
 	const TableWithData = compose(
 		withData(),
-		WrappedComponent => props =>
-			<WrappedComponent {...props} columns={getColumns(props)} />,
+		WrappedComponent => props => (
+			<WrappedComponent {...props} columns={getColumns(props)} />
+		),
 		withError({page: false}),
 		withEmpty({emptyDescription, emptyIcon, emptyTitle, spacer: true})
 	)(Table);

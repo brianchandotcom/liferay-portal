@@ -38,17 +38,17 @@ import {
 
 const DATE_FORMAT = 'MMM DD, YYYY';
 
-const getContextItemCount =
-	(contextItemKey: string) =>
-	(context: {key: string; value: any}[]): string => {
-		const contextItem = context.find(({key}) => key === contextItemKey);
+const getContextItemCount = (contextItemKey: string) => (
+	context: {key: string; value: any}[]
+): string => {
+	const contextItem = context.find(({key}) => key === contextItemKey);
 
-		if (contextItem) {
-			return Number(contextItem.value).toLocaleString();
-		}
+	if (contextItem) {
+		return Number(contextItem.value).toLocaleString();
+	}
 
-		return '0';
-	};
+	return '0';
+};
 
 interface IOutputVersionsCardProps {
 	nextRunDate: string;
@@ -168,8 +168,9 @@ const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
 						{
 							accessor: 'context',
 							className: 'table-column-text-end',
-							dataFormatter:
-								getContextItemCount('itemsDatasetCount'),
+							dataFormatter: getContextItemCount(
+								'itemsDatasetCount'
+							),
 							label: Liferay.Language.get('items'),
 							sortable: false
 						},

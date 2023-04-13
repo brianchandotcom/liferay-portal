@@ -84,8 +84,10 @@ interface IItemsProps {
 }
 
 const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
-	const [getPageAssetsTotal, {data, loading: pagesTotalLoading}] =
-		useLazyQuery(RecommendationPageAssetsQuery);
+	const [
+		getPageAssetsTotal,
+		{data, loading: pagesTotalLoading}
+	] = useLazyQuery(RecommendationPageAssetsQuery);
 
 	useEffect(() => {
 		getPageAssetsTotal({

@@ -29,7 +29,8 @@ describe('TooltipChart', () => {
 								align: 'left',
 								className: 'class-custom-column-1',
 								color: 'red',
-								label: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius hic ex, vero laboriosam necessitatibus, repudiandae est voluptatem.',
+								label:
+									'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius hic ex, vero laboriosam necessitatibus, repudiandae est voluptatem.',
 								truncated: true,
 								weight: 'normal',
 								width: 100

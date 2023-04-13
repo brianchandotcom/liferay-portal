@@ -120,8 +120,8 @@ describe('Experiment Session Mapper', () => {
 	});
 
 	it('should return empty true when sessionHistogram to be an empty array', () => {
-		expect(getSessionMapper({experiment: {sessionsHistogram: []}})).toEqual(
-			{empty: true}
-		);
+		expect(
+			getSessionMapper({experiment: {sessionsHistogram: []}})
+		).toEqual({empty: true});
 	});
 });

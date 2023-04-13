@@ -29,9 +29,7 @@ interface IAttributeBreakdownSectionProps {
 	moveBreakdown: MoveBreakdown;
 }
 
-export const AttributeBreakdownSection: React.FC<
-	IAttributeBreakdownSectionProps
-> = ({
+export const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps> = ({
 	addBreakdown,
 	attributes,
 	breakdownOrder,

@@ -40,8 +40,8 @@ const GlobalAttributeList: React.FC = () => {
 	return (
 		<ListComponent
 			{...mapListResultsToProps(response, result => ({
-				items: result.eventAttributeDefinitions
-					.eventAttributeDefinitions,
+				items:
+					result.eventAttributeDefinitions.eventAttributeDefinitions,
 				total: result.eventAttributeDefinitions.total
 			}))}
 			columns={[

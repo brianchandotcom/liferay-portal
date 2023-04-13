@@ -702,8 +702,9 @@ describe('attributes', () => {
 			};
 
 			const WrappedComponent = withAttributesProvider(() => {
-				const WrappedChildComponent =
-					withAttributesConsumer(ChildComponent);
+				const WrappedChildComponent = withAttributesConsumer(
+					ChildComponent
+				);
 
 				return <WrappedChildComponent />;
 			});

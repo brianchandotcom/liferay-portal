@@ -18,20 +18,18 @@ import {withError, withLoading} from 'shared/hoc/util';
 const ListComponent = compose<any>(
 	withToolbar(null),
 	withPaginationBar(),
-	Component =>
-		({className, renderSelectedToggle, ...otherProps}) =>
-			(
-				<div
-					className={getCN(
-						'searchable-table-with-staged-root d-flex flex-column flex-grow-1',
-						className
-					)}
-				>
-					{renderSelectedToggle()}
+	Component => ({className, renderSelectedToggle, ...otherProps}) => (
+		<div
+			className={getCN(
+				'searchable-table-with-staged-root d-flex flex-column flex-grow-1',
+				className
+			)}
+		>
+			{renderSelectedToggle()}
 
-					<Component {...otherProps} />
-				</div>
-			),
+			<Component {...otherProps} />
+		</div>
+	),
 	withLoading(),
 	withError(),
 	withEmpty()

@@ -120,8 +120,15 @@ export class DataTransformationListRow extends React.Component {
 
 	@autobind
 	handleFieldPreviewModal() {
-		const {close, fieldIMap, fileVersionId, groupId, id, open, sourceName} =
-			this.props;
+		const {
+			close,
+			fieldIMap,
+			fileVersionId,
+			groupId,
+			id,
+			open,
+			sourceName
+		} = this.props;
 
 		const fieldName = fieldIMap.getIn(['source', 'name']);
 
@@ -247,8 +254,11 @@ export class DataTransformationListRow extends React.Component {
 	}
 
 	getTooltipTitle() {
-		const {fieldIMap, isDuplicateTargetField, mappingSuggestions} =
-			this.props;
+		const {
+			fieldIMap,
+			isDuplicateTargetField,
+			mappingSuggestions
+		} = this.props;
 
 		const sourceName = fieldIMap.getIn(['source', 'name']);
 		const suggestionName = fieldIMap.getIn(['suggestion', 'name']);

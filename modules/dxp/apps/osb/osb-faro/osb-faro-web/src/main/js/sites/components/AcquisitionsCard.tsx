@@ -123,12 +123,8 @@ const AcquisitionsCardWithData: React.FC<IAcquisitionsCard> = ({
 		({tabId}) => tabId === activeTabId
 	);
 
-	const {
-		compositions = [],
-		maxCount = 0,
-		total = 0,
-		totalCount = 0
-	} = data?.[compositionBagName] ?? {};
+	const {compositions = [], maxCount = 0, total = 0, totalCount = 0} =
+		data?.[compositionBagName] ?? {};
 
 	return (
 		<Card.Body className='w-100 d-flex flex-column flex-grow-1' noPadding>
@@ -166,9 +162,12 @@ interface IAcquisitionsCardWithStatesRendererProps
 	loading?: boolean;
 }
 
-const AcquisitionsCardWithStatesRenderer: React.FC<
-	IAcquisitionsCardWithStatesRendererProps
-> = ({children, empty, error, loading}) => (
+const AcquisitionsCardWithStatesRenderer: React.FC<IAcquisitionsCardWithStatesRendererProps> = ({
+	children,
+	empty,
+	error,
+	loading
+}) => (
 	<StatesRenderer empty={empty} error={!!error} loading={loading}>
 		<StatesRenderer.Loading displayCard />
 		<StatesRenderer.Empty

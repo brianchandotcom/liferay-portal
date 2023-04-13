@@ -5,8 +5,9 @@ import {shallow} from 'enzyme';
 
 describe('WithBaseResults', () => {
 	it('Renders table w/ data', () => {
-		const MockComponent = WrappedComponent => val =>
-			<WrappedComponent {...val} />;
+		const MockComponent = WrappedComponent => val => (
+			<WrappedComponent {...val} />
+		);
 		const WrappedComponent = withBaseResults(MockComponent, {
 			initialOrderIOMap: createOrderIOMap('name')
 		});

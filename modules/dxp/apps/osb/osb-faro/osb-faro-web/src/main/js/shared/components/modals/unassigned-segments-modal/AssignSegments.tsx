@@ -55,8 +55,10 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 
 	const {channels} = useChannelContext();
 
-	const {unassignedSegments, unassignedSegmentsDispatch} =
-		useUnassignedSegmentsContext();
+	const {
+		unassignedSegments,
+		unassignedSegmentsDispatch
+	} = useUnassignedSegmentsContext();
 
 	const [channelMappings, setChannelMappings] = useState(
 		unassignedSegments.reduce(
@@ -79,11 +81,11 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 		}))
 	];
 
-	const updateSegment =
-		(segmentId: string) =>
-		({target: {value}}: React.ChangeEvent<HTMLSelectElement>): void => {
-			setChannelMappings({...channelMappings, [segmentId]: value});
-		};
+	const updateSegment = (segmentId: string) => ({
+		target: {value}
+	}: React.ChangeEvent<HTMLSelectElement>): void => {
+		setChannelMappings({...channelMappings, [segmentId]: value});
+	};
 
 	const ChannelSelect = ({data: {id}, options}) => (
 		<td>

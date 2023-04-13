@@ -22,7 +22,7 @@ const {
 } = Constants;
 
 interface IAnalysisDropdownProps {
-	alignmentPosition?: (typeof Align)[keyof typeof Align];
+	alignmentPosition?: typeof Align[keyof typeof Align];
 	close: Modal.close;
 	eventId?: string;
 	onEventChange: (event: Event) => void;

@@ -195,19 +195,21 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
-	const {data: invalidDataSources, loading: invalidDataSourcesLoading} =
-		useRequest({
-			dataSourceFn: API.dataSource.search,
-			variables: {
-				delta: 1,
-				groupId,
-				page: 1,
-				states: [
-					DataSourceStates.CredentialsInvalid,
-					DataSourceStates.UrlInvalid
-				]
-			}
-		});
+	const {
+		data: invalidDataSources,
+		loading: invalidDataSourcesLoading
+	} = useRequest({
+		dataSourceFn: API.dataSource.search,
+		variables: {
+			delta: 1,
+			groupId,
+			page: 1,
+			states: [
+				DataSourceStates.CredentialsInvalid,
+				DataSourceStates.UrlInvalid
+			]
+		}
+	});
 
 	useEffect(() => {
 		if (invalidDataSources?.total) {

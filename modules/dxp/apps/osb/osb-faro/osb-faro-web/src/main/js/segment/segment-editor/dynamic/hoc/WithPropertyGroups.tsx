@@ -93,10 +93,9 @@ const mapResultToProps = ([
 	eventProperties,
 	webBehaviors
 ]) => {
-	const individualDemographicProperties =
-		individualDemographicsMappings.items.map(
-			convertFieldMappingToIndividualProperty
-		);
+	const individualDemographicProperties = individualDemographicsMappings.items.map(
+		convertFieldMappingToIndividualProperty
+	);
 
 	let individualSubgroupsIList = List([
 		new PropertySubgroup({

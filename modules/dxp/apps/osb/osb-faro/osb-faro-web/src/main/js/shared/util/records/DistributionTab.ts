@@ -18,8 +18,7 @@ export default class DistributionTab
 		propertyType: null,
 		title: ''
 	})
-	implements IDistributionTab
-{
+	implements IDistributionTab {
 	context: string;
 	id: string;
 	numberOfBins: number;

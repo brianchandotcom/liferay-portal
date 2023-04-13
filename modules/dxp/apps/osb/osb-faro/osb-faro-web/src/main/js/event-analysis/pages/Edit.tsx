@@ -69,11 +69,10 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				}
 			} = data;
 
-			const breakdowns: BreakdownWithId[] =
-				getItemsWithUniqueId<Breakdown>(
-					eventAnalysisBreakdowns,
-					'breakdown'
-				);
+			const breakdowns: BreakdownWithId[] = getItemsWithUniqueId<Breakdown>(
+				eventAnalysisBreakdowns,
+				'breakdown'
+			);
 			const filters: FilterWithId[] = getItemsWithUniqueId<Filter>(
 				eventAnalysisFilters,
 				'filter'

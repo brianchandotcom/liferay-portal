@@ -125,8 +125,12 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 					eventAttributeDefinition: Attribute;
 					eventDefinition: Event;
 				}) => {
-					const {dataType, description, displayName, name} =
-						dataMapper(item);
+					const {
+						dataType,
+						description,
+						displayName,
+						name
+					} = dataMapper(item);
 
 					return (
 						<>

@@ -137,8 +137,7 @@ class DistributionChart extends React.Component<
 			state: {hoverIndex}
 		} = this;
 
-		const individualFieldDistribution =
-			individualFieldDistributionIList.toJS();
+		const individualFieldDistribution = individualFieldDistributionIList.toJS();
 
 		const histogram = propertyType === FieldTypes.Number;
 

@@ -39,8 +39,7 @@ export default class Project
 		timeZone: new TimeZone(),
 		userId: null
 	})
-	implements IProject
-{
+	implements IProject {
 	accountKey: string;
 	accountName: string;
 	corpProjectName: string;

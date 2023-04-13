@@ -84,8 +84,10 @@ export default class Tabs extends React.Component<ITabsProps> {
 		const prevCount = prevProps.itemsIList.size;
 
 		if (this._scrollableSectionRef && prevCount) {
-			const {scrollToBeg, scrollToEnd} =
-				this._scrollableSectionRef.current;
+			const {
+				scrollToBeg,
+				scrollToEnd
+			} = this._scrollableSectionRef.current;
 
 			if (count > prevCount) {
 				scrollToEnd();

@@ -22,35 +22,33 @@ const defaultOptions = {
  * @param {Boolean} [options.fadeIn] - Whether the spinner should fadeIn or not.
  * @returns {Function} - The new component
  */
-export default (request, mapResultToProps = val => val, options = {}) =>
-	WrappedComponent => {
-		const {
-			alignCenter = false,
-			errorProps,
-			fadeIn,
-			page
-		} = {
-			...defaultOptions,
-			...options
-		};
-
-		return ({groupId, ...props}) => {
-			const propsToError = isFunction(errorProps)
-				? errorProps({groupId})
-				: errorProps;
-
-			const Composed = compose(
-				withQuery(request, val => val),
-				withError({...propsToError, page}),
-				withLoading({alignCenter, fadeIn, page})
-			)(({data, ...otherProps}) => (
-				<WrappedComponent
-					groupId={groupId}
-					{...otherProps}
-					{...mapResultToProps(data)}
-				/>
-			));
-
-			return <Composed {...props} groupId={groupId} />;
-		};
+export default (
+	request,
+	mapResultToProps = val => val,
+	options = {}
+) => WrappedComponent => {
+	const {alignCenter = false, errorProps, fadeIn, page} = {
+		...defaultOptions,
+		...options
 	};
+
+	return ({groupId, ...props}) => {
+		const propsToError = isFunction(errorProps)
+			? errorProps({groupId})
+			: errorProps;
+
+		const Composed = compose(
+			withQuery(request, val => val),
+			withError({...propsToError, page}),
+			withLoading({alignCenter, fadeIn, page})
+		)(({data, ...otherProps}) => (
+			<WrappedComponent
+				groupId={groupId}
+				{...otherProps}
+				{...mapResultToProps(data)}
+			/>
+		));
+
+		return <Composed {...props} groupId={groupId} />;
+	};
+};

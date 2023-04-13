@@ -113,8 +113,9 @@ describe('BaseSelect', () => {
 		await waitForElementToBeRemoved(() =>
 			container.querySelector('.spinner-root')
 		).then(() => {
-			const dropdownMenu =
-				document.body.getElementsByClassName('dropdown-root')[0];
+			const dropdownMenu = document.body.getElementsByClassName(
+				'dropdown-root'
+			)[0];
 
 			expect(dropdownMenu).toMatchSnapshot();
 		});
@@ -134,8 +135,9 @@ describe('BaseSelect', () => {
 		await waitForElementToBeRemoved(() =>
 			container.querySelector('.spinner-root')
 		).then(() => {
-			const dropdownMenu =
-				document.body.getElementsByClassName('dropdown-root')[0];
+			const dropdownMenu = document.body.getElementsByClassName(
+				'dropdown-root'
+			)[0];
 
 			expect(
 				dropdownMenu.getElementsByClassName('dropdown-header')[0]
@@ -163,8 +165,9 @@ describe('BaseSelect', () => {
 		await waitForElementToBeRemoved(() =>
 			container.querySelector('.spinner-root')
 		).then(async () => {
-			const dropdownMenu =
-				document.body.getElementsByClassName('dropdown-root')[0];
+			const dropdownMenu = document.body.getElementsByClassName(
+				'dropdown-root'
+			)[0];
 
 			fireEvent.keyDown(container.querySelector('.input-root'), {
 				key: 'ArrowUp',
@@ -196,8 +199,9 @@ describe('BaseSelect', () => {
 		await waitForElementToBeRemoved(() =>
 			container.querySelector('.spinner-root')
 		).then(async () => {
-			const dropdownMenu =
-				document.body.getElementsByClassName('dropdown-root')[0];
+			const dropdownMenu = document.body.getElementsByClassName(
+				'dropdown-root'
+			)[0];
 
 			fireEvent.keyDown(container.querySelector('.input-root'), {
 				key: 'ArrowDown',

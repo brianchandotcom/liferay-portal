@@ -134,12 +134,13 @@ const updateChart = (chartElement, props) => {
 
 			tooltip.html(renderTooltip(d));
 
-			const {width: widthRect, x: pageXRect} =
-				nodes[i].getBoundingClientRect();
+			const {width: widthRect, x: pageXRect} = nodes[
+				i
+			].getBoundingClientRect();
 
-			const {width: widthTooltip} = tooltip
-				.node()
-				.getBoundingClientRect();
+			const {
+				width: widthTooltip
+			} = tooltip.node().getBoundingClientRect();
 
 			tooltip
 				.style(

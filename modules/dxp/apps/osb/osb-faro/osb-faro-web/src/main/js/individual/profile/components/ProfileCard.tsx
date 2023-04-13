@@ -165,10 +165,9 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	const startHour = formatTimestamp(chartPayload.intervalInitDate);
 	const endHour = formatTimestamp(chartPayload.intervalInitDate + 59 * 60000);
 
-	let newRangeSelectors = useMemo(
-		() => getDateRange(rangeSelectors),
-		[rangeSelectors]
-	);
+	let newRangeSelectors = useMemo(() => getDateRange(rangeSelectors), [
+		rangeSelectors
+	]);
 
 	if (
 		rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours &&

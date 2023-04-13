@@ -130,8 +130,14 @@ class Item extends React.Component {
 	}
 
 	render() {
-		const {active, children, className, href, onClick, ...otherProps} =
-			this.props;
+		const {
+			active,
+			children,
+			className,
+			href,
+			onClick,
+			...otherProps
+		} = this.props;
 
 		const classes = getCN('dropdown-item', 'text-truncate', className, {
 			active

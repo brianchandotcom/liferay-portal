@@ -76,8 +76,10 @@ const canDrop = (
 	},
 	monitor: DropTargetMonitor
 ): boolean => {
-	const {criteriaGroupId: startGroupId, index: startIndex} =
-		monitor.getItem();
+	const {
+		criteriaGroupId: startGroupId,
+		index: startIndex
+	} = monitor.getItem();
 
 	return destGroupId !== startGroupId || destIndex !== startIndex;
 };
@@ -238,8 +240,10 @@ class CriteriaRow extends React.Component<
 			state: {supportedOperators}
 		} = this;
 
-		let operatorKey: Criterion['operatorName'] | 'is-known' | 'is-unknown' =
-			operatorName;
+		let operatorKey:
+			| Criterion['operatorName']
+			| 'is-known'
+			| 'is-unknown' = operatorName;
 
 		const valueNull = value === null;
 

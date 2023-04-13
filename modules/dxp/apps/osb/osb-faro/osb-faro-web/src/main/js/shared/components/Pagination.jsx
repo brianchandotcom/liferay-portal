@@ -103,8 +103,15 @@ class PaginationItem extends React.Component {
 	}
 
 	render() {
-		const {active, children, className, disabled, href, onChange, page} =
-			this.props;
+		const {
+			active,
+			children,
+			className,
+			disabled,
+			href,
+			onChange,
+			page
+		} = this.props;
 
 		const classes = getCN('page-item', className, {active, disabled});
 

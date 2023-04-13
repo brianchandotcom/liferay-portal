@@ -131,8 +131,7 @@ const View: React.FC<IViewProps> = ({
 														runDataPeriod
 													}) => {
 														runRecommendationJob({
-															awaitRefetchQueries:
-																true,
+															awaitRefetchQueries: true,
 															refetchQueries: [
 																getOperationName(
 																	RecommendationJobRunsQuery
@@ -149,10 +148,9 @@ const View: React.FC<IViewProps> = ({
 																		Alert
 																			.Types
 																			.Success,
-																	message:
-																		Liferay.Language.get(
-																			'retraining-has-been-started'
-																		)
+																	message: Liferay.Language.get(
+																		'retraining-has-been-started'
+																	)
 																});
 
 																close();
@@ -163,12 +161,10 @@ const View: React.FC<IViewProps> = ({
 																		Alert
 																			.Types
 																			.Error,
-																	message:
-																		Liferay.Language.get(
-																			'there-was-an-error-processing-your-request.-please-try-again'
-																		),
-																	timeout:
-																		false
+																	message: Liferay.Language.get(
+																		'there-was-an-error-processing-your-request.-please-try-again'
+																	),
+																	timeout: false
 																});
 															});
 													},
@@ -233,15 +229,12 @@ const View: React.FC<IViewProps> = ({
 																		Alert
 																			.Types
 																			.Success,
-																	message:
-																		sub(
-																			Liferay.Language.get(
-																				'x-has-been-deleted'
-																			),
-																			[
-																				name
-																			]
-																		) as string
+																	message: sub(
+																		Liferay.Language.get(
+																			'x-has-been-deleted'
+																		),
+																		[name]
+																	) as string
 																});
 
 																history.push(
@@ -259,21 +252,18 @@ const View: React.FC<IViewProps> = ({
 																		Alert
 																			.Types
 																			.Error,
-																	message:
-																		Liferay.Language.get(
-																			'there-was-an-error-processing-your-request.-please-try-again'
-																		),
-																	timeout:
-																		false
+																	message: Liferay.Language.get(
+																		'there-was-an-error-processing-your-request.-please-try-again'
+																	),
+																	timeout: false
 																});
 															});
 													},
 													submitButtonDisplay:
 														'warning',
-													submitMessage:
-														Liferay.Language.get(
-															'delete'
-														),
+													submitMessage: Liferay.Language.get(
+														'delete'
+													),
 													title: sub(
 														Liferay.Language.get(
 															'deleting-x'

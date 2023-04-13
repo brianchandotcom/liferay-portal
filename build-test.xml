@@ -15101,6 +15101,7 @@ mail.send.blacklist=</echo>
 		</if>
 
 		<get-testcase-property property.name="skip.clean-app-server-deploy-dir" />
+		<propertycopy from="skip.clean-app-server-deploy-dir[${env.CI_TEST_SUITE}]" name="skip.clean-app-server-deploy-dir" silent="true" />
 
 		<if>
 			<not>

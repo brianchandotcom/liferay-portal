@@ -20,8 +20,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
-import com.liferay.object.admin.rest.dto.v1_0.Status;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
@@ -44,7 +42,6 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -52,7 +49,6 @@ import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -64,11 +60,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.net.URL;
-
-import java.util.Enumeration;
-
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -95,10 +86,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				_serviceTrackerList) {
 
 			_apply(company.getCompanyId(), systemObjectDefinitionManager);
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-			_addModifiableSystemObjectDefinitions(company);
 		}
 	}
 
@@ -167,65 +154,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerList.close();
-	}
-
-	private void _addModifiableSystemObjectDefinition(
-			Company company, String objectDefinitionJSON)
-		throws Exception {
-
-		com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition
-			objectDefinition =
-				com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition.toDTO(
-					objectDefinitionJSON);
-
-		ObjectDefinition serviceBuilderObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				company.getCompanyId(), "C_" + objectDefinition.getName());
-
-		if (serviceBuilderObjectDefinition != null) {
-			return;
-		}
-
-		ObjectDefinitionResource.Builder builder =
-			_objectDefinitionResourceFactory.create();
-
-		ObjectDefinitionResource objectDefinitionResource =
-			builder.checkPermissions(
-				false
-			).user(
-				company.getDefaultUser()
-			).build();
-
-		objectDefinition = objectDefinitionResource.postObjectDefinition(
-			objectDefinition);
-
-		Status status = objectDefinition.getStatus();
-
-		if (status.getCode() != 0) {
-			objectDefinitionResource.postObjectDefinitionPublish(
-				objectDefinition.getId());
-		}
-		else {
-			_log.error(
-				"Unable to publish modifiable system object definition " +
-					objectDefinition.getName());
-		}
-	}
-
-	private void _addModifiableSystemObjectDefinitions(Company company)
-		throws Exception {
-
-		Bundle bundle = _bundleContext.getBundle();
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"com/liferay/object/internal/system/dependencies", "*.json", false);
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			_addModifiableSystemObjectDefinition(
-				company, StreamUtil.toString(url.openStream()));
-		}
 	}
 
 	private void _apply(
@@ -351,9 +279,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

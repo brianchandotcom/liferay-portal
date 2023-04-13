@@ -15,7 +15,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import StringInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/StringInput.es';
+import StringInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/StringInput';
 import {testControlledInput} from '../../utils';
 
 const OPTIONS_STRING_INPUT_TESTID = 'options-string';

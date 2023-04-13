@@ -86,8 +86,7 @@ public class CacheHelper {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE | Bundle.STOPPING,
-			_bundleBundleTrackerCustomizer);
+			bundleContext, Bundle.ACTIVE, _bundleBundleTrackerCustomizer);
 
 		_bundleTracker.open();
 

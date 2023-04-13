@@ -19,12 +19,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,47 +63,6 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 	private NestedFieldsSupportMapToDDMFormValuesConverterStrategy() {
 	}
 
-	private void _addMissingValues(
-		Map<String, DDMFormField> ddmFormFieldsMap, Locale locale,
-		Map<String, Object> values) {
-
-		for (Map.Entry<String, DDMFormField> entry :
-				ddmFormFieldsMap.entrySet()) {
-
-			boolean match = false;
-
-			for (String key : values.keySet()) {
-				if (StringUtil.startsWith(key, entry.getKey())) {
-					match = true;
-
-					break;
-				}
-			}
-
-			if (match) {
-				continue;
-			}
-
-			Object value = StringPool.BLANK;
-
-			DDMFormField ddmFormField = entry.getValue();
-
-			if (ddmFormField.isLocalizable()) {
-				value = HashMapBuilder.<String, Object>put(
-					LocaleUtil.toLanguageId(locale), StringPool.BLANK
-				).build();
-			}
-
-			values.put(
-				StringBundler.concat(
-					entry.getKey(), DDM.INSTANCE_SEPARATOR,
-					StringUtil.randomString()),
-				HashMapBuilder.<String, Object>put(
-					"value", value
-				).build());
-		}
-	}
-
 	private DDMFormFieldValue _createDDMFormFieldValue(
 		DDMFormField ddmFormField, Map<String, DDMFormField> ddmFormFields,
 		Map<String, Object> fieldInstanceValue, String instanceId,
@@ -134,9 +89,6 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 				(Map<String, Object>)GetterUtil.getObject(
 					fieldInstanceValue.get("nestedValues"),
 					new HashMap<String, Object>());
-
-			_addMissingValues(
-				ddmFormField.getNestedDDMFormFieldsMap(), locale, nestedValues);
 
 			if (MapUtil.isEmpty(nestedValues)) {
 				return ddmFormFieldValue;

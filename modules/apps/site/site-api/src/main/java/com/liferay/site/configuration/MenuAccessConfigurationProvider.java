@@ -14,6 +14,7 @@
 
 package com.liferay.site.configuration;
 
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -23,6 +24,10 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MenuAccessConfigurationProvider {
+
+	public void addRoleToMenuAccess(Role role) throws Exception;
+
+	public void deleteRoleFromMenuAccess(Role role) throws Exception;
 
 	public String[] getRolesCanSeeControlMenu(long groupId)
 		throws ConfigurationException;

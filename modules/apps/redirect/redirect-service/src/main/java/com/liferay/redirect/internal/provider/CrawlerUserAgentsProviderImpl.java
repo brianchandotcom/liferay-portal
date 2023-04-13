@@ -14,13 +14,18 @@
 
 package com.liferay.redirect.internal.provider;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration;
 import com.liferay.redirect.provider.CrawlerUserAgentsProvider;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alicia García
@@ -34,11 +39,27 @@ public class CrawlerUserAgentsProviderImpl
 
 	@Override
 	public Set<String> getCrawlerUserAgents() {
-		return null;
+		return _crawlerUserAgents;
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
+		CrawlerUserAgentsConfiguration crawlerUserAgentsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CrawlerUserAgentsConfiguration.class, properties);
+
+		Set<String> crawlerUserAgents = new HashSet<>();
+
+		for (String crawlerUserAgent :
+				crawlerUserAgentsConfiguration.crawlerUserAgents()) {
+
+			crawlerUserAgents.add(StringUtil.toLowerCase(crawlerUserAgent));
+		}
+
+		_crawlerUserAgents = crawlerUserAgents;
 	}
+
+	private volatile Set<String> _crawlerUserAgents;
 
 }

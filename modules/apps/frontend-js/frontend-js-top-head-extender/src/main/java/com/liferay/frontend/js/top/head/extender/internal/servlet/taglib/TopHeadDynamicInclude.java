@@ -202,15 +202,10 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 				String bundleContextPath = _portal.getPathContext(
 					topHeadResources.getServletContextPath());
 
-				String proxyPath = _portal.getPathProxy();
-
-				String urlPrefix =
-					proxyPath + bundleContextPath.substring(proxyPath.length());
-
 				for (String jsResourcePath :
 						topHeadResources.getJsResourcePaths()) {
 
-					String url = urlPrefix + jsResourcePath;
+					String url = bundleContextPath + jsResourcePath;
 
 					allJsResourceURLs.add(url);
 					jsResourceURLs.add(url);
@@ -219,7 +214,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 				for (String jsResourcePath :
 						topHeadResources.getAuthenticatedJsResourcePaths()) {
 
-					allJsResourceURLs.add(urlPrefix + jsResourcePath);
+					allJsResourceURLs.add(bundleContextPath + jsResourcePath);
 				}
 			}
 			finally {

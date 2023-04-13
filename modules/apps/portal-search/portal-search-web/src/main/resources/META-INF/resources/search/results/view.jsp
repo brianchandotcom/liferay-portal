@@ -20,15 +20,12 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.search.results.configuration.SearchResultsPortletInstanceConfiguration" %><%@
@@ -52,40 +49,30 @@ List<SearchResultSummaryDisplayContext> searchResultSummaryDisplayContexts = sea
 SearchContainer<Document> searchContainer = searchResultsPortletDisplayContext.getSearchContainer();
 %>
 
-<c:choose>
-	<c:when test="<%= searchResultSummaryDisplayContexts.isEmpty() %>">
-		<div class="sheet">
-			<liferay-frontend:empty-result-message
-				description='<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false) %>'
-				title='<%= LanguageUtil.format(request, "no-results-were-found", false) %>'
-			/>
-		</div>
-	</c:when>
-	<c:otherwise>
-		<liferay-ddm:template-renderer
-			className="<%= SearchResultSummaryDisplayContext.class.getName() %>"
-			contextObjects='<%=
-				HashMapBuilder.<String, Object>put(
-					"namespace", liferayPortletResponse.getNamespace()
-				).put(
-					"searchContainer", searchContainer
-				).put(
-					"searchResultsPortletDisplayContext", searchResultsPortletDisplayContext
-				).put(
-					"userClassName", User.class.getName()
-				).build()
-			%>'
-			displayStyle="<%= searchResultsPortletInstanceConfiguration.displayStyle() %>"
-			displayStyleGroupId="<%= searchResultsPortletDisplayContext.getDisplayStyleGroupId() %>"
-			entries="<%= searchResultSummaryDisplayContexts %>"
-		/>
+<liferay-ddm:template-renderer
+	className="<%= SearchResultSummaryDisplayContext.class.getName() %>"
+	contextObjects='<%=
+		HashMapBuilder.<String, Object>put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"searchContainer", searchContainer
+		).put(
+			"searchResultsPortletDisplayContext", searchResultsPortletDisplayContext
+		).put(
+			"userClassName", User.class.getName()
+		).build()
+	%>'
+	displayStyle="<%= searchResultsPortletInstanceConfiguration.displayStyle() %>"
+	displayStyleGroupId="<%= searchResultsPortletDisplayContext.getDisplayStyleGroupId() %>"
+	entries="<%= searchResultSummaryDisplayContexts %>"
+/>
 
-		<aui:form action="#" useNamespace="<%= false %>">
-			<liferay-ui:search-paginator
-				id='<%= liferayPortletResponse.getNamespace() + "searchContainerTag" %>'
-				markupView="lexicon"
-				searchContainer="<%= searchContainer %>"
-			/>
-		</aui:form>
-	</c:otherwise>
-</c:choose>
+<c:if test="<%= !searchResultSummaryDisplayContexts.isEmpty() %>">
+	<aui:form action="#" useNamespace="<%= false %>">
+		<liferay-ui:search-paginator
+			id='<%= liferayPortletResponse.getNamespace() + "searchContainerTag" %>'
+			markupView="lexicon"
+			searchContainer="<%= searchContainer %>"
+		/>
+	</aui:form>
+</c:if>

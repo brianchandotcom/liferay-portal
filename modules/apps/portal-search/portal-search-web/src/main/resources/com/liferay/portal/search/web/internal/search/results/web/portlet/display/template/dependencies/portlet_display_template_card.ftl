@@ -1,14 +1,22 @@
-<div class="c-mb-4 c-mt-4 search-total-label">
-	<#if searchContainer.getTotal() == 1>
-		${languageUtil.format(locale, "x-result-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
-	<#else>
-		${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
-	</#if>
-</div>
+<#if !entries?has_content>
+	<div class="sheet">
+		<@liferay_frontend["empty-result-message"]
+			description='${languageUtil.format(locale, "no-results-were-found-that-matched-the-keywords-x",	"<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>", false)}'
+			title='${languageUtil.format(request, "no-results-were-found", false)}'
+		/>
+	</div>
 
-<div class="display-card">
-	<ul class="card-page">
-		<#if entries?has_content>
+<#else>
+	<div class="c-mb-4 c-mt-4 search-total-label">
+		<#if searchContainer.getTotal() == 1>
+			${languageUtil.format(locale, "x-result-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+		<#else>
+			${languageUtil.format(locale, "x-results-for-x", [searchContainer.getTotal(), "<strong>" + htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) + "</strong>"], false)}
+		</#if>
+	</div>
+
+	<div class="display-card">
+		<ul class="card-page">
 			<#list entries as entry>
 				<li class="card-page-item card-page-item-asset">
 					<div class="card card-type-asset file-card">
@@ -84,6 +92,6 @@
 					</div>
 				</li>
 			</#list>
-		</#if>
-	</ul>
-</div>
+		</ul>
+	</div>
+</#if>

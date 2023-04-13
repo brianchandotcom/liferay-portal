@@ -32,9 +32,107 @@ definition {
 	@description = "LPS-163716 - Verify it's possible to create an object entry with the Picklist default value set via Expression Builder"
 	@priority = 5
 	test CanSetPicklistViaExpressionBuilder {
+		property custom.properties = "feature.flag.LPS-163716=true";
+		property portal.acceptance = "true";
 
-		// TODO pending implementation
+		task ("Given a picklist with several items") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
+			for (var itemNumber : list "1,2,3,4,5") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "picklistItem${itemNumber}",
+					itemName = "Picklist Item ${itemNumber}",
+					picklistName = "Custom Picklist");
+			}
+		}
+
+		task ("And given a custom object with a text field and a picklist field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 181203",
+				objectName = "CustomObject181203",
+				pluralLabelName = "Custom Objects 181203");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Field Picklist",
+				fieldName = "fieldPicklist",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject181203",
+				picklistName = "Custom Picklist");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject181203");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject181203");
+		}
+
+		task ("And given the default value is set via Expression Builder") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 181203");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
+
+			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Use Default Value",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Click(
+				key_optionDefaulValue = "Expression Builder",
+				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
+
+			Type(
+				key_text = "Default Value",
+				locator1 = "TextInput#ANY",
+				value1 = "customField");
+
+			CreateObject.saveObject();
+		}
+
+		task ("And given a layout that contains only the text field") {
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "CustomObject181203");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldList = "Custom Field",
+				tabName = "Field Tab");
+
+			CreateObject.saveObject();
+		}
+
+		task ("When creating an object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject181203",
+				value = "picklistItem1");
+		}
+
+		task ("Then the default value is seen and the object entry is created with the default value") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject181203");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item 1");
+		}
 	}
 
 	@description = "LPS-163716 - Verify it's possible to create an object entry with the Picklist default value set via Input as Value"

@@ -1,0 +1,40 @@
+.card-container {
+	margin-bottom: 2.5rem;
+}
+.customer-gate-page {
+	&-body {
+		margin-top: 4.5rem;
+		width: 37.5rem;
+	}
+	&-button {
+		margin-bottom: 1.5rem;
+
+		&-container {
+			align-items: end;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 7.5rem;
+		}
+	}
+	&-container {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 100%;
+	}
+	&-divider {
+		margin-bottom: 1.5rem;
+		margin-top: 2rem;
+	}
+	&-link {
+		font-size: 16px;
+	}
+	&-text {
+		color: #54555f;
+		font-size: 16px;
+	}
+}
+.header-description {
+	color: #54555f;
+}

@@ -1630,21 +1630,21 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
-			webContentText = "This is a Text field Edit",
+			webContentText = "This is a Text field",
 			webContentTextFieldLabel = "Text Edit",
-			webContentTitle = "Web Content Title Edit");
+			webContentTitle = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display");
 
 		WebContentDisplayPortlet.viewContent(
-			webContentContent = "This is a Text field Edit",
-			webContentTitle = "Web Content Title Edit");
+			webContentContent = "This is a Text field",
+			webContentTitle = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Asset Publisher");
 
 		AssetPublisherPortlet.viewAssetDetailsPG(
-			assetContent = "This is a Text field Edit",
-			assetTitle = "Web Content Title Edit");
+			assetContent = "This is a Text field",
+			assetTitle = "Web Content Title");
 	}
 
 	macro EditWebContentAndViewInWCDandAssetPublisher {

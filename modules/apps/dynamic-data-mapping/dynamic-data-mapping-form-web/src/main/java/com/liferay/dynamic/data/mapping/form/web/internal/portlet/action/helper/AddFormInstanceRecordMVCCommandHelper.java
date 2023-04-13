@@ -133,6 +133,29 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		}
 	}
 
+	public void updateReadOnlyDDMFormFields(
+			Map<String, DDMFormField> ddmFormFieldsMap,
+			Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				ddmFormFieldsPropertyChanges)
+		throws Exception {
+
+		for (Map.Entry<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+				entry : ddmFormFieldsPropertyChanges.entrySet()) {
+
+			if (!MapUtil.getBoolean(entry.getValue(), "readOnly")) {
+				continue;
+			}
+
+			DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey =
+				entry.getKey();
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				ddmFormEvaluatorFieldContextKey.getName());
+
+			ddmFormField.setProperty("persistReadOnlyValue", true);
+		}
+	}
+
 	public void validateExpirationStatus(
 			DDMFormInstance ddmFormInstance, PortletRequest portletRequest)
 		throws Exception {

@@ -146,6 +146,10 @@ public class AddFormInstanceRecordMVCActionCommand
 			ddmStructure.getDDMFormLayout(),
 			ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
 
+		_addFormInstanceMVCCommandHelper.updateReadOnlyDDMFormFields(
+			ddmForm.getDDMFormFieldsMap(true),
+			ddmFormEvaluatorEvaluateResponse.getDDMFormFieldsPropertyChanges());
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);
 

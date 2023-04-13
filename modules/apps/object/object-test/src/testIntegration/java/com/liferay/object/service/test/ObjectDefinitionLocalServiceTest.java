@@ -997,7 +997,33 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectDefinition.getStatus());
 
-		// Publish
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		// Publish Modifiable system object
+
+		objectDefinition = _publishModifiableSystemObjectDefinition();
+
+		Assert.assertTrue(objectDefinition.isApproved());
+		Assert.assertTrue(objectDefinition.isEnableCategorization());
+		Assert.assertTrue(objectDefinition.isModifiable());
+		Assert.assertTrue(objectDefinition.isSystem());
+		Assert.assertTrue(_hasTable(objectDefinition.getDBTableName()));
+		Assert.assertTrue(
+			_hasTable(objectDefinition.getExtensionDBTableName()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		objectDefinition =
+			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), "Test", null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				_objectDefinitionLocalService,
+				Collections.<ObjectField>emptyList());
+
+		// Publish Unmodifiable system object
 
 		try {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -1011,21 +1037,6 @@ public class ObjectDefinitionLocalServiceTest {
 
 			Assert.assertNotNull(objectDefinitionStatusException);
 		}
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		// Publish Modifiable system object
-
-		objectDefinition = _publishModifiableSystemObjectDefinition();
-
-		Assert.assertTrue(objectDefinition.isApproved());
-		Assert.assertTrue(objectDefinition.isEnableCategorization());
-		Assert.assertFalse(objectDefinition.isEnableComments());
-		Assert.assertTrue(objectDefinition.isModifiable());
-		Assert.assertTrue(objectDefinition.isSystem());
-		Assert.assertTrue(_hasTable(objectDefinition.getDBTableName()));
-		Assert.assertTrue(
-			_hasTable(objectDefinition.getExtensionDBTableName()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -1465,7 +1476,8 @@ public class ObjectDefinitionLocalServiceTest {
 			TestPropsValues.getUserId(), name, null,
 			LocalizedMapUtil.getLocalizedMap(label), name, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1, _objectDefinitionLocalService,
+			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+			_objectDefinitionLocalService,
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).labelMap(

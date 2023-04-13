@@ -37,14 +37,6 @@ public class InterestUtil {
 		int delta, List<OrderByField> orderByFields,
 		ContactsEngineClient contactsEngineClient) {
 
-		Interest interest = contactsEngineClient.getLatestInterest(
-			faroProject, contactsEntityId, null, query, cur, delta,
-			orderByFields);
-
-		if (interest == null) {
-			return new FaroResultsDisplay();
-		}
-
 		Results<Interest> results = contactsEngineClient.getInterests(
 			faroProject, contactsEntityId, null, null, query,
 			Rels.Interests.PAGES_VISITED, cur, delta, orderByFields);

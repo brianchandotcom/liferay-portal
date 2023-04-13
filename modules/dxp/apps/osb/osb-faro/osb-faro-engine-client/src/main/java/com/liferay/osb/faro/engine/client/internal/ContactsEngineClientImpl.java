@@ -2210,25 +2210,6 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
-	public Interest getLatestInterest(
-		FaroProject faroProject, String ownerId, String ownerType, String query,
-		int cur, int delta, List<OrderByField> orderByFields) {
-
-		Results<Interest> results = getInterests(
-			faroProject, ownerId, ownerType, null, null, null, 1, 1,
-			Collections.singletonList(
-				new OrderByField("dateRecorded", "desc", true)));
-
-		List<Interest> interests = results.getItems();
-
-		if (interests.isEmpty()) {
-			return null;
-		}
-
-		return interests.get(0);
-	}
-
-	@Override
 	public Results<PageVisited> getPagesVisited(
 		FaroProject faroProject, String channelId, String ownerId,
 		String ownerType, String query, String interestName, Date startDate,

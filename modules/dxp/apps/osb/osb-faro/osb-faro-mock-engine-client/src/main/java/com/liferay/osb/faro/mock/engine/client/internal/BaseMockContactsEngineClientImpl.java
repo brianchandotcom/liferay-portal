@@ -864,15 +864,6 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
-	public Interest getLatestInterest(
-		FaroProject faroProject, String ownerId, String ownerType, String query,
-		int cur, int delta, List<OrderByField> orderByFields) {
-
-		return contactsEngineClient.getLatestInterest(
-			faroProject, ownerId, ownerType, query, cur, delta, orderByFields);
-	}
-
-	@Override
 	public Results<PageVisited> getPagesVisited(
 		FaroProject faroProject, String channelId, String ownerId,
 		String ownerType, String query, String interestName, Date startDate,

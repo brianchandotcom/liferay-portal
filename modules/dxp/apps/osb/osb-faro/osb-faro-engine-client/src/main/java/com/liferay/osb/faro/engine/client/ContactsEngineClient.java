@@ -411,10 +411,6 @@ public interface ContactsEngineClient {
 		String query, String expand, int cur, int delta,
 		List<OrderByField> orderByFields);
 
-	public Interest getLatestInterest(
-		FaroProject faroProject, String ownerId, String ownerType, String query,
-		int cur, int delta, List<OrderByField> orderByFields);
-
 	public Results<PageVisited> getPagesVisited(
 		FaroProject faroProject, String channelId, String ownerId,
 		String ownerType, String query, String interestName, Date startDate,

@@ -15,61 +15,44 @@
 package com.liferay.site.navigation.taglib.internal.servlet;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael Bradford
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static InfoItemServiceRegistry getInfoItemServiceRegistry() {
-		return _infoItemServiceRegistry;
+		return _infoItemServiceRegistrySnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContext;
+		return _servletContextSnapshot.get();
 	}
 
 	public static SiteNavigationMenuItemType getSiteNavigationMenuItemType(
 		String type) {
 
-		return _siteNavigationMenuItemTypeRegistry.
-			getSiteNavigationMenuItemType(type);
+		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry =
+			_siteNavigationMenuItemTypeRegistrySnapshot.get();
+
+		return siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+			type);
 	}
 
-	@Reference(unbind = "-")
-	protected void setInfoItemServiceRegistry(
-		InfoItemServiceRegistry infoItemServiceRegistry) {
-
-		_infoItemServiceRegistry = infoItemServiceRegistry;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.navigation.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteNavigationMenuItemTypeRegistry(
-		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry) {
-
-		_siteNavigationMenuItemTypeRegistry =
-			siteNavigationMenuItemTypeRegistry;
-	}
-
-	private static InfoItemServiceRegistry _infoItemServiceRegistry;
-	private static ServletContext _servletContext;
-	private static SiteNavigationMenuItemTypeRegistry
-		_siteNavigationMenuItemTypeRegistry;
+	private static final Snapshot<InfoItemServiceRegistry>
+		_infoItemServiceRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, InfoItemServiceRegistry.class);
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.site.navigation.taglib)");
+	private static final Snapshot<SiteNavigationMenuItemTypeRegistry>
+		_siteNavigationMenuItemTypeRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, SiteNavigationMenuItemTypeRegistry.class);
 
 }

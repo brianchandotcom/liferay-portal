@@ -106,10 +106,10 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 	fetchDataSource,
 	groupId,
 	history,
+	onboarding,
 	onClose,
 	onDxpConnected,
-	onNext,
-	onboarding
+	onNext
 }) => {
 	const {channelDispatch} = useChannelContext();
 	const [token, setToken] = useState<string>('');
@@ -333,9 +333,9 @@ const Footer: FC<IFooterProps & IConnectDXPProps> = ({
 	data,
 	dxpConnected,
 	groupId,
+	onboarding,
 	onClose,
-	onNext,
-	onboarding
+	onNext
 }) => {
 	const getNavHref = () => {
 		const id = get(data, ['dataSources', 0, 'id'], null);

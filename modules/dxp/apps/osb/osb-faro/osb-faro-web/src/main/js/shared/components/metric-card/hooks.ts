@@ -32,9 +32,9 @@ type TMetricQuery = {
 };
 
 export const useMetricQuery = ({
-	Query,
 	filters,
 	interval,
+	Query,
 	rangeSelectors,
 	variables
 }: TMetricQuery) => {

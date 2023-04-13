@@ -72,12 +72,12 @@ const CommerceCardWithStatesRenderer: React.FC<ICommerceMetricCardWithStatesRend
 );
 
 export function CommerceMetricCard<TGraphQlData>({
-	Query,
 	currentUser,
 	description,
 	emptyTitle,
 	label,
-	mapper
+	mapper,
+	Query
 }: ICommerceMetricCardProps<TGraphQlData>): React.ReactElement {
 	const {channelId, query} = useParams();
 	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(

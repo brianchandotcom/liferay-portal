@@ -45,8 +45,8 @@ const AttributeChip: React.FC<IAttributeChipProps> = React.forwardRef<
 	(
 		{
 			dataType,
-			dragType,
 			draggable = true,
+			dragType,
 			id,
 			index,
 			label,

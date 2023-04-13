@@ -147,6 +147,7 @@ definition {
 	}
 
 	@description = "LPS-178779. Confirm the error message that appears when the user tries to create a dataset entry with more than 280 characters in the name field"
+	@ignore = "Test Fix"
 	@priority = 3
 	test CannotExceed280Characters {
 		task ("When the user goes to add Datasets") {

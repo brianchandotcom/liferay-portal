@@ -8,19 +8,6 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "0ef6d668-9723-ee13-8628-9d7688b66ead",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Invoice Amount"
-			},
-			"name": "invoiceAmount",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
 			"externalReferenceCode": "836a082f-5740-cbf7-39bf-ca1c0f1f0d82",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -28,6 +15,19 @@
 				"en_US": "Expense Name"
 			},
 			"name": "expenseName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "0ef6d668-9723-ee13-8628-9d7688b66ead",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Invoice Amount"
+			},
+			"name": "invoiceAmount",
 			"required": false,
 			"type": "String"
 		},

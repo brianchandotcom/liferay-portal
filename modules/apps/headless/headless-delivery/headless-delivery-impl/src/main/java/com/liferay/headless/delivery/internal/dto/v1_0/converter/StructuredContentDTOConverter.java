@@ -64,12 +64,10 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -220,15 +218,17 @@ public class StructuredContentDTOConverter
 	private Map<Locale, String> _filterDescriptionMap(
 		Map<Locale, String> descriptionMap) {
 
-		Set<Map.Entry<Locale, String>> set = descriptionMap.entrySet();
+		Map<Locale, String> filterDescriptions = new HashMap<>();
 
-		Stream<Map.Entry<Locale, String>> stream = set.stream();
+		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
+			if (StringPool.BLANK.equals(entry.getValue())) {
+				continue;
+			}
 
-		return stream.filter(
-			entry -> !StringPool.BLANK.equals(entry.getValue())
-		).collect(
-			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-		);
+			filterDescriptions.put(entry.getKey(), entry.getValue());
+		}
+
+		return filterDescriptions;
 	}
 
 	private ContentField[] _toContentFields(

@@ -24,7 +24,7 @@
 	<aui:script sandbox="<%= true %>" use="aui-base,liferay-store">
 		var storeTask = A.debounce(Liferay.Store, 100);
 
-		Liferay.on('liferay.collapse.show', function(event) {
+		function onFieldsetShow(event) {
 			if (event.panel.getAttribute('id') === '<%= id %>Content') {
 				var task = {};
 
@@ -32,9 +32,9 @@
 
 				storeTask(task);
 			}
-		});
+		}
 
-		Liferay.on('liferay.collapse.hide', function(event) {
+		function onFieldsetHide(event) {
 			if (event.panel.getAttribute('id') === '<%= id %>Content') {
 				var task = {};
 
@@ -42,6 +42,16 @@
 
 				storeTask(task);
 			}
-		});
+		}
+
+		function onStartNavigate() {
+			Liferay.detach('liferay.collapse.hide', onFieldsetHide);
+			Liferay.detach('liferay.collapse.show', onFieldsetShow);
+			Liferay.detach('startNavigate', onStartNavigate);
+		}
+
+		Liferay.on('liferay.collapse.hide', onFieldsetHide);
+		Liferay.on('liferay.collapse.show', onFieldsetShow);
+		Liferay.on('startNavigate', onStartNavigate);
 	</aui:script>
 </c:if>

@@ -1642,9 +1642,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Asset Publisher");
 
-		AssetPublisherPortlet.viewAssetDetailsPG(
-			assetContent = "This is a Text field",
-			assetTitle = "Web Content Title");
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "This is a Text field",
+			webContentTitle = "Web Content Title");
 	}
 
 	macro EditWebContentAndViewInWCDandAssetPublisher {

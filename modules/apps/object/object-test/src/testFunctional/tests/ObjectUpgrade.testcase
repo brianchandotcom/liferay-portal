@@ -194,6 +194,8 @@ definition {
 		task ("View a Picklist after Upgrade") {
 			Picklist.gotoPicklists();
 
+			WaitForPageLoad();
+
 			Picklist.optionsPicklist(
 				menuItem = "View",
 				picklistName = "Custom Picklist");

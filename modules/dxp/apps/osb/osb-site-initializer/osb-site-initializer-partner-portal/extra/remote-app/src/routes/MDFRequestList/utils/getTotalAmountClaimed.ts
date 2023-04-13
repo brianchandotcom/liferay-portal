@@ -14,8 +14,8 @@ import MDFClaimDTO from '../../../common/interfaces/dto/mdfClaimDTO';
 export default function getTotalAmountClaimed(mdfClaims: MDFClaimDTO[]) {
 	return mdfClaims.reduce(
 		(previousValue: number, currentValue: MDFClaimDTO) => {
-			const sumAmount = currentValue.totalClaimAmount
-				? currentValue.totalClaimAmount
+			const sumAmount = currentValue.amountClaimed
+				? currentValue.amountClaimed
 				: 0;
 
 			const totalAmountClaimed = previousValue + sumAmount;

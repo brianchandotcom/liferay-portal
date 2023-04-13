@@ -35,7 +35,7 @@ export default function useGetListItemsFromMDFClaims(
 				[MDFClaimColumnKey.STATUS]: item.mdfClaimStatus.name,
 				[MDFClaimColumnKey.TYPE]: item.partial ? 'Partial' : 'Full',
 				...getMDFClaimAmountClaimedInfo(
-					item.totalClaimAmount,
+					item.amountClaimed,
 					item.currency
 				),
 				[MDFClaimColumnKey.DATE_SUBMITTED]: getDateCustomFormat(

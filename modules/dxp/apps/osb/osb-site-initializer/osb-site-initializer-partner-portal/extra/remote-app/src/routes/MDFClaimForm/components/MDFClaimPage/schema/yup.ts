@@ -224,7 +224,16 @@ const claimSchema = object({
 					)
 				)
 		),
-
+	amountClaimed: number()
+		.moreThan(0, 'Need be bigger than 0')
+		.required('Required')
+		.test(
+			'is-greater-than-the-requested-amount',
+			'Total Claim Amount cannot be greater than Total MDF Requested Amount',
+			(amountClaimed, testContext) =>
+				Number(amountClaimed) <=
+				Number(testContext.parent.mdfRequestedAmount)
+		),
 	reimbursementInvoice: mixed()
 		.required('Required')
 		.test(
@@ -255,16 +264,6 @@ const claimSchema = object({
 
 				return true;
 			}
-		),
-	totalClaimAmount: number()
-		.moreThan(0, 'Need be bigger than 0')
-		.required('Required')
-		.test(
-			'is-greater-than-the-requested-amount',
-			'Total Claim Amount cannot be greater than Total MDF Requested Amount',
-			(totalClaimAmount, testContext) =>
-				Number(totalClaimAmount) <=
-				Number(testContext.parent.totalMDFRequestedAmount)
 		),
 });
 

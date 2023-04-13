@@ -99,10 +99,10 @@ const getInitialFormValues = (
 	mdfClaimStatus: mdfClaim?.mdfClaimStatus
 		? mdfClaim.mdfClaimStatus
 		: Status.PENDING,
-	r_mdfReqToMDFClms_c_mdfRequestId: mdfRequestId,
-	totalMDFRequestedAmount: mdfClaim?.totalMDFRequestedAmount
-		? mdfClaim.totalMDFRequestedAmount
+	mdfRequestedAmount: mdfClaim?.mdfRequestedAmount
+		? mdfClaim.mdfRequestedAmount
 		: totalMDFRequestAmount,
+	r_mdfReqToMDFClms_c_mdfRequestId: mdfRequestId,
 });
 
 export default getInitialFormValues;

@@ -15,6 +15,7 @@ import {getAccountPostalAddressesByAccountId} from '../../utils/api';
 import {DashboardListItems} from '../DashBoardPage/DashboardPage';
 
 interface AccountDetailsPageProps {
+	commerceAccount?: CommerceAccount;
 	dashboardNavigationItems: DashboardListItems[];
 	selectedAccount: Account;
 	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
@@ -23,6 +24,7 @@ interface AccountDetailsPageProps {
 }
 
 export function AccountDetailsPage({
+	commerceAccount,
 	dashboardNavigationItems,
 	selectedAccount,
 	setDashboardNavigationItems,
@@ -96,12 +98,12 @@ export function AccountDetailsPage({
 						<img
 							alt="Account Image"
 							className="account-details-header-left-content-image"
-							src={accountLogo}
+							src={commerceAccount?.logoURL ?? accountLogo}
 						/>
 
 						<div className="account-details-header-left-content-text-container">
 							<span className="account-details-header-left-content-title">
-								Acme Co
+								{selectedAccount.name}
 							</span>
 
 							<span className="account-details-header-left-content-description">
@@ -300,7 +302,9 @@ export function AccountDetailsPage({
 									<th>Tax ID</th>
 
 									<td className="account-details-body-table-description">
-										{maskDigits('12345')}
+										{maskDigits(
+											commerceAccount?.taxId ?? ''
+										)}
 									</td>
 								</tr>
 							</table>

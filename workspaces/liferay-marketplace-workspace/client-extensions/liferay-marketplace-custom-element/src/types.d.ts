@@ -106,6 +106,11 @@ type Channel = {
 	type: string;
 };
 
+interface CommerceAccount extends Omit<Account, 'description'> {
+	taxId: string;
+	logoURL: string;
+}
+
 type CommerceOption = {
 	id: number;
 	key: string;

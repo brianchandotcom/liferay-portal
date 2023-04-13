@@ -11,6 +11,7 @@ import {
 import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/PublishedAppsDashboardTableRow';
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
+	getAccountInfoFromCommerce,
 	getAccounts,
 	getMyUserAccount,
 	getProductSpecifications,
@@ -22,7 +23,6 @@ import {
 	DashboardListItems,
 	DashboardPage,
 } from '../DashBoardPage/DashboardPage';
-
 import {
 	AccountBriefProps,
 	MemberProps,
@@ -73,7 +73,6 @@ const memberTableHeaders = [
 
 const initialAccountsState: Account[] = [
 	{
-		customFields: {CatalogId: 0},
 		externalReferenceCode: '',
 		id: 0,
 		name: '',
@@ -90,6 +89,7 @@ interface PublishedAppTable {
 
 export function PublishedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountsState);
+	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
@@ -229,10 +229,16 @@ export function PublishedAppsDashboardPage() {
 
 	useEffect(() => {
 		(async () => {
-			const accountCatalogId = selectedAccount.customFields?.CatalogId;
+			const accountCustomField = selectedAccount.customFields?.find(
+				(customField) => customField.name === 'CatalogID'
+			);
 
-			if (accountCatalogId) {
-				if (accountCatalogId !== 0) {
+			if (accountCustomField) {
+				const accountCatalogId = Number(
+					accountCustomField.customValue.data
+				);
+
+				if (accountCatalogId && accountCatalogId !== 0) {
 					const appList = await getProducts();
 
 					const appListProductIds: number[] =
@@ -274,6 +280,11 @@ export function PublishedAppsDashboardPage() {
 							}
 						}
 					);
+
+					const commerceAccountResponse =
+						await getAccountInfoFromCommerce(selectedAccount.id);
+
+					setCommerceAccount(commerceAccountResponse);
 
 					setApps(newAppList);
 
@@ -424,47 +435,22 @@ export function PublishedAppsDashboardPage() {
 							return true;
 						}
 
-			const membersList = accountsListResponse.items.map(
-				(member: UserAccountProps) => {
-					return {
-						accountBriefs: member.accountBriefs,
-						dateCreated: member.dateCreated,
-						email: member.emailAddress,
-						image: member.image,
-						lastLoginDate: member.lastLoginDate,
-						name: member.name,
-						role: getRolesList(member.roleBriefs),
-						userId: member.id,
-					} as MemberProps;
-				}
-			);
+						return false;
+					}
+				);
 
-			let filteredMembersList: MemberProps[] = [];
-
-			filteredMembersList = membersList.filter((member: MemberProps) => {
-				if (
-					member.accountBriefs.find(
-						(accountBrief: AccountBriefProps) =>
-							accountBrief.externalReferenceCode ===
-							selectedAccount.externalReferenceCode
-					)
-				) {
-					return true;
-				}
->>>>>>> 6042bea (LPS-180755 Create Account Details Page)
-
-				return false;
-			});
-
-			setMembers(filteredMembersList);
+				setMembers(filteredMembersList);
+			}
 		})();
 	}, [selectedAccount]);
+
+	console.log(selectedAccount);
 
 	return (
 		<div className="published-apps-dashboard-page-container">
 			<DashboardNavigation
 				accountAppsNumber={apps.length.toString()}
-				accountIcon={accountLogo}
+				accountIcon={commerceAccount?.logoURL ?? accountLogo}
 				accounts={accounts}
 				currentAccount={selectedAccount}
 				dashboardNavigationItems={dashboardNavigationItems}
@@ -543,6 +529,7 @@ export function PublishedAppsDashboardPage() {
 
 			{selectedNavigationItem === 'Account' && (
 				<AccountDetailsPage
+					commerceAccount={commerceAccount}
 					dashboardNavigationItems={dashboardNavigationItems}
 					selectedAccount={selectedAccount}
 					setDashboardNavigationItems={setDashboardNavigationItems}

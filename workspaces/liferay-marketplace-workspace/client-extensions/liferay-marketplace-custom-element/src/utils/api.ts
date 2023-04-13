@@ -195,17 +195,13 @@ export async function getAccountInfo({accountId}: {accountId: number}) {
 	return response.json();
 }
 
-export async function getAccountInfoFromCommerce({
-	accountId,
-}: {
-	accountId: number;
-}) {
+export async function getAccountInfoFromCommerce(accountId: number) {
 	const response = await fetch(
 		`/o/headless-commerce-admin-account/v1.0/accounts/${accountId}`,
 		{headers, method: 'GET'}
 	);
 
-	return response.json();
+	return (await response.json()) as CommerceAccount;
 }
 
 export async function getAccounts() {

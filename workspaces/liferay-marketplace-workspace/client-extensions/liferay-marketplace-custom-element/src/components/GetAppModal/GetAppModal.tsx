@@ -138,9 +138,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			// The call for getAccountInfoFromCommerce is only temporary
 
-			const currentAccountCommerce = await getAccountInfoFromCommerce({
-				accountId,
-			});
+			const currentAccountCommerce = await getAccountInfoFromCommerce(
+				accountId
+			);
 
 			setAccount({
 				...currentAccount,

@@ -95,6 +95,22 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 							%>
 
 							<liferay-util:include page="/document_library/info_panel_location.jsp" servletContext="<%= application %>" />
+
+							<%
+							DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
+							%>
+
+							<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() %>">
+								<dt class="sidebar-dt">
+									<liferay-ui:message key="ratings" />
+								</dt>
+								<dd class="sidebar-dd">
+									<liferay-ratings:ratings
+										className="<%= DLFolderConstants.getClassName() %>"
+										classPK="<%= folder.getFolderId() %>"
+									/>
+								</dd>
+							</c:if>
 						</c:if>
 					</dl>
 				</liferay-ui:section>

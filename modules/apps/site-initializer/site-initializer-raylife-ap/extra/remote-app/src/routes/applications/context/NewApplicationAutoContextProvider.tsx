@@ -137,6 +137,7 @@ const VehicleInfoForm: VehicleInfoFormTypes[] = [
 export type InitialStateTypes = {
 	applicationId: string;
 	currentStep: number;
+	externalReferenceCode: string;
 	hasFormChanges: boolean;
 	isAbleToBeSave: boolean;
 	isAbleToNextStep: boolean;
@@ -171,6 +172,7 @@ export type InitialStateTypes = {
 const initialState: InitialStateTypes = {
 	applicationId: '',
 	currentStep: 0,
+	externalReferenceCode: '',
 	hasFormChanges: false,
 	isAbleToBeSave: false,
 	isAbleToNextStep: false,
@@ -203,7 +205,7 @@ const initialState: InitialStateTypes = {
 };
 
 export enum ACTIONS {
-	SET_APPLICATION_ID = 'SET_APPLICATION_ID',
+	SET_APPLICATION = 'SET_APPLICATION',
 	SET_CURRENT_STEP = 'SET_CURRENT_STEP',
 	SET_CONTACT_INFO_FORM = 'SET_CONTACT_INFO_FORM',
 	SET_VEHICLE_INFO_FORM = 'SET_VEHICLE_INFO_FORM',
@@ -223,7 +225,7 @@ export enum ACTIONS {
 }
 
 type ActionsPayload = {
-	[ACTIONS.SET_APPLICATION_ID]: {id: number};
+	[ACTIONS.SET_APPLICATION]: {externalReferenceCode: string; id: number};
 	[ACTIONS.SET_CONTACT_INFO_FORM]: ContactInfoFormTypes;
 	[ACTIONS.SET_COVERAGE_FORM]: CoverageFormTypes;
 	[ACTIONS.SET_CURRENT_STEP]: number;
@@ -268,10 +270,11 @@ export const NewApplicationAutoContext = createContext<
 
 const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 	switch (action.type) {
-		case ACTIONS.SET_APPLICATION_ID: {
+		case ACTIONS.SET_APPLICATION: {
 			return {
 				...state,
 				applicationId: action.payload.id.toString(),
+				externalReferenceCode: action.payload.externalReferenceCode,
 			};
 		}
 
@@ -592,6 +595,7 @@ const NewApplicationAutoContextProvider: React.FC<
 		const payload = {
 			applicationId: data.id,
 			currentStep: 0,
+			externalReferenceCode: data.externalReferenceCode,
 			hasFormChanges: false,
 			isAbleToBeSave: false,
 			isAbleToNextStep: true,

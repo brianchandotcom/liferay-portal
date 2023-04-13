@@ -20,28 +20,31 @@ import {
 } from '../../routes/applications/context/NewApplicationAutoContextProvider';
 
 export type NewApplicationFormStepsType = {
-	contactInfo: {
-		form: ContactInfoFormTypes;
-		index: number;
-		name: string;
-	};
-	coverage: {
-		form: CoverageFormTypes;
-		index: number;
-		name: string;
-	};
-	driverInfo: {
-		form: DriverInfoFormTypes[];
-		index: number;
-		name: string;
-	};
-	review: {
-		index: number;
-		name: string;
-	};
-	vehicleInfo: {
-		form: VehicleInfoFormTypes[];
-		index: number;
-		name: string;
+	externalReferenceCode: string;
+	steps: {
+		contactInfo: {
+			form: ContactInfoFormTypes;
+			index: number;
+			name: string;
+		};
+		coverage: {
+			form: CoverageFormTypes;
+			index: number;
+			name: string;
+		};
+		driverInfo: {
+			form: DriverInfoFormTypes[];
+			index: number;
+			name: string;
+		};
+		review: {
+			index: number;
+			name: string;
+		};
+		vehicleInfo: {
+			form: VehicleInfoFormTypes[];
+			index: number;
+			name: string;
+		};
 	};
 };

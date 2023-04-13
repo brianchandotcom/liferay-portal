@@ -41,23 +41,23 @@ definition {
 		task ("Then displays list of headless resources") {
 			FrontendDataSetAdmin.searchProvider(
 				dropdownLabel = "Choose an Option",
-				key_provider = "Liferay Headless Delivery");
+				key_provider = "Headless");
 
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "BlogPosting");
+				tagName = "headless-admin-address/v1.0");
 
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "SitePage");
+				tagName = "headless-admin-content/v1.0");
 
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "Language");
+				tagName = "headless-admin-list-type/v1.0");
 
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "WikiNode");
+				tagName = "headless-admin-taxonomy/v1.0");
 		}
 	}
 
@@ -73,13 +73,13 @@ definition {
 		task ("And When search for a known uniquely named headless provider") {
 			FrontendDataSetAdmin.searchProvider(
 				dropdownLabel = "Choose an Option",
-				key_provider = "DispatchTrigger");
+				key_provider = "/c/fdsentries");
 		}
 
 		task ("Then the suggested list is updated to have only 1 result for the search, and Then the suggested list contains the uniquely named headless provider") {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "DispatchTrigger");
+				tagName = "/c/fdsentries");
 		}
 	}
 

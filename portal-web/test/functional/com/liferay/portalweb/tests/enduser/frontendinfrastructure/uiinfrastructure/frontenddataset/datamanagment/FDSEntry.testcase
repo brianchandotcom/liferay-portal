@@ -43,27 +43,27 @@ definition {
 		task ("Given create 6 data sets") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset 1",
-				key_type = "Channel");
+				key_type = "/c/fdsentries");
 
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset 2",
-				key_type = "Account");
+				key_type = "/c/fdsentries");
 
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset 3",
-				key_type = "Cart");
+				key_type = "/c/fdsentries");
 
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset 4",
-				key_type = "DataLayout");
+				key_type = "/c/fdsentries");
 
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset 5",
-				key_type = "Diagram");
+				key_type = "/c/fdsentries");
 
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset 6",
-				key_type = "Form");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("When changing the page to 4 entries") {
@@ -101,7 +101,7 @@ definition {
 		task ("When Create a DataSet ") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "Liferay Analytics Settings REST");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("Then Confirm the name as expected") {
@@ -112,7 +112,7 @@ definition {
 
 		task ("And Confirm the Provider as expected") {
 			AssertElementPresent(
-				key_itemName = "Channel (Liferay Analytics Settings REST v1.0)",
+				key_itemName = "/c/fdsentries",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 	}
@@ -132,7 +132,7 @@ definition {
 		task ("When the user goes to add Datasets") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "Channel");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("And the user deletes a dataset") {
@@ -159,7 +159,7 @@ definition {
 		}
 
 		task ("And choose the provider named Channel") {
-			FrontendDataSetAdmin.selectProvider(key_type = "Channel");
+			FrontendDataSetAdmin.selectProvider(key_type = "/c/fdsentries");
 		}
 
 		task ("And clicking on the Save button") {
@@ -179,7 +179,7 @@ definition {
 		task ("When The user goes to add a new Dataset") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "Channel");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("And opening the dropdown menu") {
@@ -202,8 +202,8 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 
-		task ("And choose the Provider called channel") {
-			FrontendDataSetAdmin.selectProvider(key_type = "Channel");
+		task ("And choose the Provider called /c/fdsentries") {
+			FrontendDataSetAdmin.selectProvider(key_type = "/c/fdsentries");
 		}
 
 		task ("And clicking on the Save button") {
@@ -250,8 +250,8 @@ definition {
 			PortletEntry.inputName(name = "Test Dataset");
 		}
 
-		task ("And choose the Provider called channel ") {
-			FrontendDataSetAdmin.selectProvider(key_type = "Channel");
+		task ("And choose the Provider called /c/fdsentries ") {
+			FrontendDataSetAdmin.selectProvider(key_type = "/c/fdsentries");
 		}
 
 		task ("And clicking on the Cancel button ") {
@@ -273,7 +273,7 @@ definition {
 		task ("When the user goes to add Datasets") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "Channel");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("And the user deletes a dataset") {
@@ -303,7 +303,7 @@ definition {
 		task ("When The user goes to add a new Dataset") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "Channel");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("And When the user deletes a dataset") {
@@ -337,7 +337,7 @@ definition {
 		task ("When Create a DataSet") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Data Set ~!@#$%^&*(){}[],.<>/? name",
-				key_type = "Liferay Analytics Settings REST");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("Then confirm that the dataset is created and if the name is provided as expected") {
@@ -348,7 +348,7 @@ definition {
 
 		task ("And Then Confirm the Provider as expected") {
 			AssertElementPresent(
-				key_itemName = "Channel (Liferay Analytics Settings REST v1.0)",
+				key_itemName = "/c/fdsentries",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 	}

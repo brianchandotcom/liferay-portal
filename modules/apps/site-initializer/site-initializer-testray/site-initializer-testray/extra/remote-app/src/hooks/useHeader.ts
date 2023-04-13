@@ -12,16 +12,15 @@
  * details.
  */
 
-import {useCallback, useContext, useEffect, useRef} from 'react';
-
+import {useAtom} from 'jotai';
+import {useCallback, useEffect, useRef} from 'react';
 import {
 	Dropdown,
 	HeaderActions,
-	HeaderContext,
 	HeaderTabs,
 	HeaderTitle,
-	HeaderTypes,
-} from '../context/HeaderContext';
+	headerAtom,
+} from '~/atoms';
 
 type UseHeader = {
 	dropdown?: Dropdown;
@@ -45,12 +44,16 @@ const useHeader = ({
 	dropdown,
 	tabs = [],
 }: UseHeader = {}) => {
-	const [context, dispatch] = useContext(HeaderContext);
-
 	const dropdownRef = useRef(dropdown);
 	const headerActionsRef = useRef(headerActions);
 	const headingRef = useRef(heading);
 	const tabsRef = useRef(tabs);
+
+	const [, setDropdownAtom] = useAtom(headerAtom.dropdown);
+	const [, setHeaderActionsAtom] = useAtom(headerAtom.headerActions);
+	const [, setHeadingAtom] = useAtom(headerAtom.heading);
+	const [, setSymbolAtom] = useAtom(headerAtom.symbol);
+	const [, setTabsAtom] = useAtom(headerAtom.tabs);
 
 	const actTimeout = useCallback(
 		(fn: () => void) => {
@@ -61,53 +64,23 @@ const useHeader = ({
 		[shouldUpdate, timeout]
 	);
 
-	const setDropdown = useCallback(
-		(newDropdown: Dropdown) => {
-			dispatch({payload: newDropdown, type: HeaderTypes.SET_DROPDOWN});
-		},
-		[dispatch]
-	);
-
-	const setDropdownIcon = useCallback(
-		(newSymbol: string) => {
-			dispatch({
-				payload: newSymbol,
-				type: HeaderTypes.SET_SYMBOL,
-			});
-		},
-		[dispatch]
-	);
-
 	const setHeaderActions = useCallback(
 		(newActions: HeaderActions) => {
-			actTimeout(() =>
-				dispatch({
-					payload: newActions,
-					type: HeaderTypes.SET_HEADER_ACTIONS,
-				})
-			);
+			actTimeout(() => setHeaderActionsAtom(newActions));
 		},
-		[actTimeout, dispatch]
+		[actTimeout, setHeaderActionsAtom]
 	);
 
 	const setHeading = useCallback(
-		(newHeading: HeaderTitle[] = [], append?: boolean) => {
-			actTimeout(() =>
-				dispatch({
-					payload: {append, heading: newHeading},
-					type: HeaderTypes.SET_HEADING,
-				})
-			);
+		(newHeading: HeaderTitle[] = []) => {
+			actTimeout(() => setHeadingAtom(newHeading));
 		},
-		[actTimeout, dispatch]
+		[actTimeout, setHeadingAtom]
 	);
 
 	const setTabs = useCallback(
-		(newTabs: HeaderTabs[] = []) =>
-			actTimeout(() =>
-				dispatch({payload: newTabs, type: HeaderTypes.SET_TABS})
-			),
-		[actTimeout, dispatch]
+		(newTabs: HeaderTabs[] = []) => actTimeout(() => setTabsAtom(newTabs)),
+		[actTimeout, setTabsAtom]
 	);
 
 	useEffect(() => {
@@ -118,9 +91,9 @@ const useHeader = ({
 
 	useEffect(() => {
 		if (shouldUpdate && icon) {
-			setDropdownIcon(icon);
+			setSymbolAtom(icon);
 		}
-	}, [setDropdownIcon, shouldUpdate, icon]);
+	}, [setSymbolAtom, shouldUpdate, icon]);
 
 	useEffect(() => {
 		if (shouldUpdate && tabsRef.current) {
@@ -136,15 +109,13 @@ const useHeader = ({
 
 	useEffect(() => {
 		if (shouldUpdate && dropdownRef.current) {
-			setDropdown(dropdownRef.current);
+			setDropdownAtom(dropdownRef.current);
 		}
-	}, [setDropdown, shouldUpdate]);
+	}, [setDropdownAtom, shouldUpdate]);
 
 	return {
-		context,
-		dispatch,
-		setDropdown,
-		setDropdownIcon,
+		setDropdown: setDropdownAtom,
+		setDropdownIcon: setSymbolAtom,
 		setHeaderActions,
 		setHeading,
 		setTabs,

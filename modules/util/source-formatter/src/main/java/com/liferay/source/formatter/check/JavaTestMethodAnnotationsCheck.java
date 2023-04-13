@@ -162,11 +162,8 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				break;
 			}
 
-			String propsUtilAddPropertiesMethodCall =
-				JavaSourceUtil.getMethodCall(javaTerm.getContent(), x);
-
 			List<String> parameterList = JavaSourceUtil.getParameterList(
-				propsUtilAddPropertiesMethodCall);
+				JavaSourceUtil.getMethodCall(javaTerm.getContent(), x));
 
 			if ((parameterList.size() != 1) ||
 				!StringUtil.startsWith(
@@ -176,11 +173,8 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			String unicodePropertiesBuilderSetPropertyMethodCall =
-				JavaSourceUtil.getMethodCall(parameterList.get(0), 0);
-
 			parameterList = JavaSourceUtil.getParameterList(
-				unicodePropertiesBuilderSetPropertyMethodCall);
+				JavaSourceUtil.getMethodCall(parameterList.get(0), 0));
 
 			if ((parameterList.size() == 2) &&
 				StringUtil.startsWith(

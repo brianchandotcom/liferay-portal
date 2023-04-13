@@ -50,4 +50,6 @@ export default function AppRoutes({route}: AppRoutesProps) {
 			return <PublisherGatePage />;
 		}
 	}
+
+	return <></>;
 }

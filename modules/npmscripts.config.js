@@ -65,7 +65,8 @@ module.exports = {
 						'/': '*',
 
 						'clipboard': '*',
-
+						'cropperjs': '*',
+						'cropperjs/dist/cropper.css': '*',
 						'dagre': '*',
 						'date-fns': '*',
 						'dom-align': '*',
@@ -439,6 +440,8 @@ module.exports = {
 			'@liferay/frontend-data-set-web': [],
 			'@liferay/frontend-js-dependencies-web': [
 				'@liferay/js-api',
+				'cropperjs',
+				'cropperjs/dist/cropper.css',
 				'clipboard',
 				'dagre',
 				'date-fns',

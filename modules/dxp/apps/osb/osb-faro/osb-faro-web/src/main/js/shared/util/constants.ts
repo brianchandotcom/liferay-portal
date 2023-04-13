@@ -16,6 +16,12 @@ export const ENABLE_ASSET_CARD = false;
 
 export const ENABLE_CSVFILE = false;
 
+// LRAC-13389 Disable temporarily Delete Property and Delete Data Source buttons
+
+export const ENABLE_DELETE_DATA_SOURCE_BUTTON = false;
+
+export const ENABLE_DELETE_PROPERTY_BUTTON = false;
+
 // LRAC-11650 Hide Form Abandonment Card
 
 export const ENABLE_FORM_ABANDONMENT = false;

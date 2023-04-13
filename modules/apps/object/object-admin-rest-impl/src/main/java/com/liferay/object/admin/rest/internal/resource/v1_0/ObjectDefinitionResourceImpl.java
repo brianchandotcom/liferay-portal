@@ -551,7 +551,7 @@ public class ObjectDefinitionResourceImpl
 
 		if (objectRelationships != null) {
 			_objectRelationshipLocalService.deleteObjectRelationships(
-				objectDefinitionId);
+				objectDefinitionId, false);
 		}
 
 		ObjectValidationRule[] objectValidationRules =

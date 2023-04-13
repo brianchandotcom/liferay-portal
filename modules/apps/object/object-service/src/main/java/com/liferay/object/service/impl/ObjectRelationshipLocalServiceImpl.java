@@ -431,6 +431,20 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public void deleteObjectRelationships(
+			long objectDefinitionId1, boolean reverse)
+		throws PortalException {
+
+		for (ObjectRelationship objectRelationship :
+				objectRelationshipPersistence.findByODI1_R(
+					objectDefinitionId1, reverse)) {
+
+			objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+		}
+	}
+
+	@Override
 	public ObjectRelationship fetchObjectRelationshipByObjectDefinitionId(
 		long objectDefinitionId, String name) {
 

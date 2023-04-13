@@ -30,18 +30,6 @@ const ACTIONS = {
 
 	move({moveItemUrl}) {
 		openModal({
-			buttons: [
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('cancel'),
-					type: 'cancel',
-				},
-				{
-					displayType: 'primary',
-					label: Liferay.Language.get('move'),
-					type: 'confirm',
-				},
-			],
 			height: '50vh',
 			size: 'md',
 			title: Liferay.Language.get('move'),

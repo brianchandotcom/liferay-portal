@@ -2,8 +2,10 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property portal.proxy.path = "liferay";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property skip.clean-app-server-deploy-dir = "true";
 	property testray.main.component.name = "Deployment";
 
 	setUp {
@@ -13,23 +15,17 @@ definition {
 	@description = "Runs Proxy Path redirect path. When portal.proxy.path is set, all resources load properly."
 	@priority = 5
 	test ProxyPathRedirect {
+		property custom.properties = "web.server.forwarded.port.enabled=true${line.separator}web.server.host=localhost${line.separator}web.server.protocol=http";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "PortalProxyPath#ProxyPathRedirect";
 
 		// This test should be revisited when Webdriver4 is ready
-
-		task ("Given proxy server setup with liferay") {
-			property portal.acceptance = "true";
-			property portal.proxy.path = "liferay";
-			property web.server.forwarded.port.enabled = "true";
-			property web.server.host = "localhost";
-			property web.server.protocol = "http";
-		}
 
 		task ("When on default home page") {
 			Smoke.viewWelcomeContentPage();
 
 			Navigator.openSpecificURL(
-				url = "http://localhost:8080/${variable}/liferay",
+				url = "http://localhost:88/liferay/${variable}/liferay",
 				variable = "web");
 
 			Smoke.viewWelcomeContentPage();
@@ -44,8 +40,6 @@ definition {
 	@priority = 5
 	test Smoke {
 		property portal.acceptance = "true";
-		property portal.proxy.path = "liferay";
-		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "PortalProxyPath#Smoke";
 

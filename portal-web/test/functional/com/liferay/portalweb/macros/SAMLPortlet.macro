@@ -84,6 +84,15 @@ definition {
 			SAMLPortlet.addIdentityProviderConnectionCustomFieldAttributeMapping(idpCustomFieldAttributeMapping = ${idpCustomFieldAttributeMapping});
 		}
 
+		if (isSet(idpUserMembershipsAttributeMappingText)) {
+			SAMLPortlet.addIdentityProviderConnectionUserMembershipsAttributeMappingWithUserMemberships(
+				idpUserMembershipsAttributeMapping = ${idpUserMembershipsAttributeMapping},
+				idpUserMembershipsAttributeMappingText = ${idpUserMembershipsAttributeMappingText});
+		}
+		else if (isSet(idpUserMembershipsAttributeMapping)) {
+			SAMLPortlet.addIdentityProviderConnectionUserMembershipsAttributeMappingWithUserMemberships(idpUserMembershipsAttributeMapping = ${idpUserMembershipsAttributeMapping});
+		}
+
 		if (${userResolution} == "attribute") {
 			if (isSet(customFieldUserMatching)) {
 				Click(
@@ -196,6 +205,19 @@ definition {
 
 			var attributeRowId2 = ${attributeRowId2} + 1;
 		}
+	}
+
+	@description = "Adding User Group related Attribute mapping for Service provider at Identity Provider Connection configuration"
+	macro addIdentityProviderConnectionUserMembershipsAttributeMappingWithUserMemberships {
+		Select(
+			key_index = 0,
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_MEMBERSHIPS_EXPRESSION_DROPDOWN",
+			value1 = ${idpUserMembershipsAttributeMapping});
+
+		Type(
+			key_index = 0,
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_MEMBERSHIPS_ATTRIBUTE_TEXT",
+			value1 = ${idpUserMembershipsAttributeMappingText});
 	}
 
 	@description = "Add Identity Provider Connection with only the Name and Entity ID filled out"

@@ -19,12 +19,12 @@ import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
-import com.liferay.notification.context.NotificationContextBuilder;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -150,33 +152,29 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			_userNotificationEventLocalService.getUserNotificationEventsCount(
 				user1.getUserId()));
 
-		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
+		NotificationTemplate notificationTemplate =
+			notificationTemplateLocalService.addNotificationTemplate(
+				_createNotificationContext(
+					notificationRecipientSettings, recipientType));
+
+		objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				notificationTemplate.getNotificationTemplateId()
+			).build());
+
+		objectEntryLocalService.addObjectEntry(
 			user2.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 			randomObjectEntryValues,
 			ServiceContextTestUtil.getServiceContext());
-
-		sendNotification(
-			new NotificationContextBuilder(
-			).className(
-				objectDefinition.getClassName()
-			).classPK(
-				objectEntry.getObjectEntryId()
-			).notificationTemplate(
-				notificationTemplateLocalService.addNotificationTemplate(
-					_createNotificationContext(
-						notificationRecipientSettings, recipientType))
-			).termValues(
-				HashMapBuilder.<String, Object>put(
-					"creator", user2.getUserId()
-				).put(
-					"currentUserId", user2.getUserId()
-				).putAll(
-					randomObjectEntryValues
-				).build()
-			).userId(
-				user2.getUserId()
-			).build(),
-			NotificationConstants.TYPE_USER_NOTIFICATION);
 
 		notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationQueueEntries(

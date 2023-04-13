@@ -29,6 +29,7 @@ import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -58,10 +59,15 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.sql.Timestamp;
+
+import java.text.SimpleDateFormat;
+
 import java.time.Month;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -88,6 +94,21 @@ public class BaseNotificationTypeTest {
 			).put(
 				"textObjectField", RandomTestUtil.randomString()
 			).build();
+
+		termValues = LinkedHashMapBuilder.putAll(
+			randomObjectEntryValues
+		).put(
+			"dateObjectField",
+			() -> {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+				Date dateObjectField = formatter.parse(
+					formatter.format(
+						randomObjectEntryValues.get("dateObjectField")));
+
+				return new Timestamp(dateObjectField.getTime());
+			}
+		).build();
 
 		user1 = TestPropsValues.getUser();
 
@@ -245,7 +266,7 @@ public class BaseNotificationTypeTest {
 		return ListUtil.concat(
 			ListUtil.fromMapValues(_authorTermValues),
 			ListUtil.fromMapValues(_currentUserTermValues),
-			ListUtil.fromMapValues(randomObjectEntryValues));
+			ListUtil.fromMapValues(termValues));
 	}
 
 	protected void sendNotification(
@@ -266,6 +287,7 @@ public class BaseNotificationTypeTest {
 	protected static LinkedHashMap<String, Serializable>
 		randomObjectEntryValues;
 	protected static Role role;
+	protected static LinkedHashMap<String, Serializable> termValues;
 	protected static User user1;
 	protected static User user2;
 
@@ -282,6 +304,9 @@ public class BaseNotificationTypeTest {
 
 	@Inject
 	protected NotificationTemplateLocalService notificationTemplateLocalService;
+
+	@Inject
+	protected ObjectActionLocalService objectActionLocalService;
 
 	@Inject
 	protected ObjectEntryLocalService objectEntryLocalService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.internal.configuration;
+package com.liferay.site.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.site.internal.configuration.MenuAccessConfiguration",
+	id = "com.liferay.site.configuration.MenuAccessConfiguration",
 	localization = "content/Language"
 )
 public interface MenuAccessConfiguration {

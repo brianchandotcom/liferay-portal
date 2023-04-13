@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -52,7 +51,7 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionConfigurer {
 
 	@Override
 	public void apply(
-		Project project, Optional<ClientExtension> clientExtensionOptional,
+		Project project,
 		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);

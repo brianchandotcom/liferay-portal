@@ -34,12 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	service = {
-		LayoutLocalizationStagedModelDataHandler.class,
-		StagedModelDataHandler.class
-	}
-)
+@Component(service = StagedModelDataHandler.class)
 public class LayoutLocalizationStagedModelDataHandler
 	extends BaseStagedModelDataHandler<LayoutLocalization> {
 

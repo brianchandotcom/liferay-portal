@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.taglib.internal.util;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,13 +42,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Pavel Savinov
  */
-@Component(service = {})
 public class NavItemUtil {
 
 	public static List<NavItem> getBranchNavItems(
@@ -61,7 +58,10 @@ public class NavItemUtil {
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isDraftLayout()) {
-			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
+			LayoutLocalService layoutLocalService =
+				_layoutLocalServiceSnapshot.get();
+
+			layout = layoutLocalService.fetchLayout(layout.getClassPK());
 		}
 
 		if (layout.isRootLayout()) {
@@ -104,8 +104,12 @@ public class NavItemUtil {
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
 
+			SiteNavigationMenuItemTypeRegistry
+				siteNavigationMenuItemTypeRegistry =
+					_siteNavigationMenuItemTypeRegistrySnapshot.get();
+
 			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
+				siteNavigationMenuItemTypeRegistry.
 					getSiteNavigationMenuItemType(
 						siteNavigationMenuItem.getType());
 
@@ -191,14 +195,16 @@ public class NavItemUtil {
 			if (Validator.isNotNull(rootLayoutUuid)) {
 				Layout layout = themeDisplay.getLayout();
 
+				LayoutLocalService layoutLocalService =
+					_layoutLocalServiceSnapshot.get();
+
 				Layout rootLayout =
-					_layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layoutLocalService.fetchLayoutByUuidAndGroupId(
 						rootLayoutUuid, layout.getGroupId(), false);
 
 				if (rootLayout == null) {
-					rootLayout =
-						_layoutLocalService.fetchLayoutByUuidAndGroupId(
-							rootLayoutUuid, layout.getGroupId(), true);
+					rootLayout = layoutLocalService.fetchLayoutByUuidAndGroupId(
+						rootLayoutUuid, layout.getGroupId(), true);
 				}
 
 				if (rootLayout != null) {
@@ -221,36 +227,6 @@ public class NavItemUtil {
 		}
 
 		return rootNavItem.getChildren();
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteNavigationMenuItemLocalService(
-		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService) {
-
-		_siteNavigationMenuItemLocalService =
-			siteNavigationMenuItemLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteNavigationMenuItemService(
-		SiteNavigationMenuItemService siteNavigationMenuItemService) {
-
-		_siteNavigationMenuItemService = siteNavigationMenuItemService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSiteNavigationMenuItemTypeRegistry(
-		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry) {
-
-		_siteNavigationMenuItemTypeRegistry =
-			siteNavigationMenuItemTypeRegistry;
 	}
 
 	private static List<NavItem> _fromLayouts(
@@ -277,8 +253,11 @@ public class NavItemUtil {
 			boolean privateLayout, ThemeDisplay themeDisplay)
 		throws Exception {
 
+		LayoutLocalService layoutLocalService =
+			_layoutLocalServiceSnapshot.get();
+
 		List<Layout> layouts = ListUtil.copy(
-			_layoutLocalService.getLayouts(
+			layoutLocalService.getLayouts(
 				themeDisplay.getScopeGroupId(), privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
 
@@ -305,17 +284,27 @@ public class NavItemUtil {
 
 		try {
 			if (parentSiteNavigationMenuItemId == 0) {
-				return _siteNavigationMenuItemService.
-					getSiteNavigationMenuItems(
-						siteNavigationMenuId, parentSiteNavigationMenuItemId);
+				SiteNavigationMenuItemService siteNavigationMenuItemService =
+					_siteNavigationMenuItemServiceSnapshot.get();
+
+				return siteNavigationMenuItemService.getSiteNavigationMenuItems(
+					siteNavigationMenuId, parentSiteNavigationMenuItemId);
 			}
 
+			SiteNavigationMenuItemLocalService
+				siteNavigationMenuItemLocalService =
+					_siteNavigationMenuItemLocalServiceSnapshot.get();
+
 			SiteNavigationMenuItem parentSiteNavigationMenuItem =
-				_siteNavigationMenuItemLocalService.getSiteNavigationMenuItem(
+				siteNavigationMenuItemLocalService.getSiteNavigationMenuItem(
 					parentSiteNavigationMenuItemId);
 
+			SiteNavigationMenuItemTypeRegistry
+				siteNavigationMenuItemTypeRegistry =
+					_siteNavigationMenuItemTypeRegistrySnapshot.get();
+
 			SiteNavigationMenuItemType siteNavigationMenuItemType =
-				_siteNavigationMenuItemTypeRegistry.
+				siteNavigationMenuItemTypeRegistry.
 					getSiteNavigationMenuItemType(
 						parentSiteNavigationMenuItem.getType());
 
@@ -325,7 +314,10 @@ public class NavItemUtil {
 						httpServletRequest, parentSiteNavigationMenuItem);
 			}
 
-			return _siteNavigationMenuItemService.getSiteNavigationMenuItems(
+			SiteNavigationMenuItemService siteNavigationMenuItemService =
+				_siteNavigationMenuItemServiceSnapshot.get();
+
+			return siteNavigationMenuItemService.getSiteNavigationMenuItems(
 				siteNavigationMenuId, parentSiteNavigationMenuItemId);
 		}
 		catch (Exception exception) {
@@ -340,11 +332,17 @@ public class NavItemUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(NavItemUtil.class);
 
-	private static LayoutLocalService _layoutLocalService;
-	private static SiteNavigationMenuItemLocalService
-		_siteNavigationMenuItemLocalService;
-	private static SiteNavigationMenuItemService _siteNavigationMenuItemService;
-	private static SiteNavigationMenuItemTypeRegistry
-		_siteNavigationMenuItemTypeRegistry;
+	private static final Snapshot<LayoutLocalService>
+		_layoutLocalServiceSnapshot = new Snapshot<>(
+			NavItemUtil.class, LayoutLocalService.class);
+	private static final Snapshot<SiteNavigationMenuItemLocalService>
+		_siteNavigationMenuItemLocalServiceSnapshot = new Snapshot<>(
+			NavItemUtil.class, SiteNavigationMenuItemLocalService.class);
+	private static final Snapshot<SiteNavigationMenuItemService>
+		_siteNavigationMenuItemServiceSnapshot = new Snapshot<>(
+			NavItemUtil.class, SiteNavigationMenuItemService.class);
+	private static final Snapshot<SiteNavigationMenuItemTypeRegistry>
+		_siteNavigationMenuItemTypeRegistrySnapshot = new Snapshot<>(
+			NavItemUtil.class, SiteNavigationMenuItemTypeRegistry.class);
 
 }

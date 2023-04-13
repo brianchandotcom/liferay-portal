@@ -2076,10 +2076,14 @@ public abstract class BaseBuild implements Build {
 
 		JenkinsSlave jenkinsSlave = getJenkinsSlave();
 
+		String slaveOfflineRuleString = slaveOfflineRule.toString();
+
+		slaveOfflineRuleString = slaveOfflineRuleString.replace("\\", "\\\\");
+
 		String message = JenkinsResultsParserUtil.combine(
 			pinnedMessage, slaveOfflineRule.getName(), " failure detected at ",
 			getBuildURL(), ". ", jenkinsSlave.getName(),
-			" will be taken offline.\n\n", slaveOfflineRule.toString(),
+			" will be taken offline.\n\n", slaveOfflineRuleString,
 			"\n\n\nOffline Slave URL: https://", _jenkinsMaster.getName(),
 			".liferay.com/computer/", jenkinsSlave.getName(), "\n");
 

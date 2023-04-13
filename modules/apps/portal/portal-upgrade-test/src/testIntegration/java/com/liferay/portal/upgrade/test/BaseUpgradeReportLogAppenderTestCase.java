@@ -217,11 +217,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 					@Override
 					public void run() {
 						try {
-							long timeout = ReflectionTestUtil.getFieldValue(
-								PropsValues.class,
-								"UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT");
-
-							sleep((timeout + 5) * Time.SECOND);
+							sleep(5 * Time.SECOND);
 						}
 						catch (InterruptedException interruptedException) {
 							throw new RuntimeException(interruptedException);

@@ -95,18 +95,6 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		return builder.build();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesRegistry(
-		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry) {
-
-		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
 	private LocalizedValue _deserializeLocalizedValue(
 			String value, Locale defaultLocale)
 		throws PortalException {
@@ -241,7 +229,10 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormJSONDeserializer.class);
 
+	@Reference
 	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 }

@@ -242,60 +242,52 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	public void testGetDLStorageSizeInGb() throws Exception {
 		_appender.start();
 
-		try (SafeCloseable safeCloseable =
-				_setUpgradeReportDLStorageInfoTimeout(1)) {
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
 
-			Object upgradeReport = ReflectionTestUtil.getFieldValue(
-				_appender, "_upgradeReport");
+		ReflectionTestUtil.setFieldValue(
+			upgradeReport, "_documentLibrarySizeThread",
+			new Thread() {
 
-			ReflectionTestUtil.setFieldValue(
-				upgradeReport, "_documentLibrarySizeThread",
-				new Thread() {
+				@Override
+				public void run() {
+					ReflectionTestUtil.setFieldValue(
+						upgradeReport, "_documentLibrarySize", 1073742000);
+				}
 
-					@Override
-					public void run() {
-						ReflectionTestUtil.setFieldValue(
-							upgradeReport, "_documentLibrarySize", 1073742000);
-					}
+			});
 
-				});
+		_appender.stop();
 
-			_appender.stop();
-
-			_assertReport(
-				"Document library storage size: " +
-					LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US));
-		}
+		_assertReport(
+			"Document library storage size: " +
+				LanguageUtil.formatStorageSize(1073742000, LocaleUtil.US));
 	}
 
 	@Test
 	public void testGetDLStorageSizeInMb() throws Exception {
 		_appender.start();
 
-		try (SafeCloseable safeCloseable =
-				_setUpgradeReportDLStorageInfoTimeout(1)) {
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
 
-			Object upgradeReport = ReflectionTestUtil.getFieldValue(
-				_appender, "_upgradeReport");
+		ReflectionTestUtil.setFieldValue(
+			upgradeReport, "_documentLibrarySizeThread",
+			new Thread() {
 
-			ReflectionTestUtil.setFieldValue(
-				upgradeReport, "_documentLibrarySizeThread",
-				new Thread() {
+				@Override
+				public void run() {
+					ReflectionTestUtil.setFieldValue(
+						upgradeReport, "_documentLibrarySize", 1048576);
+				}
 
-					@Override
-					public void run() {
-						ReflectionTestUtil.setFieldValue(
-							upgradeReport, "_documentLibrarySize", 1048576);
-					}
+			});
 
-				});
+		_appender.stop();
 
-			_appender.stop();
-
-			_assertReport(
-				"Document library storage size: " +
-					LanguageUtil.formatStorageSize(1048576, LocaleUtil.US));
-		}
+		_assertReport(
+			"Document library storage size: " +
+				LanguageUtil.formatStorageSize(1048576, LocaleUtil.US));
 	}
 
 	@Test

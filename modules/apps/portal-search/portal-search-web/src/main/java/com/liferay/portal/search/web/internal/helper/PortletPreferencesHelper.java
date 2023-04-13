@@ -16,7 +16,8 @@ package com.liferay.portal.search.web.internal.helper;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.web.internal.util.SearchStringUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Optional;
 
@@ -30,37 +31,46 @@ public class PortletPreferencesHelper {
 	public PortletPreferencesHelper(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
-		_portletPreferencesOptional = portletPreferencesOptional;
+		_portletPreferences = portletPreferencesOptional.orElse(null);
 	}
 
 	public boolean getBoolean(String key, boolean defaultValue) {
-		Optional<Boolean> valueOptional = getBoolean(key);
-
-		return valueOptional.orElse(defaultValue);
+		return GetterUtil.getBoolean(_getValue(key), defaultValue);
 	}
 
 	public int getInteger(String key, int defaultValue) {
-		Optional<Integer> valueOptional = getInteger(key);
-
-		return valueOptional.orElse(defaultValue);
+		return GetterUtil.getInteger(_getValue(key), defaultValue);
 	}
 
-	public Optional<String> getString(String key) {
+	public String getString(String key) {
 		return _getValue(key);
 	}
 
 	public String getString(String key, String defaultValue) {
-		Optional<String> valueOptional = getString(key);
+		String value = getString(key);
 
-		return valueOptional.orElse(defaultValue);
+		if (value == null) {
+			return defaultValue;
+		}
+
+		return value;
 	}
 
-	private Optional<String> _getValue(String key) {
-		return _portletPreferencesOptional.flatMap(
-			portletPreferences -> SearchStringUtil.maybe(
-				portletPreferences.getValue(key, StringPool.BLANK)));
+	private String _getValue(String key) {
+		if (_portletPreferences == null) {
+			return null;
+		}
+
+		String value = StringUtil.trim(
+			_portletPreferences.getValue(key, StringPool.BLANK));
+
+		if (Validator.isBlank(value)) {
+			return null;
+		}
+
+		return value;
 	}
 
-	private final Optional<PortletPreferences> _portletPreferencesOptional;
+	private final PortletPreferences _portletPreferences;
 
 }

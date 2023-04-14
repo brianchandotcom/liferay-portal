@@ -1,5 +1,15 @@
 # Poshi Runner Change Log
 
+## 1.0.422
+
+### Core
+
+* [POSHI-516](https://issues.liferay.com/browse/POSHI-516) - Fix bug when setting a var to a method that passes in a value that contains an '='
+
+### Testing
+
+* [POSHI-515](https://issues.liferay.com/browse/POSHI-515) - Add unit tests for poshi resource jars
+
 ## 1.0.420
 
 ### Core

@@ -8,10 +8,18 @@
 		"type": "string"
 	},
 	{
-		"key": "elearningPlataform",
-		"name": "E-Learnig Plataform",
+		"key": "elearningPlatform",
+		"name": "E-learning Platform",
 		"name_i18n": {
-			"en-US": "E-Learnig Plataform"
+			"en-US": "E-learning Platform"
+		},
+		"type": "string"
+	},
+	{
+		"key": "integrationPlatform",
+		"name": "Integration Platform",
+		"name_i18n": {
+			"en-US": "Integration Platform"
 		},
 		"type": "string"
 	},
@@ -25,9 +33,9 @@
 	},
 	{
 		"key": "headlessPlataform",
-		"name": "Headless Plataform",
+		"name": "Headless Platform",
 		"name_i18n": {
-			"en-US": "Headless Plataform"
+			"en-US": "Headless Platform"
 		},
 		"type": "string"
 	},
@@ -48,26 +56,26 @@
 		"type": "string"
 	},
 	{
-		"key": "resellerDistributorDealerPortal",
-		"name": "Reseller/Distributor/Dealer Portal",
+		"key": "resellerDistributorPortal",
+		"name": "Reseller/Distributor Portal",
 		"name_i18n": {
-			"en-US": "Reseller/Distributor/Dealer Portal"
+			"en-US": "Reseller/Distributor Portal"
 		},
 		"type": "string"
 	},
 	{
-		"key": "studnetCapusPortal",
-		"name": "Studant/Campus Portal",
+		"key": "studnetCampusPortal",
+		"name": "Student/Campus Portal",
 		"name_i18n": {
-			"en-US": "Studant/Campus Portal"
+			"en-US": "Student/Campus Portal"
 		},
 		"type": "string"
 	},
 	{
-		"key": "vendorSupplierPortal",
-		"name": "Vendor/Suplier Portal",
+		"key": "dealerSupplierPortal",
+		"name": "Dealer/Supplier Portal",
 		"name_i18n": {
-			"en-US": "Vendor/Suplier Portal"
+			"en-US": "Dealer/Supplier Portal"
 		},
 		"type": "string"
 	}

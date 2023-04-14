@@ -1,9 +1,9 @@
 {
-	"externalReferenceCode": "Lead_Qualification__c",
+	"externalReferenceCode": "Project__c",
 	"label": {
-		"en_US": "Lead Qualification SF"
+		"en_US": "Project SF"
 	},
-	"name": "LeadQualificationSF",
+	"name": "ProjectSF",
 	"objectFields": [
 		{
 			"DBType": "String",
@@ -34,7 +34,7 @@
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
-			"externalReferenceCode": "Use_Case__c",
+			"externalReferenceCode": "Project_Solution_Use_Case__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -47,7 +47,7 @@
 		{
 			"DBType": "Clob",
 			"businessType": "LongText",
-			"externalReferenceCode": "Project_Solution_Categories__c",
+			"externalReferenceCode": "Project_Solution_Type__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -100,7 +100,7 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Lead Qualifications SF"
+		"en_US": "Project SF"
 	},
 	"scope": "company",
 	"storageType": "salesforce"

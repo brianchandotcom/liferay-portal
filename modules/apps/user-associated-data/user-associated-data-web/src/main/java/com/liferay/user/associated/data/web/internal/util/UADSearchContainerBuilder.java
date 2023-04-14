@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
@@ -80,28 +81,24 @@ public class UADSearchContainerBuilder {
 				renderRequest, currentURL, "name",
 				new String[] {"name", "count"});
 
-		List<UADEntity<?>> uadEntities = new ArrayList<>();
-
-		for (UADApplicationSummaryDisplay uadApplicationSummaryDisplay :
-				uadApplicationSummaryDisplays) {
-
-			if (Objects.equals(
-					uadApplicationSummaryDisplay.getApplicationKey(),
-					UADConstants.ALL_APPLICATIONS) ||
-				(uadApplicationSummaryDisplay.getCount() == 0)) {
-
-				continue;
-			}
-
-			uadEntities.add(
-				_constructApplicationSummaryUADEntity(
-					liferayPortletResponse, renderRequest, currentURL,
-					uadApplicationSummaryDisplay));
-		}
-
 		searchContainer.setResultsAndTotal(
 			ListUtil.sort(
-				uadEntities,
+				TransformUtil.transform(
+					uadApplicationSummaryDisplays,
+					uadApplicationSummaryDisplay -> {
+						if (Objects.equals(
+								uadApplicationSummaryDisplay.
+									getApplicationKey(),
+								UADConstants.ALL_APPLICATIONS) ||
+							(uadApplicationSummaryDisplay.getCount() == 0)) {
+
+							return null;
+						}
+
+						return _constructApplicationSummaryUADEntity(
+							liferayPortletResponse, renderRequest, currentURL,
+							uadApplicationSummaryDisplay);
+					}),
 				_getComparator(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType())));
@@ -147,19 +144,14 @@ public class UADSearchContainerBuilder {
 			LiferayPortletRequest liferayPortletRequest =
 				_portal.getLiferayPortletRequest(renderRequest);
 
-			List<UADEntity<?>> uadEntities = new ArrayList<>();
-
-			for (Object entity : entities) {
-				uadEntities.add(
-					_constructHierarchyUADEntity(
-						liferayPortletRequest, liferayPortletResponse,
-						applicationKey, entity, selectedUser.getUserId(),
-						uadHierarchyDisplay));
-			}
-
 			searchContainer.setResultsAndTotal(
 				ListUtil.sort(
-					uadEntities,
+					TransformUtil.transform(
+						entities,
+						entity -> _constructHierarchyUADEntity(
+							liferayPortletRequest, liferayPortletResponse,
+							applicationKey, entity, selectedUser.getUserId(),
+							uadHierarchyDisplay)),
 					_getComparator(
 						searchContainer.getOrderByCol(),
 						searchContainer.getOrderByType())));

@@ -3,12 +3,15 @@ definition {
 	macro selectSingleApprover {
 		Click.clickAt(locator1 = "Icon#INFO");
 
-		Click(locator1 = "WorkflowWebContent#KEBAB_DROPDOWN");
+		Click.waitForMenuToggleJSClick(
+			ariaLabel = "Show Actions",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-		Click(locator1 = "WorkflowWebContent#EDIT_OPTION_MENU");
+		MenuItem.clickNoError(menuItem = "Edit");
 
 		Select(
-			locator1 = "Select#WORKFLOW_DEFAULT",
+			key_fieldLabel = "Default Workflow for All Structures",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Single Approver");
 
 		Button.clickSave();

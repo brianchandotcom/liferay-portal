@@ -29,10 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author     Mika Koivisto
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Component(
-	property = "initial.deployment=true",
-	service = {SAPServiceVerifyProcess.class, VerifyProcess.class}
-)
+@Component(property = "initial.deployment=true", service = VerifyProcess.class)
 @Deprecated
 public class SAPServiceVerifyProcess extends VerifyProcess {
 

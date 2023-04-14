@@ -18,8 +18,8 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.web.internal.portlet.toolbar.contributor.BookmarksPortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
@@ -74,8 +74,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "/bookmarks/view.jsp";
 	}
 
-	@Reference
-	private BookmarksPortletToolbarContributor
-		_bookmarksPortletToolbarContributor;
+	@Reference(
+		target = "(component.name=com.liferay.bookmarks.web.internal.portlet.toolbar.contributor.BookmarksPortletToolbarContributor)"
+	)
+	private PortletToolbarContributor _bookmarksPortletToolbarContributor;
 
 }

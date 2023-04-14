@@ -63,10 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 		"mvc.render.command.name=-", "mvc.render.command.name=/bookmarks/view",
 		"mvc.render.command.name=/bookmarks/view_folder"
 	},
-	service = {
-		BookmarksPortletToolbarContributor.class,
-		PortletToolbarContributor.class
-	}
+	service = PortletToolbarContributor.class
 )
 public class BookmarksPortletToolbarContributor
 	extends BasePortletToolbarContributor {

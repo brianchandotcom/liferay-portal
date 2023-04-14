@@ -130,8 +130,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Assert.assertEquals("CONFLICT", problem.getStatus());
 
 			Assert.assertEquals(
-				"There is already a site with the same key",
-				problem.getTitle());
+				"A site with the same key already exists", problem.getTitle());
 		}
 	}
 
@@ -150,9 +149,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 
-			String title = problem.getTitle();
-
-			Assert.assertTrue(title.contains("Invalid site key"));
+			Assert.assertEquals("Site key is invalid", problem.getTitle());
 		}
 	}
 
@@ -193,8 +190,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 
-			Assert.assertEquals(
-				"Could not find parent site", problem.getTitle());
+			Assert.assertEquals("No site was found", problem.getTitle());
 		}
 	}
 

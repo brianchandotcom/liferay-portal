@@ -26,7 +26,7 @@ function _addItemToList(text) {
 	quoteComparsionList.appendChild(li);
 }
 
-const raylifeApplicationForm = JSON.parse(Liferay.Util.LocalStorage.getItem("raylife-application-form", Liferay.Util.SessionStorage.TYPES.NECESSARY));
+const raylifeApplicationForm = JSON.parse(Liferay.Util.LocalStorage.getItem("raylife-application-form", Liferay.Util.LocalStorage.TYPES.NECESSARY));
 const address = raylifeApplicationForm?.basics?.businessInformation?.business?.location;
 const productCategory = raylifeApplicationForm?.basics?.productCategory;
 const annualRevenue = raylifeApplicationForm?.employees?.estimatedAnnualGrossRevenue;

@@ -17,7 +17,7 @@ const urlPaths = pathname.split('/').filter(Boolean);
 const siteName = `/${urlPaths.slice(0, urlPaths.length - 1).join('/')}`;
 const applicationId = Liferay.Util.LocalStorage.getItem(
 	'raylife-application-id',
-	Liferay.Util.SessionStorage.TYPES.NECESSARY
+	Liferay.Util.LocalStorage.TYPES.NECESSARY
 );
 
 const NEXT_STEP_DELAY = 1000;

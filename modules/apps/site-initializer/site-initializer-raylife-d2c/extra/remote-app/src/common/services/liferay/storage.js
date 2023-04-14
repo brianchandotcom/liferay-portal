@@ -24,10 +24,7 @@ const liferayStorage = Liferay.Util.LocalStorage;
  * @param {*} key Storage Key
  */
 
-export function getItem(
-	key,
-	consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY
-) {
+export function getItem(key, consentType = liferayStorage.TYPES.NECESSARY) {
 	return liferayStorage.getItem(key, consentType);
 }
 
@@ -49,7 +46,7 @@ export function removeItem(key) {
 export function setItem(
 	key,
 	value,
-	consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY
+	consentType = liferayStorage.TYPES.NECESSARY
 ) {
 	liferayStorage.setItem(key, value, consentType);
 }

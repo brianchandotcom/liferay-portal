@@ -20,7 +20,7 @@ const contextualMessageIdKey = 'raylife-contextual-message';
 const valueCall = fragmentElement.querySelector('#value-number-call')
 	.textContent;
 
-const consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY;
+const consentType = Liferay.Util.LocalStorage.TYPES.NECESSARY;
 
 btnBack.onclick = function () {
 	Liferay.Util.LocalStorage.setItem(

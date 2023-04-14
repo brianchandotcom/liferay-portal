@@ -16,7 +16,7 @@ try {
 	const firstName = JSON.parse(
 		Liferay.Util.LocalStorage.getItem(
 			'raylife-application-form',
-			Liferay.Util.SessionStorage.TYPES.NECESSARY
+			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		)
 	).basics.businessInformation.firstName;
 

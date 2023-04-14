@@ -167,7 +167,7 @@ getQuoteForm.onsubmit = function (event) {
 	if (
 		Liferay.Util.LocalStorage.getItem(
 			'raylife-back-to-edit',
-			Liferay.Util.SessionStorage.TYPES.NECESSARY
+			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		)
 	) {
 		Liferay.Util.LocalStorage.removeItem('raylife-back-to-edit');
@@ -184,7 +184,7 @@ getQuoteForm.onsubmit = function (event) {
 		Liferay.Util.LocalStorage.setItem(
 			'raylife-product',
 			JSON.stringify(formProps),
-			Liferay.Util.SessionStorage.TYPES.NECESSARY
+			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		);
 
 		const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());

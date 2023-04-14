@@ -18,7 +18,7 @@ const headlessRaylifeQuoteAPI = 'o/c/raylifequotes';
 
 const applicationId = Liferay.Util.LocalStorage.getItem(
 	'raylife-application-id',
-	Liferay.Util.SessionStorage.TYPES.NECESSARY
+	Liferay.Util.LocalStorage.TYPES.NECESSARY
 );
 
 export async function getQuotes() {

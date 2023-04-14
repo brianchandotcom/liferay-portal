@@ -73,10 +73,10 @@ const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 			productName: cardSelected,
 		};
 
-		Liferay.Util.SessionStorage.setItem(
+		Liferay.Util.LocalStorage.setItem(
 			'raylife-ap-storage',
 			JSON.stringify(newApplicationStorage),
-			Liferay.Util.SessionStorage.TYPES.NECESSARY
+			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		);
 
 		getChannelId(selectedCard[0].channelName).then((response) => {
@@ -93,10 +93,10 @@ const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 			productName: name,
 		};
 
-		Liferay.Util.SessionStorage.setItem(
+		Liferay.Util.LocalStorage.setItem(
 			'raylife-ap-storage',
 			JSON.stringify(newApplicationStorage),
-			Liferay.Util.SessionStorage.TYPES.NECESSARY
+			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		);
 	};
 

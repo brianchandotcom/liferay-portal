@@ -13,7 +13,7 @@
  * details.
  */
 
-const consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY;
+const consentType = Liferay.Util.LocalStorage.TYPES.NECESSARY;
 
 const applicationId = Liferay.Util.LocalStorage.getItem(
 	'raylife-application-id',

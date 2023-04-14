@@ -173,12 +173,13 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "page-sizes"), "pageSizes", true),
+						_language.get(locale, "list-of-items-per-page"),
+						"listOfItemsPerPage", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 						ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
-						_language.get(locale, "default-page-size"),
-						"defaultPageSize", true)));
+						_language.get(locale, "default-items-per-page"),
+						"defaultItemsPerPage", true)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId());

@@ -35,87 +35,86 @@ function Pagination({
 	fdsViewsURL,
 	namespace,
 }: IPaginationProps) {
-	const [pageSizes, setPageSizes] = useState(fdsView.pageSizes);
-	const [defaultPageSize, setDefaultPageSize] = useState(
-		fdsView.defaultPageSize.toString()
+	const [listOfItemsPerPage, setListOfItemsPerPage] = useState(
+		fdsView.listOfItemsPerPage
+	);
+	const [defaultItemsPerPage, setDefaultItemsPerPage] = useState(
+		fdsView.defaultItemsPerPage.toString()
 	);
 	const [
-		incompatibleDefaultPageSizeValidationError,
-		setIncompatibleDefaultPageSizeValidationError,
+		incompatibleDefaultItemsPerPageValidationError,
+		setIncompatibleDefaultItemsPerPageValidationError,
 	] = useState(false);
 	const [
-		invalidNumberInPageSizesValidationError,
-		setInvalidNumberInPageSizesValidationError,
+		invalidNumberInListOfItemsPerPageValidationError,
+		setInvalidNumberInListOfItemsPerPageValidationError,
 	] = useState(false);
 	const [
-		requiredDefaultPageSizeValidationError,
-		setRequiredDefaultPageSizeValidationError,
+		requiredDefaultItemsPerPageValidationError,
+		setRequiredDefaultItemsPerPageValidationError,
 	] = useState(false);
 	const [
-		requiredPageSizesValidationError,
-		setRequiredPageSizesValidationError,
+		requiredListOfItemsPerPageValidationError,
+		setRequiredListOfItemsPerPageValidationError,
 	] = useState(false);
 	const [
-		invalidPageSizesLengthValidationError,
-		setInvalidPageSizesLengthValidationError,
+		invalidListOfItemsPerPageLengthValidationError,
+		setInvalidListOfItemsPerPageLengthValidationError,
 	] = useState(false);
 
-	const fdsViewPageSizesRef = useRef<HTMLInputElement>(null);
-	const fdsViewDefaultPageSizeRef = useRef<HTMLInputElement>(null);
+	const fdsViewListOfItemsPerPageRef = useRef<HTMLInputElement>(null);
+	const fdsViewDefaultItemsPerPageRef = useRef<HTMLInputElement>(null);
 
-	const getPageSizesArray = (): string[] => {
-		return pageSizes.trim().split(/\s*(?:,|$)\s*/);
+	const getItemsPerPageArray = (): string[] => {
+		return listOfItemsPerPage.split(',').map((size) => size.trim());
 	};
 
-	const pageSizesFieldValidation = (pageSizesArray: string[]) => {
-		if (pageSizesArray.length > 25) {
-			setInvalidPageSizesLengthValidationError(true);
+	const listOfItemsPerPageFieldValidation = (itemsPerPageArray: string[]) => {
+		if (itemsPerPageArray.length > 25) {
+			setInvalidListOfItemsPerPageLengthValidationError(true);
 		}
 		else {
-			setInvalidPageSizesLengthValidationError(false);
+			setInvalidListOfItemsPerPageLengthValidationError(false);
 		}
 
-		const invalidNumber = pageSizesArray.some((element) => {
+		const invalidNumber = itemsPerPageArray.some((element) => {
 			const isNumber = /^\d+$/.test(element);
-			const pageSize: number = parseInt(element, 10);
+			const item: number = parseInt(element, 10);
 
-			return !isNumber || pageSize < 1 || pageSize > 1000;
+			return !isNumber || item < 1 || item > 1000;
 		});
 
-		if (invalidNumber) {
-			setInvalidNumberInPageSizesValidationError(true);
-		}
-		else {
-			setInvalidNumberInPageSizesValidationError(false);
-		}
+		setInvalidNumberInListOfItemsPerPageValidationError(invalidNumber);
 	};
 
-	const compatibilityValidation = (pageSizesArray: string[]) => {
-		if (!pageSizesArray.includes(defaultPageSize)) {
-			setIncompatibleDefaultPageSizeValidationError(true);
+	const compatibilityValidation = (itemsPerPageArray: string[]) => {
+		if (!itemsPerPageArray.includes(defaultItemsPerPage)) {
+			setIncompatibleDefaultItemsPerPageValidationError(true);
 		}
 		else {
-			setIncompatibleDefaultPageSizeValidationError(false);
+			setIncompatibleDefaultItemsPerPageValidationError(false);
 		}
 	};
 
 	const handleSaveClick = async () => {
-		const getPageSizesString = () => {
-			const uniquePageSizesArray = [...new Set(getPageSizesArray())];
+		const getItemsPerPageString = () => {
+			const uniqueItemsPerPageArray = [
+				...new Set(getItemsPerPageArray()),
+			];
 
-			const sortedPageSizesArray = uniquePageSizesArray
+			const sortedItemsPerPageArray = uniqueItemsPerPageArray
 				.map((element) => parseInt(element, 10))
 				.sort((a, b) => a - b);
 
-			return sortedPageSizesArray.join(', ');
+			return sortedItemsPerPageArray.join(', ');
 		};
 
-		const pageSizesString = getPageSizesString();
+		const itemsPerPage = getItemsPerPageString();
 
 		const body = {
-			defaultPageSize,
+			defaultItemsPerPage,
 			label: fdsView.label,
-			pageSizes: pageSizesString,
+			listOfItemsPerPage: itemsPerPage,
 		};
 
 		const response = await fetch(
@@ -139,7 +138,7 @@ function Pagination({
 				),
 				type: 'success',
 			});
-			setPageSizes(pageSizesString);
+			setListOfItemsPerPage(itemsPerPage);
 		}
 		else {
 			openToast({
@@ -151,14 +150,14 @@ function Pagination({
 		}
 	};
 
-	const pageSizesValidationError =
-		requiredPageSizesValidationError ||
-		invalidNumberInPageSizesValidationError ||
-		invalidPageSizesLengthValidationError;
+	const listOfItemsPerPageValidationError =
+		requiredListOfItemsPerPageValidationError ||
+		invalidNumberInListOfItemsPerPageValidationError ||
+		invalidListOfItemsPerPageLengthValidationError;
 
-	const defaultPageSizeValidationError =
-		incompatibleDefaultPageSizeValidationError ||
-		requiredDefaultPageSizeValidationError;
+	const defaultItemsPerPageValidationError =
+		incompatibleDefaultItemsPerPageValidationError ||
+		requiredDefaultItemsPerPageValidationError;
 
 	return (
 		<ClayLayout.Sheet className="mt-3" size="lg">
@@ -177,10 +176,12 @@ function Pagination({
 			<ClayLayout.SheetSection>
 				<ClayForm.Group
 					className={classnames(
-						pageSizesValidationError && 'has-error'
+						listOfItemsPerPageValidationError && 'has-error'
 					)}
 				>
-					<label htmlFor={`${namespace}fdsViewPageSizesTextarea`}>
+					<label
+						htmlFor={`${namespace}fdsViewListOfItemsPerPageTextarea`}
+					>
 						{Liferay.Language.get('list-of-items-per-page')}
 
 						<RequiredMark />
@@ -188,35 +189,39 @@ function Pagination({
 
 					<ClayInput
 						component="textarea"
-						id={`${namespace}fdsViewPageSizesTextarea`}
+						id={`${namespace}fdsViewListOfItemsPerPageTextarea`}
 						onBlur={() => {
-							const pageSizesArray = getPageSizesArray();
+							const itemsPerPageArray = getItemsPerPageArray();
 
-							pageSizesFieldValidation(pageSizesArray);
+							listOfItemsPerPageFieldValidation(
+								itemsPerPageArray
+							);
 
-							compatibilityValidation(pageSizesArray);
+							compatibilityValidation(itemsPerPageArray);
 
-							setRequiredPageSizesValidationError(
-								!fdsViewPageSizesRef.current?.value
+							setRequiredListOfItemsPerPageValidationError(
+								!fdsViewListOfItemsPerPageRef.current?.value
 							);
 						}}
-						onChange={(event) => setPageSizes(event.target.value)}
-						ref={fdsViewPageSizesRef}
+						onChange={(event) =>
+							setListOfItemsPerPage(event.target.value)
+						}
+						ref={fdsViewListOfItemsPerPageRef}
 						required
 						type="text"
-						value={pageSizes}
+						value={listOfItemsPerPage}
 					/>
 
-					{pageSizesValidationError && (
+					{listOfItemsPerPageValidationError && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{requiredPageSizesValidationError
+								{requiredListOfItemsPerPageValidationError
 									? Liferay.Language.get(
 											'this-field-is-required'
 									  )
-									: invalidNumberInPageSizesValidationError
+									: invalidNumberInListOfItemsPerPageValidationError
 									? Liferay.Language.get(
 											'this-field-contains-an-invalid-number'
 									  )
@@ -234,11 +239,11 @@ function Pagination({
 
 				<ClayForm.Group
 					className={classnames(
-						defaultPageSizeValidationError && 'has-error'
+						defaultItemsPerPageValidationError && 'has-error'
 					)}
 				>
 					<label
-						htmlFor={`${namespace}fdsViewPaginationDefaultPageSizeInput`}
+						htmlFor={`${namespace}fdsViewDefaultItemsPerPageInput`}
 					>
 						{Liferay.Language.get('default-items-per-page')}
 
@@ -246,28 +251,28 @@ function Pagination({
 					</label>
 
 					<ClayInput
-						id={`${namespace}fdsViewPaginationDefaultPageSizeInput`}
+						id={`${namespace}fdsViewDefaultItemsPerPageInput`}
 						onBlur={() => {
-							compatibilityValidation(getPageSizesArray());
+							compatibilityValidation(getItemsPerPageArray());
 
-							setRequiredDefaultPageSizeValidationError(
-								!fdsViewDefaultPageSizeRef.current?.value
+							setRequiredDefaultItemsPerPageValidationError(
+								!fdsViewDefaultItemsPerPageRef.current?.value
 							);
 						}}
 						onChange={(event) =>
-							setDefaultPageSize(event.target.value)
+							setDefaultItemsPerPage(event.target.value)
 						}
-						ref={fdsViewDefaultPageSizeRef}
+						ref={fdsViewDefaultItemsPerPageRef}
 						type="number"
-						value={defaultPageSize}
+						value={defaultItemsPerPage}
 					/>
 
-					{defaultPageSizeValidationError && (
+					{defaultItemsPerPageValidationError && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{requiredDefaultPageSizeValidationError
+								{requiredDefaultItemsPerPageValidationError
 									? Liferay.Language.get(
 											'this-field-is-required'
 									  )
@@ -288,8 +293,8 @@ function Pagination({
 				<ClayButton.Group spaced>
 					<ClayButton
 						disabled={
-							pageSizesValidationError ||
-							defaultPageSizeValidationError
+							listOfItemsPerPageValidationError ||
+							defaultItemsPerPageValidationError
 						}
 						onClick={handleSaveClick}
 					>

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.redirect.internal.provider;
+package com.liferay.redirect.internal.matcher;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration;
-import com.liferay.redirect.provider.CrawlerUserAgentsProvider;
+import com.liferay.redirect.matcher.UserAgentMatcher;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -34,10 +34,9 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration",
-	service = CrawlerUserAgentsProvider.class
+	service = UserAgentMatcher.class
 )
-public class CrawlerUserAgentsProviderImpl
-	implements CrawlerUserAgentsProvider {
+public class UserAgentMatcherImpl implements UserAgentMatcher {
 
 	@Override
 	public boolean isCrawlerUserAgent(String userAgent) {

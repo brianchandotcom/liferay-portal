@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.internal.configuration.RedirectPatternConfiguration;
 import com.liferay.redirect.internal.util.PatternUtil;
+import com.liferay.redirect.matcher.UserAgentMatcher;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.model.RedirectPatternEntry;
-import com.liferay.redirect.provider.CrawlerUserAgentsProvider;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
@@ -147,10 +147,10 @@ public class RedirectProviderImpl
 			PatternUtil.parse(redirectPatternConfiguration.patternStrings()));
 	}
 
-	protected void setCrawlerUserAgentsProvider(
-		CrawlerUserAgentsProvider crawlerUserAgentsProvider) {
+	protected void setCrawlerUserAgentsMatcher(
+		UserAgentMatcher userAgentMatcher) {
 
-		_crawlerUserAgentsProvider = crawlerUserAgentsProvider;
+		_userAgentMatcher = userAgentMatcher;
 	}
 
 	protected void setRedirectEntryLocalService(
@@ -178,8 +178,8 @@ public class RedirectProviderImpl
 			return true;
 		}
 
-		boolean crawlerUserAgent =
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(userAgent);
+		boolean crawlerUserAgent = _userAgentMatcher.isCrawlerUserAgent(
+			userAgent);
 
 		if (crawlerUserAgent &&
 			Objects.equals(
@@ -208,9 +208,6 @@ public class RedirectProviderImpl
 		}
 	}
 
-	@Reference
-	private CrawlerUserAgentsProvider _crawlerUserAgentsProvider;
-
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
 
 	@Reference
@@ -218,6 +215,9 @@ public class RedirectProviderImpl
 
 	private Map<Long, List<RedirectPatternEntry>> _redirectPatternEntries =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private UserAgentMatcher _userAgentMatcher;
 
 	private static class RedirectImpl implements Redirect {
 

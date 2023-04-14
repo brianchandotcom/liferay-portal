@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.redirect.constants.RedirectConstants;
+import com.liferay.redirect.matcher.UserAgentMatcher;
 import com.liferay.redirect.model.RedirectPatternEntry;
-import com.liferay.redirect.provider.CrawlerUserAgentsProvider;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
@@ -58,8 +58,7 @@ public class RedirectProviderImplTest {
 
 		PropsUtil.setProps(_props);
 
-		_redirectProviderImpl.setCrawlerUserAgentsProvider(
-			_crawlerUserAgentsProvider);
+		_redirectProviderImpl.setCrawlerUserAgentsMatcher(_userAgentMatcher);
 
 		_redirectProviderImpl.setRedirectEntryLocalService(
 			_redirectEntryLocalService);
@@ -217,7 +216,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternDoesntMatchUserAgentBot() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			false
 		);
@@ -245,7 +244,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternDoesntMatchUserAgentHuman() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			true
 		);
@@ -273,7 +272,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternMatchesNoUserAgent() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			true
 		);
@@ -322,7 +321,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternMatchesUserAgentBot() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			true
 		);
@@ -350,7 +349,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternMatchUserAgentBotNoFF() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			false
 		);
@@ -378,7 +377,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternMatchUserAgentHumanNoFF() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			true
 		);
@@ -421,7 +420,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternSingleMatchesUserAgentAll() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			true
 		);
@@ -449,7 +448,7 @@ public class RedirectProviderImplTest {
 	@Test
 	public void testSimplePatternSingleMatchesUserAgentHuman() {
 		Mockito.when(
-			_crawlerUserAgentsProvider.isCrawlerUserAgent(Mockito.anyString())
+			_userAgentMatcher.isCrawlerUserAgent(Mockito.anyString())
 		).thenReturn(
 			false
 		);
@@ -519,9 +518,6 @@ public class RedirectProviderImplTest {
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
-	private final CrawlerUserAgentsProvider _crawlerUserAgentsProvider =
-		Mockito.mock(CrawlerUserAgentsProvider.class);
-
 	@Mock
 	private Props _props;
 
@@ -529,5 +525,7 @@ public class RedirectProviderImplTest {
 		Mockito.mock(RedirectEntryLocalService.class);
 	private final RedirectProviderImpl _redirectProviderImpl =
 		new RedirectProviderImpl();
+	private final UserAgentMatcher _userAgentMatcher = Mockito.mock(
+		UserAgentMatcher.class);
 
 }

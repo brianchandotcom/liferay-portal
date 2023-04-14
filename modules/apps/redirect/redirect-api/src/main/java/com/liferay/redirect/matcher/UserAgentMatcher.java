@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.redirect.provider;
+package com.liferay.redirect.matcher;
 
 /**
  * @author Alicia García
  */
-public interface CrawlerUserAgentsProvider {
+public interface UserAgentMatcher {
 
 	public boolean isCrawlerUserAgent(String userAgent);
 

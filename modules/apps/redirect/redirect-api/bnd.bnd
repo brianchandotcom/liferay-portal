@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.redirect.configuration,\
 	com.liferay.redirect.constants,\
 	com.liferay.redirect.exception,\
+	com.liferay.redirect.matcher,\
 	com.liferay.redirect.model,\
 	com.liferay.redirect.provider,\
 	com.liferay.redirect.service,\

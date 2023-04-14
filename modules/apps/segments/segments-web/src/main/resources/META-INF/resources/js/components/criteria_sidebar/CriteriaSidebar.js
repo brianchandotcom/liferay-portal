@@ -16,8 +16,8 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {propertyGroupShape} from '../../utils/types.es';
-import CriteriaSidebarCollapse from './CriteriaSidebarCollapse.es';
-import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar.es';
+import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
+import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
 
 export default function CriteriaSidebar({
 	onTitleClicked,

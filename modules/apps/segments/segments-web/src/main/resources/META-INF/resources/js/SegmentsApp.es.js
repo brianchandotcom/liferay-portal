@@ -15,7 +15,7 @@
 import React from 'react';
 
 import ThemeContext from './ThemeContext.es';
-import SegmentEdit from './components/segment_edit/SegmentEdit.es';
+import SegmentEdit from './components/segment_edit/SegmentEdit';
 
 export default function ({context, props}) {
 	return (

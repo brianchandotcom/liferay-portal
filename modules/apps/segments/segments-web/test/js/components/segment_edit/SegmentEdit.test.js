@@ -17,7 +17,7 @@ import {fireEvent, render, waitFor} from '@testing-library/react';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
-import SegmentEdit from '../../../../src/main/resources/META-INF/resources/js/components/segment_edit/SegmentEdit.es';
+import SegmentEdit from '../../../../src/main/resources/META-INF/resources/js/components/segment_edit/SegmentEdit';
 
 const PROPERTY_GROUPS_BASIC = [
 	{

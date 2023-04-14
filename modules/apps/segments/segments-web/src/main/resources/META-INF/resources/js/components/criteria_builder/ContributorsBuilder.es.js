@@ -24,7 +24,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {contributorShape, propertyGroupShape} from '../../utils/types.es';
 import {getPluralMessage} from '../../utils/utils';
-import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar.es';
+import CriteriaSidebar from '../criteria_sidebar/CriteriaSidebar';
 import Conjunction from './Conjunction.es';
 import CriteriaBuilder from './CriteriaBuilder.es';
 import EmptyPlaceholder from './EmptyPlaceholder.es';

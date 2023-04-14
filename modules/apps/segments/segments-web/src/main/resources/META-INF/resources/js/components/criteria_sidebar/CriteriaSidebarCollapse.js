@@ -22,7 +22,7 @@ import React from 'react';
 import {PROPERTY_TYPES} from '../../utils/constants';
 import {propertyGroupShape} from '../../utils/types.es';
 import {jsDatetoYYYYMMDD} from '../../utils/utils';
-import CriteriaSidebarItem from './CriteriaSidebarItem.es';
+import CriteriaSidebarItem from './CriteriaSidebarItem';
 
 /**
  * Returns a default value for a property provided.

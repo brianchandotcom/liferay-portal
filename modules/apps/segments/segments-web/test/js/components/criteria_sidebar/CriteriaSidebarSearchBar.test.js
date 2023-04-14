@@ -16,7 +16,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
-import CriteriaSidebarSearchBar from '../../../../src/main/resources/META-INF/resources/js/components/criteria_sidebar/CriteriaSidebarSearchBar.es';
+import CriteriaSidebarSearchBar from '../../../../src/main/resources/META-INF/resources/js/components/criteria_sidebar/CriteriaSidebarSearchBar';
 
 const SEARCH_BUTTON_TESTID = 'search-button';
 

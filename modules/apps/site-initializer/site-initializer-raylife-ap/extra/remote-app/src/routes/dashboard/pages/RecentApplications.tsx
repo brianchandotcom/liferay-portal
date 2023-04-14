@@ -23,6 +23,7 @@ import {
 	deleteApplicationByExternalReferenceCode,
 	getApplications,
 } from '../../../common/services';
+import {Liferay} from '../../../common/services/liferay/liferay';
 import formatDate from '../../../common/utils/dateFormatter';
 import {redirectTo} from '../../../common/utils/liferay';
 import LoadingIndicator from '../../applications/components/LoadingIndicator';
@@ -170,7 +171,7 @@ const RecentApplications = () => {
 	};
 
 	useEffect(() => {
-		localStorage.removeItem('raylife-ap-storage');
+		Liferay.Util.LocalStorage.removeItem('raylife-ap-storage');
 		getApplications(PARAMETERS).then((results) => {
 			const applicationsList: TableContent[] = [];
 			results?.data?.items.forEach(

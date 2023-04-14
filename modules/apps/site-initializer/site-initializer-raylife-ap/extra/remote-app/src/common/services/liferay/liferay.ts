@@ -21,10 +21,19 @@ interface IThemeDisplay {
 	getUserName: () => string;
 }
 
+export type LiferayStorage = Storage & {
+	getItem(key: string, consentType: string): string | null;
+	setItem(key: string, value: string, consentType: string): void;
+};
+
 export type LiferayOnAction<T> = (payload: T) => void;
 
 interface ILiferay {
 	ThemeDisplay: IThemeDisplay;
+	Util: {
+		LocalStorage: LiferayStorage & {TYPES: {[key: string]: string}};
+		SessionStorage: LiferayStorage & {TYPES: {[key: string]: string}};
+	};
 	authToken: string;
 	detach: <T = any>(eventName: string, action?: (payload: T) => void) => void;
 	on: <T = any>(eventName: string, action?: (payload: T) => void) => void;
@@ -37,6 +46,8 @@ declare global {
 	}
 }
 
+const TYPES = {};
+
 export const Liferay = window.Liferay || {
 	ThemeDisplay: {
 		getCompanyGroupId: () => 0,
@@ -45,6 +56,10 @@ export const Liferay = window.Liferay || {
 		getSiteGroupId: () => 0,
 		getUserId: () => '',
 		getUserName: () => 'Test Test',
+	},
+	Util: {
+		LocalStorage: Object.assign(localStorage, {TYPES}),
+		SessionStorage: Object.assign(sessionStorage, {TYPES}),
 	},
 	authToken: '',
 	publish: '',

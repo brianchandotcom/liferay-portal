@@ -21,6 +21,7 @@ import {
 	getChannelId,
 	getProductsByCategory,
 } from '../../../common/services/commerce-catalog';
+import {Liferay} from '../../../common/services/liferay/liferay';
 import LoadingIndicator from '../components/LoadingIndicator';
 
 type InsuranceProductsProps = {
@@ -72,9 +73,10 @@ const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 			productName: cardSelected,
 		};
 
-		localStorage.setItem(
+		Liferay.Util.SessionStorage.setItem(
 			'raylife-ap-storage',
-			JSON.stringify(newApplicationStorage)
+			JSON.stringify(newApplicationStorage),
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
 		);
 
 		getChannelId(selectedCard[0].channelName).then((response) => {
@@ -91,9 +93,10 @@ const InsuranceProducts: React.FC<InsuranceProductsProps> = ({
 			productName: name,
 		};
 
-		localStorage.setItem(
+		Liferay.Util.SessionStorage.setItem(
 			'raylife-ap-storage',
-			JSON.stringify(newApplicationStorage)
+			JSON.stringify(newApplicationStorage),
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
 		);
 	};
 

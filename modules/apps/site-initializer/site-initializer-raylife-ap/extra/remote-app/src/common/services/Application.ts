@@ -56,7 +56,10 @@ export function deleteApplicationByExternalReferenceCode(
 	);
 }
 
-const products: string = localStorage.getItem('raylife-ap-storage') as string;
+const products = Liferay.Util.LocalStorage.getItem(
+	'raylife-ap-storage',
+	Liferay.Util.LocalStorage.TYPES.NECESSARY
+) as string;
 
 const adaptToFormApplicationRequest = (
 	state: NewApplicationFormStepsType,

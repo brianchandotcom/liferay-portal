@@ -43,7 +43,8 @@ const WhatsNewModal = () => {
 	);
 
 	useEffect(() => {
-		localStorage.removeItem('raylife-ap-storage');
+		Liferay.Util.LocalStorage.removeItem('raylife-ap-storage');
+
 		const handler = () => setVisible(!visible);
 
 		Liferay.on('openSettingsModalEvent', handler);

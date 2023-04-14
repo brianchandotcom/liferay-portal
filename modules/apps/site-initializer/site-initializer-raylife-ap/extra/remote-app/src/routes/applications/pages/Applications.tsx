@@ -95,11 +95,13 @@ const Applications = () => {
 	);
 
 	useEffect(() => {
-		localStorage.removeItem('raylife-ap-storage');
-		const handler = () => setVisible(!visible);
-		setContentModal(ModalType.insurance);
+		Liferay.Util.LocalStorage.removeItem('raylife-ap-storage');
 
+		const handler = () => setVisible(!visible);
+
+		setContentModal(ModalType.insurance);
 		setIsLoading(true);
+
 		setTimeout(() => setIsLoading(false), 1000);
 
 		Liferay.on('openModalEvent', handler);

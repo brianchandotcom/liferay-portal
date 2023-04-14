@@ -17,6 +17,7 @@ package com.liferay.object.action.executor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +28,8 @@ public interface ObjectActionExecutor {
 
 	public static int UNRESTRICTED_BY_COMPANY = 0;
 
-	public static List<String> UNRESTRICTED_BY_OBJECT_DEFINITIONS = null;
+	public static List<String> UNRESTRICTED_BY_OBJECT_DEFINITIONS =
+		Collections.emptyList();
 
 	public void execute(
 			long companyId, UnicodeProperties parametersUnicodeProperties,

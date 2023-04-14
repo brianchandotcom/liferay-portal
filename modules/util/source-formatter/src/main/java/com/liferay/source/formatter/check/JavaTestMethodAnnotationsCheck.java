@@ -41,7 +41,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (!javaTerm.isPublic() || !fileName.endsWith("Test.java")) {
+		if (!fileName.endsWith("Test.java")) {
 			return javaTerm.getContent();
 		}
 
@@ -51,19 +51,23 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		_checkAnnotationForMethod(
-			fileName, javaTerm, "^tearDown(?!Class)", false, "After",
-			"AfterEach");
-		_checkAnnotationForMethod(
-			fileName, javaTerm, "^tearDownClass", true, "AfterAll",
-			"AfterClass");
-		_checkAnnotationForMethod(
-			fileName, javaTerm, "^setUp(?!Class)", false, "Before",
-			"BeforeEach");
-		_checkAnnotationForMethod(
-			fileName, javaTerm, "^setUpClass", true, "BeforeAll",
-			"BeforeClass");
-		_checkAnnotationForMethod(fileName, javaTerm, "^test", false, "Test");
+		if (javaTerm.isPublic()) {
+			_checkAnnotationForMethod(
+				fileName, javaTerm, "^tearDown(?!Class)", false, "After",
+				"AfterEach");
+			_checkAnnotationForMethod(
+				fileName, javaTerm, "^tearDownClass", true, "AfterAll",
+				"AfterClass");
+			_checkAnnotationForMethod(
+				fileName, javaTerm, "^setUp(?!Class)", false, "Before",
+				"BeforeEach");
+			_checkAnnotationForMethod(
+				fileName, javaTerm, "^setUpClass", true, "BeforeAll",
+				"BeforeClass");
+			_checkAnnotationForMethod(
+				fileName, javaTerm, "^test", false, "Test");
+		}
+
 		_checkFeatureFlagsAnnotation(fileName, javaTerm);
 
 		return javaTerm.getContent();
@@ -184,8 +188,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					"Use annotation @FeatureFlags instead of PropsUtil." +
-						"addProperties for feature flag for " +
-							javaTerm.getName(),
+						"addProperties for feature flag",
 					javaTerm.getLineNumber() +
 						getLineNumber(javaTermContent, x) - 1);
 			}

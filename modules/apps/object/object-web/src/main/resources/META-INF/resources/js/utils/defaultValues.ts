@@ -12,14 +12,7 @@
  * details.
  */
 
-export function filterSettings(
-	settingsToFilter: string[],
-	values: Partial<ObjectField>
-) {
-	return values.objectFieldSettings!.filter(
-		(setting) => !settingsToFilter.includes(setting.name)
-	);
-}
+import {removeFieldSettings} from './fieldSettings';
 
 export function getDefaultValueFieldSettings(values: Partial<ObjectField>) {
 	const defaultValueTypeSetting = values.objectFieldSettings!.find(
@@ -63,7 +56,7 @@ export function getUpdatedDefaultValueFieldSettings(
 		},
 	];
 
-	const filteredObjectFieldSettings = filterSettings(
+	const filteredObjectFieldSettings = removeFieldSettings(
 		['defaultValueType', 'defaultValue'],
 		values
 	);
@@ -75,7 +68,7 @@ export function getUpdatedDefaultValueType(
 	values: Partial<ObjectField>,
 	newDefaultValueType: string
 ) {
-	const filteredObjectFieldSettings = filterSettings(
+	const filteredObjectFieldSettings = removeFieldSettings(
 		['defaultValueType', 'defaultValue'],
 		values
 	);

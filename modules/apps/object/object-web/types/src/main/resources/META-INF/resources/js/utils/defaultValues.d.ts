@@ -12,10 +12,6 @@
  * details.
  */
 
-export declare function filterSettings(
-	settingsToFilter: string[],
-	values: Partial<ObjectField>
-): ObjectFieldSetting[];
 export declare function getDefaultValueFieldSettings(
 	values: Partial<ObjectField>
 ): {
@@ -24,6 +20,7 @@ export declare function getDefaultValueFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]

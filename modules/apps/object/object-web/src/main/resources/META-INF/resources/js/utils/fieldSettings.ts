@@ -32,6 +32,15 @@ export function normalizeFieldSettings(
 	return settings;
 }
 
+export function removeFieldSettings(
+	settingsToRemove: ObjectFieldSettingName[],
+	values: Partial<ObjectField>
+): ObjectFieldSetting[] {
+	return values.objectFieldSettings!.filter(
+		(setting) => !settingsToRemove.includes(setting.name)
+	);
+}
+
 export function updateFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] = [],
 	{name, value}: ObjectFieldSetting

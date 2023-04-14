@@ -26,11 +26,11 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
 import {
-	filterSettings,
 	getDefaultValueFieldSettings,
 	getUpdatedDefaultValueFieldSettings,
 	getUpdatedDefaultValueType,
 } from '../../../../utils/defaultValues';
+import {removeFieldSettings} from '../../../../utils/fieldSettings';
 import PicklistDefaultValueSelect from '../../DefaultValueFields/PicklistDefaultValueSelect';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
@@ -95,7 +95,7 @@ export function DefaultValueContainer({
 	const handleToggle = (toggled: boolean) => {
 		if (!toggled) {
 			setValues({
-				objectFieldSettings: filterSettings(
+				objectFieldSettings: removeFieldSettings(
 					['defaultValueType', 'defaultValue'],
 					values
 				),

@@ -168,6 +168,10 @@ export declare function normalizeFieldSettings(
 		| ObjectFieldFilterSetting[]
 		| undefined;
 };
+export declare function removeFieldSettings(
+	settingsToRemove: ObjectFieldSettingName[],
+	values: Partial<ObjectField>
+): ObjectFieldSetting[];
 export declare function updateFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined,
 	{name, value}: ObjectFieldSetting

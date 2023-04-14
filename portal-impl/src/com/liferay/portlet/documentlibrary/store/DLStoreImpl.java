@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.exception.DirectoryNameException;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.store.StoreArea;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
@@ -173,7 +174,20 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public void deleteDirectory(
-		long companyId, long repositoryId, String dirName) {
+			long companyId, long repositoryId, String dirName)
+		throws PortalException {
+
+		for (String fileName :
+				_store.getFileNames(companyId, repositoryId, dirName)) {
+
+			for (String versionLabel :
+					_store.getFileVersions(companyId, repositoryId, fileName)) {
+
+				_copy(
+					StoreArea.DELETED, companyId, repositoryId, fileName,
+					versionLabel);
+			}
+		}
 
 		_store.deleteDirectory(companyId, repositoryId, dirName);
 	}
@@ -186,6 +200,10 @@ public class DLStoreImpl implements DLStore {
 
 		for (String versionLabel :
 				_store.getFileVersions(companyId, repositoryId, fileName)) {
+
+			_copy(
+				StoreArea.DELETED, companyId, repositoryId, fileName,
+				versionLabel);
 
 			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
@@ -200,6 +218,10 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false, versionLabel);
 
 		try {
+			_copy(
+				StoreArea.DELETED, companyId, repositoryId, fileName,
+				versionLabel);
+
 			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (AccessDeniedException accessDeniedException) {
@@ -421,6 +443,10 @@ public class DLStoreImpl implements DLStore {
 				_store.getFileAsStream(
 					companyId, repositoryId, fileName, versionLabel));
 
+			_copy(
+				StoreArea.DELETED, companyId, repositoryId, fileName,
+				versionLabel);
+
 			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
 	}
@@ -485,6 +511,10 @@ public class DLStoreImpl implements DLStore {
 
 		_store.addFile(
 			companyId, repositoryId, fileName, toVersionLabel, inputStream);
+
+		_copy(
+			StoreArea.DELETED, companyId, repositoryId, fileName,
+			fromVersionLabel);
 
 		_store.deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
 	}
@@ -609,6 +639,25 @@ public class DLStoreImpl implements DLStore {
 			inputStream);
 
 		_validateVersionLabel(versionLabel);
+	}
+
+	private void _copy(
+			StoreArea storeArea, long companyId, long repositoryId,
+			String fileName, String versionLabel)
+		throws PortalException {
+
+		try (InputStream inputStream = _store.getFileAsStream(
+				companyId, repositoryId, fileName, versionLabel)) {
+
+			StoreArea.withStoreArea(
+				storeArea,
+				() -> _store.addFile(
+					companyId, repositoryId, fileName, versionLabel,
+					inputStream));
+		}
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
+		}
 	}
 
 	private void _validateVersionLabel(String versionLabel)

@@ -1804,13 +1804,7 @@ definition {
 		}
 
 		task ("Checking if the results bar not appears") {
-			AssertTextNotPresent(
-				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
-				value1 = "1 ");
-
-			AssertTextNotPresent(
-				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
-				value1 = "Item Selected");
+			AssertElementNotPresent(locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE");
 		}
 	}
 

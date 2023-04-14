@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {openSelectionModal} from 'frontend-js-web';
 import propTypes from 'prop-types';
@@ -74,14 +75,14 @@ function SelectEntityInput({
 		<>
 			<div className="criterion-input input-group select-entity-input">
 				<div className="input-group-item input-group-prepend">
-					<input
+					<ClayInput
 						data-testid="entity-select-input"
 						disabled={disabled}
 						type="hidden"
 						value={value}
 					/>
 
-					<input
+					<ClayInput
 						aria-label={`${propertyLabel}: ${Liferay.Language.get(
 							'select-option'
 						)}`}

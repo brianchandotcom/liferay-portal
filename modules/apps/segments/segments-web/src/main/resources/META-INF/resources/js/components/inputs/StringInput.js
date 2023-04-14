@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClaySelectWithOption} from '@clayui/form';
+import {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import classNames from 'classnames';
 import propTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -36,7 +36,7 @@ function StringInput({
 	};
 
 	return !options.length ? (
-		<input
+		<ClayInput
 			aria-label={`${propertyLabel}: ${Liferay.Language.get(
 				'input-a-value'
 			)}`}

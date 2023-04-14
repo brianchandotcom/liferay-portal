@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClaySelectWithOption} from '@clayui/form';
+import {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -34,7 +34,7 @@ function DecimalInput({
 	};
 
 	return !options.length ? (
-		<input
+		<ClayInput
 			aria-label={`${propertyLabel}: ${Liferay.Language.get(
 				'input-a-value'
 			)}`}

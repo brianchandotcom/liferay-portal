@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -78,7 +79,7 @@ function CollectionInput({
 
 	return (
 		<>
-			<input
+			<ClayInput
 				aria-label={`${propertyLabel}: ${Liferay.Language.get(
 					'input-a-key'
 				)}`}
@@ -92,7 +93,7 @@ function CollectionInput({
 				value={key}
 			/>
 
-			<input
+			<ClayInput
 				aria-label={`${propertyLabel}: ${Liferay.Language.get(
 					'input-a-value'
 				)}`}

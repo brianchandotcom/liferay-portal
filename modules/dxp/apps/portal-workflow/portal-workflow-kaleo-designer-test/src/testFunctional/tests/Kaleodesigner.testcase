@@ -663,33 +663,6 @@ definition {
 		KaleoDesigner.viewConnectorNotPresent(connectorLabel = "Approve");
 	}
 
-	@priority = 3
-	test DeleteWorkflowDefinitionDraft {
-		property test.name.skip.portal.instance = "Kaleodesigner#DeleteWorkflowDefinitionDraft";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		Workflow.saveDefinition();
-
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition");
-
-		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
-	}
-
 	@priority = 5
 	test EditAssignmentsForTaskNodeKDCP {
 		property portal.acceptance = "true";

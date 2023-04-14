@@ -16,6 +16,7 @@ package com.liferay.frontend.data.set.taglib.internal.servlet;
 
 import com.liferay.frontend.data.set.filter.FDSFilterSerializer;
 import com.liferay.frontend.data.set.view.FDSViewSerializer;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -26,18 +27,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Chema Balsas
  * @author Marko Cikos
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static FDSFilterSerializer getFDSFilterSerializer() {
-		return _fdsFilterSerializer;
+		return _fdsFilterSerializerSnapshot.get();
 	}
 
 	public static String getFDSSettingsNamespace(
@@ -53,7 +50,9 @@ public class ServletContextUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		sb.append(_portal.getPortletNamespace(portletDisplay.getId()));
+		Portal portal = _portalSnapshot.get();
+
+		sb.append(portal.getPortletNamespace(portletDisplay.getId()));
 
 		sb.append(StringPool.POUND);
 		sb.append(themeDisplay.getPlid());
@@ -64,43 +63,24 @@ public class ServletContextUtil {
 	}
 
 	public static FDSViewSerializer getFDSViewSerializer() {
-		return _fdsViewSerializer;
+		return _fdsViewSerializerSnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContext;
+		return _servletContextSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setFDSFilterSerializer(
-		FDSFilterSerializer fdsFilterSerializer) {
-
-		_fdsFilterSerializer = fdsFilterSerializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFDSViewSerializer(
-		FDSViewSerializer fdsDisplayViewSerializer) {
-
-		_fdsViewSerializer = fdsDisplayViewSerializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.data.set.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private static FDSFilterSerializer _fdsFilterSerializer;
-	private static FDSViewSerializer _fdsViewSerializer;
-	private static Portal _portal;
-	private static ServletContext _servletContext;
+	private static final Snapshot<FDSFilterSerializer>
+		_fdsFilterSerializerSnapshot = new Snapshot<>(
+			ServletContextUtil.class, FDSFilterSerializer.class);
+	private static final Snapshot<FDSViewSerializer>
+		_fdsViewSerializerSnapshot = new Snapshot<>(
+			ServletContextUtil.class, FDSViewSerializer.class);
+	private static final Snapshot<Portal> _portalSnapshot = new Snapshot<>(
+		ServletContextUtil.class, Portal.class);
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.frontend.data.set.taglib)");
 
 }

@@ -15,27 +15,19 @@
 package com.liferay.frontend.data.set.sample.web.internal.view.util;
 
 import com.liferay.frontend.data.set.view.FDSViewSerializer;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Marko Cikos
  */
-@Component(service = {})
 public class FDSViewSerializerUtil {
 
 	public static FDSViewSerializer getFDSViewSerializer() {
-		return _fdsViewSerializer;
+		return _fdsViewSerializerSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setFDSViewSerializer(
-		FDSViewSerializer fdsDisplayViewSerializer) {
-
-		_fdsViewSerializer = fdsDisplayViewSerializer;
-	}
-
-	private static FDSViewSerializer _fdsViewSerializer;
+	private static final Snapshot<FDSViewSerializer>
+		_fdsViewSerializerSnapshot = new Snapshot<>(
+			FDSViewSerializerUtil.class, FDSViewSerializer.class);
 
 }

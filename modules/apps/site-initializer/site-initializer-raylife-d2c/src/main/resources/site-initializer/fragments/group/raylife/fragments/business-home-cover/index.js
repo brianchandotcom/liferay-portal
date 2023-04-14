@@ -179,7 +179,8 @@ getQuoteForm.onsubmit = function (event) {
 				'<span class="form-feedback-indicator"></span> Enter a valid 5 digit Zip';
 			zipContainer.classList.add('has-error');
 		}
-	} else {
+	}
+	else {
 		Liferay.Util.LocalStorage.setItem(
 			'raylife-product',
 			JSON.stringify(formProps),

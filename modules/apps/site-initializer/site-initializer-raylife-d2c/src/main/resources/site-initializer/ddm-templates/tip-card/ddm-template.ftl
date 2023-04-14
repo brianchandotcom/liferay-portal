@@ -103,10 +103,10 @@
 		}
 
 		window.location.href = siteName + '/get-a-quote';
-		
+
 		Liferay.Util.LocalStorage.setItem(
-			'raylife-back-to-edit', 
-			true, 
+			'raylife-back-to-edit',
+			true,
 			Liferay.Util.SessionStorage.TYPES.NECESSARY
 		);
 	}

@@ -25,7 +25,8 @@ try {
 			'quote-comparison-user-first-name'
 		).innerHTML = firstName;
 	}
-} catch (error) {
+}
+catch (error) {
 	document.getElementById('quote-comparison-user-first-name').innerHTML =
 		'Sam';
 }

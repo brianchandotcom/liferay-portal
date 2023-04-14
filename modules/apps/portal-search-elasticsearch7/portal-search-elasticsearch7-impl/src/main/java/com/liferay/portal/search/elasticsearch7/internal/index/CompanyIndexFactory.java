@@ -35,7 +35,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
-import com.liferay.portal.search.index.BlueGreenIndexManager;
+import com.liferay.portal.search.index.ConcurrentReindexManager;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 import com.liferay.portal.search.spi.settings.IndexSettingsContributor;
@@ -72,9 +72,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(service = {BlueGreenIndexManager.class, IndexFactory.class})
+@Component(service = {ConcurrentReindexManager.class, IndexFactory.class})
 public class CompanyIndexFactory
-	implements BlueGreenIndexManager, ElasticsearchConfigurationObserver,
+	implements ConcurrentReindexManager, ElasticsearchConfigurationObserver,
 			   IndexFactory {
 
 	@Override
@@ -86,7 +86,7 @@ public class CompanyIndexFactory
 	}
 
 	@Override
-	public void createGreenIndex(long companyId) throws Exception {
+	public void createNextIndex(long companyId) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664") ||
 			(companyId == CompanyConstants.SYSTEM)) {
 
@@ -125,7 +125,7 @@ public class CompanyIndexFactory
 	}
 
 	@Override
-	public void deleteGreenIndex(long companyId) {
+	public void deleteNextIndex(long companyId) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
 			return;
 		}
@@ -186,7 +186,7 @@ public class CompanyIndexFactory
 	}
 
 	@Override
-	public void replaceBlueIndexWithGreenIndex(long companyId)
+	public void replaceCurrentIndexWithNextIndex(long companyId)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664") ||

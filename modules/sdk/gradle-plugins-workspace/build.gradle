@@ -87,11 +87,16 @@ copyGradleTestDependencies {
 }
 
 copyGradleTestProjects {
+	ext {
+		autoClean = false
+	}
+
 	from("src/gradleTest/flexibleLayoutWildcard") {
 		include "modules/**"
 		include "themes/**"
 		include "wars/**"
 	}
+
 	into "src/gradleTest/excludePatterns"
 }
 

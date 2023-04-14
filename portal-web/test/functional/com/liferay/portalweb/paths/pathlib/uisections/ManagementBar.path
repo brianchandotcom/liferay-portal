@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>VIEW_BUTTON</td>
-	<td>//nav[contains(@class,'management-bar')]//*[(@title="Show View Options")][*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
+	<td>//nav[contains(@class,'management-bar')]//button[contains(@aria-label,'Select View')]//*[contains(@class,'icon-${key_text}')]</td>
 	<td></td>
 </tr>
 </tbody>

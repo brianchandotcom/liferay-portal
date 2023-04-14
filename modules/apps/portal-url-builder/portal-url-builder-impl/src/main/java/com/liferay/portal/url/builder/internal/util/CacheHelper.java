@@ -28,7 +28,6 @@ import java.net.URL;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -105,7 +104,7 @@ public class CacheHelper {
 	}
 
 	private String _digest(Bundle bundle, String path) {
-		ConcurrentMap<String, String> digests = _digests.computeIfAbsent(
+		Map<String, String> digests = _digests.computeIfAbsent(
 			bundle.getBundleId(), key -> new ConcurrentHashMap<>());
 
 		String cacheKey = StringBundler.concat(
@@ -156,7 +155,7 @@ public class CacheHelper {
 
 	private BundleContext _bundleContext;
 	private BundleListener _bundleListener;
-	private final Map<Long, ConcurrentMap<String, String>> _digests =
+	private final Map<Long, Map<String, String>> _digests =
 		new ConcurrentHashMap<>();
 	private long _lastRestartTime;
 

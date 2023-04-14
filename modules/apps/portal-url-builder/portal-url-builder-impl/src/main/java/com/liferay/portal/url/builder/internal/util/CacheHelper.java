@@ -110,8 +110,10 @@ public class CacheHelper {
 		String cacheKey = StringBundler.concat(
 			bundle.getBundleId(), StringPool.COLON, path);
 
-		if (digests.containsKey(cacheKey)) {
-			return digests.get(cacheKey);
+		String digest = digests.get(cacheKey);
+
+		if (digest == _NULL_HOLDER) {
+			return null;
 		}
 
 		URL url = bundle.getResource(path);
@@ -124,13 +126,13 @@ public class CacheHelper {
 						bundle.getSymbolicName()));
 			}
 
-			digests.put(cacheKey, null);
+			digests.put(cacheKey, _NULL_HOLDER);
 
 			return null;
 		}
 
 		try (InputStream inputStream = url.openStream()) {
-			String digest = DigesterUtil.digestBase64("SHA-1", inputStream);
+			digest = DigesterUtil.digestBase64("SHA-1", inputStream);
 
 			digests.put(cacheKey, digest);
 
@@ -145,11 +147,13 @@ public class CacheHelper {
 					ioException);
 			}
 
-			digests.put(cacheKey, null);
+			digests.put(cacheKey, _NULL_HOLDER);
 
 			return null;
 		}
 	}
+
+	private static final String _NULL_HOLDER = "NULL_HOLDER";
 
 	private static final Log _log = LogFactoryUtil.getLog(CacheHelper.class);
 

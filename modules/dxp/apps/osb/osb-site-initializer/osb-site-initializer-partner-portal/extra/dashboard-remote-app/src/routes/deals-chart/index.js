@@ -126,7 +126,7 @@ export default function () {
 			},
 			grid: {
 				y: {
-					lines: [{value: 100}, {value: 300}, {value: 400}],
+					lines: [{value: 100}, {value: 200}, {value: 300}],
 				},
 			},
 		};

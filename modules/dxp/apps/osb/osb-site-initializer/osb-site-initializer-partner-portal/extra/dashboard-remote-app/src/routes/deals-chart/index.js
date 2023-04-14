@@ -109,7 +109,7 @@ export default function () {
 			data: {
 				colors: dealsChartColumnColors,
 				columns: [
-					['x', '1', '2', '3', '4'],
+					['x', 'Q1', 'Q2', 'Q3', 'Q4'],
 					['Submitted', ...leadsChartValues?.submitted],
 					['Approved', ...opportunitiesChartValues?.approved],
 					['Rejected', ...totalRejectedChartValues],
@@ -152,7 +152,17 @@ export default function () {
 		}
 
 		return (
-			<ClayChart bar={chart.bar} data={chart.data} grid={chart.grid} />
+			<ClayChart
+				axis={{
+					x: {
+						show: true,
+						type: 'category',
+					},
+				}}
+				bar={chart.bar}
+				data={chart.data}
+				grid={chart.grid}
+			/>
 		);
 	};
 

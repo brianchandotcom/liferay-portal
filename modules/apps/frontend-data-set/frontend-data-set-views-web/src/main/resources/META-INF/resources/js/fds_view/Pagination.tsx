@@ -289,7 +289,13 @@ function Pagination({
 
 			<ClayLayout.SheetFooter>
 				<ClayButton.Group spaced>
-					<ClayButton onClick={handleSaveClick}>
+					<ClayButton
+						disabled={
+							pageSizesValidationError ||
+							defaultPageSizeValidationError
+						}
+						onClick={handleSaveClick}
+					>
 						{Liferay.Language.get('save')}
 					</ClayButton>
 

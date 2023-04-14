@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ADD_SUGGESTIONS_BUTTON</td>
+	<td>//button[contains(@aria-label,'Suggestion Contributor')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHARACTER_THRESHOLD_FOR_DISPLAYING_SUGGESTIONS</td>
 	<td>//input[contains(@name,'suggestionsDisplayThreshold')]</td>
 	<td></td>
@@ -41,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUGGESTION_CONTRIBUTOR_ACTIVITY</td>
+	<td>//div[contains(@class,'input-sets-item-root')][${key_suggestionContributorOrder}]//button[contains(@aria-label,'Suggestion Contributor')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUGGESTION_CONTRIBUTOR_SELECT</td>
 	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_suggestionContributor}')]</td>
 	<td></td>
@@ -48,6 +58,11 @@
 <tr>
 	<td>SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME</td>
 	<td>//div[contains(@class,'input-sets-item-root')][${key_suggestionContributorOrder}]//label[contains(.,'Display Group Name')]/following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTRIBUTOR_MINIMUM_SEARCHES</td>
+	<td>//div[contains(@class,'input-sets-item-root')][${key_suggestionContributorOrder}]//input[contains(@aria-label,'Minimum Searches')]</td>
 	<td></td>
 </tr>
 <tr>

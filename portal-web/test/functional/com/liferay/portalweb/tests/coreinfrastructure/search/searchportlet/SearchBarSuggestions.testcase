@@ -289,6 +289,7 @@ definition {
 
 		task ("Add and configure Contributors") {
 			SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+				addContributor = "true",
 				characterThreshold = 1,
 				suggestionContributor = "Blueprint",
 				suggestionContributorBlueprint = "Empty Blueprint",
@@ -347,6 +348,102 @@ definition {
 			SearchBarSuggestions.viewSuggestions(
 				searchAssetTitle = "Pineapple",
 				suggestionContributorDisplayGroupName = "Blueprint 5");
+		}
+	}
+
+	@description = "This is a use case for LPS-164683."
+	@priority = 4
+	test ConfigureSearchBarToShowTopAndTrendingSearchesUsingDataFromAnalyticsCloud {
+		property custom.properties = "feature.flag.LPS-159643=true";
+		property property.group = "analytics.cloud.profile";
+
+		task ("Configure Analytics Cloud") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Guest");
+		}
+
+		task ("Add Web Content Articles to search") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				description = "WC WebContent Description",
+				groupName = "Guest",
+				title = "Apple Pie");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				description = "WC WebContent Description",
+				groupName = "Guest",
+				title = "Apple Strudel");
+		}
+
+		task ("Configure Site Activities suggestions for embedded Search Bar") {
+			Navigator.openURL();
+
+			SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+				addContributor = "true",
+				suggestionContributor = "Site Activities",
+				suggestionContributorActivity = "Top Searches",
+				suggestionContributorMinimumSearches = 0,
+				suggestionContributorOrder = 2,
+				suggestionContributorSize = 1);
+
+			SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+				addContributor = "true",
+				suggestionContributor = "Site Activities",
+				suggestionContributorActivity = "Trending Searches",
+				suggestionContributorMinimumSearches = 0,
+				suggestionContributorOrder = 3);
+		}
+
+		task ("Populate AC with data") {
+			SearchPortlets.searchEmbedded(searchTerm = "Apple Pie");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Pie",
+				searchAssetType = "Web Content Article");
+
+			SearchPortlets.searchEmbedded(searchTerm = "Apple Pie");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Pie",
+				searchAssetType = "Web Content Article");
+
+			SearchPortlets.searchEmbedded(searchTerm = "Apple Strudel");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Strudel",
+				searchAssetType = "Web Content Article");
+
+			// Analytics Cloud needs up to 2 minutes to track searches. See LPS-164683 for details.
+
+			Pause.pauseNoSPARefresh(locator1 = 120000);
+		}
+
+		task ("Assert search results show up under the expected suggestion contributor display groups") {
+			Navigator.openURL();
+
+			Type(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				value1 = "apple");
+
+			SearchBarSuggestions.viewSuggestions(
+				searchAssetTitle = "apple pie",
+				suggestionContributorDisplayGroupName = "Top Searches");
+
+			SearchBarSuggestions.viewSuggestions(
+				searchAssetTitle = "apple pie",
+				suggestionContributorDisplayGroupName = "Trending Searches");
+
+			SearchBarSuggestions.viewSuggestions(
+				searchAssetTitle = "apple strudel",
+				suggestionContributorDisplayGroupName = "Trending Searches");
 		}
 	}
 
@@ -585,6 +682,7 @@ definition {
 		Navigator.gotoPage(pageName = "Home");
 
 		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+			addContributor = "true",
 			characterThreshold = 0,
 			suggestionContributor = "Blueprint",
 			suggestionContributorBlueprint = "Test Blueprint",

@@ -2,6 +2,9 @@
 ##
 ## Test migration of Velocity template to Freemarker Template
 
+#parse ($init)
+#parse ("$full_templates_path/navigation.file")
+
 #set ($portalBeanLocator = $portal.getClass().forName('com.liferay.portal.kernel.bean.PortalBeanLocatorUtil'))
 #set ($dateFormatFactory = $portalBeanLocator.locate('com.liferay.portal.kernel.util.DateFormatFactoryUtil'))
 

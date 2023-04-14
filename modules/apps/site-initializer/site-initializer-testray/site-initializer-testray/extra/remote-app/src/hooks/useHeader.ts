@@ -72,8 +72,12 @@ const useHeader = ({
 	);
 
 	const setHeading = useCallback(
-		(newHeading: HeaderTitle[] = []) => {
-			actTimeout(() => setHeadingAtom(newHeading));
+		(newHeading: HeaderTitle[] = [], append = false) => {
+			actTimeout(() => {
+				setHeadingAtom((prevHeading) =>
+					append ? [...prevHeading, ...newHeading] : newHeading
+				);
+			});
 		},
 		[actTimeout, setHeadingAtom]
 	);

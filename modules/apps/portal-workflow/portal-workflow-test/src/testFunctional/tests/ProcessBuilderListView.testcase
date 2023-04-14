@@ -178,7 +178,7 @@ definition {
 
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		Alert.viewErrorMessage(errorMessage = "Workflow is in use. Remove its assignment to these Assets: Blogs Entry, Calendar Event and 1 More.");
+		Alert.viewErrorMessage(errorMessage = "Workflow is in use. Remove its assignment to these Assets:");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 	}

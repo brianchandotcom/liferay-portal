@@ -22,6 +22,14 @@ liferay-sample-object-action-2:
     oAuth2ApplicationExternalReferenceCode: liferay-sample-oauth-application-user-agent
     resourcePath: /sample/object/action/2
     type: objectAction
+liferay-sample-object-action-3:
+    name: Liferay Sample Object Action 3
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-oauth-application-user-agent
+    objectDefinitionNames:
+        - ObjectDefinition1
+        - ObjectDefinition2
+    resourcePath: /sample/object/action/3
+    type: objectAction
 liferay-sample-workflow-action-1:
     name: Liferay Sample Workflow Action 1
     oAuth2ApplicationExternalReferenceCode: liferay-sample-oauth-application-user-agent

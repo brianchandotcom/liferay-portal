@@ -384,9 +384,9 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"label": {
-						"en_US": "Node Type"
+						"en_US": "Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "nodeType",
+					"listTypeDefinitionExternalReferenceCode": "jenkinsNodeType",
 					"name": "type",
 					"objectFieldSettings": [
 						{

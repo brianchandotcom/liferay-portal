@@ -20,6 +20,11 @@ import com.liferay.jethr0.jenkins.server.JenkinsServer;
 
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -34,6 +39,8 @@ public interface JenkinsNode extends Entity {
 	public int getNodeCount();
 
 	public int getNodeRAM();
+
+	public Type getType();
 
 	public URL getURL();
 
@@ -50,5 +57,41 @@ public interface JenkinsNode extends Entity {
 	public void setNodeRAM(int nodeRAM);
 
 	public void setURL(URL url);
+
+	public static enum Type {
+
+		MASTER("master"), SLAVE("slave");
+
+		public static Type get(JSONObject jsonObject) {
+			return getByKey(jsonObject.getString("key"));
+		}
+
+		public static Type getByKey(String key) {
+			return _types.get(key);
+		}
+
+		public JSONObject getJSONObject() {
+			return new JSONObject("{\"key\": \"" + getKey() + "\"}");
+		}
+
+		public String getKey() {
+			return _key;
+		}
+
+		private Type(String key) {
+			_key = key;
+		}
+
+		private static final Map<String, Type> _types = new HashMap<>();
+
+		static {
+			for (Type type : values()) {
+				_types.put(type.getKey(), type);
+			}
+		}
+
+		private final String _key;
+
+	}
 
 }

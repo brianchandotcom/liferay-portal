@@ -71,6 +71,11 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	}
 
 	@Override
+	public Type getType() {
+		return _type;
+	}
+
+	@Override
 	public URL getURL() {
 		return _url;
 	}
@@ -78,7 +83,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	@Override
 	public boolean isCompatible(Build build) {
 		if (!_hasCompatibleBattery(build) || !_hasCompatibleNodeCount(build) ||
-			!_hasCompatibleNodeRAM(build)) {
+			!_hasCompatibleNodeRAM(build) || !_hasCompatibleNodeType(build)) {
 
 			return false;
 		}
@@ -123,6 +128,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 		_name = jsonObject.getString("name");
 		_nodeCount = jsonObject.getInt("nodeCount");
 		_nodeRAM = jsonObject.getInt("nodeRAM");
+		_type = Type.get(jsonObject.getJSONObject("type"));
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
 
@@ -150,11 +156,20 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 		return false;
 	}
 
+	private boolean _hasCompatibleNodeType(Build build) {
+		if (getType() == build.getNodeType()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _goodBattery;
 	private JenkinsServer _jenkinsServer;
 	private String _name;
 	private int _nodeCount;
 	private int _nodeRAM;
+	private final Type _type;
 	private URL _url;
 
 }

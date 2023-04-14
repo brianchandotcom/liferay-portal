@@ -14,35 +14,15 @@
 
 package com.liferay.jethr0.jenkins.node;
 
-import com.liferay.jethr0.entity.factory.BaseEntityFactory;
-
 import org.json.JSONObject;
-
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
-@Configuration
-public class JenkinsNodeFactory extends BaseEntityFactory<JenkinsNode> {
+public class SlaveJenkinsNode extends BaseJenkinsNode {
 
-	@Override
-	public JenkinsNode newEntity(JSONObject jsonObject) {
-		JenkinsNode.Type type = JenkinsNode.Type.get(
-			jsonObject.getJSONObject("type"));
-
-		if (type == JenkinsNode.Type.MASTER) {
-			return new MasterJenkinsNode(jsonObject);
-		}
-		else if (type == JenkinsNode.Type.SLAVE) {
-			return new SlaveJenkinsNode(jsonObject);
-		}
-
-		throw new UnsupportedOperationException();
-	}
-
-	protected JenkinsNodeFactory() {
-		super(JenkinsNode.class);
+	protected SlaveJenkinsNode(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 }

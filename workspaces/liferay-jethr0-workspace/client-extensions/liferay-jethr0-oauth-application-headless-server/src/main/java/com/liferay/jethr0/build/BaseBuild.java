@@ -18,6 +18,7 @@ import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.util.StringUtil;
@@ -165,6 +166,24 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		return Integer.valueOf(value);
 	}
 
+	@Override
+	public JenkinsNode.Type getNodeType() {
+		BuildParameter buildParameter = getBuildParameter("NODE_TYPE");
+
+		if (buildParameter == null) {
+			return _DEFAULT_NODE_TYPE;
+		}
+
+		JenkinsNode.Type type = JenkinsNode.Type.getByKey(
+			buildParameter.getValue());
+
+		if (type == null) {
+			return _DEFAULT_NODE_TYPE;
+		}
+
+		return type;
+	}
+
 	public Set<Build> getParentBuilds() {
 		return _parentBuilds;
 	}
@@ -305,6 +324,9 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	private static final int _DEFAULT_MAX_NODE_COUNT = 2;
 
 	private static final int _DEFAULT_MIN_NODE_RAM = 12;
+
+	private static final JenkinsNode.Type _DEFAULT_NODE_TYPE =
+		JenkinsNode.Type.SLAVE;
 
 	private final String _buildName;
 	private final Set<Build> _childBuilds = new HashSet<>();

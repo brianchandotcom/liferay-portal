@@ -19,9 +19,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultJenkinsNode extends BaseJenkinsNode {
+public class MasterJenkinsNode extends BaseJenkinsNode {
 
-	protected DefaultJenkinsNode(JSONObject jsonObject) {
+	protected MasterJenkinsNode(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

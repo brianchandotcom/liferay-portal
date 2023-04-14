@@ -20,6 +20,7 @@ import {
 	useContext,
 	useEffect,
 	useMemo,
+	useRef,
 } from 'react';
 import {KeyedMutator} from 'swr';
 
@@ -101,9 +102,14 @@ const ListView: React.FC<ListViewProps> = ({
 	} = listViewContext;
 
 	const filterSchemaName = managementToolbarProps.filterSchema ?? '';
+
 	const filterSchema = (filterSchemas as any)[
 		filterSchemaName
 	] as FilterSchemaType;
+
+	const onContextChangeRef = useRef<
+		((context: ListViewContextState) => void) | undefined
+	>(onContextChange);
 
 	const onApplyFilterMemo = useMemo(
 		() => filterSchema?.onApply?.bind(filterSchema),
@@ -151,7 +157,7 @@ const ListView: React.FC<ListViewProps> = ({
 		page = 1,
 		pageSize,
 		totalCount = 0,
-		lastPage,
+		lastPage = 1,
 	} = response || {};
 
 	const itemsMemoized = useMemo(() => items, [items]);
@@ -190,24 +196,29 @@ const ListView: React.FC<ListViewProps> = ({
 		[dispatch]
 	);
 
-	const contextString = JSON.stringify(listViewContext);
-
 	const onSelectAllRows = useCallback(() => {
 		onSelectRow(itemsMemoized.map(({id}) => id));
 	}, [itemsMemoized, onSelectRow]);
 
 	useEffect(() => {
-		if (!loading && page === lastPage && !itemsMemoized.length) {
+		const shouldCurrentPageBeChanged =
+			!loading &&
+			!itemsMemoized.length &&
+			lastPage > 1 &&
+			page === lastPage;
+
+		if (shouldCurrentPageBeChanged) {
 			dispatch({payload: page - 1, type: ListViewTypes.SET_PAGE});
 		}
 	}, [dispatch, itemsMemoized.length, lastPage, loading, page]);
 
+	const listViewContextString = JSON.stringify(listViewContext);
+
 	useEffect(() => {
-		if (onContextChange) {
-			onContextChange(JSON.parse(contextString));
+		if (onContextChangeRef.current) {
+			onContextChangeRef.current(JSON.parse(listViewContextString));
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [contextString]);
+	}, [listViewContextString]);
 
 	useEffect(() => {
 		if (tableProps.rowSelectable) {

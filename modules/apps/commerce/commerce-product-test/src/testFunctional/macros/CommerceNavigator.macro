@@ -34,6 +34,10 @@ definition {
 			value1 = ${productQuantity});
 	}
 
+	macro goToAvailabilityEstimatesAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_availability_estimate_web_internal_portlet_CommerceAvailabilityEstimatePortlet");
+	}
+
 	macro gotoCommercePortletNavItem {
 		AssertClick(
 			key_navItem = ${navItem},

@@ -30,11 +30,11 @@ import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.store.StoreArea;
 import com.liferay.document.library.kernel.util.comparator.VersionNumberComparator;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,8 +153,7 @@ public class GCSStore implements Store {
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		String prefix = StringBundler.concat(
-			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH);
+		String prefix = _getPrefix(companyId, repositoryId);
 
 		return TransformUtil.transform(
 			_getFilePaths(companyId, repositoryId, dirName),
@@ -263,9 +262,9 @@ public class GCSStore implements Store {
 	private String _getFileKey(
 		long companyId, long repositoryId, String fileName) {
 
-		return StringBundler.concat(
-			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH,
-			fileName);
+		return StoreArea.getPath(
+			String.valueOf(companyId), String.valueOf(repositoryId),
+			String.valueOf(fileName));
 	}
 
 	private String[] _getFilePaths(
@@ -299,9 +298,9 @@ public class GCSStore implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		return StringBundler.concat(
-			companyId, StringPool.SLASH, repositoryId, StringPool.SLASH,
-			fileName, StringPool.SLASH, versionLabel);
+		return StoreArea.getPath(
+			String.valueOf(companyId), String.valueOf(repositoryId), fileName,
+			versionLabel);
 	}
 
 	private String _getHeadVersionLabel(
@@ -333,6 +332,13 @@ public class GCSStore implements Store {
 		return fileNamesList.get(fileNamesList.size() - 1);
 	}
 
+	private String _getPrefix(long companyId, long repositoryId) {
+		String path = StoreArea.getPath(
+			String.valueOf(companyId), String.valueOf(repositoryId));
+
+		return path + StringPool.SLASH;
+	}
+
 	private ReadChannel _getReadChannel(Blob blob) {
 		if (_blobDecryptSourceOption == null) {
 			return blob.reader();
@@ -342,7 +348,8 @@ public class GCSStore implements Store {
 	}
 
 	private String _getRepositoryKey(long companyId, long repositoryId) {
-		return companyId + StringPool.SLASH + repositoryId;
+		return StoreArea.getPath(
+			String.valueOf(companyId), String.valueOf(repositoryId));
 	}
 
 	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {

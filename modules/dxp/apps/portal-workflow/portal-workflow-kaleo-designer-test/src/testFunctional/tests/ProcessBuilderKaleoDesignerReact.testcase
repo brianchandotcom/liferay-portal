@@ -2810,7 +2810,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		Workflow.saveDefinition(newKaleoDesigner = "True");
+		Workflow.saveDefinition();
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 

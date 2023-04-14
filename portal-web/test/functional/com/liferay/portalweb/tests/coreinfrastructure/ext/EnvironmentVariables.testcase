@@ -97,4 +97,51 @@ definition {
 		}
 	}
 
+	@description = "This is a usecase for LPS-168123. Verify properties which are supported for overriding via hook can be overriden by environment variable."
+	@priority = 3
+	test SetDefaultTheme {
+		property custom.system.properties = "company-id-properties=true";
+		property test.name.skip.portal.instance = "EnvironmentVariables#SetDefaultTheme";
+
+		task ("Given the default theme is set to Classic") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			Panel.expandPanel(panel = "Look and Feel");
+
+			AssertElementPresent(
+				key_card = "Classic",
+				locator1 = "Card#CARD");
+		}
+
+		task ("When the default theme is set to the Minimum theme via environment variable") {
+			EnvironmentVariables.addProperties(properties = "default.regular.theme.id=minium_WAR_miniumtheme");
+		}
+
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the default theme for a new site should be Minium theme") {
+			JSONGroup.addGroup(groupName = "Test Site");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			Panel.expandPanel(panel = "Look and Feel");
+
+			AssertElementPresent(
+				key_card = "Minium",
+				locator1 = "Card#CARD");
+		}
+	}
+
 }

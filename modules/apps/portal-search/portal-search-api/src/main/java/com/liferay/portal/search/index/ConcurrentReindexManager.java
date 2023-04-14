@@ -17,12 +17,12 @@ package com.liferay.portal.search.index;
 /**
  * @author Bryan Engler
  */
-public interface BlueGreenIndexManager {
+public interface ConcurrentReindexManager {
 
-	public void createGreenIndex(long companyId) throws Exception;
+	public void createNextIndex(long companyId) throws Exception;
 
-	public void deleteGreenIndex(long companyId);
+	public void deleteNextIndex(long companyId);
 
-	public void replaceBlueIndexWithGreenIndex(long companyId) throws Exception;
+	public void replaceCurrentIndexWithNextIndex(long companyId) throws Exception;
 
 }

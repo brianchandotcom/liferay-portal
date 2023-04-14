@@ -26,6 +26,10 @@ export const Liferay = window.Liferay || {
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,
 	},
+	Util: {
+		LocalStorage: localStorage,
+		SessionStorage: sessionStorage,
+	},
 	authToken: '',
 };
 

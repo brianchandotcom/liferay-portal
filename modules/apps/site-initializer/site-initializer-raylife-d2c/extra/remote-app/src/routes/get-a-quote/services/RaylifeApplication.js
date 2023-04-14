@@ -38,7 +38,11 @@ const updateRaylifeApplication = async (applicationId, payload = null) => {
 
 	const {access_token} = await getGuestPermissionToken();
 
-	sessionStorage.setItem('raylife-guest-permission-token', access_token);
+	Liferay.Util.SessionStorage.setItem(
+		'raylife-guest-permission-token',
+		access_token,
+		Liferay.Util.SessionStorage.TYPES.NECESSARY
+	);
 
 	return axios.patch(`${RaylifeApplicationAPI}/${applicationId}`, payload, {
 		headers: {

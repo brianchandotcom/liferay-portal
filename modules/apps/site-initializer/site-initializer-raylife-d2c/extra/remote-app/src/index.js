@@ -46,9 +46,10 @@ const DirectToCustomer = ({route}) => {
 const giveGuestAuthorization = async () => {
 	const token = await getGuestPermissionToken();
 
-	sessionStorage.setItem(
+	Liferay.Util.SessionStorage.setItem(
 		'raylife-guest-permission-token',
-		token?.access_token
+		token?.access_token,
+		Liferay.Util.SessionStorage.TYPES.NECESSARY
 	);
 };
 

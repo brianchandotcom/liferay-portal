@@ -16,7 +16,10 @@ import {axios} from '../../../common/services/liferay/api';
 
 const headlessRaylifeQuoteAPI = 'o/c/raylifequotes';
 
-const applicationId = localStorage.getItem('raylife-application-id');
+const applicationId = Liferay.Util.LocalStorage.getItem(
+	'raylife-application-id',
+	Liferay.Util.SessionStorage.TYPES.NECESSARY
+);
 
 export async function getQuotes() {
 	const response = await axios.get(

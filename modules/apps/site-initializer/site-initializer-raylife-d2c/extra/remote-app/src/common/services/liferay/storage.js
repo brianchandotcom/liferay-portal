@@ -15,24 +15,20 @@
 // Deal with big changes in case of need to change to localStorage to sessionStorage
 // Or Even with Cookie, we don't need to change everytime in every single file
 
-const liferayStorage = localStorage;
+import {Liferay} from '../../utils/liferay';
+
+const liferayStorage = Liferay.Util.LocalStorage;
 
 /**
  * @description Use this to get value from Storage
  * @param {*} key Storage Key
  */
 
-export function getItem(key) {
-	return liferayStorage.getItem(key);
-}
-
-/**
- * @description Use this to verify if a key exists with some value
- * @param {*} key Storage Key
- */
-
-export function itemExist(key) {
-	return !!liferayStorage.getItem(key);
+export function getItem(
+	key,
+	consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY
+) {
+	return liferayStorage.getItem(key, consentType);
 }
 
 /**
@@ -50,13 +46,16 @@ export function removeItem(key) {
  * @param {*} value Storage Value
  */
 
-export function setItem(key, value) {
-	liferayStorage.setItem(key, value);
+export function setItem(
+	key,
+	value,
+	consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY
+) {
+	liferayStorage.setItem(key, value, consentType);
 }
 
 export const Storage = {
 	getItem,
-	itemExist,
 	removeItem,
 	setItem,
 };

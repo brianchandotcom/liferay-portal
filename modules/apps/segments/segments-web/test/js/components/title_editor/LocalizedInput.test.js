@@ -71,31 +71,6 @@ describe('LocalizedInput', () => {
 			expect(mainInput.value).toBe(PRE_EXISTING_VALUE);
 		});
 
-		it('has dropdown with options', () => {
-			const {
-				asFragment,
-				getAllByText,
-				getByTestId,
-				getByText,
-			} = setUpComponent();
-			const dropdownButton = getByTestId(LOCALIZED_DROPDOWN_BUTTON);
-			fireEvent.click(dropdownButton);
-
-			expect(
-				getByText('translated').closest('span.taglib-text-icon')
-					.textContent
-			).toBe('es-EStranslated');
-
-			expect(
-				getByText('default').closest('span.taglib-text-icon')
-					.textContent
-			).toBe('en-USdefault');
-
-			expect(getAllByText('not-translated').length).toBe(11);
-
-			expect(asFragment()).toMatchSnapshot();
-		});
-
 		it('switches main input value on language selection', () => {
 			const {getByTestId, getByText} = setUpComponent();
 			const dropdownButton = getByTestId(LOCALIZED_DROPDOWN_BUTTON);

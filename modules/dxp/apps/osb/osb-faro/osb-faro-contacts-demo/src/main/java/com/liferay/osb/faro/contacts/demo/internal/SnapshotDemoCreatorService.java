@@ -64,7 +64,7 @@ public class SnapshotDemoCreatorService extends DemoCreatorService {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
-				"/elasticsearch-snapshot-1.2.0.zip")) {
+				"/elasticsearch-snapshot-1.3.0.zip")) {
 
 			Path tempDirectoryPath = Files.createTempDirectory("temp");
 

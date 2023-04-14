@@ -142,7 +142,7 @@ export default function () {
 					}
 					type="button"
 				>
-					View all Renewals
+					View all
 				</ClayButton>
 			}
 			title="Renewals"

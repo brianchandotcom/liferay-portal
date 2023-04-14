@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
@@ -108,7 +109,7 @@ export default function LocalizedInput({
 			/>
 
 			<div className={inputGroupItemClasses}>
-				<input
+				<ClayInput
 					aria-label={placeholder}
 					className="field form-control-inline language-value rounded"
 					data-testid="localized-main-input"

@@ -14,10 +14,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 	}
 
 	tearDown {
@@ -78,11 +75,6 @@ definition {
 	@description = "Verify that the user can assign a Workflow to the Home folder"
 	@priority = 3
 	test CanAssignWorkflowToHomeFolder {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
 		WorkflowWebContent.selectSingleApprover();
 
 		JSONWebcontent.addWebContent(
@@ -90,13 +82,11 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		AssertTextEquals(
-			locator1 = "WorkflowWebContent#WEB_CONTENT_STATUS",
+			key_webContentTitle = "WC WebContent Title",
+			locator1 = "WC#ENTRY_LIST_WORKFLOW_TRANSLATIONE_STATUS",
 			value1 = "Pending");
 	}
 

@@ -78,10 +78,10 @@ function Pagination({
 		}
 
 		const invalidNumber = itemsPerPageArray.some((element) => {
-			const isNumber = /^\d+$/.test(element);
+			const isPositiveInteger = /^\d+$/.test(element);
 			const item: number = parseInt(element, 10);
 
-			return !isNumber || item < 1 || item > 1000;
+			return !isPositiveInteger || item < 1 || item > 1000;
 		});
 
 		setInvalidNumberInListOfItemsPerPageValidationError(invalidNumber);

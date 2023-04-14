@@ -73,11 +73,9 @@ public class MenuAccessConfigurationScreenContributor
 
 	@Override
 	public boolean isVisible(Group group) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176136")) {
-			return false;
-		}
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-176136") ||
+			group.isCompany()) {
 
-		if (group.isCompany()) {
 			return false;
 		}
 

@@ -114,8 +114,7 @@ public class ClientExtension {
 				Object value = entry.getValue();
 
 				if (value instanceof List) {
-					value = StringUtil.merge(
-						(List<?>)value, StringPool.NEW_LINE);
+					value = StringUtil.merge((List<?>)value, StringPool.COMMA);
 				}
 
 				return StringBundler.concat(entry.getKey(), "=", value);

@@ -69,8 +69,11 @@ public class ObjectActionExecutorRegistryImpl
 			ListUtil.filter(
 				new ArrayList<>(objectActionExecutorsCollection),
 				objectActionExecutor ->
-					ObjectActionExecutorUtil.isRestrictionCriteriaMet(
-						objectActionExecutor, objectDefinitionName)),
+					ObjectActionExecutorUtil.isCompanyRestrictionCriteriaMet(
+						objectActionExecutor) &&
+					ObjectActionExecutorUtil.
+						isObjectDefinitionsRestrictionCriteriaMet(
+							objectActionExecutor, objectDefinitionName)),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {
 

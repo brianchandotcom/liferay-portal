@@ -23,6 +23,7 @@ public interface ConcurrentReindexManager {
 
 	public void deleteNextIndex(long companyId);
 
-	public void replaceCurrentIndexWithNextIndex(long companyId) throws Exception;
+	public void replaceCurrentIndexWithNextIndex(long companyId)
+		throws Exception;
 
 }

@@ -30,8 +30,6 @@ type _adaptGoogleMapsAddressIntoAddress = (
 	zip: string;
 };
 
-const google = window.google;
-
 const setup = (GOOGLE_API: any) => {
 	try {
 		const googleMapsLoader = new Loader({
@@ -94,6 +92,8 @@ const GeoLocation = async (addressLocation: string) => {
 	let lat = 0;
 	let lng = 0;
 	const address = addressLocation;
+
+	const google = window.google;
 
 	if (google) {
 		const geocoder = new google.maps.Geocoder();

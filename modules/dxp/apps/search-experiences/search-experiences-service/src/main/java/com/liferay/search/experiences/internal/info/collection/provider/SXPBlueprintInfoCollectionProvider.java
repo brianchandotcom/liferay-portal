@@ -103,18 +103,12 @@ public class SXPBlueprintInfoCollectionProvider
 						sxpBlueprintExternalReferenceCode,
 						serviceContext.getCompanyId());
 
-			Pagination pagination = collectionQuery.getPagination();
-
 			SearchRequestBuilder searchRequestBuilder =
 				_searchRequestBuilderFactory.builder(
 				).companyId(
 					serviceContext.getCompanyId()
 				).emptySearchEnabled(
 					true
-				).from(
-					pagination.getStart()
-				).size(
-					pagination.getEnd()
 				).withSearchContext(
 					searchContext -> {
 						CategoriesInfoFilter categoriesInfoFilter =
@@ -147,15 +141,6 @@ public class SXPBlueprintInfoCollectionProvider
 							searchContext.setAssetTagNames(tagNames);
 						}
 
-						KeywordsInfoFilter keywordsInfoFilter =
-							collectionQuery.getInfoFilter(
-								KeywordsInfoFilter.class);
-
-						if (keywordsInfoFilter != null) {
-							searchContext.setKeywords(
-								keywordsInfoFilter.getKeywords());
-						}
-
 						searchContext.setAttribute(
 							"search.experiences.blueprint.id",
 							sxpBlueprint.getSXPBlueprintId());
@@ -172,6 +157,20 @@ public class SXPBlueprintInfoCollectionProvider
 							"search.experiences.scope.group.id",
 							themeDisplay.getScopeGroupId());
 
+						Pagination pagination = collectionQuery.getPagination();
+
+						searchContext.setEnd(pagination.getEnd());
+
+						KeywordsInfoFilter keywordsInfoFilter =
+							collectionQuery.getInfoFilter(
+								KeywordsInfoFilter.class);
+
+						if (keywordsInfoFilter != null) {
+							searchContext.setKeywords(
+								keywordsInfoFilter.getKeywords());
+						}
+
+						searchContext.setStart(pagination.getStart());
 						searchContext.setTimeZone(serviceContext.getTimeZone());
 						searchContext.setUserId(serviceContext.getUserId());
 					}

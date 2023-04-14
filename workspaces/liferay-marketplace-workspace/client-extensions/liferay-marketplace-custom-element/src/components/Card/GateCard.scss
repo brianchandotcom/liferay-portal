@@ -1,12 +1,14 @@
-.card {
+.gate-card {
 	&-body {
 		justify-content: space-between;
 	}
 	&-container {
 		align-items: center;
 		display: flex;
+		height: 11rem;
 		justify-content: center;
-		width: 600px;
+		margin-bottom: 1.5rem;
+		width: 620px;
 	}
 	&-description {
 		color: #54555f;
@@ -30,6 +32,7 @@
 		display: flex;
 		height: 24px;
 		justify-content: center;
+		margin-left: 1rem;
 		width: 40px;
 	}
 	&-link {

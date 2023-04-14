@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet;
 
-import com.liferay.portal.kernel.util.Portal;
-
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,11 +33,6 @@ public class ServletContextUtil {
 		return _servletContext;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.frontend.taglib.clay)",
 		unbind = "-"
@@ -48,7 +41,6 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private static Portal _portal;
 	private static ServletContext _servletContext;
 
 }

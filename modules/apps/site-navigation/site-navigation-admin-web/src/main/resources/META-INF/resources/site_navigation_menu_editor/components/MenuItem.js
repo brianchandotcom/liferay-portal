@@ -178,7 +178,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 			}
 			else {
 				setKeyboardDragLayer(items, {
-					eventKey: 'ArrowDown',
+					eventKey: event.key,
 					menuItemTitle: title,
 					menuItemType: type,
 					order,

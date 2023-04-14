@@ -22,6 +22,15 @@ function getMovementText(dragLayer) {
 		return '';
 	}
 
+	if (dragLayer.eventKey === 'Enter') {
+		return sub(
+			Liferay.Language.get(
+				'use-up-and-down-arrows-to-move-x-and-press-enter-to-place-it-in-desired-position'
+			),
+			`${dragLayer.menuItemTitle} (${dragLayer.menuItemType})`
+		);
+	}
+
 	return sub(
 		dragLayer.eventKey === 'ArrowDown'
 			? Liferay.Language.get('x-moved-down')

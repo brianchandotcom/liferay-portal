@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0.jenkins.master;
+package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
@@ -24,15 +24,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsMasterFactory extends BaseEntityFactory<JenkinsMaster> {
+public class JenkinsNodeFactory extends BaseEntityFactory<JenkinsNode> {
 
 	@Override
-	public JenkinsMaster newEntity(JSONObject jsonObject) {
-		return new DefaultJenkinsMaster(jsonObject);
+	public JenkinsNode newEntity(JSONObject jsonObject) {
+		return new DefaultJenkinsNode(jsonObject);
 	}
 
-	protected JenkinsMasterFactory() {
-		super(JenkinsMaster.class);
+	protected JenkinsNodeFactory() {
+		super(JenkinsNode.class);
 	}
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.jethr0.build.queue;
 
 import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.jenkins.master.JenkinsMaster;
+import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 
@@ -76,12 +76,12 @@ public class BuildQueue {
 		return _projectQueue;
 	}
 
-	public Build nextBuild(JenkinsMaster jenkinsMaster) {
+	public Build nextBuild(JenkinsNode jenkinsNode) {
 		synchronized (_sortedBuilds) {
 			Build nextBuild = null;
 
 			for (Build build : _sortedBuilds) {
-				if (!jenkinsMaster.isCompatible(build)) {
+				if (!jenkinsNode.isCompatible(build)) {
 					continue;
 				}
 

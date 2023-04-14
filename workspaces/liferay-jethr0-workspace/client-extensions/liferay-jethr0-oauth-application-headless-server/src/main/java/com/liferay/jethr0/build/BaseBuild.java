@@ -132,34 +132,34 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public int getMaxSlaveCount() {
-		BuildParameter buildParameter = getBuildParameter("MAX_SLAVE_COUNT");
+	public int getMaxNodeCount() {
+		BuildParameter buildParameter = getBuildParameter("MAX_NODE_COUNT");
 
 		if (buildParameter == null) {
-			return _DEFAULT_MAX_SLAVE_COUNT;
+			return _DEFAULT_MAX_NODE_COUNT;
 		}
 
 		String value = buildParameter.getValue();
 
 		if ((value == null) || !value.matches("\\d+")) {
-			return _DEFAULT_MAX_SLAVE_COUNT;
+			return _DEFAULT_MAX_NODE_COUNT;
 		}
 
 		return Integer.valueOf(value);
 	}
 
 	@Override
-	public int getMinSlaveRAM() {
-		BuildParameter buildParameter = getBuildParameter("MIN_SLAVE_RAM");
+	public int getMinNodeRAM() {
+		BuildParameter buildParameter = getBuildParameter("MIN_NODE_RAM");
 
 		if (buildParameter == null) {
-			return _DEFAULT_MIN_SLAVE_RAM;
+			return _DEFAULT_MIN_NODE_RAM;
 		}
 
 		String value = buildParameter.getValue();
 
 		if ((value == null) || !value.matches("\\d+")) {
-			return _DEFAULT_MIN_SLAVE_RAM;
+			return _DEFAULT_MIN_NODE_RAM;
 		}
 
 		return Integer.valueOf(value);
@@ -302,9 +302,9 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		return parentBuilds;
 	}
 
-	private static final int _DEFAULT_MAX_SLAVE_COUNT = 2;
+	private static final int _DEFAULT_MAX_NODE_COUNT = 2;
 
-	private static final int _DEFAULT_MIN_SLAVE_RAM = 12;
+	private static final int _DEFAULT_MIN_NODE_RAM = 12;
 
 	private final String _buildName;
 	private final Set<Build> _childBuilds = new HashSet<>();

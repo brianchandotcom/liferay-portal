@@ -12,32 +12,17 @@
  * details.
  */
 
-package com.liferay.jethr0.jenkins.master;
+package com.liferay.jethr0.jenkins.node;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.entity.Entity;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public interface JenkinsMaster extends Entity {
+public class DefaultJenkinsNode extends BaseJenkinsNode {
 
-	public boolean getGoodBattery();
-
-	public String getName();
-
-	public int getSlaveCount();
-
-	public int getSlaveRAM();
-
-	public boolean isCompatible(Build build);
-
-	public void setGoodBattery(boolean goodBattery);
-
-	public void setName(String name);
-
-	public void setSlaveCount(int slaveCount);
-
-	public void setSlaveRAM(int slaveRAM);
+	protected DefaultJenkinsNode(JSONObject jsonObject) {
+		super(jsonObject);
+	}
 
 }

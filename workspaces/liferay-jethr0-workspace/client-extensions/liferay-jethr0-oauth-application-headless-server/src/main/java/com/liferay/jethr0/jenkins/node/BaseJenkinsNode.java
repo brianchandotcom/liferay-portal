@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.jethr0.jenkins.master;
+package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseJenkinsMaster
-	extends BaseEntity implements JenkinsMaster {
+public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 
 	@Override
 	public boolean getGoodBattery() {
@@ -39,9 +41,9 @@ public abstract class BaseJenkinsMaster
 		).put(
 			"name", getName()
 		).put(
-			"slaveCount", getSlaveCount()
+			"nodeCount", getNodeCount()
 		).put(
-			"slaveRAM", getSlaveRAM()
+			"nodeRAM", getNodeRAM()
 		);
 
 		return jsonObject;
@@ -53,19 +55,24 @@ public abstract class BaseJenkinsMaster
 	}
 
 	@Override
-	public int getSlaveCount() {
-		return _slaveCount;
+	public int getNodeCount() {
+		return _nodeCount;
 	}
 
 	@Override
-	public int getSlaveRAM() {
-		return _slaveRAM;
+	public int getNodeRAM() {
+		return _nodeRAM;
+	}
+
+	@Override
+	public URL getURL() {
+		return _url;
 	}
 
 	@Override
 	public boolean isCompatible(Build build) {
-		if (!_hasCompatibleBattery(build) || !_hasCompatibleSlaveCount(build) ||
-			!_hasCompatibleSlaveRAM(build)) {
+		if (!_hasCompatibleBattery(build) || !_hasCompatibleNodeCount(build) ||
+			!_hasCompatibleNodeRAM(build)) {
 
 			return false;
 		}
@@ -84,22 +91,28 @@ public abstract class BaseJenkinsMaster
 	}
 
 	@Override
-	public void setSlaveCount(int slaveCount) {
-		_slaveCount = slaveCount;
+	public void setNodeCount(int nodeCount) {
+		_nodeCount = nodeCount;
 	}
 
 	@Override
-	public void setSlaveRAM(int slaveRAM) {
-		_slaveRAM = slaveRAM;
+	public void setNodeRAM(int nodeRAM) {
+		_nodeRAM = nodeRAM;
 	}
 
-	protected BaseJenkinsMaster(JSONObject jsonObject) {
+	@Override
+	public void setURL(URL url) {
+		_url = url;
+	}
+
+	protected BaseJenkinsNode(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_goodBattery = jsonObject.getBoolean("goodBattery");
 		_name = jsonObject.getString("name");
-		_slaveCount = jsonObject.getInt("slaveCount");
-		_slaveRAM = jsonObject.getInt("slaveRAM");
+		_nodeCount = jsonObject.getInt("nodeCount");
+		_nodeRAM = jsonObject.getInt("nodeRAM");
+		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
 
 	private boolean _hasCompatibleBattery(Build build) {
@@ -110,16 +123,16 @@ public abstract class BaseJenkinsMaster
 		return false;
 	}
 
-	private boolean _hasCompatibleSlaveCount(Build build) {
-		if (getSlaveCount() <= build.getMaxSlaveCount()) {
+	private boolean _hasCompatibleNodeCount(Build build) {
+		if (getNodeCount() <= build.getMaxNodeCount()) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private boolean _hasCompatibleSlaveRAM(Build build) {
-		if (getSlaveRAM() >= build.getMinSlaveRAM()) {
+	private boolean _hasCompatibleNodeRAM(Build build) {
+		if (getNodeRAM() >= build.getMinNodeRAM()) {
 			return true;
 		}
 
@@ -128,7 +141,8 @@ public abstract class BaseJenkinsMaster
 
 	private boolean _goodBattery;
 	private String _name;
-	private int _slaveCount;
-	private int _slaveRAM;
+	private int _nodeCount;
+	private int _nodeRAM;
+	private URL _url;
 
 }

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.jethr0.jenkins.master.dalo;
+package com.liferay.jethr0.jenkins.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.jenkins.master.JenkinsMaster;
-import com.liferay.jethr0.jenkins.master.JenkinsMasterFactory;
+import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -26,14 +26,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsMasterDALO extends BaseEntityDALO<JenkinsMaster> {
+public class JenkinsNodeDALO extends BaseEntityDALO<JenkinsNode> {
 
 	@Override
-	protected EntityFactory<JenkinsMaster> getEntityFactory() {
-		return _jenkinsMasterFactory;
+	protected EntityFactory<JenkinsNode> getEntityFactory() {
+		return _jenkinsNodeFactory;
 	}
 
 	@Autowired
-	private JenkinsMasterFactory _jenkinsMasterFactory;
+	private JenkinsNodeFactory _jenkinsNodeFactory;
 
 }

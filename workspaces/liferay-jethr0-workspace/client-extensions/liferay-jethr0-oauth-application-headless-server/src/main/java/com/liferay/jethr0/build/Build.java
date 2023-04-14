@@ -62,9 +62,9 @@ public interface Build extends Entity {
 
 	public String getJobName();
 
-	public int getMaxSlaveCount();
+	public int getMaxNodeCount();
 
-	public int getMinSlaveRAM();
+	public int getMinNodeRAM();
 
 	public Set<Build> getParentBuilds();
 

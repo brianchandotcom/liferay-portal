@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.jethr0.jenkins.master.repository;
+package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.jenkins.master.JenkinsMaster;
-import com.liferay.jethr0.jenkins.master.dalo.JenkinsMasterDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsNodeDALO;
+import com.liferay.jethr0.jenkins.node.JenkinsNode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -25,15 +25,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsMasterRepository
-	extends BaseEntityRepository<JenkinsMaster> {
+public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 
 	@Override
-	public JenkinsMasterDALO getEntityDALO() {
-		return _jenkinsMasterDALO;
+	public JenkinsNodeDALO getEntityDALO() {
+		return _jenkinsNodeDALO;
 	}
 
 	@Autowired
-	private JenkinsMasterDALO _jenkinsMasterDALO;
+	private JenkinsNodeDALO _jenkinsNodeDALO;
 
 }

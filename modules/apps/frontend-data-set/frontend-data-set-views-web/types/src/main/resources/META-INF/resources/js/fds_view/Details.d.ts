@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {TFDSView} from '../FDSViews';
 interface IDetailsProps {
 	fdsView: TFDSView;

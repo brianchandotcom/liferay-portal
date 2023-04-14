@@ -12,5 +12,7 @@
  * details.
  */
 
+/// <reference types="react" />
+
 declare const RequiredMark: () => JSX.Element;
 export default RequiredMark;

@@ -45,9 +45,7 @@ public class ObjectActionExecutorUtil {
 		List<String> objectDefinitionNames =
 			objectActionExecutor.getObjectDefinitionNames();
 
-		if (objectDefinitionNames ==
-				ObjectActionExecutor.UNRESTRICTED_BY_OBJECT_DEFINITIONS) {
-
+		if (objectDefinitionNames.isEmpty()) {
 			return true;
 		}
 

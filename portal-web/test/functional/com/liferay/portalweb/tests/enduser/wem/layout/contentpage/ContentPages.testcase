@@ -6,41 +6,32 @@ definition {
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
-		}
-
-		task ("Add a site via JSON") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@description = "This is a test for LPS-154530. The page designer can add negative values on spacing from style books."
 	@priority = 4
 	test AddNegativeValueOnSpacing {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page designer has a content page with selected custom style books") {
+			task ("Add a site") {
+				HeadlessSite.addSite(siteName = ${siteName});
+			}
+
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = ${siteName},
+					layoutName = "Test Content Page Name",
+					type = "content");
+			}
+
 			task ("Add a style book") {
-				StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+				StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = ${siteURLKey});
 
 				StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 			}
@@ -69,7 +60,7 @@ definition {
 			task ("Add a Button fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -105,7 +96,7 @@ definition {
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the page designer can see negative style on button fragment at view mode") {
@@ -123,10 +114,25 @@ definition {
 	test CannotEditInViewMode {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Navigate to the content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Assert the page cannot be edited in 'View Mode' by asserting the fragments side bar is not present") {
@@ -155,17 +161,32 @@ definition {
 	test ConfigureConfigurationTemplateOfAssetPublisherInPageEditor {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add an Asset Publisher widget to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
@@ -252,10 +273,25 @@ definition {
 	test ConfigurePermissionsOfAssetPublisher {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add an Asset Publisher widget to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
@@ -299,7 +335,7 @@ definition {
 		task ("Assert the ellipsis button of Asset Publisher is unavailable in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			AssertElementNotPresent(
 				key_portletName = "Asset Publisher",
@@ -310,8 +346,19 @@ definition {
 	@description = "This is a test for LPS-137155. The page creator can configure content page via header ellipsis icon at edit mode."
 	@priority = 3
 	test ConfigureViaHeaderEllipsisIcon {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page designer has content page in pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(pageName = "Test Content Page Name");
 		}
@@ -319,7 +366,7 @@ definition {
 		task ("When the page designer renames page via header ellipsis icon at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
@@ -333,7 +380,7 @@ definition {
 		}
 
 		task ("Then the page designer can see new page name in pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name Edited");
 		}
@@ -342,8 +389,19 @@ definition {
 	@description = "This is a test for LPS-137155. The page creator can delete content page via header ellipsis icon at edit mode."
 	@priority = 3
 	test DeleteViaHeaderEllipsisIcon {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page designer has content page in pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(pageName = "Test Content Page Name");
 		}
@@ -351,7 +409,7 @@ definition {
 		task ("When the page designer deletes the page via header ellipsis icon at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Delete");
 
@@ -378,8 +436,19 @@ definition {
 	test DiscardContentPageDraft {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page designer has a draft content page without any content") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("When the page designer accesses to the page editor") {
@@ -401,7 +470,7 @@ definition {
 		}
 
 		task ("When the page designer accesses to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForPageLoad();
 		}
@@ -445,7 +514,7 @@ definition {
 		}
 
 		task ("Then the page designer could discard draft in the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.discardDraft(pageName = "Test Content Page Name");
 
@@ -468,7 +537,7 @@ definition {
 				key_text = "Discard Draft",
 				locator1 = "Button#ANY_DISABLED");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForPageLoad();
 
@@ -537,7 +606,7 @@ definition {
 		}
 
 		task ("Then the page designer could discard draft in the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.discardDraft(pageName = "Test Content Page Name");
 
@@ -565,7 +634,7 @@ definition {
 				key_text = "Discard Draft",
 				locator1 = "Button#ANY_DISABLED");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForPageLoad();
 
@@ -580,11 +649,16 @@ definition {
 	test EditContentPageAfterResetChangesFromSiteTemplate {
 		property ci.retries.disabled = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+		var siteTemplateName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a site based on a site template") {
 			task ("Add a site template") {
 				JSONSiteTemplate.addSiteTemplate(
 					description = "It is a site template",
-					siteTemplateName = "Site Template Name");
+					siteTemplateName = ${siteTemplateName});
 			}
 
 			task ("Add a master template on Site Template") {
@@ -592,7 +666,7 @@ definition {
 
 				LexiconEntry.gotoEntryMenuItem(
 					menuItem = "Manage",
-					rowEntry = "Site Template Name");
+					rowEntry = ${siteTemplateName});
 
 				ProductMenu.gotoPortlet(
 					category = "Design",
@@ -631,8 +705,8 @@ definition {
 
 			task ("Add a new site based on site template") {
 				HeadlessSite.addSite(
-					siteName = "Site Name",
-					templateName = "Site Template Name",
+					siteName = ${siteName},
+					templateName = ${siteTemplateName},
 					templateType = "Site Template");
 			}
 
@@ -644,7 +718,7 @@ definition {
 
 				LexiconTable.clickEllipsisItem(
 					item = "Go to Pages",
-					tableEntry = "Site Name");
+					tableEntry = ${siteName});
 
 				SelectWindow.selectPopUp(locator1 = "null");
 
@@ -670,7 +744,7 @@ definition {
 			task ("Publish the page") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Home",
-					siteName = "Site Name");
+					siteName = ${siteName});
 
 				PageEditor.publish();
 			}
@@ -679,7 +753,7 @@ definition {
 		task ("When the page creator resets the changes from site template") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Home",
-				siteName = "Site Name");
+				siteName = ${siteName});
 
 			SiteTemplates.resetPageChanges();
 		}
@@ -688,10 +762,6 @@ definition {
 			ContentPages.gotoPageEditor();
 
 			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
-
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-
-			JSONSiteTemplate.deleteNonDefaultTemplates();
 		}
 	}
 
@@ -701,10 +771,21 @@ definition {
 	test FragmentsCanBeHiddenAndShown {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Add a widgets to the page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addWidget(portletName = "Blogs");
 		}
@@ -772,7 +853,7 @@ definition {
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Assert only html fragment is shown") {
@@ -801,7 +882,7 @@ definition {
 		task ("Edit the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Unhide Blogs from the sidebar fragment tree") {
@@ -819,13 +900,13 @@ definition {
 		task ("Publish and enter view mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.publish();
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Assert the four fragments are shown") {
@@ -854,10 +935,21 @@ definition {
 	@priority = 4
 	@uitest
 	test GroupsOfFragmentsCanBeHiddenAndShown {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Add a Container and 4 elements inside") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -970,10 +1062,21 @@ definition {
 	test HeaderOnlyShownWhenElementSelected {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Add a Heading fragment and an Asset Publisher portlet to page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1020,19 +1123,34 @@ definition {
 	@description = "This is a test for LPS-134844. Fragments hidden in pages templates appear as hidden in pages that use it and visibility can be changed."
 	@priority = 4
 	test HiddenFragmentsInPagesTemplatesAppearHiddenInPages {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1074,7 +1192,7 @@ definition {
 		}
 
 		task ("Add a page based on content page template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -1120,10 +1238,21 @@ definition {
 	@description = "This is a test for LPS-148426. The page creator can successfully publish a content page with commerce widgets."
 	@priority = 4
 	test PublishPageWithCommerceWidgets {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("When the page creator adds commerce widgets to page") {
@@ -1144,7 +1273,7 @@ definition {
 			task ("View commerce widgets are shown at view mode") {
 				ContentPagesNavigator.openViewContentPage(
 					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				for (var widgetName : list "Checkout,WishLists,WishListContent,OrderContent,OpenOrderContent") {
 					AssertElementPresent(
@@ -1161,10 +1290,25 @@ definition {
 	test ReorganizeFragmentsInPageEditor {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Heading fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1185,7 +1329,7 @@ definition {
 		task ("Navigate to the content page in Edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("View Heading frgament is on top of Button fragment") {
@@ -1227,11 +1371,26 @@ definition {
 	@description = "This is a test for LPS-162302. The page creator can navigate through fragment structure via breadcrumb on page editor."
 	@priority = 4
 	test ViewBreadcrumbOnContentPage {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given the page creator has a content page with custom fragment structure") {
+			task ("Add a site") {
+				HeadlessSite.addSite(siteName = ${siteName});
+			}
+
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = ${siteName},
+					layoutName = "Test Content Page Name",
+					type = "content");
+			}
+
 			task ("Add a Grid fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				PageEditor.addFragment(
 					collectionName = "Layout Elements",
@@ -1308,17 +1467,32 @@ definition {
 	test ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences {
 		property test.name.skip.portal.instance = "ContentPages#ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add an Asset Publisher widget to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
@@ -1345,7 +1519,7 @@ definition {
 		task ("View web content displayed at Title List in Asset Publisher at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			AssertTextEquals.assertText(
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
@@ -1365,7 +1539,7 @@ definition {
 		task ("View web content displayed at Title List in Asset Publisher at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			AssertTextEquals.assertText(
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
@@ -1376,7 +1550,7 @@ definition {
 		task ("View web content displayed at Title List in Asset Publisher at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			AssertTextEquals.assertText(
 				locator1 = "Relatedassets#ASSET_ROW_ENTRY_TITLE",
@@ -1388,16 +1562,27 @@ definition {
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page editor."
 	@priority = 4
 	test ViewDropdownIconsInPageEditor {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a Page designer has a content page with a Collection Display fragment") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				itemSubtype = "All Subtypes",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -1438,16 +1623,31 @@ definition {
 	test ViewEditModeHeaderFooterTheme {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a widget page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Widget Page Name");
 		}
 
 		task ("Assert the header and footer are disabled") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			AssertVisible(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
@@ -1459,7 +1659,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Home#SITE_NAME",
-				value1 = "Test Site Name");
+				value1 = ${siteName});
 
 			AssertVisible(
 				key_infoMessage = "This search bar is not visible to users yet.",
@@ -1515,10 +1715,25 @@ definition {
 	@priority = 4
 	@uitest
 	test ViewEllipsisButtonOnTheTopperOfFragmentInsideNestedGrid {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Grid element to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -1577,10 +1792,25 @@ definition {
 	test ViewHeaderOfFragmentMoveInsideBodyWhenReachTheManagementToolbar {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add Image, Slider, Card and HTML fragments to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1631,10 +1861,25 @@ definition {
 	@priority = 4
 	@uitest
 	test ViewHeaderOfWidgetMoveInsideBodyWhenReachTheManagementToolbar {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add My Sites, Documents and Media, Blogs and Asset Publisher widgets to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
@@ -1679,19 +1924,34 @@ definition {
 	@description = "This is for LPS-106813. Widgets inherited from content page template will inherit permissions set in content page template."
 	@priority = 4
 	test ViewPermissionsOfAssetPublisherInheritedFromContentPageTemplate {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -1737,7 +1997,7 @@ definition {
 		}
 
 		task ("Add a page based on content page template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -1767,19 +2027,34 @@ definition {
 	@description = "This is for LPS-106813. Widgets inherited from custom master will inherit permissions set in custom master."
 	@priority = 4
 	test ViewPermissionsOfAssetPublisherInheritedFromMasterPageTemplate {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "WC WebContent Title");
 		}
 
 		task ("Add a custom master") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Add an Asset Publisher widget to the master page template") {
@@ -1834,7 +2109,7 @@ definition {
 		task ("Apply the master page template to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -1850,11 +2125,11 @@ definition {
 		}
 
 		task ("Assert the Asset Publisher is invisible to Guest") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			User.logoutPG();
 
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${siteName});
 
 			AssertElementNotPresent(
 				key_assetTitle = "WC WebContent Title",
@@ -1867,17 +2142,33 @@ definition {
 	@description = "This is a test for LPS-162323. The pages propagated from a Site Template should refer to the master page from site."
 	@priority = 4
 	test ViewReferredMasterPageOfPagesPropagatedFromSiteTemplate {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+		var siteTemplateName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a site with a page from a site template") {
+			task ("Add a site") {
+				HeadlessSite.addSite(siteName = ${siteName});
+			}
+
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = ${siteName},
+					layoutName = "Test Content Page Name",
+					type = "content");
+			}
+
 			task ("Add a site template") {
 				JSONSiteTemplate.addSiteTemplate(
 					description = "Site description",
-					siteTemplateName = "Site Template Name");
+					siteTemplateName = ${siteTemplateName});
 
 				SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 				LexiconEntry.gotoEntryMenuItem(
 					menuItem = "Manage",
-					rowEntry = "Site Template Name");
+					rowEntry = ${siteTemplateName});
 			}
 
 			task ("Add a master page template") {
@@ -1895,7 +2186,7 @@ definition {
 					masterLayoutName = "Custom Masters Page Template",
 					pageName = "Test Page Name 1",
 					sitePageType = "Content Page",
-					siteTemplateName = "Site Template Name");
+					siteTemplateName = ${siteTemplateName});
 
 				PageEditor.publish();
 			}
@@ -1905,7 +2196,7 @@ definition {
 
 				Site.addSiteTemplateCP(
 					siteName = "Test Site Name 2",
-					siteTemplateName = "Site Template Name",
+					siteTemplateName = ${siteTemplateName},
 					siteTemplateTab = "Custom Site Templates");
 			}
 
@@ -1914,7 +2205,7 @@ definition {
 					masterLayoutName = "Custom Masters Page Template",
 					pageName = "Test Page Name 2",
 					sitePageType = "Content Page",
-					siteTemplateName = "Site Template Name");
+					siteTemplateName = ${siteTemplateName});
 
 				PageEditor.publish();
 			}
@@ -1953,9 +2244,24 @@ definition {
 	@description = "This is a test for LPS-154530. View custom values matches in spacing on page editor."
 	@priority = 4
 	test ViewValuesMatchesInSpacingOnPageEditor {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page designer has a content page with default and custom style books") {
+			task ("Add a site") {
+				HeadlessSite.addSite(siteName = ${siteName});
+			}
+
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = ${siteName},
+					layoutName = "Test Content Page Name",
+					type = "content");
+			}
+
 			task ("Add a style book") {
-				StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+				StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = ${siteURLKey});
 
 				StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name");
 			}
@@ -2007,7 +2313,7 @@ definition {
 			task ("Add a Heading fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -2097,7 +2403,7 @@ definition {
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the page designer can see auto style on heading fragment at view mode") {
@@ -2113,10 +2419,25 @@ definition {
 	@description = "LPS-147400. Collection Display and Collection Filter have width and display configuration."
 	@priority = 3
 	test ViewWidthAndHideOfCollectionFilterAndCollectionDisplayAndCollectionFilterCanBeHidden {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Go to edit page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Add Collection Display and Collection Filter frgaments to page") {

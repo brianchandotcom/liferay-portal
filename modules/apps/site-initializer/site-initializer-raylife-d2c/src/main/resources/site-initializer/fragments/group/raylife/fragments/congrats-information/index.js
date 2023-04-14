@@ -13,14 +13,24 @@
  * details.
  */
 
-const applicationId = localStorage.getItem('raylife-application-id');
-const quoteId = localStorage.getItem('raylife-quote-id');
-const userId = Liferay.ThemeDisplay.getUserId();
+const consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY;
+
+const applicationId = Liferay.Util.LocalStorage.getItem(
+	'raylife-application-id',
+	consentType
+);
+
+const quoteId = Liferay.Util.LocalStorage.getItem(
+	'raylife-quote-id',
+	consentType
+);
 
 const raylifeApplicationForm = JSON.parse(
-	localStorage.getItem('raylife-application-form')
+	Liferay.Util.LocalStorage.getItem('raylife-application-form', consentType)
 );
-const orderId = localStorage.getItem('orderId');
+
+const orderId = Liferay.Util.LocalStorage.getItem('orderId', consentType);
+
 const nowDate = new Date().toISOString().split('T')[0];
 
 const fetchHeadless = async (url, options) => {
@@ -59,7 +69,7 @@ const addPolicyEntryData = async ({
 			},
 			productName,
 			r_quoteToPolicies_c_raylifeQuoteId: quoteId,
-			r_userToPolicies_userId: userId,
+			r_userToPolicies_userId: Liferay.ThemeDisplay.getUserId(),
 			startDate: nowDate,
 			termPremium: price,
 		}),
@@ -189,8 +199,7 @@ const main = async () => {
 			fragmentElement.querySelector('#congrats-price'),
 			`$${Number(quoteDataJSON.price || 0).toLocaleString('en-US')}`
 		);
-	}
-	else {
+	} else {
 		const discountInPrice = quoteDataJSON.price * 0.05;
 
 		const discountDescription = `You saved 5% ($${Number(

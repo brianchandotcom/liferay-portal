@@ -20,8 +20,15 @@ const contextualMessageIdKey = 'raylife-contextual-message';
 const valueCall = fragmentElement.querySelector('#value-number-call')
 	.textContent;
 
+const consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY;
+
 btnBack.onclick = function () {
-	localStorage.setItem('raylife-back-to-edit', true);
+	Liferay.Util.LocalStorage.setItem(
+		'raylife-back-to-edit',
+		true,
+		consentType
+	);
+
 	window.history.back();
 };
 
@@ -29,14 +36,20 @@ btnCall.onclick = function () {
 	window.location.href = 'tel:' + valueCall;
 };
 
-const applicationId = localStorage.getItem(applicationIdKey);
+const applicationId = Liferay.Util.LocalStorage.getItem(
+	applicationIdKey,
+	consentType
+);
 
 if (applicationId) {
 	document.getElementById('content-agent-text-your-application').textContent =
 		'Your Application #' + applicationId;
 }
 
-const contextualMessage = localStorage.getItem(contextualMessageIdKey);
+const contextualMessage = Liferay.Util.LocalStorage.getItem(
+	contextualMessageIdKey,
+	consentType
+);
 
 if (contextualMessage) {
 	document.getElementById(
@@ -54,9 +67,7 @@ const fetchHeadless = async (url, options) => {
 		},
 	});
 
-	const data = await response.json();
-
-	return data;
+	return response.json();
 };
 
 const updateApplicationStatus = async () => {

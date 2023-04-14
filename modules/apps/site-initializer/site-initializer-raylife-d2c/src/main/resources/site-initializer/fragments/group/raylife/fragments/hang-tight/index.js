@@ -15,7 +15,10 @@
 const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 const urlPaths = pathname.split('/').filter(Boolean);
 const siteName = `/${urlPaths.slice(0, urlPaths.length - 1).join('/')}`;
-const applicationId = localStorage.getItem('raylife-application-id');
+const applicationId = Liferay.Util.LocalStorage.getItem(
+	'raylife-application-id',
+	Liferay.Util.SessionStorage.TYPES.NECESSARY
+);
 
 const NEXT_STEP_DELAY = 1000;
 
@@ -29,7 +32,7 @@ const fetchHeadless = async (url, options) => {
 		},
 	});
 
-	return await response.json();
+	return response.json();
 };
 
 const fetchHeadlessWithToken = async (url) => {
@@ -37,7 +40,10 @@ const fetchHeadlessWithToken = async (url) => {
 		return fetchHeadless(url);
 	}
 
-	const token = sessionStorage.getItem('raylife-guest-permission-token');
+	const token = Liferay.Util.SessionStorage.getItem(
+		'raylife-guest-permission-token',
+		Liferay.Util.SessionStorage.TYPES.NECESSARY
+	);
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${window.location.origin}/${url}`, {
@@ -47,7 +53,7 @@ const fetchHeadlessWithToken = async (url) => {
 		},
 	});
 
-	return await response.json();
+	return response.json();
 };
 
 const addQuoteEntryData = async (payload) => {
@@ -60,7 +66,7 @@ const addQuoteEntryData = async (payload) => {
 const main = async () => {
 	const [quote, quoteComparison] = await Promise.all([
 		fetchHeadless(
-			`o/c/raylifequotes/?filter=r_applicationToQuotes_c_raylifeApplicationId eq '${applicationId}'&fields=id`
+			`o/c/raylifequotes?filter=r_applicationToQuotes_c_raylifeApplicationId eq '${applicationId}'&fields=id`
 		),
 		fetchHeadlessWithToken(
 			`o/c/quotecomparisons/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`

@@ -14,7 +14,10 @@
 
 try {
 	const firstName = JSON.parse(
-		localStorage.getItem('raylife-application-form')
+		Liferay.Util.LocalStorage.getItem(
+			'raylife-application-form',
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
+		)
 	).basics.businessInformation.firstName;
 
 	if (firstName) {
@@ -22,8 +25,7 @@ try {
 			'quote-comparison-user-first-name'
 		).innerHTML = firstName;
 	}
-}
-catch (error) {
+} catch (error) {
 	document.getElementById('quote-comparison-user-first-name').innerHTML =
 		'Sam';
 }

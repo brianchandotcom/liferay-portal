@@ -86,6 +86,17 @@ public class CompanyIndexFactory
 	}
 
 	@Override
+	public void createIndices(IndicesClient indicesClient, long companyId) {
+		String indexName = getIndexName(companyId);
+
+		if (hasIndex(indicesClient, indexName)) {
+			return;
+		}
+
+		createIndex(indexName, indicesClient);
+	}
+
+	@Override
 	public void createNextIndex(long companyId) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664") ||
 			(companyId == CompanyConstants.SYSTEM)) {
@@ -114,14 +125,26 @@ public class CompanyIndexFactory
 	}
 
 	@Override
-	public void createIndices(IndicesClient indicesClient, long companyId) {
+	public void deleteIndices(IndicesClient indicesClient, long companyId) {
 		String indexName = getIndexName(companyId);
 
-		if (hasIndex(indicesClient, indexName)) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
+			Company company = _companyLocalService.fetchCompany(companyId);
+
+			if ((company != null) &&
+				!Validator.isBlank(company.getIndexNameCur())) {
+
+				indexName = company.getIndexNameCur();
+			}
+		}
+
+		if (!hasIndex(indicesClient, indexName)) {
 			return;
 		}
 
-		createIndex(indexName, indicesClient);
+		_executeIndexContributorsBeforeRemove(indexName);
+
+		_deleteIndex(indexName, indicesClient, companyId, true);
 	}
 
 	@Override
@@ -145,29 +168,6 @@ public class CompanyIndexFactory
 			_deleteIndex(
 				indexName, restHighLevelClient.indices(), companyId, false);
 		}
-	}
-
-	@Override
-	public void deleteIndices(IndicesClient indicesClient, long companyId) {
-		String indexName = getIndexName(companyId);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
-			Company company = _companyLocalService.fetchCompany(companyId);
-
-			if ((company != null) &&
-				!Validator.isBlank(company.getIndexNameCur())) {
-
-				indexName = company.getIndexNameCur();
-			}
-		}
-
-		if (!hasIndex(indicesClient, indexName)) {
-			return;
-		}
-
-		_executeIndexContributorsBeforeRemove(indexName);
-
-		_deleteIndex(indexName, indicesClient, companyId, true);
 	}
 
 	@Override

@@ -27,24 +27,23 @@ definition {
 	}
 
 	@priority = 4
-	test AddKBArticlePublication {
+	test CanAddKBArticleWithinPublications {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		KBAdmin.openKBAdmin(siteURLKey = "site-name");
-
-		KBArticle.addCP(
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+		PublicationsNavigator.openPublicationsAdmin();
+
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Knowledge Base Article",
-			changeSite = "Site Name",
+			changeSite = "Guest",
 			changeTitle = "Knowledge Base Article Title",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -53,7 +52,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Article Content",
@@ -62,10 +61,8 @@ definition {
 
 	@priority = 4
 	test CanDeleteKBArticleWithinPublications {
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		JSONKnowledgeBase.addkBArticle(
-			groupName = "Site Name",
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -73,17 +70,17 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.selectArticleCP(kbArticleTitle = "Knowledge Base Article Title");
 
 		KBArticle.deleteCP();
 
-		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Knowledge Base Article",
-			changeSite = "Site Name",
+			changeSite = "Guest",
 			changeTitle = "Knowledge Base Article Title",
 			changeType = "Deleted",
 			changeUser = "Test Test");
@@ -92,7 +89,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.viewDefaultCP();
 	}

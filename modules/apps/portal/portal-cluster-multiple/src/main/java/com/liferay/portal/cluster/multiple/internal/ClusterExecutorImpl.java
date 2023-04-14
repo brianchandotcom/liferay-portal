@@ -449,6 +449,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				 (_debugClusterEventListener != null)) {
 
 			removeClusterEventListener(_debugClusterEventListener);
+
+			_debugClusterEventListener = null;
 		}
 	}
 

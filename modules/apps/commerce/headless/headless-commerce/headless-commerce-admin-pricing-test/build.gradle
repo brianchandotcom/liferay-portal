@@ -16,6 +16,7 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-discount-api")
 	testIntegrationCompile project(":apps:commerce:commerce-price-list-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-api")
+	testIntegrationCompile project(":apps:commerce:commerce-test-util")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce-core-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-pricing-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-pricing-client")

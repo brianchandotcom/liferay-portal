@@ -32,7 +32,6 @@ import com.liferay.blogs.model.BlogsEntryModel;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrencyModel;
 import com.liferay.commerce.currency.model.impl.CommerceCurrencyModelImpl;
@@ -851,7 +850,7 @@ public class DataFactory {
 
 		// Other fields
 
-		addressModel.setClassNameId(getClassNameId(CommerceAccount.class));
+		addressModel.setClassNameId(getClassNameId(AccountEntry.class));
 		addressModel.setClassPK(accountEntryId);
 		addressModel.setCountryId(countryId);
 		addressModel.setListTypeId(14001);

@@ -84,7 +84,7 @@ public class AdminAccountGroupResourceTest
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
-			AccountConstants.ACCOUNT_GROUP_NAME_GUEST,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(
@@ -153,7 +153,7 @@ public class AdminAccountGroupResourceTest
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
-			AccountConstants.ACCOUNT_GROUP_NAME_GUEST,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(

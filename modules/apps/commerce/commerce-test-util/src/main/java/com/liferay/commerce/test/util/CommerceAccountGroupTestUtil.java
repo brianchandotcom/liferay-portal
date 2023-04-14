@@ -33,6 +33,18 @@ public class CommerceAccountGroupTestUtil {
 			long groupId, AccountEntry accountEntry)
 		throws PortalException {
 
+		AccountGroup accountGroup = addAccountGroup(groupId);
+
+		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
+			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		return accountGroup;
+	}
+
+	public static AccountGroup addAccountGroup(long groupId)
+		throws PortalException {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
@@ -46,14 +58,7 @@ public class CommerceAccountGroupTestUtil {
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup.setExpandoBridgeAttributes(serviceContext);
 
-		accountGroup = AccountGroupLocalServiceUtil.updateAccountGroup(
-			accountGroup);
-
-		AccountGroupRelLocalServiceUtil.addAccountGroupRel(
-			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId());
-
-		return accountGroup;
+		return AccountGroupLocalServiceUtil.updateAccountGroup(accountGroup);
 	}
 
 }

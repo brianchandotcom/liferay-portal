@@ -15,9 +15,9 @@
 package com.liferay.headless.commerce.delivery.cart.resource.v1_0.test;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -61,10 +61,9 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
 
-		_commerceAccount =
-			_commerceAccountLocalService.addBusinessCommerceAccount(
-				"Test Business Account", 0, null, null, true, null, null, null,
-				_serviceContext);
+		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
+			_serviceContext.getUserId(), "Test Business Account", null, null,
+			null, null, _serviceContext);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			testGroup.getCompanyId());
@@ -105,9 +104,8 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 				_commerceAddress);
 		}
 
-		if (_commerceAccount != null) {
-			_commerceAccountLocalService.deleteCommerceAccount(
-				_commerceAccount);
+		if (_accountEntry != null) {
+			_accountEntryLocalService.deleteAccountEntry(_accountEntry);
 		}
 	}
 
@@ -188,8 +186,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 		}
 
 		_commerceAddress = _commerceAddressLocalService.addCommerceAddress(
-			AccountEntry.class.getName(),
-			_commerceAccount.getCommerceAccountId(),
+			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -208,7 +205,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
-			_commerceAccount.getCommerceAccountId(),
+			_accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		return _commerceOrder;
@@ -234,10 +231,10 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 		};
 	}
 
-	private CommerceAccount _commerceAccount;
+	private AccountEntry _accountEntry;
 
 	@Inject
-	private CommerceAccountLocalService _commerceAccountLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	private CommerceAddress _commerceAddress;
 

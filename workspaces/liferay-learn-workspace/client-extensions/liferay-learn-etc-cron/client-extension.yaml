@@ -1,6 +1,6 @@
 assemble:
-    - from: assets
-    - fromTask: shadowJar
+    - from: resources
+    - fromTask: bootJar
 liferay-learn-etc-cron:
     .serviceAddress: localhost:8080
     .serviceScheme: http

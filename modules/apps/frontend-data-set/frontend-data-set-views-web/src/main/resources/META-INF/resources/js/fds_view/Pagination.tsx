@@ -156,6 +156,10 @@ function Pagination({
 		invalidNumberInPageSizesValidationError ||
 		invalidPageSizesLengthValidationError;
 
+	const defaultPageSizeValidationError =
+		incompatibleDefaultPageSizeValidationError ||
+		requiredDefaultPageSizeValidationError;
+
 	return (
 		<ClayLayout.Sheet className="mt-3" size="lg">
 			<ClayLayout.SheetHeader>
@@ -165,7 +169,7 @@ function Pagination({
 
 				<div className="sheet-text">
 					{Liferay.Language.get(
-						'use-values-separated-by-commas-to-generate-different-pagination-items-in-the-dataset-view'
+						'dataset-view-pagination-description'
 					)}
 				</div>
 			</ClayLayout.SheetHeader>
@@ -177,7 +181,7 @@ function Pagination({
 					)}
 				>
 					<label htmlFor={`${namespace}fdsViewPageSizesTextarea`}>
-						{Liferay.Language.get('page-sizes')}
+						{Liferay.Language.get('list-of-items-per-page')}
 
 						<RequiredMark />
 					</label>
@@ -225,19 +229,21 @@ function Pagination({
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}
+
+					<ClayForm.Text>
+						{Liferay.Language.get('list-of-items-per-page-help')}
+					</ClayForm.Text>
 				</ClayForm.Group>
 
 				<ClayForm.Group
 					className={classnames(
-						(incompatibleDefaultPageSizeValidationError ||
-							requiredDefaultPageSizeValidationError) &&
-							'has-error'
+						defaultPageSizeValidationError && 'has-error'
 					)}
 				>
 					<label
 						htmlFor={`${namespace}fdsViewPaginationDefaultPageSizeInput`}
 					>
-						{Liferay.Language.get('default-page-size')}
+						{Liferay.Language.get('default-items-per-page')}
 
 						<RequiredMark />
 					</label>
@@ -259,8 +265,7 @@ function Pagination({
 						value={defaultPageSize}
 					/>
 
-					{(incompatibleDefaultPageSizeValidationError ||
-						requiredDefaultPageSizeValidationError) && (
+					{defaultPageSizeValidationError && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
@@ -270,16 +275,14 @@ function Pagination({
 											'this-field-is-required'
 									  )
 									: Liferay.Language.get(
-											'the-default-value-must-exist-in-the-pagination-items-input'
+											'the-default-value-must-exist-in-the-list-of-items-per-page'
 									  )}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}
 
 					<ClayForm.Text>
-						{Liferay.Language.get(
-							'value-to-be-displayed-by-default-in-the-dataset-view-pagination'
-						)}
+						{Liferay.Language.get('default-items-per-page-help')}
 					</ClayForm.Text>
 				</ClayForm.Group>
 			</ClayLayout.SheetSection>

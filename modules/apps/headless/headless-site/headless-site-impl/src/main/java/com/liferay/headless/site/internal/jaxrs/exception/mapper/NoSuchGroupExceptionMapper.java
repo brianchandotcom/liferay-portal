@@ -41,8 +41,7 @@ public class NoSuchGroupExceptionMapper
 
 	@Override
 	protected Problem getProblem(NoSuchGroupException noSuchGroupException) {
-		return new Problem(
-			Response.Status.NOT_FOUND, "Could not find parent site");
+		return new Problem(Response.Status.NOT_FOUND, "No site was found");
 	}
 
 }

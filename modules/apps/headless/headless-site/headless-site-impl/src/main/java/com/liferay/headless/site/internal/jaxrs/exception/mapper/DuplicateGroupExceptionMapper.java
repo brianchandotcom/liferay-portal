@@ -45,7 +45,7 @@ public class DuplicateGroupExceptionMapper
 
 		return new Problem(
 			Response.Status.CONFLICT,
-			"There is already a site with the same key");
+			"A site with the same key already exists");
 	}
 
 }

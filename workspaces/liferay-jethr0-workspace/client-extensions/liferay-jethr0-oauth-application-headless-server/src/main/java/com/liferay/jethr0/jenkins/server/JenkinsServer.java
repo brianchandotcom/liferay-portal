@@ -15,17 +15,30 @@
 package com.liferay.jethr0.jenkins.server;
 
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.jenkins.node.JenkinsNode;
 
 import java.net.URL;
+
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
  */
 public interface JenkinsServer extends Entity {
 
+	public void addJenkinsNode(JenkinsNode jenkinsNode);
+
+	public void addJenkinsNodes(Set<JenkinsNode> jenkinsNodes);
+
+	public Set<JenkinsNode> getJenkinsNodes();
+
 	public String getName();
 
 	public URL getURL();
+
+	public void removeJenkinsNode(JenkinsNode jenkinsNode);
+
+	public void removeJenkinsNodes(Set<JenkinsNode> jenkinsNodes);
 
 	public void setName(String name);
 

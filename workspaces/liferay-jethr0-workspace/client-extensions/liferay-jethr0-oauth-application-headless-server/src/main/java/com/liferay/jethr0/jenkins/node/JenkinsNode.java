@@ -16,6 +16,7 @@ package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.jenkins.server.JenkinsServer;
 
 import java.net.URL;
 
@@ -25,6 +26,8 @@ import java.net.URL;
 public interface JenkinsNode extends Entity {
 
 	public boolean getGoodBattery();
+
+	public JenkinsServer getJenkinsServer();
 
 	public String getName();
 
@@ -37,6 +40,8 @@ public interface JenkinsNode extends Entity {
 	public boolean isCompatible(Build build);
 
 	public void setGoodBattery(boolean goodBattery);
+
+	public void setJenkinsServer(JenkinsServer jenkinsServer);
 
 	public void setName(String name);
 

@@ -16,6 +16,7 @@ package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -30,6 +31,11 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	@Override
 	public boolean getGoodBattery() {
 		return _goodBattery;
+	}
+
+	@Override
+	public JenkinsServer getJenkinsServer() {
+		return _jenkinsServer;
 	}
 
 	@Override
@@ -83,6 +89,11 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	@Override
 	public void setGoodBattery(boolean goodBattery) {
 		_goodBattery = goodBattery;
+	}
+
+	@Override
+	public void setJenkinsServer(JenkinsServer jenkinsServer) {
+		_jenkinsServer = jenkinsServer;
 	}
 
 	@Override
@@ -140,6 +151,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	}
 
 	private boolean _goodBattery;
+	private JenkinsServer _jenkinsServer;
 	private String _name;
 	private int _nodeCount;
 	private int _nodeRAM;

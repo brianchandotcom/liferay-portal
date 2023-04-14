@@ -15,9 +15,12 @@
 package com.liferay.jethr0.jenkins.server;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
+
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -26,6 +29,25 @@ import org.json.JSONObject;
  */
 public abstract class BaseJenkinsServer
 	extends BaseEntity implements JenkinsServer {
+
+	@Override
+	public void addJenkinsNode(JenkinsNode jenkinsNode) {
+		addRelatedEntity(jenkinsNode);
+
+		jenkinsNode.setJenkinsServer(this);
+	}
+
+	@Override
+	public void addJenkinsNodes(Set<JenkinsNode> jenkinsNodes) {
+		for (JenkinsNode jenkinsNode : jenkinsNodes) {
+			addJenkinsNode(jenkinsNode);
+		}
+	}
+
+	@Override
+	public Set<JenkinsNode> getJenkinsNodes() {
+		return getRelatedEntities(JenkinsNode.class);
+	}
 
 	@Override
 	public JSONObject getJSONObject() {
@@ -48,6 +70,16 @@ public abstract class BaseJenkinsServer
 	@Override
 	public URL getURL() {
 		return _url;
+	}
+
+	@Override
+	public void removeJenkinsNode(JenkinsNode jenkinsNode) {
+		removeRelatedEntity(jenkinsNode);
+	}
+
+	@Override
+	public void removeJenkinsNodes(Set<JenkinsNode> jenkinsNodes) {
+		removeRelatedEntities(jenkinsNodes);
 	}
 
 	@Override

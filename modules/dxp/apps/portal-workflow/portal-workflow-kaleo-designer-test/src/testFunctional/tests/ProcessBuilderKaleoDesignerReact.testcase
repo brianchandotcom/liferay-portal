@@ -4862,6 +4862,70 @@ definition {
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
+	@description = "This is a use case for LPS-47352 and LPS-48912."
+	@priority = 3
+	test ViewWorkflowDefinitionButtons {
+		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtons";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		KaleoDesigner.viewButtons();
+	}
+
+	@description = "This is a use case for LPS-47352 and LPS-48912."
+	@priority = 3
+	test ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin {
+		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Kaleo Forms Admin");
+
+		KaleoFormsAdmin.addFieldSet(
+			kfFieldSetName = "Field Set Data Definition",
+			kfProcessName = "Kaleo Forms Process");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "Kaleo Forms Process Description",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.chooseFieldSet(
+			kfFieldSetName = "Field Set Data Definition",
+			kfProcessName = "Kaleo Forms Process");
+
+		KaleoFormsAdmin.next();
+
+		KaleoFormsAdmin.addWorkflow(
+			kfProcessName = "Kaleo Forms Process",
+			workflowDefinitionTitle = "Workflow Definition Title");
+
+		KaleoDesigner.viewButtons(cancelButton = "true");
+
+		SelectFrameTop();
+
+		KaleoFormsAdmin.viewPublishedWorkflowDefinitions();
+
+		KaleoFormsAdmin.viewNoUnpublishedWorkflowDefinitions();
+	}
+
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"
 	@priority = 3
 	test WarningIsDisplayedWhenNewTransitionDefault {

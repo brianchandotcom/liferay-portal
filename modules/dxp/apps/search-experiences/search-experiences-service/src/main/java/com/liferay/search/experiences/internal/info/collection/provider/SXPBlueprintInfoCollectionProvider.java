@@ -144,7 +144,6 @@ public class SXPBlueprintInfoCollectionProvider
 						searchContext.setAttribute(
 							"search.experiences.blueprint.id",
 							sxpBlueprint.getSXPBlueprintId());
-						searchContext.setLocale(serviceContext.getLocale());
 
 						searchContext.setAttribute(
 							"search.experiences.ip.address",
@@ -156,6 +155,8 @@ public class SXPBlueprintInfoCollectionProvider
 						searchContext.setAttribute(
 							"search.experiences.scope.group.id",
 							themeDisplay.getScopeGroupId());
+
+						searchContext.setLocale(serviceContext.getLocale());
 
 						Pagination pagination = collectionQuery.getPagination();
 

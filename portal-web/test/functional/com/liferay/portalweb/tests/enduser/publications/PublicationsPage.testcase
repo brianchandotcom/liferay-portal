@@ -88,6 +88,84 @@ definition {
 		}
 	}
 
+	@description = "Assert that it's possible to add and apply widget template within publications"
+	test CanAddWidgetTemplateAndApplyItWithinPublications {
+		task ("Add new Publication and select it for use") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Add new site and go to it") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("Add Blog Template using 'adt_blogs_basic.ftl' file") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Templates");
+
+			Navigator.gotoNavTab(navTab = "Widget Templates");
+
+			ApplicationDisplayTemplates.addCP(
+				adtFile = "adt_blogs_basic.ftl",
+				adtType = "Blogs");
+		}
+
+		task ("Add new Widget Page using the Blog Template") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Blogs");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Widget Page Name",
+				siteName = "Test Site Name");
+
+			ApplicationDisplayTemplates.selectPortletADT(
+				portletName = "Blogs",
+				templateName = "Blogs Test ADT");
+		}
+
+		task ("Add new Blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			Refresh();
+		}
+
+		task ("Assert that the blog is shown on the Blogs Widget") {
+			AssertElementPresent(
+				key_entryTitle = "Blogs Entry Title",
+				locator1 = "BlogsEntry#TITLE");
+		}
+
+		task ("Go to review changes and assert that the changes were actually made") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Dynamic Data Mapping Template",
+				changeSite = "Test Site Name",
+				changeTitle = "Blogs Test ADT",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Publish the Publication and assert that it was published successfully") {
+			JSONPublications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+	}
+
 	@description = "Create content page template into a Publication and publish"
 	@priority = 3
 	test CanCreateContentPageTemplateAndPublish {

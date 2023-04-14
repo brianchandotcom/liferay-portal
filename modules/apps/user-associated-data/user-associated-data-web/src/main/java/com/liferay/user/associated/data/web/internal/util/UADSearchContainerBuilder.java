@@ -99,17 +99,12 @@ public class UADSearchContainerBuilder {
 					uadApplicationSummaryDisplay));
 		}
 
-		uadEntities = ListUtil.sort(
-			uadEntities,
-			_getComparator(
-				searchContainer.getOrderByCol(),
-				searchContainer.getOrderByType()));
-
 		searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				uadEntities, searchContainer.getStart(),
-				searchContainer.getDelta()),
-			uadEntities.size());
+			ListUtil.sort(
+				uadEntities,
+				_getComparator(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType())));
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
@@ -162,17 +157,12 @@ public class UADSearchContainerBuilder {
 						uadHierarchyDisplay));
 			}
 
-			uadEntities = ListUtil.sort(
-				uadEntities,
-				_getComparator(
-					searchContainer.getOrderByCol(),
-					searchContainer.getOrderByType()));
-
 			searchContainer.setResultsAndTotal(
-				() -> ListUtil.subList(
-					uadEntities, searchContainer.getStart(),
-					searchContainer.getDelta()),
-				entities.size());
+				ListUtil.sort(
+					uadEntities,
+					_getComparator(
+						searchContainer.getOrderByCol(),
+						searchContainer.getOrderByType())));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

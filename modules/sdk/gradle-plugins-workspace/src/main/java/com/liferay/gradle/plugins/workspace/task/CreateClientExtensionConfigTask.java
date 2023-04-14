@@ -104,10 +104,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				String pid = _clientExtensionProperties.getProperty(
 					clientExtension.type + ".pid");
 
-				if (Objects.equals(
-						clientExtension.type, "instanceConfiguration")) {
-
-					pid = (String)clientExtension.typeSettings.remove("pid");
+				if (Objects.equals(clientExtension.type, "instanceSettings")) {
+					pid =
+						clientExtension.typeSettings.remove("pid") + ".scoped";
 				}
 
 				if (pid != null) {

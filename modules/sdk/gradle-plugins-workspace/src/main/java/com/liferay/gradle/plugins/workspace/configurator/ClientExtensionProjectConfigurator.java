@@ -686,9 +686,7 @@ public class ClientExtensionProjectConfigurator
 						"\"oAuthApplicationHeadlessServer\""));
 			}
 		}
-		else if (Objects.equals(
-					clientExtension.type, "instanceConfiguration")) {
-
+		else if (Objects.equals(clientExtension.type, "instanceSettings")) {
 			if (!clientExtension.typeSettings.containsKey("pid")) {
 				throw new GradleException(
 					StringBundler.concat(

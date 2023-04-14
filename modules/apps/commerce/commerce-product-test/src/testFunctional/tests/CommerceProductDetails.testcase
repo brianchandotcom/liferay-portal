@@ -1618,6 +1618,81 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10897. Users cannot view XSS with Availability Estimates in product details"
+	@priority = 3
+	test CannotExecuteXSSWithAvailabilityEstimatesInProductDetails {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a regular user with Minium site membership is created") {
+			JSONUser.addUser(
+				userEmailAddress = "testuser@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "testuser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "testuser@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("And a new Availability Estimate is created using an XSS and the product 'ABS Sensor' is updated with this entry") {
+			CommerceNavigator.goToAvailabilityEstimatesAdmin();
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewAvailabilityEstimatesEntry(entryName = "Approx <script>alert(123)</script> Days");
+
+			Button.clickSave();
+
+			AssertElementPresent(locator1 = "Message#SUCCESS");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Select(
+				key_title = "Availability Estimate",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = "Approx <script>alert(123)</script> Days");
+
+			Button.clickPublish();
+		}
+
+		task ("And the stock quantity of the product is set to 0") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 0,
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("When the user logs in and goes to the product details") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "testuser@liferay.com",
+				userLoginFullName = "Test User");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then the script is not executed") {
+			AssertAlertNotPresent();
+		}
+	}
+
 	@description = "COMMERCE-9674 | As a buyer, I want to be able to view the incoming dates/quantities for a multiple SKUs product"
 	@priority = 5
 	test CanViewMultipleSkusProductIncomingQuantity {

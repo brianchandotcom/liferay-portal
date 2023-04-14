@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = "initial.deployment=true",
-	service = {CommerceProductServiceVerifyProcess.class, VerifyProcess.class}
-)
+@Component(property = "initial.deployment=true", service = VerifyProcess.class)
 public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 
 	public void verifyCPMeasurementUnits() throws Exception {

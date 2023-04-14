@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jethr0;
+package com.liferay.jethr0.jms;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,16 +24,15 @@ import org.springframework.jms.annotation.JmsListener;
  * @author Michael Hashimoto
  */
 @Configuration
-public class Jethr0JMSEventHandler {
+public class JMSEventHandler {
 
 	@JmsListener(destination = "${jms.jenkins.event.queue}")
-	public void processMessage(String message) {
+	public void process(String message) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(message);
 		}
 	}
 
-	private static final Log _log = LogFactory.getLog(
-		Jethr0JMSEventHandler.class);
+	private static final Log _log = LogFactory.getLog(JMSEventHandler.class);
 
 }

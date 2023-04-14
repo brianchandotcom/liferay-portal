@@ -51,9 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alec Sloan
  */
-@Component(
-	service = {AvailabilityLabelInfoItemRenderer.class, InfoItemRenderer.class}
-)
+@Component(service = InfoItemRenderer.class)
 public class AvailabilityLabelInfoItemRenderer
 	implements InfoItemRenderer<CPDefinition> {
 

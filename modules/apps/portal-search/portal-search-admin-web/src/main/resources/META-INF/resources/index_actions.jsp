@@ -154,7 +154,7 @@ page import="java.util.Map" %>
 							</div>
 
 							<div class="autofit-col">
-								<aui:button cssClass="save-server-button" data-blue-green-disabled="" data-cmd="reindexDictionaries" value="execute" />
+								<aui:button cssClass="save-server-button" data-concurrent-disabled="" data-cmd="reindexDictionaries" value="execute" />
 							</div>
 						</li>
 
@@ -177,7 +177,7 @@ page import="java.util.Map" %>
 								<div class="autofit-col index-action-wrapper" data-type="<%= indexer.getClassName() %>">
 									<c:choose>
 										<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
-											<aui:button cssClass="save-server-button" data-blue-green-disabled="" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />
+											<aui:button cssClass="save-server-button" data-concurrent-disabled="" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />
 										</c:when>
 										<c:otherwise>
 											<%= backgroundTaskDisplay.renderDisplayTemplate() %>
@@ -204,7 +204,7 @@ page import="java.util.Map" %>
 								</div>
 
 								<div class="autofit-col index-action-wrapper" data-type="<%= indexReindexerClassName %>">
-									<aui:button cssClass="save-server-button" data-blue-green-disabled="" data-classname="<%= indexReindexerClassName %>" data-cmd="reindexIndexReindexer" value="execute" />
+									<aui:button cssClass="save-server-button" data-concurrent-disabled="" data-classname="<%= indexReindexerClassName %>" data-cmd="reindexIndexReindexer" value="execute" />
 								</div>
 							</li>
 

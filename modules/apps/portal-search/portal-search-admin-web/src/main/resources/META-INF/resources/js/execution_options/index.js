@@ -23,7 +23,7 @@ import InstanceSelector from './InstanceSelector';
 const EXECUTE_BUTTON_QUERY_SELECTOR = '.save-server-button';
 
 const EXECUTION_MODES = {
-	BLUE_GREEN: 'blue-green',
+	CONCURRENT: 'concurrent',
 	REGULAR: 'regular',
 };
 
@@ -58,14 +58,14 @@ function ExecutionOptions({
 	);
 
 	/**
-	 * Disables execute buttons with the attribute `data-blue-green-disabled`
-	 * if Blue/Green execution mode is selected.
+	 * Disables execute buttons with the attribute `data-concurrent-disabled`
+	 * if Concurrent execution mode is selected.
 	 */
 	useEffect(() => {
 		executeButtonElementsRef.current?.forEach((element) => {
 			if (
-				executionMode === EXECUTION_MODES.BLUE_GREEN &&
-				element.hasAttribute('data-blue-green-disabled')
+				executionMode === EXECUTION_MODES.CONCURRENT &&
+				element.hasAttribute('data-concurrent-disabled')
 			) {
 				element.disabled = true;
 			}
@@ -102,8 +102,8 @@ function ExecutionOptions({
 						/>
 
 						<ClayRadio
-							label={Liferay.Language.get('blue-green')}
-							value={EXECUTION_MODES.BLUE_GREEN}
+							label={Liferay.Language.get('concurrent')}
+							value={EXECUTION_MODES.CONCURRENT}
 						/>
 					</ClayRadioGroup>
 				</div>

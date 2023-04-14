@@ -61,10 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER,
 		"mvc.path=-", "mvc.path=/view.jsp"
 	},
-	service = {
-		AssetPublisherPortletToolbarContributor.class,
-		PortletToolbarContributor.class
-	}
+	service = PortletToolbarContributor.class
 )
 public class AssetPublisherPortletToolbarContributor
 	extends BasePortletToolbarContributor {

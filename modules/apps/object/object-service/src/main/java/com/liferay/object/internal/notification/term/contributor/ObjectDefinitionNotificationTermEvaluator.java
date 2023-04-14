@@ -178,7 +178,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private String _evaluateParentObjectAuthor(
+	private String _evaluateParentObjectDefinitionAuthor(
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
@@ -230,7 +230,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private String _evaluateParentObjectFields(
+	private String _evaluateParentObjectDefinitionObjectFields(
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
@@ -375,8 +375,9 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(
 		this::_evaluateAuthor, this::_evaluateCurrentUser,
-		this::_evaluateObjectFields, this::_evaluateParentObjectAuthor,
-		this::_evaluateParentObjectFields);
+		this::_evaluateObjectFields,
+		this::_evaluateParentObjectDefinitionAuthor,
+		this::_evaluateParentObjectDefinitionObjectFields);
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -465,10 +466,12 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 			}
 
 			if (Objects.equals(sort.getFieldName(), "name")) {
-				fieldComparator = Comparator.comparing(Field::getName);
+				fieldComparator = Comparator.comparing(
+					field -> StringUtil.toLowerCase(field.getName()));
 			}
 			else {
-				fieldComparator = Comparator.comparing(Field::getType);
+				fieldComparator = Comparator.comparing(
+					field -> StringUtil.toLowerCase(field.getType()));
 			}
 
 			if (sort.isReverse()) {

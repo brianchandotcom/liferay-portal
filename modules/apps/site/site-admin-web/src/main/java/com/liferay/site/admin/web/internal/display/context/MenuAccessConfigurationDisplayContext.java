@@ -20,6 +20,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -107,6 +108,8 @@ public class MenuAccessConfigurationDisplayContext {
 		}
 
 		regularRoleItemSelectorCriterion.setCheckedRoleIds(roleIds);
+		regularRoleItemSelectorCriterion.setExcludedRoleNames(
+			new String[] {RoleConstants.ADMINISTRATOR});
 
 		SiteRoleItemSelectorCriterion siteRoleItemSelectorCriterion =
 			new SiteRoleItemSelectorCriterion();
@@ -115,6 +118,8 @@ public class MenuAccessConfigurationDisplayContext {
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
 
 		siteRoleItemSelectorCriterion.setCheckedRoleIds(roleIds);
+		siteRoleItemSelectorCriterion.setExcludedRoleNames(
+			new String[] {RoleConstants.SITE_ADMINISTRATOR});
 
 		itemSelectorCriteria.add(siteRoleItemSelectorCriterion);
 

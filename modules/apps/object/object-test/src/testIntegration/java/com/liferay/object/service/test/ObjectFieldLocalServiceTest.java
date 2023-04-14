@@ -795,6 +795,8 @@ public class ObjectFieldLocalServiceTest {
 					_createObjectFieldSetting(
 						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 						ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER)));
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingValueException.InvalidValue
 					objectFieldSettingValueException) {
@@ -828,6 +830,8 @@ public class ObjectFieldLocalServiceTest {
 					_createObjectFieldSetting(
 						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE)));
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingValueException.InvalidValue
 					objectFieldSettingValueException) {
@@ -851,6 +855,8 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				false, "upload", false, false, Collections.emptyList());
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingValueException.MissingRequiredValues
 					objectFieldSettingValueException) {
@@ -871,6 +877,8 @@ public class ObjectFieldLocalServiceTest {
 				false, "text", false, false,
 				Collections.singletonList(
 					_createObjectFieldSetting("showCounter", "true")));
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingValueException.MissingRequiredValues
 					objectFieldSettingValueException) {
@@ -889,6 +897,8 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				false, "picklist", true, true, Collections.emptyList());
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingValueException.MissingRequiredValues
 					objectFieldSettingValueException) {
@@ -912,6 +922,8 @@ public class ObjectFieldLocalServiceTest {
 				Arrays.asList(
 					_createObjectFieldSetting("anySetting", "10"),
 					_createObjectFieldSetting("showCounter", "true")));
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingNameException.NotAllowedNames
 					objectFieldSettingNameException) {
@@ -930,6 +942,8 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				false, "text", false, false,
 				Arrays.asList(_createObjectFieldSetting("maxLength", null)));
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingNameException.NotAllowedNames
 					objectFieldSettingNameException) {
@@ -950,6 +964,8 @@ public class ObjectFieldLocalServiceTest {
 				Arrays.asList(
 					_createObjectFieldSetting("maxLength", "10"),
 					_createObjectFieldSetting("showCounter", "false")));
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingNameException.NotAllowedNames
 					objectFieldSettingNameException) {
@@ -975,6 +991,8 @@ public class ObjectFieldLocalServiceTest {
 						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE),
 					_createObjectFieldSetting("showCounter", "false")));
+
+			Assert.fail();
 		}
 		catch (ObjectFieldSettingNameException.NotAllowedNames
 					objectFieldSettingNameException) {

@@ -1090,7 +1090,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		List<AssetEntry> assetEntries = baseModelSearchResult.getBaseModels();
 
-		if (!assetEntries.isEmpty() && (start < total)) {
+		if (!assetEntries.isEmpty()) {
 			assetEntryResults.add(new AssetEntryResult(assetEntries));
 		}
 

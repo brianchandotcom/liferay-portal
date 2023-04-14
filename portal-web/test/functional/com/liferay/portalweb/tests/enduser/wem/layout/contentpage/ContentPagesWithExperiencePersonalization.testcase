@@ -3,45 +3,37 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
-		}
-
-		task ("Add a site via JSON") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@description = "LPS-157033 Given the View mode of a page When an experience is active in the Control Menu Then the ACTIVE label will appear next to the experience name"
 	@priority = 3
 	test ActiveExperienceLabelInControlMenu {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -57,7 +49,7 @@ definition {
 		task ("Go to the view mode of the page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Switch to the new experience") {
@@ -72,10 +64,25 @@ definition {
 	@description = "LPS-157033 Given the View mode of a page When the Experience dropdown menu is displayed And there experiences active Then the ACTIVE label will appear next to each experience name active"
 	@priority = 3
 	test ActiveExperienceLabelInViewDropdown {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -91,7 +98,7 @@ definition {
 		task ("Go to the view mode of the page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Assert the Active label is present") {
@@ -102,10 +109,25 @@ definition {
 	@description = "This is a test for LPS-142290. The user cannot modify experiences at view mode."
 	@priority = 4
 	test CannotModifyExperienceAtViewMode {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -130,7 +152,7 @@ definition {
 		task ("View cannot prioritize, deprioritize, edit, duplicate, delete experiences at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.openExperienceMenu();
 
@@ -149,10 +171,25 @@ definition {
 	@description = "This is a test for LPS-142290. The user cannot modify experiences on preview draft page."
 	@priority = 4
 	test CannotModifyExperiencesOnPreviewDraftPage {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -173,7 +210,7 @@ definition {
 		}
 
 		task ("View cannot prioritize, deprioritize, edit, duplicate, delete experiences on preview draft page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
@@ -202,16 +239,31 @@ definition {
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page based on non-default experience."
 	@priority = 4
 	test CreatePageTemplateFromContentPageBasedOnNonDefaultExperience {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 		}
 
 		task ("Add a new experience for Anyone") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
@@ -231,7 +283,7 @@ definition {
 		}
 
 		task ("View the content page template shown in Page Templates admin") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -252,10 +304,25 @@ definition {
 	@description = "LPS-157033 Given the View mode of a page When an experience is inactive in the Control Menu Then the INACTIVE label will appear next to the experience name"
 	@priority = 3
 	test InactiveExperienceLabelInControlMenu {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -269,7 +336,7 @@ definition {
 		task ("Go to the view mode of the page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Switch to the new experience") {
@@ -284,10 +351,25 @@ definition {
 	@description = "LPS-157033 Given the View mode of a page When the Experience dropdown menu is displayed And there experiences inactive Then the INACTIVE label will appear next to each experience name inactive"
 	@priority = 3
 	test InactiveExperienceLabelInViewDropdown {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -301,7 +383,7 @@ definition {
 		task ("Go to the view mode of the page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Assert the Inactive label is present") {
@@ -312,15 +394,21 @@ definition {
 	@description = "This is a test for LPS-153367. The page creator could preview current experience in a new tab."
 	@priority = 4
 	test PreviewCurrentExperienceInANewTab {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page creator has a Heading fragment on a content page with a new experience") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -351,10 +439,25 @@ definition {
 	@description = "This is a test for LPS-142290. The user can switch experiences at view mode."
 	@priority = 4
 	test SwitchExperienceAtViewMode {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -379,7 +482,7 @@ definition {
 		task ("View the current experience is Default at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.viewCurrentExperience(experienceName = "Default");
 
@@ -460,10 +563,25 @@ definition {
 	@description = "This is a test for LPS-142290. The user can switch experiences on preview draft page."
 	@priority = 4
 	test SwitchExperienceOnPreviewDraftPage {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -484,7 +602,7 @@ definition {
 		}
 
 		task ("View the current experience is Default on preview draft page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Preview Draft",
@@ -577,12 +695,27 @@ definition {
 	test ViewCollectionItemsOnContentPageWhenSelectSegment {
 		property ci.retries.disabled = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a segment with a Regular Role field") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
 
 			JSONSegmentsentry.addSegment(
 				fieldName = "Regular Role",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				operator = "equals",
 				segmentName = "New Segment",
 				text = ${roleId});
@@ -591,7 +724,7 @@ definition {
 		task ("Add a web content without tag") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title 1");
 		}
 
@@ -599,20 +732,20 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag name",
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title 2");
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a new personalized variation with new segment") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
@@ -630,7 +763,7 @@ definition {
 		}
 
 		task ("View both web contents shown in collection items when select Anyone personalized variation") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Dynamic Collection",
@@ -638,7 +771,7 @@ definition {
 		}
 
 		task ("View only the web content with tag is shown in collection items when select New Segment personalized variation") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.viewContent(
 				assetListTitle = "Dynamic Collection",
@@ -646,7 +779,7 @@ definition {
 				assetType = "Web Content Article",
 				personalizedVariation = "New Segment");
 
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.viewNoContent(
 				assetListTitle = "Dynamic Collection",
@@ -658,7 +791,7 @@ definition {
 		task ("Add a Collection Display fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -690,7 +823,7 @@ definition {
 		task ("View both web contents shown in simulation modal by default") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			MobileDevice.previewPG();
 
@@ -730,10 +863,25 @@ definition {
 	test ViewExperienceInViewMode {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -758,7 +906,7 @@ definition {
 		task ("View the page and view the new experience shown in experience selector") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.changeExperience(experienceName = "New Experience");
 		}
@@ -795,10 +943,25 @@ definition {
 	test ViewExperienceSelectedInPreviewDraftPage {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -823,7 +986,7 @@ definition {
 		task ("Edit the inline text of Button in Default experience") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.editFragmentText(
 				fragmentName = "Button",
@@ -888,10 +1051,25 @@ definition {
 	test ViewInlineTextItemsFromCurrentExperienceInPageContentPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a new experience") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",

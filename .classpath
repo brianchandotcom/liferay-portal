@@ -38,6 +38,7 @@
 	<classpathentry kind="lib" path="lib/development/ant-contrib.jar"/>
 	<classpathentry kind="lib" path="lib/development/antelope.jar"/>
 	<classpathentry kind="lib" path="lib/development/appium.jar"/>
+	<classpathentry kind="lib" path="lib/development/asm-commons.jar"/>
 	<classpathentry kind="lib" path="lib/development/asm-tree.jar"/>
 	<classpathentry kind="lib" path="lib/development/asm.jar"/>
 	<classpathentry kind="lib" path="lib/development/aspectj-rt.jar"/>

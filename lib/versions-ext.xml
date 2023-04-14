@@ -117,6 +117,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/asm-commons.jar</file-name>
+				<version>7.0</version>
+				<project-name>ASM</project-name>
+				<project-url>http://asm.ow2.io</project-url>
+				<licenses>
+					<license>
+						<license-name>ASM License</license-name>
+						<license-url>http://asm.ow2.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/asm-tree.jar</file-name>
 				<version>7.0</version>
 				<project-name>ASM</project-name>

@@ -1110,6 +1110,10 @@ definition {
 				key_titleFieldName = "Entry Test C",
 				locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
 
+			WaitForElementPresent(
+				key_fieldLabel = "Entry Test C",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test C",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");

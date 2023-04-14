@@ -100,7 +100,7 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 							DLPortletInstanceSettings dlPortletInstanceSettings = dlRequestHelper.getDLPortletInstanceSettings();
 							%>
 
-							<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() %>">
+							<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() && folder.isSupportsSocial() %>">
 								<dt class="sidebar-dt">
 									<liferay-ui:message key="ratings" />
 								</dt>

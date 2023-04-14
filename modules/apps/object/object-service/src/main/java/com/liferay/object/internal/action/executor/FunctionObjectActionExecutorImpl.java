@@ -24,8 +24,10 @@ import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -59,8 +61,18 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
 	public String getKey() {
 		return _key;
+	}
+
+	@Override
+	public List<String> getObjectDefinitionNames() {
+		return _objectDefinitionNames;
 	}
 
 	@Activate
@@ -74,6 +86,8 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 		_key = StringBundler.concat(
 			ObjectActionExecutorConstants.KEY_FUNCTION, StringPool.POUND,
 			ConfigurationFactoryUtil.getExternalReferenceCode(properties));
+		_objectDefinitionNames = StringUtil.asList(
+			properties.get("objectDefinitionNames"));
 	}
 
 	private long _companyId;
@@ -84,6 +98,7 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 	private FunctionObjectActionExecutorImplConfiguration
 		_functionObjectActionExecutorImplConfiguration;
 	private String _key;
+	private List<String> _objectDefinitionNames;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

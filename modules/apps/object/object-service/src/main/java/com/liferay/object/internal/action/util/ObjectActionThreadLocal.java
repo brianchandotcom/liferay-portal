@@ -26,42 +26,39 @@ import java.util.Set;
  */
 public class ObjectActionThreadLocal {
 
-	public static void addObjectActionId(
+	public static void addObjectActionObjectEntryIds(
 		long objectActionId, long objectEntryId) {
 
-		Map<Long, Set<Long>> objectActionIds = getObjectActionIds();
+		Map<Long, Set<Long>> objectActionObjectEntryIds =
+			getObjectActionObjectEntryIds();
 
-		Set<Long> objectEntryIds = objectActionIds.get(objectActionId);
+		Set<Long> objectEntryIds = objectActionObjectEntryIds.get(
+			objectActionId);
 
 		if (objectEntryIds == null) {
 			objectEntryIds = new HashSet<>();
 
-			objectActionIds.put(objectActionId, objectEntryIds);
+			objectActionObjectEntryIds.put(objectActionId, objectEntryIds);
 		}
 
 		objectEntryIds.add(objectEntryId);
 	}
 
-	public static void clearObjectActionIds() {
-		Map<Long, Set<Long>> objectActionIds = getObjectActionIds();
+	public static void clearObjectActionObjectEntryIds() {
+		Map<Long, Set<Long>> objectActionObjectEntryIds =
+			getObjectActionObjectEntryIds();
 
-		objectActionIds.clear();
+		objectActionObjectEntryIds.clear();
 	}
 
-	public static Map<Long, Set<Long>> getObjectActionIds() {
-		return _objectActionIdsThreadLocal.get();
-	}
-
-	public static void setObjectActionIds(
-		Map<Long, Set<Long>> objectActionIds) {
-
-		_objectActionIdsThreadLocal.set(objectActionIds);
+	public static Map<Long, Set<Long>> getObjectActionObjectEntryIds() {
+		return _objectActionObjectEntryIdsThreadLocal.get();
 	}
 
 	private static final ThreadLocal<Map<Long, Set<Long>>>
-		_objectActionIdsThreadLocal = new CentralizedThreadLocal<>(
+		_objectActionObjectEntryIdsThreadLocal = new CentralizedThreadLocal<>(
 			ObjectActionThreadLocal.class.getName() +
-				"._objectActionIdsThreadLocal",
+				"._objectActionObjectEntryIdsThreadLocal",
 			HashMap::new);
 
 }

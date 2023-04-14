@@ -33,11 +33,10 @@ import java.util.concurrent.ConcurrentMap;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
@@ -85,10 +84,17 @@ public class CacheHelper {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE, _bundleBundleTrackerCustomizer);
+		_bundleContext = bundleContext;
 
-		_bundleTracker.open();
+		_bundleListener = bundleEvent -> {
+			if (bundleEvent.getType() == BundleEvent.STOPPED) {
+				Bundle bundle = bundleEvent.getBundle();
+
+				_digests.remove(bundle.getBundleId());
+			}
+		};
+
+		bundleContext.addBundleListener(_bundleListener);
 
 		if (_lastRestartTime == -1) {
 			_lastRestartTime = System.currentTimeMillis();
@@ -97,14 +103,12 @@ public class CacheHelper {
 
 	@Deactivate
 	protected void deactivate() {
-		_bundleTracker.close();
-
-		_bundleTracker = null;
+		_bundleContext.removeBundleListener(_bundleListener);
 	}
 
 	private String _digest(Bundle bundle, String path) {
-		ConcurrentMap<String, String> digests = _digests.get(
-			bundle.getBundleId());
+		ConcurrentMap<String, String> digests = _digests.computeIfAbsent(
+			bundle.getBundleId(), key -> new ConcurrentHashMap<>());
 
 		String cacheKey = StringBundler.concat(
 			bundle.getBundleId(), StringPool.COLON, path);
@@ -152,31 +156,8 @@ public class CacheHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(CacheHelper.class);
 
-	private final BundleTrackerCustomizer<Bundle>
-		_bundleBundleTrackerCustomizer = new BundleTrackerCustomizer<Bundle>() {
-
-			@Override
-			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				_digests.put(bundle.getBundleId(), new ConcurrentHashMap<>());
-
-				return bundle;
-			}
-
-			@Override
-			public void modifiedBundle(
-				Bundle bundle, BundleEvent bundleEvent, Bundle bundle2) {
-			}
-
-			@Override
-			public void removedBundle(
-				Bundle bundle, BundleEvent bundleEvent, Bundle bundle2) {
-
-				_digests.remove(bundle.getBundleId());
-			}
-
-		};
-
-	private BundleTracker<Bundle> _bundleTracker;
+	private BundleContext _bundleContext;
+	private BundleListener _bundleListener;
 	private final Map<Long, ConcurrentMap<String, String>> _digests =
 		new ConcurrentHashMap<>();
 	private long _lastRestartTime = -1;

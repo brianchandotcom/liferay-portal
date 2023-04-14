@@ -12,34 +12,35 @@
  * details.
  */
 
-import ClayBadge from "@clayui/badge";
-import React from "react";
-import ReactDOM from "react-dom";
+import ClayBadge from '@clayui/badge';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 class CustomElement extends HTMLElement {
-  constructor() {
-    super();
+	constructor() {
+		super();
 
-    const root = document.createElement("div");
+		const root = document.createElement('div');
 
-    this.appendChild(root);
+		this.appendChild(root);
 
-    ReactDOM.render(
-      React.createElement(ClayBadge, {
-        displayType: "success",
-        label: "Success!",
-      }),
-      root
-    );
-  }
+		ReactDOM.render(
+			React.createElement(ClayBadge, {
+				displayType: 'success',
+				label: 'Success!',
+			}),
+			root
+		);
+	}
 }
 
-const ELEMENT_NAME = "liferay-sample-custom-element-5";
+const ELEMENT_NAME = 'liferay-sample-custom-element-5';
 
 if (customElements.get(ELEMENT_NAME)) {
-  console.log(
-    `Skipping registration for <${ELEMENT_NAME}> (already registered)`
-  );
-} else {
-  customElements.define(ELEMENT_NAME, CustomElement);
+	console.log(
+		`Skipping registration for <${ELEMENT_NAME}> (already registered)`
+	);
+}
+else {
+	customElements.define(ELEMENT_NAME, CustomElement);
 }

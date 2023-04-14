@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -216,7 +215,7 @@ public class AssetCategoriesNavigationDisplayContext {
 			portletURL.setParameter("categoryId", String.valueOf(categoryId));
 		}
 
-		return HtmlUtil.escape(portletURL.toString());
+		return portletURL.toString();
 	}
 
 	private JSONArray _getVocabulariesJSONArray() throws PortalException {

@@ -60,4 +60,41 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title");
 	}
 
+	@priority = 4
+	test CanDeleteKBArticleWithinPublications {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+
+		KBArticle.selectArticleCP(kbArticleTitle = "Knowledge Base Article Title");
+
+		KBArticle.deleteCP();
+
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Knowledge Base Article",
+			changeSite = "Site Name",
+			changeTitle = "Knowledge Base Article Title",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+
+		KBArticle.viewDefaultCP();
+	}
+
 }

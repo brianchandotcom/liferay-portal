@@ -2,10 +2,44 @@
 
 <#-- Test migration of Velocity template to Freemarker Template -->
 
-<#assign $portalBeanLocator = $portal.getClass().forName('com.liferay.portal.kernel.bean.PortalBeanLocatorUtil') />
-<#assign $dateFormatFactory = $portalBeanLocator.locate('com.liferay.portal.kernel.util.DateFormatFactoryUtil') />
+<#assign portalBeanLocator = portal.getClass().forName('com.liferay.portal.kernel.bean.PortalBeanLocatorUtil') />
+<#assign dateFormatFactory = portalBeanLocator.locate('com.liferay.portal.kernel.util.DateFormatFactoryUtil') />
 
-<#-- <#assign $indexFormat = $dateFormatFactory.getSimpleDateFormat('EEE, dd MMM yyyy hh:mm:ss Z') /> -->
-<#-- <#assign $modified_date = $indexFormat.parse($reserved-article-display-date.getData()) /> -->
-<#-- <#assign $modified_date = $indexFormat.parse($$reserved-article-modified-date.getData()) /> -->
-<#-- <#assign $mod_date = $dateTool.format("d MMMM yyyy H:m",$modified_date) /> -->
+<#-- <#assign indexFormat = dateFormatFactory.getSimpleDateFormat('EEE, dd MMM yyyy hh:mm:ss Z') /> -->
+<#-- <#assign modified_date = indexFormat.parse(reserved-article-display-date.getData()) /> -->
+<#-- <#assign modified_date = indexFormat.parse($reserved-article-modified-date.getData()) /> -->
+<#-- <#assign mod_date = dateTool.format("d MMMM yyyy H:m",modified_date) /> -->
+
+<p>${Headings.getData(${Headings.getData()})}</p>
+
+<p>${Headings.getData(newTest)}</p>
+
+class="${root_css_class}"
+
+class="${root_css_class} ${root_css_sub_class} ${ro_cs_css} ${ot_ss_cass}"
+
+lang="${w3c_language_id}">
+
+href="${site_default_url}"
+
+#macro( navigationBar  nav_item )
+    #if (nav_item.hasChildren())
+        <ul class="child-menu">
+            #foreach (nav_child in nav_item.getChildren())
+                #if (nav_child.isSelected())
+                    <li class="selected">
+                    <a href="${nav_child.getURL()}" ${nav_child.getTarget()}>${nav_child.getName()}</a>
+                    #navigationBar( nav_child  )
+                #else
+                    <li>
+                    <a href="${nav_child.getURL()}" ${nav_child.getTarget()}>${nav_child.getName()}</a>
+                    #navigationBar( nav_child  )
+                #end
+                #if (nav_child.hasChildren())
+                    <i class="icon-caret-down" onclick="toggleMobileMenu(event)"></i>
+                #end
+                </li>
+            #end
+        </ul>
+    #end
+#end

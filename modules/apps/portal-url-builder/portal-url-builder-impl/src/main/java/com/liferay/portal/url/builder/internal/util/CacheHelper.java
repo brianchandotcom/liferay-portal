@@ -96,9 +96,7 @@ public class CacheHelper {
 
 		bundleContext.addBundleListener(_bundleListener);
 
-		if (_lastRestartTime == -1) {
-			_lastRestartTime = System.currentTimeMillis();
-		}
+		_lastRestartTime = System.currentTimeMillis();
 	}
 
 	@Deactivate
@@ -160,6 +158,6 @@ public class CacheHelper {
 	private BundleListener _bundleListener;
 	private final Map<Long, ConcurrentMap<String, String>> _digests =
 		new ConcurrentHashMap<>();
-	private long _lastRestartTime = -1;
+	private long _lastRestartTime;
 
 }

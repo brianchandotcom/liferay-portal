@@ -113,6 +113,13 @@ export function useSetDragLayer() {
 
 			const parentElementRect = parentElement.getBoundingClientRect();
 
+			// If we reach this point without nextChildNode, we have reached
+			// the end of the tree.
+
+			const wrapperElementRect = document
+				.querySelector('[data-item-id="0"]')
+				.getBoundingClientRect();
+
 			setDragLayer({
 				...nextDragLayer,
 				currentOffset: {
@@ -122,7 +129,7 @@ export function useSetDragLayer() {
 							: parentElementRect.x + NESTING_MARGIN,
 					y: nextChildNode
 						? nextChildNode.getBoundingClientRect().y
-						: parentElementRect.bottom + ITEM_MARGIN,
+						: wrapperElementRect.bottom + ITEM_MARGIN,
 				},
 			});
 		},

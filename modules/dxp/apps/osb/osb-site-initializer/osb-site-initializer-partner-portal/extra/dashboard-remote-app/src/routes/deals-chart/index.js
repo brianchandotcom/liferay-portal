@@ -113,14 +113,12 @@ export default function () {
 					['Submitted', ...leadsChartValues?.submitted],
 					['Approved', ...opportunitiesChartValues?.approved],
 					['Rejected', ...totalRejectedChartValues],
-					['Closed Won', ...opportunitiesChartValues?.closedWon],
 				],
-				groups: [['submitted', 'approved', 'closedwon']],
+				groups: [['submitted', 'approved']],
 				order: 'desc',
 				type: 'bar',
 				types: {
 					approved: 'bar',
-					closedwon: 'bar',
 					rejected: 'spline',
 					submitted: 'bar',
 				},
@@ -128,12 +126,7 @@ export default function () {
 			},
 			grid: {
 				y: {
-					lines: [
-						{value: 100},
-						{value: 200},
-						{value: 300},
-						{value: 400},
-					],
+					lines: [{value: 100}, {value: 300}, {value: 400}],
 				},
 			},
 		};
@@ -197,7 +190,7 @@ export default function () {
 					</ClayButton>
 				</>
 			}
-			title="Deals"
+			title="Deal Registrations"
 		>
 			{getChart()}
 		</Container>

@@ -66,9 +66,6 @@ public class FragmentEntryLinkTableReferenceDefinition
 						LayoutTable.INSTANCE.plid)
 				)
 			)
-		).parentColumnReference(
-			FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId,
-			FragmentEntryLinkTable.INSTANCE.originalFragmentEntryLinkId
 		);
 	}
 

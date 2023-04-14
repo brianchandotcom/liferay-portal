@@ -1,0 +1,31 @@
+liferay-sample-account-entry-email-configuration-instance-setting:
+    invitationEmailSubject:
+        en_US: |
+            😀[$INVITE_SENDER_NAME$] has invited you to join [$ACCOUNT_NAME$]
+    invitationEmailBody:
+        en_US: |
+            <p>
+                😀[$INVITE_SENDER_NAME$] has invited you to join [$ACCOUNT_NAME$].
+            </p>
+
+            <p>
+                Follow the link 🔗 below to set up your account 👤:<br />
+
+                <a href="[$CREATE_ACCOUNT_URL$]">Create Account 🔗</a>
+
+                <br />
+
+                <font size="-2">The link will expire after 3 days.</font>
+            </p>
+    invitationTokenExpirationTime: 72
+    name: Liferay Sample Account Entry Email Configuration Instance Setting
+    pid: com.liferay.account.configuration.AccountEntryEmailConfiguration
+    type: instanceSettings
+liferay-sample-redirect-url-configuration-instance-setting:
+    allowedDomains:
+        - localhost
+        - *.lfr.dev
+    name: Liferay Sample Redirect URL Configuration Instance Setting
+    pid: com.liferay.redirect.internal.configuration.RedirectURLConfiguration
+    securityMode: domain
+    type: instanceSettings

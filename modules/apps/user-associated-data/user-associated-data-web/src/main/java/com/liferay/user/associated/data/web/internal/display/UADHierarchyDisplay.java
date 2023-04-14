@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -34,7 +35,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,7 +43,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -64,14 +63,8 @@ public class UADHierarchyDisplay {
 		_containerUADDisplays =
 			uadHierarchyDeclaration.getContainerUADDisplays();
 
-		Stream<UADDisplay<?>> containerUADDisplayStream = Arrays.stream(
-			_containerUADDisplays);
-
-		_containerTypeClasses = containerUADDisplayStream.map(
-			UADDisplay::getTypeClass
-		).toArray(
-			Class[]::new
-		);
+		_containerTypeClasses = TransformUtil.transform(
+			_containerUADDisplays, UADDisplay::getTypeClass, Class.class);
 
 		_uadDisplays = ArrayUtil.append(
 			_containerUADDisplays,
@@ -85,13 +78,8 @@ public class UADHierarchyDisplay {
 
 		_uadDisplayMap = uadDisplayMap;
 
-		Stream<UADDisplay<?>> stream = Arrays.stream(_uadDisplays);
-
-		_typeClasses = stream.map(
-			UADDisplay::getTypeClass
-		).toArray(
-			Class[]::new
-		);
+		_typeClasses = TransformUtil.transform(
+			_uadDisplays, UADDisplay::getTypeClass, Class.class);
 	}
 
 	public <T> void addPortletBreadcrumbEntries(

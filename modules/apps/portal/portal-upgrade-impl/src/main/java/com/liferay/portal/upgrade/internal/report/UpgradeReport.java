@@ -718,9 +718,10 @@ public class UpgradeReport {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
+	private static boolean _logContext;
+
 	private double _dlSize;
 	private final Thread _dlSizeThread = new DLSizeThread();
-	private static boolean _logContext;
 	private final int _initialBuildNumber;
 	private final Map<String, Integer> _initialTableCounts;
 	private String _rootDir;

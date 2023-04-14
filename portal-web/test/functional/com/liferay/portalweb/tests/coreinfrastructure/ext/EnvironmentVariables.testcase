@@ -36,21 +36,12 @@ definition {
 			Refresh();
 		}
 
-		task ("When the feature flag is enabled via environment variable and company-id-properties=true is set via jvm argument") {
-			var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
+		task ("When the feature flag is enabled via environment variable") {
+			EnvironmentVariables.addProperties(properties = "feature.flag.COMMERCE-8087=true");
+		}
 
-			var setenvFile = "${tomcatBinDir}/setenv.sh";
-
-			var fileContent = FileUtil.read(${setenvFile});
-			var companyId = JSONCompany.getCompanyId();
-
-			var newFileContent = '''${fileContent}
-export LIFERAY_PROPS_BY_COMPANY_${companyId}=feature.flag.COMMERCE-8087=true
-
-CATALINA_OPTS="$CATALINA_OPTS -Dcompany-id-properties=true"
-''';
-
-			FileUtil.write(${setenvFile}, ${newFileContent});
+		task ("And company-id-properties=true is set via jvm argument") {
+			EnvironmentVariables.addJVMArguments(arguments = "company-id-properties=true");
 		}
 
 		task ("And the portal is restarted") {
@@ -87,18 +78,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcompany-id-properties=true"
 		}
 
 		task ("When the feature flag is enabled via environment variable") {
-			var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
-
-			var setenvFile = "${tomcatBinDir}/setenv.sh";
-
-			var fileContent = FileUtil.read(${setenvFile});
-			var companyId = JSONCompany.getCompanyId();
-
-			var newFileContent = '''${fileContent}
-export LIFERAY_PROPS_BY_COMPANY_${companyId}=feature.flag.COMMERCE-8087=true
-''';
-
-			FileUtil.write(${setenvFile}, ${newFileContent});
+			EnvironmentVariables.addProperties(properties = "feature.flag.COMMERCE-8087=true");
 		}
 
 		task ("And the portal is restarted") {

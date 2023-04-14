@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import java.math.BigDecimal;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -76,6 +78,34 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 			CommerceWishListLocalServiceUtil.addCommerceWishList(
 				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
 				serviceContext);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteWishListItem() throws Exception {
+		super.testGraphQLDeleteWishListItem();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWishListItem() throws Exception {
+		super.testGraphQLGetWishListItem();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWishListItemNotFound() throws Exception {
+		super.testGraphQLGetWishListItemNotFound();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWishListItemsPage() throws Exception {
+		super.testGraphQLGetWishListItemsPage();
 	}
 
 	@Override

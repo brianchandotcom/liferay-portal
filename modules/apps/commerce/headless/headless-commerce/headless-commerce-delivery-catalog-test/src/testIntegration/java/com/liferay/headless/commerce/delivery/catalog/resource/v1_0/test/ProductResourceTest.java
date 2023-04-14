@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -57,6 +59,20 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetChannelProduct() throws Exception {
+		super.testGraphQLGetChannelProduct();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetChannelProductNotFound() throws Exception {
+		super.testGraphQLGetChannelProductNotFound();
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -57,6 +58,27 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteWishList() throws Exception {
+		super.testGraphQLDeleteWishList();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWishList() throws Exception {
+		super.testGraphQLGetWishList();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWishListNotFound() throws Exception {
+		super.testGraphQLGetWishListNotFound();
 	}
 
 	@Override

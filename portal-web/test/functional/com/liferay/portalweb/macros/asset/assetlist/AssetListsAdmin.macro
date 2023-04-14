@@ -559,6 +559,8 @@ definition {
 			LexiconCard.clickCard(card = ${depotName});
 		}
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		if (isSet(entryList)) {
 			for (var assetName : list ${entryList}) {
 				LexiconEntry.selectEntry(rowEntry = ${assetName});

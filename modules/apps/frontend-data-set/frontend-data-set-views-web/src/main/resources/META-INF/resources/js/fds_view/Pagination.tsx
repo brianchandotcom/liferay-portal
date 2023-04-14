@@ -212,20 +212,17 @@ function Pagination({
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{requiredPageSizesValidationError &&
-									Liferay.Language.get(
-										'this-field-is-required'
-									)}
-
-								{invalidNumberInPageSizesValidationError &&
-									Liferay.Language.get(
-										'this-field-contains-an-invalid-number-error'
-									)}
-
-								{invalidPageSizesLengthValidationError &&
-									Liferay.Language.get(
-										'this-field-contains-a-very-long-list-error'
-									)}
+								{requiredPageSizesValidationError
+									? Liferay.Language.get(
+											'this-field-is-required'
+									  )
+									: invalidNumberInPageSizesValidationError
+									? Liferay.Language.get(
+											'this-field-contains-an-invalid-number'
+									  )
+									: Liferay.Language.get(
+											'this-field-contains-too-many-elements'
+									  )}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}

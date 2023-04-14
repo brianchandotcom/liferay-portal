@@ -208,49 +208,31 @@ public class UADExportProcessDisplayContext {
 
 			int status = getBackgroundTaskStatus(navigation);
 
-			searchContainer.setResultsAndTotal(
-				() -> {
-					List<BackgroundTask> results =
-						UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
-							themeDisplay.getScopeGroupId(),
-							selectedUser.getUserId(), status);
-
-					results = ListUtil.sort(
-						results,
-						getComparator(
-							themeDisplay.getLocale(),
-							searchContainer.getOrderByCol(),
-							searchContainer.getOrderByType()));
-
-					return ListUtil.subList(
-						results, searchContainer.getStart(),
-						searchContainer.getDelta());
-				},
-				UADExportBackgroundTaskManagerUtil.getBackgroundTasksCount(
+			List<BackgroundTask> results =
+				UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
 					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
-					status));
+					status);
+
+			results = ListUtil.sort(
+				results,
+				getComparator(
+					themeDisplay.getLocale(), searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType()));
+
+			searchContainer.setResultsAndTotal(results);
 		}
 		else {
-			searchContainer.setResultsAndTotal(
-				() -> {
-					List<BackgroundTask> results =
-						UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
-							themeDisplay.getScopeGroupId(),
-							selectedUser.getUserId());
+			List<BackgroundTask> results =
+				UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
+					themeDisplay.getScopeGroupId(), selectedUser.getUserId());
 
-					results = ListUtil.sort(
-						results,
-						getComparator(
-							themeDisplay.getLocale(),
-							searchContainer.getOrderByCol(),
-							searchContainer.getOrderByType()));
+			results = ListUtil.sort(
+				results,
+				getComparator(
+					themeDisplay.getLocale(), searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType()));
 
-					return ListUtil.subList(
-						results, searchContainer.getStart(),
-						searchContainer.getDelta());
-				},
-				UADExportBackgroundTaskManagerUtil.getBackgroundTasksCount(
-					themeDisplay.getScopeGroupId(), selectedUser.getUserId()));
+			searchContainer.setResultsAndTotal(results);
 		}
 
 		_searchContainer = searchContainer;

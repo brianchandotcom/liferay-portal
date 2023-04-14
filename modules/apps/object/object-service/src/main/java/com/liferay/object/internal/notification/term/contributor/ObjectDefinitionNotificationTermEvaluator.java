@@ -103,7 +103,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		String prefix = StringUtil.toUpperCase(
 			_objectDefinition.getShortName());
 
-		if (!_matchesAuthorTermName(prefix, termName)) {
+		if (!_isAuthorTermName(prefix, termName)) {
 			return null;
 		}
 
@@ -194,7 +194,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 			String prefix = ObjectRelationshipUtil.getNotificationTermPrefix(
 				objectDefinition, objectRelationship);
 
-			if (!_matchesAuthorTermName(prefix, termName)) {
+			if (!_isAuthorTermName(prefix, termName)) {
 				continue;
 			}
 
@@ -357,7 +357,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private boolean _matchesAuthorTermName(String prefix, String termName) {
+	private boolean _isAuthorTermName(String prefix, String termName) {
 		if (!termName.equals("[%" + prefix + "_AUTHOR_EMAIL_ADDRESS%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_FIRST_NAME%]") &&
 			!termName.equals("[%" + prefix + "_AUTHOR_ID%]") &&

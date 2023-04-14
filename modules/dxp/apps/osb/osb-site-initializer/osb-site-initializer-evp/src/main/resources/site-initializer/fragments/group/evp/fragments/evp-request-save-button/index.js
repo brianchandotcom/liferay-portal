@@ -14,7 +14,6 @@
 const queryString = window.location.search;
 const urlParams = queryString.split('=');
 const requestId = urlParams[1];
-const liferayUrl = window.location.origin;
 const requestIdInput = document.querySelector('.request-id div input');
 const requestIdValueField = document.getElementsByName(
 	'r_requestId_c_evpRequestId'
@@ -30,29 +29,3 @@ requestIdInput.value = requestId;
 requestIdValueField.value = requestId;
 
 selectButton.remove();
-
-const statusResponse = async () => {
-	const payload = {
-		requestStatus: {
-			key: 'closed',
-			name: 'Closed',
-		},
-	};
-
-	await fetch(`${liferayUrl}/o/c/evprequests/${requestId}`, {
-		body: JSON.stringify(payload),
-		headers: {
-			'content-type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'PUT',
-	});
-};
-
-const formElement = fragmentElement.querySelector(
-	'.lfr-layout-structure-item-form'
-);
-
-if (formElement) {
-	formElement.onsubmit = () => statusResponse();
-}

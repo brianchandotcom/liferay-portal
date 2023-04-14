@@ -1760,8 +1760,6 @@ definition {
 	@description = "LPS-155288 Given categories filter using treeview component And there is any category's checkbox selected When user clicks 'Clear All' button Then the results bar disappears "
 	@priority = 3
 	test ClearButtonCategoryAtTreeviewComponent {
-		property portal.acceptance = "false";
-
 		task ("Adding vocabulary and category") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

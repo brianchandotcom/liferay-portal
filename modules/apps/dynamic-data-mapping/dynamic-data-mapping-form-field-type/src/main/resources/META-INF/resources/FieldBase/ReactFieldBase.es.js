@@ -247,6 +247,7 @@ export function FieldBase({
 		type === 'text' ||
 		type === 'numeric' ||
 		type === 'image' ||
+		type === 'rich_text' ||
 		type === 'search_location' ||
 		type === 'select';
 	const readFieldDetails = !showFor || type === 'select';

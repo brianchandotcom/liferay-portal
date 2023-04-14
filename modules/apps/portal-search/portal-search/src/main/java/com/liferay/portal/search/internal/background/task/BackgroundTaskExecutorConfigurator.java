@@ -42,7 +42,8 @@ public class BackgroundTaskExecutorConfigurator {
 	protected void activate(BundleContext bundleContext) {
 		BackgroundTaskExecutor reindexPortalBackgroundTaskExecutor =
 			new ReindexPortalBackgroundTaskExecutor(
-				_concurrentReindexManager, bundleContext, _portalExecutorManager);
+				bundleContext, _concurrentReindexManager,
+				_portalExecutorManager);
 
 		_registerBackgroundTaskExecutor(
 			bundleContext, reindexPortalBackgroundTaskExecutor);

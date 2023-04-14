@@ -32,19 +32,19 @@ public class ReindexPortalBackgroundTaskExecutor
 	extends BaseReindexBackgroundTaskExecutor {
 
 	public ReindexPortalBackgroundTaskExecutor(
-		ConcurrentReindexManager concurrentReindexManager,
 		BundleContext bundleContext,
+		ConcurrentReindexManager concurrentReindexManager,
 		PortalExecutorManager portalExecutorManager) {
 
-		_concurrentReindexManager = concurrentReindexManager;
 		_bundleContext = bundleContext;
+		_concurrentReindexManager = concurrentReindexManager;
 		_portalExecutorManager = portalExecutorManager;
 	}
 
 	@Override
 	public BackgroundTaskExecutor clone() {
 		return new ReindexPortalBackgroundTaskExecutor(
-			_concurrentReindexManager, _bundleContext, _portalExecutorManager);
+			_bundleContext, _concurrentReindexManager, _portalExecutorManager);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class ReindexPortalBackgroundTaskExecutor
 			try {
 				SearchEngineInitializer searchEngineInitializer =
 					new SearchEngineInitializer(
-						_concurrentReindexManager, _bundleContext, companyId,
+						_bundleContext, companyId, _concurrentReindexManager,
 						executionMode, _portalExecutorManager);
 
 				searchEngineInitializer.reindex();
@@ -87,8 +87,8 @@ public class ReindexPortalBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReindexPortalBackgroundTaskExecutor.class);
 
-	private final ConcurrentReindexManager _concurrentReindexManager;
 	private final BundleContext _bundleContext;
+	private final ConcurrentReindexManager _concurrentReindexManager;
 	private final PortalExecutorManager _portalExecutorManager;
 
 }

@@ -48,13 +48,13 @@ import org.osgi.framework.BundleContext;
 public class SearchEngineInitializer implements Runnable {
 
 	public SearchEngineInitializer(
-		ConcurrentReindexManager concurrentReindexManager,
-		BundleContext bundleContext, long companyId, String executionMode,
+		BundleContext bundleContext, long companyId,
+		ConcurrentReindexManager concurrentReindexManager, String executionMode,
 		PortalExecutorManager portalExecutorManager) {
 
-		_concurrentReindexManager = concurrentReindexManager;
 		_bundleContext = bundleContext;
 		_companyId = companyId;
+		_concurrentReindexManager = concurrentReindexManager;
 		_executionMode = executionMode;
 		_portalExecutorManager = portalExecutorManager;
 	}
@@ -240,9 +240,9 @@ public class SearchEngineInitializer implements Runnable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineInitializer.class);
 
-	private final ConcurrentReindexManager _concurrentReindexManager;
 	private final BundleContext _bundleContext;
 	private final long _companyId;
+	private final ConcurrentReindexManager _concurrentReindexManager;
 	private final String _executionMode;
 	private boolean _finished;
 	private ServiceTrackerList<Indexer<?>> _indexers;

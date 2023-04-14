@@ -202,11 +202,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"FeatureFlagsAnnotationTest.testjava",
 			new String[] {
 				"Use annotation @FeatureFlags instead of PropsUtil." +
-					"addProperties for feature flag for setUpClass",
+					"addProperties for feature flag",
 				"Use annotation @FeatureFlags instead of PropsUtil." +
-					"addProperties for feature flag for tearDownClass",
+					"addProperties for feature flag",
 				"Use annotation @FeatureFlags instead of PropsUtil." +
-					"addProperties for feature flag for testMethod"
+					"addProperties for feature flag"
 			},
 			new Integer[] {31, 41, 51});
 	}

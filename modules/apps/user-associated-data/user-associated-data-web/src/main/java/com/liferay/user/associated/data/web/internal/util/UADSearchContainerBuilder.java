@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -52,8 +53,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -100,20 +99,16 @@ public class UADSearchContainerBuilder {
 					uadApplicationSummaryDisplay));
 		}
 
-		Stream<UADEntity<?>> uadEntitiesStream = uadEntities.stream();
+		uadEntities = ListUtil.sort(
+			uadEntities,
+			_getComparator(
+				searchContainer.getOrderByCol(),
+				searchContainer.getOrderByType()));
 
 		searchContainer.setResultsAndTotal(
-			() -> uadEntitiesStream.sorted(
-				_getComparator(
-					searchContainer.getOrderByCol(),
-					searchContainer.getOrderByType())
-			).skip(
-				searchContainer.getStart()
-			).limit(
-				searchContainer.getDelta()
-			).collect(
-				Collectors.toList()
-			),
+			() -> ListUtil.subList(
+				uadEntities, searchContainer.getStart(),
+				searchContainer.getDelta()),
 			uadEntities.size());
 
 		searchContainer.setRowChecker(
@@ -167,20 +162,16 @@ public class UADSearchContainerBuilder {
 						uadHierarchyDisplay));
 			}
 
-			Stream<UADEntity<?>> uadEntitiesStream = uadEntities.stream();
+			uadEntities = ListUtil.sort(
+				uadEntities,
+				_getComparator(
+					searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType()));
 
 			searchContainer.setResultsAndTotal(
-				() -> uadEntitiesStream.sorted(
-					_getComparator(
-						searchContainer.getOrderByCol(),
-						searchContainer.getOrderByType())
-				).skip(
-					searchContainer.getStart()
-				).limit(
-					searchContainer.getDelta()
-				).collect(
-					Collectors.toList()
-				),
+				() -> ListUtil.subList(
+					uadEntities, searchContainer.getStart(),
+					searchContainer.getDelta()),
 				entities.size());
 		}
 		catch (Exception exception) {

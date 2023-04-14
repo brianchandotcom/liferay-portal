@@ -18,7 +18,6 @@ import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.osgi.web.wab.generator.internal.artifact.ArtifactURLUtil;
@@ -238,9 +237,6 @@ public class WabGenerator
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(WabGenerator.class);
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private ServiceRegistration<FileInstaller> _serviceRegistration;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.export.background.task;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -133,16 +133,9 @@ public class UADExportBackgroundTaskManagerUtil {
 			return Collections.emptyList();
 		}
 
-		List<BackgroundTask> backgroundTasks = new ArrayList<>(
-			backgroundTaskModels.size());
-
-		for (com.liferay.portal.background.task.model.BackgroundTask
-				backgroundTaskModel : backgroundTaskModels) {
-
-			backgroundTasks.add(_getBackgroundTask(backgroundTaskModel));
-		}
-
-		return backgroundTasks;
+		return TransformUtil.transform(
+			backgroundTaskModels,
+			UADExportBackgroundTaskManagerUtil::_getBackgroundTask);
 	}
 
 	private static final String _BACKGROUND_TASK_EXECUTOR_CLASS_NAME =

@@ -188,7 +188,6 @@ definition {
 	}
 
 	@description = "LPS-164618. Assert that it's possible can edit a new instance was previously created"
-	@ignore = "Test fix"
 	@priority = 4
 	test CanCreateMultiple {
 		task ("And Given A custom view is created and selected") {

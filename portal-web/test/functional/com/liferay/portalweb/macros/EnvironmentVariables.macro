@@ -1,0 +1,52 @@
+definition {
+
+	macro addJVMArguments {
+		Variables.assertDefined(parameterList = ${arguments});
+
+		var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
+
+		var setenvFile = "${tomcatBinDir}/setenv.sh";
+
+		var fileContent = FileUtil.read(${setenvFile});
+		var argumentsList = "";
+
+		for (var argument : list ${arguments}) {
+			var argumentsList = ''' -D${argument}${argumentsList}''';
+		}
+
+		var argumentsList = '''${fileContent}
+
+CATALINA_OPTS="$CATALINA_OPTS${argumentsList}"''';
+
+		FileUtil.write(${setenvFile}, ${argumentsList});
+	}
+
+	macro addProperties {
+		Variables.assertDefined(parameterList = ${properties});
+
+		var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
+
+		var setenvFile = "${tomcatBinDir}/setenv.sh";
+
+		var fileContent = FileUtil.read(${setenvFile});
+
+		if (!(isSet(companyId))) {
+			var companyId = JSONCompany.getCompanyId();
+		}
+
+		var propertiesList = "";
+
+		for (var property : list ${properties}) {
+			var propertiesList = '''export LIFERAY_PROPS_BY_COMPANY_${companyId}=${property}
+
+${propertiesList}''';
+		}
+
+		var propertiesList = '''${fileContent}
+
+${propertiesList}''';
+
+		FileUtil.write(${setenvFile}, ${propertiesList});
+	}
+
+}

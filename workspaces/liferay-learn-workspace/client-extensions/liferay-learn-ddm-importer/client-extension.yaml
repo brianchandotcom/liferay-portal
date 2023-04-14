@@ -1,0 +1,10 @@
+assemble:
+    - fromTask: bootJar
+liferay-learn-ddm-importer:
+    name: Liferay Learn DDM Importer
+    scopes:
+        - liferay-json-web-services.everything.write
+        - liferay-json-web-services.everything
+        - Liferay.Data.Engine.REST.everything
+        - Liferay.Headless.Admin.User.everything.read
+    type: oAuthApplicationHeadlessServer

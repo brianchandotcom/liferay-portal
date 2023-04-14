@@ -83,7 +83,7 @@ public class SXPBlueprintInfoCollectionProvider
 		String[] sxpBlueprintExternalReferenceCodes = configuration.get(
 			"sxpBlueprintExternalReferenceCode");
 
-		if ((sxpBlueprintExternalReferenceCodes == null) ||
+		if (ArrayUtil.isEmpty(sxpBlueprintExternalReferenceCodes) ||
 			Validator.isNull(sxpBlueprintExternalReferenceCodes[0])) {
 
 			return InfoPage.of(

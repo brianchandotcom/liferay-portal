@@ -141,11 +141,7 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 				locale, searchContainer.getOrderByCol(),
 				searchContainer.getOrderByType()));
 
-		results = ListUtil.subList(
-			results, searchContainer.getStart(), searchContainer.getDelta());
-
-		searchContainer.setResultsAndTotal(
-			() -> results, summaryDisplays.size());
+		searchContainer.setResultsAndTotal(results);
 
 		return searchContainer;
 	}

@@ -28,9 +28,11 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.exception.CPDefinitionDeliveryMaxSubscriptionCyclesException;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
+import com.liferay.commerce.product.exception.CPDefinitionMaxSubscriptionCyclesException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
@@ -230,10 +232,14 @@ public class CPDefinitionLocalServiceImpl
 			groupId, ddmStructureKey, metaTitleMap, metaDescriptionMap,
 			metaKeywordsMap, displayDate, expirationDate, productTypeName);
 		_validateSubscriptionLength(subscriptionLength, "length");
+		_validateSubscriptionCycles(
+			maxSubscriptionCycles, "subscriptionCycles");
 		_validateSubscriptionTypeSettingsUnicodeProperties(
 			subscriptionType, subscriptionTypeSettingsUnicodeProperties);
 		_validateSubscriptionLength(
 			deliverySubscriptionLength, "deliverySubscriptionLength");
+		_validateSubscriptionCycles(
+			deliveryMaxSubscriptionCycles, "deliverySubscriptionCycles");
 		_validateDeliverySubscriptionTypeSettingsUnicodeProperties(
 			deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties);
@@ -2580,6 +2586,8 @@ public class CPDefinitionLocalServiceImpl
 		}
 		else {
 			_validateSubscriptionLength(subscriptionLength, "length");
+			_validateSubscriptionCycles(
+				maxSubscriptionCycles, "subscriptionCycles");
 			_validateSubscriptionTypeSettingsUnicodeProperties(
 				subscriptionType, subscriptionTypeSettingsUnicodeProperties);
 		}
@@ -2593,6 +2601,8 @@ public class CPDefinitionLocalServiceImpl
 		else {
 			_validateSubscriptionLength(
 				deliverySubscriptionLength, "deliverySubscriptionLength");
+			_validateSubscriptionCycles(
+				deliveryMaxSubscriptionCycles, "deliverySubscriptionCycles");
 			_validateDeliverySubscriptionTypeSettingsUnicodeProperties(
 				deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties);
@@ -3218,6 +3228,28 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	private void _validateSubscriptionCycles(
+			long subscriptionCycles, String subscriptionCyclesKey)
+		throws PortalException {
+
+		if ((subscriptionCycles < 0) &&
+			subscriptionCyclesKey.equals("subscriptionCycles")) {
+
+			throw new CPDefinitionMaxSubscriptionCyclesException(
+				StringBundler.concat(
+					"Invalid ", subscriptionCyclesKey, " ",
+					subscriptionCycles));
+		}
+		else if ((subscriptionCycles < 0) &&
+				 subscriptionCyclesKey.equals("deliverySubscriptionCycles")) {
+
+			throw new CPDefinitionDeliveryMaxSubscriptionCyclesException(
+				StringBundler.concat(
+					"Invalid ", subscriptionCyclesKey, " ",
+					subscriptionCycles));
+		}
 	}
 
 	private void _validateSubscriptionLength(

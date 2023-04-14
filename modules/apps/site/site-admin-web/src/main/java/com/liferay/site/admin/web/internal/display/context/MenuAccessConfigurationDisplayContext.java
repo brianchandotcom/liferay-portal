@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.roles.item.selector.regular.role.RegularRoleItemSelectorCriterion;
@@ -75,16 +74,8 @@ public class MenuAccessConfigurationDisplayContext {
 		_liferayPortletResponse = portal.getLiferayPortletResponse(
 			(PortletResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE));
-	}
-
-	public String getEditMenuAccessURL() {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/site_settings/edit_menu_access_configuration"
-		).setRedirect(
-			PortalUtil.getCurrentURL(_httpServletRequest)
-		).buildString();
+		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getEventName() {
@@ -107,7 +98,12 @@ public class MenuAccessConfigurationDisplayContext {
 		long[] roleIds = new long[roles.length];
 
 		for (int i = 0; i < roles.length; i++) {
-			roleIds[i] = Long.valueOf(roles[i]);
+			Role role = _roleLocalService.fetchRole(
+				_themeDisplay.getCompanyId(), roles[i]);
+
+			if (role != null) {
+				roleIds[i] = role.getRoleId();
+			}
 		}
 
 		regularRoleItemSelectorCriterion.setCheckedRoleIds(roleIds);
@@ -131,12 +127,8 @@ public class MenuAccessConfigurationDisplayContext {
 	}
 
 	public String[] getRolesCanSeeControlMenu() throws ConfigurationException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
-			themeDisplay.getScopeGroupId());
+			_themeDisplay.getScopeGroupId());
 	}
 
 	public SearchContainer<Role> getSearchContainer() throws PortalException {
@@ -150,8 +142,9 @@ public class MenuAccessConfigurationDisplayContext {
 
 		List<Role> roles = new ArrayList<>();
 
-		for (String roleId : getRolesCanSeeControlMenu()) {
-			Role role = _roleLocalService.fetchRole(Long.valueOf(roleId));
+		for (String roleName : getRolesCanSeeControlMenu()) {
+			Role role = _roleLocalService.fetchRole(
+				_themeDisplay.getCompanyId(), roleName);
 
 			if (role != null) {
 				roles.add(role);
@@ -164,12 +157,8 @@ public class MenuAccessConfigurationDisplayContext {
 	}
 
 	public boolean isShowControlMenuByRole() throws ConfigurationException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _menuAccessConfigurationProvider.isShowControlMenuByRole(
-			themeDisplay.getScopeGroupId());
+			_themeDisplay.getScopeGroupId());
 	}
 
 	private final ConfigurationProvider _configurationProvider;
@@ -182,5 +171,6 @@ public class MenuAccessConfigurationDisplayContext {
 		_menuAccessConfigurationProvider;
 	private final Portal _portal;
 	private final RoleLocalService _roleLocalService;
+	private final ThemeDisplay _themeDisplay;
 
 }

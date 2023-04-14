@@ -24,17 +24,23 @@ import java.util.List;
  */
 public class ObjectActionExecutorUtil {
 
-	public static boolean isRestrictionCriteriaMet(
-		ObjectActionExecutor objectActionExecutor,
-		String objectDefinitionName) {
+	public static boolean isCompanyRestrictionCriteriaMet(
+		ObjectActionExecutor objectActionExecutor) {
 
-		if ((objectActionExecutor.getCompanyId() !=
-				ObjectActionExecutor.UNRESTRICTED_BY_COMPANY) &&
-			(CompanyThreadLocal.getCompanyId() !=
+		if ((objectActionExecutor.getCompanyId() ==
+				ObjectActionExecutor.UNRESTRICTED_BY_COMPANY) ||
+			(CompanyThreadLocal.getCompanyId() ==
 				objectActionExecutor.getCompanyId())) {
 
-			return false;
+			return true;
 		}
+
+		return false;
+	}
+
+	public static boolean isObjectDefinitionsRestrictionCriteriaMet(
+		ObjectActionExecutor objectActionExecutor,
+		String objectDefinitionName) {
 
 		List<String> objectDefinitionNames =
 			objectActionExecutor.getObjectDefinitionNames();

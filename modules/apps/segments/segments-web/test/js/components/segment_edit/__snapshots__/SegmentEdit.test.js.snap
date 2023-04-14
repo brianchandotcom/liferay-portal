@@ -6,7 +6,7 @@ exports[`SegmentEdit renders 1`] = `
     class="segment-edit-page-root"
   >
     <input
-      name="active"
+      name="undefinedactive"
       type="hidden"
       value="true"
     />
@@ -20,19 +20,19 @@ exports[`SegmentEdit renders 1`] = `
           class="form-header-section-left"
         >
           <input
-            name="name_en_US"
+            name="undefinedname_en_US"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="key"
+            name="undefinedkey"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="name"
+            name="undefinedname"
             readonly=""
             type="hidden"
             value="Segment title"
@@ -101,7 +101,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
     class="segment-edit-page-root"
   >
     <input
-      name="active"
+      name="undefinedactive"
       type="hidden"
       value="true"
     />
@@ -115,19 +115,19 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
           class="form-header-section-left"
         >
           <input
-            name="name_en_US"
+            name="undefinedname_en_US"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="key"
+            name="undefinedkey"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="name"
+            name="undefinedname"
             readonly=""
             type="hidden"
             value="Segment title"
@@ -245,7 +245,7 @@ exports[`SegmentEdit renders with given values 1`] = `
     class="segment-edit-page-root segment-edit-page-root--with-warning"
   >
     <input
-      name="active"
+      name="undefinedactive"
       type="hidden"
       value="true"
     />
@@ -259,19 +259,19 @@ exports[`SegmentEdit renders with given values 1`] = `
           class="form-header-section-left"
         >
           <input
-            name="name_en_US"
+            name="undefinedname_en_US"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="key"
+            name="undefinedkey"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="name"
+            name="undefinedname"
             readonly=""
             type="hidden"
             value="Segment title"
@@ -345,6 +345,7 @@ exports[`SegmentEdit renders with given values 1`] = `
             >
               <button
                 class="text-capitalize btn btn-sm btn-primary"
+                disabled=""
                 type="submit"
               >
                 save
@@ -779,7 +780,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
     class="segment-edit-page-root"
   >
     <input
-      name="active"
+      name="undefinedactive"
       type="hidden"
       value="true"
     />
@@ -793,19 +794,19 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
           class="form-header-section-left"
         >
           <input
-            name="name_en_US"
+            name="undefinedname_en_US"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="key"
+            name="undefinedkey"
             readonly=""
             type="hidden"
             value="Segment title"
           />
           <input
-            name="name"
+            name="undefinedname"
             readonly=""
             type="hidden"
             value="Segment title"

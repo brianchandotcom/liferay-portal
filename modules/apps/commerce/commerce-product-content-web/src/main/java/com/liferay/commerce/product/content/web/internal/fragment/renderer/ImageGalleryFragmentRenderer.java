@@ -16,7 +16,6 @@ package com.liferay.commerce.product.content.web.internal.fragment.renderer;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.product.content.web.internal.info.item.renderer.ImageGalleryInfoItemRenderer;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -26,6 +25,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -189,8 +189,10 @@ public class ImageGalleryFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@Reference
-	private ImageGalleryInfoItemRenderer _imageGalleryInfoItemRenderer;
+	@Reference(
+		target = "(component.name=com.liferay.commerce.product.content.web.internal.info.item.renderer.ImageGalleryInfoItemRenderer)"
+	)
+	private InfoItemRenderer<CPDefinition> _imageGalleryInfoItemRenderer;
 
 	@Reference
 	private Language _language;

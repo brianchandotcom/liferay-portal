@@ -18,9 +18,12 @@ import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,16 @@ import java.util.Map;
  * @author Marcela Cunha
  */
 public class ObjectRelationshipUtil {
+
+	public static String getNotificationTermPrefix(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship) {
+
+		return StringUtil.toUpperCase(
+			StringBundler.concat(
+				objectRelationship.getName(), StringPool.UNDERLINE,
+				objectDefinition.getShortName()));
+	}
 
 	public static ObjectRelationship getObjectRelationship(
 			List<ObjectRelationship> objectRelationships)

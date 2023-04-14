@@ -145,13 +145,11 @@ public class ObjectEntryDTOConverter
 		Map<String, Serializable> nestedFieldValues =
 			nestedFieldsSupplier.supply(
 				nestedFieldName -> {
-					if (!StringUtil.equals(nestedFieldName, objectFieldName) &&
-						!StringUtil.equals(
-							nestedFieldName, objectFieldNameNestedField) &&
-						!StringUtil.equals(
-							nestedFieldName, objectRelationship.getName()) &&
-						!StringUtil.equals(
-							nestedFieldName, objectRelationshipNameFieldName)) {
+					if (!StringUtil.equalsAny(
+							nestedFieldName, objectFieldName,
+							objectFieldNameNestedField,
+							objectRelationship.getName(),
+							objectRelationshipNameFieldName)) {
 
 						return null;
 					}
@@ -220,13 +218,10 @@ public class ObjectEntryDTOConverter
 				map.put(nestedFieldName, entry.getValue());
 			}
 
-			if (StringUtil.equals(nestedFieldName, objectFieldName) ||
-				StringUtil.equals(
-					nestedFieldName, objectFieldNameNestedField) ||
-				StringUtil.equals(
-					nestedFieldName, objectRelationship.getName()) ||
-				StringUtil.equals(
-					nestedFieldName, objectRelationshipNameFieldName)) {
+			if (StringUtil.equalsAny(
+					nestedFieldName, objectFieldName,
+					objectFieldNameNestedField, objectRelationship.getName(),
+					objectRelationshipNameFieldName)) {
 
 				map.put(objectRelationshipNameFieldName, entry.getValue());
 			}
@@ -310,12 +305,10 @@ public class ObjectEntryDTOConverter
 							nestedFieldName);
 
 				if ((objectRelationship == null) ||
-					(!Objects.equals(
+					!StringUtil.equalsAny(
 						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-					 !Objects.equals(
-						 objectRelationship.getType(),
-						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 					return null;
 				}

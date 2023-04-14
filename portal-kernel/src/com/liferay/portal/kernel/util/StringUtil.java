@@ -508,6 +508,26 @@ public class StringUtil {
 	}
 
 	/**
+	 * Returns <code>true</code> if any of the strings from the array is equal.
+	 *
+	 * @param  s the first string to compare
+	 * @param  array the array or sequence of string arguments
+	 * @return <code>true</code> if the any of the strings are equal;
+	 * 			<code>false</code> otherwise
+	 */
+	public static boolean equalsAny(String s, String... array) {
+		if (array != null) {
+			for (String element : array) {
+				if (equals(s, element)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Returns <code>true</code> if the strings are equal, ignoring new line
 	 * characters.
 	 *

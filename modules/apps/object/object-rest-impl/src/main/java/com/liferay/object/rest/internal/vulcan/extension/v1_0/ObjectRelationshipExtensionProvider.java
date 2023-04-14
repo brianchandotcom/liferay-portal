@@ -82,12 +82,10 @@ public class ObjectRelationshipExtensionProvider
 							nestedFieldName);
 
 				if ((objectRelationship == null) ||
-					(!Objects.equals(
+					!StringUtil.equalsAny(
 						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-					 !Objects.equals(
-						 objectRelationship.getType(),
-						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 					return null;
 				}
@@ -134,11 +132,9 @@ public class ObjectRelationshipExtensionProvider
 				_objectRelationshipLocalService.getAllObjectRelationships(
 					objectDefinition.getObjectDefinitionId())) {
 
-			if (!Objects.equals(
+			if (!StringUtil.equalsAny(
 					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-				!Objects.equals(
-					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 				continue;

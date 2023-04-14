@@ -136,14 +136,22 @@ public class ObjectEntryDTOConverter
 				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
 			"Id", "");
 
+		String objectRelationshipNameFieldName = StringUtil.removeLast(
+			objectFieldName, "Id");
+
 		AtomicReference<Serializable> nestedObjectEntry =
 			new AtomicReference<>();
 
 		Map<String, Serializable> nestedFieldValues =
 			nestedFieldsSupplier.supply(
 				nestedFieldName -> {
-					if (!nestedFieldName.contains(objectFieldNameNestedField) &&
-						!nestedFieldName.equals(objectRelationship.getName())) {
+					if (!StringUtil.equals(nestedFieldName, objectFieldName) &&
+						!StringUtil.equals(
+							nestedFieldName, objectFieldNameNestedField) &&
+						!StringUtil.equals(
+							nestedFieldName, objectRelationship.getName()) &&
+						!StringUtil.equals(
+							nestedFieldName, objectRelationshipNameFieldName)) {
 
 						return null;
 					}
@@ -212,10 +220,15 @@ public class ObjectEntryDTOConverter
 				map.put(nestedFieldName, entry.getValue());
 			}
 
-			if (nestedFieldName.contains(objectFieldNameNestedField)) {
-				map.put(
-					StringUtil.removeLast(objectFieldName, "Id"),
-					entry.getValue());
+			if (StringUtil.equals(nestedFieldName, objectFieldName) ||
+				StringUtil.equals(
+					nestedFieldName, objectFieldNameNestedField) ||
+				StringUtil.equals(
+					nestedFieldName, objectRelationship.getName()) ||
+				StringUtil.equals(
+					nestedFieldName, objectRelationshipNameFieldName)) {
+
+				map.put(objectRelationshipNameFieldName, entry.getValue());
 			}
 		}
 	}

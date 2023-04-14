@@ -24,4 +24,4 @@ export const Liferay = window.Liferay || {
 		},
 	},
 	authToken: '',
-}
+};

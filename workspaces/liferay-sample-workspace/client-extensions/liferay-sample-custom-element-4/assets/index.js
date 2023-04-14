@@ -9,16 +9,13 @@ class CustomElement extends HTMLElement {
 
 		const Greeting = React.createElement(
 			'h1',
-			{ className: 'greeting' },
+			{className: 'greeting'},
 			'Hello ',
 			React.createElement('i', null, name),
 			'. Welcome!'
 		);
 
-		ReactDOM.render(
-			Greeting,
-			root
-		);
+		ReactDOM.render(Greeting, root);
 
 		this.appendChild(root);
 	}
@@ -30,6 +27,7 @@ if (customElements.get(ELEMENT_NAME)) {
 	console.log(
 		'Skipping registration for <liferay-sample-custom-element-4> (already registered)'
 	);
-} else {
+}
+else {
 	customElements.define(ELEMENT_NAME, CustomElement);
 }

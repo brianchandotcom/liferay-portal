@@ -133,7 +133,7 @@ public class ColumnValuesExtractor {
 
 			if (field == null) {
 				columnDescriptors[localIndex] = ColumnDescriptor._from(
-					null, masterIndex++, parentColumnDescriptor,
+					null, masterIndex++, fieldName, parentColumnDescriptor,
 					_getUnsafeFunction(fieldsMap, fieldName));
 
 				localIndex++;
@@ -142,7 +142,7 @@ public class ColumnValuesExtractor {
 			}
 
 			columnDescriptors[localIndex] = ColumnDescriptor._from(
-				field, masterIndex++, parentColumnDescriptor,
+				field, masterIndex++, field.getName(), parentColumnDescriptor,
 				_getUnsafeFunction(fieldsMap, fieldName));
 
 			Class<?> fieldClass = field.getType();
@@ -388,12 +388,13 @@ public class ColumnValuesExtractor {
 		}
 
 		private static ColumnDescriptor _from(
-			Field field, int index, ColumnDescriptor parentColumnDescriptor,
+			Field field, int index, String name,
+			ColumnDescriptor parentColumnDescriptor,
 			UnsafeFunction<Object, Object, ReflectiveOperationException>
 				unsafeFunction) {
 
 			ColumnDescriptor columnDescriptor = new ColumnDescriptor(
-				field, index, unsafeFunction);
+				field, index, name, unsafeFunction);
 
 			if (parentColumnDescriptor == null) {
 				return columnDescriptor;
@@ -405,12 +406,13 @@ public class ColumnValuesExtractor {
 		}
 
 		private ColumnDescriptor(
-			Field field, int index,
+			Field field, int index, String name,
 			UnsafeFunction<Object, Object, ReflectiveOperationException>
 				unsafeFunction) {
 
 			_field = field;
 			_index = index;
+			_name = name;
 			_unsafeFunction = unsafeFunction;
 		}
 
@@ -449,17 +451,11 @@ public class ColumnValuesExtractor {
 		}
 
 		private String _getSanitizedFieldName() {
-			if (_field == null) {
-				return StringPool.POUND;
+			if (_name.startsWith(StringPool.UNDERLINE)) {
+				return _name.substring(1);
 			}
 
-			String name = _field.getName();
-
-			if (name.startsWith(StringPool.UNDERLINE)) {
-				return name.substring(1);
-			}
-
-			return name;
+			return _name;
 		}
 
 		private Object _getValue(Object object)
@@ -492,6 +488,7 @@ public class ColumnValuesExtractor {
 
 		private final Field _field;
 		private final int _index;
+		private final String _name;
 		private final List<ColumnDescriptor> _parentColumnDescriptors =
 			new ArrayList<>();
 		private final UnsafeFunction

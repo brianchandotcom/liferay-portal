@@ -44,8 +44,11 @@ public class ObjectActionTestUtil {
 
 					return objectDefinitionNames;
 				}
+				else if (Objects.equals(method.getName(), "toString")) {
+					return ObjectActionExecutor.class.toString();
+				}
 
-				return "Proxy" + ObjectActionExecutor.class.getName();
+				throw new UnsupportedOperationException(method.getName());
 			});
 	}
 

@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(service = {})
-public class ServletContextUtil {
+public class FDSViewSerializerUtil {
 
 	public static FDSViewSerializer getFDSViewSerializer() {
 		return _fdsViewSerializer;

@@ -116,13 +116,6 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			setChannel(channel);
 
-			const app = await getDeliveryProduct({
-				appId: Liferay.MarketplaceCustomerFlow.appId,
-				channelId: channel.id,
-			});
-
-			setApp(app);
-
 			const currentUser = await getUserAccount();
 
 			setCurrentUser(currentUser);
@@ -154,11 +147,20 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				logoURL: currentAccountCommerce.logoURL,
 			});
 
+			const app = await getDeliveryProduct({
+				accountId,
+				appId: Liferay.MarketplaceCustomerFlow.appId,
+				channelId: channel.id,
+			});
+
+			setApp(app);
+
 			const skuResponse = await getProductSKU({
 				appProductId: Liferay.MarketplaceCustomerFlow.appId,
 			});
 
 			let sku;
+
 			if (skuResponse.items.length > 1) {
 				let isTrial;
 				isTrial = skuResponse.items

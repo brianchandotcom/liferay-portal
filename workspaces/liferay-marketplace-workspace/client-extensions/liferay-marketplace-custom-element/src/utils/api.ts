@@ -274,14 +274,16 @@ export async function getChannels() {
 }
 
 export async function getDeliveryProduct({
+	accountId,
 	appId,
 	channelId,
 }: {
+	accountId: number;
 	appId: number;
 	channelId: number;
 }) {
 	const response = await fetch(
-		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${appId}`,
+		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${appId}?accountId=${accountId}`,
 		{
 			headers,
 			method: 'GET',

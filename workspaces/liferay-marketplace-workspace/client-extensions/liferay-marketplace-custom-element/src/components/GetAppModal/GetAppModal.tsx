@@ -64,7 +64,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		productId: 0,
 		urlImage: '',
 	});
-	const [appVersion, setAppVersion] = useState<string>();
+	const [appVersion, setAppVersion] = useState<string>('');
 	const [channel, setChannel] = useState<Channel>({
 		currencyCode: '',
 		externalReferenceCode: '',
@@ -211,7 +211,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				skuId: sku?.id as number,
 			});
 
-			setAppVersion(versionResponse);
+			if (typeof versionResponse === 'string') {
+				setAppVersion(versionResponse);
+			}
 
 			const adminProduct = await getProduct({
 				appERC: app?.externalReferenceCode,

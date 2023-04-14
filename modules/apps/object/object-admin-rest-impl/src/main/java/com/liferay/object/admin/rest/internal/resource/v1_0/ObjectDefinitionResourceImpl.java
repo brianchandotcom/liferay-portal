@@ -41,7 +41,6 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
-import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
@@ -239,7 +238,7 @@ public class ObjectDefinitionResourceImpl
 		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 
-			throw new ObjectDefinitionModifiableException();
+			throw new UnsupportedOperationException();
 		}
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
@@ -403,7 +402,7 @@ public class ObjectDefinitionResourceImpl
 		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 
-			throw new ObjectDefinitionModifiableException();
+			throw new UnsupportedOperationException();
 		}
 
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&

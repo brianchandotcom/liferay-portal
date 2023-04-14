@@ -166,8 +166,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
 
 		if (batchEngineUnitConfiguration.getCompanyId() == 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Using default company ID for this batch process");
+			if (_log.isInfoEnabled()) {
+				_log.info("Using default company ID for this batch process");
 			}
 
 			try {
@@ -183,8 +183,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		if (batchEngineUnitConfiguration.getUserId() == 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Using default user ID for this batch process");
+			if (_log.isInfoEnabled()) {
+				_log.info("Using default user ID for this batch process");
 			}
 
 			try {

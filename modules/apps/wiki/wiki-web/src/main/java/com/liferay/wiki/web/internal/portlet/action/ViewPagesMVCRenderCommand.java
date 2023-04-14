@@ -15,13 +15,13 @@
 package com.liferay.wiki.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.engine.WikiEngineRenderer;
-import com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor;
 
 import java.util.Objects;
 
@@ -79,7 +79,9 @@ public class ViewPagesMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
-	@Reference
-	private WikiPortletToolbarContributor _wikiPortletToolbarContributor;
+	@Reference(
+		target = "(component.name=com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor)"
+	)
+	private PortletToolbarContributor _wikiPortletToolbarContributor;
 
 }

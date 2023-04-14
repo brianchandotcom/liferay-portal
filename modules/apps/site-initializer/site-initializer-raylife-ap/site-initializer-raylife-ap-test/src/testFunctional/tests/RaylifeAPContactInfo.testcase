@@ -54,7 +54,7 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given that I go to Raylife AP") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}
 
 		task ("When I go to the Contact Info form") {
@@ -86,7 +86,7 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given that I go to the Contact Info form") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
 

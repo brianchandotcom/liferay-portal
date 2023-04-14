@@ -56,7 +56,7 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given that I go to the Coverage Info form") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
 

@@ -627,8 +627,16 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
+			if (dataJSONObject == null) {
+				return Collections.emptyList();
+			}
+
 			JSONObject securityVulnerabilitiesJSONObject =
 				dataJSONObject.getJSONObject("securityVulnerabilities");
+
+			if (securityVulnerabilitiesJSONObject == null) {
+				return Collections.emptyList();
+			}
 
 			int totalCount = securityVulnerabilitiesJSONObject.getInt(
 				"totalCount");

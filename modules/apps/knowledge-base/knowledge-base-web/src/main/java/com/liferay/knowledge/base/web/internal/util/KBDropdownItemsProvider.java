@@ -744,7 +744,7 @@ public class KBDropdownItemsProvider {
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
-						"/admin/common/move_object_modal.jsp"
+						"/admin/common/move_kb_object_modal.jsp"
 					).setParameter(
 						"selectedItemId", kbArticle.getResourcePrimKey()
 					).setWindowState(

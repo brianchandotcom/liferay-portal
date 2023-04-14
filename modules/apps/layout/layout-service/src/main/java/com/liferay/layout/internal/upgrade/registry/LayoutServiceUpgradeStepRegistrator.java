@@ -25,12 +25,14 @@ import com.liferay.layout.internal.upgrade.v1_2_1.LayoutAssetUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_2.LayoutSEOUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_3.LayoutRevisionUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_3_0.util.LayoutLocalizationTable;
+import com.liferay.layout.internal.upgrade.v1_3_1.LayoutLocalizationUpgradeProcess;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -75,6 +77,9 @@ public class LayoutServiceUpgradeStepRegistrator
 				_layoutRevisionLocalService, _layoutSetBranchLocalService));
 
 		registry.register("1.2.3", "1.3.0", LayoutLocalizationTable.create());
+
+		registry.register(
+			"1.3.0", "1.3.1", new LayoutLocalizationUpgradeProcess(_portal));
 	}
 
 	@Reference
@@ -100,5 +105,8 @@ public class LayoutServiceUpgradeStepRegistrator
 
 	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

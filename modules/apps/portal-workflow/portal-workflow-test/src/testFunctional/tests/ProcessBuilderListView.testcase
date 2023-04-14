@@ -421,10 +421,7 @@ definition {
 	test CanSelectViewOption {
 		property test.run.environment = "EE";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.viewWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 

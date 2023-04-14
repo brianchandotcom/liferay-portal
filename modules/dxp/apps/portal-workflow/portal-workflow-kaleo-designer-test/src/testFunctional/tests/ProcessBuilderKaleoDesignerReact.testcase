@@ -4867,10 +4867,7 @@ definition {
 	test ViewWorkflowDefinitionButtons {
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewWorkflowDefinitionButtons";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 

@@ -242,7 +242,7 @@ definition {
 				termsAndConditionsType = "Payment Terms",
 				valuePosition = 1);
 
-			CommerceUtilities.addFullDescriptionUsingSource(sourceFullDescription = "<ul><li><u><em><strong>Payment Term Description</strong></em></u></li></ul>");
+			CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "<ul><li><u><em><strong>Payment Term Description</strong></em></u></li></ul>");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

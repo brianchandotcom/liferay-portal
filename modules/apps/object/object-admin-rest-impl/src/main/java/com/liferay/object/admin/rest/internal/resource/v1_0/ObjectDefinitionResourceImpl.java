@@ -485,7 +485,8 @@ public class ObjectDefinitionResourceImpl
 
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
 			new ArrayList<>(
-				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+				_objectFieldLocalService.getObjectFields(
+					objectDefinitionId, false));
 
 		if (objectDefinition.getObjectFields() != null) {
 			for (ObjectField objectField : objectDefinition.getObjectFields()) {

@@ -17,7 +17,7 @@ package com.liferay.portal.search.internal.background.task;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.search.index.BlueGreenIndexManager;
+import com.liferay.portal.search.index.ConcurrentReindexManager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +42,7 @@ public class BackgroundTaskExecutorConfigurator {
 	protected void activate(BundleContext bundleContext) {
 		BackgroundTaskExecutor reindexPortalBackgroundTaskExecutor =
 			new ReindexPortalBackgroundTaskExecutor(
-				_blueGreenIndexManager, bundleContext, _portalExecutorManager);
+				_concurrentReindexManager, bundleContext, _portalExecutorManager);
 
 		_registerBackgroundTaskExecutor(
 			bundleContext, reindexPortalBackgroundTaskExecutor);
@@ -81,7 +81,7 @@ public class BackgroundTaskExecutorConfigurator {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile BlueGreenIndexManager _blueGreenIndexManager;
+	private volatile ConcurrentReindexManager _concurrentReindexManager;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

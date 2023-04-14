@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.search.index.BlueGreenIndexManager;
+import com.liferay.portal.search.index.ConcurrentReindexManager;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -48,11 +48,11 @@ import org.osgi.framework.BundleContext;
 public class SearchEngineInitializer implements Runnable {
 
 	public SearchEngineInitializer(
-		BlueGreenIndexManager blueGreenIndexManager,
+		ConcurrentReindexManager concurrentReindexManager,
 		BundleContext bundleContext, long companyId, String executionMode,
 		PortalExecutorManager portalExecutorManager) {
 
-		_blueGreenIndexManager = blueGreenIndexManager;
+		_concurrentReindexManager = concurrentReindexManager;
 		_bundleContext = bundleContext;
 		_companyId = companyId;
 		_executionMode = executionMode;
@@ -134,8 +134,8 @@ public class SearchEngineInitializer implements Runnable {
 		stopWatch.start();
 
 		try {
-			if (_shouldExecuteBlueGreenReindex()) {
-				_blueGreenIndexManager.createGreenIndex(_companyId);
+			if (_shouldExecuteConcurrentReindex()) {
+				_concurrentReindexManager.createNextIndex(_companyId);
 			}
 			else {
 				SearchEngineHelperUtil.removeCompany(_companyId);
@@ -199,8 +199,8 @@ public class SearchEngineInitializer implements Runnable {
 				futureTask.get();
 			}
 
-			if (_shouldExecuteBlueGreenReindex()) {
-				_blueGreenIndexManager.replaceBlueIndexWithGreenIndex(
+			if (_shouldExecuteConcurrentReindex()) {
+				_concurrentReindexManager.replaceCurrentIndexWithNextIndex(
 					_companyId);
 			}
 
@@ -211,8 +211,8 @@ public class SearchEngineInitializer implements Runnable {
 			}
 		}
 		catch (Exception exception) {
-			if (_shouldExecuteBlueGreenReindex()) {
-				_blueGreenIndexManager.deleteGreenIndex(_companyId);
+			if (_shouldExecuteConcurrentReindex()) {
+				_concurrentReindexManager.deleteNextIndex(_companyId);
 			}
 
 			_log.error("Error encountered while reindexing", exception);
@@ -225,10 +225,10 @@ public class SearchEngineInitializer implements Runnable {
 		_finished = true;
 	}
 
-	private boolean _shouldExecuteBlueGreenReindex() {
+	private boolean _shouldExecuteConcurrentReindex() {
 		if (FeatureFlagManagerUtil.isEnabled("LPS-177664") &&
-			(_blueGreenIndexManager != null) && (_executionMode != null) &&
-			_executionMode.equals("blue-green") &&
+			(_concurrentReindexManager != null) && (_executionMode != null) &&
+			_executionMode.equals("concurrent") &&
 			(_companyId != CompanyConstants.SYSTEM)) {
 
 			return true;
@@ -240,7 +240,7 @@ public class SearchEngineInitializer implements Runnable {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchEngineInitializer.class);
 
-	private final BlueGreenIndexManager _blueGreenIndexManager;
+	private final ConcurrentReindexManager _concurrentReindexManager;
 	private final BundleContext _bundleContext;
 	private final long _companyId;
 	private final String _executionMode;

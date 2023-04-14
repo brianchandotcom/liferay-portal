@@ -129,19 +129,14 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 				UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 				"anonymize-order-by-type", "asc"));
 
-		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			_getUADApplicationSummaryDisplays(userId);
-
-		List<UADApplicationSummaryDisplay> summaryDisplays = ListUtil.filter(
-			uadApplicationSummaryDisplays, display -> display.getCount() > 0);
-
-		List<UADApplicationSummaryDisplay> results = ListUtil.sort(
-			summaryDisplays,
-			_getComparator(
-				locale, searchContainer.getOrderByCol(),
-				searchContainer.getOrderByType()));
-
-		searchContainer.setResultsAndTotal(results);
+		searchContainer.setResultsAndTotal(
+			ListUtil.sort(
+				ListUtil.filter(
+					_getUADApplicationSummaryDisplays(userId),
+					display -> display.getCount() > 0),
+				_getComparator(
+					locale, searchContainer.getOrderByCol(),
+					searchContainer.getOrderByType())));
 
 		return searchContainer;
 	}

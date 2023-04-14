@@ -144,41 +144,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 				GetterUtil.getLong(termValues.get("currentUserId"))));
 	}
 
-	private String _evaluateObjectFields(
-		Context context, String termName, Map<String, Object> termValues) {
-
-		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
-			return termName;
-		}
-
-		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId())) {
-
-			if (!Objects.equals(
-					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-						_objectDefinition.getShortName(),
-						objectField.getName()),
-					termName)) {
-
-				continue;
-			}
-
-			String termValue = String.valueOf(
-				termValues.get(objectField.getName()));
-
-			if (Validator.isNotNull(termValue)) {
-				return termValue;
-			}
-
-			return String.valueOf(
-				termValues.get(objectField.getDBColumnName()));
-		}
-
-		return null;
-	}
-
-	private String _evaluateParentObjectAuthor(
+	private String _evaluateObjectDefinition1Author(
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
@@ -230,7 +196,7 @@ public class ObjectDefinitionNotificationTermEvaluator
 		return null;
 	}
 
-	private String _evaluateParentObjectFields(
+	private String _evaluateObjectDefinition1ObjectFields(
 			Context context, String termName, Map<String, Object> termValues)
 		throws PortalException {
 
@@ -312,6 +278,40 @@ public class ObjectDefinitionNotificationTermEvaluator
 			objectFieldName);
 	}
 
+	private String _evaluateObjectFields(
+		Context context, String termName, Map<String, Object> termValues) {
+
+		if (termName.equals("[%OBJECT_ENTRY_CREATOR%]")) {
+			return termName;
+		}
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId())) {
+
+			if (!Objects.equals(
+					ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
+						_objectDefinition.getShortName(),
+						objectField.getName()),
+					termName)) {
+
+				continue;
+			}
+
+			String termValue = String.valueOf(
+				termValues.get(objectField.getName()));
+
+			if (Validator.isNotNull(termValue)) {
+				return termValue;
+			}
+
+			return String.valueOf(
+				termValues.get(objectField.getDBColumnName()));
+		}
+
+		return null;
+	}
+
 	private String _getTermValue(String partialTermName, User user)
 		throws PortalException {
 
@@ -375,8 +375,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(
 		this::_evaluateAuthor, this::_evaluateCurrentUser,
-		this::_evaluateObjectFields, this::_evaluateParentObjectAuthor,
-		this::_evaluateParentObjectFields);
+		this::_evaluateObjectFields, this::_evaluateObjectDefinition1Author,
+		this::_evaluateObjectDefinition1ObjectFields);
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

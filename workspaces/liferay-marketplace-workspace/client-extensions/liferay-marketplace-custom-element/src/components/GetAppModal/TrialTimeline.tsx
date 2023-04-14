@@ -5,6 +5,28 @@ import timeline from '../../assets/images/timeline.png';
 import './TrialTimeline.scss';
 
 export function TrialTimeline() {
+	const months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
+
+	const date = new Date();
+
+	date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+	const endOfTrialDay = date.getDate();
+	const endOfTrialMonth = months[date.getMonth()];
+
 	return (
 		<div className="get-app-modal-trial">
 			<div className="get-app-modal-trial-timeline">
@@ -39,7 +61,9 @@ export function TrialTimeline() {
 				</div>
 
 				<div className="get-app-modal-trial-messages-item">
-					<div className="title">March 11</div>
+					<div className="title">
+						{endOfTrialMonth} {endOfTrialDay}
+					</div>
 
 					<div className="description">
 						Your trial ends and this app will no longer function in

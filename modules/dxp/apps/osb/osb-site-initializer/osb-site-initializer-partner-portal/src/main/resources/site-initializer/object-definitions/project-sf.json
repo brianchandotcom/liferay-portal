@@ -100,7 +100,7 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Project SF"
+		"en_US": "Projects SF"
 	},
 	"scope": "company",
 	"storageType": "salesforce"

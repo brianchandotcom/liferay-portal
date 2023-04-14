@@ -42,6 +42,7 @@ import java.nio.file.StandardOpenOption;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -404,6 +405,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			if (matchingPaths.isEmpty() && logger.isWarnEnabled()) {
 				logger.warn("No paths matched the glob pattern {}", glob);
 			}
+
+			Collections.sort(matchingPaths);
 
 			return matchingPaths;
 		}

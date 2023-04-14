@@ -4211,6 +4211,26 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
+	<target name="functional-bundle-tomcat-sqlserver2022-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="sqlserver"
+			database.version="2022"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-tomcat-sybase160-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -4981,6 +5001,14 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2019" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-tomcat90-sqlserver2022-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat90-sqlserver2022-jdk11_open">
+		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-tomcat90-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" test.portal.log.assert="true" />
 	</target>
@@ -5217,6 +5245,14 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2019" />
 	</target>
 
+	<target name="functional-tomcat90-sqlserver2022-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" />
+	</target>
+
+	<target name="functional-tomcat90-sqlserver2022-jdk11_open">
+		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" />
+	</target>
+
 	<target name="functional-tomcat90-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
@@ -5375,6 +5411,14 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="functional-upgrade-tomcat90-sqlserver2019-jdk11_open">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2019" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-sqlserver2022-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" />
+	</target>
+
+	<target name="functional-upgrade-tomcat90-sqlserver2022-jdk11_open">
+		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" />
 	</target>
 
 	<target name="functional-upgrade-tomcat90-sybase160-jdk8">
@@ -5781,6 +5825,10 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="legacy-functional-bundle-tomcat-sqlserver2019">
 		<run-legacy-database-dump database.type="sqlserver" database.version="2019" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-sqlserver2022">
+		<run-legacy-database-dump database.type="sqlserver" database.version="2022" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-sybase160">
@@ -6333,6 +6381,25 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
+	<target name="modules-integration-bundle-sqlserver2022-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-modules-integration-test
+			database.type="sqlserver"
+			database.version="2022"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="modules-integration-bundle-sybase160-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -6498,6 +6565,14 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="modules-integration-sqlserver2019-jdk11_open">
 		<run-modules-integration-test database.type="sqlserver" database.version="2019" />
+	</target>
+
+	<target name="modules-integration-sqlserver2022-jdk8">
+		<run-modules-integration-test database.type="sqlserver" database.version="2022" />
+	</target>
+
+	<target name="modules-integration-sqlserver2022-jdk11_open">
+		<run-modules-integration-test database.type="sqlserver" database.version="2022" />
 	</target>
 
 	<target name="modules-integration-sybase160-jdk8">

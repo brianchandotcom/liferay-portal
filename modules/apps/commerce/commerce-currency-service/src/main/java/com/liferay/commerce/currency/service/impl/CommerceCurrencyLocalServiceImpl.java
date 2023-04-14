@@ -240,6 +240,7 @@ public class CommerceCurrencyLocalServiceImpl
 			if (commerceCurrency == null) {
 				boolean primary = jsonObject.getBoolean("primary");
 				double priority = jsonObject.getDouble("priority");
+				double rate = jsonObject.getDouble("rate");
 				String symbol = jsonObject.getString("symbol");
 
 				RoundingTypeConfiguration roundingTypeConfiguration =
@@ -264,7 +265,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 				commerceCurrencyLocalService.addCommerceCurrency(
 					serviceContext.getUserId(), code, nameMap, symbol,
-					BigDecimal.ONE, formatPatternMap,
+					BigDecimal.valueOf(rate), formatPatternMap,
 					roundingTypeConfiguration.maximumFractionDigits(),
 					roundingTypeConfiguration.minimumFractionDigits(),
 					roundingMode.name(), primary, priority, true);

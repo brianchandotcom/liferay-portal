@@ -4,6 +4,7 @@
 		"name": "US Dollar",
 		"primary": true,
 		"priority": 1,
+		"rate": 1,
 		"symbol": "$"
 	},
 	{
@@ -11,6 +12,7 @@
 		"name": "Australian Dollar",
 		"primary": false,
 		"priority": 2,
+		"rate": 1.48,
 		"symbol": "$"
 	},
 	{
@@ -18,6 +20,7 @@
 		"name": "British Pound",
 		"primary": false,
 		"priority": 3,
+		"rate": 0.80,
 		"symbol": "£"
 	},
 	{
@@ -25,6 +28,7 @@
 		"name": "Canadian Dollar",
 		"primary": false,
 		"priority": 4,
+		"rate": 1.34,
 		"symbol": "$"
 	},
 	{
@@ -32,6 +36,7 @@
 		"name": "Chinese Yuan Renminbi",
 		"primary": false,
 		"priority": 5,
+		"rate": 6.88,
 		"symbol": "¥"
 	},
 	{
@@ -39,6 +44,7 @@
 		"name": "Euro",
 		"primary": false,
 		"priority": 6,
+		"rate": 0.91,
 		"symbol": "€"
 	},
 	{
@@ -46,6 +52,7 @@
 		"name": "Hong Kong Dollar",
 		"primary": false,
 		"priority": 7,
+		"rate": 7.85,
 		"symbol": "$"
 	},
 	{
@@ -53,6 +60,7 @@
 		"name": "Japanese Yen",
 		"primary": false,
 		"priority": 8,
+		"rate": 133.28,
 		"symbol": "¥"
 	},
 	{
@@ -60,6 +68,7 @@
 		"name": "Indian Rupee",
 		"primary": false,
 		"priority": 9,
+		"rate": 81.86,
 		"symbol": "₹"
 	},
 	{
@@ -67,6 +76,7 @@
 		"name": "Brazilian Real",
 		"primary": false,
 		"priority": 10,
+		"rate": 4.91,
 		"symbol": "R$"
 	}
 ]

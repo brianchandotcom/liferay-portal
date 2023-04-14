@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -232,11 +231,6 @@ public class NavItemUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSiteNavigationMenuItemLocalService(
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService) {
 
@@ -347,7 +341,6 @@ public class NavItemUtil {
 	private static final Log _log = LogFactoryUtil.getLog(NavItemUtil.class);
 
 	private static LayoutLocalService _layoutLocalService;
-	private static Portal _portal;
 	private static SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 	private static SiteNavigationMenuItemService _siteNavigationMenuItemService;

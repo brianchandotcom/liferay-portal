@@ -223,8 +223,7 @@ public class ObjectActionLocalServiceTest {
 				objectActionErrorMessageException.getMessage());
 		}
 
-		// Object action executor unavailable due to company
-		// restriction criteria
+		// Object action executor unmet company restriction criteria
 
 		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
@@ -255,8 +254,7 @@ public class ObjectActionLocalServiceTest {
 					String.valueOf(_companyId1)));
 		}
 
-		// Object action executor unavailable due to object definitions
-		// restriction criteria
+		// Object action executor unmet object definitions restriction criteria
 
 		ObjectActionExecutor objectActionExecutor2 =
 			_registerObjectActionExecutor(

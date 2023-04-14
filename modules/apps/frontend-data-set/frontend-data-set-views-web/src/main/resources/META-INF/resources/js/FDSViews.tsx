@@ -24,16 +24,16 @@ import '../css/FDSEntries.scss';
 import {OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
 import RequiredMark from './RequiredMark';
 
-const PAGE_SIZES = '4, 8, 20, 40, 60';
-const DEFAULT_PAGE_SIZE = 20;
+const LIST_OF_ITEMS_PER_PAGE = '4, 8, 20, 40, 60';
+const DEFAULT_ITEMS_PER_PAGE = 20;
 
 export type TFDSView = {
-	defaultPageSize: number;
+	defaultItemsPerPage: number;
 	description: string;
 	externalReferenceCode: string;
 	id: string;
 	label: string;
-	pageSizes: string;
+	listOfItemsPerPage: string;
 };
 
 interface IAddFDSViewModalContentProps {
@@ -58,10 +58,10 @@ const AddFDSViewModalContent = ({
 
 	const addFDSView = async () => {
 		const body = {
-			defaultPageSize: DEFAULT_PAGE_SIZE,
+			defaultItemsPerPage: DEFAULT_ITEMS_PER_PAGE,
 			description: fdsViewDescriptionRef.current?.value,
 			label: fdsViewLabelRef.current?.value,
-			pageSizes: PAGE_SIZES,
+			listOfItemsPerPage: LIST_OF_ITEMS_PER_PAGE,
 			r_fdsEntryFDSViewRelationship_c_fdsEntryId: fdsEntryId,
 			symbol: 'catalog',
 		};

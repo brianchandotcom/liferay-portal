@@ -32,12 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	service = {
-		CPDefinitionSpecificationOptionValueInfoItemRenderer.class,
-		InfoItemRenderer.class
-	}
-)
+@Component(service = InfoItemRenderer.class)
 public class CPDefinitionSpecificationOptionValueInfoItemRenderer
 	implements InfoItemRenderer<CPDefinitionSpecificationOptionValue> {
 

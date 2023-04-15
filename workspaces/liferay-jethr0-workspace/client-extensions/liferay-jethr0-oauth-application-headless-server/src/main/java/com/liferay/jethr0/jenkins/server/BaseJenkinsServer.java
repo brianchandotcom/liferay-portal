@@ -22,7 +22,12 @@ import java.net.URL;
 
 import java.util.Set;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import org.json.JSONObject;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Michael Hashimoto
@@ -45,8 +50,39 @@ public abstract class BaseJenkinsServer
 	}
 
 	@Override
+	public JSONObject getComputerJSONObject() {
+		String basicAuthorization = StringUtil.combine(
+			getJenkinsUserName(), ":", getJenkinsUserPassword());
+
+		String response = WebClient.create(
+			StringUtil.combine(getURL(), "/computer/api/json")
+		).get(
+		).accept(
+			MediaType.APPLICATION_JSON
+		).header(
+			"Authorization",
+			"Basic " + Base64.encodeBase64String(basicAuthorization.getBytes())
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+
+		return new JSONObject(response);
+	}
+
+	@Override
 	public Set<JenkinsNode> getJenkinsNodes() {
 		return getRelatedEntities(JenkinsNode.class);
+	}
+
+	@Override
+	public String getJenkinsUserName() {
+		return _jenkinsUserName;
+	}
+
+	@Override
+	public String getJenkinsUserPassword() {
+		return _jenkinsUserPassword;
 	}
 
 	@Override
@@ -54,6 +90,10 @@ public abstract class BaseJenkinsServer
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
+			"jenkinsUserName", getJenkinsUserName()
+		).put(
+			"jenkinsUserPassword", getJenkinsUserPassword()
+		).put(
 			"name", getName()
 		).put(
 			"url", getURL()
@@ -83,6 +123,16 @@ public abstract class BaseJenkinsServer
 	}
 
 	@Override
+	public void setJenkinsUserName(String jenkinsUserName) {
+		_jenkinsUserName = jenkinsUserName;
+	}
+
+	@Override
+	public void setJenkinsUserPassword(String jenkinsUserPassword) {
+		_jenkinsUserPassword = jenkinsUserPassword;
+	}
+
+	@Override
 	public void setName(String name) {
 		_name = name;
 	}
@@ -95,10 +145,14 @@ public abstract class BaseJenkinsServer
 	protected BaseJenkinsServer(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_name = jsonObject.getString("name");
+		_jenkinsUserName = jsonObject.getString("jenkinsUserName");
+		_jenkinsUserPassword = jsonObject.getString("jenkinsUserPassword");
+		_name = jsonObject.optString("name");
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
 
+	private String _jenkinsUserName;
+	private String _jenkinsUserPassword;
 	private String _name;
 	private URL _url;
 

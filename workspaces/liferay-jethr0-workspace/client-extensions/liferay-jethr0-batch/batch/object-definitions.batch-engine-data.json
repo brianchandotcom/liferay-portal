@@ -366,9 +366,9 @@
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"label": {
-						"en_US": "Good Clock"
+						"en_US": "Good Battery"
 					},
-					"name": "goodClock",
+					"name": "goodBattery",
 					"type": "Boolean"
 				},
 				{
@@ -419,9 +419,9 @@
 					"DBType": "Integer",
 					"businessType": "Integer",
 					"label": {
-						"en_US": "Nodes Count"
+						"en_US": "Node Count"
 					},
-					"name": "nodesCount",
+					"name": "nodeCount",
 					"required": true,
 					"type": "Integer"
 				},
@@ -655,6 +655,24 @@
 			},
 			"name": "JenkinsServer",
 			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Jenkins User Name"
+					},
+					"name": "jenkinsUserName",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Jenkins User Password"
+					},
+					"name": "jenkinsUserPassword",
+					"type": "String"
+				},
 				{
 					"DBType": "String",
 					"businessType": "Text",

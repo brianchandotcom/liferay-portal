@@ -21,6 +21,8 @@ import java.net.URL;
 
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -30,7 +32,13 @@ public interface JenkinsServer extends Entity {
 
 	public void addJenkinsNodes(Set<JenkinsNode> jenkinsNodes);
 
+	public JSONObject getComputerJSONObject();
+
 	public Set<JenkinsNode> getJenkinsNodes();
+
+	public String getJenkinsUserName();
+
+	public String getJenkinsUserPassword();
 
 	public String getName();
 
@@ -39,6 +47,10 @@ public interface JenkinsServer extends Entity {
 	public void removeJenkinsNode(JenkinsNode jenkinsNode);
 
 	public void removeJenkinsNodes(Set<JenkinsNode> jenkinsNodes);
+
+	public void setJenkinsUserName(String jenkinsUserName);
+
+	public void setJenkinsUserPassword(String jenkinsUserPassword);
 
 	public void setName(String name);
 

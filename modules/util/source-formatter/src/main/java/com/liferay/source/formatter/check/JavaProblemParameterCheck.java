@@ -66,7 +66,8 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 					parameterName2.matches(
 						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
-					exceptionVariableName = parameterName2;
+					exceptionVariableName = parameterName2.substring(
+						0, parameterName2.indexOf("."));
 				}
 			}
 			else if (parameterList.size() == 4) {
@@ -80,7 +81,8 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 					parameterName3.matches(
 						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
-					exceptionVariableName = parameterName3;
+					exceptionVariableName = parameterName3.substring(
+						0, parameterName3.indexOf("."));
 				}
 			}
 
@@ -88,33 +90,28 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			exceptionVariableName = exceptionVariableName.substring(
-				0, exceptionVariableName.indexOf("."));
-
 			String variableTypeName = getVariableTypeName(
 				javaTermContent, javaTermContent, exceptionVariableName);
 
-			if (variableTypeName == null) {
+			if ((variableTypeName == null) ||
+				!variableTypeName.endsWith("Exception")) {
+
 				continue;
 			}
 
-			if (variableTypeName.endsWith("Exception")) {
-				if (parameterList.size() == 4) {
-					String parameter = parameterList.get(3);
+			if (parameterList.size() == 4) {
+				String parameter = parameterList.get(3);
 
-					if (!parameter.matches(
-							variableTypeName +
-								"\\.class\\.getSimpleName\\(\\)")) {
+				if (!parameter.matches(
+						variableTypeName + "\\.class\\.getSimpleName\\(\\)")) {
 
-						continue;
-					}
+					continue;
 				}
-
-				return StringUtil.replaceFirst(
-					javaTermContent, methodCall,
-					"new Problem(" + exceptionVariableName + ")",
-					matcher.start());
 			}
+
+			return StringUtil.replaceFirst(
+				javaTermContent, methodCall,
+				"new Problem(" + exceptionVariableName + ")", matcher.start());
 		}
 
 		return javaTermContent;

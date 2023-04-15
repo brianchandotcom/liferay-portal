@@ -34,8 +34,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-161340 - Verify if user can see the application listed in the Applications section after a complete flow in new applications."
-	@ignore = "true"
+	@description = "LPS-146337 - Verify if user can see the application listed in the Applications section after a complete flow in new applications."
 	@priority = 5
 	test CanCreateNewApplication {
 		property test.name.skip.portal.instance = "RaylifeAPReview#CanCreateNewApplication";

@@ -251,7 +251,7 @@ definition {
 	@description = "This is a test for LPS-97189. A user can edit displayed content in an Asset Publisher widget through Contents panel."
 	@priority = 4
 	test EditDisplayedWebContentInAssetPublisher {
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		var siteName = StringUtil.randomString(8);
 

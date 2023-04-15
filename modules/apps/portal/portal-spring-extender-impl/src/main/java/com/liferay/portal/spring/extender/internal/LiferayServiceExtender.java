@@ -239,7 +239,7 @@ public class LiferayServiceExtender
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.ACTIVE | Bundle.STARTING, this);
+			bundleContext, Bundle.ACTIVE, this);
 
 		FutureTask<Void> futureTask = new FutureTask<>(
 			() -> {

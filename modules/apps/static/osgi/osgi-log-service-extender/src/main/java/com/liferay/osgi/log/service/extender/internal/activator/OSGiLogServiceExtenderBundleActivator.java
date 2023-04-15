@@ -158,7 +158,7 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 				serviceReference);
 
 			BundleTracker<LoggerContext> bundleTracker = new BundleTracker<>(
-				_bundleContext, ~(Bundle.INSTALLED | Bundle.UNINSTALLED),
+				_bundleContext, Bundle.ACTIVE,
 				new LoggerContextBundleTrackerCustomizer(loggerAdmin));
 
 			bundleTracker.open();

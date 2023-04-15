@@ -263,10 +263,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
 			_bundle, FrameworkUtil.getBundle(TagSupport.class));
 
-		int stateMask = ~Bundle.INSTALLED & ~Bundle.UNINSTALLED;
-
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, stateMask, new TaglibBundleTrackerCustomizer());
+			bundleContext, Bundle.ACTIVE, new TaglibBundleTrackerCustomizer());
 
 		_bundleTracker.open();
 

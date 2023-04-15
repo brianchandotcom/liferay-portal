@@ -240,10 +240,6 @@ public class FrontendTokenDefinitionRegistryImpl
 			@Override
 			public void modifiedBundle(
 				Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
-
-				removedBundle(bundle1, bundleEvent, null);
-
-				addingBundle(bundle1, bundleEvent);
 			}
 
 			@Override

@@ -44,7 +44,7 @@ public class IndexUpdaterUtil {
 		updatePortalIndexes();
 
 		BundleTracker<Void> bundleTracker = new BundleTracker<>(
-			SystemBundleUtil.getBundleContext(), ~Bundle.UNINSTALLED,
+			SystemBundleUtil.getBundleContext(), Bundle.ACTIVE,
 			new BundleTrackerCustomizer<Void>() {
 
 				@Override

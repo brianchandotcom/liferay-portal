@@ -46,7 +46,19 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public T create(JSONObject jsonObject) {
-		return create(newEntity(jsonObject));
+		JSONObject responseJSONObject = _create(jsonObject);
+
+		if (responseJSONObject == null) {
+			throw new RuntimeException("No response");
+		}
+
+		T entity = newEntity(responseJSONObject);
+
+		entity.setCreatedDate(
+			StringUtil.toDate(responseJSONObject.getString("dateCreated")));
+		entity.setId(responseJSONObject.getLong("id"));
+
+		return entity;
 	}
 
 	@Override

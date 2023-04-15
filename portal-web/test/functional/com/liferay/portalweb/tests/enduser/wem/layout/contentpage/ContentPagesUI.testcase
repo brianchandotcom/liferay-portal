@@ -40,10 +40,10 @@ definition {
 
 		task ("Then the page creator accesses to the Look and Feel settings") {
 			AssertElementPresent(
-				key_title = "General",
+				key_title = "Design",
 				locator1 = "Header#H2_TITLE");
 
-			for (var sectionName : list "Favicon,Master,Style Book,Theme") {
+			for (var sectionName : list "Theme,Basic Settings,Customization") {
 				AssertElementPresent(
 					key_sectionTitle = ${sectionName},
 					locator1 = "PagesAdmin#SECTION_TITLE");

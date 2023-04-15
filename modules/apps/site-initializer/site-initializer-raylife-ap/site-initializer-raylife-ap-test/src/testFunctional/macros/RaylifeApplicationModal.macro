@@ -64,41 +64,41 @@ definition {
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "firstName",
-			value = "Testing");
+			value = ${firstName});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "lastName",
-			value = "Model");
+			value = ${lastName});
 
 		RaylifeApplicationModal.birthDate(nextDayDate = ${nextDayDate});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "phone",
-			value = 0123456789);
+			value = ${phoneNumber});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "email",
-			value = "test@liferay.com");
+			value = ${emailAddress});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "streetAddress",
-			value = "Address");
+			value = ${streetAddress});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "apt",
-			value = 0000);
+			value = ${apt});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "city",
-			value = "New York");
+			value = ${city});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "mySelectId",
-			value = "NY");
+			value = ${state});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "zipCode",
-			value = 12345);
+			value = ${zipCode});
 
 		DoubleClick(
 			key_option = "Own",
@@ -110,31 +110,31 @@ definition {
 	macro typeAllNewApplicationCoverageInfoFields {
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "mySelectId",
-			value = "$30,000 / $60,000");
+			value = ${bodilyInjury});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "propertyDamage",
-			value = "$25,000");
+			value = ${propertyDamage});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "uninsuredOrUnderinsuredMBI",
-			value = "$30,000 / $60,000");
+			value = ${uninsuredOrUnderinsuredMBI});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "uninsuredOrUnderinsuredMPD",
-			value = "$150,000");
+			value = ${uninsuredOrUnderinsuredMPD});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "Medical",
-			value = "$1,000");
+			value = ${medicalAmount});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "comprehensive",
-			value = "$750");
+			value = ${comprehensiveAmount});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "collision",
-			value = "$2,000");
+			value = ${collisionAmount});
 
 		Button.click(button = "Review quote");
 	}
@@ -142,39 +142,39 @@ definition {
 	macro typeAllNewApplicationDriverInfoFields {
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "firstName",
-			value = "Testing");
+			value = ${firstName});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "lastName",
-			value = "Model");
+			value = ${lastName});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "relationToContact",
-			value = "Spouse");
+			value = ${relationToContact});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "gender",
-			value = "Female");
+			value = ${gender});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "maritalStatus",
-			value = "Single");
+			value = ${maritalStatus});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "ageFirstLicenced",
-			value = 18);
+			value = ${ageFirstLicensed});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "occupation",
-			value = "Engineer");
+			value = ${occupation});
 
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "highestEducation",
-			value = "Masters");
+			value = ${highestEducation});
 
 		RaylifeApplicationModal.selectOptionInDropdownByName(
 			field = "millitary-affiliation",
-			text = "None");
+			text = ${militaryAffiliation});
 
 		DoubleClick(
 			key_option = "No",
@@ -186,27 +186,27 @@ definition {
 	macro typeAllNewApplicationVehicleInfoFields {
 		RaylifeApplicationModal.selectOptionInDropdownByName(
 			field = "years",
-			text = 2019);
+			text = ${year});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "make",
-			value = "Volvo");
+			value = ${make});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "model",
-			value = "v90 cross country");
+			value = ${model});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "primary-usage",
-			value = "Business");
+			value = ${primaryUse});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "annual-mileage",
-			value = 50000);
+			value = ${annualMileage});
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "ownership",
-			value = "Own");
+			value = ${ownership});
 
 		Button.click(button = "Next");
 	}

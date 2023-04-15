@@ -49,57 +49,58 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				javaTermContent, matcher.start());
 
-			List<String> parameters = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				methodCall);
 
-			parameters.replaceAll(e -> e.replaceAll("\n\t*", StringPool.BLANK));
+			parameterList.replaceAll(
+				e -> e.replaceAll("\n\t*", StringPool.BLANK));
 
-			String exceptionParameterName = null;
+			String exceptionVariableName = null;
 
-			if (parameters.size() == 2) {
-				String firstParameter = parameters.get(0);
-				String secondParameter = parameters.get(1);
+			if (parameterList.size() == 2) {
+				String parameterName1 = parameterList.get(0);
+				String parameterName2 = parameterList.get(1);
 
 				if (StringUtil.equals(
-						firstParameter, "Response.Status.BAD_REQUEST") &&
-					secondParameter.matches(
+						parameterName1, "Response.Status.BAD_REQUEST") &&
+					parameterName2.matches(
 						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
-					exceptionParameterName = secondParameter;
+					exceptionVariableName = parameterName2;
 				}
 			}
-			else if (parameters.size() == 4) {
-				String firstParameter = parameters.get(0);
-				String secondParameter = parameters.get(1);
-				String thirdParameter = parameters.get(2);
+			else if (parameterList.size() == 4) {
+				String parameterName1 = parameterList.get(0);
+				String parameterName2 = parameterList.get(1);
+				String parameterName3 = parameterList.get(2);
 
-				if (StringUtil.equals(firstParameter, "null") &&
+				if (StringUtil.equals(parameterName1, "null") &&
 					StringUtil.equals(
-						secondParameter, "Response.Status.BAD_REQUEST") &&
-					thirdParameter.matches(
+						parameterName2, "Response.Status.BAD_REQUEST") &&
+					parameterName3.matches(
 						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
-					exceptionParameterName = thirdParameter;
+					exceptionVariableName = parameterName3;
 				}
 			}
 
-			if (exceptionParameterName == null) {
+			if (exceptionVariableName == null) {
 				continue;
 			}
 
-			exceptionParameterName = exceptionParameterName.substring(
-				0, exceptionParameterName.indexOf("."));
+			exceptionVariableName = exceptionVariableName.substring(
+				0, exceptionVariableName.indexOf("."));
 
 			String variableTypeName = getVariableTypeName(
-				javaTermContent, javaTermContent, exceptionParameterName);
+				javaTermContent, javaTermContent, exceptionVariableName);
 
 			if (variableTypeName == null) {
 				continue;
 			}
 
 			if (variableTypeName.endsWith("Exception")) {
-				if (parameters.size() == 4) {
-					String parameter = parameters.get(3);
+				if (parameterList.size() == 4) {
+					String parameter = parameterList.get(3);
 
 					if (!parameter.matches(
 							variableTypeName +
@@ -111,7 +112,7 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 
 				return StringUtil.replaceFirst(
 					javaTermContent, methodCall,
-					"new Problem(" + exceptionParameterName + ")",
+					"new Problem(" + exceptionVariableName + ")",
 					matcher.start());
 			}
 		}

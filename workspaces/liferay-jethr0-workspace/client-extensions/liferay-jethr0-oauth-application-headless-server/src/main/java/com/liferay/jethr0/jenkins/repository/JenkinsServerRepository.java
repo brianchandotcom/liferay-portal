@@ -16,9 +16,16 @@ package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesDALO;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Objects;
+
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -28,12 +35,68 @@ import org.springframework.context.annotation.Configuration;
 public class JenkinsServerRepository
 	extends BaseEntityRepository<JenkinsServer> {
 
+	public JenkinsServer add(String url) {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"jenkinsUserName", _jenkinsUserName
+		).put(
+			"jenkinsUserPassword", _jenkinsUserPassword
+		).put(
+			"url", url
+		);
+
+		return add(jsonObject);
+	}
+
+	public JenkinsServer getByURL(String url) {
+		for (JenkinsServer jenkinsServer : getAll()) {
+			if (!Objects.equals(
+					jenkinsServer.getURL(), StringUtil.toURL(url))) {
+
+				continue;
+			}
+
+			return jenkinsServer;
+		}
+
+		return null;
+	}
+
 	@Override
 	public JenkinsServerDALO getEntityDALO() {
 		return _jenkinsServerDALO;
 	}
 
+	@Override
+	protected JenkinsServer updateEntityRelationshipsFromDatabase(
+		JenkinsServer jenkinsServer) {
+
+		jenkinsServer.addJenkinsNodes(
+			_jenkinsServerToJenkinsNodesDALO.getChildEntities(jenkinsServer));
+
+		return jenkinsServer;
+	}
+
+	@Override
+	protected JenkinsServer updateEntityRelationshipsInDatabase(
+		JenkinsServer jenkinsServer) {
+
+		_jenkinsServerToJenkinsNodesDALO.updateChildEntities(jenkinsServer);
+
+		return jenkinsServer;
+	}
+
 	@Autowired
 	private JenkinsServerDALO _jenkinsServerDALO;
+
+	@Autowired
+	private JenkinsServerToJenkinsNodesDALO _jenkinsServerToJenkinsNodesDALO;
+
+	@Value("${jenkins.user.name}")
+	private String _jenkinsUserName;
+
+	@Value("${jenkins.user.password}")
+	private String _jenkinsUserPassword;
 
 }

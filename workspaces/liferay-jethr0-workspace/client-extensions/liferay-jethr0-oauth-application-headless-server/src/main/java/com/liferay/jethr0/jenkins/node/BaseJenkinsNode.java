@@ -52,6 +52,22 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 			"nodeRAM", getNodeRAM()
 		);
 
+		JenkinsServer jenkinsServer = getJenkinsServer();
+
+		if (jenkinsServer != null) {
+			jsonObject.put(
+				"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId",
+				jenkinsServer.getId());
+		}
+
+		Type type = getType();
+
+		jsonObject.put(
+			"type", type.getJSONObject()
+		).put(
+			"url", getURL()
+		);
+
 		return jsonObject;
 	}
 

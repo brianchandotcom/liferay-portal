@@ -99,14 +99,12 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			if (parameterList.size() == 4) {
-				String parameter = parameterList.get(3);
+			if ((parameterList.size() == 4) &&
+				!StringUtil.equals(
+					parameterList.get(3),
+					variableTypeName + ".class.getSimpleName()")) {
 
-				if (!parameter.matches(
-						variableTypeName + "\\.class\\.getSimpleName\\(\\)")) {
-
-					continue;
-				}
+				continue;
 			}
 
 			return StringUtil.replaceFirst(

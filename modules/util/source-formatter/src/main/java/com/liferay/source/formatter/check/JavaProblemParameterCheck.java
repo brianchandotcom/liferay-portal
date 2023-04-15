@@ -94,15 +94,11 @@ public class JavaProblemParameterCheck extends BaseJavaTermCheck {
 				javaTermContent, javaTermContent, exceptionVariableName);
 
 			if ((variableTypeName == null) ||
-				!variableTypeName.endsWith("Exception")) {
-
-				continue;
-			}
-
-			if ((parameterList.size() == 4) &&
-				!StringUtil.equals(
-					parameterList.get(3),
-					variableTypeName + ".class.getSimpleName()")) {
+				!variableTypeName.endsWith("Exception") ||
+				((parameterList.size() == 4) &&
+				 !StringUtil.equals(
+					 parameterList.get(3),
+					 variableTypeName + ".class.getSimpleName()"))) {
 
 				continue;
 			}

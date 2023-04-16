@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "Activity"
+		"en-US": "Activity to Budgets"
 	},
 	"name": "actToBgts",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Activity$]",

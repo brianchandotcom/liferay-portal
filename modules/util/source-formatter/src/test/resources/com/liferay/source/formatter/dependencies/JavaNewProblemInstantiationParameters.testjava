@@ -24,14 +24,14 @@ import javax.ws.rs.core.Response;
 public class JavaNewProblemInstantiationParameters {
 
 	public Problem getProblem1(Exception exception) {
-
-		return new Problem(Response.Status.BAD_REQUEST, exception.getMessage());
+		return new Problem(
+			Response.Status.BAD_REQUEST, exception.getMessage());
 	}
 
 	public Problem getProblem2(Exception exception) {
-
-		return new Problem(null, Response.Status.BAD_REQUEST,
-				exception.getMessage(), Exception.class.getSimpleName());
+		return new Problem(
+			null, Response.Status.BAD_REQUEST, exception.getMessage(),
+			Exception.class.getSimpleName());
 	}
 
 }

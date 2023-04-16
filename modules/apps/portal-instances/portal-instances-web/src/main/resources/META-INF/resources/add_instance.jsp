@@ -72,9 +72,9 @@
 					<liferay-ui:panel
 						collapsible="<%= false %>"
 						extended="<%= true %>"
-						id="userDisplayDataVirtualInstancePanel"
+						id="administatorUserPanel"
 						markupView="lexicon"
-						title="user-display-data"
+						title="administrator-user"
 					>
 						<aui:input label="field.screen-name" name="screenNameAdmin" type="text">
 							<aui:validator name="required" />

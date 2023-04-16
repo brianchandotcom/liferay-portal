@@ -184,13 +184,6 @@ return element.textContent;
 		}
 	}
 
-	macro maximizeWindow {
-		var screenWidth = TestUtils.getScreenWidth();
-		var screenHeight = TestUtils.getScreenHeight();
-
-		SetWindowSize(value1 = "${screenWidth},${screenHeight}");
-	}
-
 	macro pass {
 		if (!(isSet(message))) {
 			var message = "PASS";

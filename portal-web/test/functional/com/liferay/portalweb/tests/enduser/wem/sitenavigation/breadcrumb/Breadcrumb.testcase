@@ -513,4 +513,27 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-179500. The administrater could see the description of DDM Template Key Default."
+	@priority = 3
+	test ViewDescriptionOfDDMTemplateKeyDefault {
+		property test.name.skip.portal.instance = "Breadcrumb#ViewDescriptionOfDDMTemplateKeyDefault";
+
+		task ("Given an administrater navigates to the System Settings") {
+			SystemSettings.openSystemSettingsAdmin();
+		}
+
+		task ("When the administrater navigates to the configuration of Breadcrumb Template") {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Breadcrumbs",
+				configurationName = "Breadcrumb Template",
+				configurationScope = "System Scope");
+		}
+
+		task ("Then the administrater sees the description of DDM Template Key Default") {
+			SystemSettings.viewTextLabel(fieldLabel = "DDM Template Key Default");
+
+			SystemSettings.viewSettingsText(settingsText = "The dynamic data mapping template key belongs to a breadcrumb widget template that is used as a default template to render the breadcrumb. You can find this key in the properties panel when editing the widget template.");
+		}
+	}
+
 }

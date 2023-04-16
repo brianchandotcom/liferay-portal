@@ -3,52 +3,16 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Execute Reindex all search indexes") {
 			SearchAdministration.executeReindex();
-		}
-
-		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-
-		task ("Add a Search page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Search");
-		}
-
-		task ("Add a Search Results to Search page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Search",
-				widgetName = "Search Results");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -58,10 +22,28 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#CannotSearchContentPageWithoutPublishedVersion";
 
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page with Heading fragment and keeps it as draft") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -71,7 +53,7 @@ definition {
 		task ("When the page creator search the content page in Search Bar") {
 			Navigator.gotoSitePage(
 				pageName = "Search",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			SearchPortlets.searchEmbedded(searchTerm = "Content Page");
 		}
@@ -95,9 +77,35 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#FilterByTypeFacet";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search");
+		}
+
+		task ("Add a Search Results to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Type Facet to Search page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Search",
 				widgetName = "Type Facet");
 		}
@@ -105,14 +113,14 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "This is a heading content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -126,7 +134,7 @@ definition {
 		task ("Navigate to the content page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search by keywords") {
@@ -156,10 +164,36 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByInlineText";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search");
+		}
+
+		task ("Add a Search Results to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -173,7 +207,7 @@ definition {
 		task ("Navigate to the content page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search by inline text of Heading") {
@@ -187,7 +221,7 @@ definition {
 		task ("Edit the inline text") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -202,7 +236,7 @@ definition {
 		task ("Navigate to the content page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search by edited inline text") {
@@ -228,9 +262,35 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByNotEditableText";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search");
+		}
+
+		task ("Add a Search Results to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				name = "Collection Name");
 		}
 
@@ -248,7 +308,7 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				html = ${htmlSnippet},
 				name = "Fragment Name");
 		}
@@ -256,7 +316,7 @@ definition {
 		task ("Add a new fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -270,7 +330,7 @@ definition {
 		task ("Navigate to the content page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search by non editable text") {
@@ -287,28 +347,56 @@ definition {
 	test SearchPageInSelectModalWhenMapPageToEditableField {
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageInSelectModalWhenMapPageToEditableField";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search");
+		}
+
+		task ("Add a Search Results to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a parent widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Parent Page Name");
 		}
 
 		task ("Add a child widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Child Page Name");
 		}
 
 		task ("Add a grandchild widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Grand Child Page Name");
 		}
 
 		task ("Add a Banner Center fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
@@ -334,7 +422,7 @@ definition {
 		task ("View selected page is linked to Banner Center fragment") {
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "/web/test-site-name/test-grand-child-page-name",
+				key_url = "/web/${siteURLKey}/test-grand-child-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			PageEditor.publish();
@@ -343,20 +431,20 @@ definition {
 		task ("Navigate to content page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Assert redirect to grandchild widget page") {
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "/web/test-site-name/test-grand-child-page-name",
+				key_url = "/web/${siteURLKey}/test-grand-child-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertTextEquals(
 				locator1 = "ControlMenu#HEADING",
 				value1 = "Test Grand Child Page Name");
 
-			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/test-grand-child-page-name");
+			AssertLocation.assertPartialLocation(value1 = "web/${siteURLKey}/test-grand-child-page-name");
 		}
 	}
 
@@ -366,9 +454,37 @@ definition {
 		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWithWorkflowByInlineTextAndMapContent";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given enable workflow for Content Pages") {
+			task ("Add a site") {
+				HeadlessSite.addSite(siteName = ${siteName});
+			}
+
+			task ("Add a Search page") {
+				JSONLayout.addPublicLayout(
+					groupName = ${siteName},
+					layoutName = "Search");
+			}
+
+			task ("Add a Search Results to Search page") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = ${siteName},
+					layoutName = "Search",
+					widgetName = "Search Results");
+			}
+
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = ${siteName},
+					layoutName = "Test Content Page Name",
+					type = "content");
+			}
+
 			task ("Enable Single Approver for Content Page") {
-				Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+				Workflow.openWorkflowAdmin(siteURLKey = ${siteURLKey});
 
 				Workflow.configureWorkflow(
 					workflowDefinition = "Single Approver",
@@ -380,7 +496,7 @@ definition {
 			task ("Add a Heading fragment,edit text and then submit for application") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -395,7 +511,7 @@ definition {
 			}
 
 			task ("Approve latest modification") {
-				PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+				PagesAdmin.openPagesAdmin(siteURLKey = ${siteName});
 
 				UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -415,7 +531,7 @@ definition {
 			task ("Search for inline text") {
 				Navigator.gotoSitePage(
 					pageName = "Search",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				Search.searchCP(searchTerm = "New editable fragment text");
 			}
@@ -428,7 +544,7 @@ definition {
 		task ("When add a heading fragment mapped to wc title and approve") {
 			task ("Add another content page") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${siteName},
 					layoutName = "Test Content Page Name 2",
 					type = "content");
 			}
@@ -436,14 +552,14 @@ definition {
 			task ("Add a web content") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
-					groupName = "Test Site Name",
+					groupName = ${siteName},
 					title = "WC WebContent Title");
 			}
 
 			task ("Add a Heading fragment,map it to wc title and then submit for application") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name 2",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -474,7 +590,7 @@ definition {
 			}
 
 			task ("Approve latest modification") {
-				PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+				PagesAdmin.openPagesAdmin(siteURLKey = ${siteName});
 
 				UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -494,7 +610,7 @@ definition {
 			task ("Search for inline text") {
 				Navigator.gotoSitePage(
 					pageName = "Search",
-					siteName = "Test Site Name");
+					siteName = ${siteName});
 
 				Search.searchCP(searchTerm = "WC WebContent Title");
 			}
@@ -510,27 +626,55 @@ definition {
 	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageNotShownInSearchResultsAfterDeleteCategory";
 
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search");
+		}
+
+		task ("Add a Search Results to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Publish the content page") {
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Content Page Name");
 		}
 
 		task ("Add a a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Associate a category to page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -546,7 +690,7 @@ definition {
 		task ("Navigate to the search page") {
 			Navigator.gotoSitePage(
 				pageName = "Search",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search for category") {
@@ -560,14 +704,14 @@ definition {
 		task ("Delete the category") {
 			JSONCategory.deleteCategory(
 				categoryName = "Category Name",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Navigate to the search page") {
 			Navigator.gotoSitePage(
 				pageName = "Search",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search for category") {
@@ -585,10 +729,36 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageShownInSearchResultsAfterExecuteReindexAll";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search");
+		}
+
+		task ("Add a Search Results to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Paragraph fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -609,14 +779,14 @@ definition {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Searchable Web Content Title");
 		}
 
 		task ("Navigate to the search page") {
 			Navigator.gotoSitePage(
 				pageName = "Search",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search keyword via search bar") {
@@ -636,7 +806,7 @@ definition {
 		task ("Navigate to the search page") {
 			Navigator.gotoSitePage(
 				pageName = "Search",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Search keyword via search bar") {

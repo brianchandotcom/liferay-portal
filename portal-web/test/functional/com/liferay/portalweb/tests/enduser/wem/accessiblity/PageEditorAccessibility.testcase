@@ -4,38 +4,26 @@ definition {
 	property portal.accessibility = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
-		}
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@description = "This is a test for LPS-165295. The page creator cannot access to disabled area via keyboard."
 	@priority = 3
 	test CannotAccessToDisabledAreaViaKeyboard {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -43,7 +31,7 @@ definition {
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the page creator cannot access to the disabled area via keyboard") {
@@ -62,15 +50,19 @@ definition {
 	@description = "This is a test for LPS-165791. Focus on experience selector when the window width is less than 990px."
 	@priority = 3
 	test FocusOnExperienceSelectorWhenWindowWidthLessThan990 {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("When the page creator resize the window size less than 990px") {
@@ -89,13 +81,19 @@ definition {
 	@description = "This is a test for LPS-85145. The focus should go to the Product Menu when open it."
 	@priority = 3
 	test FocusOnProductMenuWhenOpenIt {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit",
@@ -118,15 +116,19 @@ definition {
 	@description = "This is a test for LPS-166296. The sidebar buttons should be on focus after close the panel."
 	@priority = 3
 	test FocusOnSidebarButtonAfterClosePanel {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator accesses the Browser panel of content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.gotoTab(tabName = "Browser");
 		}
@@ -145,15 +147,19 @@ definition {
 	@description = "This is a test for LPS-165278. The page creator could see hovered status when navigate through treeview nodes via keyboard."
 	@priority = 3
 	test NavigateThroughTreeviewNodesViaKeyboard {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has fragment composition on a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -263,15 +269,19 @@ definition {
 	@description = "This is a test for LPS-165485. The page creator could switch edit mode via keyboard."
 	@priority = 3
 	test SwitchEditModeViaKeyboard {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("When the page creator opens the dropdown menu of edit mode selector via keyboard") {
@@ -307,15 +317,19 @@ definition {
 	@description = "This is a test for LPS-167116. The page creator could go back to the times icon on the Browser panel via shift + tab shortcuts."
 	@priority = 3
 	test ViewAccessibilityOfBrowserPanel {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -349,15 +363,19 @@ definition {
 	@description = "This is a test for LPS-165288. The Comments panel should have correct accessibility."
 	@priority = 3
 	test ViewAccessibilityOfCommentsPanel {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a fragment on a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -388,9 +406,13 @@ definition {
 	@description = "This is a test for LPS-165264. The Name and Page Template Set fields on create page template modal should have requried attribute."
 	@priority = 3
 	test ViewAccessibilityOfCreatePageTemplateModal {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -398,7 +420,7 @@ definition {
 		task ("When the page creator opens the create page template modal before creating a page template set") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
 		}
@@ -414,7 +436,7 @@ definition {
 
 		task ("When the page creator opens the create page template modal after creating a page template set") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutPageTemplateCollectionName = "Page Template Set");
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
@@ -432,9 +454,13 @@ definition {
 	@description = "This is a test for LPS-165824. The edit mode selector should have aria-label attribute."
 	@priority = 3
 	test ViewAccessibilityOfEditModeSelector {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -442,7 +468,7 @@ definition {
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the edit mode selector should have correct aria-label") {
@@ -456,9 +482,13 @@ definition {
 	@description = "This is a test for LPS-165284. The Experience selector should have correct accessibility."
 	@priority = 3
 	test ViewAccessibilityOfExperienceSelector {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -466,7 +496,7 @@ definition {
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the Experience selector should have correct accessibility") {
@@ -517,9 +547,13 @@ definition {
 	@description = "This is a test for LPS-165625. The Language Selector shouldn't have aria-pressed attribute."
 	@priority = 2
 	test ViewAccessibilityOfLanguageSelector {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -527,7 +561,7 @@ definition {
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the Language Selector should have correct accessibility") {
@@ -540,21 +574,25 @@ definition {
 	@description = "This is a test for LPS-168850. All the elements are announced as Link."
 	@priority = 4
 	test ViewAccessibilityOfNavigationMenu {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page has several nested content pages") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Home",
 				type = "content");
 
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${siteName},
 					layoutName = "Home Child Page ${i}",
 					parentLayoutName = "Home");
 			}
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Home Child Page 1 Child Page",
 				parentLayoutName = "Home Child Page 1");
 		}
@@ -562,7 +600,7 @@ definition {
 		task ("When selecting Bar with Links in Display Template field of Menu Display") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Home",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addWidgetViaKeyboard(
 				categoryName = "Content Management",
@@ -585,7 +623,7 @@ definition {
 		task ("Then role attribute is not present in all menu items") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Home",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			MouseOver(locator1 = "//div[@id='main-content']//section[contains(@id,'SiteNavigationMenuPortlet')]//div[@class='portlet-body']//span");
 
@@ -601,9 +639,13 @@ definition {
 	@description = "This is a test for LPS-165288. The Page Design Options panel should have correct accessibility."
 	@priority = 3
 	test ViewAccessibilityOfPageDesignOptionsPanel {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -611,7 +653,7 @@ definition {
 		task ("When the page creator accesses to the Page Design Options panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 		}
@@ -629,25 +671,29 @@ definition {
 	@description = "This is a test for LPS-165296. The screen reader should be able to distinguish between view mode and edit mode."
 	@priority = 3
 	test ViewPageTitleOfViewModeAndEditMode {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a published content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			Navigator.openURL();
 
 			var siteName = selenium.getText("Home#SITE_NAME");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("When the page creator accesses to the content page at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the page title doesn't have (Editing)") {
@@ -674,9 +720,13 @@ definition {
 	@description = "This is a test for LPS-165291. The aria-selected of unselected tab should be false on the Fragments and Widgets panel."
 	@priority = 3
 	test ViewStateOfUnselectedTabOnFragmentsAndWidgetsPanel {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -684,7 +734,7 @@ definition {
 		task ("When the page creator accesses to the Fragments and Widgets panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("Then the page creator sees the aria-selected of Widgets tab is false") {

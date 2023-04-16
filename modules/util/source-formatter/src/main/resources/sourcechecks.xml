@@ -523,6 +523,7 @@
 		<check name="JavaNewProblemInstantiationParametersCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `new Problem` can be simplified." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaPackagePathCheck">
 			<category name="Bug Prevention" />

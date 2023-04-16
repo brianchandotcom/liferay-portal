@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 /**
  * @author Qi Zhang
  */
-public class JavaProblemParameter {
+public class JavaNewProblemInstantiationParameters {
 
 	public Problem getProblem1(Exception exception) {
 

@@ -26,7 +26,8 @@ import java.util.regex.Pattern;
 /**
  * @author Qi Zhang
  */
-public class JavaProblemParameterCheck extends BaseJavaTermCheck {
+public class JavaNewProblemInstantiationParametersCheck
+	extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(

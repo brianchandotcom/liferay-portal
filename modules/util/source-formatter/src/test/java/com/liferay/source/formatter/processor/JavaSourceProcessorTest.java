@@ -411,13 +411,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testJavaParameterAnnotations() throws Exception {
-		test("JavaParameterAnnotations.testjava");
+	public void testJavaNewProblemInstantiationParameters() throws Exception {
+		test("JavaNewProblemInstantiationParameters.testjava");
 	}
 
 	@Test
-	public void testJavaProblemParameter() throws Exception {
-		test("JavaProblemParameter.testjava");
+	public void testJavaParameterAnnotations() throws Exception {
+		test("JavaParameterAnnotations.testjava");
 	}
 
 	@Test

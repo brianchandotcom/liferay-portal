@@ -19,7 +19,7 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 /**
  * @author Qi Zhang
  */
-public class JavaProblemParameter {
+public class JavaNewProblemInstantiationParameters {
 
 	public Problem getProblem1(Exception exception) {
 		return new Problem(exception);

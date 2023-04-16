@@ -520,14 +520,14 @@
 			<category name="Bug Prevention" />
 			<description name="Finds missing empty lines before `removedService` or `addingService` calls." />
 		</check>
+		<check name="JavaNewProblemInstantiationParametersCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases where `new Problem` can be simplified." />
+		</check>
 		<check name="JavaPackagePathCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that the package name matches the file location." />
 			<property name="checkServicePath" value="false" />
-		</check>
-		<check name="JavaProblemParameterCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds cases where `new Problem` can be simplified." />
 		</check>
 		<check name="JavaProcessCallableCheck">
 			<category name="Bug Prevention" />

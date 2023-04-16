@@ -18,7 +18,6 @@ import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -44,8 +43,7 @@ public class SkuSkuExceptionMapper
 	protected Problem getProblem(
 		CPInstanceSkuException cpInstanceSkuException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST, cpInstanceSkuException.getMessage());
+		return new Problem(cpInstanceSkuException);
 	}
 
 }

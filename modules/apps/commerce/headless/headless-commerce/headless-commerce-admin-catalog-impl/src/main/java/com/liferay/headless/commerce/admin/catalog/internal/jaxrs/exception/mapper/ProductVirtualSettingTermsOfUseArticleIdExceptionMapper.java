@@ -18,7 +18,6 @@ import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSe
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,9 +43,7 @@ public class ProductVirtualSettingTermsOfUseArticleIdExceptionMapper
 			cpDefinitionVirtualSettingTermsOfUseArticleResourcePKException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			cpDefinitionVirtualSettingTermsOfUseArticleResourcePKException.
-				getMessage());
+			cpDefinitionVirtualSettingTermsOfUseArticleResourcePKException);
 	}
 
 }

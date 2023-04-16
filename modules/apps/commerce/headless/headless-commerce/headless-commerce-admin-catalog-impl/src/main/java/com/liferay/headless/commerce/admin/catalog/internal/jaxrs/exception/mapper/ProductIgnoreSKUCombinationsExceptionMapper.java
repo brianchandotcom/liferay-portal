@@ -18,7 +18,6 @@ import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsE
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -45,9 +44,7 @@ public class ProductIgnoreSKUCombinationsExceptionMapper
 		CPDefinitionIgnoreSKUCombinationsException
 			cpDefinitionIgnoreSKUCombinationsException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			cpDefinitionIgnoreSKUCombinationsException.getMessage());
+		return new Problem(cpDefinitionIgnoreSKUCombinationsException);
 	}
 
 }

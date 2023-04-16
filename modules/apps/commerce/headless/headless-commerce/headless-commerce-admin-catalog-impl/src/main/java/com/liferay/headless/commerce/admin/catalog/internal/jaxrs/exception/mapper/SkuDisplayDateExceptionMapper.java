@@ -18,7 +18,6 @@ import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -44,9 +43,7 @@ public class SkuDisplayDateExceptionMapper
 	protected Problem getProblem(
 		CPInstanceDisplayDateException cpInstanceDisplayDateException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			cpInstanceDisplayDateException.getMessage());
+		return new Problem(cpInstanceDisplayDateException);
 	}
 
 }

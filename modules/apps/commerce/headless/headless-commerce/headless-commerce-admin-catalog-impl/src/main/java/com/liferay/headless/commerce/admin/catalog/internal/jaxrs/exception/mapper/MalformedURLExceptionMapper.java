@@ -19,7 +19,6 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import java.net.MalformedURLException;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,8 +39,7 @@ public class MalformedURLExceptionMapper
 
 	@Override
 	protected Problem getProblem(MalformedURLException malformedURLException) {
-		return new Problem(
-			Response.Status.BAD_REQUEST, malformedURLException.getMessage());
+		return new Problem(malformedURLException);
 	}
 
 }

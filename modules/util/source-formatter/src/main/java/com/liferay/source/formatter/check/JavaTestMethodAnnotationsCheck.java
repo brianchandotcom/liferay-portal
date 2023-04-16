@@ -187,8 +187,8 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 
 				addMessage(
 					fileName,
-					"Use annotation @FeatureFlags instead of PropsUtil." +
-						"addProperties for feature flag",
+					"Use annotation '@FeatureFlags' instead of 'PropsUtil." +
+						"addProperties' for feature flag",
 					javaTerm.getLineNumber() +
 						getLineNumber(javaTermContent, x) - 1);
 			}

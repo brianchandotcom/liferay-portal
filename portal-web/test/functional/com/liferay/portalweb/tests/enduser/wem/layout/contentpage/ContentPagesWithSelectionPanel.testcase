@@ -3,35 +3,12 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
-		}
-
-		task ("Add a site via JSON") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -40,10 +17,23 @@ definition {
 	test ChangeOrderOfElementsViaSelectionPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Container element to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -166,10 +156,23 @@ definition {
 	test MoveElementsIntoLayoutElementsViaSelectionPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Container element to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -251,11 +254,24 @@ definition {
 	test MoveFragmentsIntoCollectionDisplayViaSelectionPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add three web content articles") {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${i}",
-					groupName = "Test Site Name",
+					groupName = ${siteName},
 					title = "Web Content Title ${i}");
 			}
 		}
@@ -263,7 +279,7 @@ definition {
 		task ("Add a Collection Display to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -304,14 +320,29 @@ definition {
 	@description = "This is a test for LPS-121281. The data-lfr-priority can order the elements information of fragment with drop zone in Selection panel."
 	@priority = 4
 	test OrderElementInfoOfFragmentWithDropZoneInSelectionPanel {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				name = "Collection Name");
 		}
 
 		task ("Add a fragment with drop zone and data-lfr-priority attribute") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -350,7 +381,7 @@ definition {
 		task ("Add a new fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -380,14 +411,29 @@ definition {
 	@description = "This is a test for LPS-121626. The data-lfr-priority can order the elements information of fragment with editable fields in Selection panel."
 	@priority = 4
 	test OrderElementInfoOfFragmentWithEditableFieldInSelectionPanel {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				name = "Collection Name");
 		}
 
 		task ("Add a fragment with editable fields and data-lfr-priority attribute") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -428,7 +474,7 @@ definition {
 		task ("Add a new fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -460,17 +506,30 @@ definition {
 	test PerformActionsOnDisplayedAssetInContentDisplayViaGeneralPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a Content Display to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -595,15 +654,28 @@ definition {
 	test PerformActionsOnDisplayedCollectionInCollectionDisplayViaGeneralPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category in vocabulary") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -612,14 +684,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Blogs Entry Title");
 		}
 
@@ -627,14 +699,14 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a dynamic collection for All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
@@ -642,7 +714,7 @@ definition {
 		task ("Add a Collection Display to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -816,17 +888,30 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Item Selector";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -973,10 +1058,23 @@ definition {
 	@description = "This is a test for LPS-109407. View the background color of nodes in the Page Structure when hover on them or they are selected."
 	@priority = 3
 	test ViewBackgroundColorOfNodesInSelectionPanel {
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Container element to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -1113,17 +1211,30 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Item Selector";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a Button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1194,10 +1305,23 @@ definition {
 	test ViewElementInfoOrderOfSliderInSelectionPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Slider fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1229,10 +1353,23 @@ definition {
 	test ViewElementInfoOrderOfTabsInSelectionPanel {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a Tabs fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1314,17 +1451,30 @@ definition {
 	test ViewVisualStyleOfMappedEditableFieldItems {
 		property testray.component.names = "Item Selector";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
 		task ("Add a web content with basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a Button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

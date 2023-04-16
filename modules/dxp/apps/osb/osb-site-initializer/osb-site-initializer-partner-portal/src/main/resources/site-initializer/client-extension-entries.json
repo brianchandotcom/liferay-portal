@@ -12,5 +12,110 @@
 		"portletCategoryName": "category.client-extensions",
 		"useESM": true,
 		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+	},
+	{
+		"clientExtensionEntryKey": "PARTNER-PORTAL-DEALS-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/runtime-main.js$]"
+		],
+		"externalReferenceCode": "PRM002",
+		"htmlElementName": "liferay-dashboard-remote-app-partner-portal",
+		"name_i18n": {
+			"en_US": "Partner Portal: Deals Chart"
+		},
+		"portletCategoryName": "category.client-extensions",
+		"properties": {
+			"type": "deals-chart"
+		},
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-DEALS-CHART$]"
+	},
+	{
+		"clientExtensionEntryKey": "PARTNER-PORTAL-LEVEL-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/runtime-main.js$]"
+		],
+		"externalReferenceCode": "PRM003",
+		"htmlElementName": "liferay-dashboard-remote-app-partner-portal",
+		"name_i18n": {
+			"en_US": "Partner Portal: Level Chart"
+		},
+		"portletCategoryName": "category.client-extensions",
+		"properties": {
+			"type": "level-chart"
+		},
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-LEVEL-CHART$]"
+	},
+	{
+		"clientExtensionEntryKey": "PARTNER-PORTAL-MDF-REQUEST-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/runtime-main.js$]"
+		],
+		"externalReferenceCode": "PRM004",
+		"htmlElementName": "liferay-dashboard-remote-app-partner-portal",
+		"name_i18n": {
+			"en_US": "Partner Portal: MDF Request Chart"
+		},
+		"portletCategoryName": "category.client-extensions",
+		"properties": {
+			"type": "mdf-request-chart"
+		},
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-MDF-REQUEST-CHART$]"
+	},
+	{
+		"clientExtensionEntryKey": "PARTNER-PORTAL-RENEWALS-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/runtime-main.js$]"
+		],
+		"externalReferenceCode": "PRM005",
+		"htmlElementName": "liferay-dashboard-remote-app-partner-portal",
+		"name_i18n": {
+			"en_US": "Partner Portal: Renewals Chart"
+		},
+		"portletCategoryName": "category.client-extensions",
+		"properties": {
+			"type": "renewals-chart"
+		},
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-RENEWALS-CHART$]"
+	},
+	{
+		"clientExtensionEntryKey": "PARTNER-PORTAL-REVENUE-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/2.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.js$]",
+			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/runtime-main.js$]"
+		],
+		"externalReferenceCode": "PRM006",
+		"htmlElementName": "liferay-dashboard-remote-app-partner-portal",
+		"name_i18n": {
+			"en_US": "Partner Portal: Revenue Chart"
+		},
+		"portletCategoryName": "category.client-extensions",
+		"properties": {
+			"type": "revenue-chart"
+		},
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REVENUE-CHART$]"
 	}
 ]

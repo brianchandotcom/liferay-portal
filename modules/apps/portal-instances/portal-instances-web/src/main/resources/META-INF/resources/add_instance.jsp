@@ -76,25 +76,15 @@
 						markupView="lexicon"
 						title="administrator-user"
 					>
-						<aui:input label="field.screen-name" name="screenNameAdmin" type="text">
-							<aui:validator name="required" />
-						</aui:input>
+						<aui:input label="field.screen-name" name="screenNameAdmin" required="<%= true %>" type="text" />
 
-						<aui:input label="administrator-email" name="emailAdmin" type="text">
-							<aui:validator name="required" />
-						</aui:input>
+						<aui:input label="administrator-email" name="emailAdmin" required="<%= true %>" type="text" />
 
-						<aui:input label="password" name="passwordAdmin" type="password">
-							<aui:validator name="required" />
-						</aui:input>
+						<aui:input label="password" name="passwordAdmin" required="<%= true %>" type="password" />
 
-						<aui:input label="first-name" name="firstNameAdmin" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME) %>">
-							<aui:validator name="required" />
-						</aui:input>
+						<aui:input label="first-name" name="firstNameAdmin" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME) %>" />
 
-						<aui:input label="last-name" name="lastNameAdmin" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME) %>">
-							<aui:validator name="required" />
-						</aui:input>
+						<aui:input label="last-name" name="lastNameAdmin" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME) %>" />
 					</liferay-ui:panel>
 				</c:if>
 			</div>

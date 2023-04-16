@@ -199,16 +199,21 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testFeatureFlagsAnnotationTest() throws Exception {
 		test(
-			"FeatureFlagsAnnotationTest.testjava",
-			new String[] {
-				"Use annotation @FeatureFlags instead of PropsUtil." +
+			SourceProcessorTestParameters.create(
+				"FeatureFlagsAnnotationTest.testjava"
+			).addExpectedMessage(
+				"Use annotation @FeatureFlags instead of PropsUtil. " +
 					"addProperties for feature flag",
-				"Use annotation @FeatureFlags instead of PropsUtil." +
+				31
+			).addExpectedMessage(
+				"Use annotation @FeatureFlags instead of PropsUtil. " +
 					"addProperties for feature flag",
-				"Use annotation @FeatureFlags instead of PropsUtil." +
-					"addProperties for feature flag"
-			},
-			new Integer[] {31, 41, 51});
+				41
+			).addExpectedMessage(
+				"Use annotation @FeatureFlags instead of PropsUtil. " +
+					"addProperties for feature flag",
+				51
+			));
 	}
 
 	@Test

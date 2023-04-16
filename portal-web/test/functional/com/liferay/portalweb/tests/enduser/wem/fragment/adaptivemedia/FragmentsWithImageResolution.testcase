@@ -1103,7 +1103,7 @@ definition {
 		}
 
 		task ("Add an Image fragment to page") {
-			TestUtils.maximizeWindow();
+			SetWindowSize.maximizeWindow();
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

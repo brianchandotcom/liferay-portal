@@ -129,7 +129,7 @@ definition {
 
 		ScrollBy(value1 = "0, 500");
 
-		TestUtils.maximizeWindow();
+		SetWindowSize.maximizeWindow();
 
 		OcularAssertElementImage(
 			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",

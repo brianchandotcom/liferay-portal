@@ -3,45 +3,31 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
-		}
-
-		task ("Add a site via JSON") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@description = "This is a test for 147512. The page editor cannot change background image on non-desktop viewports."
 	@priority = 4
 	test CannotChangeBackgroundImageOfFragmentInNonDesktopViewport {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page where a Container fragment has a background image") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -75,10 +61,19 @@ definition {
 	test CustomizeFragmentStylesInNonDesktopViewport {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page with a Heading fragment") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -136,10 +131,23 @@ definition {
 	@priority = 4
 	@uitest
 	test CustomizeLayoutOfGridInEachViewport {
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Grid to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -275,10 +283,23 @@ definition {
 	test CustomizeTextAlignInEachViewport {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Heading fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -379,10 +400,23 @@ definition {
 	@priority = 4
 	@uitest
 	test FragmentViewOptionsCanBeResetToParentOne {
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add thee headings to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -486,10 +520,23 @@ definition {
 	test HiddenPropertyIsPropagatedToSmallerViewpoints {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add five headings to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -568,10 +615,19 @@ definition {
 	@description = "This is a test for 147512. The page editor only could clear color picker selection defined on current non-desktop viewport."
 	@priority = 4
 	test OnlyClearColorPickerSelectionInCurrentNonDesktopViewport {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator has a content page where a Heading fragment has a defined Text Color in desktop viewport") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -635,10 +691,23 @@ definition {
 	@priority = 4
 	@uitest
 	test PropagateCommonFragmentStyleDefinedInDesktopToOtherViewports {
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Paragraph to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -695,10 +764,19 @@ definition {
 	@description = "This is a test for LPS-153383. The page creator can resize editor sidebar on non desktop Viewport."
 	@priority = 4
 	test ResizeLeftSidebarPanelInNonDesktopViewport {
+		var siteName = StringUtil.randomString(8);
+
 		task ("Given a page creator accesses to the page editor") {
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("When the page creator resizes the left sidebar panel in the Desktop viewport") {
@@ -753,12 +831,25 @@ definition {
 	test ResizeWidthOfNonDesktopViewport {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("View the viewport resizer not shown in Desktop viewport") {
 			SetWindowSize.maximizeWindow();
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			AssertElementNotPresent(locator1 = "PageEditor#VIEWPORT_HANDLE");
 		}
@@ -802,10 +893,23 @@ definition {
 	test ViewCommonFragmentStyleFieldSets {
 		property portal.acceptance = "true";
 
+		var siteName = StringUtil.randomString(8);
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Add a Heading to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

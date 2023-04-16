@@ -527,7 +527,7 @@
 		</check>
 		<check name="JavaProblemParameterCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks if can simply problem parameter." />
+			<description name="Finds cases where `new Problem` can be simplified." />
 		</check>
 		<check name="JavaProcessCallableCheck">
 			<category name="Bug Prevention" />

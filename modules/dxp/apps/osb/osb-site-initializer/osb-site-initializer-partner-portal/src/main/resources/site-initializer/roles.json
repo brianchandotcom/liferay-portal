@@ -1,82 +1,58 @@
 [
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Channel General Manager",
-		"subtype": "",
+		"name": "Channel Account Manager (CAM)",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Channel Account Manager",
-		"subtype": "",
+		"name": "Channel Operations Manager (COM)",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Channel Regional Marketing Manager",
-		"subtype": "",
+		"name": "Channel Marketing Manager (CMM)",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Channel Global Marketing Manager",
-		"subtype": "",
+		"name": "Channel Marketing Director (CMD)",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Channel Finance Manager",
-		"subtype": "",
+		"name": "Channel Finance Manager (CFM)",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Partner",
-		"subtype": "",
+		"name": "Channel Enablement Manager (CEM)",
+		"type": 1
+	},
+	{
+		"name": "Partner Manager (PM)",
+		"type": 1
+	},
+	{
+		"name": "Partner Marketing User (PMU)",
+		"type": 1
+	},
+	{
+		"name": "Partner Sales Users (PSU)",
+		"type": 1
+	},
+	{
+		"name": "Partner Technical User (PTU)",
+		"type": 1
+	},
+	{
+		"name": "Partner Manager (PM)",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Partner Manager",
-		"subtype": "",
+		"name": "Partner Marketing User (PMU)",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Partner Marketing User",
-		"subtype": "",
+		"name": "Partner Sales Users (PSU)",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Partner Sales Users",
-		"subtype": "",
-		"type": 6
-	},
-	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Partner Technical User",
-		"subtype": "",
+		"name": "Partner Technical User (PTU)",
 		"type": 6
 	}
 ]

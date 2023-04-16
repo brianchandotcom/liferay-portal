@@ -88,9 +88,13 @@
 							<aui:validator name="required" />
 						</aui:input>
 
-						<aui:input label="field.first-name" name="firstNameAdmin" type="text" />
+						<aui:input label="first-name" name="firstNameAdmin" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME) %>">
+							<aui:validator name="required" />
+						</aui:input>
 
-						<aui:input label="field.last-name" name="lastNameAdmin" type="text" />
+						<aui:input label="last-name" name="lastNameAdmin" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME) %>">
+							<aui:validator name="required" />
+						</aui:input>
 					</liferay-ui:panel>
 				</c:if>
 			</div>

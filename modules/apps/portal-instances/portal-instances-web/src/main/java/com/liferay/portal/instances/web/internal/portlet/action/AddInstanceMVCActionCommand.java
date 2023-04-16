@@ -104,26 +104,26 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _addInstance(ActionRequest actionRequest) throws Exception {
-		String password = PropsValues.DEFAULT_ADMIN_PASSWORD;
-
+		String emailAdmin = ParamUtil.getString(actionRequest, "emailAdmin");
+		String passwordAdmin = ParamUtil.getString(
+			actionRequest, "passwordAdmin");
 		String screenNameAdmin = ParamUtil.getString(
 			actionRequest, "screenNameAdmin");
 
-		if (Validator.isNull(password) && Validator.isNull(screenNameAdmin)) {
-			throw new UserScreenNameException.MustNotBeNull(screenNameAdmin);
-		}
+		if (Validator.isNull(PropsValues.DEFAULT_ADMIN_PASSWORD)) {
+			if (Validator.isNull(emailAdmin)) {
+				throw new UserEmailAddressException.MustValidate(
+					emailAdmin, null);
+			}
 
-		String emailAdmin = ParamUtil.getString(actionRequest, "emailAdmin");
+			if (Validator.isNull(passwordAdmin)) {
+				throw new UserPasswordException.MustNotBeNull(0);
+			}
 
-		if (Validator.isNull(password) && Validator.isNull(emailAdmin)) {
-			throw new UserEmailAddressException.MustValidate(emailAdmin, null);
-		}
-
-		String passwordAdmin = ParamUtil.getString(
-			actionRequest, "passwordAdmin");
-
-		if (Validator.isNull(password) && Validator.isNull(passwordAdmin)) {
-			throw new UserPasswordException.MustNotBeNull(0);
+			if (Validator.isNull(screenNameAdmin)) {
+				throw new UserScreenNameException.MustNotBeNull(
+					screenNameAdmin);
+			}
 		}
 
 		String firstNameAdmin = ParamUtil.getString(

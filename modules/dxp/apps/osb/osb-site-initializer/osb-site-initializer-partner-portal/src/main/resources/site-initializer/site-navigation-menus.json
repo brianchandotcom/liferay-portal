@@ -20,6 +20,11 @@
 				"friendlyURL": "/Enablement",
 				"privateLayout": false,
 				"type": "layout"
+			},
+			{
+				"friendlyURL": "/Library",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "Header Navigation Menu",

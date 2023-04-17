@@ -108,9 +108,9 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 			getRaysourceContactRoleName(roleBrief.name)
 		);
 
-		deleteContactRoles({
+		updateContactRoles({
 			onCompleted: () =>
-				updateContactRoles({
+				deleteContactRoles({
 					onCompleted: () =>
 						replaceAccountRole({
 							variables: {
@@ -122,13 +122,13 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 						}),
 					variables: {
 						contactEmail: userAccount.emailAddress,
-						contactRoleName: newContactRoleName,
+						contactRoleNames: currentContactRolesName.join('&'),
 						externalReferenceCode,
 					},
 				}),
 			variables: {
 				contactEmail: userAccount.emailAddress,
-				contactRoleNames: currentContactRolesName.join('&'),
+				contactRoleName: newContactRoleName,
 				externalReferenceCode,
 			},
 		});

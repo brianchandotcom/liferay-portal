@@ -110,6 +110,10 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 				<aui:input checked="<%= commerceChannelDisplayContext.isGuestCheckoutEnabled() %>" helpMessage="configures-whether-a-guest-may-checkout-by-providing-an-email-address-or-if-they-must-sign-in" label="guest-checkout" labelOff="disabled" labelOn="enabled" name="settings--guestCheckoutEnabled--" type="toggle-switch" />
 
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11028") %>'>
+					<aui:input checked="<%= commerceChannelDisplayContext.isRequestQuoteEnabled() %>" helpMessage="allow-buyers-to-request-a-quote-when-no-product-in-the-cart-is-priced-as-price-on-application" label="allow-request-a-quote-on-a-fully-priced-cart" labelOff="disabled" labelOn="enabled" name="orderSettings--requestQuoteEnabled--" type="toggle-switch" />
+				</c:if>
+
 				<aui:input label="maximum-number-of-open-orders-per-account" name="orderSettings--accountCartMaxAllowed--" type="number" value="<%= commerceChannelDisplayContext.getAccountCartMaxAllowed() %>">
 					<aui:validator name="number" />
 					<aui:validator name="min">0</aui:validator>

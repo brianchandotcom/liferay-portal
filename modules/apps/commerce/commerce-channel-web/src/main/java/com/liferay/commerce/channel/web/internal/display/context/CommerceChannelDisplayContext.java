@@ -486,6 +486,13 @@ public class CommerceChannelDisplayContext
 		return commerceOrderCheckoutConfiguration.hideShippingPriceZero();
 	}
 
+	public boolean isRequestQuoteEnabled() throws PortalException {
+		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+			_getCommerceOrderFieldsConfiguration();
+
+		return commerceOrderFieldsConfiguration.requestQuoteEnabled();
+	}
+
 	public boolean isShowPurchaseOrderNumber() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 

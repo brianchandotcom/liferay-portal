@@ -38,4 +38,7 @@ public interface CommerceOrderFieldsConfiguration {
 	)
 	public boolean showPurchaseOrderNumber();
 
+	@Meta.AD(deflt = "false", name = "request-quote-enabled", required = false)
+	public boolean requestQuoteEnabled();
+
 }

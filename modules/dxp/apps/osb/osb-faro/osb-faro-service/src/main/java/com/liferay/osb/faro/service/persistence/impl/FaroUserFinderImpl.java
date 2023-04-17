@@ -17,6 +17,7 @@ package com.liferay.osb.faro.service.persistence.impl;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.model.impl.FaroUserImpl;
 import com.liferay.osb.faro.service.persistence.FaroUserFinder;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -28,16 +29,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matthew Kong
  */
+@Component(service = FaroUserFinder.class)
 public class FaroUserFinderImpl
 	extends FaroUserFinderBaseImpl implements FaroUserFinder {
 
@@ -91,23 +93,23 @@ public class FaroUserFinderImpl
 					sql, _FARO_USER_SQL, _AVAILABLE_FARO_USER_SQL);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(channelGroupId);
-			qPos.add(workspaceGroupId);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
+			queryPos.add(channelGroupId);
+			queryPos.add(workspaceGroupId);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -155,22 +157,22 @@ public class FaroUserFinderImpl
 
 			sql = _customSQL.replaceAndOperator(sql, Validator.isNull(query));
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(groupId);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
+			queryPos.add(groupId);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
 
-			Iterator<Long> itr = q.iterate();
+			Iterator<Long> iterator = sqlQuery.iterate();
 
-			if (itr.hasNext()) {
-				Long count = itr.next();
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
 
 				if (count != null) {
 					return count.intValue();
@@ -229,20 +231,21 @@ public class FaroUserFinderImpl
 					sql, _FARO_USER_SQL, _AVAILABLE_FARO_USER_SQL);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("OSBFaro_FaroUser", FaroUserImpl.class);
+			sqlQuery.addEntity("OSBFaro_FaroUser", FaroUserImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(channelGroupId);
-			qPos.add(workspaceGroupId);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
+			queryPos.add(channelGroupId);
+			queryPos.add(workspaceGroupId);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
 
-			return (List<FaroUser>)QueryUtil.list(q, getDialect(), start, end);
+			return (List<FaroUser>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -287,19 +290,20 @@ public class FaroUserFinderImpl
 
 			sql = _customSQL.replaceAndOperator(sql, Validator.isNull(query));
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("OSBFaro_FaroUser", FaroUserImpl.class);
+			sqlQuery.addEntity("OSBFaro_FaroUser", FaroUserImpl.class);
 
-			QueryPos qPos = QueryPos.getInstance(q);
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(groupId);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
+			queryPos.add(groupId);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
+			queryPos.add(keywordsArray, 2);
 
-			return (List<FaroUser>)QueryUtil.list(q, getDialect(), start, end);
+			return (List<FaroUser>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -322,13 +326,8 @@ public class FaroUserFinderImpl
 			return StringPool.BLANK;
 		}
 
-		Stream<Integer> stream = statuses.stream();
-
-		return stream.map(
-			Object::toString
-		).collect(
-			Collectors.joining(StringPool.COMMA)
-		);
+		return StringUtil.merge(
+			TransformUtil.transform(statuses, String::valueOf), ", ");
 	}
 
 	private static final String _AVAILABLE_FARO_USER_SQL =
@@ -337,7 +336,7 @@ public class FaroUserFinderImpl
 	private static final String _FARO_USER_SQL =
 		"Users_Groups.groupId IS NOT NULL";
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

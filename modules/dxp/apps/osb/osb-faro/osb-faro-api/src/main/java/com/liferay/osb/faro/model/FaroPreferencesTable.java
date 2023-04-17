@@ -31,17 +31,21 @@ public class FaroPreferencesTable extends BaseTable<FaroPreferencesTable> {
 	public static final FaroPreferencesTable INSTANCE =
 		new FaroPreferencesTable();
 
+	public final Column<FaroPreferencesTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<FaroPreferencesTable, Long> faroPreferencesId =
 		createColumn(
 			"faroPreferencesId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<FaroPreferencesTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FaroPreferencesTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FaroPreferencesTable, Long> createTime = createColumn(
+		"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroPreferencesTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroPreferencesTable, String> userName = createColumn(
 		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<FaroPreferencesTable, Long> createTime = createColumn(
-		"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroPreferencesTable, Long> modifiedTime = createColumn(
 		"modifiedTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroPreferencesTable, Long> ownerId = createColumn(

@@ -69,9 +69,10 @@ public class FaroChannelModelImpl
 	public static final String TABLE_NAME = "OSBFaro_FaroChannel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"faroChannelId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"faroChannelId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createTime", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"modifiedTime", Types.BIGINT},
 		{"channelId", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"permissionType", Types.INTEGER}, {"workspaceGroupId", Types.BIGINT}
 	};
@@ -80,11 +81,13 @@ public class FaroChannelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("faroChannelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("channelId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -93,7 +96,7 @@ public class FaroChannelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_FaroChannel (faroChannelId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,channelId VARCHAR(75) null,name VARCHAR(75) null,permissionType INTEGER,workspaceGroupId LONG)";
+		"create table OSBFaro_FaroChannel (mvccVersion LONG default 0 not null,faroChannelId LONG not null primary key,groupId LONG,companyId LONG,createTime LONG,userId LONG,userName VARCHAR(75) null,modifiedTime LONG,channelId VARCHAR(75) null,name VARCHAR(75) null,permissionType INTEGER,workspaceGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_FaroChannel";
@@ -109,24 +112,6 @@ public class FaroChannelModelImpl
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean ENTITY_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean FINDER_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -159,9 +144,19 @@ public class FaroChannelModelImpl
 	@Deprecated
 	public static final long FAROCHANNELID_COLUMN_BITMASK = 16L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.osb.faro.model.FaroChannel"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public FaroChannelModelImpl() {
 	}
@@ -259,12 +254,16 @@ public class FaroChannelModelImpl
 					new LinkedHashMap<String, Function<FaroChannel, Object>>();
 
 			attributeGetterFunctions.put(
+				"mvccVersion", FaroChannel::getMvccVersion);
+			attributeGetterFunctions.put(
 				"faroChannelId", FaroChannel::getFaroChannelId);
 			attributeGetterFunctions.put("groupId", FaroChannel::getGroupId);
-			attributeGetterFunctions.put("userId", FaroChannel::getUserId);
-			attributeGetterFunctions.put("userName", FaroChannel::getUserName);
+			attributeGetterFunctions.put(
+				"companyId", FaroChannel::getCompanyId);
 			attributeGetterFunctions.put(
 				"createTime", FaroChannel::getCreateTime);
+			attributeGetterFunctions.put("userId", FaroChannel::getUserId);
+			attributeGetterFunctions.put("userName", FaroChannel::getUserName);
 			attributeGetterFunctions.put(
 				"modifiedTime", FaroChannel::getModifiedTime);
 			attributeGetterFunctions.put(
@@ -291,20 +290,26 @@ public class FaroChannelModelImpl
 				new LinkedHashMap<String, BiConsumer<FaroChannel, ?>>();
 
 			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setMvccVersion);
+			attributeSetterBiConsumers.put(
 				"faroChannelId",
 				(BiConsumer<FaroChannel, Long>)FaroChannel::setFaroChannelId);
 			attributeSetterBiConsumers.put(
 				"groupId",
 				(BiConsumer<FaroChannel, Long>)FaroChannel::setGroupId);
 			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<FaroChannel, Long>)FaroChannel::setCreateTime);
+			attributeSetterBiConsumers.put(
 				"userId",
 				(BiConsumer<FaroChannel, Long>)FaroChannel::setUserId);
 			attributeSetterBiConsumers.put(
 				"userName",
 				(BiConsumer<FaroChannel, String>)FaroChannel::setUserName);
-			attributeSetterBiConsumers.put(
-				"createTime",
-				(BiConsumer<FaroChannel, Long>)FaroChannel::setCreateTime);
 			attributeSetterBiConsumers.put(
 				"modifiedTime",
 				(BiConsumer<FaroChannel, Long>)FaroChannel::setModifiedTime);
@@ -326,6 +331,20 @@ public class FaroChannelModelImpl
 				(Map)attributeSetterBiConsumers);
 		}
 
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -363,6 +382,34 @@ public class FaroChannelModelImpl
 	@Deprecated
 	public long getOriginalGroupId() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getCreateTime() {
+		return _createTime;
+	}
+
+	@Override
+	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createTime = createTime;
 	}
 
 	@Override
@@ -421,20 +468,6 @@ public class FaroChannelModelImpl
 		}
 
 		_userName = userName;
-	}
-
-	@Override
-	public long getCreateTime() {
-		return _createTime;
-	}
-
-	@Override
-	public void setCreateTime(long createTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createTime = createTime;
 	}
 
 	@Override
@@ -563,7 +596,7 @@ public class FaroChannelModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, FaroChannel.class.getName(), getPrimaryKey());
+			getCompanyId(), FaroChannel.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -592,11 +625,13 @@ public class FaroChannelModelImpl
 	public Object clone() {
 		FaroChannelImpl faroChannelImpl = new FaroChannelImpl();
 
+		faroChannelImpl.setMvccVersion(getMvccVersion());
 		faroChannelImpl.setFaroChannelId(getFaroChannelId());
 		faroChannelImpl.setGroupId(getGroupId());
+		faroChannelImpl.setCompanyId(getCompanyId());
+		faroChannelImpl.setCreateTime(getCreateTime());
 		faroChannelImpl.setUserId(getUserId());
 		faroChannelImpl.setUserName(getUserName());
-		faroChannelImpl.setCreateTime(getCreateTime());
 		faroChannelImpl.setModifiedTime(getModifiedTime());
 		faroChannelImpl.setChannelId(getChannelId());
 		faroChannelImpl.setName(getName());
@@ -612,15 +647,19 @@ public class FaroChannelModelImpl
 	public FaroChannel cloneWithOriginalValues() {
 		FaroChannelImpl faroChannelImpl = new FaroChannelImpl();
 
+		faroChannelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		faroChannelImpl.setFaroChannelId(
 			this.<Long>getColumnOriginalValue("faroChannelId"));
 		faroChannelImpl.setGroupId(
 			this.<Long>getColumnOriginalValue("groupId"));
+		faroChannelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		faroChannelImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
 		faroChannelImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
 		faroChannelImpl.setUserName(
 			this.<String>getColumnOriginalValue("userName"));
-		faroChannelImpl.setCreateTime(
-			this.<Long>getColumnOriginalValue("createTime"));
 		faroChannelImpl.setModifiedTime(
 			this.<Long>getColumnOriginalValue("modifiedTime"));
 		faroChannelImpl.setChannelId(
@@ -682,7 +721,7 @@ public class FaroChannelModelImpl
 	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
 	/**
@@ -691,7 +730,7 @@ public class FaroChannelModelImpl
 	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override
@@ -706,9 +745,15 @@ public class FaroChannelModelImpl
 		FaroChannelCacheModel faroChannelCacheModel =
 			new FaroChannelCacheModel();
 
+		faroChannelCacheModel.mvccVersion = getMvccVersion();
+
 		faroChannelCacheModel.faroChannelId = getFaroChannelId();
 
 		faroChannelCacheModel.groupId = getGroupId();
+
+		faroChannelCacheModel.companyId = getCompanyId();
+
+		faroChannelCacheModel.createTime = getCreateTime();
 
 		faroChannelCacheModel.userId = getUserId();
 
@@ -719,8 +764,6 @@ public class FaroChannelModelImpl
 		if ((userName != null) && (userName.length() == 0)) {
 			faroChannelCacheModel.userName = null;
 		}
-
-		faroChannelCacheModel.createTime = getCreateTime();
 
 		faroChannelCacheModel.modifiedTime = getModifiedTime();
 
@@ -805,11 +848,13 @@ public class FaroChannelModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _faroChannelId;
 	private long _groupId;
+	private long _companyId;
+	private long _createTime;
 	private long _userId;
 	private String _userName;
-	private long _createTime;
 	private long _modifiedTime;
 	private String _channelId;
 	private String _name;
@@ -844,11 +889,13 @@ public class FaroChannelModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("faroChannelId", _faroChannelId);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("modifiedTime", _modifiedTime);
 		_columnOriginalValues.put("channelId", _channelId);
 		_columnOriginalValues.put("name", _name);
@@ -867,25 +914,29 @@ public class FaroChannelModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("faroChannelId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("faroChannelId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("companyId", 8L);
 
 		columnBitmasks.put("createTime", 16L);
 
-		columnBitmasks.put("modifiedTime", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("channelId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("name", 128L);
+		columnBitmasks.put("modifiedTime", 128L);
 
-		columnBitmasks.put("permissionType", 256L);
+		columnBitmasks.put("channelId", 256L);
 
-		columnBitmasks.put("workspaceGroupId", 512L);
+		columnBitmasks.put("name", 512L);
+
+		columnBitmasks.put("permissionType", 1024L);
+
+		columnBitmasks.put("workspaceGroupId", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

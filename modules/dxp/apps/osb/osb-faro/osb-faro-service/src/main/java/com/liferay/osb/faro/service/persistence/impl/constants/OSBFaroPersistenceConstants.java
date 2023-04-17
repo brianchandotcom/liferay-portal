@@ -12,15 +12,21 @@
  *
  */
 
-package com.liferay.osb.faro.model.impl;
+package com.liferay.osb.faro.service.persistence.impl.constants;
 
 /**
  * @author Matthew Kong
+ * @generated
  */
-public class FaroProjectEmailAddressDomainImpl
-	extends FaroProjectEmailAddressDomainBaseImpl {
+public class OSBFaroPersistenceConstants {
 
-	public FaroProjectEmailAddressDomainImpl() {
-	}
+	public static final String BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.osb.faro.service";
+
+	public static final String ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER =
+		"(origin.bundle.symbolic.name=" + BUNDLE_SYMBOLIC_NAME + ")";
+
+	public static final String SERVICE_CONFIGURATION_FILTER =
+		"(&" + ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER + "(name=service))";
 
 }

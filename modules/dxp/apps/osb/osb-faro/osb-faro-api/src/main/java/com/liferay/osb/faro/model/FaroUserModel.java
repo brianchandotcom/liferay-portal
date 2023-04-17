@@ -16,6 +16,8 @@ package com.liferay.osb.faro.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface FaroUserModel extends BaseModel<FaroUser> {
+public interface FaroUserModel
+	extends BaseModel<FaroUser>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +55,22 @@ public interface FaroUserModel extends BaseModel<FaroUser> {
 	 * @param primaryKey the primary key of this faro user
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this faro user.
+	 *
+	 * @return the mvcc version of this faro user
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this faro user.
+	 *
+	 * @param mvccVersion the mvcc version of this faro user
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the faro user ID of this faro user.
@@ -96,6 +115,36 @@ public interface FaroUserModel extends BaseModel<FaroUser> {
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the company ID of this faro user.
+	 *
+	 * @return the company ID of this faro user
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this faro user.
+	 *
+	 * @param companyId the company ID of this faro user
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create time of this faro user.
+	 *
+	 * @return the create time of this faro user
+	 */
+	public long getCreateTime();
+
+	/**
+	 * Sets the create time of this faro user.
+	 *
+	 * @param createTime the create time of this faro user
+	 */
+	public void setCreateTime(long createTime);
+
+	/**
 	 * Returns the user ID of this faro user.
 	 *
 	 * @return the user ID of this faro user
@@ -137,20 +186,6 @@ public interface FaroUserModel extends BaseModel<FaroUser> {
 	 * @param userName the user name of this faro user
 	 */
 	public void setUserName(String userName);
-
-	/**
-	 * Returns the create time of this faro user.
-	 *
-	 * @return the create time of this faro user
-	 */
-	public long getCreateTime();
-
-	/**
-	 * Sets the create time of this faro user.
-	 *
-	 * @param createTime the create time of this faro user
-	 */
-	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the modified time of this faro user.

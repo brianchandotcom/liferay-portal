@@ -16,6 +16,8 @@ package com.liferay.osb.faro.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface FaroProjectModel extends BaseModel<FaroProject> {
+public interface FaroProjectModel
+	extends BaseModel<FaroProject>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +55,22 @@ public interface FaroProjectModel extends BaseModel<FaroProject> {
 	 * @param primaryKey the primary key of this faro project
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this faro project.
+	 *
+	 * @return the mvcc version of this faro project
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this faro project.
+	 *
+	 * @param mvccVersion the mvcc version of this faro project
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the faro project ID of this faro project.
@@ -80,6 +99,36 @@ public interface FaroProjectModel extends BaseModel<FaroProject> {
 	 * @param groupId the group ID of this faro project
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this faro project.
+	 *
+	 * @return the company ID of this faro project
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this faro project.
+	 *
+	 * @param companyId the company ID of this faro project
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create time of this faro project.
+	 *
+	 * @return the create time of this faro project
+	 */
+	public long getCreateTime();
+
+	/**
+	 * Sets the create time of this faro project.
+	 *
+	 * @param createTime the create time of this faro project
+	 */
+	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the user ID of this faro project.
@@ -123,20 +172,6 @@ public interface FaroProjectModel extends BaseModel<FaroProject> {
 	 * @param userName the user name of this faro project
 	 */
 	public void setUserName(String userName);
-
-	/**
-	 * Returns the create time of this faro project.
-	 *
-	 * @return the create time of this faro project
-	 */
-	public long getCreateTime();
-
-	/**
-	 * Sets the create time of this faro project.
-	 *
-	 * @param createTime the create time of this faro project
-	 */
-	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the modified time of this faro project.

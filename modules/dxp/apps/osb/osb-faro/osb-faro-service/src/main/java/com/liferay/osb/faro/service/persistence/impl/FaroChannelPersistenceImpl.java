@@ -21,7 +21,9 @@ import com.liferay.osb.faro.model.impl.FaroChannelImpl;
 import com.liferay.osb.faro.model.impl.FaroChannelModelImpl;
 import com.liferay.osb.faro.service.persistence.FaroChannelPersistence;
 import com.liferay.osb.faro.service.persistence.FaroChannelUtil;
+import com.liferay.osb.faro.service.persistence.impl.constants.OSBFaroPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,15 +31,16 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -49,6 +52,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * The persistence implementation for the faro channel service.
  *
@@ -59,6 +69,7 @@ import java.util.Set;
  * @author Matthew Kong
  * @generated
  */
+@Component(service = FaroChannelPersistence.class)
 public class FaroChannelPersistenceImpl
 	extends BasePersistenceImpl<FaroChannel> implements FaroChannelPersistence {
 
@@ -1612,8 +1623,8 @@ public class FaroChannelPersistenceImpl
 	private static final String _FINDER_COLUMN_G_U_USERID_2 =
 		"faroChannel.userId = ?";
 
-	private FinderPath _finderPathFetchByChannelId;
-	private FinderPath _finderPathCountByChannelId;
+	private FinderPath _finderPathFetchByC_W;
+	private FinderPath _finderPathCountByC_W;
 
 	/**
 	 * Returns the faro channel where channelId = &#63; and workspaceGroupId = &#63; or throws a <code>NoSuchFaroChannelException</code> if it could not be found.
@@ -1624,10 +1635,10 @@ public class FaroChannelPersistenceImpl
 	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
 	 */
 	@Override
-	public FaroChannel findByChannelId(String channelId, long workspaceGroupId)
+	public FaroChannel findByC_W(String channelId, long workspaceGroupId)
 		throws NoSuchFaroChannelException {
 
-		FaroChannel faroChannel = fetchByChannelId(channelId, workspaceGroupId);
+		FaroChannel faroChannel = fetchByC_W(channelId, workspaceGroupId);
 
 		if (faroChannel == null) {
 			StringBundler sb = new StringBundler(6);
@@ -1660,10 +1671,8 @@ public class FaroChannelPersistenceImpl
 	 * @return the matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
 	@Override
-	public FaroChannel fetchByChannelId(
-		String channelId, long workspaceGroupId) {
-
-		return fetchByChannelId(channelId, workspaceGroupId, true);
+	public FaroChannel fetchByC_W(String channelId, long workspaceGroupId) {
+		return fetchByC_W(channelId, workspaceGroupId, true);
 	}
 
 	/**
@@ -1675,7 +1684,7 @@ public class FaroChannelPersistenceImpl
 	 * @return the matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
 	@Override
-	public FaroChannel fetchByChannelId(
+	public FaroChannel fetchByC_W(
 		String channelId, long workspaceGroupId, boolean useFinderCache) {
 
 		channelId = Objects.toString(channelId, "");
@@ -1690,7 +1699,7 @@ public class FaroChannelPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByChannelId, finderArgs, this);
+				_finderPathFetchByC_W, finderArgs, this);
 		}
 
 		if (result instanceof FaroChannel) {
@@ -1711,15 +1720,15 @@ public class FaroChannelPersistenceImpl
 			boolean bindChannelId = false;
 
 			if (channelId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CHANNELID_CHANNELID_3);
+				sb.append(_FINDER_COLUMN_C_W_CHANNELID_3);
 			}
 			else {
 				bindChannelId = true;
 
-				sb.append(_FINDER_COLUMN_CHANNELID_CHANNELID_2);
+				sb.append(_FINDER_COLUMN_C_W_CHANNELID_2);
 			}
 
-			sb.append(_FINDER_COLUMN_CHANNELID_WORKSPACEGROUPID_2);
+			sb.append(_FINDER_COLUMN_C_W_WORKSPACEGROUPID_2);
 
 			String sql = sb.toString();
 
@@ -1743,7 +1752,7 @@ public class FaroChannelPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByChannelId, finderArgs, list);
+							_finderPathFetchByC_W, finderArgs, list);
 					}
 				}
 				else {
@@ -1778,11 +1787,10 @@ public class FaroChannelPersistenceImpl
 	 * @return the faro channel that was removed
 	 */
 	@Override
-	public FaroChannel removeByChannelId(
-			String channelId, long workspaceGroupId)
+	public FaroChannel removeByC_W(String channelId, long workspaceGroupId)
 		throws NoSuchFaroChannelException {
 
-		FaroChannel faroChannel = findByChannelId(channelId, workspaceGroupId);
+		FaroChannel faroChannel = findByC_W(channelId, workspaceGroupId);
 
 		return remove(faroChannel);
 	}
@@ -1795,10 +1803,10 @@ public class FaroChannelPersistenceImpl
 	 * @return the number of matching faro channels
 	 */
 	@Override
-	public int countByChannelId(String channelId, long workspaceGroupId) {
+	public int countByC_W(String channelId, long workspaceGroupId) {
 		channelId = Objects.toString(channelId, "");
 
-		FinderPath finderPath = _finderPathCountByChannelId;
+		FinderPath finderPath = _finderPathCountByC_W;
 
 		Object[] finderArgs = new Object[] {channelId, workspaceGroupId};
 
@@ -1812,15 +1820,15 @@ public class FaroChannelPersistenceImpl
 			boolean bindChannelId = false;
 
 			if (channelId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CHANNELID_CHANNELID_3);
+				sb.append(_FINDER_COLUMN_C_W_CHANNELID_3);
 			}
 			else {
 				bindChannelId = true;
 
-				sb.append(_FINDER_COLUMN_CHANNELID_CHANNELID_2);
+				sb.append(_FINDER_COLUMN_C_W_CHANNELID_2);
 			}
 
-			sb.append(_FINDER_COLUMN_CHANNELID_WORKSPACEGROUPID_2);
+			sb.append(_FINDER_COLUMN_C_W_WORKSPACEGROUPID_2);
 
 			String sql = sb.toString();
 
@@ -1854,13 +1862,13 @@ public class FaroChannelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CHANNELID_CHANNELID_2 =
+	private static final String _FINDER_COLUMN_C_W_CHANNELID_2 =
 		"faroChannel.channelId = ? AND ";
 
-	private static final String _FINDER_COLUMN_CHANNELID_CHANNELID_3 =
+	private static final String _FINDER_COLUMN_C_W_CHANNELID_3 =
 		"(faroChannel.channelId IS NULL OR faroChannel.channelId = '') AND ";
 
-	private static final String _FINDER_COLUMN_CHANNELID_WORKSPACEGROUPID_2 =
+	private static final String _FINDER_COLUMN_C_W_WORKSPACEGROUPID_2 =
 		"faroChannel.workspaceGroupId = ?";
 
 	public FaroChannelPersistenceImpl() {
@@ -1883,7 +1891,7 @@ public class FaroChannelPersistenceImpl
 			FaroChannelImpl.class, faroChannel.getPrimaryKey(), faroChannel);
 
 		finderCache.putResult(
-			_finderPathFetchByChannelId,
+			_finderPathFetchByC_W,
 			new Object[] {
 				faroChannel.getChannelId(), faroChannel.getWorkspaceGroupId()
 			},
@@ -1966,10 +1974,9 @@ public class FaroChannelPersistenceImpl
 			faroChannelModelImpl.getWorkspaceGroupId()
 		};
 
+		finderCache.putResult(_finderPathCountByC_W, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByChannelId, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByChannelId, args, faroChannelModelImpl);
+			_finderPathFetchByC_W, args, faroChannelModelImpl);
 	}
 
 	/**
@@ -1984,6 +1991,8 @@ public class FaroChannelPersistenceImpl
 
 		faroChannel.setNew(true);
 		faroChannel.setPrimaryKey(faroChannelId);
+
+		faroChannel.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return faroChannel;
 	}
@@ -2381,7 +2390,8 @@ public class FaroChannelPersistenceImpl
 	/**
 	 * Initializes the faro channel persistence.
 	 */
-	public void afterPropertiesSet() {
+	@Activate
+	public void activate() {
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
@@ -2452,20 +2462,21 @@ public class FaroChannelPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "userId"}, false);
 
-		_finderPathFetchByChannelId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByChannelId",
+		_finderPathFetchByC_W = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_W",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"channelId", "workspaceGroupId"}, true);
 
-		_finderPathCountByChannelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByChannelId",
+		_finderPathCountByC_W = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_W",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"channelId", "workspaceGroupId"}, false);
 
 		_setFaroChannelUtilPersistence(this);
 	}
 
-	public void destroy() {
+	@Deactivate
+	public void deactivate() {
 		_setFaroChannelUtilPersistence(null);
 
 		entityCache.removeCache(FaroChannelImpl.class.getName());
@@ -2487,10 +2498,36 @@ public class FaroChannelPersistenceImpl
 		}
 	}
 
-	@ServiceReference(type = EntityCache.class)
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+	}
+
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected EntityCache entityCache;
 
-	@ServiceReference(type = FinderCache.class)
+	@Reference
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_FAROCHANNEL =

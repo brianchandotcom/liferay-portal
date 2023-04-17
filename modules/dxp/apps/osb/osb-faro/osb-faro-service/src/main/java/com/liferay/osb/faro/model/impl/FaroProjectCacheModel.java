@@ -18,6 +18,7 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class FaroProjectCacheModel
-	implements CacheModel<FaroProject>, Externalizable {
+	implements CacheModel<FaroProject>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -46,7 +47,9 @@ public class FaroProjectCacheModel
 		FaroProjectCacheModel faroProjectCacheModel =
 			(FaroProjectCacheModel)object;
 
-		if (faroProjectId == faroProjectCacheModel.faroProjectId) {
+		if ((faroProjectId == faroProjectCacheModel.faroProjectId) &&
+			(mvccVersion == faroProjectCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -55,23 +58,39 @@ public class FaroProjectCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, faroProjectId);
+		int hashCode = HashUtil.hash(0, faroProjectId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(47);
 
-		sb.append("{faroProjectId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", faroProjectId=");
 		sb.append(faroProjectId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", createTime=");
+		sb.append(createTime);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
-		sb.append(", createTime=");
-		sb.append(createTime);
 		sb.append(", modifiedTime=");
 		sb.append(modifiedTime);
 		sb.append(", name=");
@@ -113,8 +132,11 @@ public class FaroProjectCacheModel
 	public FaroProject toEntityModel() {
 		FaroProjectImpl faroProjectImpl = new FaroProjectImpl();
 
+		faroProjectImpl.setMvccVersion(mvccVersion);
 		faroProjectImpl.setFaroProjectId(faroProjectId);
 		faroProjectImpl.setGroupId(groupId);
+		faroProjectImpl.setCompanyId(companyId);
+		faroProjectImpl.setCreateTime(createTime);
 		faroProjectImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -124,7 +146,6 @@ public class FaroProjectCacheModel
 			faroProjectImpl.setUserName(userName);
 		}
 
-		faroProjectImpl.setCreateTime(createTime);
 		faroProjectImpl.setModifiedTime(modifiedTime);
 
 		if (name == null) {
@@ -229,14 +250,18 @@ public class FaroProjectCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		faroProjectId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
-		userId = objectInput.readLong();
-		userName = objectInput.readUTF();
+		companyId = objectInput.readLong();
 
 		createTime = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 
 		modifiedTime = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -260,9 +285,15 @@ public class FaroProjectCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(faroProjectId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(userId);
 
@@ -272,8 +303,6 @@ public class FaroProjectCacheModel
 		else {
 			objectOutput.writeUTF(userName);
 		}
-
-		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(modifiedTime);
 
@@ -373,11 +402,13 @@ public class FaroProjectCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long faroProjectId;
 	public long groupId;
+	public long companyId;
+	public long createTime;
 	public long userId;
 	public String userName;
-	public long createTime;
 	public long modifiedTime;
 	public String name;
 	public String accountKey;

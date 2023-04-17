@@ -41,11 +41,13 @@ public class FaroPreferencesWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("faroPreferencesId", getFaroPreferencesId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createTime", getCreateTime());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("createTime", getCreateTime());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("preferences", getPreferences());
@@ -55,6 +57,12 @@ public class FaroPreferencesWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long faroPreferencesId = (Long)attributes.get("faroPreferencesId");
 
 		if (faroPreferencesId != null) {
@@ -67,6 +75,18 @@ public class FaroPreferencesWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long createTime = (Long)attributes.get("createTime");
+
+		if (createTime != null) {
+			setCreateTime(createTime);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -77,12 +97,6 @@ public class FaroPreferencesWrapper
 
 		if (userName != null) {
 			setUserName(userName);
-		}
-
-		Long createTime = (Long)attributes.get("createTime");
-
-		if (createTime != null) {
-			setCreateTime(createTime);
 		}
 
 		Long modifiedTime = (Long)attributes.get("modifiedTime");
@@ -107,6 +121,16 @@ public class FaroPreferencesWrapper
 	@Override
 	public FaroPreferences cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the company ID of this faro preferences.
+	 *
+	 * @return the company ID of this faro preferences
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -147,6 +171,16 @@ public class FaroPreferencesWrapper
 	@Override
 	public long getModifiedTime() {
 		return model.getModifiedTime();
+	}
+
+	/**
+	 * Returns the mvcc version of this faro preferences.
+	 *
+	 * @return the mvcc version of this faro preferences
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -215,6 +249,16 @@ public class FaroPreferencesWrapper
 	}
 
 	/**
+	 * Sets the company ID of this faro preferences.
+	 *
+	 * @param companyId the company ID of this faro preferences
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
+	}
+
+	/**
 	 * Sets the create time of this faro preferences.
 	 *
 	 * @param createTime the create time of this faro preferences
@@ -252,6 +296,16 @@ public class FaroPreferencesWrapper
 	@Override
 	public void setModifiedTime(long modifiedTime) {
 		model.setModifiedTime(modifiedTime);
+	}
+
+	/**
+	 * Sets the mvcc version of this faro preferences.
+	 *
+	 * @param mvccVersion the mvcc version of this faro preferences
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

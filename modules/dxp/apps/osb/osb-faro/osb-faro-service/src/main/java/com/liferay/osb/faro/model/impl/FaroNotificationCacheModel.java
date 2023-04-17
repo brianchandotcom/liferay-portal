@@ -18,6 +18,7 @@ import com.liferay.osb.faro.model.FaroNotification;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class FaroNotificationCacheModel
-	implements CacheModel<FaroNotification>, Externalizable {
+	implements CacheModel<FaroNotification>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -46,8 +47,9 @@ public class FaroNotificationCacheModel
 		FaroNotificationCacheModel faroNotificationCacheModel =
 			(FaroNotificationCacheModel)object;
 
-		if (faroNotificationId ==
-				faroNotificationCacheModel.faroNotificationId) {
+		if ((faroNotificationId ==
+				faroNotificationCacheModel.faroNotificationId) &&
+			(mvccVersion == faroNotificationCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -57,21 +59,37 @@ public class FaroNotificationCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, faroNotificationId);
+		int hashCode = HashUtil.hash(0, faroNotificationId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{faroNotificationId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", faroNotificationId=");
 		sb.append(faroNotificationId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", userId=");
-		sb.append(userId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", createTime=");
 		sb.append(createTime);
+		sb.append(", userId=");
+		sb.append(userId);
 		sb.append(", modifiedTime=");
 		sb.append(modifiedTime);
 		sb.append(", ownerId=");
@@ -93,10 +111,12 @@ public class FaroNotificationCacheModel
 	public FaroNotification toEntityModel() {
 		FaroNotificationImpl faroNotificationImpl = new FaroNotificationImpl();
 
+		faroNotificationImpl.setMvccVersion(mvccVersion);
 		faroNotificationImpl.setFaroNotificationId(faroNotificationId);
 		faroNotificationImpl.setGroupId(groupId);
-		faroNotificationImpl.setUserId(userId);
+		faroNotificationImpl.setCompanyId(companyId);
 		faroNotificationImpl.setCreateTime(createTime);
+		faroNotificationImpl.setUserId(userId);
 		faroNotificationImpl.setModifiedTime(modifiedTime);
 		faroNotificationImpl.setOwnerId(ownerId);
 
@@ -130,13 +150,17 @@ public class FaroNotificationCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		faroNotificationId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
-		userId = objectInput.readLong();
+		companyId = objectInput.readLong();
 
 		createTime = objectInput.readLong();
+
+		userId = objectInput.readLong();
 
 		modifiedTime = objectInput.readLong();
 
@@ -150,13 +174,17 @@ public class FaroNotificationCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(faroNotificationId);
 
 		objectOutput.writeLong(groupId);
 
-		objectOutput.writeLong(userId);
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(createTime);
+
+		objectOutput.writeLong(userId);
 
 		objectOutput.writeLong(modifiedTime);
 
@@ -186,10 +214,12 @@ public class FaroNotificationCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long faroNotificationId;
 	public long groupId;
-	public long userId;
+	public long companyId;
 	public long createTime;
+	public long userId;
 	public long modifiedTime;
 	public long ownerId;
 	public String scope;

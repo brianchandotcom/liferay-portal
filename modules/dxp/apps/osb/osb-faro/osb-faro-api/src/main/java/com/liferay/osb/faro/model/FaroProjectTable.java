@@ -30,16 +30,20 @@ public class FaroProjectTable extends BaseTable<FaroProjectTable> {
 
 	public static final FaroProjectTable INSTANCE = new FaroProjectTable();
 
+	public final Column<FaroProjectTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<FaroProjectTable, Long> faroProjectId = createColumn(
 		"faroProjectId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<FaroProjectTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FaroProjectTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FaroProjectTable, Long> createTime = createColumn(
+		"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroProjectTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroProjectTable, String> userName = createColumn(
 		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<FaroProjectTable, Long> createTime = createColumn(
-		"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroProjectTable, Long> modifiedTime = createColumn(
 		"modifiedTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroProjectTable, String> name = createColumn(

@@ -18,6 +18,7 @@ import com.liferay.osb.faro.model.FaroPreferences;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class FaroPreferencesCacheModel
-	implements CacheModel<FaroPreferences>, Externalizable {
+	implements CacheModel<FaroPreferences>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -46,7 +47,10 @@ public class FaroPreferencesCacheModel
 		FaroPreferencesCacheModel faroPreferencesCacheModel =
 			(FaroPreferencesCacheModel)object;
 
-		if (faroPreferencesId == faroPreferencesCacheModel.faroPreferencesId) {
+		if ((faroPreferencesId ==
+				faroPreferencesCacheModel.faroPreferencesId) &&
+			(mvccVersion == faroPreferencesCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -55,23 +59,39 @@ public class FaroPreferencesCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, faroPreferencesId);
+		int hashCode = HashUtil.hash(0, faroPreferencesId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{faroPreferencesId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", faroPreferencesId=");
 		sb.append(faroPreferencesId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", createTime=");
+		sb.append(createTime);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
-		sb.append(", createTime=");
-		sb.append(createTime);
 		sb.append(", modifiedTime=");
 		sb.append(modifiedTime);
 		sb.append(", ownerId=");
@@ -87,8 +107,11 @@ public class FaroPreferencesCacheModel
 	public FaroPreferences toEntityModel() {
 		FaroPreferencesImpl faroPreferencesImpl = new FaroPreferencesImpl();
 
+		faroPreferencesImpl.setMvccVersion(mvccVersion);
 		faroPreferencesImpl.setFaroPreferencesId(faroPreferencesId);
 		faroPreferencesImpl.setGroupId(groupId);
+		faroPreferencesImpl.setCompanyId(companyId);
+		faroPreferencesImpl.setCreateTime(createTime);
 		faroPreferencesImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -98,7 +121,6 @@ public class FaroPreferencesCacheModel
 			faroPreferencesImpl.setUserName(userName);
 		}
 
-		faroPreferencesImpl.setCreateTime(createTime);
 		faroPreferencesImpl.setModifiedTime(modifiedTime);
 		faroPreferencesImpl.setOwnerId(ownerId);
 
@@ -116,14 +138,18 @@ public class FaroPreferencesCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		faroPreferencesId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
-		userId = objectInput.readLong();
-		userName = objectInput.readUTF();
+		companyId = objectInput.readLong();
 
 		createTime = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 
 		modifiedTime = objectInput.readLong();
 
@@ -133,9 +159,15 @@ public class FaroPreferencesCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(faroPreferencesId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(userId);
 
@@ -145,8 +177,6 @@ public class FaroPreferencesCacheModel
 		else {
 			objectOutput.writeUTF(userName);
 		}
-
-		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(modifiedTime);
 
@@ -160,11 +190,13 @@ public class FaroPreferencesCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long faroPreferencesId;
 	public long groupId;
+	public long companyId;
+	public long createTime;
 	public long userId;
 	public String userName;
-	public long createTime;
 	public long modifiedTime;
 	public long ownerId;
 	public String preferences;

@@ -653,11 +653,10 @@ public class FaroChannelUtil {
 	 * @return the matching faro channel
 	 * @throws NoSuchFaroChannelException if a matching faro channel could not be found
 	 */
-	public static FaroChannel findByChannelId(
-			String channelId, long workspaceGroupId)
+	public static FaroChannel findByC_W(String channelId, long workspaceGroupId)
 		throws com.liferay.osb.faro.exception.NoSuchFaroChannelException {
 
-		return getPersistence().findByChannelId(channelId, workspaceGroupId);
+		return getPersistence().findByC_W(channelId, workspaceGroupId);
 	}
 
 	/**
@@ -667,10 +666,10 @@ public class FaroChannelUtil {
 	 * @param workspaceGroupId the workspace group ID
 	 * @return the matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
-	public static FaroChannel fetchByChannelId(
+	public static FaroChannel fetchByC_W(
 		String channelId, long workspaceGroupId) {
 
-		return getPersistence().fetchByChannelId(channelId, workspaceGroupId);
+		return getPersistence().fetchByC_W(channelId, workspaceGroupId);
 	}
 
 	/**
@@ -681,10 +680,10 @@ public class FaroChannelUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching faro channel, or <code>null</code> if a matching faro channel could not be found
 	 */
-	public static FaroChannel fetchByChannelId(
+	public static FaroChannel fetchByC_W(
 		String channelId, long workspaceGroupId, boolean useFinderCache) {
 
-		return getPersistence().fetchByChannelId(
+		return getPersistence().fetchByC_W(
 			channelId, workspaceGroupId, useFinderCache);
 	}
 
@@ -695,11 +694,11 @@ public class FaroChannelUtil {
 	 * @param workspaceGroupId the workspace group ID
 	 * @return the faro channel that was removed
 	 */
-	public static FaroChannel removeByChannelId(
+	public static FaroChannel removeByC_W(
 			String channelId, long workspaceGroupId)
 		throws com.liferay.osb.faro.exception.NoSuchFaroChannelException {
 
-		return getPersistence().removeByChannelId(channelId, workspaceGroupId);
+		return getPersistence().removeByC_W(channelId, workspaceGroupId);
 	}
 
 	/**
@@ -709,10 +708,8 @@ public class FaroChannelUtil {
 	 * @param workspaceGroupId the workspace group ID
 	 * @return the number of matching faro channels
 	 */
-	public static int countByChannelId(
-		String channelId, long workspaceGroupId) {
-
-		return getPersistence().countByChannelId(channelId, workspaceGroupId);
+	public static int countByC_W(String channelId, long workspaceGroupId) {
+		return getPersistence().countByC_W(channelId, workspaceGroupId);
 	}
 
 	/**

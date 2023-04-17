@@ -14,31 +14,32 @@
 
 package com.liferay.osb.faro.service.persistence.impl;
 
-import com.liferay.osb.faro.model.FaroProjectEmailAddressDomainTable;
-import com.liferay.osb.faro.model.impl.FaroProjectEmailAddressDomainImpl;
-import com.liferay.osb.faro.model.impl.FaroProjectEmailAddressDomainModelImpl;
+import com.liferay.osb.faro.model.FaroProjectEmailDomainTable;
+import com.liferay.osb.faro.model.impl.FaroProjectEmailDomainImpl;
+import com.liferay.osb.faro.model.impl.FaroProjectEmailDomainModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * The arguments resolver class for retrieving value from FaroProjectEmailAddressDomain.
+ * The arguments resolver class for retrieving value from FaroProjectEmailDomain.
  *
  * @author Matthew Kong
  * @generated
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"class.name=com.liferay.osb.faro.model.impl.FaroProjectEmailAddressDomainImpl",
-		"table.name=OSBFaro_FaroProjectEmailAddressDomain"
+		"class.name=com.liferay.osb.faro.model.impl.FaroProjectEmailDomainImpl",
+		"table.name=OSBFaro_FaroProjectEmailDomain"
 	},
 	service = ArgumentsResolver.class
 )
-public class FaroProjectEmailAddressDomainModelArgumentsResolver
+public class FaroProjectEmailDomainModelArgumentsResolver
 	implements ArgumentsResolver {
 
 	@Override
@@ -56,16 +57,14 @@ public class FaroProjectEmailAddressDomainModelArgumentsResolver
 			return null;
 		}
 
-		FaroProjectEmailAddressDomainModelImpl
-			faroProjectEmailAddressDomainModelImpl =
-				(FaroProjectEmailAddressDomainModelImpl)baseModel;
+		FaroProjectEmailDomainModelImpl faroProjectEmailDomainModelImpl =
+			(FaroProjectEmailDomainModelImpl)baseModel;
 
-		long columnBitmask =
-			faroProjectEmailAddressDomainModelImpl.getColumnBitmask();
+		long columnBitmask = faroProjectEmailDomainModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				faroProjectEmailAddressDomainModelImpl, columnNames, original);
+				faroProjectEmailDomainModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -76,7 +75,7 @@ public class FaroProjectEmailAddressDomainModelArgumentsResolver
 
 			for (String columnName : columnNames) {
 				finderPathColumnBitmask |=
-					faroProjectEmailAddressDomainModelImpl.getColumnBitmask(
+					faroProjectEmailDomainModelImpl.getColumnBitmask(
 						columnName);
 			}
 
@@ -86,7 +85,7 @@ public class FaroProjectEmailAddressDomainModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				faroProjectEmailAddressDomainModelImpl, columnNames, original);
+				faroProjectEmailDomainModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -94,17 +93,16 @@ public class FaroProjectEmailAddressDomainModelArgumentsResolver
 
 	@Override
 	public String getClassName() {
-		return FaroProjectEmailAddressDomainImpl.class.getName();
+		return FaroProjectEmailDomainImpl.class.getName();
 	}
 
 	@Override
 	public String getTableName() {
-		return FaroProjectEmailAddressDomainTable.INSTANCE.getTableName();
+		return FaroProjectEmailDomainTable.INSTANCE.getTableName();
 	}
 
 	private static Object[] _getValue(
-		FaroProjectEmailAddressDomainModelImpl
-			faroProjectEmailAddressDomainModelImpl,
+		FaroProjectEmailDomainModelImpl faroProjectEmailDomainModelImpl,
 		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
@@ -114,13 +112,12 @@ public class FaroProjectEmailAddressDomainModelArgumentsResolver
 
 			if (original) {
 				arguments[i] =
-					faroProjectEmailAddressDomainModelImpl.
-						getColumnOriginalValue(columnName);
+					faroProjectEmailDomainModelImpl.getColumnOriginalValue(
+						columnName);
 			}
 			else {
-				arguments[i] =
-					faroProjectEmailAddressDomainModelImpl.getColumnValue(
-						columnName);
+				arguments[i] = faroProjectEmailDomainModelImpl.getColumnValue(
+					columnName);
 			}
 		}
 

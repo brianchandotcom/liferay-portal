@@ -69,8 +69,9 @@ public class FaroNotificationModelImpl
 	public static final String TABLE_NAME = "OSBFaro_FaroNotification";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"faroNotificationId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"createTime", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"faroNotificationId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createTime", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"modifiedTime", Types.BIGINT}, {"ownerId", Types.BIGINT},
 		{"scope", Types.VARCHAR}, {"read_", Types.BOOLEAN},
 		{"type_", Types.VARCHAR}, {"subtype", Types.VARCHAR}
@@ -80,10 +81,12 @@ public class FaroNotificationModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("faroNotificationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
@@ -93,7 +96,7 @@ public class FaroNotificationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_FaroNotification (faroNotificationId LONG not null primary key,groupId LONG,userId LONG,createTime LONG,modifiedTime LONG,ownerId LONG,scope VARCHAR(75) null,read_ BOOLEAN,type_ VARCHAR(75) null,subtype VARCHAR(75) null)";
+		"create table OSBFaro_FaroNotification (mvccVersion LONG default 0 not null,faroNotificationId LONG not null primary key,groupId LONG,companyId LONG,createTime LONG,userId LONG,modifiedTime LONG,ownerId LONG,scope VARCHAR(75) null,read_ BOOLEAN,type_ VARCHAR(75) null,subtype VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_FaroNotification";
@@ -109,24 +112,6 @@ public class FaroNotificationModelImpl
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean ENTITY_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean FINDER_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -171,9 +156,19 @@ public class FaroNotificationModelImpl
 	@Deprecated
 	public static final long FARONOTIFICATIONID_COLUMN_BITMASK = 64L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.osb.faro.model.FaroNotification"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public FaroNotificationModelImpl() {
 	}
@@ -272,12 +267,16 @@ public class FaroNotificationModelImpl
 						<String, Function<FaroNotification, Object>>();
 
 			attributeGetterFunctions.put(
+				"mvccVersion", FaroNotification::getMvccVersion);
+			attributeGetterFunctions.put(
 				"faroNotificationId", FaroNotification::getFaroNotificationId);
 			attributeGetterFunctions.put(
 				"groupId", FaroNotification::getGroupId);
-			attributeGetterFunctions.put("userId", FaroNotification::getUserId);
+			attributeGetterFunctions.put(
+				"companyId", FaroNotification::getCompanyId);
 			attributeGetterFunctions.put(
 				"createTime", FaroNotification::getCreateTime);
+			attributeGetterFunctions.put("userId", FaroNotification::getUserId);
 			attributeGetterFunctions.put(
 				"modifiedTime", FaroNotification::getModifiedTime);
 			attributeGetterFunctions.put(
@@ -306,6 +305,10 @@ public class FaroNotificationModelImpl
 						<String, BiConsumer<FaroNotification, ?>>();
 
 			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setMvccVersion);
+			attributeSetterBiConsumers.put(
 				"faroNotificationId",
 				(BiConsumer<FaroNotification, Long>)
 					FaroNotification::setFaroNotificationId);
@@ -314,13 +317,17 @@ public class FaroNotificationModelImpl
 				(BiConsumer<FaroNotification, Long>)
 					FaroNotification::setGroupId);
 			attributeSetterBiConsumers.put(
-				"userId",
+				"companyId",
 				(BiConsumer<FaroNotification, Long>)
-					FaroNotification::setUserId);
+					FaroNotification::setCompanyId);
 			attributeSetterBiConsumers.put(
 				"createTime",
 				(BiConsumer<FaroNotification, Long>)
 					FaroNotification::setCreateTime);
+			attributeSetterBiConsumers.put(
+				"userId",
+				(BiConsumer<FaroNotification, Long>)
+					FaroNotification::setUserId);
 			attributeSetterBiConsumers.put(
 				"modifiedTime",
 				(BiConsumer<FaroNotification, Long>)
@@ -350,6 +357,20 @@ public class FaroNotificationModelImpl
 				(Map)attributeSetterBiConsumers);
 		}
 
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -390,6 +411,44 @@ public class FaroNotificationModelImpl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getCreateTime() {
+		return _createTime;
+	}
+
+	@Override
+	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createTime = createTime;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCreateTime() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("createTime"));
+	}
+
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -417,30 +476,6 @@ public class FaroNotificationModelImpl
 
 	@Override
 	public void setUserUuid(String userUuid) {
-	}
-
-	@Override
-	public long getCreateTime() {
-		return _createTime;
-	}
-
-	@Override
-	public void setCreateTime(long createTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createTime = createTime;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCreateTime() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("createTime"));
 	}
 
 	@Override
@@ -611,7 +646,7 @@ public class FaroNotificationModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, FaroNotification.class.getName(), getPrimaryKey());
+			getCompanyId(), FaroNotification.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -640,10 +675,12 @@ public class FaroNotificationModelImpl
 	public Object clone() {
 		FaroNotificationImpl faroNotificationImpl = new FaroNotificationImpl();
 
+		faroNotificationImpl.setMvccVersion(getMvccVersion());
 		faroNotificationImpl.setFaroNotificationId(getFaroNotificationId());
 		faroNotificationImpl.setGroupId(getGroupId());
-		faroNotificationImpl.setUserId(getUserId());
+		faroNotificationImpl.setCompanyId(getCompanyId());
 		faroNotificationImpl.setCreateTime(getCreateTime());
+		faroNotificationImpl.setUserId(getUserId());
 		faroNotificationImpl.setModifiedTime(getModifiedTime());
 		faroNotificationImpl.setOwnerId(getOwnerId());
 		faroNotificationImpl.setScope(getScope());
@@ -660,14 +697,18 @@ public class FaroNotificationModelImpl
 	public FaroNotification cloneWithOriginalValues() {
 		FaroNotificationImpl faroNotificationImpl = new FaroNotificationImpl();
 
+		faroNotificationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		faroNotificationImpl.setFaroNotificationId(
 			this.<Long>getColumnOriginalValue("faroNotificationId"));
 		faroNotificationImpl.setGroupId(
 			this.<Long>getColumnOriginalValue("groupId"));
-		faroNotificationImpl.setUserId(
-			this.<Long>getColumnOriginalValue("userId"));
+		faroNotificationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
 		faroNotificationImpl.setCreateTime(
 			this.<Long>getColumnOriginalValue("createTime"));
+		faroNotificationImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
 		faroNotificationImpl.setModifiedTime(
 			this.<Long>getColumnOriginalValue("modifiedTime"));
 		faroNotificationImpl.setOwnerId(
@@ -732,7 +773,7 @@ public class FaroNotificationModelImpl
 	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
 	/**
@@ -741,7 +782,7 @@ public class FaroNotificationModelImpl
 	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override
@@ -756,13 +797,17 @@ public class FaroNotificationModelImpl
 		FaroNotificationCacheModel faroNotificationCacheModel =
 			new FaroNotificationCacheModel();
 
+		faroNotificationCacheModel.mvccVersion = getMvccVersion();
+
 		faroNotificationCacheModel.faroNotificationId = getFaroNotificationId();
 
 		faroNotificationCacheModel.groupId = getGroupId();
 
-		faroNotificationCacheModel.userId = getUserId();
+		faroNotificationCacheModel.companyId = getCompanyId();
 
 		faroNotificationCacheModel.createTime = getCreateTime();
+
+		faroNotificationCacheModel.userId = getUserId();
 
 		faroNotificationCacheModel.modifiedTime = getModifiedTime();
 
@@ -856,10 +901,12 @@ public class FaroNotificationModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _faroNotificationId;
 	private long _groupId;
-	private long _userId;
+	private long _companyId;
 	private long _createTime;
+	private long _userId;
 	private long _modifiedTime;
 	private long _ownerId;
 	private String _scope;
@@ -897,10 +944,12 @@ public class FaroNotificationModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("faroNotificationId", _faroNotificationId);
 		_columnOriginalValues.put("groupId", _groupId);
-		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("createTime", _createTime);
+		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("modifiedTime", _modifiedTime);
 		_columnOriginalValues.put("ownerId", _ownerId);
 		_columnOriginalValues.put("scope", _scope);
@@ -931,25 +980,29 @@ public class FaroNotificationModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("faroNotificationId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("faroNotificationId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("createTime", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("modifiedTime", 16L);
+		columnBitmasks.put("createTime", 16L);
 
-		columnBitmasks.put("ownerId", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("scope", 64L);
+		columnBitmasks.put("modifiedTime", 64L);
 
-		columnBitmasks.put("read_", 128L);
+		columnBitmasks.put("ownerId", 128L);
 
-		columnBitmasks.put("type_", 256L);
+		columnBitmasks.put("scope", 256L);
 
-		columnBitmasks.put("subtype", 512L);
+		columnBitmasks.put("read_", 512L);
+
+		columnBitmasks.put("type_", 1024L);
+
+		columnBitmasks.put("subtype", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

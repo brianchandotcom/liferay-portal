@@ -16,7 +16,9 @@ package com.liferay.osb.faro.service.persistence.impl;
 
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.persistence.FaroUserPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.osb.faro.service.persistence.impl.constants.OSBFaroPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Matthew Kong
  * @generated
  */
-public class FaroUserFinderBaseImpl extends BasePersistenceImpl<FaroUser> {
+public abstract class FaroUserFinderBaseImpl
+	extends BasePersistenceImpl<FaroUser> {
 
 	public FaroUserFinderBaseImpl() {
 		setModelClass(FaroUser.class);
@@ -43,30 +50,36 @@ public class FaroUserFinderBaseImpl extends BasePersistenceImpl<FaroUser> {
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getFaroUserPersistence().getBadColumnNames();
+		return faroUserPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the faro user persistence.
-	 *
-	 * @return the faro user persistence
-	 */
-	public FaroUserPersistence getFaroUserPersistence() {
-		return faroUserPersistence;
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
 	}
 
-	/**
-	 * Sets the faro user persistence.
-	 *
-	 * @param faroUserPersistence the faro user persistence
-	 */
-	public void setFaroUserPersistence(
-		FaroUserPersistence faroUserPersistence) {
-
-		this.faroUserPersistence = faroUserPersistence;
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = FaroUserPersistence.class)
+	@Override
+	@Reference(
+		target = OSBFaroPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected FaroUserPersistence faroUserPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -30,16 +30,20 @@ public class FaroChannelTable extends BaseTable<FaroChannelTable> {
 
 	public static final FaroChannelTable INSTANCE = new FaroChannelTable();
 
+	public final Column<FaroChannelTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<FaroChannelTable, Long> faroChannelId = createColumn(
 		"faroChannelId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<FaroChannelTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FaroChannelTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FaroChannelTable, Long> createTime = createColumn(
+		"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroChannelTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroChannelTable, String> userName = createColumn(
 		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<FaroChannelTable, Long> createTime = createColumn(
-		"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroChannelTable, Long> modifiedTime = createColumn(
 		"modifiedTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FaroChannelTable, String> channelId = createColumn(

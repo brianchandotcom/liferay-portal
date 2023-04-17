@@ -69,9 +69,10 @@ public class FaroUserModelImpl
 	public static final String TABLE_NAME = "OSBFaro_FaroUser";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"faroUserId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"faroUserId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createTime", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"modifiedTime", Types.BIGINT},
 		{"liveUserId", Types.BIGINT}, {"roleId", Types.BIGINT},
 		{"emailAddress", Types.VARCHAR}, {"key_", Types.VARCHAR},
 		{"status", Types.INTEGER}
@@ -81,11 +82,13 @@ public class FaroUserModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("faroUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("liveUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
@@ -95,7 +98,7 @@ public class FaroUserModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_FaroUser (faroUserId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,liveUserId LONG,roleId LONG,emailAddress VARCHAR(75) null,key_ VARCHAR(75) null,status INTEGER)";
+		"create table OSBFaro_FaroUser (mvccVersion LONG default 0 not null,faroUserId LONG not null primary key,groupId LONG,companyId LONG,createTime LONG,userId LONG,userName VARCHAR(75) null,modifiedTime LONG,liveUserId LONG,roleId LONG,emailAddress VARCHAR(75) null,key_ VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table OSBFaro_FaroUser";
 
@@ -110,24 +113,6 @@ public class FaroUserModelImpl
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean ENTITY_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean FINDER_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -172,9 +157,19 @@ public class FaroUserModelImpl
 	@Deprecated
 	public static final long FAROUSERID_COLUMN_BITMASK = 64L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.osb.faro.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.osb.faro.model.FaroUser"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public FaroUserModelImpl() {
 	}
@@ -269,11 +264,14 @@ public class FaroUserModelImpl
 			Map<String, Function<FaroUser, Object>> attributeGetterFunctions =
 				new LinkedHashMap<String, Function<FaroUser, Object>>();
 
+			attributeGetterFunctions.put(
+				"mvccVersion", FaroUser::getMvccVersion);
 			attributeGetterFunctions.put("faroUserId", FaroUser::getFaroUserId);
 			attributeGetterFunctions.put("groupId", FaroUser::getGroupId);
+			attributeGetterFunctions.put("companyId", FaroUser::getCompanyId);
+			attributeGetterFunctions.put("createTime", FaroUser::getCreateTime);
 			attributeGetterFunctions.put("userId", FaroUser::getUserId);
 			attributeGetterFunctions.put("userName", FaroUser::getUserName);
-			attributeGetterFunctions.put("createTime", FaroUser::getCreateTime);
 			attributeGetterFunctions.put(
 				"modifiedTime", FaroUser::getModifiedTime);
 			attributeGetterFunctions.put("liveUserId", FaroUser::getLiveUserId);
@@ -299,18 +297,24 @@ public class FaroUserModelImpl
 				new LinkedHashMap<String, BiConsumer<FaroUser, ?>>();
 
 			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<FaroUser, Long>)FaroUser::setMvccVersion);
+			attributeSetterBiConsumers.put(
 				"faroUserId",
 				(BiConsumer<FaroUser, Long>)FaroUser::setFaroUserId);
 			attributeSetterBiConsumers.put(
 				"groupId", (BiConsumer<FaroUser, Long>)FaroUser::setGroupId);
 			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<FaroUser, Long>)FaroUser::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<FaroUser, Long>)FaroUser::setCreateTime);
+			attributeSetterBiConsumers.put(
 				"userId", (BiConsumer<FaroUser, Long>)FaroUser::setUserId);
 			attributeSetterBiConsumers.put(
 				"userName",
 				(BiConsumer<FaroUser, String>)FaroUser::setUserName);
-			attributeSetterBiConsumers.put(
-				"createTime",
-				(BiConsumer<FaroUser, Long>)FaroUser::setCreateTime);
 			attributeSetterBiConsumers.put(
 				"modifiedTime",
 				(BiConsumer<FaroUser, Long>)FaroUser::setModifiedTime);
@@ -331,6 +335,20 @@ public class FaroUserModelImpl
 				(Map)attributeSetterBiConsumers);
 		}
 
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -387,6 +405,34 @@ public class FaroUserModelImpl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getCreateTime() {
+		return _createTime;
+	}
+
+	@Override
+	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createTime = createTime;
+	}
+
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -433,20 +479,6 @@ public class FaroUserModelImpl
 		}
 
 		_userName = userName;
-	}
-
-	@Override
-	public long getCreateTime() {
-		return _createTime;
-	}
-
-	@Override
-	public void setCreateTime(long createTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createTime = createTime;
 	}
 
 	@Override
@@ -633,7 +665,7 @@ public class FaroUserModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, FaroUser.class.getName(), getPrimaryKey());
+			getCompanyId(), FaroUser.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -662,11 +694,13 @@ public class FaroUserModelImpl
 	public Object clone() {
 		FaroUserImpl faroUserImpl = new FaroUserImpl();
 
+		faroUserImpl.setMvccVersion(getMvccVersion());
 		faroUserImpl.setFaroUserId(getFaroUserId());
 		faroUserImpl.setGroupId(getGroupId());
+		faroUserImpl.setCompanyId(getCompanyId());
+		faroUserImpl.setCreateTime(getCreateTime());
 		faroUserImpl.setUserId(getUserId());
 		faroUserImpl.setUserName(getUserName());
-		faroUserImpl.setCreateTime(getCreateTime());
 		faroUserImpl.setModifiedTime(getModifiedTime());
 		faroUserImpl.setLiveUserId(getLiveUserId());
 		faroUserImpl.setRoleId(getRoleId());
@@ -683,14 +717,18 @@ public class FaroUserModelImpl
 	public FaroUser cloneWithOriginalValues() {
 		FaroUserImpl faroUserImpl = new FaroUserImpl();
 
+		faroUserImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		faroUserImpl.setFaroUserId(
 			this.<Long>getColumnOriginalValue("faroUserId"));
 		faroUserImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		faroUserImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		faroUserImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
 		faroUserImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
 		faroUserImpl.setUserName(
 			this.<String>getColumnOriginalValue("userName"));
-		faroUserImpl.setCreateTime(
-			this.<Long>getColumnOriginalValue("createTime"));
 		faroUserImpl.setModifiedTime(
 			this.<Long>getColumnOriginalValue("modifiedTime"));
 		faroUserImpl.setLiveUserId(
@@ -752,7 +790,7 @@ public class FaroUserModelImpl
 	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
 	/**
@@ -761,7 +799,7 @@ public class FaroUserModelImpl
 	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override
@@ -775,9 +813,15 @@ public class FaroUserModelImpl
 	public CacheModel<FaroUser> toCacheModel() {
 		FaroUserCacheModel faroUserCacheModel = new FaroUserCacheModel();
 
+		faroUserCacheModel.mvccVersion = getMvccVersion();
+
 		faroUserCacheModel.faroUserId = getFaroUserId();
 
 		faroUserCacheModel.groupId = getGroupId();
+
+		faroUserCacheModel.companyId = getCompanyId();
+
+		faroUserCacheModel.createTime = getCreateTime();
 
 		faroUserCacheModel.userId = getUserId();
 
@@ -788,8 +832,6 @@ public class FaroUserModelImpl
 		if ((userName != null) && (userName.length() == 0)) {
 			faroUserCacheModel.userName = null;
 		}
-
-		faroUserCacheModel.createTime = getCreateTime();
 
 		faroUserCacheModel.modifiedTime = getModifiedTime();
 
@@ -876,11 +918,13 @@ public class FaroUserModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _faroUserId;
 	private long _groupId;
+	private long _companyId;
+	private long _createTime;
 	private long _userId;
 	private String _userName;
-	private long _createTime;
 	private long _modifiedTime;
 	private long _liveUserId;
 	private long _roleId;
@@ -918,11 +962,13 @@ public class FaroUserModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("faroUserId", _faroUserId);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("modifiedTime", _modifiedTime);
 		_columnOriginalValues.put("liveUserId", _liveUserId);
 		_columnOriginalValues.put("roleId", _roleId);
@@ -952,27 +998,31 @@ public class FaroUserModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("faroUserId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("faroUserId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("companyId", 8L);
 
 		columnBitmasks.put("createTime", 16L);
 
-		columnBitmasks.put("modifiedTime", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("liveUserId", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("roleId", 128L);
+		columnBitmasks.put("modifiedTime", 128L);
 
-		columnBitmasks.put("emailAddress", 256L);
+		columnBitmasks.put("liveUserId", 256L);
 
-		columnBitmasks.put("key_", 512L);
+		columnBitmasks.put("roleId", 512L);
 
-		columnBitmasks.put("status", 1024L);
+		columnBitmasks.put("emailAddress", 1024L);
+
+		columnBitmasks.put("key_", 2048L);
+
+		columnBitmasks.put("status", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

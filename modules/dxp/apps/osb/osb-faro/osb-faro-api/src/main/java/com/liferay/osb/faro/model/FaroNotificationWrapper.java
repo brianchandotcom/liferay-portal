@@ -41,10 +41,12 @@ public class FaroNotificationWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("faroNotificationId", getFaroNotificationId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("userId", getUserId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("createTime", getCreateTime());
+		attributes.put("userId", getUserId());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("scope", getScope());
@@ -57,6 +59,12 @@ public class FaroNotificationWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long faroNotificationId = (Long)attributes.get("faroNotificationId");
 
 		if (faroNotificationId != null) {
@@ -69,16 +77,22 @@ public class FaroNotificationWrapper
 			setGroupId(groupId);
 		}
 
-		Long userId = (Long)attributes.get("userId");
+		Long companyId = (Long)attributes.get("companyId");
 
-		if (userId != null) {
-			setUserId(userId);
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long createTime = (Long)attributes.get("createTime");
 
 		if (createTime != null) {
 			setCreateTime(createTime);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
 		}
 
 		Long modifiedTime = (Long)attributes.get("modifiedTime");
@@ -124,6 +138,16 @@ public class FaroNotificationWrapper
 	}
 
 	/**
+	 * Returns the company ID of this faro notification.
+	 *
+	 * @return the company ID of this faro notification
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
+	}
+
+	/**
 	 * Returns the create time of this faro notification.
 	 *
 	 * @return the create time of this faro notification
@@ -161,6 +185,16 @@ public class FaroNotificationWrapper
 	@Override
 	public long getModifiedTime() {
 		return model.getModifiedTime();
+	}
+
+	/**
+	 * Returns the mvcc version of this faro notification.
+	 *
+	 * @return the mvcc version of this faro notification
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -259,6 +293,16 @@ public class FaroNotificationWrapper
 	}
 
 	/**
+	 * Sets the company ID of this faro notification.
+	 *
+	 * @param companyId the company ID of this faro notification
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
+	}
+
+	/**
 	 * Sets the create time of this faro notification.
 	 *
 	 * @param createTime the create time of this faro notification
@@ -296,6 +340,16 @@ public class FaroNotificationWrapper
 	@Override
 	public void setModifiedTime(long modifiedTime) {
 		model.setModifiedTime(modifiedTime);
+	}
+
+	/**
+	 * Sets the mvcc version of this faro notification.
+	 *
+	 * @param mvccVersion the mvcc version of this faro notification
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

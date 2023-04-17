@@ -20,10 +20,11 @@ import com.liferay.osb.faro.model.impl.FaroNotificationModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * The arguments resolver class for retrieving value from FaroNotification.
@@ -31,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Matthew Kong
  * @generated
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"class.name=com.liferay.osb.faro.model.impl.FaroNotificationImpl",
 		"table.name=OSBFaro_FaroNotification"

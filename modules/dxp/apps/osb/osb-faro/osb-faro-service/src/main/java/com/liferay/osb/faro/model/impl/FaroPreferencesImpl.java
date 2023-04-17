@@ -18,8 +18,4 @@ package com.liferay.osb.faro.model.impl;
  * @author Matthew Kong
  */
 public class FaroPreferencesImpl extends FaroPreferencesBaseImpl {
-
-	public FaroPreferencesImpl() {
-	}
-
 }

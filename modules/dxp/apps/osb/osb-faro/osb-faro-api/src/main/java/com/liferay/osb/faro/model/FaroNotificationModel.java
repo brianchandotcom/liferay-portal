@@ -16,6 +16,8 @@ package com.liferay.osb.faro.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface FaroNotificationModel extends BaseModel<FaroNotification> {
+public interface FaroNotificationModel
+	extends BaseModel<FaroNotification>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +55,22 @@ public interface FaroNotificationModel extends BaseModel<FaroNotification> {
 	 * @param primaryKey the primary key of this faro notification
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this faro notification.
+	 *
+	 * @return the mvcc version of this faro notification
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this faro notification.
+	 *
+	 * @param mvccVersion the mvcc version of this faro notification
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the faro notification ID of this faro notification.
@@ -82,6 +101,36 @@ public interface FaroNotificationModel extends BaseModel<FaroNotification> {
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the company ID of this faro notification.
+	 *
+	 * @return the company ID of this faro notification
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this faro notification.
+	 *
+	 * @param companyId the company ID of this faro notification
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create time of this faro notification.
+	 *
+	 * @return the create time of this faro notification
+	 */
+	public long getCreateTime();
+
+	/**
+	 * Sets the create time of this faro notification.
+	 *
+	 * @param createTime the create time of this faro notification
+	 */
+	public void setCreateTime(long createTime);
+
+	/**
 	 * Returns the user ID of this faro notification.
 	 *
 	 * @return the user ID of this faro notification
@@ -108,20 +157,6 @@ public interface FaroNotificationModel extends BaseModel<FaroNotification> {
 	 * @param userUuid the user uuid of this faro notification
 	 */
 	public void setUserUuid(String userUuid);
-
-	/**
-	 * Returns the create time of this faro notification.
-	 *
-	 * @return the create time of this faro notification
-	 */
-	public long getCreateTime();
-
-	/**
-	 * Sets the create time of this faro notification.
-	 *
-	 * @param createTime the create time of this faro notification
-	 */
-	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the modified time of this faro notification.

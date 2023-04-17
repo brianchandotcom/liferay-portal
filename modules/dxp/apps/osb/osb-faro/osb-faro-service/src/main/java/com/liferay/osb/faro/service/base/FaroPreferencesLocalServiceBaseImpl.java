@@ -19,7 +19,7 @@ import com.liferay.osb.faro.service.FaroPreferencesLocalService;
 import com.liferay.osb.faro.service.FaroPreferencesLocalServiceUtil;
 import com.liferay.osb.faro.service.persistence.FaroPreferencesPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -39,13 +39,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -54,6 +52,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the faro preferences local service.
@@ -68,7 +69,8 @@ import javax.sql.DataSource;
  */
 public abstract class FaroPreferencesLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements FaroPreferencesLocalService, IdentifiableOSGiService {
+	implements AopService, FaroPreferencesLocalService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -389,122 +391,24 @@ public abstract class FaroPreferencesLocalServiceBaseImpl
 		return faroPreferencesPersistence.update(faroPreferences);
 	}
 
-	/**
-	 * Returns the faro preferences local service.
-	 *
-	 * @return the faro preferences local service
-	 */
-	public FaroPreferencesLocalService getFaroPreferencesLocalService() {
-		return faroPreferencesLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the faro preferences local service.
-	 *
-	 * @param faroPreferencesLocalService the faro preferences local service
-	 */
-	public void setFaroPreferencesLocalService(
-		FaroPreferencesLocalService faroPreferencesLocalService) {
-
-		this.faroPreferencesLocalService = faroPreferencesLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			FaroPreferencesLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the faro preferences persistence.
-	 *
-	 * @return the faro preferences persistence
-	 */
-	public FaroPreferencesPersistence getFaroPreferencesPersistence() {
-		return faroPreferencesPersistence;
-	}
-
-	/**
-	 * Sets the faro preferences persistence.
-	 *
-	 * @param faroPreferencesPersistence the faro preferences persistence
-	 */
-	public void setFaroPreferencesPersistence(
-		FaroPreferencesPersistence faroPreferencesPersistence) {
-
-		this.faroPreferencesPersistence = faroPreferencesPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.osb.faro.model.FaroPreferences",
-			faroPreferencesLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		faroPreferencesLocalService = (FaroPreferencesLocalService)aopProxy;
 
 		_setLocalServiceUtilService(faroPreferencesLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.osb.faro.model.FaroPreferences");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -566,32 +470,16 @@ public abstract class FaroPreferencesLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = FaroPreferencesLocalService.class)
 	protected FaroPreferencesLocalService faroPreferencesLocalService;
 
-	@BeanReference(type = FaroPreferencesPersistence.class)
+	@Reference
 	protected FaroPreferencesPersistence faroPreferencesPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroPreferencesLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

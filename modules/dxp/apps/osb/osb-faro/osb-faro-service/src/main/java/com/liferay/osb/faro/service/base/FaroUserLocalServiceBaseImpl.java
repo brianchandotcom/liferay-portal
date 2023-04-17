@@ -17,13 +17,10 @@ package com.liferay.osb.faro.service.base;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalServiceUtil;
-import com.liferay.osb.faro.service.persistence.FaroPreferencesPersistence;
-import com.liferay.osb.faro.service.persistence.FaroProjectFinder;
-import com.liferay.osb.faro.service.persistence.FaroProjectPersistence;
 import com.liferay.osb.faro.service.persistence.FaroUserFinder;
 import com.liferay.osb.faro.service.persistence.FaroUserPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -43,16 +40,11 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.GroupPersistence;
-import com.liferay.portal.kernel.service.persistence.RolePersistence;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -61,6 +53,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the faro user local service.
@@ -75,7 +70,7 @@ import javax.sql.DataSource;
  */
 public abstract class FaroUserLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements FaroUserLocalService, IdentifiableOSGiService {
+	implements AopService, FaroUserLocalService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -385,366 +380,24 @@ public abstract class FaroUserLocalServiceBaseImpl
 		return faroUserPersistence.update(faroUser);
 	}
 
-	/**
-	 * Returns the faro user local service.
-	 *
-	 * @return the faro user local service
-	 */
-	public FaroUserLocalService getFaroUserLocalService() {
-		return faroUserLocalService;
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
 	}
 
-	/**
-	 * Sets the faro user local service.
-	 *
-	 * @param faroUserLocalService the faro user local service
-	 */
-	public void setFaroUserLocalService(
-		FaroUserLocalService faroUserLocalService) {
-
-		this.faroUserLocalService = faroUserLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			FaroUserLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Returns the faro user persistence.
-	 *
-	 * @return the faro user persistence
-	 */
-	public FaroUserPersistence getFaroUserPersistence() {
-		return faroUserPersistence;
-	}
-
-	/**
-	 * Sets the faro user persistence.
-	 *
-	 * @param faroUserPersistence the faro user persistence
-	 */
-	public void setFaroUserPersistence(
-		FaroUserPersistence faroUserPersistence) {
-
-		this.faroUserPersistence = faroUserPersistence;
-	}
-
-	/**
-	 * Returns the faro user finder.
-	 *
-	 * @return the faro user finder
-	 */
-	public FaroUserFinder getFaroUserFinder() {
-		return faroUserFinder;
-	}
-
-	/**
-	 * Sets the faro user finder.
-	 *
-	 * @param faroUserFinder the faro user finder
-	 */
-	public void setFaroUserFinder(FaroUserFinder faroUserFinder) {
-		this.faroUserFinder = faroUserFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the faro preferences local service.
-	 *
-	 * @return the faro preferences local service
-	 */
-	public com.liferay.osb.faro.service.FaroPreferencesLocalService
-		getFaroPreferencesLocalService() {
-
-		return faroPreferencesLocalService;
-	}
-
-	/**
-	 * Sets the faro preferences local service.
-	 *
-	 * @param faroPreferencesLocalService the faro preferences local service
-	 */
-	public void setFaroPreferencesLocalService(
-		com.liferay.osb.faro.service.FaroPreferencesLocalService
-			faroPreferencesLocalService) {
-
-		this.faroPreferencesLocalService = faroPreferencesLocalService;
-	}
-
-	/**
-	 * Returns the faro preferences persistence.
-	 *
-	 * @return the faro preferences persistence
-	 */
-	public FaroPreferencesPersistence getFaroPreferencesPersistence() {
-		return faroPreferencesPersistence;
-	}
-
-	/**
-	 * Sets the faro preferences persistence.
-	 *
-	 * @param faroPreferencesPersistence the faro preferences persistence
-	 */
-	public void setFaroPreferencesPersistence(
-		FaroPreferencesPersistence faroPreferencesPersistence) {
-
-		this.faroPreferencesPersistence = faroPreferencesPersistence;
-	}
-
-	/**
-	 * Returns the faro project local service.
-	 *
-	 * @return the faro project local service
-	 */
-	public com.liferay.osb.faro.service.FaroProjectLocalService
-		getFaroProjectLocalService() {
-
-		return faroProjectLocalService;
-	}
-
-	/**
-	 * Sets the faro project local service.
-	 *
-	 * @param faroProjectLocalService the faro project local service
-	 */
-	public void setFaroProjectLocalService(
-		com.liferay.osb.faro.service.FaroProjectLocalService
-			faroProjectLocalService) {
-
-		this.faroProjectLocalService = faroProjectLocalService;
-	}
-
-	/**
-	 * Returns the faro project persistence.
-	 *
-	 * @return the faro project persistence
-	 */
-	public FaroProjectPersistence getFaroProjectPersistence() {
-		return faroProjectPersistence;
-	}
-
-	/**
-	 * Sets the faro project persistence.
-	 *
-	 * @param faroProjectPersistence the faro project persistence
-	 */
-	public void setFaroProjectPersistence(
-		FaroProjectPersistence faroProjectPersistence) {
-
-		this.faroProjectPersistence = faroProjectPersistence;
-	}
-
-	/**
-	 * Returns the faro project finder.
-	 *
-	 * @return the faro project finder
-	 */
-	public FaroProjectFinder getFaroProjectFinder() {
-		return faroProjectFinder;
-	}
-
-	/**
-	 * Sets the faro project finder.
-	 *
-	 * @param faroProjectFinder the faro project finder
-	 */
-	public void setFaroProjectFinder(FaroProjectFinder faroProjectFinder) {
-		this.faroProjectFinder = faroProjectFinder;
-	}
-
-	/**
-	 * Returns the group local service.
-	 *
-	 * @return the group local service
-	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
-		return groupLocalService;
-	}
-
-	/**
-	 * Sets the group local service.
-	 *
-	 * @param groupLocalService the group local service
-	 */
-	public void setGroupLocalService(
-		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
-		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group persistence.
-	 *
-	 * @return the group persistence
-	 */
-	public GroupPersistence getGroupPersistence() {
-		return groupPersistence;
-	}
-
-	/**
-	 * Sets the group persistence.
-	 *
-	 * @param groupPersistence the group persistence
-	 */
-	public void setGroupPersistence(GroupPersistence groupPersistence) {
-		this.groupPersistence = groupPersistence;
-	}
-
-	/**
-	 * Returns the role local service.
-	 *
-	 * @return the role local service
-	 */
-	public com.liferay.portal.kernel.service.RoleLocalService
-		getRoleLocalService() {
-
-		return roleLocalService;
-	}
-
-	/**
-	 * Sets the role local service.
-	 *
-	 * @param roleLocalService the role local service
-	 */
-	public void setRoleLocalService(
-		com.liferay.portal.kernel.service.RoleLocalService roleLocalService) {
-
-		this.roleLocalService = roleLocalService;
-	}
-
-	/**
-	 * Returns the role persistence.
-	 *
-	 * @return the role persistence
-	 */
-	public RolePersistence getRolePersistence() {
-		return rolePersistence;
-	}
-
-	/**
-	 * Sets the role persistence.
-	 *
-	 * @param rolePersistence the role persistence
-	 */
-	public void setRolePersistence(RolePersistence rolePersistence) {
-		this.rolePersistence = rolePersistence;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the user group role local service.
-	 *
-	 * @return the user group role local service
-	 */
-	public com.liferay.portal.kernel.service.UserGroupRoleLocalService
-		getUserGroupRoleLocalService() {
-
-		return userGroupRoleLocalService;
-	}
-
-	/**
-	 * Sets the user group role local service.
-	 *
-	 * @param userGroupRoleLocalService the user group role local service
-	 */
-	public void setUserGroupRoleLocalService(
-		com.liferay.portal.kernel.service.UserGroupRoleLocalService
-			userGroupRoleLocalService) {
-
-		this.userGroupRoleLocalService = userGroupRoleLocalService;
-	}
-
-	/**
-	 * Returns the user group role persistence.
-	 *
-	 * @return the user group role persistence
-	 */
-	public UserGroupRolePersistence getUserGroupRolePersistence() {
-		return userGroupRolePersistence;
-	}
-
-	/**
-	 * Sets the user group role persistence.
-	 *
-	 * @param userGroupRolePersistence the user group role persistence
-	 */
-	public void setUserGroupRolePersistence(
-		UserGroupRolePersistence userGroupRolePersistence) {
-
-		this.userGroupRolePersistence = userGroupRolePersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.osb.faro.model.FaroUser", faroUserLocalService);
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		faroUserLocalService = (FaroUserLocalService)aopProxy;
 
 		_setLocalServiceUtilService(faroUserLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.osb.faro.model.FaroUser");
-
-		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -805,83 +458,19 @@ public abstract class FaroUserLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = FaroUserLocalService.class)
 	protected FaroUserLocalService faroUserLocalService;
 
-	@BeanReference(type = FaroUserPersistence.class)
+	@Reference
 	protected FaroUserPersistence faroUserPersistence;
 
-	@BeanReference(type = FaroUserFinder.class)
+	@Reference
 	protected FaroUserFinder faroUserFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@BeanReference(
-		type = com.liferay.osb.faro.service.FaroPreferencesLocalService.class
-	)
-	protected com.liferay.osb.faro.service.FaroPreferencesLocalService
-		faroPreferencesLocalService;
-
-	@BeanReference(type = FaroPreferencesPersistence.class)
-	protected FaroPreferencesPersistence faroPreferencesPersistence;
-
-	@BeanReference(
-		type = com.liferay.osb.faro.service.FaroProjectLocalService.class
-	)
-	protected com.liferay.osb.faro.service.FaroProjectLocalService
-		faroProjectLocalService;
-
-	@BeanReference(type = FaroProjectPersistence.class)
-	protected FaroProjectPersistence faroProjectPersistence;
-
-	@BeanReference(type = FaroProjectFinder.class)
-	protected FaroProjectFinder faroProjectFinder;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
-	@ServiceReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.RoleLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.RoleLocalService
-		roleLocalService;
-
-	@ServiceReference(type = RolePersistence.class)
-	protected RolePersistence rolePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserGroupRoleLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.UserGroupRoleLocalService
-		userGroupRoleLocalService;
-
-	@ServiceReference(type = UserGroupRolePersistence.class)
-	protected UserGroupRolePersistence userGroupRolePersistence;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroUserLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

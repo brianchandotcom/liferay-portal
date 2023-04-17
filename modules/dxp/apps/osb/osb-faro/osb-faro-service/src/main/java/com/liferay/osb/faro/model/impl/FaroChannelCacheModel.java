@@ -18,6 +18,7 @@ import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class FaroChannelCacheModel
-	implements CacheModel<FaroChannel>, Externalizable {
+	implements CacheModel<FaroChannel>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -46,7 +47,9 @@ public class FaroChannelCacheModel
 		FaroChannelCacheModel faroChannelCacheModel =
 			(FaroChannelCacheModel)object;
 
-		if (faroChannelId == faroChannelCacheModel.faroChannelId) {
+		if ((faroChannelId == faroChannelCacheModel.faroChannelId) &&
+			(mvccVersion == faroChannelCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -55,23 +58,39 @@ public class FaroChannelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, faroChannelId);
+		int hashCode = HashUtil.hash(0, faroChannelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{faroChannelId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", faroChannelId=");
 		sb.append(faroChannelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", createTime=");
+		sb.append(createTime);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
-		sb.append(", createTime=");
-		sb.append(createTime);
 		sb.append(", modifiedTime=");
 		sb.append(modifiedTime);
 		sb.append(", channelId=");
@@ -91,8 +110,11 @@ public class FaroChannelCacheModel
 	public FaroChannel toEntityModel() {
 		FaroChannelImpl faroChannelImpl = new FaroChannelImpl();
 
+		faroChannelImpl.setMvccVersion(mvccVersion);
 		faroChannelImpl.setFaroChannelId(faroChannelId);
 		faroChannelImpl.setGroupId(groupId);
+		faroChannelImpl.setCompanyId(companyId);
+		faroChannelImpl.setCreateTime(createTime);
 		faroChannelImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -102,7 +124,6 @@ public class FaroChannelCacheModel
 			faroChannelImpl.setUserName(userName);
 		}
 
-		faroChannelImpl.setCreateTime(createTime);
 		faroChannelImpl.setModifiedTime(modifiedTime);
 
 		if (channelId == null) {
@@ -129,14 +150,18 @@ public class FaroChannelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		faroChannelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
-		userId = objectInput.readLong();
-		userName = objectInput.readUTF();
+		companyId = objectInput.readLong();
 
 		createTime = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 
 		modifiedTime = objectInput.readLong();
 		channelId = objectInput.readUTF();
@@ -149,9 +174,15 @@ public class FaroChannelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(faroChannelId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(userId);
 
@@ -161,8 +192,6 @@ public class FaroChannelCacheModel
 		else {
 			objectOutput.writeUTF(userName);
 		}
-
-		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(modifiedTime);
 
@@ -185,11 +214,13 @@ public class FaroChannelCacheModel
 		objectOutput.writeLong(workspaceGroupId);
 	}
 
+	public long mvccVersion;
 	public long faroChannelId;
 	public long groupId;
+	public long companyId;
+	public long createTime;
 	public long userId;
 	public String userName;
-	public long createTime;
 	public long modifiedTime;
 	public String channelId;
 	public String name;

@@ -41,11 +41,13 @@ public class FaroChannelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("faroChannelId", getFaroChannelId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createTime", getCreateTime());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("createTime", getCreateTime());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put("channelId", getChannelId());
 		attributes.put("name", getName());
@@ -57,6 +59,12 @@ public class FaroChannelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long faroChannelId = (Long)attributes.get("faroChannelId");
 
 		if (faroChannelId != null) {
@@ -69,6 +77,18 @@ public class FaroChannelWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long createTime = (Long)attributes.get("createTime");
+
+		if (createTime != null) {
+			setCreateTime(createTime);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -79,12 +99,6 @@ public class FaroChannelWrapper
 
 		if (userName != null) {
 			setUserName(userName);
-		}
-
-		Long createTime = (Long)attributes.get("createTime");
-
-		if (createTime != null) {
-			setCreateTime(createTime);
 		}
 
 		Long modifiedTime = (Long)attributes.get("modifiedTime");
@@ -134,6 +148,16 @@ public class FaroChannelWrapper
 	}
 
 	/**
+	 * Returns the company ID of this faro channel.
+	 *
+	 * @return the company ID of this faro channel
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
+	}
+
+	/**
 	 * Returns the create time of this faro channel.
 	 *
 	 * @return the create time of this faro channel
@@ -171,6 +195,16 @@ public class FaroChannelWrapper
 	@Override
 	public long getModifiedTime() {
 		return model.getModifiedTime();
+	}
+
+	/**
+	 * Returns the mvcc version of this faro channel.
+	 *
+	 * @return the mvcc version of this faro channel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -259,6 +293,16 @@ public class FaroChannelWrapper
 	}
 
 	/**
+	 * Sets the company ID of this faro channel.
+	 *
+	 * @param companyId the company ID of this faro channel
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
+	}
+
+	/**
 	 * Sets the create time of this faro channel.
 	 *
 	 * @param createTime the create time of this faro channel
@@ -296,6 +340,16 @@ public class FaroChannelWrapper
 	@Override
 	public void setModifiedTime(long modifiedTime) {
 		model.setModifiedTime(modifiedTime);
+	}
+
+	/**
+	 * Sets the mvcc version of this faro channel.
+	 *
+	 * @param mvccVersion the mvcc version of this faro channel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

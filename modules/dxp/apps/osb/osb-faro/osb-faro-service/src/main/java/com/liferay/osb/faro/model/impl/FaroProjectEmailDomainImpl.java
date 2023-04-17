@@ -17,5 +17,5 @@ package com.liferay.osb.faro.model.impl;
 /**
  * @author Matthew Kong
  */
-public class FaroUserImpl extends FaroUserBaseImpl {
+public class FaroProjectEmailDomainImpl extends FaroProjectEmailDomainBaseImpl {
 }

@@ -3073,8 +3073,8 @@ public class ObjectEntryResourceTest {
 				_objectDefinition1.getPKObjectFieldName()),
 			StringBundler.concat(
 				"r_", _objectRelationship1.getName(), "_",
-				StringUtil.replaceLast(
-					_objectDefinition1.getPKObjectFieldName(), "Id", "")));
+				StringUtil.removeLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id")));
 
 		_testGetNestedFieldDetailsInOneToManyRelationships(
 			StringBundler.concat(
@@ -4082,16 +4082,16 @@ public class ObjectEntryResourceTest {
 				objectEntryId, "?nestedFields=",
 				StringBundler.concat(
 					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.replaceLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
+					StringUtil.removeLast(
+						_objectDefinition1.getPKObjectFieldName(), "Id"))),
 			Http.Method.GET);
 
 		_assertObjectEntryField(
 			jsonObject.getJSONObject(
 				StringBundler.concat(
 					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.replaceLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
+					StringUtil.removeLast(
+						_objectDefinition1.getPKObjectFieldName(), "Id"))),
 			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
@@ -4406,16 +4406,16 @@ public class ObjectEntryResourceTest {
 				objectEntryId, "?nestedFields=",
 				StringBundler.concat(
 					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.replaceLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
+					StringUtil.removeLast(
+						_objectDefinition1.getPKObjectFieldName(), "Id"))),
 			Http.Method.GET);
 
 		_assertObjectEntryField(
 			jsonObject.getJSONObject(
 				StringBundler.concat(
 					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.replaceLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
+					StringUtil.removeLast(
+						_objectDefinition1.getPKObjectFieldName(), "Id"))),
 			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 

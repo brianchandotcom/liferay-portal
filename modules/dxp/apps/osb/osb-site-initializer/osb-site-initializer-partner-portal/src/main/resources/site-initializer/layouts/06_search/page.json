@@ -9,14 +9,7 @@
 			"actionIds": [
 			],
 			"roleName": "Guest",
-			"scope": 2
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "User",
-			"scope": 2
+			"scope": 4
 		}
 	],
 	"private": false,

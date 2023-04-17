@@ -32,7 +32,6 @@ import {
 } from '../../../../../app/config/constants/keyboardCodes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
-import {config} from '../../../../../app/config/index';
 import {
 	useActivationOrigin,
 	useActiveItemId,
@@ -194,6 +193,7 @@ function StructureTreeNodeContent({
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
 	const nodeRef = useRef();
+	const restrictedItemIds = useSelector((state) => state.restrictedItemIds);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -405,7 +405,7 @@ function StructureTreeNodeContent({
 				showPermissionRestriction={isRestricted(
 					item,
 					node,
-					config.restrictedItemIds
+					restrictedItemIds
 				)}
 				showUnavailableWarning={
 					Liferay.FeatureFlags['LPS-169923'] &&

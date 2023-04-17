@@ -406,7 +406,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 															: '-1'
 													}
 													title={Liferay.Language.get(
-														'add-item'
+														'add-item-at-the-same-level'
 													)}
 												/>
 											}
@@ -443,7 +443,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 															: '-1'
 													}
 													title={Liferay.Language.get(
-														'add-item'
+														'add-item-at-the-same-level'
 													)}
 												/>
 											}

@@ -23,6 +23,7 @@ Export-Package:\
 	com.liferay.portal.search.facet,\
 	com.liferay.portal.search.facet.category,\
 	com.liferay.portal.search.facet.custom,\
+	com.liferay.portal.search.facet.date.range,\
 	com.liferay.portal.search.facet.folder,\
 	com.liferay.portal.search.facet.modified,\
 	com.liferay.portal.search.facet.nested,\

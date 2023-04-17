@@ -18,6 +18,9 @@ import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBo
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.queue.BuildQueue;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
@@ -31,8 +34,10 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
@@ -46,7 +51,41 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 public class Jethr0SpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Jethr0SpringBootApplication.class, args);
+		ConfigurableApplicationContext configurableApplicationContext =
+			SpringApplication.run(Jethr0SpringBootApplication.class, args);
+
+		ConfigurableEnvironment configurableEnvironment =
+			configurableApplicationContext.getEnvironment();
+
+		String jenkinsServerURLs = configurableEnvironment.getProperty(
+			"jenkins.server.urls");
+
+		if ((jenkinsServerURLs == null) || jenkinsServerURLs.isEmpty()) {
+			return;
+		}
+
+		JenkinsNodeRepository jenkinsNodeRepository =
+			configurableApplicationContext.getBean(JenkinsNodeRepository.class);
+		JenkinsServerRepository jenkinsServerRepository =
+			configurableApplicationContext.getBean(
+				JenkinsServerRepository.class);
+
+		for (String jenkinsServerURL : jenkinsServerURLs.split(",")) {
+			JenkinsServer jenkinsServer = jenkinsServerRepository.getByURL(
+				jenkinsServerURL);
+
+			if (jenkinsServer != null) {
+				continue;
+			}
+
+			jenkinsServer = jenkinsServerRepository.add(jenkinsServerURL);
+
+			jenkinsNodeRepository.addAll(jenkinsServer);
+		}
+
+		for (JenkinsServer jenkinsServer : jenkinsServerRepository.getAll()) {
+			jenkinsServer.update();
+		}
 	}
 
 	@Bean
@@ -142,6 +181,9 @@ public class Jethr0SpringBootApplication {
 
 		return projectPrioritizer;
 	}
+
+	@Value("${jenkins.server.urls}")
+	private String _jenkinsServerURLs;
 
 	@Value("${jms.broker.url}")
 	private String _jmsBrokerURL;

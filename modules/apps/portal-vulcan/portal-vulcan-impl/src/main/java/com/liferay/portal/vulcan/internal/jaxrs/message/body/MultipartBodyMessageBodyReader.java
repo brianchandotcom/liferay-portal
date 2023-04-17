@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.message.body;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
@@ -46,6 +47,7 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
@@ -127,6 +129,14 @@ public class MultipartBodyMessageBodyReader
 								fileItem.getInputStream(), fileItem.getSize()));
 					}
 				}
+			}
+			catch (FileUploadBase.SizeLimitExceededException
+				sizeLimitExceededException) {
+
+				throw new BadRequestException(
+					"Please enter a file with a valid file size no larger than " +
+					DLValidatorUtil.getMaxAllowableSize(0, null),
+					sizeLimitExceededException);
 			}
 			catch (Exception exception) {
 				throw new BadRequestException(

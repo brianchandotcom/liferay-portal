@@ -27,8 +27,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.BadRequestException;
-
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadException;
 
@@ -69,14 +67,6 @@ public class ServletFileUploadImpl implements ServletFileUpload {
 			}
 
 			return fileItems;
-		}
-		catch (FileUploadBase.SizeLimitExceededException
-					sizeLimitExceededException) {
-
-			throw new BadRequestException(
-				"Please enter a file with a valid file size no larger than " +
-					fileMaxSize,
-				sizeLimitExceededException);
 		}
 		catch (FileUploadException fileUploadException) {
 			UploadException uploadException = new UploadException(

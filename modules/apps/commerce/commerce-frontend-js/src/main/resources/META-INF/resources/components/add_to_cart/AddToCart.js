@@ -48,10 +48,10 @@ function AddToCart({
 	cartUUID: initialCartUUID,
 	channel,
 	cpInstance: initialCpInstance,
-	createNewOrderURL,
 	disabled: initialDisabled,
 	settings,
 	showOrderTypeModal,
+	showOrderTypeModalURL,
 }) {
 	const account = useCommerceAccount({id: initialAccountId});
 	const cart = useCommerceCart(
@@ -194,7 +194,6 @@ function AddToCart({
 				channel={channel}
 				className={`${spaceDirection}-${spacer}`}
 				cpInstances={[cpInstance]}
-				createOrderURL={createNewOrderURL}
 				disabled={buttonDisabled}
 				notAllowed={!cpInstance.validQuantity}
 				onAdd={() => {
@@ -211,6 +210,7 @@ function AddToCart({
 				}
 				settings={settings}
 				showOrderTypeModal={showOrderTypeModal}
+				showOrderTypeModalURL={showOrderTypeModalURL}
 			/>
 		</div>
 	);
@@ -224,7 +224,6 @@ AddToCart.propTypes = {
 			.isRequired,
 		skuOptions: PropTypes.array,
 	}),
-	createNewOrderURL: PropTypes.string,
 	disabled: PropTypes.bool,
 	settings: PropTypes.shape({
 		alignment: PropTypes.oneOf(['center', 'left', 'right', 'full-width']),
@@ -236,9 +235,10 @@ AddToCart.propTypes = {
 			minOrderQuantity: PropTypes.number,
 			multipleOrderQuantity: PropTypes.number,
 		}),
-		showOrderTypeModal: PropTypes.bool,
 		size: PropTypes.oneOf(['lg', 'md', 'sm']),
 	}),
+	showOrderTypeModal: PropTypes.bool,
+	showOrderTypeModalURL: PropTypes.string,
 };
 
 export default AddToCart;

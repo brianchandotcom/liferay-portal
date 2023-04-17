@@ -19,24 +19,24 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Matthew Kong
  */
-public class NoSuchFaroProjectEmailAddressDomainException
+public class NoSuchFaroProjectEmailDomainException
 	extends NoSuchModelException {
 
-	public NoSuchFaroProjectEmailAddressDomainException() {
+	public NoSuchFaroProjectEmailDomainException() {
 	}
 
-	public NoSuchFaroProjectEmailAddressDomainException(String msg) {
+	public NoSuchFaroProjectEmailDomainException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchFaroProjectEmailAddressDomainException(
-		String msg, Throwable cause) {
+	public NoSuchFaroProjectEmailDomainException(
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchFaroProjectEmailAddressDomainException(Throwable cause) {
-		super(cause);
+	public NoSuchFaroProjectEmailDomainException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

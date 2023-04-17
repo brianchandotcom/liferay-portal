@@ -6,6 +6,24 @@ definition {
 			value1 = ${activeItem});
 	}
 
+	macro gotoClaim {
+		if (!(isSet(siteName))) {
+			var siteName = "Partner Portal";
+		}
+
+		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
+
+		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/web/${siteNameURL}/l/${claimId}");
+
+		echo("${baseURL}/web/${siteNameURL}/l/${claimId}");
+	}
+
 	macro goToNavItem {
 		Click(
 			key_navItem = ${navItem},

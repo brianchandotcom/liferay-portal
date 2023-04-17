@@ -1,27 +1,26 @@
-.partner-portal-welcome-banner {
+.prm-welcome-banner {
 	height: 176px;
 }
 
-.partner-portal-welcome-img {
-	border-bottom-left-radius: var(--border-radius-xl);
-	border-top-left-radius: var(--border-radius-xl);
+.prm-welcome-img {
+	border-radius: var(--border-radius-xl);
 	object-fit: cover;
 	right: 0;
 }
 
-.partner-portal-text {
+.prm-text {
 	font-size: var(--h2-font-size);
 	z-index: 1;
 }
 
-@media (min-width: 768px){
-	.partner-portal-text {
-		font-size: var(--h1-font-size);			
+@media (min-width: 768px) {
+	.prm-text {
+		font-size: var(--h1-font-size);
 	}
 }
 
-@media (min-width: 992px){
-	.partner-portal-text {
-			font-size: var(--display4-size);
+@media (min-width: 992px) {
+	.prm-text {
+		font-size: var(--display4-size);
 	}
 }

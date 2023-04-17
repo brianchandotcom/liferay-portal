@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ComponentExposureCheck" files="portal-search-tuning/portal-search-tuning-rankings-web/src/main/java/com/liferay/portal/search/tuning/rankings/web/internal/util/RankingResultUtil\.java" />
+	</checkstyle>
+</suppressions>

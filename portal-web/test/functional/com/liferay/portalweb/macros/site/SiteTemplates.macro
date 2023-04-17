@@ -128,9 +128,22 @@ definition {
 			MenuItem.click(menuItem = "Configuration");
 		}
 
-		Navigator.gotoNavTab(navTab = "SEO");
+		if (isSet(pageSet)) {
+			Navigator.gotoNavTab(navTab = "Design");
 
-		Panel.expandPanel(panel = "JavaScript");
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Navigator.gotoNavTab(navTab = "JavaScript");
+
+			AssertElementPresent(
+				key_fieldLabel = "JavaScript",
+				locator1 = "FormFields#LABEL");
+		}
+		else {
+			Navigator.gotoNavTab(navTab = "SEO");
+
+			Panel.expandPanel(panel = "JavaScript");
+		}
 
 		Type(
 			key_text = "javascript",
@@ -568,9 +581,22 @@ definition {
 			MenuItem.click(menuItem = "Configuration");
 		}
 
-		Navigator.gotoNavTab(navTab = "SEO");
+		if (isSet(pageSet)) {
+			Navigator.gotoNavTab(navTab = "Design");
 
-		Panel.expandPanel(panel = "JavaScript");
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Navigator.gotoNavTab(navTab = "JavaScript");
+
+			AssertElementPresent(
+				key_fieldLabel = "JavaScript",
+				locator1 = "FormFields#LABEL");
+		}
+		else {
+			Navigator.gotoNavTab(navTab = "SEO");
+
+			Panel.expandPanel(panel = "JavaScript");
+		}
 
 		AssertTextEquals(
 			key_text = "javascript",

@@ -227,7 +227,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			if (type.equals(LayoutConstants.TYPE_PORTLET)) {
 				String layoutTemplateId = ParamUtil.getString(
 					uploadPortletRequest, "layoutTemplateId",
-					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+					GetterUtil.getString(
+						layoutTypePortlet.getLayoutTemplateId(),
+						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID));
 
 				layoutTypePortlet.setLayoutTemplateId(
 					themeDisplay.getUserId(), layoutTemplateId);

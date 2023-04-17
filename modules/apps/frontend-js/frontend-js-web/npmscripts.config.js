@@ -13,11 +13,7 @@
  */
 
 module.exports = {
-	bridges: [
-		'lodash.groupby',
-		'lodash.isequal',
-		'svg4everybody',
-	],
+	bridges: ['lodash.groupby', 'lodash.isequal', 'svg4everybody'],
 	build: {
 		customBridges: {
 			'bridge/frontend-js-web/index':

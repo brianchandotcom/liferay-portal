@@ -28,9 +28,9 @@ module.exports = {
 			'react-dropzone',
 			'react-transition-group',
 			'uuid',
-			"react-flow-renderer",
-			"react-helmet",
-			"react-router-dom",
+			'react-flow-renderer',
+			'react-helmet',
+			'react-router-dom',
 			'graphiql',
 			'graphiql/graphiql.css',
 			{name: 'axe-core', symbols: 'auto'},
@@ -58,7 +58,7 @@ module.exports = {
 			{name: 'qs', symbols: 'auto'},
 			{name: 'react-text-mask', symbols: 'auto'},
 			{name: 'text-mask-addons', symbols: 'auto'},
-			{name: 'text-mask-core', symbols: 'auto'}
+			{name: 'text-mask-core', symbols: 'auto'},
 		],
 	},
 };

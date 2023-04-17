@@ -205,18 +205,16 @@ const htmlEscapes = {
 	"'": '&#39;',
 	'<': '&lt;',
 	'>': '&gt;',
-}
+};
 
-const reUnescapedHtml = /[&<>"']/g
-const reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
+const reUnescapedHtml = /[&<>"']/g;
+const reHasUnescapedHtml = RegExp(reUnescapedHtml.source);
 
 Liferay.Util.escape = (string) => {
-	return (string && reHasUnescapedHtml.test(string))
+	return string && reHasUnescapedHtml.test(string)
 		? string.replace(reUnescapedHtml, (chr) => htmlEscapes[chr])
-		: (string || '')
-}
-
-;
+		: string || '';
+};
 Liferay.Util.escapeHTML = escapeHTML;
 Liferay.Util.fetch = fetch;
 
@@ -351,16 +349,19 @@ const htmlUnescapes = {
 	'&gt;': '>',
 	'&lt;': '<',
 	'&quot;': '"',
-}
+};
 
-const reEscapedHtml = /&(?:amp|lt|gt|quot|#(0+)?39);/g
-const reHasEscapedHtml = RegExp(reEscapedHtml.source)
+const reEscapedHtml = /&(?:amp|lt|gt|quot|#(0+)?39);/g;
+const reHasEscapedHtml = RegExp(reEscapedHtml.source);
 
 Liferay.Util.unescape = (string) => {
-	return (string && reHasEscapedHtml.test(string))
-		? string.replace(reEscapedHtml, (entity) => (htmlUnescapes[entity] || "'"))
-		: (string || '')
-}
+	return string && reHasEscapedHtml.test(string)
+		? string.replace(
+				reEscapedHtml,
+				(entity) => htmlUnescapes[entity] || "'"
+		  )
+		: string || '';
+};
 
 Liferay.Util.unescapeHTML = unescapeHTML;
 

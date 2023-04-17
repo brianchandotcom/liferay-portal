@@ -27,7 +27,6 @@ hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('java', java);
 hljs.registerLanguage('plaintext', plaintext);
 
-
 function Highlight(props) {
 	const {children, element: Element, innerHTML} = props;
 	const elementRef = useRef(null);

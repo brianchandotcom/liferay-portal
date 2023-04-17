@@ -2,4 +2,8 @@
 	display: flex;
 	gap: 2rem;
 	padding: 2rem;
+
+	.table-responsive {
+		overflow-x: unset;
+	}
 }

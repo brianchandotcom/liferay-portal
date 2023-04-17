@@ -24,6 +24,7 @@ export type AppProps = {
 export type TableHeaders = {
 	iconSymbol?: string;
 	title: string;
+	style?: {width: string};
 }[];
 
 interface DashboardTableProps<T> {
@@ -58,16 +59,14 @@ export function DashboardTable<T>({
 		return (
 			<ClayTable borderless className="dashboard-table-container">
 				<ClayTable.Head>
-					{tableHeaders.map((tableHeader) => (
-						<ClayTable.Cell headingCell key={tableHeader.title}>
+					{tableHeaders.map(({iconSymbol, title, style}) => (
+						<ClayTable.Cell headingCell key={title} style={style}>
 							<div className="dashboard-table-header-name">
 								<span className="dashboard-table-header-text">
-									{tableHeader.title}
+									{title}
 								</span>
 
-								{tableHeader.iconSymbol && (
-									<ClayIcon symbol={tableHeader.iconSymbol} />
-								)}
+								{iconSymbol && <ClayIcon symbol={iconSymbol} />}
 							</div>
 						</ClayTable.Cell>
 					))}

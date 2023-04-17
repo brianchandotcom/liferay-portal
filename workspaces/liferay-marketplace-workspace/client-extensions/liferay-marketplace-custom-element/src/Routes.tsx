@@ -34,6 +34,9 @@ export default function AppRoutes({route}: AppRoutesProps) {
 	else if (route === 'get-app') {
 		return <GetAppPage />;
 	}
+	else if (route === 'next-steps') {
+		return <NextStepPage />;
+	}
 	else if (route === 'purchased-apps') {
 		return <PurchasedAppsDashboardPage />;
 	}
@@ -51,9 +54,6 @@ export default function AppRoutes({route}: AppRoutesProps) {
 		else {
 			return <PublisherGatePage />;
 		}
-	}
-	else if (route === 'next-steps') {
-		return <NextStepPage />;
 	}
 
 	return <></>;

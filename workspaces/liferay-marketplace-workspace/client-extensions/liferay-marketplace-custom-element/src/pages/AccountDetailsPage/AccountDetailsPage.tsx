@@ -147,7 +147,6 @@ export function AccountDetailsPage({
 						cardIcon={userIcon}
 						cardIconAltText="Profile Icon"
 						cardTitle="Profile"
-						sizing="lg"
 					>
 						<table className="account-details-body-table">
 							<tr className="account-details-body-table-row">
@@ -196,7 +195,6 @@ export function AccountDetailsPage({
 						cardIcon={phoneIcon}
 						cardIconAltText="Contact Icon"
 						cardTitle="Contact"
-						sizing="lg"
 					>
 						<table className="account-details-body-table">
 							<tr className="account-details-body-table-row">
@@ -236,7 +234,6 @@ export function AccountDetailsPage({
 						cardIcon={locationIcon}
 						cardIconAltText="Address Icon"
 						cardTitle="Address"
-						sizing="lg"
 					>
 						<table className="account-details-body-table">
 							{selectedAccountAddress?.map((address) => (
@@ -262,7 +259,6 @@ export function AccountDetailsPage({
 						cardIconAltText="Agreements Icon"
 						cardTitle="Agreements"
 						clayIcon="info-book"
-						sizing="lg"
 					>
 						<table className="account-details-body-table">
 							<tr>
@@ -289,7 +285,6 @@ export function AccountDetailsPage({
 						cardIcon={creditCartIcon}
 						cardIconAltText="Payment  Icon"
 						cardTitle="Payment "
-						sizing="lg"
 					>
 						{getCustomFieldValue('Paypal Email Address') ? (
 							<table className="account-details-body-table">

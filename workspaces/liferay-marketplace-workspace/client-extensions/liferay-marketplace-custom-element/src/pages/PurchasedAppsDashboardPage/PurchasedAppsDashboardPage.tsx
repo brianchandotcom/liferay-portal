@@ -46,6 +46,7 @@ interface PurchasedAppTable {
 const tableHeaders = [
 	{
 		title: 'Name',
+		style: {width: '2%'},
 	},
 	{
 		title: 'Purchased By',

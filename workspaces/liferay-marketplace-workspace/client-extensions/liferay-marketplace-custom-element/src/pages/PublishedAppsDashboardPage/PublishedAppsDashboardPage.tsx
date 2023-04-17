@@ -43,6 +43,7 @@ const appTableHeaders = [
 	{
 		iconSymbol: 'order-arrow',
 		title: 'Name',
+		style: {width: '2%'},
 	},
 	{
 		title: 'Version',

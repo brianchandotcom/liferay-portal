@@ -23,11 +23,7 @@ export function DetailedCard({
 	sizing,
 }: DetailedCardProps) {
 	return (
-		<div
-			className={classNames('detailed-card-container', {
-				'detailed-card-container-larger': sizing === 'lg',
-			})}
-		>
+		<div className="detailed-card-container">
 			<div className="detailed-card-header">
 				<h2 className="">{cardTitle}</h2>
 

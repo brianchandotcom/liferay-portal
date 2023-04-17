@@ -718,6 +718,17 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
 			commerceOrder.getCommerceAccountId());
 
+		String purchaseOrderNumber = StringPool.BLANK;
+
+		if (commerceOrder.isOpen()) {
+			purchaseOrderNumber = GetterUtil.get(
+				cart.getPurchaseOrderNumber(),
+				commerceOrder.getPurchaseOrderNumber());
+		}
+		else {
+			purchaseOrderNumber = commerceOrder.getPurchaseOrderNumber();
+		}
+
 		_commerceOrderEngine.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(),
@@ -732,8 +743,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			GetterUtil.get(
 				cart.getPaymentMethod(),
 				commerceOrder.getCommercePaymentMethodKey()),
-			commerceOrder.getPurchaseOrderNumber(),
-			commerceOrder.getShippingAmount(),
+			purchaseOrderNumber, commerceOrder.getShippingAmount(),
 			GetterUtil.get(
 				cart.getShippingOption(),
 				commerceOrder.getShippingOptionName()),

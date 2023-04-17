@@ -14,7 +14,8 @@
 
 package com.liferay.osb.faro.constants;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 /**
@@ -31,11 +32,10 @@ public class FaroChannelConstants {
 	}
 
 	private static final Map<String, Integer> _permissionTypes =
-		new HashMap<String, Integer>() {
-			{
-				put("allUsers", PERMISSION_ALL_USERS);
-				put("selectUsers", PERMISSION_SELECT_USERS);
-			}
-		};
+		HashMapBuilder.put(
+			"allUsers", PERMISSION_ALL_USERS
+		).put(
+			"selectUsers", PERMISSION_SELECT_USERS
+		).build();
 
 }

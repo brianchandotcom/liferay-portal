@@ -28,12 +28,12 @@ public class NoSuchFaroUserException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchFaroUserException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchFaroUserException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchFaroUserException(Throwable cause) {
-		super(cause);
+	public NoSuchFaroUserException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

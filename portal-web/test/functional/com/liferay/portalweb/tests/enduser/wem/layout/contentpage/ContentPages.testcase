@@ -1421,6 +1421,8 @@ definition {
 		}
 
 		task ("Then the page creator should see the Breadcrumb and element-text as active") {
+			Breadcrumb.seeFullNested();
+
 			Breadcrumb.viewBreadcrumbPath(breadcrumbNameList = "Grid,Container,Heading,element-text");
 
 			Breadcrumb.viewActiveEntry(breadcrumbName = "element-text");

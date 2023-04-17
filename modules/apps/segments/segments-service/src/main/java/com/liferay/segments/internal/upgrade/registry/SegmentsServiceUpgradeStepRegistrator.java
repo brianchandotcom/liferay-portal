@@ -79,6 +79,8 @@ public class SegmentsServiceUpgradeStepRegistrator
 			"2.5.0", "2.6.0",
 			new com.liferay.segments.internal.upgrade.v2_6_0.
 				SegmentsExperienceUpgradeProcess());
+
+		registry.register("2.6.0", "2.6.1", new DummyUpgradeStep());
 	}
 
 	@Reference

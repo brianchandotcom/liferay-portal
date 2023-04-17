@@ -278,57 +278,51 @@ public class LayoutActionDropdownItemsProvider {
 					dropdownGroupItem.setDropdownItems(
 						DropdownItemListBuilder.addContext(
 							dropdownContextItem -> {
-								dropdownContextItem.setDropdownItems(
-									DropdownItemListBuilder.add(
-										dropdownItem -> {
-											dropdownItem.putData(
-												"action", "copyLayout");
-											dropdownItem.putData(
-												"copyLayoutURL",
-												_layoutsAdminDisplayContext.
-													getCopyLayoutRenderURL(
-														false, layout));
+								if (_layoutsAdminDisplayContext.
+										isShowCopyLayoutAction(layout)) {
 
-											if (!_layoutsAdminDisplayContext.
-													isShowCopyLayoutAction(
-														layout)) {
-
-												dropdownItem.setDisabled(true);
+									dropdownContextItem.setDropdownItems(
+										DropdownItemListBuilder.add(
+											dropdownItem -> {
+												dropdownItem.putData(
+													"action", "copyLayout");
+												dropdownItem.putData(
+													"copyLayoutURL",
+													_layoutsAdminDisplayContext.
+														getCopyLayoutRenderURL(
+															false, layout));
+												dropdownItem.setLabel(
+													LanguageUtil.get(
+														_httpServletRequest,
+														"page"));
 											}
-
-											dropdownItem.setLabel(
-												LanguageUtil.get(
-													_httpServletRequest,
-													"page"));
-										}
-									).add(
-										dropdownItem -> {
-											dropdownItem.putData(
-												"action",
-												"copyLayoutWithPermissions");
-											dropdownItem.putData(
-												"copyLayoutURL",
-												_layoutsAdminDisplayContext.
-													getCopyLayoutRenderURL(
-														true, layout));
-
-											if (!_layoutsAdminDisplayContext.
-													isShowCopyLayoutAction(
-														layout)) {
-
-												dropdownItem.setDisabled(true);
+										).add(
+											dropdownItem -> {
+												dropdownItem.putData(
+													"action",
+													"copyLayoutWith" +
+														"Permissions");
+												dropdownItem.putData(
+													"copyLayoutURL",
+													_layoutsAdminDisplayContext.
+														getCopyLayoutRenderURL(
+															true, layout));
+												dropdownItem.setLabel(
+													LanguageUtil.get(
+														_httpServletRequest,
+														"page-with-" +
+															"permissions"));
 											}
+										).build());
+								}
+								else {
+									dropdownContextItem.setDisabled(true);
+								}
 
-											dropdownItem.setLabel(
-												LanguageUtil.get(
-													_httpServletRequest,
-													"page-with-permissions"));
-										}
-									).build());
+								dropdownContextItem.setIcon("copy");
 								dropdownContextItem.setLabel(
 									LanguageUtil.get(
 										_httpServletRequest, "copy"));
-								dropdownContextItem.setIcon("copy");
 							}
 						).add(
 							() ->

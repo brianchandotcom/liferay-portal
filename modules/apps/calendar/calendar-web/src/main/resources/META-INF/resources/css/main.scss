@@ -69,7 +69,7 @@
 
 .calendar-list-item-hover,
 .calendar-list-item-active {
-	background-color: #dce3ea;
+	background-color: $dropdown-link-hover-bg;
 	white-space: -moz-pre-wrap;
 	white-space: pre-line;
 	white-space: pre-wrap;
@@ -210,8 +210,12 @@
 
 		.popover-content .close {
 			position: absolute;
-			right: 10px;
-			top: 5px;
+			right: 12px;
+			top: 12px;
+		}
+
+		.popover-footer {
+			padding: 5px 4px 14px;
 		}
 	}
 
@@ -237,6 +241,10 @@
 				padding: 10px 0 10px 8px;
 			}
 		}
+	}
+
+	.scheduler-view-table-data-col-title-today {
+		color: $primary-d2;
 	}
 }
 
@@ -592,9 +600,9 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 
-	&:hover {
-		background-color: #eee;
-		border: dotted #eee;
+	&:hover:not([data-id='colorPicker']) {
+		background-color: $dropdown-link-hover-bg;
+		border: dotted $dropdown-link-hover-bg;
 		border-width: 1px 0;
 		padding-bottom: 5px;
 		padding-top: 5px;

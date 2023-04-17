@@ -131,11 +131,11 @@ public class MultipartBodyMessageBodyReader
 				}
 			}
 			catch (FileUploadBase.SizeLimitExceededException
-				sizeLimitExceededException) {
+						sizeLimitExceededException) {
 
 				throw new BadRequestException(
-					"Please enter a file with a valid file size no larger than " +
-					DLValidatorUtil.getMaxAllowableSize(0, null),
+					"Please enter a file with a valid file size no larger " +
+						"than " + DLValidatorUtil.getMaxAllowableSize(0, null),
 					sizeLimitExceededException);
 			}
 			catch (Exception exception) {

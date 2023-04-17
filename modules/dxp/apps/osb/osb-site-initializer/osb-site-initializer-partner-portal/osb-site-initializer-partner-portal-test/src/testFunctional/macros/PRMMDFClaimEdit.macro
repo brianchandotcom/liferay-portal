@@ -1,0 +1,90 @@
+definition {
+
+	@summary = "Click on 'Edit' button inside claim detail page"
+	macro editButton {
+		Click(locator1 = "PRMMDFClaim#EDIT_BUTTON");
+	}
+
+	@summary = "Edit the claim, changing some informations or adding new"
+    macro editClaim {
+		if(!(isSet(activityIndex))) {
+			var activityIndex = 0;
+		}
+
+		if(!(isSet(budgetIndex))) {
+			var budgetIndex = 0;
+		}
+
+		if(isSet(newAttachment) || isSet(newInvoiceAmount)) {
+			PRMMDFClaimEdit.editActivity(
+				activityName = ${activityName},
+				activityIndex = ${activityIndex},
+				budgetIndex = ${budgetIndex},
+				newAttachment = ${newAttachment},
+				newInvoiceAmount = ${newInvoiceAmount});
+		}
+
+		if(isSet(newActivityIndex)) {
+			PRMMDFClaim.fillActivityFields(
+				activityIndex = ${newActivityIndex},
+				budgetIndex = ${newBudgetIndex},
+				thirdInvoice = ${newThirdInvoice},
+				listLeads = ${newListLeads});
+		}
+
+		Button.clickSubmitButton();
+    }
+
+	@summary = "Change informations about claimed activities"
+	macro editActivity {
+		if(!(isSet(activityIndex))) {
+			var activityIndex = 0;
+		}
+
+		if(!(isSet(budgetIndex))) {
+			var budgetIndex = 0;
+		}
+
+		Click(
+			locator1 = "PRMMDFClaimEdit#ACTIVITY_NAME",
+			key_activityName = ${activityName});
+
+		Click(
+			locator1 = "PRMMDFClaimEdit#BUDGET_COLLAPSE",
+			key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].selected");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "PRMMDFClaimEdit#UPLOAD_FIELD",
+			key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].invoice",
+			value1 = ${newAttachment});
+		
+		if(isSet(newInvoiceAmount)) {
+			Type(
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].invoiceAmount",
+				value1 = ${newInvoiceAmount});
+		}
+	}
+
+	@summary = "Go to the claim via UI, clicking on 'View' button"
+	macro gotoClaimViaUI {
+		Click(
+			locator1 = "PRMMDFClaim#VIEW_CLAIM_BUTTON",
+			key_claimId = ${claimId});
+	}
+
+	@summary = "Verify that the 'Edit' button is visible"
+	macro buttonIsVisible {
+		AssertVisible(
+			key_text = "Edit",
+			locator1 = "Button#ANY");
+	}
+
+	@summary = "Verify that the 'Edit' button is not visible"
+	macro buttonIsNotVisible {
+		AssertNotVisible(
+			key_text = "Edit",
+			locator1 = "Button#ANY");
+	}
+
+}

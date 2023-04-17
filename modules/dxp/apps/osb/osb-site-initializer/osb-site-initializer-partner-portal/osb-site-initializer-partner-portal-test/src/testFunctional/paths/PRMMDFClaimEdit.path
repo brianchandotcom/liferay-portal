@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>PRMMDFClaimEdit</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMMDFClaimEdit</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>UPLOAD_FIELD</td>
+	<td>//button[@name='${key_fieldName}']//following::input[@name='${key_fieldName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUDGET_COLLAPSE</td>
+	<td>//input[@name='${key_fieldName}'][@type='checkbox']//ancestor-or-self::div[contains(@class,'card-interactive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITY_NAME</td>
+	<td>//*[@route='mdf-claim-form']//*[contains(text(),'${key_activityName}')]//ancestor::div[contains(@class,'card-interactive')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

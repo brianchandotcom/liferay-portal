@@ -59,6 +59,34 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
 	}
 
+	@description = "This is a use case for LPS-150970. Verify Terms Of Use not reappear after dismissed once with non root context."
+	@priority = 4
+	test TermsOfUseNotShownAfterDimissedWithNonRootContext {
+		property custom.properties = "enterprise.product.notification.enabled=true";
+		property portal.acceptance = "true";
+		property portal.context = "liferay";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.name.skip.portal.instance = "DXPLicense#TermsOfUseNotShownAfterDimissedWithNonRootContext";
+
+		User.firstLoginPG();
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Terms of Use");
+
+		Click(locator1 = "Button#DONE");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		AssertElementNotPresent(locator1 = "Modal#MODAL");
+	}
+
 	@priority = 4
 	test TermsOfUseNotShownToNonAdminUser {
 		property custom.properties = "enterprise.product.notification.enabled=true";

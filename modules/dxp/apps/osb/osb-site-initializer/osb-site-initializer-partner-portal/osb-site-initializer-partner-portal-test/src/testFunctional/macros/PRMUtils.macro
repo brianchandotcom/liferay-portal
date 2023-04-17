@@ -25,6 +25,14 @@ definition {
 		SelectFrameTop();
 
 		Alert.viewSuccessMessage();
+
+		WaitForElementPresent(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		Click(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
 	}
 
 	macro assertPageTitle {

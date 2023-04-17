@@ -173,7 +173,7 @@ definition {
 			value = ${highestEducation});
 
 		RaylifeApplicationModal.selectOptionInDropdownByName(
-			field = "millitary-affiliation",
+			field = "military-affiliation",
 			text = ${militaryAffiliation});
 
 		DoubleClick(

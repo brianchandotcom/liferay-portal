@@ -1,5 +1,64 @@
 components:
     schemas:
+        Facet:
+            properties:
+                aggregationName:
+                    type: string
+                attributes:
+                    additionalProperties:
+                        type: object
+                    type: object
+                frequencyThreshold:
+                    type: integer
+                maxTerms:
+                    type: integer
+                name:
+                    type: string
+                values:
+                    items:
+                        type: object
+                    type: array
+            type: object
+        SearchRequestBody:
+            properties:
+                facets:
+                    items:
+                        $ref: "#/components/schemas/Facet"
+                    type: array
+                searchContextAttributes:
+                    additionalProperties:
+                        type: object
+                    type: object
+            type: object
+        SearchResponse:
+            properties:
+                aggregationResults:
+                    additionalProperties:
+                        type: object
+                    type: object
+                documents:
+                    items:
+                        type: object
+                    type: array
+                facets:
+                    additionalProperties:
+                        type: object
+                    type: object
+                maxScore:
+                    format: float
+                    type: number
+                page:
+                    type: integer
+                pageSize:
+                    type: integer
+                request:
+                    type: object
+                response:
+                    type: object
+                totalHits:
+                    format: int64
+                    type: integer
+            type: object
         Suggestion:
             properties:
                 attributes:
@@ -43,6 +102,92 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/search":
+        post:
+            operationId: postSearch
+            parameters:
+                - in: query
+                  name: basicFacetSelection
+                  schema:
+                      type: boolean
+                - in: query
+                  name: entryClassNames
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: explain
+                  schema:
+                      type: boolean
+                - in: query
+                  name: groupIds
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+                - in: query
+                  name: includeAssetSearchSummary
+                  schema:
+                      type: boolean
+                - in: query
+                  name: includeAssetTitle
+                  schema:
+                      type: boolean
+                - in: query
+                  name: includeRequest
+                  schema:
+                      type: boolean
+                - in: query
+                  name: includeResponse
+                  schema:
+                      type: boolean
+                - in: query
+                  name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: resultFields
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: scopeGroupId
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SearchRequestBody"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SearchRequestBody"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SearchResponse"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SearchResponse"
+            tags: ["SearchResponse"]
     /suggestions:
         post:
             operationId: postSuggestionsPage
@@ -90,6 +235,7 @@ paths:
                             items:
                                 $ref: "#/components/schemas/SuggestionsContributorConfiguration"
                             type: array
+                required: false
             responses:
                 200:
                     content:

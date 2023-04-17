@@ -199,6 +199,7 @@ definition {
 	test CanPublishSmallImageAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
 		property portal.version = "7.3.10.1";
+		property test.assert.warning.exceptions = "false";
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

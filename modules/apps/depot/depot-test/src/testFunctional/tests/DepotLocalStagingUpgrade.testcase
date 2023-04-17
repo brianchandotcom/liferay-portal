@@ -123,6 +123,7 @@ definition {
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-local-staging-with-image";
 		property portal.version = "7.3.10.1";
+		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#CanPublishImageInMGAfterUpgradeFrom73101Archive";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");

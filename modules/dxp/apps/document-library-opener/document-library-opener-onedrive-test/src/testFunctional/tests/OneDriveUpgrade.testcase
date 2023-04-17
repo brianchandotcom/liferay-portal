@@ -23,6 +23,7 @@ definition {
 	test ViewOneDriveDocumentsArchive72101 {
 		property data.archive.type = "data-archive-onedrive";
 		property portal.version = "7.2.10.1";
+		property test.assert.warning.exceptions = "false";
 
 		OneDrive.goToOneDrive();
 

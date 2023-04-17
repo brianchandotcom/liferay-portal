@@ -58,10 +58,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -72,7 +71,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -83,6 +81,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Gabriel Albuquerque
  */
+@FeatureFlags("LPS-167253")
 @RunWith(Arquillian.class)
 public class ObjectViewLocalServiceTest {
 
@@ -93,20 +92,7 @@ public class ObjectViewLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-167253", "true"
-			).build());
-
 		_objectDefinition = _addCustomObjectDefinition();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-167253", "false"
-			).build());
 	}
 
 	@Test

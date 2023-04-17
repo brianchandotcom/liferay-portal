@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.internal.test.util.DDMFixture;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -30,8 +32,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
@@ -57,13 +61,19 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Lino Alves
@@ -75,6 +85,22 @@ public class DDMIndexerImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -264,6 +290,19 @@ public class DDMIndexerImplTest {
 	private DDMStructure _createDDMStructure(DDMForm ddmForm) {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
+		Snapshot<DDMFormDeserializer> ddmFormDeserializerSnapshot =
+			Mockito.mock(Snapshot.class);
+
+		ReflectionTestUtil.setFieldValue(
+			ddmStructure, "_ddmFormDeserializerSnapshot",
+			ddmFormDeserializerSnapshot);
+
+		Mockito.when(
+			ddmFormDeserializerSnapshot.get()
+		).thenReturn(
+			new DDMFormJSONDeserializer()
+		);
+
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
@@ -346,6 +385,9 @@ public class DDMIndexerImplTest {
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();
+
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 	private final DDMFixture _ddmFixture = new DDMFixture();
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer =

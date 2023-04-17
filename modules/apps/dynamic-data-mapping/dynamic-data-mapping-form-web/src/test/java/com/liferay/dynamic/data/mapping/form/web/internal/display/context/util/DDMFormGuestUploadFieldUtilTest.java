@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context.util;
 
+import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -22,7 +24,11 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -35,13 +41,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Carolina Barbosa
@@ -55,8 +66,21 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+
 		_setUpDDMForm();
 		_setUpDDMFormInstanceRecordLocalService();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
 	}
 
 	@Test
@@ -138,6 +162,8 @@ public class DDMFormGuestUploadFieldUtilTest {
 				_MAXIMUM_SUBMISSIONS));
 	}
 
+	protected static final JSONFactory jsonFactory = new JSONFactoryImpl();
+
 	private static void _setUpDDMForm() {
 		_ddmForm = DDMFormTestUtil.createDDMForm();
 	}
@@ -160,6 +186,19 @@ public class DDMFormGuestUploadFieldUtilTest {
 	private DDMStructure _createDDMStructure() {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
+		Snapshot<DDMFormDeserializer> ddmFormDeserializerSnapshot =
+			Mockito.mock(Snapshot.class);
+
+		ReflectionTestUtil.setFieldValue(
+			ddmStructure, "_ddmFormDeserializerSnapshot",
+			ddmFormDeserializerSnapshot);
+
+		Mockito.when(
+			ddmFormDeserializerSnapshot.get()
+		).thenReturn(
+			new DDMFormJSONDeserializer()
+		);
+
 		ddmStructure.setDDMForm(_ddmForm);
 
 		return ddmStructure;
@@ -174,10 +213,12 @@ public class DDMFormGuestUploadFieldUtilTest {
 			_DDM_FORM_INSTANCE_ID
 		);
 
+		DDMStructure ddmStructure = _createDDMStructure();
+
 		Mockito.when(
 			ddmFormInstance.getStructure()
 		).thenReturn(
-			_createDDMStructure()
+			ddmStructure
 		);
 
 		return ddmFormInstance;
@@ -256,5 +297,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 	private static final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService = Mockito.mock(
 			DDMFormInstanceRecordLocalService.class);
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 }

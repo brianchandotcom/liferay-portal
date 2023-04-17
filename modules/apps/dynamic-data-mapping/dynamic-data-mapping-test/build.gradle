@@ -19,6 +19,7 @@ dependencies {
 	testCompile project(":apps:portal-search:portal-search-api")
 	testCompile project(":apps:portal-search:portal-search-test-util")
 	testCompile project(":apps:portal:portal-aop-api")
+	testCompile project(":apps:static:osgi:osgi-util")
 	testCompile project(":apps:view-count:view-count-api")
 	testCompile project(":core:osgi-service-tracker-collections")
 	testCompile project(":core:petra:petra-concurrent")

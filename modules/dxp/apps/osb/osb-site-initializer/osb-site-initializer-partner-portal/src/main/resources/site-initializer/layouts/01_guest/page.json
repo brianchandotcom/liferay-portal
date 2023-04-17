@@ -5,25 +5,6 @@
 		"en_US": "Guest"
 	},
 	"permissions": [
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Guest",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-			],
-			"roleName": "User",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-			],
-			"roleName": "Site Member",
-			"scope": 4
-		}
 	],
 	"private": false,
 	"system": false,

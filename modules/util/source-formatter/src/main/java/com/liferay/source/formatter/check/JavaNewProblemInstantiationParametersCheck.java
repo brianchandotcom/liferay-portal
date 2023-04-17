@@ -59,31 +59,28 @@ public class JavaNewProblemInstantiationParametersCheck
 			String exceptionVariableName = null;
 
 			if (parameterList.size() == 2) {
-				String parameterName1 = parameterList.get(0);
-				String parameterName2 = parameterList.get(1);
+				String parameterName = parameterList.get(1);
 
 				if (StringUtil.equals(
-						parameterName1, "Response.Status.BAD_REQUEST") &&
-					parameterName2.matches(
+						parameterList.get(0), "Response.Status.BAD_REQUEST") &&
+					parameterName.matches(
 						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
-					exceptionVariableName = parameterName2.substring(
-						0, parameterName2.indexOf("."));
+					exceptionVariableName = parameterName.substring(
+						0, parameterName.indexOf("."));
 				}
 			}
 			else if (parameterList.size() == 4) {
-				String parameterName1 = parameterList.get(0);
-				String parameterName2 = parameterList.get(1);
-				String parameterName3 = parameterList.get(2);
+				String parameterName = parameterList.get(2);
 
-				if (StringUtil.equals(parameterName1, "null") &&
+				if (StringUtil.equals(parameterList.get(0), "null") &&
 					StringUtil.equals(
-						parameterName2, "Response.Status.BAD_REQUEST") &&
-					parameterName3.matches(
+						parameterList.get(1), "Response.Status.BAD_REQUEST") &&
+					parameterName.matches(
 						"\\w*[eE]xception\\.getMessage\\(\\)")) {
 
-					exceptionVariableName = parameterName3.substring(
-						0, parameterName3.indexOf("."));
+					exceptionVariableName = parameterName.substring(
+						0, parameterName.indexOf("."));
 				}
 			}
 

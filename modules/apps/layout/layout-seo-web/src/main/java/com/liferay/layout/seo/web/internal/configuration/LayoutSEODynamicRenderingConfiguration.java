@@ -45,13 +45,6 @@ public interface LayoutSEODynamicRenderingConfiguration {
 	public String serviceURL();
 
 	@Meta.AD(
-		deflt = "W3C_Validator,applebot,baiduspider,bingbot,bitlybot,bitrix link preview,chrome-lighthouse,discordbot,embedly,facebookexternalhit,flipboard,google page speed,googlebot,linkedinbot,nuzzel,outbrain,pinterest/0.,pinterestbot,quora link preview,qwantify,redditbot,rogerbot,screaming frog,showyoubot,skypeuripreview,slackbot,telegrambot,tumblr,twitterbot,vkShare,whatsapp,xing-contenttabreceiver,yandex",
-		name = "layout-seo-dynamic-rendering-configuration-crawler-user-agents",
-		required = false
-	)
-	public String[] crawlerUserAgents();
-
-	@Meta.AD(
 		deflt = "",
 		name = "layout-seo-dynamic-rendering-configuration-included-path",
 		required = false

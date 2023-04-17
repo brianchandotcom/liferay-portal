@@ -1874,7 +1874,7 @@ definition {
 				menuItem = "Configure",
 				pageName = "Test Page");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Theme.configureLookAndFeelSpecificLook();
 

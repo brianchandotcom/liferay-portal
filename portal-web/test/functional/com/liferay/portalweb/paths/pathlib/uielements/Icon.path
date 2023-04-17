@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>CLOSE_ALERT</td>
-	<td>//*[@role='alert'] //button[contains(@class,'close')] | //a[contains(@id,'closePanelAdd') and contains(@class,'close')]</td>
+	<td>//div[contains(@class,'alert')]//button[contains(@class,'close')] | //a[contains(@id,'closePanelAdd') and contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>

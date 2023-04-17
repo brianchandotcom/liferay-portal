@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -145,7 +146,26 @@ public class MenuAccessConfigurationDisplayContext {
 
 		List<Role> roles = new ArrayList<>();
 
-		for (String roleName : getRolesCanSeeControlMenu()) {
+		String[] rolesCanSeeControlMenu = getRolesCanSeeControlMenu();
+
+		if (!ArrayUtil.contains(
+				rolesCanSeeControlMenu, RoleConstants.ADMINISTRATOR)) {
+
+			roles.add(
+				_roleLocalService.fetchRole(
+					_themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR));
+		}
+
+		if (!ArrayUtil.contains(
+				rolesCanSeeControlMenu, RoleConstants.SITE_ADMINISTRATOR)) {
+
+			roles.add(
+				_roleLocalService.fetchRole(
+					_themeDisplay.getCompanyId(),
+					RoleConstants.SITE_ADMINISTRATOR));
+		}
+
+		for (String roleName : rolesCanSeeControlMenu) {
 			Role role = _roleLocalService.fetchRole(
 				_themeDisplay.getCompanyId(), roleName);
 
@@ -162,6 +182,20 @@ public class MenuAccessConfigurationDisplayContext {
 	public boolean isShowControlMenuByRole() throws Exception {
 		return _menuAccessConfigurationProvider.isShowControlMenuByRole(
 			_themeDisplay.getScopeGroupId());
+	}
+
+	public boolean isShowDeleteButton(Role role) throws Exception {
+		if (role == null) {
+			return true;
+		}
+
+		if (RoleConstants.ADMINISTRATOR.equals(role.getName()) ||
+			RoleConstants.SITE_ADMINISTRATOR.equals(role.getName())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private final ConfigurationProvider _configurationProvider;

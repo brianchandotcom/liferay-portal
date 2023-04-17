@@ -39,7 +39,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collector;
 
 /**
  * @author Brian Wing Shun Chan
@@ -89,11 +88,6 @@ public class JSONUtil {
 		}
 
 		return newJSONArray;
-	}
-
-	public static Collector<Object, JSONArray, JSONArray> createCollector() {
-		return Collector.of(
-			JSONUtil::_createJSONArray, JSONArray::put, JSONUtil::concat);
 	}
 
 	public static boolean equals(JSONArray jsonArray1, JSONArray jsonArray2) {

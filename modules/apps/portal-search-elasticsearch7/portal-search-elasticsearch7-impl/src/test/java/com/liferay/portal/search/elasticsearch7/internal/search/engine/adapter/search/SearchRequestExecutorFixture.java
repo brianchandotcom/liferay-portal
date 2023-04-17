@@ -25,8 +25,8 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.facet.ModifiedFacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.NestedFacetProcessor;
+import com.liferay.portal.search.elasticsearch7.internal.facet.RangeFacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.groupby.DefaultGroupByTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.DefaultHighlighterTranslator;
@@ -225,7 +225,7 @@ public class SearchRequestExecutorFixture {
 				_bundleContext.registerService(
 					(Class<FacetProcessor<SearchRequestBuilder>>)
 						(Class<?>)FacetProcessor.class,
-					new ModifiedFacetProcessor(),
+					new RangeFacetProcessor(),
 					MapUtil.singletonDictionary(
 						"class.name", ModifiedFacetImpl.class.getName())));
 

@@ -36,7 +36,7 @@ public class ClassicModifiedFacetTest extends BaseClassicModifiedFacetTestCase {
 	protected IndexingFixture createIndexingFixture() throws Exception {
 		return LiferayElasticsearchIndexingFixtureFactory.builder(
 		).facetProcessor(
-			new ModifiedFacetProcessor()
+			new RangeFacetProcessor()
 		).build();
 	}
 

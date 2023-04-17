@@ -34,6 +34,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-180896 Confirm that the dataset view deletion is recoverable"
+	@priority = 5
+	test CanCancelDeletionOnCancelButton {
+		task ("The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("And Add a new view") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
+
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test");
+		}
+
+		task ("And select delete and in the modal, click the cancel button") {
+			Click(
+				key_name = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+			Button.clickCancel();
+		}
+
+		task ("Then the dataset View is not deleted") {
+			AssertElementPresent(
+				key_itemName = "View Test",
+				locator1 = "FrontendDataSetAdmin#NAME_OF_VIEWS");
+		}
+	}
+
 	@description = "LPS-180898. Confirm that the user can cancel deletion when clicking close (X) button"
 	@priority = 3
 	test CanCancelDeletionOnCloseButton {

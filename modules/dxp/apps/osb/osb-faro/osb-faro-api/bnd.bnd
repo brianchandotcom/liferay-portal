@@ -1,6 +1,6 @@
 Bundle-Name: Liferay OSB Faro API
 Bundle-SymbolicName: com.liferay.osb.faro.api
-Bundle-Version: 2.0.0
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.osb.faro.constants,\
 	com.liferay.osb.faro.exception,\

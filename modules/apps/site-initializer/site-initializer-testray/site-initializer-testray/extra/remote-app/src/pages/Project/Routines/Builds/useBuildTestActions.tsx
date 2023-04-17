@@ -65,6 +65,7 @@ const useBuildTestActions = () => {
 				}),
 			icon: 'user',
 			name: i18n.translate('assign'),
+			permission: 'UPDATE',
 		},
 		{
 			action: (caseResult, mutate) => {
@@ -93,6 +94,7 @@ const useBuildTestActions = () => {
 						? 'unassign-myself'
 						: 'assign-to-me'
 				),
+			permission: 'UPDATE',
 		},
 		{
 			action: ({id}, mutate) =>

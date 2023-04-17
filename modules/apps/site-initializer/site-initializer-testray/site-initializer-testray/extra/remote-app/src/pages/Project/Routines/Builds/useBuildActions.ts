@@ -78,6 +78,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			action: () => alert('Archive'),
 			icon: 'archive',
 			name: i18n.translate('archive'),
+			permission: 'UPDATE',
 		},
 		{
 			action: ({id}, mutate) =>

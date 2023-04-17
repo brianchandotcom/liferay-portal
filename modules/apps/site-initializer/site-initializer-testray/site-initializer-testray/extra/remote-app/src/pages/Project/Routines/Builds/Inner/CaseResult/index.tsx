@@ -234,7 +234,9 @@ const CaseResult = () => {
 											}
 										/>
 									),
-									visible: hasCaseResultEditPermission,
+									visible:
+										!!caseResult.user ||
+										hasCaseResultEditPermission,
 								},
 								{
 									divider: true,

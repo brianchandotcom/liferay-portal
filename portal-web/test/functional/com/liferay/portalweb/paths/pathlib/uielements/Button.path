@@ -116,8 +116,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_WITH_ARIA_LABEL_INDEX</td>
-	<td>xpath=(//button[@aria-label='${ariaLabel}'])[${key_index}]</td>
+	<td>ANY_WITH_CLASS_AND_INDEX</td>
+	<td>xpath=(//button[contains(@class,'${key_class}')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1667,9 +1667,9 @@ definition {
 
 	macro removeDuplicatedFieldsGroup {
 		Click(
-			ariaLabel = "Remove Duplicate Field fieldset",
+			key_class = "delete-button",
 			key_index = ${index},
-			locator1 = "Button#ANY_WITH_ARIA_LABEL_INDEX");
+			locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
 	}
 
 	macro saveAsDraftViaAP {

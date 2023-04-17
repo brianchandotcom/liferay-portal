@@ -8,8 +8,19 @@ definition {
 		JSONPRMAPI.addAccountEntry(accountName = ${accountName});
 	}
 
+	macro changeClaimStatus {
+		var statusKey = StringUtil.lowerCaseFirstLetter(${claimStatus});
+		var statusKey = StringUtil.replace(${statusKey}," ","");
+
+		JSONPRMAPI.changeClaimStatus(
+			claimStatus = ${claimStatus},
+			claimId = ${claimId},
+			statusKey = ${statusKey});
+	}
+
 	macro changeMDFStatus {
-		var statusKey = StringUtil.lowerCase(${mdfStatus});
+		var statusKey = StringUtil.replace(${mdfStatus}," ","");
+		var statusKey = StringUtil.lowerCaseFirstLetter(${mdfStatus});
 
 		JSONPRMAPI.changeMDFStatus(
 			mdfStatus = ${mdfStatus},

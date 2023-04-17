@@ -136,10 +136,19 @@ public class ObjectRelationshipExtensionProviderTest {
 				TestPropsValues.getCompanyId(), UserAccount.class.getName(),
 				userAccount);
 
+		Assert.assertNull(extendedProperties);
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			_getNestedFieldsContext(RandomTestUtil.randomString()));
+
+		extendedProperties = _extensionProvider.getExtendedProperties(
+			TestPropsValues.getCompanyId(), UserAccount.class.getName(),
+			userAccount);
+
 		Assert.assertTrue(extendedProperties.isEmpty());
 
 		NestedFieldsContextThreadLocal.setNestedFieldsContext(
-			_getNestedFieldsContext());
+			_getNestedFieldsContext(_objectRelationship.getName()));
 
 		extendedProperties = _extensionProvider.getExtendedProperties(
 			TestPropsValues.getCompanyId(), UserAccount.class.getName(),
@@ -176,9 +185,6 @@ public class ObjectRelationshipExtensionProviderTest {
 	public void testIsApplicableExtension() throws Exception {
 		Assert.assertFalse(
 			_extensionProvider.isApplicableExtension(
-				TestPropsValues.getCompanyId(), null));
-		Assert.assertFalse(
-			_extensionProvider.isApplicableExtension(
 				TestPropsValues.getCompanyId(),
 				com.liferay.object.rest.dto.v1_0.ObjectEntry.class.getName() +
 					"#" + _objectDefinition.getName()));
@@ -199,10 +205,12 @@ public class ObjectRelationshipExtensionProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private NestedFieldsContext _getNestedFieldsContext() {
+	private NestedFieldsContext _getNestedFieldsContext(
+		String nestedFieldName) {
+
 		return new NestedFieldsContext(
-			1, Collections.singletonList(_objectRelationship.getName()), null,
-			null, null, null);
+			1, Collections.singletonList(nestedFieldName), null, null, null,
+			null);
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

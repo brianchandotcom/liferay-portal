@@ -96,7 +96,7 @@ export default function () {
 		);
 	}, [leadsChartValues?.rejected, opportunitiesChartValues?.rejected]);
 
-	const getChart = () => {
+	const Chart = () => {
 		const chart = {
 			bar: {
 				radius: {
@@ -199,7 +199,7 @@ export default function () {
 			}
 			title="Deals"
 		>
-			{getChart()}
+			<Chart />
 		</Container>
 	);
 }

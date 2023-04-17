@@ -466,8 +466,12 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		existingObjectEntry.setProperties(
 			() -> {
-				Map<String, Object> properties =
-					existingObjectEntry.getProperties();
+				ObjectEntry getObjectEntry =
+					getScopeScopeKeyByExternalReferenceCode(
+						existingObjectEntry.getScopeKey(),
+						existingObjectEntry.getExternalReferenceCode());
+
+				Map<String, Object> properties = getObjectEntry.getProperties();
 
 				properties.putAll(objectEntry.getProperties());
 

@@ -21,7 +21,6 @@ definition {
 		}
 	}
 
-	@disable-webdriver = "true"
 	@priority = 3
 	test CannotGetRatedEntryByOtherUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

@@ -27,7 +27,6 @@ definition {
 		}
 	}
 
-	@disable-webdriver = "true"
 	@priority = 3
 	test CannotGetRatedEntryByOtherUsersInDepot {
 		task ("Given an asset library is created") {

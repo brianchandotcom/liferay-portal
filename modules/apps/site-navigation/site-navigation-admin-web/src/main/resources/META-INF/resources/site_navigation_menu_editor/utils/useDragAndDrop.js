@@ -12,7 +12,13 @@
  * details.
  */
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
@@ -37,6 +43,7 @@ const DragDropContext = React.createContext({});
 export function DragDropProvider({children}) {
 	const [parentId, setParentId] = useState(null);
 	const [horizontalOffset, setHorizontalOffset] = useState(0);
+	const [targetItemId, setTargetItemId] = useState(null);
 	const [verticalOffset, setVerticalOffset] = useState(0);
 
 	const dragDropValues = {
@@ -44,7 +51,9 @@ export function DragDropProvider({children}) {
 		parentId,
 		setHorizontalOffset,
 		setParentId,
+		setTargetItemId,
 		setVerticalOffset,
+		targetItemId,
 		verticalOffset,
 	};
 
@@ -67,6 +76,7 @@ export function useDragItem(item, onDragEnd) {
 		parentId,
 		setHorizontalOffset,
 		setParentId,
+		setTargetItemId,
 		setVerticalOffset,
 	} = useContext(DragDropContext);
 
@@ -82,6 +92,7 @@ export function useDragItem(item, onDragEnd) {
 
 			setHorizontalOffset(0);
 			setParentId(null);
+			setTargetItemId(null);
 			setVerticalOffset(null);
 		},
 		isDragging(monitor) {
@@ -105,6 +116,70 @@ export function useDragItem(item, onDragEnd) {
 }
 
 export function useDropTarget(item) {
+	if (Liferay.FeatureFlags['LPS-134527']) {
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		return useNewDropTarget(item);
+	}
+	else {
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		return useOldDropTarget(item);
+	}
+}
+
+function useNewDropTarget(item) {
+	const {siteNavigationMenuItemId} = item;
+
+	const [isNested, setIsNested] = useState(false);
+	const items = useItems();
+	const itemPath = getItemPath(siteNavigationMenuItemId, items);
+	const targetRef = useRef();
+
+	const {setTargetItemId, targetItemId} = useContext(DragDropContext);
+
+	const [, dndTargetRef] = useDrop({
+		accept: ACCEPTING_ITEM_TYPE,
+		canDrop(source, monitor) {
+			return monitor.isOver();
+		},
+		hover(source, monitor) {
+			if (monitor.canDrop(source, monitor)) {
+				if (!targetRef.current || itemPath.includes(source.id)) {
+					return;
+				}
+
+				const itemPosition = monitor.getSourceClientOffset();
+				const targetRect = targetRef.current.getBoundingClientRect();
+
+				// We need to check min and max X values to correctly support
+				// both LTR and RTL languages.
+
+				const max = Math.max(targetRect.left, targetRect.right);
+				const min = Math.min(targetRect.left, targetRect.right);
+
+				const normalizedPosition = (itemPosition.x - min) / (max - min);
+
+				setTargetItemId(siteNavigationMenuItemId);
+				setIsNested(normalizedPosition > 0.4);
+			}
+		},
+	});
+
+	const updateTargetRef = useCallback(
+		(nextTargetElement) => {
+			dndTargetRef(nextTargetElement);
+			targetRef.current = nextTargetElement;
+		},
+		[dndTargetRef]
+	);
+
+	return {
+		isNested,
+		isOver: targetItemId === siteNavigationMenuItemId,
+		targetRef: updateTargetRef,
+	};
+}
+
+function useOldDropTarget(item) {
 	const {siteNavigationMenuItemId} = item;
 
 	const items = useItems();

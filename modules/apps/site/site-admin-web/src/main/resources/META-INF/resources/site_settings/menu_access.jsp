@@ -18,6 +18,8 @@
 
 <%
 MenuAccessConfigurationDisplayContext menuAccessDisplayContext = (MenuAccessConfigurationDisplayContext)request.getAttribute(MenuAccessConfigurationDisplayContext.class.getName());
+
+String textCssClass = menuAccessDisplayContext.isShowControlMenuByRole() ? "modify-text" : "modify-text text-muted";
 %>
 
 <liferay-util:buffer
@@ -63,6 +65,7 @@ MenuAccessConfigurationDisplayContext menuAccessDisplayContext = (MenuAccessConf
 		cssClass="sheet-subtitle"
 	>
 		<clay:content-col
+			cssClass="<%= textCssClass %>"
 			expand="<%= true %>"
 		>
 			<span class="heading-text"><liferay-ui:message key="roles-can-see-control-menu-name" /></span>
@@ -99,6 +102,7 @@ MenuAccessConfigurationDisplayContext menuAccessDisplayContext = (MenuAccessConf
 					modelVar="role"
 				>
 					<liferay-ui:search-container-column-text
+						cssClass="<%= textCssClass %>"
 						name="title"
 						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"

@@ -21,8 +21,13 @@ export default function ({namespace}) {
 
 	const onCheckboxChange = (event) => {
 		const modifyLinks = document.querySelectorAll('.modify-link');
+		const modifyTexts = document.querySelectorAll('.modify-text');
 
 		toggleDisabled(modifyLinks, !event.target.checked);
+
+		modifyTexts.forEach((text) => {
+			text.classList.toggle('text-muted', !event.target.checked);
+		});
 	};
 
 	checkbox.addEventListener('change', onCheckboxChange);

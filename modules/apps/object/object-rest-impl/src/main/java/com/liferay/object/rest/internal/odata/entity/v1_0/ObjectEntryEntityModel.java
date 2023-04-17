@@ -83,6 +83,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 					objectRelationship.getName(),
 					_getRelatedObjectDefinitionEntityFields(
 						objectRelationship, objectDefinition)));
+
+			_handledObjectDefinitions.clear();
 		}
 	}
 
@@ -175,8 +177,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		_relatedObjectRelationships.add(
-			objectRelationship.getObjectRelationshipId());
+		_handledObjectDefinitions.add(objectDefinition.getObjectDefinitionId());
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			objectDefinition, objectRelationship);
@@ -189,6 +190,15 @@ public class ObjectEntryEntityModel implements EntityModel {
 		List<EntityField> relatedObjectDefinitionEntityFields = new ArrayList<>(
 			relatedObjectDefinitionEntityFieldsMap.values());
 
+		if (_handledObjectDefinitions.contains(
+				relatedObjectDefinition.getObjectDefinitionId())) {
+
+			_handledObjectDefinitions.remove(
+				objectDefinition.getObjectDefinitionId());
+
+			return relatedObjectDefinitionEntityFields;
+		}
+
 		List<ObjectRelationship> relatedObjectDefinitionObjectRelationships =
 			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
 				relatedObjectDefinition.getObjectDefinitionId());
@@ -198,8 +208,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 			if ((relatedObjectRelationship.getObjectRelationshipId() ==
 					objectRelationship.getObjectRelationshipId()) ||
-				_relatedObjectRelationships.contains(
-					relatedObjectRelationship.getObjectRelationshipId())) {
+				_isObjectDefinitionHandled(
+					relatedObjectDefinition, relatedObjectRelationship)) {
 
 				continue;
 			}
@@ -319,8 +329,20 @@ public class ObjectEntryEntityModel implements EntityModel {
 		return entityFieldsMap;
 	}
 
+	private boolean _isObjectDefinitionHandled(
+			ObjectDefinition relatedObjectDefinition,
+			ObjectRelationship relatedObjectRelationship)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _getRelatedObjectDefinition(
+			relatedObjectDefinition, relatedObjectRelationship);
+
+		return _handledObjectDefinitions.contains(
+			objectDefinition.getObjectDefinitionId());
+	}
+
 	private final Map<String, EntityField> _entityFieldsMap;
-	private final List<Long> _relatedObjectRelationships = new ArrayList<>();
+	private final List<Long> _handledObjectDefinitions = new ArrayList<>();
 	private final Set<String> _unsupportedBusinessTypes = SetUtil.fromArray(
 		ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,
 		ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,

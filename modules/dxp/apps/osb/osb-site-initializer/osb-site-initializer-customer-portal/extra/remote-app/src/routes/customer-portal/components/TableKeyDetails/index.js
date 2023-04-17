@@ -13,7 +13,8 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import i18n from '../../../../common/I18n';
-import getCurrentEndDate from '../../../../common/utils/getCurrentEndDate';
+import {FORMAT_DATE_TYPES} from '../../../../common/utils/constants';
+import getDateCustomFormat from '../../../../common/utils/getDateCustomFormat';
 import {
 	getFormatedProductName,
 	getProductDescription,
@@ -52,7 +53,10 @@ const TableKeyDetails = ({
 		new Date(activationKeys.expirationDate) >=
 		new Date(unlimitedLicenseDate)
 			? 'Does Not Expire'
-			: getCurrentEndDate(activationKeys.expirationDate);
+			: getDateCustomFormat(
+					activationKeys.expirationDate,
+					FORMAT_DATE_TYPES.day2DMonthSYearN
+			  );
 
 	useEffect(() => {
 		if (actionToCopy) {
@@ -206,7 +210,10 @@ const TableKeyDetails = ({
 
 					<div className="col-3">
 						<p className="bg-neutral-1 cp-key-details-paragraph px-3 py-2 rounded">
-							{getCurrentEndDate(activationKeys.createDate)}
+							{getDateCustomFormat(
+								activationKeys.createDate,
+								FORMAT_DATE_TYPES.day2DMonthSYearN
+							)}
 						</p>
 					</div>
 				</div>

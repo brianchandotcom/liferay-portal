@@ -20,9 +20,12 @@ import {
 	getCommerceOrderItems,
 } from '../../../../../common/services/liferay/graphql/queries';
 import {getCommonLicenseKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import {ROLE_TYPES} from '../../../../../common/utils/constants';
+import {
+	FORMAT_DATE_TYPES,
+	ROLE_TYPES,
+} from '../../../../../common/utils/constants';
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
-import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
+import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
 import getKebabCase from '../../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../../context';
 import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
@@ -238,10 +241,12 @@ const ActivationKeysInputs = ({
 							}}
 						>
 							{orderItemsDates.map((dateInterval, index) => {
-								const formattedDate = `${getCurrentEndDate(
-									dateInterval.startDate
-								)} - ${getCurrentEndDate(
-									dateInterval.endDate
+								const formattedDate = `${getDateCustomFormat(
+									dateInterval.startDate,
+									FORMAT_DATE_TYPES.day2DMonthSYearN
+								)} - ${getDateCustomFormat(
+									dateInterval.endDate,
+									FORMAT_DATE_TYPES.day2DMonthSYearN
 								)}`;
 
 								return (

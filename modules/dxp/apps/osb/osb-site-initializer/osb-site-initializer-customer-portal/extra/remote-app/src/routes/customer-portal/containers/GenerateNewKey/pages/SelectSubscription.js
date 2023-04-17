@@ -20,7 +20,8 @@ import {Radio} from '../../../../../common/components/Radio';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {getNewGenerateKeyFormValues} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
+import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
+import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
 import {useCustomerPortal} from '../../../context';
 import GenerateNewKeySkeleton from '../Skeleton';
 
@@ -156,8 +157,14 @@ const SelectSubscription = ({
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
 					{i18n.sub('activation-keys-will-be-valid-x-x', [
-						getCurrentEndDate(subscriptionTerm.startDate),
-						getCurrentEndDate(subscriptionTerm.endDate),
+						getDateCustomFormat(
+							subscriptionTerm.startDate,
+							FORMAT_DATE_TYPES.day2DMonthSYearN
+						),
+						getDateCustomFormat(
+							subscriptionTerm.endDate,
+							FORMAT_DATE_TYPES.day2DMonthSYearN
+						),
 					])}
 				</span>
 			</ClayAlert>
@@ -166,7 +173,12 @@ const SelectSubscription = ({
 				<span className="text-paragraph">
 					{i18n.sub(
 						'activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
-						[getCurrentEndDate(subscriptionTerm.startDate)]
+						[
+							getDateCustomFormat(
+								subscriptionTerm.startDate,
+								FORMAT_DATE_TYPES.day2DMonthSYearN
+							),
+						]
 					)}
 				</span>
 			</ClayAlert>
@@ -321,10 +333,12 @@ const SelectSubscription = ({
 									...subscriptionTerm,
 									index,
 								});
-							const currentStartAndEndDate = `${getCurrentEndDate(
-								subscriptionTerm.startDate
-							)} - ${getCurrentEndDate(
-								subscriptionTerm.endDate
+							const currentStartAndEndDate = `${getDateCustomFormat(
+								subscriptionTerm.startDate,
+								FORMAT_DATE_TYPES.day2DMonthSYearN
+							)} - ${getDateCustomFormat(
+								subscriptionTerm.endDate,
+								FORMAT_DATE_TYPES.day2DMonthSYearN
 							)}`;
 
 							const infoSelectedKey = {

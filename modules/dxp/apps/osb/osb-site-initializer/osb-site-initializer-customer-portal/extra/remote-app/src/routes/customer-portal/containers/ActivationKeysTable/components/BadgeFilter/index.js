@@ -12,7 +12,8 @@
 import {useCallback} from 'react';
 import i18n from '../../../../../../common/I18n';
 import Button from '../../../../../../common/components/Button';
-import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate';
+import {FORMAT_DATE_TYPES} from '../../../../../../common/utils/constants';
+import getDateCustomFormat from '../../../../../../common/utils/getDateCustomFormat';
 import BadgePillFilter from '../../../../components/BadgePillFilter';
 import {INITIAL_FILTER} from '../../utils/constants/initialFilter';
 
@@ -35,13 +36,19 @@ const BadgeFilter = ({
 			}
 
 			dateDisplays.push(
-				getCurrentEndDate(dateFilterState.value?.onOrAfter)
+				getDateCustomFormat(
+					dateFilterState.value?.onOrAfter,
+					FORMAT_DATE_TYPES.day2DMonthSYearN
+				)
 			);
 		}
 
 		if (dateFilterState.value?.onOrBefore) {
 			dateDisplays.push(
-				getCurrentEndDate(dateFilterState.value?.onOrBefore)
+				getDateCustomFormat(
+					dateFilterState.value?.onOrBefore,
+					FORMAT_DATE_TYPES.day2DMonthSYearN
+				)
 			);
 		}
 

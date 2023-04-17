@@ -10,7 +10,8 @@
  */
 
 import i18n from '../../../../../../../common/I18n';
-import getCurrentEndDate from '../../../../../../../common/utils/getCurrentEndDate';
+import {FORMAT_DATE_TYPES} from '../../../../../../../common/utils/constants';
+import getDateCustomFormat from '../../../../../../../common/utils/getDateCustomFormat';
 
 const DNE_YEARS = 100;
 
@@ -35,7 +36,10 @@ const ExpirationDateColumn = ({activationKey}) => {
 
 	return (
 		<p className="font-weight-bold m-0 text-neutral-10">
-			{getCurrentEndDate(activationKey.expirationDate)}
+			{getDateCustomFormat(
+				activationKey.expirationDate,
+				FORMAT_DATE_TYPES.day2DMonthSYearN
+			)}
 		</p>
 	);
 };

@@ -78,7 +78,7 @@ export default function propsTransformer({
 							);
 
 							if (callback) {
-								callback(event);
+								callback(event, item.data);
 							}
 						}
 						else {

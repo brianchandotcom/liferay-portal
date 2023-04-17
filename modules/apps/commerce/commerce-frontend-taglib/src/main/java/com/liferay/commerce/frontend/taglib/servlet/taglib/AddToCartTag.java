@@ -16,6 +16,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -37,6 +38,9 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,6 +48,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -160,6 +166,9 @@ public class AddToCartTag extends IncludeTag {
 					CommerceChannel.class.getName(), _commerceChannelId, true);
 
 			_showOrderTypeModal = commerceOrderTypesCount > 1;
+
+			_showOrderTypeModalURL = _getShowOrderTypeModalURL(
+				httpServletRequest);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -234,6 +243,9 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "size", _size);
 		setNamespacedAttribute(
 			httpServletRequest, "showOrderTypeModal", _showOrderTypeModal);
+		setNamespacedAttribute(
+			httpServletRequest, "showOrderTypeModalURL",
+			_showOrderTypeModalURL);
 		setNamespacedAttribute(httpServletRequest, "skuOptions", _skuOptions);
 		setNamespacedAttribute(
 			httpServletRequest, "stockQuantity", _stockQuantity);
@@ -313,6 +325,7 @@ public class AddToCartTag extends IncludeTag {
 		_productHelper = null;
 		_productSettingsModel = null;
 		_showOrderTypeModal = false;
+		_showOrderTypeModalURL = null;
 		_size = "md";
 		_skuOptions = null;
 		_stockQuantity = 0;
@@ -321,6 +334,27 @@ public class AddToCartTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	private String _getShowOrderTypeModalURL(
+		HttpServletRequest httpServletRequest) {
+
+		if (_showOrderTypeModal) {
+			return PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest,
+					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/commerce_order_content/view_commerce_order_order_type_modal"
+			).setParameter(
+				"addToCart", Boolean.TRUE
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
@@ -352,6 +386,7 @@ public class AddToCartTag extends IncludeTag {
 	private ProductHelper _productHelper;
 	private ProductSettingsModel _productSettingsModel;
 	private boolean _showOrderTypeModal;
+	private String _showOrderTypeModalURL;
 	private String _size = "md";
 	private String _skuOptions;
 	private int _stockQuantity;

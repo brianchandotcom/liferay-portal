@@ -35,7 +35,6 @@ function AddToCartButton({
 	channel,
 	className,
 	cpInstances,
-	createOrderURL,
 	disabled,
 	hideIcon,
 	notAllowed,
@@ -44,6 +43,7 @@ function AddToCartButton({
 	onError,
 	settings,
 	showOrderTypeModal,
+	showOrderTypeModalURL,
 }) {
 	const [cartAtomState, setCartAtomState] = useLiferayState(cartAtom);
 	const [isTriggeringCartUpdate, setIsTriggeringCartUpdate] = useState(false);
@@ -121,13 +121,13 @@ function AddToCartButton({
 	);
 
 	useEffect(() => {
-		function handleAddNewItemToCart(orderTypeId) {
+		function handleAddItemToCart({orderTypeId}) {
 			if (event) {
-				handleClickAddToCart(event, orderTypeId.details[0]);
+				handleClickAddToCart(event, orderTypeId);
 			}
 		}
 
-		Liferay.on(ADD_ITEM_TO_CART, handleAddNewItemToCart);
+		Liferay.on(ADD_ITEM_TO_CART, handleAddItemToCart);
 
 		return () => {
 			Liferay.detach(ADD_ITEM_TO_CART, handleAddItemToCart);
@@ -174,7 +174,7 @@ function AddToCartButton({
 			{showOrderTypeModal ? (
 				<Modal
 					id={`${settings.namespace}add-order-modal`}
-					url={createOrderURL}
+					url={showOrderTypeModalURL}
 				/>
 			) : null}
 
@@ -212,6 +212,7 @@ AddToCartButton.defaultProps = {
 		iconOnly: false,
 		inline: false,
 	},
+	showOrderTypeModal: false,
 };
 
 AddToCartButton.propTypes = {
@@ -238,7 +239,6 @@ AddToCartButton.propTypes = {
 			]),
 		})
 	).isRequired,
-	createOrderURL: PropTypes.string,
 	disabled: PropTypes.bool,
 	hideIcon: PropTypes.bool,
 	notAllowed: PropTypes.bool,
@@ -251,6 +251,7 @@ AddToCartButton.propTypes = {
 		inline: PropTypes.bool,
 	}),
 	showOrderTypeModal: PropTypes.bool,
+	showOrderTypeModalURL: PropTypes.string,
 };
 
 export default AddToCartButton;

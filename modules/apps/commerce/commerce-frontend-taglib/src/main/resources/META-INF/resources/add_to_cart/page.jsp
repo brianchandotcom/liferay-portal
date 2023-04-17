@@ -77,6 +77,7 @@ if (alignment.equals("full-width")) {
 			size: '<%= size %>',
 		},
 		showOrderTypeModal: <%= showOrderTypeModal %>,
+		showOrderTypeModalURL: '<%= showOrderTypeModalURL %>',
 	};
 
 	<c:if test="<%= productSettingsModel != null %>">

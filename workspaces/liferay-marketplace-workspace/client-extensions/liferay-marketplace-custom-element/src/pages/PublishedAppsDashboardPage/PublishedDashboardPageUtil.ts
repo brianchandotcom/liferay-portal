@@ -4,6 +4,7 @@ import {AppProps} from 'liferay-marketplace-custom-element/src/components/Dashbo
 import appsIcon from '../../assets/icons/apps-fill.svg';
 import businessIcon from '../../assets/icons/business-center.svg';
 import membersIcon from '../../assets/icons/person-fill.svg';
+import projectsIcon from '../../assets/icons/projects-icon.svg';
 
 export const appList: AppProps[] = [];
 
@@ -32,6 +33,12 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemSelected: true,
 		itemTitle: 'Apps',
 		items: appList,
+	},
+	{
+		itemIcon: projectsIcon,
+		itemName: 'projects',
+		itemSelected: false,
+		itemTitle: 'Projects',
 	},
 	{
 		itemIcon: membersIcon,

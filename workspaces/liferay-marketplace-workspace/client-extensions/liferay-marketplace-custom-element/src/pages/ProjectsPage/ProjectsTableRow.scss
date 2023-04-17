@@ -1,0 +1,100 @@
+.projects-table-row {
+	&-created-by {
+		&-container {
+			display: flex;
+			flex-direction: column;
+		}
+
+		&-date {
+			color: #6c6c75;
+			font-size: 13px;
+			line-height: 16px;
+		}
+
+		&-name {
+			font-size: 14px;
+			line-height: 24px;
+		}
+	}
+
+	&-dropdown-item-text {
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1rem;
+
+		&-red {
+			color: #da1414;
+		}
+	}
+
+	&-end-date {
+		font-size: 1rem;
+		line-height: 24px;
+	}
+
+	&-name {
+		&-container {
+			align-items: center;
+			display: flex;
+			gap: 12px;
+			word-break: break-all;
+		}
+
+		&-icon {
+			height: 36px;
+			width: 36px;
+		}
+
+		&-text {
+			font-size: 1rem;
+			font-weight: 600;
+			line-height: 24px;
+		}
+	}
+
+	&-project-button {
+		&-container {
+			align-items: center;
+			background: none;
+			border: 1px solid #2b3a4b;
+			border-radius: 6px;
+			display: flex;
+			height: 32px;
+			justify-content: center;
+			width: 91px;
+		}
+
+		&-icon {
+			height: 16px;
+			width: 16px;
+		}
+
+		&-text {
+			font-size: 14px;
+			font-weight: 600;
+			line-height: 16px;
+		}
+	}
+
+	&-provisioning {
+		&-container {
+			align-items: center;
+			display: flex;
+			gap: 8px;
+		}
+
+		&-icon {
+			filter: invert(55%) sepia(12%) saturate(2767%) hue-rotate(66deg)
+				brightness(102%) contrast(76%);
+			height: 8px;
+			width: 8px;
+		}
+
+		&-text {
+			color: #6c6c75;
+			font-size: 13px;
+			font-weight: 600;
+			line-height: 1rem;
+		}
+	}
+}

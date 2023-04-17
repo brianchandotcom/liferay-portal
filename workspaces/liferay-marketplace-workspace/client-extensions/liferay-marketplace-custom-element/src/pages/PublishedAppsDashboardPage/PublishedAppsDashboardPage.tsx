@@ -34,6 +34,7 @@ import {
 } from './PublishedDashboardPageUtil';
 
 import './PublishedAppsDashboardPage.scss';
+import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 
 declare let Liferay: {
 	ThemeDisplay: {getLanguageId: () => string};
@@ -472,6 +473,7 @@ export function PublishedAppsDashboardPage() {
 
 			{selectedNavigationItem === 'Apps' && (
 				<DashboardPage
+					buttonHref="/create-new-app"
 					buttonMessage="+ New App"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={appMessages}
@@ -507,6 +509,12 @@ export function PublishedAppsDashboardPage() {
 						<></>
 					)}
 				</DashboardPage>
+			)}
+
+			{selectedNavigationItem === 'Projects' && (
+				<ProjectsPage
+					dashboardNavigationItems={dashboardNavigationItems}
+				/>
 			)}
 
 			{selectedNavigationItem === 'Members' && (

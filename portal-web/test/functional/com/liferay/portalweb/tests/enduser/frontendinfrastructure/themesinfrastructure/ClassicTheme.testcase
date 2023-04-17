@@ -47,6 +47,8 @@ definition {
 			menuItem = "Configure",
 			pageName = "Classic Theme Page");
 
+		Navigator.gotoNavTab(navTab = "Design");
+
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		Theme.configureLookAndFeelSpecificLook();

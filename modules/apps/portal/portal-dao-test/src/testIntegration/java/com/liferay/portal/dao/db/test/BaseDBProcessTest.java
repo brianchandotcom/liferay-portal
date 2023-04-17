@@ -34,12 +34,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -466,16 +466,15 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	@Test
 	public void testProcessConcurrentlyWithList() throws Exception {
-		Integer[] values = IntStream.rangeClosed(
-			1, _PROCESS_CONCURRENTLY_COUNT
-		).boxed(
-		).toArray(
-			Integer[]::new
-		);
+		List<Integer> values = new ArrayList<>();
+
+		for (int i = 1; i <= _PROCESS_CONCURRENTLY_COUNT; i++) {
+			values.add(i);
+		}
 
 		_validateProcessConcurrently(
 			threadIds -> processConcurrently(
-				values,
+				values.toArray(new Integer[0]),
 				value -> {
 					Thread currentThread = Thread.currentThread();
 

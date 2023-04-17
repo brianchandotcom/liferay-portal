@@ -47,15 +47,19 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 			return <Skeleton className="mt-1" height={20} width={100} />;
 		}
 
+		const displayDate = {
+			[SLA_STATUS_TYPES.active]: koroneikiAccount.slaCurrentEndDate,
+			[SLA_STATUS_TYPES.future]: koroneikiAccount.slaFutureStartDate,
+			[SLA_STATUS_TYPES.expired]: koroneikiAccount.slaExpiredEndDate,
+		};
+
 		return (
 			<div className="text-neutral-5 text-paragraph-sm">
 				{statusReport[koroneikiAccount.status]}
 
 				<span className="font-weight-bold ml-1 text-paragraph">
 					{getDateCustomFormat(
-						koroneikiAccount.status === SLA_STATUS_TYPES.future
-							? koroneikiAccount.slaFutureStartDate
-							: koroneikiAccount.slaCurrentEndDate,
+						displayDate[koroneikiAccount.status],
 						FORMAT_DATE_TYPES.day2DMonthSYearN
 					)}
 				</span>

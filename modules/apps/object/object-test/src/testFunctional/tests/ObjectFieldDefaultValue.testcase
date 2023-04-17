@@ -21,12 +21,100 @@ definition {
 		}
 	}
 
-	@description = "LPS-163716 - Verify it's not possible to apply the default value when updating an existing object entry"
+	@description = "LPS-181207 - Verify it's not possible to apply the default value when updating an existing object entry"
 	@priority = 3
 	test CannotSetForExistingObjectEntry {
+		property custom.properties = "feature.flag.LPS-163716=true";
 
-		// TODO pending implementation
+		task ("Given a picklist with several items") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist 181207");
 
+			for (var itemNumber : list "1,2,3,4,5") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = ${itemNumber},
+					itemName = "Item Test ${itemNumber}",
+					picklistName = "Custom Picklist 181207");
+			}
+		}
+
+		task ("And given a custom object with a picklist field and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 181207",
+				objectName = "CustomObject181207",
+				pluralLabelName = "Custom Objects 181207");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Picklist Field",
+				fieldName = "picklistField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject181207",
+				picklistName = "Custom Picklist 181207");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject181207");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject181207");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject181207",
+				value = "Entry Test");
+		}
+
+		task ("And given the default value is configured for the picklist field via Input as Value") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 181207");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Picklist Field");
+
+			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Use Default Value",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Click(
+				key_optionDefaulValue = "Input as Value",
+				locator1 = "ObjectAdmin#PICKLIST_INPUT_AS_VALUE_OR_EXPRESSION");
+
+			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
+
+			Click(
+				key_dropdownItem = "Item Test 1",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			Button.clickSave();
+		}
+
+		task ("When the existing object entry is edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject181207");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Field",
+				entry = "Edited Entry");
+
+			Button.clickSave();
+		}
+
+		task ("Then the default value isn't applied") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject181207");
+
+			AssertElementNotPresent(
+				key_entry = "Item Test 1",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
 	}
 
 	@description = "LPS-181204 - Verify updating the default value configuration for the Picklist field only affects new object entries"

@@ -300,15 +300,6 @@ public class WabProcessor {
 			frontendPathString += "/";
 		}
 
-		boolean siteInitializerDetected = false;
-
-		String siteInitializerPathString = pluginPackageProperties.getProperty(
-			_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER, "site-initializer/");
-
-		if (!siteInitializerPathString.endsWith("/")) {
-			siteInitializerPathString += "/";
-		}
-
 		try (ZipFile zipFile = new ZipFile(_file)) {
 			clientExtensionBundlePath = Files.createTempDirectory(
 				"clientextension");
@@ -319,10 +310,6 @@ public class WabProcessor {
 				clientExtensionBundlePath, "META-INF/resources");
 			Path osgiInfConfiguratorPath = _createPath(
 				clientExtensionBundlePath, "OSGI-INF/configurator");
-			Path siteInitializerPath = _createPath(
-				clientExtensionBundlePath, "site-initializer");
-
-			UnicodeProperties unicodeProperties = null;
 
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -347,14 +334,6 @@ public class WabProcessor {
 
 						frontendDetected = true;
 					}
-					else if (name.startsWith(siteInitializerPathString)) {
-						Files.createDirectories(
-							siteInitializerPath.resolve(
-								name.replaceFirst(
-									"^" + siteInitializerPathString, "")));
-
-						siteInitializerDetected = true;
-					}
 
 					continue;
 				}
@@ -365,33 +344,6 @@ public class WabProcessor {
 					Files.copy(
 						zipFile.getInputStream(zipEntry),
 						osgiInfConfiguratorPath.resolve(name));
-
-					JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject(
-						StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-					if (jsonObject1 == null) {
-						continue;
-					}
-
-					for (String key : jsonObject1.keySet()) {
-						JSONObject jsonObject2 = jsonObject1.getJSONObject(key);
-
-						if (jsonObject2 == null) {
-							continue;
-						}
-
-						JSONArray jsonArray = jsonObject2.getJSONArray(
-							"typeSettings");
-
-						if (jsonArray == null) {
-							continue;
-						}
-
-						unicodeProperties = UnicodePropertiesBuilder.fastLoad(
-							StringUtil.merge(
-								JSONUtil.toStringList(jsonArray), "\n")
-						).build();
-					}
 				}
 				else if (name.startsWith(batchPathString)) {
 					Files.copy(
@@ -408,15 +360,6 @@ public class WabProcessor {
 							name.replaceFirst("^" + frontendPathString, "")));
 
 					frontendDetected = true;
-				}
-				else if (name.startsWith(siteInitializerPathString)) {
-					Files.copy(
-						zipFile.getInputStream(zipEntry),
-						siteInitializerPath.resolve(
-							name.replaceFirst(
-								"^" + siteInitializerPathString, "")));
-
-					siteInitializerDetected = true;
 				}
 			}
 
@@ -435,34 +378,6 @@ public class WabProcessor {
 			else {
 				pluginPackageProperties.remove(
 					_LIFERAY_CLIENT_EXTENSION_FRONTEND);
-			}
-
-			if (siteInitializerDetected) {
-				FileUtil.copyFile(
-					siteInitializerPath.toString() + "/thumbnail.png",
-					metatInfResourcesPath + "/thumbnail.png");
-
-				pluginPackageProperties.setProperty(
-					Constants.PROVIDE_CAPABILITY, "liferay.site.initializer");
-				pluginPackageProperties.setProperty(
-					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER,
-					"site-initializer");
-				pluginPackageProperties.setProperty(
-					"Liferay-Site-Initializer-Description",
-					unicodeProperties.getProperty(
-						"siteTemplateDescription", StringPool.BLANK));
-				pluginPackageProperties.setProperty(
-					"Liferay-Site-Initializer-Feature-Flag",
-					unicodeProperties.getProperty(
-						"siteTemplateFeatureFlag", StringPool.BLANK));
-				pluginPackageProperties.setProperty(
-					"Liferay-Site-Initializer-Name",
-					unicodeProperties.getProperty(
-						"siteTemplateName", StringPool.BLANK));
-			}
-			else {
-				pluginPackageProperties.remove(
-					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER);
 			}
 		}
 		catch (Exception exception) {
@@ -700,13 +615,6 @@ public class WabProcessor {
 	private void _processBundleClasspath(
 			Analyzer analyzer, Properties pluginPackageProperties)
 		throws IOException {
-
-		if (Validator.isNotNull(
-				pluginPackageProperties.getProperty(
-					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER))) {
-
-			return;
-		}
 
 		_appendProperty(
 			analyzer, Constants.BUNDLE_CLASSPATH, "ext/WEB-INF/classes");

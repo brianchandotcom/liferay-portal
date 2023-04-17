@@ -19,6 +19,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -27,6 +28,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -35,6 +37,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -43,6 +46,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -51,6 +55,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -59,6 +64,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -67,6 +73,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -75,6 +82,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -83,6 +91,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -91,6 +100,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -99,6 +109,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -107,6 +118,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -115,6 +127,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -123,6 +136,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -131,6 +145,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -139,6 +154,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -147,6 +163,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -155,6 +172,7 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
@@ -163,6 +181,25 @@ export declare function normalizeFieldSettings(
 		| string
 		| number
 		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	uniqueValues?:
+		| string
+		| number
+		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	uniqueValuesErrorMessage?:
+		| string
+		| number
+		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
 		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]

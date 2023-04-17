@@ -153,6 +153,7 @@ interface ObjectDefinition {
 }
 
 type ObjectFieldSettingValue =
+	| LocalizedValue<string>
 	| NameValueObject[]
 	| ObjectFieldFilterSetting[]
 	| ObjectFieldPicklistSetting
@@ -252,7 +253,9 @@ type ObjectFieldSettingName =
 	| 'showCounter'
 	| 'showFilesInDocumentsAndMedia'
 	| 'stateFlow'
-	| 'storageDLFolderPath';
+	| 'storageDLFolderPath'
+	| 'uniqueValues'
+	| 'uniqueValuesErrorMessage';
 
 interface ObjectValidation {
 	active: boolean;

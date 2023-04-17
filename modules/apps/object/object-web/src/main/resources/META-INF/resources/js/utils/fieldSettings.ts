@@ -17,12 +17,13 @@ export function normalizeFieldSettings(
 ) {
 	const settings: {
 		[key in ObjectFieldSettingName]?:
-			| string
-			| number
-			| boolean
+			| LocalizedValue<string>
 			| NameValueObject[]
 			| ObjectFieldFilterSetting[]
-			| ObjectFieldPicklistSetting;
+			| ObjectFieldPicklistSetting
+			| boolean
+			| number
+			| string;
 	} = {};
 
 	objectFieldSettings?.forEach(({name, value}) => {

@@ -91,8 +91,6 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 			return;
 		}
 
-		String upgradeInfoFromSchemaVersionString = fromSchemaVersionString;
-
 		List<UpgradeStep> upgradeStepsList = new ArrayList<>();
 
 		for (UpgradeStep upgradeStep : upgradeSteps) {
@@ -110,28 +108,22 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 			}
 		}
 
-		for (int i = 0; i < (upgradeStepsList.size() - 1); i++) {
-			UpgradeStep upgradeStep = upgradeStepsList.get(i);
-
-			String upgradeInfoToSchemaVersionString =
-				toSchemaVersionString + ".step" +
-					(i - upgradeStepsList.size() + 1);
-
-			UpgradeInfo upgradeInfo = new UpgradeInfo(
-				upgradeInfoFromSchemaVersionString,
-				upgradeInfoToSchemaVersionString, buildNumber, upgradeStep);
-
-			_upgradeInfos.add(upgradeInfo);
-
-			upgradeInfoFromSchemaVersionString =
-				upgradeInfoToSchemaVersionString;
+		if (upgradeStepsList.size() == 1) {
+			_upgradeInfos.add(
+				new UpgradeInfo(
+					fromSchemaVersionString, toSchemaVersionString, buildNumber,
+					upgradeStepsList.get(0)));
 		}
-
-		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			upgradeInfoFromSchemaVersionString, toSchemaVersionString,
-			buildNumber, upgradeStepsList.get(upgradeStepsList.size() - 1));
-
-		_upgradeInfos.add(upgradeInfo);
+		else {
+			_upgradeInfos.add(
+				new UpgradeInfo(
+					fromSchemaVersionString, toSchemaVersionString, buildNumber,
+					dbProcessContext -> {
+						for (UpgradeStep upgradeStep : upgradeStepsList) {
+							upgradeStep.upgrade(dbProcessContext);
+						}
+					}));
+		}
 	}
 
 	private String _getFinalSchemaVersion(List<UpgradeInfo> upgradeInfos) {

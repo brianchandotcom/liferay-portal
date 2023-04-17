@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+boolean addToCart = ParamUtil.getBoolean(request, "addToCart");
+
 CommerceChannel commerceChannel = commerceOrderContentDisplayContext.fetchCommerceChannel();
 %>
 
@@ -69,10 +71,10 @@ CommerceChannel commerceChannel = commerceOrderContentDisplayContext.fetchCommer
 			'#<portlet:namespace />commerceOrderTypeId'
 		).value;
 
-		var isAddToCart = window.frameElement.getAttribute('data-add-to-cart');
+		var isAddToCart = '<%= addToCart %>';
 
 		if (isAddToCart === 'true') {
-			window.parent.Liferay.fire('add-new-item-to-cart', orderTypeId);
+			window.parent.Liferay.fire(events.ADD_ITEM_TO_CART, {orderTypeId});
 
 			window.parent.Liferay.fire(events.CLOSE_MODAL, {
 				successNotification: {

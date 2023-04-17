@@ -14,9 +14,11 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/configuration/icon/init.jsp" %>
 
 <%
+TrashDisplayContext trashDisplayContext = new TrashDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
 TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 %>
 

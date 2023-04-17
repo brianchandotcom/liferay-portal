@@ -171,14 +171,14 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		BuildParameter buildParameter = getBuildParameter("NODE_TYPE");
 
 		if (buildParameter == null) {
-			return _DEFAULT_NODE_TYPE;
+			return null;
 		}
 
 		JenkinsNode.Type type = JenkinsNode.Type.getByKey(
 			buildParameter.getValue());
 
 		if (type == null) {
-			return _DEFAULT_NODE_TYPE;
+			return null;
 		}
 
 		return type;
@@ -324,9 +324,6 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	private static final int _DEFAULT_MAX_NODE_COUNT = 2;
 
 	private static final int _DEFAULT_MIN_NODE_RAM = 12;
-
-	private static final JenkinsNode.Type _DEFAULT_NODE_TYPE =
-		JenkinsNode.Type.SLAVE;
 
 	private final String _buildName;
 	private final Set<Build> _childBuilds = new HashSet<>();

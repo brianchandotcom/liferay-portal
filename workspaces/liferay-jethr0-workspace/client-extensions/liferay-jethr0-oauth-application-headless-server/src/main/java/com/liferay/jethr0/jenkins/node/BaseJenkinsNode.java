@@ -231,7 +231,9 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	}
 
 	private boolean _hasCompatibleNodeType(Build build) {
-		if (getType() == build.getNodeType()) {
+		JenkinsNode.Type jenkinsNodeType = build.getNodeType();
+
+		if ((jenkinsNodeType == null) || (jenkinsNodeType == getType())) {
 			return true;
 		}
 

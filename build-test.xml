@@ -12584,8 +12584,29 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</echo>
 			</then>
 			<else>
+				<get-testcase-property property.name="portal.context" />
+				<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+				<get-testcase-property property.name="portal.proxy.path" />
+				<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
+
+				<if>
+					<isset property="portal.context" />
+					<then>
+						<property name="default.portal.url" value="http://localhost:8080/${portal.context}" />
+					</then>
+					<elseif>
+						<isset property="portal.proxy.path" />
+						<then>
+							<property name="default.portal.url" value="http://localhost:88/${portal.proxy.path}" />
+						</then>
+					</elseif>
+					<else>
+						<property name="default.portal.url" value="http://localhost:8080" />
+					</else>
+				</if>
+
 				<echo append="true" file="${test.ext.properties.file}">
-					default.portal.url=http://localhost:8080
+					default.portal.url=${default.portal.url}
 					portal.hostname=localhost
 				</echo>
 			</else>

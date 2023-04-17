@@ -122,6 +122,9 @@ public class ClientExtensionProjectConfigurator
 		_clientExtensionConfigurers.put(
 			"globalJS", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
+			"jsImportmapsEntry",
+			Collections.singletonList(nodeBuildConfigurer));
+		_clientExtensionConfigurers.put(
 			"staticContent", Collections.singletonList(nodeBuildConfigurer));
 		_clientExtensionConfigurers.put(
 			"themeCSS",

@@ -1,6 +1,7 @@
 @import 'atlas-variables';
 
 .site_navigation_menu_editor_MenuItem {
+	box-sizing: content-box;
 	width: 40ch;
 
 	&:focus,

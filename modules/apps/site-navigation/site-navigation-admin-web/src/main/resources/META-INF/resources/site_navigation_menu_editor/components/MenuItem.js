@@ -130,8 +130,8 @@ export function MenuItem({item, onMenuItemRemoved}) {
 
 	const rtl = Liferay.Language.direction[languageId] === 'rtl';
 	const itemStyle = rtl
-		? {marginRight: (itemPath.length - 1) * NESTING_MARGIN}
-		: {marginLeft: (itemPath.length - 1) * NESTING_MARGIN};
+		? {paddingRight: (itemPath.length - 1) * NESTING_MARGIN}
+		: {paddingLeft: (itemPath.length - 1) * NESTING_MARGIN};
 
 	const parentItemId =
 		itemPath.length > 1 ? itemPath[itemPath.length - 2] : '0';

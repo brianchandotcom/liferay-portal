@@ -396,6 +396,11 @@ public class TestrayImporter {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
+		sb.append("<a href=\"");
+		sb.append(topLevelBuild.getJenkinsReportURL());
+		sb.append("\">Jenkins Report</a>");
+		sb.append(";\n");
+
 		if (topLevelBuild instanceof PortalBranchInformationBuild) {
 			PortalBranchInformationBuild portalBranchInformationBuild =
 				(PortalBranchInformationBuild)topLevelBuild;

@@ -28,24 +28,28 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
 
 		for (var nodeNumber : list "8,9") {
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			Alert.viewErrorMessage(errorMessage = "The maximum number of 2 nodes licensed for this cluster has been exceeded. Please shut down excess nodes as soon as possible. An additional 2 nodes are temporarily permitted during the grace period");
 
 			Alert.viewErrorMessage(errorMessage = "This current node is within the licensed node count and will not be automatically deactivated nor shut down after the grace period expires.");
 		}
 
-		User.firstLoginUI(
+		User.loginPG(
+			nodePort = 10080,
 			password = "test",
-			specificURL = "http://localhost:10080",
 			userEmailAddress = "test@liferay.com");
 
 		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		Refresh();
 
 		Alert.viewErrorMessage(errorMessage = "This current node is within the temporarily permitted node count and will be automatically deactivated after the grace period expires");
 
@@ -56,10 +60,14 @@ definition {
 		Pause(locator1 = 30000);
 
 		for (var nodeNumber : list "8,9") {
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
+
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			Alert.viewErrorMessage(errorMessage = "Grace period which already ended");
 		}
@@ -77,10 +85,14 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Finished shutting down overloaded nodes");
 
 		for (var nodeNumber : list "8,10") {
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
+
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}
@@ -300,15 +312,21 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
+		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		Refresh();
+
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
 		for (var nodeNumber : list "9,10") {
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
 
@@ -321,10 +339,14 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:10080/c/portal/logout");
 
-		User.firstLoginUI(
+		User.loginPG(
+			nodePort = 10080,
 			password = "test",
-			specificURL = "http://localhost:10080",
 			userEmailAddress = "userea@liferay.com");
+
+		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		Refresh();
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
@@ -339,10 +361,14 @@ definition {
 				expectedText = "Finished shutting down overloaded nodes",
 				nodePort = "${nodeNumber}080");
 
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
+
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}
@@ -359,12 +385,14 @@ definition {
 				expectedText = "licensed for this cluster has been exceeded",
 				nodePort = "${nodeNumber}080");
 
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
 
 			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
 
@@ -382,10 +410,14 @@ definition {
 		Pause(locator1 = 30000);
 
 		for (var nodeNumber : list "8,9") {
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
+
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			Alert.viewErrorMessage(errorMessage = "Grace period which already ended");
 		}
@@ -403,10 +435,14 @@ definition {
 		Clustering.waitForNodeShutdown(nodePort = 10080);
 
 		for (var nodeNumber : list "8,9") {
-			User.firstLoginUI(
+			User.loginPG(
+				nodePort = "${nodeNumber}080",
 				password = "test",
-				specificURL = "http://localhost:${nodeNumber}080",
 				userEmailAddress = "test@liferay.com");
+
+			WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+			Refresh();
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}

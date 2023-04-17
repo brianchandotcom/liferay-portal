@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_ENTRY_BY_INDEX</td>
-	<td>//li[contains(@class,'breadcrumb-item')][${key_index}]//span[normalize-space(text())='${key_breadcrumbName}']</td>
+	<td>//li[contains(@class,'breadcrumb-item')][${key_index}]//a[normalize-space(text())='${key_breadcrumbName}']</td>
 	<td></td>
 </tr>
 <tr>

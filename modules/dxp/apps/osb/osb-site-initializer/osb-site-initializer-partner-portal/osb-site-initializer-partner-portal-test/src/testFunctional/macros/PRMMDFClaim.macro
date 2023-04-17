@@ -21,6 +21,14 @@ definition {
 
 		WaitForPageLoad();
 
+		PRMMDFClaim.fillActivityFields(
+			activityIndex = ${activityIndex},
+			budgetIndex = ${budgetIndex},
+			listLeads = ${listLeads},
+			mestricsDescription = ${mestricsDescription},
+			metrics = ${metrics},
+			selectedFile = ${selectedFile},
+			thirdInvoice = ${thirdInvoice});
 		for (var actvIndex : list ${activityIndex}) {
 			Click.javaScriptClick(
 				key_fieldName = "activities[${actvIndex}].selected",
@@ -98,6 +106,31 @@ definition {
 		var orderID = StringUtil.extractLast(${orderID}, "-");
 
 		return ${orderID};
+	}
+
+	@summary = "Get the ID of the claim by index"
+	macro getClaimIdOnDetailPage {
+		var key_index = ${index};
+
+		if (${index} == 1) {
+			var claimId = selenium.getText("PRMMDFClaim#CLAIM_ID_DETAIL_PAGE_INDEX");
+
+			var claimId = StringUtil.extractDigits(${claimId});
+
+			static var staticClaimId1 = ${claimId};
+
+			return ${staticClaimId1};
+		}
+
+		if (${index} == 2) {
+			var claimId = selenium.getText("PRMMDFClaim#CLAIM_ID_DETAIL_PAGE_INDEX");
+
+			var claimId = StringUtil.extractDigits(${claimId});
+
+			static var staticClaimId2 = ${claimId};
+
+			return ${staticClaimId2};
+		}
 	}
 
 	@summary = "Search claim by ID"

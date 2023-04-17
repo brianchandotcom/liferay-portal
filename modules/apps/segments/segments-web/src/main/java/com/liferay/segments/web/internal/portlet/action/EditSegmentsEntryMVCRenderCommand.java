@@ -66,7 +66,7 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 				_segmentsEntryProviderRegistry, _segmentsEntryService);
 
 		renderRequest.setAttribute(
-			SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT,
+			EditSegmentsEntryDisplayContext.class.getName(),
 			editSegmentsEntryDisplayContext);
 
 		return "/edit_segments_entry.jsp";

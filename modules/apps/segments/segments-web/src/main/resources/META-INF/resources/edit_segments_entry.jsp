@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext = (EditSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.EDIT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
+EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext = (EditSegmentsEntryDisplayContext)request.getAttribute(EditSegmentsEntryDisplayContext.class.getName());
 
 String backURL = editSegmentsEntryDisplayContext.getBackURL();
 

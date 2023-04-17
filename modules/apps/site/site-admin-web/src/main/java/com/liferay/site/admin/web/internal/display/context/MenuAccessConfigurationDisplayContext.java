@@ -18,10 +18,8 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -83,7 +81,7 @@ public class MenuAccessConfigurationDisplayContext {
 		return _liferayPortletResponse.getNamespace() + "selectRole";
 	}
 
-	public String getRoleItemSelectorURL() throws ConfigurationException {
+	public String getRoleItemSelectorURL() throws Exception {
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 
 		RegularRoleItemSelectorCriterion regularRoleItemSelectorCriterion =
@@ -131,12 +129,12 @@ public class MenuAccessConfigurationDisplayContext {
 		).buildString();
 	}
 
-	public String[] getRolesCanSeeControlMenu() throws ConfigurationException {
+	public String[] getRolesCanSeeControlMenu() throws Exception {
 		return _menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
 			_themeDisplay.getScopeGroupId());
 	}
 
-	public SearchContainer<Role> getSearchContainer() throws PortalException {
+	public SearchContainer<Role> getSearchContainer() throws Exception {
 		PortletURL currentURL = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
 
@@ -161,7 +159,7 @@ public class MenuAccessConfigurationDisplayContext {
 		return searchContainer;
 	}
 
-	public boolean isShowControlMenuByRole() throws ConfigurationException {
+	public boolean isShowControlMenuByRole() throws Exception {
 		return _menuAccessConfigurationProvider.isShowControlMenuByRole(
 			_themeDisplay.getScopeGroupId());
 	}

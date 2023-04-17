@@ -19,10 +19,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.MenuAccessConfiguration;
 import com.liferay.site.configuration.MenuAccessConfigurationProvider;
@@ -52,25 +51,33 @@ public class MenuAccessConfigurationProviderImpl
 	}
 
 	@Override
-	public String[] getRolesCanSeeControlMenu(long groupId)
-		throws ConfigurationException {
+	public String[] getRolesCanSeeControlMenu(long groupId) throws Exception {
+		Configuration configuration = _getScopedConfiguration(groupId);
 
-		MenuAccessConfiguration menuAccessConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				MenuAccessConfiguration.class, groupId);
+		if (configuration != null) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
 
-		return menuAccessConfiguration.rolesCanSeeControlMenu();
+			return GetterUtil.getStringValues(
+				properties.get("rolesCanSeeControlMenu"));
+		}
+
+		return new String[0];
 	}
 
 	@Override
-	public boolean isShowControlMenuByRole(long groupId)
-		throws ConfigurationException {
+	public boolean isShowControlMenuByRole(long groupId) throws Exception {
+		Configuration configuration = _getScopedConfiguration(groupId);
 
-		MenuAccessConfiguration menuAccessConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				MenuAccessConfiguration.class, groupId);
+		if (configuration != null) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
 
-		return menuAccessConfiguration.showControlMenuByRole();
+			return GetterUtil.getBoolean(
+				properties.get("showControlMenuByRole"));
+		}
+
+		return false;
 	}
 
 	@Override
@@ -162,7 +169,7 @@ public class MenuAccessConfigurationProviderImpl
 			}
 			else {
 				if ((rolesCanSeeControlMenu != null) &&
-					!ArrayUtil.contains(rolesCanSeeControlMenu, roleName)) {
+					ArrayUtil.contains(rolesCanSeeControlMenu, roleName)) {
 
 					rolesCanSeeControlMenu = ArrayUtil.remove(
 						rolesCanSeeControlMenu, roleName);
@@ -177,9 +184,6 @@ public class MenuAccessConfigurationProviderImpl
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

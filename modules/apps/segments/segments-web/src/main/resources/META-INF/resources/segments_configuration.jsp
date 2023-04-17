@@ -113,9 +113,12 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		</c:if>
 
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
-			<aui:alert closeable="<%= false %>" cssClass="c-mb-4" id="errorAlert" type="info">
-				<liferay-ui:message key="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default" />
-			</aui:alert>
+			<clay:alert
+				cssClass="c-mb-4"
+				displayType="info"
+				id="errorAlert"
+				message="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default"
+			/>
 		</c:if>
 
 		<div class="row <%= (!segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled()) ? "c-mt-5" : "" %>">

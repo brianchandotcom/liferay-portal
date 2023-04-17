@@ -109,18 +109,20 @@ String textCssClass = menuAccessDisplayContext.isShowControlMenuByRole() ? "modi
 					/>
 
 					<liferay-ui:search-container-column-text>
-						<clay:button
-							aria-label='<%= LanguageUtil.get(request, "remove") %>'
-							borderless="<%= true %>"
-							cssClass="lfr-portal-tooltip modify-link"
-							data-rowId="<%= role.getRoleId() %>"
-							disabled="<%= !menuAccessDisplayContext.isShowControlMenuByRole() %>"
-							displayType="secondary"
-							icon="times-circle"
-							monospaced="<%= true %>"
-							title='<%= LanguageUtil.get(request, "remove") %>'
-							type="button"
-						/>
+						<c:if test="<%= menuAccessDisplayContext.isShowDeleteButton(role) %>">
+							<clay:button
+								aria-label='<%= LanguageUtil.get(request, "remove") %>'
+								borderless="<%= true %>"
+								cssClass="lfr-portal-tooltip modify-link"
+								data-rowId="<%= role.getRoleId() %>"
+								disabled="<%= !menuAccessDisplayContext.isShowControlMenuByRole() %>"
+								displayType="secondary"
+								icon="times-circle"
+								monospaced="<%= true %>"
+								title='<%= LanguageUtil.get(request, "remove") %>'
+								type="button"
+							/>
+						</c:if>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
 

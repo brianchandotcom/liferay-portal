@@ -557,33 +557,32 @@ public class TrashDisplayContext {
 	public String getViewContentRedirectURL() throws PortalException {
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
-		if (Validator.isNull(redirect)) {
-			TrashHandler trashHandler = getTrashHandler();
-
-			ContainerModel parentContainerModel =
-				trashHandler.getParentContainerModel(getClassPK());
-
-			PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
-
-			if ((parentContainerModel != null) && (getClassNameId() > 0)) {
-				String parentContainerModelClassName =
-					parentContainerModel.getModelClassName();
-
-				redirectURL.setParameter("mvcPath", "/view_content.jsp");
-				redirectURL.setParameter(
-					"classNameId",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							parentContainerModelClassName)));
-				redirectURL.setParameter(
-					"classPK",
-					String.valueOf(parentContainerModel.getContainerModelId()));
-			}
-
-			redirect = redirectURL.toString();
+		if (Validator.isNotNull(redirect)) {
+			return redirect;
 		}
 
-		return redirect;
+		TrashHandler trashHandler = getTrashHandler();
+
+		ContainerModel parentContainerModel =
+			trashHandler.getParentContainerModel(getClassPK());
+
+		PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
+
+		if ((parentContainerModel != null) && (getClassNameId() > 0)) {
+			String parentContainerModelClassName =
+				parentContainerModel.getModelClassName();
+
+			redirectURL.setParameter("mvcPath", "/view_content.jsp");
+			redirectURL.setParameter(
+				"classNameId",
+				String.valueOf(
+					PortalUtil.getClassNameId(parentContainerModelClassName)));
+			redirectURL.setParameter(
+				"classPK",
+				String.valueOf(parentContainerModel.getContainerModelId()));
+		}
+
+		return redirectURL.toString();
 	}
 
 	public boolean isApproximate() {

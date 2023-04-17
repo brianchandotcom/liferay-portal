@@ -63,7 +63,7 @@ definition {
 
 		var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
-		var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
+		var portalURL = StringUtil.extractFirst(${portalURL}, ":8");
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			authenticationMethod = ${authenticationMethod},

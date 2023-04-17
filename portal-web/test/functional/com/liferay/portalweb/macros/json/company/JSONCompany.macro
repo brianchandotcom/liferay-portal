@@ -183,7 +183,7 @@ definition {
 
 		var portalInstanceName = StringUtil.replace(${portalURL}, "http://", "");
 
-		var portalInstanceName = StringUtil.replace(${portalInstanceName}, ":8080", "");
+		var portalInstanceName = StringUtil.extractFirst(${portalInstanceName}, ":8");
 
 		return ${portalInstanceName};
 	}

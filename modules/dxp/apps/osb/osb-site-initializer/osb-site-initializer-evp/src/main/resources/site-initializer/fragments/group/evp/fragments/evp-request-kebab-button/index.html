@@ -4,7 +4,16 @@
 [#assign URL = (layoutURL?substring(0, layoutURL?lastIndexOf('/')))! /]
 [#assign approvedRoles =["Administrator", "Finance User"]/]
 [#assign userRoles = permissionChecker.getUserBag().getRoles()/]
-[#assign requestStatus = (restClient.get("/c/evprequests/" + requestId).requestStatus.key)! /]
+
+[#if requestId?? && requestId?hasContent]
+
+  [#assign requestStatus = (restClient.get("/c/evprequests/" + requestId).requestStatus.key)! /]
+  [#assign requestStatusListing = ["rejected","awaitingMoreInfoFromEmployee", "verified", "closed", "
+  Await Company Verification", "Awaiting Finance Review"] /]
+  [#assign requestName = (restClient.get("/c/evprequests/" + requestId).id)! /]
+
+<input class="requestID" type="hidden" value="${requestId}" />
+<input class="requestName" hidden value="${requestName}" />
 
 <div id="evp-request-kebab-button">
 	[@liferay_ui["icon-menu"]
@@ -20,16 +29,23 @@
 
 		[#list userRoles as role]
 			[#if approvedRoles?seqContains(role.name)]
-
 				[#if requestStatus == "awaitingPaymentConfirmation"]
 					[@liferay_ui["icon"]
 						message="Pay"
 						url=URL + "/payment-confirmation?id=" + requestId
 					/]
 				[/#if]
-
-				[#break]
+			[/#if]	
+				
+			[#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp"]
+				<div class="btnOpenModal">
+					[@liferay_ui["icon"]
+						message="Review"
+						url="#${requestId}"
+					/]
+				</div>
 			[/#if]
 		[/#list]
 	[/@]
 </div>
+[/#if]

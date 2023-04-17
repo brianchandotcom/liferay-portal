@@ -45,11 +45,14 @@ MenuAccessConfigurationDisplayContext menuAccessDisplayContext = (MenuAccessConf
 	<clay:content-row>
 		<clay:content-col>
 			<clay:checkbox
+				aria-describedby='<%= liferayPortletResponse.getNamespace() + "showControlMenuByRoleDescription" %>'
 				checked="<%= menuAccessDisplayContext.isShowControlMenuByRole() %>"
 				id='<%= liferayPortletResponse.getNamespace() + "showControlMenuByRole" %>'
 				label='<%= LanguageUtil.get(request, "show-control-menu-by-role-name") %>'
 				name='<%= liferayPortletResponse.getNamespace() + "showControlMenuByRole" %>'
 			/>
+
+			<p class="text-secondary" id="<portlet:namespace />showControlMenuByRoleDescription"><liferay-ui:message key="when-checked-the-control-menu-will-be-only-displayed-for-the-specified-roles" /></p>
 		</clay:content-col>
 	</clay:content-row>
 </clay:sheet-section>

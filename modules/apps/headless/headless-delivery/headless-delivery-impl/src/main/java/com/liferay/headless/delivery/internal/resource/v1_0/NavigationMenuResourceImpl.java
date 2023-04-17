@@ -681,40 +681,40 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
 				Long navigationMenuItemId = navigationMenuItem.getId();
 
-				SiteNavigationMenuItem existingSiteNavigationMenuItem = null;
+				SiteNavigationMenuItem siteNavigationMenuItem = null;
 
-				for (SiteNavigationMenuItem siteNavigationMenuItem :
+				for (SiteNavigationMenuItem curSiteNavigationMenuItem :
 						siteNavigationMenuItems) {
 
 					if (Objects.equals(
 							navigationMenuItemId,
-							siteNavigationMenuItem.
+							curSiteNavigationMenuItem.
 								getSiteNavigationMenuItemId())) {
 
-						existingSiteNavigationMenuItem = siteNavigationMenuItem;
+						siteNavigationMenuItem = curSiteNavigationMenuItem;
 
 						break;
 					}
 				}
 
-				if (existingSiteNavigationMenuItem != null) {
-					SiteNavigationMenuItem siteNavigationMenuItem =
+				if (siteNavigationMenuItem != null) {
+					SiteNavigationMenuItem updatedSiteNavigationMenuItem =
 						_siteNavigationMenuItemService.
 							updateSiteNavigationMenuItem(
 								navigationMenuItemId,
 								_getUnicodeProperties(
 									false, navigationMenuItem, siteId,
-									existingSiteNavigationMenuItem),
+									siteNavigationMenuItem),
 								ServiceContextRequestUtil.createServiceContext(
 									siteId, contextHttpServletRequest, null));
 
 					_updateNavigationMenuItems(
 						navigationMenuItem.getNavigationMenuItems(),
-						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+						updatedSiteNavigationMenuItem.
+							getSiteNavigationMenuItemId(),
 						siteId, siteNavigationMenuId);
 
-					siteNavigationMenuItems.remove(
-						existingSiteNavigationMenuItem);
+					siteNavigationMenuItems.remove(siteNavigationMenuItem);
 				}
 				else {
 					_createNavigationMenuItem(

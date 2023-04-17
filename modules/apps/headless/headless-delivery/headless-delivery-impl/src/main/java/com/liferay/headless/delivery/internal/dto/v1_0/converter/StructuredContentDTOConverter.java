@@ -218,17 +218,17 @@ public class StructuredContentDTOConverter
 	private Map<Locale, String> _filterDescriptionMap(
 		Map<Locale, String> descriptionMap) {
 
-		Map<Locale, String> filterDescriptions = new HashMap<>();
+		Map<Locale, String> filterDescriptionMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
 			if (StringPool.BLANK.equals(entry.getValue())) {
 				continue;
 			}
 
-			filterDescriptions.put(entry.getKey(), entry.getValue());
+			filterDescriptionMap.put(entry.getKey(), entry.getValue());
 		}
 
-		return filterDescriptions;
+		return filterDescriptionMap;
 	}
 
 	private ContentField[] _toContentFields(

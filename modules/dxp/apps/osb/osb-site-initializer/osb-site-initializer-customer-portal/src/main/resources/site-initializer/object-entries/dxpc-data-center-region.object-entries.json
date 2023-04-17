@@ -1,10 +1,6 @@
 {
 	"object-entries": [
 		{
-			"name": "Dubai, UAE",
-			"value": "Dubai, UAE"
-		},
-		{
 			"name": "Frankfurt, Germany",
 			"value": "Frankfurt, Germany"
 		},
@@ -35,6 +31,10 @@
 		{
 			"name": "Oregon, USA",
 			"value": "Oregon, USA"
+		},
+		{
+			"name": "Osaka, Japan",
+			"value": "Osaka, Japan"
 		},
 		{
 			"name": "São Paulo, Brazil",

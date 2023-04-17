@@ -94,4 +94,49 @@ definition {
 		KBArticle.viewDefaultCP();
 	}
 
+	@priority = 4
+	test CanEditKBArticleWithinPublications {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.editCP(
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Knowledge Base Article",
+			changeSite = "Guest",
+			changeTitle = "Knowledge Base Article Title",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Knowledge Base Article",
+			changeOrder = 2,
+			changeSite = "Guest",
+			changeTitle = "Knowledge Base Article Title Edit",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title Edit");
+	}
+
 }

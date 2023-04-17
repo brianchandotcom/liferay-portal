@@ -12,7 +12,6 @@
 	<!-- Listeners -->
 
 	<bean class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" id="messageListener.convert_process" />
-	<bean class="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" id="messageListener.hot_deploy" />
 	<bean class="com.liferay.portal.internal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
 	<bean class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener" id="messageListener.live_users_cluster">
 		<property name="priority">
@@ -152,11 +151,6 @@
 				<entry key="liferay/document_library_video_processor">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.document_library_video_processor" />
-					</list>
-				</entry>
-				<entry key="liferay/hot_deploy">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.hot_deploy" />
 					</list>
 				</entry>
 				<entry key="liferay/live_users">

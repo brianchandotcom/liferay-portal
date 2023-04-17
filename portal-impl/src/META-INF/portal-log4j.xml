@@ -62,7 +62,6 @@
 		<Logger level="INFO" name="com.liferay.portal.deploy.hot.HookHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeLoaderHotDeployListener" />
-		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
 		<Logger level="ERROR" name="com.liferay.portal.editor" />
 		<Logger level="ERROR" name="com.liferay.portal.events.EventsProcessor" />
 		<Logger level="ERROR" name="com.liferay.portal.events.GarbageCollectorAction" />

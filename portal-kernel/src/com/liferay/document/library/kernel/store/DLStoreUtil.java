@@ -110,7 +110,8 @@ public class DLStoreUtil {
 	 * @param dirName the directory's name
 	 */
 	public static void deleteDirectory(
-		long companyId, long repositoryId, String dirName) {
+			long companyId, long repositoryId, String dirName)
+		throws PortalException {
 
 		_store.deleteDirectory(companyId, repositoryId, dirName);
 	}

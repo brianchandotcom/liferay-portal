@@ -93,11 +93,18 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	public static void deleteFiles() {
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
-				DLStoreUtil.deleteDirectory(
-					companyId, REPOSITORY_ID, PREVIEW_PATH);
+				try {
+					DLStoreUtil.deleteDirectory(
+						companyId, REPOSITORY_ID, PREVIEW_PATH);
 
-				DLStoreUtil.deleteDirectory(
-					companyId, REPOSITORY_ID, THUMBNAIL_PATH);
+					DLStoreUtil.deleteDirectory(
+						companyId, REPOSITORY_ID, THUMBNAIL_PATH);
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException);
+					}
+				}
 			});
 	}
 
@@ -343,9 +350,16 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void deletePreviews(
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
-		DLStoreUtil.deleteDirectory(
-			companyId, REPOSITORY_ID,
-			getPreviewFilePath(groupId, fileEntryId, fileVersionId, null));
+		try {
+			DLStoreUtil.deleteDirectory(
+				companyId, REPOSITORY_ID,
+				getPreviewFilePath(groupId, fileEntryId, fileVersionId, null));
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
 	}
 
 	protected void deleteThumbnail(

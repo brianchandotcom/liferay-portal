@@ -168,30 +168,8 @@ definition {
 			locator1 = "Button#ANY");
 
 		if (${moveFailed} == "true") {
-
-			// Workaround LPS-178710
-
-			Click.clickAtNotVisible(
-				changeOrder = ${changeOrder},
-				key_changeCategory = ${changeCategory},
-				key_changeTitle = ${changeTitle},
-				locator1 = "PublicationsChanges#CHANGES_CHECK_BOX");
-
-			Click(
-				ariaLabel = "Show Move Changes Modal",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-			Select(
-				ariaLabel = "Select the publication you would like to move your changes to.",
-				locator1 = "Select#ANY_ARIA_LABEL",
-				value1 = ${targetPublicationName});
-
-			Click(
-				key_text = "Move",
-				locator1 = "Button#ANY");
-
 			AssertElementPresent(
-				key_alertBold = "The changes could not be moved.",
+				key_alertBold = "One or more changes conflict with existing change(s) in the destination Publication",
 				key_alertType = "inline alert-danger",
 				locator1 = "ClayAlert#ALERT_STATIC_BOLD");
 		}

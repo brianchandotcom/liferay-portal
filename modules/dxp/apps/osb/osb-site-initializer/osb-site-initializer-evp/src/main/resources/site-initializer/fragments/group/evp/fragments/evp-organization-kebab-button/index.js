@@ -10,6 +10,10 @@
  * distribution rights of the Software.
  */
 
+const ROLE = {
+	EVP_MANAGER: 'EVP Manager',
+};
+
 const updateStatus = async (key, name, message) => {
 	const organizationID = fragmentElement.querySelector('.organizationID')
 		.value;
@@ -83,11 +87,21 @@ const openModal = () => {
 			{
 				label: 'Approve',
 				async onClick() {
+					const status =
+						userRoles === ROLE.EVP_MANAGER
+							? {
+									key: 'awaitingFinanceApproval',
+									value: 'Awaiting Finance Approval',
+							  }
+							: {
+									key: 'verified',
+									value: 'Verified',
+							  };
 					await layerForDendingUpdateStatus(
 						getMessage(),
 						getAttributeHidden(),
-						'awaitingFinanceApproval',
-						'Awaiting Finance Approval'
+						status.key,
+						status.value
 					);
 				},
 				type: 'submit',

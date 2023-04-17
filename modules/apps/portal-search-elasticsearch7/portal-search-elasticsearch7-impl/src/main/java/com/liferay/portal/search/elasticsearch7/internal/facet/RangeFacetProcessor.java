@@ -38,7 +38,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Tibor Lipusz
  */
 @Component(
-	property = "class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
+	property = {
+		"class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
+		"class.name=com.liferay.portal.search.internal.facet.ModifiedFacetImpl"
+	},
 	service = FacetProcessor.class
 )
 public class RangeFacetProcessor

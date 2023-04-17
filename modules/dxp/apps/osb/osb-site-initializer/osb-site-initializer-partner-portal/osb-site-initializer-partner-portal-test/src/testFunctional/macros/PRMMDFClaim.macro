@@ -1,5 +1,12 @@
 definition {
 
+	@summary = "Open/close the activity details"
+	macro activityCollapse {
+		Click(
+			key_activityName = ${activityName},
+			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
+	}
+
 	@summary = "Create a new claim on MDF detail page"
 	macro createNewClaim {
 		if (!(isSet(activityIndex))) {
@@ -104,6 +111,20 @@ definition {
 			key_placeHolder = "Search",
 			locator1 = "TextInput#ANY_PLACEHOLDER",
 			value1 = "\RETURN");
+	}
+	
+	@summary = "Verify that the attachment is not present"
+	macro viewAttachmentNotPresent {
+		AssertElementNotPresent(
+			key_attachmentName = ${attachmentName},
+			locator1 = "PRMMDFClaim#ATTACHMENT_NAME");
+	}
+
+	@summary = "Verify that the attachment is present"
+	macro viewAttachmentPresent {
+		AssertElementPresent(
+			key_attachmentName = ${attachmentName},
+			locator1 = "PRMMDFClaim#ATTACHMENT_NAME");
 	}
 
 	@summary = "View claim type on MDF Request details page"

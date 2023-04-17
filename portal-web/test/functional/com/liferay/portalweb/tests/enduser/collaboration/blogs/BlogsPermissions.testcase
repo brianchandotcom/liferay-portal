@@ -427,17 +427,6 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotAddEntryWhenTeamRoleHasNoPermissions {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
 		Permissions.setUpSiteTeamRoleLoginUserPG(
 			siteName = "Site Name",
 			teamDescription = "Site Team Description",
@@ -448,6 +437,15 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
 			pageName = "Blogs Page",
@@ -980,17 +978,6 @@ definition {
 	@priority = 4
 	@refactorneeded
 	test CannotDeleteEntryWhenTeamRoleHasNoPermissions {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
 		Permissions.setUpSiteTeamRoleLoginUserPG(
 			siteName = "Site Name",
 			teamDescription = "Site Team Description",
@@ -1001,6 +988,15 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
 		Blogs.addBlogsEntryLoginUserPG(
 			entryContent = "Blogs Entry Content",

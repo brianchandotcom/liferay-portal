@@ -29,10 +29,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
 			PRMUtils.tearDown();
 		}
 	}

@@ -81,10 +81,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
 			PRMUtils.tearDown();
 		}
 	}
@@ -92,7 +88,6 @@ definition {
 	@description = "This is a test for LPS-179914. Verify that the value of Approved MDFs are displayed on MDF Dashboard"
 	@priority = 4
 	test MDFApprovedValueAppearInDashboard {
-		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMDashboards#MDFApprovedValueAppearInDashboard";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
@@ -142,7 +137,6 @@ definition {
 	@description = "This is a test for LPS-177308. Verify that the value of Requested MDFs are displayed on MDF Dashboard"
 	@priority = 4
 	test MDFRequestedValueAppearInDashboard {
-		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMDashboards#MDFRequestedValueAppearInDashboard";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052

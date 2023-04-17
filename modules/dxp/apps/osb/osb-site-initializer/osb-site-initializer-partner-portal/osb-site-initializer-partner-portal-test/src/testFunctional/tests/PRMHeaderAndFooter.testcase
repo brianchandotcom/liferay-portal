@@ -50,10 +50,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-
 			PRMUtils.tearDown();
 		}
 	}
@@ -61,7 +57,6 @@ definition {
 	@description = "This is a test for LPS-158388. Verify that there is a Home, Marketing, Sales, Enablement and Dashboard navigation tabs on page header"
 	@priority = 5
 	test CanNavigateToPages {
-		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMHeaderAndFooter#CanNavigateToPages";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052

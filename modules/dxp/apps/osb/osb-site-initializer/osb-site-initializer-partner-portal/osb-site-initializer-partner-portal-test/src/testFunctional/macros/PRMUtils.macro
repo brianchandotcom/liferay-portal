@@ -172,6 +172,12 @@ definition {
 	}
 
 	macro tearDown {
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
 		Site.openSitesAdmin();
 
 		if (IsElementPresent(key_tableEntry = "Partner Portal", locator1 = "LexiconTable#TABLE_ENTRY")) {

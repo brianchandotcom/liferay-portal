@@ -462,6 +462,8 @@ definition {
 
 			Click(locator1 = "ControlMenu#EDIT_COG");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
@@ -502,6 +504,8 @@ definition {
 
 		task ("Change to default style book via Look and Feel") {
 			Click(locator1 = "ControlMenu#EDIT_COG");
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 

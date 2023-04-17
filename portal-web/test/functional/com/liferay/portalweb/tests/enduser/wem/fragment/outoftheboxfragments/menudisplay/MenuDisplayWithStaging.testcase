@@ -72,6 +72,8 @@ definition {
 		}
 
 		task ("Change Master to custom master page") {
+			Navigator.gotoNavTab(navTab = "Design");
+
 			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			Click(

@@ -327,13 +327,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			await postCheckoutCart({cartId: cartResponse.id});
 		}
 
-		const url = `${origin}/next-steps?orderId=${cartResponse.id}&logoURL=${
-			account?.logoURL
-		}&appLogoURL=${app?.urlImage}&accountName=${
-			account?.name
-		}&accountLogo=${
-			account?.logoURL
-		}&appCategory=${'appCategory'}&appName=${app.name}`;
+		const url = `${origin}/next-steps?orderId=${cartResponse.id}&logoURL=${account?.logoURL}&appLogoURL=${app?.urlImage}&accountName=${account?.name}&accountLogo=${account?.logoURL}&appName=${app.name}`;
 
 		const paymentMethodURL = await getPaymentMethodURL(
 			cartResponse.id,

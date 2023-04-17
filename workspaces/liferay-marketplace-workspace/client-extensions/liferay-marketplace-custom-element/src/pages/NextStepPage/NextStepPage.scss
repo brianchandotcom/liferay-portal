@@ -5,6 +5,10 @@
 		justify-content: space-between;
 		margin-bottom: 2rem;
 		margin-top: 1.25rem;
+
+		.card-container {
+			justify-content: left;
+		}
 	}
 	&-container {
 		align-items: center;
@@ -33,6 +37,11 @@
 		text-decoration: underline;
 	}
 	&-text {
+		color: #6c6c75;
 		margin-bottom: 2rem;
+
+		strong {
+			color: #282934;
+		}
 	}
 }

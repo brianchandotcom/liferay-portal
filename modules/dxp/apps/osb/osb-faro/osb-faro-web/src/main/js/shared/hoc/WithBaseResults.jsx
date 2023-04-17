@@ -21,6 +21,7 @@ const withBaseResults = (withData, configs) => {
 		emptyTitle,
 		getColumns,
 		legacyDropdownRangeKey = true,
+		rangeKeys,
 		rowIdentifier,
 		showDropdownRangeKey = true,
 		showFilterAndOrder = false,
@@ -38,6 +39,7 @@ const withBaseResults = (withData, configs) => {
 		withToolbar({
 			disableSearch,
 			legacyDropdownRangeKey,
+			rangeKeys,
 			showDropdownRangeKey,
 			showFilterAndOrder
 		}),
@@ -78,6 +80,7 @@ const withBaseResults = (withData, configs) => {
 						orderIOMap={orderIOMap}
 						page={page}
 						query={query}
+						rangeKeys={rangeKeys}
 						rangeSelectors={rangeSelectors}
 						router={router}
 						rowIdentifier={rowIdentifier}

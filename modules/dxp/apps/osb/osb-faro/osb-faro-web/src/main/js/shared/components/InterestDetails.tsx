@@ -12,6 +12,7 @@ import {
 } from 'shared/util/table-columns';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors, Router} from 'shared/types';
 import {Routes} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
@@ -39,6 +40,8 @@ interface ITableWithDataProps {
 	rangeSelectors: RangeSelectors;
 	router: Router;
 }
+
+const {Last7Days, Last30Days, Last90Days, Yesterday} = RangeKeyTimeRanges;
 
 const TableWithData: React.FC<ITableWithDataProps> = withRangeKey(
 	withBaseResults(withData, {
@@ -71,6 +74,7 @@ const TableWithData: React.FC<ITableWithDataProps> = withRangeKey(
 			metricsListColumns.exitRateMetric
 		],
 		legacyDropdownRangeKey: false,
+		rangeKeys: [Yesterday, Last7Days, Last30Days, Last90Days],
 		rowIdentifier: 'assetId',
 		showDropdownRangeKey: true
 	})

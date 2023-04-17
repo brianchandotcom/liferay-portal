@@ -38,6 +38,7 @@ export default configs => WrappedComponent => {
 			orderByOptions: PropTypes.array,
 			orderIOMap: PropTypes.object,
 			query: PropTypes.string,
+			rangeKeys: PropTypes.array,
 			rangeSelectors: PropTypes.object,
 			renderNav: PropTypes.func,
 			renderViewSelectedToggle: PropTypes.func,
@@ -120,6 +121,7 @@ export default configs => WrappedComponent => {
 					orderByOptions,
 					orderIOMap,
 					query,
+					rangeKeys,
 					rangeSelectors,
 					renderNav,
 					renderViewSelectedToggle,
@@ -179,6 +181,7 @@ export default configs => WrappedComponent => {
 									true
 								)}
 								onChange={this.handleRangeSelectorsChange}
+								rangeKeys={rangeKeys}
 								rangeSelectors={rangeSelectors}
 							/>
 						)}

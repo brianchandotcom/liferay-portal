@@ -248,8 +248,8 @@ public class ExportedMissingReferenceExportImportTest
 
 		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
 			ServiceTrackerListFactory.open(
-				bundle.getBundleContext(),
-				(Class<PortletDataHandler>)portletDataHandlerClass);
+				bundle.getBundleContext(), PortletDataHandler.class,
+				"(component.name=" + portletDataHandlerClass.getName() + ")");
 
 		Assert.assertEquals(
 			portletDataHandlerInstances.toString(), 1,
@@ -272,8 +272,8 @@ public class ExportedMissingReferenceExportImportTest
 
 		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
 			ServiceTrackerListFactory.open(
-				bundle.getBundleContext(),
-				(Class<PortletDataHandler>)portletDataHandlerClass);
+				bundle.getBundleContext(), PortletDataHandler.class,
+				"(component.name=" + portletDataHandlerClass.getName() + ")");
 
 		Iterator<PortletDataHandler> iterator =
 			portletDataHandlerInstances.iterator();
@@ -340,8 +340,8 @@ public class ExportedMissingReferenceExportImportTest
 
 		ServiceTrackerList<PortletDataHandler> portletDataHandlerInstances =
 			ServiceTrackerListFactory.open(
-				bundle.getBundleContext(),
-				(Class<PortletDataHandler>)portletDataHandlerClass);
+				bundle.getBundleContext(), PortletDataHandler.class,
+				"(component.name=" + portletDataHandlerClass.getName() + ")");
 
 		Assert.assertEquals(
 			portletDataHandlerInstances.toString(), 1,

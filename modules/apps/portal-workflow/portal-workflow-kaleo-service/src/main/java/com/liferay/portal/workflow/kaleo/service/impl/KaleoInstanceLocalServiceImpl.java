@@ -592,17 +592,8 @@ public class KaleoInstanceLocalServiceImpl
 	private List<KaleoInstance> _toKaleoInstances(Hits hits) {
 		return TransformUtil.transformToList(
 			hits.getDocs(),
-			document -> {
-				KaleoInstance kaleoInstance =
-					kaleoInstancePersistence.fetchByPrimaryKey(
-						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-
-				if (kaleoInstance == null) {
-					return null;
-				}
-
-				return kaleoInstance;
-			});
+			document -> kaleoInstancePersistence.fetchByPrimaryKey(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

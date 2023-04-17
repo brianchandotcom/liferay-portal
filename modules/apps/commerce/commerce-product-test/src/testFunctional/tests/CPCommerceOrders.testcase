@@ -3118,7 +3118,6 @@ definition {
 	@priority = 5
 	test FulfillOrderWithBuyerOrderApprovalWorkflowActive {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithBuyerOrderApprovalWorkflowActive";
 
 		// TODO Review
 
@@ -3251,7 +3250,6 @@ definition {
 	@priority = 5
 	test FulfillOrderWithSellerOrderAcceptanceWorkflowActive {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceOrders#FulfillOrderWithSellerOrderAcceptanceWorkflowActive";
 
 		// TODO Review
 

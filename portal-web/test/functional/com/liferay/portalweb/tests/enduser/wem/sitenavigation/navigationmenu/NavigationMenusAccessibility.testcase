@@ -7,9 +7,17 @@ definition {
 	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "Navigation";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -17,31 +25,25 @@ definition {
 	@priority = 3
 	test SelectOrDeselectParentNodeAndChildItemsViaKeyboardAndMouse {
 		task ("Given a site designer has a navigation menu") {
-			var siteName = StringUtil.randomString(8);
-
-			var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONCategory.addVocabulary(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 
 			JSONCategory.addCategory(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 
 			for (var i : list "1,2,3") {
 				JSONCategory.addSubcategory(
-					groupName = ${siteName},
+					groupName = ${randomSiteName},
 					parentCategoryName = "Category Name",
 					title = "Subcategory Name ${i}",
 					vocabularyName = "Vocabulary Name");
 			}
 
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 

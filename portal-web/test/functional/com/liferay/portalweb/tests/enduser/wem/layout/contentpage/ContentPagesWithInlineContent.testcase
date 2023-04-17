@@ -6,9 +6,24 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Content Page Name",
+				type = "content");
 		}
 	}
 
@@ -17,23 +32,10 @@ definition {
 	test CannotExecuteFreemarkerCodeInHTMLFragment {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add a HTML fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -52,7 +54,7 @@ definition {
 		task ("Assert the freemarker codes are not executed") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			AssertTextNotEquals(
 				locator1 = "//div[contains(@class,'fragment-html-test')]",
@@ -63,23 +65,10 @@ definition {
 	@description = "This is a test for LPS-98553. Can edit contributed HTML type fragment."
 	@priority = 4
 	test EditInlineContentOfHTMLFragment {
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add a HTML fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -120,7 +109,7 @@ definition {
 		task ("View edited inline content in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			AssertTextEquals.assertPartialText(
 				fragmentName = "html",
@@ -134,24 +123,9 @@ definition {
 	@description = "This is a test for LPS-98553. Can edit created HTML lfr-editable fragment."
 	@priority = 4
 	test EditInlineContentOfHTMLFragmentWithOldTag {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
@@ -195,7 +169,7 @@ definition {
 		task ("Add a new fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -233,7 +207,7 @@ definition {
 		task ("View edited inline content in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				contributed = "false",
@@ -248,23 +222,10 @@ definition {
 	test EditInlineContentOfTextFragment {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -290,7 +251,7 @@ definition {
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -301,7 +262,7 @@ definition {
 		task ("Edit the inline text again") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -312,7 +273,7 @@ definition {
 		task ("View new inline content not shown in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -323,7 +284,7 @@ definition {
 		task ("Publish the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.publish();
 		}
@@ -331,7 +292,7 @@ definition {
 		task ("View new inline content shown in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -344,23 +305,10 @@ definition {
 	@priority = 4
 	@uitest
 	test EditInlineContentStyleOfRichTextFragment {
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add a Paragraph fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -403,23 +351,10 @@ definition {
 	test ViewImageFromDocumentsAndMediaInImageFragment {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -450,7 +385,7 @@ definition {
 		task ("View the selected image shown in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
@@ -462,23 +397,10 @@ definition {
 	@description = "This is a test for LPS-100121. Given a fragment with an editable image when the page author selects an image specifying a URL in the item selector then the URL is shown in selector input."
 	@priority = 4
 	test ViewImageFromURLInImageFragment {
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -511,7 +433,7 @@ definition {
 		task ("View the selected image in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
@@ -525,23 +447,10 @@ definition {
 	test ViewVisualStyleOfEditableField {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Content Page Name",
-				type = "content");
-		}
-
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

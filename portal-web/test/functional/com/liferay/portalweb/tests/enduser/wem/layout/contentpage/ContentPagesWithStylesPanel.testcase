@@ -6,30 +6,34 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
 		}
 	}
 
 	@description = "This is a test for LPS-161974. Add custom values to margin and padding on fragment of content page."
 	@priority = 4
 	test AddCustomValuesToSpacing {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has a Button fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			SetWindowSize.maximizeWindow();
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -136,19 +140,10 @@ definition {
 	@description = "This is a test for LPS-162301. Designers cannot reset undefined Spacing styles."
 	@priority = 3
 	test CannotResetUndefinedSpacingStyles {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Button fragment with padding right styles on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -177,19 +172,10 @@ definition {
 	@description = "This is a test for LPS-142050. In page editor, selecting Custom in units could insert any type of character."
 	@priority = 4
 	test ConfigureCustomUnit {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Heading fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -235,19 +221,10 @@ definition {
 	@description = "This is a test for LPS-147788. View default behavior of custom unit on styles tab of content page."
 	@priority = 4
 	test DetachLinkedNonColorToken {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Heading fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -350,19 +327,10 @@ definition {
 	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by entering a value in the text area."
 	@priority = 3
 	test ResetSpacingStylesFromCustomValue {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Button fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -423,19 +391,10 @@ definition {
 	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component by selecting from Existing tokens."
 	@priority = 4
 	test ResetSpacingStylesFromExistingTokens {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Button fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -481,19 +440,10 @@ definition {
 	@description = "This is a test for LPS-162301. Designers are able to reset the values from the spacing component to the parent viewport value."
 	@priority = 4
 	test ResetSpacingStylesToParentViewportValue {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Button fragment with different spacing styles in each viewport") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -650,19 +600,10 @@ definition {
 	@description = "This is a test for LPS-136279 and LPS-163362. View the styles of color selectors."
 	@priority = 4
 	test ViewStylesOfColorInputs {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Heading fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -734,19 +675,10 @@ definition {
 	@description = "This is a test for LPS-136279 and LPS-163362. View the styles of Font Family, Font Weight and Font Size selectors."
 	@priority = 4
 	test ViewStylesOfSelectInputs {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Heading fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -842,19 +774,10 @@ definition {
 	@description = "This is a test for LPS-136279. The text align should be indicated by align icon."
 	@priority = 4
 	test ViewStylesOfTextAlignButtons {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Heading fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -919,19 +842,10 @@ definition {
 	@description = "This is a test for LPS-163362. View the styles of Border Width, Border Radius, Opacity and Shadow text inputs."
 	@priority = 4
 	test ViewStylesOfTextInputs {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page designer has a Heading fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

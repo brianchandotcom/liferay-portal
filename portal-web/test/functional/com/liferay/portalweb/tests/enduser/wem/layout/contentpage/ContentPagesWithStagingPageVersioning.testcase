@@ -6,9 +6,24 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Activate local live staging with page versioning enabled") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = ${randomSiteName});
 		}
 	}
 
@@ -16,21 +31,6 @@ definition {
 	@priority = 5
 	test ChangeSitePagesVariationInViewMode {
 		property portal.acceptance = "true";
-
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Activate local live staging with page versioning enabled") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = ${siteName});
-		}
 
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
@@ -49,7 +49,7 @@ definition {
 		task ("Navigate to the content page in the staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 		}
 
 		task ("Assert the Card fragment is shown") {
@@ -70,7 +70,7 @@ definition {
 		task ("Assert the new site pages variation is selected in Site Pages Variation field") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 
 			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Test Site Pages Variation");
 		}
@@ -103,38 +103,23 @@ definition {
 	@description = "This is a test for LPS-140483. The site admin could create page template from content page in site page variation."
 	@priority = 4
 	test CreatePageTemplateFromContentPageInSitePageVariation {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Activate local live staging with page versioning enabled") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = ${siteName});
-		}
-
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "${siteName}-staging",
+				groupName = "${randomSiteName}-staging",
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				site = "false");
 		}
 
 		task ("Add a Heading fragment to a content page then publish") {
 			JSONLayout.addPublicLayout(
-				groupName = "${siteName} (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -146,7 +131,7 @@ definition {
 		task ("Add a new site page variation at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 
 			Staging.addSitePagesVariationPG(sitePagesVariationName = "Test Site Pages Variation");
 
@@ -193,21 +178,6 @@ definition {
 	test ManageSitePagesVariationInViewMode {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Activate local live staging with page versioning enabled") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = ${siteName});
-		}
-
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
@@ -225,7 +195,7 @@ definition {
 		task ("Navigate to the content page in the staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 		}
 
 		task ("Assert the Paragraph fragment is shown") {
@@ -304,7 +274,7 @@ definition {
 		task ("Assert the Default Variation is selected in Site Pages Variation field") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 
 			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Default Variation");
 		}
@@ -323,21 +293,6 @@ definition {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Activate local live staging with page versioning enabled") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = ${siteName});
-		}
-
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
@@ -355,7 +310,7 @@ definition {
 		task ("Navigate to the public content page in the staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Public Content Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 		}
 
 		task ("Assert the Heading fragment is shown") {
@@ -388,7 +343,7 @@ definition {
 		task ("Navigate to the public content page in the live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Public Content Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 
 			Click(locator1 = "Staging#LIVE_BUTTON");
 		}
@@ -418,7 +373,7 @@ definition {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Private Content Page Name",
 				privateLayout = "true",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 		}
 
 		task ("Assert the Button fragment is shown") {
@@ -452,7 +407,7 @@ definition {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Private Content Page Name",
 				privateLayout = "true",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 
 			Click(locator1 = "Staging#LIVE_BUTTON");
 		}
@@ -468,21 +423,6 @@ definition {
 	@description = "This is a test for LPS-125755. The Site Pages Variation is not shown on content page in edit mode when enable page versioning."
 	@priority = 4
 	test ViewSitePagesVariationOnlyShownInViewMode {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Activate local live staging with page versioning enabled") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = ${siteName});
-		}
-
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
@@ -514,7 +454,7 @@ definition {
 		task ("Navigate to the content page in the staging site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "${siteName} Staging");
+				siteName = "${randomSiteName} Staging");
 		}
 
 		task ("Assert the Site Page Variation is shown in staging bar") {

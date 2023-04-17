@@ -7,9 +7,54 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+	static var randomRoleKey = StringUtil.randomString(8);
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("Add a new site role") {
+			JSONRole.addSiteRole(
+				roleKey = ${randomRoleKey},
+				roleTitle = ${randomRoleKey});
 		}
 	}
 
@@ -17,76 +62,29 @@ definition {
 	@priority = 4
 	test AddCustomValuesToSpacingWithUpdatePermission {
 		task ("Given a new user with update permission has a Heading fragment on content page") {
-			var siteName = StringUtil.randomString(8);
-
-			var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-			task ("Add a site") {
-				HeadlessSite.addSite(siteName = ${siteName});
-			}
-
-			task ("Add a content page") {
-				JSONLayout.addPublicLayout(
-					groupName = ${siteName},
-					layoutName = "Test Content Page Name",
-					type = "content");
-			}
-
-			task ("Add a new user") {
-				var userEmailAddress = StringUtil.randomString(8);
-				var userFirstName = StringUtil.randomString(8);
-				var userLastName = StringUtil.randomString(8);
-				var userScreenName = StringUtil.randomString(8);
-
-				JSONUser.addUser(
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-					userFirstName = ${userFirstName},
-					userLastName = ${userLastName},
-					userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-			}
-
-			task ("Assign the user to site") {
-				JSONUser.addUserToSite(
-					groupName = ${siteName},
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-			}
-
-			task ("Add a new site role") {
-				var roleKey = StringUtil.randomString(8);
-
-				JSONRole.addSiteRole(
-					roleKey = ${roleKey},
-					roleTitle = ${roleKey});
-			}
-
 			task ("Define the permission of new role") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "UPDATE",
 					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
 			task ("Assign the site role to new user") {
 				JSONRole.assignSiteRoleToUser(
-					groupName = ${siteName},
-					roleTitle = ${roleKey},
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+					groupName = ${randomSiteName},
+					roleTitle = ${randomRoleKey},
+					userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 			}
 
 			task ("Sign in as new user") {
-				User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 			}
 
 			task ("Add a Heading fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name",
-					siteName = ${siteName});
+					siteName = ${randomSiteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -130,78 +128,31 @@ definition {
 	@priority = 4
 	test CannotAddCustomValuesToSpacingWithLimitedPermission {
 		task ("Given a new user with update-limited and basic permission has a Heading fragment on content page") {
-			var siteName = StringUtil.randomString(8);
-
-			var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-			task ("Add a site") {
-				HeadlessSite.addSite(siteName = ${siteName});
-			}
-
-			task ("Add a content page") {
-				JSONLayout.addPublicLayout(
-					groupName = ${siteName},
-					layoutName = "Test Content Page Name",
-					type = "content");
-			}
-
-			task ("Add a new user") {
-				var userEmailAddress = StringUtil.randomString(8);
-				var userFirstName = StringUtil.randomString(8);
-				var userLastName = StringUtil.randomString(8);
-				var userScreenName = StringUtil.randomString(8);
-
-				JSONUser.addUser(
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-					userFirstName = ${userFirstName},
-					userLastName = ${userLastName},
-					userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-				JSONUser.setFirstPassword(
-					agreeToTermsAndAnswerReminderQuery = "true",
-					requireReset = "false",
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-			}
-
-			task ("Assign the user to site") {
-				JSONUser.addUserToSite(
-					groupName = ${siteName},
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-			}
-
-			task ("Add a new site role") {
-				var roleKey = StringUtil.randomString(8);
-
-				JSONRole.addSiteRole(
-					roleKey = ${roleKey},
-					roleTitle = ${roleKey});
-			}
-
 			task ("Define the permission of new role") {
 				for (var resourceActionIndex : list "UPDATE_LAYOUT_BASIC,UPDATE_LAYOUT_LIMITED") {
 					Permissions.definePermissionViaJSONAPI(
 						resourceAction = ${resourceActionIndex},
 						resourceName = "com.liferay.portal.kernel.model.Layout",
-						roleTitle = ${roleKey},
+						roleTitle = ${randomRoleKey},
 						roleType = "site");
 				}
 			}
 
 			task ("Assign the site role to new user") {
 				JSONRole.assignSiteRoleToUser(
-					groupName = ${siteName},
-					roleTitle = ${roleKey},
-					userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+					groupName = ${randomSiteName},
+					roleTitle = ${randomRoleKey},
+					userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 			}
 
 			task ("Sign in as new user") {
-				User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 			}
 
 			task ("Add a Heading fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name",
-					siteName = ${siteName});
+					siteName = ${randomSiteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -241,87 +192,40 @@ definition {
 	@description = "This is a test for LPS-96795. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
 	@priority = 2
 	test CannotEditAssetWithoutAssetUpdatePermission {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.journal",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add three web contents") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
-					groupName = ${siteName},
+					groupName = ${randomSiteName},
 					title = ${webContentTitle});
 			}
 		}
@@ -329,7 +233,7 @@ definition {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -385,13 +289,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Open the Contents panel") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -413,7 +317,7 @@ definition {
 		task ("Assert cannot access to web content editor via Asset Publisher and Web Content Display in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			AssertElementNotPresent(
 				key_webContentTitle = "WC WebContent Title 2",
@@ -428,100 +332,53 @@ definition {
 	@description = "This is a test for LPS-140136. As a page viewer with only page view permission, the draft actions are invisible."
 	@priority = 4
 	test CannotPreviewAndDiscardDraftAsUserWithoutUpdatePermission {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new role") {
 			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.layout.seo",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			for (var resourceActionIndex : list "ADD_LAYOUT,VIEW_SITE_ADMINISTRATION") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Group",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a Button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -533,7 +390,7 @@ definition {
 		task ("Add a Heading fragment below the Button") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -542,7 +399,7 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View the Preview and Discard Draft actions are invisible in Pages admin") {
@@ -588,79 +445,32 @@ definition {
 	@description = "This is a test for LPS-103454. Content author having permission to update blog entry could see edit icon in the content page displaying the blog and could edit blog in editmode. "
 	@priority = 4
 	test EditBlogsEntryWithBlogEntryUpdatePermission {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.blogs.model.BlogsEntry",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
 		task ("Add an Asset Publisher to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
@@ -678,13 +488,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Open the Contents panel") {
 			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -707,65 +517,18 @@ definition {
 	test EditContentWithCreateAndUpdateWebContentPermissions {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of site role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			for (var resourceActionIndex : list "VIEW,UPDATE_LAYOUT_CONTENT") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
@@ -773,40 +536,40 @@ definition {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			for (var resourceActionIndex : list "ADD_ARTICLE,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.journal",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Edit the web contents via Contents panel") {
@@ -830,7 +593,7 @@ definition {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -866,7 +629,7 @@ definition {
 		task ("Add an Asset Publisher below the Web Content Display") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(
 				portletName = "Asset Publisher",
@@ -886,13 +649,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Edit the web contents via Contents panel") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -915,93 +678,46 @@ definition {
 	test EditContentWithUpdateWebContentAndUpdatePageContentPermissions {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new user") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.journal",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add three web contents") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
-					groupName = ${siteName},
+					groupName = ${randomSiteName},
 					title = ${webContentTitle});
 			}
 		}
@@ -1009,7 +725,7 @@ definition {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1045,7 +761,7 @@ definition {
 		task ("Add an Asset Publisher below the Web Content Display") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(
 				portletName = "Asset Publisher",
@@ -1065,13 +781,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Assert can access to web content editor via Asset Publisher in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			MouseOver(
 				key_assetTitle = "WC WebContent Title 3",
@@ -1108,73 +824,26 @@ definition {
 	test EditContentWithWebContentArticleUpdatePermission {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new user") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add two web contents") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
-					groupName = ${siteName},
+					groupName = ${randomSiteName},
 					title = ${webContentTitle});
 			}
 		}
@@ -1182,7 +851,7 @@ definition {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1218,7 +887,7 @@ definition {
 		task ("Add a Paragraph fragment below the Web Content Display") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1229,13 +898,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Edit the web contents via Contents panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2") {
 				PageEditor.gotoTab(tabName = "Page Content");
@@ -1260,80 +929,33 @@ definition {
 	test EditInlineContentWithUpdatePageContentPermission {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new user") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a Paragraph fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1343,13 +965,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Edit the inline content of Paragraph") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -1389,45 +1011,6 @@ definition {
 	@description = "This is a test for LPS-125388. The new user can edit specific content page as site member with update permission."
 	@priority = 4
 	test EditSpecificContentPageAsSiteMemberWithUpdatePermission {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
 		task ("Grant Update permission of specific content page to Site Member") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
@@ -1446,13 +1029,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a Paragraph fragment to content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -1480,87 +1063,40 @@ definition {
 	test MapContentWithUpdatePageContentPermission {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new user") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${resourceActionIndex},
 					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = ${roleKey},
+					roleTitle = ${randomRoleKey},
 					roleType = "site");
 			}
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Webcontent Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "WC Webcontent Title");
 		}
 
 		task ("Add a Paragraph fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1586,13 +1122,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Map the Content of web content to editable field") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -1628,53 +1164,6 @@ definition {
 	test PublishContentPageWithoutCustomFieldsPermission {
 		property test.name.skip.portal.instance = "ContentPagesWithPermissions#PublishContentPageWithoutCustomFieldsPermission";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Add a custom field for Page") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -1692,49 +1181,49 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ACCESS_IN_CONTROL_PANEL",
 				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.layout.seo",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_SITE_ADMINISTRATION",
 				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ADD_LAYOUT",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a content page") {
@@ -1757,18 +1246,7 @@ definition {
 	@description = "This is a test for LPS-137155. The page creator can change permissions of content page via header ellipsis icon at edit mode."
 	@priority = 3
 	test RemoveViewPermissionForGuestViaHeaderEllipsisIcon {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page designer has content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(pageName = "Test Content Page Name");
@@ -1777,7 +1255,7 @@ definition {
 		task ("When the page designer removes view permission of guest role via header ellipsis icon at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Permissions");
 
@@ -1796,7 +1274,7 @@ definition {
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -1808,79 +1286,32 @@ definition {
 	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
 	@priority = 4
 	test ViewDisplayedWebContentInContentsPanelWithWebContentArticleUpdatePermission {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Content Page Name",
-				type = "content");
-		}
-
-		task ("Add a new user") {
-			var userEmailAddress = StringUtil.randomString(8);
-			var userFirstName = StringUtil.randomString(8);
-			var userLastName = StringUtil.randomString(8);
-			var userScreenName = StringUtil.randomString(8);
-
-			JSONUser.addUser(
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
-				userFirstName = ${userFirstName},
-				userLastName = ${userLastName},
-				userScreenName = StringUtil.toLowerCase(${userScreenName}));
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = ${siteName},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
-		}
-
-		task ("Add a new site role") {
-			var roleKey = StringUtil.randomString(8);
-
-			JSONRole.addSiteRole(
-				roleKey = ${roleKey},
-				roleTitle = ${roleKey});
-		}
-
 		task ("Define the permissions of new user") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "UPDATE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
-				roleTitle = ${roleKey},
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign the site role to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
-				roleTitle = ${roleKey},
-				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "WC WebContent Title");
 		}
 
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1916,7 +1347,7 @@ definition {
 		task ("Add an Asset Publisher below the Web Content Display") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(
 				portletName = "Asset Publisher",
@@ -1936,13 +1367,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View the displayed web content in Contents panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoTab(tabName = "Page Content");
 

@@ -6,28 +6,32 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
 		}
 	}
 
 	@description = "This is a test for LPS-158527. The guest shouldn't be allowed to preview changes."
 	@priority = 4
 	test CannotPreviewChangesAsGuest {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a guest has a content pages with draft changes") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -56,19 +60,10 @@ definition {
 	test PreviewChangesInANewTab {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has a Heading fragment on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

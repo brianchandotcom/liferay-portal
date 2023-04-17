@@ -6,30 +6,34 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
 		}
 	}
 
 	@description = "This is a test for LPS-146373. The page creator could access to Look and Feel settings via the configuration icon."
 	@priority = 4
 	test AccessToLookAndFeelSettings {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page creator accesses to the Page Design Options panel") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 		}
@@ -54,21 +58,10 @@ definition {
 	@description = "This is a test for LPS-153383. The page creator cannot resize editor sidebar to an invalid size."
 	@priority = 4
 	test CannotResizeLeftSidebarPanelBeyoundLimitation {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page creator accesses to the page editor") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("When the page creator accesses to the left sidebar panel") {
@@ -119,21 +112,10 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
 	@priority = 4
 	test CloseLeftPageEditorSidebar {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page creator accesses to the page editor") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("When the page creator click the times icon on the Fragments and Widgets panel") {
@@ -150,21 +132,10 @@ definition {
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
 	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given go to edit content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("When switch to card view") {
@@ -243,25 +214,10 @@ definition {
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSession {
 		property portal.release = "false";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then could add and remove fragment to Favorites session and widget to Highlighted session") {
@@ -382,25 +338,10 @@ definition {
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSessionOnReleaseBundle {
 		property portal.upstream = "false";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then could add and remove fragment to Favorites session and widget to Highlighted session") {
@@ -515,25 +456,10 @@ definition {
 	@priority = 4
 	@uitest
 	test FindColorSamplesViaScrollBar {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -564,21 +490,6 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator should be redirected to the previous page when clicking the back button in the page editor."
 	@priority = 4
 	test RedirectToPreviousPageWhenClickBackInPageEditor {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Given a page creator adds a content page via the Pages admin") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
@@ -596,7 +507,7 @@ definition {
 		task ("Given the page creator accesses to page editor via view mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -606,7 +517,7 @@ definition {
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 		}
@@ -628,25 +539,10 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator could use a scroll bar for each section in the page editor."
 	@priority = 4
 	test UseScrollBarInEachSection {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Given a page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("When the page creator accesses to the Fragments and Widgets panel") {
@@ -714,21 +610,10 @@ definition {
 	@description = "This is a test for LPS-170955. View Autosave icon styles are adjusted."
 	@priority = 5
 	test ViewAutosaveIconStyles {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page designer navigates to the page editor") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("When the page designer adds a fragment to page") {
@@ -758,25 +643,10 @@ definition {
 	test ViewCollapseStyleInFragmentConfiguration {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a dropdown fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -817,21 +687,10 @@ definition {
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
 	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given go to edit content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("And choose Button and Card fragment as Favorites") {
@@ -870,7 +729,7 @@ definition {
 
 		task ("When not allow Button fragment on master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
@@ -903,7 +762,7 @@ definition {
 		task ("Then Button fragment is hidden on conetent page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 2",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			AssertElementNotPresent(
 				key_collectionName = "Favorites",
@@ -920,21 +779,10 @@ definition {
 	@description = "This is a test for LPS-158746. Favorite session is hidden when no favorite fragment is chosen."
 	@priority = 4
 	test ViewFavoriteSessionIsHiddenWhenNoFavoriteFragmentIsChosen {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given go to edit content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then assert favorite session is hidden") {
@@ -961,18 +809,7 @@ definition {
 	test ViewFavoritesListInDifferentUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given having 2 users") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			var userEmailAddress = StringUtil.randomString(8);
 			var userFirstName = StringUtil.randomString(8);
 			var userLastName = StringUtil.randomString(8);
@@ -990,11 +827,11 @@ definition {
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"));
 
 			JSONUser.addUserToSite(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"));
 
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				roleTitle = "Site Administrator",
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}1@liferay.com"));
 
@@ -1010,11 +847,11 @@ definition {
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"));
 
 			JSONUser.addUserToSite(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"));
 
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				roleTitle = "Site Administrator",
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}2@liferay.com"));
 		}
@@ -1025,7 +862,7 @@ definition {
 
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Page Name",
-					siteName = ${siteName});
+					siteName = ${randomSiteName});
 
 				MouseOver(
 					key_collectionName = "Basic Components",
@@ -1049,7 +886,7 @@ definition {
 
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Page Name",
-					siteName = ${siteName});
+					siteName = ${randomSiteName});
 
 				AssertElementNotPresent(
 					key_panel = "Favorites",
@@ -1078,7 +915,7 @@ definition {
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(
 				key_collectionName = "Favorites",
@@ -1098,25 +935,10 @@ definition {
 	test ViewOrderOfColorSamplesInColorPicker {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a Button fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1184,25 +1006,10 @@ definition {
 	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
 	@priority = 3
 	test ViewOrderOfContentPagesActions {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a Heading fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1214,7 +1021,7 @@ definition {
 		task ("Remove the Heading fragment") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.removeFragment(fragmentName = "Heading");
 		}
@@ -1231,23 +1038,10 @@ definition {
 	@description = "This is a test for LPS-146373. The page creator could find Fragments and Widgets, Browser, Page Design Options, Page Content, and Comments on the left sidebar while fragment configuration on the right sidebar. Both page editor sidebars shouldn't overlay the page content."
 	@priority = 4
 	test ViewPageEditorSidebars {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Given a page creator has a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the page creator sees Fragments and Widgets, Browser, Page Design Options, Page Content, and Comments on the left sidebar while fragment configuration on the right sidebar and both page editor sidebars don't overlay the page content") {
@@ -1295,21 +1089,10 @@ definition {
 	@description = "This is a test for LPS-146373. Both page editor sidebars should be closed when the product menu is open."
 	@priority = 4
 	test ViewPageEditorSidebarsClosedWhenProductMenuOpen {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page creator accesses to the page editor") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("When the page creator opens the Product Menu") {

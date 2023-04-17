@@ -6,9 +6,24 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
 		}
 	}
 
@@ -17,36 +32,21 @@ definition {
 	test EditCollectionItems {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -54,7 +54,7 @@ definition {
 		task ("Add a Collection Display fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -186,25 +186,10 @@ definition {
 	test EditDisplayedDocument {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add an Image fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -253,32 +238,17 @@ definition {
 	test EditDisplayedWebContentInAssetPublisher {
 		property timeout.explicit.wait = "20";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "WC WebContent Title");
 		}
 
 		task ("Add an Asset Publisher") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
@@ -315,7 +285,7 @@ definition {
 		task ("View the edited web content in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			WebContent.viewPGViaAP(
 				webContentContent = "WC WebContent Content Edit",
@@ -328,32 +298,17 @@ definition {
 	test EditDisplayedWebContentInWebContentDisplay {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "WC WebContent Title");
 		}
 
 		task ("Add a Web Content Display to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(portletName = "Web Content Display");
 		}
@@ -383,7 +338,7 @@ definition {
 		task ("View the edited web content in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content Edit");
 		}
@@ -394,25 +349,10 @@ definition {
 	test EditInlineText {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -475,50 +415,35 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Item Selector";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a dynamic collection for All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a manual collection for All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
@@ -544,7 +469,7 @@ definition {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -718,25 +643,10 @@ definition {
 	test ResizeDisplayedImageViaImageEditor {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add an Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -800,7 +710,7 @@ definition {
 		task ("Take down the new naturalWidth and naturalHeight of image at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
@@ -829,25 +739,10 @@ definition {
 	test RotateDisplayedImageViaImageEditor {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a Banner Center fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
@@ -904,7 +799,7 @@ definition {
 		task ("View the version of mapped image at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -923,50 +818,35 @@ definition {
 	test SearchDisplayedAssetsByKeyword {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a dynamic collection for All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a manual collection for All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
@@ -992,7 +872,7 @@ definition {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1242,26 +1122,15 @@ definition {
 	@description = "This is a test for LPS-173139. The page designer could see a tooltip for assets on the Page Content panel of content page."
 	@priority = 3
 	test ViewAssetWithLongTitle {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page deisgner displays a web content with long title on a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			HeadlessWebcontent.addBasicWebContent(
 				content = "Lighthouse promises life coaching to help people realise their dreams. But an 18-month investigation by the BBC finds it takes over people'\''s lives, separates people from their loved ones and harasses its critics.",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Inside the life coaching cult that takes over lives");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1303,25 +1172,10 @@ definition {
 	test ViewDashedOutlineOfEditableFieldWhenHoverOnInlineTextItems {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1419,36 +1273,21 @@ definition {
 	test ViewDashedOutlineOfMappedEditableFieldWhenHoverOnAssets {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -1456,7 +1295,7 @@ definition {
 		task ("Add a Banner Center to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
@@ -1565,43 +1404,28 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Item Selector";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content, a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
@@ -1610,7 +1434,7 @@ definition {
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1692,21 +1516,10 @@ definition {
 	@description = "This is a test for LPS-153356. View Page Content tab on sidebar of content page."
 	@priority = 4
 	test ViewPageContentOnSidebarOfContentPage {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a page creator has a content page with Heading fragment") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1741,32 +1554,17 @@ definition {
 	@description = "This is a test for LPS-96794. View permissions and usage of mapped web content in Contents panel."
 	@priority = 4
 	test ViewPermissionsAndUsageOfMappedWebContent {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = "Test Page Name",
-				type = "content");
-		}
-
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "WebContent Title");
 		}
 
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1793,7 +1591,7 @@ definition {
 		task ("View permissions of mapped web content in Contents panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoTab(tabName = "Page Content");
 
@@ -1812,7 +1610,7 @@ definition {
 		task ("View usage of mapped web content in Contents panel") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoTab(tabName = "Page Content");
 

@@ -6,9 +6,15 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -17,13 +23,9 @@ definition {
 	test AddElementsIntoContainer {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -31,7 +33,7 @@ definition {
 		task ("When the page creator adds a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragmentViaKeyboard(
 				collectionName = "Layout Elements",
@@ -68,13 +70,9 @@ definition {
 	test AddElementsIntoGrid {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -82,7 +80,7 @@ definition {
 		task ("When the page creator adds a Grid to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragmentViaKeyboard(
 				collectionName = "Layout Elements",
@@ -132,13 +130,9 @@ definition {
 	test AddFragmentsToPage {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -146,7 +140,7 @@ definition {
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the page creator could add fragments to page via keyboard") {
@@ -169,13 +163,9 @@ definition {
 	test AddWidgetsToPage {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -183,7 +173,7 @@ definition {
 		task ("When the page creator accesses to the page editor") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the page creator could add fragments to page via keyboard") {
@@ -204,13 +194,9 @@ definition {
 	@description = "This is a test for LPS-167457. The page creator shouldn't be able to add multiple Blogs widget to page via keyboard."
 	@priority = 3
 	test CannotAddMultipleBlogsWidgetToPageViaKeyboard {
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -218,7 +204,7 @@ definition {
 		task ("When the page creator adds a Blogs widget to page via keyboard") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
@@ -259,19 +245,15 @@ definition {
 	test ReorderElements {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
 		task ("Given a page creator has fragments on content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",

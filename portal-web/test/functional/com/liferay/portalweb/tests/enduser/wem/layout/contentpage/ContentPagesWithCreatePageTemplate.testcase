@@ -7,20 +7,17 @@ definition {
 	property testray.component.names = "Content Pages,Content Page Templates";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
 		}
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = ${siteName});
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -29,21 +26,15 @@ definition {
 	test AddFirstPageTemplateSetWhenCreatePageTemplate {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a site designer has a content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -89,25 +80,19 @@ definition {
 	test AddNewPageTemplateSetWhenCreatePageTemplate {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a site designer has a page template set and content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -159,25 +144,19 @@ definition {
 	@description = "This is a test for LPS-140483. The created page template from content page will be auto renamed when site designer creates the second one in the same collection."
 	@priority = 4
 	test AutoRenamePageTemplateCreatedFromContentPageInTheSameCollection {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
 		task ("Given a site designer creates a content page template from the content page") {
-			HeadlessSite.addSite(siteName = ${siteName});
-
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.createPageTemplate(collectionName = "Page Template Collection");
 		}
@@ -202,27 +181,19 @@ definition {
 	test CreatePageTemplateFromContentPage {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
 		task ("Add a Heading fragment and an Asset Publisher widget to content page then publish") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -238,7 +209,7 @@ definition {
 		task ("Create a content page template from the content page under page template collection") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.createPageTemplate(collectionName = "Page Template Collection");
 		}
@@ -271,21 +242,13 @@ definition {
 	test CreatePageTemplateFromContentPageBasedOnContentPageTemplate {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
 		task ("Add a Heading fragment to a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				layoutPageTemplateEntryName = "Content Page Template Name 1",
 				layoutPageTemplateStatus = "Draft",
@@ -348,21 +311,13 @@ definition {
 	test CreatePageTemplateFromContentPageBasedOnMasterPage {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
 		task ("Add a Header Dark fragment to the header of master page") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
@@ -432,17 +387,9 @@ definition {
 	test CreatePageTemplateFromContentPageBasedOnStyleBook {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
 		task ("Add a style book") {
 			JSONStylebooks.addStyleBookEntry(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				styleBookEntryName = "Test Style Book Name");
 		}
 
@@ -469,17 +416,17 @@ definition {
 
 		task ("Add a Heading to a content page") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -534,27 +481,19 @@ definition {
 	@description = "This is a test for LPS-140483. The site admin could create page template from an empty content page."
 	@priority = 4
 	test CreatePageTemplateFromEmptyContentPage {
-		var siteName = StringUtil.randomString(8);
-
-		var siteURLKey = StringUtil.toLowerCase(${siteName});
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
 		task ("Create a content page template from the empty content page under page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			PageEditor.createPageTemplate(collectionName = "Page Template Collection");
 		}
@@ -572,7 +511,7 @@ definition {
 		}
 
 		task ("View the content page is still at draft status") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteName});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 1,

@@ -6,9 +6,15 @@ definition {
 	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
 	setUp {
 		task ("Sign in") {
 			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -19,31 +25,27 @@ definition {
 
 		var siteName = StringUtil.randomString(8);
 
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${siteName});
-		}
-
 		task ("Add a Web Content Article, a Blogs Entry and a Document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a page based on Blank") {
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -51,7 +53,7 @@ definition {
 		task ("Assert Edit Mode is Page Design") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			AssertTextEquals(
 				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
@@ -133,7 +135,7 @@ definition {
 		task ("Select Content Editing") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = ${siteName});
+				siteName = ${randomSiteName});
 
 			Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
 

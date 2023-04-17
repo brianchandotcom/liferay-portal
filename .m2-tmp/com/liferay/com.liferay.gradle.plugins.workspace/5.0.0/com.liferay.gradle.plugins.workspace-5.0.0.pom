@@ -100,7 +100,7 @@
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.gradle.plugins.target.platform</artifactId>
-      <version>3.0.10</version>
+      <version>3.0.11</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

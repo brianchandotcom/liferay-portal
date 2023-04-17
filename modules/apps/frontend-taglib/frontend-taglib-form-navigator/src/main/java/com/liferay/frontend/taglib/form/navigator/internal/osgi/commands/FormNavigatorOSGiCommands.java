@@ -18,10 +18,8 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.Validator;
@@ -123,19 +121,20 @@ public class FormNavigatorOSGiCommands {
 			return StringPool.BLANK;
 		}
 
-		String formNavigatorEntryKeysCSV = StringUtil.merge(
-			TransformUtil.transform(
-				formNavigatorEntries, FormNavigatorEntry::getKey),
-			StringPool.COMMA);
-
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(
+			(formNavigatorEntries.size() * 2) + 2);
 
 		if (Validator.isNotNull(formNavigatorCategoryKey)) {
 			sb.append(formNavigatorCategoryKey);
 			sb.append(StringPool.EQUAL);
 		}
 
-		sb.append(formNavigatorEntryKeysCSV);
+		for (FormNavigatorEntry<?> formNavigatorEntry : formNavigatorEntries) {
+			sb.append(formNavigatorEntry.getKey());
+			sb.append(StringPool.COMMA);
+		}
+
+		sb.setIndex(sb.index() - 1);
 		sb.append(StringPool.NEW_LINE);
 
 		return sb.toString();

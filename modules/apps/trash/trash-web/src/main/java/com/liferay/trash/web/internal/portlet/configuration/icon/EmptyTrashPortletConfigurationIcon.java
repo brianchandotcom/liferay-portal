@@ -17,9 +17,13 @@ package com.liferay.trash.web.internal.portlet.configuration.icon;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.constants.TrashPortletKeys;
 
 import java.util.Map;
@@ -49,6 +53,8 @@ public class EmptyTrashPortletConfigurationIcon
 	public Map<String, Object> getContext(PortletRequest portletRequest) {
 		return HashMapBuilder.<String, Object>put(
 			"action", getNamespace(portletRequest) + "emptyTrash"
+		).put(
+			"emptyTrashURL", _getEmptyTrashURL(portletRequest)
 		).put(
 			"globalAction", true
 		).build();
@@ -90,8 +96,30 @@ public class EmptyTrashPortletConfigurationIcon
 		return _servletContext;
 	}
 
+	private String _getEmptyTrashURL(PortletRequest portletRequest) {
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, TrashPortletKeys.TRASH,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"emptyTrash"
+		).setParameter(
+			"groupId",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getScopeGroupId();
+			}
+		).buildString();
+	}
+
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.trash.web)")
 	private ServletContext _servletContext;

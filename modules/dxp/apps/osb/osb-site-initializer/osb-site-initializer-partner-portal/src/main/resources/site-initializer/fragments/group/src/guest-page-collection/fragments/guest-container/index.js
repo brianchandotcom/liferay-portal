@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,11 +8,3 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
-if (layoutMode !== 'edit' && themeDisplay.isSignedIn()) {
-	const relativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
-
-	window.location.replace(
-		relativeURL.substring(0, relativeURL.lastIndexOf('/')) + '/home'
-	);
-}

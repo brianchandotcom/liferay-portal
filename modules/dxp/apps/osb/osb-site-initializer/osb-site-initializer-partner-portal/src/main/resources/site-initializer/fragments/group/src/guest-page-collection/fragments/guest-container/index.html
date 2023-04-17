@@ -1,3 +1,10 @@
-<div class="position-relative prm-container">
-	<lfr-drop-zone></lfr-drop-zone>
-</div>
+[#if themeDisplay.isSignedIn() && !themeDisplay.getLayout().isTypeControlPanel() && !themeDisplay.getLayout().isSystem() && layoutMode != "edit"]
+	[#assign currentURL = (themeDisplay.getURLCurrent()?keep_before("/guest"))! /]
+	[#assign layoutPath = currentURL?ends_with("/")?then("home", "/home") /]
+
+	<script>
+		Liferay.Util.navigate("${currentURL + layoutPath}");
+	</script>
+[/#if]
+
+<lfr-drop-zone></lfr-drop-zone>

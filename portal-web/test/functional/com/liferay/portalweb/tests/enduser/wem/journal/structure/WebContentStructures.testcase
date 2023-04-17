@@ -757,6 +757,10 @@ definition {
 		property custom.properties = "redirect.url.ips.allowed=";
 
 		task ("Add a page based on Link to URL") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.addPage(
@@ -812,10 +816,6 @@ definition {
 		}
 
 		task ("Add a Web Content Display to another page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name");
-
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");

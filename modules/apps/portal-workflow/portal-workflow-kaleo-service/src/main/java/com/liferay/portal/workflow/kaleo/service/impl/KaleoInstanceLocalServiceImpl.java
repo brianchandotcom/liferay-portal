@@ -58,8 +58,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -488,9 +486,8 @@ public class KaleoInstanceLocalServiceImpl
 			return null;
 		}
 
-		return Stream.of(
-			orderByComparator.getOrderByFields()
-		).map(
+		return TransformUtil.transform(
+			orderByComparator.getOrderByFields(),
 			orderByFieldName -> {
 				String fieldName = _fieldNameOrderByCols.getOrDefault(
 					orderByFieldName, orderByFieldName);
@@ -507,10 +504,8 @@ public class KaleoInstanceLocalServiceImpl
 				}
 
 				return new Sort(fieldName, sortType, !ascending);
-			}
-		).toArray(
-			Sort[]::new
-		);
+			},
+			Sort.class);
 	}
 
 	private Hits _search(
@@ -595,17 +590,19 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	private List<KaleoInstance> _toKaleoInstances(Hits hits) {
-		return Stream.of(
-			hits.getDocs()
-		).map(
-			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
-		).map(
-			kaleoInstancePersistence::fetchByPrimaryKey
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transformToList(
+			hits.getDocs(),
+			document -> {
+				KaleoInstance kaleoInstance =
+					kaleoInstancePersistence.fetchByPrimaryKey(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+				if (kaleoInstance == null) {
+					return null;
+				}
+
+				return kaleoInstance;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

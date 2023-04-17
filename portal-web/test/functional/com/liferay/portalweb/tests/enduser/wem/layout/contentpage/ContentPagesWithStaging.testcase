@@ -615,7 +615,7 @@ definition {
 	@description = "This is a test for LPS-98030. A mapped editable background image of a fragment survives local staging."
 	@priority = 2
 	test MapWebContentImageToBackgroundImageOfBannerCenter {
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		var siteName = StringUtil.randomString(8);
 

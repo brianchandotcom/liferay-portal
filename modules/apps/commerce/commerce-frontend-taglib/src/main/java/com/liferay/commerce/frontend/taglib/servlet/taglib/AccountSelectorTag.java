@@ -75,6 +75,9 @@ public class AccountSelectorTag extends IncludeTag {
 				return super.doStartTag();
 			}
 
+			_addCommerceOrderURL = _getAddCommerceOrderURL(httpServletRequest);
+			_editOrderURL = _getEditOrderURL(httpServletRequest);
+
 			_accountEntryAllowedTypes =
 				commerceContext.getAccountEntryAllowedTypes();
 
@@ -86,11 +89,14 @@ public class AccountSelectorTag extends IncludeTag {
 
 			_accountEntry = commerceContext.getAccountEntry();
 			_commerceOrder = commerceContext.getCommerceOrder();
-			_editOrderURL = _getEditOrderURL(_themeDisplay);
+
 			_setCurrentAccountURL =
 				PortalUtil.getPortalURL(httpServletRequest) +
 					PortalUtil.getPathContext() +
 						"/o/commerce-ui/set-current-account";
+
+			_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			if (Validator.isNull(_spritemap)) {
 				_spritemap = _themeDisplay.getPathThemeSpritemap();
@@ -231,7 +237,7 @@ public class AccountSelectorTag extends IncludeTag {
 	}
 
 	private String _getAddCommerceOrderURL(
-			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		int commerceOrderTypesCount =
@@ -246,7 +252,7 @@ public class AccountSelectorTag extends IncludeTag {
 
 			return PortletURLBuilder.create(
 				_getPortletURL(
-					themeDisplay.getRequest(),
+					httpServletRequest,
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
 			).setMVCRenderCommandName(
 				"/commerce_order_content/view_commerce_order_order_type_modal"
@@ -260,13 +266,13 @@ public class AccountSelectorTag extends IncludeTag {
 			Boolean.FALSE);
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			themeDisplay.getScopeGroupId(),
+			PortalUtil.getScopeGroupId(httpServletRequest),
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if (plid > 0) {
 			return PortletURLBuilder.create(
 				_getPortletURL(
-					themeDisplay.getRequest(),
+					httpServletRequest,
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
 			).setActionName(
 				"/commerce_open_order_content/edit_commerce_order"
@@ -278,17 +284,17 @@ public class AccountSelectorTag extends IncludeTag {
 		return StringPool.BLANK;
 	}
 
-	private String _getEditOrderURL(ThemeDisplay themeDisplay)
+	private String _getEditOrderURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			themeDisplay.getScopeGroupId(),
+			PortalUtil.getScopeGroupId(httpServletRequest),
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if (plid > 0) {
 			return PortletURLBuilder.create(
 				_getPortletURL(
-					themeDisplay.getRequest(),
+					httpServletRequest,
 					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
 			).setActionName(
 				"/commerce_open_order_content/edit_commerce_order"

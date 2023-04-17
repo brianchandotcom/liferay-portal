@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"my-utils": "*"
+	},
+	"name": "custom-element",
+	"private": true
+}

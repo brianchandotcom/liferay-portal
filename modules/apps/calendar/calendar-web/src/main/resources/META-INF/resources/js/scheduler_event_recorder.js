@@ -133,6 +133,7 @@ AUI.add(
 							)
 						) {
 							editGroup.push({
+								cssClass: 'btn-primary btn-sm',
 								id: 'saveBtn',
 								label: Liferay.Language.get('save'),
 								on: {
@@ -153,6 +154,7 @@ AUI.add(
 							)
 						) {
 							editGroup.push({
+								cssClass: 'btn-secondary btn-sm',
 								id: 'editBtn',
 								label: Liferay.Language.get('edit'),
 								on: {
@@ -169,6 +171,7 @@ AUI.add(
 							permissions.VIEW_BOOKING_DETAILS
 						) {
 							editGroup.push({
+								cssClass: 'btn-secondary btn-sm',
 								id: 'viewBtn',
 								label: Liferay.Language.get('view-details'),
 								on: {
@@ -189,6 +192,7 @@ AUI.add(
 							)
 						) {
 							editGroup.push({
+								cssClass: 'btn-secondary btn-sm',
 								id: 'deleteBtn',
 								label: Liferay.Language.get('delete'),
 								on: {

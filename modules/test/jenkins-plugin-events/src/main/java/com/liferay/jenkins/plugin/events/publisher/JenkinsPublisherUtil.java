@@ -16,6 +16,7 @@ package com.liferay.jenkins.plugin.events.publisher;
 
 import com.liferay.jenkins.plugin.events.JenkinsEventsDescriptor;
 
+import hudson.model.Action;
 import hudson.model.Build;
 import hudson.model.Computer;
 import hudson.model.Executor;
@@ -110,6 +111,25 @@ public class JenkinsPublisherUtil {
 		).put(
 			"result", build.getResult()
 		);
+
+		JSONObject parametersJSONObject = new JSONObject();
+
+		for (Action action : build.getAllActions()) {
+			if (!(action instanceof ParametersAction)) {
+				continue;
+			}
+
+			ParametersAction parametersAction = (ParametersAction)action;
+
+			for (ParameterValue parameterValue :
+					parametersAction.getAllParameters()) {
+
+				parametersJSONObject.put(
+					parameterValue.getName(), parameterValue.getValue());
+			}
+		}
+
+		jsonObject.put("parameters", parametersJSONObject);
 
 		return jsonObject;
 	}

@@ -1039,7 +1039,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private Map<String, Object> _getAvailableLanguages() {
-		Map<String, Object> availableLanguages = new HashMap<>();
+		Map<String, Object> availableLanguages = new LinkedHashMap<>();
 
 		String[] languageIds = LocaleUtil.toLanguageIds(
 			language.getAvailableLocales(themeDisplay.getSiteGroupId()));

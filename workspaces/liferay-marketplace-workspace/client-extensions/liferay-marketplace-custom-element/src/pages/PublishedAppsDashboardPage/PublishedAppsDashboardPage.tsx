@@ -230,7 +230,7 @@ export function PublishedAppsDashboardPage() {
 	useEffect(() => {
 		(async () => {
 			const accountCustomField = selectedAccount.customFields?.find(
-				(customField) => customField.name === 'CatalogID'
+				(customField) => customField.name === 'CatalogId'
 			);
 
 			if (accountCustomField) {
@@ -443,8 +443,6 @@ export function PublishedAppsDashboardPage() {
 			}
 		})();
 	}, [selectedAccount]);
-
-	console.log(selectedAccount);
 
 	return (
 		<div className="published-apps-dashboard-page-container">

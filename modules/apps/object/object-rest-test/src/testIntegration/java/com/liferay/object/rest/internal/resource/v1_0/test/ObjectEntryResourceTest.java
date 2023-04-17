@@ -3078,6 +3078,38 @@ public class ObjectEntryResourceTest {
 
 		_testGetNestedFieldDetailsInOneToManyRelationships(
 			StringBundler.concat(
+				_objectDefinition2.getRESTContextPath(), "?nestedFields=r_",
+				_objectRelationship1.getName(), "_",
+				StringUtil.removeLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id")),
+			StringBundler.concat(
+				"r_", _objectRelationship1.getName(), "_",
+				StringUtil.removeLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id")));
+
+		_testGetNestedFieldDetailsInOneToManyRelationships(
+			StringBundler.concat(
+				_objectDefinition2.getRESTContextPath(), "?nestedFields=",
+				StringUtil.removeLast(
+					StringUtil.removeFirst(
+						_objectDefinition1.getPKObjectFieldName(), "c_"),
+					"Id")),
+			StringBundler.concat(
+				"r_", _objectRelationship1.getName(), "_",
+				StringUtil.removeLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id")));
+
+		_testGetNestedFieldDetailsInOneToManyRelationships(
+			StringBundler.concat(
+				_objectDefinition2.getRESTContextPath(), "?nestedFields=",
+				_objectRelationship1.getName()),
+			StringBundler.concat(
+				"r_", _objectRelationship1.getName(), "_",
+				StringUtil.removeLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id")));
+
+		_testGetNestedFieldDetailsInOneToManyRelationships(
+			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), "?nestedFields=",
 				_objectRelationship1.getName()),
 			_objectRelationship1.getName());

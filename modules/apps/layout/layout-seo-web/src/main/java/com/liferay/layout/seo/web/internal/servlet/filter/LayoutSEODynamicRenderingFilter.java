@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.redirect.matcher.UserAgentMatcher;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,11 +67,8 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 
 		try {
 			if (!_layoutSEODynamicRenderingConfiguration.enabled() ||
-				!_isCrawlerUserAgent(
-					_layoutSEODynamicRenderingConfiguration.crawlerUserAgents(),
-					StringUtil.toLowerCase(
-						httpServletRequest.getHeader(
-							HttpHeaders.USER_AGENT)))) {
+				!_userAgentMatcher.isCrawlerUserAgent(
+					httpServletRequest.getHeader(HttpHeaders.USER_AGENT))) {
 
 				return false;
 			}
@@ -171,18 +169,6 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 		return headers;
 	}
 
-	private boolean _isCrawlerUserAgent(
-		String[] crawlerUserAgents, String userAgent) {
-
-		for (String crawlerUserAgent : crawlerUserAgents) {
-			if (userAgent.contains(StringUtil.toLowerCase(crawlerUserAgent))) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isIncludedPath(String requestURI, String[] includedPaths) {
 		for (String includedPath : includedPaths) {
 			if (requestURI.contains(StringUtil.toLowerCase(includedPath))) {
@@ -217,5 +203,8 @@ public class LayoutSEODynamicRenderingFilter extends BaseFilter {
 
 	private LayoutSEODynamicRenderingConfiguration
 		_layoutSEODynamicRenderingConfiguration;
+
+	@Reference
+	private UserAgentMatcher _userAgentMatcher;
 
 }

@@ -28,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,6 +110,13 @@ public class DDMDataProviderInstanceStagedModelRepository
 	}
 
 	@Override
+	public DDMDataProviderInstance fetchMissingReference(
+		String uuid, long groupId) {
+
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
+	}
+
 	public DDMDataProviderInstance fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -217,5 +225,8 @@ public class DDMDataProviderInstanceStagedModelRepository
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+
+	@Reference
+	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 }

@@ -29,6 +29,38 @@ definition {
 			metrics = ${metrics},
 			selectedFile = ${selectedFile},
 			thirdInvoice = ${thirdInvoice});
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "reimbursementInvoice",
+			locator1 = "PRMMDFClaim#UPLOAD_FIELD",
+			value1 = ${reimbursementInvoice});
+
+		if (isSet(saveAsDraft)) {
+			Button.click(button = "Save as Draft");
+		}
+		else {
+			Button.click(button = "Submit");
+
+			Alert.viewSuccessMessage();
+		}
+
+		WaitForPageLoad();
+
+		WaitForVisible(
+			key_title = "Campaign MDF Request",
+			locator1 = "Header#H1_TITLE");
+	}
+
+	@summary = "Fill the fields related to activity in claim form"
+	macro fillActivityFields {
+		if (!(isSet(activityIndex))) {
+			var activityIndex = 0;
+		}
+
+		if (!(isSet(budgetIndex))) {
+			var budgetIndex = 0;
+		}
+
 		for (var actvIndex : list ${activityIndex}) {
 			Click.javaScriptClick(
 				key_fieldName = "activities[${actvIndex}].selected",
@@ -39,10 +71,12 @@ definition {
 					key_fieldName = "activities[${actvIndex}].budgets[${bdgtIndex}].selected",
 					locator1 = "Checkbox#CHECKBOX_NAME");
 
-				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-					key_fieldName = "activities[${actvIndex}].budgets[${bdgtIndex}].invoice",
-					locator1 = "PRMMDFClaim#UPLOAD_FIELD",
-					value1 = ${thirdInvoice});
+				if (isSet(thirdInvoice)) {
+					UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+						key_fieldName = "activities[${actvIndex}].budgets[${bdgtIndex}].invoice",
+						locator1 = "PRMMDFClaim#UPLOAD_FIELD",
+						value1 = ${thirdInvoice});
+				}
 
 				if (isSet(metrics)) {
 					var key_indexNumber = ${actvIndex} + 1;
@@ -54,7 +88,7 @@ definition {
 						value1 = ${mestricsDescription});
 				}
 
-				if (isSet(selectfiles)) {
+				if (isSet(selectedFile)) {
 					var key_indexNumber = ${activityIndex} + 1;
 
 					Select(
@@ -64,23 +98,14 @@ definition {
 						value1 = ${selectedFile});
 				}
 
-				UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-					key_fieldName = "activities[${actvIndex}].listOfQualifiedLeads",
-					locator1 = "PRMMDFClaim#UPLOAD_FIELD",
-					value1 = ${listLeads});
+				if (isSet(listLeads)) {
+					UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+						key_fieldName = "activities[${actvIndex}].listOfQualifiedLeads",
+						locator1 = "PRMMDFClaim#UPLOAD_FIELD",
+						value1 = ${listLeads});
+				}
 			}
 		}
-
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			key_fieldName = "reimbursementInvoice",
-			locator1 = "PRMMDFClaim#UPLOAD_FIELD",
-			value1 = ${reimbursementInvoice});
-
-		Button.click(button = "Submit");
-
-		Alert.viewSuccessMessage();
-
-		WaitForPageLoad();
 	}
 
 	@summary = "Filter the claim by Company Name"

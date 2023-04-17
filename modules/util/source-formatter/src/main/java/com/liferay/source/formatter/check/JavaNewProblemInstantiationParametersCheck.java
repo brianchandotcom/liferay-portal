@@ -54,7 +54,7 @@ public class JavaNewProblemInstantiationParametersCheck
 				methodCall);
 
 			parameterList.replaceAll(
-				e -> e.replaceAll("\n\t*", StringPool.BLANK));
+				parameter -> parameter.replaceAll("\n\t*", StringPool.BLANK));
 
 			String exceptionVariableName = null;
 

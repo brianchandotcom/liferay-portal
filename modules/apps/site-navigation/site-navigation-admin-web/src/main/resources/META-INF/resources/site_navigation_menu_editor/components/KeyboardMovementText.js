@@ -15,9 +15,11 @@
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {useItems} from '../contexts/ItemsContext';
 import {useDragLayer} from '../contexts/KeyboardDndContext';
+import getFlatItems from '../utils/getFlatItems';
 
-function getMovementText(dragLayer) {
+function getMovementText(dragLayer, items) {
 	if (!dragLayer) {
 		return '';
 	}
@@ -31,23 +33,48 @@ function getMovementText(dragLayer) {
 		);
 	}
 
-	return sub(
-		dragLayer.eventKey === 'ArrowDown'
-			? Liferay.Language.get('x-moved-down')
-			: Liferay.Language.get('x-moved-up'),
-		`${dragLayer.menuItemTitle} (${dragLayer.menuItemType})`
+	const siblingsItems = items.filter(
+		(item) =>
+			item.parentSiteNavigationMenuItemId ===
+			dragLayer.parentSiteNavigationMenuItemId
 	);
+
+	if (!siblingsItems.length) {
+		const parent = items.find(
+			(item) =>
+				item.siteNavigationMenuItemId ===
+				dragLayer.parentSiteNavigationMenuItemId
+		);
+
+		return sub(Liferay.Language.get('targeting-inside-of-x'), parent.title);
+	}
+
+	const sibling = siblingsItems[dragLayer.order - 1];
+
+	if (sibling) {
+		return sub(Liferay.Language.get('targeting-x-of-x'), [
+			Liferay.Language.get('bottom'),
+			sibling.title,
+		]);
+	}
+
+	return sub(Liferay.Language.get('targeting-x-of-x'), [
+		Liferay.Language.get('top'),
+		siblingsItems[dragLayer.order]?.title,
+	]);
 }
 
 export default function KeyboardMovementText() {
 	const dragLayer = useDragLayer();
 
+	const items = getFlatItems(useItems());
+
 	const [internalText, setInternalText] = useState(() =>
-		getMovementText(dragLayer)
+		getMovementText(dragLayer, items)
 	);
 
 	useEffect(() => {
-		setInternalText(getMovementText(dragLayer));
+		setInternalText(getMovementText(dragLayer, items));
 
 		const handler = setTimeout(() => {
 			setInternalText(null);
@@ -56,7 +83,7 @@ export default function KeyboardMovementText() {
 		return () => {
 			clearTimeout(handler);
 		};
-	}, [dragLayer]);
+	}, [dragLayer]); //eslint-disable-line
 
 	return internalText ? (
 		<span

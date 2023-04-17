@@ -56,4 +56,6 @@ public interface JenkinsServer extends Entity {
 
 	public void setURL(URL url);
 
+	public void update();
+
 }

@@ -20,10 +20,14 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.http.MediaType;
@@ -140,6 +144,40 @@ public abstract class BaseJenkinsServer
 	@Override
 	public void setURL(URL url) {
 		_url = url;
+	}
+
+	@Override
+	public void update() {
+		JSONObject jsonObject = getComputerJSONObject();
+
+		JSONArray computerJSONArray = jsonObject.getJSONArray("computer");
+
+		Map<String, JenkinsNode> jenkinsNodeMap = new HashMap<>();
+
+		for (JenkinsNode jenkinsNode : getJenkinsNodes()) {
+			jenkinsNodeMap.put(jenkinsNode.getName(), jenkinsNode);
+		}
+
+		for (int i = 0; i < computerJSONArray.length(); i++) {
+			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);
+
+			String name = computerJSONObject.getString("displayName");
+
+			if (Objects.equals(
+					computerJSONObject.getString("_class"),
+					"hudson.model.Hudson$MasterComputer")) {
+
+				name = "master";
+			}
+
+			JenkinsNode jenkinsNode = jenkinsNodeMap.get(name);
+
+			if (jenkinsNode == null) {
+				continue;
+			}
+
+			jenkinsNode.update(computerJSONObject);
+		}
 	}
 
 	protected BaseJenkinsServer(JSONObject jsonObject) {

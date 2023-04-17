@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class UpgradeVelocityCommentMigrationCheck
 	extends BaseUpgradeVelocityMigrationCheck {
 
+	@Override
 	protected String migrateContent(String content) {
 		String[] lines = content.split(StringPool.NEW_LINE);
 

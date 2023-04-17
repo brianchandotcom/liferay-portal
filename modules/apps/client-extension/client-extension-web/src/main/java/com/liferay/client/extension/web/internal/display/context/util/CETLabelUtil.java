@@ -75,6 +75,12 @@ public class CETLabelUtil {
 			return "iframe";
 		}
 		else if (Objects.equals(
+					type,
+					ClientExtensionEntryConstants.TYPE_JS_IMPORTMAPS_ENTRY)) {
+
+			return "js-importmaps-entry";
+		}
+		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_STATIC_CONTENT)) {
 
 			return "static-content";

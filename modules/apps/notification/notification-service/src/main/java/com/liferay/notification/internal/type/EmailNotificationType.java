@@ -280,7 +280,12 @@ public class EmailNotificationType extends BaseNotificationType {
 						userLocalService.getGuestUser(
 							CompanyThreadLocal.getCompanyId()),
 						body, notificationContext,
-						notificationRecipientSettingsEvaluatedMap, subject);
+						HashMapBuilder.putAll(
+							notificationRecipientSettingsEvaluatedMap
+						).put(
+							"to", emailAddressOrUserId
+						).build(),
+						subject);
 
 					_sendEmail(
 						notificationQueueEntryLocalService.
@@ -292,7 +297,12 @@ public class EmailNotificationType extends BaseNotificationType {
 
 			prepareNotificationContext(
 				user, body, notificationContext,
-				notificationRecipientSettingsEvaluatedMap, subject);
+				HashMapBuilder.putAll(
+					notificationRecipientSettingsEvaluatedMap
+				).put(
+					"to", emailAddressOrUserId
+				).build(),
+				subject);
 
 			_sendEmail(
 				notificationQueueEntryLocalService.addNotificationQueueEntry(

@@ -28,6 +28,10 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
 
 		for (var nodeNumber : list "8,9") {
+			Clustering.viewTextPresentOnSpecificNode(
+				expectedText = "licensed for this cluster has been exceeded",
+				nodePort = "${nodeNumber}080");
+
 			User.loginPG(
 				nodePort = "${nodeNumber}080",
 				password = "test",
@@ -42,6 +46,10 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "This current node is within the licensed node count and will not be automatically deactivated nor shut down after the grace period expires.");
 		}
 
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "licensed for this cluster has been exceeded",
+			nodePort = 10080);
+
 		User.loginPG(
 			nodePort = 10080,
 			password = "test",
@@ -50,6 +58,8 @@ definition {
 		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 		Refresh();
+
+		Alert.viewErrorMessage(errorMessage = "The maximum number of 2 nodes licensed for this cluster has been exceeded. Please shut down excess nodes as soon as possible. An additional 2 nodes are temporarily permitted during the grace period");
 
 		Alert.viewErrorMessage(errorMessage = "This current node is within the temporarily permitted node count and will be automatically deactivated after the grace period expires");
 

@@ -852,9 +852,17 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private boolean _isPrivateLayout() {
-		return Objects.equals(
-			ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT,
-			_getPageTypeSelectedOption());
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (group.isLayoutSetPrototype() ||
+			Objects.equals(
+				ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT,
+				_getPageTypeSelectedOption())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isPrivateLayoutsEnabled() {

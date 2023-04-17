@@ -13,6 +13,7 @@
 const ROLE = {
 	EVP_MANAGER: 'EVP Manager',
 };
+const userRoles = document.querySelector('.userRoles').value;
 
 const updateStatus = async (key, name, message) => {
 	const organizationID = fragmentElement.querySelector('.organizationID')

@@ -172,8 +172,7 @@ const Table: React.FC<TableProps> = ({
 										className={classnames('', {
 											'cursor-pointer':
 												!!item.clickable &&
-												rowContent.isClickable ===
-													'true',
+												rowContent.isClickable === true,
 											'font-weight-bolder': !!item.bold,
 											'text-danger font-weight-bolder':
 												Number(rowContent[item.key]) <

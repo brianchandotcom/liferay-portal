@@ -10,17 +10,19 @@
 ## #set ($modified_date = $indexFormat.parse($$reserved-article-modified-date.getData()))
 ## #set ($mod_date = $dateTool.format("d MMMM yyyy H:m",$modified_date))
 
-<p>$Headings.getData($Headings.getData())</p>
+<html lang="$w3c_language_id">
 
-<p>$Headings.getData(newTest)</p>
+    <p>$Headings.getData($Headings.getData())</p>
 
-class="$root_css_class"
+    <p>$Headings.getData(newTest)</p>
 
-class="$root_css_class $root_css_sub_class $ro_cs_css $ot_ss_cass"
+    <p>class="$root_css_class"</p>
 
-lang="$w3c_language_id">
+    <p>class="$root_css_class $root_css_sub_class $ro_cs_css $ot_ss_cass"</p>
 
-href="$site_default_url"
+    <a href="$site_default_url">testLink</a>
+
+</html>
 
 #macro( navigationBar  $nav_item )
     #if ($nav_item.hasChildren())

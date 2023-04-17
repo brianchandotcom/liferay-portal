@@ -79,9 +79,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -92,6 +92,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.fields.NestedFieldsContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -103,12 +105,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
 
 import org.hamcrest.CoreMatchers;
 
@@ -3346,6 +3342,10 @@ public class ObjectEntryResourceTest {
 			objectDefinition.getObjectDefinitionId());
 
 		String originalName = PrincipalThreadLocal.getName();
+
+		NestedFieldsContext originalNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -3430,8 +3430,16 @@ public class ObjectEntryResourceTest {
 
 			// Get object entry with no nested fields
 
-			objectEntryResource.setContextUriInfo(
-				_getContextUriInfo(StringPool.BLANK));
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(null);
+
+			objectEntry = objectEntryResource.getObjectEntry(objectEntryId);
+
+			Assert.assertNull(objectEntry.getAuditEvents());
+
+			// Get object entry with nested fields but without "auditEvents"
+
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				_getNestedFieldsContext(RandomTestUtil.randomString()));
 
 			objectEntry = objectEntryResource.getObjectEntry(objectEntryId);
 
@@ -3439,8 +3447,8 @@ public class ObjectEntryResourceTest {
 
 			// Get object entry with "auditEvents" nested fields
 
-			objectEntryResource.setContextUriInfo(
-				_getContextUriInfo("auditEvents"));
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				_getNestedFieldsContext("auditEvents"));
 
 			objectEntry = objectEntryResource.getObjectEntry(objectEntryId);
 
@@ -3554,6 +3562,8 @@ public class ObjectEntryResourceTest {
 			Assert.assertNull(objectEntry.getAuditEvents());
 		}
 		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				originalNestedFieldsContext);
 			PrincipalThreadLocal.setName(originalName);
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
@@ -4538,35 +4548,10 @@ public class ObjectEntryResourceTest {
 		return URLCodec.encodeURL(string);
 	}
 
-	private UriInfo _getContextUriInfo(String nestedFields) {
-		return (UriInfo)ProxyUtil.newProxyInstance(
-			ObjectEntryResourceTest.class.getClassLoader(),
-			new Class<?>[] {UriInfo.class},
-			(proxy, method, arguments) -> {
-				if (Objects.equals(method.getName(), "getBaseUriBuilder")) {
-					return UriBuilder.fromPath(RandomTestUtil.randomString());
-				}
-				else if (Objects.equals(method.getName(), "getMatchedURIs")) {
-					return Arrays.asList(StringPool.BLANK);
-				}
-				else if (Objects.equals(
-							method.getName(), "getPathParameters")) {
-
-					return new MultivaluedHashMap<>();
-				}
-				else if (Objects.equals(
-							method.getName(), "getQueryParameters")) {
-
-					MultivaluedMap<String, String> multivaluedMap =
-						new MultivaluedHashMap<>();
-
-					multivaluedMap.add("nestedFields", nestedFields);
-
-					return multivaluedMap;
-				}
-
-				return null;
-			});
+	private NestedFieldsContext _getNestedFieldsContext(String nestedFields) {
+		return new NestedFieldsContext(
+			1, ListUtil.fromString(nestedFields, StringPool.COMMA), null, null,
+			null, null);
 	}
 
 	private ObjectEntryResource _getObjectEntryResource(

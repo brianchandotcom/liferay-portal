@@ -166,7 +166,7 @@ String friendlyURLBase = StringPool.BLANK;
 
 <c:if test="<%= !selLayout.isTypeAssetDisplay() %>">
 	<clay:sheet-section>
-		<h3 class="sheet-subtitle"><liferay-ui:message key="categorization" /></h3>
+		<h3 class="mb-4 text-uppercase"><liferay-ui:message key="categorization" /></h3>
 
 		<liferay-util:include page="/layout/categorization.jsp" servletContext="<%= application %>" />
 	</clay:sheet-section>

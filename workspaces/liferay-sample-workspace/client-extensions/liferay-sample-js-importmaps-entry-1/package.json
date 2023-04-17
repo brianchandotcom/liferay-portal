@@ -1,0 +1,8 @@
+{
+	"name": "liferay-sample-js-importmaps-entry-1",
+	"private": true,
+	"workspaces": [
+		"assets/custom-element",
+		"assets/my-utils"
+	]
+}

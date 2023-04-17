@@ -20,15 +20,43 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else if (IsElementPresent(locator1 = "FrontendDataSet#TABLE_BODY")) {
+			FrontendDataSetAdmin.tearDownCP();
+		}
+		else {
+			AssertElementPresent(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
 	}
 
-	@description = "LPS-178777. Confirm that the user can create a dataset entry via API"
-	@ignore = "true"
+	@description = "LPS-178777. Confirm that the user can create a dataset view via API"
 	@priority = 5
 	test CanCreateDataSetViaAPI {
+		task ("Given creating a Data Set via API") {
+			FDSJSON.addDataSetViaAPI(
+				dataSetName = "Test Dataset",
+				restApplication = "/analytics-settings-rest/v1.0",
+				restEndpoint = "/v1.0/channels",
+				restSchema = "Channel");
+		}
 
-		// TO DO FDSAPI#CanCreateDataSetViaAPI
+		task ("and given access Datasets admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Datasets");
 
+			WaitForElementPresent(
+				key_itemName = "Test Dataset",
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+		}
+
+		task ("Then the data set is shown in the list") {
+			AssertElementPresent(
+				key_itemName = "Test Dataset",
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+		}
 	}
 
 }

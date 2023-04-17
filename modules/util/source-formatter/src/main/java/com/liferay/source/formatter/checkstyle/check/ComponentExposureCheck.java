@@ -58,7 +58,7 @@ public class ComponentExposureCheck extends BaseCheck {
 	private void _checkExposedStaticComponent(
 		DetailAST detailAST, DetailAST annotationDetailAST) {
 
-		if (_isRegisterService(annotationDetailAST)) {
+		if (_isEmptyRegisterService(annotationDetailAST)) {
 			return;
 		}
 
@@ -107,30 +107,7 @@ public class ComponentExposureCheck extends BaseCheck {
 		}
 	}
 
-	private boolean _isInsidePublicStaticMethod(DetailAST detailAST) {
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		while (parentDetailAST != null) {
-			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
-				DetailAST modifiersDetailAST = parentDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS);
-
-				if (modifiersDetailAST.branchContains(
-						TokenTypes.LITERAL_PUBLIC) &&
-					modifiersDetailAST.branchContains(
-						TokenTypes.LITERAL_STATIC)) {
-
-					return true;
-				}
-			}
-
-			parentDetailAST = parentDetailAST.getParent();
-		}
-
-		return false;
-	}
-
-	private boolean _isRegisterService(DetailAST annotationDetailAST) {
+	private boolean _isEmptyRegisterService(DetailAST annotationDetailAST) {
 		DetailAST serviceAnnotationMemberValuePairDetailAST =
 			getAnnotationMemberValuePairDetailAST(
 				annotationDetailAST, "service");
@@ -155,6 +132,29 @@ public class ComponentExposureCheck extends BaseCheck {
 		}
 
 		return true;
+	}
+
+	private boolean _isInsidePublicStaticMethod(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		while (parentDetailAST != null) {
+			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
+				DetailAST modifiersDetailAST = parentDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS);
+
+				if (modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_PUBLIC) &&
+					modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_STATIC)) {
+
+					return true;
+				}
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+
+		return false;
 	}
 
 	private static final String _MSG_EXPOSED_STATIC_COMPONENT =

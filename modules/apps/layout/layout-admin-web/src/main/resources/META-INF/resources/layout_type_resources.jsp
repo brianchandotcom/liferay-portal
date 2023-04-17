@@ -74,7 +74,7 @@ if (selLayout != null) {
 
 		<c:if test="<%= layoutPrototype != null %>">
 			<div class="layout-type">
-				<p class="small text-muted">
+				<p class="small text-secondary">
 					<%= HtmlUtil.escape(layoutPrototype.getDescription(locale)) %>
 				</p>
 
@@ -89,7 +89,7 @@ if (selLayout != null) {
 		%>
 
 		<div class="layout-type">
-			<p class="small text-muted">
+			<p class="small text-secondary">
 				<liferay-ui:message key='<%= "layout.types." + type + ".description" %>' />
 			</p>
 

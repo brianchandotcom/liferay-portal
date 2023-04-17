@@ -58,7 +58,7 @@ public class ComponentExposureCheck extends BaseCheck {
 	private void _checkExposedStaticComponent(
 		DetailAST detailAST, DetailAST annotationDetailAST) {
 
-		if (_isEmptyRegisterService(annotationDetailAST)) {
+		if (!_isEmptyRegisterService(annotationDetailAST)) {
 			return;
 		}
 
@@ -124,10 +124,10 @@ public class ComponentExposureCheck extends BaseCheck {
 			return false;
 		}
 
-		DetailAST exprDetailAST = annotationArrayInitDetailAST.findFirstToken(
-			TokenTypes.EXPR);
+		DetailAST firstChildDetailAST =
+			annotationArrayInitDetailAST.getFirstChild();
 
-		if (exprDetailAST == null) {
+		if (firstChildDetailAST.getType() != TokenTypes.RCURLY) {
 			return false;
 		}
 

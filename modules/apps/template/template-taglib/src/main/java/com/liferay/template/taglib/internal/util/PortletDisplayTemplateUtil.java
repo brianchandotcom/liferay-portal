@@ -27,10 +27,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class PortletDisplayTemplateUtil {
 
-	public static long getDDMTemplateGroupId(long groupId) {
-		return _portletDisplayTemplate.getDDMTemplateGroupId(groupId);
-	}
-
 	public static String getDisplayStyle(String ddmTemplateKey) {
 		return _portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
 	}

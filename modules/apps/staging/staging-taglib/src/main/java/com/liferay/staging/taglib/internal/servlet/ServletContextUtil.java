@@ -27,10 +27,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class ServletContextUtil {
 
-	public static String getContextPath() {
-		return _servletContext.getContextPath();
-	}
-
 	public static LayoutsTree getLayoutsTree() {
 		return _layoutsTree;
 	}

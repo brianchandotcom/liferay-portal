@@ -14,6 +14,7 @@
 
 package com.liferay.segments.asah.connector.internal.provider;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,10 +31,7 @@ import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.LongStream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -75,13 +73,9 @@ public class AsahSegmentsEntryProviderTest {
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong()
 		};
 
-		List<SegmentsEntryRel> segmentsEntryRels = new ArrayList<>();
-
-		LongStream longStream = Arrays.stream(segmentsEntryRelIds);
-
-		longStream.forEach(
-			segmentsEntryRelId -> segmentsEntryRels.add(
-				_createSegmentsEntryRel(segmentsEntryRelId)));
+		List<SegmentsEntryRel> segmentsEntryRels =
+			TransformUtil.transformToList(
+				segmentsEntryRelIds, this::_createSegmentsEntryRel);
 
 		long segmentsEntryId = RandomTestUtil.randomLong();
 

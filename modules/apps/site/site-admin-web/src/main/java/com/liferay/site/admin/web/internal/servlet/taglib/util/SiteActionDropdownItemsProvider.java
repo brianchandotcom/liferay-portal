@@ -208,10 +208,14 @@ public class SiteActionDropdownItemsProvider {
 						if (_themeDisplay.getScopeGroupId() ==
 								_group.getGroupId()) {
 
+							Group group =
+								GroupLocalServiceUtil.fetchCompanyGroup(
+									_themeDisplay.getCompanyId());
+
 							PortletURL redirectURL =
 								PortalUtil.getControlPanelPortletURL(
-									_httpServletRequest,
-									SiteAdminPortletKeys.SITE_ADMIN,
+									_httpServletRequest, group,
+									SiteAdminPortletKeys.SITE_ADMIN, 0, 0,
 									PortletRequest.RENDER_PHASE);
 
 							return redirectURL.toString();

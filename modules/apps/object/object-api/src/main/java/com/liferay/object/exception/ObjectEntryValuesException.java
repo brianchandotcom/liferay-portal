@@ -18,6 +18,8 @@ import com.liferay.object.model.ObjectState;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -299,6 +301,23 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class UniqueValueConstraintViolation
+		extends ObjectEntryValuesException {
+
+		public UniqueValueConstraintViolation(
+			String columnName, Serializable columnValue,
+			String objectFieldLabel, String tableName, Throwable throwable) {
+
+			super(
+				Arrays.asList(objectFieldLabel),
+				String.format(
+					"Unique value constraint violation for %s.%s with value %s",
+					tableName, columnName, columnValue),
+				"the-x-is-already-in-use-please-enter-a-unique-x", throwable);
+		}
+
+	}
+
 	public static class UnmodifiableAccountEntryObjectField
 		extends ObjectEntryValuesException {
 
@@ -316,6 +335,16 @@ public class ObjectEntryValuesException extends PortalException {
 		List<Object> arguments, String message, String messageKey) {
 
 		super(message);
+
+		_arguments = arguments;
+		_messageKey = messageKey;
+	}
+
+	private ObjectEntryValuesException(
+		List<Object> arguments, String message, String messageKey,
+		Throwable throwable) {
+
+		super(message, throwable);
 
 		_arguments = arguments;
 		_messageKey = messageKey;

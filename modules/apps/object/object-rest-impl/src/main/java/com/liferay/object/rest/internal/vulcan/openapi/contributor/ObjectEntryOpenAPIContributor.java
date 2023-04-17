@@ -26,6 +26,8 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -40,9 +42,11 @@ import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MapSchema;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
@@ -191,6 +195,15 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			schemas.remove("TaxonomyCategoryBrief");
 		}
+
+		if (openAPIContext != null) {
+			MapSchema actionsMapSchema = _getActionsMapSchema(openAPI);
+
+			actionsMapSchema.setAdditionalProperties(null);
+
+			actionsMapSchema.setProperties(
+				_getAvailableActionMethods(openAPIContext, openAPI.getPaths()));
+		}
 	}
 
 	private void _addObjectActionPathItem(
@@ -266,6 +279,44 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			objectDefinition.isUnmodifiableSystemObject(), openAPI);
 	}
 
+	private String _buildActionsURL(
+		OpenAPIContext openAPIContext, String pathName) {
+
+		return openAPIContext.getBaseUrl() +
+			StringUtil.removeFirst(pathName, StringPool.SLASH);
+	}
+
+	private Schema _createActionSchema(
+		OpenAPIContext openAPIContext,
+		Map.Entry<PathItem.HttpMethod, Operation> operation, String pathName) {
+
+		Schema actionOperations = new Schema();
+
+		actionOperations.setProperties(
+			HashMapBuilder.put(
+				"href",
+				() -> {
+					StringSchema hrefSchema = new StringSchema();
+
+					hrefSchema.setDefault(
+						_buildActionsURL(openAPIContext, pathName));
+
+					return hrefSchema;
+				}
+			).put(
+				"method",
+				() -> {
+					StringSchema methodSchema = new StringSchema();
+
+					methodSchema.setDefault(operation.getKey());
+
+					return methodSchema;
+				}
+			).build());
+
+		return actionOperations;
+	}
+
 	private PathItem _createObjectActionPathItem(
 		ObjectAction objectAction, PathItem pathItem) {
 
@@ -328,6 +379,61 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return pathItem;
 	}
 
+	private MapSchema _getActionsMapSchema(OpenAPI openAPI) {
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		Schema objectDefinitionSchema = schemas.get(
+			_objectDefinition.getShortName());
+
+		Map<String, Schema> openAPIProperties =
+			objectDefinitionSchema.getProperties();
+
+		return (MapSchema)openAPIProperties.get("actions");
+	}
+
+	private Map<String, Schema> _getAvailableActionMethods(
+		OpenAPIContext openAPIContext, Paths paths) {
+
+		Map<String, Schema> actions = new HashMap<>();
+
+		String pathObjectEntryERCParam =
+			StringUtil.lowerCaseFirstLetter(_objectDefinition.getShortName()) +
+				"ExternalReferenceCode";
+
+		String pathObjectEntryIdParam = StringBundler.concat(
+			StringPool.SLASH, StringPool.OPEN_CURLY_BRACE,
+			StringUtil.lowerCaseFirstLetter(_objectDefinition.getShortName()),
+			"Id}");
+
+		for (Map.Entry<String, PathItem> key : paths.entrySet()) {
+			String pathName = key.getKey();
+
+			PathItem pathItem = key.getValue();
+
+			Map<PathItem.HttpMethod, Operation> readOperationMap =
+				pathItem.readOperationsMap();
+
+			if (pathName.equals(pathObjectEntryIdParam)) {
+				_setActionsValues(
+					actions, readOperationMap, pathName, openAPIContext);
+			}
+			else if (pathName.equals(pathObjectEntryIdParam + "/permissions")) {
+				_setActionsValues(
+					actions, readOperationMap, pathName, openAPIContext);
+			}
+			else if (pathName.contains("object-actions") &&
+					 pathName.contains(pathObjectEntryERCParam)) {
+
+				_setActionsValues(
+					actions, readOperationMap, pathName, openAPIContext);
+			}
+		}
+
+		return actions;
+	}
+
 	private Content _getContent(Content originalContent, String schemaName) {
 		Content content = new Content();
 
@@ -352,6 +458,10 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 
 		return content;
+	}
+
+	private String _getCustomActionName(String pathName) {
+		return StringUtil.extractLast(pathName, StringPool.SLASH);
 	}
 
 	private String _getDescription(ObjectRelationship objectRelationship) {
@@ -550,6 +660,53 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		objectSchema.setDescription(_getDescription(objectRelationship));
 
 		return objectSchema;
+	}
+
+	private Map<String, Schema> _setActionsValues(
+		Map<String, Schema> actions,
+		Map<PathItem.HttpMethod, Operation> readOperationMap, String pathName,
+		OpenAPIContext openAPIContext) {
+
+		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
+				readOperationMap.entrySet()) {
+
+			PathItem.HttpMethod pathItemHttpMethod = operation.getKey();
+
+			Schema actionSchema = _createActionSchema(
+				openAPIContext, operation, pathName);
+
+			if (StringUtil.equals(pathItemHttpMethod.name(), "GET")) {
+				if (pathName.contains("/permissions")) {
+					actions.put(
+						StringUtil.toLowerCase("permissions"), actionSchema);
+				}
+				else {
+					actions.put(
+						StringUtil.toLowerCase(pathItemHttpMethod.name()),
+						actionSchema);
+				}
+			}
+			else if (StringUtil.equals(pathItemHttpMethod.name(), "PUT") &&
+					 !pathName.contains("/permissions")) {
+
+				if (pathName.contains("object-actions")) {
+					actions.put(_getCustomActionName(pathName), actionSchema);
+				}
+				else {
+					actions.put("replace", actionSchema);
+				}
+			}
+			else if (StringUtil.equals(pathItemHttpMethod.name(), "PATCH")) {
+				actions.put("update", actionSchema);
+			}
+			else if (!pathName.contains("/permissions")) {
+				actions.put(
+					StringUtil.toLowerCase(pathItemHttpMethod.name()),
+					actionSchema);
+			}
+		}
+
+		return actions;
 	}
 
 	private void _setSchemaDescription(

@@ -57,6 +57,12 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro seeFullNested {
+		Click(
+			ariaLabel = "See full nested",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+	}
+
 	macro viewActiveEntry {
 		AssertTextEquals(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",

@@ -15,6 +15,7 @@
 package com.liferay.jethr0.build.run;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -43,6 +44,28 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	}
 
 	@Override
+	public JSONObject getInvokeJSONObject() {
+		JSONObject invokeJSONObject = new JSONObject();
+
+		Build build = getBuild();
+
+		invokeJSONObject.put("jobName", build.getJobName());
+
+		JSONObject jobParametersJSONObject = new JSONObject();
+
+		for (BuildParameter buildParameter : build.getBuildParameters()) {
+			jobParametersJSONObject.put(
+				buildParameter.getName(), buildParameter.getValue());
+		}
+
+		jobParametersJSONObject.put("BUILD_RUN_ID", String.valueOf(getId()));
+
+		invokeJSONObject.put("jobParameters", jobParametersJSONObject);
+
+		return invokeJSONObject;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -53,11 +76,13 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 			"buildURL", getBuildURL()
 		).put(
 			"duration", getDuration()
-		).put(
-			"result", result.getJSONObject()
-		).put(
-			"state", state.getJSONObject()
 		);
+
+		if (result != null) {
+			jsonObject.put("result", result.getJSONObject());
+		}
+
+		jsonObject.put("state", state.getJSONObject());
 
 		return jsonObject;
 	}
@@ -100,9 +125,20 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	protected BaseBuildRun(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_buildURL = StringUtil.toURL(jsonObject.getString("buildURL"));
-		_duration = jsonObject.getLong("duration");
-		_result = Result.get(jsonObject.getJSONObject("result"));
+		String buildURL = jsonObject.optString("buildURL", "");
+
+		if (!buildURL.isEmpty()) {
+			_buildURL = StringUtil.toURL(jsonObject.optString("buildURL"));
+		}
+
+		_duration = jsonObject.optLong("duration");
+
+		JSONObject resultJSONObject = jsonObject.optJSONObject("result");
+
+		if (resultJSONObject != null) {
+			_result = Result.get(resultJSONObject);
+		}
+
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 

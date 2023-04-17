@@ -35,6 +35,8 @@ public interface BuildRun extends Entity {
 
 	public long getDuration();
 
+	public JSONObject getInvokeJSONObject();
+
 	public Result getResult();
 
 	public State getState();

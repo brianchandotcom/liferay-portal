@@ -31,9 +31,13 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
+ * @author Petteri Karttunen
  */
 @Component(
-	property = "class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
+	property = {
+		"class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
+		"class.name=com.liferay.portal.search.internal.facet.DateRangeFacetImpl"
+	},
 	service = FacetProcessor.class
 )
 public class DateRangeFacetProcessor
@@ -65,14 +69,17 @@ public class DateRangeFacetProcessor
 
 			String range = rangeJSONObject.getString("range");
 
-			range = StringUtil.replace(
+			String formattedRange = StringUtil.replace(
 				range, CharPool.OPEN_BRACKET, StringPool.BLANK);
-			range = StringUtil.replace(
-				range, CharPool.CLOSE_BRACKET, StringPool.BLANK);
 
-			String[] rangeParts = range.split(StringPool.SPACE);
+			formattedRange = StringUtil.replace(
+				formattedRange, CharPool.CLOSE_BRACKET, StringPool.BLANK);
 
-			dateRangeAggregationBuilder.addRange(rangeParts[0], rangeParts[2]);
+			String[] formattedRangeParts = formattedRange.split(
+				StringPool.SPACE);
+
+			dateRangeAggregationBuilder.addRange(
+				range, formattedRangeParts[0], formattedRangeParts[2]);
 		}
 
 		return dateRangeAggregationBuilder;

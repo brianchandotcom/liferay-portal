@@ -72,6 +72,7 @@ MenuAccessConfigurationDisplayContext menuAccessDisplayContext = (MenuAccessConf
 			<clay:button
 				aria-label='<%= LanguageUtil.get(request, "select") %>'
 				cssClass="modify-link"
+				disabled="<%= !menuAccessDisplayContext.isShowControlMenuByRole() %>"
 				displayType="secondary"
 				id='<%= liferayPortletResponse.getNamespace() + "selectRoleLink" %>'
 				label='<%= LanguageUtil.get(request, "select") %>'
@@ -109,6 +110,7 @@ MenuAccessConfigurationDisplayContext menuAccessDisplayContext = (MenuAccessConf
 							borderless="<%= true %>"
 							cssClass="lfr-portal-tooltip modify-link"
 							data-rowId="<%= role.getRoleId() %>"
+							disabled="<%= !menuAccessDisplayContext.isShowControlMenuByRole() %>"
 							displayType="secondary"
 							icon="times-circle"
 							monospaced="<%= true %>"

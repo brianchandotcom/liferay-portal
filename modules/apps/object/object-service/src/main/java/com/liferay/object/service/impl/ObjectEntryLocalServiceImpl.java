@@ -319,7 +319,8 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), serviceContext, userId, values);
 
 		insertIntoOrUpdateExtensionTable(
-			objectDefinition.getObjectDefinitionId(), primaryKey, values);
+			userId, objectDefinition.getObjectDefinitionId(), primaryKey,
+			values);
 	}
 
 	@Override

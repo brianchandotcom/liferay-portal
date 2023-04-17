@@ -170,7 +170,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (objectDefinition2.isUnmodifiableSystemObject()) {
 			_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
-				objectRelationship.getObjectDefinitionId2(), primaryKey2,
+				userId, objectRelationship.getObjectDefinitionId2(),
+				primaryKey2,
 				HashMapBuilder.<String, Serializable>put(
 					objectField2.getName(), primaryKey1
 				).build());

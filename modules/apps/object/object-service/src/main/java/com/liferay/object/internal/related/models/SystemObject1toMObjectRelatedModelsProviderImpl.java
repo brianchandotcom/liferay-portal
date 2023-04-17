@@ -121,7 +121,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 			for (BaseModel<T> baseModel : relatedModels) {
 				_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
-					objectRelationship.getObjectDefinitionId2(),
+					userId, objectRelationship.getObjectDefinitionId2(),
 					GetterUtil.getLong(baseModel.getPrimaryKeyObj()),
 					HashMapBuilder.<String, Serializable>put(
 						objectField.getName(), 0
@@ -151,7 +151,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
-			objectRelationship.getObjectDefinitionId2(),
+			userId, objectRelationship.getObjectDefinitionId2(),
 			GetterUtil.getLong(primaryKey2),
 			HashMapBuilder.<String, Serializable>put(
 				() -> {

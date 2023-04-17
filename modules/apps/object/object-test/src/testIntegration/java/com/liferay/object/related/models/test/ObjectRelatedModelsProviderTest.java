@@ -1145,6 +1145,7 @@ public class ObjectRelatedModelsProviderTest {
 			objectRelationship.getObjectFieldId2());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
+			TestPropsValues.getUserId(),
 			systemObjectDefinition.getObjectDefinitionId(), userIds[0],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
@@ -1153,6 +1154,7 @@ public class ObjectRelatedModelsProviderTest {
 			).build());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
+			TestPropsValues.getUserId(),
 			systemObjectDefinition.getObjectDefinitionId(), userIds[1],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
@@ -1161,6 +1163,7 @@ public class ObjectRelatedModelsProviderTest {
 			).build());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
+			TestPropsValues.getUserId(),
 			systemObjectDefinition.getObjectDefinitionId(), userIds[2],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
@@ -1176,7 +1179,8 @@ public class ObjectRelatedModelsProviderTest {
 			relatedObjectEntries.toString(), 3, relatedObjectEntries.size());
 
 		objectRelatedModelsProvider.disassociateRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
+			TestPropsValues.getUserId(),
+			objectRelationship.getObjectRelationshipId(),
 			objectEntry.getPrimaryKey(), userIds[0]);
 
 		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
@@ -1234,6 +1238,7 @@ public class ObjectRelatedModelsProviderTest {
 			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
+			TestPropsValues.getUserId(),
 			systemObjectDefinition.getObjectDefinitionId(), userIds[0],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
@@ -1242,6 +1247,7 @@ public class ObjectRelatedModelsProviderTest {
 			).build());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
+			TestPropsValues.getUserId(),
 			systemObjectDefinition.getObjectDefinitionId(), userIds[1],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()

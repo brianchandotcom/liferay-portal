@@ -58,17 +58,6 @@ public class TrashContainerModelDisplayContext {
 			liferayPortletRequest);
 	}
 
-	public String getBackURL() {
-		if (Validator.isNotNull(_backURL)) {
-			return _backURL;
-		}
-
-		_backURL = ParamUtil.getString(
-			_httpServletRequest, "backURL", getRedirect());
-
-		return _backURL;
-	}
-
 	public String getClassName() {
 		if (Validator.isNotNull(_className)) {
 			return _className;
@@ -209,18 +198,6 @@ public class TrashContainerModelDisplayContext {
 		).buildPortletURL();
 	}
 
-	public String getEventName() {
-		if (Validator.isNotNull(_eventName)) {
-			return _eventName;
-		}
-
-		_eventName = ParamUtil.getString(
-			_httpServletRequest, "eventName",
-			_liferayPortletResponse.getNamespace() + "selectContainer");
-
-		return _eventName;
-	}
-
 	public Object[] getMissingContainerMessageArguments()
 		throws PortalException {
 
@@ -303,34 +280,6 @@ public class TrashContainerModelDisplayContext {
 		return _trashRenderer;
 	}
 
-	public boolean isShowBackIcon() throws PortalException {
-		if (_showBackIcon != null) {
-			return _showBackIcon;
-		}
-
-		ContainerModel containerModel = null;
-
-		if (getContainerModelId() > 0) {
-			TrashHandler containerTrashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					getContainerModelClassName());
-
-			containerModel = containerTrashHandler.getContainerModel(
-				getContainerModelId());
-		}
-
-		boolean showBackIcon = false;
-
-		if (containerModel != null) {
-			showBackIcon = true;
-		}
-
-		_showBackIcon = showBackIcon;
-
-		return _showBackIcon;
-	}
-
-	private String _backURL;
 	private String _className;
 	private Long _classNameId;
 	private Long _classPK;
@@ -340,14 +289,12 @@ public class TrashContainerModelDisplayContext {
 	private String _containerModelName;
 	private List<ContainerModel> _containerModels;
 	private Integer _containerModelsCount;
-	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Object[] _missingContainerMessageArguments;
 	private String _redirect;
 	private SearchContainer<?> _searchContainer;
-	private Boolean _showBackIcon;
 	private TrashHandler _trashHandler;
 	private TrashRenderer _trashRenderer;
 

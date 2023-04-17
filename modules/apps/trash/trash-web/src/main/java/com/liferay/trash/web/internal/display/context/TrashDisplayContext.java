@@ -463,13 +463,6 @@ public class TrashDisplayContext {
 		return _trashContainerSearchContainer;
 	}
 
-	public int getTrashContainerTotalItems() throws PortalException {
-		SearchContainer<TrashedModel> searchContainer =
-			getTrashContainerSearchContainer();
-
-		return searchContainer.getTotal();
-	}
-
 	public TrashEntry getTrashEntry() {
 		if (_trashEntry != null) {
 			return _trashEntry;

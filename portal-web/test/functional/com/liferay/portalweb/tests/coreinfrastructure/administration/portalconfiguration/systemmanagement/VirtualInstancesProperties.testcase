@@ -1,10 +1,10 @@
-@component-name = "portal-util-misc"
+@component-name = "portal-portal-configuration"
 definition {
 
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Ext";
+	property testray.main.component.name = "Virtual Instances";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -23,7 +23,7 @@ definition {
 	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via jvm argument."
 	@priority = 3
 	test ConfigurePortalExtPropertyViaJVM {
-		property test.name.skip.portal.instance = "EnvironmentVariables#ConfigurePortalExtPropertyViaJVM";
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#ConfigurePortalExtPropertyViaJVM";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -64,7 +64,7 @@ definition {
 	@priority = 3
 	test ConfigurePortalExtPropertyViaSystemExt {
 		property custom.system.properties = "company-id-properties=true";
-		property test.name.skip.portal.instance = "EnvironmentVariables#ConfigurePortalExtPropertyViaSystemExt";
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#ConfigurePortalExtPropertyViaSystemExt";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -101,7 +101,7 @@ definition {
 	@priority = 3
 	test SetDefaultTheme {
 		property custom.system.properties = "company-id-properties=true";
-		property test.name.skip.portal.instance = "EnvironmentVariables#SetDefaultTheme";
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#SetDefaultTheme";
 
 		task ("Given the default theme is set to Classic") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "guest");

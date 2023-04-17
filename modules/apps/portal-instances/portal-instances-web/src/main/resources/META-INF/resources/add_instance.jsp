@@ -78,7 +78,7 @@
 					>
 						<aui:input label="field.screen-name" name="screenNameAdmin" required="<%= true %>" type="text" />
 
-						<aui:input label="administrator-email" name="emailAdmin" required="<%= true %>" type="text" />
+						<aui:input label="email-address" name="emailAdmin" required="<%= true %>" type="text" />
 
 						<aui:input label="password" name="passwordAdmin" required="<%= true %>" type="password" />
 

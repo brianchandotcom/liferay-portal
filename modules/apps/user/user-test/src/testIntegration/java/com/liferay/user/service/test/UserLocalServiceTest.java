@@ -82,7 +82,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.LongStream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -504,11 +503,17 @@ public class UserLocalServiceTest {
 
 		// LPS-119805
 
+		long[] values = new long[2001];
+
+		int index = 0;
+
+		for (long i = 1000; i <= 3000; i++) {
+			values[index++] = i;
+		}
+
 		_userLocalService.searchCounts(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
-			LongStream.rangeClosed(
-				1000, 3000
-			).toArray());
+			values);
 	}
 
 	@Test

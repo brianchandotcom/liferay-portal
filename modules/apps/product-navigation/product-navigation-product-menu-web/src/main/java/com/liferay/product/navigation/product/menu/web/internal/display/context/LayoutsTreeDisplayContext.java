@@ -75,7 +75,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -166,11 +165,11 @@ public class LayoutsTreeDisplayContext {
 		).build();
 	}
 
-	private PortletURL _getAddCollectionLayoutURL() {
+	private String _getAddCollectionLayoutURL() {
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		return PortletURLBuilder.create(
@@ -187,14 +186,16 @@ public class LayoutsTreeDisplayContext {
 			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
 			"privateLayout", _isPrivateLayout()
-		).buildPortletURL();
+		).setParameter(
+			"selPlid", LayoutConstants.DEFAULT_PLID
+		).buildString();
 	}
 
-	private PortletURL _getAddLayoutURL() {
+	private String _getAddLayoutURL() {
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		return PortletURLBuilder.create(
@@ -211,7 +212,9 @@ public class LayoutsTreeDisplayContext {
 			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
 			"privateLayout", _isPrivateLayout()
-		).buildPortletURL();
+		).setParameter(
+			"selPlid", LayoutConstants.DEFAULT_PLID
+		).buildString();
 	}
 
 	private String _getAdministrationPortletURL() {
@@ -266,23 +269,16 @@ public class LayoutsTreeDisplayContext {
 
 	private Map<String, Object> _getConfigData() {
 		Map<String, Object> configData = HashMapBuilder.<String, Object>put(
-			"addCollectionLayoutURL", _setSelPlid(_getAddCollectionLayoutURL())
+			"addCollectionLayoutURL", _getAddCollectionLayoutURL()
 		).put(
-			"addLayoutURL", _setSelPlid(_getAddLayoutURL())
+			"addLayoutURL", _getAddLayoutURL()
 		).put(
 			"administrationPortletNamespace",
 			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
 		).put(
 			"administrationPortletURL", _getAdministrationPortletURL()
 		).put(
-			"configureLayoutSetURL",
-			() -> {
-				if (!_isShowConfigureLayout()) {
-					return StringPool.BLANK;
-				}
-
-				return _setSelPlid(_getConfigureLayoutSetURL());
-			}
+			"configureLayoutSetURL", this::_getConfigureLayoutSetURL
 		).put(
 			"findLayoutsURL",
 			() -> {
@@ -353,7 +349,11 @@ public class LayoutsTreeDisplayContext {
 		return configData;
 	}
 
-	private PortletURL _getConfigureLayoutSetURL() {
+	private String _getConfigureLayoutSetURL() throws PortalException {
+		if (!_isShowConfigureLayout()) {
+			return StringPool.BLANK;
+		}
+
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
@@ -368,7 +368,9 @@ public class LayoutsTreeDisplayContext {
 			"groupId", _themeDisplay.getScopeGroupId()
 		).setParameter(
 			"privateLayout", _isPrivateLayout()
-		).buildPortletURL();
+		).setParameter(
+			"selPlid", LayoutConstants.DEFAULT_PLID
+		).buildString();
 	}
 
 	private long _getGroupId() {
@@ -936,17 +938,6 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		return false;
-	}
-
-	private String _setSelPlid(PortletURL portletURL) {
-		if (portletURL == null) {
-			return StringPool.BLANK;
-		}
-
-		portletURL.setParameter(
-			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
-
-		return portletURL.toString();
 	}
 
 	private static final String _PRIVATE_PAGES_KEY = "private-pages";

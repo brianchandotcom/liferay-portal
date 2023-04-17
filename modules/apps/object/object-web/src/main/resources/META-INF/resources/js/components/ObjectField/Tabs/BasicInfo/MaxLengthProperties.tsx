@@ -19,7 +19,11 @@ import React, {useEffect, useRef} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
 
 import {createAutoCorrectedNumberPipe} from '../../../../utils/createAutoCorrectedNumberPipe';
-import {normalizeFieldSettings} from '../../../../utils/fieldSettings';
+import {
+	normalizeFieldSettings,
+	removeFieldSettings,
+	updateFieldSettings,
+} from '../../../../utils/fieldSettings';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
 interface IMaxLengthPropertiesProps {
@@ -63,6 +67,27 @@ export function MaxLengthProperties({
 		}
 	}, [defaultMaxLength, objectField.businessType, settings.showCounter]);
 
+	const handleToggle = (toggled: boolean) => {
+		let updatedSettings;
+
+		if (!toggled) {
+			updatedSettings = removeFieldSettings(['maxLength'], objectField);
+		}
+		else {
+			updatedSettings = updateFieldSettings(objectFieldSettings, {
+				name: 'maxLength',
+				value: defaultMaxLength,
+			});
+		}
+
+		setValues({
+			objectFieldSettings: updateFieldSettings(updatedSettings, {
+				name: 'showCounter',
+				value: toggled,
+			}),
+		});
+	};
+
 	return (
 		<>
 			<ClayForm.Group>
@@ -70,29 +95,16 @@ export function MaxLengthProperties({
 					disabled={disabled}
 					label={Liferay.Language.get('limit-characters')}
 					name="showCounter"
-					onToggle={(value) => {
-						const updatedSettings: ObjectFieldSetting[] = [
-							{name: 'showCounter', value},
-						];
-
-						if (value) {
-							updatedSettings.push({
-								name: 'maxLength',
-								value: defaultMaxLength,
-							});
-						}
-
-						setValues({objectFieldSettings: updatedSettings});
-					}}
+					onToggle={handleToggle}
 					toggled={!!settings.showCounter}
 					tooltip={Liferay.Language.get(
 						'when-enabled-a-character-counter-will-be-shown-to-the-user'
 					)}
 				/>
-			</ClayForm.Group>
-			<ClayForm.Group>
+
 				{settings.showCounter && (
 					<Input
+						className="mt-3"
 						disabled={disabled}
 						error={errors.maxLength}
 						feedbackMessage={sub(

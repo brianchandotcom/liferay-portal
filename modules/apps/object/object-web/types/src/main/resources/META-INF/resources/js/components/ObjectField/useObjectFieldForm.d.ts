@@ -49,6 +49,8 @@ export declare function useObjectFieldForm({
 			showFilesInDocumentsAndMedia: unknown;
 			stateFlow: unknown;
 			storageDLFolderPath: unknown;
+			uniqueValues: unknown;
+			uniqueValuesErrorMessage: unknown;
 		}
 	>;
 	handleChange: import('react').ChangeEventHandler<HTMLInputElement>;

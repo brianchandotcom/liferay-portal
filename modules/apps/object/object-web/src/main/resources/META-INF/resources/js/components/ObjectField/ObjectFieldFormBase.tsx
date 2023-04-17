@@ -38,6 +38,7 @@ import {removeFieldSettings} from '../../utils/fieldSettings';
 import {toCamelCase} from '../../utils/string';
 import {AggregationFormBase} from './AggregationFormBase';
 import {AttachmentFormBase} from './AttachmentFormBase';
+import {UniqueValues} from './UniqueValues';
 import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
@@ -466,7 +467,7 @@ export default function ObjectFieldFormBase({
 
 			{children}
 
-			<ClayForm.Group className="lfr-objects__object-field-form-base-form-group-toggles">
+			<ClayForm.Group>
 				{values.businessType !== 'Aggregation' &&
 					values.businessType !== 'Formula' && (
 						<ClayToggle
@@ -477,25 +478,35 @@ export default function ObjectFieldFormBase({
 							toggled={values.required || values.state}
 						/>
 					)}
-
-				{values.businessType === 'Picklist' &&
-					validListTypeDefinitionId && (
-						<ClayToggle
-							disabled={
-								disabled ||
-								(Liferay.FeatureFlags['LPS-167253']
-									? !objectDefinition?.modifiable
-									: objectDefinition?.system)
-							}
-							label={Liferay.Language.get('mark-as-state')}
-							name="state"
-							onToggle={async (state) => {
-								handleStateToggleChange(state);
-							}}
-							toggled={values.state}
-						/>
-					)}
 			</ClayForm.Group>
+
+			{values.businessType === 'Picklist' && validListTypeDefinitionId && (
+				<ClayForm.Group>
+					<ClayToggle
+						disabled={
+							disabled ||
+							(Liferay.FeatureFlags['LPS-167253']
+								? !objectDefinition?.modifiable
+								: objectDefinition?.system)
+						}
+						label={Liferay.Language.get('mark-as-state')}
+						name="state"
+						onToggle={async (state) => {
+							handleStateToggleChange(state);
+						}}
+						toggled={values.state}
+					/>
+				</ClayForm.Group>
+			)}
+
+			{(values.businessType === 'Text' ||
+				values.businessType === 'Integer') && (
+				<UniqueValues
+					disabled={disabled}
+					objectField={values}
+					setValues={setValues}
+				/>
+			)}
 		</>
 	);
 }

@@ -257,6 +257,12 @@ AUI.add(
 					return shortDurationEventIntersecting;
 				},
 
+				_onColorChange(event) {
+					const instance = this;
+
+					instance._uiSetColor(event.newVal);
+				},
+
 				_onLoadingChange(event) {
 					const instance = this;
 
@@ -273,6 +279,16 @@ AUI.add(
 					const instance = this;
 
 					instance._uiSetStatus(event.newVal);
+				},
+
+				_uiSetColor(value) {
+					const instance = this;
+					const node = instance.get('node');
+					const opacity = instance._isPastEvent() ? '26' : 'B3';
+
+					node.setStyles({
+						backgroundColor: value + opacity,
+					});
 				},
 
 				_uiSetEndDate(val) {
@@ -354,6 +370,7 @@ AUI.add(
 					instance._uiSetStartDate(instance.get('startDate'));
 					instance._uiSetStatus(instance.get('status'));
 
+					instance.on('colorChange', instance._onColorChange);
 					instance.on('loadingChange', instance._onLoadingChange);
 					instance.on('startDateChange', instance._onStartDateChange);
 					instance.on('statusChange', instance._onStatusChange);

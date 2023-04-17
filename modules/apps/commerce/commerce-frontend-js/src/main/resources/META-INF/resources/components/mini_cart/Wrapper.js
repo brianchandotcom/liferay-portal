@@ -12,12 +12,22 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import React, {useContext} from 'react';
 
+import {liferayNavigate} from '../../utilities/index';
 import MiniCartContext from './MiniCartContext';
 
 function Wrapper() {
-	const {CartViews, isOpen} = useContext(MiniCartContext);
+	const {
+		CartViews,
+		actionURLs,
+		cartState,
+		isOpen,
+		requestQuoteEnabled,
+	} = useContext(MiniCartContext);
+	const {cartItems = []} = cartState;
+	const {orderDetailURL} = actionURLs;
 
 	return (
 		<div className="mini-cart-wrapper">
@@ -28,6 +38,25 @@ function Wrapper() {
 			</div>
 
 			<CartViews.OrderButton />
+
+			{requestQuoteEnabled && !!cartItems.length && (
+				<div className="request-quote-wrapper">
+					<ClayButton
+						block={true}
+						className="btn-md request-quote"
+						displayType="secondary"
+						onClick={() => {
+							return liferayNavigate(orderDetailURL);
+						}}
+					>
+						<span className="text-truncate-inline">
+							<span className="text-truncate">
+								{Liferay.Language.get('request-a-quote')}
+							</span>
+						</span>
+					</ClayButton>
+				</div>
+			)}
 		</div>
 	);
 }

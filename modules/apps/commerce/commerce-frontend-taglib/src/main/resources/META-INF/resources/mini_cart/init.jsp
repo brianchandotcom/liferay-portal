@@ -41,6 +41,7 @@ Map<String, String> labels = (Map<String, String>)request.getAttribute("liferay-
 String orderDetailURL = (String)request.getAttribute("liferay-commerce:cart:orderDetailURL");
 long orderId = (long)request.getAttribute("liferay-commerce:cart:orderId");
 String productURLSeparator = (String)request.getAttribute("liferay-commerce:cart:productURLSeparator");
+boolean requestCodeEnabled = (boolean)request.getAttribute("liferay-commerce:cart:requestQuoteEnabled");
 String siteDefaultURL = (String)request.getAttribute("liferay-commerce:cart:siteDefaultURL");
 boolean toggleable = (boolean)request.getAttribute("liferay-commerce:cart:toggleable");
 

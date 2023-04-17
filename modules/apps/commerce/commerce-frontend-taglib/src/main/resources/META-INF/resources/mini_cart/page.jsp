@@ -42,6 +42,7 @@
 				displayTotalItemsQuantity: <%= displayTotalItemsQuantity %>,
 				itemsQuantity: <%= itemsQuantity %>,
 				orderId: <%= orderId %>,
+				requestQuoteEnabled: <%= requestCodeEnabled %>,
 				toggleable: <%= toggleable %>,
 			};
 

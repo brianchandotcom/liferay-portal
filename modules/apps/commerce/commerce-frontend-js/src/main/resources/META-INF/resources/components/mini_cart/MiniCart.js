@@ -57,6 +57,7 @@ function MiniCart({
 	onAddToCart,
 	orderId,
 	productURLSeparator,
+	requestQuoteEnabled,
 	summaryDataMapper,
 	toggleable,
 }) {
@@ -164,6 +165,7 @@ function MiniCart({
 				labels: {...DEFAULT_LABELS, ...labels},
 				openCart,
 				productURLSeparator,
+				requestQuoteEnabled,
 				setCartState,
 				setIsUpdating,
 				summaryDataMapper,
@@ -204,6 +206,7 @@ MiniCart.defaultProps = {
 	labels: DEFAULT_LABELS,
 	onAddToCart: () => {},
 	orderId: 0,
+	requestQuoteEnabled: false,
 	summaryDataMapper,
 	toggleable: true,
 };
@@ -295,6 +298,7 @@ MiniCart.propTypes = {
 	}),
 	onAddToCart: PropTypes.func,
 	orderId: PropTypes.number,
+	requestQuoteEnabled: PropTypes.bool,
 	summaryDataMapper: PropTypes.func,
 	toggleable: PropTypes.bool,
 };

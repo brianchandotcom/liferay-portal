@@ -34,6 +34,17 @@ export default function propsTransformer({
 						if (data.value && data.value.length) {
 							const selectedItems = data.value;
 
+							let assetClassName = '';
+
+							Array.prototype.forEach.call(
+								selectedItems,
+								(selectedItem) => {
+									const assetEntry = JSON.parse(selectedItem);
+
+									assetClassName = assetEntry.className;
+								}
+							);
+
 							Liferay.Util.postForm(
 								document[`${portletNamespace}fm`],
 								{
@@ -47,6 +58,7 @@ export default function propsTransformer({
 												return assetEntry.assetEntryId;
 											})
 											.join(','),
+										assetEntryType: assetClassName,
 										cmd: 'add-selection',
 										redirect: additionalProps.currentURL,
 									},

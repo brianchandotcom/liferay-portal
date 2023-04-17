@@ -192,7 +192,6 @@ components:
                 printedNote:
                     type: string
                 purchaseOrderNumber:
-                    readOnly: true
                     type: string
                 shippingAddress:
                     $ref: "#/components/schemas/Address"

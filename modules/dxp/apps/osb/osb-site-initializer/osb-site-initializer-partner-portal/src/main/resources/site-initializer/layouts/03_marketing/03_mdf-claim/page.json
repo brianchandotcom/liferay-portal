@@ -12,54 +12,6 @@
 			],
 			"roleName": "Guest",
 			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "User",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-			],
-			"roleName": "Site Member",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Channel General Manager",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Channel Account Manager",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Channel Finance Manager",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Channel Global Marketing Manager",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Channel Regional Marketing Manager",
-			"scope": 4
 		}
 	],
 	"private": false,

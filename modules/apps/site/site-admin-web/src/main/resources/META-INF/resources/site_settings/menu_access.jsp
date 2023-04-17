@@ -129,6 +129,10 @@ MenuAccessConfigurationDisplayContext menuAccessDisplayContext = (MenuAccessConf
 	</clay:content-row>
 </clay:sheet-section>
 
+<liferay-frontend:component
+	module="js/MenuAccess"
+/>
+
 <aui:script use="liferay-search-container">
 	const bindModifyLink = function (config) {
 		const searchContainer = config.searchContainer;

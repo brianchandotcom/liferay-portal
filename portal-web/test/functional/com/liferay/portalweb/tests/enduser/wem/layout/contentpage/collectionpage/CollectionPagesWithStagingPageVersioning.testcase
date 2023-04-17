@@ -3,50 +3,42 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
-		}
-
-		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@description = "This is a test case for LPS-139864. Can enable local live in a site with different types of collection page."
 	@priority = 4
 	test ActivateStagingPageVersioning {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${siteName});
+		}
+
 		task ("Add a manual collection for all types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
 
 		task ("Add a dynamic collection for all types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${siteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add the first collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -91,18 +83,18 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
 			Staging.activateStagingCP(
 				pageVersioningEnabled = "true",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 		}
 
 		task ("View the workflow message is not shown in staging site") {
 			for (var text : list "First,Second") {
 				ContentPagesNavigator.openViewContentPage(
 					pageName = "${text} Collection Page Name",
-					siteName = "Test Site Name Staging");
+					siteName = "${siteName} Staging");
 
 				AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 			}
@@ -111,7 +103,7 @@ definition {
 		task ("View the Heading fragment is shown in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "First Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -122,7 +114,7 @@ definition {
 		task ("View the Button and Heading fragments are shown in live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Second Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${siteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
@@ -136,7 +128,7 @@ definition {
 		}
 
 		task ("Assert View action of the third collection page is disabled in live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Third Collection Page Name");
 

@@ -115,10 +115,21 @@ definition {
 			cacheValue = "test.value.node.1.company.2",
 			portalInstanceName = "www.able.com");
 
+		User.logoutPG();
+
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
+
+		if (IsElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE")) {
+			Refresh();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+		}
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -135,7 +146,15 @@ definition {
 			cacheValue = "test.value.node.2.company.2",
 			portalInstanceName = "www.able.com");
 
+		User.logoutPG();
+
 		User.firstLoginPG();
+
+		if (IsElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE")) {
+			Refresh();
+
+			User.firstLoginPG();
+		}
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

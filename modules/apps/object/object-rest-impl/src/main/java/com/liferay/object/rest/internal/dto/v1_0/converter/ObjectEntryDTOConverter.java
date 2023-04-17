@@ -341,6 +341,10 @@ public class ObjectEntryDTOConverter
 						primaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				if (relatedObjectDefinition.isSystem()) {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-165819")) {
+						return null;
+					}
+
 					SystemObjectDefinitionManager
 						systemObjectDefinitionManager =
 							_systemObjectDefinitionManagerRegistry.

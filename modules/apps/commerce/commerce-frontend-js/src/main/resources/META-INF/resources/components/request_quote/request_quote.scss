@@ -1,0 +1,41 @@
+@import 'atlas-variables';
+
+.mini-cart {
+	.request-quote-wrapper {
+		background-color: #fff;
+		font-size: 1rem;
+		padding: 0 1em 1em;
+	}
+}
+
+.minium-frame {
+	.mini-cart {
+		.btn.request-quote {
+			background-color: #fff;
+			border-color: transparent;
+			border-radius: 0;
+			height: 3.3rem;
+		}
+
+		.request-quote-wrapper {
+			padding: 0;
+		}
+	}
+
+	.product-detail-actions {
+		.request-quote-wrapper {
+			margin-bottom: 0;
+			margin-left: 0;
+		}
+	}
+}
+
+.product-detail-actions {
+	.request-quote-wrapper {
+		margin: 0;
+
+		button {
+			margin: 0 1.25rem 0 0;
+		}
+	}
+}

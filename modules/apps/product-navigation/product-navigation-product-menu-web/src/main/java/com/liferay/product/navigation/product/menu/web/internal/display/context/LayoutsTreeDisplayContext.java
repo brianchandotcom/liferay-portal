@@ -602,8 +602,7 @@ public class LayoutsTreeDisplayContext {
 
 		selectedLayoutPath.addAll(
 			ListUtil.toList(
-				_layoutService.getAncestorLayouts(selPlid),
-				layout -> layout.getPlid()));
+				_layoutService.getAncestorLayouts(selPlid), Layout::getPlid));
 
 		return selectedLayoutPath;
 	}

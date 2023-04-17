@@ -448,7 +448,7 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	public void insertIntoOrUpdateExtensionTable(
-			long objectDefinitionId, long primaryKey,
+			long userId, long objectDefinitionId, long primaryKey,
 			Map<String, Serializable> values)
 		throws PortalException;
 

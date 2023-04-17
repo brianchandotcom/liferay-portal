@@ -201,6 +201,9 @@ public abstract class BaseAnalyticsMVCActionCommand
 	@Reference
 	protected SettingsFactory settingsFactory;
 
+	@Reference
+	protected SettingsLocatorHelper settingsLocatorHelper;
+
 	private void _checkPermissions(ThemeDisplay themeDisplay)
 		throws PrincipalException {
 
@@ -230,7 +233,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 			new CompanyServiceSettingsLocator(scopePK, pid));
 
 		SettingsDescriptor settingsDescriptor =
-			_settingsLocatorHelper.getSettingsDescriptor(pid);
+			settingsLocatorHelper.getSettingsDescriptor(pid);
 
 		if (settingsDescriptor == null) {
 			return configurationProperties;
@@ -311,8 +314,5 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAnalyticsMVCActionCommand.class);
-
-	@Reference
-	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

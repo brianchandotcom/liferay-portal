@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend JS Module Launcher API
-Bundle-SymbolicName: com.liferay.frontend.js.module.launcher.api
-Bundle-Version: 1.0.6
-Export-Package: com.liferay.frontend.js.module.launcher

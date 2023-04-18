@@ -231,6 +231,52 @@ export function PurchasedAppsDashboardPage() {
 	useEffect(() => {
 		(async () => {
 			if (selectedNavigationItem === 'Members') {
+				const currentUserAccountResponse = await getMyUserAccount();
+
+				const currentUserAccount = {
+					accountBriefs: currentUserAccountResponse.accountBriefs,
+					isCustomerAccount: false,
+					isPublisherAccount: false,
+				};
+
+				const currentUserAccountRoleBriefs =
+					currentUserAccount.accountBriefs.find(
+						(accountBrief: {name: string}) =>
+							accountBrief.name === selectedAccount.name
+					).roleBriefs;
+
+				const customerRoles = [
+					'Account Administrator',
+					'Account Buyer',
+					'Account Member',
+				];
+
+				const publisherRoles = [
+					'Account Administrator',
+					'App Editor',
+				];
+
+				customerRoles.forEach((customerRole) => {
+					if (
+						currentUserAccountRoleBriefs.find(
+							(role: {name: string}) => role.name === customerRole
+						)
+					) {
+						currentUserAccount.isCustomerAccount = true;
+					}
+				});
+
+				publisherRoles.forEach((publisherRole) => {
+					if (
+						currentUserAccountRoleBriefs.find(
+							(role: {name: string}) =>
+								role.name === publisherRole
+						)
+					) {
+						currentUserAccount.isCustomerAccount = true;
+					}
+				});
+
 				const accountsListResponse = await getUserAccounts();
 
 				const membersList = accountsListResponse.items.map(
@@ -249,6 +295,23 @@ export function PurchasedAppsDashboardPage() {
 						} as MemberProps;
 					}
 				);
+
+				membersList.forEach((member: MemberProps) => {
+					const rolesList = member.role.split(', ');
+
+					customerRoles.forEach((customerRole) => {
+						if (rolesList.find((role) => role === customerRole)) {
+							member.isCustomerAccount = true;
+						}
+					});
+
+					publisherRoles.forEach((publisherRole) => {
+						if (rolesList.find((role) => role === publisherRole)) {
+							member.isPublisherAccount = true;
+						}
+					});
+				});
+
 				let filteredMembersList: MemberProps[] = [];
 
 				filteredMembersList = membersList.filter(
@@ -258,7 +321,8 @@ export function PurchasedAppsDashboardPage() {
 								(accountBrief: AccountBriefProps) =>
 									accountBrief.externalReferenceCode ===
 									selectedAccount.externalReferenceCode
-							)
+							) &&
+							member.isCustomerAccount
 						) {
 							return true;
 						}

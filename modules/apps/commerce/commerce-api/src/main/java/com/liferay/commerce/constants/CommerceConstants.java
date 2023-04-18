@@ -21,6 +21,9 @@ package com.liferay.commerce.constants;
  */
 public class CommerceConstants {
 
+	public static final String RESOURCE_NAME_COMMERCE_ACCOUNT =
+		"com.liferay.commerce.account";
+
 	public static final String RESOURCE_NAME_COMMERCE_ADDRESS =
 		"com.liferay.commerce.address";
 
@@ -38,6 +41,9 @@ public class CommerceConstants {
 
 	public static final String RESOURCE_NAME_COMMERCE_SUBSCRIPTION =
 		"com.liferay.commerce.subscription";
+
+	public static final String SERVICE_NAME_COMMERCE_ACCOUNT =
+		"com.liferay.commerce.account";
 
 	public static final String SERVICE_NAME_COMMERCE_ORDER =
 		"com.liferay.commerce.order";

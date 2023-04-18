@@ -95,6 +95,16 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 				return false;
 			}
 
+			Long sessionPasswordModifiedTime = (Long)httpSession.getAttribute(
+				WebKeys.USER_PASSWORD_MODIFIED_TIME);
+
+			if ((sessionPasswordModifiedTime != null) &&
+				(sessionPasswordModifiedTime >=
+					passwordModifiedDate.getTime())) {
+
+				return false;
+			}
+
 			if (!httpServletRequest.isRequestedSessionIdValid() ||
 				(httpSession.getCreationTime() <
 					passwordModifiedDate.getTime())) {

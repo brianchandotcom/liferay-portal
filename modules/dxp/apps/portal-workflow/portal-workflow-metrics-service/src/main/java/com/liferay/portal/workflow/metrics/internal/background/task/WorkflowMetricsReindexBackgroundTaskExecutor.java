@@ -35,6 +35,7 @@ import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetri
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
+import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexerRegistry;
 
 import java.io.Serializable;
 
@@ -103,8 +104,8 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 				_workflowMetricsPortalExecutor.execute(
 					() -> {
 						WorkflowMetricsReindexer workflowMetricsReindexer =
-							_workflowMetricsReindexers.getService(
-								indexEntityName);
+							_workflowMetricsReindexerRegistry.
+								getWorkflowMetricsReindexer(indexEntityName);
 
 						workflowMetricsReindexer.reindex(
 							backgroundTask.getCompanyId());
@@ -139,16 +140,11 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 		_workflowMetricsIndexes = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, WorkflowMetricsIndex.class,
 			"workflow.metrics.index.entity.name");
-		_workflowMetricsReindexers =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, WorkflowMetricsReindexer.class,
-				"workflow.metrics.index.entity.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_workflowMetricsIndexes.close();
-		_workflowMetricsReindexers.close();
 	}
 
 	private String[] _getIndexEntityNames(BackgroundTask backgroundTask) {
@@ -161,7 +157,7 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 					"workflow.metrics.index.entity.names"),
 				name -> {
 					if (_workflowMetricsIndexes.containsKey(name) &&
-						_workflowMetricsReindexers.containsKey(name)) {
+						_workflowMetricsReindexerRegistry.containsKey(name)) {
 
 						return name;
 					}
@@ -213,8 +209,8 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 	@Reference
 	private WorkflowMetricsPortalExecutor _workflowMetricsPortalExecutor;
 
-	private ServiceTrackerMap<String, WorkflowMetricsReindexer>
-		_workflowMetricsReindexers;
+	@Reference
+	private WorkflowMetricsReindexerRegistry _workflowMetricsReindexerRegistry;
 
 	@Reference
 	private WorkflowMetricsReindexStatusMessageSender

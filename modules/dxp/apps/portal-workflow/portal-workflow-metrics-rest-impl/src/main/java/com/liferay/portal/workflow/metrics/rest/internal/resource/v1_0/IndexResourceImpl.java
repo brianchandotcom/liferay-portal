@@ -36,11 +36,10 @@ import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.Inde
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.IndexResource;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsBackgroundTaskExecutorNames;
 import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
-import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
+import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexerRegistry;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -66,7 +65,7 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 	public Page<Index> getIndexesPage() throws Exception {
 		return Page.of(
 			transform(
-				_indexEntityNameSet,
+				_workflowMetricsReindexerRegistry.getIndexEntityNames(),
 				indexEntityName -> IndexUtil.toIndex(
 					indexEntityName, _language,
 					ResourceBundleUtil.getModuleAndPortalResourceBundle(
@@ -152,25 +151,6 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 			workflowMetricsIndexEntityName, workflowMetricsIndexNameBuilder);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addWorkflowMetricsReindexer(
-		WorkflowMetricsReindexer workflowMetricsReindexer,
-		Map<String, Object> properties) {
-
-		String workflowMetricsIndexEntityName = GetterUtil.getString(
-			properties.get("workflow.metrics.index.entity.name"));
-
-		if (Validator.isNull(workflowMetricsIndexEntityName)) {
-			return;
-		}
-
-		_indexEntityNameSet.add(workflowMetricsIndexEntityName);
-	}
-
 	protected void removeWorkflowMetricsIndexNameBuilder(
 		WorkflowMetricsIndexNameBuilder workflowMetricsIndexNameBuilder,
 		Map<String, Object> properties) {
@@ -182,20 +162,6 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 			workflowMetricsIndexEntityName);
 	}
 
-	protected void removeWorkflowMetricsReindexer(
-		WorkflowMetricsReindexer workflowMetricsReindexer,
-		Map<String, Object> properties) {
-
-		String workflowMetricsIndexEntityName = GetterUtil.getString(
-			properties.get("workflow.metrics.index.entity.name"));
-
-		if (Validator.isNull(workflowMetricsIndexEntityName)) {
-			return;
-		}
-
-		_indexEntityNameSet.remove(workflowMetricsIndexEntityName);
-	}
-
 	private String _getBackgroundTaskName(Index index) {
 		return StringBundler.concat(
 			IndexResourceImpl.class.getSimpleName(), StringPool.DASH,
@@ -203,29 +169,31 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 	}
 
 	private String[] _getIndexEntityNames(Index index) {
+		Set<String> indexEntityNames =
+			_workflowMetricsReindexerRegistry.getIndexEntityNames();
+
 		if (Objects.equals(index.getKey(), Index.Group.ALL.getValue())) {
-			return _indexEntityNameSet.toArray(new String[0]);
+			return indexEntityNames.toArray(new String[0]);
 		}
 		else if (Objects.equals(
 					index.getKey(), Index.Group.METRIC.getValue())) {
 
 			return ArrayUtil.filter(
-				_indexEntityNameSet.toArray(new String[0]),
+				indexEntityNames.toArray(new String[0]),
 				value -> !value.startsWith("sla"));
 		}
 		else if (Objects.equals(index.getKey(), Index.Group.SLA.getValue())) {
 			return ArrayUtil.filter(
-				_indexEntityNameSet.toArray(new String[0]),
+				indexEntityNames.toArray(new String[0]),
 				value -> value.startsWith("sla"));
 		}
-		else if (_indexEntityNameSet.contains(index.getKey())) {
+		else if (indexEntityNames.contains(index.getKey())) {
 			return new String[] {index.getKey()};
 		}
 
 		return new String[0];
 	}
 
-	private static final Set<String> _indexEntityNameSet = new HashSet<>();
 	private static final Map<String, WorkflowMetricsIndexNameBuilder>
 		_workflowMetricsIndexNameBuilderMap = new ConcurrentHashMap<>();
 
@@ -240,5 +208,8 @@ public class IndexResourceImpl extends BaseIndexResourceImpl {
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
+
+	@Reference
+	private WorkflowMetricsReindexerRegistry _workflowMetricsReindexerRegistry;
 
 }

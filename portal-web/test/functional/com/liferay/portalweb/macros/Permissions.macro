@@ -1,5 +1,50 @@
 definition {
 
+	macro definePermissionsViaJSONAPI {
+		var groupId = JSONPermissionSetter.setGroupId(
+			groupName = ${groupName},
+			noSelenium = "true");
+		var roleType = JSONPermissionSetter.setRoleType(roleType = ${roleType});
+
+		var primKey = JSONPermissionSetter.setPrimKey(roleType = ${roleType});
+		var roleId = JSONPermissionSetter.setRoleId(roleTitle = ${roleTitle});
+		var scope = JSONPermissionSetter.setScope(roleType = ${roleType});
+		var list1 = ListUtil.newListFromString(${resourceNameActionList}, ":");
+
+		var size1 = ListUtil.size(${list1});
+		var i = 0;
+
+		while (${i} != ${size1}) {
+			var resourceNameAction = ListUtil.get(${list1}, ${i});
+
+			var list2 = ListUtil.newListFromString(${resourceNameAction});
+
+			var size2 = ListUtil.size(${list2});
+			var j = 1;
+			var name = ListUtil.get(${list2}, 0);
+
+			while (${j} != ${size2}) {
+				var actionId = ListUtil.get(${list2}, ${j});
+
+				JSONPermissionAPI._addResourcePermission(
+					actionId = ${actionId},
+					groupId = ${groupId},
+					name = ${name},
+					primKey = ${primKey},
+					roleId = ${roleId},
+					scope = ${scope});
+
+				var j = ${j} + 1;
+
+				var j = StringUtil.valueOf(${j});
+			}
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf(${i});
+		}
+	}
+
 	macro definePermissionViaJSONAPI {
 		JSONPermission.addPermission(
 			actionId = ${resourceAction},

@@ -2,9 +2,9 @@
 	"friendlyURL_i18n": {
 		"en_US": "/marketing/mdf-requests"
 	},
-	"hidden": true,
+	"hidden": false,
 	"name_i18n": {
-		"en_US": "MDF Requests"
+		"en_US": "MDFs"
 	},
 	"permissions": [
 		{

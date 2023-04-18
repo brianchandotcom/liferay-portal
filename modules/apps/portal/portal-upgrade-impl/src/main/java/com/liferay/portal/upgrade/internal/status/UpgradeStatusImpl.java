@@ -175,7 +175,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		boolean check;
 
 		try {
-			check = _releaseManager.getMessage();
+			check = _releaseManager.getStatus();
 		}
 		catch (Exception exception) {
 			_log.error(

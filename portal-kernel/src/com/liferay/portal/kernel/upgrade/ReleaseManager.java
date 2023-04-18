@@ -20,9 +20,9 @@ package com.liferay.portal.kernel.upgrade;
  */
 public interface ReleaseManager {
 
-	public boolean getMessage() throws Exception;
-
 	public String getShortStatusMessage(boolean onlyRequiredUpgrades);
+
+	public boolean getStatus() throws Exception;
 
 	public String getStatusMessage(boolean showUpgradeSteps);
 

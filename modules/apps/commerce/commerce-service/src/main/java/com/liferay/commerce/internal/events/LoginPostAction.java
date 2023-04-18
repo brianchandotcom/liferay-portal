@@ -18,6 +18,8 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.commerce.account.configuration.CommerceAccountServiceConfiguration;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -57,6 +60,8 @@ public class LoginPostAction extends Action {
 		HttpServletResponse httpServletResponse) {
 
 		try {
+			_addDefaultAccountRoles(httpServletRequest);
+
 			Cookie[] cookies = httpServletRequest.getCookies();
 
 			if (cookies == null) {
@@ -89,6 +94,22 @@ public class LoginPostAction extends Action {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+	}
+
+	private void _addDefaultAccountRoles(HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CommerceAccountServiceConfiguration
+			commerceAccountServiceConfiguration =
+				_configurationProvider.getSystemConfiguration(
+					CommerceAccountServiceConfiguration.class);
+
+		if (commerceAccountServiceConfiguration.
+				applyDefaultRoleToExistingUsers()) {
+
+			_commerceAccountHelper.addDefaultRoles(
+				_portal.getUserId(httpServletRequest));
 		}
 	}
 
@@ -183,10 +204,16 @@ public class LoginPostAction extends Action {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
 	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

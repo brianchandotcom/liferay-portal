@@ -7,17 +7,17 @@
 	"name": "MDFClaim",
 	"objectFields": [
 		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "e4c313f9-0700-e435-baef-fd940901a09d",
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "17123b30-ee57-413b-8aed-71ca50ed04ed",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Total Claim Amount"
+				"en_US": "MDF Request External Reference Code"
 			},
-			"name": "amountClaimed",
+			"name": "mdfRequestExternalReferenceCode",
 			"required": false,
-			"type": "BigDecimal"
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -42,6 +42,70 @@
 				"en_US": "External Reference Code SF"
 			},
 			"name": "externalReferenceCodeSF",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "79da1510-5081-43ef-5d12-a49dd92f0741",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Request Total Cost of Expense"
+			},
+			"name": "mdfRequestTotalCostOfExpense",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "039f6da5-ec52-904a-ce28-fbe9b68e5a4a",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total MDF Requested Amount"
+			},
+			"name": "totalMDFRequestedAmount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "72fb6b32-2845-91ae-a9ef-eb7f592dd013",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partial"
+			},
+			"name": "partial",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "e4c313f9-0700-e435-baef-fd940901a09d",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Claim Amount"
+			},
+			"name": "totalClaimAmount",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "8491c70a-7000-7d1c-8278-b4b703af1219",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Payment Received"
+			},
+			"name": "paymentReceived",
 			"required": false,
 			"type": "String"
 		},
@@ -193,70 +257,6 @@
 			"required": true,
 			"state": true,
 			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "039f6da5-ec52-904a-ce28-fbe9b68e5a4a",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Total MDF Requested Amount"
-			},
-			"name": "mdfRequestedAmount",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "17123b30-ee57-413b-8aed-71ca50ed04ed",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "MDF Request External Reference Code"
-			},
-			"name": "mdfRequestExternalReferenceCodeSF",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "79da1510-5081-43ef-5d12-a49dd92f0741",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "MDF Request Total Cost of Expense"
-			},
-			"name": "mdfRequestTotalCostOfExpense",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
-			"DBType": "Boolean",
-			"externalReferenceCode": "72fb6b32-2845-91ae-a9ef-eb7f592dd013",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Partial"
-			},
-			"name": "partial",
-			"required": false,
-			"type": "Boolean"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "8491c70a-7000-7d1c-8278-b4b703af1219",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Payment Received"
-			},
-			"name": "paymentReceived",
-			"required": false,
 			"type": "String"
 		},
 		{

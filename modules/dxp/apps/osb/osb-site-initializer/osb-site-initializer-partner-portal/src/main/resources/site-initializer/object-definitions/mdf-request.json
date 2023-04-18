@@ -8,15 +8,14 @@
 	"objectFields": [
 		{
 			"DBType": "String",
-			"businessType": "Picklist",
-			"externalReferenceCode": "175d1494-efaa-cc64-b82b-40991e295dc3",
+			"businessType": "Text",
+			"externalReferenceCode": "b3e0f842-d37f-1148-f27f-645507015916",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Additional Option"
+				"en_US": "External Reference Code SF"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request: Additional Options$]",
-			"name": "additionalOption",
+			"name": "externalReferenceCodeSF",
 			"required": false,
 			"type": "String"
 		},
@@ -50,6 +49,32 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "2892b7ec-1bbb-0a68-8724-f3cb8af12538",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Overall Campaign Name"
+			},
+			"name": "overallCampaignName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "27fc20cc-501e-e962-221c-7454645c72dc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Overall Campaign Description"
+			},
+			"name": "overallCampaignDescription",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "886e43d4-6e79-1753-654b-4ac9fa1dfcd9",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -57,19 +82,6 @@
 				"en_US": "Email Address"
 			},
 			"name": "emailAddress",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "b3e0f842-d37f-1148-f27f-645507015916",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "External Reference Code SF"
-			},
-			"name": "externalReferenceCodeSF",
 			"required": false,
 			"type": "String"
 		},
@@ -87,6 +99,59 @@
 			"type": "Clob"
 		},
 		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "3fab6412-aeab-faff-f868-c6a999e4c468",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Target Markets"
+			},
+			"name": "targetMarkets",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "175d1494-efaa-cc64-b82b-40991e295dc3",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Additional Option"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:MDF Request: Additional Options$]",
+			"name": "additionalOption",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "3c5ab435-f894-5e16-943b-4a7fd898c8ec",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Target Audience/Roles"
+			},
+			"name": "targetAudienceRoles",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "e18f8900-f04a-7b4c-a268-091e58fa7c74",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Minimum Activity Date"
+			},
+			"name": "minDateActivity",
+			"required": false,
+			"type": "Date"
+		},
+		{
 			"DBType": "Date",
 			"businessType": "Date",
 			"externalReferenceCode": "fa841737-7874-d8aa-ccd3-313a5e94a9d2",
@@ -98,6 +163,32 @@
 			"name": "maxDateActivity",
 			"required": false,
 			"type": "Date"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "b3f49a6f-1063-4cd9-777e-5d715234b492",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total Cost of Expense"
+			},
+			"name": "totalCostOfExpense",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "658fb33b-f21b-76c3-d996-18a79e55ef1a",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Total MDF Requested Amount"
+			},
+			"name": "totalMDFRequestAmount",
+			"required": false,
+			"type": "BigDecimal"
 		},
 		{
 			"DBType": "String",
@@ -257,97 +348,6 @@
 			"state": true,
 			"system": false,
 			"type": "String"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"externalReferenceCode": "e18f8900-f04a-7b4c-a268-091e58fa7c74",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Minimum Activity Date"
-			},
-			"name": "minDateActivity",
-			"required": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "27fc20cc-501e-e962-221c-7454645c72dc",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Overall Campaign Description"
-			},
-			"name": "overallCampaignDescription",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "2892b7ec-1bbb-0a68-8724-f3cb8af12538",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Overall Campaign Name"
-			},
-			"name": "overallCampaignName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"externalReferenceCode": "3c5ab435-f894-5e16-943b-4a7fd898c8ec",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Target Audience/Roles"
-			},
-			"name": "targetAudienceRoles",
-			"required": false,
-			"type": "Clob"
-		},
-		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"externalReferenceCode": "3fab6412-aeab-faff-f868-c6a999e4c468",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Target Markets"
-			},
-			"name": "targetMarkets",
-			"required": false,
-			"type": "Clob"
-		},
-		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "b3f49a6f-1063-4cd9-777e-5d715234b492",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Total Cost of Expense"
-			},
-			"name": "totalCostOfExpense",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "658fb33b-f21b-76c3-d996-18a79e55ef1a",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Total MDF Requested Amount"
-			},
-			"name": "totalMDFRequestAmount",
-			"required": false,
-			"type": "BigDecimal"
 		},
 		{
 			"DBType": "String",

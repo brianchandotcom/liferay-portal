@@ -8,28 +8,15 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "50cca4d9-9f79-7e3f-fe88-b238890999e2",
+			"externalReferenceCode": "cd8f3d0b-738a-8c40-91f2-e26ca8e69027",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Account External Reference Code"
+				"en_US": "Partner Account Name"
 			},
-			"name": "accountExternalReferenceCodeSF",
+			"name": "partnerAccountName",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"externalReferenceCode": "19b70ac3-5899-112c-7f83-2f7508197eaf",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Additional Contacts"
-			},
-			"name": "additionalContacts",
-			"required": false,
-			"type": "Clob"
 		},
 		{
 			"DBType": "String",
@@ -47,145 +34,28 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "e1975031-7299-30a1-7bab-b3d7118a1fd1",
+			"externalReferenceCode": "50cca4d9-9f79-7e3f-fe88-b238890999e2",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Lead Status"
+				"en_US": "Account External Reference Code"
 			},
-			"name": "leadStatus",
+			"name": "accountExternalReferenceCode",
 			"required": false,
 			"type": "String"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "8aeadf7d-44f5-977d-b788-7621a1c53d1c",
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "19b70ac3-5899-112c-7f83-2f7508197eaf",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Lead Status Detail"
+				"en_US": "Additional Contacts"
 			},
-			"name": "leadStatusDetail",
+			"name": "additionalContacts",
 			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "955f2571-da04-2a96-c75e-189212a2ba26",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Lead Type"
-			},
-			"name": "leadType",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "cd8f3d0b-738a-8c40-91f2-e26ca8e69027",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Partner Account Name"
-			},
-			"name": "partnerAccountName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "1c499f8f-bba5-d97b-68b2-d7536e73e2af",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Prospect Business Unit"
-			},
-			"name": "primaryProspectBusinessUnit",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "0500b303-287b-4b5d-96fa-2ff53b5623f3",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Prospect Department"
-			},
-			"name": "primaryProspectDepartment",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "ac8e31ca-a6da-1f58-761a-3da83a36b4e2",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Prospect Email Address"
-			},
-			"name": "primaryProspectEmailAddress",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "b5d4a217-abca-77d8-e61e-8124f2e9d29e",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Prospect First Name"
-			},
-			"name": "primaryProspectFirstName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "6de228eb-09b5-1aa3-bf05-af90908f7ecc",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Prospect Job Role"
-			},
-			"name": "primaryProspectJobRole",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "7d44839e-934d-2bae-7675-a4b2dc665990",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Prospect Last Name"
-			},
-			"name": "primaryProspectLastName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "b26d3a6d-eb6e-eded-659b-dc6d5e859317",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Primary Prospect Phone"
-			},
-			"name": "primaryProspectPhone",
-			"required": false,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",
@@ -242,19 +112,6 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "5fffc286-9f20-e35b-fc32-244854e56203",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Prospect Industry"
-			},
-			"name": "prospectIndustry",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
 			"externalReferenceCode": "57378af8-89ea-181e-0c0e-795953af2a79",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -275,6 +132,149 @@
 				"en_US": "Prospect State"
 			},
 			"name": "prospectStateCode",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "1c499f8f-bba5-d97b-68b2-d7536e73e2af",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Business Unit"
+			},
+			"name": "primaryProspectBusinessUnit",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "ac8e31ca-a6da-1f58-761a-3da83a36b4e2",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Email Address"
+			},
+			"name": "primaryProspectEmailAddress",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "b5d4a217-abca-77d8-e61e-8124f2e9d29e",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect First Name"
+			},
+			"name": "primaryProspectFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "7d44839e-934d-2bae-7675-a4b2dc665990",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Last Name"
+			},
+			"name": "primaryProspectLastName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "b26d3a6d-eb6e-eded-659b-dc6d5e859317",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Phone"
+			},
+			"name": "primaryProspectPhone",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "e1975031-7299-30a1-7bab-b3d7118a1fd1",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead Status"
+			},
+			"name": "leadStatus",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "955f2571-da04-2a96-c75e-189212a2ba26",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead Type"
+			},
+			"name": "leadType",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "8aeadf7d-44f5-977d-b788-7621a1c53d1c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Lead Status Detail"
+			},
+			"name": "leadStatusDetail",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "5fffc286-9f20-e35b-fc32-244854e56203",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Prospect Industry"
+			},
+			"name": "prospectIndustry",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "6de228eb-09b5-1aa3-bf05-af90908f7ecc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Job Role"
+			},
+			"name": "primaryProspectJobRole",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "0500b303-287b-4b5d-96fa-2ff53b5623f3",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Prospect Department"
+			},
+			"name": "primaryProspectDepartment",
 			"required": false,
 			"type": "String"
 		}

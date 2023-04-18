@@ -21,7 +21,7 @@
 				},
 				{
 					"name": "objectFieldName",
-					"value": "amountClaimed"
+					"value": "totalClaimAmount"
 				}
 			],
 			"required": false,

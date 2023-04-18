@@ -32,18 +32,6 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Boolean",
-			"externalReferenceCode": "b9bc1465-e8bb-1915-fca6-da71e5d0c9d0",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Selected"
-			},
-			"name": "selected",
-			"required": false,
-			"type": "Boolean"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "deb2134a-1ed6-ba79-c208-82a0dc8d4c1c",
@@ -55,6 +43,18 @@
 			"name": "totalCost",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "b9bc1465-e8bb-1915-fca6-da71e5d0c9d0",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Selected"
+			},
+			"name": "selected",
+			"required": false,
+			"type": "Boolean"
 		},
 		{
 			"DBType": "String",

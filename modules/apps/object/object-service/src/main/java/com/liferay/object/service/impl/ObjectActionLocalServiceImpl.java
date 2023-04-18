@@ -112,7 +112,7 @@ public class ObjectActionLocalServiceImpl
 		_validateLabel(labelMap);
 		_validateName(0, objectDefinitionId, name);
 		_validateObjectActionExecutorKey(
-			objectActionExecutorKey, objectDefinition.getName());
+			objectActionExecutorKey, objectDefinition);
 		_validateObjectActionTriggerKey(
 			conditionExpression, objectActionTriggerKey, objectDefinition);
 
@@ -307,7 +307,7 @@ public class ObjectActionLocalServiceImpl
 				objectAction.getObjectDefinitionId());
 
 		_validateObjectActionExecutorKey(
-			objectActionExecutorKey, objectDefinition.getName());
+			objectActionExecutorKey, objectDefinition);
 
 		_validateParametersUnicodeProperties(
 			objectAction.getCompanyId(), objectAction.getUserId(),
@@ -435,7 +435,7 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	private void _validateObjectActionExecutorKey(
-			String objectActionExecutorKey, String objectDefinitionName)
+			String objectActionExecutorKey, ObjectDefinition objectDefinition)
 		throws PortalException {
 
 		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
@@ -455,7 +455,7 @@ public class ObjectActionLocalServiceImpl
 				objectActionExecutorKey);
 
 		if (!ObjectActionExecutorUtil.isCompanyRestrictionCriteriaMet(
-				objectActionExecutor)) {
+				objectDefinition.getCompanyId(), objectActionExecutor)) {
 
 			throw new ObjectActionExecutorKeyException(
 				StringBundler.concat(
@@ -465,13 +465,13 @@ public class ObjectActionLocalServiceImpl
 		}
 
 		if (!ObjectActionExecutorUtil.isObjectDefinitionsRestrictionCriteriaMet(
-				objectActionExecutor, objectDefinitionName)) {
+				objectActionExecutor, objectDefinition.getName())) {
 
 			throw new ObjectActionExecutorKeyException(
 				StringBundler.concat(
 					"The object action executor key ", objectActionExecutorKey,
 					" is not allowed for object definition ",
-					objectDefinitionName));
+					objectDefinition.getName()));
 		}
 	}
 

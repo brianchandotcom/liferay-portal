@@ -118,15 +118,16 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
 	 * @param  active whether the company is active
-	 * @param  emailAdmin Email set to the admin user of the company
-	 * @param  passwordAdmin Password set to the admin user of the company
+	 * @param  defaultAdminEmailAddress Email set to the admin user of the company
+	 * @param  defaultAdminPassword Password set to the admin user of the company
 	 * @return the company
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public Company addCompany(
 			String webId, String virtualHost, String mx, int maxUsers,
-			boolean active, String screenNameAdmin, String emailAdmin,
-			String passwordAdmin, String firstNameAdmin, String lastNameAdmin)
+			boolean active, String defaultAdminScreenName,
+			String defaultAdminEmailAddress, String defaultAdminPassword,
+			String defaultAdminFirstName, String defaultAdminLastName)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -136,8 +137,9 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			null, webId, virtualHost, mx, maxUsers, active, screenNameAdmin,
-			emailAdmin, passwordAdmin, firstNameAdmin, lastNameAdmin);
+			null, webId, virtualHost, mx, maxUsers, active,
+			defaultAdminScreenName, defaultAdminEmailAddress,
+			defaultAdminPassword, defaultAdminFirstName, defaultAdminLastName);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

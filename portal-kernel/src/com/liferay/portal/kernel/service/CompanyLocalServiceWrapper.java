@@ -84,23 +84,27 @@ public class CompanyLocalServiceWrapper
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
-	 * @param emailAdmin Email set to the admin user of the company
-	 * @param passwordAdmin Password set to the admin user of the company
+	 * @param defaultAdminPassword Password set to the admin user of the company
+	 * @param defaultAdminEmailAddress Email set to the admin user of the company
 	 * @return the company
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Company addCompany(
 			java.lang.Long companyId, java.lang.String webId,
 			java.lang.String virtualHostname, java.lang.String mx, int maxUsers,
-			boolean active, java.lang.String screenNameAdmin,
-			java.lang.String emailAdmin, java.lang.String passwordAdmin,
-			java.lang.String firstNameAdmin, java.lang.String lastNameAdmin)
+			boolean active, java.lang.String defaultAdminPassword,
+			java.lang.String defaultAdminScreenName,
+			java.lang.String defaultAdminEmailAddress,
+			java.lang.String defaultAdminFirstName,
+			java.lang.String defaultAdminMiddleName,
+			java.lang.String defaultAdminLastName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _companyLocalService.addCompany(
 			companyId, webId, virtualHostname, mx, maxUsers, active,
-			screenNameAdmin, emailAdmin, passwordAdmin, firstNameAdmin,
-			lastNameAdmin);
+			defaultAdminPassword, defaultAdminScreenName,
+			defaultAdminEmailAddress, defaultAdminFirstName,
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	/**

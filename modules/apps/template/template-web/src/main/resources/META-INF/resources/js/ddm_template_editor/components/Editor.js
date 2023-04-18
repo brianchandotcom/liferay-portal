@@ -126,6 +126,14 @@ export function Editor({autocompleteData, initialScript, mode}) {
 						navigate(response.url);
 					}
 
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						title: Liferay.Language.get('success'),
+						type: 'success',
+					});
+
 					changeDisabled(false);
 
 					return response;

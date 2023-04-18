@@ -123,6 +123,8 @@ definition {
 			en_US_plural_label = ${en_US_plural_label},
 			fieldName = "name",
 			fieldValue = ${name},
+			keywords = ${keywords},
+			taxonomyCategoryIds = ${taxonomyCategoryIds},
 			token = ${token},
 			virtualHost = ${virtualHost});
 
@@ -456,6 +458,25 @@ definition {
 		return ${response};
 	}
 
+	macro _updateObjectDefinition {
+		Variables.assertDefined(parameterList = "${objectDefinitionId},${parameter},${parameterValue}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"${parameter}": "${parameterValue}"
+				}
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		return ${response};
+	}
+
 	macro assertBatchActionsInResponse {
 		Variables.assertDefined(parameterList = "${responseToParse},${batchActions}");
 
@@ -690,8 +711,10 @@ definition {
 	macro createObjectEntryWithName {
 		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = ${en_US_plural_label},
+			keywords = ${keywords},
 			name = ${name},
 			secondFieldValue = ${secondFieldValue},
+			taxonomyCategoryIds = ${taxonomyCategoryIds},
 			token = ${token},
 			virtualHost = ${virtualHost});
 
@@ -1017,6 +1040,13 @@ definition {
 			expected = ${employeeFirstname});
 
 		return ${employeeId};
+	}
+
+	macro updateObjectDefinitionById {
+		ObjectDefinitionAPI._updateObjectDefinition(
+			objectDefinitionId = ${objectDefinitionId},
+			parameter = ${parameter},
+			parameterValue = ${parameterValue});
 	}
 
 }

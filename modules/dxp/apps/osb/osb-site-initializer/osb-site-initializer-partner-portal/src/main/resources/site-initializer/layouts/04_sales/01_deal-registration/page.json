@@ -1,7 +1,5 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "/sales/deal-registrations"
-	},
+	"friendlyURL": "/sales/deal-registrations",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Deals"

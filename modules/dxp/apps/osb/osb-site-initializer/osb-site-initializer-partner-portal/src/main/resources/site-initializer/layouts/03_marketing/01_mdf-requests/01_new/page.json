@@ -1,7 +1,5 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "/marketing/mdf-requests/new"
-	},
+	"friendlyURL": "/marketing/mdf-requests/new",
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "MDF Request: New"

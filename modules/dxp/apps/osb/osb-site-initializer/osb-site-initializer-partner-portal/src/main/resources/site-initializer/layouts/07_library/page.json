@@ -1,7 +1,5 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "/library"
-	},
+	"friendlyURL": "/library",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Library"

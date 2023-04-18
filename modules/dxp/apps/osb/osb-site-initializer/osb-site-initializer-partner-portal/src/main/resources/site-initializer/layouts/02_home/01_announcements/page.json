@@ -1,7 +1,5 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "/home/announcements"
-	},
+	"friendlyURL": "/home/announcements",
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "Announcements"

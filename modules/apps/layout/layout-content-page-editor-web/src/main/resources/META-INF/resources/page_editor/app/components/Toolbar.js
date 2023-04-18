@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
@@ -218,6 +219,12 @@ function ToolbarBody({className}) {
 			onClick={deselectItem}
 			ref={dropClearRef}
 		>
+			<div className="p-2 page-editor__resolution-info-alert w-100">
+				<ClayAlert className="mb-0" displayType="info">
+					This editor is not optimized for mobile or 400% zooming.
+				</ClayAlert>
+			</div>
+
 			<ul className="navbar-nav start" onClick={deselectItem}>
 				{config.toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {

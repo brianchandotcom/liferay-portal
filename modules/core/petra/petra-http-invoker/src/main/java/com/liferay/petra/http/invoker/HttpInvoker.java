@@ -80,6 +80,7 @@ public class HttpInvoker {
 
 		httpResponse.setBinaryContent(binaryContent);
 		httpResponse.setContent(new String(binaryContent));
+
 		httpResponse.setContentType(
 			httpURLConnection.getHeaderField("Content-Type"));
 		httpResponse.setMessage(httpURLConnection.getResponseMessage());

@@ -229,7 +229,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			_appender.stop();
 
 			Assert.assertTrue(
-				_getLogContextContent().contains(
+				_getLogContent().contains(
 					"INFO - Unable to determine the document library size. " +
 						"Increase the timeout or check it manually."));
 			_assertLogContextContains(
@@ -553,7 +553,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		}
 	}
 
-	private String _getLogContextContent() {
+	private String _getLogContent() {
 		return _unsyncStringWriter.toString();
 	}
 
@@ -565,11 +565,10 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			"(?s)INFO - Upgrade report generated in " + file.getAbsolutePath() +
 				"\\n\\s+\\{(.+)\\}");
 
-		int index = _getLogContextContent().indexOf(
+		int index = _getLogContent().indexOf(
 			"INFO - Upgrade report generated in " + file.getAbsolutePath());
 
-		String substringLogContextContent = _getLogContextContent().substring(
-			index);
+		String substringLogContextContent = _getLogContent().substring(index);
 
 		Matcher matcher = pattern.matcher(substringLogContextContent);
 

@@ -55,8 +55,10 @@ public class MBUADHierarchyDeclaration implements UADHierarchyDeclaration {
 	@Reference
 	private MBCategoryUADDisplay _mbCategoryUADDisplay;
 
-	@Reference
-	private MBMessageUADDisplay _mbMessageUADDisplay;
+	@Reference(
+		target = "(component.name=com.liferay.message.boards.uad.display.MBMessageUADDisplay)"
+	)
+	private UADDisplay<?> _mbMessageUADDisplay;
 
 	@Reference(
 		target = "(component.name=com.liferay.message.boards.uad.display.MBThreadUADDisplay)"

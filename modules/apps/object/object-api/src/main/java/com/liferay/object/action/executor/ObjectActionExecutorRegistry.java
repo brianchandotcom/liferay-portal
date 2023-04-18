@@ -28,7 +28,7 @@ public interface ObjectActionExecutorRegistry {
 		String objectActionExecutorKey);
 
 	public List<ObjectActionExecutor> getObjectActionExecutors(
-		String objectDefinitionName);
+		long companyId, String objectDefinitionName);
 
 	public boolean hasObjectActionExecutor(String objectActionExecutorKey);
 

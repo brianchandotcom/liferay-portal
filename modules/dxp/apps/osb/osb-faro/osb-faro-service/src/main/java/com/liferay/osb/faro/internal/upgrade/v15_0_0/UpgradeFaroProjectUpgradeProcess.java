@@ -25,21 +25,21 @@ import java.sql.Statement;
 /**
  * @author Marcos Martins
  */
-public class UpgradeFaroProject extends UpgradeProcess {
+public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select faroProjectId, createTime, subscription from " +
 					"OSBFaro_FaroProject")) {
 
-			try (Statement st = connection.createStatement();
-				ResultSet rs = ps.executeQuery()) {
+			try (Statement statement = connection.createStatement();
+				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				while (rs.next()) {
+				while (resultSet.next()) {
 					JSONObject subscriptionJSONObject =
 						JSONFactoryUtil.createJSONObject(
-							rs.getString("subscription"));
+							resultSet.getString("subscription"));
 
 					long startDate = subscriptionJSONObject.getLong(
 						"startDate", 0);
@@ -49,17 +49,17 @@ public class UpgradeFaroProject extends UpgradeProcess {
 					}
 
 					subscriptionJSONObject.put(
-						"startDate", rs.getLong("createTime"));
+						"startDate", resultSet.getLong("createTime"));
 
-					st.addBatch(
+					statement.addBatch(
 						String.format(
 							"update OSBFaro_FaroProject set subscription = '" +
 								"%s' where faroProjectId = %s",
 							subscriptionJSONObject.toString(),
-							rs.getLong("faroProjectId")));
+							resultSet.getLong("faroProjectId")));
 				}
 
-				st.executeBatch();
+				statement.executeBatch();
 			}
 		}
 	}

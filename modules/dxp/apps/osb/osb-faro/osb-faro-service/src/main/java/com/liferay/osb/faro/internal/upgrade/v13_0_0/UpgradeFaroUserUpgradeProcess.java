@@ -12,24 +12,17 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade.v6_0_0;
+package com.liferay.osb.faro.internal.upgrade.v13_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * @author Geyson Silva
+ * @author Matthew Kong
  */
-public class UpgradeFaroProjectEmailAddressDomain extends UpgradeProcess {
+public class UpgradeFaroUserUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			StringBundler.concat(
-				"create table OSBFaro_FaroProjectEmailAddressDomain ",
-				"(faroProjectEmailAddressDomainId LONG not null primary key, ",
-				"groupId LONG, faroProjectId LONG, emailAddressDomain ",
-				"VARCHAR(255) null)"));
 	}
 
 }

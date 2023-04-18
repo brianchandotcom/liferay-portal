@@ -12,24 +12,18 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade.v3_0_0;
+package com.liferay.osb.faro.internal.upgrade.v14_0_0;
 
-import com.liferay.osb.faro.model.impl.FaroProjectModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Matthew Kong
+ * @author Alejo Ceballos
+ * @author Marcos Martins
  */
-public class UpgradeFaroProject extends UpgradeProcess {
+public class UpgradeFaroChannelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			FaroProjectModelImpl.class,
-			new AlterTableAddColumn("services STRING"));
-		alter(
-			FaroProjectModelImpl.class,
-			new AlterTableDropColumn("weDeployServiceIds"));
 	}
 
 }

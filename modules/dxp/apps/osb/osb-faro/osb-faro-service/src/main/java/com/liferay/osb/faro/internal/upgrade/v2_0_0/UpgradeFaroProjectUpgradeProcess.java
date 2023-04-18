@@ -12,18 +12,27 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade.v6_0_0;
+package com.liferay.osb.faro.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
- * @author André Miranda
+ * @author Matthew Kong
  */
-public class UpgradeFaroProject extends UpgradeProcess {
+public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("create index IX_DC26D918 on OSBFaro_FaroProject (userId)");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"OSBFaro_FaroProject", "corpProjectName STRING null")
+		};
 	}
 
 }

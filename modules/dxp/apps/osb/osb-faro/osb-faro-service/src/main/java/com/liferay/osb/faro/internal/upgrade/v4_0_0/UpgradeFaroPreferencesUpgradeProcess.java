@@ -12,23 +12,24 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade.v14_0_0;
+package com.liferay.osb.faro.internal.upgrade.v4_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * @author Alejo Ceballos
- * @author Marcos Martins
+ * @author Matthew Kong
  */
-public class UpgradeFaroChannel extends UpgradeProcess {
+public class UpgradeFaroPreferencesUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("drop index IX_5960B666 on OSBFaro_FaroChannel");
-
 		runSQL(
-			"create unique index IX_5960B666 on OSBFaro_FaroChannel " +
-				"(channelId, workspaceGroupId)");
+			StringBundler.concat(
+				"create table OSBFaro_FaroPreferences (faroPreferencesId LONG ",
+				"not null primary key, groupId LONG, userId LONG, userName ",
+				"VARCHAR(75) null, createTime LONG, modifiedTime LONG, ",
+				"ownerId LONG, preferences STRING null)"));
 	}
 
 }

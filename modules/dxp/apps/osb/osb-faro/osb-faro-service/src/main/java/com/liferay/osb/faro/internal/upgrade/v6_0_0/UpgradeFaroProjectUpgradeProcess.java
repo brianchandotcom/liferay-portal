@@ -12,23 +12,17 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade.v9_0_0;
+package com.liferay.osb.faro.internal.upgrade.v6_0_0;
 
-import com.liferay.osb.faro.model.impl.FaroProjectModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Geyson Silva
+ * @author André Miranda
  */
-public class UpgradeFaroProject extends UpgradeProcess {
+public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			FaroProjectModelImpl.class,
-			new AlterTableAddColumn("timeZoneId VARCHAR(75)"));
-
-		runSQL("update OSBFaro_FaroProject set timeZoneId = 'UTC'");
 	}
 
 }

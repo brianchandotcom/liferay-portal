@@ -16,16 +16,24 @@ package com.liferay.osb.faro.service.impl;
 
 import com.liferay.osb.faro.model.FaroPreferences;
 import com.liferay.osb.faro.service.base.FaroPreferencesLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matthew Kong
  */
+@Component(
+	property = "model.class.name=com.liferay.osb.faro.model.FaroPreferences",
+	service = AopService.class
+)
 public class FaroPreferencesLocalServiceImpl
 	extends FaroPreferencesLocalServiceBaseImpl {
 
-	@Override
 	public FaroPreferences deleteFaroPreferences(long groupId, long ownerId) {
 		FaroPreferences faroPreferences = faroPreferencesPersistence.fetchByG_O(
 			groupId, ownerId);
@@ -37,22 +45,19 @@ public class FaroPreferencesLocalServiceImpl
 		return faroPreferences;
 	}
 
-	@Override
 	public void deleteFaroPreferencesByGroupId(long groupId) {
 		faroPreferencesPersistence.removeByGroupId(groupId);
 	}
 
-	@Override
 	public FaroPreferences fetchFaroPreferences(long groupId, long ownerId) {
 		return faroPreferencesPersistence.fetchByG_O(groupId, ownerId);
 	}
 
-	@Override
 	public FaroPreferences savePreferences(
 			long userId, long groupId, long ownerId, String preferences)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		FaroPreferences faroPreferences = faroPreferencesPersistence.fetchByG_O(
 			groupId, ownerId);
@@ -75,5 +80,8 @@ public class FaroPreferencesLocalServiceImpl
 
 		return updateFaroPreferences(faroPreferences);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

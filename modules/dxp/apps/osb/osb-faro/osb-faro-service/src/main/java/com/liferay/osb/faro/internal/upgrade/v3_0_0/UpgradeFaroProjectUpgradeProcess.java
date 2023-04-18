@@ -12,19 +12,29 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade.v13_0_0;
+package com.liferay.osb.faro.internal.upgrade.v3_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Matthew Kong
  */
-public class UpgradeFaroUser extends UpgradeProcess {
+public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL(
-			"create index IX_1B6F355D on OSBFaro_FaroUser (groupId, roleId)");
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"OSBFaro_FaroProject", "services STRING"),
+			UpgradeProcessFactory.dropColumns(
+				"OSBFaro_FaroProject", "weDeployServiceIds")
+		};
 	}
 
 }

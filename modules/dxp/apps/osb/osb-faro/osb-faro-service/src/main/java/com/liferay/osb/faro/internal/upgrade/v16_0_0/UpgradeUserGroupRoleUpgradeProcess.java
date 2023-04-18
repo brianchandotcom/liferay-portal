@@ -23,26 +23,27 @@ import java.sql.ResultSet;
 /**
  * @author Matthew Kong
  */
-public class UpgradeUserGroupRole extends UpgradeProcess {
+public class UpgradeUserGroupRoleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select roleId from Role_ where name in (?, ?, ?)")) {
 
-			ps.setString(1, RoleConstants.SITE_ADMINISTRATOR);
-			ps.setString(2, RoleConstants.SITE_MEMBER);
-			ps.setString(3, RoleConstants.SITE_OWNER);
+			preparedStatement.setString(1, RoleConstants.SITE_ADMINISTRATOR);
+			preparedStatement.setString(2, RoleConstants.SITE_MEMBER);
+			preparedStatement.setString(3, RoleConstants.SITE_OWNER);
 
-			ResultSet rs = ps.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-			while (rs.next()) {
-				try (PreparedStatement psUpdate = connection.prepareStatement(
-						"delete from UserGroupRole where roleId = ?")) {
+			while (resultSet.next()) {
+				try (PreparedStatement updatePreparedStatement =
+						connection.prepareStatement(
+							"delete from UserGroupRole where roleId = ?")) {
 
-					psUpdate.setLong(1, rs.getLong(1));
+					updatePreparedStatement.setLong(1, resultSet.getLong(1));
 
-					psUpdate.executeUpdate();
+					updatePreparedStatement.executeUpdate();
 				}
 			}
 		}

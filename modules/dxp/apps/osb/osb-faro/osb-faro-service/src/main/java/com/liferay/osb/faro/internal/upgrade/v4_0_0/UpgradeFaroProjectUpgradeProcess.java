@@ -15,21 +15,27 @@
 package com.liferay.osb.faro.internal.upgrade.v4_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
  * @author Matthew Kong
  */
-public class UpgradeFaroPreferences extends UpgradeProcess {
+public class UpgradeFaroProjectUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			StringBundler.concat(
-				"create table OSBFaro_FaroPreferences (faroPreferencesId LONG ",
-				"not null primary key, groupId LONG, userId LONG, userName ",
-				"VARCHAR(75) null, createTime LONG, modifiedTime LONG, ",
-				"ownerId LONG, preferences STRING null)"));
+			"update OSBFaro_FaroProject set lastAccessTime = " +
+				System.currentTimeMillis());
+	}
+
+	@Override
+	protected UpgradeStep[] getPreUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.addColumns(
+				"OSBFaro_FaroProject", "lastAccessTime LONG")
+		};
 	}
 
 }

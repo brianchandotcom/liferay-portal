@@ -26,7 +26,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author Geyson Silva
@@ -67,9 +66,11 @@ public class FaroNotificationLocalServiceImpl
 		List<FaroNotification> faroNotifications =
 			faroNotificationPersistence.findByLtCreateTime(_getDateMillis());
 
-		Stream<FaroNotification> stream = faroNotifications.stream();
-
-		stream.forEach(this::deleteFaroNotification);
+		for (FaroNotification faroNotification : faroNotifications) {
+			deleteFaroNotifications(
+				faroNotification.getGroupId(), faroNotification.getType(),
+				faroNotification.getSubtype(), faroNotification.getUserId());
+		}
 	}
 
 	@Override

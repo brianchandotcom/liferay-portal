@@ -12,25 +12,25 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade.v4_0_0;
+package com.liferay.osb.faro.internal.upgrade.v7_0_0;
 
-import com.liferay.osb.faro.model.impl.FaroProjectModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * @author Matthew Kong
+ * @author André Miranda
  */
-public class UpgradeFaroProject extends UpgradeProcess {
+public class UpgradeFaroChannelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			FaroProjectModelImpl.class,
-			new AlterTableAddColumn("lastAccessTime LONG"));
-
 		runSQL(
-			"update OSBFaro_FaroProject set lastAccessTime = " +
-				System.currentTimeMillis());
+			StringBundler.concat(
+				"create table OSBFaro_FaroChannel (",
+				"faroChannelId LONG not null primary key, groupId LONG, ",
+				"userId LONG, userName VARCHAR(75) null, createTime LONG, ",
+				"modifiedTime LONG, channelId VARCHAR(75), name VARCHAR(75) ",
+				"null, permissionType INTEGER, workspaceGroupId LONG)"));
 	}
 
 }

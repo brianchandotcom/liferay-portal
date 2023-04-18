@@ -34,7 +34,7 @@
 				},
 				{
 					"defaultValue": true,
-					"label": "Partner Manager",
+					"label": "Partner Manager (PM)",
 					"name": "partnerManager",
 					"type": "checkbox"
 				},

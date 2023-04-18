@@ -127,7 +127,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			String webId, String virtualHost, String mx, int maxUsers,
 			boolean active, String defaultAdminPassword,
 			String defaultAdminScreenName, String defaultAdminEmailAddress,
-			String defaultAdminFirstName, String defaultAdminLastName)
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -140,7 +141,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			null, webId, virtualHost, mx, maxUsers, active,
 			defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
-			defaultAdminLastName);
+			defaultAdminMiddleName, defaultAdminLastName);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

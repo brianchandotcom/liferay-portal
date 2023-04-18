@@ -200,7 +200,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		return addCompany(
 			companyId, webId, virtualHostname, mx, maxUsers, active, null, null,
-			null, null, null);
+			null, null, null, null);
 	}
 
 	/**
@@ -222,7 +222,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			Long companyId, String webId, String virtualHostname, String mx,
 			int maxUsers, boolean active, String defaultAdminPassword,
 			String defaultAdminScreenName, String defaultAdminEmailAddress,
-			String defaultAdminFirstName, String defaultAdminLastName)
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		// Company
@@ -304,7 +305,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company = _checkCompany(
 				company, mx, defaultAdminPassword, defaultAdminScreenName,
 				defaultAdminEmailAddress, defaultAdminFirstName,
-				defaultAdminLastName);
+				defaultAdminMiddleName, defaultAdminLastName);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -378,7 +379,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = getCompanyByWebId(webId);
 
-		return _checkCompany(company, mx, null, null, null, null, null);
+		return _checkCompany(company, mx, null, null, null, null, null, null);
 	}
 
 	/**
@@ -1974,7 +1975,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	private Company _checkCompany(
 			Company company, String mx, String defaultAdminPassword,
 			String defaultAdminScreenName, String defaultAdminEmailAddress,
-			String defaultAdminFirstName, String defaultAdminLastName)
+			String defaultAdminFirstName, String defaultAdminMiddleName,
+			String defaultAdminLastName)
 		throws PortalException {
 
 		Locale localeThreadLocalDefaultLocale =
@@ -2058,6 +2060,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						PropsValues.DEFAULT_ADMIN_FIRST_NAME;
 				}
 
+				if (Validator.isNull(defaultAdminMiddleName)) {
+					defaultAdminMiddleName =
+						PropsValues.DEFAULT_ADMIN_MIDDLE_NAME;
+				}
+
 				if (Validator.isNull(defaultAdminLastName)) {
 					defaultAdminLastName = PropsValues.DEFAULT_ADMIN_LAST_NAME;
 				}
@@ -2066,8 +2073,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					company.getCompanyId(), defaultAdminPassword,
 					defaultAdminScreenName, defaultAdminEmailAddress,
 					guestUser.getLocale(), defaultAdminFirstName,
-					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
-					defaultAdminLastName);
+					defaultAdminMiddleName, defaultAdminLastName);
 			}
 
 			// Default service account

@@ -58,13 +58,16 @@ public class CustomFilterPortletSharedSearchContributor
 			).disabled(
 				customFilterPortletPreferences.isDisabled()
 			).field(
-				customFilterPortletPreferences.getFilterFieldString()
+				GetterUtil.getString(
+					customFilterPortletPreferences.getFilterField())
 			).name(
-				customFilterPortletPreferences.getQueryNameString()
+				GetterUtil.getString(
+					customFilterPortletPreferences.getQueryName())
 			).occur(
 				customFilterPortletPreferences.getOccur()
 			).parent(
-				customFilterPortletPreferences.getParentQueryNameString()
+				GetterUtil.getString(
+					customFilterPortletPreferences.getParentQueryName())
 			).type(
 				customFilterPortletPreferences.getFilterQueryType()
 			).value(

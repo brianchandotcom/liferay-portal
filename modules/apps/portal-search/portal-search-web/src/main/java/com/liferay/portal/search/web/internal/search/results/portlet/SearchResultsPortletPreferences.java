@@ -46,8 +46,6 @@ public interface SearchResultsPortletPreferences {
 
 	public String getFieldsToDisplay();
 
-	public String getFieldsToDisplayString();
-
 	public int getPaginationDelta();
 
 	public String getPaginationDeltaParameterName();

@@ -51,37 +51,23 @@ public interface CustomFilterPortletPreferences {
 
 	public String getBoost();
 
-	public String getBoostString();
-
 	public String getCustomHeading();
-
-	public String getCustomHeadingString();
 
 	public String getFederatedSearchKey();
 
 	public String getFilterField();
 
-	public String getFilterFieldString();
-
 	public String getFilterQueryType();
 
 	public String getFilterValue();
-
-	public String getFilterValueString();
 
 	public String getOccur();
 
 	public String getParameterName();
 
-	public String getParameterNameString();
-
 	public String getParentQueryName();
 
-	public String getParentQueryNameString();
-
 	public String getQueryName();
-
-	public String getQueryNameString();
 
 	public boolean isDisabled();
 

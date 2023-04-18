@@ -39,30 +39,20 @@ public interface LowLevelSearchOptionsPortletPreferences {
 
 	public static final String PREFERENCE_KEY_INDEXES = "indexes";
 
-	public JSONArray getAttributesJSONArray();
+	public String getAttributes();
 
-	public String getAttributesString();
+	public JSONArray getAttributesJSONArray();
 
 	public String getConnectionId();
 
-	public String getConnectionIdString();
-
 	public String getContributorsToExclude();
 
-	public String getContributorsToExcludeString();
-
 	public String getContributorsToInclude();
-
-	public String getContributorsToIncludeString();
 
 	public String getFederatedSearchKey();
 
 	public String getFieldsToReturn();
 
-	public String getFieldsToReturnString();
-
 	public String getIndexes();
-
-	public String getIndexesString();
 
 }

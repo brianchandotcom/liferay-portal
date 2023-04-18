@@ -43,8 +43,14 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
+	public String getAttributes() {
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.PREFERENCE_ATTRIBUTES);
+	}
+
+	@Override
 	public JSONArray getAttributesJSONArray() {
-		String fieldsString = getAttributesString();
+		String fieldsString = getAttributes();
 
 		if (Validator.isBlank(fieldsString)) {
 			return _getDefaultAttributesJSONArray();
@@ -63,25 +69,10 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getAttributesString() {
-		return _portletPreferencesHelper.getString(
-			LowLevelSearchOptionsPortletPreferences.PREFERENCE_ATTRIBUTES,
-			StringPool.BLANK);
-	}
-
-	@Override
 	public String getConnectionId() {
 		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONNECTION_ID);
-	}
-
-	@Override
-	public String getConnectionIdString() {
-		return _portletPreferencesHelper.getString(
-			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_CONNECTION_ID,
-			StringPool.BLANK);
 	}
 
 	@Override
@@ -92,26 +83,10 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getContributorsToExcludeString() {
-		return _portletPreferencesHelper.getString(
-			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE,
-			StringPool.BLANK);
-	}
-
-	@Override
 	public String getContributorsToInclude() {
 		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE);
-	}
-
-	@Override
-	public String getContributorsToIncludeString() {
-		return _portletPreferencesHelper.getString(
-			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE,
-			StringPool.BLANK);
 	}
 
 	@Override
@@ -129,24 +104,9 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getFieldsToReturnString() {
-		return _portletPreferencesHelper.getString(
-			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_FIELDS_TO_RETURN,
-			StringPool.BLANK);
-	}
-
-	@Override
 	public String getIndexes() {
 		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES);
-	}
-
-	@Override
-	public String getIndexesString() {
-		return _portletPreferencesHelper.getString(
-			LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES,
-			StringPool.BLANK);
 	}
 
 	private JSONArray _getDefaultAttributesJSONArray() {

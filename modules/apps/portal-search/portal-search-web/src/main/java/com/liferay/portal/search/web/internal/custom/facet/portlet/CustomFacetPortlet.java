@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -127,7 +128,8 @@ public class CustomFacetPortlet extends MVCPortlet {
 				portletSharedSearchResponse, customFacetPortletPreferences,
 				renderRequest)
 		).setFieldToAggregate(
-			customFacetPortletPreferences.getAggregationFieldString()
+			GetterUtil.getString(
+				customFacetPortletPreferences.getAggregationField())
 		).setFrequenciesVisible(
 			customFacetPortletPreferences.isFrequenciesVisible()
 		).setFrequencyThreshold(

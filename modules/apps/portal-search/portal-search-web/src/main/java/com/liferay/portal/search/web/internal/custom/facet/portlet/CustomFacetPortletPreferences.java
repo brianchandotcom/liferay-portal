@@ -41,11 +41,7 @@ public interface CustomFacetPortletPreferences {
 
 	public String getAggregationField();
 
-	public String getAggregationFieldString();
-
 	public String getCustomHeading();
-
-	public String getCustomHeadingString();
 
 	public String getFederatedSearchKey();
 
@@ -56,8 +52,6 @@ public interface CustomFacetPortletPreferences {
 	public String getOrder();
 
 	public String getParameterName();
-
-	public String getParameterNameString();
 
 	public boolean isFrequenciesVisible();
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.portlet;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -64,8 +63,14 @@ public class ModifiedFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getRanges() {
+		return _portletPreferencesHelper.getString(
+			ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES);
+	}
+
+	@Override
 	public JSONArray getRangesJSONArray() {
-		String rangesString = getRangesString();
+		String rangesString = getRanges();
 
 		if (Validator.isBlank(rangesString)) {
 			return _getDefaultRangesJSONArray();
@@ -81,13 +86,6 @@ public class ModifiedFacetPortletPreferencesImpl
 
 			return _getDefaultRangesJSONArray();
 		}
-	}
-
-	@Override
-	public String getRangesString() {
-		return _portletPreferencesHelper.getString(
-			ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES,
-			StringPool.BLANK);
 	}
 
 	@Override

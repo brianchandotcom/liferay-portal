@@ -2958,6 +2958,103 @@ definition {
 		}
 	}
 
+	@description = "LPS-164948 - Verify the user can validate Formula Fields with a Custom Validation"
+	@priority = 4
+	test CanValidateFormulaField {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
+		task ("Given: a custom object with two integer fields and a formula field summing the integer field values") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 176853",
+				objectName = "CustomObject176853",
+				pluralLabelName = "Custom Objects 176853");
+
+			for (var valueField : list "1,2") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Integer",
+					fieldLabelName = "Custom Integer ${valueField}",
+					fieldName = "customInteger${valueField}",
+					fieldType = "Integer",
+					isRequired = "false",
+					objectName = "CustomObject176853");
+			}
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Formula",
+				fieldLabelName = "Custom Formula Field",
+				fieldName = "customFormulaField",
+				fieldType = "String",
+				formulaScript = "customInteger1 + customInteger2",
+				isRequired = "false",
+				objectName = "CustomObject176853",
+				outputOption = "Integer");
+		}
+
+		task ("When: a Custom Validation is created to limit Formula Field value to 50 or less") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 176853");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation Formula Plus",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation Formula Plus");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customFormulaField <= 50");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "The sum must be less than or equal to 50");
+
+			PortletEntry.save();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176853");
+		}
+
+		task ("Then: only object entries where the Formula Field value is less than or equal to 50 are created") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject176853");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer 1",
+				entry = 25);
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer 2",
+				entry = 25);
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			ObjectPortlet.viewEntry(entry = 50);
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer 1",
+				entry = 30);
+
+			ObjectPortlet.typeCustomField(
+				customField = "Custom Integer 2",
+				entry = 30);
+
+			Button.click(button = "Save");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "The sum must be less than or equal to 50");
+		}
+	}
+
 	@description = "LPS-148112 - Verify if on the side panel that only valid paths can be used on the 'Show files' settings"
 	@priority = 4
 	test CanValidOnlyPathsDefinedOnShowFilesOption {

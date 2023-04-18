@@ -103,7 +103,7 @@ public class CommercePriceListPriceModifiersScreenNavigationEntry
 		}
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/commerce_price_lists/price_modifiers.jsp");
 	}
 
@@ -138,6 +138,6 @@ public class CommercePriceListPriceModifiersScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.pricing.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

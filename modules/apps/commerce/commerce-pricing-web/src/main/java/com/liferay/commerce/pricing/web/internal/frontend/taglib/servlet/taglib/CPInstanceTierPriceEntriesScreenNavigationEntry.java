@@ -98,7 +98,7 @@ public class CPInstanceTierPriceEntriesScreenNavigationEntry
 		}
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/commerce_price_lists/cp_instance" +
 				"/cp_instance_commerce_tier_price_entries.jsp");
 	}
@@ -124,6 +124,6 @@ public class CPInstanceTierPriceEntriesScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.pricing.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

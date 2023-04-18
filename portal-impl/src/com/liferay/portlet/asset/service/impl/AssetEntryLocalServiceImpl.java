@@ -1336,6 +1336,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetRenderer<?> assetRenderer = entry.getAssetRenderer();
 
 		if (assetRenderer == null) {
+			indexer.reindex(entry.getClassName(), entry.getClassPK());
+
 			return;
 		}
 

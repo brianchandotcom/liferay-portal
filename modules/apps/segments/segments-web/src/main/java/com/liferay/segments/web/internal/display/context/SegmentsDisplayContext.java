@@ -50,6 +50,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsActionKeys;
@@ -57,7 +59,6 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
-import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsResourcePermission;
 import com.liferay.segments.web.internal.util.comparator.SegmentsEntryModifiedDateComparator;
@@ -84,6 +85,7 @@ public class SegmentsDisplayContext {
 		GroupLocalService groupLocalService, ItemSelector itemSelector,
 		Language language, Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse,
+		RoleTypeContributorProvider roleTypeContributorProvider,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		SegmentsEntryService segmentsEntryService) {
 
@@ -94,6 +96,7 @@ public class SegmentsDisplayContext {
 		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_roleTypeContributorProvider = roleTypeContributorProvider;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 		_segmentsEntryService = segmentsEntryService;
 
@@ -131,8 +134,7 @@ public class SegmentsDisplayContext {
 				roleItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 					new UUIDItemSelectorReturnType());
 				roleItemSelectorCriterion.setExcludedRoleNames(
-					(String[])_httpServletRequest.getAttribute(
-						SegmentsWebKeys.EXCLUDED_ROLE_NAMES));
+					_getExcludedRoleNames());
 
 				PortletURL portletURL = _itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(_renderRequest),
@@ -546,6 +548,18 @@ public class SegmentsDisplayContext {
 		return false;
 	}
 
+	private String[] _getExcludedRoleNames() {
+		RoleTypeContributor roleTypeContributor =
+			_roleTypeContributorProvider.getRoleTypeContributor(
+				RoleConstants.TYPE_SITE);
+
+		if (roleTypeContributor != null) {
+			return roleTypeContributor.getExcludedRoleNames();
+		}
+
+		return new String[0];
+	}
+
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -699,6 +713,7 @@ public class SegmentsDisplayContext {
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final RoleTypeContributorProvider _roleTypeContributorProvider;
 	private SearchContainer<SegmentsEntry> _searchContainer;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private final SegmentsEntryService _segmentsEntryService;

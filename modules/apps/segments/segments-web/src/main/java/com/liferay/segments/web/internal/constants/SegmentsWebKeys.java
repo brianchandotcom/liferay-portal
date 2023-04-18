@@ -19,8 +19,6 @@ package com.liferay.segments.web.internal.constants;
  */
 public class SegmentsWebKeys {
 
-	public static final String EXCLUDED_ROLE_NAMES = "EXCLUDED_ROLE_NAMES";
-
 	public static final String PREVIEW_SEGMENTS_ENTRY_CRITERIA =
 		"PREVIEW_SEGMENTS_ENTRY_CRITERIA";
 

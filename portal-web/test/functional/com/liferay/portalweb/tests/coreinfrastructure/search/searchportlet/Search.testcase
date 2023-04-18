@@ -1858,12 +1858,16 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Go to the Search page and execute a search for the web content article") {
-			Search.openSearchPage(searchTerm = "WC Title");
+		task ("Add the Custom Facet to the search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Facet");
 		}
 
-		task ("Add the Custom Facet to the page") {
-			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		task ("Go to the Search page and execute a search for the web content article") {
+			Search.openSearchPage(searchTerm = "WC Title");
 		}
 
 		task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {

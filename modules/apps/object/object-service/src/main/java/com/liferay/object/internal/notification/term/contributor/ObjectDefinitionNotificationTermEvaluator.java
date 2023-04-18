@@ -199,25 +199,28 @@ public class ObjectDefinitionNotificationTermEvaluator
 				continue;
 			}
 
-			User user = null;
-
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectRelationship.getObjectFieldId2());
+
+			long primaryKey = GetterUtil.getLong(
+				termValues.get(objectField.getName()));
+
+			if (primaryKey == 0) {
+				return StringPool.BLANK;
+			}
+
+			User user = null;
 
 			if (objectDefinition.isSystem()) {
 				user = _userLocalService.getUser(
 					MapUtil.getLong(
 						_objectEntryLocalService.getSystemModelAttributes(
-							objectDefinition,
-							GetterUtil.getLong(
-								termValues.get(objectField.getName()))),
+							objectDefinition, primaryKey),
 						"creator"));
 			}
 			else {
 				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						GetterUtil.getLong(
-							termValues.get(objectField.getName())));
+					_objectEntryLocalService.getObjectEntry(primaryKey);
 
 				user = _userLocalService.getUser(objectEntry.getUserId());
 			}
@@ -286,16 +289,22 @@ public class ObjectDefinitionNotificationTermEvaluator
 			return null;
 		}
 
+		long primaryKey = GetterUtil.getLong(
+			termValues.get(objectField2.getName()));
+
+		if (primaryKey == 0) {
+			return StringPool.BLANK;
+		}
+
 		if (objectDefinition.isSystem()) {
 			return MapUtil.getString(
 				_objectEntryLocalService.getSystemModelAttributes(
-					objectDefinition,
-					GetterUtil.getLong(termValues.get(objectField2.getName()))),
+					objectDefinition, primaryKey),
 				objectFieldName);
 		}
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			GetterUtil.getLong(termValues.get(objectField2.getName())));
+			primaryKey);
 
 		return MapUtil.getString(
 			HashMapBuilder.putAll(

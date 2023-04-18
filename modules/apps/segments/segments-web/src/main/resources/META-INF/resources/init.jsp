@@ -41,7 +41,6 @@ page import="com.liferay.segments.exception.SegmentsEntryCriteriaException" %><%
 page import="com.liferay.segments.exception.SegmentsEntryKeyException" %><%@
 page import="com.liferay.segments.exception.SegmentsEntryNameException" %><%@
 page import="com.liferay.segments.source.provider.SegmentsSourceDetailsProvider" %><%@
-page import="com.liferay.segments.web.internal.constants.SegmentsWebKeys" %><%@
 page import="com.liferay.segments.web.internal.display.context.EditSegmentsEntryDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.PreviewSegmentsEntryUsersDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SegmentsCompanyConfigurationDisplayContext" %><%@

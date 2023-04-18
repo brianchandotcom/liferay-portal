@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.soy.internal.template;
 
-import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -42,14 +41,10 @@ public class SoyComponentRenderer {
 
 		SoyComponentRendererHelper soyComponentRendererHelper =
 			new SoyComponentRendererHelper(
-				httpServletRequest, componentDescriptor, context,
-				_jsModuleLauncher, _portal);
+				httpServletRequest, componentDescriptor, context, _portal);
 
 		soyComponentRendererHelper.renderSoyComponent(writer);
 	}
-
-	@Reference
-	private JSModuleLauncher _jsModuleLauncher;
 
 	@Reference
 	private Portal _portal;

@@ -198,6 +198,13 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public final Column<CommerceOrderItemTable, Integer> quantity =
 		createColumn(
 			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Long> replacedCPInstanceId =
+		createColumn(
+			"replacedCPInstanceId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, String> replacedSku =
+		createColumn(
+			"replacedSku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, Date> requestedDeliveryDate =
 		createColumn(
 			"requestedDeliveryDate", Date.class, Types.TIMESTAMP,

@@ -219,6 +219,8 @@
 		<field name="promoPrice" type="BigDecimal" />
 		<field name="promoPriceWithTaxAmount" type="BigDecimal" />
 		<field name="quantity" type="int" />
+		<field name="replacedCPInstanceId" type="long" />
+		<field name="replacedSku" type="String" />
 		<field name="requestedDeliveryDate" type="Date" />
 		<field name="shipSeparately" type="boolean" />
 		<field name="shippable" type="boolean" />

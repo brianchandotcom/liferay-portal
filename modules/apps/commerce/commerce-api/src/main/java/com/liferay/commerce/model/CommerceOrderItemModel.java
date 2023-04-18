@@ -917,6 +917,35 @@ public interface CommerceOrderItemModel
 	public void setQuantity(int quantity);
 
 	/**
+	 * Returns the replaced cp instance ID of this commerce order item.
+	 *
+	 * @return the replaced cp instance ID of this commerce order item
+	 */
+	public long getReplacedCPInstanceId();
+
+	/**
+	 * Sets the replaced cp instance ID of this commerce order item.
+	 *
+	 * @param replacedCPInstanceId the replaced cp instance ID of this commerce order item
+	 */
+	public void setReplacedCPInstanceId(long replacedCPInstanceId);
+
+	/**
+	 * Returns the replaced sku of this commerce order item.
+	 *
+	 * @return the replaced sku of this commerce order item
+	 */
+	@AutoEscape
+	public String getReplacedSku();
+
+	/**
+	 * Sets the replaced sku of this commerce order item.
+	 *
+	 * @param replacedSku the replaced sku of this commerce order item
+	 */
+	public void setReplacedSku(String replacedSku);
+
+	/**
 	 * Returns the requested delivery date of this commerce order item.
 	 *
 	 * @return the requested delivery date of this commerce order item

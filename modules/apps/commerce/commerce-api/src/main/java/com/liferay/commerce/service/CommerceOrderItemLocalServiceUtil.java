@@ -63,38 +63,41 @@ public class CommerceOrderItemLocalServiceUtil {
 
 	public static CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			int quantity, int shippedQuantity,
+			int quantity, long replacedCPInstanceId, int shippedQuantity,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, json, quantity,
-			shippedQuantity, commerceContext, serviceContext);
+			replacedCPInstanceId, shippedQuantity, commerceContext,
+			serviceContext);
 	}
 
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, int quantity,
-			int shippedQuantity,
+			long replacedCPInstanceId, int shippedQuantity,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceOrderItem(
-			userId, commerceOrderId, cpInstanceId, quantity, shippedQuantity,
-			commerceContext, serviceContext);
+			userId, commerceOrderId, cpInstanceId, quantity,
+			replacedCPInstanceId, shippedQuantity, commerceContext,
+			serviceContext);
 	}
 
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			int quantity, int shippedQuantity,
+			int quantity, long replacedCPInstanceId, int shippedQuantity,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, json, quantity,
-			shippedQuantity, commerceContext, serviceContext);
+			replacedCPInstanceId, shippedQuantity, commerceContext,
+			serviceContext);
 	}
 
 	public static int countSubscriptionCommerceOrderItems(

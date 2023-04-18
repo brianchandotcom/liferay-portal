@@ -40,26 +40,26 @@ public class CommerceOrderItemServiceUtil {
 	 */
 	public static CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity,
+			long replacedCPInstanceId, int shippedQuantity,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceOrderItem(
-			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
-			commerceContext, serviceContext);
+			commerceOrderId, cpInstanceId, json, quantity, replacedCPInstanceId,
+			shippedQuantity, commerceContext, serviceContext);
 	}
 
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity,
+			long replacedCPInstanceId, int shippedQuantity,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceOrderItem(
-			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
-			commerceContext, serviceContext);
+			commerceOrderId, cpInstanceId, json, quantity, replacedCPInstanceId,
+			shippedQuantity, commerceContext, serviceContext);
 	}
 
 	public static int countSubscriptionCommerceOrderItems(long commerceOrderId)

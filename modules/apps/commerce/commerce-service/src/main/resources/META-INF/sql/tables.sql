@@ -208,6 +208,8 @@ create table CommerceOrderItem (
 	promoPrice DECIMAL(30, 16) null,
 	promoPriceWithTaxAmount DECIMAL(30, 16) null,
 	quantity INTEGER,
+	replacedCPInstanceId LONG,
+	replacedSku VARCHAR(75) null,
 	requestedDeliveryDate DATE null,
 	shipSeparately BOOLEAN,
 	shippable BOOLEAN,

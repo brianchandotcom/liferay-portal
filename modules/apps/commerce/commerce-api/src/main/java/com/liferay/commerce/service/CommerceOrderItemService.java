@@ -60,14 +60,14 @@ public interface CommerceOrderItemService extends BaseService {
 	 */
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			long replacedCPInstanceId, int shippedQuantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			long replacedCPInstanceId, int shippedQuantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public int countSubscriptionCommerceOrderItems(long commerceOrderId)

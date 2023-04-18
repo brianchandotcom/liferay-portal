@@ -54,7 +54,7 @@ public class CommerceOrderItemServiceHttp {
 			addCommerceOrderItem(
 				HttpPrincipal httpPrincipal, long commerceOrderId,
 				long cpInstanceId, String json, int quantity,
-				int shippedQuantity,
+				long replacedCPInstanceId, int shippedQuantity,
 				com.liferay.commerce.context.CommerceContext commerceContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,7 +66,8 @@ public class CommerceOrderItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, cpInstanceId, json, quantity,
-				shippedQuantity, commerceContext, serviceContext);
+				replacedCPInstanceId, shippedQuantity, commerceContext,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -100,7 +101,7 @@ public class CommerceOrderItemServiceHttp {
 			addOrUpdateCommerceOrderItem(
 				HttpPrincipal httpPrincipal, long commerceOrderId,
 				long cpInstanceId, String json, int quantity,
-				int shippedQuantity,
+				long replacedCPInstanceId, int shippedQuantity,
 				com.liferay.commerce.context.CommerceContext commerceContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -113,7 +114,8 @@ public class CommerceOrderItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, cpInstanceId, json, quantity,
-				shippedQuantity, commerceContext, serviceContext);
+				replacedCPInstanceId, shippedQuantity, commerceContext,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1722,14 +1724,14 @@ public class CommerceOrderItemServiceHttp {
 
 	private static final Class<?>[] _addCommerceOrderItemParameterTypes0 =
 		new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			com.liferay.commerce.context.CommerceContext.class,
+			long.class, long.class, String.class, int.class, long.class,
+			int.class, com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCommerceOrderItemParameterTypes1 = new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			com.liferay.commerce.context.CommerceContext.class,
+			long.class, long.class, String.class, int.class, long.class,
+			int.class, com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

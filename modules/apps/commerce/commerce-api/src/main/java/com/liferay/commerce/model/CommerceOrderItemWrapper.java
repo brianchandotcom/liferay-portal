@@ -114,6 +114,8 @@ public class CommerceOrderItemWrapper
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("promoPriceWithTaxAmount", getPromoPriceWithTaxAmount());
 		attributes.put("quantity", getQuantity());
+		attributes.put("replacedCPInstanceId", getReplacedCPInstanceId());
+		attributes.put("replacedSku", getReplacedSku());
 		attributes.put("requestedDeliveryDate", getRequestedDeliveryDate());
 		attributes.put("shipSeparately", isShipSeparately());
 		attributes.put("shippable", isShippable());
@@ -454,6 +456,19 @@ public class CommerceOrderItemWrapper
 
 		if (quantity != null) {
 			setQuantity(quantity);
+		}
+
+		Long replacedCPInstanceId = (Long)attributes.get(
+			"replacedCPInstanceId");
+
+		if (replacedCPInstanceId != null) {
+			setReplacedCPInstanceId(replacedCPInstanceId);
+		}
+
+		String replacedSku = (String)attributes.get("replacedSku");
+
+		if (replacedSku != null) {
+			setReplacedSku(replacedSku);
 		}
 
 		Date requestedDeliveryDate = (Date)attributes.get(
@@ -1201,6 +1216,26 @@ public class CommerceOrderItemWrapper
 	@Override
 	public int getQuantity() {
 		return model.getQuantity();
+	}
+
+	/**
+	 * Returns the replaced cp instance ID of this commerce order item.
+	 *
+	 * @return the replaced cp instance ID of this commerce order item
+	 */
+	@Override
+	public long getReplacedCPInstanceId() {
+		return model.getReplacedCPInstanceId();
+	}
+
+	/**
+	 * Returns the replaced sku of this commerce order item.
+	 *
+	 * @return the replaced sku of this commerce order item
+	 */
+	@Override
+	public String getReplacedSku() {
+		return model.getReplacedSku();
 	}
 
 	/**
@@ -2039,6 +2074,26 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setQuantity(int quantity) {
 		model.setQuantity(quantity);
+	}
+
+	/**
+	 * Sets the replaced cp instance ID of this commerce order item.
+	 *
+	 * @param replacedCPInstanceId the replaced cp instance ID of this commerce order item
+	 */
+	@Override
+	public void setReplacedCPInstanceId(long replacedCPInstanceId) {
+		model.setReplacedCPInstanceId(replacedCPInstanceId);
+	}
+
+	/**
+	 * Sets the replaced sku of this commerce order item.
+	 *
+	 * @param replacedSku the replaced sku of this commerce order item
+	 */
+	@Override
+	public void setReplacedSku(String replacedSku) {
+		model.setReplacedSku(replacedSku);
 	}
 
 	/**

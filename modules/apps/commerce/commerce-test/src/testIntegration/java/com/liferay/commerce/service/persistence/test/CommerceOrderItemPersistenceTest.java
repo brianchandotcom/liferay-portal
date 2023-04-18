@@ -250,6 +250,10 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setQuantity(RandomTestUtil.nextInt());
 
+		newCommerceOrderItem.setReplacedCPInstanceId(RandomTestUtil.nextLong());
+
+		newCommerceOrderItem.setReplacedSku(RandomTestUtil.randomString());
+
 		newCommerceOrderItem.setRequestedDeliveryDate(
 			RandomTestUtil.nextDate());
 
@@ -438,6 +442,12 @@ public class CommerceOrderItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderItem.getQuantity(),
 			newCommerceOrderItem.getQuantity());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getReplacedCPInstanceId(),
+			newCommerceOrderItem.getReplacedCPInstanceId());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getReplacedSku(),
+			newCommerceOrderItem.getReplacedSku());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCommerceOrderItem.getRequestedDeliveryDate()),
@@ -641,9 +651,10 @@ public class CommerceOrderItemPersistenceTest {
 			true, "manuallyAdjusted", true, "maxSubscriptionCycles", true,
 			"name", true, "priceManuallyAdjusted", true, "printedNote", true,
 			"promoPrice", true, "promoPriceWithTaxAmount", true, "quantity",
-			true, "requestedDeliveryDate", true, "shipSeparately", true,
-			"shippable", true, "shippedQuantity", true, "shippingExtraPrice",
-			true, "sku", true, "subscription", true, "subscriptionLength", true,
+			true, "replacedCPInstanceId", true, "replacedSku", true,
+			"requestedDeliveryDate", true, "shipSeparately", true, "shippable",
+			true, "shippedQuantity", true, "shippingExtraPrice", true, "sku",
+			true, "subscription", true, "subscriptionLength", true,
 			"subscriptionType", true, "subscriptionTypeSettings", true,
 			"unitPrice", true, "unitPriceWithTaxAmount", true, "weight", true,
 			"width", true);
@@ -1074,6 +1085,10 @@ public class CommerceOrderItemPersistenceTest {
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceOrderItem.setQuantity(RandomTestUtil.nextInt());
+
+		commerceOrderItem.setReplacedCPInstanceId(RandomTestUtil.nextLong());
+
+		commerceOrderItem.setReplacedSku(RandomTestUtil.randomString());
 
 		commerceOrderItem.setRequestedDeliveryDate(RandomTestUtil.nextDate());
 

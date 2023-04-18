@@ -80,7 +80,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(127);
+		StringBundler sb = new StringBundler(131);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -180,6 +180,10 @@ public class CommerceOrderItemCacheModel
 		sb.append(promoPriceWithTaxAmount);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", replacedCPInstanceId=");
+		sb.append(replacedCPInstanceId);
+		sb.append(", replacedSku=");
+		sb.append(replacedSku);
 		sb.append(", requestedDeliveryDate=");
 		sb.append(requestedDeliveryDate);
 		sb.append(", shipSeparately=");
@@ -357,6 +361,14 @@ public class CommerceOrderItemCacheModel
 		commerceOrderItemImpl.setPromoPriceWithTaxAmount(
 			promoPriceWithTaxAmount);
 		commerceOrderItemImpl.setQuantity(quantity);
+		commerceOrderItemImpl.setReplacedCPInstanceId(replacedCPInstanceId);
+
+		if (replacedSku == null) {
+			commerceOrderItemImpl.setReplacedSku("");
+		}
+		else {
+			commerceOrderItemImpl.setReplacedSku(replacedSku);
+		}
 
 		if (requestedDeliveryDate == Long.MIN_VALUE) {
 			commerceOrderItemImpl.setRequestedDeliveryDate(null);
@@ -485,6 +497,9 @@ public class CommerceOrderItemCacheModel
 		promoPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
 
 		quantity = objectInput.readInt();
+
+		replacedCPInstanceId = objectInput.readLong();
+		replacedSku = objectInput.readUTF();
 		requestedDeliveryDate = objectInput.readLong();
 
 		shipSeparately = objectInput.readBoolean();
@@ -638,6 +653,16 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeObject(promoPriceWithTaxAmount);
 
 		objectOutput.writeInt(quantity);
+
+		objectOutput.writeLong(replacedCPInstanceId);
+
+		if (replacedSku == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(replacedSku);
+		}
+
 		objectOutput.writeLong(requestedDeliveryDate);
 
 		objectOutput.writeBoolean(shipSeparately);
@@ -730,6 +755,8 @@ public class CommerceOrderItemCacheModel
 	public BigDecimal promoPrice;
 	public BigDecimal promoPriceWithTaxAmount;
 	public int quantity;
+	public long replacedCPInstanceId;
+	public String replacedSku;
 	public long requestedDeliveryDate;
 	public boolean shipSeparately;
 	public boolean shippable;

@@ -63,6 +63,11 @@
 	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'justify-content-center')]//p[(@class="list-group-title") and contains (.,'${entryName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NAME_OF_VIEWS</td>
+	<td>//div[contains(@class,"justify-content-center autofit-col autofit-col-expand") and contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

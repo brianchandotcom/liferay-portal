@@ -107,6 +107,9 @@
 				"en_US": "Bookmarks Entries"
 			},
 			"scope": "site",
+			"status": {
+				"code": 0
+			},
 			"system": true,
 			"titleObjectFieldName": "name"
 		}

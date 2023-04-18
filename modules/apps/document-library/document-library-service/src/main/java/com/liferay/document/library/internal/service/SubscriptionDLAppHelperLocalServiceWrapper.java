@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.internal.service;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.document.library.internal.util.DLSubscriptionSender;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -37,9 +40,12 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -136,6 +142,18 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 		}
 	}
 
+	private boolean _hasAssetDisplayPage(ServiceContext serviceContext) {
+		int displayPageType = ParamUtil.getInteger(
+			serviceContext, "displayPageType",
+			AssetDisplayPageConstants.TYPE_DEFAULT);
+
+		if (displayPageType == AssetDisplayPageConstants.TYPE_NONE) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _isEnabled(FileEntry fileEntry) {
 		if (!DLAppHelperThreadLocal.isEnabled() ||
 			RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
@@ -162,7 +180,24 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!fileVersion.isApproved() || Validator.isNull(entryURL)) {
+		if (!fileVersion.isApproved()) {
+			return;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if ((themeDisplay != null) && _hasAssetDisplayPage(serviceContext)) {
+			String friendlyURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					FileEntry.class.getName(), fileVersion.getFileEntryId(),
+					themeDisplay);
+
+			if (Validator.isNotNull(friendlyURL)) {
+				entryURL = friendlyURL;
+			}
+		}
+
+		if (Validator.isNull(entryURL)) {
 			return;
 		}
 
@@ -313,6 +348,14 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
 	private Closeable _closeable;
 
 	@Reference
@@ -330,6 +373,9 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

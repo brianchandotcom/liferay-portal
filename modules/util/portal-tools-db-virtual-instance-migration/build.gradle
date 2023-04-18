@@ -1,0 +1,35 @@
+dependencies {
+}
+
+deploy {
+	from "scripts"
+}
+
+distZip {
+	filesMatching("**/*.jar") {
+		it.path = it.name
+	}
+}
+
+distributions {
+	main {
+		contents {
+			from "scripts"
+			into "/"
+		}
+	}
+}
+
+jar {
+	archiveName "$baseName" + ".jar"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}
+
+startScripts {
+	onlyIf {
+		false
+	}
+}

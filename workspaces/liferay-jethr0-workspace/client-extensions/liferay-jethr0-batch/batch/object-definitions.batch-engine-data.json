@@ -772,7 +772,7 @@
 						"en_US": "Build URL"
 					},
 					"name": "buildURL",
-					"required": true,
+					"required": false,
 					"type": "String"
 				},
 				{

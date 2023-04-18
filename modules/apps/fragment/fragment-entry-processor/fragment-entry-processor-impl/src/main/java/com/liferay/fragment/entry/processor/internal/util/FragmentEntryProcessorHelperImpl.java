@@ -43,6 +43,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -551,6 +554,16 @@ public class FragmentEntryProcessorHelperImpl
 
 			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 				Locale dateLocale = locale;
+
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				if (serviceContext != null) {
+					ThemeDisplay themeDisplay =
+						serviceContext.getThemeDisplay();
+
+					dateLocale = themeDisplay.getSiteDefaultLocale();
+				}
 
 				if (infoField.isLocalizable()) {
 					InfoLocalizedValue<String> infoLocalizedValue =

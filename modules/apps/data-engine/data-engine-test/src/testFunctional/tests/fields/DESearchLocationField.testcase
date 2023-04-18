@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 3
 	test CanSetPlaceholderAndHelpText {
 

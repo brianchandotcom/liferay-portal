@@ -2904,7 +2904,7 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
+	@ignore = "Test Stub"
 	@priority = 5
 	test CanTranslateLabelPlaceholderAndHelpTextOfTextField {
 

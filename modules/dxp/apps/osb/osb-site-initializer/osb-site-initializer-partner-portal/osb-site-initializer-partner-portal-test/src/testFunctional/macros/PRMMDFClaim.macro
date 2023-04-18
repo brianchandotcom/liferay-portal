@@ -170,7 +170,7 @@ definition {
 			locator1 = "TextInput#ANY_PLACEHOLDER",
 			value1 = "\RETURN");
 	}
-	
+
 	@summary = "Verify that the attachment is not present"
 	macro viewAttachmentNotPresent {
 		AssertElementNotPresent(

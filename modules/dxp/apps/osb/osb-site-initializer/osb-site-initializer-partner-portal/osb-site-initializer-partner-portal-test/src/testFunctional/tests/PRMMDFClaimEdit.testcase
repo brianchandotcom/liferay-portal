@@ -104,120 +104,21 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-181359. Verify that the Partner can Edit a Claim in 'Draft' Status"
+	@description = "This is a test for LPS-181363. Verify that its possible to unselect an activity when editing"
+	@ignore = "true"
 	@priority = 5
-	test PartnerCanEditClaimInDraftStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInDraftStatus";
+	test CanUnselectClaimedActivity {
 
-		task ("Given that a new claim is saved as draft") {
-			PRMMDFClaim.createNewClaim(
-				listLeads = "Document_1.xlsx",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.png",
-				saveAsDraft = "true");
+		// This is a test for LPS-181363. Verify that its possible to unselect an activity when editing
 
-			task ("The Claim ID is saved in a variable") {
-				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
-			}
-		}
+	}
 
-		task ("And the partner goes to edit the claim") {
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-
-			PRMMDFClaimEdit.editButton();
-		}
-
-		task ("When the partner change one attachment of the budget") {
-			PRMMDFClaimEdit.editClaim(
-				newAttachment = "Document_3.png",
-				activityName = "Activity Name");
-		}
-
-		task ("And go to the claim detail page") {
-			PRMMDFClaimEdit.gotoClaimViaUI(claimId = ${staticClaimId1});
-		}
-
-		task ("And open the activity details") {
-			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
-		}
-
-		task ("Then the new attachment is displayed") {
-			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_3.png");
-		}
-
-		task ("And the old attachment isn't displayed") {
-			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
-		}
-    }
-
-    @description = "This is a test for LPS-181358. Verify that the Partner can Edit a Claim in 'Request More Info' Status"
-	@priority = 5
-	test PartnerCanEditClaimInRequestMoreInfoStatus {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInRequestMoreInfoStatus";
-
-		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-
-		task ("Given that a new claim is created") {
-			PRMMDFClaim.createNewClaim(
-				listLeads = "Document_1.xlsx",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.png");
-
-			task ("The Claim ID is saved in a variable") {
-				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
-			}
-		}
-
-		task ("And the Manager approves the created Claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
-			JSONPRM.changeClaimStatus(
-				claimStatus = "More Info Requested",
-				claimId = ${staticClaimId1});
-		}
-
-		task ("And the partner goes to edit the approved claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-
-			PRMMDFClaimEdit.editButton();
-		}
-
-		task ("When the partner change one attachment of the budget") {
-			PRMMDFClaimEdit.editClaim(
-				newAttachment = "Document_2.png",
-				activityName = "Activity Name");
-		}
-
-		task ("And go to the claim detail page") {
-			PRMMDFClaimEdit.gotoClaimViaUI(claimId = ${staticClaimId1});
-		}
-
-		task ("And open the activity details") {
-			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
-		}
-
-		task ("Then the new attachment is displayed") {
-			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.png");
-		}
-
-		task ("And the old attachment isn't displayed") {
-			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
-		}
-    }
-
-    @description = "This is a test for LPS-181360. Verify that the Edit button is not displayed to partner in status different from 'Draft' and 'Request More Info'"
+	@description = "This is a test for LPS-181360. Verify that the Edit button is not displayed to partner in status different from 'Draft' and 'Request More Info'"
 	@priority = 5
 	test EditButtonIsDisplayedInSpecificStatusToPartner {
 		property test.name.skip.portal.instance = "PRMMDFClaimEdit#EditButtonIsDisplayedInSpecificStatus";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-
 
 		task ("Given that a new claim is created") {
 			PRMMDFClaim.createNewClaim(
@@ -236,8 +137,8 @@ definition {
 				userLoginFullName = "manager");
 
 			JSONPRM.changeClaimStatus(
-				claimStatus = "Approved",
-				claimId = ${staticClaimId1});
+				claimId = ${staticClaimId1},
+				claimStatus = "Approved");
 		}
 
 		task ("And the partner goes to the approved claim") {
@@ -258,8 +159,8 @@ definition {
 				userLoginFullName = "manager");
 
 			JSONPRM.changeClaimStatus(
-				claimStatus = "In Finance Review",
-				claimId = ${staticClaimId1});
+				claimId = ${staticClaimId1},
+				claimStatus = "In Finance Review");
 		}
 
 		task ("And the partner goes to the claim") {
@@ -280,8 +181,8 @@ definition {
 				userLoginFullName = "manager");
 
 			JSONPRM.changeClaimStatus(
-				claimStatus = "Claim Paid",
-				claimId = ${staticClaimId1});
+				claimId = ${staticClaimId1},
+				claimStatus = "Claim Paid");
 		}
 
 		task ("And the partner goes to the claim") {
@@ -295,15 +196,64 @@ definition {
 		task ("Then the 'Edit' button is not visible") {
 			PRMMDFClaimEdit.buttonIsNotVisible();
 		}
-    }
+	}
 
-    @description = "This is a test for LPS-181361. Verify that Managers can edit Claim in any status"
+	@description = "This is a test for LPS-181362. Verify that is not possible to edit the MDF Claim when all required fields are not filled"
+	@priority = 5
+	test IsNotPossibleToEditClaimWithoutFillAllRequiredFields {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#IsNotPossibleToEditClaimWithoutFillAllRequiredFields";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that the partner creates a new claim") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("And the Manager approves the created Claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "More Info Requested");
+		}
+
+		task ("And the partner goes to edit the approved claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaimEdit.editButton();
+		}
+
+		task ("When the partner don't fill all mandatory fields of a new activity") {
+			PRMMDFClaim.fillActivityFields(
+				activityIndex = 1,
+				thirdInvoice = "Document_1.jpg");
+		}
+
+		task ("Then the 'Submit' button remains disabled") {
+			PRMMDFRequest.viewDisabledButton(buttonName = "Submit");
+		}
+	}
+
+	@description = "This is a test for LPS-181361. Verify that Managers can edit Claim in any status"
 	@priority = 5
 	test ManagerCanEditClaimInAnyStatus {
 		property test.name.skip.portal.instance = "PRMMDFClaimEdit#ManagerCanEditClaimInAnyStatus";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-		
+
 		task ("Given that the manager creates a new claim") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
@@ -331,14 +281,14 @@ definition {
 			PRMMDFClaimEdit.editButton();
 
 			PRMMDFClaimEdit.editClaim(
-				newAttachment = "Document_2.jpg",
-				activityName = "Activity Name");
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
 		}
 
 		task ("When the manager changes the claim status to 'Approved' and navigate to it") {
 			JSONPRM.changeClaimStatus(
-				claimStatus = "Approved",
-				claimId = ${staticClaimId1});
+				claimId = ${staticClaimId1},
+				claimStatus = "Approved");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -347,29 +297,30 @@ definition {
 			PRMMDFClaimEdit.editButton();
 
 			PRMMDFClaimEdit.editClaim(
-				newAttachment = "Document_2.jpg",
-				activityName = "Activity Name");
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
 		}
 
 		task ("When the manager changes the claim status to 'In Finance Review' and navigate to it") {
 			JSONPRM.changeClaimStatus(
-				claimStatus = "In Finance Review",
-				claimId = ${staticClaimId1});
+				claimId = ${staticClaimId1},
+				claimStatus = "In Finance Review");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
+
 		task ("Then he is able to edit the claim") {
 			PRMMDFClaimEdit.editButton();
 
 			PRMMDFClaimEdit.editClaim(
-				newAttachment = "Document_2.jpg",
-				activityName = "Activity Name");
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
 		}
 
 		task ("When the manager changes the claim status to 'Claim Paid' and navigate to it") {
 			JSONPRM.changeClaimStatus(
-				claimStatus = "Claim Paid",
-				claimId = ${staticClaimId1});
+				claimId = ${staticClaimId1},
+				claimStatus = "Claim Paid");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -378,22 +329,69 @@ definition {
 			PRMMDFClaimEdit.editButton();
 
 			PRMMDFClaimEdit.editClaim(
-				newAttachment = "Document_2.jpg",
-				activityName = "Activity Name");
+				activityName = "Activity Name",
+				newAttachment = "Document_2.jpg");
 		}
-    }
+	}
 
-    @description = "This is a test for LPS-181362. Verify that is not possible to edit the MDF Claim when all required fields are not filled"
+	@description = "This is a test for LPS-181359. Verify that the Partner can Edit a Claim in 'Draft' Status"
 	@priority = 5
-	test IsNotPossibleToEditClaimWithoutFillAllRequiredFields {
-		property test.name.skip.portal.instance = "PRMMDFClaimEdit#IsNotPossibleToEditClaimWithoutFillAllRequiredFields";
+	test PartnerCanEditClaimInDraftStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInDraftStatus";
 
-		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-		task ("Given that the partner creates a new claim") {
+		task ("Given that a new claim is saved as draft") {
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.jpg");
+				saveAsDraft = "true",
+				thirdInvoice = "Document_1.png");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("And the partner goes to edit the claim") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaimEdit.editButton();
+		}
+
+		task ("When the partner change one attachment of the budget") {
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_3.png");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMMDFClaimEdit.gotoClaimViaUI(claimId = ${staticClaimId1});
+		}
+
+		task ("And open the activity details") {
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_3.png");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-181358. Verify that the Partner can Edit a Claim in 'Request More Info' Status"
+	@priority = 5
+	test PartnerCanEditClaimInRequestMoreInfoStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInRequestMoreInfoStatus";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that a new claim is created") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
 
 			task ("The Claim ID is saved in a variable") {
 				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
@@ -406,8 +404,8 @@ definition {
 				userLoginFullName = "manager");
 
 			JSONPRM.changeClaimStatus(
-				claimStatus = "More Info Requested",
-				claimId = ${staticClaimId1});
+				claimId = ${staticClaimId1},
+				claimStatus = "More Info Requested");
 		}
 
 		task ("And the partner goes to edit the approved claim") {
@@ -420,24 +418,27 @@ definition {
 			PRMMDFClaimEdit.editButton();
 		}
 
-		task ("When the partner don't fill all mandatory fields of a new activity") {
-			PRMMDFClaim.fillActivityFields(
-				activityIndex = 1,
-				thirdInvoice = "Document_1.jpg");
+		task ("When the partner change one attachment of the budget") {
+			PRMMDFClaimEdit.editClaim(
+				activityName = "Activity Name",
+				newAttachment = "Document_2.png");
 		}
 
-		task ("Then the 'Submit' button remains disabled") {
-			PRMMDFRequest.viewDisabledButton(buttonName = "Submit");
+		task ("And go to the claim detail page") {
+			PRMMDFClaimEdit.gotoClaimViaUI(claimId = ${staticClaimId1});
 		}
-    }
-    
-    @description = "This is a test for LPS-181363. Verify that its possible to unselect an activity when editing"
-	@priority = 5
-	@ignore = "true"
-	test CanUnselectClaimedActivity {
 
-		// This is a test for LPS-181363. Verify that its possible to unselect an activity when editing
+		task ("And open the activity details") {
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
 
-    }
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.png");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+	}
 
 }

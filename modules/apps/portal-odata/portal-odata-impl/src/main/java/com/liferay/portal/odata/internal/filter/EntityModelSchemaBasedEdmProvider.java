@@ -14,6 +14,8 @@
 
 package com.liferay.portal.odata.internal.filter;
 
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -21,6 +23,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -75,8 +78,9 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private CsdlComplexType _createCsdlComplexType(
-		List<CsdlComplexType> csdlComplexTypes, EntityField entityField,
-		String namespace) {
+		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
+			complexTypeNameDepth,
+		EntityField entityField, String namespace, int depth) {
 
 		if (!Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
 			return null;
@@ -104,8 +108,17 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 				if (Objects.equals(
 						curEntityField.getType(), EntityField.Type.COMPLEX)) {
 
-					csdlComplexTypes.addAll(
-						_createCsdlComplexTypes(entityFieldsMap, _NAMESPACE));
+					ComplexEntityField curComplexEntityField =
+						(ComplexEntityField)curEntityField;
+
+					_handleComplexType(
+						complexTypeNameDepth,
+						_createCsdlComplexType(
+							complexTypeNameDepth, curComplexEntityField,
+							_NAMESPACE, depth++),
+						depth);
+
+					depth--;
 				}
 			}
 		}
@@ -118,19 +131,22 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	private List<CsdlComplexType> _createCsdlComplexTypes(
 		Map<String, EntityField> entityFieldsMap, String namespace) {
 
-		List<CsdlComplexType> csdlComplexTypes = new ArrayList<>(
-			entityFieldsMap.size());
+		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
+			complexTypeNameDepth = new HashMap<>();
 
 		for (EntityField entityField : entityFieldsMap.values()) {
 			CsdlComplexType csdlComplexType = _createCsdlComplexType(
-				csdlComplexTypes, entityField, namespace);
+				complexTypeNameDepth, entityField, namespace, 1);
 
 			if (csdlComplexType != null) {
-				csdlComplexTypes.add(csdlComplexType);
+				complexTypeNameDepth.put(
+					csdlComplexType.getName(),
+					new ObjectValuePair<>(0, csdlComplexType));
 			}
 		}
 
-		return csdlComplexTypes;
+		return TransformUtil.transform(
+			complexTypeNameDepth.values(), ObjectValuePair::getValue);
 	}
 
 	private CsdlEntityContainer _createCsdlEntityContainer(
@@ -323,6 +339,22 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 	private FullQualifiedName _getFullQualifiedName(EntityModel entityModel) {
 		return new FullQualifiedName(_NAMESPACE + "." + entityModel.getName());
+	}
+
+	private void _handleComplexType(
+		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
+			complexTypeNameDepth,
+		CsdlComplexType csdlComplexType, int depth) {
+
+		complexTypeNameDepth.compute(
+			csdlComplexType.getName(),
+			(key, value) -> {
+				if ((value == null) || (value.getKey() >= depth)) {
+					return new ObjectValuePair<>(depth, csdlComplexType);
+				}
+
+				return value;
+			});
 	}
 
 	private static final String _NAMESPACE = "HypermediaRestApis";

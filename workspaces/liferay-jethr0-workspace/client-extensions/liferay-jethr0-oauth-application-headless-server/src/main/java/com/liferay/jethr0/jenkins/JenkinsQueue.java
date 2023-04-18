@@ -46,8 +46,6 @@ public class JenkinsQueue {
 
 				Build build = _buildQueue.nextBuild(jenkinsNode);
 
-				System.out.println("build=" + build);
-
 				if (build == null) {
 					continue;
 				}

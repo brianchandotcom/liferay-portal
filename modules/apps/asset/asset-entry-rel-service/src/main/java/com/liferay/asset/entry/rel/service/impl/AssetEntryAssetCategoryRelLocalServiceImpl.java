@@ -23,7 +23,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -221,7 +221,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 		}
 
 		try {
-			Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<Object> indexer = _indexerRegistry.getIndexer(
 				assetEntry.getClassName());
 
 			if (indexer == null) {
@@ -246,5 +246,8 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }

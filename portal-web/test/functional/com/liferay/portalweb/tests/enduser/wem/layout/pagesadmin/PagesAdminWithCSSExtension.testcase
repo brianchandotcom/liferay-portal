@@ -175,8 +175,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Panel.expandPanel(panel = "Look and Feel");
-
 			AssertTextEquals(
 				key_sectionTitle = "CSS Client Extensions",
 				locator1 = "PagesAdmin#SECTION_SUBTITLE",

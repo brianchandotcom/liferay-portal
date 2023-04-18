@@ -231,7 +231,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			Assert.assertTrue(
 				_getLogContextContent().contains(
 					"INFO - Unable to determine the document library size. " +
-					"Increase the timeout or check it manually."));
+						"Increase the timeout or check it manually."));
 			_assertLogContextContains(
 				"upgrade.report.document.library.storage.size",
 				"Unable to determine");

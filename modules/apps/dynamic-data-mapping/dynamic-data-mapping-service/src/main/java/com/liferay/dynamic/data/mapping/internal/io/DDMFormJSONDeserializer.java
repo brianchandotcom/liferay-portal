@@ -50,7 +50,15 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 
-	public static DDMFormDeserializerDeserializeResponse internalDeserialize(
+	@Override
+	public DDMFormDeserializerDeserializeResponse deserialize(
+		DDMFormDeserializerDeserializeRequest
+			ddmFormDeserializerDeserializeRequest) {
+
+		return internalDeserialize(ddmFormDeserializerDeserializeRequest);
+	}
+
+	public DDMFormDeserializerDeserializeResponse internalDeserialize(
 		DDMFormDeserializerDeserializeRequest
 			ddmFormDeserializerDeserializeRequest) {
 
@@ -92,14 +100,6 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		}
 
 		return builder.build();
-	}
-
-	@Override
-	public DDMFormDeserializerDeserializeResponse deserialize(
-		DDMFormDeserializerDeserializeRequest
-			ddmFormDeserializerDeserializeRequest) {
-
-		return internalDeserialize(ddmFormDeserializerDeserializeRequest);
 	}
 
 	protected static LocalizedValue deserializeLocalizedValue(

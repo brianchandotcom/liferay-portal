@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model.impl;
 
 import com.liferay.dynamic.data.mapping.exception.StructureFieldException;
 import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -30,6 +31,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUt
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -623,10 +625,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 					getDefinition());
 
+			DDMFormJSONDeserializer ddmFormDeserializer =
+				(DDMFormJSONDeserializer)_ddmFormDeserializerSnapshot.get();
+
 			DDMFormDeserializerDeserializeResponse
 				ddmFormDeserializerDeserializeResponse =
-					DDMFormJSONDeserializer.internalDeserialize(
-						builder.build());
+					ddmFormDeserializer.internalDeserialize(builder.build());
 
 			_ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
@@ -725,6 +729,11 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureImpl.class);
+
+	private static final Snapshot<DDMFormDeserializer>
+		_ddmFormDeserializerSnapshot = new Snapshot<>(
+			DDMStructureImpl.class, DDMFormDeserializer.class,
+			"(ddm.form.deserializer.type=json)");
 
 	@CacheField
 	private String _className;

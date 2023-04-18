@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
@@ -51,6 +52,7 @@ import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -117,41 +119,48 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			Hits hits = null;
 
-			while (true) {
-				SearchSearchRequest searchSearchRequest =
-					createSearchSearchRequest(
-						searchRequest, searchContext, query, start, end);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-172416")) {
+				// TODO: LPS-172416
+			} else {
 
-				SearchSearchResponse searchSearchResponse =
-					_searchEngineAdapter.execute(searchSearchRequest);
+				while (true) {
+					SearchSearchRequest searchSearchRequest =
+						createSearchSearchRequest(
+							searchRequest, searchContext, query, start, end);
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"The search engine processed ",
-							searchSearchResponse.getSearchRequestString(),
-							" in ", searchSearchResponse.getExecutionTime(),
-							" ms"));
+					SearchSearchResponse searchSearchResponse =
+						_searchEngineAdapter.execute(searchSearchRequest);
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							StringBundler.concat(
+								"The search engine processed ",
+								searchSearchResponse.getSearchRequestString(),
+								" in ", searchSearchResponse.getExecutionTime(),
+								" ms"));
+					}
+
+					_populateResponse(
+						searchSearchResponse, searchResponseBuilder);
+
+					searchResponseBuilder.searchHits(
+						searchSearchResponse.getSearchHits());
+
+					hits = searchSearchResponse.getHits();
+
+					Document[] documents = hits.getDocs();
+
+					if ((documents.length != 0) || (start == 0)) {
+						break;
+					}
+
+					int[] startAndEnd =
+						SearchPaginationUtil.calculateStartAndEnd(
+							start, end, hits.getLength());
+
+					start = startAndEnd[0];
+					end = startAndEnd[1];
 				}
-
-				_populateResponse(searchSearchResponse, searchResponseBuilder);
-
-				searchResponseBuilder.searchHits(
-					searchSearchResponse.getSearchHits());
-
-				hits = searchSearchResponse.getHits();
-
-				Document[] documents = hits.getDocs();
-
-				if ((documents.length != 0) || (start == 0)) {
-					break;
-				}
-
-				int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-					start, end, hits.getLength());
-
-				start = startAndEnd[0];
-				end = startAndEnd[1];
 			}
 
 			hits.setStart(stopWatch.getStartTime());

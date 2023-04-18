@@ -15,7 +15,6 @@
 package com.liferay.object.internal.action.executor.util;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.List;
 
@@ -25,12 +24,11 @@ import java.util.List;
 public class ObjectActionExecutorUtil {
 
 	public static boolean isCompanyRestrictionCriteriaMet(
-		ObjectActionExecutor objectActionExecutor) {
+		long companyId, ObjectActionExecutor objectActionExecutor) {
 
 		if ((objectActionExecutor.getCompanyId() ==
 				ObjectActionExecutor.UNRESTRICTED_BY_COMPANY) ||
-			(CompanyThreadLocal.getCompanyId() ==
-				objectActionExecutor.getCompanyId())) {
+			(objectActionExecutor.getCompanyId() == companyId)) {
 
 			return true;
 		}

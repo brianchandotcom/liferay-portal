@@ -89,7 +89,7 @@ public class ObjectActionExecutorRegistryImplTest {
 	public static void tearDownClass() {
 		CompanyThreadLocal.setCompanyId(_companyId1);
 
-		_serviceRegistrations.forEach(ServiceRegistration::unregister);
+		_unregisterObjectActionExecutors();
 	}
 
 	@Test
@@ -119,12 +119,28 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_concatOOTBObjectActionExecutors(objectActionExecutor1));
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors("User"),
 			_ootbObjectActionExecutors);
 
+		CompanyThreadLocal.setCompanyId(_companyId2);
+
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+
+		_unregisterObjectActionExecutors();
+
 		// Available for a restricted company's object definitions
+
+		CompanyThreadLocal.setCompanyId(_companyId1);
 
 		ObjectActionExecutor objectActionExecutor2 =
 			_registerObjectActionExecutor(
@@ -133,14 +149,15 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
-			_concatOOTBObjectActionExecutors(
-				objectActionExecutor1, objectActionExecutor2));
+			_concatOOTBObjectActionExecutors(objectActionExecutor2));
 
 		CompanyThreadLocal.setCompanyId(_companyId2);
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+			_ootbObjectActionExecutors);
+
+		_unregisterObjectActionExecutors();
 
 		// Available for a restricted company's restricted object definitions
 
@@ -153,19 +170,29 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
-			_concatOOTBObjectActionExecutors(
-				objectActionExecutor1, objectActionExecutor2,
-				objectActionExecutor3));
+			_concatOOTBObjectActionExecutors(objectActionExecutor3));
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_concatOOTBObjectActionExecutors(objectActionExecutor3));
+
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("User"),
+			_ootbObjectActionExecutors);
 
 		CompanyThreadLocal.setCompanyId(_companyId2);
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor1));
-
-		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("User"),
 			_ootbObjectActionExecutors);
+		_assertObjectActionExecutors(
+			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_ootbObjectActionExecutors);
+	}
+
+	private static void _unregisterObjectActionExecutors() {
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
+
+		_serviceRegistrations.clear();
 	}
 
 	private void _assertObjectActionExecutors(

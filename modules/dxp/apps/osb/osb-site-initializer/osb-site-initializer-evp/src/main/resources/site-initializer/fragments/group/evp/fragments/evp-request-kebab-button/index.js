@@ -90,8 +90,8 @@ const openModal = () => {
                     await layerForDendingUpdateStatus(
                         getMessage(),
                         getAttributeHidden(),
-                        'awaitingFinanceApproval',
-                        'Awaiting Finance Approval'
+                        'awaitingFinanceReview',
+                        'Awaiting Finance Review'
                     );
                 },
                 type: 'submit',

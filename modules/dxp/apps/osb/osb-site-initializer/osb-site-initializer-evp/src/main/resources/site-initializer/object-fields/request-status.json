@@ -35,6 +35,9 @@
 									},
 									{
 										"key": "awaitingPaymentConfirmation"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
 									}
 								]
 							},
@@ -55,6 +58,9 @@
 									},
 									{
 										"key": "awaitingPaymentConfirmation"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
 									}
 								]
 							},
@@ -75,6 +81,9 @@
 									},
 									{
 										"key": "awaitingPaymentConfirmation"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
 									}
 								]
 							},
@@ -95,6 +104,9 @@
 									},
 									{
 										"key": "awaitingPaymentConfirmation"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
 									}
 								]
 							},
@@ -115,6 +127,9 @@
 									},
 									{
 										"key": "awaitingPaymentConfirmation"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
 									}
 								]
 							},
@@ -135,6 +150,32 @@
 									},
 									{
 										"key": "awaitingFinanceReview"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
+									}
+								]
+							},
+							{
+								"key": "awaitingMoreInfoFromEmployee",
+								"objectStateTransitions": [
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "closed"
+									},
+									{
+										"key": "awaitingApprovalOnEvp"
+									},
+									{
+										"key": "awaitCompanyVerification"
+									},
+									{
+										"key": "awaitingFinanceReview"
+									},
+									{
+										"key": "awaitingPaymentConfirmation"
 									}
 								]
 							}

@@ -376,6 +376,28 @@ public class SitePage implements Cloneable, Serializable {
 
 	protected String pageType;
 
+	public ParentSitePage getParentSitePage() {
+		return parentSitePage;
+	}
+
+	public void setParentSitePage(ParentSitePage parentSitePage) {
+		this.parentSitePage = parentSitePage;
+	}
+
+	public void setParentSitePage(
+		UnsafeSupplier<ParentSitePage, Exception>
+			parentSitePageUnsafeSupplier) {
+
+		try {
+			parentSitePage = parentSitePageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ParentSitePage parentSitePage;
+
 	public RenderedPage getRenderedPage() {
 		return renderedPage;
 	}

@@ -282,6 +282,16 @@ public class SitePageSerDes {
 			sb.append("\"");
 		}
 
+		if (sitePage.getParentSitePage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentSitePage\": ");
+
+			sb.append(String.valueOf(sitePage.getParentSitePage()));
+		}
+
 		if (sitePage.getRenderedPage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -545,6 +555,14 @@ public class SitePageSerDes {
 			map.put("pageType", String.valueOf(sitePage.getPageType()));
 		}
 
+		if (sitePage.getParentSitePage() == null) {
+			map.put("parentSitePage", null);
+		}
+		else {
+			map.put(
+				"parentSitePage", String.valueOf(sitePage.getParentSitePage()));
+		}
+
 		if (sitePage.getRenderedPage() == null) {
 			map.put("renderedPage", null);
 		}
@@ -734,6 +752,13 @@ public class SitePageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "pageType")) {
 				if (jsonParserFieldValue != null) {
 					sitePage.setPageType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "parentSitePage")) {
+				if (jsonParserFieldValue != null) {
+					sitePage.setParentSitePage(
+						ParentSitePageSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "renderedPage")) {

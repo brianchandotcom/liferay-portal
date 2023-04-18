@@ -1239,6 +1239,14 @@ public abstract class BaseSitePageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentSitePage", additionalAssertFieldName)) {
+				if (sitePage.getParentSitePage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("renderedPage", additionalAssertFieldName)) {
 				if (sitePage.getRenderedPage() == null) {
 					valid = false;
@@ -1581,6 +1589,17 @@ public abstract class BaseSitePageResourceTestCase {
 			if (Objects.equals("pageType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sitePage1.getPageType(), sitePage2.getPageType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("parentSitePage", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sitePage1.getParentSitePage(),
+						sitePage2.getParentSitePage())) {
 
 					return false;
 				}
@@ -1931,6 +1950,11 @@ public abstract class BaseSitePageResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("parentSitePage")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("renderedPage")) {

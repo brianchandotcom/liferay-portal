@@ -2862,7 +2862,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sitePage(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, experience, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, pageType, renderedPage, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sitePage(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, experience, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, pageType, parentSitePage, renderedPage, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves a specific public page of a site")
 	public SitePage sitePage(
@@ -2899,7 +2899,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sitePageExperienceExperienceKey(experienceKey: ___, friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, experience, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, pageType, renderedPage, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sitePageExperienceExperienceKey(experienceKey: ___, friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, experience, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, pageType, parentSitePage, renderedPage, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a specific public page of a site for a given experience"

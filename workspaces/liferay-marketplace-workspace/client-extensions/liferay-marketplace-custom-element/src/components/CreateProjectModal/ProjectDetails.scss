@@ -1,0 +1,67 @@
+.create-project-modal {
+	&-inputs-contianer {
+		display: grid;
+		gap: 24px;
+		grid-template-columns: 1fr 1fr;
+		margin-top: 48px;
+	}
+
+	&-project-details-card {
+		border: 2px solid #e2e2e4;
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		padding: 24px;
+
+		&-info-block {
+			align-items: center;
+			display: flex;
+			gap: 1rem;
+
+			&-container {
+				display: grid;
+				gap: 2rem;
+				grid-template-columns: 1fr 1fr;
+			}
+
+			&-icon-container {
+				align-items: center;
+				background-color: #e2e2e4;
+				border-radius: 50%;
+				display: flex;
+				height: 40px;
+				justify-content: center;
+				width: 40px;
+			}
+
+			&-text {
+				&-container {
+					display: flex;
+					flex-direction: column;
+				}
+
+				&-description {
+					color: #54555f;
+					font-size: 1rem;
+					font-weight: 400;
+					line-height: 24px;
+				}
+
+				&-title {
+					color: #282934;
+					font-size: 1rem;
+					font-weight: 600;
+					line-height: 24px;
+				}
+			}
+		}
+
+		&-title {
+			color: #3f404b;
+			font-size: 18px;
+			font-weight: 600;
+			line-height: 20px;
+		}
+	}
+}

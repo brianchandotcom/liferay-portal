@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 
+import {CreateProjectModal} from '../../components/CreateProjectModal/CreateProjectModal';
 import {
 	DashboardTable,
 	TableHeaders,
@@ -34,29 +35,37 @@ const projectsTableHeaders: TableHeaders = [
 ];
 
 export function ProjectsPage({dashboardNavigationItems}: ProjectsPage) {
+	const [visible, setVisible] = useState(false);
+
 	return (
-		<DashboardPage
-			buttonMessage="+ New Project"
-			dashboardNavigationItems={dashboardNavigationItems}
-			messages={{
-				description:
-					'Manage projects to build and test your apps and solutions',
-				title: 'Projects',
-			}}
-			onButtonClick={() => {}}
-		>
-			<DashboardTable
-				emptyStateMessage={{
-					description1:
-						'Publish projects and they will show up here.',
-					description2: 'Click on “New Projects” to start.',
-					title: 'No projects yet',
+		<>
+			<DashboardPage
+				buttonMessage="+ New Project"
+				dashboardNavigationItems={dashboardNavigationItems}
+				messages={{
+					description:
+						'Manage projects to build and test your apps and solutions',
+					title: 'Projects',
 				}}
-				items={[0, 2]}
-				tableHeaders={projectsTableHeaders}
+				onButtonClick={() => setVisible(true)}
 			>
-				{() => <ProjectsTableRow />}
-			</DashboardTable>
-		</DashboardPage>
+				<DashboardTable
+					emptyStateMessage={{
+						description1:
+							'Publish projects and they will show up here.',
+						description2: 'Click on “New Projects” to start.',
+						title: 'No projects yet',
+					}}
+					items={[0, 2]}
+					tableHeaders={projectsTableHeaders}
+				>
+					{() => <ProjectsTableRow />}
+				</DashboardTable>
+			</DashboardPage>
+
+			{visible && (
+				<CreateProjectModal handleClose={() => setVisible(false)} />
+			)}
+		</>
 	);
 }

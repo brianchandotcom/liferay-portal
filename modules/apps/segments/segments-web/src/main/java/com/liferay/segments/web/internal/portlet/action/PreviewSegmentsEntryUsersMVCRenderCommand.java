@@ -80,7 +80,7 @@ public class PreviewSegmentsEntryUsersMVCRenderCommand
 					userODataRetriever, _userLocalService);
 
 		renderRequest.setAttribute(
-			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_USERS_DISPLAY_CONTEXT,
+			PreviewSegmentsEntryUsersDisplayContext.class.getName(),
 			previewSegmentsEntryUsersDisplayContext);
 
 		return "/preview_segments_entry_users.jsp";

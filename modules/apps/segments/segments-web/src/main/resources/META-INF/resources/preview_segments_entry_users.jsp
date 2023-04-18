@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PreviewSegmentsEntryUsersDisplayContext previewSegmentsEntryUsersDisplayContext = (PreviewSegmentsEntryUsersDisplayContext)request.getAttribute(SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_USERS_DISPLAY_CONTEXT);
+PreviewSegmentsEntryUsersDisplayContext previewSegmentsEntryUsersDisplayContext = (PreviewSegmentsEntryUsersDisplayContext)request.getAttribute(PreviewSegmentsEntryUsersDisplayContext.class.getName());
 
 SearchContainer<User> userSearchContainer = previewSegmentsEntryUsersDisplayContext.getSearchContainer();
 %>

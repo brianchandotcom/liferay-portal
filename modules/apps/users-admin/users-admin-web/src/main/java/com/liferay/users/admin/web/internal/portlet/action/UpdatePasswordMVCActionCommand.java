@@ -39,8 +39,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
+import java.util.Date;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,21 +113,21 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNotNull(newPassword1) ||
 				Validator.isNotNull(newPassword2)) {
 
-				_userLocalService.updatePassword(
+				user = _userLocalService.updatePassword(
 					user.getUserId(), newPassword1, newPassword2,
 					passwordReset);
 
 				passwordModified = true;
 			}
 
-			_userLocalService.updatePasswordReset(
+			user = _userLocalService.updatePasswordReset(
 				user.getUserId(), passwordReset);
 
 			if (Validator.isNotNull(reminderQueryQuestion) &&
 				Validator.isNotNull(reminderQueryAnswer) &&
 				!reminderQueryAnswer.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 
-				_userLocalService.updateReminderQuery(
+				user = _userLocalService.updateReminderQuery(
 					user.getUserId(), reminderQueryQuestion,
 					reminderQueryAnswer);
 			}
@@ -146,9 +151,22 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 					login = String.valueOf(user.getUserId());
 				}
 
-				_authenticatedSessionManager.login(
+				HttpServletRequest httpServletRequest =
 					_portal.getOriginalServletRequest(
-						_portal.getHttpServletRequest(actionRequest)),
+						_portal.getHttpServletRequest(actionRequest));
+
+				if (httpServletRequest != null) {
+					HttpSession httpSession = httpServletRequest.getSession();
+
+					Date passwordModifiedDate = user.getPasswordModifiedDate();
+
+					httpSession.setAttribute(
+						WebKeys.USER_PASSWORD_MODIFIED_TIME,
+						passwordModifiedDate.getTime());
+				}
+
+				_authenticatedSessionManager.login(
+					httpServletRequest,
 					_portal.getHttpServletResponse(actionResponse), login,
 					newPassword1, false, null);
 			}

@@ -236,8 +236,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Panel.expandPanel(panel = "Look and Feel");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			AssertTextEquals(
@@ -784,8 +782,6 @@ definition {
 		}
 
 		task ("When the site designer adds a JavaScript extension to Pages") {
-			Panel.expandPanel(panel = "Look and Feel");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -821,8 +817,6 @@ definition {
 			WaitForPageLoad();
 
 			Navigator.gotoNavTab(navTab = "Design");
-
-			Panel.expandPanel(panel = "Look and Feel");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 

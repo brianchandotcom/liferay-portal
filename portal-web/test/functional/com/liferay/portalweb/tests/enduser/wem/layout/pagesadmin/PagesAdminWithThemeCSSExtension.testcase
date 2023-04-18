@@ -179,8 +179,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Panel.expandPanel(panel = "Look and Feel");
-
 			AssertAttributeValue(
 				attribute1 = "placeholder",
 				key_text = "Theme CSS",
@@ -399,8 +397,6 @@ definition {
 			WaitForPageLoad();
 
 			Navigator.gotoNavTab(navTab = "Design");
-
-			Panel.expandPanel(panel = "Look and Feel");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 

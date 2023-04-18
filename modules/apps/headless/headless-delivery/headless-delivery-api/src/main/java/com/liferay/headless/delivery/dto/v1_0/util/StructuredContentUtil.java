@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.Locale;
 
 /**
- *@author Luis Miguel Barcos
+ * @author Luis Miguel Barcos
  */
 public class StructuredContentUtil {
 

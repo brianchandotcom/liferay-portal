@@ -21,11 +21,12 @@ export default interface MDFClaimDTO extends MDFClaim {
 	externalReferenceCodeSF?: string;
 	mdfClaimStatus: LiferayPicklist;
 	mdfClmToMDFClmActs?: MDFClaimActivityDTO[];
-	mdfRequestExternalReferenceCodeSF?: string;
+	mdfRequestExternalReferenceCode?: string;
 	mdfRequestTotalCostOfExpense?: number;
 	partial?: boolean;
 	paymentReceived?: number;
 	r_accToMDFClms_accountEntry?: AccountEntry;
 	r_accToMDFClms_accountEntryId?: number;
 	r_mdfReqToMDFClms_c_mdfRequestId: number;
+	totalClaimAmount?: number;
 }

@@ -13,7 +13,6 @@ import {Liferay} from '../..';
 import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../../interfaces/mdfClaim';
 import {getDTOFromMDFClaim} from '../../../../utils/dto/mdf-claim/getDTOFromMDFClaim';
-import {getSFDTOFromMDFClaim} from '../../../../utils/dto/mdf-claim/getSFDTOFromMDFClaim';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
@@ -28,18 +27,11 @@ export default async function createMDFClaim(
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
 		Liferay.authToken,
-		apiOption === ResourceName.MDF_CLAIM_SALESFORCE
-			? getSFDTOFromMDFClaim(
-					mdfClaim,
-					mdfRequest,
-					externalReferenceCode,
-					externalReferenceCodeSF
-			  )
-			: getDTOFromMDFClaim(
-					mdfClaim,
-					mdfRequest,
-					externalReferenceCode,
-					externalReferenceCodeSF
-			  )
+		getDTOFromMDFClaim(
+			mdfClaim,
+			mdfRequest,
+			externalReferenceCode,
+			externalReferenceCodeSF
+		)
 	);
 }

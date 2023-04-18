@@ -32,7 +32,7 @@ const getMDFClaimSummary = async () => {
 		const data = await response.json();
 
 		const totalClaimAmount = formatCurrency(
-			Liferay.Util.escape(data.amountClaimed),
+			Liferay.Util.escape(data.totalClaimAmount),
 			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
 		);
 		const check = formatCurrency(

@@ -55,7 +55,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		onClose: handleClose,
 	});
 	const [account, setAccount] = useState<AccountBrief>();
-	const [accountPublisher, setAccountPublisher] = useState<AccountBrief>();
+	const [accountPublisher, setAccountPublisher] = useState<Account>();
 	const [app, setApp] = useState<App>({
 		createdBy: '',
 		id: 0,
@@ -223,15 +223,17 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			const accounts = await getAccounts();
 
 			const accountPublisher = accounts?.items.find(
-				({customFields}: AccountBrief) => {
-					const catalogIdField = customFields.find(
-						(customField: {
-							customValue: {data: string};
-							name: string;
-						}) => customField.name === 'CatalogId'
-					);
+				({customFields}: Account) => {
+					if (customFields) {
+						const catalogIdField = customFields.find(
+							(customField: {
+								customValue: {data: string};
+								name: string;
+							}) => customField.name === 'CatalogId'
+						);
 
-					return catalogIdField.customValue.data === catalogId;
+						return catalogIdField?.customValue.data === catalogId;
+					}
 				}
 			);
 

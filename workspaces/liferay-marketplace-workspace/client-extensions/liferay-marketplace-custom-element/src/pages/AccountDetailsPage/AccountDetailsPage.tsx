@@ -119,7 +119,7 @@ export function AccountDetailsPage({
 							onClick={(itemName) =>
 								updateDashboardNavigationItems(itemName)
 							}
-							text="people"
+							text="Apps"
 							title="Apps"
 						/>
 

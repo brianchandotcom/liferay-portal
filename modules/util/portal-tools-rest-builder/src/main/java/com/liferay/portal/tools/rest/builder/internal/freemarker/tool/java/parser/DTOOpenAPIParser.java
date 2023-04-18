@@ -66,6 +66,13 @@ public class DTOOpenAPIParser {
 	public static Map<String, String> getProperties(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 
+		return getProperties(configYAML, openAPIYAML, schema, false);
+	}
+
+	public static Map<String, String> getProperties(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema,
+		boolean excludeReadOnly) {
+
 		Map<String, String> javaDataTypeMap =
 			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
 		Map<String, String> properties = new TreeMap<>();
@@ -73,8 +80,13 @@ public class DTOOpenAPIParser {
 		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
-			String propertySchemaName = entry.getKey();
 			Schema propertySchema = entry.getValue();
+
+			if (excludeReadOnly && propertySchema.isReadOnly()) {
+				continue;
+			}
+
+			String propertySchemaName = entry.getKey();
 
 			properties.put(
 				_getPropertyName(propertySchema, propertySchemaName),

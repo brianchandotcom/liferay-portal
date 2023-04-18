@@ -44,14 +44,11 @@ public class SelectSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext =
-			new SelectSegmentsEntryDisplayContext(
-				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse, _segmentsEntryLocalService);
-
 		renderRequest.setAttribute(
 			SelectSegmentsEntryDisplayContext.class.getName(),
-			selectSegmentsEntryDisplayContext);
+			new SelectSegmentsEntryDisplayContext(
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse, _segmentsEntryLocalService));
 
 		return "/select_segments_entry.jsp";
 	}

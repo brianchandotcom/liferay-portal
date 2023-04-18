@@ -72,16 +72,12 @@ public class PreviewSegmentsEntryUsersMVCRenderCommand
 		ODataRetriever<User> userODataRetriever = _serviceTrackerMap.getService(
 			User.class.getName());
 
-		PreviewSegmentsEntryUsersDisplayContext
-			previewSegmentsEntryUsersDisplayContext =
-				new PreviewSegmentsEntryUsersDisplayContext(
-					httpServletRequest, renderRequest, renderResponse,
-					_segmentsEntryProviderRegistry, _segmentsEntryService,
-					userODataRetriever, _userLocalService);
-
 		renderRequest.setAttribute(
 			PreviewSegmentsEntryUsersDisplayContext.class.getName(),
-			previewSegmentsEntryUsersDisplayContext);
+			new PreviewSegmentsEntryUsersDisplayContext(
+				httpServletRequest, renderRequest, renderResponse,
+				_segmentsEntryProviderRegistry, _segmentsEntryService,
+				userODataRetriever, _userLocalService));
 
 		return "/preview_segments_entry_users.jsp";
 	}

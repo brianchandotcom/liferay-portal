@@ -57,17 +57,14 @@ public class EditSegmentsEntryMVCRenderCommand implements MVCRenderCommand {
 		portletSession.removeAttribute(
 			SegmentsWebKeys.PREVIEW_SEGMENTS_ENTRY_CRITERIA);
 
-		EditSegmentsEntryDisplayContext editSegmentsEntryDisplayContext =
+		renderRequest.setAttribute(
+			EditSegmentsEntryDisplayContext.class.getName(),
 			new EditSegmentsEntryDisplayContext(
 				_companyLocalService, _groupLocalService,
 				_portal.getHttpServletRequest(renderRequest), _itemSelector,
 				renderRequest, renderResponse, _segmentsConfigurationProvider,
 				_segmentsCriteriaContributorRegistry,
-				_segmentsEntryProviderRegistry, _segmentsEntryService);
-
-		renderRequest.setAttribute(
-			EditSegmentsEntryDisplayContext.class.getName(),
-			editSegmentsEntryDisplayContext);
+				_segmentsEntryProviderRegistry, _segmentsEntryService));
 
 		return "/edit_segments_entry.jsp";
 	}

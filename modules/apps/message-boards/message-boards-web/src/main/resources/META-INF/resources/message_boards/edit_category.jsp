@@ -124,7 +124,7 @@ if (portletTitleBasedNavigation) {
 						</c:if>
 					</c:if>
 
-					<aui:input name="name" />
+					<aui:input autocomplete="off" name="name" />
 
 					<aui:input name="description" />
 

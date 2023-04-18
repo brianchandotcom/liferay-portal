@@ -200,7 +200,7 @@ public class CommerceOrderImporter {
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			userId, commerceOrder.getCommerceOrderId(),
-			cpInstance.getCPInstanceId(), StringPool.BLANK, 1, 1,
+			cpInstance.getCPInstanceId(), StringPool.BLANK, 1, 0, 1,
 			commerceContext, serviceContext);
 	}
 

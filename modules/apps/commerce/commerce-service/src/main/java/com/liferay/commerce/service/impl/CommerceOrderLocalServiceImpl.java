@@ -857,6 +857,7 @@ public class CommerceOrderLocalServiceImpl
 				guestCommerceOrderItem.getCPInstanceId(),
 				guestCommerceOrderItem.getJson(),
 				guestCommerceOrderItem.getQuantity(),
+				guestCommerceOrderItem.getReplacedCPInstanceId(),
 				guestCommerceOrderItem.getShippedQuantity(), commerceContext,
 				serviceContext);
 		}
@@ -1019,8 +1020,9 @@ public class CommerceOrderLocalServiceImpl
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				userId, newCommerceOrder.getCommerceOrderId(),
 				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(), 0,
-				commerceContext, serviceContext);
+				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(),
+				commerceOrderItem.getReplacedCPInstanceId(), 0, commerceContext,
+				serviceContext);
 		}
 
 		return newCommerceOrder;

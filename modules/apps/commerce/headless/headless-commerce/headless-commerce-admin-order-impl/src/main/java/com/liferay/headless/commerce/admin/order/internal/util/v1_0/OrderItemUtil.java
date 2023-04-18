@@ -78,6 +78,7 @@ public class OrderItemUtil {
 				cpInstance.getCPInstanceId(),
 				GetterUtil.getString(orderItem.getOptions(), null),
 				GetterUtil.get(orderItem.getQuantity(), 0),
+				GetterUtil.getLong(orderItem.getReplacedSkuId()),
 				GetterUtil.get(orderItem.getShippedQuantity(), 0),
 				commerceContext, serviceContext);
 		}
@@ -257,6 +258,7 @@ public class OrderItemUtil {
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getOptions(), json),
 					GetterUtil.get(orderItem.getQuantity(), quantity),
+					GetterUtil.getLong(orderItem.getReplacedSkuId()),
 					GetterUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
 					commerceContext, serviceContext);

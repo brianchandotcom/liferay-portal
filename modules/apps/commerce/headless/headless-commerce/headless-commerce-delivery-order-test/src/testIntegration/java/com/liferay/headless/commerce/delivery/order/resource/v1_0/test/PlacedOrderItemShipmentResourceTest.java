@@ -125,7 +125,7 @@ public class PlacedOrderItemShipmentResourceTest
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				_cpInstance.getCPInstanceId(), null,
-				RandomTestUtil.randomInt(1, 10),
+				RandomTestUtil.randomInt(1, 10), 0,
 				RandomTestUtil.randomInt(1, 10),
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,

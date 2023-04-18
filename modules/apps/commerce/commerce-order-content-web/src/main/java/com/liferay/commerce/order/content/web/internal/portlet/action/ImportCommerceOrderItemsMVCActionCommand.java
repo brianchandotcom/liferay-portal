@@ -216,7 +216,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 						commerceOrder.getCommerceOrderId(),
 						commerceOrderImporterItem.getCPInstanceId(),
 						commerceOrderImporterItem.getJSON(),
-						commerceOrderImporterItem.getQuantity(), 0,
+						commerceOrderImporterItem.getQuantity(), 0, 0,
 						(CommerceContext)actionRequest.getAttribute(
 							CommerceWebKeys.COMMERCE_CONTEXT),
 						ServiceContextFactory.getInstance(

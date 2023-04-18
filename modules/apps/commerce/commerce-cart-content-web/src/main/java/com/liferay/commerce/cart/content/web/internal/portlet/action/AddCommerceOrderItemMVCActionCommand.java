@@ -115,7 +115,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId,
-					ddmFormValues, quantity, 0, commerceContext,
+					ddmFormValues, quantity, 0, 0, commerceContext,
 					serviceContext);
 
 			jsonObject.put(

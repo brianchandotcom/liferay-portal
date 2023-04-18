@@ -391,8 +391,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			cartItem.getOptions(), GetterUtil.get(cartItem.getQuantity(), 1), 0,
-			commerceContext, serviceContext);
+			cartItem.getOptions(), GetterUtil.get(cartItem.getQuantity(), 1),
+			GetterUtil.getLong(cartItem.getReplacedSkuId()), 0, commerceContext,
+			serviceContext);
 	}
 
 	private void _addOrUpdateNestedResources(

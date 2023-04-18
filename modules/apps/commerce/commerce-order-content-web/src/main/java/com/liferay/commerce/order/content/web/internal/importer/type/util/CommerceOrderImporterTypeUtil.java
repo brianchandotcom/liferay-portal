@@ -94,7 +94,7 @@ public class CommerceOrderImporterTypeUtil {
 						tempCommerceOrder.getCommerceOrderId(),
 						commerceOrderImporterItemImpl.getCPInstanceId(),
 						commerceOrderImporterItemImpl.getJSON(),
-						commerceOrderImporterItemImpl.getQuantity(), 0,
+						commerceOrderImporterItemImpl.getQuantity(), 0, 0,
 						commerceContext, serviceContext);
 
 				commerceOrderImporterItemImpl.setCommerceOrderItemPrice(
@@ -186,7 +186,7 @@ public class CommerceOrderImporterTypeUtil {
 				commerceOrderItemService.addCommerceOrderItem(
 					tempCommerceOrderId, commerceOrderItem.getCPInstanceId(),
 					commerceOrderItem.getJson(),
-					commerceOrderItem.getQuantity(), 0, commerceContext,
+					commerceOrderItem.getQuantity(), 0, 0, commerceContext,
 					serviceContext);
 			}
 		}

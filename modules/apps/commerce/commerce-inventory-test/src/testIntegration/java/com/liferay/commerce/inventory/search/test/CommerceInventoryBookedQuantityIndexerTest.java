@@ -185,7 +185,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), null, 2, 0, _commerceContext,
+				cpInstance.getCPInstanceId(), null, 2, 0, 0, _commerceContext,
 				_serviceContext);
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
@@ -241,7 +241,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), null, 2, 0, _commerceContext,
+				cpInstance.getCPInstanceId(), null, 2, 0, 0, _commerceContext,
 				_serviceContext);
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =

@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.constants.D
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -141,7 +142,9 @@ public class CartItemResourceImpl
 			commerceOrder.getCommerceAccountId(),
 			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
-				cartItem.getOptions(), cartItem.getQuantity(), 0,
+				cartItem.getOptions(),
+				GetterUtil.get(cartItem.getQuantity(), 1),
+				GetterUtil.getLong(cartItem.getReplacedSkuId()), 0,
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 					contextUser.getUserId(), cartId,

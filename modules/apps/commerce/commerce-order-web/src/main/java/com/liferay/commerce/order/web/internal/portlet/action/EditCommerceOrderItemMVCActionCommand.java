@@ -148,7 +148,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		for (long cpInstanceId : cpInstanceIds) {
 			_commerceOrderItemService.addCommerceOrderItem(
-				commerceOrderId, cpInstanceId, null, 1, 0, commerceContext,
+				commerceOrderId, cpInstanceId, null, 1, 0, 0, commerceContext,
 				serviceContext);
 		}
 	}

@@ -411,7 +411,7 @@ public class PunchOutSessionResourceImpl
 
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
-				cartItem.getSkuId(), null, cartItem.getQuantity(),
+				cartItem.getSkuId(), null, cartItem.getQuantity(), 0,
 				cartItem.getShippedQuantity(), commerceContext,
 				_serviceContextHelper.getServiceContext(groupId));
 		}

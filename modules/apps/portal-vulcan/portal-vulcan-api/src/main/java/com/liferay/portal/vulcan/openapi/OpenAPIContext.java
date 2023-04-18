@@ -19,12 +19,20 @@ package com.liferay.portal.vulcan.openapi;
  */
 public class OpenAPIContext {
 
+	public String getBaseUrl() {
+		return _baseUrl;
+	}
+
 	public String getPath() {
 		return _path;
 	}
 
 	public String getVersion() {
 		return _version;
+	}
+
+	public void setBaseUrl(String baseUrl) {
+		_baseUrl = baseUrl;
 	}
 
 	public void setPath(String path) {
@@ -35,6 +43,7 @@ public class OpenAPIContext {
 		_version = version;
 	}
 
+	private String _baseUrl;
 	private String _path;
 	private String _version;
 

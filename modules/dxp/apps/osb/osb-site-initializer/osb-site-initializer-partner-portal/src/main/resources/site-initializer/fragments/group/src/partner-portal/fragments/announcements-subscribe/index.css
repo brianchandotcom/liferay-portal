@@ -1,10 +1,10 @@
-.partner-portal-announcements-subscribe .subscribe-action {
+.prm-announcements-subscribe .subscribe-action {
 	display: flex;
 	position: absolute;
 	right: 0;
 	top: -55px;
 }
 
-.partner-portal-announcements-subscribe .btn-secondary {
+.prm-announcements-subscribe .btn-secondary {
 	border: 0;
 }

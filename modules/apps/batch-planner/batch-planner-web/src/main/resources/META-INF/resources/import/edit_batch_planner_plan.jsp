@@ -35,7 +35,6 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 	<form id="<portlet:namespace />fm" name="<portlet:namespace />fm">
 		<input id="<portlet:namespace />batchPlannerPlanId" name="<portlet:namespace />batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<input id="<portlet:namespace />externalType" name="<portlet:namespace />externalType" type="hidden" value="" />
-		<input id="<portlet:namespace />taskItemDelegateName" name="<portlet:namespace />taskItemDelegateName" type="hidden" value="DEFAULT" />
 
 		<div class="row">
 			<div class="col-lg-6 d-flex flex-column">

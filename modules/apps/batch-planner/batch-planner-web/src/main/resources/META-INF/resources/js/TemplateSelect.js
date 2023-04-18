@@ -106,7 +106,6 @@ const TemplateSelect = ({
 					}),
 					{}
 				),
-				taskItemDelegateName: templateDetails.taskItemDelegateName,
 			},
 		});
 	};

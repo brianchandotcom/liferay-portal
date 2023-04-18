@@ -63,9 +63,6 @@ export default function ({
 	const internalClassNameSelect = document.querySelector(
 		`#${namespace}internalClassName`
 	);
-	const taskItemDelegateNameInput = document.querySelector(
-		`#${namespace}taskItemDelegateName`
-	);
 	const externalTypeInput = document.querySelector(
 		`#${namespace}externalType`
 	);
@@ -105,11 +102,7 @@ export default function ({
 				externalTypeInput.value = template.externalType;
 			}
 
-			let selectedClassNameValue = template.internalClassName;
-
-			if (template.taskItemDelegateName !== 'DEFAULT') {
-				selectedClassNameValue += '#' + template.taskItemDelegateName;
-			}
+			const selectedClassNameValue = template.internalClassName;
 
 			const internalClassTemplateOption = internalClassNameSelect.querySelector(
 				`option[value='${selectedClassNameValue}']`
@@ -130,13 +123,7 @@ export default function ({
 				internalClassNameSelect.selectedIndex
 			];
 
-		const schemaName = selectedOption.getAttribute('schemaName');
-
-		taskItemDelegateNameInput.value = schemaName || 'DEFAULT';
-
-		const internalClassNameValue = trimPackage(
-			schemaName || selectedOption.value
-		);
+		const internalClassNameValue = trimPackage(selectedOption.value);
 
 		if (!internalClassNameValue) {
 			Liferay.fire(SCHEMA_SELECTED_EVENT, {

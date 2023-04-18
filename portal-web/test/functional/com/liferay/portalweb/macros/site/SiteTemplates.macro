@@ -23,9 +23,44 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addChildPage(
-			childPageName = ${siteChildPageName},
-			parentPageName = ${pageName});
+		WaitForElementPresent(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Pages");
+
+		MouseOver(
+			key_itemName = ${parentPageName},
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+
+		Click(
+			key_pageName = ${parentPageName},
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
+
+		DropdownMenuItem.click(menuItem = "Add Page");
+
+		if (!(isSet(sitePageType))) {
+			var sitePageType = "Widget Page";
+		}
+
+		var rowEntry = ${sitePageType};
+
+		if (${rowEntry} == "Content Page") {
+			ContentPages._selectCard(masterLayoutName = ${masterLayoutName});
+		}
+		else {
+			LexiconCard.clickCard(card = ${rowEntry});
+		}
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = ${childPageName});
+
+		Button.click(button = "Add");
+
+		SelectFrame.selectFrameTop();
+
+		if (${sitePageType} != "Content Page") {
+			Button.click(button = "Save");
+		}
 	}
 
 	macro addCP {

@@ -118,9 +118,8 @@ definition {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.addChildPageViaSiteTemplateCP(
-				childSitepageName = "true",
-				pageName = "Site Page Name",
-				siteChildPageName = "Site Child Page Name",
+				childPageName = "Site Child Page Name",
+				parentPageName = "Site Page Name",
 				siteTemplateName = "Site Template Name");
 		}
 

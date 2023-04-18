@@ -16,6 +16,7 @@ import React, {
 	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
@@ -28,6 +29,7 @@ import {useConstants} from '../contexts/ConstantsContext';
 import {useItems, useSetItems} from '../contexts/ItemsContext';
 import updateItemParent from '../utils/updateItemParent';
 import getDescendantsCount from './getDescendantsCount';
+import getFlatItems from './getFlatItems';
 import getItemPath from './getItemPath';
 import moveItem from './moveItem';
 
@@ -129,12 +131,41 @@ export function useDropTarget(item) {
 function useNewDropTarget(item) {
 	const {siteNavigationMenuItemId} = item;
 
-	const [isNested, setIsNested] = useState(false);
+	const [nestingLevel, setNestingLevel] = useState(0);
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 	const targetRef = useRef();
 
-	const {setTargetItemId, targetItemId} = useContext(DragDropContext);
+	const {languageId} = useConstants();
+	const rtl = Liferay.Language.direction[languageId] === 'rtl';
+
+	const {parentId, setTargetItemId, targetItemId} = useContext(
+		DragDropContext
+	);
+
+	const nextItemNesting = useMemo(() => {
+		const flatItems = getFlatItems(items);
+
+		const itemIndex = flatItems.findIndex(
+			(otherItem) =>
+				otherItem.siteNavigationMenuItemId === siteNavigationMenuItemId
+		);
+
+		for (let i = itemIndex + 1; i < flatItems.length; i++) {
+			const nextItem = flatItems[i];
+
+			const nextItemPath = getItemPath(
+				nextItem.siteNavigationMenuItemId,
+				items
+			);
+
+			if (!nextItemPath.includes(parentId)) {
+				return nextItemPath.length;
+			}
+		}
+
+		return 1;
+	}, [items, parentId, siteNavigationMenuItemId]);
 
 	const [, dndTargetRef] = useDrop({
 		accept: ACCEPTING_ITEM_TYPE,
@@ -150,16 +181,29 @@ function useNewDropTarget(item) {
 				const itemPosition = monitor.getSourceClientOffset();
 				const targetRect = targetRef.current.getBoundingClientRect();
 
-				// We need to check min and max X values to correctly support
-				// both LTR and RTL languages.
-
-				const max = Math.max(targetRect.left, targetRect.right);
-				const min = Math.min(targetRect.left, targetRect.right);
-
-				const normalizedPosition = (itemPosition.x - min) / (max - min);
-
 				setTargetItemId(siteNavigationMenuItemId);
-				setIsNested(normalizedPosition > 0.4);
+
+				let nesting = 1;
+
+				if (rtl) {
+					nesting =
+						Math.round(
+							(targetRect.width - itemPosition.x) / NESTING_MARGIN
+						) + 1;
+				}
+				else {
+					nesting =
+						Math.round(
+							(itemPosition.x - targetRect.left) / NESTING_MARGIN
+						) + 1;
+				}
+
+				setNestingLevel(
+					Math.max(
+						nextItemNesting,
+						Math.min(itemPath.length + 1, nesting)
+					)
+				);
 			}
 		},
 	});
@@ -173,8 +217,8 @@ function useNewDropTarget(item) {
 	);
 
 	return {
-		isNested,
 		isOver: targetItemId === siteNavigationMenuItemId,
+		nestingLevel,
 		targetRef: updateTargetRef,
 	};
 }

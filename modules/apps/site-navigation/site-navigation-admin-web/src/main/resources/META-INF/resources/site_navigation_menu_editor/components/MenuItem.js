@@ -46,7 +46,6 @@ export function MenuItem({item, onMenuItemRemoved}) {
 	const setSidebarPanelId = useSetSidebarPanelId();
 	const {
 		editSiteNavigationMenuItemParentURL,
-		languageId,
 		portletNamespace,
 	} = useConstants();
 
@@ -112,7 +111,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 	const keyboardDragLayer = useDragLayer();
 	const setKeyboardDragLayer = useSetDragLayer();
 	const {handlerRef, isDragging} = useDragItem(item, updateMenuItemParent);
-	const {targetRef} = useDropTarget(item);
+	const {isOver, nestingLevel, targetRef} = useDropTarget(item);
 
 	const isKeyboardDragging = useMemo(
 		() =>
@@ -128,10 +127,11 @@ export function MenuItem({item, onMenuItemRemoved}) {
 		]
 	);
 
-	const rtl = Liferay.Language.direction[languageId] === 'rtl';
-	const itemStyle = rtl
-		? {paddingRight: (itemPath.length - 1) * NESTING_MARGIN}
-		: {paddingLeft: (itemPath.length - 1) * NESTING_MARGIN};
+	const itemStyle = {
+		'--nesting-level': itemPath.length,
+		'--nesting-margin': NESTING_MARGIN,
+		'--over-nesting-level': nestingLevel,
+	};
 
 	const parentItemId =
 		itemPath.length > 1 ? itemPath[itemPath.length - 2] : '0';
@@ -272,11 +272,13 @@ export function MenuItem({item, onMenuItemRemoved}) {
 				className={classNames(
 					'focusable-menu-item site_navigation_menu_editor_MenuItem',
 					{
-						active: selected,
-						dragging: isDragging || isKeyboardDragging,
+						'active': selected,
+						'dragging': isDragging || isKeyboardDragging,
+						'is-over': isOver,
 					}
 				)}
 				data-item-id={item.siteNavigationMenuItemId}
+				data-nesting-level={nestingLevel}
 				data-parent-item-id={parentItemId}
 				onBlur={onBlur}
 				onClick={(event) => {

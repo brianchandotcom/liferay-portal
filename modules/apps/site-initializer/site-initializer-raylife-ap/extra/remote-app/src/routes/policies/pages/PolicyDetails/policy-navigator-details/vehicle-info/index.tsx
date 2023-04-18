@@ -46,9 +46,10 @@ const VehicleInfo = ({dataJSON: applicationData}: VehicleNavigatorType) => {
 								<img
 									className="w-75"
 									onError={addImageFallback}
-									src={`${getWebDavUrl()}/${currentVehicle?.model
-										.replace(/ /g, '')
-										.toLocaleLowerCase()}.svg`}
+									src={`${getWebDavUrl()}/${currentVehicle?.model.replace(
+										/ /g,
+										''
+									)}.svg`}
 								/>
 							</div>
 

@@ -149,7 +149,7 @@ const Table: React.FC<TableProps> = ({
 							<Cell
 								className={classnames('border-top-0', {
 									'ray-row-table-danger':
-										rowContent.isRedLine === 'true',
+										rowContent.isRedLine === true,
 								})}
 								key={index}
 							>
@@ -195,7 +195,7 @@ const Table: React.FC<TableProps> = ({
 							<Cell
 								className={classnames('border-top-0', {
 									'ray-row-table-danger':
-										rowContent.isRedLine === 'true',
+										rowContent.isRedLine === true,
 								})}
 							>
 								<SettingsButton

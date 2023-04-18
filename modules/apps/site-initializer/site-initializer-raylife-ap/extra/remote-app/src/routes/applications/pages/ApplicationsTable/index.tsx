@@ -99,7 +99,7 @@ type Application = {
 	productName: string;
 };
 
-type TableContent = {[keys: string]: string};
+type TableContent = {[keys: string]: string | any};
 
 type TableItemType = {
 	centered?: boolean;
@@ -405,7 +405,7 @@ const ApplicationsTable = () => {
 						email,
 						externalReferenceCode,
 						fullName,
-						isClickable: 'true',
+						isClickable: true,
 						key: externalReferenceCode,
 						name,
 						productName,

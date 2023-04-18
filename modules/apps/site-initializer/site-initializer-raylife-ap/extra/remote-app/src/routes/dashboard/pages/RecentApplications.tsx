@@ -86,7 +86,7 @@ type RecentApplication = {
 	productName: string;
 };
 
-type TableContent = {[keys: string]: string};
+type TableContent = {[keys: string]: string | any};
 
 enum ModalType {
 	insurance = 1,
@@ -185,7 +185,7 @@ const RecentApplications = () => {
 							new Date(applicationCreateDate)
 						),
 						externalReferenceCode,
-						isClickable: 'true',
+						isClickable: true,
 						key: externalReferenceCode,
 						name,
 						productName,

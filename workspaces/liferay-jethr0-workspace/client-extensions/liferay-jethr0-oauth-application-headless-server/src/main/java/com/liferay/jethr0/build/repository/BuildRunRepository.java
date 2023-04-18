@@ -31,13 +31,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 
-	public BuildRun add(Build build) {
+	public BuildRun add(Build build, BuildRun.State state) {
 		JSONObject jsonObject = new JSONObject();
+
+		if (state == null) {
+			state = BuildRun.State.OPENED;
+		}
 
 		jsonObject.put(
 			"r_buildToBuildRuns_c_buildId", build.getId()
 		).put(
-			"state", BuildRun.State.OPENED.getJSONObject()
+			"state", state.getJSONObject()
 		);
 
 		BuildRun buildRun = _buildRunDALO.create(jsonObject);

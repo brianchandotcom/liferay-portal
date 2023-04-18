@@ -52,17 +52,14 @@ public class JenkinsQueue {
 
 				build.setState(Build.State.QUEUED);
 
-				BuildRun buildRun = _buildRunRepository.add(build);
+				BuildRun buildRun = _buildRunRepository.add(
+					build, BuildRun.State.QUEUED);
+
+				_jmsEventHandler.send(
+					String.valueOf(buildRun.getInvokeJSONObject()));
 
 				_buildRepository.update(build);
-
-				JSONObject invokeJSONObject = buildRun.getInvokeJSONObject();
-
-				buildRun.setState(BuildRun.State.QUEUED);
-
 				_buildRunRepository.update(buildRun);
-
-				_jmsEventHandler.send(invokeJSONObject.toString());
 			}
 		}
 	}

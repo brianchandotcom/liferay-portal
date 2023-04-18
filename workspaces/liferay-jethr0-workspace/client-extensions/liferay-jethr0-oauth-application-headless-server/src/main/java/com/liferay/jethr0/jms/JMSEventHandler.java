@@ -21,6 +21,8 @@ import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
+import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.repository.ProjectRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -92,6 +94,31 @@ public class JMSEventHandler {
 		buildRun.setResult(_getBuildRunResult(messageJSONObject));
 		buildRun.setState(BuildRun.State.COMPLETED);
 
+		Build build = buildRun.getBuild();
+
+		build.setState(Build.State.COMPLETED);
+
+		Project project = build.getProject();
+
+		Project.State projectState = Project.State.COMPLETED;
+
+		for (Build projectBuild : project.getBuilds()) {
+			Build.State buildState = projectBuild.getState();
+
+			if (buildState != Build.State.COMPLETED) {
+				projectState = Project.State.RUNNING;
+
+				break;
+			}
+		}
+
+		if (projectState == Project.State.COMPLETED) {
+			project.setState(projectState);
+
+			_projectRepository.update(project);
+		}
+
+		_buildRepository.update(build);
 		_buildRunRepository.update(buildRun);
 	}
 
@@ -101,6 +128,19 @@ public class JMSEventHandler {
 		buildRun.setBuildURL(_getBuildURL(messageJSONObject));
 		buildRun.setState(BuildRun.State.RUNNING);
 
+		Build build = buildRun.getBuild();
+
+		build.setState(Build.State.RUNNING);
+
+		Project project = build.getProject();
+
+		if (project.getState() != Project.State.RUNNING) {
+			project.setState(Project.State.RUNNING);
+
+			_projectRepository.update(project);
+		}
+
+		_buildRepository.update(build);
 		_buildRunRepository.update(buildRun);
 	}
 
@@ -119,14 +159,13 @@ public class JMSEventHandler {
 
 		build.setState(Build.State.QUEUED);
 
-		BuildRun buildRun = _buildRunRepository.add(build);
+		BuildRun buildRun = _buildRunRepository.add(
+			build, BuildRun.State.QUEUED);
 
-		buildRun.setState(BuildRun.State.QUEUED);
+		send(String.valueOf(buildRun.getInvokeJSONObject()));
 
 		_buildRepository.update(build);
 		_buildRunRepository.update(buildRun);
-
-		send(String.valueOf(buildRun.getInvokeJSONObject()));
 	}
 
 	private BuildRun _getBuildRun(JSONObject messageJSONObject) {
@@ -207,6 +246,9 @@ public class JMSEventHandler {
 
 	@Autowired
 	private JenkinsNodeRepository _jenkinsNodeRepository;
+
+	@Autowired
+	private ProjectRepository _projectRepository;
 
 	@Value("${jms.jenkins.build.queue}")
 	private String _jmsJenkinsBuildQueue;

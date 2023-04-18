@@ -369,6 +369,23 @@ public class ObjectDefinitionResourceImpl
 				aggregationServiceBuilderObjectField.getObjectFieldSettings());
 		}
 
+		Status status = objectDefinition.getStatus();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-167253") &&
+			(status != null) &&
+			(status.getCode() == WorkflowConstants.STATUS_APPROVED)) {
+
+			postObjectDefinitionPublish(
+				serviceBuilderObjectDefinition.getObjectDefinitionId());
+
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						serviceBuilderObjectDefinition.
+							getExternalReferenceCode(),
+						serviceBuilderObjectDefinition.getCompanyId());
+		}
+
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
 

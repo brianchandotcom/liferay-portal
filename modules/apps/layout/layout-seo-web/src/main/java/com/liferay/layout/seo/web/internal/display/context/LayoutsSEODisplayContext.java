@@ -231,10 +231,6 @@ public class LayoutsSEODisplayContext {
 		return _getPortletURL("/layout/edit_custom_meta_tags");
 	}
 
-	public PortletURL getEditOpenGraphURL() {
-		return _getPortletURL("/layout/edit_open_graph");
-	}
-
 	public long getGroupId() {
 		LayoutSEOEntry selLayoutSEOEntry = getSelLayoutSEOEntry();
 

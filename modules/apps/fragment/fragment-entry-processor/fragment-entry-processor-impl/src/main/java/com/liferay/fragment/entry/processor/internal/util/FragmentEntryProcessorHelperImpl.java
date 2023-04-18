@@ -30,6 +30,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.info.type.Labeled;
 import com.liferay.info.type.WebImage;
@@ -65,6 +66,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -548,10 +550,24 @@ public class FragmentEntryProcessorHelperImpl
 			InfoField infoField = infoFieldValue.getInfoField();
 
 			if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
+				Locale dateLocale = locale;
+
+				if (infoField.isLocalizable()) {
+					InfoLocalizedValue<String> infoLocalizedValue =
+						(InfoLocalizedValue<String>)infoFieldValue.getValue();
+
+					Set<Locale> availableLocales =
+						infoLocalizedValue.getAvailableLocales();
+
+					if (!availableLocales.contains(locale)) {
+						dateLocale = infoLocalizedValue.getDefaultLocale();
+					}
+				}
+
 				try {
 					DateFormat dateFormat =
 						DateFormatFactoryUtil.getSimpleDateFormat(
-							_getShortTimeStylePattern(locale), locale);
+							_getShortTimeStylePattern(dateLocale), dateLocale);
 
 					Date date = dateFormat.parse(value.toString());
 
@@ -567,7 +583,7 @@ public class FragmentEntryProcessorHelperImpl
 					try {
 						DateFormat dateFormat =
 							DateFormatFactoryUtil.getSimpleDateFormat(
-								_getDefaultPattern(locale), locale);
+								_getDefaultPattern(dateLocale), dateLocale);
 
 						return _getDateValue(
 							editableValueJSONObject,

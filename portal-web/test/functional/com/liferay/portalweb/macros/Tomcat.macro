@@ -1,27 +1,6 @@
 definition {
 
-	macro addJVMArguments {
-		Variables.assertDefined(parameterList = ${arguments});
-
-		var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
-
-		var setenvFile = "${tomcatBinDir}/setenv.sh";
-
-		var fileContent = FileUtil.read(${setenvFile});
-		var argumentsList = "";
-
-		for (var argument : list ${arguments}) {
-			var argumentsList = ''' -D${argument}${argumentsList}''';
-		}
-
-		var argumentsList = '''${fileContent}
-
-CATALINA_OPTS="$CATALINA_OPTS${argumentsList}"''';
-
-		FileUtil.write(${setenvFile}, ${argumentsList});
-	}
-
-	macro addProperties {
+	macro addCompanyProperties {
 		Variables.assertDefined(parameterList = ${properties});
 
 		var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
@@ -47,6 +26,27 @@ ${propertiesList}''';
 ${propertiesList}''';
 
 		FileUtil.write(${setenvFile}, ${propertiesList});
+	}
+
+	macro addJVMArguments {
+		Variables.assertDefined(parameterList = ${arguments});
+
+		var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
+
+		var setenvFile = "${tomcatBinDir}/setenv.sh";
+
+		var fileContent = FileUtil.read(${setenvFile});
+		var argumentsList = "";
+
+		for (var argument : list ${arguments}) {
+			var argumentsList = ''' -D${argument}${argumentsList}''';
+		}
+
+		var argumentsList = '''${fileContent}
+
+CATALINA_OPTS="$CATALINA_OPTS${argumentsList}"''';
+
+		FileUtil.write(${setenvFile}, ${argumentsList});
 	}
 
 }

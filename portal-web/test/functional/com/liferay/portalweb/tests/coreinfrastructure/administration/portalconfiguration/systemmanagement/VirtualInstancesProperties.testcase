@@ -22,8 +22,8 @@ definition {
 
 	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via jvm argument."
 	@priority = 3
-	test ConfigurePortalExtPropertyViaJVM {
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#ConfigurePortalExtPropertyViaJVM";
+	test CanSetPortalPropertyViaJVM {
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaJVM";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -37,11 +37,11 @@ definition {
 		}
 
 		task ("When the feature flag is enabled via environment variable") {
-			EnvironmentVariables.addProperties(properties = "feature.flag.COMMERCE-8087=true");
+			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
 		}
 
 		task ("And company-id-properties=true is set via jvm argument") {
-			EnvironmentVariables.addJVMArguments(arguments = "company-id-properties=true");
+			Tomcat.addJVMArguments(arguments = "company-id-properties=true");
 		}
 
 		task ("And the portal is restarted") {
@@ -62,9 +62,9 @@ definition {
 
 	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via system-ext.properties"
 	@priority = 3
-	test ConfigurePortalExtPropertyViaSystemExt {
+	test CanSetPortalPropertyViaEnvironmentVariable {
 		property custom.system.properties = "company-id-properties=true";
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#ConfigurePortalExtPropertyViaSystemExt";
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaEnvironmentVariable";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -78,7 +78,7 @@ definition {
 		}
 
 		task ("When the feature flag is enabled via environment variable") {
-			EnvironmentVariables.addProperties(properties = "feature.flag.COMMERCE-8087=true");
+			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
 		}
 
 		task ("And the portal is restarted") {
@@ -99,9 +99,9 @@ definition {
 
 	@description = "This is a usecase for LPS-168123. Verify properties which are supported for overriding via hook can be overriden by environment variable."
 	@priority = 3
-	test SetDefaultTheme {
+	test CanOverrideHookProperties {
 		property custom.system.properties = "company-id-properties=true";
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#SetDefaultTheme";
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanOverrideHookProperties";
 
 		task ("Given the default theme is set to Classic") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -118,7 +118,7 @@ definition {
 		}
 
 		task ("When the default theme is set to the Minimum theme via environment variable") {
-			EnvironmentVariables.addProperties(properties = "default.regular.theme.id=minium_WAR_miniumtheme");
+			Tomcat.addCompanyProperties(properties = "default.regular.theme.id=minium_WAR_miniumtheme");
 		}
 
 		task ("And the portal is restarted") {

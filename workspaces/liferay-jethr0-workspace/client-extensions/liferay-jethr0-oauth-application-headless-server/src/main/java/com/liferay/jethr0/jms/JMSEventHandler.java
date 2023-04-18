@@ -55,16 +55,23 @@ public class JMSEventHandler {
 		String eventTrigger = messageJSONObject.getString("eventTrigger");
 
 		if (eventTrigger.equals("BUILD_COMPLETED")) {
-			_buildCompleted(messageJSONObject);
+			_eventTriggerBuildCompleted(messageJSONObject);
 		}
 		else if (eventTrigger.equals("BUILD_STARTED")) {
-			_buildStarted(messageJSONObject);
+			_eventTriggerBuildStarted(messageJSONObject);
 		}
-		else if (eventTrigger.equals("COMPUTER_IDLE")) {
-			_computerIdle(messageJSONObject);
-		}
-		else if (eventTrigger.equals("COMPUTER_BUSY")) {
-			_computerBusy(messageJSONObject);
+		else if (eventTrigger.equals("COMPUTER_BUSY") ||
+				 eventTrigger.equals("COMPUTER_IDLE") ||
+				 eventTrigger.equals("COMPUTER_OFFLINE") ||
+				 eventTrigger.equals("COMPUTER_ONLINE") ||
+				 eventTrigger.equals("COMPUTER_TEMPORARILY_OFFLINE") ||
+				 eventTrigger.equals("COMPUTER_TEMPORARILY_ONLINE")) {
+
+			_updateJenkinsNode(messageJSONObject);
+
+			if (eventTrigger.equals("COMPUTER_IDLE")) {
+				_eventTriggerComputerIdle(messageJSONObject);
+			}
 		}
 	}
 
@@ -78,7 +85,7 @@ public class JMSEventHandler {
 		_jmsTemplate.convertAndSend(_jmsJenkinsBuildQueue, message);
 	}
 
-	private void _buildCompleted(JSONObject messageJSONObject) {
+	private void _eventTriggerBuildCompleted(JSONObject messageJSONObject) {
 		BuildRun buildRun = _getBuildRun(messageJSONObject);
 
 		buildRun.setDuration(_getBuildRunDuration(messageJSONObject));
@@ -88,7 +95,7 @@ public class JMSEventHandler {
 		_buildRunRepository.update(buildRun);
 	}
 
-	private void _buildStarted(JSONObject messageJSONObject) {
+	private void _eventTriggerBuildStarted(JSONObject messageJSONObject) {
 		BuildRun buildRun = _getBuildRun(messageJSONObject);
 
 		buildRun.setBuildURL(_getBuildURL(messageJSONObject));
@@ -97,11 +104,7 @@ public class JMSEventHandler {
 		_buildRunRepository.update(buildRun);
 	}
 
-	private void _computerBusy(JSONObject messageJSONObject) {
-		_getJenkinsNode(messageJSONObject);
-	}
-
-	private void _computerIdle(JSONObject messageJSONObject) {
+	private void _eventTriggerComputerIdle(JSONObject messageJSONObject) {
 		JenkinsNode jenkinsNode = _getJenkinsNode(messageJSONObject);
 
 		if (jenkinsNode == null) {
@@ -171,8 +174,14 @@ public class JMSEventHandler {
 		JSONObject computerJSONObject = messageJSONObject.getJSONObject(
 			"computer");
 
-		JenkinsNode jenkinsNode = _jenkinsNodeRepository.get(
-			computerJSONObject.getString("name"));
+		return _jenkinsNodeRepository.get(computerJSONObject.getString("name"));
+	}
+
+	private JenkinsNode _updateJenkinsNode(JSONObject messageJSONObject) {
+		JenkinsNode jenkinsNode = _getJenkinsNode(messageJSONObject);
+
+		JSONObject computerJSONObject = messageJSONObject.getJSONObject(
+			"computer");
 
 		computerJSONObject.put(
 			"idle", !computerJSONObject.getBoolean("busy")

@@ -16,16 +16,12 @@ package com.liferay.layout.admin.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -103,9 +99,10 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 
 	@Override
 	public String getURLViewInContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		String noSuchEntryRedirect) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect)
+		throws Exception {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -116,26 +113,10 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 
 	@Override
 	public String getURLViewInContext(
-		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
+			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
+		throws Exception {
 
-		try {
-			if (!_layout.isDenied() && !_layout.isPending()) {
-				return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
-			}
-
-			String previewURL = PortalUtil.getLayoutFriendlyURL(
-				_layout.fetchDraftLayout(), themeDisplay);
-
-			return HttpComponentsUtil.addParameter(
-				previewURL, "p_l_back_url", themeDisplay.getURLCurrent());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
+		return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
 	}
 
 	@Override
@@ -172,9 +153,6 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 
 		return super.isPreviewInContext();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutAssetRenderer.class);
 
 	private final Layout _layout;
 

@@ -55,8 +55,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -77,7 +77,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -228,35 +227,30 @@ public class LayoutsSEODisplayContext {
 	}
 
 	public PortletURL getEditCustomMetaTagsURL() {
-		LiferayPortletURL liferayPortletURL =
-			_liferayPortletResponse.createLiferayPortletURL(
-				_liferayPortletRequest.getPlid(),
-				_liferayPortletRequest.getPortletName(),
-				PortletRequest.ACTION_PHASE, MimeResponse.Copy.ALL);
-
-		liferayPortletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/edit_custom_meta_tags");
-		liferayPortletURL.setParameter(
-			"mvcRenderCommandName",
-			_liferayPortletRequest.getParameter("mvcRenderCommandName"));
-		liferayPortletURL.setParameter(
-			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
-		liferayPortletURL.setParameter(
-			"screenNavigationCategoryKey",
-			_liferayPortletRequest.getParameter("screenNavigationCategoryKey"));
-		liferayPortletURL.setParameter(
-			"screenNavigationEntryKey",
-			_liferayPortletRequest.getParameter("screenNavigationEntryKey"));
-		liferayPortletURL.setParameter(
-			"selPlid", _liferayPortletRequest.getParameter("selPlid"));
-		liferayPortletURL.setParameter(
+		return PortletURLBuilder.createLiferayPortletURL(
+			_liferayPortletResponse, _liferayPortletRequest.getPlid(),
+			_liferayPortletRequest.getPortletName(),
+			PortletRequest.ACTION_PHASE, MimeResponse.Copy.ALL
+		).setActionName(
+			"/layout/edit_custom_meta_tags"
+		).setMVCRenderCommandName(
+			_liferayPortletRequest.getParameter("mvcRenderCommandName")
+		).setTabs1(
+			_liferayPortletRequest.getParameter("tabs1")
+		).setParameter(
+			"displayStyle", _liferayPortletRequest.getParameter("displayStyle")
+		).setParameter(
 			"privateLayout",
-			_liferayPortletRequest.getParameter("privateLayout"));
-		liferayPortletURL.setParameter(
-			"displayStyle",
-			_liferayPortletRequest.getParameter("displayStyle"));
-
-		return liferayPortletURL;
+			_liferayPortletRequest.getParameter("privateLayout")
+		).setParameter(
+			"screenNavigationCategoryKey",
+			_liferayPortletRequest.getParameter("screenNavigationCategoryKey")
+		).setParameter(
+			"screenNavigationEntryKey",
+			_liferayPortletRequest.getParameter("screenNavigationEntryKey")
+		).setParameter(
+			"selPlid", _liferayPortletRequest.getParameter("selPlid")
+		).buildPortletURL();
 	}
 
 	public long getGroupId() {
@@ -383,33 +377,28 @@ public class LayoutsSEODisplayContext {
 	}
 
 	public PortletURL getRedirectURL() {
-		LiferayPortletURL liferayPortletURL =
-			_liferayPortletResponse.createLiferayPortletURL(
-				_liferayPortletRequest.getPlid(),
-				_liferayPortletRequest.getPortletName(),
-				PortletRequest.RENDER_PHASE, MimeResponse.Copy.ALL);
-
-		liferayPortletURL.setParameter(
-			"mvcRenderCommandName",
-			_liferayPortletRequest.getParameter("mvcRenderCommandName"));
-		liferayPortletURL.setParameter(
-			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
-		liferayPortletURL.setParameter(
-			"screenNavigationCategoryKey",
-			_liferayPortletRequest.getParameter("screenNavigationCategoryKey"));
-		liferayPortletURL.setParameter(
-			"screenNavigationEntryKey",
-			_liferayPortletRequest.getParameter("screenNavigationEntryKey"));
-		liferayPortletURL.setParameter(
-			"selPlid", _liferayPortletRequest.getParameter("selPlid"));
-		liferayPortletURL.setParameter(
+		return PortletURLBuilder.createLiferayPortletURL(
+			_liferayPortletResponse, _liferayPortletRequest.getPlid(),
+			_liferayPortletRequest.getPortletName(),
+			PortletRequest.RENDER_PHASE, MimeResponse.Copy.ALL
+		).setMVCRenderCommandName(
+			_liferayPortletRequest.getParameter("mvcRenderCommandName")
+		).setTabs1(
+			_liferayPortletRequest.getParameter("tabs1")
+		).setParameter(
+			"displayStyle", _liferayPortletRequest.getParameter("displayStyle")
+		).setParameter(
 			"privateLayout",
-			_liferayPortletRequest.getParameter("privateLayout"));
-		liferayPortletURL.setParameter(
-			"displayStyle",
-			_liferayPortletRequest.getParameter("displayStyle"));
-
-		return liferayPortletURL;
+			_liferayPortletRequest.getParameter("privateLayout")
+		).setParameter(
+			"screenNavigationCategoryKey",
+			_liferayPortletRequest.getParameter("screenNavigationCategoryKey")
+		).setParameter(
+			"screenNavigationEntryKey",
+			_liferayPortletRequest.getParameter("screenNavigationEntryKey")
+		).setParameter(
+			"selPlid", _liferayPortletRequest.getParameter("selPlid")
+		).buildPortletURL();
 	}
 
 	public Group getSelGroup() {

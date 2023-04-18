@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
@@ -113,9 +112,6 @@ public class SegmentsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PrefsProps _prefsProps;
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;

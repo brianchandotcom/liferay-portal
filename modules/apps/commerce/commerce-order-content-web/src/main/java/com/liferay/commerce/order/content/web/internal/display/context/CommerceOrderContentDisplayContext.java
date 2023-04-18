@@ -1188,7 +1188,7 @@ public class CommerceOrderContentDisplayContext {
 				commercePaymentMethodKey);
 
 		return ArrayUtil.contains(
-			CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPES_ONLINE,
+			CommercePaymentConstants.METHOD_TYPES_ONLINE,
 			commercePaymentMethod.getPaymentType());
 	}
 

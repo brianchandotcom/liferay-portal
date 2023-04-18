@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.payment.method.mercanet.internal;
 
-import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -121,8 +120,7 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public int getPaymentType() {
-		return CommercePaymentConstants.
-			COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT;
+		return CommercePaymentConstants.METHOD_TYPE_ONLINE_REDIRECT;
 	}
 
 	@Override
@@ -263,7 +261,7 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 
 		return new CommercePaymentResult(
 			transactionId, commerceOrder.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, true, url, null,
+			CommercePaymentConstants.STATUS_AUTHORIZED, true, url, null,
 			resultMessage, true);
 	}
 

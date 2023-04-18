@@ -101,9 +101,8 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 		String cancelUrl = null;
 		String returnUrl = null;
 
-		if (CommercePaymentConstants.
-				COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT ==
-					commercePaymentMethod.getPaymentType()) {
+		if (CommercePaymentConstants.METHOD_TYPE_ONLINE_REDIRECT ==
+				commercePaymentMethod.getPaymentType()) {
 
 			cancelUrl = _getCancelUrl(
 				httpServletRequest, commerceOrder, checkoutStepUrl,

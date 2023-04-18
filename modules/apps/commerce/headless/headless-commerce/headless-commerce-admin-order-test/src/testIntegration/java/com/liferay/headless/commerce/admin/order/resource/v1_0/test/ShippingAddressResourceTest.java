@@ -123,7 +123,7 @@ public class ShippingAddressResourceTest
 				CommerceOrderConstants.TYPE_PK_FULFILLMENT, 0,
 				address.getAddressId(), RandomTestUtil.randomString(), 1, 1,
 				2022, 0, 0, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-				CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE,
+				CommercePaymentConstants.METHOD_TYPE_OFFLINE,
 				RandomTestUtil.randomString(), BigDecimal.ONE,
 				RandomTestUtil.randomString(), BigDecimal.ONE, BigDecimal.ONE,
 				BigDecimal.ONE, BigDecimal.ONE, BigDecimal.TEN, BigDecimal.TEN,

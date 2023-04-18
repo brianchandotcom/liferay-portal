@@ -439,14 +439,13 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				commerceOrder.getCommercePaymentMethodKey());
 
 		if ((commerceOrder.getPaymentStatus() ==
-				CommerceOrderConstants.PAYMENT_STATUS_PAID) ||
+				CommercePaymentConstants.STATUS_PAID) ||
 			(commercePaymentMethod == null) ||
 			((commercePaymentMethod != null) &&
 			 (commercePaymentMethod.getPaymentType() ==
-				 CommercePaymentConstants.
-					 COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE) &&
+				 CommercePaymentConstants.METHOD_TYPE_OFFLINE) &&
 			 (commerceOrder.getPaymentStatus() ==
-				 CommerceOrderConstants.PAYMENT_STATUS_PENDING))) {
+				 CommercePaymentConstants.STATUS_PENDING))) {
 
 			return transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
@@ -533,7 +532,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				if ((orderStatus ==
 						CommerceOrderConstants.ORDER_STATUS_PENDING) &&
 					(commerceOrder.getPaymentStatus() ==
-						CommerceOrderConstants.PAYMENT_STATUS_PAID)) {
+						CommercePaymentConstants.STATUS_PAID)) {
 
 					CommerceSubscriptionEntryHelperUtil.
 						checkCommerceSubscriptions(commerceOrder);

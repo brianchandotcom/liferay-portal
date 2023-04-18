@@ -15,7 +15,7 @@
 package com.liferay.commerce.payment.engine.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.context.CommerceGroupThreadLocal;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -206,7 +206,7 @@ public class CommercePaymentEngineTest {
 				checkoutOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
-			CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED,
+			CommercePaymentConstants.STATUS_AUTHORIZED,
 			paymentOrder.getPaymentStatus());
 
 		Assert.assertNotNull(paymentOrder.getTransactionId());
@@ -219,7 +219,7 @@ public class CommercePaymentEngineTest {
 			checkoutOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
-			CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			CommercePaymentConstants.STATUS_PAID,
 			paymentOrder.getPaymentStatus());
 	}
 
@@ -298,7 +298,7 @@ public class CommercePaymentEngineTest {
 				checkoutOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
-			CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED,
+			CommercePaymentConstants.STATUS_AUTHORIZED,
 			paymentOrder.getPaymentStatus());
 
 		Assert.assertNotNull(paymentOrder.getTransactionId());

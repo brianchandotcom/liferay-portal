@@ -146,9 +146,8 @@ public class CommercePaymentServlet extends HttpServlet {
 				_commercePaymentEngine.getCommercePaymentMethodType(
 					_commerceOrderId);
 
-			if ((CommercePaymentConstants.
-					COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE ==
-						commercePaymentMethodType) ||
+			if ((CommercePaymentConstants.METHOD_TYPE_OFFLINE ==
+					commercePaymentMethodType) ||
 				(commercePaymentMethodType == -1)) {
 
 				_commercePaymentEngine.completePayment(
@@ -158,9 +157,8 @@ public class CommercePaymentServlet extends HttpServlet {
 			}
 
 			if (commercePaymentResult.isSuccess() &&
-				(CommercePaymentConstants.
-					COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD ==
-						commercePaymentMethodType)) {
+				(CommercePaymentConstants.METHOD_TYPE_ONLINE_STANDARD ==
+					commercePaymentMethodType)) {
 
 				if (commerceOrder.isSubscriptionOrder()) {
 					_commerceSubscriptionEngine.completeRecurringPayment(

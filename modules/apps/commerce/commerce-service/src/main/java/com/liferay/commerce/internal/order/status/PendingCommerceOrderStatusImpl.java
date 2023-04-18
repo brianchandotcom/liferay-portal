@@ -126,10 +126,9 @@ public class PendingCommerceOrderStatusImpl implements CommerceOrderStatus {
 		}
 
 		if ((commerceOrder.getPaymentStatus() ==
-				CommerceOrderConstants.PAYMENT_STATUS_PAID) ||
+				CommercePaymentConstants.STATUS_PAID) ||
 			(commercePaymentMethod.getPaymentType() ==
-				CommercePaymentConstants.
-					COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE)) {
+				CommercePaymentConstants.METHOD_TYPE_OFFLINE)) {
 
 			return _commerceOrderValidatorRegistry.isValid(
 				LocaleUtil.getSiteDefault(), commerceOrder);

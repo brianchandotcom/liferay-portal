@@ -93,7 +93,7 @@ public class CommercePaymentEntryLocalServiceImpl
 		commercePaymentEntry.setCurrencyCode(currencyCode);
 		commercePaymentEntry.setPaymentMethodName(paymentMethodName);
 		commercePaymentEntry.setPaymentStatus(
-			CommercePaymentConstants.PAYMENT_STATUS_PENDING);
+			CommercePaymentConstants.STATUS_PENDING);
 		commercePaymentEntry.setTransactionCode(transactionCode);
 
 		commercePaymentEntry = commercePaymentEntryPersistence.update(

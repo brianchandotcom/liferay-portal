@@ -12,7 +12,7 @@
 import Role from '../interfaces/role';
 
 export enum RoleTypes {
-	PARTNER_MANAGER = 'Partner Manager',
+	PARTNER_MANAGER = 'Partner Manager (PM)',
 }
 
 export function isPartnerManager(roles: Role[]) {

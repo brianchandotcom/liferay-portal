@@ -21,6 +21,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.delivery.dto.v1_0.PageSettings;
+import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
@@ -261,6 +262,24 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			Map<Locale, String> nameMap)
 		throws Exception {
 
+		long parentLayoutId = 0;
+
+		ParentSitePage parentSitePage = sitePage.getParentSitePage();
+
+		if (parentSitePage != null) {
+			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+				siteId, false, parentSitePage.getFriendlyUrlPath());
+
+			if (layout == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Could not find parent site page");
+				}
+			}
+			else {
+				parentLayoutId = layout.getLayoutId();
+			}
+		}
+
 		Map<Locale, String> descriptionMap = new HashMap<>();
 		Map<Locale, String> keywordsMap = new HashMap<>();
 		Map<Locale, String> robotsMap = new HashMap<>();
@@ -291,8 +310,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		Layout layout = _layoutService.addLayout(
-			siteId, false, 0, nameMap, titleMap, descriptionMap, keywordsMap,
-			robotsMap, LayoutConstants.TYPE_CONTENT, null, false,
+			siteId, false, parentLayoutId, nameMap, titleMap, descriptionMap,
+			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT, null, false,
 			friendlyUrlMap, 0, _createServiceContext(siteId, sitePage));
 
 		layout.setStatus(WorkflowConstants.STATUS_APPROVED);

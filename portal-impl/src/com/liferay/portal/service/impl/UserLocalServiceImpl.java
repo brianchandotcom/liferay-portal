@@ -268,7 +268,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * Adds a default admin user for the company.
 	 *
 	 * @param  companyId the primary key of the user's company
-	 * @param  password1 the password of the user
+	 * @param  password the password of the user
 	 * @param  screenName the user's screen name
 	 * @param  emailAddress the user's email address
 	 * @param  locale the user's locale
@@ -278,7 +278,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @return the new default admin user
 	 */
 	public User addDefaultAdminUser(
-			long companyId, String password1, String screenName,
+			long companyId, String password, String screenName,
 			String emailAddress, Locale locale, String firstName,
 			String middleName, String lastName)
 		throws PortalException {
@@ -286,15 +286,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long creatorUserId = 0;
 		boolean autoPassword = false;
 
-		if (Validator.isNull(password1)) {
-			password1 = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD);
+		if (Validator.isNull(password)) {
+			password = PropsUtil.get(PropsKeys.DEFAULT_ADMIN_PASSWORD);
 		}
-
-		String password2 = password1;
 
 		boolean passwordReset = _isPasswordReset(companyId);
 
-		if (Validator.isNull(password1)) {
+		if (Validator.isNull(password)) {
 			autoPassword = true;
 			passwordReset = true;
 		}
@@ -347,7 +345,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		serviceContext.setPortalURL(company.getPortalURL(0));
 
 		User defaultAdminUser = addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
+			creatorUserId, companyId, autoPassword, password, password,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixListTypeId, suffixListTypeId, male,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle,

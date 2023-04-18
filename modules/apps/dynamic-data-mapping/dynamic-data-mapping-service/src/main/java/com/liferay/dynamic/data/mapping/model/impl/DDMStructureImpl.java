@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.model.impl;
 
 import com.liferay.dynamic.data.mapping.exception.StructureFieldException;
-import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -625,12 +624,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 					getDefinition());
 
-			DDMFormJSONDeserializer ddmFormDeserializer =
-				(DDMFormJSONDeserializer)_ddmFormDeserializerSnapshot.get();
+			DDMFormDeserializer ddmFormDeserializer =
+				_ddmFormDeserializerSnapshot.get();
 
 			DDMFormDeserializerDeserializeResponse
 				ddmFormDeserializerDeserializeResponse =
-					ddmFormDeserializer.internalDeserialize(builder.build());
+					ddmFormDeserializer.deserialize(builder.build());
 
 			_ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 

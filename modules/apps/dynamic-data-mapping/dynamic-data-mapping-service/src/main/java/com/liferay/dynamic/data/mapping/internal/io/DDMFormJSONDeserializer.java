@@ -55,13 +55,6 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 		DDMFormDeserializerDeserializeRequest
 			ddmFormDeserializerDeserializeRequest) {
 
-		return internalDeserialize(ddmFormDeserializerDeserializeRequest);
-	}
-
-	public DDMFormDeserializerDeserializeResponse internalDeserialize(
-		DDMFormDeserializerDeserializeRequest
-			ddmFormDeserializerDeserializeRequest) {
-
 		DDMForm ddmForm = new DDMForm();
 
 		DDMFormDeserializerDeserializeResponse.Builder builder =

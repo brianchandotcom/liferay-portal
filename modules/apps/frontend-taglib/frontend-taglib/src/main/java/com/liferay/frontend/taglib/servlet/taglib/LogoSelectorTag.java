@@ -15,7 +15,18 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -100,21 +111,81 @@ public class LogoSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:aspectRatio",
-			String.valueOf(_aspectRatio));
-		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:currentLogoURL", _currentLogoURL);
-		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:defaultLogo",
-			String.valueOf(_defaultLogo));
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:defaultLogoURL", _defaultLogoURL);
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:preserveRatio",
-			String.valueOf(_preserveRatio));
+			"liferay-frontend:logo-selector:imageURL",
+			_getImageURL(httpServletRequest));
+
+		String randomKey = PortalUtil.generateRandomKey(
+			httpServletRequest, "taglib_ui_logo_selector");
+
+		String randomNamespace = randomKey + StringPool.UNDERLINE;
+
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:tempImageFileName",
-			_tempImageFileName);
+			"liferay-frontend:logo-selector:randomNamespace", randomNamespace);
+
+		httpServletRequest.setAttribute(
+			"liferay-frontend:logo-selector:uploadImageURL",
+			_getUploadImageURL(httpServletRequest, randomNamespace));
+	}
+
+	private String _getImageURL(HttpServletRequest httpServletRequest) {
+		boolean deleteLogo = ParamUtil.getBoolean(
+			httpServletRequest, "deleteLogo");
+
+		if (deleteLogo) {
+			return getDefaultLogoURL();
+		}
+
+		long fileEntryId = ParamUtil.getLong(httpServletRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			PortletResponse portletResponse =
+				(PortletResponse)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+			return ResourceURLBuilder.createResourceURL(
+				PortalUtil.getLiferayPortletResponse(portletResponse),
+				PortletKeys.IMAGE_UPLOADER
+			).setMVCResourceCommandName(
+				"/image_uploader/upload_image"
+			).setCMD(
+				Constants.GET_TEMP
+			).setParameter(
+				"tempImageFileName", getTempImageFileName()
+			).buildString();
+		}
+
+		return getCurrentLogoURL();
+	}
+
+	private String _getUploadImageURL(
+		HttpServletRequest httpServletRequest, String randomNamespace) {
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		return PortletURLBuilder.createRenderURL(
+			PortalUtil.getLiferayPortletResponse(portletResponse),
+			PortletKeys.IMAGE_UPLOADER
+		).setMVCRenderCommandName(
+			"/image_uploader/upload_image"
+		).setParameter(
+			"aspectRatio", getAspectRatio()
+		).setParameter(
+			"currentLogoURL", getCurrentLogoURL()
+		).setParameter(
+			"preserveRatio", isPreserveRatio()
+		).setParameter(
+			"randomNamespace", randomNamespace
+		).setParameter(
+			"tempImageFileName", getTempImageFileName()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private static final String _PAGE = "/logo_selector/page.jsp";

@@ -217,6 +217,85 @@ definition {
 	}
 
 	@priority = 3
+	test UseDefaultTemplateWhenCreatingNewPublication {
+		task ("Add new user with publications permitions") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Publications User",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Enable publications with sandbox and add new publication template set as default") {
+			Publications.enableSandboxOnly();
+
+			PublicationsTemplate.gotoPublicationTemplate();
+
+			PublicationsTemplate.addPublicationTemplate(
+				defaultSandboxTemplate = "true",
+				defaultTemplate = "true",
+				publicationDescription = "Publications Description ${CURRENT_USERNAME} 1",
+				publicationName = "Publication Name ${CURRENT_USERNAME} 1",
+				templateDescription = "Template Description 1",
+				templateName = "Template Name 1");
+
+			PublicationsNavigator.openPublicationsAdmin();
+		}
+
+		task ("Assert that the template is set as default") {
+			Click(locator1 = "Button#PLUS");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#TEMPLATE_OPTION",
+				value1 = "Template Name 1");
+
+			AssertTextEquals(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "Publication Name test 1");
+		}
+
+		task ("Log out from test user, log in with new user") {
+			SignOut.signOut();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assert that the template is set as default for the new user") {
+			PublicationsNavigator.openPublicationsAdmin();
+
+			Click(locator1 = "Button#PLUS");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#TEMPLATE_OPTION",
+				value1 = "Template Name 1");
+
+			AssertTextEquals(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "Publication Name usersn 1");
+		}
+	}
+
+	@priority = 3
 	test UsePublicationNameSetInSelectedPublicationTemplate {
 		PublicationsTemplate.gotoPublicationTemplate();
 

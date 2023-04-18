@@ -521,6 +521,27 @@ public class Document implements Cloneable, Serializable {
 
 	protected Long sizeInBytes;
 
+	public String getSourceFileName() {
+		return sourceFileName;
+	}
+
+	public void setSourceFileName(String sourceFileName) {
+		this.sourceFileName = sourceFileName;
+	}
+
+	public void setSourceFileName(
+		UnsafeSupplier<String, Exception> sourceFileNameUnsafeSupplier) {
+
+		try {
+			sourceFileName = sourceFileNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String sourceFileName;
+
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		return taxonomyCategoryBriefs;
 	}

@@ -214,6 +214,7 @@ public abstract class BaseDocumentResourceTestCase {
 		document.setEncodingFormat(regex);
 		document.setExternalReferenceCode(regex);
 		document.setFileExtension(regex);
+		document.setSourceFileName(regex);
 		document.setTitle(regex);
 
 		String json = DocumentSerDes.toJSON(document);
@@ -229,6 +230,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(regex, document.getEncodingFormat());
 		Assert.assertEquals(regex, document.getExternalReferenceCode());
 		Assert.assertEquals(regex, document.getFileExtension());
+		Assert.assertEquals(regex, document.getSourceFileName());
 		Assert.assertEquals(regex, document.getTitle());
 	}
 
@@ -2947,6 +2949,14 @@ public abstract class BaseDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("sourceFileName", additionalAssertFieldName)) {
+				if (document.getSourceFileName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
 
@@ -3400,6 +3410,17 @@ public abstract class BaseDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("sourceFileName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						document1.getSourceFileName(),
+						document2.getSourceFileName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
 
@@ -3832,6 +3853,14 @@ public abstract class BaseDocumentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("sourceFileName")) {
+			sb.append("'");
+			sb.append(String.valueOf(document.getSourceFileName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("taxonomyCategoryBriefs")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3925,6 +3954,8 @@ public abstract class BaseDocumentResourceTestCase {
 				numberOfComments = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 				sizeInBytes = RandomTestUtil.randomLong();
+				sourceFileName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

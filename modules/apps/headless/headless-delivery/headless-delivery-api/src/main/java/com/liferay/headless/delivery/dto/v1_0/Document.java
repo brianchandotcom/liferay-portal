@@ -759,6 +759,34 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
 
+	@Schema(description = "The document's source file name.")
+	public String getSourceFileName() {
+		return sourceFileName;
+	}
+
+	public void setSourceFileName(String sourceFileName) {
+		this.sourceFileName = sourceFileName;
+	}
+
+	@JsonIgnore
+	public void setSourceFileName(
+		UnsafeSupplier<String, Exception> sourceFileNameUnsafeSupplier) {
+
+		try {
+			sourceFileName = sourceFileNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The document's source file name.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String sourceFileName;
+
 	@Schema(description = "The categories associated with this document.")
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
@@ -1241,6 +1269,20 @@ public class Document implements Serializable {
 			sb.append("\"sizeInBytes\": ");
 
 			sb.append(sizeInBytes);
+		}
+
+		if (sourceFileName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sourceFileName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sourceFileName));
+
+			sb.append("\"");
 		}
 
 		if (taxonomyCategoryBriefs != null) {

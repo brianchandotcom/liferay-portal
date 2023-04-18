@@ -386,6 +386,20 @@ public class DocumentSerDes {
 			sb.append(document.getSizeInBytes());
 		}
 
+		if (document.getSourceFileName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sourceFileName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(document.getSourceFileName()));
+
+			sb.append("\"");
+		}
+
 		if (document.getTaxonomyCategoryBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -660,6 +674,14 @@ public class DocumentSerDes {
 			map.put("sizeInBytes", String.valueOf(document.getSizeInBytes()));
 		}
 
+		if (document.getSourceFileName() == null) {
+			map.put("sourceFileName", null);
+		}
+		else {
+			map.put(
+				"sourceFileName", String.valueOf(document.getSourceFileName()));
+		}
+
 		if (document.getTaxonomyCategoryBriefs() == null) {
 			map.put("taxonomyCategoryBriefs", null);
 		}
@@ -885,6 +907,11 @@ public class DocumentSerDes {
 				if (jsonParserFieldValue != null) {
 					document.setSizeInBytes(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sourceFileName")) {
+				if (jsonParserFieldValue != null) {
+					document.setSourceFileName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

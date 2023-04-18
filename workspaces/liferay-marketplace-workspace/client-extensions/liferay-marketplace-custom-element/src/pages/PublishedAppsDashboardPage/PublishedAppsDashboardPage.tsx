@@ -353,16 +353,13 @@ export function PublishedAppsDashboardPage() {
 
 				const customerRoles = [
 					'Account Administrator',
-					'Project Installer',
 					'Account Buyer',
 					'Account Member',
 				];
 
 				const publisherRoles = [
-					'Owner',
 					'Account Administrator',
 					'App Editor',
-					'Sales Manager',
 				];
 
 				customerRoles.forEach((customerRole) => {

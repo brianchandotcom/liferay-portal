@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder auto-import-default-references="false" package-path="com.liferay.osb.faro">
+<service-builder auto-import-default-references="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.osb.faro">
 	<author>Matthew Kong</author>
 	<namespace>OSBFaro</namespace>
 	<entity local-service="true" name="FaroChannel" remote-service="false">
@@ -16,9 +16,10 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
+		<column name="createTime" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-		<column name="createTime" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->
@@ -40,17 +41,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>
-		<finder name="ChannelId" return-type="FaroChannel" unique="true">
+		<finder name="C_W" return-type="FaroChannel" unique="true">
 			<finder-column name="channelId" />
 			<finder-column name="workspaceGroupId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="FaroEmail" persistence-class="false" remote-service="false" />
 	<entity local-service="true" name="FaroNotification" remote-service="false">
@@ -65,8 +59,9 @@
 
 		<!-- Audit fields -->
 
-		<column name="userId" type="long" />
+		<column name="companyId" type="long" />
 		<column name="createTime" type="long" />
+		<column name="userId" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->
@@ -116,9 +111,10 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
+		<column name="createTime" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-		<column name="createTime" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->
@@ -135,10 +131,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="ownerId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="FaroProject" remote-service="false">
 
@@ -152,9 +144,10 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
+		<column name="createTime" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-		<column name="createTime" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->
@@ -192,30 +185,25 @@
 		<finder name="WeDeployKey" return-type="FaroProject" unique="true">
 			<finder-column name="weDeployKey" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="FaroChannel" package-path="com.liferay.osb.faro" />
-		<reference entity="FaroPreferences" package-path="com.liferay.osb.faro" />
-		<reference entity="FaroProjectEmailAddressDomain" package-path="com.liferay.osb.faro" />
-		<reference entity="FaroUser" package-path="com.liferay.osb.faro" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="FaroProjectEmailAddressDomain" remote-service="false">
+	<entity local-service="true" name="FaroProjectEmailDomain" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="faroProjectEmailAddressDomainId" primary="true" type="long" />
+		<column name="faroProjectEmailDomainId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
 		<column name="groupId" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="faroProjectId" type="long" />
-		<column name="emailAddressDomain" type="String" />
+		<column name="emailDomain" type="String" />
 
 		<!-- Finder methods -->
 
@@ -238,9 +226,10 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
+		<column name="createTime" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-		<column name="createTime" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->
@@ -283,14 +272,5 @@
 			<finder-column name="emailAddress" />
 			<finder-column name="status" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="FaroPreferences" package-path="com.liferay.osb.faro" />
-		<reference entity="FaroProject" package-path="com.liferay.osb.faro" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

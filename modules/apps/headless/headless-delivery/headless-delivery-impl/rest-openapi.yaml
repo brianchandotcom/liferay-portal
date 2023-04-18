@@ -3258,6 +3258,18 @@ components:
                     # @review
                     description:
                         The Open Graph's image.
+                imageAlt:
+                    # @review
+                    description:
+                        The Open Graph's image alt.
+                    type: string
+                imageAlt_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized Open Graph's image alts.
+                    type: object
                 title:
                     # @review
                     description:

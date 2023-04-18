@@ -31,10 +31,10 @@ import javax.portlet.WindowState;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionEntryFriendlyURLMapper
+public class PortletCETFriendlyURLMapper
 	extends DefaultFriendlyURLMapper implements FriendlyURLMapper {
 
-	public ClientExtensionEntryFriendlyURLMapper(String friendlyURLMapping) {
+	public PortletCETFriendlyURLMapper(String friendlyURLMapping) {
 		_mapping = friendlyURLMapping;
 
 		Router router = new RouterImpl();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.react.web.internal.importmap;
+package com.liferay.frontend.js.react.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
 import com.liferay.petra.string.StringBundler;

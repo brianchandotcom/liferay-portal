@@ -6,7 +6,7 @@ classes {
 
 copyPackageJson {
 	from new File(projectDir, "package.json")
-	into new File(sourceSets.main.java.outputDir, "com/liferay/frontend/taglib/clay/internal/importmap/dependencies")
+	into new File(sourceSets.main.java.outputDir, "com/liferay/frontend/taglib/clay/internal/js/importmaps/extender/dependencies")
 }
 
 dependencies {

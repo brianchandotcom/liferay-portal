@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.dependencies.web.internal.importmap;
+package com.liferay.frontend.js.dependencies.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
 import com.liferay.portal.kernel.json.JSONFactory;

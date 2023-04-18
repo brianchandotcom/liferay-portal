@@ -593,7 +593,7 @@ public class LayoutsSEODisplayContext {
 	}
 
 	private String _getTypeLabel(String className) {
-		InfoItemDetailsProvider infoItemDetailsProvider =
+		InfoItemDetailsProvider<?> infoItemDetailsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, className);
 

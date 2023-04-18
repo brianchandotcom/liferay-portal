@@ -666,7 +666,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getActionDropdownItems", new Class<?>[0]);
 	}
 
@@ -679,7 +679,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getAssignUserRolesDataMap", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -692,7 +692,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getAvailableActions", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -703,7 +703,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getDeleteURL", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -714,7 +714,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getEditURL", new Class<?>[] {SegmentsEntry.class}, segmentsEntry);
 	}
 
@@ -775,7 +775,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getPermissionURL", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -788,7 +788,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getPreviewMembersURL", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -799,7 +799,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getScopeName", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -812,7 +812,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getSegmentsEntryURL", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -825,7 +825,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"getSegmentsEntryURLTarget", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -852,7 +852,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isRoleSegmentationEnabled", new Class<?>[] {long.class},
 			companyId);
 	}
@@ -865,7 +865,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isRoleSegmentationEnabled", new Class<?>[] {long.class},
 			companyId);
 	}
@@ -876,7 +876,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isSegmentationEnabled", new Class<?>[] {long.class}, companyId);
 	}
 
@@ -888,7 +888,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isShowAssignUserRolesAction", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -899,7 +899,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isShowCreationMenu", new Class<?>[0]);
 	}
 
@@ -911,7 +911,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isShowDeleteAction", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -924,7 +924,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isShowPermissionAction", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -937,7 +937,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isShowUpdateAction", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -950,7 +950,7 @@ public class SegmentsDisplayContextTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"SEGMENTS_DISPLAY_CONTEXT"),
+				_SEGMENTS_DISPLAY_CONTEXT),
 			"isShowViewAction", new Class<?>[] {SegmentsEntry.class},
 			segmentsEntry);
 	}
@@ -967,6 +967,10 @@ public class SegmentsDisplayContextTest {
 
 		return mockLiferayPortletRenderRequest;
 	}
+
+	private static final String _SEGMENTS_DISPLAY_CONTEXT =
+		"com.liferay.segments.web.internal.display.context." +
+			"SegmentsDisplayContext";
 
 	private Company _company;
 

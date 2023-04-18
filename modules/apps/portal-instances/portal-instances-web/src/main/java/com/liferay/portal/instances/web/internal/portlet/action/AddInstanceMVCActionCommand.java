@@ -15,6 +15,7 @@
 package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
@@ -139,8 +140,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		Company company = _companyService.addCompany(
-			webId, virtualHostname, mx, maxUsers, active, screenNameAdmin,
-			emailAdmin, passwordAdmin, firstNameAdmin, lastNameAdmin);
+			webId, virtualHostname, mx, maxUsers, active, passwordAdmin,
+			screenNameAdmin, emailAdmin, firstNameAdmin, StringPool.BLANK,
+			lastNameAdmin);
 
 		String siteInitializerKey = ParamUtil.getString(
 			actionRequest, "siteInitializerKey");

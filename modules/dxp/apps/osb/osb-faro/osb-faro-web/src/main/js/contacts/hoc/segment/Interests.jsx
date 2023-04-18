@@ -10,7 +10,7 @@ import {
 	mapPropsToOptions
 } from 'contacts/hoc/mappers/interests-query';
 import {graphql} from '@apollo/react-hoc';
-import {Routes, toRoute} from 'shared/util/router';
+import {PAGES, Routes, setUriQueryValue, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {useParams} from 'react-router-dom';
 import {useQueryPagination} from 'shared/hooks';
@@ -57,12 +57,17 @@ const TableWithData = withBaseResults(withData, {
 			label: Liferay.Language.get('topic'),
 			routeFn: ({data: {name}}) =>
 				name &&
-				toRoute(Routes.CONTACTS_SEGMENT_INTEREST_DETAILS, {
-					channelId,
-					groupId,
-					id,
-					interestId: name
-				}),
+				setUriQueryValue(
+					toRoute(Routes.CONTACTS_SEGMENT_INTEREST_DETAILS, {
+						channelId,
+						groupId,
+						id,
+						interestId: name,
+						tabId: PAGES
+					}),
+					'active',
+					true
+				),
 			sortable: true
 		}),
 		compositionListColumns.getRelativeMetricBar({

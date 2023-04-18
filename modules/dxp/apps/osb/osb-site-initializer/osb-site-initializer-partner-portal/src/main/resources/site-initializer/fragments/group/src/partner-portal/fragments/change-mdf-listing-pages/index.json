@@ -4,7 +4,7 @@
 			"fields": [
 				{
 					"defaultValue": true,
-					"label": "Channel Account Manager",
+					"label": "Channel Account Manager (CAM)",
 					"name": "channelAccountManager",
 					"type": "checkbox"
 				},

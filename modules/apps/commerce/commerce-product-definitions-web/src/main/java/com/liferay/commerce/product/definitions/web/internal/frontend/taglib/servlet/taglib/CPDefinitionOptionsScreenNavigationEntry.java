@@ -105,7 +105,7 @@ public class CPDefinitionOptionsScreenNavigationEntry
 			cpDefinitionOptionRelDisplayContext);
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/definition_option_rels.jsp");
 	}
 
@@ -139,6 +139,6 @@ public class CPDefinitionOptionsScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

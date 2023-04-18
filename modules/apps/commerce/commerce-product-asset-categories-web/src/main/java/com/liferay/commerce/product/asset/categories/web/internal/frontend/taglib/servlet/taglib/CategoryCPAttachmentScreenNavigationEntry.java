@@ -81,7 +81,7 @@ public class CategoryCPAttachmentScreenNavigationEntry
 			"cpAttachmentFileEntryService", cpAttachmentFileEntryService);
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/images.jsp");
 	}
 
@@ -100,6 +100,6 @@ public class CategoryCPAttachmentScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

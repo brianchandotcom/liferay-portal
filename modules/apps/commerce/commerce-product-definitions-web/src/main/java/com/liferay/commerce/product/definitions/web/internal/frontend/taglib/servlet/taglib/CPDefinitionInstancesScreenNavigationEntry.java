@@ -109,7 +109,7 @@ public class CPDefinitionInstancesScreenNavigationEntry
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/instances.jsp");
 	}
 
@@ -155,6 +155,6 @@ public class CPDefinitionInstancesScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

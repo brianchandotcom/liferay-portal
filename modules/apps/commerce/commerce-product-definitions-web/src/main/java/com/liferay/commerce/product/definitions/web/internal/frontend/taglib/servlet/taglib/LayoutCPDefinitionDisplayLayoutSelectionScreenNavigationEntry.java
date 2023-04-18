@@ -114,7 +114,7 @@ public class LayoutCPDefinitionDisplayLayoutSelectionScreenNavigationEntry
 			cpDefinitionDisplayLayoutDisplayContext);
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/display_layout/layout_selection.jsp");
 	}
 
@@ -161,6 +161,6 @@ public class LayoutCPDefinitionDisplayLayoutSelectionScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

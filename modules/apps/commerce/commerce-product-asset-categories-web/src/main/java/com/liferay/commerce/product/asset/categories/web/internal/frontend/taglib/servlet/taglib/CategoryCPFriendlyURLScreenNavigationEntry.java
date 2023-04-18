@@ -98,7 +98,7 @@ public class CategoryCPFriendlyURLScreenNavigationEntry
 		httpServletRequest.setAttribute("titleMapAsXML", titleMapAsXML);
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/friendly_url.jsp");
 	}
 
@@ -123,6 +123,6 @@ public class CategoryCPFriendlyURLScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.asset.categories.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

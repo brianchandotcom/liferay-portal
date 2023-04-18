@@ -10,7 +10,7 @@
 				},
 				{
 					"defaultValue": true,
-					"label": "Channel Finance Manager",
+					"label": "Channel Finance Manager (CFM)",
 					"name": "channelFinanceManager",
 					"type": "checkbox"
 				},

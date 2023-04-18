@@ -16,7 +16,7 @@ export enum RoleTypes {
 	CHANNEL_ACCOUNT_MANAGER = 'Channel Account Manager (CAM)',
 	CHANNEL_REGIONAL_MARKETING_MANAGER = 'Channel Regional Marketing Manager',
 	CHANNEL_GLOBAL_MARKETING_MANAGER = 'Channel Global Marketing Manager',
-	CHANNEL_FINANCE_MANAGER = 'Channel Finance Manager',
+	CHANNEL_FINANCE_MANAGER = 'Channel Finance Manager (CFM)',
 }
 
 export function isLiferayManager(roles: Role[]) {

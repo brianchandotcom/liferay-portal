@@ -430,4 +430,14 @@ definition {
 			PRMMDFRequest.viewDisabledButton(buttonName = "Submit");
 		}
     }
+    
+    @description = "This is a test for LPS-181363. Verify that its possible to unselect an activity when editing"
+	@priority = 5
+	@ignore = "true"
+	test CanUnselectClaimedActivity {
+
+		// This is a test for LPS-181363. Verify that its possible to unselect an activity when editing
+
+    }
+
 }

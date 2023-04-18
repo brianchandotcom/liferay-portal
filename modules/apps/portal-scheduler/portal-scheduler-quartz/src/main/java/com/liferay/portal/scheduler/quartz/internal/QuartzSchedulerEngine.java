@@ -916,6 +916,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			Trigger.CompletedExecutionInstruction
 				completedExecutionInstruction) {
 
+			if (jobExecutionContext.getNextFireTime() != null) {
+				return;
+			}
+
 			TriggerKey triggerKey = trigger.getKey();
 
 			JobDetail jobDetail = jobExecutionContext.getJobDetail();

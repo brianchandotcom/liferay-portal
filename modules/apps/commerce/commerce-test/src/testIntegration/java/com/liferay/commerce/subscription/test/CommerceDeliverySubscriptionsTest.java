@@ -15,7 +15,7 @@
 package com.liferay.commerce.subscription.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -95,7 +95,7 @@ public class CommerceDeliverySubscriptionsTest {
 			_commerceOrder, _user.getUserId(), true, true);
 
 		_commerceOrder.setPaymentStatus(
-			CommerceOrderConstants.PAYMENT_STATUS_PAID);
+			CommerceOrderPaymentConstants.STATUS_COMPLETED);
 
 		CommerceOrderLocalServiceUtil.updateCommerceOrder(_commerceOrder);
 
@@ -191,7 +191,7 @@ public class CommerceDeliverySubscriptionsTest {
 			_commerceOrder, _user.getUserId(), true, true);
 
 		_commerceOrder.setPaymentStatus(
-			CommerceOrderConstants.PAYMENT_STATUS_PAID);
+			CommerceOrderPaymentConstants.STATUS_COMPLETED);
 
 		CommerceOrderLocalServiceUtil.updateCommerceOrder(_commerceOrder);
 

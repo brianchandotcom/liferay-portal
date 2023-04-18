@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.payment.test.util;
 
-import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
@@ -59,7 +59,7 @@ public class TestCommercePaymentMethod implements CommercePaymentMethod {
 
 		return new CommercePaymentResult(
 			null, commercePaymentRequest.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_PAID, false, null, null,
+			CommerceOrderPaymentConstants.STATUS_COMPLETED, false, null, null,
 			Collections.emptyList(), true);
 	}
 
@@ -80,7 +80,7 @@ public class TestCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public int getPaymentType() {
-		return CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE;
+		return CommercePaymentMethodConstants.TYPE_OFFLINE;
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class TestCommercePaymentMethod implements CommercePaymentMethod {
 
 		return new CommercePaymentResult(
 			null, commercePaymentRequest.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, false, null, null,
+			CommerceOrderPaymentConstants.STATUS_AUTHORIZED, false, null, null,
 			Collections.emptyList(), true);
 	}
 

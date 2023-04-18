@@ -19,6 +19,7 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -146,7 +147,7 @@ public class CommerceOrderStatusNotificationTest {
 			_commerceOrder.getCommerceOrderId());
 
 		Assert.assertEquals(
-			CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			CommerceOrderPaymentConstants.STATUS_COMPLETED,
 			_commerceOrder.getPaymentStatus());
 		Assert.assertEquals(
 			CommerceOrderConstants.ORDER_STATUS_PENDING,

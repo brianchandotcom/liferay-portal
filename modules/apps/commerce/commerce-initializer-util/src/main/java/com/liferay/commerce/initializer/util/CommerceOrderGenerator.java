@@ -22,6 +22,7 @@ import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -231,7 +232,7 @@ public class CommerceOrderGenerator {
 
 		_commerceOrderLocalService.updatePaymentStatus(
 			commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_PAID);
+			CommerceOrderPaymentConstants.STATUS_COMPLETED);
 	}
 
 	private void _generateCommerceOrderItems(

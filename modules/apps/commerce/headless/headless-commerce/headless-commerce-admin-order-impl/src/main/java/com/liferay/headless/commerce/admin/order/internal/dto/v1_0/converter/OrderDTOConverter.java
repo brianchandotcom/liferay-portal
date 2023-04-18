@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
@@ -121,12 +122,13 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				paymentStatus = commerceOrder.getPaymentStatus();
 				paymentStatusInfo = _getPaymentStatusInfo(
 					commerceOrder.getPaymentStatus(),
-					CommerceOrderConstants.getPaymentStatusLabel(
+					CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(
 						commerceOrder.getPaymentStatus()),
 					_language.get(
 						resourceBundle,
-						CommerceOrderConstants.getPaymentStatusLabel(
-							commerceOrder.getPaymentStatus())));
+						CommerceOrderPaymentConstants.
+							getOrderPaymentStatusLabel(
+								commerceOrder.getPaymentStatus())));
 				paymentTermDescription =
 					commerceOrder.getPaymentCommerceTermEntryDescription();
 				paymentTermId = commerceOrder.getPaymentCommerceTermEntryId();

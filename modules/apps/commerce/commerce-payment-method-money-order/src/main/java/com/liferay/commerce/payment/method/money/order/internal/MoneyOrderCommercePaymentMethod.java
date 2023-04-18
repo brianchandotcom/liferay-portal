@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.payment.method.money.order.internal;
 
-import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
@@ -48,7 +48,7 @@ public class MoneyOrderCommercePaymentMethod implements CommercePaymentMethod {
 		return new CommercePaymentResult(
 			commercePaymentRequest.getTransactionId(),
 			commercePaymentRequest.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_PENDING, false, null, null,
+			CommerceOrderPaymentConstants.STATUS_PENDING, false, null, null,
 			Collections.emptyList(), true);
 	}
 
@@ -70,7 +70,7 @@ public class MoneyOrderCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public int getPaymentType() {
-		return CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE;
+		return CommercePaymentMethodConstants.TYPE_OFFLINE;
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class MoneyOrderCommercePaymentMethod implements CommercePaymentMethod {
 		return new CommercePaymentResult(
 			commercePaymentRequest.getTransactionId(),
 			commercePaymentRequest.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, false, null, null,
+			CommerceOrderPaymentConstants.STATUS_AUTHORIZED, false, null, null,
 			Collections.emptyList(), true);
 	}
 

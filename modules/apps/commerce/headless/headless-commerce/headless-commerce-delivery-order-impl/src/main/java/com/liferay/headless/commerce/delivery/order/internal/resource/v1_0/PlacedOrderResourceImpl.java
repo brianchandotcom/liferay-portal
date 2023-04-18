@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.delivery.order.internal.resource.v1_0;
 
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
@@ -114,7 +114,7 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 		sb.append(_portal.getPortalURL(contextHttpServletRequest));
 		sb.append(_portal.getPathModule());
 		sb.append(CharPool.SLASH);
-		sb.append(CommercePaymentConstants.SERVLET_PATH);
+		sb.append(CommercePaymentMethodConstants.SERVLET_PATH);
 		sb.append("?groupId=");
 		sb.append(commerceOrder.getGroupId());
 		sb.append(StringPool.AMPERSAND);

@@ -15,6 +15,7 @@
 package com.liferay.commerce.payment.internal.engine;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -228,7 +229,7 @@ public class CommerceSubscriptionEngineImpl
 			StringPool.BLANK);
 
 		if (commercePaymentResult.getNewPaymentStatus() ==
-				CommerceOrderConstants.PAYMENT_STATUS_PAID) {
+				CommerceOrderPaymentConstants.STATUS_COMPLETED) {
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();

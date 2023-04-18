@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
@@ -782,7 +783,7 @@ public class ObjectActionLocalServiceTest {
 
 			_commerceOrderLocalService.updatePaymentStatus(
 				commerceOrder1.getUserId(), commerceOrder1.getCommerceOrderId(),
-				CommerceOrderConstants.PAYMENT_STATUS_PAID);
+				CommerceOrderPaymentConstants.STATUS_COMPLETED);
 
 			commerceOrder1 = _commerceOrderLocalService.getCommerceOrder(
 				commerceOrder1.getCommerceOrderId());

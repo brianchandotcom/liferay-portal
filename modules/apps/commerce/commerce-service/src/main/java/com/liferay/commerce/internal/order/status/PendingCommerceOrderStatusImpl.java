@@ -15,7 +15,8 @@
 package com.liferay.commerce.internal.order.status;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
@@ -126,10 +127,9 @@ public class PendingCommerceOrderStatusImpl implements CommerceOrderStatus {
 		}
 
 		if ((commerceOrder.getPaymentStatus() ==
-				CommerceOrderConstants.PAYMENT_STATUS_PAID) ||
+				CommerceOrderPaymentConstants.STATUS_COMPLETED) ||
 			(commercePaymentMethod.getPaymentType() ==
-				CommercePaymentConstants.
-					COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE)) {
+				CommercePaymentMethodConstants.TYPE_OFFLINE)) {
 
 			return _commerceOrderValidatorRegistry.isValid(
 				LocaleUtil.getSiteDefault(), commerceOrder);

@@ -17,7 +17,7 @@ package com.liferay.commerce.payment.method.paypal.internal;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -229,7 +229,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 					}
 
 					success = true;
-					status = CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
+					status = CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
 					transactionId = authorizeOrder.id();
 				}
 			}
@@ -331,7 +331,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			Capture capture = captureHttpResponse.result();
 
 			success = true;
-			status = CommerceOrderConstants.PAYMENT_STATUS_PAID;
+			status = CommerceOrderPaymentConstants.STATUS_COMPLETED;
 			transactionId = capture.id();
 		}
 
@@ -372,14 +372,14 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				return new CommercePaymentResult(
 					captureOrder.id(),
 					commercePaymentRequest.getCommerceOrderId(),
-					CommerceOrderConstants.PAYMENT_STATUS_PAID, false, null,
+					CommerceOrderPaymentConstants.STATUS_COMPLETED, false, null,
 					null, Collections.emptyList(), success);
 			}
 
 			return new CommercePaymentResult(
 				commercePaymentRequest.getTransactionId(),
 				commercePaymentRequest.getCommerceOrderId(),
-				CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, true, null,
+				CommerceOrderPaymentConstants.STATUS_AUTHORIZED, true, null,
 				null, Collections.emptyList(), success);
 		}
 		catch (IOException ioException) {
@@ -395,7 +395,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			return new CommercePaymentResult(
 				commercePaymentRequest.getTransactionId(),
 				commercePaymentRequest.getCommerceOrderId(),
-				CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, true, null,
+				CommerceOrderPaymentConstants.STATUS_AUTHORIZED, true, null,
 				null, errorMessages, false);
 		}
 	}
@@ -435,8 +435,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			return new CommercePaymentResult(
 				activeAgreement.getId(),
 				commercePaymentRequest.getCommerceOrderId(),
-				CommerceOrderConstants.PAYMENT_STATUS_PAID, false, null, null,
-				messages, success);
+				CommerceOrderPaymentConstants.STATUS_COMPLETED, false, null,
+				null, messages, success);
 		}
 		catch (PayPalRESTException payPalRESTException) {
 			_log.error(payPalRESTException);
@@ -444,7 +444,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			return new CommercePaymentResult(
 				commercePaymentRequest.getTransactionId(),
 				commercePaymentRequest.getCommerceOrderId(),
-				CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, true, null,
+				CommerceOrderPaymentConstants.STATUS_AUTHORIZED, true, null,
 				null,
 				Collections.singletonList(payPalRESTException.getMessage()),
 				false);
@@ -477,8 +477,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public int getPaymentType() {
-		return CommercePaymentConstants.
-			COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT;
+		return CommercePaymentMethodConstants.TYPE_ONLINE_REDIRECT;
 	}
 
 	@Override
@@ -671,7 +670,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				}
 
 				success = true;
-				status = CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
+				status = CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
 
 				transactionId = createOrder.id();
 			}
@@ -746,7 +745,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				Validator.isNotNull(token)) {
 
 				success = true;
-				status = CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
+				status = CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
 			}
 
 			List<String> messages = Arrays.asList(plan.getState());

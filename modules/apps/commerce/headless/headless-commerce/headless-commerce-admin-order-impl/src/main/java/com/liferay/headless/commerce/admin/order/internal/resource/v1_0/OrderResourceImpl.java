@@ -18,6 +18,7 @@ import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
@@ -316,7 +317,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 					CommerceOrderConstants.ORDER_STATUS_PENDING),
 				GetterUtil.getInteger(
 					order.getPaymentStatus(),
-					CommerceOrderConstants.PAYMENT_STATUS_PENDING),
+					CommerceOrderPaymentConstants.STATUS_PENDING),
 				order.getPurchaseOrderNumber(), order.getShippingAmount(),
 				order.getShippingOption(), order.getShippingWithTaxAmount(),
 				order.getSubtotal(), order.getSubtotalWithTaxAmount(),

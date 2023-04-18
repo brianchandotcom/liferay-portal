@@ -18,7 +18,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.constants.CommerceAddressConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
@@ -135,7 +135,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		sb.append(_portal.getPortalURL(contextHttpServletRequest));
 		sb.append(_portal.getPathModule());
 		sb.append(CharPool.SLASH);
-		sb.append(CommercePaymentConstants.SERVLET_PATH);
+		sb.append(CommercePaymentMethodConstants.SERVLET_PATH);
 		sb.append("?groupId=");
 		sb.append(commerceOrder.getGroupId());
 		sb.append(StringPool.AMPERSAND);

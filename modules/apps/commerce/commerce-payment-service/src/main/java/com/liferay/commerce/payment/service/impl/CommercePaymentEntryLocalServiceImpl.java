@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.payment.service.impl;
 
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentEntryConstants;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.commerce.payment.service.base.CommercePaymentEntryLocalServiceBaseImpl;
@@ -93,7 +93,7 @@ public class CommercePaymentEntryLocalServiceImpl
 		commercePaymentEntry.setCurrencyCode(currencyCode);
 		commercePaymentEntry.setPaymentMethodName(paymentMethodName);
 		commercePaymentEntry.setPaymentStatus(
-			CommercePaymentConstants.PAYMENT_STATUS_PENDING);
+			CommercePaymentEntryConstants.STATUS_PENDING);
 		commercePaymentEntry.setTransactionCode(transactionCode);
 
 		commercePaymentEntry = commercePaymentEntryPersistence.update(

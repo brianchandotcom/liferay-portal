@@ -19,7 +19,8 @@ import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
@@ -439,14 +440,13 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				commerceOrder.getCommercePaymentMethodKey());
 
 		if ((commerceOrder.getPaymentStatus() ==
-				CommerceOrderConstants.PAYMENT_STATUS_PAID) ||
+				CommerceOrderPaymentConstants.STATUS_COMPLETED) ||
 			(commercePaymentMethod == null) ||
 			((commercePaymentMethod != null) &&
 			 (commercePaymentMethod.getPaymentType() ==
-				 CommercePaymentConstants.
-					 COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE) &&
+				 CommercePaymentMethodConstants.TYPE_OFFLINE) &&
 			 (commerceOrder.getPaymentStatus() ==
-				 CommerceOrderConstants.PAYMENT_STATUS_PENDING))) {
+				 CommerceOrderPaymentConstants.STATUS_PENDING))) {
 
 			return transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
@@ -533,7 +533,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 				if ((orderStatus ==
 						CommerceOrderConstants.ORDER_STATUS_PENDING) &&
 					(commerceOrder.getPaymentStatus() ==
-						CommerceOrderConstants.PAYMENT_STATUS_PAID)) {
+						CommerceOrderPaymentConstants.STATUS_COMPLETED)) {
 
 					CommerceSubscriptionEntryHelperUtil.
 						checkCommerceSubscriptions(commerceOrder);

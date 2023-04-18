@@ -14,9 +14,8 @@
 
 package com.liferay.commerce.payment.method.authorize.net.internal;
 
-import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
@@ -100,7 +99,7 @@ public class AuthorizeNetCommercePaymentMethod
 		return new CommercePaymentResult(
 			commercePaymentRequest.getTransactionId(),
 			authorizeNetCommercePaymentRequest.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_PAID, false, null, null,
+			CommerceOrderPaymentConstants.STATUS_COMPLETED, false, null, null,
 			Collections.emptyList(), true);
 	}
 
@@ -122,8 +121,7 @@ public class AuthorizeNetCommercePaymentMethod
 
 	@Override
 	public int getPaymentType() {
-		return CommercePaymentConstants.
-			COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_REDIRECT;
+		return CommercePaymentMethodConstants.TYPE_ONLINE_REDIRECT;
 	}
 
 	@Override
@@ -228,7 +226,7 @@ public class AuthorizeNetCommercePaymentMethod
 
 			return new CommercePaymentResult(
 				token, authorizeNetCommercePaymentRequest.getCommerceOrderId(),
-				CommerceOrderConstants.PAYMENT_STATUS_PENDING, true, url, null,
+				CommerceOrderPaymentConstants.STATUS_PENDING, true, url, null,
 				resultMessages, true);
 		}
 

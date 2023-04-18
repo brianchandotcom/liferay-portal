@@ -19,6 +19,7 @@ import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -171,9 +172,9 @@ public class CommerceOrderLocalServiceImpl
 			userId, groupId, 0, commerceAccountId, commerceCurrencyId,
 			commerceOrderTypeId, 0, 0, null, 0, 0, 0, 0, 0,
 			CommerceOrderConstants.ORDER_STATUS_OPEN,
-			CommerceOrderConstants.PAYMENT_STATUS_PENDING, null,
-			BigDecimal.ZERO, null, BigDecimal.ZERO, BigDecimal.ZERO,
-			BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+			CommerceOrderPaymentConstants.STATUS_PENDING, null, BigDecimal.ZERO,
+			null, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+			BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
 			new ServiceContext());
 	}
 
@@ -982,7 +983,7 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrder.getCommerceShippingMethodId(), shippingAddressId,
 				commerceOrder.getCommercePaymentMethodKey(), 0, 0, 0, 0, 0,
 				CommerceOrderConstants.ORDER_STATUS_OPEN,
-				CommerceOrderConstants.PAYMENT_STATUS_PENDING, StringPool.BLANK,
+				CommerceOrderPaymentConstants.STATUS_PENDING, StringPool.BLANK,
 				commerceOrder.getShippingAmount(),
 				commerceOrder.getShippingOptionName(),
 				commerceOrder.getShippingWithTaxAmount(),

@@ -22,7 +22,7 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -1188,7 +1188,7 @@ public class CommerceOrderContentDisplayContext {
 				commercePaymentMethodKey);
 
 		return ArrayUtil.contains(
-			CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPES_ONLINE,
+			CommercePaymentMethodConstants.TYPES_ONLINE,
 			commercePaymentMethod.getPaymentType());
 	}
 

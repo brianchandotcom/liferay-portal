@@ -16,6 +16,7 @@ package com.liferay.commerce.product.type.virtual.order.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
@@ -150,7 +151,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		commerceOrder = _setCommerceOrderStatuses(
 			_commerceOrderLocalService.getCommerceOrder(
 				commerceOrder.getCommerceOrderId()),
-			CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			CommerceOrderPaymentConstants.STATUS_COMPLETED,
 			CommerceOrderConstants.ORDER_STATUS_PENDING);
 
 		_commerceVirtualOrderItemChecker.checkCommerceVirtualOrderItems(
@@ -243,7 +244,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		commerceOrder = _setCommerceOrderStatuses(
 			_commerceOrderLocalService.getCommerceOrder(
 				commerceOrder.getCommerceOrderId()),
-			CommerceOrderConstants.PAYMENT_STATUS_PAID,
+			CommerceOrderPaymentConstants.STATUS_COMPLETED,
 			CommerceOrderConstants.ORDER_STATUS_PENDING);
 
 		_commerceSubscriptionEntryHelper.checkCommerceSubscriptions(

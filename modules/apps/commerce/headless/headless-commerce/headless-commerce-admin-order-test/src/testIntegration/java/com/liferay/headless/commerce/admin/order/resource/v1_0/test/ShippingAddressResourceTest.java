@@ -19,7 +19,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommercePaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.model.CommerceOrder;
@@ -123,7 +123,7 @@ public class ShippingAddressResourceTest
 				CommerceOrderConstants.TYPE_PK_FULFILLMENT, 0,
 				address.getAddressId(), RandomTestUtil.randomString(), 1, 1,
 				2022, 0, 0, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-				CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE,
+				CommercePaymentMethodConstants.TYPE_OFFLINE,
 				RandomTestUtil.randomString(), BigDecimal.ONE,
 				RandomTestUtil.randomString(), BigDecimal.ONE, BigDecimal.ONE,
 				BigDecimal.ONE, BigDecimal.ONE, BigDecimal.TEN, BigDecimal.TEN,

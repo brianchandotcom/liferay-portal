@@ -1,0 +1,20 @@
+{
+	"friendlyURL_i18n": {
+		"en_US": "/marketing/campaigns"
+	},
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Campaigns"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -3,6 +3,314 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragment": {
+						"key": "content-welcome-banner"
+					},
+					"fragmentConfig": {
+						"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
+					},
+					"fragmentFields": [
+						{
+							"id": "first-banner-primary-button-text",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"ar_SA": "Watch a Video Tour",
+										"ca_ES": "Watch a Video Tour",
+										"de_DE": "Watch a Video Tour",
+										"en_US": "Watch a Video Tour",
+										"es_ES": "Watch a Video Tour",
+										"fi_FI": "Watch a Video Tour",
+										"fr_FR": "Watch a Video Tour",
+										"hu_HU": "Watch a Video Tour",
+										"ja_JP": "Watch a Video Tour",
+										"nl_NL": "Watch a Video Tour",
+										"pt_BR": "Watch a Video Tour",
+										"sv_SE": "Watch a Video Tour",
+										"zh_CN": "Watch a Video Tour"
+									}
+								}
+							}
+						},
+						{
+							"id": "second-banner-primary-button-text",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"ar_SA": "Watch a Video Tour",
+										"ca_ES": "Watch a Video Tour",
+										"de_DE": "Watch a Video Tour",
+										"en_US": "Watch a Video Tour",
+										"es_ES": "Watch a Video Tour",
+										"fi_FI": "Watch a Video Tour",
+										"fr_FR": "Watch a Video Tour",
+										"hu_HU": "Watch a Video Tour",
+										"ja_JP": "Watch a Video Tour",
+										"nl_NL": "Watch a Video Tour",
+										"pt_BR": "Watch a Video Tour",
+										"sv_SE": "Watch a Video Tour",
+										"zh_CN": "Watch a Video Tour"
+									}
+								}
+							}
+						},
+						{
+							"id": "first-welcome-banner-title",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"ar_SA": "Welcome to Partner Portal",
+										"ca_ES": "Welcome to Partner Portal",
+										"de_DE": "Welcome to Partner Portal",
+										"en_US": "Welcome to Partner Portal",
+										"es_ES": "Welcome to Partner Portal",
+										"fi_FI": "Welcome to Partner Portal",
+										"fr_FR": "Welcome to Partner Portal",
+										"hu_HU": "Welcome to Partner Portal",
+										"ja_JP": "Welcome to Partner Portal",
+										"nl_NL": "Welcome to Partner Portal",
+										"pt_BR": "Welcome to Partner Portal",
+										"sv_SE": "Welcome to Partner Portal",
+										"zh_CN": "Welcome to Partner Portal"
+									}
+								}
+							}
+						},
+						{
+							"id": "first-welcome-banner-description",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": ""
+									}
+								}
+							}
+						},
+						{
+							"id": "second-welcome-banner-title",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"ar_SA": "Partner Portal",
+										"ca_ES": "Partner Portal",
+										"de_DE": "Partner Portal",
+										"en_US": "Partner Portal",
+										"es_ES": "Partner Portal",
+										"fi_FI": "Partner Portal",
+										"fr_FR": "Partner Portal",
+										"hu_HU": "Partner Portal",
+										"ja_JP": "Partner Portal",
+										"nl_NL": "Partner Portal",
+										"pt_BR": "Partner Portal",
+										"sv_SE": "Partner Portal",
+										"zh_CN": "Partner Portal"
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"marginBottom": "5"
+					},
+					"indexed": true
+				},
+				"pageElements": [
+					{
+						"definition": {
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "clay-icon-link"
+									},
+									"fragmentConfig": {
+										"iconLink": "",
+										"iconName": "video"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "",
+										"inverted": false,
+										"style": "primary",
+										"type": "ghost",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "View Solution Partner Guide",
+														"ca_ES": "View Solution Partner Guide",
+														"de_DE": "View Solution Partner Guide",
+														"en_US": "View Solution Partner Guide",
+														"es_ES": "View Solution Partner Guide",
+														"fi_FI": "View Solution Partner Guide",
+														"fr_FR": "View Solution Partner Guide",
+														"hu_HU": "View Solution Partner Guide",
+														"ja_JP": "View Solution Partner Guide",
+														"nl_NL": "View Solution Partner Guide",
+														"pt_BR": "View Solution Partner Guide",
+														"sv_SE": "View Solution Partner Guide",
+														"zh_CN": "View Solution Partner Guide"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-image"
+									},
+									"fragmentConfig": {
+										"imageSize": "w-100"
+									},
+									"fragmentFields": [
+										{
+											"id": "image-square",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"mapping": {
+															"fieldKey": "FileEntry_previewImage",
+															"itemReference": {
+																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/content-welcome-banner-resources/sales-welcome-banner-bg.png#]"
+															}
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "clay-icon-link"
+									},
+									"fragmentConfig": {
+										"iconLink": "",
+										"iconName": "video"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "dialect-dialect-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "",
+										"inverted": false,
+										"style": "primary",
+										"type": "solid",
+										"uppercase": false
+									},
+									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "View Solutions Partner Guide",
+														"ca_ES": "View Solutions Partner Guide",
+														"de_DE": "View Solutions Partner Guide",
+														"en_US": "View Solutions Partner Guide",
+														"es_ES": "View Solutions Partner Guide",
+														"fi_FI": "View Solutions Partner Guide",
+														"fr_FR": "View Solutions Partner Guide",
+														"hu_HU": "View Solutions Partner Guide",
+														"ja_JP": "View Solutions Partner Guide",
+														"nl_NL": "View Solutions Partner Guide",
+														"pt_BR": "View Solutions Partner Guide",
+														"sv_SE": "View Solutions Partner Guide",
+														"zh_CN": "View Solutions Partner Guide"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
+			},
+			{
+				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
 						"textAlign": ""
@@ -28,6 +336,7 @@
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
+						"opacity": 100,
 						"paddingBottom": 0,
 						"paddingLeft": 0,
 						"paddingRight": 0,
@@ -38,53 +347,1387 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "welcome-banner"
-							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
 							"fragmentStyle": {
-								"textAlign": ""
+								"marginBottom": "3"
 							},
 							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"textAlign": "left"
-									},
-									"id": "portraitMobile"
-								}
-							],
-							"indexed": true
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"fragmentStyle": {
-								"marginTop": "4",
-								"paddingTop": "3"
-							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"marginRight": "0",
-										"textAlign": "center"
-									},
-									"id": "portraitMobile"
-								},
 								{
 									"fragmentViewportStyle": {
 										"marginRight": "0"
 									},
-									"id": "tablet"
+									"id": "portraitMobile"
 								}
 							],
 							"gutters": true,
 							"indexed": true,
-							"modulesPerRow": 1,
+							"modulesPerRow": 2,
 							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1,
+										"reverseOrder": false
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 9
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "announcements-subscribe"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "announcements-heading",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Announcements",
+																"ca_ES": "Announcements",
+																"de_DE": "Announcements",
+																"en_US": "Announcements",
+																"es_ES": "Announcements",
+																"fi_FI": "Announcements",
+																"fr_FR": "Announcements",
+																"hu_HU": "Announcements",
+																"ja_JP": "Announcements",
+																"nl_NL": "Announcements",
+																"pt_BR": "Announcements",
+																"sv_SE": "Announcements",
+																"zh_CN": "Announcements"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"paddingTop": "2"
+											},
+											"indexed": true,
+											"widgetInstances": [
+												{
+													"widgetConfig": {
+														"abstractLength": "200",
+														"anyAssetType": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
+														"anyClassTypeDLFileEntryAssetRendererFactory": "true",
+														"anyClassTypeJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+														"assetLinkBehavior": "viewInPortlet",
+														"assetVocabularyId": "",
+														"classNameIds": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
+														"classTypeIds": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+														"classTypeIdsDLFileEntryAssetRendererFactory": "0,42656,42705",
+														"classTypeIdsJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+														"customUserAttributes": "",
+														"ddmStructureDisplayFieldValue": "",
+														"ddmStructureFieldName": "",
+														"ddmStructureFieldValue": "",
+														"delta": "3",
+														"displayStyle": "ddmTemplate_ANNOUNCEMENTS-ENTRIES",
+														"displayStyleGroupId": "[$GROUP_ID$]",
+														"emailAssetEntryAddedBody_ar_SA": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_ca_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_en_US": "Dear [$TO_NAME$],<br />\n<br />\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br />\n<br />\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br />\n<br />\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]\n",
+														"emailAssetEntryAddedBody_es_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_fi_FI": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_fr_FR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_hu_HU": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_ja_JP": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_nl_NL": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_pt_BR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_sv_SE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedBody_zh_CN": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+														"emailAssetEntryAddedEnabled": "true",
+														"emailAssetEntryAddedSubject_ar_SA": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_ca_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_de_DE": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_es_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_fi_FI": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_fr_FR": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_hu_HU": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_ja_JP": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_nl_NL": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_pt_BR": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_sv_SE": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailAssetEntryAddedSubject_zh_CN": "New Asset Entries Added to [$PORTLET_TITLE$]",
+														"emailFromAddress": "test@liferay.com",
+														"emailFromName": "Test Test",
+														"enableCommentRatings": "false",
+														"enableComments": "false",
+														"enableFlags": "false",
+														"enablePermissions": "true",
+														"enablePrint": "false",
+														"enableRatings": "false",
+														"enableRelatedAssets": "false",
+														"enableRss": "false",
+														"enableSubscriptions": "true",
+														"enableViewCountIncrement": "false",
+														"mergeUrlTags": "false",
+														"metadataFields": "author,modified-date",
+														"orderByColumn1": "publishDate",
+														"orderByColumn2": "title",
+														"orderByType1": "DESC",
+														"orderByType2": "ASC",
+														"paginationType": "none",
+														"queryAndOperator0": "true",
+														"queryContains0": "true",
+														"queryName0": "assetTags",
+														"rssDelta": "20",
+														"rssDisplayStyle": "abstract",
+														"rssFeedType": "atom_1.0",
+														"rssName": "Asset Publisher",
+														"selectionStyle": "dynamic",
+														"showAddContentButton": "false",
+														"showAssetTitle": "true",
+														"showAvailableLocales": "false",
+														"showContextLink": "true",
+														"showExtraInfo": "true",
+														"showMetadataDescriptions": "false",
+														"showOnlyLayoutAssets": "false",
+														"socialBookmarksDisplayStyle": "inline",
+														"socialBookmarksTypes": "",
+														"subtypeFieldsFilterEnabled": "false",
+														"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory": "false",
+														"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory": "false"
+													},
+													"widgetName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"
+												}
+											]
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																	"abstractLength": "200",
+																	"anyAssetType": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
+																	"anyClassTypeDLFileEntryAssetRendererFactory": "true",
+																	"anyClassTypeJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+																	"assetLinkBehavior": "viewInPortlet",
+																	"assetVocabularyId": "",
+																	"classNameIds": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
+																	"classTypeIds": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+																	"classTypeIdsDLFileEntryAssetRendererFactory": "0,42268,42351",
+																	"classTypeIdsJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+																	"customUserAttributes": "",
+																	"ddmStructureDisplayFieldValue": "",
+																	"ddmStructureFieldName": "",
+																	"ddmStructureFieldValue": "",
+																	"delta": "3",
+																	"displayStyle": "ddmTemplate_ANNOUNCEMENTS-ENTRIES",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"emailAssetEntrFyAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_ar_SA": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_ca_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_en_US": "Dear [$TO_NAME$],<br />\n<br />\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br />\n<br />\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br />\n<br />\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]\n",
+																	"emailAssetEntryAddedBody_es_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_fi_FI": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_fr_FR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_hu_HU": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_ja_JP": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_nl_NL": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_pt_BR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_sv_SE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedBody_zh_CN": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+																	"emailAssetEntryAddedEnabled": "true",
+																	"emailAssetEntryAddedSubject_ar_SA": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_ca_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_de_DE": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_es_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_fi_FI": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_fr_FR": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_hu_HU": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_ja_JP": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_nl_NL": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_pt_BR": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_sv_SE": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailAssetEntryAddedSubject_zh_CN": "New Asset Entries Added to [$PORTLET_TITLE$]",
+																	"emailFromAddress": "test@liferay.com",
+																	"emailFromName": "Test Test",
+																	"enableCommentRatings": "false",
+																	"enableComments": "false",
+																	"enableFlags": "false",
+																	"enablePermissions": "true",
+																	"enablePrint": "false",
+																	"enableRatings": "false",
+																	"enableRelatedAssets": "false",
+																	"enableRss": "false",
+																	"enableSubscriptions": "true",
+																	"enableViewCountIncrement": "false",
+																	"mergeUrlTags": "false",
+																	"metadataFields": "author,modified-date",
+																	"notifiedAssetEntryIds": "66029",
+																	"orderByColumn1": "publishDate",
+																	"orderByColumn2": "title",
+																	"orderByType1": "DESC",
+																	"orderByType2": "ASC",
+																	"paginationType": "none",
+																	"queryAndOperator0": "true",
+																	"queryContains0": "true",
+																	"queryName0": "assetTags",
+																	"rssDelta": "20",
+																	"rssDisplayStyle": "abstract",
+																	"rssFeedType": "atom_1.0",
+																	"rssName": "Asset Publisher",
+																	"selectionStyle": "dynamic",
+																	"showAddContentButton": "false",
+																	"showAssetTitle": "true",
+																	"showAvailableLocales": "false",
+																	"showContextLink": "true",
+																	"showExtraInfo": "true",
+																	"showMetadataDescriptions": "false",
+																	"showOnlyLayoutAssets": "false",
+																	"showQueryLogic": "false",
+																	"socialBookmarksDisplayStyle": "inline",
+																	"socialBookmarksTypes": "",
+																	"subtypeFieldsFilterEnabled": "false",
+																	"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory": "false",
+																	"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory": "false"
+																},
+																"widgetName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"cssClasses": [
+												"mt-n2"
+											],
+											"fragment": {
+												"key": "dialect-dialect-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "",
+												"inverted": false,
+												"style": "primary",
+												"type": "borderless",
+												"uppercase": false
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"mapping": {
+																		"itemReference": {
+																			"className": "com.liferay.portal.kernel.model.Layout",
+																			"fields": [
+																				{
+																					"fieldName": "friendlyURL",
+																					"fieldValue": "/home/announcements"
+																				},
+																				{
+																					"fieldName": "privatePage",
+																					"fieldValue": "false"
+																				},
+																				{
+																					"fieldName": "siteKey",
+																					"fieldValue": "[$GROUP_KEY$]"
+																				}
+																			]
+																		}
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "View All Announcements",
+																"ca_ES": "View All Announcements",
+																"de_DE": "View All Announcements",
+																"en_US": "View All Announcements",
+																"es_ES": "View All Announcements",
+																"fi_FI": "View All Announcements",
+																"fr_FR": "View All Announcements",
+																"hu_HU": "View All Announcements",
+																"ja_JP": "View All Announcements",
+																"nl_NL": "View All Announcements",
+																"pt_BR": "View All Announcements",
+																"sv_SE": "View All Announcements",
+																"zh_CN": "View All Announcements"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"paddingBottom": "2",
+												"textAlign": "center"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/sales/deal-registrations"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
+													}
+												}
+											},
+											"fragmentStyle": {
+												"borderColor": "colorNeutral2",
+												"borderRadius": "borderRadiusLg",
+												"borderWidth": "1px",
+												"marginBottom": "3",
+												"paddingBottom": "3",
+												"paddingTop": "3"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginBottom": "4"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderColor": "colorNeutral2",
+												"borderWidth": 0,
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 1,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 1,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 1,
+												"widthType": "Fluid"
+											},
+											"name": "Quick Link Card Small"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/deal-registration.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/sales/deal-registrations"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h6",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/sales/deal-registrations"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Deals",
+																		"ca_ES": "Deals",
+																		"de_DE": "Deals",
+																		"en_US": "Deals",
+																		"es_ES": "Deals",
+																		"fi_FI": "Deals",
+																		"fr_FR": "Deals",
+																		"hu_HU": "Deals",
+																		"ja_JP": "Deals",
+																		"nl_NL": "Deals",
+																		"pt_BR": "Deals",
+																		"sv_SE": "Deals",
+																		"zh_CN": "Deals"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/sales/renewal-opportunities"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
+													}
+												}
+											},
+											"fragmentStyle": {
+												"borderColor": "colorNeutral2",
+												"borderRadius": "borderRadiusLg",
+												"borderWidth": "1",
+												"marginBottom": "3",
+												"paddingBottom": "3",
+												"paddingTop": "3",
+												"shadow": "",
+												"textAlign": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginBottom": "4",
+														"paddingBottom": "3"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderColor": "colorNeutral2",
+												"borderWidth": 1,
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 1,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 1,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 1,
+												"widthType": "Fluid"
+											},
+											"name": "Quick Link Card Small"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/demo-access.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/sales/renewal-opportunities"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "",
+														"marginBottom": "3",
+														"shadow": "",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h6",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/sales/renewal-opportunities"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Renewals",
+																		"ca_ES": "Renewals",
+																		"de_DE": "Renewals",
+																		"en_US": "Renewals",
+																		"es_ES": "Renewals",
+																		"fi_FI": "Renewals",
+																		"fr_FR": "Renewals",
+																		"hu_HU": "Renewals",
+																		"ja_JP": "Renewals",
+																		"nl_NL": "Renewals",
+																		"pt_BR": "Renewals",
+																		"sv_SE": "Renewals",
+																		"zh_CN": "Renewals"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/marketing/mdf-requests"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
+													}
+												}
+											},
+											"fragmentStyle": {
+												"borderColor": "colorNeutral2",
+												"borderRadius": "borderRadiusLg",
+												"borderWidth": "1",
+												"marginBottom": "3",
+												"paddingBottom": "3",
+												"paddingTop": "3",
+												"shadow": "",
+												"textAlign": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginBottom": "4"
+													},
+													"id": "landscapeMobile"
+												}
+											],
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderColor": "colorNeutral2",
+												"borderWidth": 1,
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 1,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 1,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 1,
+												"widthType": "Fluid"
+											},
+											"name": "Quick Link Card Small"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/mdf.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/marketing/mdf-requests"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h6",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/marketing/mdf-requests"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "MDFs",
+																		"ca_ES": "MDFs",
+																		"de_DE": "MDFs",
+																		"en_US": "MDFs",
+																		"es_ES": "MDFs",
+																		"fi_FI": "MDFs",
+																		"fr_FR": "MDFs",
+																		"hu_HU": "MDFs",
+																		"ja_JP": "MDFs",
+																		"nl_NL": "MDFs",
+																		"pt_BR": "MDFs",
+																		"sv_SE": "MDFs",
+																		"zh_CN": "MDFs"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "",
+														"fontWeight": "fontWeightBold",
+														"shadow": "",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/sales/pricebooks"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
+													}
+												}
+											},
+											"fragmentStyle": {
+												"borderColor": "colorNeutral2",
+												"borderRadius": "borderRadiusLg",
+												"borderWidth": "1",
+												"marginBottom": "3",
+												"paddingBottom": "3",
+												"paddingTop": "3",
+												"shadow": "",
+												"textAlign": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginBottom": "4"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderColor": "colorNeutral2",
+												"borderWidth": 1,
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 1,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 1,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 1,
+												"widthType": "Fluid"
+											},
+											"name": "Quick Link Card Small"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/qsp-tracker.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/sales/pricebooks"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "",
+														"marginBottom": "3",
+														"shadow": "",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h6",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/sales/pricebooks"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Pricebooks",
+																		"ca_ES": "Pricebooks",
+																		"de_DE": "Pricebooks",
+																		"en_US": "Pricebooks",
+																		"es_ES": "Pricebooks",
+																		"fi_FI": "Pricebooks",
+																		"fr_FR": "Pricebooks",
+																		"hu_HU": "Pricebooks",
+																		"ja_JP": "Pricebooks",
+																		"nl_NL": "Pricebooks",
+																		"pt_BR": "Pricebooks",
+																		"sv_SE": "Pricebooks",
+																		"zh_CN": "Pricebooks"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "",
+														"fontWeight": "fontWeightBold",
+														"shadow": "",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/marketing/campaigns"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "[$GROUP_KEY$]"
+																}
+															]
+														}
+													}
+												}
+											},
+											"fragmentStyle": {
+												"borderColor": "colorNeutral2",
+												"borderRadius": "borderRadiusLg",
+												"borderWidth": "1",
+												"paddingBottom": "3",
+												"paddingTop": "3",
+												"shadow": "",
+												"textAlign": ""
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderColor": "colorNeutral2",
+												"borderWidth": 1,
+												"contentDisplay": "FlexColumn",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 1,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 1,
+												"widthType": "Fluid"
+											},
+											"name": "Quick Link Card Small"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/price-books.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/marketing/campaigns"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "",
+														"marginBottom": "3",
+														"shadow": "",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h6",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/marketing/campaigns"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						},
+																						{
+																							"fieldName": "siteKey",
+																							"fieldValue": "[$GROUP_KEY$]"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Campaigns",
+																		"ca_ES": "Campaigns",
+																		"de_DE": "Campaigns",
+																		"en_US": "Campaigns",
+																		"es_ES": "Campaigns",
+																		"fi_FI": "Campaigns",
+																		"fr_FR": "Campaigns",
+																		"hu_HU": "Campaigns",
+																		"ja_JP": "Campaigns",
+																		"nl_NL": "Campaigns",
+																		"pt_BR": "Campaigns",
+																		"sv_SE": "Campaigns",
+																		"zh_CN": "Campaigns"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "",
+														"fontWeight": "fontWeightBold",
+														"shadow": "",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 4,
 							"reverseOrder": false,
 							"rowViewports": [
 								{
@@ -127,500 +1770,18 @@
 											"id": "tablet"
 										}
 									],
-									"size": 12
+									"size": 6
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragmentViewports": [
-												{
-													"fragmentViewportStyle": {
-														"marginRight": "0"
-													},
-													"id": "portraitMobile"
-												}
-											],
-											"gutters": true,
-											"indexed": true,
-											"modulesPerRow": 2,
-											"numberOfColumns": 2,
-											"reverseOrder": false,
-											"rowViewports": [
-												{
-													"id": "landscapeMobile",
-													"rowViewportDefinition": {
-														"modulesPerRow": 1
-													}
+											"widgetInstance": {
+												"widgetConfig": {
 												},
-												{
-													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
-												},
-												{
-													"id": "tablet",
-													"rowViewportDefinition": {
-														"modulesPerRow": 1,
-														"reverseOrder": false
-													}
-												}
-											],
-											"verticalAlignment": "middle"
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "tablet"
-														}
-													],
-													"size": 7
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "announcements-subscribe"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-																{
-																	"id": "announcements-heading",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Announcements",
-																				"ca_ES": "Announcements",
-																				"de_DE": "Announcements",
-																				"en_US": "Announcements",
-																				"es_ES": "Announcements",
-																				"fi_FI": "Announcements",
-																				"fr_FR": "Announcements",
-																				"hu_HU": "Announcements",
-																				"ja_JP": "Announcements",
-																				"nl_NL": "Announcements",
-																				"pt_BR": "Announcements",
-																				"sv_SE": "Announcements",
-																				"zh_CN": "Announcements"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"paddingTop": "2"
-															},
-															"indexed": true,
-															"widgetInstances": [
-																{
-																	"widgetConfig": {
-																		"abstractLength": "200",
-																		"anyAssetType": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
-																		"anyClassTypeDLFileEntryAssetRendererFactory": "true",
-																		"anyClassTypeJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
-																		"assetLinkBehavior": "viewInPortlet",
-																		"assetVocabularyId": "",
-																		"classNameIds": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
-																		"classTypeIds": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
-																		"classTypeIdsDLFileEntryAssetRendererFactory": "0,42656,42705",
-																		"classTypeIdsJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
-																		"customUserAttributes": "",
-																		"ddmStructureDisplayFieldValue": "",
-																		"ddmStructureFieldName": "",
-																		"ddmStructureFieldValue": "",
-																		"delta": "3",
-																		"displayStyle": "ddmTemplate_ANNOUNCEMENTS-ENTRIES",
-																		"displayStyleGroupId": "[$GROUP_ID$]",
-																		"emailAssetEntryAddedBody_ar_SA": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_ca_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_en_US": "Dear [$TO_NAME$],<br />\n<br />\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br />\n<br />\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br />\n<br />\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]\n",
-																		"emailAssetEntryAddedBody_es_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_fi_FI": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_fr_FR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_hu_HU": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_ja_JP": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_nl_NL": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_pt_BR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_sv_SE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedBody_zh_CN": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																		"emailAssetEntryAddedEnabled": "true",
-																		"emailAssetEntryAddedSubject_ar_SA": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_ca_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_de_DE": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_es_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_fi_FI": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_fr_FR": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_hu_HU": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_ja_JP": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_nl_NL": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_pt_BR": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_sv_SE": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailAssetEntryAddedSubject_zh_CN": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																		"emailFromAddress": "test@liferay.com",
-																		"emailFromName": "Test Test",
-																		"enableCommentRatings": "false",
-																		"enableComments": "false",
-																		"enableFlags": "false",
-																		"enablePermissions": "true",
-																		"enablePrint": "false",
-																		"enableRatings": "false",
-																		"enableRelatedAssets": "false",
-																		"enableRss": "false",
-																		"enableSubscriptions": "true",
-																		"enableViewCountIncrement": "false",
-																		"mergeUrlTags": "false",
-																		"metadataFields": "author,modified-date",
-																		"orderByColumn1": "publishDate",
-																		"orderByColumn2": "title",
-																		"orderByType1": "DESC",
-																		"orderByType2": "ASC",
-																		"paginationType": "none",
-																		"queryAndOperator0": "true",
-																		"queryContains0": "true",
-																		"queryName0": "assetTags",
-																		"rssDelta": "20",
-																		"rssDisplayStyle": "abstract",
-																		"rssFeedType": "atom_1.0",
-																		"rssName": "Asset Publisher",
-																		"selectionStyle": "dynamic",
-																		"showAddContentButton": "false",
-																		"showAssetTitle": "true",
-																		"showAvailableLocales": "false",
-																		"showContextLink": "true",
-																		"showExtraInfo": "true",
-																		"showMetadataDescriptions": "false",
-																		"showOnlyLayoutAssets": "false",
-																		"socialBookmarksDisplayStyle": "inline",
-																		"socialBookmarksTypes": "",
-																		"subtypeFieldsFilterEnabled": "false",
-																		"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory": "false",
-																		"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory": "false"
-																	},
-																	"widgetName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"
-																}
-															]
-														},
-														"pageElements": [
-															{
-																"pageElements": [
-																	{
-																		"definition": {
-																			"widgetInstance": {
-																				"widgetConfig": {
-																					"abstractLength": "200",
-																					"anyAssetType": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
-																					"anyClassTypeDLFileEntryAssetRendererFactory": "true",
-																					"anyClassTypeJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
-																					"assetLinkBehavior": "viewInPortlet",
-																					"assetVocabularyId": "",
-																					"classNameIds": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
-																					"classTypeIds": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
-																					"classTypeIdsDLFileEntryAssetRendererFactory": "0,42268,42351",
-																					"classTypeIdsJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
-																					"customUserAttributes": "",
-																					"ddmStructureDisplayFieldValue": "",
-																					"ddmStructureFieldName": "",
-																					"ddmStructureFieldValue": "",
-																					"delta": "3",
-																					"displayStyle": "ddmTemplate_ANNOUNCEMENTS-ENTRIES",
-																					"displayStyleGroupId": "[$GROUP_ID$]",
-																					"emailAssetEntrFyAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_ar_SA": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_ca_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_en_US": "Dear [$TO_NAME$],<br />\n<br />\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br />\n<br />\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br />\n<br />\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]\n",
-																					"emailAssetEntryAddedBody_es_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_fi_FI": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_fr_FR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_hu_HU": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_ja_JP": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_nl_NL": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_pt_BR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_sv_SE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedBody_zh_CN": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																					"emailAssetEntryAddedEnabled": "true",
-																					"emailAssetEntryAddedSubject_ar_SA": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_ca_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_de_DE": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_es_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_fi_FI": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_fr_FR": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_hu_HU": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_ja_JP": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_nl_NL": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_pt_BR": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_sv_SE": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailAssetEntryAddedSubject_zh_CN": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																					"emailFromAddress": "test@liferay.com",
-																					"emailFromName": "Test Test",
-																					"enableCommentRatings": "false",
-																					"enableComments": "false",
-																					"enableFlags": "false",
-																					"enablePermissions": "true",
-																					"enablePrint": "false",
-																					"enableRatings": "false",
-																					"enableRelatedAssets": "false",
-																					"enableRss": "false",
-																					"enableSubscriptions": "true",
-																					"enableViewCountIncrement": "false",
-																					"mergeUrlTags": "false",
-																					"metadataFields": "author,modified-date",
-																					"notifiedAssetEntryIds": "66029",
-																					"orderByColumn1": "publishDate",
-																					"orderByColumn2": "title",
-																					"orderByType1": "DESC",
-																					"orderByType2": "ASC",
-																					"paginationType": "none",
-																					"queryAndOperator0": "true",
-																					"queryContains0": "true",
-																					"queryName0": "assetTags",
-																					"rssDelta": "20",
-																					"rssDisplayStyle": "abstract",
-																					"rssFeedType": "atom_1.0",
-																					"rssName": "Asset Publisher",
-																					"selectionStyle": "dynamic",
-																					"showAddContentButton": "false",
-																					"showAssetTitle": "true",
-																					"showAvailableLocales": "false",
-																					"showContextLink": "true",
-																					"showExtraInfo": "true",
-																					"showMetadataDescriptions": "false",
-																					"showOnlyLayoutAssets": "false",
-																					"showQueryLogic": "false",
-																					"socialBookmarksDisplayStyle": "inline",
-																					"socialBookmarksTypes": "",
-																					"subtypeFieldsFilterEnabled": "false",
-																					"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory": "false",
-																					"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory": "false"
-																				},
-																				"widgetName": "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet"
-																			}
-																		},
-																		"type": "Widget"
-																	}
-																],
-																"type": "FragmentDropZone"
-															}
-														],
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"cssClasses": [
-																"mt-n2"
-															],
-															"fragment": {
-																"key": "DIALECT-dialect-button"
-															},
-															"fragmentConfig": {
-																"buttonSize": "",
-																"inverted": false,
-																"style": "primary",
-																"type": "borderless",
-																"uppercase": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "link",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"mapping": {
-																						"itemReference": {
-																							"className": "com.liferay.portal.kernel.model.Layout",
-																							"fields": [
-																								{
-																									"fieldName": "friendlyURL",
-																									"fieldValue": "/home/announcements"
-																								},
-																								{
-																									"fieldName": "privatePage",
-																									"fieldValue": "false"
-																								},
-																								{
-																									"fieldName": "siteKey",
-																									"fieldValue": "[$GROUP_KEY$]"
-																								}
-																							]
-																						}
-																					}
-																				}
-																			}
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "View All Announcements",
-																				"ca_ES": "View All Announcements",
-																				"de_DE": "View All Announcements",
-																				"en_US": "View All Announcements",
-																				"es_ES": "View All Announcements",
-																				"fi_FI": "View All Announcements",
-																				"fr_FR": "View All Announcements",
-																				"hu_HU": "View All Announcements",
-																				"ja_JP": "View All Announcements",
-																				"nl_NL": "View All Announcements",
-																				"pt_BR": "View All Announcements",
-																				"sv_SE": "View All Announcements",
-																				"zh_CN": "View All Announcements"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"paddingBottom": "2",
-																"textAlign": "center"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Column"
-											},
-											{
-												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "tablet"
-														}
-													],
-													"size": 5
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"widgetInstance": {
-																"widgetConfig": {
-																	"abstractLength": "200",
-																	"anyAssetType": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
-																	"anyClassTypeDDLRecordAssetRendererFactory": "true",
-																	"anyClassTypeDLFileEntryAssetRendererFactory": "true",
-																	"anyClassTypeJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:BLOG$]",
-																	"assetLinkBehavior": "viewInPortlet",
-																	"assetVocabularyId": "",
-																	"classNameIds": "[$CLASS_NAME_ID:com.liferay.journal.model.JournalArticle$]",
-																	"classTypeIds": "[$DDM_STRUCTURE_ID:BLOG$]",
-																	"classTypeIdsDDLRecordAssetRendererFactory": "46294",
-																	"classTypeIdsDLFileEntryAssetRendererFactory": "0,42656,42705",
-																	"classTypeIdsJournalArticleAssetRendererFactory": "[$DDM_STRUCTURE_ID:BLOG$]",
-																	"customUserAttributes": "",
-																	"ddmStructureDisplayFieldValue": "",
-																	"ddmStructureFieldName": "",
-																	"ddmStructureFieldValue": "",
-																	"delta": "1",
-																	"displayStyle": "ddmTemplate_BLOGS-ENTRIES",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"emailAssetEntryAddedBody_ar_SA": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_ca_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_en_US": "Dear [$TO_NAME$],<br />\n<br />\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br />\n<br />\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br />\n<br />\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]\n",
-																	"emailAssetEntryAddedBody_es_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_fi_FI": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_fr_FR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_hu_HU": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_ja_JP": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_nl_NL": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_pt_BR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_sv_SE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedBody_zh_CN": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
-																	"emailAssetEntryAddedEnabled": "false",
-																	"emailAssetEntryAddedSubject_ar_SA": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_ca_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_de_DE": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_es_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_fi_FI": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_fr_FR": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_hu_HU": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_ja_JP": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_nl_NL": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_pt_BR": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_sv_SE": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailAssetEntryAddedSubject_zh_CN": "New Asset Entries Added to [$PORTLET_TITLE$]",
-																	"emailFromAddress": "test@liferay.com",
-																	"emailFromName": "Test Test",
-																	"enableCommentRatings": "false",
-																	"enableComments": "false",
-																	"enableFlags": "false",
-																	"enablePermissions": "true",
-																	"enablePrint": "false",
-																	"enableRatings": "false",
-																	"enableRelatedAssets": "false",
-																	"enableRss": "false",
-																	"enableSubscriptions": "false",
-																	"enableViewCountIncrement": "false",
-																	"mergeUrlTags": "true",
-																	"metadataFields": "author,modified-date",
-																	"orderByColumn1": "publishDate",
-																	"orderByColumn2": "title",
-																	"orderByType1": "DESC",
-																	"orderByType2": "ASC",
-																	"paginationType": "none",
-																	"queryAndOperator0": "true",
-																	"queryContains0": "true",
-																	"queryName0": "assetTags",
-																	"rssDelta": "20",
-																	"rssDisplayStyle": "abstract",
-																	"rssFeedType": "atom_1.0",
-																	"rssName": "Recent Content",
-																	"selectionStyle": "dynamic",
-																	"showAddContentButton": "false",
-																	"showAssetTitle": "true",
-																	"showAvailableLocales": "false",
-																	"showContextLink": "true",
-																	"showExtraInfo": "true",
-																	"showMetadataDescriptions": "false",
-																	"socialBookmarksDisplayStyle": "inline",
-																	"socialBookmarksTypes": "",
-																	"subtypeFieldsFilterEnabled": "false",
-																	"subtypeFieldsFilterEnabledDDLRecordAssetRendererFactory": "false",
-																	"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory": "false",
-																	"subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory": "false"
-																},
-																"widgetName": "com_liferay_asset_publisher_web_portlet_RecentContentPortlet"
-															}
-														},
-														"type": "Widget"
-													}
-												],
-												"type": "Column"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REVENUE-CHART$]"
 											}
-										],
-										"type": "Row"
+										},
+										"type": "Widget"
 									}
 								],
 								"type": "Column"
@@ -645,1160 +1806,90 @@
 											"id": "tablet"
 										}
 									],
-									"size": 12
+									"size": 6
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text"
-											},
-											"fragmentConfig": {
-												"textType": "h4"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"ar_SA": "Quick Links",
-																"ca_ES": "Quick Links",
-																"de_DE": "Quick Links",
-																"en_US": "Quick Links",
-																"es_ES": "Quick Links",
-																"fi_FI": "Quick Links",
-																"fr_FR": "Quick Links",
-																"hu_HU": "Quick Links",
-																"ja_JP": "Quick Links",
-																"nl_NL": "Quick Links",
-																"pt_BR": "Quick Links",
-																"sv_SE": "Quick Links",
-																"zh_CN": "Quick Links"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"fontWeight": "fontWeightBolder",
-												"marginBottom": "4",
-												"marginTop": "4",
-												"textAlign": ""
-											},
-											"fragmentViewports": [
-												{
-													"fragmentViewportStyle": {
-														"marginTop": "4"
-													},
-													"id": "landscapeMobile"
+											"widgetInstance": {
+												"widgetConfig": {
 												},
-												{
-													"fragmentViewportStyle": {
-														"marginBottom": "4",
-														"textAlign": "left"
-													},
-													"id": "portraitMobile"
-												}
-											],
-											"indexed": true
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-DEALS-CHART$]"
+											}
 										},
-										"type": "Fragment"
-									},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
 									{
 										"definition": {
-											"fragmentViewports": [
-												{
-													"fragmentViewportStyle": {
-														"marginRight": "0"
-													},
-													"id": "portraitMobile"
+											"widgetInstance": {
+												"widgetConfig": {
 												},
-												{
-													"fragmentViewportStyle": {
-														"hidden": false
-													},
-													"id": "tablet"
-												}
-											],
-											"gutters": true,
-											"indexed": true,
-											"modulesPerRow": 2,
-											"numberOfColumns": 2,
-											"reverseOrder": false,
-											"rowViewports": [
-												{
-													"id": "landscapeMobile",
-													"rowViewportDefinition": {
-														"modulesPerRow": 1
-													}
-												},
-												{
-													"id": "portraitMobile",
-													"rowViewportDefinition": {
-														"reverseOrder": false
-													}
-												},
-												{
-													"id": "tablet",
-													"rowViewportDefinition": {
-														"modulesPerRow": 2,
-														"reverseOrder": false,
-														"verticalAlignment": "top"
-													}
-												}
-											],
-											"verticalAlignment": "top"
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
-																"size": 6
-															},
-															"id": "tablet"
-														}
-													],
-													"size": 7
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentViewports": [
-																{
-																	"fragmentViewportStyle": {
-																		"hidden": false
-																	},
-																	"id": "tablet"
-																}
-															],
-															"gutters": true,
-															"indexed": true,
-															"modulesPerRow": 3,
-															"numberOfColumns": 3,
-															"reverseOrder": false,
-															"rowViewports": [
-																{
-																	"id": "landscapeMobile",
-																	"rowViewportDefinition": {
-																		"modulesPerRow": 1
-																	}
-																},
-																{
-																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
-																},
-																{
-																	"id": "tablet",
-																	"rowViewportDefinition": {
-																		"modulesPerRow": 1
-																	}
-																}
-															],
-															"verticalAlignment": "top"
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"columnViewports": [
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "landscapeMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"size": 4
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"fragmentStyle": {
-																				"borderColor": "colorNeutral2",
-																				"borderRadius": "borderRadiusLg",
-																				"borderWidth": "1px",
-																				"paddingBottom": "3",
-																				"paddingTop": "3"
-																			},
-																			"fragmentViewports": [
-																				{
-																					"fragmentViewportStyle": {
-																						"marginBottom": "4"
-																					},
-																					"id": "tablet"
-																				}
-																			],
-																			"indexed": true,
-																			"layout": {
-																				"align": "Center",
-																				"borderColor": "colorNeutral2",
-																				"borderWidth": 0,
-																				"contentDisplay": "FlexColumn",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
-																				"opacity": 100,
-																				"paddingBottom": 1,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 1,
-																				"widthType": "Fluid"
-																			},
-																			"name": "Quick Link Card Small"
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "BASIC_COMPONENT-image"
-																					},
-																					"fragmentConfig": {
-																						"imageSize": "w-0"
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "image-square",
-																							"value": {
-																								"fragmentImage": {
-																									"url": {
-																										"mapping": {
-																											"fieldKey": "FileEntry_previewImage",
-																											"itemReference": {
-																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/deal-registration.png#]"
-																											}
-																										}
-																									}
-																								},
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"mapping": {
-																												"itemReference": {
-																													"className": "com.liferay.portal.kernel.model.Layout",
-																													"fields": [
-																														{
-																															"fieldName": "friendlyURL",
-																															"fieldValue": "/sales/deal-registrations"
-																														},
-																														{
-																															"fieldName": "privatePage",
-																															"fieldValue": "false"
-																														},
-																														{
-																															"fieldName": "siteKey",
-																															"fieldValue": "[$GROUP_KEY$]"
-																														}
-																													]
-																												}
-																											}
-																										}
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"marginBottom": "3"
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			},
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "DIALECT-dialect-text"
-																					},
-																					"fragmentConfig": {
-																						"textType": "h6",
-																						"truncateText": false
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "element-text",
-																							"value": {
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"mapping": {
-																												"itemReference": {
-																													"className": "com.liferay.portal.kernel.model.Layout",
-																													"fields": [
-																														{
-																															"fieldName": "friendlyURL",
-																															"fieldValue": "/sales/deal-registrations"
-																														},
-																														{
-																															"fieldName": "privatePage",
-																															"fieldValue": "false"
-																														},
-																														{
-																															"fieldName": "siteKey",
-																															"fieldValue": "[$GROUP_KEY$]"
-																														}
-																													]
-																												}
-																											}
-																										}
-																									}
-																								},
-																								"text": {
-																									"value_i18n": {
-																										"ar_SA": "Deal Registration",
-																										"ca_ES": "Deal Registration",
-																										"de_DE": "Deal Registration",
-																										"en_US": "Deal Registration",
-																										"es_ES": "Deal Registration",
-																										"fi_FI": "Deal Registration",
-																										"fr_FR": "Deal Registration",
-																										"hu_HU": "Deal Registration",
-																										"ja_JP": "Deal Registration",
-																										"nl_NL": "Deal Registration",
-																										"pt_BR": "Deal Registration",
-																										"sv_SE": "Deal Registration",
-																										"zh_CN": "Deal Registration"
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"fontWeight": "fontWeightBold"
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Section"
-																	}
-																],
-																"type": "Column"
-															},
-															{
-																"definition": {
-																	"columnViewports": [
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "landscapeMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"size": 4
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"fragmentStyle": {
-																				"borderColor": "colorNeutral2",
-																				"borderRadius": "borderRadiusLg",
-																				"borderWidth": "1",
-																				"paddingBottom": "3",
-																				"paddingTop": "3",
-																				"shadow": "",
-																				"textAlign": ""
-																			},
-																			"fragmentViewports": [
-																				{
-																					"fragmentViewportStyle": {
-																						"marginBottom": "4",
-																						"paddingBottom": "3"
-																					},
-																					"id": "tablet"
-																				}
-																			],
-																			"indexed": true,
-																			"layout": {
-																				"align": "Center",
-																				"borderColor": "colorNeutral2",
-																				"borderWidth": 1,
-																				"contentDisplay": "FlexColumn",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
-																				"opacity": 100,
-																				"paddingBottom": 1,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 1,
-																				"widthType": "Fluid"
-																			},
-																			"name": "Quick Link Card Small"
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "BASIC_COMPONENT-image"
-																					},
-																					"fragmentConfig": {
-																						"imageSize": "w-0"
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "image-square",
-																							"value": {
-																								"fragmentImage": {
-																									"url": {
-																										"mapping": {
-																											"fieldKey": "FileEntry_previewImage",
-																											"itemReference": {
-																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/demo-access.png#]"
-																											}
-																										}
-																									}
-																								},
-																								"fragmentLink": {
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"borderRadius": "",
-																						"marginBottom": "3",
-																						"shadow": "",
-																						"textAlign": ""
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			},
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "DIALECT-dialect-text"
-																					},
-																					"fragmentConfig": {
-																						"textType": "h6",
-																						"truncateText": false
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "element-text",
-																							"value": {
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"value_i18n": {
-																												"ar_SA": "https://www.liferay.com/",
-																												"ca_ES": "https://www.liferay.com/",
-																												"de_DE": "https://www.liferay.com/",
-																												"en_US": "https://www.liferay.com/",
-																												"es_ES": "https://www.liferay.com/",
-																												"fi_FI": "https://www.liferay.com/",
-																												"fr_FR": "https://www.liferay.com/",
-																												"hu_HU": "https://www.liferay.com/",
-																												"ja_JP": "https://www.liferay.com/",
-																												"nl_NL": "https://www.liferay.com/",
-																												"pt_BR": "https://www.liferay.com/",
-																												"sv_SE": "https://www.liferay.com/",
-																												"zh_CN": "https://www.liferay.com/"
-																											}
-																										}
-																									}
-																								},
-																								"text": {
-																									"value_i18n": {
-																										"ar_SA": "Demo Access",
-																										"ca_ES": "Demo Access",
-																										"de_DE": "Demo Access",
-																										"en_US": "Demo Access",
-																										"es_ES": "Demo Access",
-																										"fi_FI": "Demo Access",
-																										"fr_FR": "Demo Access",
-																										"hu_HU": "Demo Access",
-																										"ja_JP": "Demo Access",
-																										"nl_NL": "Demo Access",
-																										"pt_BR": "Demo Access",
-																										"sv_SE": "Demo Access",
-																										"zh_CN": "Demo Access"
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"fontWeight": "fontWeightBold"
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Section"
-																	}
-																],
-																"type": "Column"
-															},
-															{
-																"definition": {
-																	"columnViewports": [
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "landscapeMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"size": 4
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"fragmentStyle": {
-																				"borderColor": "colorNeutral2",
-																				"borderRadius": "borderRadiusLg",
-																				"borderWidth": "1",
-																				"paddingBottom": "3",
-																				"paddingTop": "3",
-																				"shadow": "",
-																				"textAlign": ""
-																			},
-																			"fragmentViewports": [
-																				{
-																					"fragmentViewportStyle": {
-																						"marginBottom": "4"
-																					},
-																					"id": "landscapeMobile"
-																				}
-																			],
-																			"indexed": true,
-																			"layout": {
-																				"align": "Center",
-																				"borderColor": "colorNeutral2",
-																				"borderWidth": 1,
-																				"contentDisplay": "FlexColumn",
-																				"opacity": 100,
-																				"paddingBottom": 1,
-																				"paddingTop": 1,
-																				"widthType": "Fluid"
-																			},
-																			"name": "Quick Link Card Small"
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "BASIC_COMPONENT-image"
-																					},
-																					"fragmentConfig": {
-																						"imageSize": "w-0"
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "image-square",
-																							"value": {
-																								"fragmentImage": {
-																									"url": {
-																										"mapping": {
-																											"fieldKey": "FileEntry_previewImage",
-																											"itemReference": {
-																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/mdf.png#]"
-																											}
-																										}
-																									}
-																								},
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"mapping": {
-																												"itemReference": {
-																													"className": "com.liferay.portal.kernel.model.Layout",
-																													"fields": [
-																														{
-																															"fieldName": "friendlyURL",
-																															"fieldValue": "/marketing/mdf-requests"
-																														},
-																														{
-																															"fieldName": "privatePage",
-																															"fieldValue": "false"
-																														},
-																														{
-																															"fieldName": "siteKey",
-																															"fieldValue": "[$GROUP_KEY$]"
-																														}
-																													]
-																												}
-																											}
-																										}
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"marginBottom": "3"
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			},
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "DIALECT-dialect-text"
-																					},
-																					"fragmentConfig": {
-																						"textType": "h6",
-																						"truncateText": false
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "element-text",
-																							"value": {
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"mapping": {
-																												"itemReference": {
-																													"className": "com.liferay.portal.kernel.model.Layout",
-																													"fields": [
-																														{
-																															"fieldName": "friendlyURL",
-																															"fieldValue": "/marketing/mdf-requests"
-																														},
-																														{
-																															"fieldName": "privatePage",
-																															"fieldValue": "false"
-																														},
-																														{
-																															"fieldName": "siteKey",
-																															"fieldValue": "[$GROUP_KEY$]"
-																														}
-																													]
-																												}
-																											}
-																										}
-																									}
-																								},
-																								"text": {
-																									"value_i18n": {
-																										"ar_SA": "MDF",
-																										"ca_ES": "MDF",
-																										"de_DE": "MDF",
-																										"en_US": "MDF",
-																										"es_ES": "MDF",
-																										"fi_FI": "MDF",
-																										"fr_FR": "MDF",
-																										"hu_HU": "MDF",
-																										"ja_JP": "MDF",
-																										"nl_NL": "MDF",
-																										"pt_BR": "MDF",
-																										"sv_SE": "MDF",
-																										"zh_CN": "MDF"
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"borderRadius": "",
-																						"fontWeight": "fontWeightBold",
-																						"shadow": "",
-																						"textAlign": ""
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Section"
-																	}
-																],
-																"type": "Column"
-															}
-														],
-														"type": "Row"
-													}
-												],
-												"type": "Column"
-											},
-											{
-												"definition": {
-													"columnViewports": [
-														{
-															"columnViewportDefinition": {
-																"size": 12
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
-																"size": 6
-															},
-															"id": "tablet"
-														}
-													],
-													"size": 5
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentViewports": [
-																{
-																	"fragmentViewportStyle": {
-																		"hidden": false,
-																		"marginTop": "0",
-																		"paddingTop": "0"
-																	},
-																	"id": "tablet"
-																}
-															],
-															"gutters": true,
-															"indexed": true,
-															"modulesPerRow": 2,
-															"numberOfColumns": 2,
-															"reverseOrder": false,
-															"rowViewports": [
-																{
-																	"id": "landscapeMobile",
-																	"rowViewportDefinition": {
-																		"modulesPerRow": 1
-																	}
-																},
-																{
-																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
-																},
-																{
-																	"id": "tablet",
-																	"rowViewportDefinition": {
-																		"modulesPerRow": 1,
-																		"reverseOrder": false
-																	}
-																}
-															],
-															"verticalAlignment": "top"
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"columnViewports": [
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "landscapeMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"size": 6
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"fragmentStyle": {
-																				"borderColor": "colorNeutral2",
-																				"borderRadius": "borderRadiusLg",
-																				"borderWidth": "1",
-																				"paddingBottom": "3",
-																				"paddingTop": "3",
-																				"shadow": "",
-																				"textAlign": ""
-																			},
-																			"fragmentViewports": [
-																				{
-																					"fragmentViewportStyle": {
-																						"marginBottom": "4"
-																					},
-																					"id": "tablet"
-																				}
-																			],
-																			"indexed": true,
-																			"layout": {
-																				"align": "Center",
-																				"borderColor": "colorNeutral2",
-																				"borderWidth": 1,
-																				"contentDisplay": "FlexColumn",
-																				"opacity": 100,
-																				"paddingBottom": 1,
-																				"paddingTop": 1,
-																				"widthType": "Fluid"
-																			},
-																			"name": "Quick Link Card Small"
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "BASIC_COMPONENT-image"
-																					},
-																					"fragmentConfig": {
-																						"imageSize": "w-0"
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "image-square",
-																							"value": {
-																								"fragmentImage": {
-																									"url": {
-																										"mapping": {
-																											"fieldKey": "FileEntry_previewImage",
-																											"itemReference": {
-																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/qsp-tracker.png#]"
-																											}
-																										}
-																									}
-																								},
-																								"fragmentLink": {
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"borderRadius": "",
-																						"marginBottom": "3",
-																						"shadow": "",
-																						"textAlign": ""
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			},
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "DIALECT-dialect-text"
-																					},
-																					"fragmentConfig": {
-																						"textType": "h6",
-																						"truncateText": false
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "element-text",
-																							"value": {
-																								"fragmentLink": {
-																									"value": {
-																										"href": {
-																											"value_i18n": {
-																												"ar_SA": "https://www.liferay.com/",
-																												"ca_ES": "https://www.liferay.com/",
-																												"de_DE": "https://www.liferay.com/",
-																												"en_US": "https://www.liferay.com/",
-																												"es_ES": "https://www.liferay.com/",
-																												"fi_FI": "https://www.liferay.com/",
-																												"fr_FR": "https://www.liferay.com/",
-																												"hu_HU": "https://www.liferay.com/",
-																												"ja_JP": "https://www.liferay.com/",
-																												"nl_NL": "https://www.liferay.com/",
-																												"pt_BR": "https://www.liferay.com/",
-																												"sv_SE": "https://www.liferay.com/",
-																												"zh_CN": "https://www.liferay.com/"
-																											}
-																										}
-																									}
-																								},
-																								"text": {
-																									"value_i18n": {
-																										"ar_SA": "QSP Tracker",
-																										"ca_ES": "QSP Tracker",
-																										"de_DE": "QSP Tracker",
-																										"en_US": "QSP Tracker",
-																										"es_ES": "QSP Tracker",
-																										"fi_FI": "QSP Tracker",
-																										"fr_FR": "QSP Tracker",
-																										"hu_HU": "QSP Tracker",
-																										"ja_JP": "QSP Tracker",
-																										"nl_NL": "QSP Tracker",
-																										"pt_BR": "QSP Tracker",
-																										"sv_SE": "QSP Tracker",
-																										"zh_CN": "QSP Tracker"
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"borderRadius": "",
-																						"fontWeight": "fontWeightBold",
-																						"shadow": "",
-																						"textAlign": ""
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			}
-																		],
-																		"type": "Section"
-																	}
-																],
-																"type": "Column"
-															},
-															{
-																"definition": {
-																	"columnViewports": [
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "landscapeMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																			},
-																			"id": "portraitMobile"
-																		},
-																		{
-																			"columnViewportDefinition": {
-																				"size": 12
-																			},
-																			"id": "tablet"
-																		}
-																	],
-																	"size": 6
-																},
-																"pageElements": [
-																	{
-																		"definition": {
-																			"fragmentLink": {
-																				"href": {
-																					"value_i18n": {
-																						"en_US": ""
-																					}
-																				}
-																			},
-																			"fragmentStyle": {
-																				"borderWidth": "0"
-																			},
-																			"indexed": true,
-																			"layout": {
-																				"borderWidth": 0,
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
-																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
-																				"widthType": "Fluid"
-																			}
-																		},
-																		"pageElements": [
-																			{
-																				"definition": {
-																					"fragmentStyle": {
-																						"borderColor": "colorNeutral2",
-																						"borderRadius": "borderRadiusLg",
-																						"borderWidth": "1",
-																						"paddingBottom": "3",
-																						"paddingTop": "3",
-																						"shadow": "",
-																						"textAlign": ""
-																					},
-																					"indexed": true,
-																					"layout": {
-																						"align": "Center",
-																						"borderColor": "colorNeutral2",
-																						"borderWidth": 1,
-																						"contentDisplay": "FlexColumn",
-																						"marginBottom": 0,
-																						"marginLeft": 0,
-																						"marginRight": 0,
-																						"marginTop": 0,
-																						"opacity": 100,
-																						"paddingBottom": 1,
-																						"paddingLeft": 0,
-																						"paddingRight": 0,
-																						"paddingTop": 1,
-																						"widthType": "Fluid"
-																					},
-																					"name": "Quick Link Card Small"
-																				},
-																				"pageElements": [
-																					{
-																						"definition": {
-																							"fragment": {
-																								"key": "BASIC_COMPONENT-image"
-																							},
-																							"fragmentConfig": {
-																								"imageSize": "w-0"
-																							},
-																							"fragmentFields": [
-																								{
-																									"id": "image-square",
-																									"value": {
-																										"fragmentImage": {
-																											"url": {
-																												"mapping": {
-																													"fieldKey": "FileEntry_previewImage",
-																													"itemReference": {
-																														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/price-books.png#]"
-																													}
-																												}
-																											}
-																										},
-																										"fragmentLink": {
-																										}
-																									}
-																								}
-																							],
-																							"fragmentStyle": {
-																								"borderRadius": "",
-																								"marginBottom": "3",
-																								"shadow": "",
-																								"textAlign": ""
-																							},
-																							"indexed": true
-																						},
-																						"type": "Fragment"
-																					},
-																					{
-																						"definition": {
-																							"fragment": {
-																								"key": "DIALECT-dialect-text"
-																							},
-																							"fragmentConfig": {
-																								"textType": "h6",
-																								"truncateText": false
-																							},
-																							"fragmentFields": [
-																								{
-																									"id": "element-text",
-																									"value": {
-																										"fragmentLink": {
-																											"value": {
-																												"href": {
-																													"value_i18n": {
-																														"ar_SA": "https://www.liferay.com/",
-																														"ca_ES": "https://www.liferay.com/",
-																														"de_DE": "https://www.liferay.com/",
-																														"en_US": "https://www.liferay.com/",
-																														"es_ES": "https://www.liferay.com/",
-																														"fi_FI": "https://www.liferay.com/",
-																														"fr_FR": "https://www.liferay.com/",
-																														"hu_HU": "https://www.liferay.com/",
-																														"ja_JP": "https://www.liferay.com/",
-																														"nl_NL": "https://www.liferay.com/",
-																														"pt_BR": "https://www.liferay.com/",
-																														"sv_SE": "https://www.liferay.com/",
-																														"zh_CN": "https://www.liferay.com/"
-																													}
-																												}
-																											}
-																										},
-																										"text": {
-																											"value_i18n": {
-																												"ar_SA": "Price Books",
-																												"ca_ES": "Price Books",
-																												"de_DE": "Price Books",
-																												"en_US": "Price Books",
-																												"es_ES": "Price Books",
-																												"fi_FI": "Price Books",
-																												"fr_FR": "Price Books",
-																												"hu_HU": "Price Books",
-																												"ja_JP": "Price Books",
-																												"nl_NL": "Price Books",
-																												"pt_BR": "Price Books",
-																												"sv_SE": "Price Books",
-																												"zh_CN": "Price Books"
-																											}
-																										}
-																									}
-																								}
-																							],
-																							"fragmentStyle": {
-																								"borderRadius": "",
-																								"fontWeight": "fontWeightBold",
-																								"shadow": "",
-																								"textAlign": ""
-																							},
-																							"indexed": true
-																						},
-																						"type": "Fragment"
-																					}
-																				],
-																				"type": "Section"
-																			}
-																		],
-																		"type": "Section"
-																	}
-																],
-																"type": "Column"
-															}
-														],
-														"type": "Row"
-													}
-												],
-												"type": "Column"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-MDF-REQUEST-CHART$]"
 											}
-										],
-										"type": "Row"
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 6
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-LEVEL-CHART$]"
+											}
+										},
+										"type": "Widget"
 									}
 								],
 								"type": "Column"

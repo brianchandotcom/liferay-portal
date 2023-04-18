@@ -1,0 +1,20 @@
+{
+	"friendlyURL_i18n": {
+		"en_US": "/sales/pricebooks"
+	},
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Pricebooks"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

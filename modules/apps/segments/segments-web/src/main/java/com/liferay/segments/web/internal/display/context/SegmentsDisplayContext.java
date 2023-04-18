@@ -308,7 +308,7 @@ public class SegmentsDisplayContext {
 			return _searchContainer;
 		}
 
-		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer(
+		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer<>(
 			_renderRequest, _getPortletURL(), null, "there-are-no-segments");
 
 		searchContainer.setId("segmentsEntries");

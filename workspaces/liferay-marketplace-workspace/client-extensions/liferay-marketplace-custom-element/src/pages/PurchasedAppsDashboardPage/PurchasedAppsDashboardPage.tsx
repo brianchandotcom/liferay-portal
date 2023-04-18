@@ -3,19 +3,24 @@ import {useEffect, useState} from 'react';
 
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
+import { DashboardMemberTableRow } from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
 	AppProps,
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
+import { MemberProfile } from '../../components/MemberProfile/MemberProfile';
 import {getCompanyId} from '../../liferay/constants';
 import {
 	getAccounts,
 	getChannels,
+	getMyUserAccount,
 	getOrders,
 	getSKUCustomFieldExpandoValue,
+	getUserAccounts,
 } from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
+import { AccountBriefProps, MemberProps, UserAccountProps } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
 import {
@@ -65,6 +70,19 @@ const tableHeaders = [
 	},
 ];
 
+const memberTableHeaders = [
+	{
+		iconSymbol: 'order-arrow',
+		title: 'Name',
+	},
+	{
+		title: 'Email',
+	},
+	{
+		title: 'Role',
+	},
+];
+
 export function PurchasedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountState);
 	const [selectedAccount, setSelectedAccount] = useState<Account>(
@@ -76,6 +94,9 @@ export function PurchasedAppsDashboardPage() {
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
 	);
+	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
+	const [selectedMember, setSelectedMember] = useState<MemberProps>();
+	const [selectedNavigationItem, setSelectedNavigationItem] = useState('Apps');
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 
 	const messages = {
@@ -89,14 +110,34 @@ export function PurchasedAppsDashboardPage() {
 		title: 'My Apps',
 	};
 
+	const memberMessages = {
+		description:
+			'Manage users in your development team and invite new ones',
+		emptyStateMessage: {
+			description1: 'Create new members and they will show up here.',
+			description2: 'Click on “New Member” to start.',
+			title: 'No members yet',
+		},
+		title: 'Members',
+	};
+
 	useEffect(() => {
 		const makeFetch = async () => {
 			const accountsResponse = await getAccounts();
 
-			setAccounts(accountsResponse.items);
-			setSelectedAccount(accountsResponse.items[0]);
-		};
+			const accountsList = accountsResponse.items.map(
+				(account: Account) => {
+					return {
+						externalReferenceCode: account.externalReferenceCode,
+						id: account.id,
+						name: account.name,
+					} as Account;
+				}
+			);
 
+			setAccounts(accountsList);
+			setSelectedAccount(accountsList[0]);
+		};
 		makeFetch();
 	}, []);
 
@@ -163,6 +204,74 @@ export function PurchasedAppsDashboardPage() {
 		makeFetch();
 	}, [page, purchasedAppTable.pageSize, selectedAccount]);
 
+	function getRolesList(accountBriefs: AccountBrief[]) {
+		const rolesList: string[] = [];
+
+		const accountBrief = accountBriefs.find(
+			(accountBrief) => accountBrief.name === selectedAccount.name
+		);
+
+		accountBrief?.roleBriefs.forEach((role) => {
+			rolesList.push(role.name);
+		});
+
+		return rolesList.join(', ');
+	}
+
+	useEffect(() => {
+		const clickedNavigationItem =
+			dashboardNavigationItems.find(
+				(dashboardNavigationItem) =>
+					dashboardNavigationItem.itemSelected
+			) || dashboardNavigationItems[0];
+
+		setSelectedNavigationItem(clickedNavigationItem?.itemTitle as string);
+	}, [dashboardNavigationItems]);
+
+	useEffect(() => {
+		(async () => {
+			if (selectedNavigationItem === 'Members') {
+				const accountsListResponse = await getUserAccounts();
+
+				const membersList = accountsListResponse.items.map(
+					(member: UserAccountProps) => {
+						return {
+							accountBriefs: member.accountBriefs,
+							dateCreated: member.dateCreated,
+							email: member.emailAddress,
+							image: member.image,
+							isCustomerAccount: false,
+							isPublisherAccount: false,
+							lastLoginDate: member.lastLoginDate,
+							name: member.name,
+							role: getRolesList(member.accountBriefs),
+							userId: member.id,
+						} as MemberProps;
+					}
+				);
+				let filteredMembersList: MemberProps[] = [];
+
+				filteredMembersList = membersList.filter(
+					(member: MemberProps) => {
+						if (
+							member.accountBriefs.find(
+								(accountBrief: AccountBriefProps) =>
+									accountBrief.externalReferenceCode ===
+									selectedAccount.externalReferenceCode
+							)
+						) {
+							return true;
+						}
+
+						return false;
+					}
+				);
+
+				setMembers(filteredMembersList);
+			}
+		})();
+	}, [selectedNavigationItem, selectedAccount]);
+
 	return (
 		<div className="purchased-apps-dashboard-page-container">
 			<DashboardNavigation
@@ -177,39 +286,69 @@ export function PurchasedAppsDashboardPage() {
 				setSelectedAccount={setSelectedAccount}
 			/>
 
-			<DashboardPage
-				buttonMessage="Add Apps"
-				dashboardNavigationItems={dashboardNavigationItems}
-				messages={messages}
-			>
-				<DashboardTable<PurchasedAppProps>
-					emptyStateMessage={messages.emptyStateMessage}
-					items={purchasedAppTable.items}
-					tableHeaders={tableHeaders}
+			{selectedNavigationItem === 'Apps' && (
+				<DashboardPage
+					buttonMessage="Add Apps"
+					dashboardNavigationItems={dashboardNavigationItems}
+					messages={messages}
 				>
-					{(item) => (
-						<PurchasedAppsDashboardTableRow
-							item={item}
-							key={item.name}
-						/>
-					)}
-				</DashboardTable>
+					<DashboardTable<PurchasedAppProps>
+						emptyStateMessage={messages.emptyStateMessage}
+						items={purchasedAppTable.items}
+						tableHeaders={tableHeaders}
+					>
+						{(item) => (
+							<PurchasedAppsDashboardTableRow
+								item={item}
+								key={item.name}
+							/>
+						)}
+					</DashboardTable>
 
-				{purchasedAppTable.items.length ? (
-					<ClayPaginationBarWithBasicItems
-						active={page}
-						activeDelta={purchasedAppTable.pageSize}
-						defaultActive={1}
-						ellipsisBuffer={3}
-						ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
-						onActiveChange={setPage}
-						showDeltasDropDown={false}
-						totalItems={purchasedAppTable?.totalCount}
-					/>
-				) : (
-					<></>
-				)}
-			</DashboardPage>
+					{purchasedAppTable.items.length ? (
+						<ClayPaginationBarWithBasicItems
+							active={page}
+							activeDelta={purchasedAppTable.pageSize}
+							defaultActive={1}
+							ellipsisBuffer={3}
+							ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
+							onActiveChange={setPage}
+							showDeltasDropDown={false}
+							totalItems={purchasedAppTable?.totalCount}
+						/>
+					) : (
+						<></>
+					)}
+				</DashboardPage>
+			)}
+
+			{selectedNavigationItem === 'Members' && (
+				<DashboardPage
+					dashboardNavigationItems={dashboardNavigationItems}
+					messages={memberMessages}
+				>
+					{selectedMember ? (
+						<MemberProfile
+							member={selectedMember}
+							setSelectedMember={setSelectedMember}
+						></MemberProfile>
+					) : (
+						<DashboardTable<MemberProps>
+							emptyStateMessage={memberMessages.emptyStateMessage}
+							items={members}
+							tableHeaders={memberTableHeaders}
+						>
+							{(item) => (
+								<DashboardMemberTableRow
+									item={item}
+									key={item.name}
+									onSelectedMemberChange={setSelectedMember}
+								/>
+							)}
+						</DashboardTable>
+					)}
+				</DashboardPage>
+			)}
 		</div>
 	);
 }

@@ -215,7 +215,7 @@ export default function ModalImportObjectDefinition({
 						<Input
 							disabled
 							feedbackMessage={Liferay.Language.get(
-								'internal-key-to-reference-the-object-definition'
+								'unique-key-for-referencing-the-object-definition'
 							)}
 							id="externalReferenceCode"
 							label={Liferay.Language.get(

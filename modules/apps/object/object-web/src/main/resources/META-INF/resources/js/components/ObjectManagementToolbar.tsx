@@ -59,7 +59,7 @@ export default function ObjectManagementToolbar({
 			hasPublishPermission={hasPublishObjectPermission}
 			hasUpdatePermission={hasUpdateObjectDefinitionPermission}
 			helpMessage={Liferay.Language.get(
-				'internal-key-to-reference-the-object-definition'
+				'unique-key-for-referencing-the-object-definition'
 			)}
 			isApproved={isApproved}
 			label={label}

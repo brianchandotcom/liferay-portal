@@ -205,6 +205,11 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					skuOptions="[]"
 				/>
 
+				<commerce-ui:request-quote
+					CPCatalogEntry="<%= cpCatalogEntry %>"
+					namespace="<%= liferayPortletResponse.getNamespace() %>"
+				/>
+
 				<commerce-ui:add-to-wish-list
 					CPCatalogEntry="<%= cpCatalogEntry %>"
 					large="<%= true %>"

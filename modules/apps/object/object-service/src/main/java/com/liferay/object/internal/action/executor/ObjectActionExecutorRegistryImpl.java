@@ -56,7 +56,7 @@ public class ObjectActionExecutorRegistryImpl
 
 	@Override
 	public List<ObjectActionExecutor> getObjectActionExecutors(
-		String objectDefinitionName) {
+		long companyId, String objectDefinitionName) {
 
 		Collection<ObjectActionExecutor> objectActionExecutorsCollection =
 			_serviceTrackerMap.values();
@@ -70,7 +70,7 @@ public class ObjectActionExecutorRegistryImpl
 				new ArrayList<>(objectActionExecutorsCollection),
 				objectActionExecutor ->
 					ObjectActionExecutorUtil.isCompanyRestrictionCriteriaMet(
-						objectActionExecutor) &&
+						companyId, objectActionExecutor) &&
 					ObjectActionExecutorUtil.
 						isObjectDefinitionsRestrictionCriteriaMet(
 							objectActionExecutor, objectDefinitionName)),

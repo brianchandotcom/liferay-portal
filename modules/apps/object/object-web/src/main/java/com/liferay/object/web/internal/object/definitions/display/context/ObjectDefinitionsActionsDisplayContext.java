@@ -126,6 +126,7 @@ public class ObjectDefinitionsActionsDisplayContext
 
 		for (ObjectActionExecutor objectActionExecutor :
 				_objectActionExecutorRegistry.getObjectActionExecutors(
+					objectDefinition.getCompanyId(),
 					objectDefinition.getName())) {
 
 			objectActionExecutorsJSONArray.put(

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -231,7 +232,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			sitePage.getFriendlyUrlPath(), sitePage.getFriendlyUrlPath_i18n(),
 			titleMap);
 
-		Layout layout = _addLayout(siteId, friendlyUrlMap, titleMap);
+		Layout layout = _addLayout(siteId, sitePage, friendlyUrlMap, titleMap);
 
 		DefaultDTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
@@ -245,7 +246,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	private Layout _addLayout(
-			Long siteId, Map<Locale, String> friendlyUrlMap,
+			Long siteId, SitePage sitePage, Map<Locale, String> friendlyUrlMap,
 			Map<Locale, String> titleMap)
 		throws Exception {
 
@@ -253,8 +254,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			siteId, false, 0, titleMap, new HashMap<>(), new HashMap<>(),
 			new HashMap<>(), new HashMap<>(), LayoutConstants.TYPE_CONTENT,
 			null, false, friendlyUrlMap, 0,
-			ServiceContextRequestUtil.createServiceContext(
-				siteId, contextHttpServletRequest, null));
+			_createServiceContext(siteId, sitePage));
 
 		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
@@ -271,6 +271,26 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return _layoutLocalService.updateLayout(
 			siteId, false, layout.getLayoutId(), draftLayout.getModifiedDate());
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, SitePage sitePage) {
+
+		Long[] assetCategoryIds = {};
+
+		if (sitePage.getTaxonomyCategoryIds() != null) {
+			assetCategoryIds = sitePage.getTaxonomyCategoryIds();
+		}
+
+		String[] assetTagNames = new String[0];
+
+		if (sitePage.getKeywords() != null) {
+			assetTagNames = sitePage.getKeywords();
+		}
+
+		return ServiceContextRequestUtil.createServiceContext(
+			assetCategoryIds, assetTagNames, null, groupId,
+			contextHttpServletRequest, null);
 	}
 
 	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {

@@ -110,6 +110,11 @@ public class FaroServiceUpgradeStepRegistrator
 			"15.0.0", "16.0.0",
 			new com.liferay.osb.faro.internal.upgrade.v16_0_0.
 				UpgradeUserGroupRoleUpgradeProcess());
+
+		registry.register(
+			"16.0.0", "17.0.0",
+			new com.liferay.osb.faro.internal.upgrade.v17_0_0.
+				UpgradeFaroProjectEmailDomainUpgradeProcess());
 	}
 
 }

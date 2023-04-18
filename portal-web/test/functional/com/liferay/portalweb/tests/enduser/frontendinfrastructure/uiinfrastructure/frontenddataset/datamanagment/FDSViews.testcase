@@ -344,6 +344,56 @@ definition {
 				entryName = "View Test",
 				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
 		}
+
+	@description = "LPS-180895  Confirm that the view was really deleted"
+	@priority = 5
+	test CanUpdateNumberOfViews {
+		task ("When The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("And Add a new view") {
+			FrontendDataSetAdmin.goToViews(key_entry = "Test Dataset");
+
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test");
+		}
+
+		task ("And back to the Datasets admin page") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then confirm that the views column shows 1 views") {
+			AssertElementPresent(
+				locator1 = "FrontendDataSetAdmin#NUMBER_ON_VIEWS",
+				numberOfViews = 1);
+		}
+
+		task ("When go to View admin page") {
+			Click(
+				key_entry = "Test Dataset",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+
+			Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
+		}
+
+		task ("And the user deletes a View created") {
+			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test");
+		}
+
+		task ("And back to the Datasets admin page") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then confirm that the views column shows 0 views") {
+			AssertElementPresent(
+				locator1 = "FrontendDataSetAdmin#NUMBER_OF_VIEWS",
+				numberOfViews = 0);
+		}
+
 	}
 
 }

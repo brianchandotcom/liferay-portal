@@ -1,6 +1,7 @@
 @component-name = "portal-portal-configuration"
 definition {
 
+	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

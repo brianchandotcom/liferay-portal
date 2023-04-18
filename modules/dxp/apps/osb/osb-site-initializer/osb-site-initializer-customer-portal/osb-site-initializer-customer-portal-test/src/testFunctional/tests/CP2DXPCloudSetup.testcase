@@ -57,13 +57,15 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Fill out all the fields in the form") {
@@ -81,7 +83,7 @@ definition {
 	@priority = 5
 	test CanChooseDisasterRecoveryDataCenter {
 		task ("Activate object for disaster data center region") {
-			CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
+			CP2DXPCloudSetup.activeFieldDisasterRecoveryDataCenter(accountKey = "ERC-001_lxc---sm");
 		}
 
 		task ("Change the user role in the project") {
@@ -95,23 +97,25 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding to Setup") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Assert the region options from the drop-down") {
-			CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Dubai, UAE,Frankfurt, Germany,Hamina, Finland,Iowa, USA,Jurong West, Singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
+			CP2DXPCloudSetup.viewDisasterRegionList(regionRow = "Frankfurt, Germany,Hamina, Finland,Iowa, USA,Jurong West, Singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Osaka, Japan,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
 		}
 
 		task ("Deactivating object for the disaster data center region") {
-			CP2DXPCloudSetup.deactivateDisasterRecoveryDataCenter(index = 6);
+			CP2DXPCloudSetup.deactivateFieldDisasterRecoveryDataCenter(accountKey = "ERC-001_lxc---sm");
 		}
 	}
 
@@ -129,19 +133,21 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding to Setup") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Assert the drop-down options in primary data center region") {
-			CP2DXPCloudSetup.viewRegionList(regionList = "Dubai, UAE,Frankfurt, Germany,Hamina, Finland,Iowa, USA,Jurong West, Singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
+			CP2DXPCloudSetup.viewRegionList(regionList = "Frankfurt, Germany,Hamina, Finland,Iowa, USA,Jurong West, Singapore,London, England,Montreal, Canada,Mumbai, India,Oregon, USA,Osaka, Japan,Sao Paulo, Brazil,Sydney, Australia,Tokyo, Japan");
 		}
 	}
 
@@ -159,15 +165,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding to Setup") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Assert that the submit button is enabled") {
@@ -189,17 +197,15 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
-
-			CustomerPortal.clickOnSkipForNowButton();
-
-			CustomerPortal.clickOnSkipForNowButton();
+			CP2Utils.onboardingFlow();
 		}
 
 		task ("Assert that the user has been taken to the overview page") {
@@ -221,15 +227,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Fill out the form and submit it") {
@@ -269,17 +277,15 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
-
-			CustomerPortal.clickOnSkipForNowButton();
-
-			CustomerPortal.clickOnSkipForNowButton();
+			CP2Utils.onboardingFlow();
 		}
 
 		task ("Go to the product activation page and open the card activation modal") {
@@ -311,15 +317,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Filling in and deleting the DXP Cloud System Admin's Email Address field") {
@@ -355,15 +363,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Filling in a wrong entry in the DXP Cloud System Admin email address field") {
@@ -395,15 +405,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Filling and deleting the Project ID field") {
@@ -439,15 +451,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Filling in and deleting the System Admin's First Name field") {
@@ -483,15 +497,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Filling in and deleting the System Admin's Github Username field") {
@@ -527,15 +543,17 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
+			Button.click(button = "Start Project Setup");
 
-			CustomerPortal.clickOnSkipForNowButton();
+			Button.click(button = "Skip for now");
 		}
 
 		task ("Filling in and deleting the System Admin's Last Name field") {
@@ -571,17 +589,15 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
-
-			CustomerPortal.clickOnSkipForNowButton();
-
-			CustomerPortal.clickOnSkipForNowButton();
+			CP2Utils.onboardingFlow();
 		}
 
 		task ("Go to the product activation page and open the card activation modal") {
@@ -614,17 +630,15 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
 		task ("Going through onboarding") {
-			CustomerPortal.clickOnStartProjectSetup();
-
-			CustomerPortal.clickOnSkipForNowButton();
-
-			CustomerPortal.clickOnSkipForNowButton();
+			CP2Utils.onboardingFlow();
 		}
 
 		task ("Go to the product activation page and open the card activation modal") {
@@ -656,7 +670,9 @@ definition {
 		}
 
 		task ("Go to CP2.0 and join a project") {
-			CP2Utils.goToCustomerPortalSiteWithRefresh();
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
 
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}

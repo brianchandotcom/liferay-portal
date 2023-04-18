@@ -49,9 +49,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionEntryPortlet extends MVCPortlet {
+public class PortletCETPortlet extends MVCPortlet {
 
-	public ClientExtensionEntryPortlet(
+	public PortletCETPortlet(
 		CET cet, CustomElementCET customElementCET, IFrameCET iFrameCET,
 		NPMResolver npmResolver) {
 
@@ -178,7 +178,7 @@ public class ClientExtensionEntryPortlet extends MVCPortlet {
 		StringBuffer stringBuffer = stringWriter.getBuffer();
 
 		outputData.setDataSB(
-			ClientExtensionEntryPortlet.class.toString(), WebKeys.PAGE_TOP,
+			PortletCETPortlet.class.toString(), WebKeys.PAGE_TOP,
 			new StringBundler(stringBuffer.toString()));
 
 		PrintWriter printWriter = renderResponse.getWriter();
@@ -202,7 +202,7 @@ public class ClientExtensionEntryPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClientExtensionEntryPortlet.class);
+		PortletCETPortlet.class);
 
 	private final CET _cet;
 	private final CustomElementCET _customElementCET;

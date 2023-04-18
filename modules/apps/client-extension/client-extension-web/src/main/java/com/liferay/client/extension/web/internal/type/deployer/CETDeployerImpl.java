@@ -20,10 +20,10 @@ import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.JSImportmapsEntryCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
-import com.liferay.client.extension.web.internal.importmap.ClientExtensionEntryJSImportmapsContributor;
-import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryFriendlyURLMapper;
-import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryPortlet;
-import com.liferay.client.extension.web.internal.portlet.action.ClientExtensionEntryConfigurationAction;
+import com.liferay.client.extension.web.internal.frontend.js.importmaps.extender.JSImportmapsEntryCETJSImportmapsContributor;
+import com.liferay.client.extension.web.internal.portlet.PortletCETFriendlyURLMapper;
+import com.liferay.client.extension.web.internal.portlet.PortletCETPortlet;
+import com.liferay.client.extension.web.internal.portlet.action.PortletCETConfigurationAction;
 import com.liferay.client.extension.web.internal.util.CETUtil;
 import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
@@ -90,7 +90,7 @@ public class CETDeployerImpl implements CETDeployer {
 		ServiceRegistration<JSImportmapsContributor> serviceRegistration =
 			_bundleContext.registerService(
 				JSImportmapsContributor.class,
-				new ClientExtensionEntryJSImportmapsContributor(
+				new JSImportmapsEntryCETJSImportmapsContributor(
 					jsImportmapsEntryCET, _jsonFactory),
 				null);
 
@@ -176,8 +176,7 @@ public class CETDeployerImpl implements CETDeployer {
 		_registerConfigurationAction(CET cet) {
 
 		return _bundleContext.registerService(
-			ConfigurationAction.class,
-			new ClientExtensionEntryConfigurationAction(),
+			ConfigurationAction.class, new PortletCETConfigurationAction(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"javax.portlet.name", _getPortletId(cet)
 			).build());
@@ -188,7 +187,7 @@ public class CETDeployerImpl implements CETDeployer {
 
 		return _bundleContext.registerService(
 			FriendlyURLMapper.class,
-			new ClientExtensionEntryFriendlyURLMapper(friendlyURLMapping),
+			new PortletCETFriendlyURLMapper(friendlyURLMapping),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"javax.portlet.name", _getPortletId(cet)
 			).build());
@@ -258,7 +257,7 @@ public class CETDeployerImpl implements CETDeployer {
 
 		return _bundleContext.registerService(
 			Portlet.class,
-			new ClientExtensionEntryPortlet(
+			new PortletCETPortlet(
 				cet, customElementCET, iFrameCET, _npmResolver),
 			dictionary);
 	}

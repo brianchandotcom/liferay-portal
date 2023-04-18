@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.importmap;
+package com.liferay.client.extension.web.internal.frontend.js.importmaps.extender;
 
 import com.liferay.client.extension.type.JSImportmapsEntryCET;
 import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionEntryJSImportmapsContributor
+public class JSImportmapsEntryCETJSImportmapsContributor
 	implements JSImportmapsContributor {
 
-	public ClientExtensionEntryJSImportmapsContributor(
+	public JSImportmapsEntryCETJSImportmapsContributor(
 		JSImportmapsEntryCET jsImportmapsEntryCET, JSONFactory jsonFactory) {
 
 		_importmapsJSONObject = jsonFactory.createJSONObject();

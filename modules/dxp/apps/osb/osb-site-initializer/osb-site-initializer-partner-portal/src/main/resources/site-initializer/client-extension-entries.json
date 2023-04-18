@@ -56,7 +56,7 @@
 		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-LEVEL-CHART$]"
 	},
 	{
-		"clientExtensionEntryKey": "PARTNER-PORTAL-MDF-REQUEST-CHART",
+		"clientExtensionEntryKey": "PARTNER-PORTAL-MDF-REQUESTS-CHART",
 		"cssURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/dashboard-remote-app/osb-site-initializer-partner-portal/main.css$]"
 		],
@@ -68,13 +68,13 @@
 		"externalReferenceCode": "PRM004",
 		"htmlElementName": "liferay-dashboard-remote-app-partner-portal",
 		"name_i18n": {
-			"en_US": "Partner Portal: MDF Request Chart"
+			"en_US": "Partner Portal: MDF Requests Chart"
 		},
 		"portletCategoryName": "category.client-extensions",
 		"properties": {
-			"type": "mdf-request-chart"
+			"type": "mdf-requests-chart"
 		},
-		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-MDF-REQUEST-CHART$]"
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-MDF-REQUESTS-CHART$]"
 	},
 	{
 		"clientExtensionEntryKey": "PARTNER-PORTAL-RENEWALS-CHART",

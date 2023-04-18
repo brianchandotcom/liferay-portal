@@ -154,7 +154,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "dialect-dialect-button"
+										"key": "DIALECT-dialect-button"
 									},
 									"fragmentConfig": {
 										"buttonSize": "",
@@ -264,7 +264,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "dialect-dialect-button"
+										"key": "DIALECT-dialect-button"
 									},
 									"fragmentConfig": {
 										"buttonSize": "",
@@ -649,7 +649,7 @@
 												"mt-n2"
 											],
 											"fragment": {
-												"key": "dialect-dialect-button"
+												"key": "DIALECT-dialect-button"
 											},
 											"fragmentConfig": {
 												"buttonSize": "",
@@ -864,7 +864,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1057,7 +1057,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1246,7 +1246,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1441,7 +1441,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1627,7 +1627,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1850,7 +1850,7 @@
 											"widgetInstance": {
 												"widgetConfig": {
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-MDF-REQUEST-CHART$]"
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-MDF-REQUESTS-CHART$]"
 											}
 										},
 										"type": "Widget"

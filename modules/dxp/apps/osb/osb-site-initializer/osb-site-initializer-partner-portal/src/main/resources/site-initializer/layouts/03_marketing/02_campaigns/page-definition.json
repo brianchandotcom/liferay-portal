@@ -4,7 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "dialect-dialect-text"
+						"key": "DIALECT-dialect-text"
 					},
 					"fragmentConfig": {
 						"textType": "h1"

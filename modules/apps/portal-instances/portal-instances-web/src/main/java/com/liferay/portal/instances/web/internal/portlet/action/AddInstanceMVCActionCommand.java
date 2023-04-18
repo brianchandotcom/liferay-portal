@@ -105,14 +105,19 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _addInstance(ActionRequest actionRequest) throws Exception {
+		String defaultAdminScreenName = ParamUtil.getString(
+			actionRequest, "defaultAdminScreenName");
 		String defaultAdminEmailAddress = ParamUtil.getString(
 			actionRequest, "defaultAdminEmailAddress");
 		String defaultAdminPassword = ParamUtil.getString(
 			actionRequest, "defaultAdminPassword");
-		String defaultAdminScreenName = ParamUtil.getString(
-			actionRequest, "defaultAdminScreenName");
 
 		if (Validator.isNull(PropsValues.DEFAULT_ADMIN_PASSWORD)) {
+			if (Validator.isNull(defaultAdminScreenName)) {
+				throw new UserScreenNameException.MustNotBeNull(
+					defaultAdminScreenName);
+			}
+
 			if (Validator.isNull(defaultAdminEmailAddress)) {
 				throw new UserEmailAddressException.MustValidate(
 					defaultAdminEmailAddress, null);
@@ -121,17 +126,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNull(defaultAdminPassword)) {
 				throw new UserPasswordException.MustNotBeNull(0);
 			}
-
-			if (Validator.isNull(defaultAdminScreenName)) {
-				throw new UserScreenNameException.MustNotBeNull(
-					defaultAdminScreenName);
-			}
 		}
-
-		String defaultAdminFirstName = ParamUtil.getString(
-			actionRequest, "defaultAdminFirstName");
-		String defaultAdminLastName = ParamUtil.getString(
-			actionRequest, "defaultAdminLastName");
 
 		String webId = ParamUtil.getString(actionRequest, "webId");
 		String virtualHostname = ParamUtil.getString(
@@ -139,6 +134,10 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String mx = ParamUtil.getString(actionRequest, "mx");
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+		String defaultAdminFirstName = ParamUtil.getString(
+			actionRequest, "defaultAdminFirstName");
+		String defaultAdminLastName = ParamUtil.getString(
+			actionRequest, "defaultAdminLastName");
 
 		Company company = _companyService.addCompany(
 			webId, virtualHostname, mx, maxUsers, active, defaultAdminPassword,

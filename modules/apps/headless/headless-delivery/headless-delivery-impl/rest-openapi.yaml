@@ -4656,6 +4656,17 @@ components:
                     description:
                         The type of the page.
                     type: string
+                parentSitePage:
+                    # @review
+                    description:
+                        The parent page or null if it is a top level page.
+                    properties:
+                        friendlyUrlPath:
+                            # @review
+                            description:
+                                The relative URL of the parent page.
+                            type: string
+                    type: object
                 renderedPage:
                     allOf:
                         - $ref: "#/components/schemas/RenderedPage"

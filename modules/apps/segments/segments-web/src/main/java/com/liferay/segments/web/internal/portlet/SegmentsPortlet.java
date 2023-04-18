@@ -84,7 +84,7 @@ public class SegmentsPortlet extends MVCPortlet {
 				_segmentsConfigurationProvider, _segmentsEntryService);
 
 		renderRequest.setAttribute(
-			SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT, segmentsDisplayContext);
+			SegmentsDisplayContext.class.getName(), segmentsDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

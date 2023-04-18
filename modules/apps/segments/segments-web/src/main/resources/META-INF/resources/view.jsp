@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.getAttribute(SegmentsWebKeys.SEGMENTS_DISPLAY_CONTEXT);
+SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.getAttribute(SegmentsDisplayContext.class.getName());
 
 String eventName = liferayPortletResponse.getNamespace() + "assignSiteRoles";
 

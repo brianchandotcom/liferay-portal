@@ -26,9 +26,6 @@ public class SegmentsWebKeys {
 	public static final String PREVIEW_SEGMENTS_ENTRY_CRITERIA =
 		"PREVIEW_SEGMENTS_ENTRY_CRITERIA";
 
-	public static final String SEGMENTS_DISPLAY_CONTEXT =
-		"SEGMENTS_DISPLAY_CONTEXT";
-
 	public static final String SELECT_SEGMENTS_ENTRY_DISPLAY_CONTEXT =
 		"SELECT_SEGMENTS_ENTRY_DISPLAY_CONTEXT";
 

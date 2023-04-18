@@ -64,6 +64,12 @@ definition {
 
 			PortletEntry.inputName(name = ${siteName});
 
+			if (isSet(enablePrivatePage)) {
+				Check(
+					checkboxName = "Create default pages as private",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
 			Button.click(button = "Add");
 
 			SelectFrameTop();
@@ -204,6 +210,7 @@ definition {
 	macro addSiteTemplateCP {
 		if (isSet(siteTemplateTab)) {
 			Site.addCP(
+				enablePrivatePage = ${enablePrivatePage},
 				membershipType = ${membershipType},
 				parentSiteName = ${parentSiteName},
 				siteName = ${siteName},

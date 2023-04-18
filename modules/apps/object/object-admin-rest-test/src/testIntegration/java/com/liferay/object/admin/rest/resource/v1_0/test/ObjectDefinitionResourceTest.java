@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.dto.v1_0.Status;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
@@ -28,12 +29,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
@@ -50,7 +55,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags("LPS-146755")
+@FeatureFlags({"LPS-146755", "LPS-167253"})
 @RunWith(Arquillian.class)
 public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {
@@ -197,6 +202,33 @@ public class ObjectDefinitionResourceTest
 			Arrays.asList(
 				ObjectDefinitionSerDes.toDTOs(
 					objectDefinitionsJSONObject.getString("items"))));
+	}
+
+	@Test
+	public void testPostObjectDefinition() throws Exception {
+
+		// Create an approved object definition
+
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		Status status = new Status() {
+			{
+				code = 0;
+				label = WorkflowConstants.getStatusLabel(0);
+				label_i18n = _language.get(
+					LanguageResources.getResourceBundle(
+						LocaleUtil.getDefault()),
+					WorkflowConstants.getStatusLabel(0));
+			}
+		};
+
+		randomObjectDefinition.setStatus(status);
+
+		ObjectDefinition postObjectDefinition =
+			testPostObjectDefinition_addObjectDefinition(
+				randomObjectDefinition);
+
+		Assert.assertEquals(status, postObjectDefinition.getStatus());
 	}
 
 	@Test
@@ -366,6 +398,9 @@ public class ObjectDefinitionResourceTest
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionResourceTest.class);
+
+	@Inject
+	private Language _language;
 
 	private ObjectDefinition _objectDefinition;
 

@@ -2,6 +2,7 @@ jobs:
     publish-workspaces:
         env:
             ANT_OPTS: "-Xmx2560m"
+        if: (github.repository == 'liferay/liferay-portal')
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code

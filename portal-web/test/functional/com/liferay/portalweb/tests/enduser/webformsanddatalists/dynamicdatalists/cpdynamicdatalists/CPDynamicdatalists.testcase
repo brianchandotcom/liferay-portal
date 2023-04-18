@@ -968,7 +968,6 @@ definition {
 		DDLRecord.viewGeolocationRecord(fieldFieldLabel = "Geolocation");
 	}
 
-	@ignore = "true"
 	@priority = 5
 	test AddListRecordWithHTMLField {
 		Navigator.openURL();
@@ -1740,7 +1739,6 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no templates.");
 	}
 
-	@ignore = "true"
 	@priority = 3
 	test CopyDataDefinitionWithCopyDisplayTemplates {
 		Navigator.openURL();
@@ -1828,7 +1826,6 @@ definition {
 			ddlTemplateName = "Data Definition Form Template Name");
 	}
 
-	@ignore = "true"
 	@priority = 3
 	test CopyDataDefinitionWithCopyFormTemplates {
 		Navigator.openURL();
@@ -1925,7 +1922,6 @@ definition {
 			ddlTemplateName = "Data Definition Display Template Name");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CopyDataDefinitionWithCopyFormTemplatesAndCopyDisplayTemplates {
 		Navigator.openURL();
@@ -3701,7 +3697,6 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
-	@ignore = "true"
 	@priority = 3
 	test ViewNoDuplicatesInOriginalAfterCopy {
 		Navigator.openURL();

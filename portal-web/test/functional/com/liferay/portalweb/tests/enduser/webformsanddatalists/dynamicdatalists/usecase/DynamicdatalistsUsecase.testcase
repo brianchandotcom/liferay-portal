@@ -78,7 +78,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-50557."
-	@ignore = "true"
 	@priority = 4
 	test AddListWithXSSWorkflowDefinition {
 		property test.name.skip.portal.instance = "DynamicdatalistUsecase#AddListWithXSSWorkflowDefinition";
@@ -901,7 +900,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-50549."
-	@ignore = "true"
 	@priority = 4
 	test AddXSSToHTMLField {
 		var ddlRecordFieldData1 = '''<img src=x onerror=alert(/xss/) />''';

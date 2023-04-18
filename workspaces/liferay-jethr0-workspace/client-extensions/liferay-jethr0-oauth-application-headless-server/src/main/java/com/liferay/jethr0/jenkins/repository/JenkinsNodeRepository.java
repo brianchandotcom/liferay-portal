@@ -60,7 +60,6 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 					computerJSONObject.getString("_class"),
 					"hudson.model.Hudson$MasterComputer")) {
 
-				name = "master";
 				nodeCount = 1;
 				type = JenkinsNode.Type.MASTER;
 				url = StringUtil.combine(
@@ -128,6 +127,16 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 
 			add(jenkinsNode);
 		}
+	}
+
+	public JenkinsNode get(String jenkinsNodeName) {
+		for (JenkinsNode jenkinsNode : getAll()) {
+			if (Objects.equals(jenkinsNodeName, jenkinsNode.getName())) {
+				return jenkinsNode;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

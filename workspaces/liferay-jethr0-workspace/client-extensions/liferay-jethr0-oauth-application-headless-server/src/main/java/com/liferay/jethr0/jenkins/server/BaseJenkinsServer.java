@@ -22,7 +22,6 @@ import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -161,16 +160,8 @@ public abstract class BaseJenkinsServer
 		for (int i = 0; i < computerJSONArray.length(); i++) {
 			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);
 
-			String name = computerJSONObject.getString("displayName");
-
-			if (Objects.equals(
-					computerJSONObject.getString("_class"),
-					"hudson.model.Hudson$MasterComputer")) {
-
-				name = "master";
-			}
-
-			JenkinsNode jenkinsNode = jenkinsNodeMap.get(name);
+			JenkinsNode jenkinsNode = jenkinsNodeMap.get(
+				computerJSONObject.getString("displayName"));
 
 			if (jenkinsNode == null) {
 				continue;

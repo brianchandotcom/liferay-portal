@@ -89,6 +89,30 @@ public class OpenGraphSettingsSerDes {
 			sb.append(String.valueOf(openGraphSettings.getImage()));
 		}
 
+		if (openGraphSettings.getImageAlt() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageAlt\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(openGraphSettings.getImageAlt()));
+
+			sb.append("\"");
+		}
+
+		if (openGraphSettings.getImageAlt_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageAlt_i18n\": ");
+
+			sb.append(_toJSON(openGraphSettings.getImageAlt_i18n()));
+		}
+
 		if (openGraphSettings.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -159,6 +183,23 @@ public class OpenGraphSettingsSerDes {
 			map.put("image", String.valueOf(openGraphSettings.getImage()));
 		}
 
+		if (openGraphSettings.getImageAlt() == null) {
+			map.put("imageAlt", null);
+		}
+		else {
+			map.put(
+				"imageAlt", String.valueOf(openGraphSettings.getImageAlt()));
+		}
+
+		if (openGraphSettings.getImageAlt_i18n() == null) {
+			map.put("imageAlt_i18n", null);
+		}
+		else {
+			map.put(
+				"imageAlt_i18n",
+				String.valueOf(openGraphSettings.getImageAlt_i18n()));
+		}
+
 		if (openGraphSettings.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -213,6 +254,18 @@ public class OpenGraphSettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					openGraphSettings.setImage(
 						ContentDocumentSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "imageAlt")) {
+				if (jsonParserFieldValue != null) {
+					openGraphSettings.setImageAlt((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "imageAlt_i18n")) {
+				if (jsonParserFieldValue != null) {
+					openGraphSettings.setImageAlt_i18n(
+						(Map)OpenGraphSettingsSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -99,6 +99,49 @@ public class OpenGraphSettings implements Cloneable, Serializable {
 
 	protected ContentDocument image;
 
+	public String getImageAlt() {
+		return imageAlt;
+	}
+
+	public void setImageAlt(String imageAlt) {
+		this.imageAlt = imageAlt;
+	}
+
+	public void setImageAlt(
+		UnsafeSupplier<String, Exception> imageAltUnsafeSupplier) {
+
+		try {
+			imageAlt = imageAltUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String imageAlt;
+
+	public Map<String, String> getImageAlt_i18n() {
+		return imageAlt_i18n;
+	}
+
+	public void setImageAlt_i18n(Map<String, String> imageAlt_i18n) {
+		this.imageAlt_i18n = imageAlt_i18n;
+	}
+
+	public void setImageAlt_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			imageAlt_i18nUnsafeSupplier) {
+
+		try {
+			imageAlt_i18n = imageAlt_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> imageAlt_i18n;
+
 	public String getTitle() {
 		return title;
 	}

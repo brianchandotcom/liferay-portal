@@ -148,6 +148,64 @@ public class OpenGraphSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContentDocument image;
 
+	@Schema(description = "The Open Graph's image alt.")
+	public String getImageAlt() {
+		return imageAlt;
+	}
+
+	public void setImageAlt(String imageAlt) {
+		this.imageAlt = imageAlt;
+	}
+
+	@JsonIgnore
+	public void setImageAlt(
+		UnsafeSupplier<String, Exception> imageAltUnsafeSupplier) {
+
+		try {
+			imageAlt = imageAltUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The Open Graph's image alt.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String imageAlt;
+
+	@Schema(description = "The localized Open Graph's image alts.")
+	@Valid
+	public Map<String, String> getImageAlt_i18n() {
+		return imageAlt_i18n;
+	}
+
+	public void setImageAlt_i18n(Map<String, String> imageAlt_i18n) {
+		this.imageAlt_i18n = imageAlt_i18n;
+	}
+
+	@JsonIgnore
+	public void setImageAlt_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			imageAlt_i18nUnsafeSupplier) {
+
+		try {
+			imageAlt_i18n = imageAlt_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The localized Open Graph's image alts.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> imageAlt_i18n;
+
 	@Schema(description = "The Open Graph's title.")
 	public String getTitle() {
 		return title;
@@ -265,6 +323,30 @@ public class OpenGraphSettings implements Serializable {
 			sb.append("\"image\": ");
 
 			sb.append(String.valueOf(image));
+		}
+
+		if (imageAlt != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageAlt\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(imageAlt));
+
+			sb.append("\"");
+		}
+
+		if (imageAlt_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageAlt_i18n\": ");
+
+			sb.append(_toJSON(imageAlt_i18n));
 		}
 
 		if (title != null) {

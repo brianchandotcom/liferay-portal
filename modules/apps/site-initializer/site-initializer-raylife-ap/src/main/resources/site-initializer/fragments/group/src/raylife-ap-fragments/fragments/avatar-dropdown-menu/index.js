@@ -40,7 +40,6 @@ dropdownContent.style.left = `${left + 10}px`;
 dropdownContent.style.bottom = `${height}px`;
 
 const btnDashboard = fragmentElement.querySelector('#dropdown-item-dashboard');
-const btnMyaccount = fragmentElement.querySelector('#dropdown-item-myaccount');
 const btnNotifications = fragmentElement.querySelector(
 	'#dropdown-item-notifications'
 );
@@ -53,7 +52,6 @@ const btnDropdown = fragmentElement.querySelector(
 );
 
 btnDashboard.onclick = () => redirectUrl('dashboard');
-btnMyaccount.onclick = () => handleCustomizebleUrl(btnMyaccount.href);
 btnNotifications.onclick = () => redirectUrl('notifications-list');
 btnAccountsettings.onclick = () => redirectUrl('account-settings');
 btnSignout.onclick = () => handleCustomizebleUrl(btnSignout.href);

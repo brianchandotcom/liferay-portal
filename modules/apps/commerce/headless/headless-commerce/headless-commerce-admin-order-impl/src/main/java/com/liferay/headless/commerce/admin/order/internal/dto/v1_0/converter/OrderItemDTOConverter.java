@@ -121,6 +121,8 @@ public class OrderItemDTOConverter
 				promoPriceWithTaxAmount =
 					commerceOrderItem.getPromoPriceWithTaxAmount();
 				quantity = commerceOrderItem.getQuantity();
+				replacedSku = commerceOrderItem.getReplacedSku();
+				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
 				shippedQuantity = commerceOrderItem.getShippedQuantity();

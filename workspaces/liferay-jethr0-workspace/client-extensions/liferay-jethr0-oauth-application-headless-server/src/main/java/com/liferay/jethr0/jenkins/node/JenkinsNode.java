@@ -44,7 +44,13 @@ public interface JenkinsNode extends Entity {
 
 	public URL getURL();
 
+	public boolean isAvailable();
+
 	public boolean isCompatible(Build build);
+
+	public boolean isIdle();
+
+	public boolean isOffline();
 
 	public void setGoodBattery(boolean goodBattery);
 
@@ -57,6 +63,10 @@ public interface JenkinsNode extends Entity {
 	public void setNodeRAM(int nodeRAM);
 
 	public void setURL(URL url);
+
+	public void update();
+
+	public void update(JSONObject computerJSONObject);
 
 	public static enum Type {
 

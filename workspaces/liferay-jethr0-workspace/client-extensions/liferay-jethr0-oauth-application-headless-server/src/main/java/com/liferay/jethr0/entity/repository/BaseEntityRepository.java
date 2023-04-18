@@ -38,7 +38,11 @@ public abstract class BaseEntityRepository<T extends Entity>
 	public T add(JSONObject jsonObject) {
 		EntityDALO<T> entityDALO = getEntityDALO();
 
-		return add(entityDALO.create(jsonObject));
+		T entity = entityDALO.create(jsonObject);
+
+		addAll(Collections.singletonList(entity));
+
+		return entity;
 	}
 
 	@Override

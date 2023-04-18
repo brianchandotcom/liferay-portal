@@ -43,7 +43,7 @@ public class JenkinsServerToJenkinsNodesDALO
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "jenkinsServerToJenkinsNodesDALO";
+		return "jenkinsServerToJenkinsNodes";
 	}
 
 	@Autowired

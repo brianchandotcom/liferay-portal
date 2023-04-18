@@ -1,7 +1,5 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "/marketing/campaigns"
-	},
+	"friendlyURL": "/marketing/campaigns",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Campaigns"

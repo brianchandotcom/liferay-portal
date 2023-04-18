@@ -1,7 +1,5 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "/sales/partner-opportunities"
-	},
+	"friendlyURL": "/sales/partner-opportunities",
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "Partner Opportunities"

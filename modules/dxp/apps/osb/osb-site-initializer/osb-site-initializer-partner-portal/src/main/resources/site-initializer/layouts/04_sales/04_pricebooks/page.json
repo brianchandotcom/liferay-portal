@@ -1,7 +1,5 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "/sales/pricebooks"
-	},
+	"friendlyURL": "/sales/pricebooks",
 	"hidden": false,
 	"name_i18n": {
 		"en_US": "Pricebooks"

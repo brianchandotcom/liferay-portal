@@ -46,8 +46,8 @@ public interface BlogsConfiguration {
 	public int entryCheckInterval();
 
 	/**
-	 * Set the interval on how often to check for new link backs. The value
-	 * is set in one minute increments.
+	 * Set the interval on how often to check for new link backs. The value is
+	 * set in one minute increments.
 	 */
 	@Meta.AD(deflt = "5", name = "linkback-job-interval", required = false)
 	public int linkbackJobInterval();

@@ -31,9 +31,6 @@ public class CommercePaymentScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
 
-	public static final String ENTRY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS =
-		"details";
-
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_GENERAL =
 		"commerce.channel.general";
 

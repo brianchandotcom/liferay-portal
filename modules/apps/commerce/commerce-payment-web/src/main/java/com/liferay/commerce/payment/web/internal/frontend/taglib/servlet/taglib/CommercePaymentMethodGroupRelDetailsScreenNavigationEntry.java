@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.payment.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.payment.constants.CommercePaymentScreenNavigationConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -40,8 +39,7 @@ public class CommercePaymentMethodGroupRelDetailsScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return CommercePaymentScreenNavigationConstants.
-			ENTRY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS;
+		return getCategoryKey();
 	}
 
 	@Override

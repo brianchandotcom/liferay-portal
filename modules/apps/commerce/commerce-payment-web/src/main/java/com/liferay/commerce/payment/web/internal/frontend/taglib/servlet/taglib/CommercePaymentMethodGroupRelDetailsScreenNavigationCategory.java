@@ -41,10 +41,7 @@ public class CommercePaymentMethodGroupRelDetailsScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return language.get(
-			locale,
-			CommercePaymentScreenNavigationConstants.
-				ENTRY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS);
+		return language.get(locale, getCategoryKey());
 	}
 
 	@Override

@@ -130,6 +130,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				<liferay-frontend:sidebar-panel
 					resourceURL="<%= dlViewDisplayContext.getSidebarPanelURL() %>"
 					searchContainerId="entries"
+					title='<%= LanguageUtil.get(request, "info-panel") %>'
 				>
 					<liferay-util:include page="/document_library/info_panel.jsp" servletContext="<%= application %>" />
 				</liferay-frontend:sidebar-panel>

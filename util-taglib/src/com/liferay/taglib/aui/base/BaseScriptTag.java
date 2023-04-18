@@ -30,10 +30,6 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 		return super.doStartTag();
 	}
 
-	public java.lang.String getLoad() {
-		return _load;
-	}
-
 	public java.lang.String getRequire() {
 		return _require;
 	}
@@ -44,10 +40,6 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 
 	public java.lang.String getUse() {
 		return _use;
-	}
-
-	public void setLoad(java.lang.String load) {
-		_load = load;
 	}
 
 	public void setRequire(java.lang.String require) {
@@ -66,7 +58,6 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_load = null;
 		_require = null;
 		_sandbox = false;
 		_use = null;
@@ -79,7 +70,6 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 	private static final String _PAGE =
 		"/html/taglib/aui/script/page.jsp";
 
-	private java.lang.String _load = null;
 	private java.lang.String _require = null;
 	private boolean _sandbox = false;
 	private java.lang.String _use = null;

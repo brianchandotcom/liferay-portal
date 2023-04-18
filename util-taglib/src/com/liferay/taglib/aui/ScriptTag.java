@@ -114,14 +114,12 @@ public class ScriptTag extends BaseScriptTag {
 				portletId = portlet.getPortletId();
 			}
 
-			String load = getLoad();
 			String require = getRequire();
 			String use = getUse();
 
-			if ((use != null) && ((load != null) || (require != null))) {
+			if ((use != null) && (require != null)) {
 				throw new JspException(
-					"Attribute \"use\" cannot be used with \"load\" or " +
-						"\"require\"");
+					"Attribute \"use\" cannot be used with \"require\"");
 			}
 
 			StringBundler bodyContentSB = getBodyContentAsStringBundler();
@@ -138,65 +136,6 @@ public class ScriptTag extends BaseScriptTag {
 
 				if ((require == null) && (use == null)) {
 					sb.append("})();");
-				}
-
-				bodyContentSB = sb;
-			}
-
-			if (load != null) {
-				StringBundler sb = null;
-
-				String[] modulesAndVariables = StringUtil.split(load);
-
-				if (modulesAndVariables.length == 1) {
-					sb = new StringBundler(9);
-
-					sb.append("(function() {window[Symbol.for('");
-					sb.append("__LIFERAY_WEBPACK_GET_MODULE__')]('");
-
-					String moduleAndVariable = modulesAndVariables[0];
-
-					String[] parts = StringUtil.split(
-						moduleAndVariable, " as ");
-
-					sb.append(parts[0]);
-
-					sb.append("').then((");
-					sb.append(parts[1]);
-					sb.append(") => {");
-					sb.append(bodyContentSB);
-					sb.append("});})();");
-				}
-				else {
-					sb = new StringBundler(
-						6 + (5 * modulesAndVariables.length));
-
-					sb.append("(function() {Promise.all([");
-
-					for (String moduleAndVariable : modulesAndVariables) {
-						String[] parts = StringUtil.split(
-							moduleAndVariable, " as ");
-
-						sb.append(StringPool.APOSTROPHE);
-						sb.append(parts[0]);
-						sb.append("', ");
-					}
-
-					sb.append("].map(window[Symbol.for('");
-					sb.append("__LIFERAY_WEBPACK_GET_MODULE__')])).then(([");
-
-					for (String moduleAndVariable : modulesAndVariables) {
-						String[] parts = StringUtil.split(
-							moduleAndVariable, " as ");
-
-						sb.append(parts[1]);
-
-						sb.append(StringPool.COMMA);
-					}
-
-					sb.append("]) => {");
-					sb.append(bodyContentSB);
-					sb.append("});})();");
 				}
 
 				bodyContentSB = sb;

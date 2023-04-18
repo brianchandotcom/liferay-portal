@@ -849,18 +849,7 @@ definition {
 
 		CommerceCheckout.gotoCheckout();
 
-		Click(locator1 = "Icon#PLUS");
-
-		Type(
-			key_text = "Search",
-			locator1 = "TextInput#ANY",
-			value1 = "Coupon Code Entry");
-
-		MouseOver(
-			categoryName = "Coupon Code Entry",
-			locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
-
-		Click(locator1 = "Button#PLUS");
+		CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
 
 		Type(
 			locator1 = "TextInput#DISCOUNT",
@@ -1087,18 +1076,7 @@ definition {
 
 		Button.click(button = "Submit");
 
-		Click(locator1 = "Icon#PLUS");
-
-		Type(
-			key_text = "Search",
-			locator1 = "TextInput#ANY",
-			value1 = "Coupon Code Entry");
-
-		Click(
-			categoryName = "Coupon Code Entry",
-			locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
-
-		Click(locator1 = "Button#PLUS");
+		CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
 
 		Type(
 			key_titleName = "Coupon Code",

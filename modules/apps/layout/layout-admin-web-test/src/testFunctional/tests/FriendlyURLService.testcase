@@ -390,7 +390,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page");
 
-		AssertTextPresent(value1 = "The requested resource could not be found.");
+		AssertTextPresent(value1 = "The requested address was not found on the system.");
 	}
 
 	@description = "This ensures that the friendlyURL of web content can be reset to default."
@@ -714,9 +714,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/-/friendlyUrl");
 
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
+		AssertTextPresent(value1 = "The requested address was not found on the system.");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/-/editedfriendlyUrl");
 

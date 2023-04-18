@@ -174,9 +174,11 @@ public class JMSEventHandler {
 		JenkinsNode jenkinsNode = _jenkinsNodeRepository.get(
 			computerJSONObject.getString("name"));
 
-		computerJSONObject.put("idle", !computerJSONObject.getBoolean("busy"));
 		computerJSONObject.put(
-			"offline", !computerJSONObject.getBoolean("online"));
+			"idle", !computerJSONObject.getBoolean("busy")
+		).put(
+			"offline", !computerJSONObject.getBoolean("online")
+		);
 
 		jenkinsNode.update(computerJSONObject);
 

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
@@ -1325,11 +1326,20 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	protected void reindex(AssetEntry entry) throws PortalException {
-		String className = PortalUtil.getClassName(entry.getClassNameId());
+		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
+			entry.getClassName());
 
-		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
+		if (indexer == null) {
+			return;
+		}
 
-		indexer.reindex(className, entry.getClassPK());
+		AssetRenderer<?> assetRenderer = entry.getAssetRenderer();
+
+		if (assetRenderer == null) {
+			return;
+		}
+
+		indexer.reindex(assetRenderer.getAssetObject());
 	}
 
 	private List<AssetEntryValidator> _getAssetEntryValidators(

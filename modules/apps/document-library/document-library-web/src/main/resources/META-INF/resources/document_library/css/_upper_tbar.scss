@@ -51,7 +51,9 @@ $upper-tbar-height: 4rem;
 			}
 
 			body.sidenav-transition & {
-				transition: left 0.5s ease;
+				@media (prefers-reduced-motion: no-preference) {
+					transition: left 0.5s ease;
+				}
 			}
 		}
 	}

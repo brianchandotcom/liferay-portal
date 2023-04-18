@@ -3,7 +3,9 @@ html#{$cadmin-selector} {
 		.cadmin {
 			&.affix,
 			&.control-menu-container {
-				@include transition($control-menu-css-transition);
+				@media (prefers-reduced-motion: no-preference) {
+					@include transition($control-menu-css-transition);
+				}
 			}
 		}
 	}

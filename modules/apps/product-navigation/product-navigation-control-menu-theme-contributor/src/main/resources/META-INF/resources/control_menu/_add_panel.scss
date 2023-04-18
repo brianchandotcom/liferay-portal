@@ -2,7 +2,9 @@ html#{$cadmin-selector} {
 	body.sidenav-transition {
 		#wrapper {
 			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
-				@include transition(padding 0.5s ease);
+				@media (prefers-reduced-motion: no-preference) {
+					@include transition(padding 0.5s ease);
+				}
 			}
 		}
 	}

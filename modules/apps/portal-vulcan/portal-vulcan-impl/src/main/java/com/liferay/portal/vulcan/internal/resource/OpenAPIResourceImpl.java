@@ -751,6 +751,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 			openAPIContext = new OpenAPIContext();
 
+			openAPIContext.setBaseUrl(uri.toString());
 			openAPIContext.setPath(uri.getPath());
 			openAPIContext.setVersion(
 				StringUtil.extractFirst(uriInfo.getPath(), StringPool.SLASH));

@@ -105,32 +105,33 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _addInstance(ActionRequest actionRequest) throws Exception {
-		String emailAdmin = ParamUtil.getString(actionRequest, "emailAdmin");
-		String passwordAdmin = ParamUtil.getString(
-			actionRequest, "passwordAdmin");
-		String screenNameAdmin = ParamUtil.getString(
-			actionRequest, "screenNameAdmin");
+		String defaultAdminEmailAddress = ParamUtil.getString(
+			actionRequest, "defaultAdminEmailAddress");
+		String defaultAdminPassword = ParamUtil.getString(
+			actionRequest, "defaultAdminPassword");
+		String defaultAdminScreenName = ParamUtil.getString(
+			actionRequest, "defaultAdminScreenName");
 
 		if (Validator.isNull(PropsValues.DEFAULT_ADMIN_PASSWORD)) {
-			if (Validator.isNull(emailAdmin)) {
+			if (Validator.isNull(defaultAdminEmailAddress)) {
 				throw new UserEmailAddressException.MustValidate(
-					emailAdmin, null);
+					defaultAdminEmailAddress, null);
 			}
 
-			if (Validator.isNull(passwordAdmin)) {
+			if (Validator.isNull(defaultAdminPassword)) {
 				throw new UserPasswordException.MustNotBeNull(0);
 			}
 
-			if (Validator.isNull(screenNameAdmin)) {
+			if (Validator.isNull(defaultAdminScreenName)) {
 				throw new UserScreenNameException.MustNotBeNull(
-					screenNameAdmin);
+					defaultAdminScreenName);
 			}
 		}
 
-		String firstNameAdmin = ParamUtil.getString(
-			actionRequest, "firstNameAdmin");
-		String lastNameAdmin = ParamUtil.getString(
-			actionRequest, "lastNameAdmin");
+		String defaultAdminFirstName = ParamUtil.getString(
+			actionRequest, "defaultAdminFirstName");
+		String defaultAdminLastName = ParamUtil.getString(
+			actionRequest, "defaultAdminLastName");
 
 		String webId = ParamUtil.getString(actionRequest, "webId");
 		String virtualHostname = ParamUtil.getString(
@@ -140,9 +141,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		Company company = _companyService.addCompany(
-			webId, virtualHostname, mx, maxUsers, active, passwordAdmin,
-			screenNameAdmin, emailAdmin, firstNameAdmin, StringPool.BLANK,
-			lastNameAdmin);
+			webId, virtualHostname, mx, maxUsers, active, defaultAdminPassword,
+			defaultAdminScreenName, defaultAdminEmailAddress,
+			defaultAdminFirstName, StringPool.BLANK, defaultAdminLastName);
 
 		String siteInitializerKey = ParamUtil.getString(
 			actionRequest, "siteInitializerKey");

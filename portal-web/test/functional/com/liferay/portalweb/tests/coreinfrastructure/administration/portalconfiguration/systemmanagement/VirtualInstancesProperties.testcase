@@ -68,9 +68,10 @@ definition {
 	}
 
 	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via system-ext.properties"
-	@priority = 3
+	@priority = 5
 	test CanSetPortalPropertyViaEnvironmentVariable {
 		property custom.system.properties = "company-id-properties=true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaEnvironmentVariable";
 
 		task ("Given a feature flag is disabled") {
@@ -105,8 +106,9 @@ definition {
 	}
 
 	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via jvm argument."
-	@priority = 3
+	@priority = 5
 	test CanSetPortalPropertyViaJVM {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaJVM";
 
 		task ("Given a feature flag is disabled") {

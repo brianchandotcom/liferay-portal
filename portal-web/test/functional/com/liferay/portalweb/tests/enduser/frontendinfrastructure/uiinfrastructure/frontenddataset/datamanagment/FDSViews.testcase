@@ -66,6 +66,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-181346. Confirm that pagination works right on views page"
+	@priority = 3
+	test CanAssertPaginationOnFDSViewsPage {
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_name = "View Test",
+				reps = "1,2,3,4,5,6");
+		}
+
+		task ("And changing the page to 4 entries.") {
+			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
+		}
+
+		task ("Then confirm that only 4 entries are displayed") {
+			for (var num : list "1,2,3,4") {
+				AssertElementPresent(
+					entryName = "View Test ${num}",
+					locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+		}
+
+		task ("When to switch to page 2") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then 2 entries are displayed") {
+			for (var num : list "5,6") {
+				AssertElementPresent(
+					entryName = "View Test ${num}",
+					locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+			}
+
+			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+		}
+	}
+
 	@description = "LPS-180898. Confirm that the user can cancel deletion when clicking close (X) button"
 	@priority = 3
 	test CanCancelDeletionOnCloseButton {

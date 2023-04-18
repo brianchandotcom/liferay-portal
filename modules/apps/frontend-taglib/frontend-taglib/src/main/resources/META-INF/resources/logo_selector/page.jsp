@@ -17,35 +17,13 @@
 <%@ include file="/logo_selector/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_logo_selector") + StringPool.UNDERLINE;
-
-int aspectRatio = GetterUtil.getInteger((String)request.getAttribute("liferay-frontend:logo-selector:aspectRatio"));
-String currentLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:currentLogoURL");
 boolean defaultLogo = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:defaultLogo"));
 String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:defaultLogoURL");
-boolean preserveRatio = GetterUtil.getBoolean((String)request.getAttribute("liferay-frontend:logo-selector:preserveRatio"));
-String tempImageFileName = (String)request.getAttribute("liferay-frontend:logo-selector:tempImageFileName");
+String imageURL = (String)request.getAttribute("liferay-frontend:logo-selector:imageURL");
+String randomNamespace = (String)request.getAttribute("liferay-frontend:logo-selector:randomNamespace");
+String uploadImageURL = (String)request.getAttribute("liferay-frontend:logo-selector:uploadImageURL");
 
-boolean deleteLogo = ParamUtil.getBoolean(request, "deleteLogo");
 long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
-
-String imageURL = null;
-
-if (deleteLogo) {
-	imageURL = defaultLogoURL;
-}
-else if (fileEntryId > 0) {
-	ResourceURL previewURL = PortletURLFactoryUtil.create(portletRequest, PortletKeys.IMAGE_UPLOADER, PortletRequest.RESOURCE_PHASE);
-
-	previewURL.setParameter("mvcRenderCommandName", "/image_uploader/upload_image");
-	previewURL.setParameter(Constants.CMD, Constants.GET_TEMP);
-	previewURL.setParameter("tempImageFileName", tempImageFileName);
-
-	imageURL = previewURL.toString();
-}
-else {
-	imageURL = currentLogoURL;
-}
 %>
 
 <div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
@@ -67,21 +45,12 @@ else {
 				<aui:button aria-label='<%= LanguageUtil.get(request, "delete-image") %>' cssClass="delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
 			</div>
 
-			<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />
+			<aui:input name="deleteLogo" type="hidden" value='<%= ParamUtil.getBoolean(request, "deleteLogo") %>' />
 
 			<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
 		</div>
 	</div>
 </div>
-
-<liferay-portlet:renderURL portletName="<%= PortletKeys.IMAGE_UPLOADER %>" var="uploadImageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<liferay-portlet:param name="mvcRenderCommandName" value="/image_uploader/upload_image" />
-	<liferay-portlet:param name="randomNamespace" value="<%= randomNamespace %>" />
-	<liferay-portlet:param name="aspectRatio" value="<%= String.valueOf(aspectRatio) %>" />
-	<liferay-portlet:param name="currentLogoURL" value="<%= currentLogoURL %>" />
-	<liferay-portlet:param name="preserveRatio" value="<%= String.valueOf(preserveRatio) %>" />
-	<liferay-portlet:param name="tempImageFileName" value="<%= tempImageFileName %>" />
-</liferay-portlet:renderURL>
 
 <aui:script use="liferay-logo-selector">
 	new Liferay.LogoSelector({

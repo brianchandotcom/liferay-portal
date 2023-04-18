@@ -1,17 +1,21 @@
 assemble:
     - from: src
 liferay-marketplace-oauth-application-user-agent:
-    .serviceAddress: localhost:58081
-    .serviceScheme: http
     name: Liferay Marketplace OAuth Application User Agent
     scopes:
         - C_Test.everything
         - Liferay.Headless.Commerce.Delivery.Order.everything.read
         - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Admin.User.read
         - Liferay.Headless.Commerce.Admin.Order.everything
     type: oAuthApplicationUserAgent
 liferay-marketplace-object-action-trial-add:
     name: Liferay Marketplace Object Action Trial Add
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-oauth-application-user-agent
     resourcePath: /marketplace/trial
+    type: objectAction
+liferay-marketplace-object-action-test:
+    name: Liferay Marketplace Object Action Test
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-oauth-application-user-agent
+    resourcePath: /marketplace/test
     type: objectAction

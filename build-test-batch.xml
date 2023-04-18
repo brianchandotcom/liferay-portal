@@ -7774,7 +7774,6 @@ information. Make sure to commit in all build services results.
 						</if>
 
 						<ant dir="portal-impl" target="format-source-all">
-							<property name="check.vulnerabilities" value="false" />
 							<property name="source.auto.fix" value="false" />
 							<property name="source.fail.on.auto.fix" value="true" />
 							<property name="source.fail.on.has.warning" value="true" />
@@ -7789,6 +7788,7 @@ information. Make sure to commit in all build services results.
 						<antcall target="setup-yarn" />
 
 						<ant dir="portal-impl" target="format-source-current-branch">
+							<property name="check.vulnerabilities" value="true" />
 							<property name="source.auto.fix" value="false" />
 							<property name="source.fail.on.auto.fix" value="true" />
 							<property name="source.fail.on.has.warning" value="true" />

@@ -440,9 +440,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="format-source-all">
-		<antcall target="format-source-files">
-			<param name="check.vulnerabilities" value="${check.vulnerabilities}" />
-		</antcall>
+		<antcall target="format-source-files" />
 	</target>
 
 	<target name="format-source-bnd">
@@ -526,6 +524,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 						<if>
 							<isset property="format.source.default.task" />
 							<then>
+								<property name="check.vulnerabilities" value="true" />
 								<property name="format.current.branch" value="true" />
 								<property name="source.formatter.message" value="Running SourceFormatter on added/modified files in the current branch (${current.branch.name}) only. Please run the following command to run SourceFormatter on all files:${line.separator}${line.separator}ant format-source-all" />
 								<property name="validate.commit.messages" value="true" />

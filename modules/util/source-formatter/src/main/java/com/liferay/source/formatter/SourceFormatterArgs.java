@@ -31,7 +31,7 @@ public class SourceFormatterArgs {
 
 	public static final String BASE_DIR_NAME = "./";
 
-	public static final boolean CHECK_VULNERABILITIES = true;
+	public static final boolean CHECK_VULNERABILITIES = false;
 
 	public static final int COMMIT_COUNT = 0;
 

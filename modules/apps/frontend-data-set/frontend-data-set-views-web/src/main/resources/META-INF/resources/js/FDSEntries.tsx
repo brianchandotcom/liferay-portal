@@ -25,10 +25,10 @@ import fuzzy from 'fuzzy';
 import React, {useRef, useState} from 'react';
 
 import '../css/FDSEntries.scss';
-import {OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
-import {TFDSView} from './FDSViews';
-import RequiredMark from './RequiredMark';
-import ValidationFeedback from './ValidationFeedback';
+import {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
+import {FDSViewType} from './FDSViews';
+import RequiredMark from './components/RequiredMark';
+import ValidationFeedback from './components/ValidationFeedback';
 
 const FUZZY_OPTIONS = {
 	post: '</strong>',
@@ -36,7 +36,7 @@ const FUZZY_OPTIONS = {
 };
 
 type FDSEntryType = {
-	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<TFDSView>;
+	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
 	actions: {
 		delete: {
 			href: string;
@@ -258,7 +258,6 @@ const RestEndpointDropdownMenu = ({
 
 interface AddFDSEntryModalContentInterface {
 	closeModal: Function;
-	fdsEntriesAPIURL: string;
 	loadData: Function;
 	namespace: string;
 	restApplications: Array<string>;
@@ -266,7 +265,6 @@ interface AddFDSEntryModalContentInterface {
 
 const AddFDSEntryModalContent = ({
 	closeModal,
-	fdsEntriesAPIURL,
 	loadData,
 	namespace,
 	restApplications,
@@ -316,7 +314,7 @@ const AddFDSEntryModalContent = ({
 			restSchema: selectedRESTSchema,
 		};
 
-		const response = await fetch(fdsEntriesAPIURL, {
+		const response = await fetch(API_URL.FDS_ENTRIES, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
@@ -700,14 +698,12 @@ const AddFDSEntryModalContent = ({
 };
 
 interface FDSEntriesInterface {
-	fdsEntriesAPIURL: string;
 	fdsViewsURL: string;
 	namespace: string;
 	restApplications: Array<string>;
 }
 
 const FDSEntries = ({
-	fdsEntriesAPIURL,
 	fdsViewsURL,
 	namespace,
 	restApplications,
@@ -725,7 +721,6 @@ const FDSEntries = ({
 						}) => (
 							<AddFDSEntryModalContent
 								closeModal={closeModal}
-								fdsEntriesAPIURL={fdsEntriesAPIURL}
 								loadData={loadData}
 								namespace={namespace}
 								restApplications={restApplications}
@@ -836,7 +831,7 @@ const FDSEntries = ({
 	return (
 		<div className="fds-entries">
 			<FrontendDataSet
-				apiURL={`${fdsEntriesAPIURL}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
+				apiURL={`${API_URL.FDS_ENTRIES}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
 				creationMenu={creationMenu}
 				customDataRenderers={{
 					viewsCount: ViewsCountRenderer,
@@ -862,4 +857,5 @@ const FDSEntries = ({
 	);
 };
 
+export {FDSEntryType};
 export default FDSEntries;

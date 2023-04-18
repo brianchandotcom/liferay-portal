@@ -20,14 +20,15 @@ import classNames from 'classnames';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import '../css/FDSEntries.scss';
-import {OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
-import RequiredMark from './RequiredMark';
+import {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
+import {FDSEntryType} from './FDSEntries';
+import RequiredMark from './components/RequiredMark';
 
 const LIST_OF_ITEMS_PER_PAGE = '4, 8, 20, 40, 60';
 const DEFAULT_ITEMS_PER_PAGE = 20;
 
-export type TFDSView = {
+type FDSViewType = {
+	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: FDSEntryType;
 	defaultItemsPerPage: number;
 	description: string;
 	externalReferenceCode: string;
@@ -36,10 +37,9 @@ export type TFDSView = {
 	listOfItemsPerPage: string;
 };
 
-interface IAddFDSViewModalContentProps {
+interface AddFDSViewModalContentInterface {
 	closeModal: Function;
 	fdsEntryId: string;
-	fdsViewsAPIURL: string;
 	loadData: Function;
 	namespace: string;
 }
@@ -47,10 +47,9 @@ interface IAddFDSViewModalContentProps {
 const AddFDSViewModalContent = ({
 	closeModal,
 	fdsEntryId,
-	fdsViewsAPIURL,
 	loadData,
 	namespace,
-}: IAddFDSViewModalContentProps) => {
+}: AddFDSViewModalContentInterface) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
 	const fdsViewDescriptionRef = useRef<HTMLInputElement>(null);
@@ -66,7 +65,7 @@ const AddFDSViewModalContent = ({
 			symbol: 'catalog',
 		};
 
-		const response = await fetch(fdsViewsAPIURL, {
+		const response = await fetch(API_URL.FDS_VIEWS, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
@@ -190,11 +189,10 @@ const AddFDSViewModalContent = ({
 	);
 };
 
-interface IFDSViewsProps {
+interface FDSViewsInterface {
 	fdsEntryId: string;
 	fdsEntryLabel: string;
 	fdsViewURL: string;
-	fdsViewsAPIURL: string;
 	namespace: string;
 }
 
@@ -202,10 +200,9 @@ const FDSViews = ({
 	fdsEntryId,
 	fdsEntryLabel,
 	fdsViewURL,
-	fdsViewsAPIURL,
 	namespace,
-}: IFDSViewsProps) => {
-	const onViewClick = ({itemData}: {itemData: TFDSView}) => {
+}: FDSViewsInterface) => {
+	const onViewClick = ({itemData}: {itemData: FDSViewType}) => {
 		const url = new URL(fdsViewURL);
 
 		url.searchParams.set(`${namespace}fdsEntryId`, fdsEntryId);
@@ -220,7 +217,7 @@ const FDSViews = ({
 		itemData,
 		loadData,
 	}: {
-		itemData: TFDSView;
+		itemData: FDSViewType;
 		loadData: Function;
 	}) => {
 		openModal({
@@ -240,7 +237,7 @@ const FDSViews = ({
 					onClick: ({processClose}: {processClose: Function}) => {
 						processClose();
 
-						fetch(`${fdsViewsAPIURL}/${itemData.id}`, {
+						fetch(`${API_URL.FDS_VIEWS}/${itemData.id}`, {
 							method: 'DELETE',
 						})
 							.then(() => {
@@ -283,7 +280,6 @@ const FDSViews = ({
 							<AddFDSViewModalContent
 								closeModal={closeModal}
 								fdsEntryId={fdsEntryId}
-								fdsViewsAPIURL={fdsViewsAPIURL}
 								loadData={loadData}
 								namespace={namespace}
 							/>
@@ -308,7 +304,7 @@ const FDSViews = ({
 
 	return (
 		<FrontendDataSet
-			apiURL={`${fdsViewsAPIURL}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
+			apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
 			creationMenu={creationMenu}
 			id={`${namespace}FDSViews`}
 			itemsActions={[
@@ -330,4 +326,5 @@ const FDSViews = ({
 	);
 };
 
+export {FDSViewType};
 export default FDSViews;

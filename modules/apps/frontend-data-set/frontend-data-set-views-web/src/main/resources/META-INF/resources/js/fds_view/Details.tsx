@@ -19,22 +19,15 @@ import classNames from 'classnames';
 import {fetch, navigate, openToast} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import {TFDSView} from '../FDSViews';
-import RequiredMark from '../RequiredMark';
-
-interface IDetailsProps {
-	fdsView: TFDSView;
-	fdsViewsAPIURL: string;
-	fdsViewsURL: string;
-	namespace: string;
-}
+import {API_URL} from '../Constants';
+import {FDSViewSectionInterface} from '../FDSView';
+import RequiredMark from '../components/RequiredMark';
 
 const Details = ({
 	fdsView,
-	fdsViewsAPIURL,
 	fdsViewsURL,
 	namespace,
-}: IDetailsProps) => {
+}: FDSViewSectionInterface) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
 	const fdsViewDescriptionRef = useRef<HTMLInputElement>(null);
@@ -47,7 +40,7 @@ const Details = ({
 		};
 
 		const response = await fetch(
-			`${fdsViewsAPIURL}/by-external-reference-code/${fdsView.externalReferenceCode}`,
+			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
 				body: JSON.stringify(body),
 				headers: {

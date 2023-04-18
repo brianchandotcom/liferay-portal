@@ -1,0 +1,24 @@
+@import 'atlas-variables';
+
+.orderable-table-sheet {
+	.c-empty-state {
+		text-align: center;
+	}
+
+	.orderable-table.table-autofit td {
+		width: inherit;
+
+		&.drag-handle-cell {
+			width: 0;
+		}
+	}
+
+	.orderable-table-row.dragging {
+		opacity: 0.5;
+	}
+
+	.sheet-header {
+		border-bottom: 1px solid $gray-200;
+		margin-bottom: 0;
+	}
+}

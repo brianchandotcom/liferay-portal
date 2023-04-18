@@ -3,7 +3,7 @@ task runGradleTest
 runGradleTest {
 	dependsOn ":sample-custom-element-1:createClientExtensionConfig"
 	dependsOn ":sample-iframe-1:buildClientExtensionZip"
-	dependsOn ":sample-theme-css:buildClientExtensionZip"
+	dependsOn ":sample-theme-css-1:buildClientExtensionZip"
 	dependsOn ":sample-theme-favicon:buildClientExtensionZip"
 
 	doLast {
@@ -24,11 +24,11 @@ runGradleTest {
 		assert !lcpJsonFile.text.contains("sample-iframe")
 		assert lcpJsonFile.text.contains("sampleiframe")
 
-		Project sampleThemeCSSProject = project(":sample-theme-css")
+		Project sampleThemeCSS1Project = project(":sample-theme-css-1")
 
-		FileTree sampleThemeCSSZipFileTree = zipTree(sampleThemeCSSProject.file("dist/sample-theme-css.zip"))
+		FileTree sampleThemeCSS1ZipFileTree = zipTree(sampleThemeCSS1Project.file("dist/sample-theme-css-1.zip"))
 
-		assert !sampleThemeCSSZipFileTree.isEmpty()
+		assert !sampleThemeCSS1ZipFileTree.isEmpty()
 
 		Project sampleThemeFaviconProject = project(":sample-theme-favicon")
 

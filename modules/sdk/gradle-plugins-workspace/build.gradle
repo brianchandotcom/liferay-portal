@@ -110,10 +110,11 @@ copyWorkspacesSamples {
 		[
 			"sample-custom-element-1",
 			"sample-iframe-1",
-			"sample-theme-css",
+			"sample-theme-css-1",
 			"sample-theme-favicon",
 		].each {
-			sampleName ->
+			String sampleName ->
+
 			copy {
 				from new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces/liferay-sample-workspace/client-extensions/liferay-${sampleName}")
 				into "src/gradleTest/clientExtensionSamples/${sampleName}"

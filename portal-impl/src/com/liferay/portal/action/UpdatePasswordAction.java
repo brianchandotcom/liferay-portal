@@ -51,6 +51,7 @@ import com.liferay.portal.struts.model.ActionMapping;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -295,6 +296,14 @@ public class UpdatePasswordAction implements Action {
 
 				UserLocalServiceUtil.updateUser(user);
 			}
+
+			HttpSession httpSession = httpServletRequest.getSession();
+
+			Date passwordModifiedDate = user.getPasswordModifiedDate();
+
+			httpSession.setAttribute(
+				WebKeys.USER_PASSWORD_MODIFIED_TIME,
+				passwordModifiedDate.getTime());
 		}
 		finally {
 			PwdToolkitUtilThreadLocal.setValidate(previousValidate);

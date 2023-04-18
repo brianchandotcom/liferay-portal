@@ -61,27 +61,11 @@ definition {
 				roleTitle = "Roles Regrole Name");
 		}
 
-		task ("Define permission to new regular role") {
-			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-					roleTitle = "Roles Regrole Name");
-			}
-
-			for (var resourceActionIndex : list "ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.portal.kernel.model.Group",
-					roleTitle = "Roles Regrole Name");
-			}
-
-			for (var resourceActionIndex : list "ADD_DISCUSSION,ADD_LAYOUT,CONFIGURE_PORTLETS,CUSTOMIZE,DELETE,DELETE_DISCUSSION,PERMISSIONS,UPDATE,UPDATE_DISCUSSION,UPDATE_LAYOUT_CONTENT,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = "Roles Regrole Name");
-			}
+		task ("Define the permissions of regular role") {
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW:com.liferay.portal.kernel.model.Group,ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING:com.liferay.portal.kernel.model.Layout,ADD_DISCUSSION,ADD_LAYOUT,CONFIGURE_PORTLETS,CUSTOMIZE,DELETE,DELETE_DISCUSSION,PERMISSIONS,UPDATE,UPDATE_DISCUSSION,UPDATE_LAYOUT_CONTENT,VIEW",
+				roleTitle = "Roles Regrole Name",
+				roleType = "regular");
 		}
 
 		task ("Assign regular role to the user") {

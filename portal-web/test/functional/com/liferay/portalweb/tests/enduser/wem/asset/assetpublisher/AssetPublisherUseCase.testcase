@@ -2527,37 +2527,11 @@ catch (Exception e) {
 				roleTitle = "WC Author");
 		}
 
-		task ("Define permissions of the regular role") {
-			for (var resourceActionIndex : list "ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal",
-					roleTitle = "WC Author");
-			}
-
-			for (var resourceActionIndex : list "VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal.model.JournalArticle",
-					roleTitle = "WC Author");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "WC Author");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
-				roleTitle = "WC Author");
-
-			for (var resourceActionIndex : list "VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-					roleTitle = "WC Author");
-			}
+		task ("Define the permissions of regular role") {
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.journal,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE:com.liferay.journal.model.JournalArticle,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE,ADD_DISCUSSION:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle,VIEW:com_liferay_journal_web_portlet_JournalPortlet,VIEW,PREFERENCES,PERMISSIONS,CONFIGURATION,ACCESS_IN_CONTROL_PANEL",
+				roleTitle = "WC Author",
+				roleType = "regular");
 		}
 
 		task ("Assign the regular roles to two new users") {

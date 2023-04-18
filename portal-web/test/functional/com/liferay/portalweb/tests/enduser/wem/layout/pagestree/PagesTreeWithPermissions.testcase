@@ -62,73 +62,11 @@ definition {
 			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
 		}
 
-		task ("Define the permissions of new role") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
+		task ("Define the permissions of regular role") {
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:90,VIEW_CONTROL_PANEL:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW:com.liferay.journal,ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW:com.liferay.journal.model.JournalFolder,ACCESS,ADD_SUBFOLDER,ADD_ARTICLE,DELETE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW:com.liferay.journal.model.JournalArticle,ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW:com.liferay.journal.model.JournalFeed,DELETE,PERMISSIONS,UPDATE,VIEW:com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle,DELETE,PERMISSIONS,UPDATE,VIEW:com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle,DELETE,PERMISSIONS,UPDATE,VIEW",
 				roleTitle = "Regular Role Name",
 				roleType = "regular");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = 90,
-				roleTitle = "Regular Role Name");
-
-			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "ACCESS,ADD_SUBFOLDER,ADD_ARTICLE,DELETE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal.model.JournalFolder",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal.model.JournalArticle",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal.model.JournalFeed",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
-
-			for (var resourceActionIndex : list "DELETE,PERMISSIONS,UPDATE,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle",
-					roleTitle = "Regular Role Name",
-					roleType = "regular");
-			}
 		}
 
 		task ("Assign the regular role to new user") {
@@ -202,28 +140,11 @@ definition {
 				roleTitle = "Regular Role Name");
 		}
 
-		task ("Define the permissions of new role") {
-			for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-					roleTitle = "Regular Role Name");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Regular Role Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seo",
-				roleTitle = "Regular Role Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Regular Role Name");
+		task ("Define the permissions of regular role") {
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.layout.seo,VIEW:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION",
+				roleTitle = "Regular Role Name",
+				roleType = "regular");
 		}
 
 		task ("Assign the regular role to new user") {

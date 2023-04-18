@@ -16,13 +16,13 @@ import MDFClaimActivity from './mdfClaimActivity';
 
 export default interface MDFClaim extends Partial<LiferayObject> {
 	activities?: MDFClaimActivity[];
-	amountClaimed?: number;
 	currency: LiferayPicklist;
 	externalReferenceCode?: string;
 	externalReferenceCodeSF?: string;
 	mdfClaimStatus: LiferayPicklist;
-	mdfRequestedAmount?: number;
 	partial?: boolean;
 	r_mdfReqToMDFClms_c_mdfRequestId: number;
 	reimbursementInvoice?: LiferayFile & number;
+	totalClaimAmount?: number;
+	totalMDFRequestedAmount?: number;
 }

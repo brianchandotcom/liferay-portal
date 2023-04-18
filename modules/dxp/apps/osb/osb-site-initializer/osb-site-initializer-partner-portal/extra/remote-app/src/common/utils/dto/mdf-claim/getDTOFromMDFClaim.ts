@@ -22,20 +22,20 @@ export function getDTOFromMDFClaim(
 	reimbursementInvoiceDocumentId?: LiferayFile & number
 ): MDFClaimDTO {
 	return {
-		amountClaimed: mdfClaim.amountClaimed,
 		companyName: mdfRequest.r_accToMDFReqs_accountEntry?.name,
 		currency: mdfClaim.currency,
 		externalReferenceCode,
 		externalReferenceCodeSF,
 		mdfClaimStatus: mdfClaim.mdfClaimStatus,
-		mdfRequestExternalReferenceCodeSF: mdfRequest?.externalReferenceCode,
+		mdfRequestExternalReferenceCode: mdfRequest?.externalReferenceCode,
 		mdfRequestTotalCostOfExpense: mdfRequest.totalCostOfExpense,
-		mdfRequestedAmount: mdfClaim.mdfRequestedAmount,
 		partial: mdfClaim.partial,
 		r_accToMDFClms_accountEntryId:
 			mdfRequest.r_accToMDFReqs_accountEntry?.id,
 		r_mdfReqToMDFClms_c_mdfRequestId:
 			mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId,
 		reimbursementInvoice: reimbursementInvoiceDocumentId,
+		totalClaimAmount: mdfClaim.totalClaimAmount,
+		totalMDFRequestedAmount: mdfClaim.totalMDFRequestedAmount,
 	};
 }

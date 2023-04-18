@@ -98,7 +98,7 @@ function totalApprovedMDFToClaims(mdfRequests, chartColumns) {
 		.flat();
 
 	const totalClaimedApprovedRequestsAmount = claimedRequests?.reduce(
-		(acc, value) => acc + value?.amountClaimed || 0,
+		(acc, value) => acc + value?.totalClaimAmount || 0,
 		0
 	);
 

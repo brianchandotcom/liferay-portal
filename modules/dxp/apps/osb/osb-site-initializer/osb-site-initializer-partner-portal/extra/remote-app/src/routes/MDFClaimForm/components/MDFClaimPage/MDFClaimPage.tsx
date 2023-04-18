@@ -50,7 +50,8 @@ const MDFClaimPage = ({
 	useActivitiesAmount(
 		values.activities,
 		useCallback(
-			(amountValue) => setFieldValue('amountClaimed', amountValue * 0.5),
+			(amountValue) =>
+				setFieldValue('totalClaimAmount', amountValue * 0.5),
 			[setFieldValue]
 		)
 	);
@@ -232,16 +233,16 @@ const MDFClaimPage = ({
 						leftContent="Total MDF Requested Amount"
 						rightContent={getIntlNumberFormat(
 							values.currency
-						).format(values.mdfRequestedAmount || 0)}
+						).format(values.totalMDFRequestedAmount || 0)}
 					/>
 
 					<PRMFormik.Field
 						component={PRMForm.InputCurrency}
 						description="The amount to be claimed for the Total of  selected expenses"
 						label="Total Claim Amount"
-						name="amountClaimed"
+						name="totalClaimAmount"
 						onAccept={(value: number) =>
-							setFieldValue('amountClaimed', value)
+							setFieldValue('totalClaimAmount', value)
 						}
 						required
 					/>

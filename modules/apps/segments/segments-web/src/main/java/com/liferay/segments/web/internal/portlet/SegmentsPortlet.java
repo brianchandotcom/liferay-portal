@@ -73,14 +73,12 @@ public class SegmentsPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			SegmentsWebKeys.EXCLUDED_ROLE_NAMES, _getExcludedRoleNames());
-		renderRequest.setAttribute(
-			SegmentsWebKeys.ITEM_SELECTOR, _itemSelector);
 
 		renderRequest.setAttribute(
 			SegmentsDisplayContext.class.getName(),
 			new SegmentsDisplayContext(
-				_analyticsSettingsManager, _groupLocalService, _language,
-				_portal, renderRequest, renderResponse,
+				_analyticsSettingsManager, _groupLocalService, _itemSelector,
+				_language, _portal, renderRequest, renderResponse,
 				_segmentsConfigurationProvider, _segmentsEntryService));
 
 		super.render(renderRequest, renderResponse);

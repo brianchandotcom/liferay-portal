@@ -81,13 +81,15 @@ public class SegmentsDisplayContext {
 
 	public SegmentsDisplayContext(
 		AnalyticsSettingsManager analyticsSettingsManager,
-		GroupLocalService groupLocalService, Language language, Portal portal,
-		RenderRequest renderRequest, RenderResponse renderResponse,
+		GroupLocalService groupLocalService, ItemSelector itemSelector,
+		Language language, Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		SegmentsEntryService segmentsEntryService) {
 
 		_analyticsSettingsManager = analyticsSettingsManager;
 		_groupLocalService = groupLocalService;
+		_itemSelector = itemSelector;
 		_language = language;
 		_portal = portal;
 		_renderRequest = renderRequest;
@@ -121,10 +123,6 @@ public class SegmentsDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectorURL",
 			() -> {
-				ItemSelector itemSelector =
-					(ItemSelector)_httpServletRequest.getAttribute(
-						SegmentsWebKeys.ITEM_SELECTOR);
-
 				RoleItemSelectorCriterion roleItemSelectorCriterion =
 					new RoleItemSelectorCriterion(RoleConstants.TYPE_SITE);
 
@@ -136,7 +134,7 @@ public class SegmentsDisplayContext {
 					(String[])_httpServletRequest.getAttribute(
 						SegmentsWebKeys.EXCLUDED_ROLE_NAMES));
 
-				PortletURL portletURL = itemSelector.getItemSelectorURL(
+				PortletURL portletURL = _itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(_renderRequest),
 					(String)_httpServletRequest.getAttribute(
 						"view.jsp-eventName"),
@@ -692,6 +690,7 @@ public class SegmentsDisplayContext {
 	private String _displayStyle;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private String _keywords;
 	private final Language _language;
 	private String _orderByCol;

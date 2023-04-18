@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.importmap;
+package com.liferay.frontend.taglib.clay.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
 import com.liferay.petra.string.StringBundler;

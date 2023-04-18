@@ -21,8 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionEntryConfigurationAction
-	extends DefaultConfigurationAction {
+public class PortletCETConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {

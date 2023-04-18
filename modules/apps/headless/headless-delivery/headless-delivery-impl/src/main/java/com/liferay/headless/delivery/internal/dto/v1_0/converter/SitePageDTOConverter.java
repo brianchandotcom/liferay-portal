@@ -22,6 +22,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.headless.delivery.dto.v1_0.Experience;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
@@ -38,7 +39,9 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -199,6 +202,23 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 								layoutTypeController.getClass()),
 							"layout.types." + layout.getType());
 					});
+				setParentSitePage(
+					() -> {
+						if (layout.getParentLayoutId() ==
+								LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+							return null;
+						}
+
+						Layout parentLayout = _layoutLocalService.fetchLayout(
+							layout.getParentPlid());
+
+						return new ParentSitePage() {
+							{
+								friendlyUrlPath = parentLayout.getFriendlyURL();
+							}
+						};
+					});
 			}
 		};
 	}
@@ -223,6 +243,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

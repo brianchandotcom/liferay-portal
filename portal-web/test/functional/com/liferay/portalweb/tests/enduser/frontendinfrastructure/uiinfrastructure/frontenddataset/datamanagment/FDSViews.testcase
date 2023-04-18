@@ -184,6 +184,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-181341. Confirm that The user can create a view with no description"
+	@priority = 4
+	test CanCreateViewWithNoDescription {
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("When going to the Dataset View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("And Clicking add button, And Filling the name with 'View Test', And Clicking the Save button") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "",
+				key_name = "View Test");
+		}
+
+		task ("Then Confirm Data set view was created") {
+			AssertElementPresent(
+				entryName = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+		}
+	}
+
 	@description = "LPS-180893. Confirm that a dataset view can be deleted"
 	@priority = 5
 	test CanDeleteView {

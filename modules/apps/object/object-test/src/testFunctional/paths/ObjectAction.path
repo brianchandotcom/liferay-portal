@@ -29,7 +29,7 @@
 	</tr>
 	<tr>
 		<td>INPUT_VALUE</td>
-		<td>//input[(@placeholder='Input a value.')]</td>
+		<td>xpath=(//input[(@placeholder='Input a value.')])[${key_rowNumber}]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -44,7 +44,7 @@
 	</tr>
 	<tr>
 		<td>INPUT_METHOD</td>
-		<td>//input[contains(@class, 'custom-control-input') and contains(@type,'checkbox')]/..//span[contains(text(),'Input as a value.')]</td>
+		<td>xpath=(//input[contains(@class, 'custom-control-input') and contains(@type,'checkbox')]/..//span[contains(text(),'Input as a value.')])[${key_rowNumber}]</td>
 		<td></td>
 	</tr>
 	<tr>

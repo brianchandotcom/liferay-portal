@@ -150,4 +150,65 @@ definition {
 		}
     }
 
+    @description = "This is a test for LPS-181358. Verify that the Partner can Edit a Claim in 'Request More Info' Status"
+	@priority = 5
+	test PartnerCanEditClaimInRequestMoreInfoStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInRequestMoreInfoStatus";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given that a new claim is created") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("And the Manager approves the created Claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			JSONPRM.changeClaimStatus(
+				claimStatus = "More Info Requested",
+				claimId = ${staticClaimId1});
+		}
+
+		task ("And the partner goes to edit the approved claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaimEdit.editButton();
+		}
+
+		task ("When the partner change one attachment of the budget") {
+			PRMMDFClaimEdit.editClaim(
+				newAttachment = "Document_2.png",
+				activityName = "Activity Name");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMMDFClaimEdit.gotoClaimViaUI(claimId = ${staticClaimId1});
+		}
+
+		task ("And open the activity details") {
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_2.png");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+    }
+
 }

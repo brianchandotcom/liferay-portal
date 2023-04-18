@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = {DDMFormInstanceUADDisplay.class, UADDisplay.class})
+@Component(service = UADDisplay.class)
 public class DDMFormInstanceUADDisplay extends BaseDDMFormInstanceUADDisplay {
 
 	@Override

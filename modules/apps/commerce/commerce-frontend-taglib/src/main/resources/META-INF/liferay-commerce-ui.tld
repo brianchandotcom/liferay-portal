@@ -528,6 +528,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>request-quote</name>
+		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.RequestQuoteTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>CPCatalogEntry</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>namespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>search-bar</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.SearchBarTag</tag-class>
 		<body-content>empty</body-content>

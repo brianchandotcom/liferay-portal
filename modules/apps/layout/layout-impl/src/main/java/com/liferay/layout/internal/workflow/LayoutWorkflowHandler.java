@@ -14,22 +14,30 @@
 
 package com.liferay.layout.internal.workflow;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -65,6 +73,36 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 	@Override
 	public String getType(Locale locale) {
 		return _language.get(locale, "content-page");
+	}
+
+	@Override
+	public String getURLViewInContext(
+		long classPK, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		String noSuchEntryRedirect) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			AssetRenderer<Layout> assetRenderer = getAssetRenderer(classPK);
+
+			Layout layout = assetRenderer.getAssetObject();
+
+			String previewURL = _portal.getLayoutFriendlyURL(
+				layout.fetchDraftLayout(), themeDisplay);
+
+			return HttpComponentsUtil.addParameter(
+				previewURL, "p_l_back_url", themeDisplay.getURLCurrent());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -178,6 +216,9 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 				serviceContext);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutWorkflowHandler.class);
 
 	@Reference
 	private Language _language;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.template;
+package com.liferay.commerce.internal.template;
 
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;

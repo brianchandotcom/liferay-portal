@@ -220,7 +220,7 @@ export default function ModalImportListTypeDefinition({
 						<Input
 							disabled
 							feedbackMessage={Liferay.Language.get(
-								'internal-key-to-reference-the-picklist'
+								'unique-key-for-referencing-the-picklist-definition'
 							)}
 							id="externalReferenceCode"
 							label={Liferay.Language.get(

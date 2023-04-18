@@ -96,7 +96,7 @@ export default function EditListTypeDefinition({
 							autoComplete="off"
 							error={errors.externalReferenceCode}
 							feedbackMessage={Liferay.Language.get(
-								'internal-key-to-reference-the-object-definition'
+								'unique-key-for-referencing-the-picklist-definition'
 							)}
 							label={Liferay.Language.get(
 								'external-reference-code'

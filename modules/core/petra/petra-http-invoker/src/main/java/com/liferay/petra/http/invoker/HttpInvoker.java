@@ -173,16 +173,16 @@ public class HttpInvoker {
 			return _content;
 		}
 
+		public String getContentType() {
+			return _contentType;
+		}
+
 		public String getMessage() {
 			return _message;
 		}
 
 		public int getStatusCode() {
 			return _statusCode;
-		}
-
-		public String getContentType() {
-			return _contentType;
 		}
 
 		public void setBinaryContent(byte[] binaryContent) {

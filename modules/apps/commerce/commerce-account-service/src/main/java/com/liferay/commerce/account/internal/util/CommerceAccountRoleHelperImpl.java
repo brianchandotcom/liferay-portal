@@ -16,6 +16,7 @@ package com.liferay.commerce.account.internal.util;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -53,7 +54,7 @@ public class CommerceAccountRoleHelperImpl
 		throws PortalException {
 
 		_checkRole(
-			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
 			serviceContext);
 		_checkRole(
 			CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER, serviceContext);
@@ -80,8 +81,8 @@ public class CommerceAccountRoleHelperImpl
 			_setRolePermissions(role, serviceContext);
 		}
 
-		if (CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR.equals(
-				name)) {
+		if (AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR.
+				equals(name)) {
 
 			_setRolePermissions(role, serviceContext);
 		}
@@ -113,7 +114,8 @@ public class CommerceAccountRoleHelperImpl
 		String name = role.getName();
 
 		if (name.equals(
-				CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR)) {
+				AccountRoleConstants.
+					REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR)) {
 
 			companyResourceActionIds.put(
 				"com.liferay.commerce.model.CommerceOrderType",

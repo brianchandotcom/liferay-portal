@@ -15,7 +15,7 @@
 package com.liferay.commerce.util;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceAccountConstants;
 
 /**
  * @author Luca Pellizzon

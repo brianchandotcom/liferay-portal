@@ -17,8 +17,7 @@ package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Account;
 import com.liferay.portal.kernel.model.User;
@@ -26,8 +25,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,39 +82,14 @@ public class AccountDTOConverter
 					accountEntry.getParentAccountEntryId() ==
 						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
 				taxId = accountEntry.getTaxIdNumber();
-				type = _toCommerceAccountType(accountEntry.getType());
+				type = CommerceAccountConstants.getCommerceAccountType(
+					accountEntry.getType());
 			}
 		};
 	}
 
-	private Integer _toCommerceAccountType(String accountEntryType) {
-		if (Objects.equals(
-				accountEntryType,
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
-
-			return CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
-		}
-		else if (Objects.equals(
-					accountEntryType,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
-
-			return CommerceAccountConstants.ACCOUNT_TYPE_GUEST;
-		}
-		else if (Objects.equals(
-					accountEntryType,
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
-
-			return CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL;
-		}
-
-		return CommerceAccountConstants.ACCOUNT_TYPE_GUEST;
-	}
-
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private AccountEntryService _accountEntryService;
 
 	@Reference
 	private UserLocalService _userLocalService;

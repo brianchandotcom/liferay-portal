@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.upgrade.v1_10_1;
 
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -60,7 +60,7 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 				Settings settings = _settingsFactory.getSettings(
 					new GroupServiceSettingsLocator(
 						_getCommerceChannelGroupIdBySiteGroupId(groupId),
-						CommerceAccountConstants.SERVICE_NAME));
+						CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
 
 				ModifiableSettings modifiableSettings =
 					settings.getModifiableSettings();
@@ -71,7 +71,8 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 							CommerceAccountGroupServiceConfiguration.class,
 							new GroupServiceSettingsLocator(
 								groupId,
-								CommerceAccountConstants.SERVICE_NAME));
+								CommerceConstants.
+									SERVICE_NAME_COMMERCE_ACCOUNT));
 
 				modifiableSettings.setValue(
 					"commerceSiteType",

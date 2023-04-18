@@ -27,7 +27,6 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAddressConstants;
@@ -470,19 +469,13 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	private String _toAccountEntryType(int commerceAccountType) {
-		if (commerceAccountType ==
-				CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS) {
-
+		if (commerceAccountType == _ACCOUNT_TYPE_BUSINESS) {
 			return AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
 		}
-		else if (commerceAccountType ==
-					CommerceAccountConstants.ACCOUNT_TYPE_GUEST) {
-
+		else if (commerceAccountType == _ACCOUNT_TYPE_GUEST) {
 			return AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST;
 		}
-		else if (commerceAccountType ==
-					CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
-
+		else if (commerceAccountType == _ACCOUNT_TYPE_PERSONAL) {
 			return AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
 		}
 
@@ -697,6 +690,12 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		return accountEntry;
 	}
+
+	private static final int _ACCOUNT_TYPE_BUSINESS = 2;
+
+	private static final int _ACCOUNT_TYPE_GUEST = 0;
+
+	private static final int _ACCOUNT_TYPE_PERSONAL = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountResourceImpl.class);

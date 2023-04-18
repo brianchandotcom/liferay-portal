@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.health.status.web.internal;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
@@ -111,7 +111,7 @@ public class AccountsCommerceHealthHttpStatus
 
 		Role role = _roleLocalService.fetchRole(
 			companyId,
-			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 
 		if (role != null) {
 			return true;

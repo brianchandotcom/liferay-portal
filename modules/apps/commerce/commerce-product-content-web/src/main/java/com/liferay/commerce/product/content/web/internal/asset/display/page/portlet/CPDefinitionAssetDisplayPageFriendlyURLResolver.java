@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.asset.display.page.portlet;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.asset.display.page.configuration.AssetDisplayPageConfiguration;
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
@@ -24,7 +25,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
@@ -393,7 +393,7 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long commerceAccountId = CommerceAccountConstants.ACCOUNT_ID_GUEST;
+		long commerceAccountId = AccountConstants.ACCOUNT_ENTRY_ID_GUEST;
 
 		AccountEntry accountEntry =
 			_commerceAccountHelper.getCurrentAccountEntry(

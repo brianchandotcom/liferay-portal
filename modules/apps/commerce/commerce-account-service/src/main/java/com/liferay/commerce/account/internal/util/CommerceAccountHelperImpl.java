@@ -29,6 +29,7 @@ import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceCon
 import com.liferay.commerce.account.configuration.CommerceAccountServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -295,7 +296,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					CommerceAccountGroupServiceConfiguration.class,
 					new GroupServiceSettingsLocator(
 						commerceChannelGroupId,
-						CommerceAccountConstants.SERVICE_NAME));
+						CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
 
 		return commerceAccountGroupServiceConfiguration.commerceSiteType();
 	}
@@ -430,27 +431,6 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 
 		return WorkflowConstants.STATUS_INACTIVE;
-	}
-
-	@Override
-	public String toAccountEntryType(int commerceAccountType) {
-		if (commerceAccountType ==
-				CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS) {
-
-			return AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
-		}
-		else if (commerceAccountType ==
-					CommerceAccountConstants.ACCOUNT_TYPE_GUEST) {
-
-			return AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST;
-		}
-		else if (commerceAccountType ==
-					CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
-
-			return AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
-		}
-
-		return null;
 	}
 
 	@Override

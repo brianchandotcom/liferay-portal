@@ -15,7 +15,6 @@
 package com.liferay.commerce.channel.web.internal.display.context;
 
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.channel.web.internal.display.context.helper.CommerceChannelRequestHelper;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
@@ -521,7 +520,7 @@ public class CommerceChannelDisplayContext
 				CommerceAccountGroupServiceConfiguration.class,
 				new GroupServiceSettingsLocator(
 					commerceChannel.getGroupId(),
-					CommerceAccountConstants.SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
 
 		return _commerceAccountGroupServiceConfiguration;
 	}

@@ -16,8 +16,9 @@ package com.liferay.commerce.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -76,7 +77,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 						CommerceAccountGroupServiceConfiguration.class,
 						new GroupServiceSettingsLocator(
 							commerceChannel.getGroupId(),
-							CommerceAccountConstants.SERVICE_NAME));
+							CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
 			}
 		}
 		catch (PortalException portalException) {

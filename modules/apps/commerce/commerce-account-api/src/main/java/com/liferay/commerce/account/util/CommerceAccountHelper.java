@@ -76,8 +76,6 @@ public interface CommerceAccountHelper {
 
 	public Integer toAccountEntryStatus(Boolean commerceAccountActive);
 
-	public String toAccountEntryType(int commerceAccountType);
-
 	public String[] toAccountEntryTypes(int commerceSiteType);
 
 }

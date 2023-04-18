@@ -14,10 +14,11 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.order.rule.constants.COREntryConstants;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryRel;
@@ -122,7 +123,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				logoId = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				root = true;
-				type = CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+				type = CommerceAccountConstants.getCommerceAccountType(
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 			}
 		};
 	}
@@ -174,7 +176,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				id = _accountEntry.getAccountEntryId();
 				name = _accountEntry.getName();
 				root = true;
-				type = CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+				type = CommerceAccountConstants.getCommerceAccountType(
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 			}
 		};
 	}

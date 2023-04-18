@@ -16,7 +16,7 @@ package com.liferay.commerce.product.internal.upgrade.v3_4_0;
 
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
 import com.liferay.petra.string.StringBundler;
@@ -78,7 +78,7 @@ public class CommerceChannelUpgradeProcess extends UpgradeProcess {
 					CommerceAccountGroupServiceConfiguration.class,
 					new GroupServiceSettingsLocator(
 						commerceChannelGroupId,
-						CommerceAccountConstants.SERVICE_NAME));
+						CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
 
 		return AccountEntryAllowedTypesUtil.getAllowedTypes(
 			commerceAccountGroupServiceConfiguration.commerceSiteType());

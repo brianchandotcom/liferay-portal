@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -119,7 +119,7 @@ public class ProductVirtualSettingsDTOConverter
 							getDownloadVirtualProductSampleURL(
 								CPDefinition.class.getName(),
 								cpDefinition.getCPDefinitionId(),
-								CommerceAccountConstants.ACCOUNT_ID_ADMIN,
+								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 								fileEntry.getFileEntryId());
 					});
 				setSrc(
@@ -135,7 +135,7 @@ public class ProductVirtualSettingsDTOConverter
 							getDownloadVirtualProductURL(
 								CPDefinition.class.getName(),
 								cpDefinition.getCPDefinitionId(),
-								CommerceAccountConstants.ACCOUNT_ID_ADMIN,
+								AccountConstants.ACCOUNT_ENTRY_ID_ADMIN,
 								fileEntry.getFileEntryId());
 					});
 				setTermsOfUseJournalArticleId(

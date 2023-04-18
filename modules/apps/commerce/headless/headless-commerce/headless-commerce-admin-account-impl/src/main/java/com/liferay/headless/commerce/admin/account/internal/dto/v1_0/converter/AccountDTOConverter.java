@@ -17,7 +17,6 @@ package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.petra.string.StringBundler;
@@ -117,23 +116,29 @@ public class AccountDTOConverter
 				accountEntryType,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {
 
-			return CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS;
+			return _ACCOUNT_TYPE_BUSINESS;
 		}
 		else if (Objects.equals(
 					accountEntryType,
 					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
 
-			return CommerceAccountConstants.ACCOUNT_TYPE_GUEST;
+			return _ACCOUNT_TYPE_GUEST;
 		}
 		else if (Objects.equals(
 					accountEntryType,
 					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON)) {
 
-			return CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL;
+			return _ACCOUNT_TYPE_PERSONAL;
 		}
 
-		return CommerceAccountConstants.ACCOUNT_TYPE_GUEST;
+		return _ACCOUNT_TYPE_GUEST;
 	}
+
+	private static final int _ACCOUNT_TYPE_BUSINESS = 2;
+
+	private static final int _ACCOUNT_TYPE_GUEST = 0;
+
+	private static final int _ACCOUNT_TYPE_PERSONAL = 1;
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

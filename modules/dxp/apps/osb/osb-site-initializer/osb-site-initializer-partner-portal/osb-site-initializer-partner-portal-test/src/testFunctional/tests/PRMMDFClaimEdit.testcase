@@ -1,0 +1,153 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Partner Portal Site and connect with Salesforce") {
+			PRMUtils.addSite();
+
+			PRMUtils.connectWithSalesforce();
+		}
+
+		task ("Add a Partner user") {
+			JSONUser.addUser(
+				userEmailAddress = "partner@liferay.com",
+				userFirstName = "partner",
+				userLastName = "partner",
+				userScreenName = "partner");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "partner@liferay.com");
+		}
+
+		task ("Add a Manager user") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Channel General Manager",
+				userEmailAddress = "manager@liferay.com",
+				userFirstName = "manager",
+				userLastName = "manager",
+				userScreenName = "manager");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "manager@liferay.com");
+		}
+
+		task ("Add a new account and assign the created users to the account") {
+			JSONPRM.addAccount();
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "partner@liferay.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "manager@liferay.com");
+		}
+
+		task ("Login with the Partner user and create an MDF Request") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			var requestId = JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				secondActivityName = "Activity Name 2",
+				secondBudgetValueList = 1000,
+				userEmailAddress = "partner@liferay.com");
+		}
+
+		task ("Login with the Manager user and approves the created MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "Approved",
+				requestId = ${requestId});
+		}
+
+		task ("Login with the Partner user and create an MDF Claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
+
+    @description = "This is a test for LPS-181359. Verify that the Partner can Edit a Claim in 'Draft' Status"
+	@priority = 5
+	test PartnerCanEditClaimInDraftStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#PartnerCanEditClaimInDraftStatus";
+
+		task ("Given that a new claim is saved as draft") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png",
+				saveAsDraft = "true");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("And the partner goes to edit the claim") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+
+			PRMMDFClaimEdit.editButton();
+		}
+
+		task ("When the partner change one attachment of the budget") {
+			PRMMDFClaimEdit.editClaim(
+				newAttachment = "Document_3.png",
+				activityName = "Activity Name");
+		}
+
+		task ("And go to the claim detail page") {
+			PRMMDFClaimEdit.gotoClaimViaUI(claimId = ${staticClaimId1});
+		}
+
+		task ("And open the activity details") {
+			PRMMDFClaim.activityCollapse(activityName = "Activity Name");
+		}
+
+		task ("Then the new attachment is displayed") {
+			PRMMDFClaim.viewAttachmentPresent(attachmentName = "Document_3.png");
+		}
+
+		task ("And the old attachment isn't displayed") {
+			PRMMDFClaim.viewAttachmentNotPresent(attachmentName = "Document_1.png");
+		}
+    }
+
+}

@@ -364,6 +364,8 @@
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="promoPriceWithTaxAmount" type="BigDecimal" />
 		<column name="quantity" type="int" />
+		<column name="replacedCPInstanceId" type="long" />
+		<column name="replacedSku" type="String" />
 		<column name="requestedDeliveryDate" type="Date" />
 		<column name="shipSeparately" type="boolean" />
 		<column name="shippable" type="boolean" />

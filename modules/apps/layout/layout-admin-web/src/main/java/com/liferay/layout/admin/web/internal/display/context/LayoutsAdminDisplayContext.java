@@ -1106,23 +1106,6 @@ public class LayoutsAdminDisplayContext {
 			httpServletRequest, "robots", _getStrictRobots());
 	}
 
-	public String getRootNodeName() {
-		if (_rootNodeName != null) {
-			return _rootNodeName;
-		}
-
-		_rootNodeName = getRootNodeName(isPrivateLayout());
-
-		return _rootNodeName;
-	}
-
-	public String getRootNodeName(boolean privateLayout) {
-		Group liveGroup = getLiveGroup();
-
-		return liveGroup.getLayoutRootNodeName(
-			privateLayout, themeDisplay.getLocale());
-	}
-
 	public String getSelectFaviconEventName() {
 		return _liferayPortletResponse.getNamespace() + "selectImage";
 	}
@@ -2520,7 +2503,6 @@ public class LayoutsAdminDisplayContext {
 	private Boolean _privateLayout;
 	private Boolean _privateLayoutsEnabled;
 	private String _redirect;
-	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;
 	private Long _selPlid;

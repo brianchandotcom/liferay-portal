@@ -26,7 +26,7 @@ import com.liferay.osb.faro.engine.client.model.Workspace;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.exception.EmailAddressDomainException;
 import com.liferay.osb.faro.model.FaroProject;
-import com.liferay.osb.faro.model.FaroProjectEmailAddressDomain;
+import com.liferay.osb.faro.model.FaroProjectEmailDomain;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
 import com.liferay.osb.faro.provisioning.client.constants.CorpProjectConstants;
@@ -34,7 +34,7 @@ import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
 import com.liferay.osb.faro.service.FaroNotificationLocalService;
-import com.liferay.osb.faro.service.FaroProjectEmailAddressDomainLocalService;
+import com.liferay.osb.faro.service.FaroProjectEmailDomainLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.web.internal.annotations.Unauthenticated;
@@ -440,15 +440,15 @@ public class ProjectController extends BaseFaroController {
 	public List<String> getEmailAddressDomains(
 		@PathParam("groupId") long groupId) {
 
-		List<FaroProjectEmailAddressDomain> faroProjectEmailAddressDomains =
-			_faroProjectEmailAddressDomainLocalService.
-				getFaroProjectEmailAddressDomainsByGroupId(groupId);
+		List<FaroProjectEmailDomain> faroProjectEmailAddressDomains =
+			_faroProjectEmailAddressLocalService.
+				getFaroProjectEmailDomainsByGroupId(groupId);
 
-		Stream<FaroProjectEmailAddressDomain> emailAddressDomainStream =
+		Stream<FaroProjectEmailDomain> emailAddressDomainStream =
 			faroProjectEmailAddressDomains.stream();
 
 		return emailAddressDomainStream.map(
-			FaroProjectEmailAddressDomain::getEmailAddressDomain
+			FaroProjectEmailDomain::getEmailDomain
 		).collect(
 			Collectors.toList()
 		);
@@ -656,10 +656,9 @@ public class ProjectController extends BaseFaroController {
 		}
 
 		try {
-			_faroProjectEmailAddressDomainLocalService.
-				addFaroProjectEmailAddressDomains(
-					groupId, faroProject.getFaroProjectId(),
-					emailAddressDomainsFaroParam.getValue());
+			_faroProjectEmailAddressLocalService.addFaroProjectEmailDomains(
+				groupId, faroProject.getFaroProjectId(),
+				emailAddressDomainsFaroParam.getValue());
 		}
 		catch (EmailAddressDomainException emailAddressDomainException) {
 			throw new FaroValidationException(
@@ -1182,8 +1181,8 @@ public class ProjectController extends BaseFaroController {
 	private FaroNotificationLocalService _faroNotificationLocalService;
 
 	@Reference
-	private FaroProjectEmailAddressDomainLocalService
-		_faroProjectEmailAddressDomainLocalService;
+	private FaroProjectEmailDomainLocalService
+		_faroProjectEmailAddressLocalService;
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;

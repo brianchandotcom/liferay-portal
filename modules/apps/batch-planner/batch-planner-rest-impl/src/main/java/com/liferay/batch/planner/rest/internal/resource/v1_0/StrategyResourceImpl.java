@@ -16,6 +16,7 @@ package com.liferay.batch.planner.rest.internal.resource.v1_0;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.rest.dto.v1_0.Strategy;
 import com.liferay.batch.planner.rest.resource.v1_0.StrategyResource;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -45,7 +46,8 @@ public class StrategyResourceImpl extends BaseStrategyResourceImpl {
 
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
 			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				internalClassName, "DEFAULT");
+				TaskItemUtil.getInternalClassName(internalClassName),
+				TaskItemUtil.getDelegateName(internalClassName));
 
 		for (String createStrategy :
 				batchEngineTaskItemDelegate.getAvailableCreateStrategies()) {

@@ -14,6 +14,7 @@
 
 package com.liferay.batch.planner.web.internal.helper;
 
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.constants.BatchPlannerPolicyConstants;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -64,9 +65,8 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "externalType");
 		String internalClassName = _resolveInternalClassName(
 			ParamUtil.getString(portletRequest, "internalClassName"));
-		String taskItemDelegateName = _resolveTaskItemDelegateName(
-			ParamUtil.getString(portletRequest, "internalClassName"),
-			ParamUtil.getString(portletRequest, "taskItemDelegateName"));
+		String taskItemDelegateName = TaskItemUtil.getDelegateName(
+			ParamUtil.getString(portletRequest, "internalClassName"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
 		BatchPlannerPlan batchPlannerPlan =
@@ -99,9 +99,8 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "externalType", "CSV");
 		String internalClassName = _resolveInternalClassName(
 			ParamUtil.getString(portletRequest, "internalClassName"));
-		String taskItemDelegateName = _resolveTaskItemDelegateName(
-			ParamUtil.getString(portletRequest, "internalClassName"),
-			ParamUtil.getString(portletRequest, "taskItemDelegateName"));
+		String taskItemDelegateName = TaskItemUtil.getDelegateName(
+			ParamUtil.getString(portletRequest, "internalClassName"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
 		int size = 0;
@@ -344,18 +343,6 @@ public class BatchPlannerPlanHelper {
 		}
 
 		return internalClassName.substring(0, index);
-	}
-
-	private String _resolveTaskItemDelegateName(
-		String internalClassName, String taskItemDelegateName) {
-
-		int index = internalClassName.indexOf(StringPool.POUND);
-
-		if (index < 0) {
-			return taskItemDelegateName;
-		}
-
-		return internalClassName.substring(index + 1);
 	}
 
 	private BatchPlannerPlan _updateBatchPlannerPlan(

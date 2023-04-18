@@ -565,8 +565,6 @@ public class ObjectActionLocalServiceTest {
 			"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
 			WorkflowConstants.STATUS_DRAFT);
 
-		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
-
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
@@ -579,6 +577,7 @@ public class ObjectActionLocalServiceTest {
 			"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
 			WorkflowConstants.STATUS_DRAFT);
 
+		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
 		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);

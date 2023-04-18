@@ -264,8 +264,11 @@ const FragmentContent = ({
 				<UnsafeHTML
 					className={classNames(
 						className,
-						`page-editor__fragment-content ${fragmentEntryLink?.cssClass}`,
+						`page-editor__fragment-content`,
 						{
+							[`${fragmentEntryLink?.cssClass}`]: !hasInnerCommonStyles(
+								fragmentEntryLink
+							),
 							[getLayoutDataItemCssClasses(
 								item
 							)]: !hasInnerCommonStyles(fragmentEntryLink),

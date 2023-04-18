@@ -14,22 +14,32 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
+import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
+import com.liferay.headless.delivery.dto.v1_0.PageSettings;
+import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
+import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -49,6 +59,7 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -247,18 +258,48 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	private Layout _addLayout(
 			Long siteId, SitePage sitePage, Map<Locale, String> friendlyUrlMap,
-			Map<Locale, String> titleMap)
+			Map<Locale, String> nameMap)
 		throws Exception {
 
+		Map<Locale, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> keywordsMap = new HashMap<>();
+		Map<Locale, String> robotsMap = new HashMap<>();
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		PageSettings pageSettings = sitePage.getPageSettings();
+
+		if (sitePage.getPageSettings() != null) {
+			SEOSettings seoSettings = pageSettings.getSeoSettings();
+
+			if (seoSettings != null) {
+				descriptionMap = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					seoSettings.getDescription(),
+					seoSettings.getDescription_i18n());
+				keywordsMap = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					seoSettings.getSeoKeywords(),
+					seoSettings.getSeoKeywords_i18n());
+				robotsMap = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					seoSettings.getRobots(), seoSettings.getRobots_i18n());
+				titleMap = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					seoSettings.getHtmlTitle(),
+					seoSettings.getHtmlTitle_i18n());
+			}
+		}
+
 		Layout layout = _layoutService.addLayout(
-			siteId, false, 0, titleMap, new HashMap<>(), new HashMap<>(),
-			new HashMap<>(), new HashMap<>(), LayoutConstants.TYPE_CONTENT,
-			null, false, friendlyUrlMap, 0,
-			_createServiceContext(siteId, sitePage));
+			siteId, false, 0, nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, LayoutConstants.TYPE_CONTENT, null, false,
+			friendlyUrlMap, 0, _createServiceContext(siteId, sitePage));
 
 		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		layout = _layoutLocalService.updateLayout(layout);
+
+		_updateSEOEntry(layout, sitePage);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -334,6 +375,32 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				"getSiteSitePageExperienceExperienceKeyRenderedPage",
 				Group.class.getName(), layout.getGroupId())
 		).build();
+	}
+
+	private long _getFileEntryId(OpenGraphSettings openGraphSettings) {
+		if (openGraphSettings == null) {
+			return 0;
+		}
+
+		ContentDocument contentDocument = openGraphSettings.getImage();
+
+		if (contentDocument == null) {
+			return 0;
+		}
+
+		try {
+			FileEntry fileEntry = _dlAppService.getFileEntry(
+				contentDocument.getId());
+
+			return fileEntry.getFileEntryId();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return 0;
 	}
 
 	private Layout _getLayout(long groupId, String friendlyUrlPath)
@@ -534,7 +601,82 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
 	}
 
+	private void _updateSEOEntry(Layout layout, SitePage sitePage)
+		throws Exception {
+
+		PageSettings pageSettings = sitePage.getPageSettings();
+
+		if (pageSettings == null) {
+			return;
+		}
+
+		OpenGraphSettings openGraphSettings =
+			pageSettings.getOpenGraphSettings();
+
+		boolean openGraphDescriptionEnabled = false;
+		boolean openGraphTitleEnabled = false;
+		Map<Locale, String> openGraphDescriptionMap = new HashMap<>();
+		Map<Locale, String> openImageAltMap = new HashMap<>();
+		Map<Locale, String> openGraphTitleMap = new HashMap<>();
+
+		if (openGraphSettings != null) {
+			openGraphDescriptionMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				openGraphSettings.getDescription(),
+				openGraphSettings.getDescription_i18n());
+
+			if (MapUtil.isNotEmpty(openGraphDescriptionMap)) {
+				openGraphDescriptionEnabled = true;
+			}
+
+			openImageAltMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				openGraphSettings.getImageAlt(),
+				openGraphSettings.getImageAlt_i18n());
+
+			openGraphTitleMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				openGraphSettings.getTitle(),
+				openGraphSettings.getTitle_i18n());
+
+			if (MapUtil.isNotEmpty(openGraphTitleMap)) {
+				openGraphTitleEnabled = true;
+			}
+		}
+
+		SEOSettings seoSettings = pageSettings.getSeoSettings();
+
+		boolean canonicalURLEnabled = false;
+		Map<Locale, String> canonicalURLMap = new HashMap<>();
+
+		if (seoSettings != null) {
+			canonicalURLMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				seoSettings.getCustomCanonicalURL(),
+				seoSettings.getCustomCanonicalURL_i18n());
+
+			if (MapUtil.isNotEmpty(canonicalURLMap)) {
+				canonicalURLEnabled = true;
+			}
+		}
+
+		_layoutSEOEntryService.updateLayoutSEOEntry(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			canonicalURLEnabled, canonicalURLMap, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openImageAltMap,
+			_getFileEntryId(openGraphSettings), openGraphTitleEnabled,
+			openGraphTitleMap,
+			ServiceContextRequestUtil.createServiceContext(
+				null, layout.getGroupId(), contextHttpServletRequest, null));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SitePageResourceImpl.class);
+
 	private static final EntityModel _entityModel = new SitePageEntityModel();
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
@@ -544,6 +686,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSEOEntryService _layoutSEOEntryService;
 
 	@Reference
 	private LayoutService _layoutService;

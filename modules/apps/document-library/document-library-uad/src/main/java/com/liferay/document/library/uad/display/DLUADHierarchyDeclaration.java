@@ -49,8 +49,10 @@ public class DLUADHierarchyDeclaration implements UADHierarchyDeclaration {
 		return new UADDisplay<?>[] {_dlFileEntryUADDisplay};
 	}
 
-	@Reference
-	private DLFileEntryUADDisplay _dlFileEntryUADDisplay;
+	@Reference(
+		target = "(component.name=com.liferay.document.library.uad.display.DLFileEntryUADDisplay)"
+	)
+	private UADDisplay<?> _dlFileEntryUADDisplay;
 
 	@Reference(
 		target = "(component.name=com.liferay.document.library.uad.display.DLFolderUADDisplay)"

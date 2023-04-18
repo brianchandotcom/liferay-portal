@@ -405,28 +405,6 @@ definition {
 				objectName = "CustomObject170529",
 				pluralLabelName = "Custom Objects 170529");
 
-			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "CustomObject170529",
-				objectName_2 = "CustomObject170529",
-				relationshipLabel = "Relationship",
-				relationshipName = "relationship",
-				relationshipType = "oneToMany");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field",
-				fieldName = "customObjectField",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "CustomObject170529");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject170529");
-
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "Custom Field 170529",
-				objectName = "CustomObject170529",
-				value = "Entry Test");
-
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name 1",
 				accountEntryType = "Business");
@@ -434,16 +412,21 @@ definition {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name 2",
 				accountEntryType = "Business");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "AccountEntry",
+				objectName_2 = "CustomObject170529",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject170529");
 		}
 
 		task ("When the user creates a filter and the relationship column can be selected as the filter") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 170529");
-
-			CreateObject.selectTitleField(fieldLabel = "Custom Field");
-
-			CreateObject.saveObject();
 
 			ObjectCustomViews.goToViewsTab();
 
@@ -457,24 +440,34 @@ definition {
 
 			ObjectCustomViews.addColumnsViaUI(addColumns = "Relationship");
 
-			ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
-
 			ObjectCustomViews.goToFiltersTab();
 
 			ObjectCustomViews.addNewFilterViaUI(
 				filterBy = "Relationship",
 				filterType = "Includes",
 				filterValue = "Account Name 1");
+
+			PortletEntry.save();
 		}
 
 		task ("Then the user can filter relationship entries") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject170529");
 
+			for (var entryName : list "Account Name 1,Account Name 2") {
+				LexiconEntry.gotoAdd();
+
+				ObjectPortlet.chooseEntryOnRelationshipField(entryOption = ${entryName});
+
+				PortletEntry.save();
+
+				Navigator.gotoBack();
+			}
+
 			AssertElementPresent(
 				key_tabName = "Account Name 1",
 				locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_tabName = "Account Name 2",
 				locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
 		}

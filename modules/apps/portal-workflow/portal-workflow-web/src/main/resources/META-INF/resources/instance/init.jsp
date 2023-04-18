@@ -30,6 +30,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowHandler" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
 page import="com.liferay.portal.workflow.web.internal.dao.search.WorkflowInstanceResultRowSplitter" %><%@

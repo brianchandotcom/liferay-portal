@@ -70,7 +70,9 @@ renderResponse.setTitle(assetRenderer.getTitle(workflowTaskDisplayContext.getTas
 				</c:if>
 
 				<%
-				String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null);
+				WorkflowHandler<?> workflowHandler = workflowTaskDisplayContext.getWorkflowHandler(workflowTaskDisplayContext.getWorkflowTask());
+
+				String viewInContextURL = workflowHandler.getURLViewInContext(assetRenderer.getClassPK(), liferayPortletRequest, liferayPortletResponse, null);
 				%>
 
 				<c:if test="<%= viewInContextURL != null %>">

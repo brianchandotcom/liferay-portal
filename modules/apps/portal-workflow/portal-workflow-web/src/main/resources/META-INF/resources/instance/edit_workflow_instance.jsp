@@ -79,6 +79,8 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 					AssetRenderer<?> assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
 
 					AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
+
+					WorkflowHandler<?> workflowHandler = workflowInstanceEditDisplayContext.getWorkflowHandler();
 					%>
 
 					<c:if test="<%= assetRenderer != null %>">
@@ -110,7 +112,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 										markupView="lexicon"
 										message="view[action]"
 										toolTip="<%= true %>"
-										url="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
+										url="<%= assetRenderer.isPreviewInContext() ? workflowHandler.getURLViewInContext(assetRenderer.getClassPK(), liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
 									/>
 								</c:if>
 							</div>
@@ -141,10 +143,6 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 								/>
 							</c:if>
 						</liferay-ui:panel>
-
-						<%
-						WorkflowHandler<?> workflowHandler = workflowInstanceEditDisplayContext.getWorkflowHandler();
-						%>
 
 						<c:if test="<%= workflowHandler.isCommentable() %>">
 

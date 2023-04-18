@@ -58,7 +58,9 @@ renderResponse.setTitle(assetRenderer.getTitle(locale));
 						/>
 
 						<%
-						String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null);
+						WorkflowHandler<?> workflowHandler = WorkflowHandlerRegistryUtil.getWorkflowHandler(assetRenderer.getClassName());
+
+						String viewInContextURL = workflowHandler.getURLViewInContext(assetRenderer.getClassPK(), liferayPortletRequest, liferayPortletResponse, null);
 						%>
 
 						<c:if test="<%= viewInContextURL != null %>">

@@ -42,12 +42,6 @@ public class SearchBarPortletPreferencesImpl
 	}
 
 	@Override
-	public Optional<String> getDestinationOptional() {
-		return _portletPreferencesHelper.getString(
-			SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION);
-	}
-
-	@Override
 	public String getFederatedSearchKey() {
 		return _portletPreferencesHelper.getString(
 			SearchBarPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY,

@@ -7,7 +7,7 @@ definition {
 
 		var setenvFile = "${tomcatBinDir}/setenv.sh";
 
-		var fileContent = FileUtil.read(${setenvFile});
+		var originalFileContent = FileUtil.read(${setenvFile});
 
 		if (!(isSet(companyId))) {
 			var companyId = JSONCompany.getCompanyId();
@@ -21,11 +21,11 @@ definition {
 ${propertiesList}''';
 		}
 
-		var propertiesList = '''${fileContent}
+		var newFileContent = '''${originalFileContent}
 
 ${propertiesList}''';
 
-		FileUtil.write(${setenvFile}, ${propertiesList});
+		FileUtil.write(${setenvFile}, ${newFileContent});
 	}
 
 	macro addJVMArguments {
@@ -35,18 +35,18 @@ ${propertiesList}''';
 
 		var setenvFile = "${tomcatBinDir}/setenv.sh";
 
-		var fileContent = FileUtil.read(${setenvFile});
+		var originalFileContent = FileUtil.read(${setenvFile});
 		var argumentsList = "";
 
 		for (var argument : list ${arguments}) {
 			var argumentsList = ''' -D${argument}${argumentsList}''';
 		}
 
-		var argumentsList = '''${fileContent}
+		var newFileContent = '''${originalFileContent}
 
 CATALINA_OPTS="$CATALINA_OPTS${argumentsList}"''';
 
-		FileUtil.write(${setenvFile}, ${argumentsList});
+		FileUtil.write(${setenvFile}, ${newFileContent});
 	}
 
 }

@@ -15,10 +15,13 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
+import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.delivery.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.dto.v1_0.PageSettings;
@@ -27,6 +30,7 @@ import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -35,8 +39,13 @@ import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -52,6 +61,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -67,6 +77,7 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,9 +106,11 @@ import com.liferay.segments.service.SegmentsExperienceService;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -423,6 +436,88 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		).build();
 	}
 
+	private String _getDDMFormValues(PageSettings pageSettings) {
+		CustomMetaTag[] customMetaTags = pageSettings.getCustomMetaTags();
+
+		if (ArrayUtil.isEmpty(customMetaTags)) {
+			return null;
+		}
+
+		JSONObject ddmFormValuesJSONObject = JSONUtil.put(
+			"defaultLanguageId",
+			contextAcceptLanguage.getPreferredLanguageId());
+
+		JSONArray fieldValuesJSONArray = _jsonFactory.createJSONArray();
+
+		Set<String> availableLanguageIds = new HashSet<>();
+
+		for (CustomMetaTag customMetaTag : customMetaTags) {
+			JSONObject fieldValueJSONObject = JSONUtil.put(
+				"instanceId", StringUtil.randomString(8)
+			).put(
+				"name", "property"
+			).put(
+				"value", customMetaTag.getKey()
+			);
+
+			JSONObject nestedFieldValueJSONObject = JSONUtil.put(
+				"instanceId", StringUtil.randomString(8)
+			).put(
+				"name", "content"
+			);
+
+			Map<Locale, String> valuesMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				customMetaTag.getValue(), customMetaTag.getValue_i18n());
+
+			JSONObject valueJSONObject = _jsonFactory.createJSONObject();
+
+			for (Map.Entry<Locale, String> entry : valuesMap.entrySet()) {
+				String key = LocaleUtil.toLanguageId(entry.getKey());
+
+				valueJSONObject.put(key, entry.getValue());
+
+				availableLanguageIds.add(key);
+			}
+
+			nestedFieldValueJSONObject.put("value", valueJSONObject);
+
+			JSONArray nestedFieldValuesJSONArray = JSONUtil.put(
+				nestedFieldValueJSONObject);
+
+			fieldValueJSONObject.put(
+				"nestedFieldValues", nestedFieldValuesJSONArray);
+
+			fieldValuesJSONArray.put(fieldValueJSONObject);
+		}
+
+		ddmFormValuesJSONObject.put("fieldValues", fieldValuesJSONArray);
+
+		JSONArray availableLanguageIdsJSONArray =
+			_jsonFactory.createJSONArray();
+
+		for (String availableLanguage : availableLanguageIds) {
+			availableLanguageIdsJSONArray.put(availableLanguage);
+		}
+
+		ddmFormValuesJSONObject.put(
+			"availableLanguageIds", availableLanguageIdsJSONArray);
+
+		return ddmFormValuesJSONObject.toString();
+	}
+
+	private long _getDDMStructurePrimaryKey(Layout layout) throws Exception {
+		Company company = _companyLocalService.getCompany(
+			layout.getCompanyId());
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			company.getGroupId(),
+			_portal.getClassNameId(LayoutSEOEntry.class.getName()),
+			"custom-meta-tags");
+
+		return ddmStructure.getPrimaryKey();
+	}
+
 	private Map<String, Map<String, String>> _getExperienceActions(
 		Layout layout) {
 
@@ -723,20 +818,37 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			}
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				null, layout.getGroupId(), contextHttpServletRequest, null);
+
+		String ddmFormValues = _getDDMFormValues(pageSettings);
+
+		if (Validator.isNotNull(ddmFormValues)) {
+			long ddmStructurePrimaryKey = _getDDMStructurePrimaryKey(layout);
+
+			serviceContext.setAttribute(
+				ddmStructurePrimaryKey + "ddmFormValues", ddmFormValues);
+		}
+
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			canonicalURLEnabled, canonicalURLMap, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openImageAltMap,
 			_getFileEntryId(openGraphSettings), openGraphTitleEnabled,
-			openGraphTitleMap,
-			ServiceContextRequestUtil.createServiceContext(
-				null, layout.getGroupId(), contextHttpServletRequest, null));
+			openGraphTitleMap, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitePageResourceImpl.class);
 
 	private static final EntityModel _entityModel = new SitePageEntityModel();
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DDMStructureService _ddmStructureService;
 
 	@Reference
 	private DLAppService _dlAppService;
@@ -746,6 +858,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

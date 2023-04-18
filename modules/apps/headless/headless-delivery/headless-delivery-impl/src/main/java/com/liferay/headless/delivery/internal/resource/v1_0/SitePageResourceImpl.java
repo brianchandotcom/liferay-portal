@@ -284,6 +284,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		Map<Locale, String> keywordsMap = new HashMap<>();
 		Map<Locale, String> robotsMap = new HashMap<>();
 		Map<Locale, String> titleMap = new HashMap<>();
+		boolean hidden = false;
 
 		PageSettings pageSettings = sitePage.getPageSettings();
 
@@ -307,11 +308,14 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					seoSettings.getHtmlTitle(),
 					seoSettings.getHtmlTitle_i18n());
 			}
+
+			hidden = GetterUtil.getBoolean(
+				pageSettings.getHiddenFromNavigation());
 		}
 
 		Layout layout = _layoutService.addLayout(
 			siteId, false, parentLayoutId, nameMap, titleMap, descriptionMap,
-			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT, null, false,
+			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT, null, hidden,
 			friendlyUrlMap, 0, _createServiceContext(siteId, sitePage));
 
 		layout.setStatus(WorkflowConstants.STATUS_APPROVED);

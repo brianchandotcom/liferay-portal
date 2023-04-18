@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSegmentsEntryDisplayContext)request.getAttribute(SegmentsWebKeys.SELECT_SEGMENTS_ENTRY_DISPLAY_CONTEXT);
+SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSegmentsEntryDisplayContext)request.getAttribute(SelectSegmentsEntryDisplayContext.class.getName());
 %>
 
 <clay:management-toolbar

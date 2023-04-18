@@ -17,16 +17,13 @@ package com.liferay.segments.web.internal.portlet;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.service.SegmentsEntryService;
-import com.liferay.segments.web.internal.constants.SegmentsWebKeys;
 import com.liferay.segments.web.internal.display.context.SegmentsDisplayContext;
 
 import java.io.IOException;
@@ -76,7 +73,8 @@ public class SegmentsPortlet extends MVCPortlet {
 			new SegmentsDisplayContext(
 				_analyticsSettingsManager, _groupLocalService, _itemSelector,
 				_language, _portal, renderRequest, renderResponse,
-				_roleTypeContributorProvider, _segmentsConfigurationProvider, _segmentsEntryService));
+				_roleTypeContributorProvider, _segmentsConfigurationProvider,
+				_segmentsEntryService));
 
 		super.render(renderRequest, renderResponse);
 	}

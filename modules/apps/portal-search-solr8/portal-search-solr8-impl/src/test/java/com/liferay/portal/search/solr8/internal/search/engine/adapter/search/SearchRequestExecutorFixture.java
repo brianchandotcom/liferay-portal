@@ -65,9 +65,7 @@ public class SearchRequestExecutorFixture {
 			_solrClientManager, _facetProcessor, _queryTranslator);
 	}
 
-	protected static BaseSearchResponseAssembler
-		createBaseSearchResponseAssembler() {
-
+	protected BaseSearchResponseAssembler createBaseSearchResponseAssembler() {
 		BaseSearchResponseAssemblerImpl baseSearchResponseAssemblerImpl =
 			new BaseSearchResponseAssemblerImpl();
 
@@ -78,7 +76,7 @@ public class SearchRequestExecutorFixture {
 		return baseSearchResponseAssemblerImpl;
 	}
 
-	protected static BaseSolrQueryAssembler createBaseSolrQueryAssembler(
+	protected BaseSolrQueryAssembler createBaseSolrQueryAssembler(
 		FacetProcessor<SolrQuery> facetProcessor,
 		QueryTranslator<String> queryTranslator) {
 
@@ -99,11 +97,10 @@ public class SearchRequestExecutorFixture {
 		return baseSolrQueryAssemblerImpl;
 	}
 
-	protected static CountSearchRequestExecutor
-		createCountSearchRequestExecutor(
-			SolrClientManager solrClientManager,
-			FacetProcessor<SolrQuery> facetProcessor,
-			QueryTranslator<String> queryTranslator) {
+	protected CountSearchRequestExecutor createCountSearchRequestExecutor(
+		SolrClientManager solrClientManager,
+		FacetProcessor<SolrQuery> facetProcessor,
+		QueryTranslator<String> queryTranslator) {
 
 		CountSearchRequestExecutorImpl countSearchRequestExecutorImpl =
 			new CountSearchRequestExecutorImpl();
@@ -121,7 +118,7 @@ public class SearchRequestExecutorFixture {
 		return countSearchRequestExecutorImpl;
 	}
 
-	protected static SearchRequestExecutor createSearchRequestExecutor(
+	protected SearchRequestExecutor createSearchRequestExecutor(
 		SolrClientManager solrClientManager,
 		FacetProcessor<SolrQuery> facetProcessor,
 		QueryTranslator<String> queryTranslator) {
@@ -144,11 +141,10 @@ public class SearchRequestExecutorFixture {
 		return solrSearchRequestExecutor;
 	}
 
-	protected static SearchSearchRequestExecutor
-		createSearchSearchRequestExecutor(
-			SolrClientManager solrClientManager,
-			FacetProcessor<SolrQuery> facetProcessor,
-			QueryTranslator<String> queryTranslator) {
+	protected SearchSearchRequestExecutor createSearchSearchRequestExecutor(
+		SolrClientManager solrClientManager,
+		FacetProcessor<SolrQuery> facetProcessor,
+		QueryTranslator<String> queryTranslator) {
 
 		SearchSearchRequestExecutorImpl searchSearchRequestExecutorImpl =
 			new SearchSearchRequestExecutorImpl();
@@ -166,7 +162,7 @@ public class SearchRequestExecutorFixture {
 		return searchSearchRequestExecutorImpl;
 	}
 
-	protected static SearchSearchResponseAssembler
+	protected SearchSearchResponseAssembler
 		createSearchSearchResponseAssembler() {
 
 		SearchSearchResponseAssemblerImpl searchSearchResponseAssemblerImpl =
@@ -183,7 +179,7 @@ public class SearchRequestExecutorFixture {
 		return searchSearchResponseAssemblerImpl;
 	}
 
-	protected static SearchSearchResponseAssemblerHelper
+	protected SearchSearchResponseAssemblerHelper
 		createSearchSearchResponseAssemblerHelper() {
 
 		DefaultSearchSearchResponseAssemblerHelperImpl
@@ -212,7 +208,7 @@ public class SearchRequestExecutorFixture {
 		return defaultSearchSearchResponseAssemblerHelperImpl;
 	}
 
-	protected static SearchSolrQueryAssembler createSearchSolrQueryAssembler(
+	protected SearchSolrQueryAssembler createSearchSolrQueryAssembler(
 		FacetProcessor<SolrQuery> facetProcessor,
 		QueryTranslator<String> queryTranslator) {
 
@@ -241,7 +237,7 @@ public class SearchRequestExecutorFixture {
 		return searchSolrQueryAssemblerImpl;
 	}
 
-	protected static SolrFilterTranslator createSolrFilterTranslator() {
+	protected SolrFilterTranslator createSolrFilterTranslator() {
 		SolrFilterTranslator solrFilterTranslator = new SolrFilterTranslator();
 
 		ReflectionTestUtil.setFieldValue(
@@ -290,7 +286,7 @@ public class SearchRequestExecutorFixture {
 		return solrFilterTranslator;
 	}
 
-	protected static StatsTranslator createStatsTranslator() {
+	protected StatsTranslator createStatsTranslator() {
 		DefaultStatsTranslator defaultStatsTranslator =
 			new DefaultStatsTranslator();
 

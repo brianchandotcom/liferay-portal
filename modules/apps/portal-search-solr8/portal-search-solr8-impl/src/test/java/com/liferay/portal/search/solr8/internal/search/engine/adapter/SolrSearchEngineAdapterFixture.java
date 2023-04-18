@@ -55,7 +55,7 @@ public class SolrSearchEngineAdapterFixture {
 			_queryTranslator, _properties);
 	}
 
-	protected static SearchEngineAdapter createSearchEngineAdapter(
+	protected SearchEngineAdapter createSearchEngineAdapter(
 		FacetProcessor<SolrQuery> facetProcessor,
 		SolrClientManager solrClientManager,
 		SolrDocumentFactory solrDocumentFactory,

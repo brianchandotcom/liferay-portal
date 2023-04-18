@@ -288,7 +288,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		PageSettings pageSettings = sitePage.getPageSettings();
 
-		if (sitePage.getPageSettings() != null) {
+		if (pageSettings != null) {
 			SEOSettings seoSettings = pageSettings.getSeoSettings();
 
 			if (seoSettings != null) {

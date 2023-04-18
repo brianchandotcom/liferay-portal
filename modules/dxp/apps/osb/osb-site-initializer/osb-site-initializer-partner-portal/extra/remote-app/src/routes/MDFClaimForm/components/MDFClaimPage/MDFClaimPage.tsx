@@ -98,7 +98,7 @@ const MDFClaimPage = ({
 
 		if (
 			values.id &&
-			roleEntries &&
+			!roleEntries &&
 			!isPartnerManagerRole &&
 			!userAccountRolesCanEdit &&
 			values.mdfClaimStatus?.key !== 'draft' &&

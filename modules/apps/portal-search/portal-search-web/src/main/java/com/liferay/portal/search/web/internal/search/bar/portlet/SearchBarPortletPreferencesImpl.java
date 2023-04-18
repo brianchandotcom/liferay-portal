@@ -37,9 +37,8 @@ public class SearchBarPortletPreferencesImpl
 
 	@Override
 	public String getDestination() {
-		Optional<String> optional = getDestinationOptional();
-
-		return optional.orElse(StringPool.BLANK);
+		return _portletPreferencesHelper.getString(
+			SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION);
 	}
 
 	@Override

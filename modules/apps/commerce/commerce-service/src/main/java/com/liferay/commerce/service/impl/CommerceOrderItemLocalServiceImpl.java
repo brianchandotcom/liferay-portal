@@ -129,8 +129,8 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			int quantity, int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			int quantity, long replacedCPInstanceId, int shippedQuantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(json)) {
@@ -150,6 +150,8 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem = _createCommerceOrderItem(
 			commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
 			json, quantity, shippedQuantity, commerceContext, serviceContext);
+
+		commerceOrderItem.setReplacedCPInstanceId(replacedCPInstanceId);
 
 		commerceOrderItem = commerceOrderItemPersistence.update(
 			commerceOrderItem);
@@ -216,8 +218,8 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			long replacedCPInstanceId, int shippedQuantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		String cpInstanceOptionValueRelJSONString =
@@ -225,15 +227,15 @@ public class CommerceOrderItemLocalServiceImpl
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId,
-			cpInstanceOptionValueRelJSONString, quantity, 0, commerceContext,
-			serviceContext);
+			cpInstanceOptionValueRelJSONString, quantity, replacedCPInstanceId,
+			shippedQuantity, commerceContext, serviceContext);
 	}
 
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			int quantity, int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			int quantity, long replacedCPInstanceId, int shippedQuantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		List<CommerceOrderItem> commerceOrderItems = getCommerceOrderItems(
@@ -253,8 +255,8 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 
 		return commerceOrderItemLocalService.addCommerceOrderItem(
-			userId, commerceOrderId, cpInstanceId, json, quantity, 0,
-			commerceContext, serviceContext);
+			userId, commerceOrderId, cpInstanceId, json, quantity,
+			replacedCPInstanceId, 0, commerceContext, serviceContext);
 	}
 
 	@Override

@@ -61,8 +61,8 @@ public class CommerceOrderItemServiceImpl
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			long replacedCPInstanceId, int shippedQuantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -70,14 +70,15 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.addCommerceOrderItem(
 			getUserId(), commerceOrderId, cpInstanceId, json, quantity,
-			shippedQuantity, commerceContext, serviceContext);
+			replacedCPInstanceId, shippedQuantity, commerceContext,
+			serviceContext);
 	}
 
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			long replacedCPInstanceId, int shippedQuantity,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
@@ -97,7 +98,8 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			getUserId(), commerceOrderId, cpInstanceId, json, quantity,
-			shippedQuantity, commerceContext, serviceContext);
+			replacedCPInstanceId, shippedQuantity, commerceContext,
+			serviceContext);
 	}
 
 	@Override

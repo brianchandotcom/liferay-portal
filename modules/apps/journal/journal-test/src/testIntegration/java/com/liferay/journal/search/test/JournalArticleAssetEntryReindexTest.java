@@ -16,8 +16,10 @@ package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -111,6 +113,33 @@ public class JournalArticleAssetEntryReindexTest {
 		_assertSearch(updatedAssetCategoryTitle, journalArticle);
 	}
 
+	@Test
+	public void testUpdateAssetTagName() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetTag assetTag = _assetTagLocalService.addTag(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		_assertSearch(assetTag.getName(), journalArticle);
+
+		String updatedAssetTagName = RandomTestUtil.randomString();
+
+		_assetTagLocalService.updateTag(
+			TestPropsValues.getUserId(), assetTag.getTagId(),
+			updatedAssetTagName, serviceContext);
+
+		_assertSearch(updatedAssetTagName, journalArticle);
+	}
+
 	private void _assertSearch(String keyword, JournalArticle journalArticle) {
 		Document[] documents = _indexerFixture.search(keyword);
 
@@ -127,6 +156,9 @@ public class JournalArticleAssetEntryReindexTest {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

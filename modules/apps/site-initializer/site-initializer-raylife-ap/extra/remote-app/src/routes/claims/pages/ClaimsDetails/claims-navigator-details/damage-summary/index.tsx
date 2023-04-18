@@ -28,8 +28,8 @@ enum NavVehicleLabel {
 }
 
 const images = [
-	`${getWebDavUrl()}/driver-side-damage.svg`,
-	`${getWebDavUrl()}/driver-side-damage-rear.svg`,
+	`${getWebDavUrl()}/driver_side_damage_rear.svg`,
+	`${getWebDavUrl()}/driver_side_damage.svg`,
 ];
 
 const DamageSummary = () => {
@@ -90,8 +90,8 @@ const DamageSummary = () => {
 							<img
 								src={`${getWebDavUrl()}/${
 									active === NavVehicleLabel.Exterior
-										? 'AutoExterior.svg'
-										: 'AutoInterior.svg'
+										? 'auto_exterior.svg'
+										: 'auto_interior.svg'
 								}`}
 							/>
 						</div>

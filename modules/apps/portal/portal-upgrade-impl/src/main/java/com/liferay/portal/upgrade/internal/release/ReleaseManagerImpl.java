@@ -70,19 +70,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		return _serviceTrackerMap.keySet();
 	}
 
-	@Override
-	public boolean getMessage() throws Exception {
-		try (Connection connection = DataAccess.getConnection()) {
-			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
-				_isPendingModuleUpgrades()) {
-
-				return false;
-			}
-		}
-
-		return _checkUnsatisfiedUpgradeComponents();
-	}
-
 	public String getSchemaVersionString(String bundleSymbolicName) {
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
@@ -138,6 +125,19 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public boolean getStatus() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
+				_isPendingModuleUpgrades()) {
+
+				return false;
+			}
+		}
+
+		return _checkUnsatisfiedUpgradeComponents();
 	}
 
 	@Override

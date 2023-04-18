@@ -47,7 +47,7 @@ public class ReleaseManagerTest {
 
 	@Test
 	public void testCheck() throws Exception {
-		Assert.assertTrue(_releaseManager.getMessage());
+		Assert.assertTrue(_releaseManager.getStatus());
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class ReleaseManagerTest {
 
 			release = _releaseLocalService.updateRelease(release);
 
-			Assert.assertFalse(_releaseManager.getMessage());
+			Assert.assertFalse(_releaseManager.getStatus());
 		}
 		finally {
 			_releaseLocalService.deleteRelease(release);
@@ -87,7 +87,7 @@ public class ReleaseManagerTest {
 
 			release = _releaseLocalService.updateRelease(release);
 
-			Assert.assertFalse(_releaseManager.getMessage());
+			Assert.assertFalse(_releaseManager.getStatus());
 		}
 		finally {
 			release.setSchemaVersion(currentSchemaVersion);

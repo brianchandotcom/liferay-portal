@@ -551,7 +551,7 @@ public class FragmentEntryProcessorHelperImpl
 				try {
 					DateFormat dateFormat =
 						DateFormatFactoryUtil.getSimpleDateFormat(
-							"MM/dd/yy hh:mm a", locale);
+							_getShortTimeStylePattern(locale), locale);
 
 					Date date = dateFormat.parse(value.toString());
 
@@ -567,7 +567,7 @@ public class FragmentEntryProcessorHelperImpl
 					try {
 						DateFormat dateFormat =
 							DateFormatFactoryUtil.getSimpleDateFormat(
-								"MM/dd/yy", locale);
+								_getDefaultPattern(locale), locale);
 
 						return _getDateValue(
 							editableValueJSONObject,

@@ -20,83 +20,6 @@ definition {
 		}
 	}
 
-	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via jvm argument."
-	@priority = 3
-	test CanSetPortalPropertyViaJVM {
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaJVM";
-
-		task ("Given a feature flag is disabled") {
-			ApplicationsMenuHelper.openApplicationsMenu();
-
-			AssertElementNotPresent(
-				key_category = "Import / Export",
-				key_portlet = "Import/Export Center",
-				locator1 = "ApplicationsMenu#PORTLET");
-
-			Refresh();
-		}
-
-		task ("When the feature flag is enabled via environment variable") {
-			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
-		}
-
-		task ("And company-id-properties=true is set via jvm argument") {
-			Tomcat.addJVMArguments(arguments = "company-id-properties=true");
-		}
-
-		task ("And the portal is restarted") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(deleteLiferayHome = "false");
-		}
-
-		task ("Then the feature flag is enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Import / Export",
-				panel = "Applications",
-				portlet = "Import/Export Center");
-
-			ImportExport.gotoImport();
-		}
-	}
-
-	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via system-ext.properties"
-	@priority = 3
-	test CanSetPortalPropertyViaEnvironmentVariable {
-		property custom.system.properties = "company-id-properties=true";
-		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaEnvironmentVariable";
-
-		task ("Given a feature flag is disabled") {
-			ApplicationsMenuHelper.openApplicationsMenu();
-
-			AssertElementNotPresent(
-				key_category = "Import / Export",
-				key_portlet = "Import/Export Center",
-				locator1 = "ApplicationsMenu#PORTLET");
-
-			Refresh();
-		}
-
-		task ("When the feature flag is enabled via environment variable") {
-			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
-		}
-
-		task ("And the portal is restarted") {
-			Portlet.shutdownServer();
-
-			Portlet.startServer(deleteLiferayHome = "false");
-		}
-
-		task ("Then the feature flag is enabled") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Import / Export",
-				panel = "Applications",
-				portlet = "Import/Export Center");
-
-			ImportExport.gotoImport();
-		}
-	}
-
 	@description = "This is a usecase for LPS-168123. Verify properties which are supported for overriding via hook can be overriden by environment variable."
 	@priority = 3
 	test CanOverrideHookProperties {
@@ -141,6 +64,83 @@ definition {
 			AssertElementPresent(
 				key_card = "Minium",
 				locator1 = "Card#CARD");
+		}
+	}
+
+	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via system-ext.properties"
+	@priority = 3
+	test CanSetPortalPropertyViaEnvironmentVariable {
+		property custom.system.properties = "company-id-properties=true";
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaEnvironmentVariable";
+
+		task ("Given a feature flag is disabled") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			AssertElementNotPresent(
+				key_category = "Import / Export",
+				key_portlet = "Import/Export Center",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			Refresh();
+		}
+
+		task ("When the feature flag is enabled via environment variable") {
+			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
+		}
+
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the feature flag is enabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Import / Export",
+				panel = "Applications",
+				portlet = "Import/Export Center");
+
+			ImportExport.gotoImport();
+		}
+	}
+
+	@description = "Verify portal-ext properties can be set with environment variables after setting company-id-properties=true via jvm argument."
+	@priority = 3
+	test CanSetPortalPropertyViaJVM {
+		property test.name.skip.portal.instance = "VirtualInstancesProperties#CanSetPortalPropertyViaJVM";
+
+		task ("Given a feature flag is disabled") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			AssertElementNotPresent(
+				key_category = "Import / Export",
+				key_portlet = "Import/Export Center",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			Refresh();
+		}
+
+		task ("When the feature flag is enabled via environment variable") {
+			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
+		}
+
+		task ("And company-id-properties=true is set via jvm argument") {
+			Tomcat.addJVMArguments(arguments = "company-id-properties=true");
+		}
+
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the feature flag is enabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Import / Export",
+				panel = "Applications",
+				portlet = "Import/Export Center");
+
+			ImportExport.gotoImport();
 		}
 	}
 

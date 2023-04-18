@@ -663,13 +663,35 @@ definition {
 		}
 	}
 
-	@description = "LPS-171625 - Verify that after updating a system object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address, From Name, CC, BCC and Template Body fields"
+	@description = "LPS-171625 - Verify that after updating a custom object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address and From Name and Subject fields"
 	@priority = 5
-	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnSystemObject {
+	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnCustomObject {
 		property custom.properties = "feature.flag.LPS-171625=true";
 		property portal.acceptance = "true";
 
-		task ("Given an email notification template with the applicable fields filled with the Author and Current User terms") {
+		task ("Given a custom object a text field and an entry are created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 180337",
+				objectName = "CustomObject180337",
+				pluralLabelName = "Custom Objects 180337");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject180337");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject180337");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject180337",
+				value = "Before");
+		}
+
+		task ("And given an email notification template with the applicable fields filled with the Author and Current User terms") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Notifications",
 				panel = "Control Panel",
@@ -678,27 +700,30 @@ definition {
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "[%CURRENT_USER_EMAIL_ADDRESS%]",
-				fromAddress = "[%USER_AUTHOR_FIRST_NAME%]",
-				fromName = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+				fromAddress = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+				fromName = "[%CURRENT_USER_FIRST_NAME%]",
 				name = "Notification Template",
 				notificationType = "Email",
-				subject = "[%USER_AUTHOR_LAST_NAME%]");
+				subject = "[%CUSTOMOBJECT180337_CUSTOMOBJECTFIELD%]");
 
 			PortletEntry.save();
 		}
 
-		task ("And given an action to send an email notification after updating a system object entry") {
+		task ("And given an action to send an email notification after updating a custom object entry") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "User");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 180337");
 
 			ObjectAdmin.goToActionsTab();
 
 			ObjectAdmin.addObjectActionViaUI(
 				actionLabel = "Custom Action",
+				actionName = "CustomAction",
 				active = "true",
+				inputMethod = "true",
+				inputValue = "Action shot on add",
 				notificationName = "Notification Template",
-				objectLabel = "User",
+				objectLabel = "Custom Objects 180337",
 				thenAction = "Notification",
 				whenAction = "On After Update");
 		}
@@ -715,16 +740,16 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("When the second admin user updates the System Object entry") {
+		task ("When the second admin user updates the custom object entry") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			User.openUsersAdmin();
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject180337");
 
-			UserNavigator.gotoUser(userScreenName = "usersn");
+			ObjectPortlet.viewEntryDetails(entry = "Before");
 
-			User.editUserInformation(userLastNameEdit = "edituserln");
+			ObjectAdmin.editEntryName(newEntryValue = "After");
 		}
 
 		task ("Then the email is received with the terms replaced with the correct values") {
@@ -733,9 +758,11 @@ definition {
 				panel = "Control Panel",
 				portlet = "Queue");
 
-			AssertTextPresent(value1 = "edituserln");
+			AssertTextPresent(value1 = "userfn");
 
 			AssertTextPresent(value1 = "userea@liferay.com");
+
+			AssertTextPresent(value1 = "After");
 		}
 	}
 

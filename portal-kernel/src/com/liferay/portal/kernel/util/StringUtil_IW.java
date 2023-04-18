@@ -101,6 +101,10 @@ public class StringUtil_IW {
 		return StringUtil.equals(s1, s2);
 	}
 
+	public boolean equalsAny(java.lang.String s, java.lang.String... array) {
+		return StringUtil.equalsAny(s, array);
+	}
+
 	public boolean equalsIgnoreBreakLine(java.lang.String s1,
 		java.lang.String s2) {
 		return StringUtil.equalsIgnoreBreakLine(s1, s2);

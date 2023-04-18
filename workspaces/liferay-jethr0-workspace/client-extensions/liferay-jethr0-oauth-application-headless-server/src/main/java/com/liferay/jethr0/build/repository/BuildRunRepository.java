@@ -16,47 +16,45 @@ package com.liferay.jethr0.build.repository;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.dalo.BuildRunDALO;
-import com.liferay.jethr0.build.dalo.BuildToBuildRunsDALO;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
+
+	public BuildRun add(Build build) {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"r_buildToBuildRuns_c_buildId", build.getId()
+		).put(
+			"state", BuildRun.State.OPENED.getJSONObject()
+		);
+
+		BuildRun buildRun = _buildRunDALO.create(jsonObject);
+
+		buildRun.setBuild(build);
+
+		build.addBuildRun(buildRun);
+
+		return add(buildRun);
+	}
 
 	@Override
 	public EntityDALO<BuildRun> getEntityDALO() {
 		return _buildRunDALO;
 	}
 
-	@Override
-	protected BuildRun updateEntityRelationshipsFromDatabase(
-		BuildRun buildRun) {
-
-		for (Build build : _buildToBuildRunsDALO.getParentEntities(buildRun)) {
-			buildRun.setBuild(build);
-
-			build.addBuildRun(buildRun);
-		}
-
-		return buildRun;
-	}
-
-	@Override
-	protected BuildRun updateEntityRelationshipsInDatabase(BuildRun buildRun) {
-		_buildToBuildRunsDALO.updateParentEntities(buildRun);
-
-		return buildRun;
-	}
-
 	@Autowired
 	private BuildRunDALO _buildRunDALO;
-
-	@Autowired
-	private BuildToBuildRunsDALO _buildToBuildRunsDALO;
 
 }

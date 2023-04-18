@@ -86,6 +86,8 @@ public class BuildQueue {
 				}
 
 				nextBuild = build;
+
+				break;
 			}
 
 			_sortedBuilds.remove(nextBuild);

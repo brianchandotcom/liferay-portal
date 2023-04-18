@@ -22,7 +22,6 @@ import com.liferay.jethr0.build.dalo.BuildToEnvironmentsDALO;
 import com.liferay.jethr0.build.dalo.BuildToTasksDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +40,6 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 
 	@Override
 	protected Build updateEntityRelationshipsFromDatabase(Build build) {
-		for (Project project : _projectToBuildsDALO.getParentEntities(build)) {
-			build.setProject(project);
-
-			project.addBuild(build);
-		}
-
 		build.addBuildParameters(
 			_buildToBuildParametersDALO.getChildEntities(build));
 		build.addBuildRuns(_buildToBuildRunsDALO.getChildEntities(build));
@@ -59,10 +52,8 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 	@Override
 	protected Build updateEntityRelationshipsInDatabase(Build build) {
 		_buildToBuildParametersDALO.updateChildEntities(build);
-		_buildToBuildRunsDALO.updateChildEntities(build);
 		_buildToEnvironmentsDALO.updateChildEntities(build);
 		_buildToTasksDALO.updateChildEntities(build);
-		_projectToBuildsDALO.updateParentEntities(build);
 
 		return build;
 	}

@@ -29,6 +29,14 @@ definition {
 			}
 		}
 
+		if (${defaultTemplate} == "true") {
+			FormFields.enableCheckbox(fieldName = "Default Template");
+		}
+
+		if (${defaultSandboxTemplate} == "true") {
+			FormFields.enableCheckbox(fieldName = "Default Sandbox Template");
+		}
+
 		if (isSet(userInvite1)) {
 			PublicationsTemplate.expandPublicationCollaborators();
 

@@ -1,6 +1,11 @@
 Bundle-Name: Liferay Commerce Service
 Bundle-SymbolicName: com.liferay.commerce.service
+<<<<<<< HEAD
+Bundle-Version: 11.0.126
 Bundle-Version: 11.0.130
-Liferay-Require-SchemaVersion: 8.9.4
+Liferay-Require-SchemaVersion: 9.0.0
+=======
+Liferay-Require-SchemaVersion: 9.0.0
+>>>>>>> 6e7fab20472e... TET
 Liferay-Service: true
 -dsannotations-options: inherit

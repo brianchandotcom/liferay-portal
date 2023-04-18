@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.batch.planner.api
 Bundle-Version: 12.4.1
 Export-Package:\
 	com.liferay.batch.planner.batch.engine.broker,\
+	com.liferay.batch.planner.batch.engine.task,\
 	com.liferay.batch.planner.configuration,\
 	com.liferay.batch.planner.constants,\
 	com.liferay.batch.planner.exception,\

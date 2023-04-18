@@ -65,6 +65,66 @@ definition {
 		Smoke.viewWelcomeContentPage();
 	}
 
+	@description = "This is a use case for LPS-163426. Verify redirection to localized friendly URL's when using a virtual host."
+	@priority = 4
+	test RedirectToLocalizedFriendlyURLWithVirtualHost {
+		task ("Given two pages on a site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Page 1");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Page 2");
+		}
+
+		task ("And given the second page has a language selector widget") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Page 2",
+				widgetName = "Language Selector");
+		}
+
+		task ("And given the second page has localized friendly URL's for English and Hungarian") {
+			PagesAdmin.openToConfigurePublicPage(
+				groupName = "Test Site Name",
+				layoutName = "Page 2",
+				site = "true",
+				siteURLKey = "test-site-name");
+
+			PagesAdmin.addLocalizedFriendlyURL(
+				friendlyURLLocalizedList = "en-US",
+				localizedFriendlyURLList = "/english/testurl",
+				localizedNameList = "Page 2");
+
+			PagesAdmin.addLocalizedFriendlyURL(
+				friendlyURLLocalizedList = "hu-HU",
+				localizedFriendlyURLList = "/magyar/testurl ",
+				localizedNameList = "Page 2");
+		}
+
+		task ("When the user signs in to a virtual host and navigates to the second page") {
+			Navigator.gotoSitePage(
+				baseURL = "http://www.able.com:8080",
+				pageName = "Page 2",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the user is redirected to the page via the English friendly URL") {
+			AssertLocation.assertPartialLocation(value1 = "/web/test-site-name/english/testurl");
+		}
+
+		task ("When the user changes the language to Hungarian") {
+			LanguagePortlet.selectLanguagePG(
+				locale = "hu-HU",
+				textIcon = "magyar-Magyarország");
+		}
+
+		task ("Then the user is redirected to the page via the Hungarial friendly URL") {
+			AssertLocation.assertPartialLocation(value1 = "/web/test-site-name/magyar/testurl");
+		}
+	}
+
 	@description = "This is a test for LPS-162714. Checks that Web Content FriendlyURL special characters like éöő are not escaped"
 	@priority = 4
 	test SpecialCharactersAreNotEscapedFromWebContentURL {

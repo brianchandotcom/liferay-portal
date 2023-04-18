@@ -52,8 +52,10 @@ public class MBUADHierarchyDeclaration implements UADHierarchyDeclaration {
 	@Reference
 	private Language _language;
 
-	@Reference
-	private MBCategoryUADDisplay _mbCategoryUADDisplay;
+	@Reference(
+		target = "(component.name=com.liferay.message.boards.uad.display.MBCategoryUADDisplay)"
+	)
+	private UADDisplay<?> _mbCategoryUADDisplay;
 
 	@Reference(
 		target = "(component.name=com.liferay.message.boards.uad.display.MBMessageUADDisplay)"

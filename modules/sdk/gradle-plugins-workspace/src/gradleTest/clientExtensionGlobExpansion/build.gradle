@@ -4,11 +4,11 @@ runGradleTest {
 	dependsOn ":client-extension:deploy"
 
 	doLast {
-		def clientExtensionProject = project ":client-extension"
+		Project clientExtensionProject = project ":client-extension"
 
-		def clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
+		File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
 
-		def clientExtensionConfigJSONFile = new File(clientExtensionBuildDir, "client-extension.client-extension-config.json")
+		File clientExtensionConfigJSONFile = new File(clientExtensionBuildDir, "client-extension.client-extension-config.json")
 
 		assert clientExtensionConfigJSONFile.text.contains('"fooUrls=foo.json,foo.txt"')
 		assert clientExtensionConfigJSONFile.text.contains('"jsonUrls=foo.json,one/two/three/bar.json"')

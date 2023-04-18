@@ -574,9 +574,10 @@ public class ClientExtensionProjectConfigurator
 				profileName + "\" client extension profile.");
 		deployProfileTask.setGroup(BasePlugin.BUILD_GROUP);
 
-		TaskInputs inputs = deployProfileTask.getInputs();
+		TaskInputs taskInputs = deployProfileTask.getInputs();
 
-		inputs.files(clientExtensionYamlFile, overrideClientExtensionYamlFile);
+		taskInputs.files(
+			clientExtensionYamlFile, overrideClientExtensionYamlFile);
 	}
 
 	private void _configureLiferayExtension(

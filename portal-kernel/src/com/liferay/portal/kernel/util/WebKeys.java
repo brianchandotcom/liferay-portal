@@ -696,6 +696,9 @@ public interface WebKeys {
 
 	public static final String USER_PASSWORD = "USER_PASSWORD";
 
+	public static final String USER_PASSWORD_MODIFIED_TIME =
+		"USER_PASSWORD_MODIFIED_TIME";
+
 	public static final String USERS_NOTIFIED = "USERS_NOTIFIED";
 
 	public static final String VIRTUAL_HOST_LANGUAGE_ID =

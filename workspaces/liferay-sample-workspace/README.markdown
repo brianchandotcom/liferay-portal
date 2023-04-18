@@ -34,11 +34,19 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - liferay-sample-custom-element-1
 
+	A sample custom element that is self contained (doesn't depend on any external dependency).
+
 - liferay-sample-custom-element-2
+
+	A sample custom element that uses `react-scripts` to build.
 
 - liferay-sample-custom-element-3
 
+	A sample custom element that uses `@angular/cli` to build.
+
 - liferay-sample-custom-element-4
+
+	A sample custom element that uses `react`, and `react-dom` packages that Liferay makes publicly available through import maps.
 
 - liferay-sample-custom-element-5
 
@@ -74,22 +82,46 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - liferay-sample-fds-cell-renderer
 
+	A sample Frontend Data Set Cell Renderer frontend client extension that uses `@liferay/js-api` and `tsc` to make sure, when building, it conforms to Liferay's API.
+
 - liferay-sample-global-css
+
+	A simple Global CSS frontend client extension example.
 
 - liferay-sample-global-js
 
+	A simple Global JS frontend client extension example.
+
 - liferay-sample-iframe-1
+
+	A sample Iframe frontend client extension (with no code) that renders [https://arnab-datta.github.io/counter-app](https://arnab-datta.github.io/counter-app) inside.
 
 - liferay-sample-iframe-2
 
+	A sample project providing 3 Iframe frontend client extension that render some Wikipedia pages.
+
 - liferay-sample-instance-settings
+
+- liferay-sample-js-importmaps-entry-1
+
+	A sample project providing a JS Importmaps Entry and Custom Element frontend client extensions where the custom element uses some functions from the JS Importmaps Entry code through a JavaScript browser module which is made available through a bare identifier declared in the import maps.
 
 - liferay-sample-static-content
 
+	A sample Static Content frontend client extension.
+
 - liferay-sample-theme-css
+
+	A sample Theme CSS frontend client extension that is built by Liferay's Workspace and uses `styled` as its base theme.
 
 - liferay-sample-theme-favicon
 
+	A sample Theme Favicon frontend client extension.
+
 - liferay-sample-theme-spritemap-1
 
+	A sample Theme Spritemap frontend client extension.
+
 - liferay-sample-theme-spritemap-2
+
+	A sample Theme Spritemap frontend client extension where the SVG file containing the spritemap is composed from several smaller SVG files.

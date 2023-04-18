@@ -71,6 +71,9 @@ public class IncludeResourceCompileIncludeInstruction {
 			if (!expand) {
 				sb.append(";lib:=true");
 			}
+			else {
+				sb.append("!/!META-INF/versions/*");
+			}
 		}
 
 		return sb.toString();

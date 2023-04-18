@@ -75,17 +75,24 @@ export function MenuItem({item, onMenuItemRemoved}) {
 		[items, item]
 	);
 
-	const updateMenuItemParent = (itemId, parentId) => {
-		const order = getOrder({
-			items,
-			parentSiteNavigationMenuItemId: parentId,
-			siteNavigationMenuItemId: itemId,
-		});
+	const updateMenuItemParent = (itemId, parentId, order) => {
+		let computedOrder;
+
+		if (Liferay.FeatureFlags['LPS-134527']) {
+			computedOrder = order;
+		}
+		else {
+			computedOrder = getOrder({
+				items,
+				parentSiteNavigationMenuItemId: parentId,
+				siteNavigationMenuItemId: itemId,
+			});
+		}
 
 		updateMenuItem({
 			editSiteNavigationMenuItemParentURL,
 			itemId,
-			order,
+			order: computedOrder,
 			parentId,
 			portletNamespace,
 		})

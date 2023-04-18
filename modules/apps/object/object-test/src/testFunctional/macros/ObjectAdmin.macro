@@ -1042,11 +1042,7 @@ definition {
 				}
 
 				if (${inputMethod} == "true") {
-					Click(locator1 = "ObjectAction#INPUT_METHOD");
-
-					Type(
-						locator1 = "ObjectAction#INPUT_VALUE",
-						value1 = ${inputValue});
+					ObjectAdmin.inputMethodValue(inputValues = ${inputValue});
 				}
 				else if (${inputMethod} == "false") {
 					Type(
@@ -1076,11 +1072,7 @@ definition {
 				SelectFrame(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
 
 				if (${inputMethod} == "true") {
-					Click(locator1 = "ObjectAction#INPUT_METHOD");
-
-					Type(
-						locator1 = "ObjectAction#INPUT_VALUE",
-						value1 = ${inputValue});
+					ObjectAdmin.inputMethodValue(inputValues = ${inputValue});
 				}
 				else if (${inputMethod} == "false") {
 					Type(
@@ -1270,6 +1262,23 @@ definition {
 
 	macro goToValidationsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_VALIDATIONS_TAB");
+	}
+
+	macro inputMethodValue {
+		var rowNumber = 0;
+
+		for (var value : list ${inputValues}) {
+			var rowNumber = ${rowNumber} + 1;
+
+			Click(
+				key_rowNumber = ${rowNumber},
+				locator1 = "ObjectAction#INPUT_METHOD");
+
+			Type(
+				key_rowNumber = ${rowNumber},
+				locator1 = "ObjectAction#INPUT_VALUE",
+				value1 = ${value});
+		}
 	}
 
 	macro markLayoutAsDefault {

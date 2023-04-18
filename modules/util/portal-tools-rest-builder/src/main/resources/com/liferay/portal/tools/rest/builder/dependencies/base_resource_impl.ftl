@@ -371,7 +371,15 @@ public abstract class Base${schemaName}ResourceImpl
 				<#list properties?keys as propertyName>
 					<#if !freeMarkerTool.isDTOSchemaProperty(openAPIYAML, propertyName, schema) && !stringUtil.equals(propertyName, "id")>
 						if (${schemaVarName}.get${propertyName?cap_first}() != null) {
-							existing${schemaName}.set${propertyName?cap_first}(${schemaVarName}.get${propertyName?cap_first}());
+							<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema) />
+							<#if propertySchema.isJsonMap()>
+								${properties[propertyName]} ${propertyName} = ${schemaVarName}.get${propertyName?cap_first}();
+
+								${propertyName}.putAll(existing${schemaName}.get${propertyName?cap_first}());
+								existing${schemaName}.set${propertyName?cap_first}(${propertyName});
+							<#else>
+								existing${schemaName}.set${propertyName?cap_first}(${schemaVarName}.get${propertyName?cap_first}());
+							</#if>
 						}
 					</#if>
 				</#list>

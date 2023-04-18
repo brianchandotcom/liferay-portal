@@ -3,7 +3,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"defaultValue": "awaitingPaymentConfirmation",
+			"defaultValue": "awaitingApprovalOnEvp",
 			"externalReferenceCode": "EVP-REQUEST-STATUS-DEFAULT",
 			"indexed": true,
 			"indexedAsKeyword": false,

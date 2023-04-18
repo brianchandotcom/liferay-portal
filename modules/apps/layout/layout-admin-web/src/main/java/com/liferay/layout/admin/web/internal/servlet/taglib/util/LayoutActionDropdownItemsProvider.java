@@ -142,40 +142,41 @@ public class LayoutActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
+			() -> FeatureFlagManagerUtil.isEnabled("LPS-177031"),
 			dropdownGroupItem -> {
-				if (FeatureFlagManagerUtil.isEnabled("LPS-177031")) {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.addContext(
-							_getcopyLayoutActionUnsafeConsumer(layout)
-						).add(
-							() ->
-								_layoutsAdminDisplayContext.
-									isShowExportTranslationAction(layout),
-							_getExportForTranslationLayoutActionUnsafeConsumer(
-								draftLayout, layout)
-						).add(
-							() -> _isShowImportTranslationAction(layout),
-							_getImportTranslationLayoutActionUnsafeConsumer(
-								draftLayout, layout)
-						).build());
-				}
-				else {
-					dropdownGroupItem.setDropdownItems(
-						DropdownItemListBuilder.add(
-							_getCopyLayoutActionUnsafeConsumer(layout)
-						).add(
-							() ->
-								_layoutsAdminDisplayContext.
-									isShowExportTranslationAction(layout),
-							_getExportForTranslationLayoutActionUnsafeConsumer(
-								draftLayout, layout)
-						).add(
-							() -> _isShowImportTranslationAction(layout),
-							_getImportTranslationLayoutActionUnsafeConsumer(
-								draftLayout, layout)
-						).build());
-				}
-
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.addContext(
+						_getcopyLayoutActionUnsafeConsumer(layout)
+					).add(
+						() ->
+							_layoutsAdminDisplayContext.
+								isShowExportTranslationAction(layout),
+						_getExportForTranslationLayoutActionUnsafeConsumer(
+							draftLayout, layout)
+					).add(
+						() -> _isShowImportTranslationAction(layout),
+						_getImportTranslationLayoutActionUnsafeConsumer(
+							draftLayout, layout)
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-177031"),
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						_getCopyLayoutActionUnsafeConsumer(layout)
+					).add(
+						() ->
+							_layoutsAdminDisplayContext.
+								isShowExportTranslationAction(layout),
+						_getExportForTranslationLayoutActionUnsafeConsumer(
+							draftLayout, layout)
+					).add(
+						() -> _isShowImportTranslationAction(layout),
+						_getImportTranslationLayoutActionUnsafeConsumer(
+							draftLayout, layout)
+					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(

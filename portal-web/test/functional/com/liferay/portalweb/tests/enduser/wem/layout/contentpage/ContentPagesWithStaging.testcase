@@ -1794,7 +1794,8 @@ definition {
 	@priority = 4
 	test ViewPrefixesForEmailAndPhoneAndNoneOptionsInLiveSite {
 		var siteName = StringUtil.randomString(8);
-		var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
 
 		task ("Given a site created from Welcome site template") {
 			HeadlessSite.addSite(

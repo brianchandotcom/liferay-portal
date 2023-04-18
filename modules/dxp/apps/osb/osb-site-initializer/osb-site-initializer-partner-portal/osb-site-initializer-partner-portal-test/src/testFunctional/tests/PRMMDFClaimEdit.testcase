@@ -297,4 +297,90 @@ definition {
 		}
     }
 
+    @description = "This is a test for LPS-181361. Verify that Managers can edit Claim in any status"
+	@priority = 5
+	test ManagerCanEditClaimInAnyStatus {
+		property test.name.skip.portal.instance = "PRMMDFClaimEdit#ManagerCanEditClaimInAnyStatus";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+		
+		task ("Given that the manager creates a new claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+
+			task ("The Claim ID is saved in a variable") {
+				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+			}
+		}
+
+		task ("When the manager goes to the created claim in 'Pending Marketing Review' status") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("Then he is able to edit the claim") {
+			PRMMDFClaimEdit.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				newAttachment = "Document_2.jpg",
+				activityName = "Activity Name");
+		}
+
+		task ("When the manager changes the claim status to 'Approved' and navigate to it") {
+			JSONPRM.changeClaimStatus(
+				claimStatus = "Approved",
+				claimId = ${staticClaimId1});
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("Then he is able to edit the claim") {
+			PRMMDFClaimEdit.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				newAttachment = "Document_2.jpg",
+				activityName = "Activity Name");
+		}
+
+		task ("When the manager changes the claim status to 'In Finance Review' and navigate to it") {
+			JSONPRM.changeClaimStatus(
+				claimStatus = "In Finance Review",
+				claimId = ${staticClaimId1});
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+		task ("Then he is able to edit the claim") {
+			PRMMDFClaimEdit.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				newAttachment = "Document_2.jpg",
+				activityName = "Activity Name");
+		}
+
+		task ("When the manager changes the claim status to 'Claim Paid' and navigate to it") {
+			JSONPRM.changeClaimStatus(
+				claimStatus = "Claim Paid",
+				claimId = ${staticClaimId1});
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("Then he is able to edit the claim") {
+			PRMMDFClaimEdit.editButton();
+
+			PRMMDFClaimEdit.editClaim(
+				newAttachment = "Document_2.jpg",
+				activityName = "Activity Name");
+		}
+    }
+
 }

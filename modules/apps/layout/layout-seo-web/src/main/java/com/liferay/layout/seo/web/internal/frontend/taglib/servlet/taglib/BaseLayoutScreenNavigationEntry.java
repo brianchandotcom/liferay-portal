@@ -110,7 +110,8 @@ public abstract class BaseLayoutScreenNavigationEntry
 			LayoutSEOWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT,
 			new LayoutsSEODisplayContext(
 				dlAppService, dlurlHelper, infoItemServiceRegistry,
-				itemSelector, layoutPageTemplateEntryLocalService,
+				itemSelector, layoutLocalService,
+				layoutPageTemplateEntryLocalService,
 				layoutSEOCanonicalURLProvider, layoutSEOLinkManager,
 				layoutSEOSiteLocalService,
 				portal.getLiferayPortletRequest(

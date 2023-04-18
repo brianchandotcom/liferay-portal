@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -91,7 +92,7 @@ public class LayoutsSEODisplayContext {
 	public LayoutsSEODisplayContext(
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
 		InfoItemServiceRegistry infoItemServiceRegistry,
-		ItemSelector itemSelector,
+		ItemSelector itemSelector, LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
@@ -104,6 +105,7 @@ public class LayoutsSEODisplayContext {
 		_dlurlHelper = dlurlHelper;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
+		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
 		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
@@ -331,9 +333,7 @@ public class LayoutsSEODisplayContext {
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>putAll(
-			_getBaseSEOMappingData(
-				_getInfoForm(_getLayoutPageTemplateEntry()),
-				_getLayoutPageTemplateEntry())
+			_getBaseSEOMappingData()
 		).put(
 			"openGraphDescription",
 			_selLayout.getTypeSettingsProperty(
@@ -418,9 +418,7 @@ public class LayoutsSEODisplayContext {
 
 	public HashMap<String, Object> getSEOMappingData() throws PortalException {
 		return HashMapBuilder.<String, Object>putAll(
-			_getBaseSEOMappingData(
-				_getInfoForm(_getLayoutPageTemplateEntry()),
-				_getLayoutPageTemplateEntry())
+			_getBaseSEOMappingData()
 		).put(
 			"description",
 			_selLayout.getTypeSettingsProperty(
@@ -466,9 +464,10 @@ public class LayoutsSEODisplayContext {
 		return _privateLayout;
 	}
 
-	private HashMap<String, Object> _getBaseSEOMappingData(
-			InfoForm infoForm, LayoutPageTemplateEntry layoutPageTemplateEntry)
+	private HashMap<String, Object> _getBaseSEOMappingData()
 		throws PortalException {
+
+		InfoForm infoForm = _getInfoForm();
 
 		return HashMapBuilder.<String, Object>put(
 			"defaultLanguageId", _selLayout.getDefaultLanguageId()
@@ -496,37 +495,72 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"selectedSource",
 			JSONUtil.put(
-				"className", layoutPageTemplateEntry.getClassName()
+				"className", _getClassName()
 			).put(
-				"classNameLabel",
-				_getTypeLabel(layoutPageTemplateEntry.getClassName())
+				"classNameLabel", _getTypeLabel()
 			).put(
-				"classTypeId", layoutPageTemplateEntry.getClassTypeId()
+				"classTypeId", _getClassTypeId()
 			).put(
-				"classTypeLabel",
-				_getSubtypeLabel(
-					layoutPageTemplateEntry.getClassName(),
-					layoutPageTemplateEntry.getClassTypeId())
+				"classTypeLabel", _getSubtypeLabel()
 			)
 		).build();
 	}
 
-	private InfoForm _getInfoForm(
-			LayoutPageTemplateEntry layoutPageTemplateEntry)
-		throws NoSuchFormVariationException {
+	private String _getClassName() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
 
+		return layoutPageTemplateEntry.getClassName();
+	}
+
+	private long _getClassTypeId() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
+
+		return layoutPageTemplateEntry.getClassTypeId();
+	}
+
+	private InfoForm _getInfoForm() throws NoSuchFormVariationException {
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class,
-				layoutPageTemplateEntry.getClassName());
+				InfoItemFormProvider.class, _getClassName());
 
 		return infoItemFormProvider.getInfoForm(
-			String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+			String.valueOf(_getClassTypeId()));
 	}
 
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {
-		return _layoutPageTemplateEntryLocalService.
-			fetchLayoutPageTemplateEntryByPlid(_selPlid);
+		if (_layoutPageTemplateEntry != null) {
+			return _layoutPageTemplateEntry;
+		}
+
+		_layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(_getSelPlid());
+
+		if (_layoutPageTemplateEntry != null) {
+			return _layoutPageTemplateEntry;
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(_getSelPlid());
+
+		if (layout.isDraftLayout()) {
+			_layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+		else {
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			if (draftLayout != null) {
+				_layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchLayoutPageTemplateEntryByPlid(
+							draftLayout.getPlid());
+			}
+		}
+
+		return _layoutPageTemplateEntry;
 	}
 
 	private PortletURL _getPortletURL(String actionName) {
@@ -572,14 +606,12 @@ public class LayoutsSEODisplayContext {
 		return _selPlid;
 	}
 
-	private String _getSubtypeLabel(String className, long classTypeId)
-		throws PortalException {
-
+	private String _getSubtypeLabel() throws PortalException {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
+				_getClassName());
 
-		if ((assetRendererFactory == null) || (classTypeId <= 0)) {
+		if ((assetRendererFactory == null) || (_getClassTypeId() <= 0)) {
 			return StringPool.BLANK;
 		}
 
@@ -587,15 +619,15 @@ public class LayoutsSEODisplayContext {
 			assetRendererFactory.getClassTypeReader();
 
 		ClassType classType = classTypeReader.getClassType(
-			classTypeId, _themeDisplay.getLocale());
+			_getClassTypeId(), _themeDisplay.getLocale());
 
 		return classType.getName();
 	}
 
-	private String _getTypeLabel(String className) {
+	private String _getTypeLabel() {
 		InfoItemDetailsProvider<?> infoItemDetailsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, className);
+				InfoItemDetailsProvider.class, _getClassName());
 
 		if (infoItemDetailsProvider == null) {
 			return StringPool.BLANK;
@@ -618,6 +650,8 @@ public class LayoutsSEODisplayContext {
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 	private Long _layoutId;
+	private final LayoutLocalService _layoutLocalService;
+	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 	private final LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;

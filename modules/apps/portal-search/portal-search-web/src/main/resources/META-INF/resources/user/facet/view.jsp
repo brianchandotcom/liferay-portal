@@ -119,10 +119,10 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 												<span class="custom-control-label-text">
 													<c:choose>
 														<c:when test="<%= bucketDisplayContext.isSelected() %>">
-															<strong><liferay-ui:message key="<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>" /></strong>
+															<strong><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></strong>
 														</c:when>
 														<c:otherwise>
-															<liferay-ui:message key="<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>" />
+															<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
 														</c:otherwise>
 													</c:choose>
 												</span>

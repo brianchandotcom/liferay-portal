@@ -1,0 +1,229 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ObjectDefinitionAPI.staticUniversityObjectId();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		TaxonomyVocabularyAPI.deleteTaxonomyVocabularyByErc(
+			externalReferenceCode = "erc",
+			groupName = "Guest");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test CanGetParametersOfKeywordsAndCategoriesInEndpoint {
+		property portal.acceptance = "true";
+
+		task ("when I navigate to c/university endpoint postUniversity") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "universities");
+
+			Click(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "postUniversity",
+				service = "University");
+		}
+
+		task ("Then I found the keywords and categories appear in the Request body") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = "postUniversity",
+				value1 = "\"keywords\":");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = "postUniversity",
+				value1 = "\"taxonomyCategoryIds\":");
+		}
+	}
+
+	@priority = 4
+	test CannotAddObjectEntryWithKeywordsAndCategoriesWhenCategorizationNotEnabled {
+		property portal.acceptance = "true";
+
+		task ("And Given taxonomyVocabulary with name 'vocabulary' created") {
+			var responseFromVocabulary = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				externalReferenceCode = "erc",
+				groupName = "Guest",
+				name = "Vocabulary");
+		}
+
+		task ("And Given category with name 'category' in 'vocabulary' created") {
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseFromVocabulary});
+
+			var responseFromCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
+				name = "Category",
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
+		}
+
+		task ("And Given I set university object with enableCategorization=false") {
+			ObjectDefinitionAPI.updateObjectDefinitionById(
+				objectDefinitionId = ${staticUniversityObjectId},
+				parameter = "enableCategorization",
+				parameterValue = "false");
+		}
+
+		task ("And Given I navigate to c/university endpoint postUniversity to create a university entry with keyword 'tag1' and taxonomyCategoryId of 'category'") {
+			var taxonomyCategoryId = JSONPathUtil.getIdValue(response = ${responseFromCategory});
+
+			var objectDefinitionEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				keywords = "tag1",
+				name = "Liferay University",
+				taxonomyCategoryIds = ${taxonomyCategoryId});
+		}
+
+		task ("When I use getUniversitiesPage") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "universities");
+		}
+
+		task ("Then the response will return the details of the entries with keywords and categories that are null") {
+			var actualKeywordsValue = JSONUtil.getWithJSONPath(${response}, "$..keywords");
+
+			TestUtils.assertEquals(
+				actual = ${actualKeywordsValue},
+				expected = "");
+
+			var actualTaxonomyCategoryIdsValue = JSONUtil.getWithJSONPath(${response}, "$..taxonomyCategoryBriefs.taxonomyCategoryId");
+
+			TestUtils.assertEquals(
+				actual = ${actualTaxonomyCategoryIdsValue},
+				expected = "");
+		}
+	}
+
+	@priority = 4
+	test CannotGetKeywordsAndCategoriesValuesWhenCategorizationNotEnabled {
+		property portal.acceptance = "true";
+
+		task ("And Given taxonomyVocabulary with name 'vocabulary' created") {
+			var responseFromVocabulary = TaxonomyVocabularyAPI.createTaxonomyVocabulary(
+				externalReferenceCode = "erc",
+				groupName = "Guest",
+				name = "Vocabulary");
+		}
+
+		task ("And Given category with name 'category' in 'vocabulary' created") {
+			var taxonomyVocabularyId = JSONPathUtil.getIdValue(response = ${responseFromVocabulary});
+
+			var responseFromCategory = TaxonomyCategoryAPI.createTaxonomyCategory(
+				name = "Category",
+				taxonomyVocabularyId = ${taxonomyVocabularyId});
+		}
+
+		task ("And Given I navigate to c/university endpoint postUniversity to create a university entry with keyword 'tag1' and taxonomyCategoryId of 'category'") {
+			var taxonomyCategoryId = JSONPathUtil.getIdValue(response = ${responseFromCategory});
+
+			var objectDefinitionEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				keywords = "tag1",
+				name = "Liferay University",
+				taxonomyCategoryIds = ${taxonomyCategoryId});
+		}
+
+		task ("And Given I set university object with enableCategorization=false") {
+			ObjectDefinitionAPI.updateObjectDefinitionById(
+				objectDefinitionId = ${staticUniversityObjectId},
+				parameter = "enableCategorization",
+				parameterValue = "false");
+		}
+
+		task ("When I use getUniversitiesPage") {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "universities");
+		}
+
+		task ("Then the response will return the details of the entries with keywords and categories that are null") {
+			var actualKeywordsValue = JSONUtil.getWithJSONPath(${response}, "$..keywords");
+
+			TestUtils.assertEquals(
+				actual = ${actualKeywordsValue},
+				expected = "");
+
+			var actualTaxonomyCategoryIdsValue = JSONUtil.getWithJSONPath(${response}, "$..taxonomyCategoryBriefs.taxonomyCategoryId");
+
+			TestUtils.assertEquals(
+				actual = ${actualTaxonomyCategoryIdsValue},
+				expected = "");
+		}
+	}
+
+	@priority = 3
+	test CannotGetKeywordsAndCategoriesWhenCategorizationNotEnabled {
+		property portal.acceptance = "true";
+
+		task ("when I navigate to c/university endpoint postUniversity") {
+			ObjectDefinitionAPI.updateObjectDefinitionById(
+				objectDefinitionId = ${staticUniversityObjectId},
+				parameter = "enableCategorization",
+				parameterValue = "false");
+
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "universities");
+
+			Click(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "postUniversity",
+				service = "University");
+		}
+
+		task ("Then the keywords and categories are not present in the Request body") {
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = "postUniversity",
+				value1 = "\"keywords\":");
+
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "OpenAPI#REQUEST_BODY",
+				method = "postUniversity",
+				value1 = "\"taxonomyCategoryIds\":");
+		}
+	}
+
+	@priority = 3
+	test CannotSeeTaxonomyCategoryBriefInSchemaWhenCategorizationNotEnabled {
+		property portal.acceptance = "true";
+
+		task ("when I navigate to c/university endpoint postUniversity") {
+			ObjectDefinitionAPI.updateObjectDefinitionById(
+				objectDefinitionId = ${staticUniversityObjectId},
+				parameter = "enableCategorization",
+				parameterValue = "false");
+
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "universities");
+
+			Click(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "postUniversity",
+				service = "University");
+		}
+
+		task ("Then the Schemas doesn't contain the field Taxonomy Category Brief") {
+			AssertElementNotPresent(
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "TaxonomyCategoryBrief");
+		}
+	}
+
+}

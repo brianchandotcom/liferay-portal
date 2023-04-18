@@ -15,7 +15,7 @@
 import {ClayInput} from '@clayui/form';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 import LocalizedDropdown from './LocalizedDropdown';
 
@@ -44,7 +44,7 @@ export default function LocalizedInput({
 	const [currentValue, setCurrentValue] = useState(
 		initialValues[initialLanguageId] || ''
 	);
-	const hasErrorRef = useRef(false);
+	const [hasError, setHasError] = useState(false);
 	const [values, setValues] = useState(initialValues);
 
 	const handleChange = (event, values, hasError) => {
@@ -61,16 +61,17 @@ export default function LocalizedInput({
 
 		const value = event.target.value;
 
-		const newValues = {
+		const nextValues = {
 			...values,
 			[currentLang]: value,
 		};
 
-		hasErrorRef.current = !onValidateValues(newValues);
+		const nextHasError = !onValidateValues(nextValues);
 
 		setAvailableLanguages(
 			availableLanguages.map((lang) => {
 				let newLang = lang;
+
 				if (lang.key === currentLang) {
 					newLang = {
 						...lang,
@@ -82,9 +83,10 @@ export default function LocalizedInput({
 			})
 		);
 		setCurrentValue(value);
-		setValues(newValues);
+		setValues(nextValues);
+		setHasError(nextHasError);
 
-		handleChange(event, newValues, hasErrorRef.current);
+		handleChange(event, nextValues, nextHasError);
 	};
 
 	const onValidateValues = (values) => {
@@ -95,7 +97,7 @@ export default function LocalizedInput({
 	};
 
 	const inputGroupItemClasses = getCN('input-group-item ml-2', {
-		'has-error': hasErrorRef.current,
+		'has-error': hasError,
 	});
 
 	return (

@@ -147,6 +147,7 @@ export default function PageStructureSidebar() {
 				dragAndDropHoveredItemId,
 				editingNodeId,
 				fragmentEntryLinks,
+				hoveredItemId,
 				isMasterPage,
 				keyboardMovementTargetId,
 				layoutData,
@@ -168,6 +169,7 @@ export default function PageStructureSidebar() {
 			dragAndDropHoveredItemId,
 			editingNodeId,
 			fragmentEntryLinks,
+			hoveredItemId,
 			isMasterPage,
 			keyboardMovementTargetId,
 			layoutData,
@@ -340,8 +342,7 @@ export default function PageStructureSidebar() {
 													item.active &&
 													item.activable,
 												'page-editor__page-structure__clay-tree-node--hovered':
-													item.itemId ===
-													hoveredItemId,
+													item.hovered,
 												'page-editor__page-structure__clay-tree-node--mapped':
 													item.mapped,
 												'page-editor__page-structure__clay-tree-node--master-item':
@@ -588,6 +589,7 @@ function visit(
 		editingNodeId,
 		fragmentEntryLinks,
 		hasHiddenAncestor,
+		hoveredItemId,
 		isMasterPage,
 		keyboardMovementTargetId,
 		layoutData,
@@ -698,6 +700,7 @@ function visit(
 						editingNodeId,
 						fragmentEntryLinks,
 						hasHiddenAncestor: hasHiddenAncestor || hidden,
+						hoveredItemId,
 						isMasterPage,
 						layoutData,
 						layoutDataRef,
@@ -747,6 +750,7 @@ function visit(
 						editingNodeId,
 						fragmentEntryLinks,
 						hasHiddenAncestor: hasHiddenAncestor || hidden,
+						hoveredItemId,
 						isMasterPage,
 						keyboardMovementTargetId,
 						layoutData,
@@ -771,6 +775,7 @@ function visit(
 					editingNodeId,
 					fragmentEntryLinks,
 					hasHiddenAncestor: hasHiddenAncestor || hidden,
+					hoveredItemId,
 					isMasterPage,
 					keyboardMovementTargetId,
 					layoutData,
@@ -808,6 +813,7 @@ function visit(
 			isHidable(item, fragmentEntryLinks, layoutData),
 		hidden,
 		hiddenAncestor: hasHiddenAncestor,
+		hovered: item.itemId === hoveredItemId,
 		icon,
 		id: item.itemId,
 		isMasterItem: !isMasterPage && itemInMasterLayout,

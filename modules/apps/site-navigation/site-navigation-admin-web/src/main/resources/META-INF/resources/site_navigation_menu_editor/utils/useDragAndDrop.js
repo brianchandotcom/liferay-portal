@@ -132,9 +132,11 @@ function useNewDropTarget(item) {
 	const {siteNavigationMenuItemId} = item;
 
 	const [nestingLevel, setNestingLevel] = useState(0);
+	const nextItemNestingRef = useRef(null);
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
 	const targetRef = useRef();
+	const targetRectRef = useRef(null);
 
 	const {languageId} = useConstants();
 	const rtl = Liferay.Language.direction[languageId] === 'rtl';
@@ -143,34 +145,14 @@ function useNewDropTarget(item) {
 		DragDropContext
 	);
 
-	const nextItemNesting = useMemo(() => {
-		const flatItems = getFlatItems(items);
-
-		const itemIndex = flatItems.findIndex(
-			(otherItem) =>
-				otherItem.siteNavigationMenuItemId === siteNavigationMenuItemId
-		);
-
-		for (let i = itemIndex + 1; i < flatItems.length; i++) {
-			const nextItem = flatItems[i];
-
-			const nextItemPath = getItemPath(
-				nextItem.siteNavigationMenuItemId,
-				items
-			);
-
-			if (!nextItemPath.includes(parentId)) {
-				return nextItemPath.length;
-			}
-		}
-
-		return 1;
-	}, [items, parentId, siteNavigationMenuItemId]);
-
 	const [, dndTargetRef] = useDrop({
 		accept: ACCEPTING_ITEM_TYPE,
 		canDrop(source, monitor) {
 			return monitor.isOver();
+		},
+		drop() {
+			nextItemNestingRef.current = null;
+			targetRectRef.current = null;
 		},
 		hover(source, monitor) {
 			if (monitor.canDrop(source, monitor)) {
@@ -178,8 +160,40 @@ function useNewDropTarget(item) {
 					return;
 				}
 
+				targetRectRef.current =
+					targetRectRef.current ||
+					targetRef.current.getBoundingClientRect();
+
+				nextItemNestingRef.current =
+					nextItemNestingRef.current ||
+					(() => {
+						const flatItems = getFlatItems(items);
+
+						const itemIndex = flatItems.findIndex(
+							(otherItem) =>
+								otherItem.siteNavigationMenuItemId ===
+								siteNavigationMenuItemId
+						);
+
+						for (let i = itemIndex + 1; i < flatItems.length; i++) {
+							const nextItem = flatItems[i];
+
+							const nextItemPath = getItemPath(
+								nextItem.siteNavigationMenuItemId,
+								items
+							);
+
+							if (!nextItemPath.includes(source.id)) {
+								return nextItemPath.length;
+							}
+						}
+
+						return 1;
+					})();
+
 				const itemPosition = monitor.getSourceClientOffset();
-				const targetRect = targetRef.current.getBoundingClientRect();
+				const nextItemNesting = nextItemNestingRef.current;
+				const targetRect = targetRectRef.current;
 
 				setTargetItemId(siteNavigationMenuItemId);
 

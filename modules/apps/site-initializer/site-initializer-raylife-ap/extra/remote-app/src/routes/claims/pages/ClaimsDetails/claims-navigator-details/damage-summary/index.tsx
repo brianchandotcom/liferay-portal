@@ -28,8 +28,8 @@ enum NavVehicleLabel {
 }
 
 const images = [
-	`${getWebDavUrl()}/driver-side-damage.svg`,
-	`${getWebDavUrl()}/driver-side-damage-rear.svg`,
+	`${getWebDavUrl()}/DriverSideDamage.svg`,
+	`${getWebDavUrl()}/DriverSideDamageRear.svg`,
 ];
 
 const DamageSummary = () => {

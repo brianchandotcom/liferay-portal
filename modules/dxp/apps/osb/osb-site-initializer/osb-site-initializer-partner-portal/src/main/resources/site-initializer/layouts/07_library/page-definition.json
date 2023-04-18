@@ -1,0 +1,172 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"gutters": true,
+					"indexed": true,
+					"modulesPerRow": 2,
+					"numberOfColumns": 2,
+					"reverseOrder": false,
+					"rowViewports": [
+						{
+							"id": "landscapeMobile",
+							"rowViewportDefinition": {
+								"modulesPerRow": 1
+							}
+						},
+						{
+							"id": "portraitMobile",
+							"rowViewportDefinition": {
+							}
+						},
+						{
+							"id": "tablet",
+							"rowViewportDefinition": {
+							}
+						}
+					],
+					"verticalAlignment": "top"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"columnViewports": [
+								{
+									"columnViewportDefinition": {
+										"size": 12
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "tablet"
+								}
+							],
+							"size": 3
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+										},
+										"widgetName": "com_liferay_portal_search_web_portlet_SearchPortlet"
+									}
+								},
+								"type": "Widget"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"allowEmptySearches": "true",
+											"basicFacetSelection": "false",
+											"federatedSearchKey": ""
+										},
+										"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+									}
+								},
+								"type": "Widget"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"assetTypes": "com.liferay.document.library.kernel.model.DLFileEntry",
+											"displayStyle": "default",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"frequenciesVisible": "true",
+											"frequencyThreshold": "1",
+											"order": "count:desc",
+											"parameterName": "type"
+										},
+										"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
+									}
+								},
+								"type": "Widget"
+							},
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+										},
+										"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Column"
+					},
+					{
+						"definition": {
+							"columnViewports": [
+								{
+									"columnViewportDefinition": {
+										"size": 12
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "tablet"
+								}
+							],
+							"size": 9
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+											"displayInDocumentForm": "false",
+											"displayStyle": "ddmTemplate_SEARCH-RESULTS-CARD-FTL",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"federatedSearchKey": "",
+											"fieldsToDisplay": "",
+											"highlightEnabled": "false",
+											"paginationDelta": "20",
+											"paginationDeltaParameterName": "delta",
+											"paginationStartParameterName": "start",
+											"viewInContext": "false"
+										},
+										"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Column"
+					}
+				],
+				"type": "Row"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

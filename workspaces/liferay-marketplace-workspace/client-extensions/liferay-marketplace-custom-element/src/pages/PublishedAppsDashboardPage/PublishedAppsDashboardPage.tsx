@@ -30,6 +30,8 @@ import {
 	ProductSpecificationProps,
 	UserAccountProps,
 	initialDashboardNavigationItems,
+	customerRoles,
+	publisherRoles,
 } from './PublishedDashboardPageUtil';
 
 import './PublishedAppsDashboardPage.scss';
@@ -350,17 +352,6 @@ export function PublishedAppsDashboardPage() {
 						(accountBrief: {name: string}) =>
 							accountBrief.name === selectedAccount.name
 					).roleBriefs;
-
-				const customerRoles = [
-					'Account Administrator',
-					'Account Buyer',
-					'Account Member',
-				];
-
-				const publisherRoles = [
-					'Account Administrator',
-					'App Editor',
-				];
 
 				customerRoles.forEach((customerRole) => {
 					if (

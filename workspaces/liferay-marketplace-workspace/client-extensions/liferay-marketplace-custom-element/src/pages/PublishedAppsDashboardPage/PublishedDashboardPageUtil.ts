@@ -19,6 +19,12 @@ export type CatalogProps = {
 	name: string;
 };
 
+export const customerRoles = [
+	'Account Administrator',
+	'Account Buyer',
+	'Account Member',
+];
+
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: appsIcon,
@@ -72,6 +78,11 @@ export type ProductSpecificationProps = {
 	specificationKey: string;
 	value: {};
 };
+
+export const publisherRoles = [
+	'Account Administrator',
+	'App Editor',
+];
 
 export type RoleBriefProps = {
 	id: number;

@@ -20,7 +20,7 @@ import {
 	getUserAccounts,
 } from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
-import { AccountBriefProps, MemberProps, UserAccountProps } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
+import { AccountBriefProps, customerRoles, MemberProps, publisherRoles, UserAccountProps } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
 import {
@@ -244,17 +244,6 @@ export function PurchasedAppsDashboardPage() {
 						(accountBrief: {name: string}) =>
 							accountBrief.name === selectedAccount.name
 					).roleBriefs;
-
-				const customerRoles = [
-					'Account Administrator',
-					'Account Buyer',
-					'Account Member',
-				];
-
-				const publisherRoles = [
-					'Account Administrator',
-					'App Editor',
-				];
 
 				customerRoles.forEach((customerRole) => {
 					if (

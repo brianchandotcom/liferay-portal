@@ -281,6 +281,13 @@ components:
                 quantity:
                     format: int32
                     type: integer
+                replacedSku:
+                    example: "12341234"
+                    readOnly: true
+                    type: string
+                replacedSkuId:
+                    format: int64
+                    type: integer
                 settings:
                     $ref: "#/components/schemas/Settings"
                 sku:

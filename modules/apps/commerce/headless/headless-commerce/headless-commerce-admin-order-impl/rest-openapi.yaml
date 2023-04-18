@@ -750,6 +750,13 @@ components:
                     format: int32
                     minimum: 0
                     type: integer
+                replacedSku:
+                    example: "1234123124"
+                    readOnly: true
+                    type: string
+                replacedSkuId:
+                    format: int64
+                    type: integer
                 requestedDeliveryDate:
                     example: 2017-07-21
                     format: date

@@ -296,6 +296,9 @@ components:
                     format: int32
                     readOnly: true
                     type: integer
+                replacedSku:
+                    readOnly: true
+                    type: string
                 settings:
                     $ref: "#/components/schemas/Settings"
                     readOnly: true

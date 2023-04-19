@@ -94,6 +94,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(SearchResponseResourceImpl.class);
+
 			add(SuggestionResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

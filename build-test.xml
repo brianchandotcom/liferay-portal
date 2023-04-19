@@ -9334,10 +9334,21 @@ org.apache.catalina.tribes.level = FINE]]>
 						/>
 					</delete>
 
-					<mirrors-get
-						dest="${todir}"
-						src="${test.jdbc.drivers.url}/sqlserver/${database.version}/${jdbc.sqlserver.driver}"
-					/>
+					<if>
+						<equals arg1="${database.version}" arg2="2022" />
+						<then>
+							<mirrors-get
+								dest="${todir}"
+								src="${test.jdbc.drivers.url}/sqlserver/2019/${jdbc.sqlserver.driver}"
+							/>
+						</then>
+						<else>
+							<mirrors-get
+								dest="${todir}"
+								src="${test.jdbc.drivers.url}/sqlserver/${database.version}/${jdbc.sqlserver.driver}"
+							/>
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<elseif>

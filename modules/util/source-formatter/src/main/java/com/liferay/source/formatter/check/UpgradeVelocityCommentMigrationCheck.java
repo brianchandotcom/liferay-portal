@@ -41,7 +41,14 @@ public class UpgradeVelocityCommentMigrationCheck
 			}
 		}
 
+		StringUtil.replace(content, "#*", _COMMENT_START);
+		StringUtil.replace(content, "*#", _COMMENT_END);
+
 		return StringUtil.removeSubstring(content, "##");
 	}
+
+	private static final String _COMMENT_END = " -->";
+
+	private static final String _COMMENT_START = "<#--";
 
 }

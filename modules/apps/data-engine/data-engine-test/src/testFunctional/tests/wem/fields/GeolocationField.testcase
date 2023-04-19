@@ -170,7 +170,6 @@ definition {
 	}
 
 	@description = "This test ensures the field can be set as required."
-	@ignore = "true"
 	@priority = 5
 	test VerifyRequiredPropertyOfGeolocation {
 		var key_fieldName = "Geolocation";

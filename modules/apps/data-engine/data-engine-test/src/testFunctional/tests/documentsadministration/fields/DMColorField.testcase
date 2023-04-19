@@ -81,7 +81,6 @@ definition {
 	}
 
 	@description = "This test validates field reference input with and without invalid characters."
-	@ignore = "true"
 	@priority = 3
 	test EditColorFieldNameWithInvalidAndValidCharacters {
 		property portal.acceptance = "false";

@@ -1,0 +1,53 @@
+[#assign organizations = (restClient.get("/c/evporganizations/").items)! /]
+<div class="token-sample">
+	<label class="" for="0">
+		Organization<span class="text-danger"> *</span>
+	</label>
+
+	<div class="wrapper">
+		<div class="form-group select-item-btn">
+			<span id="selected-org" class="text-secondary item-selected">Select an Organization</span>
+
+			<div class="div-svg">
+				<svg class="lexicon-icon lexicon-icon-caret-double" role="presentation" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+					<use xlink:href="/o/dialect-theme/images/clay/icons.svg#caret-double"></use>
+				</svg>
+	   		</div>
+		</div>
+
+		<div class="content-listed">
+			<div class="search-organization">
+			<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+					<path d="M10.5 18a7.5 7.5 0 1 1 5.304-2.196l4.05 4.05-1.5 1.5-4.05-4.05A7.453 7.453 0 0 1 10.5 18zm0-13.5a6 6 0 1 0 0 12 6 6 0 0 0 0-12z" />
+					<path d="M0 0h24v24H0z" fill="none" />
+				</svg>
+			<input placeholder="Search for an Organization" type="text" />
+			</div>
+
+			<span class="your-organizations" id="your-organizations">
+				Your Organizations
+			</span>
+
+			<ul class="options-organizations your-organizations">
+			[#if organizations?has_content]
+				[#list organizations as	organization]
+					[#if organization.creator.id == user.userId ]
+						<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} -	${organization.taxId}</li>
+					[/#if]
+				[/#list]
+			[/#if]
+				</ul>
+			<span class="all-organizations" id="all-organizations">
+				All Organizations
+			</span>
+
+			<ul class="all-organizations options-organizations">
+			[#if organizations?has_content]
+				[#list organizations as	organization]
+					<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} -	${organization.taxId}</li>
+				[/#list]
+			[/#if]
+			</ul>
+		</div>
+	</div>
+</div>

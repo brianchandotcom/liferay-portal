@@ -20,18 +20,11 @@
 				"pageElements": [
 					{
 						"definition": {
+							"fragmentStyle": {
+							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							}
 						},
@@ -127,17 +120,9 @@
 							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"contentDisplay": "FlexRow",
 								"marginBottom": 1,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Employee Info"
@@ -221,11 +206,29 @@
 					{
 						"definition": {
 							"fragment": {
+								"key": "evp-organization-list",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"fieldOrganizationForm"
+							],
+							"customCSS": ".fieldOrganizationForm{\n display:none;\n}",
+							"fragment": {
 								"key": "INPUTS-select-from-list"
 							},
 							"fragmentConfig": {
 								"inputFieldId": "ObjectField_r_organization_c_evpOrganizationId",
-								"inputRequired": true
+								"inputRequired": false
 							},
 							"fragmentFields": [
 							],
@@ -269,16 +272,7 @@
 							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Service Form"
@@ -286,20 +280,13 @@
 						"pageElements": [
 							{
 								"definition": {
+									"fragmentStyle": {
+									},
 									"indexed": true,
 									"layout": {
-										"borderWidth": 0,
 										"contentDisplay": "FlexColumn",
 										"justify": "SpaceBetween",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
 										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
 										"widthType": "Fluid"
 									},
 									"name": "Container"
@@ -366,18 +353,10 @@
 											"indexed": true,
 											"layout": {
 												"align": "Start",
-												"borderWidth": 0,
 												"contentDisplay": "FlexRow",
 												"justify": "SpaceBetween",
 												"marginBottom": 1,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
 												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
 												"widthType": "Fluid"
 											}
 										},
@@ -462,16 +441,8 @@
 							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"marginBottom": 2,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Grant Form"
@@ -517,18 +488,10 @@
 									"indexed": true,
 									"layout": {
 										"align": "Center",
-										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
 										"justify": "SpaceBetween",
 										"marginBottom": 1,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
 										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
 										"widthType": "Fluid"
 									},
 									"name": "Container"
@@ -586,18 +549,11 @@
 					},
 					{
 						"definition": {
+							"fragmentStyle": {
+							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "General Info"
@@ -607,17 +563,8 @@
 								"definition": {
 									"indexed": true,
 									"layout": {
-										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
 										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
 										"widthType": "Fluid"
 									}
 								},
@@ -693,20 +640,13 @@
 					},
 					{
 						"definition": {
+							"fragmentStyle": {
+							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"contentDisplay": "FlexRow",
 								"justify": "End",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Buttons Container"

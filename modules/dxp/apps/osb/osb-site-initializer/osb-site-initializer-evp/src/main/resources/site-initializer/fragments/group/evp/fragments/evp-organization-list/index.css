@@ -1,0 +1,136 @@
+.wrapper {
+	margin-bottom: 9px;
+	position: relative;
+}
+
+.select-item-btn {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+}
+
+.select-item-btn {
+	background: #fff;
+	border: 1px solid;
+	border-color: var(--form-input-label-color);
+	border-radius: 7px;
+	font-size: 22px;
+	height: 42px;
+	justify-content: space-between;
+	margin-bottom: 0;
+	padding: 0 0px;
+}
+
+.select-item-btn svg {
+	position: absolute;
+	right: 14px;
+	top: 39%;
+	transition: transform 0.3s linear;
+	width: 16px;
+}
+
+.select-item-btn .div-svg {
+	border: 1px solid black;
+	border-radius: 0px 5px 5px 0px;
+	padding: 20px;
+	width: 47px;
+}
+
+.select-item-btn span {
+	font-size: 16px;
+	padding-left: 14px;
+}
+
+.content-listed {
+	background: white;
+	border-radius: 17px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+	display: none;
+	margin-bottom: 0;
+	padding: 14px;
+	position: absolute;
+	width: 40%;
+	z-index: 10;
+}
+
+.wrapper.active .content-listed {
+	display: block;
+	max-height: 19rem;
+	max-width: 25rem;
+	overflow: auto;
+}
+
+.content-listed .search-organization {
+	position: relative;
+}
+
+.search-organization svg {
+	color: #999;
+	font-size: 20px;
+	pointer-events: none;
+	position: absolute;
+	right: 9px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.search-organization input {
+	border: 1px solid #b3b3b3;
+	border-radius: 5px;
+	font-size: 17px;
+	height: 50px;
+	margin-bottom: 7px;
+	outline: none;
+	padding: 0 0 0 10px;
+	width: 100%;
+}
+
+.search-organization input:focus {
+	border: 2px solid #004ad7;
+}
+
+.search-organization input::placeholder {
+	color: #bfbfbf;
+}
+
+.content-listed .options-organizations {
+	cursor: pointer;
+	list-style-type: none;
+	margin-bottom: 0rem;
+	margin-top: 6px;
+	max-height: 250px;
+	padding-right: 7px;
+}
+
+.options-organizations::-webkit-scrollbar {
+	width: 7px;
+}
+
+.options-organizations::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 25px;
+}
+
+.options-organizations::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 25px;
+}
+
+.options-organizations::-webkit-scrollbar-thumb:hover {
+	background: #b3b3b3;
+}
+
+.options-organizations li {
+	height: 40px;
+}
+
+.options-organizations li:hover,
+li.selected {
+	background: #f0f5ff;
+	border-radius: 5px;
+}
+
+.content-listed #your-organizations,
+#all-organizations {
+	font-weight: bold;
+}

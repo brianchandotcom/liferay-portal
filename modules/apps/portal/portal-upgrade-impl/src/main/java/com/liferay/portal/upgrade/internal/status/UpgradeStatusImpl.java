@@ -82,10 +82,6 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	public void finish() {
-		_processRelease(
-			(moduleSchemaVersions, schemaVersion) ->
-				moduleSchemaVersions._setFinal(schemaVersion));
-
 		_state = _calculateState();
 		_type = _calculateType();
 
@@ -198,6 +194,10 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	private String _calculateType() {
+		_processRelease(
+			(moduleSchemaVersions, schemaVersion) ->
+				moduleSchemaVersions._setFinal(schemaVersion));
+
 		String type = "no upgrade";
 
 		for (Map.Entry<String, SchemaVersions> schemaVersionsEntry :

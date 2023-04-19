@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.sample.web.internal.servlet;
+package com.liferay.frontend.data.set.sample.web.internal.view.util;
 
 import com.liferay.frontend.data.set.view.FDSViewSerializer;
 

@@ -263,6 +263,9 @@ public interface AccountGroupLocalService
 			String uuid, long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getAccountGroupIds(long accountEntryId);
+
 	/**
 	 * Returns a range of all the account groups.
 	 *

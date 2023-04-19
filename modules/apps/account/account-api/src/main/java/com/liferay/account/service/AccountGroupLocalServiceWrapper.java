@@ -321,6 +321,11 @@ public class AccountGroupLocalServiceWrapper
 			uuid, companyId);
 	}
 
+	@Override
+	public long[] getAccountGroupIds(long accountEntryId) {
+		return _accountGroupLocalService.getAccountGroupIds(accountEntryId);
+	}
+
 	/**
 	 * Returns a range of all the account groups.
 	 *

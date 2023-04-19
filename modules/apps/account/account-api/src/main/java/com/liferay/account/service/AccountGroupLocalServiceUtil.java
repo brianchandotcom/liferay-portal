@@ -284,6 +284,10 @@ public class AccountGroupLocalServiceUtil {
 		return getService().getAccountGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static long[] getAccountGroupIds(long accountEntryId) {
+		return getService().getAccountGroupIds(accountEntryId);
+	}
+
 	/**
 	 * Returns a range of all the account groups.
 	 *

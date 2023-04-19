@@ -26,40 +26,17 @@ String uploadImageURL = (String)request.getAttribute("liferay-frontend:logo-sele
 long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 %>
 
-<div class="taglib-logo-selector" id="<%= randomNamespace %>taglibLogoSelector">
-	<div class="taglib-logo-selector-content" id="<%= randomNamespace %>taglibLogoSelectorContent">
-		<span class="lfr-change-logo">
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="avatar img-fluid mw-100" id="<%= randomNamespace %>avatar" src="<%= HtmlUtil.escape(imageURL) %>" />
-		</span>
-
-		<c:if test='<%= Validator.isNull(imageURL) || imageURL.contains("/spacer.png") %>'>
-			<p class="text-muted" id="<%= randomNamespace %>emptyResultMessage">
-				<liferay-ui:message key="none" />
-			</p>
-		</c:if>
-
-		<div class="mb-4 mt-3 portrait-icons">
-			<div class="btn-group button-holder">
-				<aui:button aria-label='<%= LanguageUtil.get(request, "change-image") %>' cssClass="edit-logo modify-link mr-3" value="change" />
-
-				<aui:button aria-label='<%= LanguageUtil.get(request, "delete-image") %>' cssClass="delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
-			</div>
-
-			<aui:input name="deleteLogo" type="hidden" value='<%= ParamUtil.getBoolean(request, "deleteLogo") %>' />
-
-			<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
-		</div>
-	</div>
+<div>
+	<react:component
+		module="logo_selector/LogoSelector"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"defaultLogoURL", defaultLogoURL
+			).put(
+				"logoURL", imageURL
+			).put(
+				"selectLogoURL", uploadImageURL
+			).build()
+		%>'
+	/>
 </div>
-
-<aui:script use="liferay-logo-selector">
-	new Liferay.LogoSelector({
-		boundingBox: '#<%= randomNamespace %>taglibLogoSelector',
-		contentBox: '#<%= randomNamespace %>taglibLogoSelectorContent',
-		defaultLogo: '<%= defaultLogo %>',
-		defaultLogoURL: '<%= defaultLogoURL %>',
-		editLogoURL: '<%= uploadImageURL %>',
-		portletNamespace: '<portlet:namespace />',
-		randomNamespace: '<%= randomNamespace %>',
-	}).render();
-</aui:script>

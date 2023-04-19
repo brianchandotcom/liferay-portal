@@ -1,0 +1,195 @@
+definition {
+
+	macro addOrganization {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.addCP(orgName = "Organization Name");
+	}
+
+	macro addUserAndSuborganization {
+		JSONOrganization.addOrganization(organizationName = "Organization2");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Sub-organization2",
+			parentOrganizationName = "Organization2");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Sub-organization1",
+			parentOrganizationName = "Organization1");
+
+		JSONUser.addUser(
+			userEmailAddress = "user2@liferay.com",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userScreenName = "user2");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization1",
+			userEmailAddress = "user2@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.gotoCP(orgName = "Organization1");
+
+		Organization.assignUser(
+			orgName = "Sub-organization1",
+			userFirstName = "user2",
+			userLastName = "user2",
+			userName = "user2 user2",
+			userScreenName = "user2");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.gotoCP(orgName = "Organization1");
+
+		User.searchCP(searchTerm = "usersn");
+
+		Organization.viewUser(userName = "userfn userln");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization1");
+
+		Organization.viewCP(
+			orgName = "Sub-organization-Pre",
+			orgType = "Organization");
+
+		Organization.openOrganizationsAdmin();
+
+		Organization.gotoCP(orgName = "Organization1");
+
+		Organization.gotoCP(orgName = "Sub-organization-Pre");
+
+		Organization.viewUser(userName = "userfn userln");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.edit(
+			orgName = "Organization1",
+			orgNameEdit = "Organization1 Edit");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Organization1 Edit");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization1 Edit");
+
+		Organization.edit(
+			orgName = "Sub-organization1",
+			orgNameEdit = "Sub-organization1 Edit");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Sub-organization1 Edit");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization2");
+
+		Organization.delete(orgName = "Sub-organization2");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.delete(orgName = "Organization2");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization1 Edit");
+
+		LexiconEntry.gotoEntry(rowEntry = "Sub-organization1 Edit");
+
+		Organization.removeAssignee(userFullName = "user2 user2");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LexiconEntry.gotoEntry(rowEntry = "Organization1 Edit");
+
+		Organization.delete(orgName = "Sub-organization1 Edit");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.searchCP(
+			orgName = "Organization1 Edit",
+			searchTerm = "Organization1 Edit");
+
+		Organization.viewCP(
+			orgName = "Organization1 Edit",
+			orgType = "Organization");
+	}
+
+}

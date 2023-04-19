@@ -1,0 +1,54 @@
+definition {
+
+	macro viewNotifications {
+		Navigator.openURL();
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "Message Boards Subject 1",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Message Boards Subject 1");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject 1");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = 2);
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "Message Boards Subject 2",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Message Boards Subject 2");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject 2");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = 1);
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewContent(
+			assetType = "message boards message",
+			contentBody = "Message Boards Subject 3",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Message Boards Subject 3");
+
+		MessageboardsThread.viewPG(
+			threadBody = "Message Boards Body",
+			threadSubject = "Message Boards Subject 3");
+	}
+
+}

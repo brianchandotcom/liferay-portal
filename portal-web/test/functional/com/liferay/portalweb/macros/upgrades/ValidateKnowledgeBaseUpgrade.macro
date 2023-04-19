@@ -1,0 +1,78 @@
+definition {
+
+	macro editAndDeleteKBArticle {
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		Ratings.rateThumb(
+			blogRating = "true",
+			ratingResult = "Rate this as bad");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as bad",
+			voteCount = 1);
+
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as good",
+			voteCount = 0);
+
+		Ratings.rateThumb(
+			blogRating = "true",
+			ratingResult = "You have rated this as bad");
+
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as good",
+			voteCount = 0);
+
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as bad",
+			voteCount = 0);
+
+		KBDisplayWidget.editPGViaKBDisplay(
+			kbArticleContentEdit = "Knowledge Base Video Content Edit",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
+
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		KBArticle.deletePG();
+
+		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Title Edit");
+	}
+
+	macro viewAndAddKBArticle {
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		if (${portalVersion} == "7.1.10.5") {
+			KBArticle.viewPG(
+				kbArticleContent = "Knowledge Base Video Content",
+				kbArticleTitle = "Knowledge Base Article Title");
+		}
+		else {
+			KBArticle.viewPG(
+				embedVideo = "true",
+				kbArticleContent = "Knowledge Base Video Content",
+				kbArticleTitle = "Knowledge Base Article Title");
+		}
+
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = 1);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			kbArticleContent = "Knowledge Base Article Content After Upgrade",
+			kbArticleTitle = "Knowledge Base Article Title After Upgrade");
+
+		Navigator.gotoPage(pageName = "Knowledge Base");
+
+		KBDisplayWidget.gotoViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title After Upgrade");
+
+		KBArticle.viewPG(
+			kbArticleContent = "Knowledge Base Article Content After Upgrade",
+			kbArticleTitle = "Knowledge Base Article Title After Upgrade");
+	}
+
+}

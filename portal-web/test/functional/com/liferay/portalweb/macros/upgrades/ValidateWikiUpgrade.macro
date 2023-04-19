@@ -1,0 +1,63 @@
+definition {
+
+	macro editAndDeleteWiki {
+		Navigator.gotoPage(pageName = "Wiki");
+
+		Ratings.revokeStarsRating();
+
+		Ratings.rateStar(ratingStarCount = 3);
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "3.0",
+			ratingStarCount = 3);
+
+		WikiPage.editFrontPagePG(wikiPageContentEdit = "Wiki FrontPage Content Edit");
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiNavigator.gotoPG(
+			wikiPageContent = "Wiki FrontPage Content Edit",
+			wikiPageRevision = "1.2",
+			wikiPageTitle = "FrontPage",
+			wikiPageUsername = "Test Test");
+
+		WikiPage.viewPG(
+			wikiPageContent = "Wiki FrontPage Content Edit",
+			wikiPageTitle = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.deletePG(wikiPageTitle = "FrontPage");
+	}
+
+	macro viewAndAddWiki {
+		Navigator.gotoPage(pageName = "Wiki");
+
+		WikiNavigator.gotoFrontPagePG();
+
+		WikiPage.viewFrontPagePG(
+			wikiPageContent = "Wiki Front Page Content",
+			wikiPageTitle = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki");
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "4.0",
+			ratingStarCount = 4);
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content After Upgrade",
+			wikiPageTitle = "Wiki Page Title After Upgrade");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title After Upgrade");
+
+		WikiPage.viewPagePG(
+			wikiPageContent = "Wiki Page Content After Upgrade",
+			wikiPageTitle = "Wiki Page Title After Upgrade");
+	}
+
+}

@@ -24,7 +24,7 @@ definition {
 		property data.archive.type = "data-archive-search-engine-results-page-preview";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewAndEditSERPPreview();
+		ValidateSEOUpgrade.viewAndEditSERPPreview();
 	}
 
 }

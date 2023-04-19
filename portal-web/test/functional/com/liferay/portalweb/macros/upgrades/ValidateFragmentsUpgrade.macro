@@ -1,0 +1,148 @@
+definition {
+
+	macro viewCardWithThreeColumnsInMobileBreakpoint {
+		task ("Select Mobile Device in simulation menu") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("View Card fragment width is same as column width at mobile mode") {
+			var columnWidth = selenium.getElementWidth("//div[contains(@class,'flex-row')]");
+			var cardFragmentWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'col-md')])[2]");
+
+			TestUtils.assertEquals(
+				actual = ${cardFragmentWidth},
+				expected = ${columnWidth});
+		}
+	}
+
+	macro viewDefinedGridLayout {
+		task ("Navigate to page in edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the Grid Styles") {
+			PageEditor.gotoConfiguration(fragmentName = "Grid");
+
+			PageEditor.viewGridStyle(
+				columnCount = 6,
+				position = 1);
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "3 Modules per Row");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "2 Modules per Row");
+		}
+
+		task ("Change to the Desktop viewport") {
+			PageEditor.switchViewport(deviceType = "Desktop");
+		}
+
+		task ("Configure the Grid") {
+			PageEditor.editLayoutGrid(
+				columnCount = 3,
+				panel = "General");
+		}
+
+		task ("View the Grid Styles after updating") {
+			PageEditor.viewGridStyle(
+				columnCount = 3,
+				position = 1);
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "3 Modules per Row");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+		}
+	}
+
+	macro viewEditableCardFragment {
+		task ("View the inline text of the card fragment at view mode after Upgrade") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Test Title");
+		}
+
+		task ("View the inline text of the card fragment at edit mode after Upgrade") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.viewFragmentEditableText(
+				contributed = "false",
+				editableText = "Test Title",
+				fragmentName = "Card");
+		}
+
+		task ("Edit the inline text of the Card fragment") {
+			PageEditor.gotoTab(tabName = "Page Content");
+
+			PageEditor.editFragmentTextViaPageContentPanel(
+				itemName = "Test Title",
+				text = "Editable Title");
+		}
+
+		task ("View the updated inline text of the card fragment") {
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Editable Title");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.publish();
+		}
+
+		task ("View the inline text of the card fragment at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				contributed = "false",
+				fragmentName = "card",
+				text = "Editable Title");
+		}
+	}
+
+}

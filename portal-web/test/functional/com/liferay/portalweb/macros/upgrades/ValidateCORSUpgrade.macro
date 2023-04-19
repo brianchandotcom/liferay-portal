@@ -1,0 +1,30 @@
+definition {
+
+	macro viewPortalCORS {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = ${name});
+
+		AssertTextEquals(
+			key_configurationValue = "filterMappingUrlPattern",
+			locator1 = "SystemSettings#CORS_CONFIGURATION",
+			value1 = ${urlPattern});
+
+		AssertTextEquals(
+			key_configurationValue = "header",
+			locator1 = "SystemSettings#CORS_CONFIGURATION",
+			value1 = ${header});
+	}
+
+	macro viewWebContextsCORS {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = ${filter});
+
+		AssertTextEquals(
+			key_configurationValue = "filterMappingUrlPattern",
+			locator1 = "SystemSettings#CORS_CONFIGURATION",
+			value1 = ${urlPattern});
+	}
+
+}

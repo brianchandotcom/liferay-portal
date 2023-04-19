@@ -24,7 +24,7 @@ definition {
 		property data.archive.type = "data-archive-open-graph";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewAndEditOpenGraph();
+		ValidateSEOUpgrade.viewAndEditOpenGraph();
 	}
 
 }

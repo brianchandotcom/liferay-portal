@@ -1,0 +1,95 @@
+definition {
+
+	macro editAndDeleteRedirects {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.editEntry(
+			destinationURLEdit = "${portalURL}/web/test-site-name/test-destination-temporary-page-edit",
+			sourceURL = "test-source-temporary-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.deleteEntry(sourceURL = "test-source-permanent-page");
+	}
+
+	macro ignore404URLs {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+
+		Redirect.view404URLs(
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			requestNumber = 1);
+
+		Redirect.view404URLs(
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
+			requestNumber = 1);
+
+		Redirect.ignoreEntry(
+			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			skipNavigation = "true");
+
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-temporary-page",
+			ignoredURL = "${portalURL}/web/test-site-name/test-destination-page1",
+			siteName = "test-site-name",
+			skipNavigation = "true",
+			sourceURL = "test-destination-page1");
+
+		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntryVia404URLs(
+			activeIgnoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-temporary-page",
+			siteName = "test-site-name",
+			skipNavigation = "true",
+			sourceURL = "test-destination-page2");
+
+		Redirect.view404URLsDefault();
+	}
+
+	macro viewAndAccessRedirects {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-permanent-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-source-permanent-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-permanent-page");
+
+		SelectWindow(locator1 = "title=Test Destination Permanent Page - Test Site Name - Liferay DXP");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-permanent-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-source-temporary-page",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-destination-temporary-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-temporary-page");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-temporary-page");
+
+		for (var i : list "1,2") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-without-references-page${i}");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-without-references-page3");
+		}
+
+		for (var i : list "1,2") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-with-references-page${i}");
+
+			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-with-references-page3");
+		}
+	}
+
+}

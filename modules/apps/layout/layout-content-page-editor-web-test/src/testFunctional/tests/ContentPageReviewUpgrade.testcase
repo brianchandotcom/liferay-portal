@@ -24,7 +24,7 @@ definition {
 		property data.archive.type = "data-archive-content-page-review";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewAndEditContentPageReview();
+		ValidatePagesUpgrade.viewAndEditContentPageReview();
 	}
 
 	@priority = 5
@@ -33,7 +33,7 @@ definition {
 		property data.archive.type = "data-archive-content-page-review";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewAndEditContentPageReview();
+		ValidatePagesUpgrade.viewAndEditContentPageReview();
 	}
 
 }

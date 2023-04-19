@@ -1,0 +1,62 @@
+definition {
+
+	macro viewCustomSiteSetting {
+		task ("Get the default site name") {
+			Navigator.openURL();
+
+			var siteName = selenium.getText("Home#SITE_NAME");
+		}
+
+		task ("Navigate to Site Settings admin in custom site") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Site Settings");
+		}
+
+		task ("View the custom site URL") {
+			AssertLocation.assertPartialLocation(value1 = "/beijing2008");
+
+			Click(
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Navigator.gotoNavTab(navTab = "Site URL");
+
+			AssertTextEquals(
+				locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
+				value1 = "/beijing2008");
+		}
+
+		task ("View the selected parent site") {
+			Navigator.gotoNavTab(navTab = "Details");
+
+			AssertTextEquals(
+				key_fieldFieldLabel = "Parent Site",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${siteName} (Open)");
+
+			Navigator.gotoBack();
+
+			Site.openSitesAdmin();
+
+			Site.viewChildCP(
+				childSiteName = "Test Site Name",
+				siteName = ${siteName});
+		}
+
+		task ("View the site default language") {
+			Site.openSiteSettingsAdmin(siteURLKey = "beijing2008");
+
+			Click(
+				key_itemName = "Localization",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			AssertSelectedLabel(
+				locator1 = "SiteSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT_FIELD",
+				value1 = "Chinese (China)");
+		}
+	}
+
+}

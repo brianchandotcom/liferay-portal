@@ -23,11 +23,11 @@ definition {
 		property data.archive.type = "data-archive-adaptive-media";
 		property portal.version = "7.1.10.5";
 
-		Upgrade.viewAndAddImageResolution();
+		ValidateAdaptiveMediaUpgrade.viewAndAddImageResolution();
 
-		Upgrade.editImageResolution();
+		ValidateAdaptiveMediaUpgrade.editImageResolution();
 
-		Upgrade.deleteImageResolution();
+		ValidateAdaptiveMediaUpgrade.deleteImageResolution();
 	}
 
 	@priority = 4
@@ -35,11 +35,11 @@ definition {
 		property data.archive.type = "data-archive-adaptive-media";
 		property portal.version = "7.2.10.4";
 
-		Upgrade.viewAndAddImageResolution();
+		ValidateAdaptiveMediaUpgrade.viewAndAddImageResolution();
 
-		Upgrade.editImageResolution();
+		ValidateAdaptiveMediaUpgrade.editImageResolution();
 
-		Upgrade.deleteImageResolution();
+		ValidateAdaptiveMediaUpgrade.deleteImageResolution();
 	}
 
 	@priority = 4
@@ -47,11 +47,11 @@ definition {
 		property data.archive.type = "data-archive-adaptive-media";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewAndAddImageResolution();
+		ValidateAdaptiveMediaUpgrade.viewAndAddImageResolution();
 
-		Upgrade.editImageResolution();
+		ValidateAdaptiveMediaUpgrade.editImageResolution();
 
-		Upgrade.deleteImageResolution();
+		ValidateAdaptiveMediaUpgrade.deleteImageResolution();
 	}
 
 	@priority = 4
@@ -63,11 +63,11 @@ definition {
 
 		AdaptiveMedia.adaptRemainingImages(imageName = "Thumbnail 300x300");
 
-		Upgrade.viewAndAddImageResolution();
+		ValidateAdaptiveMediaUpgrade.viewAndAddImageResolution();
 
-		Upgrade.editImageResolution();
+		ValidateAdaptiveMediaUpgrade.editImageResolution();
 
-		Upgrade.deleteImageResolution();
+		ValidateAdaptiveMediaUpgrade.deleteImageResolution();
 	}
 
 }

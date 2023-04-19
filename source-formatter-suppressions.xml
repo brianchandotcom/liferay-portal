@@ -156,7 +156,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/sitenavigation/sitenavigationmenu/NavigationMenusAdmin\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/sitenavigation/sitenavigationmenu/NavigationMenusWidget\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Staging\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Upgrade\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/xsl/XSLContent\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/administration/passwordpolicies/PasswordPolicies\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/login/Login\.testcase" />

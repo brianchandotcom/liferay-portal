@@ -145,7 +145,7 @@ definition {
 			locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
 			value1 = "check-failed-upgrade-log");
 
-		var schemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName = 'com.liferay.journal.web';");
+		var schemaVersion = ValidateSmokeUpgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName = 'com.liferay.journal.web';");
 
 		if (!(contains(${schemaVersion}, "0.0.1"))) {
 			fail("The upgrade client upgrades core and modules.");

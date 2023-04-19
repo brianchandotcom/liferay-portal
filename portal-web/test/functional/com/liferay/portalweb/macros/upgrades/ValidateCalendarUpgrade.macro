@@ -1,0 +1,52 @@
+definition {
+
+	macro viewCalendar {
+		Navigator.gotoPage(pageName = "Calendar");
+
+		ProductMenuHelper.closeProductMenu();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title Edited");
+
+		CalendarEvent.publishRepeating(saveOption = "Entire Series");
+
+		Navigator.gotoPage(pageName = "Calendar");
+
+		ProductMenuHelper.closeProductMenu();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title Edited");
+
+		Navigator.gotoPage(pageName = "Calendar");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.add(
+			eventTitle = "Post Upgrade Calendar Event",
+			eventType = "Regular",
+			pageName = "Calendar");
+
+		Navigator.gotoPage(pageName = "Calendar");
+
+		ProductMenuHelper.closeProductMenu();
+
+		CalendarEvent.view(eventTitle = "Post Upgrade Calendar Event");
+	}
+
+	macro viewMatchingCalendarIndexesInPartitionedDatabase {
+		var baseSchemaIndex = SQL.executeMySQLStatement(mysqlStatement = "SHOW INDEX FROM lportal.Calendar;");
+		var partitionSchemaIndex = SQL.executeMySQLStatement(mysqlStatement = "SHOW INDEX FROM lpartition_42638.Calendar;");
+
+		if (${baseSchemaIndex} == ${partitionSchemaIndex}) {
+			echo("Calendar Index matches: ${baseSchemaIndex}");
+		}
+		else {
+			echo("Calendar Index does not match between database schemas");
+
+			fail("Base schema index is ${baseSchemaIndex} but partitioned schema index is ${partitionSchemaIndex}");
+		}
+	}
+
+}

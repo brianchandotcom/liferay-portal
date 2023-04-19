@@ -1,0 +1,310 @@
+definition {
+
+	macro viewInstanceSettings {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewTextValue(
+			fieldName = "homeURL",
+			fieldValue = "/web/test/home");
+
+		FormFields.viewTextValue(
+			fieldName = "default-logout-page",
+			fieldValue = "/web/test/home");
+
+		FormFields.viewTextValue(
+			fieldName = "default-landing-page",
+			fieldValue = "/web/test/home");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertSelectedLabel(
+			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT",
+			value1 = "By Screen Name");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "company-security-auto-login");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "company-security-send-password");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "company-security-send-password-reset-link");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "company-security-strangers");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "company-security-strangers-with-mx");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "Reserved Credentials",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewTextMultilineValue(
+			fieldName = "reserved.screen.names",
+			fieldValue = "usersn");
+
+		FormFields.viewTextMultilineValue(
+			fieldName = "reserved.email.addresses",
+			fieldValue = "userea@liferay.com");
+
+		// Ignore test until LPS-98192 is resolved
+
+		/*
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Fields",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "users-screen-name-always-autogenerate");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "field-enable-com-liferay-portal-kernel-model-Contact-birthday");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "field-enable-com-liferay-portal-kernel-model-Contact-male");*/
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Default User Associations",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewTextMultilineValue(
+			fieldName = "default.group.names",
+			fieldValue = "Liferay");
+
+		FormFields.viewTextMultilineValue(
+			fieldName = "default.role.names",
+			fieldValue = "Administrator");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewTextValue(
+			fieldName = "email.from.name",
+			fieldValue = "Test Test");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Sharing",
+			configurationName = "Content Sharing",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "sites-content-sharing-through-administrators-enabled");
+
+		AssertSelectedLabel(
+			locator1 = "PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR",
+			value1 = "Disabled by Default");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
+			value1 = "English (United States)");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
+			value1 = "Spanish (Spain)");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Time Zone",
+			configurationScope = "Virtual Instance Scope");
+
+		AssertSelectedLabel(
+			locator1 = "Select#TIME_ZONE",
+			value1 = "(UTC +03:00) Eastern European Time");
+	}
+
+	macro viewSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "addDefaultStructures");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "charactersblacklist",
+			fieldValue = "test");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "errorTemplateFTL",
+			fieldValue = "errortest.ftl");
+
+		FormFields.viewTextValue(
+			fieldName = "checkInterval",
+			fieldValue = 5);
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "customTokenNames",
+			fieldValue = "Custom Token Name1");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "customTokenValues",
+			fieldValue = "Custom Token Value1");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "articleCommentsEnabled");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "databaseContentKeywordSearchEnabled");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "expireAllArticleVersionsEnabled");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Administration",
+			configurationScope = "System Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "changeableDefaultLanguage");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "defaultDisplayView",
+			fieldValue = "list");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "journalArticleForceAutogenerateId");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Service",
+			configurationScope = "Site Scope");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "emailFromName",
+			fieldValue = "test name");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "emailFromAddress",
+			fieldValue = "test@liferay.com");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "emailArticleAddedEnabled");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "emailArticleUpdatedEnabled");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Wiki",
+			configurationName = "Wiki Service",
+			configurationScope = "Site Scope");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "emailFromAddress",
+			fieldValue = "test@liferay.com");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "emailFromName",
+			fieldValue = "test name");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "emailPageAddedEnabled");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "emailPageUpdatedEnabled");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "frontPageName",
+			fieldValue = "TestFrontPage");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "getCreoleEditor",
+			fieldValue = "ckeditor_creole");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "getHTMLEditor",
+			fieldValue = "creole");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "initialNodeName",
+			fieldValue = "TestMainNode");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "pageCommentsEnabled");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "pageMinorEditAddSocialActivity");
+
+		FormFields.viewTextValue(
+			fieldName = "rssAbstractLength",
+			fieldValue = 500);
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Wiki",
+			configurationName = "Widgets Display",
+			configurationScope = "Widget Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enableCommentRatings");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enableComments");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enableHighlighting");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enablePageRatings");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enableRelatedAssets");
+
+		// Ignore test until LPS-97976 is resolved
+
+		/*
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Dynamic Data Mapping",
+			configurationName = "Dynamic Data Mapping Service",
+			configurationScope = "Site Scope");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "smallImageExtensions",
+			fieldValue = ".svg",
+			repeatableFieldNumber = "4");
+
+		SystemSettings.viewTextareaValue(
+			fieldName = "smallImageExtensions",
+			fieldValue = "*",
+			repeatableFieldNumber = "5");
+
+		FormFields.viewTextValue(
+			fieldName = "smallImageMaxSize",
+			fieldValue = "5120");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Dynamic Data Mapping",
+			configurationName = "Dynamic Data Mapping Web",
+			configurationScope = "System Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "autogenerateStructureKey");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "autogenerateTemplateKey");*/
+	}
+
+}

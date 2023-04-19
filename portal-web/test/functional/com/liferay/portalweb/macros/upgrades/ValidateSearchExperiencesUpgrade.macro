@@ -1,0 +1,118 @@
+definition {
+
+	macro viewSXPBlueprintAndElements {
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		WaitForElementPresent(locator1 = "Pagination#RESULTS");
+
+		var paginationResults = selenium.getText("Pagination#RESULTS");
+
+		var totalElements = StringUtil.extractLast(${paginationResults}, "of ");
+
+		var totalElements = StringUtil.extractFirst(${totalElements}, " ");
+
+		var difference = ${totalElements} - 39;
+
+		if (${difference} != 0) {
+			TestUtils.fail(message = "FAILED: Actual total elements '${totalElements}' is not equal to expected total elements of 39");
+		}
+
+		Search.searchCP(searchTerm = "Test Element");
+
+		AssertElementPresent(
+			key_entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
+		Search.searchCP(searchTerm = "Boost Contents in a Category for User Segments");
+
+		AssertElementPresent(
+			key_entryTitle = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
+		AssertTextEquals(
+			key_entryTitle = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
+			value1 = "Boost contents in a category for users belonging to the given user segments.");
+
+		Search.searchCP(searchTerm = "Search with Query String Syntax");
+
+		AssertElementPresent(
+			key_entryTitle = "Search with Query String Syntax",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
+		Navigator.gotoNavItem(navItem = "Blueprints");
+
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
+
+		AssertElementPresent(
+			key_index = 40,
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Boost Contents in a Category for the Time of Day",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Boost Contents in a Category for a Period of Time",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Search with Query String Syntax",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_elementName = "Boost Contents in a Category for the Time of Day",
+			key_fieldLabel = "Asset Category ID",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		AssertElementPresent(
+			key_dropdownName = "Time of Day",
+			key_option = "Morning (4am - 12pm)",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION");
+
+		AssertTextPresent(
+			key_element = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
+			value1 = "Boost contents in a category for users belonging to the given user segments.");
+
+		AssertElementPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Date: From",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementNotPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Create Date: From",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Date: To",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementNotPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Create Date: To",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_elementName = "Boost Proximity",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
+}

@@ -1,0 +1,78 @@
+definition {
+
+	macro publishStagedSite {
+		Navigator.openSiteURL(siteName = "Staging Site Staging");
+
+		AssertElementNotPresent(locator1 = "Home#PORTLET");
+
+		ProductMenu.gotoStagingSite(site = "Staging Site");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Web Content",
+			contentDateRange = "All");
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite(site = "Staging Site");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+	}
+
+	macro viewStagingConfiguration {
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Export/Import, Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Export/Import, Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Staging",
+			configurationScope = "Virtual Instance Scope");
+	}
+
+	macro viewStagingNestedPortlets {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Staging Site");
+
+		AssertTextEquals(
+			key_portletName = "Nested Applications",
+			locator1 = "Portlet#TITLE",
+			value1 = "Nested Applications");
+
+		AssertTextNotEquals(
+			locator1 = "Message#INFO",
+			value1 = "Drag applications below to nest them.");
+
+		NestedPortlets.viewPG(
+			nestedColumnNumber = 1,
+			portletName = "Web Content Display");
+
+		NestedPortlets.viewPG(
+			nestedColumnNumber = 1,
+			portletName = "Blogs");
+	}
+
+}

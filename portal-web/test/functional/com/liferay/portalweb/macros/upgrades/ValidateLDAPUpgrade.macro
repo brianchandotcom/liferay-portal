@@ -1,0 +1,43 @@
+definition {
+
+	macro viewLDAPConfiguration {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Authentication",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "enabled");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Import",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "importEnabled");
+
+		FormFields.viewCheckboxChecked(fieldName = "importOnStartup");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Export",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "exportEnabled");
+	}
+
+}

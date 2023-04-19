@@ -1,0 +1,67 @@
+definition {
+
+	macro exportDefaultSiteIntoNewSite {
+		task ("View displayed asset on Asset Publisher on default site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "home",
+				siteName = "Guest");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content Edit",
+				assetTitle = "Web Content Title 2");
+		}
+
+		task ("View the two versions of the web content on default site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View History",
+				rowEntry = "Web Content Title 2");
+
+			for (var n : list "1,2") {
+				WebContent.viewSpecificVersionHistoryCP(
+					webContentStatus = "Approved",
+					webContentTitle = "Web Content Title ${n}");
+			}
+		}
+
+		task ("Export the default site") {
+			LAR.exportSiteCP(siteScopeName = "guest");
+
+			var larFileName = LAR.getLarFileName();
+
+			LAR.downloadLar();
+		}
+
+		task ("Import the default site into the new site") {
+			LAR.importSiteCP(
+				larFileName = ${larFileName},
+				siteName = "Test Site Name");
+		}
+
+		task ("View displayed asset on Asset Publisher on the new site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "home",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content Edit",
+				assetTitle = "Web Content Title 2");
+		}
+
+		task ("View the two versions of the web content on the new site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View History",
+				rowEntry = "Web Content Title 2");
+
+			for (var n : list "1,2") {
+				WebContent.viewSpecificVersionHistoryCP(
+					webContentStatus = "Approved",
+					webContentTitle = "Web Content Title ${n}");
+			}
+		}
+	}
+
+}

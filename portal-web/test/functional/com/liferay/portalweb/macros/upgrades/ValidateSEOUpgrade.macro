@@ -1,0 +1,174 @@
+definition {
+
+	macro viewAndEditCustomMetaTag {
+		var portalURL = PropsUtil.get("portal.url");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property" content="custom Tag 1 content",property="custom Tag 2 property" content="custom Tag 2 content"''');
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+		PagesAdmin.gotoPageEllipsisMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name");
+
+		Navigator.gotoNavTab(navTab = "Custom Meta Tags");
+
+		CustomMetaTags.editTag(
+			customContent = "custom Tag 1 content",
+			customProperty = "custom Tag 1 property",
+			newCustomContent = "custom Tag 1 content edit",
+			newCustomProperty = "custom Tag 1 property edit");
+
+		CustomMetaTags.removeTag(tagNum = 2);
+
+		CustomMetaTags.addMultipleTags(customTagsList = "custom Tag 3");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property edit" content="custom Tag 1 content edit",property="custom Tag 3 property" content="custom Tag 3 content"''');
+	}
+
+	macro viewAndEditOpenGraph {
+		var portalURL = PropsUtil.get("portal.url");
+		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		Page.viewPreview(
+			description = "This is a custom description",
+			htmlTitle = "This is a custom title",
+			key_imageName = "Document_1.jpg",
+			openGraph = "true",
+			portalURL = ${portalURL},
+			siteNameURL = "test-site-name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title","og:description" content="This is a custom description","og:image" content="${portalURL}/documents/${siteId}/0/Document_1.jpg''');
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		OpenGraph.configureOpenGraph(
+			customDescription = "This is a custom description edit",
+			customImage = "true",
+			customTitle = "This is a custom title edit",
+			pageName = "Test Page Name",
+			uploadFileName = "Document_2.jpg");
+
+		Page.viewPreview(
+			description = "This is a custom description edit",
+			htmlTitle = "This is a custom title edit",
+			key_imageName = "Document_2.jpg",
+			openGraph = "true",
+			portalURL = ${portalURL},
+			siteNameURL = "test-site-name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="This is a custom title edit","og:description" content="This is a custom description edit","og:image" content="${portalURL}/documents/${siteId}/0/Document_2.jpg''');
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openToGroupPagesPortlet(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		OpenGraph.clearImage();
+
+		Button.click(button = "Save");
+
+		Site.openToSiteSettingsPages(
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		OpenGraph.configureOpenGraph(
+			customImage = "true",
+			uploadFileName = "Document_3.jpg");
+
+		Site.openToSiteSettingsPages(
+			portlet = "Open Graph",
+			siteURLKey = "test-site-name");
+
+		OpenGraph.viewPreviewImage(imageName = "Document_3.jpg");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
+
+		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteId}/0/Document_3.jpg''');
+	}
+
+	macro viewAndEditSERPPreview {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Page.viewPreview(
+			description = "Description",
+			htmlTitle = "Page HTML Title - Liferay DXP",
+			pageName = "Test Page",
+			portalURL = ${portalURL});
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
+
+		Page.viewPreview(
+			description = "Description",
+			htmlTitle = "Page HTML Title - Liferay DXP",
+			openGraph = "true",
+			pageName = "Test Page",
+			portalURL = ${portalURL});
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		PortletEntry.inputText(
+			fieldLabel = "HTML Title",
+			text = "Page HTML Title Edit");
+
+		PortletEntry.inputText(
+			fieldLabel = "Description",
+			text = "Page Description Edit");
+
+		Button.clickSave();
+
+		Page.viewPreview(
+			description = "Page Description Edit",
+			htmlTitle = "Page HTML Title Edit - Liferay DXP",
+			pageName = "Test Page",
+			portalURL = ${portalURL});
+	}
+
+}

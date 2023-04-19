@@ -171,11 +171,11 @@ definition {
 		property test.assert.warning.exceptions = "false";
 		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#ViewDepotStagingArchive73101";
 
-		Upgrade.publishDMsInStagingDepot();
+		ValidateDepotUpgrade.publishDMsInStagingDepot();
 
-		Upgrade.publishWCsInStagingDepot();
+		ValidateDepotUpgrade.publishWCsInStagingDepot();
 
-		Upgrade.publishCollectionsInStagingDepot();
+		ValidateDepotUpgrade.publishCollectionsInStagingDepot();
 	}
 
 }

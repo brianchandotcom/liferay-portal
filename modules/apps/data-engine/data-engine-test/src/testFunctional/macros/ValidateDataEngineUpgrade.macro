@@ -1,5 +1,55 @@
 definition {
 
+	macro addDataDefinitionWithDB2 {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists",
+			site = ${site});
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no lists.");
+
+		DDLNavigator.gotoManageDataDefinitions();
+
+		for (var ddlDataDefinitionName : list "Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do") {
+			DDLDataDefinition.viewName(ddlDataDefinitionName = ${ddlDataDefinitionName});
+		}
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-134");
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-727");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.viewCP(
+			ddlDataDefinitionName = "Data Definition",
+			fieldFieldLabel = "Text");
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-134");
+
+		AssertConsoleTextNotPresent(value1 = "SQLCODE=-727");
+	}
+
 	macro createNewStructureUsingAnUpgradedStructureAsFieldset {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

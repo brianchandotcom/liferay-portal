@@ -33,7 +33,7 @@ definition {
 		}
 
 		task ("Read the final portal build number") {
-			var finalBuildVersion = Upgrade.getBuildNumber();
+			var finalBuildVersion = ValidateSmokeUpgrade.getBuildNumber();
 
 			if (!(contains(${fileContent}, "Portal final build number: ${finalBuildVersion}"))) {
 				echo(${fileContent});
@@ -43,7 +43,7 @@ definition {
 		}
 
 		task ("Read the expected portal build number") {
-			var expectedBuildVersion = Upgrade.getBuildNumber();
+			var expectedBuildVersion = ValidateSmokeUpgrade.getBuildNumber();
 
 			if (!(contains(${fileContent}, "Portal expected build number: ${expectedBuildVersion}"))) {
 				echo(${fileContent});
@@ -567,7 +567,7 @@ definition {
 		}
 
 		task ("Read the final schema version") {
-			var finalSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
+			var finalSchemaVersion = ValidateSmokeUpgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
 			if (!(contains(${fileContent}, "Portal final schema version: ${finalSchemaVersion}"))) {
 				echo(${fileContent});
@@ -577,7 +577,7 @@ definition {
 		}
 
 		task ("Read the expected schema version") {
-			var expectedSchemaVersion = Upgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
+			var expectedSchemaVersion = ValidateSmokeUpgrade.getSchemaVersion(mysqlStatement = "SELECT schemaVersion FROM Release_ WHERE servletContextName='portal';");
 
 			if (!(contains(${fileContent}, "Portal expected schema version: ${expectedSchemaVersion}"))) {
 				echo(${fileContent});

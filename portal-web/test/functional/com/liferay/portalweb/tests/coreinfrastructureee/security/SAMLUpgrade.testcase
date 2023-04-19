@@ -323,9 +323,9 @@ definition {
 		property portal.version = "7.3.10";
 
 		task ("View SAML general IdP and connection configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration();
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration();
 		}
 	}
 
@@ -336,9 +336,9 @@ definition {
 		property portal.version = "7.4.12";
 
 		task ("View SAML general IdP and connection configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration();
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration();
 		}
 	}
 
@@ -349,9 +349,9 @@ definition {
 		property portal.version = "7.1.10.3";
 
 		task ("View SAML general IdP and connection configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration();
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration();
 		}
 	}
 
@@ -362,9 +362,9 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		task ("View SAML general IdP and connection configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration();
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration();
 		}
 	}
 
@@ -376,9 +376,9 @@ definition {
 		property portal.version = "7.3.10.1";
 
 		task ("View SAML general IdP and connection configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration();
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration();
 		}
 	}
 
@@ -389,9 +389,9 @@ definition {
 		property portal.version = "7.0.10.16";
 
 		task ("View SAML general IdP and connection configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration();
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration();
 		}
 	}
 
@@ -403,9 +403,9 @@ definition {
 		property portal.version = "7.3.10";
 
 		task ("View SAML general IdP and connection with encryption configuration ") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
 		}
 	}
 
@@ -416,9 +416,9 @@ definition {
 		property portal.version = "7.4.12";
 
 		task ("View SAML general IdP and connection with encryption configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
 		}
 	}
 
@@ -429,9 +429,9 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		task ("View SAML general IdP and connection with encryption configuration") {
-			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+			ValidateSAMLUpgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-			Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+			ValidateSAMLUpgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
 		}
 	}
 

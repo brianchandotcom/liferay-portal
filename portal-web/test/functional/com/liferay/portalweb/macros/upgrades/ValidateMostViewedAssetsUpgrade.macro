@@ -1,0 +1,87 @@
+definition {
+
+	macro viewOrderOfAssetsOnMostedViewedAssets {
+		task ("View order of displayed assets on Mosted Viewed Assets") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetOrderPG(assetTitleList = "Web Content Title 3,Web Content Title 1,Web Content Title 2");
+		}
+
+		task ("View count of the assets on Mosted Viewed Assets") {
+			var n = 1;
+
+			for (var count : list "3,2,5") {
+				AssetPublisherPortlet.viewAssetViewCount(
+					assetTitle = "Web Content Title ${n}",
+					viewCount = "${count} Views");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the Web Content Title 1 twice") {
+			var count = 0;
+
+			while (${count} != 2) {
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				AssetPublisherPortlet.viewAssetDetailsPG(
+					assetContent = "Web Content Content 1",
+					assetTitle = "Web Content Title 1");
+
+				var count = ${count} + 1;
+			}
+		}
+
+		task ("View the Web Content Title 2 five times") {
+			var count = 0;
+
+			while (${count} != 5) {
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				AssetPublisherPortlet.viewAssetDetailsPG(
+					assetContent = "Web Content Content 2",
+					assetTitle = "Web Content Title 2");
+
+				var count = ${count} + 1;
+			}
+		}
+
+		task ("View the Web Content Title 3 once") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content 3",
+				assetTitle = "Web Content Title 3");
+		}
+
+		task ("View the new order of displayed assets on Mosted Viewed Assets") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetOrderPG(assetTitleList = "Web Content Title 2,Web Content Title 3,Web Content Title 1");
+		}
+
+		task ("View the new count of the assets on Mosted Viewed Assets") {
+			var n = 1;
+
+			for (var count : list "5,7,6") {
+				AssetPublisherPortlet.viewAssetViewCount(
+					assetTitle = "Web Content Title ${n}",
+					viewCount = "${count} Views");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+}

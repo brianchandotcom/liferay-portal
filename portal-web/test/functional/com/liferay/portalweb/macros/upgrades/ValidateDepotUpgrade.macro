@@ -1,0 +1,832 @@
+definition {
+
+	macro publishCollectionsInRemoteStagingDepot {
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Depot Manual Asset List",
+			assetName = "DM Document Title Without Publish",
+			assetType = "Basic Document",
+			itemSubtype = "Basic Document",
+			itemType = "Document");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "DM Document Title Without Publish");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "DM Document Title Without Publish");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.deleteEntry(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document Title For Collections");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title Without Publish");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document Title For Collections");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title Without Publish");
+	}
+
+	macro publishCollectionsInStagingDepot {
+		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Depot Manual Asset List",
+			assetName = "DM Document Title Without Publish",
+			assetType = "Basic Document",
+			itemSubtype = "Basic Document",
+			itemType = "Document");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "DM Document Title Without Publish");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "DM Document Title Without Publish");
+
+		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		AssetListsAdmin.deleteEntry(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document Title For Collections",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		AssertElementNotPresent(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page Collections",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document Title For Collections",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		AssertElementNotPresent(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+	}
+
+	macro publishDMsInRemoteStagingDepot {
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "DM Document Title Without Publish",
+			assetType = "Basic Document",
+			depotName = "Test Depot Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "DM Document Title Without Publish");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "DM Document Title Without Publish");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentTitle = "Document_1.jpg",
+			dmDocumentTitleEdit = "Document_2.jpg");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "Document_2.jpg");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "DM Document Description",
+			assetTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_2.jpg",
+			assetType = "Document");
+
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_2.jpg");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_2.jpg");
+	}
+
+	macro publishDMsInStagingDepot {
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "DM Document Title Without Publish",
+			assetType = "Basic Document",
+			depotName = "Test Depot Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "DM Document Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentTitle = "Document_1.jpg",
+			dmDocumentTitleEdit = "Document_2.jpg");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertVisible(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_2.jpg",
+			assetType = "Document");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+	}
+
+	macro publishWCsInRemoteStagingDepot {
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WebContent Title Without Publish",
+			assetType = "Basic Web Content",
+			depotName = "Test Depot Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WebContent Content",
+			assetTitle = "WebContent Title Without Publish");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC WebContent Content",
+			assetTitle = "WC WebContent Title Edit");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "WC WebContent Content",
+			assetTitle = "WC WebContent Title Edit");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContent.deleteCP(
+			depotName = "Test Depot Name",
+			webContentTitle = "WC WebContent Title Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC WebContent Title Edit");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC WebContent Title Edit");
+	}
+
+	macro publishWCsInStagingDepot {
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WebContent Title Without Publish",
+			assetType = "Basic Web Content",
+			depotName = "Test Depot Name Local Staging");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "WebContent Title Without Publish",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WebContent Title Without Publish");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC WebContent Title Edit");
+
+		Navigator.openSiteURL(siteName = "Site Name Local Staging");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertTextEquals(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE",
+			value1 = "WC WebContent Title Edit");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name Local Staging");
+
+		WebContent.deleteStagedCP(
+			depotName = "Test Depot Name Local Staging",
+			webContentTitle = "WC WebContent Title Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page WC",
+			siteName = "Site Name Local Staging");
+
+		AssertElementNotPresent(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+	}
+
+	macro validateCollections {
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.selectAssetList(
+			assetListName = "Depot Dynamic Asset List",
+			depotName = "Test Depot Name");
+
+		for (var assetTitle : list "DM Without Autotagging,DM Document Title Sharing,DM Document Title In Site") {
+			AssetPublisherPortlet.viewAssetPG(assetTitle = ${assetTitle});
+		}
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.removeScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			scopeName = "Current Asset Library");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetPG(assetTitle = "DM Document Title In Site");
+
+		for (var assetTitle : list "DM Without Autotagging,DM Document Title Sharing") {
+			AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = ${assetTitle});
+		}
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.deleteEntry(assetListTitle = "Depot Dynamic Asset List");
+	}
+
+	macro validateDepotDMAndType {
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_assetTitle = "DM Document Title In Depot",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Search.searchCP(searchTerm = "DM Document Title In Depot");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "DM Document Title In Depot",
+			searchAssetType = "Document");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_1.txt",
+			dmDocumentFileNameEdit = "DM Document Title In Depot.txt",
+			dmDocumentTitle = "DM Document Title In Depot",
+			dmDocumentTitleEdit = "DM Document Title In Depot Edit");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title In Depot Edit");
+
+		DMDocument.viewCP(
+			dmDocumentFileName = "DM Document Title In Depot.txt",
+			dmDocumentTitle = "DM Document Title In Depot Edit");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title In Depot Edit");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertElementNotPresent(
+			key_assetTitle = "DM Document Title In Depot Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document with DM Document Type Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title With DM Type",
+			dmDocumentTypeName = "DM Document Type Name",
+			numericField = 1234,
+			numericFieldFieldLabel = "Number");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		DMDocument.viewDocumentTypePG(
+			numericFieldLabel = "Number",
+			numericValue = 1234);
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
+
+		DMDocumentType.edit(
+			dmDocumentTypeName = "DM Document Type Name",
+			fieldFieldLabel = "Number",
+			fieldFieldLabelEdit = "Amount");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		DMDocument.viewDocumentTypePG(
+			numericFieldLabel = "Amount",
+			numericValue = 1234);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title With DM Type");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		RecycleBin.deleteCP(
+			assetName = "DM Document Title With DM Type",
+			assetType = "Document");
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
+
+		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
+	}
+
+	macro validateDepotEntries {
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
+
+		Depot.viewConnectedSite(
+			depotName = "Test Depot Name",
+			siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.editDepot(
+			depotDescriptionEdit = "This is an edited description of a depot",
+			depotName = "Test Depot Name",
+			depotNameEdit = "Edited Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.deleteCP(depotName = "Edited Test Depot Name");
+
+		AssertElementNotPresent(
+			key_card = "Edited Test Depot Name",
+			locator1 = "Card#CARD_TITLE_LINK");
+	}
+
+	macro validateDepotSettings {
+		DepotNavigator.openDepotAdmin();
+
+		Depot.viewApplication(
+			applicationList = "Collections",
+			depotName = "Test Depot Name For Settings",
+			noApplication = "true");
+
+		DepotNavigator.gotoPortlet(
+			depotName = "Test Depot Name For Settings",
+			portlet = "Asset Library Settings");
+
+		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
+			Depot.viewDepotConfiguration(
+				configuration = "disabled",
+				toggleSwitchLabel = ${toggleSwitchLabel});
+		}
+
+		Depot.configureAutoTagging(autoTagging = "Enabled");
+
+		Depot.configureSharing(sharing = "Enabled");
+
+		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
+			Depot.viewDepotConfiguration(
+				configuration = "enabled",
+				toggleSwitchLabel = ${toggleSwitchLabel});
+		}
+
+		DepotNavigator.gotoLanguages();
+
+		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Asset Library Settings");
+
+		Depot.configureAutoTagging(autoTagging = "Disabled");
+
+		Depot.configureSharing(sharing = "Disabled");
+
+		for (var toggleSwitchLabel : list "Enable Auto Tagging,Enable Sharing") {
+			Depot.viewDepotConfiguration(
+				configuration = "disabled",
+				toggleSwitchLabel = ${toggleSwitchLabel});
+		}
+	}
+
+	macro validateDepotWCAndStructure {
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_assetTitle = "WC WebContent Title",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		Search.searchCP(searchTerm = "WC WebContent Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC WebContent Title",
+			searchAssetType = "Web Content Article");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content Edit",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_assetTitle = "WC WebContent Title Edit",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContent.deleteCP(
+			depotName = "Test Depot Name",
+			webContentTitle = "WC WebContent Title Edit");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title With Structure");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title With Structure");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edit");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTextFieldLabel = "Text Edit",
+			webContentTitle = "Web Content Title With Structure");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "site-name",
+			webContentTitle = "Web Content Title With Structure");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentStructures.deleteCP(structureName = "WC Structure Name");
+	}
+
+}

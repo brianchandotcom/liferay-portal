@@ -31,17 +31,17 @@ definition {
 			OneDrive.deleteDocument(dmDocumentTitle = "${dmDocumentType} Title After Upgrade");
 		}
 
-		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Excel");
+		ValidateOnlineEditingUpgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Excel");
 
-		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "PowerPoint");
+		ValidateOnlineEditingUpgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "PowerPoint");
 
-		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Word");
+		ValidateOnlineEditingUpgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Word");
 
-		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Excel");
+		ValidateOnlineEditingUpgrade.addOneDriveDocument(dmDocumentTypeName = "Excel");
 
-		Upgrade.addOneDriveDocument(dmDocumentTypeName = "PowerPoint");
+		ValidateOnlineEditingUpgrade.addOneDriveDocument(dmDocumentTypeName = "PowerPoint");
 
-		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Word");
+		ValidateOnlineEditingUpgrade.addOneDriveDocument(dmDocumentTypeName = "Word");
 	}
 
 	@priority = 5
@@ -55,17 +55,17 @@ definition {
 			OneDrive.deleteDocument(dmDocumentTitle = "${dmDocumentType} Title After Upgrade");
 		}
 
-		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Excel");
+		ValidateOnlineEditingUpgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Excel");
 
-		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "PowerPoint");
+		ValidateOnlineEditingUpgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "PowerPoint");
 
-		Upgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Word");
+		ValidateOnlineEditingUpgrade.viewAndDeleteOneDriveDocument(dmDocumentTypeName = "Word");
 
-		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Excel");
+		ValidateOnlineEditingUpgrade.addOneDriveDocument(dmDocumentTypeName = "Excel");
 
-		Upgrade.addOneDriveDocument(dmDocumentTypeName = "PowerPoint");
+		ValidateOnlineEditingUpgrade.addOneDriveDocument(dmDocumentTypeName = "PowerPoint");
 
-		Upgrade.addOneDriveDocument(dmDocumentTypeName = "Word");
+		ValidateOnlineEditingUpgrade.addOneDriveDocument(dmDocumentTypeName = "Word");
 	}
 
 }

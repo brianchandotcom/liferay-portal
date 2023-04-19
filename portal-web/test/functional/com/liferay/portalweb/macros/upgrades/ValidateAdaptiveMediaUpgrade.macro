@@ -1,0 +1,54 @@
+definition {
+
+	macro deleteImageResolution {
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.disableImageResolution(
+			imageName = "Low Resolution",
+			imageState = "Disabled",
+			percentAdapted = 0);
+
+		AdaptiveMedia.deleteImageResolution(imageName = "Low Resolution");
+	}
+
+	macro editImageResolution {
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "Low Resolution",
+			imageNameEdit = "Low Resolution Edited",
+			maxHeightEdit = 480,
+			maxWidthEdit = 320);
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution Edited");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/1");
+	}
+
+	macro viewAndAddImageResolution {
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Preview",
+			maxHeight = "Auto",
+			maxWidth = 1000);
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Thumbnail 300x300");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/1");
+
+		AdaptiveMedia.openToAddImageResolution();
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Low Resolution",
+			maxHeight = 480,
+			maxWidth = 320);
+
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Low Resolution",
+			maxHeight = 480,
+			maxWidth = 320,
+			percentAdapted = 0);
+	}
+
+}

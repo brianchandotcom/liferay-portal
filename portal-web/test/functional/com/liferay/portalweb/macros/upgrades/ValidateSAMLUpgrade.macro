@@ -1,0 +1,49 @@
+definition {
+
+	macro viewSAMLGeneralConfiguration {
+		SAML.goToSAMLAdmin();
+
+		FormFields.viewCheckboxChecked(fieldName = "enabled");
+
+		if (isSet(samlRoleType)) {
+			AssertTextEquals(
+				locator1 = "CPSAMLAdmin#SAML_SELECTED_ROLE",
+				value1 = ${samlRoleType});
+		}
+
+		AssertTextEquals(
+			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",
+			value1 = "samlidp");
+	}
+
+	macro viewSAMLSPConnectionConfiguration {
+		SAMLNavigation.gotoServiceProviderConnection();
+
+		Click(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_DROPDOWN");
+
+		MenuItem.click(menuItem = "Edit");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "samlsp");
+
+		AssertTextEquals(
+			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
+			value1 = "samlsp");
+
+		FormFields.viewCheckboxChecked(fieldName = "enabled");
+
+		if (isSet(forceEncryption)) {
+			FormFields.viewCheckboxChecked(fieldName = "encryptionForced");
+		}
+
+		AssertTextEquals(
+			locator1 = "TextInput#SAML_METADATA_URL_FIELD",
+			value1 = "http://www.able.com:9080//c/portal/saml/metadata");
+
+		AssertTextEquals(
+			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD",
+			value1 = "emailAddress");
+	}
+
+}

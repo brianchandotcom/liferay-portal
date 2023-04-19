@@ -1,0 +1,117 @@
+definition {
+
+	macro viewUpgradeDBPartition {
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "test1@www.able.com",
+			userFirstName = "Test1",
+			userLastName = "Test1",
+			userScreenName = "test1");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.searchCP(searchTerm = "test2");
+
+		User.viewNoUsersFoundCP();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(
+			roleTitle = "Roles Regrole1 Name",
+			roleType = "Regular");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document1 Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document1 Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContent.viewWithStructureCP(
+			webContentRichText = "WC WebContent1 Content",
+			webContentRichTextFieldLabel = "content",
+			webContentTitle = "WC WebContent1 Title");
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.baker.com:8080",
+			userEmailAddress = "test@www.baker.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "test2@www.baker.com",
+			userFirstName = "Test2",
+			userLastName = "Test2",
+			userScreenName = "test2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.searchCP(searchTerm = "test1");
+
+		User.viewNoUsersFoundCP();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(
+			roleTitle = "Roles Regrole2 Name",
+			roleType = "Regular");
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document2 Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document2 Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContent.viewWithStructureCP(
+			webContentRichText = "WC WebContent2 Content",
+			webContentRichTextFieldLabel = "content",
+			webContentTitle = "WC WebContent2 Title");
+
+		ValidateCalendarUpgrade.viewMatchingCalendarIndexesInPartitionedDatabase();
+	}
+
+}

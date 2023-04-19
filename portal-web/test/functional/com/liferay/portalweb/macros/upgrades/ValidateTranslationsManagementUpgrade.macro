@@ -1,0 +1,152 @@
+definition {
+
+	macro addAndEditTranslations {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "wc webcontentコンテンツ 編集",
+			webContentDescription = "wc webcontent記述 編集",
+			webContentTitle = "wc webcontentタイトルを並べて 編集");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "Contenido de WC WebContent",
+			webContentTitle = "Título del contenido web de WC");
+
+		PortletEntry.publish();
+	}
+
+	macro exportAndImportTranslations {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan)");
+
+		Translations.translateFile(
+			contentTranslation = "Webコンテンツ",
+			descriptionTranslation = "",
+			encoding = "utf8",
+			operation = "unzip",
+			titleTranslation = "Webコンテンツのタイトル",
+			translationFileName = "WebContentTitle-en_US-ja_JP",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US-ja_JP.xlf",
+			filePath = "/WebContentTitle-en_US",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "ja-JP");
+
+		WebContent.viewCP(
+			upgradedFieldLabel = "true",
+			webContentContent = "Webコンテンツ",
+			webContentTitle = "Webコンテンツのタイトル");
+	}
+
+	macro viewTranslations {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			upgradedFieldLabel = "true",
+			webContentContent = "Contenidoweb",
+			webContentDescription = "Descripcion",
+			webContentTitle = "Titulodelcontenidoweb");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Side By Side");
+
+		PortletEntry.changeLocale(locale = "ja-JP");
+
+		WebContent.viewCP(
+			upgradedFieldLabel = "true",
+			webContentContent = "wc webcontentコンテンツ",
+			webContentDescription = "wc webcontent記述",
+			webContentTitle = "wc webcontentタイトルを並べて");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.viewTargetFields(
+			webContentContent = "wc webcontentコンテンツ",
+			webContentDescription = "wc webcontent記述",
+			webContentTitle = "wc webcontentタイトルを並べて");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "wc webcontentコンテンツ 編集",
+			webContentDescription = "wc webcontent記述 編集",
+			webContentTitle = "wc webcontentタイトルを並べて 編集");
+
+		PortletEntry.publish();
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "Contenido de WC WebContent",
+			webContentTitle = "Título del contenido web de WC");
+
+		PortletEntry.publish();
+	}
+
+}

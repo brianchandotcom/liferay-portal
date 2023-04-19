@@ -108,7 +108,7 @@ definition {
 
 		SearchAdministration.executeReindex();
 
-		Upgrade.viewUpgradeDBPartition();
+		ValidateDatabasePartitioningUpgrade.viewUpgradeDBPartition();
 	}
 
 }

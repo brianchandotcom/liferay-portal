@@ -1,0 +1,37 @@
+definition {
+
+	macro addStyleBook {
+		task ("Add a style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			StyleBooksAdmin.addStyleBooks(styleBookName = "Test Style Book Name 2");
+		}
+
+		task ("Define the Font Family") {
+			var fontFamily = '''"Courier New"''';
+
+			StyleBooks.selectForm(formName = "Typography");
+
+			StyleBooks.expandSection(sectionName = "Font Family");
+
+			PortletEntry.inputText(
+				fieldLabel = "Font Family Base",
+				text = ${fontFamily});
+
+			StyleBooks.clickManagementBar();
+
+			StyleBooks.waitForAutoSave();
+		}
+
+		task ("Publish the style book") {
+			StyleBooks.clickPublish();
+		}
+
+		task ("Assert the Style Books") {
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name");
+
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Test Style Book Name 2");
+		}
+	}
+
+}

@@ -1,0 +1,20 @@
+definition {
+
+	macro viewDroolsAppManager {
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.viewApp(
+			appName = "Liferay Drools",
+			appStatus = "Active",
+			searchTerm = "Drools");
+
+		AppManager.viewApp(
+			appName = "Liferay Portal Rules Engine Drools",
+			appStatus = "Active",
+			searchTerm = "Drools");
+	}
+
+}

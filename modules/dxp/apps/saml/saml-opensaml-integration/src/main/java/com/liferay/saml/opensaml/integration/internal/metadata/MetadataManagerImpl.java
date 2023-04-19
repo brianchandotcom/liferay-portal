@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
+import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -76,7 +77,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ReferenceScope;
 
@@ -464,7 +464,6 @@ public class MetadataManagerImpl
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policyOption = ReferencePolicyOption.GREEDY,
 		scope = ReferenceScope.PROTOTYPE_REQUIRED
 	)
@@ -487,6 +486,12 @@ public class MetadataManagerImpl
 
 	@Activate
 	protected void activate() throws ComponentInitializationException {
+		_cachingChainingMetadataResolver.addMetadataResolver(
+			new DBMetadataResolver(
+				_parserPool, _samlIdpSpConnectionLocalService,
+				_samlProviderConfigurationHelper,
+				_samlSpIdpConnectionLocalService));
+
 		_cachingChainingMetadataResolver.setId(
 			CachingChainingMetadataResolver.class.getName());
 		_cachingChainingMetadataResolver.setParserPool(_parserPool);

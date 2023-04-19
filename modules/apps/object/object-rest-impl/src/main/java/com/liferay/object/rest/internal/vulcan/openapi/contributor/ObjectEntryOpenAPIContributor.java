@@ -27,6 +27,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -196,7 +197,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			schemas.remove("TaxonomyCategoryBrief");
 		}
 
-		if (openAPIContext != null) {
+		if ((openAPIContext != null) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-180090")) {
+
 			MapSchema actionsMapSchema = _getActionsMapSchema(openAPI);
 
 			actionsMapSchema.setAdditionalProperties(null);

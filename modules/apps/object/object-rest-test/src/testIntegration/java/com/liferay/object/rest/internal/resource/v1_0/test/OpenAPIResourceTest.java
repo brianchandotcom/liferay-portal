@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -91,6 +92,7 @@ public class OpenAPIResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
 	}
 
+	@FeatureFlags("LPS-180090")
 	@Test
 	public void testGetActionsOpenAPI() throws Exception {
 		String objectActionName = RandomTestUtil.randomString();

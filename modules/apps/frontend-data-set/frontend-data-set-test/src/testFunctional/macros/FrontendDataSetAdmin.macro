@@ -90,22 +90,4 @@ definition {
 			value1 = ${key_type});
 	}
 
-	macro tearDownCP {
-		while (IsElementPresent(locator1 = "FrontendDataSet#TABLE_BODY")) {
-			Click(
-				key_entry = "",
-				locator1 = "FrontendDataSetAdmin#ENTRY_KEBAB_MENU");
-
-			ClickNoError(locator1 = "FrontendDataSetAdmin#DELETE_ENTRY_BUTTON");
-
-			AssertElementPresent(
-				key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
-				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
-
-			Button.clickDelete();
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
 }

@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.client.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
@@ -256,6 +257,26 @@ public class SitePageSerDes {
 			sb.append("\"pageDefinition\": ");
 
 			sb.append(String.valueOf(sitePage.getPageDefinition()));
+		}
+
+		if (sitePage.getPagePermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pagePermissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < sitePage.getPagePermissions().length; i++) {
+				sb.append(String.valueOf(sitePage.getPagePermissions()[i]));
+
+				if ((i + 1) < sitePage.getPagePermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (sitePage.getPageSettings() != null) {
@@ -541,6 +562,15 @@ public class SitePageSerDes {
 				"pageDefinition", String.valueOf(sitePage.getPageDefinition()));
 		}
 
+		if (sitePage.getPagePermissions() == null) {
+			map.put("pagePermissions", null);
+		}
+		else {
+			map.put(
+				"pagePermissions",
+				String.valueOf(sitePage.getPagePermissions()));
+		}
+
 		if (sitePage.getPageSettings() == null) {
 			map.put("pageSettings", null);
 		}
@@ -741,6 +771,22 @@ public class SitePageSerDes {
 					sitePage.setPageDefinition(
 						PageDefinitionSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pagePermissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PagePermission[] pagePermissionsArray =
+						new PagePermission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < pagePermissionsArray.length; i++) {
+						pagePermissionsArray[i] = PagePermissionSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					sitePage.setPagePermissions(pagePermissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageSettings")) {

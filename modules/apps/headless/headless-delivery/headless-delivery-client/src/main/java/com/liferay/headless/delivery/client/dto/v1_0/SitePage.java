@@ -334,6 +334,28 @@ public class SitePage implements Cloneable, Serializable {
 
 	protected PageDefinition pageDefinition;
 
+	public PagePermission[] getPagePermissions() {
+		return pagePermissions;
+	}
+
+	public void setPagePermissions(PagePermission[] pagePermissions) {
+		this.pagePermissions = pagePermissions;
+	}
+
+	public void setPagePermissions(
+		UnsafeSupplier<PagePermission[], Exception>
+			pagePermissionsUnsafeSupplier) {
+
+		try {
+			pagePermissions = pagePermissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PagePermission[] pagePermissions;
+
 	public PageSettings getPageSettings() {
 		return pageSettings;
 	}

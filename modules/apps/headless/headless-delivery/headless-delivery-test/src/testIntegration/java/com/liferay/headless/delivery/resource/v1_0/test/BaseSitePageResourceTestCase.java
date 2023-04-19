@@ -1223,6 +1223,14 @@ public abstract class BaseSitePageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("pagePermissions", additionalAssertFieldName)) {
+				if (sitePage.getPagePermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pageSettings", additionalAssertFieldName)) {
 				if (sitePage.getPageSettings() == null) {
 					valid = false;
@@ -1568,6 +1576,17 @@ public abstract class BaseSitePageResourceTestCase {
 				if (!Objects.deepEquals(
 						sitePage1.getPageDefinition(),
 						sitePage2.getPageDefinition())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pagePermissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sitePage1.getPagePermissions(),
+						sitePage2.getPagePermissions())) {
 
 					return false;
 				}
@@ -1935,6 +1954,11 @@ public abstract class BaseSitePageResourceTestCase {
 		}
 
 		if (entityFieldName.equals("pageDefinition")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("pagePermissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

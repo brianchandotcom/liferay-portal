@@ -497,6 +497,36 @@ public class SitePage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageDefinition pageDefinition;
 
+	@Schema(description = "The page's permissions.")
+	@Valid
+	public PagePermission[] getPagePermissions() {
+		return pagePermissions;
+	}
+
+	public void setPagePermissions(PagePermission[] pagePermissions) {
+		this.pagePermissions = pagePermissions;
+	}
+
+	@JsonIgnore
+	public void setPagePermissions(
+		UnsafeSupplier<PagePermission[], Exception>
+			pagePermissionsUnsafeSupplier) {
+
+		try {
+			pagePermissions = pagePermissionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The page's permissions.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected PagePermission[] pagePermissions;
+
 	@Schema(description = "Settings of the page, such as SEO or OpenGraph.")
 	@Valid
 	public PageSettings getPageSettings() {
@@ -1062,6 +1092,26 @@ public class SitePage implements Serializable {
 			sb.append("\"pageDefinition\": ");
 
 			sb.append(String.valueOf(pageDefinition));
+		}
+
+		if (pagePermissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pagePermissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pagePermissions.length; i++) {
+				sb.append(String.valueOf(pagePermissions[i]));
+
+				if ((i + 1) < pagePermissions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (pageSettings != null) {

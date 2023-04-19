@@ -583,7 +583,7 @@ definition {
 			var upgradeLogContent = Log.getUpgradeLogFileContent();
 		}
 
-		task ("Look for the upgrade report") { getUpgradeReportFileContent
+		task ("Look for the upgrade report") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
 		}
 

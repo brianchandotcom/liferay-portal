@@ -216,4 +216,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-181351. Confirm that the user can search a view by its name"
+	@priority = 4
+	test CanSearchViewByName {
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("And Adding a new view called 'View Test' and the description field with 'Test Description'") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_name = "View Test");
+		}
+
+		task ("And Adding a new view called 'Bob Test' and the description field with 'Bob Description'") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Bob Description",
+				key_name = "Bob Test");
+		}
+
+		task ("And type 'View Test' in the search bar and click enter") {
+			Search.searchCP(searchTerm = "View Test");
+		}
+
+		task ("Then the corresponding view is displayed") {
+			AssertElementPresent(
+				entryName = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+		}
+	}
+
 }

@@ -24,6 +24,8 @@ import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsRe
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -49,7 +51,6 @@ import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.util.BodyBottomTag;
 
 import java.io.IOException;
@@ -147,7 +148,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		IconTag iconTag = new IconTag();
 
 		iconTag.setCssClass("icon-monospaced");
-		iconTag.setImage("analytics");
+		iconTag.setSymbol("analytics");
 
 		try {
 			values.put(
@@ -361,15 +362,17 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			sb.append(_language.get(httpServletRequest, "content-performance"));
 			sb.append("</span>");
 
-			IconTag iconTag = new IconTag();
+			ButtonTag buttonTag = new ButtonTag();
 
-			iconTag.setCssClass(
-				"btn btn-monospaced btn-unstyled component-action " +
-					"sidenav-close text-secondary");
-			iconTag.setImage("times");
-			iconTag.setUrl("javascript:void(0);");
+			buttonTag.setCssClass("close sidenav-close");
+			buttonTag.setDisplayType("unstyled");
+			buttonTag.setDynamicAttribute(
+				StringPool.BLANK, "aria-label",
+				_language.get(
+					(HttpServletRequest)pageContext.getRequest(), "close"));
+			buttonTag.setIcon("times");
 
-			sb.append(iconTag.doTagAsString(pageContext));
+			sb.append(buttonTag.doTagAsString(pageContext));
 
 			sb.append("</div>");
 			sb.append("<div class=\"sidebar-body\">");

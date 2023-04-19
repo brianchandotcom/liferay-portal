@@ -18,7 +18,6 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
@@ -184,15 +183,13 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		int priority = defaultPriority;
 
 		if (priority < 0) {
-			List<Layout> layouts = layoutPersistence.findByG_P_P(
-				groupId, privateLayout, parentLayoutId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new LayoutPriorityComparator(false));
+			Layout layout = layoutPersistence.fetchByG_P_P_First(
+				groupId, privateLayout, parentLayoutId,
+				new LayoutPriorityComparator(false));
 
-			if (layouts.isEmpty()) {
+			if (layout == null) {
 				return 0;
 			}
-
-			Layout layout = layouts.get(0);
 
 			priority = layout.getPriority() + 1;
 		}

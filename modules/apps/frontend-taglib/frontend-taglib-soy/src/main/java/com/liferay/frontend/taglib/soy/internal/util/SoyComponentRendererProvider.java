@@ -15,31 +15,19 @@
 package com.liferay.frontend.taglib.soy.internal.util;
 
 import com.liferay.frontend.taglib.soy.internal.template.SoyComponentRenderer;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = {})
 public class SoyComponentRendererProvider {
 
 	public static SoyComponentRenderer getSoyComponentRenderer() {
-		if (_soyRendererProvider == null) {
-			return null;
-		}
-
-		return _soyRendererProvider._soyComponentRenderer;
+		return _soyComponentRendererSnapshot.get();
 	}
 
-	public SoyComponentRendererProvider() {
-		_soyRendererProvider = this;
-	}
-
-	private static SoyComponentRendererProvider _soyRendererProvider;
-
-	@Reference
-	private SoyComponentRenderer _soyComponentRenderer;
+	private static final Snapshot<SoyComponentRenderer>
+		_soyComponentRendererSnapshot = new Snapshot<>(
+			SoyComponentRendererProvider.class, SoyComponentRenderer.class);
 
 }

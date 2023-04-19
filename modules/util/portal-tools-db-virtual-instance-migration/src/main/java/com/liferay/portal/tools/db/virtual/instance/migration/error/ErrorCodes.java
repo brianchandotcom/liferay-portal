@@ -19,12 +19,16 @@ package com.liferay.portal.tools.db.virtual.instance.migration.error;
  */
 public class ErrorCodes {
 
-	public static final int BAD_DESTINATION_PARAMETERS = 3;
+	public static final int BAD_DESTINATION_PARAMETERS = 12;
 
-	public static final int BAD_INPUT_ARGUMENTS = 1;
+	public static final int BAD_INPUT_ARGUMENTS = 10;
 
-	public static final int BAD_SOURCE_PARAMETERS = 2;
+	public static final int BAD_SOURCE_PARAMETERS = 11;
+
+	public static final int DESTINATION_NOT_DEFAULT = 13;
 
 	public static final int SUCCESS = 0;
+
+	public static final int UNEXPECTED_ERROR = 255;
 
 }

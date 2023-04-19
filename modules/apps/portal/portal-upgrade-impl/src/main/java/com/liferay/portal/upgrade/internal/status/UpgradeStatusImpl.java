@@ -95,6 +95,10 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 				if (_state.equals("success")) {
 					_log.info("No pending upgrades to run");
 				}
+				else if (_state.equals("unresolved")) {
+					_log.info(
+						"Not possible to check if upgrade finished correctly");
+				}
 				else {
 					_log.info(
 						"Upgrade process failed or upgrade dependencies are " +
@@ -168,10 +172,16 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 	}
 
 	private String _calculateState() {
-		boolean check;
+		if (!_errorMessages.isEmpty()) {
+			return "failure";
+		}
 
 		try {
-			check = _releaseManager.getStatus();
+			boolean releaseStatus = _releaseManager.getStatus();
+
+			if (!releaseStatus) {
+				return "unresolved";
+			}
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -179,10 +189,6 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 					"Unable to check the upgrade state due to ",
 					exception.getMessage(), ". Please check manually."));
 
-			return "failure";
-		}
-
-		if (!_errorMessages.isEmpty() || !check) {
 			return "failure";
 		}
 

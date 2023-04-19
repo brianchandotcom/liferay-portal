@@ -16,6 +16,8 @@ package com.liferay.segments.experiment.web.internal.product.navigation.control.
 
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -55,7 +57,6 @@ import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentService;
-import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.util.BodyBottomTag;
 
 import java.io.IOException;
@@ -152,7 +153,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		IconTag iconTag = new IconTag();
 
 		iconTag.setCssClass("icon-monospaced");
-		iconTag.setImage("test");
+		iconTag.setSymbol("test");
 
 		try {
 			values.put(
@@ -437,16 +438,17 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			sb.append(_language.get(httpServletRequest, "ab-test"));
 			sb.append("</span>");
 
-			IconTag iconTag = new IconTag();
+			ButtonTag buttonTag = new ButtonTag();
 
-			iconTag.setCssClass(
-				"btn btn-monospaced btn-unstyle component-action " +
-					"sidenav-close text-secondary");
-			iconTag.setImage("times");
-			iconTag.setMarkupView("lexicon");
-			iconTag.setUrl("javascript:;");
+			buttonTag.setCssClass("close sidenav-close");
+			buttonTag.setDisplayType("unstyled");
+			buttonTag.setDynamicAttribute(
+				StringPool.BLANK, "aria-label",
+				_language.get(
+					(HttpServletRequest)pageContext.getRequest(), "close"));
+			buttonTag.setIcon("times");
 
-			sb.append(iconTag.doTagAsString(pageContext));
+			sb.append(buttonTag.doTagAsString(pageContext));
 
 			sb.append("</div>");
 			sb.append("<div class=\"sidebar-body\">");

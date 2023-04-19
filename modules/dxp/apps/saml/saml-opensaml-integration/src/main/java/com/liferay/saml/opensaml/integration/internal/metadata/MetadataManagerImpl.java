@@ -74,12 +74,14 @@ import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
 import org.opensaml.xmlsec.signature.support.impl.ChainingSignatureTrustEngine;
 import org.opensaml.xmlsec.signature.support.impl.ExplicitKeySignatureTrustEngine;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
-import org.osgi.service.component.annotations.ReferenceScope;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Mika Koivisto
@@ -466,29 +468,10 @@ public class MetadataManagerImpl
 		return false;
 	}
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		scope = ReferenceScope.PROTOTYPE_REQUIRED
-	)
-	public void setMetadataResolver(MetadataResolver metadataResolver) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Adding metadata resolver " + metadataResolver);
-		}
-
-		_cachingChainingMetadataResolver.addMetadataResolver(metadataResolver);
-	}
-
-	public void unsetMetadataResolver(MetadataResolver metadataResolver) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Removing metadata resolver " + metadataResolver);
-		}
-
-		_cachingChainingMetadataResolver.removeMetadataResolver(
-			metadataResolver);
-	}
-
 	@Activate
-	protected void activate() throws ComponentInitializationException {
+	protected void activate(BundleContext bundleContext)
+		throws ComponentInitializationException {
+
 		_cachingChainingMetadataResolver.addMetadataResolver(
 			new DBMetadataResolver(
 				_parserPool, _samlIdpSpConnectionLocalService,
@@ -500,10 +483,50 @@ public class MetadataManagerImpl
 		_cachingChainingMetadataResolver.setParserPool(_parserPool);
 
 		_cachingChainingMetadataResolver.initialize();
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, MetadataResolver.class,
+			new ServiceTrackerCustomizer<MetadataResolver, MetadataResolver>() {
+
+				@Override
+				public MetadataResolver addingService(
+					ServiceReference<MetadataResolver> serviceReference) {
+
+					MetadataResolver metadataResolver =
+						bundleContext.getService(serviceReference);
+
+					_cachingChainingMetadataResolver.addMetadataResolver(
+						metadataResolver);
+
+					return metadataResolver;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<MetadataResolver> serviceReference,
+					MetadataResolver metadataResolver) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<MetadataResolver> serviceReference,
+					MetadataResolver metadataResolver) {
+
+					_cachingChainingMetadataResolver.removeMetadataResolver(
+						metadataResolver);
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTracker.close();
+
 		_predicateRoleDescriptorResolverDCLSingleton.destroy(
 			PredicateRoleDescriptorResolver::destroy);
 
@@ -635,5 +658,7 @@ public class MetadataManagerImpl
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	private ServiceTracker<MetadataResolver, MetadataResolver> _serviceTracker;
 
 }

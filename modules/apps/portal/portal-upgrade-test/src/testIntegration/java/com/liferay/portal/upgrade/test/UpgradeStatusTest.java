@@ -127,7 +127,7 @@ public class UpgradeStatusTest {
 			_releaseLocalService.updateRelease(release);
 		}
 
-		Assert.assertEquals("failure", _upgradeStatus.getState());
+		Assert.assertEquals("unresolved", _upgradeStatus.getState());
 
 		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
 	}

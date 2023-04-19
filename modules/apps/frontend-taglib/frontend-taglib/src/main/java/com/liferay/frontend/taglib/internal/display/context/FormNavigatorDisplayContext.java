@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.internal.display.context;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryProvider;
+import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -96,6 +97,12 @@ public class FormNavigatorDisplayContext {
 			_httpServletRequest, "taglib_ui_form_navigator_init");
 
 		return randomNamespace + "_tabs1";
+	}
+
+	public FormNavigatorConstants.FormNavigatorType getType() {
+		return (FormNavigatorConstants.FormNavigatorType)
+			_httpServletRequest.getAttribute(
+				"liferay-frontend:form-navigator:type");
 	}
 
 	public boolean isShowButtons() {

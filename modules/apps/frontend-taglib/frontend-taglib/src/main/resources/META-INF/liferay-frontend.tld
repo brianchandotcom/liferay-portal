@@ -476,6 +476,11 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<description>Creates a navigable form for multiple section forms. The navigation is a side navigation box with links to each section that renders as a progressive step navigation positioned above the form.</description>

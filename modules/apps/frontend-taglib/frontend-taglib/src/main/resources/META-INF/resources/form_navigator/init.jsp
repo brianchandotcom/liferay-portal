@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry" %><%@
+page import="com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants" %><%@
 page import="com.liferay.frontend.taglib.internal.constants.FormNavigatorWebKeys" %><%@
 page import="com.liferay.frontend.taglib.internal.display.context.FormNavigatorDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@

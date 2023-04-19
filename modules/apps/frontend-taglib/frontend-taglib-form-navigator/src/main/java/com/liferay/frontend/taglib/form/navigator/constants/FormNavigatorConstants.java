@@ -101,4 +101,10 @@ public class FormNavigatorConstants {
 
 	public static final String FORM_NAVIGATOR_ID_USERS = "users.form";
 
+	public enum FormNavigatorType {
+
+		DEFAULT, SHEET_SECTIONS
+
+	}
+
 }

@@ -477,6 +477,169 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-166286. TC-1: Verify that site template propagation works well after the conflicting layout friendly URL is modified."
+	@priority = 4
+	test AssertSiteTemplatePropagationAfterConflictingFriendlyURLIsModified {
+		property custom.properties = "feature.flag.LPS-166286=true";
+		property portal.release = "false";
+
+		task ("Given: Add new site template and a new site based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("And: Create a new page with the same name under the new site and site template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.addPage(pageName = "Page A");
+
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page A",
+				siteTemplateName = "Site Template Name");
+		}
+
+		task ("When: The conflicting layout friendly URL is modified") {
+			PagesAdmin.openToConfigurePublicPage(
+				groupName = "Site Name",
+				layoutName = "Page A",
+				siteURLKey = "site-name");
+
+			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/page-a1");
+		}
+
+		task ("Then: Verify the propagation should work well after triggering a new propagation") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			Refresh();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/page-a");
+		}
+	}
+
+	@description = "This is a use case for LPS-166286. TC-3: Verify that site template propagation works well on child page."
+	@priority = 4
+	test AssertSiteTemplatePropagationOnChildPage {
+		property custom.properties = "feature.flag.LPS-166286=true";
+		property portal.release = "false";
+
+		task ("Given: Add new site template and a new site based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("When: Create a content page and a widget page with its child page under the site template") {
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page A",
+				sitePageType = "Content Page",
+				siteTemplateName = "Site Template Name");
+
+			PageEditor.publish();
+
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page B",
+				siteTemplateName = "Site Template Name");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.addChildPageViaSiteTemplateCP(
+				childPageName = "Child Page A",
+				parentPageName = "Page A",
+				sitePageType = "Content Page",
+				siteTemplateName = "Site Template Name");
+
+			PageEditor.publish();
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.addChildPageViaSiteTemplateCP(
+				childPageName = "Child Page B",
+				parentPageName = "Page B",
+				siteTemplateName = "Site Template Name");
+		}
+
+		task ("And: Navigate to the site to trigger the propagation") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			Refresh();
+		}
+
+		task ("Then: Verify content page, widget page and its child pages should appear in site") {
+			Page.viewSpecificPG(pageNameList = "Page A,Page B");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/child-page-a");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/child-page-b");
+		}
+	}
+
+	@description = "This is a use case for LPS-166286. TC-2: Verify that site template propagation works well on private page."
+	@priority = 4
+	test AssertSiteTemplatePropagationOnPrivatePage {
+		property custom.properties = "feature.flag.LPS-166286=true";
+		property portal.release = "false";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+		property test.name.skip.portal.instance = "CPSitetemplates#AssertSiteTemplatePropagationOnPrivatePage";
+
+		task ("Given: Add new site template and a new private site based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				enablePrivatePage = "true",
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
+		}
+
+		task ("When: Create a content page and a widget page under the site template") {
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page A",
+				sitePageType = "Content Page",
+				siteTemplateName = "Site Template Name");
+
+			PageEditor.publish();
+
+			takeScreenshot();
+
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page B",
+				siteTemplateName = "Site Template Name");
+		}
+
+		task ("And: Navigate to the site to trigger the propagation") {
+			Navigator.openPrivateSiteURL(siteName = "site-name");
+
+			Refresh();
+
+			takeScreenshot();
+		}
+
+		task ("Then: Verify content page and widget page should appear in priavte site") {
+			Navigator.gotoPrivateSitePage(
+				pageName = "Page A",
+				siteName = "Site Name");
+
+			Navigator.gotoPrivateSitePage(
+				pageName = "Page B",
+				siteName = "Site Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-150460 TC-2. User can trigger Site template propagation upon visiting a connected site."
 	@priority = 5
 	test AssertSiteTemplatePropagationWhenOpeningSite {
@@ -1134,6 +1297,150 @@ definition {
 			SiteTemplates.viewResetPageChanges(
 				columnNumberFrom = 2,
 				portletName = "Asset Publisher");
+		}
+	}
+
+	@description = "This is a use case for LPS-166286. TC-5: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for content page."
+	@priority = 4
+	test SiteCanReuseCachedSiteTemplateLarFileForContentPage {
+		property custom.properties = "feature.flag.LPS-166286=true";
+		property portal.release = "false";
+		property test.name.skip.portal.instance = "CPSitetemplates#SiteCanReuseCachedSiteTemplateLarFileForContentPage";
+
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+		task ("Given: Add new site template and two new sites based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name A",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name B",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("And: Add Category log levels") {
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.addCategoryLogLevels(
+				categoryLevel = "ALL",
+				categoryName = "com.liferay.exportimport.internal.background.task.LayoutSetPrototypeMergeBackgroundTaskExecutor");
+		}
+
+		task ("When: Add an AP widget to home page in Site template and navigate to Site Name A for triggering the propagation") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = ${siteName},
+				siteTemplateName = "Site Template Name");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			PageEditor.publish();
+
+			Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+
+			Navigator.openSiteURL(siteName = "Site Name A");
+
+			Refresh();
+		}
+
+		task ("And: Navigate to the Site Name B to trigger the propagation") {
+			Navigator.openSitePage(
+				pageName = "Home",
+				siteName = "Site Name B");
+
+			Refresh();
+		}
+
+		task ("Then: Verify the propagation of Site Name B should reuse the cached site template Lar file") {
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+
+			AssertConsoleTextPresent(value1 = "Using cached layout set prototype LAR file");
+		}
+	}
+
+	@description = "This is a use case for LPS-166286. TC-4: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for widget page."
+	@priority = 4
+	test SiteCanReuseCachedSiteTemplateLarFileForWidgetPage {
+		property custom.properties = "feature.flag.LPS-166286=true";
+		property portal.release = "false";
+		property test.name.skip.portal.instance = "CPSitetemplates#SiteCanReuseCachedSiteTemplateLarFileForWidgetPage";
+
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+		task ("Given: Add new site template with widget page and two new sites based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page A",
+				siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name A",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name B",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("And: Add Category log levels") {
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.addCategoryLogLevels(
+				categoryLevel = "ALL",
+				categoryName = "com.liferay.exportimport.internal.background.task.LayoutSetPrototypeMergeBackgroundTaskExecutor");
+		}
+
+		task ("When: Add a WCD portlet to widget page in Site template and navigate to Site Name A for triggering the propagation") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Page A",
+				siteName = ${siteName},
+				siteTemplateName = "Site Template Name");
+
+			Portlet.addPG(portletName = "Web Content Display");
+
+			Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+
+			Navigator.openSitePage(
+				pageName = "Page A",
+				siteName = "Site Name A");
+
+			Refresh();
+		}
+
+		task ("And: Navigate to the Site Name B to trigger the propagation") {
+			Navigator.openSitePage(
+				pageName = "Page A",
+				siteName = "Site Name B");
+
+			Refresh();
+		}
+
+		task ("Then: Verify the propagation of Site Name B should reuse the cached site template Lar file") {
+			Portlet.viewPG(portletName = "Web Content Display");
+
+			AssertConsoleTextPresent(value1 = "Using cached layout set prototype LAR file");
 		}
 	}
 

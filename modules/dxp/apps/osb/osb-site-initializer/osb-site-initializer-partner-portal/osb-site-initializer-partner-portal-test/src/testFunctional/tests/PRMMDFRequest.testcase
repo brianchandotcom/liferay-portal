@@ -1037,6 +1037,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177320. Verify that when a MDF is created with the Total MDF Requested Amount higher than 15k, after submitted, the MDF status will be ‘Marketing Director’s Review’."
+	@priority = 5
+	test ViewMDFStatusWithRequestValueHigherThan15K {
+		task ("When I submitted a MDF with thte Total MDF Requested Amount higher than 15k") {
+			JSONPRM.createMDFRequest(
+				budgetValueList = "20000, 20000",
+				expenseOption = "Sponsorship Fee");
+		}
+
+		task ("Then I can see that the status will be 'Marketing Director Review'") {
+			PRMUtils.gotoPRM();
+
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "mdf-requests",
+				buttonText = "MDF");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+
+			PRMMDFRequest.viewMDFStatus(key_status = "Marketing Director Review");
+		}
+
+		
+		
+
+
+	}
+
 	@description = "This is a test for LPS-177043. Verify that If all claims (two) were made, so the message 'No more claim can be submitted' and the claim button will be not displayed anymore"
 	@priority = 5
 	test VerifyMessageWhenTwoClaimsWasMade {

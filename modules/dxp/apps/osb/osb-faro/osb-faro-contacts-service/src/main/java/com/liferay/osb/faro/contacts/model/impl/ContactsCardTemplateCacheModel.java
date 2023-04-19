@@ -18,6 +18,7 @@ import com.liferay.osb.faro.contacts.model.ContactsCardTemplate;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class ContactsCardTemplateCacheModel
-	implements CacheModel<ContactsCardTemplate>, Externalizable {
+	implements CacheModel<ContactsCardTemplate>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -46,8 +47,9 @@ public class ContactsCardTemplateCacheModel
 		ContactsCardTemplateCacheModel contactsCardTemplateCacheModel =
 			(ContactsCardTemplateCacheModel)object;
 
-		if (contactsCardTemplateId ==
-				contactsCardTemplateCacheModel.contactsCardTemplateId) {
+		if ((contactsCardTemplateId ==
+				contactsCardTemplateCacheModel.contactsCardTemplateId) &&
+			(mvccVersion == contactsCardTemplateCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -57,23 +59,39 @@ public class ContactsCardTemplateCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, contactsCardTemplateId);
+		int hashCode = HashUtil.hash(0, contactsCardTemplateId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{contactsCardTemplateId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", contactsCardTemplateId=");
 		sb.append(contactsCardTemplateId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", createTime=");
+		sb.append(createTime);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
-		sb.append(", createTime=");
-		sb.append(createTime);
 		sb.append(", modifiedTime=");
 		sb.append(modifiedTime);
 		sb.append(", name=");
@@ -92,9 +110,12 @@ public class ContactsCardTemplateCacheModel
 		ContactsCardTemplateImpl contactsCardTemplateImpl =
 			new ContactsCardTemplateImpl();
 
+		contactsCardTemplateImpl.setMvccVersion(mvccVersion);
 		contactsCardTemplateImpl.setContactsCardTemplateId(
 			contactsCardTemplateId);
 		contactsCardTemplateImpl.setGroupId(groupId);
+		contactsCardTemplateImpl.setCompanyId(companyId);
+		contactsCardTemplateImpl.setCreateTime(createTime);
 		contactsCardTemplateImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -104,7 +125,6 @@ public class ContactsCardTemplateCacheModel
 			contactsCardTemplateImpl.setUserName(userName);
 		}
 
-		contactsCardTemplateImpl.setCreateTime(createTime);
 		contactsCardTemplateImpl.setModifiedTime(modifiedTime);
 
 		if (name == null) {
@@ -130,14 +150,18 @@ public class ContactsCardTemplateCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		contactsCardTemplateId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
-		userId = objectInput.readLong();
-		userName = objectInput.readUTF();
+		companyId = objectInput.readLong();
 
 		createTime = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 
 		modifiedTime = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -148,9 +172,15 @@ public class ContactsCardTemplateCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(contactsCardTemplateId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(userId);
 
@@ -160,8 +190,6 @@ public class ContactsCardTemplateCacheModel
 		else {
 			objectOutput.writeUTF(userName);
 		}
-
-		objectOutput.writeLong(createTime);
 
 		objectOutput.writeLong(modifiedTime);
 
@@ -182,11 +210,13 @@ public class ContactsCardTemplateCacheModel
 		objectOutput.writeInt(type);
 	}
 
+	public long mvccVersion;
 	public long contactsCardTemplateId;
 	public long groupId;
+	public long companyId;
+	public long createTime;
 	public long userId;
 	public String userName;
-	public long createTime;
 	public long modifiedTime;
 	public String name;
 	public String settings;

@@ -70,9 +70,11 @@ public class ContactsLayoutTemplateModelImpl
 	public static final String TABLE_NAME = "OSBFaro_ContactsLayoutTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"contactsLayoutTemplateId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createTime", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
+		{"modifiedTime", Types.BIGINT},
 		{"headerContactsCardTemplateIds", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"settings_", Types.VARCHAR},
 		{"type_", Types.INTEGER}
@@ -82,11 +84,13 @@ public class ContactsLayoutTemplateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contactsLayoutTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("headerContactsCardTemplateIds", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -95,7 +99,7 @@ public class ContactsLayoutTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_ContactsLayoutTemplate (contactsLayoutTemplateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,headerContactsCardTemplateIds STRING null,name VARCHAR(75) null,settings_ STRING null,type_ INTEGER)";
+		"create table OSBFaro_ContactsLayoutTemplate (mvccVersion LONG default 0 not null,contactsLayoutTemplateId LONG not null primary key,groupId LONG,companyId LONG,createTime LONG,userId LONG,userName VARCHAR(75) null,modifiedTime LONG,headerContactsCardTemplateIds STRING null,name VARCHAR(75) null,settings_ STRING null,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_ContactsLayoutTemplate";
@@ -111,24 +115,6 @@ public class ContactsLayoutTemplateModelImpl
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean ENTITY_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean FINDER_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -149,9 +135,19 @@ public class ContactsLayoutTemplateModelImpl
 	@Deprecated
 	public static final long CONTACTSLAYOUTTEMPLATEID_COLUMN_BITMASK = 4L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.osb.faro.contacts.model.ContactsLayoutTemplate"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public ContactsLayoutTemplateModelImpl() {
 	}
@@ -252,16 +248,20 @@ public class ContactsLayoutTemplateModelImpl
 						<String, Function<ContactsLayoutTemplate, Object>>();
 
 			attributeGetterFunctions.put(
+				"mvccVersion", ContactsLayoutTemplate::getMvccVersion);
+			attributeGetterFunctions.put(
 				"contactsLayoutTemplateId",
 				ContactsLayoutTemplate::getContactsLayoutTemplateId);
 			attributeGetterFunctions.put(
 				"groupId", ContactsLayoutTemplate::getGroupId);
 			attributeGetterFunctions.put(
+				"companyId", ContactsLayoutTemplate::getCompanyId);
+			attributeGetterFunctions.put(
+				"createTime", ContactsLayoutTemplate::getCreateTime);
+			attributeGetterFunctions.put(
 				"userId", ContactsLayoutTemplate::getUserId);
 			attributeGetterFunctions.put(
 				"userName", ContactsLayoutTemplate::getUserName);
-			attributeGetterFunctions.put(
-				"createTime", ContactsLayoutTemplate::getCreateTime);
 			attributeGetterFunctions.put(
 				"modifiedTime", ContactsLayoutTemplate::getModifiedTime);
 			attributeGetterFunctions.put(
@@ -293,6 +293,10 @@ public class ContactsLayoutTemplateModelImpl
 						<String, BiConsumer<ContactsLayoutTemplate, ?>>();
 
 			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setMvccVersion);
+			attributeSetterBiConsumers.put(
 				"contactsLayoutTemplateId",
 				(BiConsumer<ContactsLayoutTemplate, Long>)
 					ContactsLayoutTemplate::setContactsLayoutTemplateId);
@@ -301,6 +305,14 @@ public class ContactsLayoutTemplateModelImpl
 				(BiConsumer<ContactsLayoutTemplate, Long>)
 					ContactsLayoutTemplate::setGroupId);
 			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<ContactsLayoutTemplate, Long>)
+					ContactsLayoutTemplate::setCreateTime);
+			attributeSetterBiConsumers.put(
 				"userId",
 				(BiConsumer<ContactsLayoutTemplate, Long>)
 					ContactsLayoutTemplate::setUserId);
@@ -308,10 +320,6 @@ public class ContactsLayoutTemplateModelImpl
 				"userName",
 				(BiConsumer<ContactsLayoutTemplate, String>)
 					ContactsLayoutTemplate::setUserName);
-			attributeSetterBiConsumers.put(
-				"createTime",
-				(BiConsumer<ContactsLayoutTemplate, Long>)
-					ContactsLayoutTemplate::setCreateTime);
 			attributeSetterBiConsumers.put(
 				"modifiedTime",
 				(BiConsumer<ContactsLayoutTemplate, Long>)
@@ -337,6 +345,20 @@ public class ContactsLayoutTemplateModelImpl
 				(Map)attributeSetterBiConsumers);
 		}
 
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -374,6 +396,34 @@ public class ContactsLayoutTemplateModelImpl
 	@Deprecated
 	public long getOriginalGroupId() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getCreateTime() {
+		return _createTime;
+	}
+
+	@Override
+	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createTime = createTime;
 	}
 
 	@Override
@@ -423,20 +473,6 @@ public class ContactsLayoutTemplateModelImpl
 		}
 
 		_userName = userName;
-	}
-
-	@Override
-	public long getCreateTime() {
-		return _createTime;
-	}
-
-	@Override
-	public void setCreateTime(long createTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createTime = createTime;
 	}
 
 	@Override
@@ -563,7 +599,8 @@ public class ContactsLayoutTemplateModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, ContactsLayoutTemplate.class.getName(), getPrimaryKey());
+			getCompanyId(), ContactsLayoutTemplate.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -593,12 +630,14 @@ public class ContactsLayoutTemplateModelImpl
 		ContactsLayoutTemplateImpl contactsLayoutTemplateImpl =
 			new ContactsLayoutTemplateImpl();
 
+		contactsLayoutTemplateImpl.setMvccVersion(getMvccVersion());
 		contactsLayoutTemplateImpl.setContactsLayoutTemplateId(
 			getContactsLayoutTemplateId());
 		contactsLayoutTemplateImpl.setGroupId(getGroupId());
+		contactsLayoutTemplateImpl.setCompanyId(getCompanyId());
+		contactsLayoutTemplateImpl.setCreateTime(getCreateTime());
 		contactsLayoutTemplateImpl.setUserId(getUserId());
 		contactsLayoutTemplateImpl.setUserName(getUserName());
-		contactsLayoutTemplateImpl.setCreateTime(getCreateTime());
 		contactsLayoutTemplateImpl.setModifiedTime(getModifiedTime());
 		contactsLayoutTemplateImpl.setHeaderContactsCardTemplateIds(
 			getHeaderContactsCardTemplateIds());
@@ -616,16 +655,20 @@ public class ContactsLayoutTemplateModelImpl
 		ContactsLayoutTemplateImpl contactsLayoutTemplateImpl =
 			new ContactsLayoutTemplateImpl();
 
+		contactsLayoutTemplateImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		contactsLayoutTemplateImpl.setContactsLayoutTemplateId(
 			this.<Long>getColumnOriginalValue("contactsLayoutTemplateId"));
 		contactsLayoutTemplateImpl.setGroupId(
 			this.<Long>getColumnOriginalValue("groupId"));
+		contactsLayoutTemplateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		contactsLayoutTemplateImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
 		contactsLayoutTemplateImpl.setUserId(
 			this.<Long>getColumnOriginalValue("userId"));
 		contactsLayoutTemplateImpl.setUserName(
 			this.<String>getColumnOriginalValue("userName"));
-		contactsLayoutTemplateImpl.setCreateTime(
-			this.<Long>getColumnOriginalValue("createTime"));
 		contactsLayoutTemplateImpl.setModifiedTime(
 			this.<Long>getColumnOriginalValue("modifiedTime"));
 		contactsLayoutTemplateImpl.setHeaderContactsCardTemplateIds(
@@ -690,7 +733,7 @@ public class ContactsLayoutTemplateModelImpl
 	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
 	/**
@@ -699,7 +742,7 @@ public class ContactsLayoutTemplateModelImpl
 	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override
@@ -714,10 +757,16 @@ public class ContactsLayoutTemplateModelImpl
 		ContactsLayoutTemplateCacheModel contactsLayoutTemplateCacheModel =
 			new ContactsLayoutTemplateCacheModel();
 
+		contactsLayoutTemplateCacheModel.mvccVersion = getMvccVersion();
+
 		contactsLayoutTemplateCacheModel.contactsLayoutTemplateId =
 			getContactsLayoutTemplateId();
 
 		contactsLayoutTemplateCacheModel.groupId = getGroupId();
+
+		contactsLayoutTemplateCacheModel.companyId = getCompanyId();
+
+		contactsLayoutTemplateCacheModel.createTime = getCreateTime();
 
 		contactsLayoutTemplateCacheModel.userId = getUserId();
 
@@ -728,8 +777,6 @@ public class ContactsLayoutTemplateModelImpl
 		if ((userName != null) && (userName.length() == 0)) {
 			contactsLayoutTemplateCacheModel.userName = null;
 		}
-
-		contactsLayoutTemplateCacheModel.createTime = getCreateTime();
 
 		contactsLayoutTemplateCacheModel.modifiedTime = getModifiedTime();
 
@@ -826,11 +873,13 @@ public class ContactsLayoutTemplateModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _contactsLayoutTemplateId;
 	private long _groupId;
+	private long _companyId;
+	private long _createTime;
 	private long _userId;
 	private String _userName;
-	private long _createTime;
 	private long _modifiedTime;
 	private String _headerContactsCardTemplateIds;
 	private String _name;
@@ -867,12 +916,14 @@ public class ContactsLayoutTemplateModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"contactsLayoutTemplateId", _contactsLayoutTemplateId);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("modifiedTime", _modifiedTime);
 		_columnOriginalValues.put(
 			"headerContactsCardTemplateIds", _headerContactsCardTemplateIds);
@@ -903,25 +954,29 @@ public class ContactsLayoutTemplateModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("contactsLayoutTemplateId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("contactsLayoutTemplateId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("companyId", 8L);
 
 		columnBitmasks.put("createTime", 16L);
 
-		columnBitmasks.put("modifiedTime", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("headerContactsCardTemplateIds", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("name", 128L);
+		columnBitmasks.put("modifiedTime", 128L);
 
-		columnBitmasks.put("settings_", 256L);
+		columnBitmasks.put("headerContactsCardTemplateIds", 256L);
 
-		columnBitmasks.put("type_", 512L);
+		columnBitmasks.put("name", 512L);
+
+		columnBitmasks.put("settings_", 1024L);
+
+		columnBitmasks.put("type_", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

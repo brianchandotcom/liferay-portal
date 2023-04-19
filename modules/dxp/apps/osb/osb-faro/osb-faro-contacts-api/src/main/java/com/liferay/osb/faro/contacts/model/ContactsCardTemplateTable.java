@@ -32,20 +32,26 @@ public class ContactsCardTemplateTable
 	public static final ContactsCardTemplateTable INSTANCE =
 		new ContactsCardTemplateTable();
 
+	public final Column<ContactsCardTemplateTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ContactsCardTemplateTable, Long>
 		contactsCardTemplateId = createColumn(
 			"contactsCardTemplateId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
 	public final Column<ContactsCardTemplateTable, Long> groupId = createColumn(
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ContactsCardTemplateTable, Long> companyId =
+		createColumn(
+			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ContactsCardTemplateTable, Long> createTime =
+		createColumn(
+			"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactsCardTemplateTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactsCardTemplateTable, String> userName =
 		createColumn(
 			"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ContactsCardTemplateTable, Long> createTime =
-		createColumn(
-			"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactsCardTemplateTable, Long> modifiedTime =
 		createColumn(
 			"modifiedTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

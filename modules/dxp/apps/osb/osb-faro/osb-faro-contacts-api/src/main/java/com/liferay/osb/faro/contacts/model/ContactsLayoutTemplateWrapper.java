@@ -43,12 +43,14 @@ public class ContactsLayoutTemplateWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"contactsLayoutTemplateId", getContactsLayoutTemplateId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("createTime", getCreateTime());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("createTime", getCreateTime());
 		attributes.put("modifiedTime", getModifiedTime());
 		attributes.put(
 			"headerContactsCardTemplateIds",
@@ -62,6 +64,12 @@ public class ContactsLayoutTemplateWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long contactsLayoutTemplateId = (Long)attributes.get(
 			"contactsLayoutTemplateId");
 
@@ -75,6 +83,18 @@ public class ContactsLayoutTemplateWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long createTime = (Long)attributes.get("createTime");
+
+		if (createTime != null) {
+			setCreateTime(createTime);
+		}
+
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -85,12 +105,6 @@ public class ContactsLayoutTemplateWrapper
 
 		if (userName != null) {
 			setUserName(userName);
-		}
-
-		Long createTime = (Long)attributes.get("createTime");
-
-		if (createTime != null) {
-			setCreateTime(createTime);
 		}
 
 		Long modifiedTime = (Long)attributes.get("modifiedTime");
@@ -128,6 +142,16 @@ public class ContactsLayoutTemplateWrapper
 	@Override
 	public ContactsLayoutTemplate cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the company ID of this contacts layout template.
+	 *
+	 * @return the company ID of this contacts layout template
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -178,6 +202,16 @@ public class ContactsLayoutTemplateWrapper
 	@Override
 	public long getModifiedTime() {
 		return model.getModifiedTime();
+	}
+
+	/**
+	 * Returns the mvcc version of this contacts layout template.
+	 *
+	 * @return the mvcc version of this contacts layout template
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -256,6 +290,16 @@ public class ContactsLayoutTemplateWrapper
 	}
 
 	/**
+	 * Sets the company ID of this contacts layout template.
+	 *
+	 * @param companyId the company ID of this contacts layout template
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
+	}
+
+	/**
 	 * Sets the contacts layout template ID of this contacts layout template.
 	 *
 	 * @param contactsLayoutTemplateId the contacts layout template ID of this contacts layout template
@@ -305,6 +349,16 @@ public class ContactsLayoutTemplateWrapper
 	@Override
 	public void setModifiedTime(long modifiedTime) {
 		model.setModifiedTime(modifiedTime);
+	}
+
+	/**
+	 * Sets the mvcc version of this contacts layout template.
+	 *
+	 * @param mvccVersion the mvcc version of this contacts layout template
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

@@ -15,6 +15,7 @@
 package com.liferay.osb.faro.contacts.model.constants;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,67 +86,77 @@ public class ContactsCardTemplateConstants {
 		return _constants;
 	}
 
-	private static final Map<String, Integer> _cardTypes =
-		new HashMap<String, Integer>() {
-			{
-				put("activityHistory", TYPE_ACTIVITY_HISTORY);
-				put("associatedSegments", TYPE_ASSOCIATED_SEGMENTS);
-				put("closedWon", TYPE_CLOSED_WON);
-				put("conversionHealth", TYPE_CONVERSION_HEALTH);
-				put("coworkers", TYPE_COWORKERS);
-				put("interests", TYPE_INTEREST);
-				put("lifetimeValue", TYPE_LIFETIME_VALUE);
-				put("netSales", TYPE_NET_SALES);
-				put("profile", TYPE_PROFILE);
-				put("recentActivities", TYPE_RECENT_ACTIVITIES);
-				put("segmentDistribution", TYPE_SEGMENT_DISTRIBUTION);
-				put("segmentMembership", TYPE_SEGMENT_MEMBERSHIP);
-				put("similar", TYPE_SIMILAR);
-				put("touchpointAttribution", TYPE_TOUCHPOINT_ATTRIBUTION);
-			}
-		};
+	private static final Map<String, Integer> _cardTypes = HashMapBuilder.put(
+		"activityHistory", TYPE_ACTIVITY_HISTORY
+	).put(
+		"associatedSegments", TYPE_ASSOCIATED_SEGMENTS
+	).put(
+		"closedWon", TYPE_CLOSED_WON
+	).put(
+		"conversionHealth", TYPE_CONVERSION_HEALTH
+	).put(
+		"coworkers", TYPE_COWORKERS
+	).put(
+		"interests", TYPE_INTEREST
+	).put(
+		"lifetimeValue", TYPE_LIFETIME_VALUE
+	).put(
+		"netSales", TYPE_NET_SALES
+	).put(
+		"profile", TYPE_PROFILE
+	).put(
+		"recentActivities", TYPE_RECENT_ACTIVITIES
+	).put(
+		"segmentDistribution", TYPE_SEGMENT_DISTRIBUTION
+	).put(
+		"segmentMembership", TYPE_SEGMENT_MEMBERSHIP
+	).put(
+		"similar", TYPE_SIMILAR
+	).put(
+		"touchpointAttribution", TYPE_TOUCHPOINT_ATTRIBUTION
+	).build();
 	private static final Map<String, Object> _constants = new HashMap<>();
 
 	static {
-		Map<String, String> filterTypes = new HashMap<>();
-
-		filterTypes.put("all", SETTINGS_FILTER_ALL);
-
-		Map<String, Integer> graphTypes = new HashMap<>();
-
-		graphTypes.put("bar", SETTINGS_GRAPH_TYPE_BAR);
-		graphTypes.put("line", SETTINGS_GRAPH_TYPE_LINE);
-		graphTypes.put("pie", SETTINGS_GRAPH_TYPE_PIE);
-
-		Map<String, Integer> profileCardLayoutTypes = new HashMap<>();
-
-		profileCardLayoutTypes.put(
-			"horizontal", SETTINGS_PROFILE_CARD_LAYOUT_TYPE_HORIZONTAL);
-		profileCardLayoutTypes.put(
-			"noAvatar", SETTINGS_PROFILE_CARD_LAYOUT_TYPE_NO_AVATAR);
-		profileCardLayoutTypes.put(
-			"vertical", SETTINGS_PROFILE_CARD_LAYOUT_TYPE_VERTICAL);
-
-		Map<String, Integer> segmentsMembershipCardOrders = new HashMap<>();
-
-		segmentsMembershipCardOrders.put(
-			"alphabetical", SETTINGS_SEGMENTS_MEMBERSHIP_CARD_ORDER_BY_NAME);
-		segmentsMembershipCardOrders.put(
-			"numberOfMembers",
-			SETTINGS_SEGMENTS_MEMBERSHIP_CARD_ORDER_BY_COUNT);
-
-		Map<String, Integer> units = new HashMap<>();
-
-		units.put("count", SETTINGS_UNIT_COUNT);
-		units.put("percentage", SETTINGS_UNIT_PERCENTAGE);
-
 		_constants.put("cardTypes", _cardTypes);
-		_constants.put("fiterTypes", filterTypes);
-		_constants.put("graphTypes", graphTypes);
-		_constants.put("profileCardLayoutTypes", profileCardLayoutTypes);
 		_constants.put(
-			"segmentsMembershipCardOrders", segmentsMembershipCardOrders);
-		_constants.put("units", units);
+			"fiterTypes",
+			HashMapBuilder.<String, String>put(
+				"all", SETTINGS_FILTER_ALL
+			).build());
+		_constants.put(
+			"graphTypes",
+			HashMapBuilder.<String, Integer>put(
+				"bar", SETTINGS_GRAPH_TYPE_BAR
+			).put(
+				"line", SETTINGS_GRAPH_TYPE_LINE
+			).put(
+				"pie", SETTINGS_GRAPH_TYPE_PIE
+			).build());
+		_constants.put(
+			"profileCardLayoutTypes",
+			HashMapBuilder.<String, Integer>put(
+				"horizontal", SETTINGS_PROFILE_CARD_LAYOUT_TYPE_HORIZONTAL
+			).put(
+				"noAvatar", SETTINGS_PROFILE_CARD_LAYOUT_TYPE_NO_AVATAR
+			).put(
+				"vertical", SETTINGS_PROFILE_CARD_LAYOUT_TYPE_VERTICAL
+			).build());
+		_constants.put(
+			"segmentsMembershipCardOrders",
+			HashMapBuilder.<String, Integer>put(
+				"alphabetical", SETTINGS_SEGMENTS_MEMBERSHIP_CARD_ORDER_BY_NAME
+			).put(
+				"numberOfMembers",
+				SETTINGS_SEGMENTS_MEMBERSHIP_CARD_ORDER_BY_COUNT
+			).build());
+		_constants.put(
+			"units",
+			HashMapBuilder.<String, Integer>put(
+				"count", SETTINGS_UNIT_COUNT
+			).put(
+				"percentage", SETTINGS_UNIT_PERCENTAGE
+			).build());
 	}
 
 }

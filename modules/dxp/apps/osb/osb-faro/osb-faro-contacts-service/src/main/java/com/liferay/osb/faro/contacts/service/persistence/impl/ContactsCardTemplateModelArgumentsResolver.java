@@ -20,10 +20,11 @@ import com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * The arguments resolver class for retrieving value from ContactsCardTemplate.
@@ -31,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shinn Lok
  * @generated
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"class.name=com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateImpl",
 		"table.name=OSBFaro_ContactsCardTemplate"

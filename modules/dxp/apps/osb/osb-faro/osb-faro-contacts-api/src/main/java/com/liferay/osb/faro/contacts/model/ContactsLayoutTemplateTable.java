@@ -32,20 +32,26 @@ public class ContactsLayoutTemplateTable
 	public static final ContactsLayoutTemplateTable INSTANCE =
 		new ContactsLayoutTemplateTable();
 
+	public final Column<ContactsLayoutTemplateTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ContactsLayoutTemplateTable, Long>
 		contactsLayoutTemplateId = createColumn(
 			"contactsLayoutTemplateId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
 	public final Column<ContactsLayoutTemplateTable, Long> groupId =
 		createColumn("groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ContactsLayoutTemplateTable, Long> companyId =
+		createColumn(
+			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ContactsLayoutTemplateTable, Long> createTime =
+		createColumn(
+			"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactsLayoutTemplateTable, Long> userId =
 		createColumn("userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactsLayoutTemplateTable, String> userName =
 		createColumn(
 			"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ContactsLayoutTemplateTable, Long> createTime =
-		createColumn(
-			"createTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactsLayoutTemplateTable, Long> modifiedTime =
 		createColumn(
 			"modifiedTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

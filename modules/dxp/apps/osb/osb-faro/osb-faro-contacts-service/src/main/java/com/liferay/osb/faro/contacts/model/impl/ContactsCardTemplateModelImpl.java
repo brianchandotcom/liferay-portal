@@ -70,9 +70,10 @@ public class ContactsCardTemplateModelImpl
 	public static final String TABLE_NAME = "OSBFaro_ContactsCardTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"contactsCardTemplateId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createTime", Types.BIGINT}, {"modifiedTime", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"contactsCardTemplateId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createTime", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"modifiedTime", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"settings_", Types.VARCHAR},
 		{"type_", Types.INTEGER}
 	};
@@ -81,11 +82,13 @@ public class ContactsCardTemplateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contactsCardTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("createTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
@@ -93,7 +96,7 @@ public class ContactsCardTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBFaro_ContactsCardTemplate (contactsCardTemplateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createTime LONG,modifiedTime LONG,name VARCHAR(75) null,settings_ STRING null,type_ INTEGER)";
+		"create table OSBFaro_ContactsCardTemplate (mvccVersion LONG default 0 not null,contactsCardTemplateId LONG not null primary key,groupId LONG,companyId LONG,createTime LONG,userId LONG,userName VARCHAR(75) null,modifiedTime LONG,name VARCHAR(75) null,settings_ STRING null,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBFaro_ContactsCardTemplate";
@@ -111,24 +114,6 @@ public class ContactsCardTemplateModelImpl
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean ENTITY_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean FINDER_CACHE_ENABLED = true;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = true;
-
-	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
@@ -141,9 +126,19 @@ public class ContactsCardTemplateModelImpl
 	@Deprecated
 	public static final long CONTACTSCARDTEMPLATEID_COLUMN_BITMASK = 2L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.osb.faro.contacts.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.osb.faro.contacts.model.ContactsCardTemplate"));
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+	}
 
 	public ContactsCardTemplateModelImpl() {
 	}
@@ -242,16 +237,20 @@ public class ContactsCardTemplateModelImpl
 						<String, Function<ContactsCardTemplate, Object>>();
 
 			attributeGetterFunctions.put(
+				"mvccVersion", ContactsCardTemplate::getMvccVersion);
+			attributeGetterFunctions.put(
 				"contactsCardTemplateId",
 				ContactsCardTemplate::getContactsCardTemplateId);
 			attributeGetterFunctions.put(
 				"groupId", ContactsCardTemplate::getGroupId);
 			attributeGetterFunctions.put(
+				"companyId", ContactsCardTemplate::getCompanyId);
+			attributeGetterFunctions.put(
+				"createTime", ContactsCardTemplate::getCreateTime);
+			attributeGetterFunctions.put(
 				"userId", ContactsCardTemplate::getUserId);
 			attributeGetterFunctions.put(
 				"userName", ContactsCardTemplate::getUserName);
-			attributeGetterFunctions.put(
-				"createTime", ContactsCardTemplate::getCreateTime);
 			attributeGetterFunctions.put(
 				"modifiedTime", ContactsCardTemplate::getModifiedTime);
 			attributeGetterFunctions.put("name", ContactsCardTemplate::getName);
@@ -278,6 +277,10 @@ public class ContactsCardTemplateModelImpl
 						<String, BiConsumer<ContactsCardTemplate, ?>>();
 
 			attributeSetterBiConsumers.put(
+				"mvccVersion",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setMvccVersion);
+			attributeSetterBiConsumers.put(
 				"contactsCardTemplateId",
 				(BiConsumer<ContactsCardTemplate, Long>)
 					ContactsCardTemplate::setContactsCardTemplateId);
@@ -286,6 +289,14 @@ public class ContactsCardTemplateModelImpl
 				(BiConsumer<ContactsCardTemplate, Long>)
 					ContactsCardTemplate::setGroupId);
 			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"createTime",
+				(BiConsumer<ContactsCardTemplate, Long>)
+					ContactsCardTemplate::setCreateTime);
+			attributeSetterBiConsumers.put(
 				"userId",
 				(BiConsumer<ContactsCardTemplate, Long>)
 					ContactsCardTemplate::setUserId);
@@ -293,10 +304,6 @@ public class ContactsCardTemplateModelImpl
 				"userName",
 				(BiConsumer<ContactsCardTemplate, String>)
 					ContactsCardTemplate::setUserName);
-			attributeSetterBiConsumers.put(
-				"createTime",
-				(BiConsumer<ContactsCardTemplate, Long>)
-					ContactsCardTemplate::setCreateTime);
 			attributeSetterBiConsumers.put(
 				"modifiedTime",
 				(BiConsumer<ContactsCardTemplate, Long>)
@@ -318,6 +325,20 @@ public class ContactsCardTemplateModelImpl
 				(Map)attributeSetterBiConsumers);
 		}
 
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -355,6 +376,34 @@ public class ContactsCardTemplateModelImpl
 	@Deprecated
 	public long getOriginalGroupId() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	@Override
+	public long getCreateTime() {
+		return _createTime;
+	}
+
+	@Override
+	public void setCreateTime(long createTime) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_createTime = createTime;
 	}
 
 	@Override
@@ -404,20 +453,6 @@ public class ContactsCardTemplateModelImpl
 		}
 
 		_userName = userName;
-	}
-
-	@Override
-	public long getCreateTime() {
-		return _createTime;
-	}
-
-	@Override
-	public void setCreateTime(long createTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createTime = createTime;
 	}
 
 	@Override
@@ -513,7 +548,8 @@ public class ContactsCardTemplateModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, ContactsCardTemplate.class.getName(), getPrimaryKey());
+			getCompanyId(), ContactsCardTemplate.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -543,12 +579,14 @@ public class ContactsCardTemplateModelImpl
 		ContactsCardTemplateImpl contactsCardTemplateImpl =
 			new ContactsCardTemplateImpl();
 
+		contactsCardTemplateImpl.setMvccVersion(getMvccVersion());
 		contactsCardTemplateImpl.setContactsCardTemplateId(
 			getContactsCardTemplateId());
 		contactsCardTemplateImpl.setGroupId(getGroupId());
+		contactsCardTemplateImpl.setCompanyId(getCompanyId());
+		contactsCardTemplateImpl.setCreateTime(getCreateTime());
 		contactsCardTemplateImpl.setUserId(getUserId());
 		contactsCardTemplateImpl.setUserName(getUserName());
-		contactsCardTemplateImpl.setCreateTime(getCreateTime());
 		contactsCardTemplateImpl.setModifiedTime(getModifiedTime());
 		contactsCardTemplateImpl.setName(getName());
 		contactsCardTemplateImpl.setSettings(getSettings());
@@ -564,16 +602,20 @@ public class ContactsCardTemplateModelImpl
 		ContactsCardTemplateImpl contactsCardTemplateImpl =
 			new ContactsCardTemplateImpl();
 
+		contactsCardTemplateImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
 		contactsCardTemplateImpl.setContactsCardTemplateId(
 			this.<Long>getColumnOriginalValue("contactsCardTemplateId"));
 		contactsCardTemplateImpl.setGroupId(
 			this.<Long>getColumnOriginalValue("groupId"));
+		contactsCardTemplateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		contactsCardTemplateImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
 		contactsCardTemplateImpl.setUserId(
 			this.<Long>getColumnOriginalValue("userId"));
 		contactsCardTemplateImpl.setUserName(
 			this.<String>getColumnOriginalValue("userName"));
-		contactsCardTemplateImpl.setCreateTime(
-			this.<Long>getColumnOriginalValue("createTime"));
 		contactsCardTemplateImpl.setModifiedTime(
 			this.<Long>getColumnOriginalValue("modifiedTime"));
 		contactsCardTemplateImpl.setName(
@@ -635,7 +677,7 @@ public class ContactsCardTemplateModelImpl
 	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return true;
 	}
 
 	/**
@@ -644,7 +686,7 @@ public class ContactsCardTemplateModelImpl
 	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return true;
 	}
 
 	@Override
@@ -659,10 +701,16 @@ public class ContactsCardTemplateModelImpl
 		ContactsCardTemplateCacheModel contactsCardTemplateCacheModel =
 			new ContactsCardTemplateCacheModel();
 
+		contactsCardTemplateCacheModel.mvccVersion = getMvccVersion();
+
 		contactsCardTemplateCacheModel.contactsCardTemplateId =
 			getContactsCardTemplateId();
 
 		contactsCardTemplateCacheModel.groupId = getGroupId();
+
+		contactsCardTemplateCacheModel.companyId = getCompanyId();
+
+		contactsCardTemplateCacheModel.createTime = getCreateTime();
 
 		contactsCardTemplateCacheModel.userId = getUserId();
 
@@ -673,8 +721,6 @@ public class ContactsCardTemplateModelImpl
 		if ((userName != null) && (userName.length() == 0)) {
 			contactsCardTemplateCacheModel.userName = null;
 		}
-
-		contactsCardTemplateCacheModel.createTime = getCreateTime();
 
 		contactsCardTemplateCacheModel.modifiedTime = getModifiedTime();
 
@@ -758,11 +804,13 @@ public class ContactsCardTemplateModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _contactsCardTemplateId;
 	private long _groupId;
+	private long _companyId;
+	private long _createTime;
 	private long _userId;
 	private String _userName;
-	private long _createTime;
 	private long _modifiedTime;
 	private String _name;
 	private String _settings;
@@ -798,12 +846,14 @@ public class ContactsCardTemplateModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"contactsCardTemplateId", _contactsCardTemplateId);
 		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createTime", _createTime);
 		_columnOriginalValues.put("modifiedTime", _modifiedTime);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("settings_", _settings);
@@ -832,23 +882,27 @@ public class ContactsCardTemplateModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("contactsCardTemplateId", 1L);
+		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("groupId", 2L);
+		columnBitmasks.put("contactsCardTemplateId", 2L);
 
-		columnBitmasks.put("userId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("userName", 8L);
+		columnBitmasks.put("companyId", 8L);
 
 		columnBitmasks.put("createTime", 16L);
 
-		columnBitmasks.put("modifiedTime", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("name", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("settings_", 128L);
+		columnBitmasks.put("modifiedTime", 128L);
 
-		columnBitmasks.put("type_", 256L);
+		columnBitmasks.put("name", 256L);
+
+		columnBitmasks.put("settings_", 512L);
+
+		columnBitmasks.put("type_", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

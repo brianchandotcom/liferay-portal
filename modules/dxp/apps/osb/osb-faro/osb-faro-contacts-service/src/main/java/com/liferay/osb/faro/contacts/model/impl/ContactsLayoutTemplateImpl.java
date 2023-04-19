@@ -18,8 +18,4 @@ package com.liferay.osb.faro.contacts.model.impl;
  * @author Shinn Lok
  */
 public class ContactsLayoutTemplateImpl extends ContactsLayoutTemplateBaseImpl {
-
-	public ContactsLayoutTemplateImpl() {
-	}
-
 }

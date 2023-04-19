@@ -16,6 +16,8 @@ package com.liferay.osb.faro.contacts.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ContactsLayoutTemplateModel
-	extends BaseModel<ContactsLayoutTemplate> {
+	extends BaseModel<ContactsLayoutTemplate>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -53,6 +55,22 @@ public interface ContactsLayoutTemplateModel
 	 * @param primaryKey the primary key of this contacts layout template
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this contacts layout template.
+	 *
+	 * @return the mvcc version of this contacts layout template
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this contacts layout template.
+	 *
+	 * @param mvccVersion the mvcc version of this contacts layout template
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the contacts layout template ID of this contacts layout template.
@@ -81,6 +99,36 @@ public interface ContactsLayoutTemplateModel
 	 * @param groupId the group ID of this contacts layout template
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this contacts layout template.
+	 *
+	 * @return the company ID of this contacts layout template
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this contacts layout template.
+	 *
+	 * @param companyId the company ID of this contacts layout template
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the create time of this contacts layout template.
+	 *
+	 * @return the create time of this contacts layout template
+	 */
+	public long getCreateTime();
+
+	/**
+	 * Sets the create time of this contacts layout template.
+	 *
+	 * @param createTime the create time of this contacts layout template
+	 */
+	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the user ID of this contacts layout template.
@@ -124,20 +172,6 @@ public interface ContactsLayoutTemplateModel
 	 * @param userName the user name of this contacts layout template
 	 */
 	public void setUserName(String userName);
-
-	/**
-	 * Returns the create time of this contacts layout template.
-	 *
-	 * @return the create time of this contacts layout template
-	 */
-	public long getCreateTime();
-
-	/**
-	 * Sets the create time of this contacts layout template.
-	 *
-	 * @param createTime the create time of this contacts layout template
-	 */
-	public void setCreateTime(long createTime);
 
 	/**
 	 * Returns the modified time of this contacts layout template.

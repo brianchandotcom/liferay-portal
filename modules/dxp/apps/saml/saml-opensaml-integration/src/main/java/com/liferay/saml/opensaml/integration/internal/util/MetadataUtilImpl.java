@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.util.MetadataUtil;
 
 import java.io.ByteArrayInputStream;
@@ -53,6 +54,8 @@ public class MetadataUtilImpl implements MetadataUtil {
 	@Override
 	public InputStream getMetadata(String url) throws Exception {
 		HttpGet httpGet = new HttpGet(url);
+
+		HttpClient httpClient = httpClientFactory.getHttpClient();
 
 		try (CloseableHttpResponse closeableHttpResponse =
 				(CloseableHttpResponse)httpClient.execute(httpGet)) {
@@ -125,7 +128,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 	}
 
 	@Reference
-	protected HttpClient httpClient;
+	protected HttpClientFactory httpClientFactory;
 
 	@Reference
 	protected ParserPool parserPool;

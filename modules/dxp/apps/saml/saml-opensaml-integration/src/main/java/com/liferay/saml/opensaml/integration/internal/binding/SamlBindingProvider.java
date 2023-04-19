@@ -17,14 +17,13 @@ package com.liferay.saml.opensaml.integration.internal.binding;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
 import com.liferay.saml.runtime.SamlException;
 
 import java.util.Map;
 
 import net.shibboleth.utilities.java.support.xml.ParserPool;
-
-import org.apache.http.client.HttpClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,7 +58,7 @@ public class SamlBindingProvider {
 			_parserPool);
 
 		HttpSoap11Binding httpSoap11Binding = new HttpSoap11Binding(
-			_parserPool, _httpClient);
+			_parserPool, _httpClientFactory.getHttpClient());
 
 		return HashMapBuilder.<String, SamlBinding>put(
 			httpPostBinding.getCommunicationProfileId(), httpPostBinding
@@ -71,7 +70,7 @@ public class SamlBindingProvider {
 	}
 
 	@Reference
-	private HttpClient _httpClient;
+	private HttpClientFactory _httpClientFactory;
 
 	@Reference
 	private ParserPool _parserPool;

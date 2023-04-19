@@ -25,6 +25,102 @@ definition {
 		}
 	}
 
+	@description = "Assert that is possible to add a Information Template to a Publication"
+	test CanAddInformationTemplateAndApplyItWithinPublications {
+		task ("Add a new publications, select it and crete a new site") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to new site and add a new Information Template") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Templates");
+
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemSubtype = "Basic Document",
+				itemType = "Document");
+
+			InformationTemplates.addField(
+				fieldName = "Title",
+				panelTitle = "Basic Information");
+
+			PortletEntry.save();
+		}
+
+		task ("Add a Content Page and add a HTML fragment in it") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "HTML",
+				id = "element-html");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC WebContent Title",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert that the HTML fragment is shown in the content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				fragmentName = "html",
+				id = "element-html",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "WC WebContent Title");
+		}
+
+		task ("Go to review changes and assert that the changes were indeed made") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Dynamic Data Mapping Template",
+				changeSite = "Test Site Name",
+				changeTitle = "Test Information Template",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Publish the publication and assert that it was published successfully") {
+			JSONPublications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+	}
+
 	@description = "Add style book and apply it within Publications"
 	@priority = 3
 	test CanAddStyleBookAndApplyItWithinPublications {

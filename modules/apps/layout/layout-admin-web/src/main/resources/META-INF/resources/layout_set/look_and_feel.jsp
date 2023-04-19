@@ -25,8 +25,6 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	value="look-and-feel"
 />
 
-<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />
-
 <liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 
 <%

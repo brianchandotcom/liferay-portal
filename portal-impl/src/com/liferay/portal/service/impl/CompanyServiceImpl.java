@@ -78,35 +78,8 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			companyId, webId, virtualHost, mx, maxUsers, active);
-	}
-
-	/**
-	 * Adds a company.
-	 *
-	 * @param  webId the company's web domain
-	 * @param  virtualHost the company's virtual host name
-	 * @param  mx the company's mail domain
-	 * @param  maxUsers the max number of company users (optionally
-	 *         <code>0</code>)
-	 * @param  active whether the company is active
-	 * @return the company
-	 */
-	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	@Override
-	public Company addCompany(
-			String webId, String virtualHost, String mx, int maxUsers,
-			boolean active)
-		throws PortalException {
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
-		}
-
-		return companyLocalService.addCompany(
-			null, webId, virtualHost, mx, maxUsers, active);
+			companyId, webId, virtualHost, mx, maxUsers, active, null, null,
+			null, null, null, null);
 	}
 
 	/**

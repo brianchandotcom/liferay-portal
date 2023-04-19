@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.management.toolbar.FilterContributor;
 import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import com.liferay.users.admin.web.internal.util.DisplayStyleUtil;
 
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -68,11 +70,25 @@ public class ViewFlatUsersDisplayContextFactory {
 		UserSearchTerms userSearchTerms =
 			(UserSearchTerms)searchContainer.getSearchTerms();
 
-		ManagementToolbarDisplayContext managementToolbarDisplayContext =
-			new ViewFlatUsersManagementToolbarDisplayContext(
-				liferayPortletRequest, liferayPortletResponse, searchContainer,
-				_isShowDeleteButton(userSearchTerms),
-				_isShowRestoreButton(userSearchTerms));
+		ManagementToolbarDisplayContext managementToolbarDisplayContext;
+
+		if (Objects.equals(
+				UsersAdminPortletKeys.SERVICE_ACCOUNTS,
+				PortalUtil.getPortletId(renderRequest))) {
+
+			managementToolbarDisplayContext =
+				new ViewServiceAccountUsersManagementToolbarDisplayContext(
+					liferayPortletRequest, liferayPortletResponse,
+					searchContainer, _isShowDeleteButton(userSearchTerms),
+					_isShowRestoreButton(userSearchTerms));
+		}
+		else {
+			managementToolbarDisplayContext =
+				new ViewFlatUsersManagementToolbarDisplayContext(
+					liferayPortletRequest, liferayPortletResponse,
+					searchContainer, _isShowDeleteButton(userSearchTerms),
+					_isShowRestoreButton(userSearchTerms));
+		}
 
 		FilterContributor[] filterContributors = _getFilterContributors(
 			httpServletRequest);

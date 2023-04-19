@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.discount.internal;
 
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.model.CommerceDiscount;
@@ -60,7 +60,7 @@ public abstract class BaseCommerceDiscountCalculation
 	}
 
 	@Reference
-	protected CommerceAccountHelper commerceAccountHelper;
+	protected AccountGroupLocalService accountGroupLocalService;
 
 	@Reference
 	protected CommerceChannelAccountEntryRelLocalService
@@ -193,7 +193,7 @@ public abstract class BaseCommerceDiscountCalculation
 		}
 
 		long[] commerceAccountGroupIds =
-			commerceAccountHelper.getCommerceAccountGroupIds(commerceAccountId);
+			accountGroupLocalService.getAccountGroupIds(commerceAccountId);
 
 		commerceDiscounts =
 			commerceDiscountLocalService.
@@ -431,7 +431,7 @@ public abstract class BaseCommerceDiscountCalculation
 		}
 
 		long[] commerceAccountGroupIds =
-			commerceAccountHelper.getCommerceAccountGroupIds(commerceAccountId);
+			accountGroupLocalService.getAccountGroupIds(commerceAccountId);
 
 		commerceDiscounts =
 			commerceDiscountLocalService.

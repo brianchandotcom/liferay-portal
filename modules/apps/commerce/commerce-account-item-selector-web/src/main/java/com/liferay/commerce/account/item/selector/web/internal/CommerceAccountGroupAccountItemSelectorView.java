@@ -19,7 +19,7 @@ import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupAccountItemSelectorCriterion;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.CommerceAccountGroupAccountItemSelectorViewDisplayContext;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;

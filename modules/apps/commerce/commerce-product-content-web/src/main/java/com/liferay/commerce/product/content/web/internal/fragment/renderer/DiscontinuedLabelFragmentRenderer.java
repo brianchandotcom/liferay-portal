@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.web.internal.fragment.renderer;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.constants.CPWebKeys;
@@ -24,6 +23,7 @@ import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;

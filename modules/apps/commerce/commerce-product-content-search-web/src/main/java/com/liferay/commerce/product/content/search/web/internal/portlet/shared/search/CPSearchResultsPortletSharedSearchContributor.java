@@ -15,14 +15,15 @@
 package com.liferay.commerce.product.content.search.web.internal.portlet.shared.search;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -145,7 +146,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 			if (accountEntry != null) {
 				searchContext.setAttribute(
 					"commerceAccountGroupIds",
-					_commerceAccountHelper.getCommerceAccountGroupIds(
+					_accountGroupLocalService.getAccountGroupIds(
 						accountEntry.getAccountEntryId()));
 			}
 		}
@@ -214,6 +215,9 @@ public class CPSearchResultsPortletSharedSearchContributor
 		portletSharedSearchSettings.setPaginationDelta(
 			paginationDeltaOptional.orElse(configurationPaginationDelta));
 	}
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

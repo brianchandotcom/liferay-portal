@@ -21,7 +21,7 @@ import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
 import com.liferay.headless.commerce.admin.account.internal.constants.v1_0.AccountMemberBatchEngineTaskItemDelegateConstants;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountMemberUtil;

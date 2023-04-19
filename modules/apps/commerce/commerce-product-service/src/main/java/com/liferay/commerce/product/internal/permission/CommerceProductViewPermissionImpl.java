@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.internal.permission;
 
 import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
@@ -139,9 +139,8 @@ public class CommerceProductViewPermissionImpl
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		long[] accountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccountId);
+		long[] accountGroupIds = _accountGroupLocalService.getAccountGroupIds(
+			commerceAccountId);
 
 		for (AccountGroupRel accountGroupRel : accountGroupRels) {
 			if (ArrayUtil.contains(
@@ -178,10 +177,10 @@ public class CommerceProductViewPermissionImpl
 	}
 
 	@Reference
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

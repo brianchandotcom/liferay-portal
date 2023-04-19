@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.internal.template;
 
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;

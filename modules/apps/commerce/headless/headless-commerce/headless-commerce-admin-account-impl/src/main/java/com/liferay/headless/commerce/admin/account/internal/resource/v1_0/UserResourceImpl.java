@@ -17,7 +17,7 @@ package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.UserResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;

@@ -15,8 +15,8 @@
 package com.liferay.commerce.context;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
@@ -31,6 +31,7 @@ import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -51,6 +52,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 
 	public BaseCommerceContextHttp(
 		HttpServletRequest httpServletRequest,
+		AccountGroupLocalService accountGroupLocalService,
 		CommerceAccountHelper commerceAccountHelper,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
@@ -60,6 +62,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 		ConfigurationProvider configurationProvider, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
+		_accountGroupLocalService = accountGroupLocalService;
 		_commerceAccountHelper = commerceAccountHelper;
 		_commerceChannelAccountEntryRelLocalService =
 			commerceChannelAccountEntryRelLocalService;
@@ -121,9 +124,8 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			return new long[0];
 		}
 
-		_commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				accountEntry.getAccountEntryId());
+		_commerceAccountGroupIds = _accountGroupLocalService.getAccountGroupIds(
+			accountEntry.getAccountEntryId());
 
 		return _commerceAccountGroupIds.clone();
 	}
@@ -274,6 +276,7 @@ public class BaseCommerceContextHttp implements CommerceContext {
 
 	private AccountEntry _accountEntry;
 	private String[] _accountEntryAllowedTypes;
+	private final AccountGroupLocalService _accountGroupLocalService;
 	private long[] _commerceAccountGroupIds;
 	private CommerceAccountGroupServiceConfiguration
 		_commerceAccountGroupServiceConfiguration;

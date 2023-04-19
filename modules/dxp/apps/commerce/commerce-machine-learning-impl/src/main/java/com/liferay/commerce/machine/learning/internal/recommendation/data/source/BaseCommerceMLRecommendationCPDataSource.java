@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.machine.learning.internal.recommendation.data.source;
 
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 

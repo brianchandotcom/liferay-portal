@@ -21,7 +21,6 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
@@ -232,7 +231,7 @@ public class CommerceDiscountLocalServiceTest {
 		_commerceOrders.add(commerceOrder);
 
 		long[] commerceAccountGroups =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry.getAccountEntryId());
 
 		CommerceDiscount commerceDiscountTotal1 =
@@ -426,7 +425,7 @@ public class CommerceDiscountLocalServiceTest {
 		_commerceOrders.add(commerceOrder);
 
 		long[] commerceAccountGroups =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry.getAccountEntryId());
 
 		CommerceDiscountTestUtil.addAccountGroupAndChannelOrderDiscount(
@@ -485,7 +484,7 @@ public class CommerceDiscountLocalServiceTest {
 			cpInstance.getCPInstanceId());
 
 		long[] commerceAccountGroups =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry.getAccountEntryId());
 
 		CommerceDiscount commerceAccountGroupsDiscount =
@@ -584,7 +583,7 @@ public class CommerceDiscountLocalServiceTest {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		long[] commerceAccountGroups =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry.getAccountEntryId());
 
 		CommerceDiscountTestUtil.addAccountGroupAndChannelDiscount(
@@ -648,8 +647,7 @@ public class CommerceDiscountLocalServiceTest {
 		}
 
 		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccountId);
+			_accountGroupLocalService.getAccountGroupIds(commerceAccountId);
 
 		commerceDiscounts =
 			_commerceDiscountLocalService.
@@ -750,8 +748,7 @@ public class CommerceDiscountLocalServiceTest {
 		}
 
 		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccountId);
+			_accountGroupLocalService.getAccountGroupIds(commerceAccountId);
 
 		commerceDiscounts =
 			_commerceDiscountLocalService.
@@ -851,9 +848,6 @@ public class CommerceDiscountLocalServiceTest {
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;
-
-	@Inject
-	private CommerceAccountHelper _commerceAccountHelper;
 
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;

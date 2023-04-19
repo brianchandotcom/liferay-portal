@@ -16,8 +16,8 @@ package com.liferay.commerce.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
@@ -51,7 +51,7 @@ public class BaseCommerceContext implements CommerceContext {
 		long companyId, long commerceChannelGroupId, long orderId,
 		long commerceAccountId,
 		AccountEntryLocalService accountEntryLocalService,
-		CommerceAccountHelper commerceAccountHelper,
+		AccountGroupLocalService accountGroupLocalService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
 		CommerceChannelLocalService commerceChannelLocalService,
@@ -64,7 +64,7 @@ public class BaseCommerceContext implements CommerceContext {
 		_orderId = orderId;
 		_commerceAccountId = commerceAccountId;
 		_accountEntryLocalService = accountEntryLocalService;
-		_commerceAccountHelper = commerceAccountHelper;
+		_accountGroupLocalService = accountGroupLocalService;
 		_commerceChannelAccountEntryRelLocalService =
 			commerceChannelAccountEntryRelLocalService;
 		_commerceChannelLocalService = commerceChannelLocalService;
@@ -126,9 +126,8 @@ public class BaseCommerceContext implements CommerceContext {
 			return new long[0];
 		}
 
-		_commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				accountEntry.getAccountEntryId());
+		_commerceAccountGroupIds = _accountGroupLocalService.getAccountGroupIds(
+			accountEntry.getAccountEntryId());
 
 		return _commerceAccountGroupIds.clone();
 	}
@@ -261,10 +260,10 @@ public class BaseCommerceContext implements CommerceContext {
 	private AccountEntry _accountEntry;
 	private String[] _accountEntryAllowedTypes;
 	private final AccountEntryLocalService _accountEntryLocalService;
+	private final AccountGroupLocalService _accountGroupLocalService;
 	private long[] _commerceAccountGroupIds;
 	private CommerceAccountGroupServiceConfiguration
 		_commerceAccountGroupServiceConfiguration;
-	private final CommerceAccountHelper _commerceAccountHelper;
 	private final long _commerceAccountId;
 	private final CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;

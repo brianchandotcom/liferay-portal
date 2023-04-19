@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.layout.admin.util;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -101,7 +102,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 					Field.STATUS, WorkflowConstants.STATUS_APPROVED
 				).put(
 					"commerceAccountGroupIds",
-					_commerceAccountHelper.getCommerceAccountGroupIds(
+					_accountGroupLocalService.getAccountGroupIds(
 						accountEntry.getAccountEntryId())
 				).put(
 					"commerceChannelGroupId", groupId
@@ -194,6 +195,9 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 				alternateFriendlyURLs);
 		}
 	}
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

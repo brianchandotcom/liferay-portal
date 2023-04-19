@@ -15,7 +15,6 @@
 package com.liferay.commerce.shop.by.diagram.admin.web.internal.info.item.renderer;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
 import com.liferay.commerce.product.content.util.CPContentHelper;
@@ -24,6 +23,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.util.CSDiagramCPTypeHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;

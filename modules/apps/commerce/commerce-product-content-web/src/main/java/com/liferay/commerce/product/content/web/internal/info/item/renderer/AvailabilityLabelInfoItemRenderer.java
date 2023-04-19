@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.model.CPDefinitionInventory;
@@ -27,6 +26,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

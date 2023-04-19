@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.internal.data.source;
 
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -82,7 +82,7 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 
 		SearchContext searchContext =
 			CPDefinitionLinkSearchUtil.getCPDefinitionLinkSearchContext(
-				commerceContext.getAccountEntry(), _commerceAccountHelper,
+				commerceContext.getAccountEntry(), _accountGroupLocalService,
 				_portal.getCompanyId(httpServletRequest),
 				cpCatalogEntry.getCPDefinitionId(),
 				_cpDefinitionLinkTypeConfiguration.type());
@@ -101,7 +101,7 @@ public class DefinitionLinkTypeCPDataSourceImpl implements CPDataSource {
 	}
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

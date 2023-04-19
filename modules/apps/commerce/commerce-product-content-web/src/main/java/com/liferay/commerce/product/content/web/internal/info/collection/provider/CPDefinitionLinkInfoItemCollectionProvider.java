@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.info.collection.provider;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.product.catalog.CPQuery;
@@ -83,7 +83,7 @@ public class CPDefinitionLinkInfoItemCollectionProvider
 
 			SearchContext searchContext =
 				CPDefinitionLinkSearchUtil.getCPDefinitionLinkSearchContext(
-					accountEntry, _commerceAccountHelper,
+					accountEntry, _accountGroupLocalService,
 					serviceContext.getCompanyId(),
 					cpDefinition.getCPDefinitionId(),
 					_cpDefinitionLinkTypeConfiguration.type());
@@ -138,7 +138,7 @@ public class CPDefinitionLinkInfoItemCollectionProvider
 	}
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

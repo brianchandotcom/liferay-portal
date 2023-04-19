@@ -15,7 +15,7 @@
 package com.liferay.commerce.test.util.context;
 
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -23,6 +23,7 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -44,8 +45,8 @@ public class TestCustomCommerceContextFactory
 	@Override
 	public CommerceContext create(HttpServletRequest httpServletRequest) {
 		return new TestCustomCommerceContextHttp(
-			httpServletRequest, _commerceAccountHelper,
-			_commerceChannelAccountEntryRelLocalService,
+			httpServletRequest, _accountGroupLocalService,
+			_commerceAccountHelper, _commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
 			_commerceOrderHttpHelper, _configurationProvider, _portal);
 	}
@@ -57,7 +58,7 @@ public class TestCustomCommerceContextFactory
 
 		return new TestCustomCommerceContext(
 			companyId, commerceChannelGroupId, orderId, commerceAccountId,
-			_accountEntryLocalService, _commerceAccountHelper,
+			_accountEntryLocalService, _accountGroupLocalService,
 			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
 			_commerceOrderService, _configurationProvider);
@@ -65,6 +66,9 @@ public class TestCustomCommerceContextFactory
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

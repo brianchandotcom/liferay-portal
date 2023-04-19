@@ -17,7 +17,6 @@ package com.liferay.headless.commerce.punchout.internal.resource.v1_0;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceOrder;
@@ -30,6 +29,7 @@ import com.liferay.commerce.punchout.oauth2.provider.PunchOutAccessTokenProvider
 import com.liferay.commerce.punchout.oauth2.provider.model.PunchOutAccessToken;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.punchout.dto.v1_0.Cart;
 import com.liferay.headless.commerce.punchout.dto.v1_0.CartItem;

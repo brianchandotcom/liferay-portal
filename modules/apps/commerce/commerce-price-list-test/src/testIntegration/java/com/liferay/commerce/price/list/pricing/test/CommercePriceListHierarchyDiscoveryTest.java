@@ -19,7 +19,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
@@ -145,10 +144,10 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_group.getGroupId(), _commerceCurrency.getCode());
 
 		long[] commerceAccount3AccountGroups =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry4.getAccountEntryId());
 		long[] commerceAccount4AccountGroups =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry5.getAccountEntryId());
 
 		CommercePriceListTestUtil.addAccountToPriceList(
@@ -266,7 +265,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			discoveredPriceList.getCommercePriceListId());
 
 		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry1.getAccountEntryId());
 
 		CommercePriceList commerceAccountGroupPriceList =
@@ -379,7 +378,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		CommercePriceListTestUtil.addAccountGroupAndChannelPriceList(
 			catalog.getGroupId(),
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				_accountEntry1.getAccountEntryId()),
 			_commerceChannel1.getCommerceChannelId(), _TYPE);
 
@@ -581,9 +580,6 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private AccountGroupLocalService _accountGroupLocalService;
 
 	private CommerceCatalog _catalog;
-
-	@Inject
-	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;

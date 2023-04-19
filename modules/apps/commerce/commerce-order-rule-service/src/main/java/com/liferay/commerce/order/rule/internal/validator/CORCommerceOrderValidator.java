@@ -15,7 +15,7 @@
 package com.liferay.commerce.order.rule.internal.validator;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidator;
@@ -130,7 +130,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 		}
 
 		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
+			_accountGroupLocalService.getAccountGroupIds(
 				accountEntry.getAccountEntryId());
 
 		corEntries =
@@ -299,7 +299,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 	}
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

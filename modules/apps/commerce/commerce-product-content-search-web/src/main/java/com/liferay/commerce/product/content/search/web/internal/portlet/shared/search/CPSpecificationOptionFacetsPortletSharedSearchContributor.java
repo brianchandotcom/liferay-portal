@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.content.search.web.internal.portlet.shared.search;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.util.CPSpecificationOptionFacetsUtil;
@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.search.facet.SerializableFacet;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -179,7 +180,7 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 			if (accountEntry != null) {
 				searchContext.setAttribute(
 					"commerceAccountGroupIds",
-					_commerceAccountHelper.getCommerceAccountGroupIds(
+					_accountGroupLocalService.getAccountGroupIds(
 						accountEntry.getAccountEntryId()));
 			}
 		}
@@ -271,6 +272,9 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSpecificationOptionFacetsPortletSharedSearchContributor.class);
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

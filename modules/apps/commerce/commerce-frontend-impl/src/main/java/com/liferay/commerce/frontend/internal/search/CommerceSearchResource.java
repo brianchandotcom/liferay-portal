@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.frontend.internal.account.CommerceAccountResource;
@@ -40,6 +40,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -347,8 +348,7 @@ public class CommerceSearchResource {
 
 			attributes.put(
 				"commerceAccountGroupIds",
-				_commerceAccountHelper.getCommerceAccountGroupIds(
-					accountEntryId));
+				_accountGroupLocalService.getAccountGroupIds(accountEntryId));
 		}
 
 		searchContext.setAttributes(attributes);
@@ -404,6 +404,9 @@ public class CommerceSearchResource {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceSearchResource.class);
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

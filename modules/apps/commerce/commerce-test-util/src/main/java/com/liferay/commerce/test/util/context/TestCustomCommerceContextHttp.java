@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.test.util.context;
 
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.context.BaseCommerceContextHttp;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -22,6 +22,7 @@ import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,6 +36,7 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 
 	public TestCustomCommerceContextHttp(
 		HttpServletRequest httpServletRequest,
+		AccountGroupLocalService accountGroupLocalService,
 		CommerceAccountHelper commerceAccountHelper,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
@@ -44,7 +46,7 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 		ConfigurationProvider configurationProvider, Portal portal) {
 
 		super(
-			httpServletRequest, commerceAccountHelper,
+			httpServletRequest, accountGroupLocalService, commerceAccountHelper,
 			commerceChannelAccountEntryRelLocalService,
 			commerceChannelLocalService, commerceCurrencyLocalService,
 			commerceOrderHttpHelper, configurationProvider, portal);

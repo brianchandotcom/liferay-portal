@@ -16,8 +16,8 @@ package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -30,6 +30,7 @@ import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.internal.odata.entity.v1_0.ProductEntityModel;
@@ -126,8 +127,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
 				"commerceAccountGroupIds",
-				_commerceAccountHelper.getCommerceAccountGroupIds(
-					commerceAccountId)
+				_accountGroupLocalService.getAccountGroupIds(commerceAccountId)
 			).put(
 				"commerceChannelGroupId", commerceChannel.getGroupId()
 			).build());
@@ -260,6 +260,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

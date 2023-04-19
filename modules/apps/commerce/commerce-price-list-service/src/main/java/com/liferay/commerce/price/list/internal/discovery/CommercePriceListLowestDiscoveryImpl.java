@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.price.list.internal.discovery;
 
-import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -39,8 +39,7 @@ public class CommercePriceListLowestDiscoveryImpl
 
 		return _commercePriceListLocalService.getCommercePriceListByLowestPrice(
 			groupId, commerceAccountId,
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccountId),
+			_accountGroupLocalService.getAccountGroupIds(commerceAccountId),
 			commerceChannelId, commerceOrderTypeId, cpInstanceUuid, type);
 	}
 
@@ -50,7 +49,7 @@ public class CommercePriceListLowestDiscoveryImpl
 	}
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

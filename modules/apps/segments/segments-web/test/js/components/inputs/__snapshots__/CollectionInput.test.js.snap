@@ -4,7 +4,7 @@ exports[`CollectionInput renders collection type 1`] = `
 <DocumentFragment>
   <input
     aria-label="Test label: input-a-key"
-    class="criterion-input form-control"
+    class="form-control criterion-input"
     data-testid="collection-key-input"
     placeholder="key"
     type="text"
@@ -12,7 +12,7 @@ exports[`CollectionInput renders collection type 1`] = `
   />
   <input
     aria-label="Test label: input-a-value"
-    class="criterion-input form-control"
+    class="form-control criterion-input"
     data-testid="collection-value-input"
     placeholder="value"
     type="text"

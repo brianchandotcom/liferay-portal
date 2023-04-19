@@ -4,7 +4,7 @@ exports[`StringInput renders type string with options 1`] = `
 <DocumentFragment>
   <select
     aria-label="Test label: select-option"
-    class="form-control criterion-input form-control"
+    class="form-control criterion-input"
     data-testid="options-string"
   >
     <option
@@ -25,7 +25,7 @@ exports[`StringInput renders type string with options disabled 1`] = `
 <DocumentFragment>
   <select
     aria-label="Test label: select-option"
-    class="form-control criterion-input form-control"
+    class="form-control criterion-input"
     data-testid="options-string"
   >
     <option
@@ -47,7 +47,7 @@ exports[`StringInput renders type string with value 1`] = `
 <DocumentFragment>
   <input
     aria-label="Test label: input-a-value"
-    class="criterion-input form-control"
+    class="form-control criterion-input"
     data-testid="simple-string"
     type="text"
     value="defaultValue"
@@ -59,7 +59,7 @@ exports[`StringInput renders with type string 1`] = `
 <DocumentFragment>
   <input
     aria-label="Test label: input-a-value"
-    class="criterion-input form-control"
+    class="form-control criterion-input"
     data-testid="simple-string"
     type="text"
     value=""

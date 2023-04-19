@@ -76,7 +76,7 @@ exports[`SegmentEdit renders 1`] = `
             >
               <input
                 aria-label="untitled-segment"
-                class="field form-control form-control-inline language-value rounded"
+                class="form-control field form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 readonly=""
@@ -171,7 +171,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
             >
               <input
                 aria-label="untitled-segment"
-                class="field form-control form-control-inline language-value rounded"
+                class="form-control field form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 readonly=""
@@ -315,7 +315,7 @@ exports[`SegmentEdit renders with given values 1`] = `
             >
               <input
                 aria-label="untitled-segment"
-                class="field form-control form-control-inline language-value rounded"
+                class="form-control field form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 type="text"
@@ -345,7 +345,6 @@ exports[`SegmentEdit renders with given values 1`] = `
             >
               <button
                 class="text-capitalize btn btn-sm btn-primary"
-                disabled=""
                 type="submit"
               >
                 save
@@ -675,7 +674,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                             </span>
                             <select
                               aria-label="Value: select-property-operator-option"
-                              class="form-control criterion-input form-control operator-input"
+                              class="form-control criterion-input operator-input"
                             >
                               <option
                                 value="eq"
@@ -700,7 +699,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                             </select>
                             <input
                               aria-label="Value: input-a-value"
-                              class="criterion-input form-control"
+                              class="form-control criterion-input"
                               data-testid="simple-string"
                               type="text"
                               value="value"
@@ -850,7 +849,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
             >
               <input
                 aria-label="untitled-segment"
-                class="field form-control form-control-inline language-value rounded"
+                class="form-control field form-control-inline language-value rounded"
                 data-testid="localized-main-input"
                 placeholder="untitled-segment"
                 readonly=""

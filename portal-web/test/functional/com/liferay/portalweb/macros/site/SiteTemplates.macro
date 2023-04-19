@@ -29,7 +29,11 @@ definition {
 	}
 
 	macro addCP {
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = ${baseURL});
 
 		LexiconEntry.gotoAdd();
 

@@ -16,11 +16,10 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import javax.servlet.ServletContext;
 
@@ -59,17 +58,13 @@ public class LayoutCustomizationSettingsFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		Group group = layout.getGroup();
-
-		if (group == null) {
-			_log.error("Unable to display form for customization settings");
-		}
-
 		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
 			return false;
 		}
 
-		if (!group.isUser() && layout.isTypePortlet()) {
+		Group group = _groupLocalService.fetchGroup(layout.getGroupId());
+
+		if ((group != null) && !group.isUser() && layout.isTypePortlet()) {
 			return true;
 		}
 
@@ -81,8 +76,8 @@ public class LayoutCustomizationSettingsFormNavigatorEntry
 		return "/layout/customization_settings.jsp";
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutCustomizationSettingsFormNavigatorEntry.class);
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
 	private ServletContext _servletContext;

@@ -41,10 +41,22 @@ String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 
 		<aui:script>
 			<c:if test="<%= fileEntry != null %>">
-				Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo(
-					'<%= previewURL %>',
-					'<%= fileEntry.getFileEntryId() %>'
-				);
+				const onChangeLogo = Liferay.Util.getOpener()
+					.<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo;
+
+				if (onChangeLogo) {
+					Liferay.Util.getOpener().<%= HtmlUtil.escapeJS(randomNamespace) %>changeLogo(
+						'<%= previewURL %>',
+						'<%= fileEntry.getFileEntryId() %>'
+					);
+				}
+				else {
+					Liferay.Util.getOpener().Liferay.fire('changeLogo', {
+						previewURL: '<%= previewURL %>',
+						fileEntryId: '<%= fileEntry.getFileEntryId() %>',
+						tempImageFileName: '<%= HtmlUtil.escape(tempImageFileName) %>',
+					});
+				}
 			</c:if>
 
 			Liferay.Util.getWindow().hide();

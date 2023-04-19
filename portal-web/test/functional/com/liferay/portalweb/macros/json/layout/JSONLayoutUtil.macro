@@ -58,6 +58,9 @@ definition {
 		else if (${widgetName} == "Breadcrumb") {
 			var portletId = "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet";
 		}
+		else if (${widgetName} == "Calendar") {
+			var portletId = "com_liferay_calendar_web_portlet_CalendarPortlet";
+		}
 		else if (${widgetName} == "Category Facet") {
 			var portletId = "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet";
 		}

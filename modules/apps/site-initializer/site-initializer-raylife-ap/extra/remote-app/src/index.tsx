@@ -55,7 +55,6 @@ const RaylifeComponents: RaylifeComponentsType = {
 			<NewApplication />
 		</NewApplicationAutoContextProvider>
 	),
-	'no-route-selected': <NoRouteSelected />,
 	'notification-sidebar': <NotificationSidebar />,
 	'policies': <Policies />,
 	'policies-table': <PoliciesTable />,
@@ -70,9 +69,8 @@ type Props = {
 	route: any;
 };
 
-const DirectToCustomer: React.FC<Props> = ({route}) => {
-	return RaylifeComponents[route];
-};
+const DirectToCustomer: React.FC<Props> = ({route}) =>
+	RaylifeComponents[route] ?? <NoRouteSelected />;
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {

@@ -122,7 +122,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"description", "sourceFileName", "title"};
+		return new String[] {"description", "fileName", "title"};
 	}
 
 	@Override

@@ -165,7 +165,7 @@ public class DocumentDTOConverter
 					dtoConverterContext.getLocale());
 				siteId = GroupUtil.getSiteId(group);
 				sizeInBytes = fileEntry.getSize();
-				sourceFileName = fileEntry.getFileName();
+				fileName = fileEntry.getFileName();
 				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						DLFileEntry.class.getName(),

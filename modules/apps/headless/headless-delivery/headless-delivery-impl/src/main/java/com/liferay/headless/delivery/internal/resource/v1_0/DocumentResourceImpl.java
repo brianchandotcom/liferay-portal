@@ -378,18 +378,18 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		existingFileEntry = _moveDocument(
 			documentId, document, existingFileEntry);
 
-		String sourceFileName = null;
+		String fileName = null;
 		String title = null;
 		String description = null;
 
 		if (document != null) {
-			sourceFileName = document.getSourceFileName();
+			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
 		}
 
-		if (sourceFileName == null) {
-			sourceFileName = binaryFile.getFileName();
+		if (fileName == null) {
+			fileName = binaryFile.getFileName();
 		}
 
 		if (title == null) {
@@ -402,7 +402,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			_dlAppService.updateFileEntry(
-				documentId, sourceFileName, binaryFile.getContentType(), title,
+				documentId, fileName, binaryFile.getContentType(), title,
 				null, description, null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
 				existingFileEntry.getExpirationDate(),
@@ -549,28 +549,28 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			throw new BadRequestException("No file found in body");
 		}
 
-		String sourceFileName = null;
+		String fileName = null;
 		String title = null;
 		String description = null;
 
 		if (document != null) {
-			sourceFileName = document.getSourceFileName();
+			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
 		}
 
-		if (sourceFileName == null) {
-			sourceFileName = binaryFile.getFileName();
+		if (fileName == null) {
+			fileName = binaryFile.getFileName();
 		}
 
 		if (title == null) {
-			title = sourceFileName;
+			title = fileName;
 		}
 
 		return _toDocument(
 			_dlAppService.addFileEntry(
 				externalReferenceCode, repositoryId, documentFolderId,
-				sourceFileName, binaryFile.getContentType(), title, null,
+				fileName, binaryFile.getContentType(), title, null,
 				description, null, binaryFile.getInputStream(),
 				binaryFile.getSize(), null, null,
 				_createServiceContext(
@@ -962,18 +962,18 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		fileEntry = _moveDocument(
 			fileEntry.getFileEntryId(), document, fileEntry);
 
-		String sourceFileName = null;
+		String fileName = null;
 		String title = null;
 		String description = null;
 
 		if (document != null) {
-			sourceFileName = document.getSourceFileName();
+			fileName = document.getFileName();
 			title = document.getTitle();
 			description = document.getDescription();
 		}
 
-		if (sourceFileName == null) {
-			sourceFileName = binaryFile.getFileName();
+		if (fileName == null) {
+			fileName = binaryFile.getFileName();
 		}
 
 		if (title == null) {
@@ -982,7 +982,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			_dlAppService.updateFileEntry(
-				fileEntry.getFileEntryId(), sourceFileName,
+				fileEntry.getFileEntryId(), fileName,
 				binaryFile.getContentType(), title, null, description, null,
 				DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
 				binaryFile.getSize(), fileEntry.getExpirationDate(),

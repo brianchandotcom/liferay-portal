@@ -147,6 +147,8 @@ definition {
 		task ("When: Logout and login with OpenID Connect") {
 			User.logoutPG();
 
+			User.viewLoggedOutPG();
+
 			User.loginUserWithOpenIDConnectEnabledPG(
 				userEmailAddress = ${userEmailAddress},
 				userPassword = ${userPassword});

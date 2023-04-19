@@ -106,6 +106,53 @@ definition {
 		}
 	}
 
+	@description = "LPS-180070 - Verify creating a Commerce Product entry triggers an action to add a user"
+	@priority = 5
+	test CanAddUserAfterCreatingCommerceProductEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a Commerce Product object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Product");
+		}
+
+		task ("And given an action to add a new User after creating a Commerce Product entry") {
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "customAction",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "newusertest,newuser@test.com,newUserTest,newUserTest",
+				objectLabel = "User",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("When the user creates a Commerce Product entry") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
+
+		task ("Then the action is triggered and a user is added") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			LexiconEntry.viewEntryName(rowEntry = "newusertest");
+		}
+	}
+
 	@description = "LPS-139008 - Verify it is possible to cancel the creation of an Action"
 	@priority = 4
 	test CanCancelAction {

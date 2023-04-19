@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.frontend.js.web.internal.servlet.taglib.aui.PortletDataRendererImpl;
 import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.lang.ClassLoaderPool;
@@ -106,12 +105,6 @@ public class ComponentTagTest {
 
 	@Test
 	public void testDoEndTag() throws Exception {
-		Mockito.when(
-			ServicesProvider.getJSModuleLauncher()
-		).thenReturn(
-			Mockito.mock(JSModuleLauncher.class)
-		);
-
 		ComponentTag componentTag = new ComponentTag();
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();

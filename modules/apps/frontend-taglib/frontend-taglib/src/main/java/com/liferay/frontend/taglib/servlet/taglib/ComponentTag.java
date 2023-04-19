@@ -15,9 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.js.module.launcher.JSModuleDependency;
-import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
-import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -40,7 +37,6 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -143,19 +139,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			servletContext = getServletContext();
 		}
 
-		try {
-			return NPMResolvedPackageNameUtil.get(servletContext);
-		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			JSModuleResolver jsModuleResolver =
-				ServicesProvider.getJSModuleResolver();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(unsupportedOperationException);
-			}
-
-			return jsModuleResolver.resolveModule(servletContext, null);
-		}
+		return NPMResolvedPackageNameUtil.get(servletContext);
 	}
 
 	protected boolean isPositionInline() {
@@ -263,9 +247,6 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	private void _renderJavaScript() throws IOException {
-		JSModuleLauncher jsModuleLauncher =
-			ServicesProvider.getJSModuleLauncher();
-
 		String module = getModule();
 
 		String variableName = _getVariableName(module);
@@ -274,50 +255,33 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 		HttpServletRequest httpServletRequest = getRequest();
 
-		if (jsModuleLauncher.isValidModule(module)) {
-			List<JSModuleDependency> jsModuleDependencies = Arrays.asList(
-				new JSModuleDependency(module, variableName));
-
-			if (isPositionInline()) {
-				jsModuleLauncher.writeScript(
-					pageContext.getOut(), jsModuleDependencies, javaScriptCode);
-			}
-			else {
-				jsModuleLauncher.appendPortletScript(
-					httpServletRequest,
-					PortalUtil.getPortletId(httpServletRequest),
-					jsModuleDependencies, javaScriptCode);
-			}
-		}
-		else {
-			if (isPositionInline()) {
-				ScriptData scriptData = new ScriptData();
-
-				scriptData.append(
-					PortalUtil.getPortletId(httpServletRequest), javaScriptCode,
-					module + " as " + variableName, ScriptData.ModulesType.ES6);
-
-				JspWriter jspWriter = pageContext.getOut();
-
-				scriptData.writeTo(jspWriter);
-
-				return;
-			}
-
-			ScriptData scriptData = (ScriptData)httpServletRequest.getAttribute(
-				WebKeys.AUI_SCRIPT_DATA);
-
-			if (scriptData == null) {
-				scriptData = new ScriptData();
-
-				httpServletRequest.setAttribute(
-					WebKeys.AUI_SCRIPT_DATA, scriptData);
-			}
+		if (isPositionInline()) {
+			ScriptData scriptData = new ScriptData();
 
 			scriptData.append(
 				PortalUtil.getPortletId(httpServletRequest), javaScriptCode,
 				module + " as " + variableName, ScriptData.ModulesType.ES6);
+
+			JspWriter jspWriter = pageContext.getOut();
+
+			scriptData.writeTo(jspWriter);
+
+			return;
 		}
+
+		ScriptData scriptData = (ScriptData)httpServletRequest.getAttribute(
+			WebKeys.AUI_SCRIPT_DATA);
+
+		if (scriptData == null) {
+			scriptData = new ScriptData();
+
+			httpServletRequest.setAttribute(
+				WebKeys.AUI_SCRIPT_DATA, scriptData);
+		}
+
+		scriptData.append(
+			PortalUtil.getPortletId(httpServletRequest), javaScriptCode,
+			module + " as " + variableName, ScriptData.ModulesType.ES6);
 	}
 
 	private static final String _UNNAMED_COMPONENT_NAME =

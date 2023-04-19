@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.taglib.internal.util;
 
-import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
-import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
@@ -82,22 +80,10 @@ public class ServicesProvider {
 			});
 	}
 
-	public static JSModuleLauncher getJSModuleLauncher() {
-		return _jsModuleLauncherSnapshot.get();
-	}
-
-	public static JSModuleResolver getJSModuleResolver() {
-		return _jsModuleResolverSnapshot.get();
-	}
-
 	private static final Snapshot<AbsolutePortalURLBuilderFactory>
 		_absolutePortalURLBuilderFactorySnapshot = new Snapshot<>(
 			ServicesProvider.class, AbsolutePortalURLBuilderFactory.class);
 	private static final DCLSingleton<Map<String, Bundle>>
 		_bundleMapDCLSingleton = new DCLSingleton<>();
-	private static final Snapshot<JSModuleLauncher> _jsModuleLauncherSnapshot =
-		new Snapshot<>(ServicesProvider.class, JSModuleLauncher.class);
-	private static final Snapshot<JSModuleResolver> _jsModuleResolverSnapshot =
-		new Snapshot<>(ServicesProvider.class, JSModuleResolver.class);
 
 }

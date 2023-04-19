@@ -344,6 +344,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 				modelPermissionsParameterMap, null);
 
+			_resourcePermissionLocalService.deleteResourcePermissions(
+				layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()));
+
 			_resourcePermissionLocalService.addModelResourcePermissions(
 				layout.getCompanyId(), siteId, contextUser.getUserId(),
 				Layout.class.getName(), String.valueOf(layout.getPlid()),

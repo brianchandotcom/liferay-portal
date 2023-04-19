@@ -198,39 +198,41 @@ definition {
 	@priority = 4
 	test CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterDeleteTrigger {
 		task ("Given: Two custom objects with a text field") {
-			for (var objectNum : list "1,2") {
+			for (var letters : list "A,B") {
 				ObjectAdmin.addObjectViaAPI(
-					labelName = "Custom Object 178405${objectNum}",
-					objectName = "CustomObject170405${objectNum}",
-					pluralLabelName = "Custom Objects 178405${objectNum}");
+					labelName = "Custom Object ${letters} 178405",
+					objectName = "CustomObject${letters}178405",
+					pluralLabelName = "Custom Objects ${letters} 178405");
+			}
 
+			for (var letters : list "A,B") {
 				ObjectAdmin.addObjectFieldViaAPI(
 					fieldBusinessType = "Text",
-					fieldLabelName = "Custom Text Field",
+					fieldLabelName = "Custom Field",
 					fieldName = "customObjectField",
 					fieldType = "String",
 					isRequired = "false",
-					objectName = "CustomObject178405${objectNum}");
+					objectName = "CustomObject${letters}178405");
 
-				ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject178405${objectNum}");
+				ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject${letters}178405");
 			}
 		}
 
 		task ("And Given: The custom objects has a On Afer Delete Trigger action") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object 1784051");
+			ObjectPortlet.selectCustomObject(label = "Custom Object A 178405");
 
 			ObjectAdmin.goToActionsTab();
 
 			ObjectAdmin.addObjectActionViaUI(
 				actionLabel = "Custom Action",
 				active = "true",
-				fieldName = "Custom Text Field",
+				fieldName = "Custom Field",
 				inputExpression = "oldValue('customObjectField') == 'Entry Test'",
 				inputMethod = "true",
 				inputValue = "Works!",
-				objectLabel = "Custom Object 1784052",
+				objectLabel = "Custom Object B 178405",
 				thenAction = "Add an Object Entry",
 				whenAction = "On After Delete");
 
@@ -242,23 +244,23 @@ definition {
 		task ("When an entry is created and then deleted") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
-				objectName = "CustomObject1784051",
+				objectName = "CustomObjectA178405",
 				value = "Entry Test");
 
 			ObjectAdmin.deleteObjectEntryViaAPI(
 				fieldName = "customObjectField",
-				objectName = "CustomObject1784051",
+				objectName = "CustomObjectA178405",
 				value = "Entry Test");
 		}
 
 		task ("Then the action will be triggered after deleting an entry.") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject178405-2");
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB178405");
 
 			ObjectPortlet.viewEntry(entry = "Works!");
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object 178405-1");
+			ObjectPortlet.selectCustomObject(label = "Custom Object A 178405");
 
 			ObjectAdmin.goToActionsTab();
 

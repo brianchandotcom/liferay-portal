@@ -3509,6 +3509,11 @@ public class DataFactory {
 		return ddmTemplateLinkModel;
 	}
 
+	public UserModel newDefaultAdminUserModel() {
+		return newUserModel(
+			_counter.get(), "Test", "Test", "Test", UserConstants.TYPE_REGULAR);
+	}
+
 	public AssetVocabularyModel newDefaultAssetVocabularyModel() {
 		return newAssetVocabularyModel(
 			_globalGroupId, _guestUserId, null,

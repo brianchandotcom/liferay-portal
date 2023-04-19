@@ -366,9 +366,10 @@ public abstract class BaseObjectEntryResourceImpl
 		}
 
 		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties = objectEntry.getProperties();
+			Map<String, Object> properties =
+				existingobjectEntry.getProperties();
 
-			properties.putAll(existingObjectEntry.getProperties());
+			properties.putAll(objectEntry.getProperties());
 
 			existingObjectEntry.setProperties(properties);
 		}
@@ -589,9 +590,10 @@ public abstract class BaseObjectEntryResourceImpl
 		}
 
 		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties = objectEntry.getProperties();
+			Map<String, Object> properties =
+				existingobjectEntry.getProperties();
 
-			properties.putAll(existingObjectEntry.getProperties());
+			properties.putAll(objectEntry.getProperties());
 
 			existingObjectEntry.setProperties(properties);
 		}
@@ -836,9 +838,10 @@ public abstract class BaseObjectEntryResourceImpl
 		}
 
 		if (objectEntry.getProperties() != null) {
-			Map<String, Object> properties = objectEntry.getProperties();
+			Map<String, Object> properties =
+				existingobjectEntry.getProperties();
 
-			properties.putAll(existingObjectEntry.getProperties());
+			properties.putAll(objectEntry.getProperties());
 
 			existingObjectEntry.setProperties(properties);
 		}

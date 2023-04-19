@@ -637,8 +637,6 @@ public abstract class BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_localEntityManager", credentialResolver);
 
-		metadataManagerImpl.setMetadataResolver(new MockMetadataResolver());
-
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_parserPool", parserPool);
 		ReflectionTestUtil.setFieldValue(
@@ -649,6 +647,12 @@ public abstract class BaseSamlTestCase {
 
 		ReflectionTestUtil.invoke(
 			metadataManagerImpl, "activate", new Class<?>[0]);
+
+		ReflectionTestUtil.invoke(
+			metadataManagerImpl.getMetadataResolver(), "doDestroy",
+			new Class<?>[0]);
+
+		metadataManagerImpl.setMetadataResolver(new MockMetadataResolver());
 	}
 
 	private void _setupParserPool() {

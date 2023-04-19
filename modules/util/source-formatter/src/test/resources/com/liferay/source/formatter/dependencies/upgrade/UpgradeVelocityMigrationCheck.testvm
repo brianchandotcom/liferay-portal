@@ -7,7 +7,7 @@
 
 ## #set ($indexFormat = $dateFormatFactory.getSimpleDateFormat('EEE, dd MMM yyyy hh:mm:ss Z'))
 ## #set ($modified_date = $indexFormat.parse($reserved-article-display-date.getData()))
-## #set ($modified_date = $indexFormat.parse($$reserved-article-modified-date.getData()))
+## #set ($modified_date = $indexFormat.parse($reserved-article-modified-date.getData()))
 ## #set ($mod_date = $dateTool.format("d MMMM yyyy H:m",$modified_date))
 
 <html lang="$w3c_language_id">
@@ -42,4 +42,24 @@
             #end
         </ul>
     #end
+#end
+
+#if ("${type.getData()}" !="" && "${type.getData()}" =="R1C2")
+	<div class="triggerBanner banner-R1C2">
+	    <a href="${linkHref}" target="${linkTarget}" style="text-decoration:none">
+			<p class="g-font-klm r1c2-More">${languageUtil.get(${locale}, "Read more")} ></p>
+		</a>
+	</div>
+#elseif ("${type.getData()}" !="" && "${type.getData()}" =="R1C1")
+	<div class="triggerBanner banner-R1C1">
+		<a href="${linkHref}" target="${linkTarget}" style="text-decoration:none">
+			<p class="g-font-klm r1c1-More">${languageUtil.get(${locale}, "Read more")} ></p>
+		</a>
+	</div>
+#else
+	<div class="triggerBanner banner-R1C1">
+		<a href="${linkHref}" target="${linkTarget}" style="text-decoration:none">
+			<p class="g-font-klm r1c1-More">${languageUtil.get(${locale}, "Read more")} ></p>
+		</a>
+	</div>
 #end

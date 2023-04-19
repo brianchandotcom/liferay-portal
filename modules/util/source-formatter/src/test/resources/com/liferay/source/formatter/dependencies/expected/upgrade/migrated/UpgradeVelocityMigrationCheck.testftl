@@ -7,7 +7,7 @@
 
 <#-- <#assign indexFormat = dateFormatFactory.getSimpleDateFormat('EEE, dd MMM yyyy hh:mm:ss Z') /> -->
 <#-- <#assign modified_date = indexFormat.parse(reserved-article-display-date.getData()) /> -->
-<#-- <#assign modified_date = indexFormat.parse($reserved-article-modified-date.getData()) /> -->
+<#-- <#assign modified_date = indexFormat.parse(reserved-article-modified-date.getData()) /> -->
 <#-- <#assign mod_date = dateTool.format("d MMMM yyyy H:m",modified_date) /> -->
 
 <html lang="${w3c_language_id}">
@@ -23,23 +23,43 @@
 </html>
 
 #macro( navigationBar  nav_item )
-    #if (nav_item.hasChildren())
+    <#if nav_item.hasChildren()>
         <ul class="child-menu">
             #foreach (nav_child in nav_item.getChildren())
-                #if (nav_child.isSelected())
+                <#if nav_child.isSelected()>
                     <li class="selected">
                     <a href="${nav_child.getURL()}" ${nav_child.getTarget()}>${nav_child.getName()}</a>
                     #navigationBar( nav_child  )
-                #else
+                <#else>
                     <li>
                     <a href="${nav_child.getURL()}" ${nav_child.getTarget()}>${nav_child.getName()}</a>
                     #navigationBar( nav_child  )
-                #end
-                #if (nav_child.hasChildren())
+                </#if>
+                <#if nav_child.hasChildren()>
                     <i class="icon-caret-down" onclick="toggleMobileMenu(event)"></i>
-                #end
+                </#if>
                 </li>
             #end
         </ul>
-    #end
+    </#if>
 #end
+
+<#if "${type.getData()}" !="" && "${type.getData()}" =="R1C2">
+	<div class="triggerBanner banner-R1C2">
+	    <a href="${linkHref}" target="${linkTarget}" style="text-decoration:none">
+			<p class="g-font-klm r1c2-More">${languageUtil.get(${locale}, "Read more")} ></p>
+		</a>
+	</div>
+<#elseif "${type.getData()}" !="" && "${type.getData()}" =="R1C1">
+	<div class="triggerBanner banner-R1C1">
+		<a href="${linkHref}" target="${linkTarget}" style="text-decoration:none">
+			<p class="g-font-klm r1c1-More">${languageUtil.get(${locale}, "Read more")} ></p>
+		</a>
+	</div>
+<#else>
+	<div class="triggerBanner banner-R1C1">
+		<a href="${linkHref}" target="${linkTarget}" style="text-decoration:none">
+			<p class="g-font-klm r1c1-More">${languageUtil.get(${locale}, "Read more")} ></p>
+		</a>
+	</div>
+</#if>

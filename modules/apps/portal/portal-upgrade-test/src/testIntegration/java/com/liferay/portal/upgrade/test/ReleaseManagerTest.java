@@ -24,6 +24,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -33,6 +34,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Luis Ortiz
@@ -45,6 +47,13 @@ public class ReleaseManagerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@After
+	public void tearDown() throws Exception {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
+
 	@Test
 	public void testCheck() throws Exception {
 		Assert.assertTrue(_releaseManager.getStatus());
@@ -56,7 +65,7 @@ public class ReleaseManagerTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			UpgradeStepRegistrator.class,
 			new ReleaseManagerTest.TestUpgradeStepRegistrator(), null);
 
@@ -101,6 +110,8 @@ public class ReleaseManagerTest {
 
 	@Inject
 	private volatile ReleaseManager _releaseManager;
+
+	private ServiceRegistration<UpgradeStepRegistrator> _serviceRegistration;
 
 	private static class TestUpgradeStepRegistrator
 		implements UpgradeStepRegistrator {

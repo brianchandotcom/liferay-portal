@@ -18,9 +18,9 @@
 
 <%
 String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:defaultLogoURL");
-String imageURL = (String)request.getAttribute("liferay-frontend:logo-selector:imageURL");
+String logoURL = (String)request.getAttribute("liferay-frontend:logo-selector:logoURL");
 String randomNamespace = (String)request.getAttribute("liferay-frontend:logo-selector:randomNamespace");
-String uploadImageURL = (String)request.getAttribute("liferay-frontend:logo-selector:uploadImageURL");
+String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:selectLogoURL");
 
 long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 %>
@@ -32,9 +32,9 @@ long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 			HashMapBuilder.<String, Object>put(
 				"defaultLogoURL", defaultLogoURL
 			).put(
-				"logoURL", imageURL
+				"logoURL", logoURL
 			).put(
-				"selectLogoURL", uploadImageURL
+				"selectLogoURL", selectLogoURL
 			).build()
 		%>'
 	/>

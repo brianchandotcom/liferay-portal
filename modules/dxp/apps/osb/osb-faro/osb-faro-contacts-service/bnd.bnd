@@ -1,5 +1,6 @@
 Bundle-Name: Liferay OSB Faro Contacts Service
 Bundle-SymbolicName: com.liferay.osb.faro.contacts.service
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.0
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
+-dsannotations-options: inherit

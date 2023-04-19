@@ -88,7 +88,6 @@ definition {
 					},
 					"name": "${name}",
 					"objectFields": [{
-						"DBType": "String",
 						"businessType": "Text",
 						"indexed": true,
 						"indexedAsKeyword": true,
@@ -97,7 +96,7 @@ definition {
 						},
 						"name": "${requiredStringFieldName}",
 						"required": true,
-						"dbtype": "String"
+						"DBType": "String"
 					}],
 					"pluralLabel": {
 						"en_US": "${en_US_plural_label}"
@@ -754,6 +753,28 @@ definition {
 		return ${relationshipName};
 	}
 
+	macro createRelationshipWithObjectDefinitionNames {
+		Variables.assertDefined(parameterList = "${childObjectName},${deletionType},${name},${parentObjectName},${type}");
+
+		if (!(isSet(en_US_label))) {
+			var en_US_label = ${name};
+		}
+
+		var childObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${childObjectName});
+		var parentObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${parentObjectName});
+
+		var relationshipName = ObjectDefinitionAPI.createRelationship(
+			deletionType = ${deletionType},
+			en_US_label = ${en_US_label},
+			name = ${name},
+			objectDefinitionId1 = ${parentObjectId},
+			objectDefinitionId2 = ${childObjectId},
+			type = ${type},
+			virtualHost = ${virtualHost});
+
+		return ${relationshipName};
+	}
+
 	macro deleteObjectEntry {
 		ObjectDefinitionAPI._deleteObjectEntry(
 			en_US_plural_label = ${en_US_plural_label},
@@ -841,10 +862,18 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var curl = '''
-			${portalURL}/o/c/${en_US_plural_label_lowercase}/ \
-				-u test@liferay.com:test
-		''';
+		if (isSet(parameter)) {
+			var curl = '''
+				${portalURL}/o/c/${en_US_plural_label_lowercase}?${parameter} \
+					-u test@liferay.com:test
+			''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/c/${en_US_plural_label_lowercase}/ \
+					-u test@liferay.com:test
+			''';
+		}
 
 		if (isSet(token)) {
 			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
@@ -908,11 +937,74 @@ definition {
 			relationshipId = ${relationshipId});
 	}
 
+	macro postObjectDefinitionObjectField {
+		Variables.assertDefined(parameterList = "${dBType},${businessType},${name},${objectDefinitionName}");
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(en_US_label))) {
+			var en_US_label = ${name};
+		}
+
+		if (!(isSet(required))) {
+			var required = "false";
+		}
+
+		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectDefinitionName});
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-H accept: application/json \
+				-d {
+					"DBType": "${dBType}",
+					"businessType": "${businessType}",
+					"label": {
+						"en_US": "${en_US_label}"
+					},
+					"name": "${name}",
+					"required": ${required}
+				}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro relateObjectEntries {
 		var curl = ObjectDefinitionAPI._curlObjectEntriesRelationship(
 			en_US_plural_label = ${en_US_plural_label},
 			objectEntry1 = ${objectEntry1},
 			objectEntry2 = ${objectEntry2},
+			relationshipName = ${relationshipName},
+			virtualHost = ${virtualHost});
+
+		var response = JSONCurlUtil.put(${curl});
+
+		return ${response};
+	}
+
+	macro relateObjectEntriesByName {
+		var childEntryId = CustomObjectAPI.getObjectEntryIdByName(
+			en_US_plural_label = ${child_plural_label},
+			name = ${childEntryName});
+		var parentEntryId = CustomObjectAPI.getObjectEntryIdByName(
+			en_US_plural_label = ${parent_plural_label},
+			name = ${parentEntryName});
+
+		var curl = ObjectDefinitionAPI._curlObjectEntriesRelationship(
+			en_US_plural_label = ${parent_plural_label},
+			objectEntry1 = ${parentEntryId},
+			objectEntry2 = ${childEntryId},
 			relationshipName = ${relationshipName},
 			virtualHost = ${virtualHost});
 

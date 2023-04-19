@@ -12,7 +12,6 @@ import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/Pu
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {getCompanyId} from '../../liferay/constants';
 import {
-	getAccounts,
 	getChannels,
 	getMyUserAccount,
 	getOrders,
@@ -130,21 +129,34 @@ export function PurchasedAppsDashboardPage() {
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const accountsResponse = await getAccounts();
+			const userAccountsResponse = await getUserAccounts();
 
-			const accountsList = accountsResponse.items.map(
-				(account: Account) => {
+			const userAccount = userAccountsResponse.items.map(
+				(accountBrief: AccountBriefProps) => {
 					return {
-						externalReferenceCode: account.externalReferenceCode,
-						id: account.id,
-						name: account.name,
+						externalReferenceCode: accountBrief.externalReferenceCode,
+						id: accountBrief.id,
+						name: accountBrief.name,
 					} as Account;
 				}
 			);
 
-			setAccounts(accountsList);
-			setSelectedAccount(accountsList[0]);
+			const businessAccounts = userAccountsResponse.items[0].accountBriefs.map(
+				(accountBrief: AccountBriefProps) => {
+					return {
+						externalReferenceCode: accountBrief.externalReferenceCode,
+						id: accountBrief.id,
+						name: accountBrief.name,
+					} as Account;
+				}
+			);
+
+			const accounts = [...userAccount, ...businessAccounts]
+
+			setAccounts(accounts);
+			setSelectedAccount(accounts[0]);
 		};
+
 		makeFetch();
 	}, []);
 

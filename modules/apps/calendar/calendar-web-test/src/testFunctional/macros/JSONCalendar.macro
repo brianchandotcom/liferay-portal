@@ -1,0 +1,15 @@
+definition {
+
+	macro tearDownBookings {
+		var calendarIdList = JSONCalendarAPI.searchAllCalendars();
+
+		for (var calendarId : list ${calendarIdList}) {
+			var calendarBookingIdList = JSONCalendarAPI.getCalendarBookings(calendarId = ${calendarId});
+
+			for (var calendarBookingId : list ${calendarBookingIdList}) {
+				JSONCalendarAPI.deleteCalendarBooking(calendarBookingId = ${calendarBookingId});
+			}
+		}
+	}
+
+}

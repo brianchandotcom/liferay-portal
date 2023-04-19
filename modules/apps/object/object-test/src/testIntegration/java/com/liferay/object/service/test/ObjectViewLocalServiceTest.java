@@ -92,7 +92,7 @@ public class ObjectViewLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = _addCustomObjectDefinition();
+		_objectDefinition = _addObjectDefinition();
 	}
 
 	@Test
@@ -135,7 +135,7 @@ public class ObjectViewLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = _addCustomObjectDefinition();
+		_objectDefinition = _addObjectDefinition();
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),
@@ -386,7 +386,7 @@ public class ObjectViewLocalServiceTest {
 		_objectViewLocalService.deleteObjectView(objectView.getObjectViewId());
 	}
 
-	private ObjectDefinition _addCustomObjectDefinition() throws Exception {
+	private ObjectDefinition _addObjectDefinition() throws Exception {
 		ListTypeDefinition listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),

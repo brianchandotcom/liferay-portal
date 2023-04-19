@@ -95,7 +95,18 @@ definition {
 			}
 		}
 
+		var marketingDirectorReviewValue = 14999;
 		var totalMDFRequestAmount = ${totalCostOfExpense} / 2;
+		var marketingDirectorReviewCondition = MathUtil.isGreaterThan(${totalMDFRequestAmount}, ${marketingDirectorReviewValue});
+
+		if (${marketingDirectorReviewCondition} == "true") {
+			var mdfRequestStatus = "Marketing Director Review";
+		} else {
+			var mdfRequestStatus = "Pending Marketing Review";
+		}
+
+		var mdfRequestStatusKey = StringUtil.lowerCaseFirstLetter(${mdfRequestStatus});
+		var mdfRequestStatusKey = StringUtil.replace(${mdfRequestStatusKey}, " ", "");
 
 		var mdfExternalReferenceCode = JSONPRMAPI.addMDFSf(
 			accountEntryName = ${accountEntryName},
@@ -107,7 +118,9 @@ definition {
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions},
 			totalCostOfExpense = ${totalCostOfExpense},
-			totalMDFRequestAmount = ${totalMDFRequestAmount});
+			totalMDFRequestAmount = ${totalMDFRequestAmount},
+			mdfRequestStatusKey = ${mdfRequestStatusKey},
+			mdfRequestStatus = ${mdfRequestStatus});
 
 		var requestId = JSONPRMAPI.addMDF(
 			accountEntryName = ${accountEntryName},
@@ -120,6 +133,8 @@ definition {
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions},
 			totalCostOfExpense = ${totalCostOfExpense},
+			mdfRequestStatus = ${mdfRequestStatus},
+			mdfRequestStatusKey = ${mdfRequestStatusKey},
 			totalMDFRequestAmount = ${totalMDFRequestAmount},
 			userEmailAddress = ${userEmailAddress});
 

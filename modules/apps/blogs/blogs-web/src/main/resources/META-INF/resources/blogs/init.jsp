@@ -16,4 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.blogs.web.internal.display.context.BlogsViewEntryDisplayContext" %>
+
 <%@ include file="/blogs/init-ext.jsp" %>

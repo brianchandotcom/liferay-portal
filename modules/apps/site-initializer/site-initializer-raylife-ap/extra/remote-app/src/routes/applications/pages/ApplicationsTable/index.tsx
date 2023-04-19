@@ -178,8 +178,12 @@ const ApplicationsTable = () => {
 	const [filterProductCheck, setFilterProductCheck] = useState<string[]>([]);
 	const [filterStatusCheck, setFilterStatusCheck] = useState<string[]>([]);
 	const [filterCheckedLabel, setFilterCheckedLabel] = useState<string[]>([]);
-	const [checkedStateProduct, setCheckedStateProduct] = useState<any>();
-	const [checkedStateStatus, setCheckedStateStatus] = useState<any>();
+	const [checkedStateProduct, setCheckedStateProduct] = useState<
+		boolean[] | any
+	>([]);
+	const [checkedStateStatus, setCheckedStateStatus] = useState<
+		boolean[] | any
+	>([]);
 
 	const filterSearch = !lastNameSearched
 		? `contains(firstName,'${firstNameSearched}') or contains(lastName,'${firstNameSearched}') or contains(email, '${firstNameSearched}') or contains(externalReferenceCode, '${firstNameSearched}')`
@@ -628,6 +632,7 @@ const ApplicationsTable = () => {
 								onKeyDown={handleKeyDown}
 								placeholder="Search for..."
 								type="text"
+								value={searchInput}
 							/>
 						</ClayInput.GroupItem>
 
@@ -682,7 +687,7 @@ const ApplicationsTable = () => {
 											checked={
 												checkedStateProduct[
 													checkedIndex
-												]
+												] ?? false
 											}
 											key={checkedIndex}
 											label={
@@ -721,7 +726,9 @@ const ApplicationsTable = () => {
 									) => (
 										<ClayCheckbox
 											checked={
-												checkedStateStatus[checkedIndex]
+												checkedStateStatus[
+													checkedIndex
+												] ?? false
 											}
 											key={checkedIndex}
 											label={

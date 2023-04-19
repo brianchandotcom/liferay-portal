@@ -792,6 +792,7 @@ const ClaimsTable = () => {
 								onKeyDown={handleKeyDown}
 								placeholder="Search for..."
 								type="text"
+								value={searchInput}
 							/>
 						</ClayInput.GroupItem>
 
@@ -846,7 +847,7 @@ const ClaimsTable = () => {
 											checked={
 												checkedStateProduct[
 													checkedIndex
-												]
+												] ?? false
 											}
 											key={checkedIndex}
 											label={
@@ -885,7 +886,9 @@ const ClaimsTable = () => {
 									) => (
 										<ClayCheckbox
 											checked={
-												checkedStateStatus[checkedIndex]
+												checkedStateStatus[
+													checkedIndex
+												] ?? false
 											}
 											key={checkedIndex}
 											label={

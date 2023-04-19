@@ -668,6 +668,7 @@ const PoliciesTable = () => {
 								onKeyDown={handleKeyDown}
 								placeholder="Search for..."
 								type="text"
+								value={searchInput}
 							/>
 						</ClayInput.GroupItem>
 
@@ -722,7 +723,7 @@ const PoliciesTable = () => {
 											checked={
 												checkedStateProduct[
 													checkedIndex
-												]
+												] ?? false
 											}
 											key={checkedIndex}
 											label={
@@ -761,7 +762,9 @@ const PoliciesTable = () => {
 									) => (
 										<ClayCheckbox
 											checked={
-												checkedStateStatus[checkedIndex]
+												checkedStateStatus[
+													checkedIndex
+												] ?? false
 											}
 											key={checkedIndex}
 											label={

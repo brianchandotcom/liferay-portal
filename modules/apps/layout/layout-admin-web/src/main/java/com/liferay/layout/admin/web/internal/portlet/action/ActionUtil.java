@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,9 +42,9 @@ import javax.portlet.ActionRequest;
 public class ActionUtil {
 
 	public static void deleteThemeSettingsProperties(
-		UnicodeProperties typeSettingsUnicodeProperties, String device) {
+		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
+		String keyPrefix = ThemeSettingImpl.namespaceProperty("regular");
 
 		Set<String> keys = typeSettingsUnicodeProperties.keySet();
 
@@ -86,62 +85,55 @@ public class ActionUtil {
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 
-		String[] devices = StringUtil.split(
-			ParamUtil.getString(actionRequest, "devices"));
+		String deviceThemeId = ParamUtil.getString(
+			actionRequest, "regularThemeId");
+		String deviceColorSchemeId = ParamUtil.getString(
+			actionRequest, "regularColorSchemeId");
+		String deviceCss = ParamUtil.getString(actionRequest, "regularCss");
 
-		for (String device : devices) {
-			String deviceThemeId = ParamUtil.getString(
-				actionRequest, device + "ThemeId");
-			String deviceColorSchemeId = ParamUtil.getString(
-				actionRequest, device + "ColorSchemeId");
-			String deviceCss = ParamUtil.getString(
-				actionRequest, device + "Css");
+		boolean deviceInheritLookAndFeel = ParamUtil.getBoolean(
+			actionRequest, "regularInheritLookAndFeel");
 
-			boolean deviceInheritLookAndFeel = ParamUtil.getBoolean(
-				actionRequest, device + "InheritLookAndFeel");
+		if (deviceInheritLookAndFeel) {
+			deviceThemeId = ThemeFactoryUtil.getDefaultRegularThemeId(
+				companyId);
+			deviceColorSchemeId = StringPool.BLANK;
 
-			if (deviceInheritLookAndFeel) {
-				deviceThemeId = ThemeFactoryUtil.getDefaultRegularThemeId(
-					companyId);
-				deviceColorSchemeId = StringPool.BLANK;
-
-				deleteThemeSettingsProperties(
-					typeSettingsUnicodeProperties, device);
-			}
-			else if (Validator.isNotNull(deviceThemeId)) {
-				deviceColorSchemeId = getColorSchemeId(
-					companyId, deviceThemeId, deviceColorSchemeId);
-
-				updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsUnicodeProperties,
-					device, deviceThemeId, true);
-			}
-
-			long groupId = liveGroupId;
-
-			if (stagingGroupId > 0) {
-				groupId = stagingGroupId;
-			}
-
-			LayoutServiceUtil.updateLayout(
-				groupId, privateLayout, layoutId,
-				typeSettingsUnicodeProperties.toString());
-
-			LayoutServiceUtil.updateLookAndFeel(
-				groupId, privateLayout, layoutId, deviceThemeId,
-				deviceColorSchemeId, deviceCss);
+			deleteThemeSettingsProperties(typeSettingsUnicodeProperties);
 		}
+		else if (Validator.isNotNull(deviceThemeId)) {
+			deviceColorSchemeId = getColorSchemeId(
+				companyId, deviceThemeId, deviceColorSchemeId);
+
+			updateThemeSettingsProperties(
+				actionRequest, companyId, typeSettingsUnicodeProperties,
+				deviceThemeId, true);
+		}
+
+		long groupId = liveGroupId;
+
+		if (stagingGroupId > 0) {
+			groupId = stagingGroupId;
+		}
+
+		LayoutServiceUtil.updateLayout(
+			groupId, privateLayout, layoutId,
+			typeSettingsUnicodeProperties.toString());
+
+		LayoutServiceUtil.updateLookAndFeel(
+			groupId, privateLayout, layoutId, deviceThemeId,
+			deviceColorSchemeId, deviceCss);
 	}
 
 	public static UnicodeProperties updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId,
-			UnicodeProperties typeSettingsUnicodeProperties, String device,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String deviceThemeId, boolean layout)
 		throws Exception {
 
 		Theme theme = ThemeLocalServiceUtil.getTheme(companyId, deviceThemeId);
 
-		deleteThemeSettingsProperties(typeSettingsUnicodeProperties, device);
+		deleteThemeSettingsProperties(typeSettingsUnicodeProperties);
 
 		Map<String, ThemeSetting> themeSettings =
 			theme.getConfigurableSettings();
@@ -151,7 +143,7 @@ public class ActionUtil {
 		}
 
 		_setThemeSettingProperties(
-			actionRequest, typeSettingsUnicodeProperties, themeSettings, device,
+			actionRequest, typeSettingsUnicodeProperties, themeSettings,
 			layout);
 
 		return typeSettingsUnicodeProperties;
@@ -160,8 +152,7 @@ public class ActionUtil {
 	private static void _setThemeSettingProperties(
 			ActionRequest actionRequest,
 			UnicodeProperties typeSettingsUnicodeProperties,
-			Map<String, ThemeSetting> themeSettings, String device,
-			boolean isLayout)
+			Map<String, ThemeSetting> themeSettings, boolean isLayout)
 		throws Exception {
 
 		Layout layout = null;
@@ -181,7 +172,7 @@ public class ActionUtil {
 			ThemeSetting themeSetting = entry.getValue();
 
 			String property = StringBundler.concat(
-				device, "ThemeSettingsProperties--", key,
+				"regularThemeSettingsProperties--", key,
 				StringPool.DOUBLE_DASH);
 
 			String value = ParamUtil.getString(
@@ -190,11 +181,11 @@ public class ActionUtil {
 			if ((isLayout &&
 				 !Objects.equals(
 					 value,
-					 layout.getDefaultThemeSetting(key, device, false))) ||
+					 layout.getDefaultThemeSetting(key, "regular", false))) ||
 				(!isLayout && !value.equals(themeSetting.getValue()))) {
 
 				typeSettingsUnicodeProperties.setProperty(
-					ThemeSettingImpl.namespaceProperty(device, key), value);
+					ThemeSettingImpl.namespaceProperty("regular", key), value);
 			}
 		}
 	}

@@ -273,30 +273,24 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 
-		String[] devices = StringUtil.split(
-			ParamUtil.getString(actionRequest, "devices"));
+		String deviceThemeId = ParamUtil.getString(
+			actionRequest, "regularThemeId");
+		String deviceColorSchemeId = ParamUtil.getString(
+			actionRequest, "regularColorSchemeId");
+		String deviceCss = ParamUtil.getString(actionRequest, "regularCss");
 
-		for (String device : devices) {
-			String deviceThemeId = ParamUtil.getString(
-				actionRequest, device + "ThemeId");
-			String deviceColorSchemeId = ParamUtil.getString(
-				actionRequest, device + "ColorSchemeId");
-			String deviceCss = ParamUtil.getString(
-				actionRequest, device + "Css");
+		if (Validator.isNotNull(deviceThemeId)) {
+			deviceColorSchemeId = ActionUtil.getColorSchemeId(
+				companyId, deviceThemeId, deviceColorSchemeId);
 
-			if (Validator.isNotNull(deviceThemeId)) {
-				deviceColorSchemeId = ActionUtil.getColorSchemeId(
-					companyId, deviceThemeId, deviceColorSchemeId);
-
-				ActionUtil.updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsUnicodeProperties,
-					device, deviceThemeId, false);
-			}
-
-			_layoutSetService.updateLookAndFeel(
-				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
-				deviceCss);
+			ActionUtil.updateThemeSettingsProperties(
+				actionRequest, companyId, typeSettingsUnicodeProperties,
+				deviceThemeId, false);
 		}
+
+		_layoutSetService.updateLookAndFeel(
+			groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
+			deviceCss);
 
 		long faviconFileEntryId = ParamUtil.getLong(
 			actionRequest, "faviconFileEntryId");

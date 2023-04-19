@@ -39,8 +39,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
 
-<aui:input name="devices" type="hidden" value="regular" />
-
 <liferay-util:buffer
 	var="rootNodeNameLink"
 >

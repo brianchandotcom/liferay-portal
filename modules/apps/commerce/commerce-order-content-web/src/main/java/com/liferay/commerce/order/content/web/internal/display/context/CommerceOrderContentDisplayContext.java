@@ -72,11 +72,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -143,6 +145,7 @@ public class CommerceOrderContentDisplayContext {
 			CommercePaymentMethodRegistry commercePaymentMethodRegistry,
 			CommerceShipmentItemService commerceShipmentItemService,
 			CommerceTermEntryService commerceTermEntryService,
+			ConfigurationProvider configurationProvider,
 			DLAppLocalService dlAppLocalService,
 			HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
@@ -165,6 +168,7 @@ public class CommerceOrderContentDisplayContext {
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
 		_commerceShipmentItemService = commerceShipmentItemService;
 		_commerceTermEntryService = commerceTermEntryService;
+		_configurationProvider = configurationProvider;
 		_dlAppLocalService = dlAppLocalService;
 		_httpServletRequest = httpServletRequest;
 		_itemSelector = itemSelector;
@@ -1074,6 +1078,21 @@ public class CommerceOrderContentDisplayContext {
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 	}
 
+	public boolean isRequestQuoteEnabled() throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-11028")) {
+			return false;
+		}
+
+		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+			_getCommerceOrderFieldsConfiguration();
+
+		if (commerceOrderFieldsConfiguration == null) {
+			return false;
+		}
+
+		return commerceOrderFieldsConfiguration.requestQuoteEnabled();
+	}
+
 	public boolean isShowCommerceOrderCreateTime() throws PortalException {
 		CommerceOrderContentPortletInstanceConfiguration
 			commerceOrderContentPortletInstanceConfiguration =
@@ -1117,6 +1136,30 @@ public class CommerceOrderContentDisplayContext {
 		}
 
 		return false;
+	}
+
+	private CommerceOrderFieldsConfiguration
+			_getCommerceOrderFieldsConfiguration()
+		throws PortalException {
+
+		if (_commerceOrderFieldsConfiguration != null) {
+			return _commerceOrderFieldsConfiguration;
+		}
+
+		CommerceChannel commerceChannel = fetchCommerceChannel();
+
+		if (commerceChannel == null) {
+			return null;
+		}
+
+		_commerceOrderFieldsConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderFieldsConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+		return _commerceOrderFieldsConfiguration;
 	}
 
 	private List<StepModel> _getWorkflowSteps(CommerceOrder commerceOrder) {
@@ -1202,6 +1245,7 @@ public class CommerceOrderContentDisplayContext {
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatTime;
 	private final CommerceOrderEngine _commerceOrderEngine;
+	private CommerceOrderFieldsConfiguration _commerceOrderFieldsConfiguration;
 	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private final CommerceOrderImporterTypeRegistry
 		_commerceOrderImporterTypeRegistry;
@@ -1217,6 +1261,7 @@ public class CommerceOrderContentDisplayContext {
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 	private final CommerceShipmentItemService _commerceShipmentItemService;
 	private final CommerceTermEntryService _commerceTermEntryService;
+	private final ConfigurationProvider _configurationProvider;
 	private final CPRequestHelper _cpRequestHelper;
 	private final DLAppLocalService _dlAppLocalService;
 	private final HttpServletRequest _httpServletRequest;

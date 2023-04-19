@@ -36,6 +36,7 @@ import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -82,7 +83,7 @@ public class EditCommerceOrderPurchaseOrderNumberMVCRenderCommand
 						_commercePaymentMethodGroupRelLocalService,
 						_commercePaymentMethodRegistry,
 						_commerceShipmentItemService, _commerceTermEntryService,
-						_dlAppLocalService,
+						_configurationProvider, _dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
 						_percentageFormatter, _portletResourcePermission);
@@ -149,6 +150,9 @@ public class EditCommerceOrderPurchaseOrderNumberMVCRenderCommand
 
 	@Reference
 	private CommerceTermEntryService _commerceTermEntryService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

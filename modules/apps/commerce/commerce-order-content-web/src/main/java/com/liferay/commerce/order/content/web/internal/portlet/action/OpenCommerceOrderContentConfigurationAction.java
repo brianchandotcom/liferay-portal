@@ -37,6 +37,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -85,7 +86,8 @@ public class OpenCommerceOrderContentConfigurationAction
 						_commercePaymentMethodGroupRelServiceService,
 						_commercePaymentMethodRegistry,
 						_commerceShipmentItemService, _commerceTermEntryService,
-						_dlAppLocalService, httpServletRequest, _itemSelector,
+						_configurationProvider, _dlAppLocalService,
+						httpServletRequest, _itemSelector,
 						_modelResourcePermission, _percentageFormatter,
 						_portletResourcePermission);
 
@@ -146,6 +148,9 @@ public class OpenCommerceOrderContentConfigurationAction
 
 	@Reference
 	private CommerceTermEntryService _commerceTermEntryService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

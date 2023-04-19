@@ -38,6 +38,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -99,7 +100,7 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 						_commercePaymentMethodGroupRelServiceService,
 						_commercePaymentMethodRegistry,
 						_commerceShipmentItemService, _commerceTermEntryService,
-						_dlAppLocalService,
+						_configurationProvider, _dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
 						_percentageFormatter, _portletResourcePermission);
@@ -161,6 +162,9 @@ public class CommerceOrderContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceTermEntryService _commerceTermEntryService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

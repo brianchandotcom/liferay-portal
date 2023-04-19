@@ -450,6 +450,15 @@ if (backURL != null) {
 			commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>"
 			cssClass="btn btn-fixed btn-primary ml-3"
 		/>
+
+		<c:if test="<%= commerceOrderContentDisplayContext.isRequestQuoteEnabled() %>">
+			<clay:button
+				cssClass="btn-fixed btn-secondary ml-3 request-quote"
+				displayType="secondary"
+				label='<%= LanguageUtil.get(request, "request-a-quote") %>'
+				small="<%= false %>"
+			/>
+		</c:if>
 	</div>
 </aui:form>
 

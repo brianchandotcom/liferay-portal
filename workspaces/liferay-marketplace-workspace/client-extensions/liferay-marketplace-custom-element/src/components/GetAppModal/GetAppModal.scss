@@ -108,6 +108,10 @@
 			}
 		}
 
+		&-card-body.inline-scroller {
+			max-height: 700px;
+		}
+
 		&-card-container {
 			border: 1px solid #e2e2e4;
 			border-radius: 0.625rem;
@@ -234,7 +238,7 @@
 
 		&-get-this-app {
 			background-color: #0053f0;
-			border: 1px solid #0053f0;
+			border: solid 1px #0053f0;
 			border-radius: 0.5rem;
 			color: #fff;
 			font-size: 1rem;
@@ -245,9 +249,10 @@
 			padding-right: 16px;
 			width: auto;
 
-			&:hover {
-				background: #fff;
-				color: #0053f0;
+			&-disabled {
+				background: #6d9fff;
+				border: solid 1px #6d9fff;
+				cursor: not-allowed;
 			}
 
 			transition: background 0.3s;
@@ -337,11 +342,46 @@
 		}
 	}
 
+	&-step-item {
+		&:last-child {
+			margin-left: 27px;
+		}
+
+		&-active {
+			color: #0b5fff;
+			font-weight: 600;
+		}
+	}
+
+	&-step-icon {
+		filter: invert(75%) sepia(1%) saturate(3107%) hue-rotate(199deg)
+			brightness(82%) contrast(87%);
+		height: 8px;
+		margin-right: 0.625rem;
+		width: 8px;
+
+		&-checked {
+			filter: invert(26%) sepia(83%) saturate(5507%) hue-rotate(220deg)
+				brightness(104%) contrast(97%);
+			height: 16px;
+			margin-right: 0.625rem;
+			width: 16px;
+		}
+
+		&-selected {
+			filter: invert(26%) sepia(83%) saturate(5507%) hue-rotate(220deg)
+				brightness(104%) contrast(97%);
+			height: 18px;
+			margin-right: 0.625rem;
+			width: 18px;
+		}
+	}
+
 	&-text-divider {
 		align-items: center;
 		color: #54555f;
 		display: flex;
-		font-size: 16px;
+		font-size: 14px;
 		margin: 40px 0;
 
 		&::before,

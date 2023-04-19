@@ -5,6 +5,9 @@ import radioChecked from '../../assets/icons/radio-button-checked.svg';
 import radioUnchecked from '../../assets/icons/radio-button-unchecked.svg';
 
 import './RadioCard.scss';
+
+import {useState} from 'react';
+
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface RadioCardProps {
@@ -12,6 +15,7 @@ interface RadioCardProps {
 	disabled?: boolean;
 	icon?: string;
 	onChange: (value?: boolean) => void;
+	position?: string;
 	selected: boolean;
 	small?: boolean;
 	title?: string;
@@ -24,45 +28,63 @@ export function RadioCard({
 	disabled = false,
 	icon,
 	onChange,
+	position = 'left',
 	selected,
 	small,
 	title,
 	toggle = false,
 	tooltip,
 }: RadioCardProps) {
+	const [hovered, setHovered] = useState(false);
+
 	return (
 		<div
 			className={classNames('radio-card-container', {
 				'radio-card-container-disabled': disabled,
-				'radio-card-container-selected': selected,
+				'radio-card-container-selected': selected || hovered,
 				'radio-card-container-small': small,
 			})}
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
 		>
 			<div className="radio-card-main-info">
 				<div className="radio-card-title">
-					{toggle ? (
-						<ClayToggle
-							onToggle={(toggleValue) => onChange(toggleValue)}
-							toggled={selected}
+					{position === 'right' && icon && (
+						<img
+							alt="Icon"
+							className="radio-card-title-icon-rounded"
+							src={icon}
 						/>
-					) : (
-						<button
-							className={classNames('radio-card-button', {
-								'radio-card-button-disabled': disabled,
-							})}
-							onClick={() => !disabled && onChange()}
-						>
-							<img
-								alt={
-									selected
-										? 'Radio Checked'
-										: 'Radio unchecked'
-								}
-								className="radio-card-button-icon"
-								src={selected ? radioChecked : radioUnchecked}
-							/>
-						</button>
 					)}
+
+					{position === 'left' &&
+						(toggle ? (
+							<ClayToggle
+								onToggle={(toggleValue) =>
+									onChange(toggleValue)
+								}
+								toggled={selected}
+							/>
+						) : (
+							<button
+								className={classNames('radio-card-button', {
+									'radio-card-button-disabled': disabled,
+								})}
+								onClick={() => !disabled && onChange()}
+							>
+								<img
+									alt={
+										selected
+											? 'Radio Checked'
+											: 'Radio unchecked'
+									}
+									className="radio-card-button-icon"
+									src={
+										selected ? radioChecked : radioUnchecked
+									}
+								/>
+							</button>
+						))}
 
 					{small ? (
 						<div className="radio-card-main-info-small">
@@ -84,7 +106,7 @@ export function RadioCard({
 						)
 					)}
 
-					{icon && (
+					{position === 'left' && icon && (
 						<img
 							alt="Icon"
 							className={classNames('radio-card-title-icon', {
@@ -100,6 +122,31 @@ export function RadioCard({
 						<Tooltip tooltip={tooltip} />
 					</div>
 				)}
+
+				{position === 'right' &&
+					(toggle ? (
+						<ClayToggle
+							onToggle={(toggleValue) => onChange(toggleValue)}
+							toggled={selected}
+						/>
+					) : (
+						<button
+							className={classNames('radio-card-button', {
+								'radio-card-button-disabled': disabled,
+							})}
+							onClick={() => !disabled && onChange()}
+						>
+							<img
+								alt={
+									selected
+										? 'Radio Checked'
+										: 'Radio unchecked'
+								}
+								className="radio-card-button-icon"
+								src={selected ? radioChecked : radioUnchecked}
+							/>
+						</button>
+					))}
 			</div>
 
 			<span className="radio-card-description">{description}</span>

@@ -34,15 +34,15 @@ definition {
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
 		property test.name.skip.portal.instance = "AWSStore#AssertNoErrorMessageAfterExportAndImportSiteLAR";
 
-		var bucketID = PropsUtil.get("aws.bucket.id");
+		var bucketID = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Test Site Name",
 			site = "true");
 
 		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			locator1 = "build-test-s3-store.xml",
+			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketID}");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -52,8 +52,8 @@ definition {
 			sourceFileName = "Document_1.jpg");
 
 		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			locator1 = "build-test-s3-store.xml",
+			value1 = "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketID}");
 
 		LAR.exportSiteCP(siteScopeName = "Test Site Name");
 
@@ -77,7 +77,7 @@ definition {
 		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreDataMigration";
 
 		task ("Given a document is added to the default store") {
-			var bucketId = PropsUtil.get("aws.bucket.id");
+			var bucketId = PropsUtil.get("s3.bucket.id");
 			var companyId = JSONCompany.getCompanyId();
 			var groupId = JSONGroupAPI._getGroupIdByName(
 				groupName = "Test Site Name",
@@ -90,7 +90,7 @@ definition {
 				mimeType = "text/plain",
 				sourceFileName = "Document_1.txt");
 
-			AntCommands.runCommand("build-test-aws-s3.xml", "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -Ds3.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 		}
 
 		task ("And given the user cannot migrate data to AWS S3 store without setting up a connection configuration") {
@@ -105,7 +105,7 @@ definition {
 		}
 
 		task ("When the user adds the configuration") {
-			AntCommands.runCommand("build-test.xml", "prepare-aws-s3-configuration -Daws.bucket.id=${bucketId}");
+			AntCommands.runCommand("build-test.xml", "prepare-aws-s3-configuration -Ds3.bucket.id=${bucketId}");
 
 			OSGiConfig.waitForOSGiConfig();
 
@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("Then the document is migrated over from the default store to the AWS S3 store") {
-			AntCommands.runCommand("build-test-aws-s3.xml", "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			AntCommands.runCommand("build-test-s3-store.xml", "assert-document-in-bucket -Ds3.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 		}
 
 		task ("And the user can configure the portal to use AWS S3 store without issue") {
@@ -153,15 +153,15 @@ definition {
 	test AWSS3StoreSmoke {
 		property test.name.skip.portal.instance = "AWSStore#AWSS3StoreSmoke";
 
-		var bucketId = PropsUtil.get("aws.bucket.id");
+		var bucketId = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Test Site Name",
 			site = "true");
 
 		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			locator1 = "build-test-s3-store.xml",
+			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -171,8 +171,8 @@ definition {
 			sourceFileName = "Document_1.txt");
 
 		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			locator1 = "build-test-s3-store.xml",
+			value1 = "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -187,8 +187,8 @@ definition {
 		RecycleBin.emptyCP();
 
 		AntCommand(
-			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketId} -DcompanyId=${companyId} -DgroupId=${groupId}");
+			locator1 = "build-test-s3-store.xml",
+			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 	}
 
 	@description = "This is a use case for LPS-122233."

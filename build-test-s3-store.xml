@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project basedir="." name="portal-test-aws-s3" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." name="portal-test-s3-store" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<macrodef name="delete-expired-buckets">
@@ -93,7 +93,7 @@
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws" outputproperty="bucket.objects">
-					<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+					<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${s3.bucket.id} --prefix ${companyId}/${groupId}" />
 				</exec>
 			</then>
 		</if>
@@ -102,7 +102,7 @@
 			<equals arg1="${ibm.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws" outputproperty="bucket.objects">
-					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud --output json s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud --output json s3api list-objects --bucket lfr-qa-poshi-test-${s3.bucket.id} --prefix ${companyId}/${groupId}" />
 				</exec>
 			</then>
 		</if>
@@ -130,7 +130,7 @@
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws" outputproperty="bucket.objects">
-					<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+					<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${s3.bucket.id} --prefix ${companyId}/${groupId}" />
 				</exec>
 			</then>
 		</if>
@@ -139,7 +139,7 @@
 			<equals arg1="${ibm.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws" outputproperty="bucket.objects">
-					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud --output json s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
+					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud --output json s3api list-objects --bucket lfr-qa-poshi-test-${s3.bucket.id} --prefix ${companyId}/${groupId}" />
 				</exec>
 			</then>
 		</if>
@@ -219,7 +219,7 @@
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws" outputproperty="bucket.create.output">
-					<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${aws.bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
+					<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${s3.bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
 				</exec>
 			</then>
 		</if>
@@ -228,7 +228,7 @@
 			<equals arg1="${ibm.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws" outputproperty="bucket.create.output">
-					<arg line="s3 mb s3://lfr-qa-poshi-test-${aws.bucket.id} --region us-east-standard --endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud" />
+					<arg line="s3 mb s3://lfr-qa-poshi-test-${s3.bucket.id} --region us-east-standard --endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud" />
 				</exec>
 			</then>
 		</if>
@@ -237,7 +237,7 @@
 
 		<if>
 			<not>
-				<contains string="${bucket.create.output}" substring="lfr-qa-poshi-test-${aws.bucket.id}" />
+				<contains string="${bucket.create.output}" substring="lfr-qa-poshi-test-${s3.bucket.id}" />
 			</not>
 			<then>
 				<fail>Bucket was not created.</fail>
@@ -253,7 +253,7 @@
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws">
-					<arg line="s3 rb s3://lfr-qa-poshi-test-${aws.bucket.id}  --force" />
+					<arg line="s3 rb s3://lfr-qa-poshi-test-${s3.bucket.id}  --force" />
 				</exec>
 			</then>
 		</if>
@@ -262,7 +262,7 @@
 			<equals arg1="${ibm.store.enabled}" arg2="true" />
 			<then>
 				<exec executable="aws">
-					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud s3 rb s3://lfr-qa-poshi-test-${aws.bucket.id}  --force" />
+					<arg line="--endpoint-url https://s3.us-east.cloud-object-storage.appdomain.cloud s3 rb s3://lfr-qa-poshi-test-${s3.bucket.id}  --force" />
 				</exec>
 			</then>
 		</if>

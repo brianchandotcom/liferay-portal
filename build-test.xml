@@ -2387,7 +2387,7 @@ accessKey=&quot;${aws.s3.access.key.id}&quot;
 cacheDirCleanUpFrequency=&quot;100&quot;
 connectionTimeout=&quot;10000&quot;
 multipartUploadThreshold=&quot;10485760&quot;
-bucketName=&quot;lfr-qa-poshi-test-${aws.bucket.id}&quot;
+bucketName=&quot;lfr-qa-poshi-test-${s3.bucket.id}&quot;
 minimumUploadPartSize=&quot;5242880&quot;
 proxyPassword=&quot;&quot;
 maxPoolSize=&quot;20&quot;
@@ -2905,7 +2905,7 @@ jdbc.default.password=${database.password}</echo>
 	<macrodef name="prepare-ibm-s3-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config">
-bucketName=&quot;lfr-qa-poshi-test-${aws.bucket.id}&quot;
+bucketName=&quot;lfr-qa-poshi-test-${s3.bucket.id}&quot;
 accessKey=&quot;${ibm.s3.access.key.id}&quot;
 secretKey=&quot;${ibm.s3.secret.access.key}&quot;
 s3Endpoint=&quot;https://s3.us-east.cloud-object-storage.appdomain.cloud&quot;
@@ -12036,10 +12036,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</echo>
 
 		<if>
-			<isset property="aws.bucket.id" />
+			<isset property="s3.bucket.id" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					aws.bucket.id=${aws.bucket.id}
+					s3.bucket.id=${s3.bucket.id}
 				</echo>
 			</then>
 		</if>
@@ -15138,12 +15138,12 @@ mail.send.blacklist=</echo>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
 				<tstamp>
-					<format pattern="yyyyMMddkkmmssSSS" property="aws.bucket.id" />
+					<format pattern="yyyyMMddkkmmssSSS" property="s3.bucket.id" />
 				</tstamp>
 
-				<ant antfile="build-test-aws-s3.xml" target="configure-aws-cli" />
+				<ant antfile="build-test-s3-store.xml" target="configure-aws-cli" />
 
-				<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
+				<ant antfile="build-test-s3-store.xml" target="create-s3-bucket" />
 
 				<if>
 					<not>
@@ -15193,12 +15193,12 @@ mail.send.blacklist=</echo>
 			<equals arg1="${ibm.store.enabled}" arg2="true" />
 			<then>
 				<tstamp>
-					<format pattern="yyyyMMddkkmmssSSS" property="aws.bucket.id" />
+					<format pattern="yyyyMMddkkmmssSSS" property="s3.bucket.id" />
 				</tstamp>
 
-				<ant antfile="build-test-aws-s3.xml" target="configure-ibm-aws-cli" />
+				<ant antfile="build-test-s3-store.xml" target="configure-ibm-aws-cli" />
 
-				<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
+				<ant antfile="build-test-s3-store.xml" target="create-s3-bucket" />
 
 				<prepare-ibm-s3-configuration />
 			</then>
@@ -15742,7 +15742,7 @@ mail.send.blacklist=</echo>
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
-				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
+				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket" />
 			</then>
 		</if>
 
@@ -15760,7 +15760,7 @@ mail.send.blacklist=</echo>
 		<if>
 			<equals arg1="${ibm.store.enabled}" arg2="true" />
 			<then>
-				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
+				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket" />
 			</then>
 		</if>
 

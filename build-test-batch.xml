@@ -5901,14 +5901,14 @@ information. Make sure to commit in all format-javadoc results.
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="aws.bucket.id" />
+			<format pattern="yyyyMMddkkmmssSSS" property="s3.bucket.id" />
 		</tstamp>
 
-		<ant antfile="build-test-aws-s3.xml" target="configure-aws-cli" />
+		<ant antfile="build-test-s3-store.xml" target="configure-aws-cli" />
 
 		<prepare-aws-s3-configuration />
 
-		<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />
+		<ant antfile="build-test-s3-store.xml" target="create-s3-bucket" />
 
 		<trycatch>
 			<try>
@@ -5920,7 +5920,7 @@ information. Make sure to commit in all format-javadoc results.
 			</try>
 
 			<finally>
-				<ant antfile="build-test-aws-s3.xml" target="delete-s3-bucket" />
+				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket" />
 			</finally>
 		</trycatch>
 	</target>

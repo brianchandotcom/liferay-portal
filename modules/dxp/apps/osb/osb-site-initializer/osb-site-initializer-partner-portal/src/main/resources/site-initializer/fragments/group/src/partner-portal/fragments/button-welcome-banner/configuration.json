@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "https://www.youtube.com/embed/bZeAh7dpskw",
+					"label": "PRM Video Button Link",
+					"name": "videoButtonLink",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

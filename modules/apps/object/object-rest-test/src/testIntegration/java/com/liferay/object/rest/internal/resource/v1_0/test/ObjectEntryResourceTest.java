@@ -640,12 +640,14 @@ public class ObjectEntryResourceTest {
 		// 1 to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -857,12 +859,14 @@ public class ObjectEntryResourceTest {
 		// Many to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1188,12 +1192,14 @@ public class ObjectEntryResourceTest {
 		// 1 to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1259,12 +1265,14 @@ public class ObjectEntryResourceTest {
 		// Many to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1347,8 +1355,9 @@ public class ObjectEntryResourceTest {
 			_TAG_1);
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1494,8 +1503,9 @@ public class ObjectEntryResourceTest {
 		// Many to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1670,12 +1680,14 @@ public class ObjectEntryResourceTest {
 		// 1 to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1851,12 +1863,14 @@ public class ObjectEntryResourceTest {
 		// Many to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2374,12 +2388,14 @@ public class ObjectEntryResourceTest {
 		throws Exception {
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		// 1 to many relationship, custom object field
 
@@ -2533,12 +2549,14 @@ public class ObjectEntryResourceTest {
 		// Many to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2867,12 +2885,14 @@ public class ObjectEntryResourceTest {
 		// 1 to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, objectFieldValue1,
@@ -2970,12 +2990,14 @@ public class ObjectEntryResourceTest {
 		// Many to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition2, _objectDefinition3, _objectEntry2,
-			_objectEntry3, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, objectFieldValue1,
@@ -3072,8 +3094,9 @@ public class ObjectEntryResourceTest {
 		// One to many with Custom Object Definition
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
 			_objectRelationship1.getName(),
@@ -3124,8 +3147,9 @@ public class ObjectEntryResourceTest {
 		// Many to many with Custom Object Definition
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _objectDefinition2, _objectEntry1,
-			_objectEntry2, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
 			_objectRelationship2.getName(),
@@ -4660,8 +4684,8 @@ public class ObjectEntryResourceTest {
 
 	private ObjectRelationship _addObjectRelationshipAndRelateObjectEntries(
 			ObjectDefinition objectDefinition1,
-			ObjectDefinition objectDefinition2, ObjectEntry objectEntry1,
-			ObjectEntry objectEntry2, String type)
+			ObjectDefinition objectDefinition2, long primaryKey1,
+			long primaryKey2, String type)
 		throws Exception {
 
 		ObjectRelationship objectRelationship =
@@ -4670,8 +4694,8 @@ public class ObjectEntryResourceTest {
 				TestPropsValues.getUserId(), type);
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
-			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
-			objectRelationship, TestPropsValues.getUserId());
+			primaryKey1, primaryKey2, objectRelationship,
+			TestPropsValues.getUserId());
 
 		return objectRelationship;
 	}
@@ -4680,16 +4704,9 @@ public class ObjectEntryResourceTest {
 			String type)
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition1, _objectDefinition2,
-				TestPropsValues.getUserId(), type);
-
-		ObjectRelationshipTestUtil.relateObjectEntries(
-			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
-			objectRelationship, TestPropsValues.getUserId());
-
-		return objectRelationship;
+		return _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(), type);
 	}
 
 	private TaxonomyCategory _addTaxonomyCategory() throws Exception {

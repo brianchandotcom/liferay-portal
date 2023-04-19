@@ -30,10 +30,53 @@ import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.metadata.resolver.impl.AbstractMetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
  * @author Mika Koivisto
  */
 public class CachingChainingMetadataResolver extends AbstractMetadataResolver {
+
+	public CachingChainingMetadataResolver(BundleContext bundleContext) {
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, MetadataResolver.class,
+			new ServiceTrackerCustomizer<MetadataResolver, MetadataResolver>() {
+
+				@Override
+				public MetadataResolver addingService(
+					ServiceReference<MetadataResolver> serviceReference) {
+
+					MetadataResolver metadataResolver =
+						bundleContext.getService(serviceReference);
+
+					addMetadataResolver(metadataResolver);
+
+					return metadataResolver;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<MetadataResolver> serviceReference,
+					MetadataResolver metadataResolver) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<MetadataResolver> serviceReference,
+					MetadataResolver metadataResolver) {
+
+					removeMetadataResolver(metadataResolver);
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_serviceTracker.open();
+	}
 
 	public void addMetadataResolver(MetadataResolver metadataResolver) {
 		Lock lock = _readWriteLock.writeLock();
@@ -60,6 +103,8 @@ public class CachingChainingMetadataResolver extends AbstractMetadataResolver {
 		lock.lock();
 
 		try {
+			_serviceTracker.close();
+
 			_metadataResolversMap.clear();
 
 			for (MetadataResolver metadataProvider : _metadataResolvers) {
@@ -142,5 +187,7 @@ public class CachingChainingMetadataResolver extends AbstractMetadataResolver {
 		new ConcurrentHashMap<>();
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock(
 		true);
+	private final ServiceTracker<MetadataResolver, MetadataResolver>
+		_serviceTracker;
 
 }

@@ -75,13 +75,10 @@ import org.opensaml.xmlsec.signature.support.impl.ChainingSignatureTrustEngine;
 import org.opensaml.xmlsec.signature.support.impl.ExplicitKeySignatureTrustEngine;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Mika Koivisto
@@ -225,7 +222,8 @@ public class MetadataManagerImpl
 
 	@Override
 	public MetadataResolver getMetadataResolver() {
-		return _cachingChainingMetadataResolver;
+		return _cachingChainingMetadataResolverDCLSingleton.getSingleton(
+			this::_createCachingChainingMetadataResolver);
 	}
 
 	@Override
@@ -469,68 +467,45 @@ public class MetadataManagerImpl
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws ComponentInitializationException {
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
 
-		_cachingChainingMetadataResolver.addMetadataResolver(
+	@Deactivate
+	protected void deactivate() {
+		_predicateRoleDescriptorResolverDCLSingleton.destroy(
+			PredicateRoleDescriptorResolver::destroy);
+
+		_cachingChainingMetadataResolverDCLSingleton.destroy(
+			CachingChainingMetadataResolver::destroy);
+	}
+
+	private CachingChainingMetadataResolver
+		_createCachingChainingMetadataResolver() {
+
+		CachingChainingMetadataResolver cachingChainingMetadataResolver =
+			new CachingChainingMetadataResolver(_bundleContext);
+
+		cachingChainingMetadataResolver.addMetadataResolver(
 			new DBMetadataResolver(
 				_parserPool, _samlIdpSpConnectionLocalService,
 				_samlProviderConfigurationHelper,
 				_samlSpIdpConnectionLocalService));
 
-		_cachingChainingMetadataResolver.setId(
+		cachingChainingMetadataResolver.setId(
 			CachingChainingMetadataResolver.class.getName());
-		_cachingChainingMetadataResolver.setParserPool(_parserPool);
+		cachingChainingMetadataResolver.setParserPool(_parserPool);
 
-		_cachingChainingMetadataResolver.initialize();
+		try {
+			cachingChainingMetadataResolver.initialize();
+		}
+		catch (ComponentInitializationException
+					componentInitializationException) {
 
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, MetadataResolver.class,
-			new ServiceTrackerCustomizer<MetadataResolver, MetadataResolver>() {
+			throw new RuntimeException(componentInitializationException);
+		}
 
-				@Override
-				public MetadataResolver addingService(
-					ServiceReference<MetadataResolver> serviceReference) {
-
-					MetadataResolver metadataResolver =
-						bundleContext.getService(serviceReference);
-
-					_cachingChainingMetadataResolver.addMetadataResolver(
-						metadataResolver);
-
-					return metadataResolver;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<MetadataResolver> serviceReference,
-					MetadataResolver metadataResolver) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<MetadataResolver> serviceReference,
-					MetadataResolver metadataResolver) {
-
-					_cachingChainingMetadataResolver.removeMetadataResolver(
-						metadataResolver);
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
-		_serviceTracker.open();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTracker.close();
-
-		_predicateRoleDescriptorResolverDCLSingleton.destroy(
-			PredicateRoleDescriptorResolver::destroy);
-
-		_cachingChainingMetadataResolver.destroy();
+		return cachingChainingMetadataResolver;
 	}
 
 	private ChainingSignatureTrustEngine _createChainingSignatureTrustEngine() {
@@ -585,7 +560,8 @@ public class MetadataManagerImpl
 
 		PredicateRoleDescriptorResolver predicateRoleDescriptorResolver =
 			new PredicateRoleDescriptorResolver(
-				_cachingChainingMetadataResolver);
+				_cachingChainingMetadataResolverDCLSingleton.getSingleton(
+					this::_createCachingChainingMetadataResolver));
 
 		try {
 			predicateRoleDescriptorResolver.initialize();
@@ -626,9 +602,9 @@ public class MetadataManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		MetadataManagerImpl.class);
 
-	private final CachingChainingMetadataResolver
-		_cachingChainingMetadataResolver =
-			new CachingChainingMetadataResolver();
+	private BundleContext _bundleContext;
+	private final DCLSingleton<CachingChainingMetadataResolver>
+		_cachingChainingMetadataResolverDCLSingleton = new DCLSingleton<>();
 	private final DCLSingleton<ChainingSignatureTrustEngine>
 		_chainingSignatureTrustEngineDCLSingleton = new DCLSingleton<>();
 
@@ -658,7 +634,5 @@ public class MetadataManagerImpl
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
-
-	private ServiceTracker<MetadataResolver, MetadataResolver> _serviceTracker;
 
 }

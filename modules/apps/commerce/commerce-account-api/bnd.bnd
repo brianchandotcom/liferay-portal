@@ -8,5 +8,4 @@ Export-Package:\
 	com.liferay.commerce.account.model,\
 	com.liferay.commerce.account.permission,\
 	com.liferay.commerce.account.service,\
-	com.liferay.commerce.account.service.persistence,\
-	com.liferay.commerce.account.util
+	com.liferay.commerce.account.service.persistence

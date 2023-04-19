@@ -15,7 +15,7 @@
 package com.liferay.commerce.account.internal.verify;
 
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
+import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;

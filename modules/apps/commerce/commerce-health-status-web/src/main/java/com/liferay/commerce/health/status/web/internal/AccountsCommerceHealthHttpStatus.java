@@ -15,9 +15,9 @@
 package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.account.constants.AccountRoleConstants;
-import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
+import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;

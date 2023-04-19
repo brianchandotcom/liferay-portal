@@ -191,7 +191,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 *         <code>0</code>)
 	 * @param  active whether the company is active
 	 * @param  defaultAdminPassword Password set to the admin user of the company
-	 * @param  defaultAdminEmailAddress Email set to the admin user of the company
+	 * @param  defaultAdminScreenName Screen name set to the admin user of the company
+	 * @param  defaultAdminEmailAddress Email address set to the admin user of the company
+	 * @param  defaultAdminFirstName First name set to the admin user of the company
+	 * @param  defaultAdminMiddleName Middle name set to the admin user of the company
+	 * @param  defaultAdminLastName Last name set to the admin user of the company
 	 * @return the company
 	 */
 	public Company addCompany(

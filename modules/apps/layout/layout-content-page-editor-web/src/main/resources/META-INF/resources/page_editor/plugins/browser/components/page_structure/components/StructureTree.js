@@ -263,14 +263,35 @@ export default function PageStructureSidebar() {
 	};
 
 	useEffect(() => {
-		const getAncestorsIds = (layoutDataItem) => {
+		const getAncestorsIds = (layoutDataItem, data) => {
 			if (!layoutDataItem.parentId) {
-				return [layoutDataItem.itemId];
+				const itemInMasterLayout =
+					masterLayoutData?.items[layoutDataItem.itemId];
+				if (
+					!itemInMasterLayout &&
+					masterLayoutData?.rootItems?.dropZone
+				) {
+					const dropZoneItem =
+						masterLayoutData.items[
+							masterLayoutData.rootItems.dropZone
+						];
+
+					return [
+						...[layoutDataItem.itemId],
+						...getAncestorsIds(
+							masterLayoutData.items[dropZoneItem.parentId],
+							masterLayoutData
+						),
+					];
+				}
+				else {
+					return [layoutDataItem.itemId];
+				}
 			}
 
 			return [
 				...[layoutDataItem.itemId],
-				...getAncestorsIds(layoutData.items[layoutDataItem.parentId]),
+				...getAncestorsIds(data.items[layoutDataItem.parentId], data),
 			];
 		};
 
@@ -284,11 +305,11 @@ export default function PageStructureSidebar() {
 			setExpandedKeys((previousExpanedKeys) => [
 				...new Set([
 					...previousExpanedKeys,
-					...getAncestorsIds(layoutDataActiveItem),
+					...getAncestorsIds(layoutDataActiveItem, layoutData),
 				]),
 			]);
 		}
-	}, [activeItemId, layoutData.items]);
+	}, [activeItemId, layoutData, masterLayoutData]);
 
 	return (
 		<div
@@ -655,7 +676,6 @@ function visit(
 					children: [],
 					dragAndDropHoveredItemId,
 					draggable: false,
-					expanded: childId === activeItemId,
 					hidable: false,
 					hidden: false,
 					hiddenAncestor: hasHiddenAncestor || hidden,
@@ -784,13 +804,9 @@ function visit(
 			canUpdateItemConfiguration,
 		active: item.itemId === activeItemId,
 		children,
-		config: layoutDataRef.current.items[item.itemId]?.config,
+		config: layoutDataRef?.current?.items[item.itemId]?.config,
 		draggable: true,
 		editingName: editingNodeId === item.itemId,
-		expanded:
-			item.itemId === activeItemId ||
-			item.itemId === dragAndDropHoveredItemId ||
-			item.itemId === keyboardMovementTargetId,
 		hidable:
 			!itemInMasterLayout &&
 			isHidable(item, fragmentEntryLinks, layoutData),

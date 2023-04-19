@@ -22,20 +22,20 @@
 	"items": [
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "liferay-fds-view",
+			"externalReferenceCode": "MSOD_FDS_VIEW",
 			"label": {
-				"en_US": "FDSView"
+				"en_US": "FDS View"
 			},
 			"name": "FDSView",
 			"objectFields": [
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-view-custom-views-enabled",
+					"externalReferenceCode": "CUSTOM_VIEWS_ENABLED",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "customViewsEnabled"
+						"en_US": "Custom Views Enabled"
 					},
 					"name": "customViewsEnabled",
 					"objectFieldSettings": [
@@ -46,11 +46,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-view-deltas",
+					"externalReferenceCode": "DELTAS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "deltas"
+						"en_US": "Deltas"
 					},
 					"name": "deltas",
 					"objectFieldSettings": [
@@ -65,7 +65,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-view-description",
+					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -84,11 +84,11 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "liferay-fds-view-initial-delta",
+					"externalReferenceCode": "INITIAL_DELTA",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "initialDelta"
+						"en_US": "Initial Delta"
 					},
 					"name": "initialDelta",
 					"objectFieldSettings": [
@@ -99,7 +99,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-view-name",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -118,11 +118,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-view-selection-type",
+					"externalReferenceCode": "SELECTION_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "selectionType"
+						"en_US": "Selection Type"
 					},
 					"name": "selectionType",
 					"objectFieldSettings": [
@@ -133,11 +133,11 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-view-show-management-bar",
+					"externalReferenceCode": "SHOW_MANAGEMENT_BAR",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "showManagementBar"
+						"en_US": "Show Management Bar"
 					},
 					"name": "showManagementBar",
 					"objectFieldSettings": [
@@ -148,11 +148,11 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-view-show-pagination",
+					"externalReferenceCode": "SHOW_PAGINATION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "showPagination"
+						"en_US": "Show Pagination"
 					},
 					"name": "showPagination",
 					"objectFieldSettings": [
@@ -163,11 +163,11 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-view-show-search",
+					"externalReferenceCode": "SHOW_SEARCH",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "showSearch"
+						"en_US": "Show Search"
 					},
 					"name": "showSearch",
 					"objectFieldSettings": [
@@ -180,49 +180,49 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "viewModes"
+						"en_US": "Sorts"
 					},
-					"name": "viewModes",
-					"objectDefinitionExternalReferenceCode1": "liferay-fds-view",
-					"objectDefinitionExternalReferenceCode2": "liferay-fds-view-mode",
-					"objectDefinitionName2": "FDSViewMode",
+					"name": "sorts",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_VIEW",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_SORT",
+					"objectDefinitionName2": "FDSSort",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "sorts"
+						"en_US": "View Modes"
 					},
-					"name": "sorts",
-					"objectDefinitionExternalReferenceCode1": "liferay-fds-view",
-					"objectDefinitionExternalReferenceCode2": "liferay-fds-sort",
-					"objectDefinitionName2": "FDSSort",
+					"name": "viewModes",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_VIEW",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW_MODE",
+					"objectDefinitionName2": "FDSViewMode",
 					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "FDSViews"
+				"en_US": "FDS Views"
 			},
 			"scope": "company",
 			"titleObjectFieldName": "id"
 		},
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "liferay-fds-view-mode",
+			"externalReferenceCode": "MSOD_FDS_VIEW_MODE",
 			"label": {
-				"en_US": "FDSViewMode"
+				"en_US": "FDS View Mode"
 			},
 			"name": "FDSViewMode",
 			"objectFields": [
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-view-mode-content-renderer",
+					"externalReferenceCode": "CONTENT_RENDERER",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "contentRenderer"
+						"en_US": "Content Renderer"
 					},
 					"name": "contentRenderer",
 					"objectFieldSettings": [
@@ -238,11 +238,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-view-mode-content-renderer-config",
+					"externalReferenceCode": "CONTENT_RENDERER_CONFIG",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "contentRendererConfig"
+						"en_US": "Content Renderer Config"
 					},
 					"name": "contentRendererConfig",
 					"objectFieldSettings": [
@@ -258,11 +258,11 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-view-mode-default",
+					"externalReferenceCode": "DEFAULT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "default"
+						"en_US": "Default"
 					},
 					"name": "default",
 					"objectFieldSettings": [
@@ -274,11 +274,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-view-mode-label",
+					"externalReferenceCode": "LABEL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "label"
+						"en_US": "Label"
 					},
 					"name": "label",
 					"objectFieldSettings": [
@@ -294,11 +294,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-view-mode-name",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "name"
+						"en_US": "Name"
 					},
 					"name": "name",
 					"objectFieldSettings": [
@@ -314,11 +314,11 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-view-mode-quick-actions-enabled",
+					"externalReferenceCode": "QUICK_ACTIONS_ENABLED",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "quickActionsEnabled"
+						"en_US": "Quick Actions Enabled"
 					},
 					"name": "quickActionsEnabled",
 					"objectFieldSettings": [
@@ -330,11 +330,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-view-mode-thumbnail",
+					"externalReferenceCode": "THUMBNAIL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "thumbnail"
+						"en_US": "Thumbnail"
 					},
 					"name": "thumbnail",
 					"objectFieldSettings": [
@@ -348,38 +348,38 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "fieldMappings"
+						"en_US": "Field Mappings"
 					},
 					"name": "fieldMappings",
-					"objectDefinitionExternalReferenceCode1": "liferay-fds-view-mode",
-					"objectDefinitionExternalReferenceCode2": "liferay-fds-field-mapping",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_VIEW_MODE",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_FIELD_MAPPING",
 					"objectDefinitionName2": "FDSFieldMapping",
 					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "FDSViewModes"
+				"en_US": "FDS View Modes"
 			},
 			"scope": "company",
 			"titleObjectFieldName": "id"
 		},
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "liferay-fds-sort",
+			"externalReferenceCode": "MSOD_FDS_SORT",
 			"label": {
-				"en_US": "FDSSort"
+				"en_US": "FDS Sort"
 			},
 			"name": "FDSSort",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-sort-field-name",
+					"externalReferenceCode": "FIELD_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "fieldName"
+						"en_US": "Field Name"
 					},
 					"name": "fieldName",
 					"objectFieldSettings": [
@@ -391,13 +391,13 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
-					"externalReferenceCode": "1418cfcc-9ae8-f6cf-0997-20eac5324039",
+					"externalReferenceCode": "ORDER",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "order"
+						"en_US": "Order"
 					},
-					"listTypeDefinitionExternalReferenceCode": "liferay-fds-sort-order",
+					"listTypeDefinitionExternalReferenceCode": "ORDER_PICKLIST",
 					"name": "order",
 					"objectFieldSettings": [
 					],
@@ -408,11 +408,11 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "liferay-fds-sort-priority",
+					"externalReferenceCode": "PRIORITY",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "priority"
+						"en_US": "Priority"
 					},
 					"name": "priority",
 					"objectFieldSettings": [
@@ -424,27 +424,27 @@
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "FDSSorts"
+				"en_US": "FDS Sorts"
 			},
 			"scope": "company",
 			"titleObjectFieldName": "id"
 		},
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "liferay-fds-field-mapping",
+			"externalReferenceCode": "MSOD_FDS_FIELD_MAPPING",
 			"label": {
-				"en_US": "FDSFieldMapping"
+				"en_US": "FDS Field Mapping"
 			},
 			"name": "FDSFieldMapping",
 			"objectFields": [
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-field-mapping-content-renderer",
+					"externalReferenceCode": "CONTENT_RENDERER",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "contentRenderer"
+						"en_US": "Content Renderer"
 					},
 					"name": "contentRenderer",
 					"objectFieldSettings": [
@@ -460,11 +460,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-field-mapping-content-renderer-config",
+					"externalReferenceCode": "CONTENT_RENDERER_CONFIG",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "contentRendererConfig"
+						"en_US": "Content Renderer Config"
 					},
 					"name": "contentRendererConfig",
 					"objectFieldSettings": [
@@ -480,11 +480,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-field-mapping-field-name",
+					"externalReferenceCode": "FIELD_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "fieldName"
+						"en_US": "Field Name"
 					},
 					"name": "fieldName",
 					"objectFieldSettings": [
@@ -500,11 +500,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-field-mapping-label",
+					"externalReferenceCode": "LABEL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "label"
+						"en_US": "Label"
 					},
 					"name": "label",
 					"objectFieldSettings": [
@@ -520,11 +520,11 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-field-mapping-localize-label",
+					"externalReferenceCode": "LOCALIZE_LABEL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "localizeLabel"
+						"en_US": "Localize Label"
 					},
 					"name": "localizeLabel",
 					"objectFieldSettings": [
@@ -536,11 +536,11 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "liferay-fds-field-mapping-sortable",
+					"externalReferenceCode": "SORTABLE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "sortable"
+						"en_US": "Sortable"
 					},
 					"name": "sortable",
 					"objectFieldSettings": [
@@ -552,27 +552,27 @@
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "FDSFieldMappings"
+				"en_US": "FDS Field Mappings"
 			},
 			"scope": "company",
 			"titleObjectFieldName": "id"
 		},
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "liferay-fds-action",
+			"externalReferenceCode": "MSOD_FDS_ACTION",
 			"label": {
-				"en_US": "FDSAction"
+				"en_US": "FDS Action"
 			},
 			"name": "FDSAction",
 			"objectFields": [
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-action-confirmation-message",
+					"externalReferenceCode": "CONFIRMATION_MESSAGE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "confirmationMessage"
+						"en_US": "Confirmation Message"
 					},
 					"name": "confirmationMessage",
 					"objectFieldSettings": [
@@ -588,11 +588,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-action-href",
+					"externalReferenceCode": "HREF",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "href"
+						"en_US": "Href"
 					},
 					"name": "href",
 					"objectFieldSettings": [
@@ -608,11 +608,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-action-icon",
+					"externalReferenceCode": "ICON",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "icon"
+						"en_US": "Icon"
 					},
 					"name": "icon",
 					"objectFieldSettings": [
@@ -624,11 +624,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-action-label",
+					"externalReferenceCode": "LABEL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "label"
+						"en_US": "Label"
 					},
 					"name": "label",
 					"objectFieldSettings": [
@@ -644,11 +644,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-action-method",
+					"externalReferenceCode": "METHOD",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "method"
+						"en_US": "Method"
 					},
 					"name": "method",
 					"objectFieldSettings": [
@@ -660,11 +660,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-action-permission-key",
+					"externalReferenceCode": "PERMISSION_KEY",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "permissionKey"
+						"en_US": "Permission Key"
 					},
 					"name": "permissionKey",
 					"objectFieldSettings": [
@@ -676,11 +676,11 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "liferay-fds-action-priority",
+					"externalReferenceCode": "PRIORITY",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "priority"
+						"en_US": "Priority"
 					},
 					"name": "priority",
 					"objectFieldSettings": [
@@ -692,11 +692,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-action-target",
+					"externalReferenceCode": "TARGET",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "target"
+						"en_US": "Target"
 					},
 					"name": "target",
 					"objectFieldSettings": [
@@ -708,27 +708,27 @@
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "FDSActions"
+				"en_US": "FDS Actions"
 			},
 			"scope": "company",
 			"titleObjectFieldName": "id"
 		},
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "liferay-fds-filter",
+			"externalReferenceCode": "MSOD_FDS_FILTER",
 			"label": {
-				"en_US": "FDSFilter"
+				"en_US": "FDS Filter"
 			},
 			"name": "FDSFilter",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-filter-entity-field-type",
+					"externalReferenceCode": "ENTITY_FIELD_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "entityFieldType"
+						"en_US": "Entity Field Type"
 					},
 					"name": "entityFieldType",
 					"objectFieldSettings": [
@@ -740,11 +740,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-filter-filter-properties",
+					"externalReferenceCode": "FILTER_PROPERTIES",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "filterProperties"
+						"en_US": "Filter Properties"
 					},
 					"name": "filterProperties",
 					"objectFieldSettings": [
@@ -760,11 +760,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-filter-label",
+					"externalReferenceCode": "LABEL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "label"
+						"en_US": "Label"
 					},
 					"name": "label",
 					"objectFieldSettings": [
@@ -780,11 +780,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-filter-preloaded-data",
+					"externalReferenceCode": "PRELOADED_DATA",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "preloadedData"
+						"en_US": "Preloaded Data"
 					},
 					"name": "preloadedData",
 					"objectFieldSettings": [
@@ -800,11 +800,11 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "liferay-fds-filter-type",
+					"externalReferenceCode": "TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "type"
+						"en_US": "Type"
 					},
 					"name": "type",
 					"objectFieldSettings": [
@@ -818,38 +818,38 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "filters"
+						"en_US": "Filters"
 					},
 					"name": "filters",
-					"objectDefinitionExternalReferenceCode1": "liferay-fds-filter",
-					"objectDefinitionExternalReferenceCode2": "liferay-fds-view",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_FILTER",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
 					"objectDefinitionName2": "FDSView",
 					"type": "manyToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "FDSFilters"
+				"en_US": "FDS Filters"
 			},
 			"scope": "company",
 			"titleObjectFieldName": "id"
 		},
 		{
 			"accountEntryRestricted": false,
-			"externalReferenceCode": "liferay-fds-entry",
+			"externalReferenceCode": "MSOD_FDS_ENTRY",
 			"label": {
-				"en_US": "FDSEntry"
+				"en_US": "FDS Entry"
 			},
 			"name": "FDSEntry",
 			"objectFields": [
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-entry-endpoint-url",
+					"externalReferenceCode": "ENDPOINT_URL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "endpointURL"
+						"en_US": "Endpoint URL"
 					},
 					"name": "endpointURL",
 					"objectFieldSettings": [
@@ -865,11 +865,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-entry-name",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "name"
+						"en_US": "Name"
 					},
 					"name": "name",
 					"objectFieldSettings": [
@@ -885,11 +885,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-entry-open-api-url",
+					"externalReferenceCode": "OPEN_API_URL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "openAPIURL"
+						"en_US": "OpenAPI URL"
 					},
 					"name": "openAPIURL",
 					"objectFieldSettings": [
@@ -905,11 +905,11 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "liferay-fds-entry-schema-name",
+					"externalReferenceCode": "SCHEMA_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "schemaName"
+						"en_US": "Schema Name"
 					},
 					"name": "schemaName",
 					"objectFieldSettings": [
@@ -927,40 +927,40 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "entryviews"
-					},
-					"name": "entryviews",
-					"objectDefinitionExternalReferenceCode1": "liferay-fds-entry",
-					"objectDefinitionExternalReferenceCode2": "liferay-fds-view",
-					"objectDefinitionName2": "FDSView",
-					"type": "manyToMany"
-				},
-				{
-					"deletionType": "prevent",
-					"label": {
-						"en_US": "creationMenuPrimaryActions"
+						"en_US": "Creation Menu Primary Actions"
 					},
 					"name": "creationMenuPrimaryActions",
-					"objectDefinitionExternalReferenceCode1": "liferay-fds-entry",
-					"objectDefinitionExternalReferenceCode2": "liferay-fds-action",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
 					"objectDefinitionName2": "FDSAction",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "creationMenuSecondaryActions"
+						"en_US": "Creation Menu Secondary Actions"
 					},
 					"name": "creationMenuSecondaryActions",
-					"objectDefinitionExternalReferenceCode1": "liferay-fds-entry",
-					"objectDefinitionExternalReferenceCode2": "liferay-fds-action",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
 					"objectDefinitionName2": "FDSAction",
 					"type": "oneToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Entry Views"
+					},
+					"name": "entryViews",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
+					"objectDefinitionName2": "FDSView",
+					"type": "manyToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "FDSEntry"
+				"en_US": "FDS Entries"
 			},
 			"scope": "company",
 			"titleObjectFieldName": "id"

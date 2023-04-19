@@ -17,8 +17,14 @@ package com.liferay.portal.tools.db.virtual.instance.migration;
 import com.liferay.portal.tools.db.virtual.instance.migration.error.ErrorCodes;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -32,93 +38,146 @@ import org.apache.commons.cli.ParseException;
  */
 public class VirtualInstanceMigration {
 
-	public static void main(String[] args) throws Exception {
-		Options options = _getOptions();
-
-		if ((args.length != 0) &&
-			(args[0].equals("-h") || args[0].endsWith("help"))) {
-
-			HelpFormatter helpFormatter = new HelpFormatter();
-
-			helpFormatter.printHelp(
-				"Liferay Portal Tools DB Virtual Instance Migration", options);
-
-			return;
-		}
-
+	public static void main(String[] args) {
 		try {
-			CommandLineParser commandLineParser = new DefaultParser();
+			Options options = _getOptions();
 
-			CommandLine commandLine = commandLineParser.parse(options, args);
+			if ((args.length != 0) &&
+				(args[0].equals("-h") || args[0].endsWith("help"))) {
 
-			String sourceJdbcUrl = commandLine.getOptionValue(
-				"source-jdbc-url");
-			String sourceUser = commandLine.getOptionValue("source-user");
-			String sourcePassword = commandLine.getOptionValue(
-				"source-password");
+				HelpFormatter helpFormatter = new HelpFormatter();
 
-			String destinationJdbcUrl = commandLine.getOptionValue(
-				"destination-jdbc-url");
-			String destinationUser = commandLine.getOptionValue(
-				"destination-user");
-			String destinationPassword = commandLine.getOptionValue(
-				"destination-password");
+				helpFormatter.printHelp(
+					"Liferay Portal Tools DB Virtual Instance Migration",
+					options);
 
-			try {
-				_sourceConnection = DriverManager.getConnection(
-					sourceJdbcUrl, sourceUser, sourcePassword);
-			}
-			catch (SQLException sqlException) {
-				System.err.println(
-					"ERROR: Not possible to get source database connection " +
-						"with specified parameters:");
-				sqlException.printStackTrace();
-
-				_exitWithCode(ErrorCodes.BAD_SOURCE_PARAMETERS);
+				return;
 			}
 
 			try {
-				_destinationConnection = DriverManager.getConnection(
-					destinationJdbcUrl, destinationUser, destinationPassword);
+				CommandLineParser commandLineParser = new DefaultParser();
+
+				CommandLine commandLine = commandLineParser.parse(
+					options, args);
+
+				String sourceJdbcUrl = commandLine.getOptionValue(
+					"source-jdbc-url");
+				String sourceUser = commandLine.getOptionValue("source-user");
+				String sourcePassword = commandLine.getOptionValue(
+					"source-password");
+
+				String destinationJdbcUrl = commandLine.getOptionValue(
+					"destination-jdbc-url");
+				String destinationUser = commandLine.getOptionValue(
+					"destination-user");
+				String destinationPassword = commandLine.getOptionValue(
+					"destination-password");
+
+				try {
+					_sourceConnection = DriverManager.getConnection(
+						sourceJdbcUrl, sourceUser, sourcePassword);
+				}
+				catch (SQLException sqlException) {
+					System.err.println(
+						"ERROR: Not possible to get source database " +
+							"connection with specified parameters:");
+					sqlException.printStackTrace();
+
+					_exitWithCode(ErrorCodes.BAD_SOURCE_PARAMETERS);
+				}
+
+				try {
+					_destinationConnection = DriverManager.getConnection(
+						destinationJdbcUrl, destinationUser,
+						destinationPassword);
+				}
+				catch (SQLException sqlException) {
+					System.err.println(
+						"ERROR: Not possible to get destination database " +
+							"connection with specified parameters:");
+					sqlException.printStackTrace();
+
+					_exitWithCode(ErrorCodes.BAD_DESTINATION_PARAMETERS);
+				}
+
+				if (commandLine.hasOption("destination-schema-prefix")) {
+					_schemaPrefix = commandLine.getOptionValue(
+						"destination-schema-prefix");
+				}
+
+				String destinationSchemaName = _getSchemaName(
+					destinationJdbcUrl);
+
+				if (!_checkIsDefaultPartition(
+						_destinationConnection, destinationSchemaName)) {
+
+					System.err.println(
+						"ERROR: Destination database is not the default " +
+							"partition");
+
+					_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
+				}
 			}
-			catch (SQLException sqlException) {
+			catch (ParseException parseException) {
 				System.err.println(
-					"ERROR: Not possible to get destination database " +
-						"connection with specified parameters:");
-				sqlException.printStackTrace();
+					"ERROR: Unable to parse command line properties: " +
+						parseException.getMessage());
+				System.err.println();
 
-				_exitWithCode(ErrorCodes.BAD_DESTINATION_PARAMETERS);
+				HelpFormatter helpFormatter = new HelpFormatter();
+
+				helpFormatter.printHelp(
+					"Liferay Portal Tools DB Virtual Instance Migration",
+					options);
+
+				_exitWithCode(ErrorCodes.BAD_INPUT_ARGUMENTS);
 			}
 
-			if (commandLine.hasOption("destination-schema-prefix")) {
-				_schemaPrefix = commandLine.getOptionValue(
-					"destination-schema-prefix");
-			}
+			_exitWithCode(ErrorCodes.SUCCESS);
 		}
-		catch (ParseException parseException) {
-			System.err.println(
-				"ERROR: Unable to parse command line properties: " +
-					parseException.getMessage());
-			System.err.println();
-
-			HelpFormatter helpFormatter = new HelpFormatter();
-
-			helpFormatter.printHelp(
-				"Liferay Portal Tools DB Virtual Instance Migration", options);
-
-			_exitWithCode(ErrorCodes.BAD_INPUT_ARGUMENTS);
+		catch (Exception exception) {
+			System.err.println("Unexpected error:");
+			exception.printStackTrace();
+			_exitWithCode(ErrorCodes.UNEXPECTED_ERROR);
 		}
-
-		_exitWithCode(ErrorCodes.SUCCESS);
 	}
 
-	private static void _exitWithCode(int code) throws SQLException {
-		if (_sourceConnection != null) {
-			_sourceConnection.close();
+	private static boolean _checkIsDefaultPartition(
+			Connection connection, String schemaName)
+		throws SQLException {
+
+		boolean defaultPartition = true;
+
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		for (String tableName : _controlTableNames) {
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					schemaName, schemaName, tableName,
+					new String[] {"TABLE"})) {
+
+				if (!resultSet.next()) {
+					defaultPartition = false;
+
+					break;
+				}
+			}
 		}
 
-		if (_destinationConnection != null) {
-			_sourceConnection.close();
+		return defaultPartition;
+	}
+
+	private static void _exitWithCode(int code) {
+		try {
+			if (_sourceConnection != null) {
+				_sourceConnection.close();
+			}
+
+			if (_destinationConnection != null) {
+				_sourceConnection.close();
+			}
+		}
+		catch (SQLException sqlException) {
+			System.err.println(sqlException);
 		}
 
 		if (code != ErrorCodes.SUCCESS) {
@@ -130,19 +189,8 @@ public class VirtualInstanceMigration {
 		Options options = new Options();
 
 		options.addRequiredOption(
-			"s", "source-jdbc-url", true,
-			"Set the JDBC url for the source database.");
-		options.addRequiredOption(
-			"su", "source-user", true, "Set the source database user name.");
-		options.addRequiredOption(
-			"sp", "source-password", true,
-			"Set the source database user password.");
-		options.addRequiredOption(
 			"d", "destination-jdbc-url", true,
 			"Set the JDBC url for the destination database.");
-		options.addRequiredOption(
-			"du", "destination-user", true,
-			"Set the destination database user name.");
 		options.addRequiredOption(
 			"dp", "destination-password", true,
 			"Set the destination database user password.");
@@ -150,11 +198,41 @@ public class VirtualInstanceMigration {
 			"dsp", "destination-schema-prefix", true,
 			"Set the schema prefix for nondefault databases in destination " +
 				"database.");
+		options.addRequiredOption(
+			"du", "destination-user", true,
+			"Set the destination database user name.");
 		options.addOption("h", "help", false, "Print help message.");
+		options.addRequiredOption(
+			"s", "source-jdbc-url", true,
+			"Set the JDBC url for the source database.");
+		options.addRequiredOption(
+			"sp", "source-password", true,
+			"Set the source database user password.");
+		options.addRequiredOption(
+			"su", "source-user", true, "Set the source database user name.");
 
 		return options;
 	}
 
+	private static String _getSchemaName(String jdbcUrl) {
+		String schemaName;
+
+		int paramsIndex = jdbcUrl.indexOf("?");
+
+		if (paramsIndex == -1) {
+			schemaName = jdbcUrl.substring(jdbcUrl.lastIndexOf("/") + 1);
+		}
+		else {
+			String onlyUrl = jdbcUrl.substring(0, paramsIndex);
+
+			schemaName = onlyUrl.substring(onlyUrl.lastIndexOf("/") + 1);
+		}
+
+		return schemaName;
+	}
+
+	private static final Set<String> _controlTableNames = new HashSet<>(
+		Arrays.asList("Company", "VirtualHost"));
 	private static Connection _destinationConnection;
 	private static String _schemaPrefix = "lpartition_";
 	private static Connection _sourceConnection;

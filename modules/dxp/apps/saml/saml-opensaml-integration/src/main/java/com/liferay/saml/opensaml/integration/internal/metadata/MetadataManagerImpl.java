@@ -217,7 +217,8 @@ public class MetadataManagerImpl
 
 	@Override
 	public MetadataCredentialResolver getMetadataCredentialResolver() {
-		return _metadataCredentialResolver;
+		return _metadataCredentialResolverDCLSingleton.getSingleton(
+			this::_createMetadataCredentialResolver);
 	}
 
 	@Override
@@ -501,19 +502,6 @@ public class MetadataManagerImpl
 		_cachingChainingMetadataResolver.initialize();
 
 		_predicateRoleDescriptorResolver.initialize();
-
-		KeyInfoCredentialResolver keyInfoCredentialResolver =
-			DefaultSecurityConfigurationBootstrap.
-				buildBasicInlineKeyInfoCredentialResolver();
-
-		_metadataCredentialResolver = new MetadataCredentialResolver();
-
-		_metadataCredentialResolver.setKeyInfoCredentialResolver(
-			keyInfoCredentialResolver);
-		_metadataCredentialResolver.setRoleDescriptorResolver(
-			_predicateRoleDescriptorResolver);
-
-		_metadataCredentialResolver.initialize();
 	}
 
 	@Deactivate
@@ -526,12 +514,16 @@ public class MetadataManagerImpl
 	private ChainingSignatureTrustEngine _createChainingSignatureTrustEngine() {
 		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
 
+		MetadataCredentialResolver metadataCredentialResolver =
+			_metadataCredentialResolverDCLSingleton.getSingleton(
+				this::_createMetadataCredentialResolver);
+
 		KeyInfoCredentialResolver keyInfoCredentialResolver =
-			_metadataCredentialResolver.getKeyInfoCredentialResolver();
+			metadataCredentialResolver.getKeyInfoCredentialResolver();
 
 		SignatureTrustEngine signatureTrustEngine =
 			new ExplicitKeySignatureTrustEngine(
-				_metadataCredentialResolver, keyInfoCredentialResolver);
+				metadataCredentialResolver, keyInfoCredentialResolver);
 
 		signatureTrustEngines.add(signatureTrustEngine);
 
@@ -541,6 +533,28 @@ public class MetadataManagerImpl
 		signatureTrustEngines.add(signatureTrustEngine);
 
 		return new ChainingSignatureTrustEngine(signatureTrustEngines);
+	}
+
+	private MetadataCredentialResolver _createMetadataCredentialResolver() {
+		MetadataCredentialResolver metadataCredentialResolver =
+			new MetadataCredentialResolver();
+
+		metadataCredentialResolver.setKeyInfoCredentialResolver(
+			DefaultSecurityConfigurationBootstrap.
+				buildBasicInlineKeyInfoCredentialResolver());
+		metadataCredentialResolver.setRoleDescriptorResolver(
+			_predicateRoleDescriptorResolver);
+
+		try {
+			metadataCredentialResolver.initialize();
+		}
+		catch (ComponentInitializationException
+					componentInitializationException) {
+
+			throw new RuntimeException(componentInitializationException);
+		}
+
+		return metadataCredentialResolver;
 	}
 
 	private SamlProviderConfiguration _getSamlProviderConfiguration() {
@@ -582,7 +596,8 @@ public class MetadataManagerImpl
 	@Reference
 	private LocalEntityManager _localEntityManager;
 
-	private MetadataCredentialResolver _metadataCredentialResolver;
+	private final DCLSingleton<MetadataCredentialResolver>
+		_metadataCredentialResolverDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private ParserPool _parserPool;

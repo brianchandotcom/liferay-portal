@@ -242,9 +242,9 @@ public class IllegalImportsCheck extends BaseFileCheck {
 									"' should be replaced by '",
 									replacedTaglibArray[1],
 									"', see LPS-179523"));
-						}
 
-						break;
+							break;
+						}
 					}
 				}
 

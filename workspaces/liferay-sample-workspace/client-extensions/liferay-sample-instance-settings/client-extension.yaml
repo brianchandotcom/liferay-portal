@@ -1,3 +1,5 @@
+assemble:
+    - into: static
 liferay-sample-instance-settings-d5f7j8:
     invitationEmailBody:
         en_US: |
@@ -20,7 +22,7 @@ liferay-sample-instance-settings-d5f7j8:
 liferay-sample-instance-settings-e9b8w3:
     allowedDomains:
         - localhost
-        - *.lfr.dev
+        - "*.lfr.dev"
     name: Liferay Sample Instance Settings E9B8W3
     pid: com.liferay.redirect.internal.configuration.RedirectURLConfiguration
     securityMode: domain

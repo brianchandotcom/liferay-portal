@@ -369,6 +369,7 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Object> properties = objectEntry.getProperties();
 
 			properties.putAll(existingObjectEntry.getProperties());
+
 			existingObjectEntry.setProperties(properties);
 		}
 
@@ -591,6 +592,7 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Object> properties = objectEntry.getProperties();
 
 			properties.putAll(existingObjectEntry.getProperties());
+
 			existingObjectEntry.setProperties(properties);
 		}
 
@@ -837,6 +839,7 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Object> properties = objectEntry.getProperties();
 
 			properties.putAll(existingObjectEntry.getProperties());
+
 			existingObjectEntry.setProperties(properties);
 		}
 

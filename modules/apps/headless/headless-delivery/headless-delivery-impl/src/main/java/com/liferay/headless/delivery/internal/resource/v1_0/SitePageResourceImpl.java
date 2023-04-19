@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
@@ -336,9 +338,16 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				new HashMap<>(pagePermissions.length);
 
 			for (PagePermission pagePermission : pagePermissions) {
+				String roleKey = pagePermission.getRoleKey();
+
+				Team team = _teamLocalService.fetchTeam(siteId, roleKey);
+
+				if (team != null) {
+					roleKey = String.valueOf(team.getTeamId());
+				}
+
 				modelPermissionsParameterMap.put(
-					pagePermission.getRoleKey(),
-					pagePermission.getActionKeys());
+					roleKey, pagePermission.getActionKeys());
 			}
 
 			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
@@ -773,5 +782,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.SitePageDTOConverter)"
 	)
 	private DTOConverter<Layout, SitePage> _sitePageDTOConverter;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 }

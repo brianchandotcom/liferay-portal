@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
@@ -49,12 +47,11 @@ public class SearchBarPortletDestinationUtil {
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		ThemeDisplay themeDisplay) {
 
-		Optional<String> optional =
-			searchBarPortletPreferences.getDestinationOptional();
+		String destination = searchBarPortletPreferences.getDestination();
 
-		if (!optional.isPresent() ||
+		if (Validator.isNull(destination) ||
 			isSameDestination(
-				optional.get(),
+				destination,
 				themeDisplay.getLayoutFriendlyURL(themeDisplay.getLayout()))) {
 
 			return true;

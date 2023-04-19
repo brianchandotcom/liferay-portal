@@ -12,24 +12,24 @@
  *
  */
 
-package com.liferay.osb.faro.internal.upgrade;
+package com.liferay.osb.faro.internal.upgrade.v2_0_0;
 
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class FaroContactsServiceUpgrade implements UpgradeStepRegistrator {
+public class UpgradeContactsCriterionUpgradeProcess extends UpgradeProcess {
 
 	@Override
-	public void register(Registry registry) {
-		registry.register(
-			"1.0.0", "2.0.0",
-			new com.liferay.osb.faro.internal.upgrade.v2_0_0.
-				UpgradeContactsCriterion());
+	protected void doUpgrade() throws Exception {
+		for (String tableName : _TABLE_NAMES) {
+			runSQL("drop table if exists " + tableName);
+		}
 	}
+
+	private static final String[] _TABLE_NAMES = {
+		"OSBFaro_ContactsCriterion", "OSBFaro_ContactsCriterionLink"
+	};
 
 }

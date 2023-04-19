@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

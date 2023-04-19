@@ -97,15 +97,18 @@ definition {
 
 		var marketingDirectorReviewValue = 14999;
 		var totalMDFRequestAmount = ${totalCostOfExpense} / 2;
+
 		var marketingDirectorReviewCondition = MathUtil.isGreaterThan(${totalMDFRequestAmount}, ${marketingDirectorReviewValue});
 
 		if (${marketingDirectorReviewCondition} == "true") {
 			var mdfRequestStatus = "Marketing Director Review";
-		} else {
+		}
+		else {
 			var mdfRequestStatus = "Pending Marketing Review";
 		}
 
 		var mdfRequestStatusKey = StringUtil.lowerCaseFirstLetter(${mdfRequestStatus});
+
 		var mdfRequestStatusKey = StringUtil.replace(${mdfRequestStatusKey}, " ", "");
 
 		var mdfExternalReferenceCode = JSONPRMAPI.addMDFSf(
@@ -114,13 +117,13 @@ definition {
 			campaignName = ${campaignName},
 			endDate = ${endDate},
 			goalsOptions = ${goalsOptions},
+			mdfRequestStatus = ${mdfRequestStatus},
+			mdfRequestStatusKey = ${mdfRequestStatusKey},
 			startDate = ${startDate},
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions},
 			totalCostOfExpense = ${totalCostOfExpense},
-			totalMDFRequestAmount = ${totalMDFRequestAmount},
-			mdfRequestStatusKey = ${mdfRequestStatusKey},
-			mdfRequestStatus = ${mdfRequestStatus});
+			totalMDFRequestAmount = ${totalMDFRequestAmount});
 
 		var requestId = JSONPRMAPI.addMDF(
 			accountEntryName = ${accountEntryName},
@@ -129,12 +132,12 @@ definition {
 			endDate = ${endDate},
 			goalsOptions = ${goalsOptions},
 			mdfExternalReferenceCode = ${mdfExternalReferenceCode},
+			mdfRequestStatus = ${mdfRequestStatus},
+			mdfRequestStatusKey = ${mdfRequestStatusKey},
 			startDate = ${startDate},
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions},
 			totalCostOfExpense = ${totalCostOfExpense},
-			mdfRequestStatus = ${mdfRequestStatus},
-			mdfRequestStatusKey = ${mdfRequestStatusKey},
 			totalMDFRequestAmount = ${totalMDFRequestAmount},
 			userEmailAddress = ${userEmailAddress});
 

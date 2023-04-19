@@ -23,7 +23,6 @@ import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplay
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -126,7 +125,7 @@ public class CustomFacetDisplayContextTest
 		customFacetDisplayContextBuilder.setOrder(order);
 
 		customFacetDisplayContextBuilder.setCustomDisplayCaption(
-			Optional.ofNullable(customDisplayCaption));
+			customDisplayCaption);
 		customFacetDisplayContextBuilder.setFieldToAggregate(fieldToAggregate);
 
 		return customFacetDisplayContextBuilder.build();

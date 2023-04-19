@@ -3,7 +3,7 @@
 [#assign approvedRoles = [""] /]
 
 [#if configuration.channelAccountManager]
-	[#assign approvedRoles = approvedRoles + ["Channel Account Manager"] /]
+	[#assign approvedRoles = approvedRoles + ["Channel Account Manager (CAM)"] /]
 [/#if]
 [#if configuration.channelFinanceManager]
 	[#assign approvedRoles = approvedRoles + ["Channel Finance Manager"] /]
@@ -18,7 +18,7 @@
 	[#assign approvedRoles = approvedRoles + ["Channel Regional Marketing Manager"] /]
 [/#if]
 [#if configuration.partnerManager]
-	[#assign approvedRoles = approvedRoles + ["Partner Manager"] /]
+	[#assign approvedRoles = approvedRoles + ["Partner Manager (PM)"] /]
 [/#if]
 
 [#if configuration.user]

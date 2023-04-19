@@ -186,7 +186,9 @@ public class PortalK8sAgentImplTest {
 	public void testCreateDXPMetadata() throws Exception {
 		String webId = "foo.lxc.com";
 
-		_companyLocalService.addCompany(null, webId, webId, webId, 0, true);
+		_companyLocalService.addCompany(
+			null, webId, webId, webId, 0, true, null, null, null, null, null,
+			null);
 
 		ConfigMap configMap = _kubernetesMockClient.configMaps(
 		).withName(

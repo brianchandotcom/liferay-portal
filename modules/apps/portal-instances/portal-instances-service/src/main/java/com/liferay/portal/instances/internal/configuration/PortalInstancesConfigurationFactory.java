@@ -71,7 +71,8 @@ public class PortalInstancesConfigurationFactory {
 
 		if (company == null) {
 			company = _companyLocalService.addCompany(
-				null, webId, virtualHostname, mx, maxUsers, active);
+				null, webId, virtualHostname, mx, maxUsers, active, null, null,
+				null, null, null, null);
 
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(

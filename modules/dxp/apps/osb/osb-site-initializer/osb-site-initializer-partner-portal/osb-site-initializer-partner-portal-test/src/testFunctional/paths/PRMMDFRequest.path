@@ -110,6 +110,11 @@
 	<td>//div[contains(@class,'edit-button-mdf-request')]//button[@id='edit-button-${key_roleName}']/div[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VALUE_BUDGET</td>
+	<td>//*[@route='mdf-request-form']//div[contains(@class,'text-paragraph') and contains(text(),'Total cost')]//following-sibling::div[contains(@class,'text-paragraph') and contains(text(),'${key_totalCost}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -28,7 +28,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			FrontendDataSetViewsJSON.deleteAllDataSetEntriesViaAPI();
+			JSONFrontendDatasetEntries._deleteFDSEntry();
 		}
 	}
 

@@ -55,6 +55,36 @@ public class KnowledgeBaseArticleResourceTest
 
 	@Override
 	@Test
+	public void testDeleteKnowledgeBaseArticleMyRating() throws Exception {
+		super.testDeleteKnowledgeBaseArticleMyRating();
+
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseArticleResource.
+				deleteKnowledgeBaseArticleMyRatingHttpResponse(
+					knowledgeBaseArticle.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.
+				deleteKnowledgeBaseArticleMyRatingHttpResponse(
+					knowledgeBaseArticle.getId()));
+
+		KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
+			randomIrrelevantKnowledgeBaseArticle();
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.
+				deleteKnowledgeBaseArticleMyRatingHttpResponse(
+					irrelevantKnowledgeBaseArticle.getId()));
+	}
+
+	@Override
+	@Test
 	public void testPutSiteKnowledgeBaseArticleSubscribe() throws Exception {
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testPutSiteKnowledgeBaseArticleSubscribe_addKnowledgeBaseArticle();
@@ -93,6 +123,21 @@ public class KnowledgeBaseArticleResourceTest
 
 		knowledgeBaseArticle.setParentKnowledgeBaseArticleId(0L);
 		knowledgeBaseArticle.setParentKnowledgeBaseFolderId(0L);
+
+		return knowledgeBaseArticle;
+	}
+
+	@Override
+	protected KnowledgeBaseArticle
+			testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle()
+		throws Exception {
+
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			super.
+				testDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
+
+		knowledgeBaseArticleResource.putKnowledgeBaseArticleMyRating(
+			knowledgeBaseArticle.getId(), randomRating());
 
 		return knowledgeBaseArticle;
 	}

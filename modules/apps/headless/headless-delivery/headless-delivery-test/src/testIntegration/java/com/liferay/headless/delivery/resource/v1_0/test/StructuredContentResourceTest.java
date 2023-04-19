@@ -134,6 +134,36 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testDeleteStructuredContentMyRating() throws Exception {
+		super.testDeleteStructuredContentMyRating();
+
+		StructuredContent structuredContent =
+			testDeleteStructuredContentMyRating_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.
+				deleteStructuredContentMyRatingHttpResponse(
+					structuredContent.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.
+				deleteStructuredContentMyRatingHttpResponse(
+					structuredContent.getId()));
+
+		StructuredContent irrelevantStructuredContent =
+			randomIrrelevantStructuredContent();
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.
+				deleteStructuredContentMyRatingHttpResponse(
+					irrelevantStructuredContent.getId()));
+	}
+
+	@Override
+	@Test
 	public void testGetStructuredContent() throws Exception {
 
 		// Get structured content
@@ -531,6 +561,20 @@ public class StructuredContentResourceTest
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected StructuredContent
+			testDeleteStructuredContentMyRating_addStructuredContent()
+		throws Exception {
+
+		StructuredContent structuredContent =
+			super.testDeleteStructuredContentMyRating_addStructuredContent();
+
+		structuredContentResource.putStructuredContentMyRatingHttpResponse(
+			structuredContent.getId(), randomRating());
+
+		return structuredContent;
 	}
 
 	@Override

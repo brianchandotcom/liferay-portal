@@ -57,6 +57,36 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	@Test
+	public void testDeleteMessageBoardMessageMyRating() throws Exception {
+		super.testDeleteMessageBoardMessageMyRating();
+
+		MessageBoardMessage messageBoardMessage =
+			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				deleteMessageBoardMessageMyRatingHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				deleteMessageBoardMessageMyRatingHttpResponse(
+					messageBoardMessage.getId()));
+
+		MessageBoardMessage irrelevantMessageBoardMessage =
+			randomIrrelevantMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				deleteMessageBoardMessageMyRatingHttpResponse(
+					irrelevantMessageBoardMessage.getId()));
+	}
+
+	@Override
+	@Test
 	public void testGetMessageBoardMessageMessageBoardMessagesPage()
 		throws Exception {
 
@@ -168,7 +198,12 @@ public class MessageBoardMessageResourceTest
 			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage()
 		throws Exception {
 
-		return _addMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage = _addMessageBoardMessage();
+
+		messageBoardMessageResource.putMessageBoardMessageMyRating(
+			messageBoardMessage.getId(), randomRating());
+
+		return messageBoardMessage;
 	}
 
 	@Override

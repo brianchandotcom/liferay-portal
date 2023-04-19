@@ -47,24 +47,22 @@ public class DocumentFolderResourceTest
 			testDeleteDocumentFolderMyRating_addDocumentFolder();
 
 		assertHttpResponseStatusCode(
-			200,
-			documentFolderResource.putDocumentFolderMyRatingHttpResponse(
-				documentFolder.getId(), randomRating()));
-
-		assertHttpResponseStatusCode(
-			200,
-			documentFolderResource.getDocumentFolderMyRatingHttpResponse(
-				documentFolder.getId()));
-
-		assertHttpResponseStatusCode(
 			204,
 			documentFolderResource.deleteDocumentFolderMyRatingHttpResponse(
 				documentFolder.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			documentFolderResource.getDocumentFolderMyRatingHttpResponse(
+			documentFolderResource.deleteDocumentFolderMyRatingHttpResponse(
 				documentFolder.getId()));
+
+		DocumentFolder irrelevantDocumentFolder =
+			randomIrrelevantDocumentFolder();
+
+		assertHttpResponseStatusCode(
+			404,
+			documentFolderResource.deleteDocumentFolderMyRatingHttpResponse(
+				irrelevantDocumentFolder.getId()));
 	}
 
 	@Override
@@ -75,6 +73,20 @@ public class DocumentFolderResourceTest
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {"creatorId"};
+	}
+
+	@Override
+	protected DocumentFolder
+			testDeleteDocumentFolderMyRating_addDocumentFolder()
+		throws Exception {
+
+		DocumentFolder documentFolder =
+			super.testDeleteDocumentFolderMyRating_addDocumentFolder();
+
+		documentFolderResource.putDocumentFolderMyRating(
+			documentFolder.getId(), randomRating());
+
+		return documentFolder;
 	}
 
 	@Override

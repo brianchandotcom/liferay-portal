@@ -65,6 +65,36 @@ public class MessageBoardThreadResourceTest
 
 	@Override
 	@Test
+	public void testDeleteMessageBoardThreadMyRating() throws Exception {
+		super.testDeleteMessageBoardThreadMyRating();
+
+		MessageBoardThread messageBoardThread =
+			testDeleteMessageBoardThreadMyRating_addMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.
+				deleteMessageBoardThreadMyRatingHttpResponse(
+					messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				deleteMessageBoardThreadMyRatingHttpResponse(
+					messageBoardThread.getId()));
+
+		MessageBoardThread irrelevantMessageBoardThread =
+			randomIrrelevantMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				deleteMessageBoardThreadMyRatingHttpResponse(
+					irrelevantMessageBoardThread.getId()));
+	}
+
+	@Override
+	@Test
 	public void testGetMessageBoardThreadsRankedPageWithSortString()
 		throws Exception {
 
@@ -161,6 +191,20 @@ public class MessageBoardThreadResourceTest
 		messageBoardThread.setMessageBoardSectionId((Long)null);
 		messageBoardThread.setSubscribed(false);
 		messageBoardThread.setThreadType("Urgent");
+
+		return messageBoardThread;
+	}
+
+	@Override
+	protected MessageBoardThread
+			testDeleteMessageBoardThreadMyRating_addMessageBoardThread()
+		throws Exception {
+
+		MessageBoardThread messageBoardThread =
+			super.testDeleteMessageBoardThreadMyRating_addMessageBoardThread();
+
+		messageBoardThreadResource.putMessageBoardThreadMyRating(
+			messageBoardThread.getId(), randomRating());
 
 		return messageBoardThread;
 	}

@@ -57,6 +57,31 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteDocumentMyRating() throws Exception {
+		super.testDeleteDocumentMyRating();
+
+		Document document = testDeleteDocumentMyRating_addDocument();
+
+		assertHttpResponseStatusCode(
+			204,
+			documentResource.deleteDocumentMyRatingHttpResponse(
+				document.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentResource.deleteDocumentMyRatingHttpResponse(
+				document.getId()));
+
+		Document irrelevantDocument = randomIrrelevantDocument();
+
+		assertHttpResponseStatusCode(
+			404,
+			documentResource.deleteDocumentMyRatingHttpResponse(
+				irrelevantDocument.getId()));
+	}
+
+	@Override
+	@Test
 	public void testGetDocumentRenderedContentByDisplayPageDisplayPageKey()
 		throws Exception {
 
@@ -164,6 +189,17 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected Document testDeleteDocumentMyRating_addDocument()
+		throws Exception {
+
+		Document document = super.testDeleteDocumentMyRating_addDocument();
+
+		documentResource.putDocumentMyRating(document.getId(), randomRating());
+
+		return document;
 	}
 
 	@Override

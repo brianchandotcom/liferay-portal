@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.util;
+package com.liferay.commerce.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;

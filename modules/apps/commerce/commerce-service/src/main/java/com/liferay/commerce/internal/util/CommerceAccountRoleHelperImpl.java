@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.util;
+package com.liferay.commerce.internal.util;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
@@ -20,9 +20,8 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
+import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -128,14 +127,6 @@ public class CommerceAccountRoleHelperImpl
 					AccountActionKeys.ASSIGN_USERS, ActionKeys.UPDATE,
 					ActionKeys.VIEW, AccountActionKeys.VIEW_ADDRESSES,
 					AccountActionKeys.VIEW_USERS
-				});
-			groupResourceActionIds.put(
-				"com.liferay.commerce.account.model.CommerceAccount",
-				new String[] {
-					CommerceAccountActionKeys.MANAGE_ADDRESSES,
-					CommerceAccountActionKeys.MANAGE_MEMBERS, ActionKeys.UPDATE,
-					ActionKeys.VIEW, CommerceAccountActionKeys.VIEW_ADDRESSES,
-					CommerceAccountActionKeys.VIEW_MEMBERS
 				});
 			groupResourceActionIds.put(
 				"com.liferay.commerce.order",

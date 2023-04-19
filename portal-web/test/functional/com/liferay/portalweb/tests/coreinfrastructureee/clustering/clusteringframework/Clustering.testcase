@@ -397,24 +397,20 @@ definition {
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",
-			categoryName = "com.liferay.portal.cluster");
+			categoryName = "com.liferay.portal.servlet.filters.autologin.AutoLoginFilter");
 
 		ServerAdministration.viewCategoryLogLevels(
 			categoryLevel = "DEBUG",
-			categoryName = "com.liferay.portal.cluster");
+			categoryName = "com.liferay.portal.servlet.filters.autologin.AutoLoginFilter");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		for (var serverPort : list "8080,9080,10080") {
+			User.loginPG(
+				nodePort = ${serverPort},
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = 9080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Send multicast message",
+				expectedText = "com.liferay.portal.servlet.filters.autologin.AutoLoginFilter /web/guest",
 				nodePort = ${serverPort});
 		}
 	}
@@ -440,11 +436,11 @@ definition {
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",
-			categoryName = "com.liferay.portal.cluster");
+			categoryName = "com.liferay.portal.servlet.filters.autologin.AutoLoginFilter");
 
 		ServerAdministration.viewCategoryLogLevels(
 			categoryLevel = "DEBUG",
-			categoryName = "com.liferay.portal.cluster");
+			categoryName = "com.liferay.portal.servlet.filters.autologin.AutoLoginFilter");
 
 		for (var serverPort : list "8080,9080,10080") {
 			User.loginPG(
@@ -453,7 +449,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "Send multicast message",
+				expectedText = "com.liferay.portal.servlet.filters.autologin.AutoLoginFilter /web/guest",
 				nodePort = ${serverPort});
 		}
 	}

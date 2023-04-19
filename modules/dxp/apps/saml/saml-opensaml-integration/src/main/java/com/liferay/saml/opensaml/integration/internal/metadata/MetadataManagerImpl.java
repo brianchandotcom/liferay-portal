@@ -500,13 +500,12 @@ public class MetadataManagerImpl
 		_cachingChainingMetadataResolver.setParserPool(_parserPool);
 
 		_cachingChainingMetadataResolver.initialize();
-
-		_predicateRoleDescriptorResolver.initialize();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_predicateRoleDescriptorResolver.destroy();
+		_predicateRoleDescriptorResolverDCLSingleton.destroy(
+			PredicateRoleDescriptorResolver::destroy);
 
 		_cachingChainingMetadataResolver.destroy();
 	}
@@ -543,7 +542,8 @@ public class MetadataManagerImpl
 			DefaultSecurityConfigurationBootstrap.
 				buildBasicInlineKeyInfoCredentialResolver());
 		metadataCredentialResolver.setRoleDescriptorResolver(
-			_predicateRoleDescriptorResolver);
+			_predicateRoleDescriptorResolverDCLSingleton.getSingleton(
+				this::_createPredicateRoleDescriptorResolver));
 
 		try {
 			metadataCredentialResolver.initialize();
@@ -555,6 +555,25 @@ public class MetadataManagerImpl
 		}
 
 		return metadataCredentialResolver;
+	}
+
+	private PredicateRoleDescriptorResolver
+		_createPredicateRoleDescriptorResolver() {
+
+		PredicateRoleDescriptorResolver predicateRoleDescriptorResolver =
+			new PredicateRoleDescriptorResolver(
+				_cachingChainingMetadataResolver);
+
+		try {
+			predicateRoleDescriptorResolver.initialize();
+		}
+		catch (ComponentInitializationException
+					componentInitializationException) {
+
+			throw new RuntimeException(componentInitializationException);
+		}
+
+		return predicateRoleDescriptorResolver;
 	}
 
 	private SamlProviderConfiguration _getSamlProviderConfiguration() {
@@ -605,9 +624,8 @@ public class MetadataManagerImpl
 	@Reference
 	private Portal _portal;
 
-	private final PredicateRoleDescriptorResolver
-		_predicateRoleDescriptorResolver = new PredicateRoleDescriptorResolver(
-			_cachingChainingMetadataResolver);
+	private final DCLSingleton<PredicateRoleDescriptorResolver>
+		_predicateRoleDescriptorResolverDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

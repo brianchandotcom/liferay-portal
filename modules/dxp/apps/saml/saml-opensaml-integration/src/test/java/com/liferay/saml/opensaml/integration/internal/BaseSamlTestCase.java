@@ -749,9 +749,6 @@ public abstract class BaseSamlTestCase {
 			samlBindingProvider, "_httpClient", httpClient);
 		ReflectionTestUtil.setFieldValue(
 			samlBindingProvider, "_parserPool", parserPool);
-
-		ReflectionTestUtil.invoke(
-			samlBindingProvider, "activate", new Class<?>[0]);
 	}
 
 	private void _setupSamlPeerBindingsLocalService() throws Exception {

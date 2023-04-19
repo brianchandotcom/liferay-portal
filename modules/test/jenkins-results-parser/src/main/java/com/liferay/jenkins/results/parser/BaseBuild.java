@@ -1987,6 +1987,8 @@ public abstract class BaseBuild implements Build {
 		try {
 			JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(invocationURL));
+
+			_jenkinsConsoleTextLoader = null;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

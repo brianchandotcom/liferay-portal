@@ -46,7 +46,6 @@ import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierG
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
-import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.impl.SamlPeerBindingImpl;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
@@ -744,25 +743,12 @@ public abstract class BaseSamlTestCase {
 	}
 
 	private void _setupSamlBindings() {
-		VelocityEngineFactory velocityEngineFactory =
-			new VelocityEngineFactory();
-
-		Thread currentThread = Thread.currentThread();
-
-		ReflectionTestUtil.setFieldValue(
-			velocityEngineFactory, "_velocityEngine",
-			velocityEngineFactory.getVelocityEngine(
-				currentThread.getContextClassLoader()));
-
 		samlBindingProvider = new SamlBindingProvider();
 
 		ReflectionTestUtil.setFieldValue(
 			samlBindingProvider, "_httpClient", httpClient);
 		ReflectionTestUtil.setFieldValue(
 			samlBindingProvider, "_parserPool", parserPool);
-		ReflectionTestUtil.setFieldValue(
-			samlBindingProvider, "_velocityEngineFactory",
-			velocityEngineFactory);
 
 		ReflectionTestUtil.invoke(
 			samlBindingProvider, "activate", new Class<?>[0]);

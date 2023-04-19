@@ -51,7 +51,7 @@ public class SamlBindingProvider {
 	@Activate
 	protected void activate() {
 		HttpPostBinding httpPostBinding = new HttpPostBinding(
-			_parserPool, _velocityEngineFactory.getVelocityEngine());
+			_parserPool, VelocityEngineFactory.getVelocityEngine());
 
 		_samlBindings.put(
 			httpPostBinding.getCommunicationProfileId(), httpPostBinding);
@@ -77,8 +77,5 @@ public class SamlBindingProvider {
 	private ParserPool _parserPool;
 
 	private final Map<String, SamlBinding> _samlBindings = new HashMap<>();
-
-	@Reference
-	private VelocityEngineFactory _velocityEngineFactory;
 
 }

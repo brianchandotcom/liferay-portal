@@ -1,0 +1,19 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compile group: "org.apache.cxf", name: "cxf-rt-rs-security-oauth2", version: "3.2.14"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/cxf/rs/security/oauth2/grants/code/JwtRequestCodeFilter.java"
+
+	originalLibModuleName = "cxf-rt-rs-security-oauth2"
+}

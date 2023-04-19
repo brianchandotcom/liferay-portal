@@ -26,6 +26,7 @@
 			"label": {
 				"en_US": "FDS View"
 			},
+			"modifiable": true,
 			"name": "FDSView",
 			"objectFields": [
 				{
@@ -208,6 +209,7 @@
 			"status": {
 				"code": 0
 			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -216,6 +218,7 @@
 			"label": {
 				"en_US": "FDS View Mode"
 			},
+			"modifiable": true,
 			"name": "FDSViewMode",
 			"objectFields": [
 				{
@@ -368,6 +371,7 @@
 			"status": {
 				"code": 0
 			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -376,6 +380,7 @@
 			"label": {
 				"en_US": "FDS Sort"
 			},
+			"modifiable": true,
 			"name": "FDSSort",
 			"objectFields": [
 				{
@@ -436,6 +441,7 @@
 			"status": {
 				"code": 0
 			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -444,6 +450,7 @@
 			"label": {
 				"en_US": "FDS Field Mapping"
 			},
+			"modifiable": true,
 			"name": "FDSFieldMapping",
 			"objectFields": [
 				{
@@ -567,6 +574,7 @@
 			"status": {
 				"code": 0
 			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -575,6 +583,7 @@
 			"label": {
 				"en_US": "FDS Action"
 			},
+			"modifiable": true,
 			"name": "FDSAction",
 			"objectFields": [
 				{
@@ -726,6 +735,7 @@
 			"status": {
 				"code": 0
 			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -734,6 +744,7 @@
 			"label": {
 				"en_US": "FDS Filter"
 			},
+			"modifiable": true,
 			"name": "FDSFilter",
 			"objectFields": [
 				{
@@ -850,6 +861,7 @@
 			"status": {
 				"code": 0
 			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -858,6 +870,7 @@
 			"label": {
 				"en_US": "FDS Entry"
 			},
+			"modifiable": true,
 			"name": "FDSEntry",
 			"objectFields": [
 				{
@@ -984,6 +997,7 @@
 			"status": {
 				"code": 0
 			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		}
 	]

@@ -171,6 +171,13 @@ public class ObjectRelationshipLocalServiceUtil {
 		getService().deleteObjectRelationships(objectDefinitionId1);
 	}
 
+	public static void deleteObjectRelationships(
+			long objectDefinitionId1, boolean reverse)
+		throws PortalException {
+
+		getService().deleteObjectRelationships(objectDefinitionId1, reverse);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

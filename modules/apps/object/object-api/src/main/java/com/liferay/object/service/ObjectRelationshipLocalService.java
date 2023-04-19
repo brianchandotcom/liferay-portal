@@ -160,6 +160,10 @@ public interface ObjectRelationshipLocalService
 	public void deleteObjectRelationships(long objectDefinitionId1)
 		throws PortalException;
 
+	public void deleteObjectRelationships(
+			long objectDefinitionId1, boolean reverse)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

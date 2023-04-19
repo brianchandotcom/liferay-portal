@@ -32,7 +32,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 	floatElements="end"
 	verticalAlign="center"
 >
-	<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
+	<c:if test="<%= !layout.isTypeAssetDisplay() && blogsPortletInstanceConfiguration.enableComments() %>">
 		<clay:content-col>
 
 			<%

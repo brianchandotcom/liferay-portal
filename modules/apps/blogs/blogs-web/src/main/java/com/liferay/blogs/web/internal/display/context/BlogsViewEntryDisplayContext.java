@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -226,7 +227,9 @@ public class BlogsViewEntryDisplayContext {
 	}
 
 	public boolean isCommentsEnabled() throws PortalException {
-		if (getDiscussion() == null) {
+		Layout layout = _themeDisplay.getLayout();
+
+		if (layout.isTypeAssetDisplay() || (getDiscussion() == null)) {
 			return false;
 		}
 

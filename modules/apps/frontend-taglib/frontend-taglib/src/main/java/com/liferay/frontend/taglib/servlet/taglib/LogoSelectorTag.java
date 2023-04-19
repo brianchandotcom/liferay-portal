@@ -102,8 +102,6 @@ public class LogoSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:currentLogoURL", _currentLogoURL);
-		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:defaultLogoURL", _defaultLogoURL);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:logoURL",
@@ -113,9 +111,6 @@ public class LogoSelectorTag extends IncludeTag {
 			httpServletRequest, "taglib_ui_logo_selector");
 
 		String randomNamespace = randomKey + StringPool.UNDERLINE;
-
-		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:randomNamespace", randomNamespace);
 
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:selectLogoURL",

@@ -3,13 +3,13 @@ import {useEffect, useState} from 'react';
 
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import { DashboardMemberTableRow } from '../../components/DashboardTable/DashboardMemberTableRow';
+import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
 	AppProps,
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
-import { MemberProfile } from '../../components/MemberProfile/MemberProfile';
+import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {getCompanyId} from '../../liferay/constants';
 import {
 	getAccounts,
@@ -20,7 +20,13 @@ import {
 	getUserAccounts,
 } from '../../utils/api';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
-import { AccountBriefProps, customerRoles, MemberProps, publisherRoles, UserAccountProps } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
+import {
+	AccountBriefProps,
+	MemberProps,
+	UserAccountProps,
+	customerRoles,
+	publisherRoles,
+} from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
 import {
@@ -96,7 +102,8 @@ export function PurchasedAppsDashboardPage() {
 	);
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
-	const [selectedNavigationItem, setSelectedNavigationItem] = useState('Apps');
+	const [selectedNavigationItem, setSelectedNavigationItem] =
+		useState('Apps');
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 
 	const messages = {
@@ -364,7 +371,10 @@ export function PurchasedAppsDashboardPage() {
 							activeDelta={purchasedAppTable.pageSize}
 							defaultActive={1}
 							ellipsisBuffer={3}
-							ellipsisProps={{'aria-label': 'More', 'title': 'More'}}
+							ellipsisProps={{
+								'aria-label': 'More',
+								'title': 'More',
+							}}
 							onActiveChange={setPage}
 							showDeltasDropDown={false}
 							totalItems={purchasedAppTable?.totalCount}

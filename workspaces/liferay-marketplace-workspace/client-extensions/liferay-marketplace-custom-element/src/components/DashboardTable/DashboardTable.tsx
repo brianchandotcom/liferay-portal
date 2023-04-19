@@ -59,7 +59,7 @@ export function DashboardTable<T>({
 		return (
 			<ClayTable borderless className="dashboard-table-container">
 				<ClayTable.Head>
-					{tableHeaders.map(({iconSymbol, title, style}) => (
+					{tableHeaders.map(({iconSymbol, style, title}) => (
 						<ClayTable.Cell headingCell key={title} style={style}>
 							<div className="dashboard-table-header-name">
 								<span className="dashboard-table-header-text">

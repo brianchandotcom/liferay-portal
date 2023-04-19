@@ -2,9 +2,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
-import {Liferay} from '../../liferay/liferay';
 
 import {getCompanyId} from '../../liferay/constants';
+import {Liferay} from '../../liferay/liferay';
 import {
 	getAccountInfo,
 	getAccountInfoFromCommerce,
@@ -409,6 +409,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 										<span className="get-app-modal-body-content-app-info-version">
 											{appVersion} by{' '}
+
 											{accountPublisher?.name}
 										</span>
 									</div>

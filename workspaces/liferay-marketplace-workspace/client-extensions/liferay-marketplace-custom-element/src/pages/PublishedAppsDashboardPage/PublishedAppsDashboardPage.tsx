@@ -29,8 +29,8 @@ import {
 	ProductResponseProps,
 	ProductSpecificationProps,
 	UserAccountProps,
-	initialDashboardNavigationItems,
 	customerRoles,
+	initialDashboardNavigationItems,
 	publisherRoles,
 } from './PublishedDashboardPageUtil';
 

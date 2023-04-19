@@ -79,10 +79,7 @@ export type ProductSpecificationProps = {
 	value: {};
 };
 
-export const publisherRoles = [
-	'Account Administrator',
-	'App Editor',
-];
+export const publisherRoles = ['Account Administrator', 'App Editor'];
 
 export type RoleBriefProps = {
 	id: number;

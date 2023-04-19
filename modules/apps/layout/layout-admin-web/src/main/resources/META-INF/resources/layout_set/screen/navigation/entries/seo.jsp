@@ -66,6 +66,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 			formModelBean="<%= selLayoutSet %>"
 			id="<%= LayoutAdminFormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET_ADVANCED %>"
 			showButtons="<%= false %>"
+			type="<%= FormNavigatorConstants.FormNavigatorType.SHEET_SECTIONS %>"
 		/>
 	</liferay-frontend:edit-form-body>
 

@@ -1387,9 +1387,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
-                sourceFileName:
+                fileName:
                     description:
-                        The document's source file name.
+                        The document's file name.
                     type: string
                 taxonomyCategoryBriefs:
                     # @review

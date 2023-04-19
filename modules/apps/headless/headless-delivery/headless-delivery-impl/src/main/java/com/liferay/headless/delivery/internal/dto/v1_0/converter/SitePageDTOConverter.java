@@ -22,6 +22,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.headless.delivery.dto.v1_0.Experience;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
@@ -38,10 +39,21 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -55,6 +67,11 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -188,6 +205,96 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 						return _pageDefinitionDTOConverter.toDTO(
 							dtoConverterContext, layoutStructure);
 					});
+				setPagePermissions(
+					() -> {
+						List<ResourcePermission> resourcePermissions =
+							_resourcePermissionLocalService.
+								getResourcePermissions(
+									layout.getCompanyId(),
+									Layout.class.getName(),
+									ResourceConstants.SCOPE_INDIVIDUAL,
+									String.valueOf(layout.getPlid()));
+
+						if (ListUtil.isEmpty(resourcePermissions)) {
+							return null;
+						}
+
+						List<ResourceAction> resourceActions =
+							_resourceActionLocalService.getResourceActions(
+								Layout.class.getName());
+
+						if (ListUtil.isEmpty(resourceActions)) {
+							return null;
+						}
+
+						ArrayList<PagePermission> pagePermissions =
+							new ArrayList<>();
+
+						for (ResourcePermission resourcePermission :
+								resourcePermissions) {
+
+							Role role = _roleLocalService.fetchRole(
+								resourcePermission.getRoleId());
+
+							if (role == null) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(
+										String.format(
+											"Resource permission %s will not " +
+												"be included since no role " +
+													"was found with role ID %s",
+											resourcePermission.getName(),
+											resourcePermission.getRoleId()));
+								}
+
+								continue;
+							}
+
+							Set<String> actionIdsSet = new HashSet<>();
+
+							long actionIds = resourcePermission.getActionIds();
+
+							for (ResourceAction resourceAction :
+									resourceActions) {
+
+								long bitwiseValue =
+									resourceAction.getBitwiseValue();
+
+								if ((actionIds & bitwiseValue) ==
+										bitwiseValue) {
+
+									actionIdsSet.add(
+										resourceAction.getActionId());
+								}
+							}
+
+							String roleKey = role.getName();
+
+							if (role.getClassNameId() == _portal.getClassNameId(
+									Team.class)) {
+
+								Team team = _teamLocalService.fetchTeam(
+									role.getClassPK());
+
+								if (team != null) {
+									roleKey = team.getName();
+								}
+							}
+
+							String finalRoleKey = roleKey;
+
+							pagePermissions.add(
+								new PagePermission() {
+									{
+										actionKeys = actionIdsSet.toArray(
+											new String[0]);
+										roleKey = finalRoleKey;
+									}
+								});
+						}
+
+						return pagePermissions.toArray(new PagePermission[0]);
+					});
 				setPageType(
 					() -> {
 						LayoutTypeController layoutTypeController =
@@ -222,6 +329,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SitePageDTOConverter.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
@@ -271,7 +381,19 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private StorageEngineManager _storageEngineManager;
+
+	@Reference
+	private TeamLocalService _teamLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -961,21 +961,41 @@ definition {
 
 		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectDefinitionName});
 
-		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json \
-				-H accept: application/json \
-				-d {
-					"DBType": "${dBType}",
-					"businessType": "${businessType}",
-					"label": {
-						"en_US": "${en_US_label}"
-					},
-					"name": "${name}",
-					"required": ${required}
-				}
-		''';
+		if (isSet(listTypeDefinitionId)) {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields \
+					-u test@liferay.com:test \
+					-H Content-Type: application/json \
+					-H accept: application/json \
+					-d {
+						"DBType": "${dBType}",
+						"businessType": "${businessType}",
+						"label": {
+							"en_US": "${en_US_label}"
+						},
+						"name": "${name}",
+						"required": ${required},
+						"listTypeDefinitionId": ${listTypeDefinitionId}
+					}
+			''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields \
+					-u test@liferay.com:test \
+					-H Content-Type: application/json \
+					-H accept: application/json \
+					-d {
+						"DBType": "${dBType}",
+						"businessType": "${businessType}",
+						"label": {
+							"en_US": "${en_US_label}"
+						},
+						"name": "${name}",
+						"required": ${required}
+					}
+			''';
+		}
 
 		JSONCurlUtil.post(${curl});
 	}
@@ -1007,10 +1027,6 @@ definition {
 			objectEntry2 = ${childEntryId},
 			relationshipName = ${relationshipName},
 			virtualHost = ${virtualHost});
-
-		var response = JSONCurlUtil.put(${curl});
-
-		return ${response};
 	}
 
 	macro setUpGlobalObjectDefinitionIdWithName {

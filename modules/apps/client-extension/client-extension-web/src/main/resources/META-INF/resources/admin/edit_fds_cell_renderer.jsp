@@ -22,4 +22,10 @@ EditClientExtensionEntryDisplayContext<FDSCellRendererCET> editClientExtensionEn
 FDSCellRendererCET fdsCellRendererCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
-<aui:input label="js-url" name="url" required="<%= true %>" type="text" value="<%= fdsCellRendererCET.getURL() %>" />
+<aui:field-wrapper cssClass="form-group">
+	<aui:input label="js-url" name="url" required="<%= true %>" type="text" value="<%= fdsCellRendererCET.getURL() %>" />
+
+	<div class="form-text">
+		<liferay-ui:message key="enter-the-url-of-your-client-extension-javascript-file" />
+	</div>
+</aui:field-wrapper>

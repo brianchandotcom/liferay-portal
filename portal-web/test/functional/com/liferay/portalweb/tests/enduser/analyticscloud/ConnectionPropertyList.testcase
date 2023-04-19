@@ -25,7 +25,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
 
 		ACUtils.tearDownDXP();
 
@@ -355,8 +357,12 @@ definition {
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12572 | Test Summary: Check that a deleted property in AC will not appear in the DXP"
+	@ignore = "true"
 	@priority = 3
 	test CheckDeletedPropertyInACSideNotAppearInDXP {
+
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
 		var propertyName = "AC Deleted Property";
 
 		task ("Connect DXP to AC and get the first property name from the list") {
@@ -384,7 +390,8 @@ definition {
 		task ("Delete one property") {
 			ACUtils.searchBar(searchItem = ${autoGeneratePropertyName});
 
-			ACSettings.deletePropertyByCheckbox(propertyName = ${autoGeneratePropertyName});
+			//ACSettings.deletePropertyByCheckbox(propertyName = ${autoGeneratePropertyName});
+
 		}
 
 		task ("Go to DXP > Instance Settings > Analytics Cloud") {
@@ -439,8 +446,12 @@ definition {
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12569 | Test Summary: Assert Empty State upon property creation"
+	@ignore = "true"
 	@priority = 2
 	test CheckPropertyListEmptyStateMessage {
+
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
 		task ("Create a new workspace") {
 			ACUtils.launchAC(
 				emailList = "acworkspace@liferay.com",
@@ -465,9 +476,9 @@ definition {
 			ACSettings.goToProperties();
 		}
 
-		task ("Delete all the properties in the list") {
-			ACSettings.deleteAllProperties();
-		}
+		//task ("Delete all the properties in the list") {
+		//	ACSettings.deleteAllProperties();
+		//}
 
 		task ("Go to Instance Settings > Analytics Cloud") {
 			ACUtils.launchDXP();

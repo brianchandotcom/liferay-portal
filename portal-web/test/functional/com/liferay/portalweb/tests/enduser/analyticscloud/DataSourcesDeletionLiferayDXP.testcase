@@ -21,7 +21,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
 
 		ACUtils.tearDownDXP();
 
@@ -39,6 +41,7 @@ definition {
 	test DeleteLiferayDXPDataSourceEnsureContactsAndEventsNoBeingSynced {
 
 		// AC Bug ticket: LRAC-10534
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
 		ACUtils.addSiteAndPage();
 
@@ -58,7 +61,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACSettings.deleteDataSource(dataSourceName = ${itemName});
+		//ACSettings.deleteDataSource(dataSourceName = ${itemName});
 
 		ACNavigation.exitSettings();
 

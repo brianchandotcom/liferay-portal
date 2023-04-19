@@ -544,20 +544,21 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Deletes all data source"
-	macro deleteAllDataSource {
-		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-			ACNavigation.goToSettings();
-		}
+	// @summary = "Deletes all data source"
 
-		ACSettings.goToDataSources();
+	//macro deleteAllDataSource {
 
-		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
-			ACSettings.deleteDataSource();
+	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
-			Refresh();
-		}
-	}
+	//	if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+	//		ACNavigation.goToSettings();
+	//}
+	//	ACSettings.goToDataSources();
+	//	while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
+	//		ACSettings.deleteDataSource();
+	//		Refresh();
+	//}
+	//}
 
 	macro deleteAllKeywords {
 		KeyPress(
@@ -582,95 +583,76 @@ definition {
 		}
 	}
 
-	@summary = "Deletes all properties \  @param propertyList the list of properties you want to delete (optional)"
-	macro deleteAllProperties {
-		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-			ACNavigation.goToSettings();
-		}
+	// @summary = "Deletes all properties \  @param propertyList the list of properties you want to delete (optional)"
 
-		ACSettings.goToProperties();
+	//macro deleteAllProperties {
 
-		if (IsElementPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX")) {
-			KeyPress(
-				locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
-				value1 = "\SPACE");
+	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
-			Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+	//	if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+	//		ACNavigation.goToSettings();
+	//}
+	//	ACSettings.goToProperties();
+	//	if (IsElementPresent(locator1 = "ACSettings#SELECT_ALL_CHECKBOX")) {
+	//		KeyPress(
+	//			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+	//			value1 = "\SPACE");
+	//		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+	//		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	//}
+	//}
+	// @summary = "Deletes a specific data source \  @param dataSourceName the name of the data source you want to delete"
 
-			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//macro deleteDataSource {
 
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
-			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-		}
-	}
-
-	@summary = "Deletes a specific data source \  @param dataSourceName the name of the data source you want to delete"
-	macro deleteDataSource {
-		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
-			ACNavigation.goToSettings();
-		}
-
-		if (isSet(dataSourceName)) {
-			ACUtils.searchBar(searchItem = ${dataSourceName});
-
-			ACNavigation.openItem(itemName = ${dataSourceName});
-		}
-		else {
-			Click(locator1 = "ACSettings#ITEM_TABLE");
-		}
-
-		WaitForVisible(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-
-		if (IsElementPresent(key_text = "Edit CSV", locator1 = "Button#ANY")) {
-			var dataSourceName = selenium.getText("//div[contains(@class,'sheet-header')]//h3");
-
-			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-
-			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-
-			AssertTextEquals(
-				locator1 = "Modal#HEADER",
-				value1 = "Delete Data Source");
-
-			AssertTextPresent(
-				locator1 = "Modal#BODY",
-				value1 = "Are you sure you want to delete ${dataSourceName}?");
-
-			AssertTextPresent(
-				locator1 = "Modal#BODY",
-				value1 = "You will permanently lose all contacts and analytics data collected from this data source. You will not be able to undo this action.");
-
-			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-		}
-		else {
-			var dataSourceName = selenium.getText("//h3");
-
-			Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-
-			if (!(contains(${dataSourceName}, "Salesforce"))) {
-				AssertTextEquals(
-					locator1 = "Modal#HEADER",
-					value1 = "Delete ${dataSourceName}");
-			}
-
-			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-		}
-	}
+	//	if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+	//		ACNavigation.goToSettings();
+	//}
+	//	if (isSet(dataSourceName)) {
+	//		ACUtils.searchBar(searchItem = ${dataSourceName});
+	//		ACNavigation.openItem(itemName = ${dataSourceName});
+	//}
+	//	else {
+	//		Click(locator1 = "ACSettings#ITEM_TABLE");
+	//}
+	//	WaitForVisible(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+	//	if (IsElementPresent(key_text = "Edit CSV", locator1 = "Button#ANY")) {
+	//		var dataSourceName = selenium.getText("//div[contains(@class,'sheet-header')]//h3");
+	//		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+	//		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+	//		AssertTextEquals(
+	//			locator1 = "Modal#HEADER",
+	//			value1 = "Delete Data Source");
+	//		AssertTextPresent(
+	//			locator1 = "Modal#BODY",
+	//			value1 = "Are you sure you want to delete ${dataSourceName}?");
+	//		AssertTextPresent(
+	//			locator1 = "Modal#BODY",
+	//			value1 = "You will permanently lose all contacts and analytics data collected from this data source. You will not be able to undo this action.");
+	//		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+	//}
+	//	else {
+	//		var dataSourceName = selenium.getText("//h3");
+	//		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
+	//		if (!(contains(${dataSourceName}, "Salesforce"))) {
+	//			AssertTextEquals(
+	//				locator1 = "Modal#HEADER",
+	//				value1 = "Delete ${dataSourceName}");
+	//}
+	//		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	//}
+	//}
 
 	macro deleteKeywordCheckbox {
 		var key_keywordName = ${keyword};
@@ -696,65 +678,51 @@ definition {
 		}
 	}
 
-	macro deleteProperty {
-		ACUtils.searchBar(searchItem = ${propertyName});
+	//macro deleteProperty {
 
-		ACNavigation.openItem(itemName = ${propertyName});
+	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
-		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+	//	ACUtils.searchBar(searchItem = ${propertyName});
+	//	ACNavigation.openItem(itemName = ${propertyName});
+	//	Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+	//	AssertTextEquals(
+	//		locator1 = "Modal#HEADER",
+	//		value1 = "Delete ${propertyName}?");
+	//	AssertTextPresent(
+	//		locator1 = "Modal#BODY",
+	//		value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
+	//	AssertTextPresent(
+	//		locator1 = "Modal#BODY",
+	//		value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
+	//	Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//	Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	//	Alert.viewSuccessMessage();
+	//}
+	//macro deletePropertyByCheckbox {
 
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Delete ${propertyName}?");
+	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
-		AssertTextPresent(
-			locator1 = "Modal#BODY",
-			value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
-
-		AssertTextPresent(
-			locator1 = "Modal#BODY",
-			value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
-
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro deletePropertyByCheckbox {
-		Click.clickAtNotVisible(
-			key_propertyName = ${propertyName},
-			locator1 = "ACSettings#PROPERTY_CHECKBOX");
-
-		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
-
-		AssertTextEquals(
-			locator1 = "Modal#HEADER",
-			value1 = "Delete ${propertyName}?");
-
-		AssertTextPresent(
-			locator1 = "Modal#BODY",
-			value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
-
-		AssertTextPresent(
-			locator1 = "Modal#BODY",
-			value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
-
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
+	//	Click.clickAtNotVisible(
+	//		key_propertyName = ${propertyName},
+	//		locator1 = "ACSettings#PROPERTY_CHECKBOX");
+	//	Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+	//	AssertTextEquals(
+	//		locator1 = "Modal#HEADER",
+	//		value1 = "Delete ${propertyName}?");
+	//	AssertTextPresent(
+	//		locator1 = "Modal#BODY",
+	//		value1 = "To delete ${propertyName}, copy the sentence below to confirm your intention to delete property.");
+	//	AssertTextPresent(
+	//		locator1 = "Modal#BODY",
+	//		value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
+	//	Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//	Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	//	Alert.viewSuccessMessage();
+	//}
 
 	macro deleteUser {
 		if (IsVisible(locator1 = "ACSettings#USER_LIST_EMAIL", value1 = ${userDelete})) {

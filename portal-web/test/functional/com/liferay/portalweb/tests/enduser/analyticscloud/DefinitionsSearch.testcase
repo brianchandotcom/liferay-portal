@@ -23,7 +23,10 @@ definition {
 
 		ACDefinitions.deleteAllSearchQuery();
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
+
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"

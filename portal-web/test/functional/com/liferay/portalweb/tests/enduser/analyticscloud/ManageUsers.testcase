@@ -15,7 +15,10 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
+
 	}
 
 	@description = "Automation ID: LRAC-9051 | Test Summary: Admin can be edited or removed"

@@ -21,7 +21,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
 
 		ACUtils.tearDownDXP();
 
@@ -199,8 +201,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
+	@ignore = "true"
 	@priority = 4
 	test UserLostAccess {
+
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();
 
@@ -248,7 +254,8 @@ definition {
 
 			ACSettings.goToProperties();
 
-			ACSettings.deleteAllProperties();
+			//ACSettings.deleteAllProperties();
+
 		}
 
 		task ("Log in as the user corbin.murakami@faro.io, go to the properties menu and checks if the property has been deleted for the user") {

@@ -19,7 +19,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
 
 		ACUtils.tearDownDXP();
 
@@ -124,6 +126,7 @@ definition {
 	test AdminCanRemoveDataSources {
 
 		// AC Bug ticket: LRAC-10534
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
 		task ("Logout AC and login as an admin user") {
 			ACWorkspace.signOut();
@@ -170,7 +173,7 @@ definition {
 		task ("Assert that the data source was removed") {
 			ACSettings.goToDataSources();
 
-			ACSettings.deleteDataSource(dataSourceName = ${dataSource});
+			//ACSettings.deleteDataSource(dataSourceName = ${dataSource});
 
 			Refresh();
 
@@ -616,6 +619,7 @@ definition {
 	test OwnerCanRemoveDataSources {
 
 		// AC Bug ticket: LRAC-10534
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
 		task ("Connect DXP to AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();
@@ -636,7 +640,8 @@ definition {
 		}
 
 		task ("Delete the data source and check if it has been deleted") {
-			ACSettings.deleteDataSource(dataSourceName = ${dataSource});
+
+			//ACSettings.deleteDataSource(dataSourceName = ${dataSource});
 
 			TestUtils.hardRefresh();
 

@@ -29,7 +29,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
 
 		ACUtils.tearDownDXP();
 
@@ -85,12 +87,17 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9101 | Test Summary: [AC] It is possible create Properties when no data source is created yet"
+	@ignore = "true"
 	@priority = 3
 	test CanCreatePropertiesWhenNoDataSourceIsCreatedYet {
+
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
 		task ("Remove all data sources present") {
 			ACUtils.launchAC();
 
-			ACSettings.deleteAllDataSource();
+			//ACSettings.deleteAllDataSource();
+
 		}
 
 		task ("Create a new property") {

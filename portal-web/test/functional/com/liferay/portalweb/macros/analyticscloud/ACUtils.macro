@@ -966,13 +966,14 @@ definition {
 		var localStorageItem = selenium.getEval(${javaScript});
 	}
 
-	macro tearDownAC {
-		ACUtils.launchAC();
+	//macro tearDownAC {
 
-		ACSettings.deleteAllProperties();
+	// // It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
-		ACSettings.deleteAllDataSource();
-	}
+	//	ACUtils.launchAC();
+	//	ACSettings.deleteAllProperties();
+	//	ACSettings.deleteAllDataSource();
+	//}
 
 	macro tearDownCommerce {
 		JSONUser.tearDownNonAdminUsers();

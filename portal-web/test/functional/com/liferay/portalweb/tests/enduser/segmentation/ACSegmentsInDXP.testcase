@@ -92,7 +92,10 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
+
 	}
 
 	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments And I have connected my DXP instance with AC When I create an Individual Segment in AC and it shows in the DXP Segments administration Then I don't see the edit action"

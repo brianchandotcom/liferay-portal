@@ -19,7 +19,9 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -32,6 +34,7 @@ definition {
 	test DeleteCSVDataSourceAndAssertDetailsFromDataSourceRemoved {
 
 		// CSV data source tests are no longer possible to run due to this ticket LRAC-11651
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
 
 		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
@@ -43,9 +46,9 @@ definition {
 			ACNavigation.exitSettings();
 		}
 
-		task ("Remove the CSV Data Source") {
-			ACSettings.deleteDataSource(dataSourceName = "CSV Data Source");
-		}
+		//task ("Remove the CSV Data Source") {
+		//	ACSettings.deleteDataSource(dataSourceName = "CSV Data Source");
+		//}
 
 		task ("View the CSV Data Source is deleted") {
 			ACUtils.searchBar(searchItem = "CSV Data Source");

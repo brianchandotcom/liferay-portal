@@ -102,6 +102,8 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
 
+		// Before add, assert validations criterias
+
 		// Label is null
 
 		_assertFailure(
@@ -149,13 +151,6 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> _addCustomObjectDefinition(
 				"A123456789a123456789a123456789a12345678912"));
 
-		// Plural label is null
-
-		_assertFailure(
-			ObjectDefinitionPluralLabelException.class,
-			"Plural label is null for locale " + LocaleUtil.US.getDisplayName(),
-			() -> _addCustomObjectDefinition("Test", "Test", ""));
-
 		// Duplicate name
 
 		ObjectDefinition objectDefinition =
@@ -182,6 +177,13 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> _addCustomObjectDefinition("Test"));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		// Plural label is null
+
+		_assertFailure(
+			ObjectDefinitionPluralLabelException.class,
+			"Plural label is null for locale " + LocaleUtil.US.getDisplayName(),
+			() -> _addCustomObjectDefinition("Test", "Test", ""));
 
 		// Scope is null
 
@@ -220,7 +222,7 @@ public class ObjectDefinitionLocalServiceTest {
 						RandomTestUtil.randomString(),
 						StringUtil.randomId()))));
 
-		// Database table, resources, and status
+		// After add assert properties
 
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -248,18 +250,20 @@ public class ObjectDefinitionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie", true,
 			false, Collections.emptyList());
 
-		// Before publish, database table
-
-		Assert.assertFalse(_hasTable(objectDefinition.getDBTableName()));
-		Assert.assertFalse(
-			_hasTable(objectDefinition.getExtensionDBTableName()));
+		// Before publish
 
 		// Custom object definition names are automatically prepended with
 		// with "C_"
 
 		Assert.assertEquals("C_Test", objectDefinition.getName());
 
-		// Before publish, resources
+		// Database table
+
+		Assert.assertFalse(_hasTable(objectDefinition.getDBTableName()));
+		Assert.assertFalse(
+			_hasTable(objectDefinition.getExtensionDBTableName()));
+
+		// Resources
 
 		Assert.assertEquals(
 			0,
@@ -281,7 +285,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
 
-		// Before publish, status
+		// Status
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
@@ -301,7 +305,9 @@ public class ObjectDefinitionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Dog"), false, "dog", true, false,
 			Collections.emptyList());
 
-		// After publish, database table
+		// After publish
+
+		// Database table
 
 		Assert.assertFalse(
 			_hasColumn(objectDefinition.getDBTableName(), "able"));
@@ -323,7 +329,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(
 			_hasTable(objectDefinition.getExtensionDBTableName()));
 
-		// After publish, resources
+		// Resources
 
 		Assert.assertEquals(
 			4,
@@ -345,7 +351,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
 
-		// After publish, status
+		// Status
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectDefinition.getStatus());
@@ -696,7 +702,8 @@ public class ObjectDefinitionLocalServiceTest {
 		_assertFailure(
 			ObjectDefinitionLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
-			() -> _addSystemObjectDefinition("", "Test"));
+			() -> _addSystemObjectDefinition(
+				"", "Test", RandomTestUtil.randomString()));
 
 		// Name is null
 
@@ -765,14 +772,8 @@ public class ObjectDefinitionLocalServiceTest {
 		_assertFailure(
 			ObjectDefinitionPluralLabelException.class,
 			"Plural label is null for locale " + LocaleUtil.US.getDisplayName(),
-			() ->
-				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-					TestPropsValues.getUserId(), "Test", null,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					"Test", null, null, LocalizedMapUtil.getLocalizedMap(""),
-					ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-					_objectDefinitionLocalService, Collections.emptyList()));
+			() -> _addSystemObjectDefinition(
+				RandomTestUtil.randomString(), "Test", ""));
 
 		// Scope is null
 
@@ -1466,17 +1467,18 @@ public class ObjectDefinitionLocalServiceTest {
 	private ObjectDefinition _addSystemObjectDefinition(String name)
 		throws Exception {
 
-		return _addSystemObjectDefinition(RandomTestUtil.randomString(), name);
+		return _addSystemObjectDefinition(
+			RandomTestUtil.randomString(), name, RandomTestUtil.randomString());
 	}
 
 	private ObjectDefinition _addSystemObjectDefinition(
-			String label, String name)
+			String label, String name, String pluralLabel)
 		throws Exception {
 
 		return ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
 			TestPropsValues.getUserId(), name, null,
 			LocalizedMapUtil.getLocalizedMap(label), name, null, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(pluralLabel),
 			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 			_objectDefinitionLocalService,
 			Arrays.asList(

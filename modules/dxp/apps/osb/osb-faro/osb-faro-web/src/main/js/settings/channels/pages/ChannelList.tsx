@@ -21,6 +21,7 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose, withCurrentUser} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {CREATE_TIME, createOrderIOMap} from 'shared/util/pagination';
+import {ENABLE_DELETE_PROPERTY_BUTTON, Sizes} from 'shared/util/constants';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {FormikActions} from 'formik';
 import {getPluralMessage, sub} from 'shared/util/lang';
@@ -29,7 +30,6 @@ import {Link} from 'react-router-dom';
 import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {setBackURL} from 'shared/actions/settings';
-import {Sizes} from 'shared/util/constants';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
 import {useQueryPagination, useRequest} from 'shared/hooks';
@@ -333,15 +333,17 @@ const ChannelList: React.FC<IChannelListProps> = ({
 						{Liferay.Language.get('clear-data')}
 					</ClayButton>
 
-					<ClayButton
-						borderless
-						className='button-root'
-						displayType='secondary'
-						onClick={handleDeleteChannel}
-						outline
-					>
-						{Liferay.Language.get('delete')}
-					</ClayButton>
+					{ENABLE_DELETE_PROPERTY_BUTTON && (
+						<ClayButton
+							borderless
+							className='button-root'
+							displayType='secondary'
+							onClick={handleDeleteChannel}
+							outline
+						>
+							{Liferay.Language.get('delete')}
+						</ClayButton>
+					)}
 				</Nav>
 			);
 		}

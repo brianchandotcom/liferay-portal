@@ -20,10 +20,14 @@ import com.liferay.jethr0.build.dalo.BuildToBuildParametersDALO;
 import com.liferay.jethr0.build.dalo.BuildToBuildRunsDALO;
 import com.liferay.jethr0.build.dalo.BuildToEnvironmentsDALO;
 import com.liferay.jethr0.build.dalo.BuildToTasksDALO;
+import com.liferay.jethr0.build.parameter.BuildParameter;
+import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
 
+import com.liferay.jethr0.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -51,9 +55,36 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 
 	@Override
 	protected Build updateEntityRelationshipsInDatabase(Build build) {
-		_buildToBuildParametersDALO.updateChildEntities(build);
-		_buildToEnvironmentsDALO.updateChildEntities(build);
-		_buildToTasksDALO.updateChildEntities(build);
+		for (BuildParameter buildParameter :
+				_buildToBuildParametersDALO.getChildEntities(build)) {
+
+			buildParameter.setBuild(build);
+
+			build.addBuildParameter(buildParameter);
+		}
+
+		for (BuildRun buildRun :
+				_buildToBuildRunsDALO.getChildEntities(build)) {
+
+			buildRun.setBuild(build);
+
+			build.addBuildRun(buildRun);
+		}
+
+		for (Environment environment :
+				_buildToEnvironmentsDALO.getChildEntities(build)) {
+
+			environment.setBuild(build);
+
+			build.addEnvironment(environment);
+		}
+
+
+		for (Task task : _buildToTasksDALO.getChildEntities(build)) {
+			task.setBuild(build);
+
+			build.addTask(task);
+		}
 
 		return build;
 	}

@@ -16,7 +16,6 @@ import ClayAlert from '@clayui/alert';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {Treeview} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import getAllEditables from '../../../../../app/components/fragment_content/getAllEditables';
@@ -62,9 +61,8 @@ import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
-import StructureClayTreeNode from './StructureClayTreeNode';
-import StructureClayTreeNodeActions from './StructureClayTreeNodeActions';
 import StructureTreeNode from './StructureTreeNode';
+import StructureTreeNodeActions from './StructureTreeNodeActions';
 import VisibilityButton from './VisibilityButton';
 
 const EDITABLE_LABEL = {
@@ -254,7 +252,7 @@ export default function PageStructureSidebar() {
 				)}
 
 				{showOptions && (
-					<StructureClayTreeNodeActions
+					<StructureTreeNodeActions
 						item={item}
 						setEditingNodeId={setEditingNodeId}
 						visible={item.hidden || isHovered || isSelected}
@@ -276,7 +274,7 @@ export default function PageStructureSidebar() {
 			];
 		};
 
-		if (Liferay.FeatureFlags['LPS-151678'] && activeItemId) {
+		if (activeItemId) {
 			const layoutDataActiveItem = layoutData.items[activeItemId];
 
 			if (!layoutDataActiveItem) {
@@ -308,98 +306,83 @@ export default function PageStructureSidebar() {
 			)}
 
 			<DragAndDropContextProvider>
-				<>
-					{!Liferay.FeatureFlags['LPS-151678'] ? (
-						<Treeview
-							NodeComponent={StructureTreeNode}
-							nodes={nodes}
-							selectedNodeIds={[activeItemId]}
-						/>
-					) : (
-						<ClayTreeView
-							displayType="light"
-							expandDoubleClick={false}
-							expandedKeys={new Set(expandedKeys)}
-							expanderIcons={{
-								close: <ClayIcon symbol="hr" />,
-								open: <ClayIcon symbol="plus" />,
-							}}
-							items={nodes}
-							onExpandedChange={setExpandedNodes}
-							onItemsChange={() => {}}
-							showExpanderOnHover={false}
+				<ClayTreeView
+					displayType="light"
+					expandDoubleClick={false}
+					expandedKeys={new Set(expandedKeys)}
+					expanderIcons={{
+						close: <ClayIcon symbol="hr" />,
+						open: <ClayIcon symbol="plus" />,
+					}}
+					items={nodes}
+					onExpandedChange={setExpandedNodes}
+					onItemsChange={() => {}}
+					showExpanderOnHover={false}
+				>
+					{(item) => (
+						<ClayTreeView.Item
+							actions={<ItemActions item={item} />}
+							active={item.active && item.activable}
 						>
-							{(item) => (
-								<ClayTreeView.Item
-									actions={<ItemActions item={item} />}
-									active={item.active && item.activable}
-								>
-									<ClayTreeView.ItemStack
-										className={classNames(
-											'page-editor__page-structure__clay-tree-node',
-											{
-												'page-editor__page-structure__clay-tree-node--active':
-													item.active &&
-													item.activable,
-												'page-editor__page-structure__clay-tree-node--hovered':
-													item.hovered,
-												'page-editor__page-structure__clay-tree-node--mapped':
-													item.mapped,
-												'page-editor__page-structure__clay-tree-node--master-item':
-													item.isMasterItem,
-											}
-										)}
-										data-title={
-											item.isMasterItem || !item.activable
-												? ''
-												: item.tooltipTitle
-										}
-										data-tooltip-align={
-											item.isMasterItem || !item.activable
-												? ''
-												: 'right'
-										}
-										onMouseLeave={(event) => {
-											if (
-												item.id ===
-												fromControlsId(hoveredItemId)
-											) {
-												event.stopPropagation();
-												hoverItem(null);
-											}
-										}}
-										onMouseOver={(event) => {
-											event.stopPropagation();
-											hoverItem(item.id);
-										}}
+							<ClayTreeView.ItemStack
+								className={classNames(
+									'page-editor__page-structure__clay-tree-node',
+									{
+										'page-editor__page-structure__clay-tree-node--active':
+											item.active && item.activable,
+										'page-editor__page-structure__clay-tree-node--hovered':
+											item.hovered,
+										'page-editor__page-structure__clay-tree-node--mapped':
+											item.mapped,
+										'page-editor__page-structure__clay-tree-node--master-item':
+											item.isMasterItem,
+									}
+								)}
+								data-title={
+									item.isMasterItem || !item.activable
+										? ''
+										: item.tooltipTitle
+								}
+								data-tooltip-align={
+									item.isMasterItem || !item.activable
+										? ''
+										: 'right'
+								}
+								onMouseLeave={(event) => {
+									if (
+										item.id ===
+										fromControlsId(hoveredItemId)
+									) {
+										event.stopPropagation();
+										hoverItem(null);
+									}
+								}}
+								onMouseOver={(event) => {
+									event.stopPropagation();
+									hoverItem(item.id);
+								}}
+							>
+								<StructureTreeNode
+									node={item}
+									setEditingNodeId={setEditingNodeId}
+								/>
+							</ClayTreeView.ItemStack>
+
+							<ClayTreeView.Group items={item.children}>
+								{(item) => (
+									<ClayTreeView.Item
+										actions={<ItemActions item={item} />}
 									>
-										<StructureClayTreeNode
+										<StructureTreeNode
 											node={item}
 											setEditingNodeId={setEditingNodeId}
 										/>
-									</ClayTreeView.ItemStack>
-
-									<ClayTreeView.Group items={item.children}>
-										{(item) => (
-											<ClayTreeView.Item
-												actions={
-													<ItemActions item={item} />
-												}
-											>
-												<StructureClayTreeNode
-													node={item}
-													setEditingNodeId={
-														setEditingNodeId
-													}
-												/>
-											</ClayTreeView.Item>
-										)}
-									</ClayTreeView.Group>
-								</ClayTreeView.Item>
-							)}
-						</ClayTreeView>
+									</ClayTreeView.Item>
+								)}
+							</ClayTreeView.Group>
+						</ClayTreeView.Item>
 					)}
-				</>
+				</ClayTreeView>
 			</DragAndDropContextProvider>
 		</div>
 	);

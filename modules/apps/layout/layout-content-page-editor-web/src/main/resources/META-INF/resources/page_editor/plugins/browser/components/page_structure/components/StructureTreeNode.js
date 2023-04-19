@@ -16,9 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {openToast, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 
 import {addMappingFields} from '../../../../../app/actions/index';
 import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
@@ -35,8 +35,6 @@ import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes'
 import {
 	useActivationOrigin,
 	useActiveItemId,
-	useHoverItem,
-	useHoveredItemId,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
 import {
@@ -76,16 +74,9 @@ import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
-import {
-	FORM_ERROR_TYPES,
-	getFormErrorDescription,
-} from '../../../../../app/utils/getFormErrorDescription';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
-import updateItemStyle from '../../../../../app/utils/updateItemStyle';
-import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 import useControlledState from '../../../../../common/hooks/useControlledState';
-import StructureTreeNodeActions from './StructureTreeNodeActions';
 
 const HOVER_EXPAND_DELAY = 1000;
 
@@ -115,11 +106,10 @@ const loadCollectionFields = (
 		});
 };
 
-export default function StructureTreeNode({node}) {
+export default function StructureTreeNode({node, setEditingNodeId}) {
 	const activationOrigin = useActivationOrigin();
 	const activeItemId = useActiveItemId();
 	const dispatch = useDispatch();
-	const hoveredItemId = useHoveredItemId();
 	const isSelected = node.id === fromControlsId(activeItemId);
 
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
@@ -167,10 +157,9 @@ export default function StructureTreeNode({node}) {
 		<MemoizedStructureTreeNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
 			isActive={node.activable && isSelected}
-			isHovered={node.id === fromControlsId(hoveredItemId)}
 			isMapped={node.mapped}
-			isSelected={isSelected}
 			node={node}
+			setEditingNodeId={setEditingNodeId}
 		/>
 	);
 }
@@ -191,14 +180,12 @@ const MemoizedStructureTreeNodeContent = React.memo(
 function StructureTreeNodeContent({
 	activationOrigin,
 	isActive,
-	isHovered,
 	isMapped,
-	isSelected,
 	node,
+	setEditingNodeId,
 }) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
-	const hoverItem = useHoverItem();
 	const nodeRef = useRef();
 	const restrictedItemIds = useSelector((state) => state.restrictedItemIds);
 	const selectedViewportSize = useSelector(
@@ -207,8 +194,6 @@ function StructureTreeNodeContent({
 	const selectItem = useSelectItem();
 
 	const layoutDataRef = useSelectorRef((store) => store.layoutData);
-
-	const [editingName, setEditingName] = useState(false);
 
 	const item = useMemo(
 		() => ({
@@ -291,7 +276,7 @@ function StructureTreeNodeContent({
 			);
 		}
 
-		setEditingName(false);
+		setEditingNodeId(null);
 	};
 
 	const handleButtonsKeyDown = (event) => {
@@ -340,13 +325,6 @@ function StructureTreeNodeContent({
 		};
 	}, [isOverTarget, node]);
 
-	const showOptions =
-		canUpdatePageStructure &&
-		node.itemType !== ITEM_TYPES.editable &&
-		node.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
-		node.activable &&
-		!node.isMasterItem;
-
 	return (
 		<div
 			aria-disabled={node.isMasterItem || !node.activable}
@@ -363,33 +341,15 @@ function StructureTreeNodeContent({
 				'dragged': isDraggingSource,
 				'font-weight-semi-bold':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
-				'page-editor__page-structure__tree-node--active': isActive,
-				'page-editor__page-structure__tree-node--hovered': isHovered,
-				'page-editor__page-structure__tree-node--mapped': isMapped,
-				'page-editor__page-structure__tree-node--master-item':
-					node.isMasterItem,
 			})}
-			onMouseLeave={(event) => {
-				if (!isDraggingSource && isHovered) {
-					event.stopPropagation();
-					hoverItem(null);
-				}
-			}}
-			onMouseOver={(event) => {
-				if (!isDraggingSource) {
-					event.stopPropagation();
-					hoverItem(node.id);
-				}
-			}}
 			ref={targetRef}
 		>
 			<div
 				aria-label={sub(Liferay.Language.get('select-x'), [node.name])}
 				className="lfr-portal-tooltip page-editor__page-structure__tree-node__mask"
 				data-item-id={node.id}
-				data-title={node.tooltipTitle}
-				data-tooltip-align="right"
-				onClick={() => {
+				onClick={(event) => {
+					event.stopPropagation();
 					const itemId = getFirstControlsId({
 						item: node,
 						layoutData: layoutDataRef.current,
@@ -404,9 +364,8 @@ function StructureTreeNodeContent({
 				}}
 				onDoubleClick={(event) => {
 					event.stopPropagation();
-
 					if (canBeRenamed(item)) {
-						setEditingName(true);
+						setEditingNodeId(item.itemId);
 					}
 				}}
 				ref={
@@ -428,10 +387,9 @@ function StructureTreeNodeContent({
 			/>
 
 			<NameLabel
-				editingName={editingName}
+				editingName={node.editingName}
 				hidden={node.hidden || node.hiddenAncestor}
 				icon={node.icon}
-				isActive={isActive}
 				isMapped={isMapped}
 				isMasterItem={node.isMasterItem}
 				name={node.name}
@@ -449,34 +407,6 @@ function StructureTreeNodeContent({
 					formIsUnavailable(item)
 				}
 			/>
-
-			{!editingName && (
-				<div
-					className={classNames({
-						'page-editor__page-structure__tree-node__buttons--hidden':
-							node.hidden || node.hiddenAncestor,
-					})}
-					onFocus={(event) => event.stopPropagation()}
-					onKeyDown={handleButtonsKeyDown}
-				>
-					{(node.hidable || node.hidden) && (
-						<VisibilityButton
-							dispatch={dispatch}
-							node={node}
-							selectedViewportSize={selectedViewportSize}
-							visible={node.hidden || isHovered || isSelected}
-						/>
-					)}
-
-					{showOptions && (
-						<StructureTreeNodeActions
-							item={item}
-							setEditingName={setEditingName}
-							visible={node.hidden || isHovered || isSelected}
-						/>
-					)}
-				</div>
-			)}
 		</div>
 	);
 }
@@ -487,7 +417,6 @@ const NameLabel = React.forwardRef(
 			editingName,
 			hidden,
 			icon,
-			isActive,
 			isMapped,
 			isMasterItem,
 			name: defaultName,
@@ -513,16 +442,19 @@ const NameLabel = React.forwardRef(
 				className={classNames(
 					'page-editor__page-structure__tree-node__name d-flex flex-grow-1 align-items-center',
 					{
-						'page-editor__page-structure__tree-node__name--active': isActive,
 						'page-editor__page-structure__tree-node__name--hidden': hidden,
 						'page-editor__page-structure__tree-node__name--mapped': isMapped,
 						'page-editor__page-structure__tree-node__name--master-item': isMasterItem,
-						'w-100': editingName,
 					}
 				)}
 				ref={ref}
 			>
-				{icon && <ClayIcon className="mt-0" symbol={icon || ''} />}
+				{icon && (
+					<ClayIcon
+						className="flex-shrink-0 mt-0"
+						symbol={icon || ''}
+					/>
+				)}
 
 				{editingName ? (
 					<input
@@ -591,53 +523,6 @@ const NameLabel = React.forwardRef(
 		);
 	}
 );
-
-const VisibilityButton = ({dispatch, node, selectedViewportSize, visible}) => {
-	const hasRequiredChild = useHasRequiredChild(node.id);
-
-	return (
-		<ClayButton
-			aria-label={sub(
-				node.hidden || node.hiddenAncestor
-					? Liferay.Language.get('show-x')
-					: Liferay.Language.get('hide-x'),
-				[node.name]
-			)}
-			className={classNames(
-				'page-editor__page-structure__tree-node__visibility-button',
-				{
-					'page-editor__page-structure__tree-node__visibility-button--visible': visible,
-				}
-			)}
-			disabled={node.isMasterItem || node.hiddenAncestor}
-			displayType="unstyled"
-			onClick={() => {
-				updateItemStyle({
-					dispatch,
-					itemId: node.id,
-					selectedViewportSize,
-					styleName: 'display',
-					styleValue: node.hidden ? 'block' : 'none',
-				});
-
-				if (!node.hidden && hasRequiredChild()) {
-					const {message} = getFormErrorDescription({
-						type: FORM_ERROR_TYPES.hiddenFragment,
-					});
-
-					openToast({
-						message,
-						type: 'warning',
-					});
-				}
-			}}
-		>
-			<ClayIcon
-				symbol={node.hidden || node.hiddenAncestor ? 'hidden' : 'view'}
-			/>
-		</ClayButton>
-	);
-};
 
 const MoveButton = ({
 	canUpdate,

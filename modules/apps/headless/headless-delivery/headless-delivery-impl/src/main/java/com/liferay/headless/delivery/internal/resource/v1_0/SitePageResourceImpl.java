@@ -20,6 +20,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
+import com.liferay.headless.delivery.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -51,7 +53,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -323,6 +328,27 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		layout = _layoutLocalService.updateLayout(layout);
 
 		_updateSEOEntry(layout, sitePage);
+
+		PagePermission[] pagePermissions = sitePage.getPagePermissions();
+
+		if (pagePermissions != null) {
+			HashMap<String, String[]> modelPermissionsParameterMap =
+				new HashMap<>(pagePermissions.length);
+
+			for (PagePermission pagePermission : pagePermissions) {
+				modelPermissionsParameterMap.put(
+					pagePermission.getRoleKey(),
+					pagePermission.getActionKeys());
+			}
+
+			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+				modelPermissionsParameterMap, null);
+
+			_resourcePermissionLocalService.addModelResourcePermissions(
+				layout.getCompanyId(), siteId, contextUser.getUserId(),
+				Layout.class.getName(), String.valueOf(layout.getPlid()),
+				modelPermissions);
+		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -721,6 +747,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private SegmentsEntryRetriever _segmentsEntryRetriever;

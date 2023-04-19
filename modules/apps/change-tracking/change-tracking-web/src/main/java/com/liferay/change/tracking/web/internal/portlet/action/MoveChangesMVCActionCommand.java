@@ -138,8 +138,10 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 				_backgroundTaskLocalService.fetchBackgroundTask(
 					ctProcess.getBackgroundTaskId());
 
-			if (backgroundTask.getStatus() ==
-					BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+			if ((backgroundTask.getStatus() ==
+					BackgroundTaskConstants.STATUS_SUCCESSFUL) ||
+				(backgroundTask.getStatus() ==
+					BackgroundTaskConstants.STATUS_NEW)) {
 
 				displayType = "success";
 				label = _language.get(themeDisplay.getLocale(), "published");
@@ -150,13 +152,6 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 
 				displayType = "danger";
 				label = _language.get(themeDisplay.getLocale(), "failed");
-			}
-
-			if (backgroundTask.getStatus() ==
-					BackgroundTaskConstants.STATUS_NEW) {
-
-				displayType = "warning";
-				label = _language.get(themeDisplay.getLocale(), "pending");
 			}
 		}
 

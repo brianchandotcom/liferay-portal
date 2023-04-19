@@ -12,6 +12,7 @@ UpgradeGradleIncludeResourceCheck | .bnd, .gradle, .java or .vm | Replaces with 
 UpgradeJavaCheck | .bnd, .gradle, .java or .vm | Performs upgrade checks for `java` files |
 UpgradeRemovedAPICheck | .java | Finds cases where calls are made to removed API after an upgrade. |
 UpgradeVelocityCommentMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements |
+UpgradeVelocityIfStatementsMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to If statements from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityVariableReferenceMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to variables from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityVariableSetMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of set variables from a Velocity file to a Freemarker file with the syntax replacements |
 XMLUpgradeDTDVersionCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks and upgrades the DTD version in `*.xml` file. |

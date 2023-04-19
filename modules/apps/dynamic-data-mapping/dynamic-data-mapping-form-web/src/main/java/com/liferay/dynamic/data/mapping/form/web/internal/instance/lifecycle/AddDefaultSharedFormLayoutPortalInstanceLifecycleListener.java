@@ -170,6 +170,15 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 
 		Role role = _roleLocalService.getRole(companyId, RoleConstants.USER);
 
+		if (_resourcePermissionLocalService.hasResourcePermission(
+				role.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(layout.getCompanyId()), role.getRoleId(),
+				ActionKeys.VIEW)) {
+
+			return;
+		}
+
 		_resourcePermissionLocalService.addResourcePermission(
 			role.getCompanyId(), Layout.class.getName(),
 			ResourceConstants.SCOPE_GROUP, String.valueOf(layout.getGroupId()),

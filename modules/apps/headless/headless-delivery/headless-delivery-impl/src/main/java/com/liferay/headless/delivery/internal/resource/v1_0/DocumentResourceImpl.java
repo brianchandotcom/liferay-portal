@@ -402,8 +402,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			_dlAppService.updateFileEntry(
-				documentId, fileName, binaryFile.getContentType(), title,
-				null, description, null, DLVersionNumberIncrease.AUTOMATIC,
+				documentId, fileName, binaryFile.getContentType(), title, null,
+				description, null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
 				existingFileEntry.getExpirationDate(),
 				existingFileEntry.getReviewDate(),
@@ -569,10 +569,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _toDocument(
 			_dlAppService.addFileEntry(
-				externalReferenceCode, repositoryId, documentFolderId,
-				fileName, binaryFile.getContentType(), title, null,
-				description, null, binaryFile.getInputStream(),
-				binaryFile.getSize(), null, null,
+				externalReferenceCode, repositoryId, documentFolderId, fileName,
+				binaryFile.getContentType(), title, null, description, null,
+				binaryFile.getInputStream(), binaryFile.getSize(), null, null,
 				_createServiceContext(
 					Constants.ADD, () -> new Long[0], () -> new String[0],
 					documentFolderId, document, groupId)));

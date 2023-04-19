@@ -71,30 +71,12 @@ public class CompanyLocalServiceUtil {
 	 * @param maxUsers the max number of company users (optionally
 	 <code>0</code>)
 	 * @param active whether the company is active
-	 * @return the company
-	 */
-	public static Company addCompany(
-			Long companyId, String webId, String virtualHostname, String mx,
-			int maxUsers, boolean active)
-		throws PortalException {
-
-		return getService().addCompany(
-			companyId, webId, virtualHostname, mx, maxUsers, active);
-	}
-
-	/**
-	 * Adds a company with the primary key.
-	 *
-	 * @param companyId the primary key of the company (optionally <code>null</code> or
-	 <code>0</code> to generate a key automatically)
-	 * @param webId the the company's web domain
-	 * @param virtualHostname the company's virtual host name
-	 * @param mx the company's mail domain
-	 * @param maxUsers the max number of company users (optionally
-	 <code>0</code>)
-	 * @param active whether the company is active
 	 * @param defaultAdminPassword Password set to the admin user of the company
-	 * @param defaultAdminEmailAddress Email set to the admin user of the company
+	 * @param defaultAdminScreenName Screen name set to the admin user of the company
+	 * @param defaultAdminEmailAddress Email address set to the admin user of the company
+	 * @param defaultAdminFirstName First name set to the admin user of the company
+	 * @param defaultAdminMiddleName Middle name set to the admin user of the company
+	 * @param defaultAdminLastName Last name set to the admin user of the company
 	 * @return the company
 	 */
 	public static Company addCompany(
@@ -110,30 +92,6 @@ public class CompanyLocalServiceUtil {
 			defaultAdminPassword, defaultAdminScreenName,
 			defaultAdminEmailAddress, defaultAdminFirstName,
 			defaultAdminMiddleName, defaultAdminLastName);
-	}
-
-	/**
-	 * Adds a company.
-	 *
-	 * @param webId the the company's web domain
-	 * @param virtualHostname the company's virtual host name
-	 * @param mx the company's mail domain
-	 * @param maxUsers the max number of company users (optionally
-	 <code>0</code>)
-	 * @param active whether the company is active
-	 * @return the company
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addCompany(Long, String, String, String, boolean, int,
-	 boolean)}
-	 */
-	@Deprecated
-	public static Company addCompany(
-			String webId, String virtualHostname, String mx, int maxUsers,
-			boolean active)
-		throws PortalException {
-
-		return getService().addCompany(
-			webId, virtualHostname, mx, maxUsers, active);
 	}
 
 	/**

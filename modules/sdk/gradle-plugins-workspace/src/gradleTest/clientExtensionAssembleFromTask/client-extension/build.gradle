@@ -1,0 +1,7 @@
+task fooTask(type: Copy)
+
+fooTask {
+	from "foo"
+	include "*.txt"
+	into "tmp"
+}

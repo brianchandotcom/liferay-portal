@@ -1,0 +1,15 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":client-extension:assembleClientExtension"
+
+	doLast {
+		Project clientExtensionProject = project ":client-extension"
+
+		File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
+
+		File file = new File(clientExtensionBuildDir, "bar.txt")
+
+		assert file.exists()
+	}
+}

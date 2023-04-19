@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
@@ -56,6 +57,7 @@ import javax.servlet.http.HttpSession;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
+import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -606,7 +608,15 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			metadataManagerImpl, "_localEntityManager", credentialResolver);
 
 		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_parserPool", parserPool);
+			metadataManagerImpl, "_parserPoolProvider",
+			new ParserPoolProvider() {
+
+				@Override
+				public ParserPool getParserPool() {
+					return parserPool;
+				}
+
+			});
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_portal", portal);
 		ReflectionTestUtil.setFieldValue(

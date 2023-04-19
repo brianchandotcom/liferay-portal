@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
 import com.liferay.saml.opensaml.integration.internal.credential.FileSystemKeyStoreManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.credential.KeyStoreCredentialResolver;
 import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierGeneratorStrategyFactory;
@@ -643,7 +644,15 @@ public abstract class BaseSamlTestCase {
 			metadataManagerImpl, "_localEntityManager", credentialResolver);
 
 		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_parserPool", parserPool);
+			metadataManagerImpl, "_parserPoolProvider",
+			new ParserPoolProvider() {
+
+				@Override
+				public ParserPool getParserPool() {
+					return parserPool;
+				}
+
+			});
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_portal", portal);
 		ReflectionTestUtil.setFieldValue(
@@ -772,7 +781,15 @@ public abstract class BaseSamlTestCase {
 
 			});
 		ReflectionTestUtil.setFieldValue(
-			samlBindingProvider, "_parserPool", parserPool);
+			samlBindingProvider, "_parserPoolProvider",
+			new ParserPoolProvider() {
+
+				@Override
+				public ParserPool getParserPool() {
+					return parserPool;
+				}
+
+			});
 	}
 
 	private void _setupSamlPeerBindingsLocalService() throws Exception {

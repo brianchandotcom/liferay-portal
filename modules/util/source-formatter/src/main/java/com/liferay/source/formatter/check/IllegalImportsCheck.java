@@ -235,11 +235,8 @@ public class IllegalImportsCheck extends BaseFileCheck {
 							addMessage(
 								fileName,
 								StringBundler.concat(
-									"Do not use following old taglib, '",
-									replacedTaglibArray[0],
-									"' should be replaced by '",
-									replacedTaglibArray[1],
-									"', see LPS-179523"));
+									"Use ", replacedTaglibArray[1],
+									" instead of ", replacedTaglibArray[0]));
 
 							break;
 						}

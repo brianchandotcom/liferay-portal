@@ -585,7 +585,7 @@ public class ObjectLayoutLocalServiceTest {
 	}
 
 	private void _assertFailure(
-		Class<?> expectedExceptionClass, String message,
+		Class<?> clazz, String message,
 		UnsafeSupplier<Object, Exception> unsafeSupplier) {
 
 		try {
@@ -594,8 +594,8 @@ public class ObjectLayoutLocalServiceTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
+			Assert.assertTrue(clazz.isInstance(exception));
 			Assert.assertEquals(message, exception.getMessage());
-			Assert.assertTrue(expectedExceptionClass.isInstance(exception));
 		}
 	}
 

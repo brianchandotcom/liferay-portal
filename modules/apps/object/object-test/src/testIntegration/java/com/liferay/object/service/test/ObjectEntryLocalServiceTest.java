@@ -2247,8 +2247,8 @@ public class ObjectEntryLocalServiceTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(exception.getMessage(), message);
 			Assert.assertTrue(clazz.isInstance(exception));
+			Assert.assertEquals(exception.getMessage(), message);
 		}
 	}
 

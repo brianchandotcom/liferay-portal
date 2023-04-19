@@ -153,7 +153,12 @@ if (fixedHeader) {
 						<c:choose>
 							<c:when test="<%= (rowChecker != null) && (i == 0) %>">
 								<span class="sr-only">
-									<liferay-ui:message key="selected-item" />
+									<liferay-ui:message key="item-selection" />
+								</span>
+							</c:when>
+							<c:when test="<%= Validator.isNull(headerName) && (i == (headerNames.size() - 1)) %>">
+								<span class="sr-only">
+									<liferay-ui:message key="item-actions" />
 								</span>
 							</c:when>
 							<c:when test="<%= truncate %>">

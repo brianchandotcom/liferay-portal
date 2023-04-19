@@ -61,8 +61,6 @@ $sidebarWidth: 320px;
 		}
 
 		.rtl & {
-			transform: translateX(-$sidebarWidth);
-
 			&--visible {
 				transform: translateX(0);
 			}

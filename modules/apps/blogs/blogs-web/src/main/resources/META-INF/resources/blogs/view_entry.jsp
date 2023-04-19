@@ -21,14 +21,6 @@
 <%
 BlogsViewEntryDisplayContext blogsViewEntryDisplayContext = new BlogsViewEntryDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-assetHelper.addLayoutTags(request, AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), blogsViewEntryDisplayContext.getBlogsEntryId()));
-
-if (request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) == null) {
-	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, blogsViewEntryDisplayContext.getBlogsEntryAssetEntry());
-}
-
-LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(request, blogsViewEntryDisplayContext.getBlogsEntryAssetEntryId());
-
 request.setAttribute("view_entry_content.jsp-entry", blogsViewEntryDisplayContext.getBlogsEntry());
 
 request.setAttribute("view_entry_content.jsp-assetEntry", blogsViewEntryDisplayContext.getBlogsEntryAssetEntry());
@@ -50,7 +42,15 @@ PortalUtil.setPageTitle(blogsViewEntryDisplayContext.getBlogsEntryTitle(), reque
 
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), blogsViewEntryDisplayContext.getBlogsEntryId());
 
+assetHelper.addLayoutTags(request, assetTags);
+
 PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
+
+if (request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) == null) {
+	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, blogsViewEntryDisplayContext.getBlogsEntryAssetEntry());
+}
+
+LinkedAssetEntryIdsUtil.addLinkedAssetEntryId(request, blogsViewEntryDisplayContext.getBlogsEntryAssetEntryId());
 
 PortalUtil.addPortletBreadcrumbEntry(request, blogsViewEntryDisplayContext.getBlogsEntryTitle(), currentURL);
 %>

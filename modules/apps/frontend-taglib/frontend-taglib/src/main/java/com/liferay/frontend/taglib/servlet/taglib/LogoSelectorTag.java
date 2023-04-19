@@ -106,8 +106,8 @@ public class LogoSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:defaultLogoURL", _defaultLogoURL);
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:imageURL",
-			_getImageURL(httpServletRequest));
+			"liferay-frontend:logo-selector:logoURL",
+			_getLogoURL(httpServletRequest));
 
 		String randomKey = PortalUtil.generateRandomKey(
 			httpServletRequest, "taglib_ui_logo_selector");
@@ -118,11 +118,11 @@ public class LogoSelectorTag extends IncludeTag {
 			"liferay-frontend:logo-selector:randomNamespace", randomNamespace);
 
 		httpServletRequest.setAttribute(
-			"liferay-frontend:logo-selector:uploadImageURL",
-			_getUploadImageURL(httpServletRequest, randomNamespace));
+			"liferay-frontend:logo-selector:selectLogoURL",
+			_getSelectLogoURL(httpServletRequest, randomNamespace));
 	}
 
-	private String _getImageURL(HttpServletRequest httpServletRequest) {
+	private String _getLogoURL(HttpServletRequest httpServletRequest) {
 		boolean deleteLogo = ParamUtil.getBoolean(
 			httpServletRequest, "deleteLogo");
 
@@ -152,7 +152,7 @@ public class LogoSelectorTag extends IncludeTag {
 		return getCurrentLogoURL();
 	}
 
-	private String _getUploadImageURL(
+	private String _getSelectLogoURL(
 		HttpServletRequest httpServletRequest, String randomNamespace) {
 
 		PortletResponse portletResponse =

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.test.rule.Inject;
@@ -71,44 +72,27 @@ public class ExportImportObjectDefinitionTest {
 
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
-		ObjectDefinition objectDefinition = _importObjectDefinition();
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			_createMockLiferayResourceRequest(objectDefinition.getId()),
-			mockLiferayResourceResponse);
-
-		Class<?> clazz = getClass();
-
-		JSONAssert.assertEquals(
-			StringUtil.read(
-				clazz.getResourceAsStream(
-					"dependencies/object_definition.json")),
-			String.valueOf(
-				mockLiferayResourceResponse.getPortletOutputStream()),
-			JSONCompareMode.STRICT_ORDER);
-
-		_objectDefinitionResource.deleteObjectDefinition(
-			objectDefinition.getId());
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		_exportImportObjectDefinition(
+			"account_entry_system_object_definition.json", "AccountEntry",
+			true);
+		_exportImportObjectDefinition(
+			"custom_object_definition.json", "ImportedCustomObjectDefinition",
+			false);
 	}
 
 	private MockLiferayPortletActionRequest
-			_createMockLiferayPortletActionRequest(String fileName, String name)
+			_createMockLiferayPortletActionRequest(
+				String externalReferenceCode, String fileName, String name)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest(
 				_createMockMultipartHttpServletRequest(fileName));
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			mockLiferayPortletActionRequest.addParameter(
+				"externalReferenceCode", externalReferenceCode);
+		}
 
 		mockLiferayPortletActionRequest.addParameter("name", name);
 		mockLiferayPortletActionRequest.addParameter(
@@ -166,6 +150,50 @@ public class ExportImportObjectDefinitionTest {
 		return mockMultipartHttpServletRequest;
 	}
 
+	private void _exportImportObjectDefinition(
+			String fileName, String name, boolean system)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
+		_objectDefinitionResource = builder.user(
+			TestPropsValues.getUser()
+		).build();
+
+		ObjectDefinition objectDefinition = _importObjectDefinition(
+			fileName, name, system);
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		_mvcResourceCommand.serveResource(
+			_createMockLiferayResourceRequest(objectDefinition.getId()),
+			mockLiferayResourceResponse);
+
+		Class<?> clazz = getClass();
+
+		JSONAssert.assertEquals(
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + fileName)),
+			String.valueOf(
+				mockLiferayResourceResponse.getPortletOutputStream()),
+			JSONCompareMode.STRICT_ORDER);
+
+		if (!objectDefinition.getSystem()) {
+			_objectDefinitionResource.deleteObjectDefinition(
+				objectDefinition.getId());
+		}
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+	}
+
 	private byte[] _getContent(String boundary, byte[] bytes, String fileName) {
 		String start = StringBundler.concat(
 			StringPool.DOUBLE_DASH, boundary,
@@ -176,6 +204,18 @@ public class ExportImportObjectDefinitionTest {
 			"\r\n--", boundary, StringPool.DOUBLE_DASH);
 
 		return ArrayUtil.append(start.getBytes(), bytes, end.getBytes());
+	}
+
+	private ObjectDefinition _getObjectDefinitionByName(String name)
+		throws Exception {
+
+		Page<ObjectDefinition> page =
+			_objectDefinitionResource.getObjectDefinitionsPage(
+				name, null, null, Pagination.of(1, 1), null);
+
+		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
+
+		return items.get(0);
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -194,27 +234,30 @@ public class ExportImportObjectDefinitionTest {
 		return themeDisplay;
 	}
 
-	private ObjectDefinition _importObjectDefinition() throws Exception {
+	private ObjectDefinition _importObjectDefinition(
+			String fileName, String name, boolean system)
+		throws Exception {
+
+		if (system) {
+			ObjectDefinition objectDefinition = _getObjectDefinitionByName(
+				name);
+
+			_mvcActionCommand.processAction(
+				_createMockLiferayPortletActionRequest(
+					objectDefinition.getExternalReferenceCode(), fileName,
+					name),
+				new MockLiferayPortletActionResponse());
+
+			return _objectDefinitionResource.getObjectDefinition(
+				objectDefinition.getId());
+		}
+
 		_mvcActionCommand.processAction(
 			_createMockLiferayPortletActionRequest(
-				"object_definition.json", "ImportedObjectDefinition"),
+				StringPool.BLANK, fileName, name),
 			new MockLiferayPortletActionResponse());
 
-		ObjectDefinitionResource.Builder builder =
-			_objectDefinitionResourceFactory.create();
-
-		ObjectDefinitionResource objectDefinitionResource = builder.user(
-			TestPropsValues.getUser()
-		).build();
-
-		Page<ObjectDefinition> page =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				"ImportedObjectDefinition", null, null, Pagination.of(1, 1),
-				null);
-
-		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
-
-		return items.get(0);
+		return _getObjectDefinitionByName(name);
 	}
 
 	@Inject

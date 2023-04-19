@@ -19,7 +19,7 @@
 	"label": {
 		"en_US": "Object Definition"
 	},
-	"name": "ImportedObjectDefinition",
+	"name": "ImportedCustomObjectDefinition",
 	"objectActions": [
 		{
 			"active": true,

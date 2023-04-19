@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -103,6 +104,8 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -406,7 +409,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return ServiceContextRequestUtil.createServiceContext(
-			assetCategoryIds, assetTagNames, null, groupId,
+			assetCategoryIds, assetTagNames,
+			_getExpandoBridgeAttributes(sitePage), groupId,
 			contextHttpServletRequest, null);
 	}
 
@@ -516,6 +520,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			"custom-meta-tags");
 
 		return ddmStructure.getPrimaryKey();
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		SitePage sitePage) {
+
+		return CustomFieldsUtil.toMap(
+			Layout.class.getName(), contextCompany.getCompanyId(),
+			sitePage.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Map<String, Map<String, String>> _getExperienceActions(

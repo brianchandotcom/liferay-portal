@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -37,15 +38,20 @@ import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.SystemObjectEntryTestUtil;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -70,6 +76,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -227,6 +234,26 @@ public class ObjectEntryResourceTest {
 		_siteScopedObjectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_1);
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager("User");
+
+		_userSystemObjectDefinition =
+			_objectDefinitionLocalService.fetchSystemObjectDefinition(
+				systemObjectDefinitionManager.getName());
+
+		_userSystemObjectField = ObjectFieldTestUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
+			_OBJECT_FIELD_NAME_2);
+
+		_userAccount = SystemObjectEntryTestUtil.addUserAccount(
+			systemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
+			).build());
 	}
 
 	@After
@@ -3089,7 +3116,8 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetNestedFieldDetailsInRelationships() throws Exception {
+	public void testGetNestedFieldDetailsInRelationshipsWithCustomObjectDefinitions()
+		throws Exception {
 
 		// One to many with Custom Object Definition
 
@@ -3266,6 +3294,81 @@ public class ObjectEntryResourceTest {
 			},
 			null, _objectRelationship3.getName(), _objectDefinition2,
 			Type.MANY_TO_ONE);
+	}
+
+	@FeatureFlags("LPS-165819")
+	@Test
+	public void testGetNestedFieldDetailsInRelationshipsWithSystemObjectDefinitions()
+		throws Exception {
+
+		// One to many with System Object Definition
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _userSystemObjectDefinition,
+			_objectEntry1.getPrimaryKey(), _userAccount.getId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship1.getName(),
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			null, _objectRelationship1.getName(), _objectDefinition1,
+			Type.ONE_TO_MANY);
+
+		// Many to many with System Object Definition
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _userSystemObjectDefinition,
+			_objectEntry1.getPrimaryKey(), _userAccount.getId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship2.getName(),
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			null, _objectRelationship2.getName(), _objectDefinition1,
+			Type.MANY_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship2.getName(),
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			3, _objectRelationship2.getName(), _objectDefinition1,
+			Type.MANY_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship2.getName(),
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			5, _objectRelationship2.getName(), _objectDefinition1,
+			Type.MANY_TO_MANY);
+
+		_testGetNestedFieldDetailsInRelationships(
+			_objectRelationship2.getName(),
+			new String[][] {
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
+				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
+			},
+			6, _objectRelationship2.getName(), _objectDefinition1,
+			Type.MANY_TO_MANY);
 	}
 
 	@Test
@@ -5139,6 +5242,16 @@ public class ObjectEntryResourceTest {
 
 	private ObjectDefinition _siteScopedObjectDefinition1;
 	private ObjectEntry _siteScopedObjectEntry1;
+
+	@Inject
+	private SystemObjectDefinitionManagerRegistry
+		_systemObjectDefinitionManagerRegistry;
+
+	private UserAccount _userAccount;
+	private ObjectDefinition _userSystemObjectDefinition;
+
+	@DeleteAfterTestRun
+	private ObjectField _userSystemObjectField;
 
 	private enum Type {
 

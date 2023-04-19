@@ -466,6 +466,13 @@ definition {
 		}
 	}
 
+	@summary = "Click on the '-' button, inside the activities page of the MDF Request, to remove a budget value"
+	macro removeValueBudget {
+		Click(
+			key_text = "hr",
+			locator1 = "Icon#ANY");
+	}
+
 	@summary = "Search for an MDF Request"
 	macro searchMDF {
 		Type(
@@ -812,16 +819,10 @@ definition {
 	@summary = "Assert the Total Cost value of the budget, inside the activities page of the MDF Request"
 	macro viewValueBudget {
 		var key_totalCost = ${totalCost};
-		
+
 		AssertTextEquals(
 			locator1 = "PRMMDFRequest#VALUE_BUDGET",
 			value1 = ${totalCost});
-		}
-
-	@summary = "Click on the '-' button, inside the activities page of the MDF Request, to remove a budget value"
-	macro removeValueBudget {
-		Click(
-			key_text = "hr",
-			locator1 = "Icon#ANY");
 	}
+
 }

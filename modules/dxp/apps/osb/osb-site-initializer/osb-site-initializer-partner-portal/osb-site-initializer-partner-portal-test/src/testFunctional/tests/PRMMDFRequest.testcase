@@ -466,6 +466,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-171641. Verify that when click on '-' button, the budget value will be cleaned"
+	@priority = 3
+	test CanRemoveBudgetValue {
+		property test.name.skip.portal.instance = "PRMMDFRequest#CanRemoveBudgetValue";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given a new MDF request and budget value is added") {
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.fillGoalsPage(
+				accountName = "Company Name 1",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				goalsOptions = "Lead generation",
+				targetMarketOptions = "Education,Energy",
+				targetRolesOptions = "Administrator");
+
+			Button.click(button = "Continue");
+
+			PRMMDFRequest.addNewActivity();
+
+			PRMMDFRequest.fillExpenseFields(budgetList = "Sponsorship Fee-2000");
+
+			PRMMDFRequest.viewValueBudget(totalCost = "R$2,000.00");
+		}
+
+		task ("When I click on '-' button") {
+			PRMMDFRequest.removeValueBudget();
+		}
+
+		task ("Then the budget value will be cleaned") {
+			PRMMDFRequest.viewValueBudget(totalCost = "R$0.00");
+		}
+	}
+
 	@description = "This is a test for LPS-169960. Verify that a submited MDF will be displayed on the list"
 	@priority = 5
 	test CanViewMDFStatusOnListing {

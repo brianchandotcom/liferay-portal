@@ -1216,4 +1216,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-171627. Verify that that on Target Market, just 1 ~ 3 options can be selected"
+	@priority = 4
+	test ViewTargetMarketOptionsError {
+		property test.name.skip.portal.instance = "PRMMDFRequest#ViewTargetMarketOptionsError";
+
+		task ("Given that the User go to add a new MDF Request") {
+			PRMMarketing.gotoAddNewMDF();
+		}
+
+		task ("When the user selects 4 different Target Market options") {
+			PRMMDFRequest.fillGoalsPage(targetMarketOptions = "Education,Energy,Automotive,Agriculture");
+		}
+
+		task ("Then the error message that the limit has been exceeded should appear") {
+			PRMMDFRequest.viewErrorMessage(errorMessage = "You have exceed the choose limit");
+		}
+
+		task ("But when the user unselect one option, leaving only 3 options selected") {
+			PRMMDFRequest.fillGoalsPage(targetMarketOptions = "Education,Energy,Automotive");
+		}
+
+		task ("Then the error will be no longer be visible") {
+			PRMMDFRequest.viewNoErrorMessage(errorMessage = "You have exceed the choose limit");
+		}
+	}
+
 }

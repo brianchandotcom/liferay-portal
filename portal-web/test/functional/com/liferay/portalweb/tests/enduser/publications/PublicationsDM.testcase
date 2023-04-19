@@ -25,6 +25,96 @@ definition {
 		}
 	}
 
+	@description = "This is the use case for LPS-161041. Can view changes to a document across multiple publications"
+	@priority = 4
+	test CanViewDocumentFolderAndFileOverMultiplePublications {
+		property custom.properties = "feature.flag.LPS-161033=true";
+
+		task ("Add new document folder and file on new added site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONFolder.addFolder(
+				dmFolderDescription = "DM Folder Description",
+				dmFolderName = "DM Folder Name",
+				groupName = "Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add and select a new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name 1");
+		}
+
+		task ("Assert there are no changes in the Publication timeline") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+			Publications.viewPublicationTimeline(isEmpty = "true");
+		}
+
+		task ("Edit the document folder and file") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMFolder.editCP(
+				dmFolderDescription = "DM Folder Description",
+				dmFolderDescriptionEdit = "DM Folder Description Edit",
+				dmFolderName = "DM Folder Name",
+				dmFolderNameEdit = "DM Folder Name Edit");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMDocument.editCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentDescriptionEdit = "DM Document Description Edit",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTitleEdit = "DM Document Title Edit");
+		}
+
+		task ("Publish the publication") {
+			JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+			JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+		}
+
+		task ("Add a new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name 2");
+		}
+
+		task ("View Publication timeline in Production") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
+
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name Edit");
+
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
+		}
+
+		task ("View Publication timeline in Publication") {
+			JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
+		}
+	}
+
 	@priority = 4
 	test CheckoutAndCheckinDocumentInPublication {
 		property test.assert.warning.exceptions = "true";

@@ -90,7 +90,7 @@ const openModal = () => {
 			},
 		],
 		center: true,
-		headerHTML: `<p class="headerTextModal">Review Request:</p><p>${requestName}</p>`,
+		headerHTML: `<p class="request-modal-header">Review Request:</p><p>${requestName}</p>`,
 		size: 'md',
 	});
 };

@@ -66,6 +66,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-181348. Confirm that a dataset view can be deleted"
+	@priority = 5
+	test AssertNumberOfCharactersExceededInNameField {
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("And Clicking add button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And a user types a name that is more than 280 characters") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		}
+
+		task ("And Filling the description field with 'Test Description'") {
+			Type(
+				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				value1 = "Test Description");
+		}
+
+		task ("And Clicking Save button") {
+			Button.clickSave();
+		}
+
+		task ("Then confirm the error alert is present") {
+			Alert.viewErrorMessage(errorMessage = "Error:Your request failed to complete");
+		}
+	}
+
 	@description = "LPS-181346. Confirm that pagination works right on views page"
 	@priority = 3
 	test CanAssertPaginationOnFDSViewsPage {

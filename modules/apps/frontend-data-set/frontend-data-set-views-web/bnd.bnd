@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Frontend Data Set Views Web
 Bundle-SymbolicName: com.liferay.frontend.data.set.views.web
 Bundle-Version: 1.0.0
-Liferay-Client-Extension-Batch: com/liferay/frontend/data/set/views/web/objects
+Liferay-Client-Extension-Batch: com/liferay/frontend/data/set/views/web/batch
 Web-ContextPath: /frontend-data-set-views-web

@@ -422,25 +422,20 @@ definition {
 	test ViewErrorMessageWhenSubmitFormWithAttachedFileSizeLargerThanAllowedMaximumUploadSize {
 		task ("Given a user has a content page where a File Upload and Submit Button fragments are inside a Form Container") {
 			task ("Add an Attachment field to object") {
-				ObjectAdmin.addObjectFieldViaAPI(
-					fieldBusinessType = "Attachment",
-					fieldLabelName = "Custom Attachment From Computer",
-					fieldName = "customAttachmentFromComputer",
-					fieldType = "Long",
-					fileSource = "userComputer",
-					isRequired = "false",
-					objectName = "UploadObject");
-
-				ObjectAdmin.publishObjectViaAPI(objectName = "UploadObject");
-			}
-
-			task ("Change the Maximum File Size to 2 MB") {
 				ObjectAdmin.openObjectAdmin();
 
 				ObjectPortlet.selectCustomObject(label = "Upload Object");
 
 				ObjectAdmin.goToFieldsTab();
 
+				ObjectAdmin.addObjectFieldViaUI(
+					enableShowFiles = "true",
+					fieldAttachment = "Upload Directly from the User's Computer",
+					fieldLabel = "Custom Attachment From Computer",
+					fieldType = "Attachment");
+			}
+
+			task ("Change the Maximum File Size to 2 MB") {
 				ObjectAdmin.goToFieldsDetails(label = "Custom Attachment From Computer");
 
 				Type(
@@ -449,6 +444,8 @@ definition {
 					value1 = 2);
 
 				ObjectField.save();
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "UploadObject");
 			}
 
 			task ("Add a Form Container framgment to content page") {

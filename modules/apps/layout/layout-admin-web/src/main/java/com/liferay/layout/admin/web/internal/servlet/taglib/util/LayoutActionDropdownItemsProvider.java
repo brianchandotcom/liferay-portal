@@ -146,7 +146,8 @@ public class LayoutActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.addContext(
-						_getcopyLayoutActionUnsafeConsumer(layout)
+						_getCopyLayoutWithPermissionsActionUnsafeConsumer(
+							layout)
 					).add(
 						() ->
 							_layoutsAdminDisplayContext.
@@ -279,8 +280,28 @@ public class LayoutActionDropdownItemsProvider {
 		};
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getCopyLayoutActionUnsafeConsumer(Layout layout) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "copyLayout");
+			dropdownItem.putData(
+				"copyLayoutURL",
+				_layoutsAdminDisplayContext.getCopyLayoutRenderURL(
+					false, layout));
+
+			if (!_layoutsAdminDisplayContext.isShowCopyLayoutAction(layout)) {
+				dropdownItem.setDisabled(true);
+			}
+
+			dropdownItem.setIcon("copy");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "copy-page"));
+		};
+	}
+
 	private UnsafeConsumer<DropdownContextItem, Exception>
-		_getcopyLayoutActionUnsafeConsumer(Layout layout) {
+		_getCopyLayoutWithPermissionsActionUnsafeConsumer(Layout layout) {
 
 		return dropdownContextItem -> {
 			if (_layoutsAdminDisplayContext.isShowCopyLayoutAction(layout)) {
@@ -317,26 +338,6 @@ public class LayoutActionDropdownItemsProvider {
 			dropdownContextItem.setIcon("copy");
 			dropdownContextItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getCopyLayoutActionUnsafeConsumer(Layout layout) {
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "copyLayout");
-			dropdownItem.putData(
-				"copyLayoutURL",
-				_layoutsAdminDisplayContext.getCopyLayoutRenderURL(
-					false, layout));
-
-			if (!_layoutsAdminDisplayContext.isShowCopyLayoutAction(layout)) {
-				dropdownItem.setDisabled(true);
-			}
-
-			dropdownItem.setIcon("copy");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "copy-page"));
 		};
 	}
 

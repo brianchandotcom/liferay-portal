@@ -104,110 +104,57 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Label is null
 
-		try {
-			_testAddCustomObjectDefinition("", "Test", "Tests");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionLabelException objectDefinitionLabelException) {
-			Assert.assertEquals(
-				"Label is null for locale " + LocaleUtil.US.getDisplayName(),
-				objectDefinitionLabelException.getMessage());
-		}
+		_assertFailure(
+			ObjectDefinitionLabelException.class,
+			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
+			() -> _addCustomObjectDefinition("", "Test", "Tests"));
 
 		// Name is null
 
-		try {
-			_testAddCustomObjectDefinition("Test", "", "Tests");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name is null", objectDefinitionNameException.getMessage());
-		}
-
-		// Plural label is null
-
-		try {
-			_testAddCustomObjectDefinition("Test", "Test", "");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionPluralLabelException
-					objectDefinitionPluralLabelException) {
-
-			Assert.assertEquals(
-				"Plural label is null for locale " +
-					LocaleUtil.US.getDisplayName(),
-				objectDefinitionPluralLabelException.getMessage());
-		}
-
-		// Custom object definition names are automatically prepended with
-		// with "C_"
-
-		try {
-			_testAddCustomObjectDefinition("Test");
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			throw objectDefinitionNameException;
-		}
+		_assertFailure(
+			ObjectDefinitionNameException.class, "Name is null",
+			() -> _addCustomObjectDefinition("Test", "", "Tests"));
 
 		// Name must only contain letters and digits
 
-		_testAddCustomObjectDefinition(" Test ");
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_addCustomObjectDefinition(" Test "));
 
-		try {
-			_testAddCustomObjectDefinition("Tes t");
+		_assertFailure(
+			ObjectDefinitionNameException.class,
+			"Name must only contain letters and digits",
+			() -> _addCustomObjectDefinition("Tes t"));
 
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectDefinitionNameException.getMessage());
-		}
-
-		try {
-			_testAddCustomObjectDefinition("Tes-t");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectDefinitionNameException.getMessage());
-		}
+		_assertFailure(
+			ObjectDefinitionNameException.class,
+			"Name must only contain letters and digits",
+			() -> _addCustomObjectDefinition("Tes-t"));
 
 		// The first character of a name must be an upper case letter
 
-		try {
-			_testAddCustomObjectDefinition("test");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"The first character of a name must be an upper case letter",
-				objectDefinitionNameException.getMessage());
-		}
+		_assertFailure(
+			ObjectDefinitionNameException.class,
+			"The first character of a name must be an upper case letter",
+			() -> _addCustomObjectDefinition("test"));
 
 		// Name must be less than 41 characters
 
-		_testAddCustomObjectDefinition(
-			"A123456789a123456789a123456789a1234567891");
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_addCustomObjectDefinition(
+				"A123456789a123456789a123456789a1234567891"));
 
-		try {
-			_testAddCustomObjectDefinition(
-				"A123456789a123456789a123456789a12345678912");
+		_assertFailure(
+			ObjectDefinitionNameException.class,
+			"Name must be less than 41 characters",
+			() -> _addCustomObjectDefinition(
+				"A123456789a123456789a123456789a12345678912"));
 
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name must be less than 41 characters",
-				objectDefinitionNameException.getMessage());
-		}
+		// Plural label is null
+
+		_assertFailure(
+			ObjectDefinitionPluralLabelException.class,
+			"Plural label is null for locale " + LocaleUtil.US.getDisplayName(),
+			() -> _addCustomObjectDefinition("Test", "Test", ""));
 
 		// Duplicate name
 
@@ -230,23 +177,17 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
-		try {
-			_testAddCustomObjectDefinition("Test");
-		}
-		catch (ObjectDefinitionNameException.MustNotBeDuplicate
-					objectDefinitionNameException) {
-
-			Assert.assertEquals(
-				"Duplicate name C_Test",
-				objectDefinitionNameException.getMessage());
-		}
+		_assertFailure(
+			ObjectDefinitionNameException.class, "Duplicate name C_Test",
+			() -> _addCustomObjectDefinition("Test"));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		// Scope is null
 
-		try {
-			_objectDefinitionLocalService.addCustomObjectDefinition(
+		_assertFailure(
+			ObjectDefinitionScopeException.class, "Scope is null",
+			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
@@ -256,21 +197,17 @@ public class ObjectDefinitionLocalServiceTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionScopeException objectDefinitionScopeException) {
-			Assert.assertEquals(
-				"Scope is null", objectDefinitionScopeException.getMessage());
-		}
+						RandomTestUtil.randomString(),
+						StringUtil.randomId()))));
 
 		// No object scope provider found with key
 
 		String scope = RandomTestUtil.randomString();
 
-		try {
-			_objectDefinitionLocalService.addCustomObjectDefinition(
+		_assertFailure(
+			ObjectDefinitionScopeException.class,
+			"No object scope provider found with key " + scope,
+			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
@@ -280,15 +217,8 @@ public class ObjectDefinitionLocalServiceTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionScopeException objectDefinitionScopeException) {
-			Assert.assertEquals(
-				"No object scope provider found with key " + scope,
-				objectDefinitionScopeException.getMessage());
-		}
+						RandomTestUtil.randomString(),
+						StringUtil.randomId()))));
 
 		// Database table, resources, and status
 
@@ -323,6 +253,11 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(_hasTable(objectDefinition.getDBTableName()));
 		Assert.assertFalse(
 			_hasTable(objectDefinition.getExtensionDBTableName()));
+
+		// Custom object definition names are automatically prepended with
+		// with "C_"
+
+		Assert.assertEquals("C_Test", objectDefinition.getName());
 
 		// Before publish, resources
 
@@ -1505,6 +1440,29 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
+	private ObjectDefinition _addCustomObjectDefinition(String name)
+		throws Exception {
+
+		return _addCustomObjectDefinition(name, name, name);
+	}
+
+	private ObjectDefinition _addCustomObjectDefinition(
+			String label, String name, String pluralLabel)
+		throws Exception {
+
+		return _objectDefinitionLocalService.addCustomObjectDefinition(
+			TestPropsValues.getUserId(), false, false,
+			LocalizedMapUtil.getLocalizedMap(label), name, null, null,
+			LocalizedMapUtil.getLocalizedMap(pluralLabel),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), StringUtil.randomId())));
+	}
+
 	private ObjectDefinition _addSystemObjectDefinition(String name)
 		throws Exception {
 
@@ -1645,44 +1603,6 @@ public class ObjectDefinitionLocalServiceTest {
 		return _objectDefinitionLocalService.publishSystemObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
-	}
-
-	private void _testAddCustomObjectDefinition(String name) throws Exception {
-		_testAddCustomObjectDefinition(name, name, name);
-	}
-
-	private void _testAddCustomObjectDefinition(
-			String label, String name, String pluralLabel)
-		throws Exception {
-
-		ObjectDefinition objectDefinition = null;
-
-		try {
-			objectDefinition =
-				_objectDefinitionLocalService.addCustomObjectDefinition(
-					TestPropsValues.getUserId(), false, false,
-					LocalizedMapUtil.getLocalizedMap(label), name, null, null,
-					LocalizedMapUtil.getLocalizedMap(pluralLabel),
-					ObjectDefinitionConstants.SCOPE_COMPANY,
-					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-					Arrays.asList(
-						ObjectFieldUtil.createObjectField(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-							ObjectFieldConstants.DB_TYPE_STRING,
-							RandomTestUtil.randomString(),
-							StringUtil.randomId())));
-
-			objectDefinition =
-				_objectDefinitionLocalService.publishCustomObjectDefinition(
-					TestPropsValues.getUserId(),
-					objectDefinition.getObjectDefinitionId());
-		}
-		finally {
-			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition);
-			}
-		}
 	}
 
 	private void _testSystemObjectFields(ObjectDefinition objectDefinition)

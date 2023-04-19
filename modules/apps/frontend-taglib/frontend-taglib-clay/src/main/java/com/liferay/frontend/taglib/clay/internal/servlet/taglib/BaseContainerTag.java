@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
@@ -367,25 +366,8 @@ public class BaseContainerTag extends AttributesTagSupport {
 			String propsTransformer = null;
 
 			if (Validator.isNotNull(_propsTransformer)) {
-				String resolvedPackageName;
-
-				try {
-					resolvedPackageName = NPMResolvedPackageNameUtil.get(
+				String resolvedPackageName = NPMResolvedPackageNameUtil.get(
 						getPropsTransformerServletContext());
-				}
-				catch (UnsupportedOperationException
-							unsupportedOperationException) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(unsupportedOperationException);
-					}
-
-					JSModuleResolver jsModuleResolver =
-						ServicesProvider.getJSModuleResolver();
-
-					resolvedPackageName = jsModuleResolver.resolveModule(
-						getPropsTransformerServletContext(), null);
-				}
 
 				propsTransformer =
 					resolvedPackageName + "/" + _propsTransformer;

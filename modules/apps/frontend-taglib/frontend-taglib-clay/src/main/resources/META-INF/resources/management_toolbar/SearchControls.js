@@ -20,6 +20,7 @@ import React, {useEffect, useRef} from 'react';
 
 const SearchControls = ({
 	disabled,
+	onCloseSearchMobile,
 	searchActionURL,
 	searchData,
 	searchFormMethod,
@@ -28,7 +29,6 @@ const SearchControls = ({
 	searchInputName,
 	searchMobile,
 	searchValue,
-	setSearchMobile,
 }) => {
 	const searchInputRef = useRef();
 
@@ -47,7 +47,13 @@ const SearchControls = ({
 				showMobile={searchMobile}
 			>
 				<FocusTrap active={searchMobile}>
-					<ClayInput.Group>
+					<ClayInput.Group
+						onKeyDown={(event) => {
+							if (searchMobile && event.key === 'Escape') {
+								onCloseSearchMobile();
+							}
+						}}
+					>
 						<ClayInput.GroupItem>
 							<ClayInput
 								aria-label={`${Liferay.Language.get(
@@ -85,7 +91,7 @@ const SearchControls = ({
 								)}
 								disabled={disabled}
 								displayType="unstyled"
-								onClick={() => setSearchMobile(false)}
+								onClick={onCloseSearchMobile}
 								size="sm"
 								symbol="times"
 								title={Liferay.Language.get('close-search')}

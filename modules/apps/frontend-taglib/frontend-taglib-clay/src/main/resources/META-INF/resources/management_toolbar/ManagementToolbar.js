@@ -152,6 +152,7 @@ function ManagementToolbar({
 				{!active && showSearch && (
 					<SearchControls
 						disabled={disabled}
+						onCloseSearchMobile={() => setSearchMobile(false)}
 						searchActionURL={searchActionURL}
 						searchData={searchData}
 						searchFormMethod={searchFormMethod}
@@ -160,7 +161,6 @@ function ManagementToolbar({
 						searchInputName={searchInputName}
 						searchMobile={searchMobile}
 						searchValue={searchValue}
-						setSearchMobile={setSearchMobile}
 					/>
 				)}
 

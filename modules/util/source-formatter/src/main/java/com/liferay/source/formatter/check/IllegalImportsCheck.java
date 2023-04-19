@@ -214,24 +214,24 @@ public class IllegalImportsCheck extends BaseFileCheck {
 				sourceFormatterArgs.getBaseDirName(),
 				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
-			List<String> shouldReplaceTagLibs = getAttributeValues(
-				_SHOULD_REPLACE_TAGLIB_KEY, absolutePath);
+			List<String> replacedTaglibs = getAttributeValues(
+				_REPLACED_TAGLIBS_KEY, absolutePath);
 
 			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
 				if (!line.startsWith(StringPool.PLUS)) {
 					continue;
 				}
 
-				if (isAttributeValue(_AVOID_OLD_TAGLIB_KEY, absolutePath)) {
-					for (String shouldReplaceTaglib : shouldReplaceTagLibs) {
-						String[] shouldReplaceTaglibArray = StringUtil.split(
-							shouldReplaceTaglib, "->");
+				if (isAttributeValue(_CHECK_TAGLIBS_KEY, absolutePath)) {
+					for (String replacedTaglib : replacedTaglibs) {
+						String[] replacedTaglibArray = StringUtil.split(
+							replacedTaglib, "->");
 
-						if (shouldReplaceTaglibArray.length != 2) {
+						if (replacedTaglibArray.length != 2) {
 							continue;
 						}
 
-						String oldTaglibImport = shouldReplaceTaglibArray[0];
+						String oldTaglibImport = replacedTaglibArray[0];
 
 						if (line.contains(oldTaglibImport)) {
 							addMessage(
@@ -240,7 +240,7 @@ public class IllegalImportsCheck extends BaseFileCheck {
 									"Do not use following old taglib, '",
 									oldTaglibImport,
 									"' should be replaced by '",
-									shouldReplaceTaglibArray[1],
+									replacedTaglibArray[1],
 									"', see LPS-179523"));
 						}
 
@@ -269,11 +269,11 @@ public class IllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _AVOID_OLD_TAGLIB_KEY = "avoidOldTaglib";
-
 	private static final String _AVOID_OPTIONAL_KEY = "avoidOptional";
 
 	private static final String _AVOID_STREAM_KEY = "avoidStream";
+
+	private static final String _CHECK_TAGLIBS_KEY = "checkTaglibs";
 
 	private static final String _ENFORCE_COOKIES_MANAGER_UTIL_KEY =
 		"enforceCookiesManagerUtil";
@@ -283,10 +283,9 @@ public class IllegalImportsCheck extends BaseFileCheck {
 
 	private static final String _PROXY_EXCLUDES = "proxy.excludes";
 
+	private static final String _REPLACED_TAGLIBS_KEY = "replacedTaglibs";
+
 	private static final String _SECURE_RANDOM_EXCLUDES =
 		"secure.random.excludes";
-
-	private static final String _SHOULD_REPLACE_TAGLIB_KEY =
-		"shouldReplaceTaglib";
 
 }

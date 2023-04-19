@@ -282,6 +282,20 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (document.getFileName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(document.getFileName()));
+
+			sb.append("\"");
+		}
+
 		if (document.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -384,20 +398,6 @@ public class DocumentSerDes {
 			sb.append("\"sizeInBytes\": ");
 
 			sb.append(document.getSizeInBytes());
-		}
-
-		if (document.getSourceFileName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sourceFileName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(document.getSourceFileName()));
-
-			sb.append("\"");
 		}
 
 		if (document.getTaxonomyCategoryBriefs() != null) {
@@ -619,6 +619,13 @@ public class DocumentSerDes {
 				"fileExtension", String.valueOf(document.getFileExtension()));
 		}
 
+		if (document.getFileName() == null) {
+			map.put("fileName", null);
+		}
+		else {
+			map.put("fileName", String.valueOf(document.getFileName()));
+		}
+
 		if (document.getId() == null) {
 			map.put("id", null);
 		}
@@ -672,14 +679,6 @@ public class DocumentSerDes {
 		}
 		else {
 			map.put("sizeInBytes", String.valueOf(document.getSizeInBytes()));
-		}
-
-		if (document.getSourceFileName() == null) {
-			map.put("sourceFileName", null);
-		}
-		else {
-			map.put(
-				"sourceFileName", String.valueOf(document.getSourceFileName()));
 		}
 
 		if (document.getTaxonomyCategoryBriefs() == null) {
@@ -848,6 +847,11 @@ public class DocumentSerDes {
 					document.setFileExtension((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "fileName")) {
+				if (jsonParserFieldValue != null) {
+					document.setFileName((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					document.setId(Long.valueOf((String)jsonParserFieldValue));
@@ -907,11 +911,6 @@ public class DocumentSerDes {
 				if (jsonParserFieldValue != null) {
 					document.setSizeInBytes(
 						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sourceFileName")) {
-				if (jsonParserFieldValue != null) {
-					document.setSourceFileName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

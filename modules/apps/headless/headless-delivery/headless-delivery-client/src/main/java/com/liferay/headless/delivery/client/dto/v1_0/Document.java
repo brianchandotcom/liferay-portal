@@ -374,6 +374,27 @@ public class Document implements Cloneable, Serializable {
 
 	protected String fileExtension;
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void setFileName(
+		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
+
+		try {
+			fileName = fileNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fileName;
+
 	public Long getId() {
 		return id;
 	}
@@ -520,27 +541,6 @@ public class Document implements Cloneable, Serializable {
 	}
 
 	protected Long sizeInBytes;
-
-	public String getSourceFileName() {
-		return sourceFileName;
-	}
-
-	public void setSourceFileName(String sourceFileName) {
-		this.sourceFileName = sourceFileName;
-	}
-
-	public void setSourceFileName(
-		UnsafeSupplier<String, Exception> sourceFileNameUnsafeSupplier) {
-
-		try {
-			sourceFileName = sourceFileNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String sourceFileName;
 
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		return taxonomyCategoryBriefs;

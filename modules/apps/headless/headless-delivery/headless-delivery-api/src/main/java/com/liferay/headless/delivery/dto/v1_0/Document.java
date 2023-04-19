@@ -553,6 +553,34 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String fileExtension;
 
+	@Schema(description = "The document's file name.")
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	@JsonIgnore
+	public void setFileName(
+		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
+
+		try {
+			fileName = fileNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The document's file name.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fileName;
+
 	@Schema(description = "The document's ID.")
 	public Long getId() {
 		return id;
@@ -758,34 +786,6 @@ public class Document implements Serializable {
 	@GraphQLField(description = "The document's size in bytes.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long sizeInBytes;
-
-	@Schema(description = "The document's source file name.")
-	public String getSourceFileName() {
-		return sourceFileName;
-	}
-
-	public void setSourceFileName(String sourceFileName) {
-		this.sourceFileName = sourceFileName;
-	}
-
-	@JsonIgnore
-	public void setSourceFileName(
-		UnsafeSupplier<String, Exception> sourceFileNameUnsafeSupplier) {
-
-		try {
-			sourceFileName = sourceFileNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The document's source file name.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String sourceFileName;
 
 	@Schema(description = "The categories associated with this document.")
 	@Valid
@@ -1167,6 +1167,20 @@ public class Document implements Serializable {
 			sb.append("\"");
 		}
 
+		if (fileName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileName));
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1269,20 +1283,6 @@ public class Document implements Serializable {
 			sb.append("\"sizeInBytes\": ");
 
 			sb.append(sizeInBytes);
-		}
-
-		if (sourceFileName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sourceFileName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(sourceFileName));
-
-			sb.append("\"");
 		}
 
 		if (taxonomyCategoryBriefs != null) {

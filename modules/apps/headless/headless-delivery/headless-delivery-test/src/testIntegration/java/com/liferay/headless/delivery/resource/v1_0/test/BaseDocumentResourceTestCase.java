@@ -214,7 +214,7 @@ public abstract class BaseDocumentResourceTestCase {
 		document.setEncodingFormat(regex);
 		document.setExternalReferenceCode(regex);
 		document.setFileExtension(regex);
-		document.setSourceFileName(regex);
+		document.setFileName(regex);
 		document.setTitle(regex);
 
 		String json = DocumentSerDes.toJSON(document);
@@ -230,7 +230,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(regex, document.getEncodingFormat());
 		Assert.assertEquals(regex, document.getExternalReferenceCode());
 		Assert.assertEquals(regex, document.getFileExtension());
-		Assert.assertEquals(regex, document.getSourceFileName());
+		Assert.assertEquals(regex, document.getFileName());
 		Assert.assertEquals(regex, document.getTitle());
 	}
 
@@ -2909,6 +2909,14 @@ public abstract class BaseDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("fileName", additionalAssertFieldName)) {
+				if (document.getFileName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (document.getKeywords() == null) {
 					valid = false;
@@ -2943,14 +2951,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
 				if (document.getSizeInBytes() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sourceFileName", additionalAssertFieldName)) {
-				if (document.getSourceFileName() == null) {
 					valid = false;
 				}
 
@@ -3348,6 +3348,16 @@ public abstract class BaseDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("fileName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						document1.getFileName(), document2.getFileName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(document1.getId(), document2.getId())) {
 					return false;
@@ -3403,17 +3413,6 @@ public abstract class BaseDocumentResourceTestCase {
 				if (!Objects.deepEquals(
 						document1.getSizeInBytes(),
 						document2.getSizeInBytes())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("sourceFileName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						document1.getSourceFileName(),
-						document2.getSourceFileName())) {
 
 					return false;
 				}
@@ -3817,6 +3816,14 @@ public abstract class BaseDocumentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("fileName")) {
+			sb.append("'");
+			sb.append(String.valueOf(document.getFileName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3851,14 +3858,6 @@ public abstract class BaseDocumentResourceTestCase {
 		if (entityFieldName.equals("sizeInBytes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("sourceFileName")) {
-			sb.append("'");
-			sb.append(String.valueOf(document.getSourceFileName()));
-			sb.append("'");
-
-			return sb.toString();
 		}
 
 		if (entityFieldName.equals("taxonomyCategoryBriefs")) {
@@ -3950,12 +3949,12 @@ public abstract class BaseDocumentResourceTestCase {
 					RandomTestUtil.randomString());
 				fileExtension = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				fileName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				numberOfComments = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 				sizeInBytes = RandomTestUtil.randomLong();
-				sourceFileName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

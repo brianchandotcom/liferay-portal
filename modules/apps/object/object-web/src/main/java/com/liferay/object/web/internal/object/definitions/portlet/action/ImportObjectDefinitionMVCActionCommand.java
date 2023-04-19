@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 
@@ -153,6 +154,14 @@ public class ImportObjectDefinitionMVCActionCommand
 			objectDefinitionJSONObject.toString());
 
 		objectDefinition.setActive(false);
+
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			objectDefinition.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		objectDefinition.setName(ParamUtil.getString(actionRequest, "name"));
 
 		ObjectDefinition putObjectDefinition =

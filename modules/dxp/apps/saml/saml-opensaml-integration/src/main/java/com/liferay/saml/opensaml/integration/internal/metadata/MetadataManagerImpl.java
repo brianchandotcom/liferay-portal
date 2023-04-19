@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.metadata;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -381,7 +382,8 @@ public class MetadataManagerImpl
 
 	@Override
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException {
-		return _chainingSignatureTrustEngine;
+		return _chainingSignatureTrustEngineDCLSingleton.getSingleton(
+			this::_createChainingSignatureTrustEngine);
 	}
 
 	@Override
@@ -512,8 +514,20 @@ public class MetadataManagerImpl
 			_predicateRoleDescriptorResolver);
 
 		_metadataCredentialResolver.initialize();
+	}
 
+	@Deactivate
+	protected void deactivate() {
+		_predicateRoleDescriptorResolver.destroy();
+
+		_cachingChainingMetadataResolver.destroy();
+	}
+
+	private ChainingSignatureTrustEngine _createChainingSignatureTrustEngine() {
 		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
+
+		KeyInfoCredentialResolver keyInfoCredentialResolver =
+			_metadataCredentialResolver.getKeyInfoCredentialResolver();
 
 		SignatureTrustEngine signatureTrustEngine =
 			new ExplicitKeySignatureTrustEngine(
@@ -526,15 +540,7 @@ public class MetadataManagerImpl
 
 		signatureTrustEngines.add(signatureTrustEngine);
 
-		_chainingSignatureTrustEngine = new ChainingSignatureTrustEngine(
-			signatureTrustEngines);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_predicateRoleDescriptorResolver.destroy();
-
-		_cachingChainingMetadataResolver.destroy();
+		return new ChainingSignatureTrustEngine(signatureTrustEngines);
 	}
 
 	private SamlProviderConfiguration _getSamlProviderConfiguration() {
@@ -567,7 +573,8 @@ public class MetadataManagerImpl
 	private final CachingChainingMetadataResolver
 		_cachingChainingMetadataResolver =
 			new CachingChainingMetadataResolver();
-	private ChainingSignatureTrustEngine _chainingSignatureTrustEngine;
+	private final DCLSingleton<ChainingSignatureTrustEngine>
+		_chainingSignatureTrustEngineDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private CredentialResolver _credentialResolver;

@@ -1,0 +1,61 @@
+definition {
+
+	macro _getDatasetEntryIds {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/fdsentries \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var datasetEntrytIds = JSONCurlUtil.get(${curl}, "$..['id']");
+		
+		if (${datasetEntrytIds} == "") {
+			fail("FAIL. No datasets was found");
+		}
+		else {
+			return ${datasetEntrytIds};
+		}
+	}
+
+	@summary = "This calls the JSON WS API to delete all data sets"
+	macro _deleteFDSEntry {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(datasetEntriestIdList))) {
+			var datasetEntriestIdList = JSONFrontendDatasetEntries._getDatasetEntryIds();
+		}
+		
+		if (${datasetEntriestIdList} != "") {
+			for (var dataSetEntrytId : list ${datasetEntriestIdList}) {
+				var curl = '''
+					${portalURL}/o/c/fdsentries/${dataSetEntrytId} \
+						-u ${userEmailAddress}:${userPassword}
+				''';
+
+				JSONCurlUtil.delete(${curl});
+			}
+		}
+		else {
+			echo("No Datasets entries to be deleted");
+		}
+
+	}
+
+}

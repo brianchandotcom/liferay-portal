@@ -28,12 +28,14 @@ public class NoSuchContactsCardTemplateException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchContactsCardTemplateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchContactsCardTemplateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchContactsCardTemplateException(Throwable cause) {
-		super(cause);
+	public NoSuchContactsCardTemplateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

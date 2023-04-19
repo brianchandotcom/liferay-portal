@@ -52,6 +52,8 @@ public class SPIRatingResource<T> {
 	public void deleteRating(Long classPK) throws Exception {
 		_checkPermission();
 
+		getRating(classPK);
+
 		_ratingsEntryLocalService.deleteEntry(
 			_user.getUserId(), _className, classPK);
 	}

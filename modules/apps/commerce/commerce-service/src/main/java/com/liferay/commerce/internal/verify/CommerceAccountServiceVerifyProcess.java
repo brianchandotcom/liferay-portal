@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.verify;
+package com.liferay.commerce.internal.verify;
 
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
@@ -20,7 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;

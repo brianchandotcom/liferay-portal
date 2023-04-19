@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Notification Service
 Bundle-SymbolicName: com.liferay.notification.service
-Bundle-Version: 1.0.48
+Bundle-Version: 1.0.49
 Liferay-Require-SchemaVersion: 3.5.1
 Liferay-Service: true
 -dsannotations-options: inherit

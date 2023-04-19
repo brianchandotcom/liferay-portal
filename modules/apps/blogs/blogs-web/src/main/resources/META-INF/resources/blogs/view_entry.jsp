@@ -44,6 +44,15 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 if (portletTitleBasedNavigation) {
 	renderResponse.setTitle(blogsViewEntryDisplayContext.getBlogsEntryTitle());
 }
+
+PortalUtil.setPageDescription(blogsViewEntryDisplayContext.getBlogsEntryDescription(), request);
+PortalUtil.setPageTitle(blogsViewEntryDisplayContext.getBlogsEntryTitle(), request);
+
+List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), blogsViewEntryDisplayContext.getBlogsEntryId());
+
+PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
+
+PortalUtil.addPortletBreadcrumbEntry(request, blogsViewEntryDisplayContext.getBlogsEntryTitle(), currentURL);
 %>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
@@ -109,16 +118,5 @@ if (portletTitleBasedNavigation) {
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>
-
-<%
-PortalUtil.setPageDescription(blogsViewEntryDisplayContext.getBlogsEntryDescription(), request);
-PortalUtil.setPageTitle(blogsViewEntryDisplayContext.getBlogsEntryTitle(), request);
-
-List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), blogsViewEntryDisplayContext.getBlogsEntryId());
-
-PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
-
-PortalUtil.addPortletBreadcrumbEntry(request, blogsViewEntryDisplayContext.getBlogsEntryTitle(), currentURL);
-%>
 
 <liferay-util:dynamic-include key="com.liferay.blogs.web#/blogs/view_entry.jsp#post" />

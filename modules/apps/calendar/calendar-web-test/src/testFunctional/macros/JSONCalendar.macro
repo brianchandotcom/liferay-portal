@@ -12,4 +12,12 @@ definition {
 		}
 	}
 
+	macro tearDownNonDefaultCalendars {
+		var calendarIdList = JSONCalendarAPI.getNotDefaultCalendars();
+
+		for (var calendarId : list ${calendarIdList}) {
+			JSONCalendarAPI.deleteCalendar(calendarId = ${calendarId});
+		}
+	}
+
 }

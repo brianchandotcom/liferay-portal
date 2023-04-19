@@ -1,5 +1,19 @@
 definition {
 
+	macro deleteCalendar {
+		Variables.assertDefined(parameterList = ${calendarId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/calendar.calendar/delete-calendar \
+				-u test@liferay.com:test \
+				-d calendarId=${calendarId}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro deleteCalendarBooking {
 		Variables.assertDefined(parameterList = ${calendarBookingId});
 
@@ -30,6 +44,29 @@ definition {
 		var calendarBookingIdList = JSONCurlUtil.post(${curl}, "$..['calendarBookingId']");
 
 		return ${calendarBookingIdList};
+	}
+
+	macro getNotDefaultCalendars {
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/calendar.calendar/search \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d groupIds= \
+				-d calendarResourceIds= \
+				-d "name=" \
+				-d "description=" \
+				-d andOperator=true \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
+		''';
+
+		var calendarIdList = JSONCurlUtil.post(${curl}, "$[?(@['defaultCalendar'] == false)]['calendarId']");
+
+		return ${calendarIdList};
 	}
 
 	macro searchAllCalendars {

@@ -25,8 +25,8 @@ import org.osgi.framework.Bundle;
  *
  * It is instantiated when an OSGi bundle has a `package.json` file but the
  * `manifest.json` is missing or empty (which is a sign that the OSGi bundle has
- * not been built by liferay-npm-bundler but by npm-scripts, thus it uses
- * webpack federation to load modules).
+ * not been built by liferay-npm-bundler but by npm-scripts, thus it doesn't use
+ * AMD infrastructure).
  *
  * @author Iván Zaera Avellón
  * @review

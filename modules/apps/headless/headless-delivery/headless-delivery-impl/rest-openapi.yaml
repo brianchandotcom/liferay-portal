@@ -4645,6 +4645,26 @@ components:
                         Optional field with the structure of all the elements of the page. Can be embedded with
                         nestedFields when retrieving the collection of site pages. When retrieving a single site page,
                         it will automatically be included.
+                pagePermissions:
+                    # @review
+                    description:
+                        The page's permissions.
+                    items:
+                        properties:
+                            actionKeys:
+                                # @review
+                                description:
+                                    The keys of the actions the role has permission for.
+                                items:
+                                    type: string
+                                type: array
+                            roleKey:
+                                # @review
+                                description:
+                                    The role's key.
+                                type: string
+                        type: object
+                    type: array
                 pageSettings:
                     allOf:
                         - $ref: "#/components/schemas/PageSettings"

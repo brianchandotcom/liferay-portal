@@ -243,6 +243,10 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace in `.ftl` files." />
 		</check>
+		<check name="IllegalTaglibCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect use of certain taglib." />
+		</check>
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">
 		<check name="GradleBlockOrderCheck">
@@ -985,6 +989,10 @@
 			<category name="Bug Prevention" />
 			<description name="Finds cases of incorrect use of certain classes." />
 			<property name="enforceJavaUtilFunctionImports" value="true" />
+		</check>
+		<check name="IllegalTaglibCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect use of certain taglib." />
 		</check>
 		<check name="JSPArrowFunctionCheck">
 			<category name="Bug Prevention" />

@@ -211,16 +211,8 @@ public abstract class BaseCartCommentResourceImpl
 
 		CartComment existingCartComment = getCartComment(cartCommentId);
 
-		if (cartComment.getAuthor() != null) {
-			existingCartComment.setAuthor(cartComment.getAuthor());
-		}
-
 		if (cartComment.getContent() != null) {
 			existingCartComment.setContent(cartComment.getContent());
-		}
-
-		if (cartComment.getOrderId() != null) {
-			existingCartComment.setOrderId(cartComment.getOrderId());
 		}
 
 		if (cartComment.getRestricted() != null) {

@@ -551,34 +551,14 @@ public abstract class BaseObjectValidationRuleResourceImpl
 		ObjectValidationRule existingObjectValidationRule =
 			getObjectValidationRule(objectValidationRuleId);
 
-		if (objectValidationRule.getActions() != null) {
-			existingObjectValidationRule.setActions(
-				objectValidationRule.getActions());
-		}
-
 		if (objectValidationRule.getActive() != null) {
 			existingObjectValidationRule.setActive(
 				objectValidationRule.getActive());
 		}
 
-		if (objectValidationRule.getDateCreated() != null) {
-			existingObjectValidationRule.setDateCreated(
-				objectValidationRule.getDateCreated());
-		}
-
-		if (objectValidationRule.getDateModified() != null) {
-			existingObjectValidationRule.setDateModified(
-				objectValidationRule.getDateModified());
-		}
-
 		if (objectValidationRule.getEngine() != null) {
 			existingObjectValidationRule.setEngine(
 				objectValidationRule.getEngine());
-		}
-
-		if (objectValidationRule.getEngineLabel() != null) {
-			existingObjectValidationRule.setEngineLabel(
-				objectValidationRule.getEngineLabel());
 		}
 
 		if (objectValidationRule.getErrorLabel() != null) {

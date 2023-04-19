@@ -393,10 +393,6 @@ public abstract class BaseUserGroupResourceImpl
 		UserGroup existingUserGroup = getUserGroupByExternalReferenceCode(
 			externalReferenceCode);
 
-		if (userGroup.getActions() != null) {
-			existingUserGroup.setActions(userGroup.getActions());
-		}
-
 		if (userGroup.getDescription() != null) {
 			existingUserGroup.setDescription(userGroup.getDescription());
 		}
@@ -408,10 +404,6 @@ public abstract class BaseUserGroupResourceImpl
 
 		if (userGroup.getName() != null) {
 			existingUserGroup.setName(userGroup.getName());
-		}
-
-		if (userGroup.getUsersCount() != null) {
-			existingUserGroup.setUsersCount(userGroup.getUsersCount());
 		}
 
 		preparePatch(userGroup, existingUserGroup);
@@ -587,10 +579,6 @@ public abstract class BaseUserGroupResourceImpl
 
 		UserGroup existingUserGroup = getUserGroup(userGroupId);
 
-		if (userGroup.getActions() != null) {
-			existingUserGroup.setActions(userGroup.getActions());
-		}
-
 		if (userGroup.getDescription() != null) {
 			existingUserGroup.setDescription(userGroup.getDescription());
 		}
@@ -602,10 +590,6 @@ public abstract class BaseUserGroupResourceImpl
 
 		if (userGroup.getName() != null) {
 			existingUserGroup.setName(userGroup.getName());
-		}
-
-		if (userGroup.getUsersCount() != null) {
-			existingUserGroup.setUsersCount(userGroup.getUsersCount());
 		}
 
 		preparePatch(userGroup, existingUserGroup);

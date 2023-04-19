@@ -506,22 +506,8 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinition.getAccountEntryRestrictedObjectFieldName());
 		}
 
-		if (objectDefinition.getActions() != null) {
-			existingObjectDefinition.setActions(objectDefinition.getActions());
-		}
-
 		if (objectDefinition.getActive() != null) {
 			existingObjectDefinition.setActive(objectDefinition.getActive());
-		}
-
-		if (objectDefinition.getDateCreated() != null) {
-			existingObjectDefinition.setDateCreated(
-				objectDefinition.getDateCreated());
-		}
-
-		if (objectDefinition.getDateModified() != null) {
-			existingObjectDefinition.setDateModified(
-				objectDefinition.getDateModified());
 		}
 
 		if (objectDefinition.getDefaultLanguageId() != null) {
@@ -577,11 +563,6 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinition.getPanelCategoryKey());
 		}
 
-		if (objectDefinition.getParameterRequired() != null) {
-			existingObjectDefinition.setParameterRequired(
-				objectDefinition.getParameterRequired());
-		}
-
 		if (objectDefinition.getPluralLabel() != null) {
 			existingObjectDefinition.setPluralLabel(
 				objectDefinition.getPluralLabel());
@@ -589,11 +570,6 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		if (objectDefinition.getPortlet() != null) {
 			existingObjectDefinition.setPortlet(objectDefinition.getPortlet());
-		}
-
-		if (objectDefinition.getRestContextPath() != null) {
-			existingObjectDefinition.setRestContextPath(
-				objectDefinition.getRestContextPath());
 		}
 
 		if (objectDefinition.getScope() != null) {

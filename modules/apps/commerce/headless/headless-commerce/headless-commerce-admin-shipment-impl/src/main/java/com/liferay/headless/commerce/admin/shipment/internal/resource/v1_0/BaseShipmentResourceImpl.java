@@ -363,20 +363,8 @@ public abstract class BaseShipmentResourceImpl
 		Shipment existingShipment = getShipmentByExternalReferenceCode(
 			externalReferenceCode);
 
-		if (shipment.getAccountId() != null) {
-			existingShipment.setAccountId(shipment.getAccountId());
-		}
-
-		if (shipment.getActions() != null) {
-			existingShipment.setActions(shipment.getActions());
-		}
-
 		if (shipment.getCarrier() != null) {
 			existingShipment.setCarrier(shipment.getCarrier());
-		}
-
-		if (shipment.getCreateDate() != null) {
-			existingShipment.setCreateDate(shipment.getCreateDate());
 		}
 
 		if (shipment.getExpectedDate() != null) {
@@ -386,10 +374,6 @@ public abstract class BaseShipmentResourceImpl
 		if (shipment.getExternalReferenceCode() != null) {
 			existingShipment.setExternalReferenceCode(
 				shipment.getExternalReferenceCode());
-		}
-
-		if (shipment.getModifiedDate() != null) {
-			existingShipment.setModifiedDate(shipment.getModifiedDate());
 		}
 
 		if (shipment.getOrderId() != null) {
@@ -410,21 +394,12 @@ public abstract class BaseShipmentResourceImpl
 				shipment.getShippingMethodId());
 		}
 
-		if (shipment.getShippingOptionName() != null) {
-			existingShipment.setShippingOptionName(
-				shipment.getShippingOptionName());
-		}
-
 		if (shipment.getTrackingNumber() != null) {
 			existingShipment.setTrackingNumber(shipment.getTrackingNumber());
 		}
 
 		if (shipment.getTrackingURL() != null) {
 			existingShipment.setTrackingURL(shipment.getTrackingURL());
-		}
-
-		if (shipment.getUserName() != null) {
-			existingShipment.setUserName(shipment.getUserName());
 		}
 
 		preparePatch(shipment, existingShipment);

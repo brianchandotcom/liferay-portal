@@ -514,11 +514,6 @@ public abstract class BaseNotificationTemplateResourceImpl
 		NotificationTemplate existingNotificationTemplate =
 			getNotificationTemplate(notificationTemplateId);
 
-		if (notificationTemplate.getActions() != null) {
-			existingNotificationTemplate.setActions(
-				notificationTemplate.getActions());
-		}
-
 		if (notificationTemplate.
 				getAttachmentObjectFieldExternalReferenceCodes() != null) {
 
@@ -536,16 +531,6 @@ public abstract class BaseNotificationTemplateResourceImpl
 		if (notificationTemplate.getBody() != null) {
 			existingNotificationTemplate.setBody(
 				notificationTemplate.getBody());
-		}
-
-		if (notificationTemplate.getDateCreated() != null) {
-			existingNotificationTemplate.setDateCreated(
-				notificationTemplate.getDateCreated());
-		}
-
-		if (notificationTemplate.getDateModified() != null) {
-			existingNotificationTemplate.setDateModified(
-				notificationTemplate.getDateModified());
 		}
 
 		if (notificationTemplate.getDescription() != null) {

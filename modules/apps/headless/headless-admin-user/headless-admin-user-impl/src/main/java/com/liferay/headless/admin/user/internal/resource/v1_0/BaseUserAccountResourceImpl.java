@@ -1548,10 +1548,6 @@ public abstract class BaseUserAccountResourceImpl
 
 		UserAccount existingUserAccount = getUserAccount(userAccountId);
 
-		if (userAccount.getActions() != null) {
-			existingUserAccount.setActions(userAccount.getActions());
-		}
-
 		if (userAccount.getAdditionalName() != null) {
 			existingUserAccount.setAdditionalName(
 				userAccount.getAdditionalName());
@@ -1571,25 +1567,8 @@ public abstract class BaseUserAccountResourceImpl
 				userAccount.getCurrentPassword());
 		}
 
-		if (userAccount.getDashboardURL() != null) {
-			existingUserAccount.setDashboardURL(userAccount.getDashboardURL());
-		}
-
-		if (userAccount.getDateCreated() != null) {
-			existingUserAccount.setDateCreated(userAccount.getDateCreated());
-		}
-
-		if (userAccount.getDateModified() != null) {
-			existingUserAccount.setDateModified(userAccount.getDateModified());
-		}
-
 		if (userAccount.getEmailAddress() != null) {
 			existingUserAccount.setEmailAddress(userAccount.getEmailAddress());
-		}
-
-		if (userAccount.getExternalReferenceCode() != null) {
-			existingUserAccount.setExternalReferenceCode(
-				userAccount.getExternalReferenceCode());
 		}
 
 		if (userAccount.getFamilyName() != null) {
@@ -1610,33 +1589,12 @@ public abstract class BaseUserAccountResourceImpl
 				userAccount.getHonorificSuffix());
 		}
 
-		if (userAccount.getImage() != null) {
-			existingUserAccount.setImage(userAccount.getImage());
-		}
-
 		if (userAccount.getJobTitle() != null) {
 			existingUserAccount.setJobTitle(userAccount.getJobTitle());
 		}
 
-		if (userAccount.getKeywords() != null) {
-			existingUserAccount.setKeywords(userAccount.getKeywords());
-		}
-
-		if (userAccount.getLastLoginDate() != null) {
-			existingUserAccount.setLastLoginDate(
-				userAccount.getLastLoginDate());
-		}
-
-		if (userAccount.getName() != null) {
-			existingUserAccount.setName(userAccount.getName());
-		}
-
 		if (userAccount.getPassword() != null) {
 			existingUserAccount.setPassword(userAccount.getPassword());
-		}
-
-		if (userAccount.getProfileURL() != null) {
-			existingUserAccount.setProfileURL(userAccount.getProfileURL());
 		}
 
 		preparePatch(userAccount, existingUserAccount);

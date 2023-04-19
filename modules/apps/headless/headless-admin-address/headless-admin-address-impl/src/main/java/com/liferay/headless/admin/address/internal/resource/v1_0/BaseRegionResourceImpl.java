@@ -613,10 +613,6 @@ public abstract class BaseRegionResourceImpl
 			existingRegion.setActive(region.getActive());
 		}
 
-		if (region.getCountryId() != null) {
-			existingRegion.setCountryId(region.getCountryId());
-		}
-
 		if (region.getName() != null) {
 			existingRegion.setName(region.getName());
 		}

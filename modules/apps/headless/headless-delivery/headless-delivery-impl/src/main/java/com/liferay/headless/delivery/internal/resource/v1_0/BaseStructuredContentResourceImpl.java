@@ -1903,34 +1903,9 @@ public abstract class BaseStructuredContentResourceImpl
 		StructuredContent existingStructuredContent = getStructuredContent(
 			structuredContentId);
 
-		if (structuredContent.getActions() != null) {
-			existingStructuredContent.setActions(
-				structuredContent.getActions());
-		}
-
-		if (structuredContent.getAssetLibraryKey() != null) {
-			existingStructuredContent.setAssetLibraryKey(
-				structuredContent.getAssetLibraryKey());
-		}
-
-		if (structuredContent.getAvailableLanguages() != null) {
-			existingStructuredContent.setAvailableLanguages(
-				structuredContent.getAvailableLanguages());
-		}
-
 		if (structuredContent.getContentStructureId() != null) {
 			existingStructuredContent.setContentStructureId(
 				structuredContent.getContentStructureId());
-		}
-
-		if (structuredContent.getDateCreated() != null) {
-			existingStructuredContent.setDateCreated(
-				structuredContent.getDateCreated());
-		}
-
-		if (structuredContent.getDateModified() != null) {
-			existingStructuredContent.setDateModified(
-				structuredContent.getDateModified());
 		}
 
 		if (structuredContent.getDatePublished() != null) {
@@ -1963,37 +1938,14 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getFriendlyUrlPath_i18n());
 		}
 
-		if (structuredContent.getKey() != null) {
-			existingStructuredContent.setKey(structuredContent.getKey());
-		}
-
 		if (structuredContent.getKeywords() != null) {
 			existingStructuredContent.setKeywords(
 				structuredContent.getKeywords());
 		}
 
-		if (structuredContent.getNumberOfComments() != null) {
-			existingStructuredContent.setNumberOfComments(
-				structuredContent.getNumberOfComments());
-		}
-
 		if (structuredContent.getPriority() != null) {
 			existingStructuredContent.setPriority(
 				structuredContent.getPriority());
-		}
-
-		if (structuredContent.getSiteId() != null) {
-			existingStructuredContent.setSiteId(structuredContent.getSiteId());
-		}
-
-		if (structuredContent.getStructuredContentFolderId() != null) {
-			existingStructuredContent.setStructuredContentFolderId(
-				structuredContent.getStructuredContentFolderId());
-		}
-
-		if (structuredContent.getSubscribed() != null) {
-			existingStructuredContent.setSubscribed(
-				structuredContent.getSubscribed());
 		}
 
 		if (structuredContent.getTaxonomyCategoryIds() != null) {
@@ -2008,10 +1960,6 @@ public abstract class BaseStructuredContentResourceImpl
 		if (structuredContent.getTitle_i18n() != null) {
 			existingStructuredContent.setTitle_i18n(
 				structuredContent.getTitle_i18n());
-		}
-
-		if (structuredContent.getUuid() != null) {
-			existingStructuredContent.setUuid(structuredContent.getUuid());
 		}
 
 		if (structuredContent.getViewableBy() != null) {

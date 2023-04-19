@@ -265,49 +265,14 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		MessageBoardSection existingMessageBoardSection =
 			getMessageBoardSection(messageBoardSectionId);
 
-		if (messageBoardSection.getActions() != null) {
-			existingMessageBoardSection.setActions(
-				messageBoardSection.getActions());
-		}
-
-		if (messageBoardSection.getDateCreated() != null) {
-			existingMessageBoardSection.setDateCreated(
-				messageBoardSection.getDateCreated());
-		}
-
-		if (messageBoardSection.getDateModified() != null) {
-			existingMessageBoardSection.setDateModified(
-				messageBoardSection.getDateModified());
-		}
-
 		if (messageBoardSection.getDescription() != null) {
 			existingMessageBoardSection.setDescription(
 				messageBoardSection.getDescription());
 		}
 
-		if (messageBoardSection.getNumberOfMessageBoardSections() != null) {
-			existingMessageBoardSection.setNumberOfMessageBoardSections(
-				messageBoardSection.getNumberOfMessageBoardSections());
-		}
-
-		if (messageBoardSection.getNumberOfMessageBoardThreads() != null) {
-			existingMessageBoardSection.setNumberOfMessageBoardThreads(
-				messageBoardSection.getNumberOfMessageBoardThreads());
-		}
-
 		if (messageBoardSection.getParentMessageBoardSectionId() != null) {
 			existingMessageBoardSection.setParentMessageBoardSectionId(
 				messageBoardSection.getParentMessageBoardSectionId());
-		}
-
-		if (messageBoardSection.getSiteId() != null) {
-			existingMessageBoardSection.setSiteId(
-				messageBoardSection.getSiteId());
-		}
-
-		if (messageBoardSection.getSubscribed() != null) {
-			existingMessageBoardSection.setSubscribed(
-				messageBoardSection.getSubscribed());
 		}
 
 		if (messageBoardSection.getTitle() != null) {

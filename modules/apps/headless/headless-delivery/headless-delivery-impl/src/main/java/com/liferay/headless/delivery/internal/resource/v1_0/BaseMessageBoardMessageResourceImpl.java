@@ -266,11 +266,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		MessageBoardMessage existingMessageBoardMessage =
 			getMessageBoardMessage(messageBoardMessageId);
 
-		if (messageBoardMessage.getActions() != null) {
-			existingMessageBoardMessage.setActions(
-				messageBoardMessage.getActions());
-		}
-
 		if (messageBoardMessage.getAnonymous() != null) {
 			existingMessageBoardMessage.setAnonymous(
 				messageBoardMessage.getAnonymous());
@@ -279,16 +274,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		if (messageBoardMessage.getArticleBody() != null) {
 			existingMessageBoardMessage.setArticleBody(
 				messageBoardMessage.getArticleBody());
-		}
-
-		if (messageBoardMessage.getDateCreated() != null) {
-			existingMessageBoardMessage.setDateCreated(
-				messageBoardMessage.getDateCreated());
-		}
-
-		if (messageBoardMessage.getDateModified() != null) {
-			existingMessageBoardMessage.setDateModified(
-				messageBoardMessage.getDateModified());
 		}
 
 		if (messageBoardMessage.getEncodingFormat() != null) {
@@ -326,24 +311,9 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage.getMessageBoardSectionId());
 		}
 
-		if (messageBoardMessage.getMessageBoardThreadId() != null) {
-			existingMessageBoardMessage.setMessageBoardThreadId(
-				messageBoardMessage.getMessageBoardThreadId());
-		}
-
 		if (messageBoardMessage.getModified() != null) {
 			existingMessageBoardMessage.setModified(
 				messageBoardMessage.getModified());
-		}
-
-		if (messageBoardMessage.getNumberOfMessageBoardAttachments() != null) {
-			existingMessageBoardMessage.setNumberOfMessageBoardAttachments(
-				messageBoardMessage.getNumberOfMessageBoardAttachments());
-		}
-
-		if (messageBoardMessage.getNumberOfMessageBoardMessages() != null) {
-			existingMessageBoardMessage.setNumberOfMessageBoardMessages(
-				messageBoardMessage.getNumberOfMessageBoardMessages());
 		}
 
 		if (messageBoardMessage.getParentMessageBoardMessageId() != null) {
@@ -354,21 +324,6 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		if (messageBoardMessage.getShowAsAnswer() != null) {
 			existingMessageBoardMessage.setShowAsAnswer(
 				messageBoardMessage.getShowAsAnswer());
-		}
-
-		if (messageBoardMessage.getSiteId() != null) {
-			existingMessageBoardMessage.setSiteId(
-				messageBoardMessage.getSiteId());
-		}
-
-		if (messageBoardMessage.getStatus() != null) {
-			existingMessageBoardMessage.setStatus(
-				messageBoardMessage.getStatus());
-		}
-
-		if (messageBoardMessage.getSubscribed() != null) {
-			existingMessageBoardMessage.setSubscribed(
-				messageBoardMessage.getSubscribed());
 		}
 
 		if (messageBoardMessage.getViewableBy() != null) {

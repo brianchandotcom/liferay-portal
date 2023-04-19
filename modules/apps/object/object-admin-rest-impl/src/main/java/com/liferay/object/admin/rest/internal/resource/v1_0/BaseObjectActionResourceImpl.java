@@ -211,10 +211,6 @@ public abstract class BaseObjectActionResourceImpl
 
 		ObjectAction existingObjectAction = getObjectAction(objectActionId);
 
-		if (objectAction.getActions() != null) {
-			existingObjectAction.setActions(objectAction.getActions());
-		}
-
 		if (objectAction.getActive() != null) {
 			existingObjectAction.setActive(objectAction.getActive());
 		}
@@ -222,15 +218,6 @@ public abstract class BaseObjectActionResourceImpl
 		if (objectAction.getConditionExpression() != null) {
 			existingObjectAction.setConditionExpression(
 				objectAction.getConditionExpression());
-		}
-
-		if (objectAction.getDateCreated() != null) {
-			existingObjectAction.setDateCreated(objectAction.getDateCreated());
-		}
-
-		if (objectAction.getDateModified() != null) {
-			existingObjectAction.setDateModified(
-				objectAction.getDateModified());
 		}
 
 		if (objectAction.getDescription() != null) {

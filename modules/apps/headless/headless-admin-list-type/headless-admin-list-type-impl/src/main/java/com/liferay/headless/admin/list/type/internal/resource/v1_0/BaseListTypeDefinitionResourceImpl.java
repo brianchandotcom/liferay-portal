@@ -494,21 +494,6 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		ListTypeDefinition existingListTypeDefinition = getListTypeDefinition(
 			listTypeDefinitionId);
 
-		if (listTypeDefinition.getActions() != null) {
-			existingListTypeDefinition.setActions(
-				listTypeDefinition.getActions());
-		}
-
-		if (listTypeDefinition.getDateCreated() != null) {
-			existingListTypeDefinition.setDateCreated(
-				listTypeDefinition.getDateCreated());
-		}
-
-		if (listTypeDefinition.getDateModified() != null) {
-			existingListTypeDefinition.setDateModified(
-				listTypeDefinition.getDateModified());
-		}
-
 		if (listTypeDefinition.getExternalReferenceCode() != null) {
 			existingListTypeDefinition.setExternalReferenceCode(
 				listTypeDefinition.getExternalReferenceCode());

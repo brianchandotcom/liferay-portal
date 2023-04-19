@@ -703,25 +703,6 @@ public abstract class BaseDocumentFolderResourceImpl
 		DocumentFolder existingDocumentFolder = getDocumentFolder(
 			documentFolderId);
 
-		if (documentFolder.getActions() != null) {
-			existingDocumentFolder.setActions(documentFolder.getActions());
-		}
-
-		if (documentFolder.getAssetLibraryKey() != null) {
-			existingDocumentFolder.setAssetLibraryKey(
-				documentFolder.getAssetLibraryKey());
-		}
-
-		if (documentFolder.getDateCreated() != null) {
-			existingDocumentFolder.setDateCreated(
-				documentFolder.getDateCreated());
-		}
-
-		if (documentFolder.getDateModified() != null) {
-			existingDocumentFolder.setDateModified(
-				documentFolder.getDateModified());
-		}
-
 		if (documentFolder.getDescription() != null) {
 			existingDocumentFolder.setDescription(
 				documentFolder.getDescription());
@@ -736,28 +717,9 @@ public abstract class BaseDocumentFolderResourceImpl
 			existingDocumentFolder.setName(documentFolder.getName());
 		}
 
-		if (documentFolder.getNumberOfDocumentFolders() != null) {
-			existingDocumentFolder.setNumberOfDocumentFolders(
-				documentFolder.getNumberOfDocumentFolders());
-		}
-
-		if (documentFolder.getNumberOfDocuments() != null) {
-			existingDocumentFolder.setNumberOfDocuments(
-				documentFolder.getNumberOfDocuments());
-		}
-
 		if (documentFolder.getParentDocumentFolderId() != null) {
 			existingDocumentFolder.setParentDocumentFolderId(
 				documentFolder.getParentDocumentFolderId());
-		}
-
-		if (documentFolder.getSiteId() != null) {
-			existingDocumentFolder.setSiteId(documentFolder.getSiteId());
-		}
-
-		if (documentFolder.getSubscribed() != null) {
-			existingDocumentFolder.setSubscribed(
-				documentFolder.getSubscribed());
 		}
 
 		if (documentFolder.getViewableBy() != null) {

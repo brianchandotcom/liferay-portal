@@ -733,10 +733,6 @@ public abstract class BaseDataRecordResourceImpl
 				dataRecord.getDataRecordValues());
 		}
 
-		if (dataRecord.getStatus() != null) {
-			existingDataRecord.setStatus(dataRecord.getStatus());
-		}
-
 		preparePatch(dataRecord, existingDataRecord);
 
 		return putDataRecord(dataRecordId, existingDataRecord);

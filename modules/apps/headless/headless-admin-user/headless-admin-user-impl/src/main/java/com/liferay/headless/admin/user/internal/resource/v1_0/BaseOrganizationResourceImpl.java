@@ -738,21 +738,8 @@ public abstract class BaseOrganizationResourceImpl
 		Organization existingOrganization =
 			getOrganizationByExternalReferenceCode(externalReferenceCode);
 
-		if (organization.getActions() != null) {
-			existingOrganization.setActions(organization.getActions());
-		}
-
 		if (organization.getComment() != null) {
 			existingOrganization.setComment(organization.getComment());
-		}
-
-		if (organization.getDateCreated() != null) {
-			existingOrganization.setDateCreated(organization.getDateCreated());
-		}
-
-		if (organization.getDateModified() != null) {
-			existingOrganization.setDateModified(
-				organization.getDateModified());
 		}
 
 		if (organization.getExternalReferenceCode() != null) {
@@ -760,31 +747,8 @@ public abstract class BaseOrganizationResourceImpl
 				organization.getExternalReferenceCode());
 		}
 
-		if (organization.getImage() != null) {
-			existingOrganization.setImage(organization.getImage());
-		}
-
-		if (organization.getKeywords() != null) {
-			existingOrganization.setKeywords(organization.getKeywords());
-		}
-
 		if (organization.getName() != null) {
 			existingOrganization.setName(organization.getName());
-		}
-
-		if (organization.getNumberOfAccounts() != null) {
-			existingOrganization.setNumberOfAccounts(
-				organization.getNumberOfAccounts());
-		}
-
-		if (organization.getNumberOfOrganizations() != null) {
-			existingOrganization.setNumberOfOrganizations(
-				organization.getNumberOfOrganizations());
-		}
-
-		if (organization.getNumberOfUsers() != null) {
-			existingOrganization.setNumberOfUsers(
-				organization.getNumberOfUsers());
 		}
 
 		preparePatch(organization, existingOrganization);
@@ -972,21 +936,8 @@ public abstract class BaseOrganizationResourceImpl
 
 		Organization existingOrganization = getOrganization(organizationId);
 
-		if (organization.getActions() != null) {
-			existingOrganization.setActions(organization.getActions());
-		}
-
 		if (organization.getComment() != null) {
 			existingOrganization.setComment(organization.getComment());
-		}
-
-		if (organization.getDateCreated() != null) {
-			existingOrganization.setDateCreated(organization.getDateCreated());
-		}
-
-		if (organization.getDateModified() != null) {
-			existingOrganization.setDateModified(
-				organization.getDateModified());
 		}
 
 		if (organization.getExternalReferenceCode() != null) {
@@ -994,31 +945,8 @@ public abstract class BaseOrganizationResourceImpl
 				organization.getExternalReferenceCode());
 		}
 
-		if (organization.getImage() != null) {
-			existingOrganization.setImage(organization.getImage());
-		}
-
-		if (organization.getKeywords() != null) {
-			existingOrganization.setKeywords(organization.getKeywords());
-		}
-
 		if (organization.getName() != null) {
 			existingOrganization.setName(organization.getName());
-		}
-
-		if (organization.getNumberOfAccounts() != null) {
-			existingOrganization.setNumberOfAccounts(
-				organization.getNumberOfAccounts());
-		}
-
-		if (organization.getNumberOfOrganizations() != null) {
-			existingOrganization.setNumberOfOrganizations(
-				organization.getNumberOfOrganizations());
-		}
-
-		if (organization.getNumberOfUsers() != null) {
-			existingOrganization.setNumberOfUsers(
-				organization.getNumberOfUsers());
 		}
 
 		preparePatch(organization, existingOrganization);

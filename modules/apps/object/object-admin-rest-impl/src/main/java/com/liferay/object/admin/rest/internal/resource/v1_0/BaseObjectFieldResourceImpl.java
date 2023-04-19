@@ -538,10 +538,6 @@ public abstract class BaseObjectFieldResourceImpl
 			existingObjectField.setDBType(objectField.getDBType());
 		}
 
-		if (objectField.getActions() != null) {
-			existingObjectField.setActions(objectField.getActions());
-		}
-
 		if (objectField.getBusinessType() != null) {
 			existingObjectField.setBusinessType(objectField.getBusinessType());
 		}
@@ -589,11 +585,6 @@ public abstract class BaseObjectFieldResourceImpl
 
 		if (objectField.getName() != null) {
 			existingObjectField.setName(objectField.getName());
-		}
-
-		if (objectField.getRelationshipType() != null) {
-			existingObjectField.setRelationshipType(
-				objectField.getRelationshipType());
 		}
 
 		if (objectField.getRequired() != null) {

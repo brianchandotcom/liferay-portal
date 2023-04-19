@@ -12,6 +12,14 @@ definition {
 		return ${fileContent};
 	}
 
+	macro getUpgradeLogFileContent {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var upgradeLogFileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
+
+		return ${upgradeLogFileContent};
+	}
+
 	macro viewLogFileContentNotPresent {
 		var fileContent = Log.getLogFileContent();
 

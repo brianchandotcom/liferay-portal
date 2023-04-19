@@ -42,9 +42,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class BlogsAggregatorDisplayContext {
+public class BlogsAggregatorViewDisplayContext {
 
-	public BlogsAggregatorDisplayContext(
+	public BlogsAggregatorViewDisplayContext(
 			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws PortalException {

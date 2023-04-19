@@ -25,9 +25,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class BlogImagesDisplayContext {
+public class BlogsViewImagesDisplayContext {
 
-	public BlogImagesDisplayContext(HttpServletRequest httpServletRequest) {
+	public BlogsViewImagesDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
 		_httpServletRequest = httpServletRequest;
 	}
 

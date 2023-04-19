@@ -75,9 +75,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class BlogEntriesDisplayContext {
+public class BlogsViewEntriesDisplayContext {
 
-	public BlogEntriesDisplayContext(
+	public BlogsViewEntriesDisplayContext(
 		HtmlParser htmlParser, Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse, TrashHelper trashHelper) {
 
@@ -364,7 +364,7 @@ public class BlogEntriesDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogEntriesDisplayContext.class);
+		BlogsViewEntriesDisplayContext.class);
 
 	private String _displayStyle;
 	private final HtmlParser _htmlParser;

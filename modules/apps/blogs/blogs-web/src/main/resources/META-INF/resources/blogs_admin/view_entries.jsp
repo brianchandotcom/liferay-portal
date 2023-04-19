@@ -20,17 +20,17 @@
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
-BlogEntriesDisplayContext blogEntriesDisplayContext = (BlogEntriesDisplayContext)request.getAttribute(BlogEntriesDisplayContext.class.getName());
+BlogsViewEntriesDisplayContext blogsViewEntriesDisplayContext = (BlogsViewEntriesDisplayContext)request.getAttribute(BlogsViewEntriesDisplayContext.class.getName());
 
-String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
+String displayStyle = blogsViewEntriesDisplayContext.getDisplayStyle();
 
-SearchContainer<BlogsEntry> entriesSearchContainer = blogEntriesDisplayContext.getSearchContainer();
+SearchContainer<BlogsEntry> entriesSearchContainer = blogsViewEntriesDisplayContext.getSearchContainer();
 
 PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 %>
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= new BlogEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle) %>"
+	managementToolbarDisplayContext="<%= new BlogsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle) %>"
 	propsTransformer="blogs_admin/js/BlogEntriesManagementToolbarPropsTransformer"
 	searchContainerId="blogEntries"
 />
@@ -76,7 +76,7 @@ PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 				<%
 				row.setData(
 					HashMapBuilder.<String, Object>put(
-						"actions", StringUtil.merge(blogEntriesDisplayContext.getAvailableActions(entry))
+						"actions", StringUtil.merge(blogsViewEntriesDisplayContext.getAvailableActions(entry))
 					).build());
 				%>
 
@@ -93,6 +93,6 @@ PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 
 <liferay-frontend:component
 	componentId="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	context="<%= blogEntriesDisplayContext.getComponentContext() %>"
+	context="<%= blogsViewEntriesDisplayContext.getComponentContext() %>"
 	module="blogs_admin/js/ElementsDefaultEventHandler.es"
 />

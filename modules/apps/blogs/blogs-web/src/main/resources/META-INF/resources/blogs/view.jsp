@@ -17,11 +17,11 @@
 <%@ include file="/blogs/init.jsp" %>
 
 <%
-BlogsDisplayContext blogsDisplayContext = new BlogsDisplayContext(request, renderRequest, renderResponse);
+BlogsViewDisplayContext blogsViewDisplayContext = new BlogsViewDisplayContext(request, renderRequest, renderResponse);
 
-BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = blogsDisplayContext.getBlogsPortletInstanceConfiguration();
+BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = blogsViewDisplayContext.getBlogsPortletInstanceConfiguration();
 
-SearchContainer<?> searchContainer = blogsDisplayContext.getSearchContainer();
+SearchContainer<?> searchContainer = blogsViewDisplayContext.getSearchContainer();
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
@@ -37,9 +37,9 @@ SearchContainer<?> searchContainer = blogsDisplayContext.getSearchContainer();
 
 <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-<c:if test="<%= blogsDisplayContext.getUnpublishedEntriesCount() > 0 %>">
+<c:if test="<%= blogsViewDisplayContext.getUnpublishedEntriesCount() > 0 %>">
 	<clay:navigation-bar
-		navigationItems="<%= blogsDisplayContext.getNavigationItems() %>"
+		navigationItems="<%= blogsViewDisplayContext.getNavigationItems() %>"
 	/>
 </c:if>
 

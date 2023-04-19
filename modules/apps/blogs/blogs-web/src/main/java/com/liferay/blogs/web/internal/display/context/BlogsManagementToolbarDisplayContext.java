@@ -54,10 +54,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class BlogEntriesManagementToolbarDisplayContext
+public class BlogsManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public BlogEntriesManagementToolbarDisplayContext(
+	public BlogsManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,

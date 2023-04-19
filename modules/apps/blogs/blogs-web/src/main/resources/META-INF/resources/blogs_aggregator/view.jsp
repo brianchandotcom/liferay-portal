@@ -28,9 +28,9 @@ boolean blogsPortletFound = ParamUtil.getBoolean(request, "blogsPortletFound", t
 </c:if>
 
 <%
-BlogsAggregatorDisplayContext blogsAggregatorDisplayContext = new BlogsAggregatorDisplayContext(request, renderRequest, renderResponse);
+BlogsAggregatorViewDisplayContext blogsAggregatorViewDisplayContext = new BlogsAggregatorViewDisplayContext(request, renderRequest, renderResponse);
 
-SearchContainer<BlogsEntry> searchContainer = blogsAggregatorDisplayContext.getSearchContainer();
+SearchContainer<BlogsEntry> searchContainer = blogsAggregatorViewDisplayContext.getSearchContainer();
 
 List<BlogsEntry> results = searchContainer.getResults();
 %>

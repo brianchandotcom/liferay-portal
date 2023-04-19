@@ -49,9 +49,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class BlogsDisplayContext {
+public class BlogsViewDisplayContext {
 
-	public BlogsDisplayContext(
+	public BlogsViewDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 

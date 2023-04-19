@@ -17,11 +17,11 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-BlogImagesDisplayContext blogImagesDisplayContext = (BlogImagesDisplayContext)request.getAttribute(BlogImagesDisplayContext.class.getName());
+BlogsViewImagesDisplayContext blogsViewImagesDisplayContext = (BlogsViewImagesDisplayContext)request.getAttribute(BlogsViewImagesDisplayContext.class.getName());
 %>
 
 <liferay-document-library:repository-browser
 	actions="delete"
-	folderId="<%= blogImagesDisplayContext.getFolderId() %>"
-	repositoryId="<%= blogImagesDisplayContext.getRepositoryId() %>"
+	folderId="<%= blogsViewImagesDisplayContext.getFolderId() %>"
+	repositoryId="<%= blogsViewImagesDisplayContext.getRepositoryId() %>"
 />

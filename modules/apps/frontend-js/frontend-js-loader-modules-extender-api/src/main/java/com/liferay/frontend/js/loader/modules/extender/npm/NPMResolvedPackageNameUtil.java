@@ -136,9 +136,6 @@ public class NPMResolvedPackageNameUtil {
 
 			return npmResolver.resolveModuleName(name);
 		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			throw unsupportedOperationException;
-		}
 		catch (Exception exception) {
 			_log.error(
 				"Unable to resolve NPM package " + bundle.getSymbolicName(),

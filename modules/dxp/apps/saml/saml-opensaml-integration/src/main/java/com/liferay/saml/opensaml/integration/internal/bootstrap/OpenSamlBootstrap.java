@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.shibboleth.utilities.java.support.xml.BasicParserPool;
-import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.apache.xml.security.stax.ext.XMLSecurityConstants;
 
@@ -31,18 +30,9 @@ import org.opensaml.core.xml.config.XMLObjectProviderRegistry;
 import org.opensaml.xmlsec.signature.support.SignatureValidator;
 import org.opensaml.xmlsec.signature.support.Signer;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-
 /**
  * @author Mika Koivisto
  */
-@Component(service = {})
 public class OpenSamlBootstrap {
 
 	public static synchronized void bootstrap()
@@ -68,43 +58,6 @@ public class OpenSamlBootstrap {
 
 		if (XMLSecurityConstants.xmlOutputFactory == null) {
 			throw new IllegalStateException();
-		}
-	}
-
-	@Activate
-	protected synchronized void activate(BundleContext bundleContext)
-		throws IllegalAccessException, InitializationException,
-			   InvocationTargetException, NoSuchMethodException {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		try {
-			Bundle bundle = bundleContext.getBundle();
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
-
-			bootstrap();
-
-			XMLObjectProviderRegistry xmlObjectProviderRegistry =
-				ConfigurationService.get(XMLObjectProviderRegistry.class);
-
-			_parserPoolServiceRegistration = bundleContext.registerService(
-				ParserPool.class, xmlObjectProviderRegistry.getParserPool(),
-				null);
-		}
-		finally {
-			currentThread.setContextClassLoader(classLoader);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_parserPoolServiceRegistration != null) {
-			_parserPoolServiceRegistration.unregister();
 		}
 	}
 
@@ -150,7 +103,5 @@ public class OpenSamlBootstrap {
 				exception);
 		}
 	}
-
-	private ServiceRegistration<ParserPool> _parserPoolServiceRegistration;
 
 }

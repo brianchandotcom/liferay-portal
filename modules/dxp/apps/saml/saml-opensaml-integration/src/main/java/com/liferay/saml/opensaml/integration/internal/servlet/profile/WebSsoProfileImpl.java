@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublisherImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverRegistry;
@@ -2115,7 +2116,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private NameIdResolverRegistry _nameIdResolverRegistry;
 
 	@Reference
-	private ParserPool _parserPool;
+	private ParserPoolProvider _parserPoolProvider;
 
 	private SamlConfiguration _samlConfiguration;
 
@@ -2157,7 +2158,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		@Override
 		protected ParserPool buildParserPool() {
-			return _parserPool;
+			return _parserPoolProvider.getParserPool();
 		}
 
 	}

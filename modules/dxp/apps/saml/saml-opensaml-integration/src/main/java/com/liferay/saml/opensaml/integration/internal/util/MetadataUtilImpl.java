@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.util.MetadataUtil;
 
@@ -27,8 +28,6 @@ import java.io.InputStream;
 
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
-
-import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -108,7 +107,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 
 		try (InputStream inputStream2 = inputStream1) {
 			XMLObject xmlObject = XMLObjectSupport.unmarshallFromInputStream(
-				parserPool, inputStream1);
+				parserPoolProvider.getParserPool(), inputStream1);
 
 			EntityDescriptor entityDescriptor =
 				SamlUtil.getEntityDescriptorById(entityId, xmlObject);
@@ -131,6 +130,6 @@ public class MetadataUtilImpl implements MetadataUtil {
 	protected HttpClientFactory httpClientFactory;
 
 	@Reference
-	protected ParserPool parserPool;
+	protected ParserPoolProvider parserPoolProvider;
 
 }

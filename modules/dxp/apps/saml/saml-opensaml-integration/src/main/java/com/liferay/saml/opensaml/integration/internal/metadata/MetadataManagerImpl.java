@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
@@ -343,7 +344,8 @@ public class MetadataManagerImpl
 
 				saml2HTTPPostSimpleSignSecurityHandler.setKeyInfoResolver(
 					keyInfoCredentialResolver);
-				saml2HTTPPostSimpleSignSecurityHandler.setParser(_parserPool);
+				saml2HTTPPostSimpleSignSecurityHandler.setParser(
+					_parserPoolProvider.getParserPool());
 
 				messageHandlers.add(saml2HTTPPostSimpleSignSecurityHandler);
 			}
@@ -486,15 +488,17 @@ public class MetadataManagerImpl
 		CachingChainingMetadataResolver cachingChainingMetadataResolver =
 			new CachingChainingMetadataResolver(_bundleContext);
 
+		ParserPool parserPool = _parserPoolProvider.getParserPool();
+
 		cachingChainingMetadataResolver.addMetadataResolver(
 			new DBMetadataResolver(
-				_parserPool, _samlIdpSpConnectionLocalService,
+				parserPool, _samlIdpSpConnectionLocalService,
 				_samlProviderConfigurationHelper,
 				_samlSpIdpConnectionLocalService));
 
 		cachingChainingMetadataResolver.setId(
 			CachingChainingMetadataResolver.class.getName());
-		cachingChainingMetadataResolver.setParserPool(_parserPool);
+		cachingChainingMetadataResolver.setParserPool(parserPool);
 
 		try {
 			cachingChainingMetadataResolver.initialize();
@@ -618,7 +622,7 @@ public class MetadataManagerImpl
 		_metadataCredentialResolverDCLSingleton = new DCLSingleton<>();
 
 	@Reference
-	private ParserPool _parserPool;
+	private ParserPoolProvider _parserPoolProvider;
 
 	@Reference
 	private Portal _portal;

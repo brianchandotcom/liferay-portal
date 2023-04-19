@@ -48,6 +48,7 @@ import com.liferay.saml.opensaml.integration.internal.metadata.MetadataGenerator
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
+import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.impl.SamlPeerBindingImpl;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
@@ -761,7 +762,15 @@ public abstract class BaseSamlTestCase {
 		samlBindingProvider = new SamlBindingProvider();
 
 		ReflectionTestUtil.setFieldValue(
-			samlBindingProvider, "_httpClient", httpClient);
+			samlBindingProvider, "_httpClientFactory",
+			new HttpClientFactory() {
+
+				@Override
+				public HttpClient getHttpClient() {
+					return httpClient;
+				}
+
+			});
 		ReflectionTestUtil.setFieldValue(
 			samlBindingProvider, "_parserPool", parserPool);
 	}

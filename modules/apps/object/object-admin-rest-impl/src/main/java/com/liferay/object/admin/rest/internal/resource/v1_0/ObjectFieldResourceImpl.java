@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -129,6 +130,14 @@ public class ObjectFieldResourceImpl
 	public ObjectField postObjectDefinitionObjectField(
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-178057") &&
+			StringUtil.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-164948") &&
 			Objects.equals(

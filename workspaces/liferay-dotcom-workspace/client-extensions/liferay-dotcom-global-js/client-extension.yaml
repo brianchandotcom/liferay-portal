@@ -4,4 +4,4 @@ assemble:
 liferay-dotcom-global-js:
     name: Liferay Dotcom Global JS
     type: globalJS
-    url: .*.js
+    url: "*.js"

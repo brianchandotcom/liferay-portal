@@ -4,4 +4,4 @@ assemble:
 liferay-learn-global-js:
     name: Liferay Learn Global JS
     type: globalJS
-    url: .*.js
+    url: "*.js"

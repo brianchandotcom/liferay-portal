@@ -23,15 +23,32 @@ definition {
 	}
 
 	macro createDataSet {
-		LexiconEntry.gotoAdd();
+		var reps = ${reps};
 
-		Type(
-			locator1 = "TextInput#NAME",
-			value1 = ${key_name});
+		if (isSet(reps)) {
+			for (var num : list ${reps}) {
+				LexiconEntry.gotoAdd();
 
-		FrontendDataSetAdmin.selectProvider(key_type = ${key_type});
+				Type(
+					locator1 = "TextInput#NAME",
+					value1 = "${key_name} ${num}");
 
-		PortletEntry.save();
+				FrontendDataSetAdmin.selectProvider(key_type = ${key_type});
+
+				PortletEntry.save();
+			}
+		}
+		else {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = ${key_name});
+
+			FrontendDataSetAdmin.selectProvider(key_type = ${key_type});
+
+			PortletEntry.save();
+		}
 	}
 
 	macro createDatasetEntryViaAPI {

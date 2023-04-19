@@ -152,8 +152,8 @@ definition {
 
 		task ("Look for the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-			
-			var reportFileExists =  FileUtil.exists("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
+
+			var reportFileExists = FileUtil.exists("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
 		}
 
 		task ("Check if file exists") {
@@ -176,7 +176,6 @@ definition {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 			var reportFileExists = FileUtil.exists("${liferayHome}/reports/upgrade_report.info");
-
 			var reportFileContent = UpgradeReport.getAutoUpgradeReportFileContent();
 		}
 
@@ -473,7 +472,6 @@ definition {
 
 		task ("Look for the original upgrade report that has been renamed") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
 			var upgradeReportFilePattern = StringUtil.split("**/upgrade_report.info.[0-9]*");
 
 			var upgradeReportRenamedFilePath = FileUtil.getIncludedResourceURLs(${upgradeReportFilePattern}, "${liferayHome}/tools/portal-tools-db-upgrade-client/reports");
@@ -511,6 +509,28 @@ definition {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 			AssertConsoleTextPresent(value1 = "Upgrade report generated in ${liferayHome}/reports/upgrade_report.info");
+		}
+	}
+
+	@description = "LPS-181594: The message with the  upgrade report file path is printed in the logs"
+	@priority = 4
+	test ReportTraceLineLoggedWithDBUpgradeTool {
+		task ("Look for the upgrade logs") {
+			var upgradeLogContent = Log.getUpgradeLogFileContent();
+		}
+
+		task ("Given A upgrade is completed When Upgrade Report is enabled Then a message saying 'Starting upgrade report generation' is printed at the end of the upgrade log.") {
+			if (!(contains(${upgradeLogContent}, "Starting upgrade report generation"))) {
+				fail("Starting upgrade report generation message not present in the logs");
+			}
+		}
+
+		task ("Given A upgrade is completed When Upgrade Report is enabled Then a message with the report trace line is printed at the end of the upgrade log.") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			if (!(contains(${upgradeLogContent}, "Upgrade report generated in ${liferayHome}/tools/portal-tools-db-upgrade-client/./reports/upgrade_report.info"))) {
+				fail("Upgrade report file path message not present");
+			}
 		}
 	}
 
@@ -612,28 +632,6 @@ definition {
 				echo(${upgradeReportContent});
 
 				fail("Total runtime in upgrade report does not match the runtime in upgrade.log file.");
-			}
-		}
-	}
-
-	@description = "LPS-181594: The message with the  upgrade report file path is printed in the logs"
-	@priority = 4
-	test ReportTraceLineLoggedWithDBUpgradeTool {
-		task ("Look for the upgrade logs") {
-			var upgradeLogContent = Log.getUpgradeLogFileContent();
-		}
-
-		task ("Given A upgrade is completed When Upgrade Report is enabled Then a message saying 'Starting upgrade report generation' is printed at the end of the upgrade log.") {
-			if (!(contains(${upgradeLogContent}, "Starting upgrade report generation"))) {
-				fail("Starting upgrade report generation message not present in the logs");
-			}
-		}
-
-		task ("Given A upgrade is completed When Upgrade Report is enabled Then a message with the report trace line is printed at the end of the upgrade log.") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			if (!(contains(${upgradeLogContent}, "Upgrade report generated in ${liferayHome}/tools/portal-tools-db-upgrade-client/./reports/upgrade_report.info"))) {
-				fail("Upgrade report file path message not present");
 			}
 		}
 	}

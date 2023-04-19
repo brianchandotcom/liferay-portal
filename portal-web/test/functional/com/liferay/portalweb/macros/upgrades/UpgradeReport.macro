@@ -1,17 +1,17 @@
 definition {
 
-	macro getUpgradeReportFileContent {
+	macro getAutoUpgradeReportFileContent {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		var fileContentReport = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
+		var fileContentReport = FileUtil.read("${liferayHome}/reports/upgrade_report.info");
 
 		return ${fileContentReport};
 	}
 
-    macro getAutoUpgradeReportFileContent {
+	macro getUpgradeReportFileContent {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		var fileContentReport = FileUtil.read("${liferayHome}/reports/upgrade_report.info");
+		var fileContentReport = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
 
 		return ${fileContentReport};
 	}

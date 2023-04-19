@@ -205,6 +205,9 @@
 				"en_US": "FDS Views"
 			},
 			"scope": "company",
+			"status": {
+				"code": 0
+			},
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -362,6 +365,9 @@
 				"en_US": "FDS View Modes"
 			},
 			"scope": "company",
+			"status": {
+				"code": 0
+			},
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -427,6 +433,9 @@
 				"en_US": "FDS Sorts"
 			},
 			"scope": "company",
+			"status": {
+				"code": 0
+			},
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -555,6 +564,9 @@
 				"en_US": "FDS Field Mappings"
 			},
 			"scope": "company",
+			"status": {
+				"code": 0
+			},
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -711,6 +723,9 @@
 				"en_US": "FDS Actions"
 			},
 			"scope": "company",
+			"status": {
+				"code": 0
+			},
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -832,6 +847,9 @@
 				"en_US": "FDS Filters"
 			},
 			"scope": "company",
+			"status": {
+				"code": 0
+			},
 			"titleObjectFieldName": "id"
 		},
 		{
@@ -963,6 +981,9 @@
 				"en_US": "FDS Entries"
 			},
 			"scope": "company",
+			"status": {
+				"code": 0
+			},
 			"titleObjectFieldName": "id"
 		}
 	]

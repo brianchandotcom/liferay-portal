@@ -186,25 +186,39 @@ else {
 		'<portlet:namespace />themeOptions'
 	);
 
-	regularInheritLookAndFeel.addEventListener('change', (event) => {
-		event.target.checked = true;
-		regularUniqueLookAndFeel.checked = false;
+	if (regularInheritLookAndFeel) {
+		regularInheritLookAndFeel.addEventListener('change', (event) => {
+			event.target.checked = true;
+			regularUniqueLookAndFeel.checked = false;
 
-		inheritThemeOptions.classList.toggle('hide');
-		themeOptions.classList.toggle('hide');
+			if (inheritThemeOptions) {
+				inheritThemeOptions.classList.toggle('hide');
+			}
 
-		Liferay.Util.toggleDisabled([regularCss, regularCssLabel], true);
-	});
+			if (themeOptions) {
+				themeOptions.classList.toggle('hide');
+			}
 
-	regularUniqueLookAndFeel.addEventListener('change', (event) => {
-		event.target.checked = true;
-		regularInheritLookAndFeel.checked = false;
+			Liferay.Util.toggleDisabled([regularCss, regularCssLabel], true);
+		});
+	}
 
-		inheritThemeOptions.classList.toggle('hide');
-		themeOptions.classList.toggle('hide');
+	if (regularUniqueLookAndFeel) {
+		regularUniqueLookAndFeel.addEventListener('change', (event) => {
+			event.target.checked = true;
+			regularInheritLookAndFeel.checked = false;
 
-		Liferay.Util.toggleDisabled([regularCss, regularCssLabel], false);
-	});
+			if (inheritThemeOptions) {
+				inheritThemeOptions.classList.toggle('hide');
+			}
+
+			if (themeOptions) {
+				themeOptions.classList.toggle('hide');
+			}
+
+			Liferay.Util.toggleDisabled([regularCss, regularCssLabel], false);
+		});
+	}
 </aui:script>
 
 <c:if test="<%= layoutLookAndFeelDisplayContext.hasStyleBooks() %>">

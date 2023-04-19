@@ -111,10 +111,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		CalendarScheduler.viewEventColor(
-			eventBackgroundColorRgb = "(208, 219, 240)",
-			eventFontColorRgb = "(104, 142, 217)",
-			eventTitle = "Calendar Event Regular Title");
+		AssertCssValue(
+			key_eventTitle = "Calendar Event Regular Title",
+			locator1 = "Calendar#SCHEDULER_EVENT",
+			locator2 = "background-color",
+			value1 = "rgba(102, 140, 217, 0.7)");
+
+		AssertCssValue(
+			key_eventTitle = "Calendar Event Regular Title",
+			locator1 = "Calendar#SCHEDULER_EVENT_CONTENT",
+			locator2 = "color",
+			value1 = "rgba(39, 40, 51, 1)");
 	}
 
 	@description = "LRQA-72024 - Verify that the user can go back and forward on Calendar"

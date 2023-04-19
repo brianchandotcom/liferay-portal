@@ -521,6 +521,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT</td>
+	<td>//*[contains(@class,'calendar-portlet-event-approved')][*[(@class='scheduler-event-content') and contains(.,'${key_eventTitle}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_CONTENT</td>
+	<td>//*[@class='scheduler-event-content' and contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_GENERIC</td>
 	<td>//div[contains(@class,'calendar-portlet-event')]</td>
 	<td></td>

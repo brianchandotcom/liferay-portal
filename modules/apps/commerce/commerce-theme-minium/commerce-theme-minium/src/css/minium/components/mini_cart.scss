@@ -119,6 +119,18 @@
 		}
 	}
 
+	.request-quote-wrapper {
+		padding: 0;
+
+		.request-quote {
+			background-color: #fff;
+			border-color: transparent;
+			border-radius: 0;
+			height: 3.3rem;
+			text-transform: uppercase;
+		}
+	}
+
 	.rtl & {
 		&-wrapper {
 			box-shadow: 10px $frame-size 20px -10px rgba(0, 0, 0, 0.3);

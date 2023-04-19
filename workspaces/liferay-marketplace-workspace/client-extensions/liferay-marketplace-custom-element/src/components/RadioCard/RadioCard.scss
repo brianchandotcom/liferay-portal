@@ -8,13 +8,13 @@
 		padding: 1rem;
 		width: 100%;
 
+		&-disabled {
+			opacity: 0.5;
+		}
+
 		&-selected {
 			background-color: #e6edfb;
 			border: 1px solid #004ad7;
-		}
-
-		&-disabled {
-			opacity: 0.5;
 		}
 
 		&-small {
@@ -65,7 +65,7 @@
 	}
 
 	&-title {
-		align-items: flex-start;
+		align-items: center;
 		display: flex;
 		gap: 0.5rem;
 		justify-content: center;
@@ -89,6 +89,12 @@
 				brightness(86%) contrast(110%);
 
 			transition: filter 0.5s;
+
+			&-rounded {
+				border-radius: 50%;
+				height: 32px;
+				width: 32px;
+			}
 		}
 
 		&-tooltip {

@@ -1,0 +1,21 @@
+.account-selector {
+	color: #54555f;
+	font-size: 16px;
+
+	.contact-support {
+		a {
+			color: #0b5fff;
+			cursor: pointer;
+			font-weight: 600;
+			text-decoration: none;
+		}
+	}
+}
+
+.account-cards {
+	margin-bottom: 8px;
+
+	.radio-card-container {
+		margin-top: 16px;
+	}
+}

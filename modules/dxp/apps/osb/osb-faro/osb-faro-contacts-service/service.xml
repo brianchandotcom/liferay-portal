@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder auto-import-default-references="false" package-path="com.liferay.osb.faro.contacts">
+<service-builder auto-import-default-references="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.osb.faro.contacts">
 	<author>Shinn Lok</author>
 	<namespace>OSBFaro</namespace>
 	<entity local-service="true" name="ContactsCardTemplate" remote-service="false">
@@ -16,9 +16,10 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
+		<column name="createTime" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-		<column name="createTime" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->
@@ -45,9 +46,10 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
+		<column name="createTime" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-		<column name="createTime" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->

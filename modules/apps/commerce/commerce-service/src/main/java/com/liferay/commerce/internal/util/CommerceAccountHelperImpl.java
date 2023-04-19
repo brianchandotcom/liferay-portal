@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.util;
+package com.liferay.commerce.internal.util;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
@@ -21,17 +21,16 @@ import com.liferay.account.manager.CurrentAccountEntryManager;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.account.configuration.CommerceAccountServiceConfiguration;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -269,21 +268,6 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	@Override
-	public long[] getCommerceAccountGroupIds(long commerceAccountId) {
-		List<AccountGroupRel> accountGroupRels =
-			_accountGroupRelLocalService.getAccountGroupRels(
-				AccountEntry.class.getName(), commerceAccountId);
-
-		if (accountGroupRels.isEmpty()) {
-			return new long[0];
-		}
-
-		return ArrayUtil.sortedUnique(
-			TransformUtil.transformToLongArray(
-				accountGroupRels, AccountGroupRel::getAccountGroupId));
 	}
 
 	@Override

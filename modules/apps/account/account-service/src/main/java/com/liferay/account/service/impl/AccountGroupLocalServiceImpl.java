@@ -172,6 +172,23 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
+	public long[] getAccountGroupIds(long accountEntryId) {
+		List<AccountGroupRel> accountGroupRels =
+			_accountGroupRelPersistence.findByC_C(
+				_classNameLocalService.getClassNameId(
+					AccountEntry.class.getName()),
+				accountEntryId);
+
+		if (accountGroupRels.isEmpty()) {
+			return new long[0];
+		}
+
+		return ArrayUtil.sortedUnique(
+			TransformUtil.transformToLongArray(
+				accountGroupRels, AccountGroupRel::getAccountGroupId));
+	}
+
+	@Override
 	public List<AccountGroup> getAccountGroups(
 		long companyId, int start, int end,
 		OrderByComparator<AccountGroup> orderByComparator) {

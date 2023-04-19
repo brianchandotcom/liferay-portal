@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.util;
+package com.liferay.commerce.util;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
@@ -55,8 +55,6 @@ public interface CommerceAccountHelper {
 	public String getAccountManagementPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
-
-	public long[] getCommerceAccountGroupIds(long commerceAccountId);
 
 	public int getCommerceSiteType(long commerceChannelGroupId)
 		throws ConfigurationException;

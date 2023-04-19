@@ -551,26 +551,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
-	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR_DEFAULT</td>
-	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(240, 209, 209)')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULER_EVENT_SPECIFIC_FONT_COLOR</td>
-	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_fontColor}')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT</td>
-	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'rgb(217, 104, 104)')]/div[contains(.,'${key_eventTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_HEIGHT</td>
 	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'height: ${key_pixelHeight}px;')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>

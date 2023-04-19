@@ -306,20 +306,6 @@ definition {
 		CalendarNavigator.gotoView(viewType = "Week");
 	}
 
-	macro viewEventColor {
-		var key_backgroundColor = ${eventBackgroundColorRgb};
-		var key_eventTitle = ${eventTitle};
-		var key_fontColor = ${eventFontColorRgb};
-
-		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR");
-
-		AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_FONT_COLOR");
-
-		AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR_DEFAULT");
-
-		AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_FONT_COLOR_DEFAULT");
-	}
-
 	macro viewEventDuration {
 		var key_eventTitle = ${eventTitle};
 

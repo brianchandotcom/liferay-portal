@@ -56,6 +56,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ASSERT_PICKLIST</td>
+		<td>//div[contains(@class,'table-list-title') and contains(.,'${key_picklistName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_PICKLIST_ITEM_NAME_AND_KEY</td>
 		<td>//*[contains(@class,'modal-body')] //label[text()='${key_selectField}']/..//input</td>
 		<td></td>

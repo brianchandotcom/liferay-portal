@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "form.navigator.entry.order:Integer=220",
 	service = FormNavigatorEntry.class
 )
-public class LayoutSetFaviconFormNavigatorEntry
+public class LayoutSetBasicSettingsFormNavigatorEntry
 	extends BaseLayoutSetFormNavigatorEntry {
 
 	@Override
@@ -39,7 +39,7 @@ public class LayoutSetFaviconFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "favicon";
+		return "basic-settings";
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class LayoutSetFaviconFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/layout_set/favicon.jsp";
+		return "/layout_set/basic_settings.jsp";
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")

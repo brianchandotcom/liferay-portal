@@ -236,6 +236,52 @@ definition {
 		}
 	}
 
+	@description = "This is the use case for LPS-179026. Can preview changes for WikiPages"
+	@priority = 3
+	test CanPreviewChangesForWikiPages {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONWiki.addWikiPage(
+			groupName = "Site Name",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name");
+
+		JSONWiki.updateWikiPage(
+			groupName = "Site Name",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content Edited",
+			wikiPageName = "Wiki Page Title");
+
+		JSONWiki.addAttachmentToWikiPage(
+			fileName = "Document_1.txt",
+			groupName = "Site Name",
+			mimeType = "text/txt",
+			wikiNodeName = "Main",
+			wikiPageName = "Wiki Page Title");
+
+		task ("View the wiki page change details on Display tab") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Wiki Page",
+				changeOrder = 2,
+				changeTitle = "Wiki Page Title (1.1)");
+
+			PublicationsChangeDetails.viewChangeDetailsInDisplay(
+				changeType = "Modified",
+				contentValueInProduction = "Wiki Page Content",
+				contentValueInPublication = "Wiki Page Content Edited",
+				diffAddedValue = "Attachments");
+		}
+	}
+
 	@description = "This is a use case for LPS-174885. Resolve typical conflicts when using wiki with publications"
 	@priority = 3
 	test CanResolveConflictingPublicationsAutomatically {

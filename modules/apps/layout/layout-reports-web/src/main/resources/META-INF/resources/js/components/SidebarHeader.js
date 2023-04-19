@@ -87,7 +87,7 @@ const IssueDetailSidebarHeader = () => {
 		<div className="d-flex justify-content-between p-3 sidebar-header">
 			<div className="d-flex">
 				<ClayButtonWithIcon
-					className="component-action flex-shrink-0 mr-2 sidenav-back text-secondary"
+					className="align-items-start component-action flex-shrink-0 mr-2 sidenav-back text-secondary"
 					displayType="unstyled"
 					onClick={() => {
 						dispatch({

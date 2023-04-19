@@ -155,7 +155,7 @@ FailingElementsPanel.propTypes = {
 
 const FailingElement = ({element}) => {
 	return (
-		<ClayList.Item className="failing-element mb-2 p-0" flex>
+		<ClayList.Item className="border-0 failing-element mb-2 p-0" flex>
 			<ClayList.ItemField className="mb-2 p-0" expand>
 				{element.title && (
 					<ClayList.ItemText className="font-weight-semi-bold mb-2">

@@ -61,7 +61,6 @@ export default function Translation({
 			active={active}
 			hasLeftSymbols
 			menuElementAttrs={{
-				className: 'dropdown-menu__languages',
 				containerProps: {
 					className: 'cadmin',
 				},

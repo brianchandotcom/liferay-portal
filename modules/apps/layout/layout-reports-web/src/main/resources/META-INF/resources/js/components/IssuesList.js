@@ -210,7 +210,7 @@ const Issue = ({issue}) => {
 
 	return (
 		issueTotal > 0 && (
-			<ClayList.Item action className="border-0 issue rounded-0" flex>
+			<ClayList.Item action className="border-0 rounded-0" flex>
 				<ClayButton
 					className="w-100"
 					displayType="unstyled"

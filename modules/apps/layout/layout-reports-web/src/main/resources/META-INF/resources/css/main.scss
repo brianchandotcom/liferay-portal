@@ -8,10 +8,6 @@ html#{$cadmin-selector} {
 				width: 320px;
 			}
 
-			.dropdown-menu__languages {
-				max-height: 295px;
-			}
-
 			.failing-element {
 				&:not(:first-child) {
 					margin-top: 8px;
@@ -20,12 +16,6 @@ html#{$cadmin-selector} {
 				&:not(:last-child) {
 					border-width: 0 0 1px;
 				}
-
-				border-width: 0;
-			}
-
-			.issue {
-				cursor: pointer;
 			}
 
 			.list-group {
@@ -42,24 +32,8 @@ html#{$cadmin-selector} {
 			}
 
 			.sidebar-header {
-				line-height: 32px;
-
 				.sidenav-back {
-					align-items: flex-start;
 					width: 24px;
-				}
-
-				.issue-detail-title {
-					line-height: 17.5px;
-				}
-			}
-
-			.sidebar-body {
-				.loading-animation {
-					left: 0;
-					position: absolute;
-					right: 0;
-					top: 40%;
 				}
 			}
 

@@ -14,11 +14,14 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.processor.SourceProcessor;
+
+import java.util.List;
 
 /**
  * @author Hugo Huijser
@@ -211,9 +214,38 @@ public class IllegalImportsCheck extends BaseFileCheck {
 				sourceFormatterArgs.getBaseDirName(),
 				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
+			List<String> shouldReplaceTagLibs = getAttributeValues(
+				_SHOULD_REPLACE_TAGLIB_KEY, absolutePath);
+
 			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
 				if (!line.startsWith(StringPool.PLUS)) {
 					continue;
+				}
+
+				if (isAttributeValue(_AVOID_OLD_TAGLIB_KEY, absolutePath)) {
+					for (String shouldReplaceTaglib : shouldReplaceTagLibs) {
+						String[] shouldReplaceTaglibArray = StringUtil.split(
+							shouldReplaceTaglib, "->");
+
+						if (shouldReplaceTaglibArray.length != 2) {
+							continue;
+						}
+
+						String oldTaglibImport = shouldReplaceTaglibArray[0];
+
+						if (line.contains(oldTaglibImport)) {
+							addMessage(
+								fileName,
+								StringBundler.concat(
+									"Do not use following old taglib, '",
+									oldTaglibImport,
+									"' should be replaced by '",
+									shouldReplaceTaglibArray[1],
+									"', see LPS-179523"));
+						}
+
+						break;
+					}
 				}
 
 				if (isAttributeValue(_AVOID_OPTIONAL_KEY, absolutePath) &&
@@ -237,6 +269,8 @@ public class IllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String _AVOID_OLD_TAGLIB_KEY = "avoidOldTaglib";
+
 	private static final String _AVOID_OPTIONAL_KEY = "avoidOptional";
 
 	private static final String _AVOID_STREAM_KEY = "avoidStream";
@@ -251,5 +285,8 @@ public class IllegalImportsCheck extends BaseFileCheck {
 
 	private static final String _SECURE_RANDOM_EXCLUDES =
 		"secure.random.excludes";
+
+	private static final String _SHOULD_REPLACE_TAGLIB_KEY =
+		"shouldReplaceTaglib";
 
 }

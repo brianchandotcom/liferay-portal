@@ -17,6 +17,9 @@ package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -55,8 +58,15 @@ public class UserPasswordScreenNavigationEntry
 		if ((selUser == null) || selUser.isServiceAccountUser()) {
 			return false;
 		}
+		try {
+			return selUser.getPasswordPolicy().isChangeable();
+		} catch (PortalException e) {
+			_log.error(e.getMessage());
+			return false;
+		}
 
-		return true;
 	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(UserPasswordScreenNavigationEntry.class);
 
 }

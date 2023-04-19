@@ -4,13 +4,13 @@
 			"fields": [
 				{
 					"defaultValue": true,
-					"label": "Channel Account Manager",
+					"label": "Channel Account Manager (CAM)",
 					"name": "channelAccountManager",
 					"type": "checkbox"
 				},
 				{
 					"defaultValue": true,
-					"label": "Channel Finance Manager",
+					"label": "Channel Finance Manager (CFM)",
 					"name": "channelFinanceManager",
 					"type": "checkbox"
 				},
@@ -34,7 +34,7 @@
 				},
 				{
 					"defaultValue": true,
-					"label": "Partner Manager",
+					"label": "Partner Manager (PM)",
 					"name": "partnerManager",
 					"type": "checkbox"
 				},

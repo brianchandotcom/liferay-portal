@@ -14918,44 +14918,6 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.context" />
-		<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
-
-		<if>
-			<isset property="portal.context" />
-			<then>
-				<if>
-					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<then>
-						<move
-							todir="${app.server.dir}/webapps/${portal.context}"
-						>
-							<fileset
-								dir="${app.server.dir}/webapps/ROOT"
-							/>
-						</move>
-						<move
-							file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml"
-							tofile="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml"
-						/>
-						<replace
-							file="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml"
-							token="path=&quot;&quot;"
-							value="path=&quot;/${portal.context}&quot;"
-						/>
-						<replace
-							file="${app.server.dir}/conf/catalina.properties"
-							token="common.loader=&quot;${catalina.home}/webapps/ROOT/WEB-INF/lib/support-tomcat.jar&quot;"
-							value="common.loader=&quot;${catalina.home}/webapps/${portal.context}/WEB-INF/lib/support-tomcat.jar&quot;"
-						/>
-					</then>
-					<else>
-						<fail message="Changing the portal context for ${app.server.type} is not supported." />
-					</else>
-				</if>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="portal.proxy.path" />
 		<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
 
@@ -15547,6 +15509,44 @@ mail.send.blacklist=</echo>
 						includes="*Theme*.lpkg"
 					/>
 				</move>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="portal.context" />
+		<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+
+		<if>
+			<isset property="portal.context" />
+			<then>
+				<if>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<move
+							todir="${app.server.dir}/webapps/${portal.context}"
+						>
+							<fileset
+								dir="${app.server.dir}/webapps/ROOT"
+							/>
+						</move>
+						<move
+							file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml"
+							tofile="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml"
+						/>
+						<replace
+							file="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml"
+							token="path=&quot;&quot;"
+							value="path=&quot;/${portal.context}&quot;"
+						/>
+						<replace
+							file="${app.server.dir}/conf/catalina.properties"
+							token="common.loader=&quot;${catalina.home}/webapps/ROOT/WEB-INF/lib/support-tomcat.jar&quot;"
+							value="common.loader=&quot;${catalina.home}/webapps/${portal.context}/WEB-INF/lib/support-tomcat.jar&quot;"
+						/>
+					</then>
+					<else>
+						<fail message="Changing the portal context for ${app.server.type} is not supported." />
+					</else>
+				</if>
 			</then>
 		</if>
 

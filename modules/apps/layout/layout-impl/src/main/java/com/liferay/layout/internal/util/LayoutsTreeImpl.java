@@ -81,9 +81,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				WebKeys.THEME_DISPLAY);
 
 		return _getLayoutsJSONArray(
-			false, expandedLayoutIds, groupId, httpServletRequest,
-			includeActions, incomplete, loadMore, parentLayoutId, privateLayout,
-			themeDisplay, treeId);
+			_getAncestorLayouts(httpServletRequest), false, expandedLayoutIds,
+			groupId, httpServletRequest, includeActions, incomplete, loadMore,
+			parentLayoutId, privateLayout, themeDisplay, treeId);
 	}
 
 	private Layout _fetchCurrentLayout(HttpServletRequest httpServletRequest) {
@@ -143,7 +143,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private JSONArray _getLayoutsJSONArray(
-			boolean childLayout, long[] expandedLayoutIds, long groupId,
+			List<Layout> ancestorLayouts, boolean childLayout,
+			long[] expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			boolean incomplete, boolean loadMore, long parentLayoutId,
 			boolean privateLayout, ThemeDisplay themeDisplay, String treeId)
@@ -157,8 +158,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		}
 
 		JSONArray layoutsJSONArray = _jsonFactory.createJSONArray();
-
-		List<Layout> ancestorLayouts = _getAncestorLayouts(httpServletRequest);
 
 		List<Layout> layouts = _getPaginatedLayouts(
 			httpServletRequest, groupId, privateLayout, parentLayoutId,
@@ -193,7 +192,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
 
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						true, expandedLayoutIds,
+						ancestorLayouts, true, expandedLayoutIds,
 						virtualLayout.getSourceGroupId(), httpServletRequest,
 						includeActions, incomplete, loadMore,
 						virtualLayout.getLayoutId(),
@@ -201,10 +200,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				}
 				else {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						true, expandedLayoutIds, groupId, httpServletRequest,
-						includeActions, incomplete, loadMore,
-						layout.getLayoutId(), layout.isPrivateLayout(),
-						themeDisplay, treeId);
+						ancestorLayouts, true, expandedLayoutIds, groupId,
+						httpServletRequest, includeActions, incomplete,
+						loadMore, layout.getLayoutId(),
+						layout.isPrivateLayout(), themeDisplay, treeId);
 				}
 
 				childLayoutsCount = childLayoutsJSONArray.length();

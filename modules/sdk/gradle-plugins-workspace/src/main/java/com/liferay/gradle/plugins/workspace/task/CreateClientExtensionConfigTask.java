@@ -125,6 +125,18 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		jsonMap.put(":configurator:policy", "force");
 
 		for (ClientExtension clientExtension : clientExtensions) {
+			if (Objects.equals(clientExtension.classification, "batch")) {
+				pluginPackageProperties.put(
+					"Liferay-Client-Extension-Batch", "batch/");
+			}
+
+			if (Objects.equals(clientExtension.classification, "frontend")) {
+				_expandWildcards(clientExtension.typeSettings);
+
+				pluginPackageProperties.put(
+					"Liferay-Client-Extension-Frontend", "static/");
+			}
+
 			String pid = _clientExtensionProperties.getProperty(
 				clientExtension.type + ".pid");
 
@@ -132,20 +144,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				pid = clientExtension.typeSettings.remove("pid") + ".scoped";
 			}
 
-			_expandWildcards(clientExtension.typeSettings);
-
 			if (pid != null) {
 				jsonMap.putAll(clientExtension.toJSONMap(pid));
-			}
-
-			if (Objects.equals(clientExtension.classification, "batch")) {
-				pluginPackageProperties.put(
-					"Liferay-Client-Extension-Batch", "batch/");
-			}
-
-			if (Objects.equals(clientExtension.classification, "frontend")) {
-				pluginPackageProperties.put(
-					"Liferay-Client-Extension-Frontend", "static/");
 			}
 		}
 

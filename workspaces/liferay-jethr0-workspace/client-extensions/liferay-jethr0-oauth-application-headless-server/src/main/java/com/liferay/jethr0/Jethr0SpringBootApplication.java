@@ -133,10 +133,22 @@ public class Jethr0SpringBootApplication {
 				Project.State.QUEUED, Project.State.RUNNING));
 
 		for (Project project : projectQueue.getProjects()) {
-			System.out.println(project);
+			Project.State projectState = Project.State.COMPLETED;
 
-			for (Build build : project.getBuilds()) {
-				System.out.println("> " + build);
+			for (Build projectBuild : project.getBuilds()) {
+				Build.State buildState = projectBuild.getState();
+
+				if (buildState != Build.State.COMPLETED) {
+					projectState = Project.State.RUNNING;
+
+					break;
+				}
+			}
+
+			if (projectState == Project.State.COMPLETED) {
+				project.setState(projectState);
+
+				projectRepository.update(project);
 			}
 		}
 

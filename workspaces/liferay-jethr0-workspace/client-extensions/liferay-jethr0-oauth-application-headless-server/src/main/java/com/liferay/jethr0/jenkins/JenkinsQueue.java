@@ -25,8 +25,6 @@ import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.jms.JMSEventHandler;
 
-import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

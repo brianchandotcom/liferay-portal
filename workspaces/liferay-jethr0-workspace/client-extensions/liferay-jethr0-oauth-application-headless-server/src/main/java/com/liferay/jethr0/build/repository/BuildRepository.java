@@ -26,8 +26,8 @@ import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
-
 import com.liferay.jethr0.task.Task;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -78,7 +78,6 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 
 			build.addEnvironment(environment);
 		}
-
 
 		for (Task task : _buildToTasksDALO.getChildEntities(build)) {
 			task.setBuild(build);

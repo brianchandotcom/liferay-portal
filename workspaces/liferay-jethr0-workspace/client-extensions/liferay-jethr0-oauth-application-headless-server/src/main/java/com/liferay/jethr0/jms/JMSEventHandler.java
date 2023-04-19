@@ -247,9 +247,6 @@ public class JMSEventHandler {
 	@Autowired
 	private JenkinsNodeRepository _jenkinsNodeRepository;
 
-	@Autowired
-	private ProjectRepository _projectRepository;
-
 	@Value("${jms.jenkins.build.queue}")
 	private String _jmsJenkinsBuildQueue;
 
@@ -258,5 +255,8 @@ public class JMSEventHandler {
 
 	@Autowired
 	private JmsTemplate _jmsTemplate;
+
+	@Autowired
+	private ProjectRepository _projectRepository;
 
 }

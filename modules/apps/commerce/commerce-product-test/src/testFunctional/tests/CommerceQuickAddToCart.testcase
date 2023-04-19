@@ -1631,6 +1631,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10475. Buyer user can paste text on quick add to cart search bar"
+	@priority = 3
+	test CanPasteTextOnQuickAddToCartSearchBar {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer user adds a product 'U-Joint' to cart and copies its SKU 'MIN55861'") {
+			Type(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				value1 = "MIN55861");
+
+			Type.sendKeys(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				value1 = "keys=CONTROL,a");
+
+			Type.sendKeys(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				value1 = "keys=CONTROL,c");
+
+			Button.clickSubmitButton();
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("And pastes 'MIN55861' on the quick add-to-cart search bar") {
+			CommerceNavigator.gotoMiniCart();
+
+			Type.sendKeys(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "keys=CONTROL,v");
+		}
+
+		task ("Then the pasted text is shown") {
+			AssertElementPresent(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "MIN55861");
+		}
+
+		task ("And the matching SKU suggestion is shown") {
+			AssertElementPresent(
+				key_productSku = "MIN55861",
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10474. Buyer user can press enter on quick add to cart search bar and the text doesn't disappear"
 	@priority = 4
 	test CanPressEnterOnQuickAddToCartSearchBar {

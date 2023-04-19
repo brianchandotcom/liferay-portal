@@ -7,48 +7,64 @@ import {Input} from '../Input/Input';
 
 import './ProjectDetails.scss';
 
+interface ProjectDetailsProps {
+	githubUsername: string;
+	onGithubUsernameChange: (value: string) => void;
+	onProjectNameChange: (value: string) => void;
+	projectName: string;
+}
+
 const projectDetailsCardValues = [
 	{
+		description: '1 Site',
 		icon: guideIcon,
 		title: 'Sites',
-		description: '1 Site',
 	},
 	{
+		description: '10 GB',
 		icon: serverIcon,
 		title: 'Storage',
-		description: '10 GB',
 	},
 	{
+		description: 'Yes',
 		icon: listIcon,
 		title: 'Extensions Environment',
-		description: 'Yes',
 	},
 	{
+		description: 'Yes',
 		icon: githubIcon,
 		title: 'Github Access',
-		description: 'Yes',
 	},
 	{
+		description: '60 days',
 		icon: calendarIcon,
 		title: 'Duration',
-		description: '60 days',
 	},
 ];
 
-export function ProjectDetails() {
+export function ProjectDetails({
+	githubUsername,
+	onGithubUsernameChange,
+	onProjectNameChange,
+	projectName,
+}: ProjectDetailsProps) {
 	return (
 		<>
 			<div className="create-project-modal-inputs-contianer">
 				<Input
 					label="Project name"
+					onChange={(e) => onProjectNameChange(e.target.value)}
 					placeholder="Type your environment name"
 					required
+					value={projectName}
 				/>
 
 				<Input
 					label="Github username"
+					onChange={(e) => onGithubUsernameChange(e.target.value)}
 					placeholder="Type your github username"
 					required
+					value={githubUsername}
 				/>
 			</div>
 

@@ -18,9 +18,9 @@ export function createSkuName(
 }
 
 export async function getCatalogId() {
-	const response = await getCatalogs();
+	const catalogs = await getCatalogs();
 
-	return response.items[0].id;
+	return catalogs[0].id;
 }
 
 export async function publisherUserChecker() {

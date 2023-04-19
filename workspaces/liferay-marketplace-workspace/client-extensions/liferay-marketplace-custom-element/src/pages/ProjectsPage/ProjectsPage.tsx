@@ -9,8 +9,9 @@ import {DashboardListItems} from '../DashBoardPage/DashboardPage';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
-interface ProjectsPage {
+interface ProjectsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
+	selectedAccount: Account;
 }
 
 const projectsTableHeaders: TableHeaders = [
@@ -34,7 +35,10 @@ const projectsTableHeaders: TableHeaders = [
 	},
 ];
 
-export function ProjectsPage({dashboardNavigationItems}: ProjectsPage) {
+export function ProjectsPage({
+	dashboardNavigationItems,
+	selectedAccount,
+}: ProjectsPageProps) {
 	const [visible, setVisible] = useState(false);
 
 	return (
@@ -64,7 +68,10 @@ export function ProjectsPage({dashboardNavigationItems}: ProjectsPage) {
 			</DashboardPage>
 
 			{visible && (
-				<CreateProjectModal handleClose={() => setVisible(false)} />
+				<CreateProjectModal
+					handleClose={() => setVisible(false)}
+					selectedAccount={selectedAccount}
+				/>
 			)}
 		</>
 	);

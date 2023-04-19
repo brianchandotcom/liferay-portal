@@ -12,6 +12,7 @@ import phoneIcon from '../../assets/icons/phone-icon.svg';
 import userIcon from '../../assets/icons/user-icon.svg';
 import {DetailedCard} from '../../components/DetailedCard/DetailedCard';
 import {getAccountPostalAddressesByAccountId} from '../../utils/api';
+import {getCustomFieldValue} from '../../utils/customFieldUtil';
 import {DashboardListItems} from '../DashBoardPage/DashboardPage';
 
 interface AccountDetailsPageProps {
@@ -33,22 +34,6 @@ export function AccountDetailsPage({
 }: AccountDetailsPageProps) {
 	const [selectedAccountAddress, setSelectedAccountAddress] =
 		useState<AccountPostalAddresses[]>();
-
-	const getCustomFieldValue = (customFieldName: string) => {
-		const customField = selectedAccount.customFields?.find(
-			(customField) => customField.name === customFieldName
-		);
-
-		if (customField) {
-			const {
-				customValue: {data},
-			} = customField;
-
-			return data;
-		}
-
-		return '';
-	};
 
 	const maskDigits = (str: string) => {
 		const first3Digits = str.slice(0, 3);
@@ -177,7 +162,10 @@ export function AccountDetailsPage({
 								<th>Github Username</th>
 
 								<td className="account-details-body-table-description">
-									{getCustomFieldValue('Github Username')}
+									{getCustomFieldValue(
+										selectedAccount?.customFields ?? [],
+										'Github Username'
+									)}
 								</td>
 							</tr>
 
@@ -201,7 +189,10 @@ export function AccountDetailsPage({
 								<th>Phone</th>
 
 								<td className="account-details-body-table-description">
-									{getCustomFieldValue('Contact Phone')}
+									{getCustomFieldValue(
+										selectedAccount.customFields ?? [],
+										'Contact Phone'
+									)}
 								</td>
 							</tr>
 
@@ -209,7 +200,10 @@ export function AccountDetailsPage({
 								<th>Email</th>
 
 								<td className="account-details-body-table-description">
-									{getCustomFieldValue('Contact Email')}
+									{getCustomFieldValue(
+										selectedAccount.customFields ?? [],
+										'Contact Email'
+									)}
 								</td>
 							</tr>
 
@@ -219,11 +213,15 @@ export function AccountDetailsPage({
 								<td className="account-details-body-table-description">
 									<a
 										href={getCustomFieldValue(
+											selectedAccount.customFields ?? [],
 											'Homepage URL'
 										)}
 										target="__blank"
 									>
-										{getCustomFieldValue('Homepage URL')}
+										{getCustomFieldValue(
+											selectedAccount.customFields ?? [],
+											'Homepage URL'
+										)}
 									</a>
 								</td>
 							</tr>
@@ -293,7 +291,10 @@ export function AccountDetailsPage({
 						cardIconAltText="Payment  Icon"
 						cardTitle="Payment "
 					>
-						{getCustomFieldValue('Paypal Email Address') ? (
+						{getCustomFieldValue(
+							selectedAccount.customFields ?? [],
+							'Paypal Email Address'
+						) ? (
 							<table className="account-details-body-table">
 								<tr className="account-details-body-table-row">
 									<th>Paypal Account</th>
@@ -301,6 +302,8 @@ export function AccountDetailsPage({
 									<td className="account-details-body-table-description">
 										{maskDigits(
 											getCustomFieldValue(
+												selectedAccount.customFields ??
+													[],
 												'Paypal Email Address'
 											)
 										)}

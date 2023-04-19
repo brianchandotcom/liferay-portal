@@ -1,5 +1,5 @@
 type Account = {
-	customFields?: AccountCustomField[];
+	customFields?: CustomField[];
 	description: string;
 	externalReferenceCode: string;
 	id: number;
@@ -7,11 +7,11 @@ type Account = {
 	type: string;
 };
 
-type AccountCustomField = {
+type CustomField = {
 	customValue: {
 		data: string;
 	};
-	dataType: string;
+	dataType?: string;
 	name: string;
 };
 
@@ -83,6 +83,7 @@ type Cart = {
 };
 
 type CartItem = {
+	customFields?: {};
 	price: {
 		currency: string;
 		discount: number;
@@ -95,6 +96,28 @@ type CartItem = {
 		maxQuantity: number;
 	};
 	skuId: number;
+};
+
+type Catalog = {
+	currencyCode: string;
+	defaultLanguageId: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	system: boolean;
+};
+
+type Category = {
+	description: string;
+	externalReferenceCode: string;
+	id: string;
+	name: string;
+	parentTaxonomyVocabulary: {
+		id: number;
+		name: string;
+	};
+	siteId: number;
+	taxonomyVocabularyId: number;
 };
 
 type Channel = {
@@ -184,6 +207,18 @@ interface PostCheckoutCartResponse extends PostCartResponse {
 	cartItems: CartItem[];
 }
 
+type Product = {
+	active: boolean;
+	catalogId: number;
+	description: {[key: string]: string};
+	externalReferenceCode: string;
+	id: number;
+	productId: number;
+	productStatus: number;
+	productType: string;
+	version: number;
+};
+
 type ProductOptionItem = {
 	id: number;
 	key: string;
@@ -197,6 +232,7 @@ type RoleBrief = {
 };
 
 type SKU = {
+	customFields?: CustomField[];
 	cost: number;
 	externalReferenceCode: string;
 	id: number;

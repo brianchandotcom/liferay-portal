@@ -21,16 +21,12 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 %>
 
 <div>
-	<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
-
 	<react:component
 		componentId="moveObjectModalId"
 		module="admin/js/components/MoveModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"items", kbAdminNavigationDisplayContext.getKBFolderDataJSONArray()
-			).put(
-				"moveKBObjectURL", moveKBObjectURL
 			).put(
 				"selectedItemId", ParamUtil.getString(request, "selectedItemId")
 			).build()

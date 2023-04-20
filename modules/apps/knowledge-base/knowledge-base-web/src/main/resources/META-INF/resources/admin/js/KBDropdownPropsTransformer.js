@@ -12,7 +12,21 @@
  * details.
  */
 
-import {openConfirmModal, openModal} from 'frontend-js-web';
+import {
+	fetch,
+	objectToFormData,
+	openConfirmModal,
+	openModal,
+	openSelectionModal,
+	openToast,
+} from 'frontend-js-web';
+
+import showSuccessMessage from './utils/showSuccessMessage';
+
+const ITEM_TYPES = {
+	article: 'article',
+	folder: 'folder',
+};
 
 const ACTIONS = {
 	delete({deleteURL}) {
@@ -28,12 +42,87 @@ const ACTIONS = {
 		});
 	},
 
-	move({moveItemUrl}) {
-		openModal({
+	move(
+		{
+			moveItemActionUrl,
+			moveItemModalUrl,
+			selectedItemClassNameId,
+			selectedItemId,
+			selectedItemType,
+		},
+		portletNamespace
+	) {
+		openSelectionModal({
+			buttonAddLabel: Liferay.Language.get('move'),
 			height: '50vh',
+			multiple: true,
+			onSelect: ({index, item, parentItem}) => {
+				if (!item) {
+					item = {
+						classNameId: selectedItemClassNameId,
+						id: selectedItemId,
+						type: selectedItemType,
+					};
+				}
+
+				if (
+					item.type === ITEM_TYPES.folder &&
+					parentItem.type === ITEM_TYPES.article
+				) {
+					openToast({
+						message: Liferay.Language.get(
+							'folders-cannot-be-moved-into-articles'
+						),
+						type: 'danger',
+					});
+
+					return false;
+				}
+
+				fetch(moveItemActionUrl, {
+					body: objectToFormData({
+						[`${portletNamespace}dragAndDrop`]: true,
+						[`${portletNamespace}position`]: index?.next ?? -1,
+						[`${portletNamespace}resourceClassNameId`]: item.classNameId,
+						[`${portletNamespace}resourcePrimKey`]: item.id,
+						[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,
+						[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,
+					}),
+					method: 'POST',
+				})
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error();
+						}
+
+						return response.json();
+					})
+					.then((response) => {
+						if (!response.success) {
+							throw new Error(response.errorMessage);
+						}
+
+						showSuccessMessage(portletNamespace);
+					})
+					.catch(
+						({
+							message = Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						}) => {
+							openToast({
+								message,
+								type: 'danger',
+							});
+						}
+					);
+
+				return true;
+			},
+			selectEventName: `selectKBMoveFolder`,
 			size: 'md',
 			title: Liferay.Language.get('move'),
-			url: moveItemUrl,
+			url: moveItemModalUrl,
 		});
 	},
 
@@ -52,7 +141,7 @@ const ACTIONS = {
 	},
 };
 
-export default function propsTransformer({items, ...props}) {
+export default function propsTransformer({items, portletNamespace, ...props}) {
 	return {
 		...props,
 		items: items.map((item) => {
@@ -66,7 +155,7 @@ export default function propsTransformer({items, ...props}) {
 						if (action) {
 							event.preventDefault();
 
-							ACTIONS[action](child.data);
+							ACTIONS[action](child.data, portletNamespace);
 						}
 					},
 				})),

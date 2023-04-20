@@ -57,7 +57,7 @@ function filterEmptyGroups(items) {
 		);
 }
 
-function normalizeItems(items = []) {
+function normalizeItems(items = [], portletNamespace) {
 	const transformedItems = KBDropdownPropsTransformer({
 		items: items.map((item) => {
 			return {
@@ -68,6 +68,7 @@ function normalizeItems(items = []) {
 				})),
 			};
 		}),
+		portletNamespace,
 	}).items;
 
 	const filteredItems = filterEmptyGroups(transformedItems);
@@ -75,13 +76,16 @@ function normalizeItems(items = []) {
 	return addSeparators(filteredItems);
 }
 
-export default function normalizeDropdownItems(items) {
+export default function normalizeDropdownItems(items, portletNamespace) {
 	if (items) {
 		return items.map((item) => {
 			return {
 				...item,
-				actions: normalizeItems(item.actions),
-				children: normalizeDropdownItems(item.children),
+				actions: normalizeItems(item.actions, portletNamespace),
+				children: normalizeDropdownItems(
+					item.children,
+					portletNamespace
+				),
 			};
 		});
 	}

@@ -41,8 +41,10 @@ export default function NavigationPanel({
 	portletNamespace,
 	selectedItemId,
 }) {
-	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
-
+	const items = useMemo(
+		() => normalizeItems(initialItems, portletNamespace),
+		[initialItems, portletNamespace]
+	);
 	const searchItems = useMemo(() => getSearchItems(initialItems), [
 		initialItems,
 	]);

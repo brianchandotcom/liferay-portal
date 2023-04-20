@@ -740,7 +740,7 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"moveItemUrl",
+					"moveItemModalUrl",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
@@ -751,6 +751,20 @@ public class KBDropdownItemsProvider {
 						LiferayWindowState.POP_UP
 					).buildString());
 
+				dropdownItem.putData(
+					"moveItemActionUrl",
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/move_kb_object"
+					).buildString());
+				dropdownItem.putData(
+					"selectedItemClassNameId",
+					String.valueOf(kbArticle.getClassNameId()));
+				dropdownItem.putData(
+					"selectedItemId",
+					String.valueOf(kbArticle.getResourcePrimKey()));
+				dropdownItem.putData("selectedItemType", "article");
 				dropdownItem.setIcon("move-folder");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
@@ -795,7 +809,7 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"moveItemUrl",
+					"moveItemModalUrl",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
@@ -805,6 +819,21 @@ public class KBDropdownItemsProvider {
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
+
+				dropdownItem.putData(
+					"moveItemActionUrl",
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/move_kb_object"
+					).buildString());
+				dropdownItem.putData(
+					"selectedItemClassNameId",
+					String.valueOf(kbFolder.getClassNameId()));
+				dropdownItem.putData(
+					"selectedItemId", String.valueOf(kbFolder.getKbFolderId()));
+				dropdownItem.putData("selectedItemType", "article");
+
 				dropdownItem.setIcon("move-folder");
 				dropdownItem.setLabel(
 					LanguageUtil.get(

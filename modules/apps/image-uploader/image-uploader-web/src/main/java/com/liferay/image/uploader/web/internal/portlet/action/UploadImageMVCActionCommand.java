@@ -219,10 +219,6 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			contentType);
 	}
 
-	private String _getTempImageFileName(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "tempImageFileName");
-	}
-
 	private void _handleUploadException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String cmd, long maxFileSize, Exception exception)
@@ -377,7 +373,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getScopeGroupId(),
 						themeDisplay.getUserId(),
 						UploadImageUtil.TEMP_IMAGE_FOLDER_NAME,
-						_getTempImageFileName(actionRequest));
+						UploadImageUtil.getTempImageFileName(actionRequest));
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
@@ -388,7 +384,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				return TempFileEntryUtil.addTempFileEntry(
 					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 					UploadImageUtil.TEMP_IMAGE_FOLDER_NAME,
-					_getTempImageFileName(actionRequest), file,
+					UploadImageUtil.getTempImageFileName(actionRequest), file,
 					tempFileEntry.getMimeType());
 			}
 		}

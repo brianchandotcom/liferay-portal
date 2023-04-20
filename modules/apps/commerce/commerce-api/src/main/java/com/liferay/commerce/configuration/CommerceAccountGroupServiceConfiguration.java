@@ -12,32 +12,31 @@
  * details.
  */
 
-package com.liferay.commerce.account.configuration;
+package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Alessio Antonio Rendina
  */
 @ExtendedObjectClassDefinition(
-	category = "users", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "orders", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.account.configuration.CommerceAccountServiceConfiguration",
+	id = "com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "commerce-account-service-configuration-name"
+	name = "commerce-account-group-service-configuration-name"
 )
-public interface CommerceAccountServiceConfiguration {
+public interface CommerceAccountGroupServiceConfiguration {
 
 	@Meta.AD(
-		deflt = "false", name = "apply-default-role-to-existing-users",
-		required = false
+		deflt = "" + CommerceAccountConstants.SITE_TYPE_B2C,
+		name = "commerce-site-type", optionLabels = {"B2C", "B2B", "B2X"},
+		optionValues = {"0", "1", "2"}, required = false
 	)
-	public boolean applyDefaultRoleToExistingUsers();
-
-	@Meta.AD(name = "site-roles", required = false)
-	public String[] siteRoles();
+	public int commerceSiteType();
 
 }

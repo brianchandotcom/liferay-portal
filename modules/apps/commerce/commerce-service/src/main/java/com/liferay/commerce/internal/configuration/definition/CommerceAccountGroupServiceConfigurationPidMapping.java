@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.configuration.definition;
+package com.liferay.commerce.internal.configuration.definition;
 
-import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,7 +34,7 @@ public class CommerceAccountGroupServiceConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return CommerceAccountConstants.SERVICE_NAME;
+		return CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT;
 	}
 
 }

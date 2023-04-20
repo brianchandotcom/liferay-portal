@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Qi Zhang
  */
-public class IllegalTaglibCheck extends BaseFileCheck {
+public class IllegalTaglibsCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

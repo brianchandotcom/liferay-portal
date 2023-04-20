@@ -243,7 +243,7 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary whitespace in `.ftl` files." />
 		</check>
-		<check name="IllegalTaglibCheck">
+		<check name="IllegalTaglibsCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases of incorrect use of certain taglib." />
 		</check>
@@ -990,7 +990,7 @@
 			<description name="Finds cases of incorrect use of certain classes." />
 			<property name="enforceJavaUtilFunctionImports" value="true" />
 		</check>
-		<check name="IllegalTaglibCheck">
+		<check name="IllegalTaglibsCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases of incorrect use of certain taglib." />
 		</check>

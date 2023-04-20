@@ -31,14 +31,14 @@ const getItemStyles = (wrapperElement, currentOffset, element, rtl) => {
 		};
 	}
 
+	const elementRect = element.getBoundingClientRect();
 	const wrapperRect = wrapperElement.getBoundingClientRect();
 
 	const x = rtl
-		? currentOffset.x +
-		  wrapperRect.right +
-		  wrapperElement.scrollLeft +
-		  HANDLER_OFFSET -
-		  window.innerWidth
+		? currentOffset.x -
+		  elementRect.width +
+		  wrapperElement.scrollLeft -
+		  HANDLER_OFFSET
 		: currentOffset.x +
 		  wrapperElement.scrollLeft -
 		  wrapperRect.left -
@@ -53,7 +53,8 @@ const getItemStyles = (wrapperElement, currentOffset, element, rtl) => {
 	const transform = `translate(${x}px, ${y}px)`;
 
 	return {
-		WebkitTransform: transform,
+		left: 0,
+		right: 'auto',
 		transform,
 	};
 };

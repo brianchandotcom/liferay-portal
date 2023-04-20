@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.util;
+package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.model.CommerceChannel;

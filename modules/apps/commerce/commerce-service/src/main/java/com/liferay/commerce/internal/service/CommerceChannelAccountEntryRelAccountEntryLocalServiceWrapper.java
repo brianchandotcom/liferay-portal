@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.service;
+package com.liferay.commerce.internal.service;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryTable;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryLocalServiceWrapper;
-import com.liferay.commerce.account.internal.util.AccountEntryUtil;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.context.CommerceGroupThreadLocal;
+import com.liferay.commerce.internal.util.AccountEntryUtil;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRelTable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;

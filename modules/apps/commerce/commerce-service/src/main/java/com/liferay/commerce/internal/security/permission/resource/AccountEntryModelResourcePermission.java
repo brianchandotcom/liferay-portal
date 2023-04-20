@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.security.permission.resource;
+package com.liferay.commerce.internal.security.permission.resource;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
-import com.liferay.commerce.account.internal.util.AccountEntryUtil;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.context.CommerceGroupThreadLocal;
+import com.liferay.commerce.internal.util.AccountEntryUtil;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;

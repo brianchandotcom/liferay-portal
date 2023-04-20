@@ -43,8 +43,7 @@ public class StructuredContentFolderNameExceptionMapper
 	protected Problem getProblem(FolderNameException folderNameException) {
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"Invalid structured content folder name " +
-				folderNameException.getMessage());
+			"The structured content folder name is invalid");
 	}
 
 }

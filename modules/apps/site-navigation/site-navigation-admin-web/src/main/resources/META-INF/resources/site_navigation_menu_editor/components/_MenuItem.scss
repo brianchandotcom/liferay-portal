@@ -74,31 +74,31 @@
 		opacity: 0.4;
 	}
 
-	&.is-over {
-		&::after {
-			border-top: 4px solid $primary-l1;
-			content: '';
-			display: block;
-			margin-top: 8px;
-			padding-bottom: 16px;
+	&.is-over-top::before,
+	&.is-over::after {
+		border-top: 4px solid $primary-l1;
+		content: '';
+		display: block;
+		margin-top: 8px;
+		padding-bottom: 16px;
+		width: 100%;
+	}
+
+	&.is-over::after {
+		transform: translateX(
+			calc(
+				var(--nesting-margin) *
+					(var(--nesting-level) - var(--over-nesting-level)) * -1px
+			)
+		);
+
+		[dir='rtl'] & {
 			transform: translateX(
 				calc(
 					var(--nesting-margin) *
-						(var(--nesting-level) - var(--over-nesting-level)) *
-						-1px
+						(var(--nesting-level) - var(--over-nesting-level)) * 1px
 				)
 			);
-			width: 100%;
-
-			[dir='rtl'] & {
-				transform: translateX(
-					calc(
-						var(--nesting-margin) *
-							(var(--nesting-level) - var(--over-nesting-level)) *
-							1px
-					)
-				);
-			}
 		}
 	}
 

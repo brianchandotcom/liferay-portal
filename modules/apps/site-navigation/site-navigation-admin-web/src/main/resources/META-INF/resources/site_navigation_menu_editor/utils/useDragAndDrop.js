@@ -161,13 +161,16 @@ function useNewDropTarget(item) {
 	const nextItemNestingRef = useRef(null);
 	const items = useItems();
 	const itemPath = getItemPath(siteNavigationMenuItemId, items);
+	const {languageId} = useConstants();
+	const {setTargetItemId, targetItemId} = useContext(DragDropContext);
 	const targetRef = useRef();
 	const targetRectRef = useRef(null);
 
-	const {languageId} = useConstants();
 	const rtl = Liferay.Language.direction[languageId] === 'rtl';
 
-	const {setTargetItemId, targetItemId} = useContext(DragDropContext);
+	const isFirstItem =
+		itemPath.length === 1 &&
+		items[0]?.siteNavigationMenuItemId === siteNavigationMenuItemId;
 
 	const [, dndTargetRef] = useDrop({
 		accept: ACCEPTING_ITEM_TYPE,
@@ -175,6 +178,13 @@ function useNewDropTarget(item) {
 			return monitor.isOver();
 		},
 		drop() {
+			if (targetItemId === '0') {
+				return {
+					order: 0,
+					parentId: '0',
+				};
+			}
+
 			const lastNestingLevel = nestingLevel;
 
 			cardWidthRef.current = null;
@@ -255,6 +265,15 @@ function useNewDropTarget(item) {
 				const nextItemNesting = nextItemNestingRef.current;
 				const targetRect = targetRectRef.current;
 
+				if (
+					isFirstItem &&
+					itemPosition.y < targetRect.top + targetRect.height * 0.25
+				) {
+					setTargetItemId('0');
+
+					return;
+				}
+
 				setTargetItemId(siteNavigationMenuItemId);
 
 				let nesting = 1;
@@ -294,6 +313,7 @@ function useNewDropTarget(item) {
 
 	return {
 		isOver: targetItemId === siteNavigationMenuItemId,
+		isOverFirstItem: isFirstItem && targetItemId === '0',
 		nestingLevel:
 			targetItemId === siteNavigationMenuItemId ? nestingLevel : 0,
 		targetRef: updateTargetRef,

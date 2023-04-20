@@ -118,7 +118,10 @@ export function MenuItem({item, onMenuItemRemoved}) {
 	const keyboardDragLayer = useDragLayer();
 	const setKeyboardDragLayer = useSetDragLayer();
 	const {handlerRef, isDragging} = useDragItem(item, updateMenuItemParent);
-	const {isOver, nestingLevel, targetRef} = useDropTarget(item);
+
+	const {isOver, isOverFirstItem, nestingLevel, targetRef} = useDropTarget(
+		item
+	);
 
 	const isKeyboardDragging = useMemo(
 		() =>
@@ -282,6 +285,7 @@ export function MenuItem({item, onMenuItemRemoved}) {
 						'active': selected,
 						'dragging': isDragging || isKeyboardDragging,
 						'is-over': isOver,
+						'is-over-top': isOverFirstItem,
 					}
 				)}
 				data-item-id={item.siteNavigationMenuItemId}

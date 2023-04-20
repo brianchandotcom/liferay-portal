@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,13 +34,9 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carolina Barbosa
  */
-@Component(service = {})
 public class DDMFormGuestUploadFieldUtil {
 
 	public static boolean isMaximumSubmissionLimitReached(
@@ -58,8 +55,11 @@ public class DDMFormGuestUploadFieldUtil {
 			return false;
 		}
 
+		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService =
+			_ddmFormInstanceRecordLocalServiceSnapshot.get();
+
 		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
+			ddmFormInstanceRecordLocalService.getFormInstanceRecords(
 				ddmFormInstance.getFormInstanceId(),
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
@@ -103,14 +103,9 @@ public class DDMFormGuestUploadFieldUtil {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	private void _setDDMFormInstanceRecordLocalService(
-		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService) {
-
-		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
-	}
-
-	private static DDMFormInstanceRecordLocalService
-		_ddmFormInstanceRecordLocalService;
+	private static final Snapshot<DDMFormInstanceRecordLocalService>
+		_ddmFormInstanceRecordLocalServiceSnapshot = new Snapshot<>(
+			DDMFormGuestUploadFieldUtil.class,
+			DDMFormInstanceRecordLocalService.class);
 
 }

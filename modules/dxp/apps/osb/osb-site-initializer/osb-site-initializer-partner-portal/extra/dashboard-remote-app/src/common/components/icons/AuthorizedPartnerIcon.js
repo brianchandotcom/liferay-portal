@@ -26,7 +26,7 @@ function AuthorizedPartnerIcon() {
 				height="33"
 				id="mask0_6629_387786"
 				maskUnits="userSpaceOnUse"
-				style={{'mask-type': 'alpha'}}
+				style={{maskType: 'alpha'}}
 				width="32"
 				x="0"
 				y="0"

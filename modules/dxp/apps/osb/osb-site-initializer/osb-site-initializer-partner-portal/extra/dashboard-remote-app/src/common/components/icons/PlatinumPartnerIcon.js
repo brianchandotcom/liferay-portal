@@ -29,7 +29,7 @@ function PlatinumPartnerIcon() {
 				height="32"
 				id="mask0_6629_390596"
 				maskUnits="userSpaceOnUse"
-				style={{'mask-type': 'alpha'}}
+				style={{maskType: 'alpha'}}
 				width="28"
 				x="2"
 				y="1"

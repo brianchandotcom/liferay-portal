@@ -34,7 +34,7 @@ function SilverPartnerIcon() {
 				height="31"
 				id="mask0_6629_390566"
 				maskUnits="userSpaceOnUse"
-				style={{'mask-type': 'alpha'}}
+				style={{maskType: 'alpha'}}
 				width="30"
 				x="0"
 				y="0"

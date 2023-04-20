@@ -80,7 +80,9 @@ export function useDragItem(item, onDragEnd) {
 		parentId,
 		setHorizontalOffset,
 		setParentId,
+		setTargetItemId,
 		setVerticalOffset,
+		targetItemId,
 	} = useContext(DragDropContext);
 
 	const [{isDragging}, handlerRef, previewRef] = useDrag({
@@ -94,7 +96,13 @@ export function useDragItem(item, onDragEnd) {
 		}),
 		end(_, monitor) {
 			if (Liferay.FeatureFlags['LPS-134527']) {
+				if (!targetItemId) {
+					return;
+				}
+
 				const dropResult = monitor.getDropResult();
+
+				setTargetItemId(null);
 
 				if (!dropResult) {
 					return;
@@ -169,9 +177,6 @@ function useNewDropTarget(item) {
 		drop() {
 			const lastNestingLevel = nestingLevel;
 
-			setTargetItemId(null);
-			setNestingLevel(0);
-
 			cardWidthRef.current = null;
 			nextItemNestingRef.current = null;
 			targetRectRef.current = null;
@@ -204,6 +209,8 @@ function useNewDropTarget(item) {
 		hover(source, monitor) {
 			if (monitor.canDrop(source, monitor)) {
 				if (!targetRef.current || itemPath.includes(source.id)) {
+					setTargetItemId(null);
+
 					return;
 				}
 
@@ -287,7 +294,8 @@ function useNewDropTarget(item) {
 
 	return {
 		isOver: targetItemId === siteNavigationMenuItemId,
-		nestingLevel,
+		nestingLevel:
+			targetItemId === siteNavigationMenuItemId ? nestingLevel : 0,
 		targetRef: updateTargetRef,
 	};
 }

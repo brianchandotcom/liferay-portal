@@ -163,9 +163,8 @@ public class SoyComponentRendererHelper {
 			ScriptData scriptData = new ScriptData();
 
 			scriptData.append(
-				_portal.getPortletId(_httpServletRequest),
-				componentJavaScript, sb.toString(),
-				ScriptData.ModulesType.ES6);
+				_portal.getPortletId(_httpServletRequest), componentJavaScript,
+				sb.toString(), ScriptData.ModulesType.ES6);
 
 			scriptData.writeTo(writer);
 		}
@@ -182,9 +181,8 @@ public class SoyComponentRendererHelper {
 			}
 
 			scriptData.append(
-				_portal.getPortletId(_httpServletRequest),
-				componentJavaScript, sb.toString(),
-				ScriptData.ModulesType.ES6);
+				_portal.getPortletId(_httpServletRequest), componentJavaScript,
+				sb.toString(), ScriptData.ModulesType.ES6);
 		}
 	}
 

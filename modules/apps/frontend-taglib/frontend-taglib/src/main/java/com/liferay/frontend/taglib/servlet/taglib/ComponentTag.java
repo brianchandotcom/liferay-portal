@@ -15,13 +15,10 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -36,7 +33,6 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -290,8 +286,6 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	private static final char[] _UNSAFE_MODULE_NAME_CHARS = {
 		CharPool.PERIOD, CharPool.DASH
 	};
-
-	private static final Log _log = LogFactoryUtil.getLog(ComponentTag.class);
 
 	private String _componentId;
 	private String _containerId;

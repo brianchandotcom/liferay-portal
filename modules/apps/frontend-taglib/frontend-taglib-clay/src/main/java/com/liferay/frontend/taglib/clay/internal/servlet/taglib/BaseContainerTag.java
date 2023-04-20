@@ -20,8 +20,6 @@ import com.liferay.frontend.taglib.clay.internal.servlet.taglib.util.ServicesPro
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -367,7 +365,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 
 			if (Validator.isNotNull(_propsTransformer)) {
 				String resolvedPackageName = NPMResolvedPackageNameUtil.get(
-						getPropsTransformerServletContext());
+					getPropsTransformerServletContext());
 
 				propsTransformer =
 					resolvedPackageName + "/" + _propsTransformer;
@@ -514,9 +512,6 @@ public class BaseContainerTag extends AttributesTagSupport {
 		jspWriter.write(cssClasses);
 		jspWriter.write("\"");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseContainerTag.class);
 
 	private Map<String, Object> _additionalProps;
 	private String _componentId;

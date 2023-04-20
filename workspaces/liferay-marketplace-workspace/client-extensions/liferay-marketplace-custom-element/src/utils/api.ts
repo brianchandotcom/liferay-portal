@@ -204,6 +204,15 @@ export async function getAccountInfoFromCommerce(accountId: number) {
 	return (await response.json()) as CommerceAccount;
 }
 
+export async function getAccountAddressesFromCommerce(accountId: number) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-account/v1.0/accounts/${accountId}/accountAddresses`,
+		{headers, method: 'GET'}
+	);
+
+	return (await response.json()) as {items: BillingAddress[]};
+}
+
 export async function getAccounts() {
 	const response = await fetch(
 		'/o/headless-admin-user/v1.0/accounts?pageSize=-1',

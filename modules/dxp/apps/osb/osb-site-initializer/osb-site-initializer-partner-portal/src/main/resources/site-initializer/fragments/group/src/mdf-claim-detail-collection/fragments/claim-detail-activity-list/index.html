@@ -3,18 +3,12 @@
 value?string["¤,##0.00;; currencyCode=${currency_key}"] /] [/#function] [#macro
 activity_panel activity]
 <div class="panel panel-secondary" role="tablist">
-	<button
-		aria-controls="mdfClaimActivitiesPanel-${activity.id}"
-		aria-expanded="false"
-		class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link"
-		data-target="#mdfClaimActivitiesPanel-${activity.id}"
-		data-toggle="liferay-collapse"
-		role="tab"
-	>
+<button aria-controls="mdfClaimActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfClaimActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
 		<div>
 			<div class="d-flex">
 				<div class="w-100">
 					<h5 class="text-neutral-10">${activity.name}</h5>
+
 					<div class="d-flex justify-content-between">
 						<h5 class="justify-content-end text-neutral-10">
 							${get_currency(activity.totalCost?number,
@@ -26,17 +20,10 @@ activity_panel activity]
 		</div>
 	</button>
 
-	<div
-		class="collapse panel-collapse"
-		id="mdfClaimActivitiesPanel-${activity.id}"
-		role="tabpanel"
-	>
+	<div class="collapse panel-collapse" id="mdfClaimActivitiesPanel-${activity.id}" role="tabpanel">
 		<div class="panel-body">
 			[#if activity.listOfQualifiedLeads?has_content]
-			<a
-				class="align-items-end d-flex mx-2 my-3 text-decoration-none"
-				href="${activity.listOfQualifiedLeads.link.href}"
-			>
+		<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${activity.listOfQualifiedLeads.link.href}">
 				<span class="mr-2 mt-3 text-neutral-5">
 					[@clay.icon class="mr-2 mt-3 text-neutral-5"
 					symbol="file-xsl" /]
@@ -51,21 +38,15 @@ activity_panel activity]
 			[/#if]
 
 			<div class="table-responsive">
-				<table
-					class="bg-brand-primary-lighten-6 border-0 show-quick-actions-on-hover table table-autofit table-hover table-list table-striped"
-				>
+			<table class="bg-brand-primary-lighten-6 border-0 show-quick-actions-on-hover table table-autofit table-hover table-list table-striped">
 					<thead>
 						<tr>
-							<th
-								class="border-neutral-2 border-top rounded-0 table-cell-expand w-50"
-							>
+						<th class="border-neutral-2 border-top rounded-0 table-cell-expand w-50">
 								<p class="mt-4 text-neutral-10">
 									Budget Breakdown
 								</p>
 							</th>
-							<td
-								class="border-neutral-2 border-top rounded-0 w-50"
-							></td>
+						<td class="border-neutral-2 border-top rounded-0 w-50" />
 						</tr>
 					</thead>
 
@@ -77,6 +58,7 @@ activity_panel activity]
 								<p class="text-neutral-10">
 									${budget.expenseName}
 								</p>
+
 								<p class="text-neutral-10">
 									${get_currency(budget.invoiceAmount?number,
 									(activity.currency.key)!"USD")}
@@ -84,10 +66,7 @@ activity_panel activity]
 							</td>
 							<td class="align-baseline border-0">
 								[#if budget.invoice?has_content]
-								<a
-									class="align-items-end d-flex mx-2 my-3 text-decoration-none"
-									href="${budget.invoice.link.href}"
-								>
+							<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${budget.invoice.link.href}">
 									<span class="mr-2 mt-3 text-neutral-5">
 										[@clay.icon class="mr-2 mt-3
 										text-neutral-5" symbol="document-table"
@@ -120,6 +99,7 @@ restClient.get("/c/mdfclaims/${mdf_claim_id}/mdfClmToMDFClmActs?nestedFields=mdf
 		which attributes are available from
 		<em>request.getAttribute("INFO_ITEM")</em>.
 	</p>
+
 	<p class="mb-0">
 		It's important to note that this will only display the attributes of a
 		display page when you view the published display page not when you are

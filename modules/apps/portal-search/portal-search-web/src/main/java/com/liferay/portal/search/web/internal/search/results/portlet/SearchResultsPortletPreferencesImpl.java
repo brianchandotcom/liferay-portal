@@ -45,7 +45,7 @@ public class SearchResultsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getFieldsToDisplayString() {
+	public String getFieldsToDisplay() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			SearchResultsPortletPreferences.PREFERENCE_KEY_FIELDS_TO_DISPLAY);
 

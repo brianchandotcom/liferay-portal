@@ -44,7 +44,7 @@ public interface SearchResultsPortletPreferences {
 
 	public String getFederatedSearchKey();
 
-	public String getFieldsToDisplayString();
+	public String getFieldsToDisplay();
 
 	public int getPaginationDelta();
 

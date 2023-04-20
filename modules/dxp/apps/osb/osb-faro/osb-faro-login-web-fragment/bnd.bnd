@@ -1,4 +1,4 @@
-Bundle-Description: Liferay OSB Faro Login Web Fragment
+Bundle-Name: Liferay OSB Faro Login Web Fragment
 Bundle-SymbolicName: com.liferay.osb.faro.login.web.fragment
 Bundle-Version: 1.0.0
 Fragment-Host: com.liferay.login.web;bundle-version="2.0.7"

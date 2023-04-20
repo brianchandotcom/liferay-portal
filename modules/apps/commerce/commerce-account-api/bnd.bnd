@@ -2,7 +2,6 @@ Bundle-Name: Liferay Commerce Account API
 Bundle-SymbolicName: com.liferay.commerce.account.api
 Bundle-Version: 21.1.1
 Export-Package:\
-	com.liferay.commerce.account.configuration,\
 	com.liferay.commerce.account.constants,\
 	com.liferay.commerce.account.exception,\
 	com.liferay.commerce.account.model,\

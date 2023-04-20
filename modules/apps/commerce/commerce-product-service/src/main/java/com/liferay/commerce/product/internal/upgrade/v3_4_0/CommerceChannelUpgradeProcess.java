@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.upgrade.v3_4_0;
 
 import com.liferay.account.settings.AccountEntryGroupSettings;
-import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
+import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.util.AccountEntryAllowedTypesUtil;

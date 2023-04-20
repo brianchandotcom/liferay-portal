@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.content.web.internal.importer.type;
 
-import com.liferay.commerce.account.configuration.CommerceAccountGroupServiceConfiguration;
+import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration;
 import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;

@@ -6,8 +6,8 @@
 	fill-opacity: 0.25;
 }
 
-.yui3-widget-bd {
-	height: 20px;
+#organization-name {
+	font-weight: normal;
 }
 
 .dropdown-item.focus {
@@ -18,11 +18,21 @@
 	min-width: 90px;
 }
 
+.modal-title {
+	white-space: inherit !important;
+}
+
 .request-modal-header {
 	margin-bottom: 0 !important;
 }
-.modal-title {
-	white-space: inherit !important;
+
+html:not(#__):not(#___) .cadmin .modal-body {
+	padding-bottom: 10px;
+}
+
+html:not(#__):not(#___) .cadmin .modal-footer {
+	border-top: 1px solid white;
+	padding-top: 0px;
 }
 
 html:not(#__):not(#___) .cadmin .modal-header,
@@ -45,15 +55,6 @@ html:not(#__):not(#___) .cadmin textarea {
 	padding: 8px;
 }
 
-#organization-name {
-	font-weight: normal;
-}
-
-html:not(#__):not(#___) .cadmin .modal-footer {
-	border-top: 1px solid white;
-	padding-top: 0px;
-}
-
-html:not(#__):not(#___) .cadmin .modal-body {
-	padding-bottom: 10px;
+.yui3-widget-bd {
+	height: 20px;
 }

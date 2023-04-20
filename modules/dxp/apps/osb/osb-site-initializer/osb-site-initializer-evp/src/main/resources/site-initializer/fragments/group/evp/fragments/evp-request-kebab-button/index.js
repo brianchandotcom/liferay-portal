@@ -14,14 +14,16 @@
 const updateStatus = async (key, name, message) => {
 	const requestID = fragmentElement.querySelector('.requestID').value;
 
+	const requestBody = {
+		messageEVPManager: `${message}`,
+		requestStatus: {
+			key: `${key}`,
+			name: `${name}`,
+		},
+	};
+
 	await fetch(`/o/c/evprequests/${requestID}`, {
-		body: `{
-        "requestStatus":{
-           "key":"${key}",
-           "name":"${name}"
-        },
-        "messageEVPManager":"${message}"
-     }`,
+		body: JSON.stringify(requestBody),
 		headers: {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,

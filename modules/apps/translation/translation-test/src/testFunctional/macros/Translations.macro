@@ -228,8 +228,8 @@ definition {
 
 			for (var experienceName : list ${experienceList}) {
 				Click.clickNoWaitForVisible(
-					key_fieldName = ${experienceName},
-					locator1 = "FormFields#CHECKBOX");
+					key_experienceName = ${experienceName},
+					locator1 = "Translation#EXPERIENCE_CHECKBOX");
 			}
 		}
 

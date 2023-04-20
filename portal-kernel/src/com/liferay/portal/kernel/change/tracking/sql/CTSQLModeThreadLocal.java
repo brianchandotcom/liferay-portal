@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.change.tracking.sql;
+package com.liferay.portal.kernel.change.tracking.sql;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;

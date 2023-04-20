@@ -105,6 +105,7 @@ definition {
 				caseName = "Case 1",
 				caseResultName = "case result 1",
 				componentName = ${componentName},
+				messageError = "Failed to run on CI",
 				runName = "Run 1");
 
 			JSONTestray.addCaseResult(
@@ -112,6 +113,7 @@ definition {
 				caseName = "Case 1",
 				caseResultName = "case result 2",
 				componentName = ${componentName},
+				messageError = "Aborted prior to running test",
 				runName = "Run 2");
 		}
 
@@ -179,7 +181,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by assignee"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterByAssignee {
 		task ("Given that the user assign to me a case result") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -220,7 +222,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by product version name"
-	@priority = 5
+	@priority = 2
 	test AdminCanFilterByProductVersionName {
 		task ("Given that the user has two product version different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -265,7 +267,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by routine"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterByRoutine {
 		task ("Given that the user has two routine different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -306,7 +308,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by status"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterByStatus {
 		task ("Given that the user complete a test with passed status") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -341,7 +343,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
-	@priority = 3
+	@priority = 2
 	test AdminCanFilterOptionsToFilter {
 		task ("When the user searches for a field called routine") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -363,6 +365,53 @@ definition {
 			AssertElementNotPresent(
 				locator1 = "Select#SELECT_FIELD_LABEL",
 				selectFieldLabel = "Assignee");
+		}
+	}
+
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by environment"
+	@priority = 3
+	test AdminCanFilterCaseHistoryByEnvironment {
+		task ("Given that the user has two enviroments different in the table") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			WaitForPageLoad();
+
+			AssertElementPresent(
+				key_projectName = "Run 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result by enviroment") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_fieldLabel = "Environment",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Run 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only the run 1 in the table") {
+			AssertElementPresent(
+				key_projectName = "Run 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see run 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 

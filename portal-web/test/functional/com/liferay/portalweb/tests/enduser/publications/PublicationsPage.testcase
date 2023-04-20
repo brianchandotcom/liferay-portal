@@ -314,18 +314,19 @@ definition {
 			PublicationsNavigator.gotoReviewChanges();
 
 			PublicationsChanges.viewChanges(
-				changeCategory = "Page Set",
+				changeCategory = "Fragment Entry Link",
 				changeSite = "Site Name",
-				changeTitle = "Pages",
+				changeTitle = "Footer Nav Dark for Custom Master Page Template.",
 				changeType = "Added",
 				changeUser = "Test Test");
 
 			PublicationsChanges.viewChanges(
-				changeCategory = "Page",
+				changeCategory = "Asset",
 				changeSite = "Site Name",
-				changeTitle = "Test Page",
+				changeTitle = "Custom Master Page Template",
 				changeType = "Added",
-				changeUser = "Test Test");
+				changeUser = "Test Test",
+				showAllItems = "true");
 		}
 
 		PublicationsNavigator.gotoPublish(

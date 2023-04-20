@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.processor.FTLSourceProcessor;
+import com.liferay.source.formatter.processor.JSPSourceProcessor;
 import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.util.List;
@@ -44,8 +46,16 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
-		List<String> replacedTaglibs = getAttributeValues(
-			_REPLACED_TAGLIBS_KEY, absolutePath);
+		List<String> replacedTaglibs = null;
+
+		if (sourceProcessor instanceof FTLSourceProcessor) {
+			replacedTaglibs = getAttributeValues(
+				_FTL_REPLACED_TAGLIBS_KEY, absolutePath);
+		}
+		else if (sourceProcessor instanceof JSPSourceProcessor) {
+			replacedTaglibs = getAttributeValues(
+				_JSP_REPLACED_TAGLIBS_KEY, absolutePath);
+		}
 
 		if (sourceFormatterArgs.isFormatCurrentBranch() &&
 			ListUtil.isNotEmpty(replacedTaglibs)) {
@@ -63,25 +73,16 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 					String[] replacedTaglibArray = StringUtil.split(
 						replacedTaglib, "->");
 
-					if (replacedTaglibArray.length != 3) {
+					if (replacedTaglibArray.length != 2) {
 						continue;
 					}
 
-					String fileType = replacedTaglibArray[0];
-					String oldTaglib = replacedTaglibArray[1];
-
-					if (((fileName.endsWith(".jsp") &&
-						  StringUtil.equals(fileType, "jsp")) ||
-						 (fileName.endsWith(".ftl") &&
-						  StringUtil.equals(fileType, "ftl"))) &&
-						line.contains("<" + oldTaglib)) {
-
+					if (line.contains(replacedTaglibArray[0])) {
 						addMessage(
 							fileName,
 							StringBundler.concat(
-								"Do not use following old taglib. '", oldTaglib,
-								"' should be replaced by '",
-								replacedTaglibArray[2], "', see LPS-179523"));
+								"Use ", replacedTaglibArray[1], " instead of ",
+								replacedTaglibArray[0]));
 					}
 				}
 			}
@@ -90,6 +91,10 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _REPLACED_TAGLIBS_KEY = "replacedTaglibs";
+	private static final String _FTL_REPLACED_TAGLIBS_KEY =
+		"ftlReplacedTaglibs";
+
+	private static final String _JSP_REPLACED_TAGLIBS_KEY =
+		"jspReplacedTaglibs";
 
 }

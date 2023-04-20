@@ -158,6 +158,33 @@ definition {
 		}
 	}
 
+	@summary = "Partially create a new claim on the MDF details page"
+	macro partialNewClaim {
+		Button.click(button = "New Claim");
+
+		WaitForPageLoad();
+
+		if (!(isSet(activityIndex))) {
+			var activityIndex = 0;
+		}
+
+		if (!(isSet(budgetIndex))) {
+			var budgetIndex = 0;
+		}
+
+		for (var actvIndex : list ${activityIndex}) {
+			Click.javaScriptClick(
+				key_fieldName = "activities[${actvIndex}].selected",
+				locator1 = "Checkbox#CHECKBOX_NAME");
+
+			for (var bdgtIndex : list ${budgetIndex}) {
+				Click.javaScriptClick(
+					key_fieldName = "activities[${actvIndex}].budgets[${bdgtIndex}].selected",
+					locator1 = "Checkbox#CHECKBOX_NAME");
+			}
+		}
+	}
+
 	@summary = "Search claim by ID"
 	macro searchClaim {
 		Type(

@@ -318,7 +318,7 @@ definition {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
 		}
-				
+
 		var javaScriptCountElement = '''
         
         return document.querySelector("input[name='${nametest}']").value;

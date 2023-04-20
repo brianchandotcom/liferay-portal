@@ -77,7 +77,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${actualValue},
-				expected = "{title=Document_1.txt}");
+				expected = "{fileName=Document_1.txt, title=Document_1.txt}");
 		}
 	}
 

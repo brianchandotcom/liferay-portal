@@ -14,6 +14,38 @@
 		gap: 24px;
 		padding: 24px;
 
+		&-header {
+			align-items: center;
+			border-bottom: 1px solid #e2e2e4;
+			display: flex;
+			gap: 24px;
+			padding-bottom: 23px;
+
+			&-descripition {
+				font-size: 14px;
+				font-weight: 600;
+				line-height: 16px;
+			}
+
+			&-icon {
+				height: 48px;
+				width: 48px;
+			}
+
+			&-text-container {
+				color: #282934;
+				display: flex;
+				flex-direction: column;
+			}
+
+			&-title {
+				color: #54555f;
+				font-size: 24px;
+				font-weight: 700;
+				line-height: 28px;
+			}
+		}
+
 		&-info-block {
 			align-items: center;
 			display: flex;

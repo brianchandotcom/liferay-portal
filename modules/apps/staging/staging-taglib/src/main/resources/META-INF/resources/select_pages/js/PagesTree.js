@@ -32,12 +32,14 @@ export default function PagesTree({
 	items,
 	portletNamespace: namespace,
 	privateLayout,
-	selectedPlids: initialSelectedPlids,
+	selectedLayoutIds: initialSelectedLayoutIds,
 	treeId,
 }) {
 	const {changeItemSelectionURL, loadMoreItemsURL, maxPageSize} = config;
 
-	const [selectedPlids, setSelectedPlids] = useState(initialSelectedPlids);
+	const [selectedLayoutIds, setSelectedLayoutIds] = useState(
+		initialSelectedLayoutIds
+	);
 
 	const onLoadMore = useCallback(
 		(item, initialCursor = 1) => {
@@ -78,7 +80,7 @@ export default function PagesTree({
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					groupId,
 					layoutId: item.layoutId,
-					plid: item.id,
+					plid: item.plid,
 					privateLayout,
 					recursive: true,
 					treeId: `${treeId}SelectedNode`,
@@ -86,8 +88,8 @@ export default function PagesTree({
 				method: 'post',
 			})
 				.then((response) => response.json())
-				.then((nextSelectedPlids) =>
-					setSelectedPlids(nextSelectedPlids)
+				.then((nextSelectedLayoutIds) =>
+					setSelectedLayoutIds(nextSelectedLayoutIds)
 				)
 				.catch(() => openErrorToast());
 		},
@@ -101,7 +103,7 @@ export default function PagesTree({
 				defaultItems={items}
 				onLoadMore={onLoadMore}
 				onSelectionChange={() => {}}
-				selectedKeys={new Set(selectedPlids)}
+				selectedKeys={new Set(selectedLayoutIds)}
 				selectionMode="multiple-recursive"
 				showExpanderOnHover={false}
 			>
@@ -121,7 +123,7 @@ export default function PagesTree({
 				name={`${namespace}layoutIds`}
 				readOnly
 				type="hidden"
-				value={JSON.stringify(selectedPlids)}
+				value={JSON.stringify(selectedLayoutIds)}
 			/>
 		</>
 	);
@@ -133,7 +135,7 @@ PagesTree.propTypes = {
 	items: PropTypes.array.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	privateLayout: PropTypes.bool.isRequired,
-	selectedPlids: PropTypes.array.isRequired,
+	selectedLayoutIds: PropTypes.array.isRequired,
 	treeId: PropTypes.string.isRequired,
 };
 

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SessionTreeJSClicks;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -55,11 +55,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -194,7 +192,7 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"privateLayout", isSelectPagesPrivateLayout()
 		).put(
-			"selectedPlids", _getSelectedPlids()
+			"selectedLayoutIds", SetUtil.fromArray(_getSelectedLayoutIdsArray())
 		).put(
 			"treeId", _treeId
 		).build();
@@ -428,28 +426,6 @@ public class LayoutsTreeDisplayContext {
 		_selectedLayoutIdsArray = selectedLayoutIdsArray;
 
 		return _selectedLayoutIdsArray;
-	}
-
-	private Set<Long> _getSelectedPlids() throws Exception {
-		Set<Long> plids = new HashSet<>();
-
-		for (long layoutId : _getSelectedLayoutIdsArray()) {
-			if (layoutId == 0) {
-				plids.add(layoutId);
-
-				continue;
-			}
-
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				_getSelectPagesGroupId(), isSelectPagesPrivateLayout(),
-				layoutId);
-
-			if (layout != null) {
-				plids.add(layout.getPlid());
-			}
-		}
-
-		return plids;
 	}
 
 	private long _getSelectPagesGroupId() {

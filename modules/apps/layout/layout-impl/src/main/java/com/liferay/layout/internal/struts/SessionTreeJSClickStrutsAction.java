@@ -137,12 +137,7 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					httpServletRequest);
-
-			String json = portalPreferences.getValue(
-				SessionTreeJSClicks.class.getName(), treeId + "Plid");
+			String json = _getCheckedLayoutIds(httpServletRequest, treeId);
 
 			if (Validator.isNotNull(json)) {
 				ServletResponseUtil.write(httpServletResponse, json);
@@ -206,6 +201,31 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 				}
 			}
 		}
+	}
+
+	private String _getCheckedLayoutIds(
+		HttpServletRequest httpServletRequest, String treeId) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
+
+		long[] checkedLayoutIds = StringUtil.split(
+			portalPreferences.getValue(
+				SessionTreeJSClicks.class.getName(), treeId),
+			0L);
+
+		for (long checkedLayoutId : checkedLayoutIds) {
+			if (checkedLayoutId == LayoutConstants.DEFAULT_PLID) {
+				jsonArray.put(String.valueOf(LayoutConstants.DEFAULT_PLID));
+			}
+
+			jsonArray.put(String.valueOf(checkedLayoutId));
+		}
+
+		return jsonArray.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

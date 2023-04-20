@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/select_pages/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(group, groupId, request, renderRequest, renderResponse);

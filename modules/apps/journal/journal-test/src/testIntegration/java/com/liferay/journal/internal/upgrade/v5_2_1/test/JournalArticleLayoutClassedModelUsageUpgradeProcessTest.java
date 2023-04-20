@@ -146,6 +146,15 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 	@After
 	public void tearDown() throws Exception {
+		try {
+			_pushServiceContext(_liveGroup, _layout);
+
+			_stagingLocalService.disableStaging(
+				_liveGroup, ServiceContextThreadLocal.getServiceContext());
+		}
+		catch (Exception exception) {
+		}
+
 		PrincipalThreadLocal.setName(_originalName);
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);

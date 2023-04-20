@@ -10,39 +10,44 @@
 }
 
 .select-item-btn {
-	background: #fff;
-	border: 1px solid;
-	border-color: var(--form-input-label-color);
-	border-radius: 7px;
-	font-size: 22px;
-	height: 42px;
+	background: var(--form-input-background-color);
 	justify-content: space-between;
-	margin-bottom: 0;
 	padding: 0 0px;
 }
 
 .select-item-btn svg {
 	position: absolute;
 	right: 14px;
-	top: 39%;
+	top: 50%;
 	transition: transform 0.3s linear;
 	width: 16px;
 }
 
-.select-item-btn .div-svg {
+.select-item-btn .svg-caret-double {
+	background: var(--form-input-background-color);
 	border: 1px solid black;
 	border-radius: 0px 5px 5px 0px;
 	padding: 20px;
 	width: 47px;
 }
 
-.select-item-btn span {
-	font-size: 16px;
-	padding-left: 14px;
+.select-item-btn input {
+	width: 100%;
+  height: 42px;
+	border-radius: 7px 0px 0px 7px;
+}
+
+.select-item-btn input:focus{
+  z-index: 2;
+}
+
+.svg-caret-double:focus{
+
+	box-shadow: 0 0 0 0.125rem var(--color-neutral-0) , 0 0 0 0.25rem var(--color-focus);
 }
 
 .content-listed {
-	background: white;
+	background: var(--form-input-background-color);
 	border-radius: 17px;
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 	display: none;
@@ -62,6 +67,20 @@
 
 .content-listed .search-organization {
 	position: relative;
+}
+
+.content-listed #your-organizations,
+#all-organizations {
+	font-weight: bold;
+}
+
+.content-listed .options-organizations {
+	cursor: pointer;
+	list-style-type: none;
+	margin-bottom: 0rem;
+	margin-top: 6px;
+	max-height: 250px;
+	padding-right: 7px;
 }
 
 .search-organization svg {
@@ -93,14 +112,7 @@
 	color: #bfbfbf;
 }
 
-.content-listed .options-organizations {
-	cursor: pointer;
-	list-style-type: none;
-	margin-bottom: 0rem;
-	margin-top: 6px;
-	max-height: 250px;
-	padding-right: 7px;
-}
+
 
 .options-organizations::-webkit-scrollbar {
 	width: 7px;
@@ -130,7 +142,4 @@ li.selected {
 	border-radius: 5px;
 }
 
-.content-listed #your-organizations,
-#all-organizations {
-	font-weight: bold;
-}
+

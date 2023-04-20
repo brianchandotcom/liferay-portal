@@ -11,18 +11,19 @@
 
 const wrapper = document.querySelector('.wrapper');
 const selectBtn = document.querySelector('.select-item-btn');
+const selectText = selectBtn.querySelector('.select-item-btn input');
 const searchInput = document.querySelector('.search-organization input');
 const allOptions = document.querySelectorAll('.options-organizations li');
 const itemSelected = document.querySelector('.item-selected');
 const yourOrganizations = document.querySelector('#your-organizations');
 const allOrganizations = document.querySelector('#all-organizations');
 
-
 selectBtn.addEventListener('click', () => {
 	wrapper.classList.toggle('active');
 	if (wrapper.classList.contains('active')) {
 		document.addEventListener('click', closeDropDown);
-	} else {
+	}
+	else {
 		document.removeEventListener('click', closeDropDown);
 	}
 });
@@ -37,13 +38,8 @@ function closeDropDown(event) {
 
 allOptions.forEach((option) => {
 	option.addEventListener('click', () => {
-
-		itemSelected.classList.remove('text-secondary');
 		wrapper.classList.remove('active');
-		selectBtn.querySelector('.select-item-btn span').textContent =
-			option.textContent;
-		selectBtn.value = option.getAttribute('value');
-
+		selectText.value = option.textContent;
 		const inputID = document.querySelector(
 			"input[name='r_organization_c_evpOrganizationId']"
 		);
@@ -51,8 +47,8 @@ allOptions.forEach((option) => {
 			"input[name='r_organization_c_evpOrganizationId-label']"
 		);
 
-		inputID.value = selectBtn.value;
-		inputLabel.value = itemSelected.innerHTML.split(' - ')[1];
+		inputID.value = selectText.value.split(' - ')[0];
+		inputLabel.value = selectText.value.split(' - ')[1];
 
 		searchInput.value = '';
 		filterData('');
@@ -68,10 +64,13 @@ const filterData = (typing) => {
 	});
 };
 
-searchInput.addEventListener('keyup', () => {
-	const typing = searchInput.value;
+function handleTyping() {
+	const typing = this.value;
 	filterData(typing);
-});
+}
+
+searchInput.addEventListener('keyup', handleTyping);
+itemSelected.addEventListener('keyup', handleTyping);
 
 const getOrganizationsLabelControl = () => {
 	const checkVisibleOptions = (selector, element) => {
@@ -90,6 +89,5 @@ const getOrganizationsLabelControl = () => {
 		allOrganizations
 	);
 };
-
 
 getOrganizationsLabelControl();

@@ -523,26 +523,26 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		// Many to many
 
 		_testPostCustomObjectEntryWithNestedSystemObjectEntry(
+			false,
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY),
-			false);
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
 
 		// Many to one
 
 		_testPostCustomObjectEntryWithNestedSystemObjectEntry(
+			true,
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
-			true);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 		// One to many
 
 		_testPostCustomObjectEntryWithNestedSystemObjectEntry(
+			false,
 			_addObjectRelationship(
 				_objectDefinition1, _userSystemObjectDefinition,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
-			false);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 	}
 
 	@Test
@@ -558,26 +558,26 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		// Many to many
 
 		_testPutCustomObjectEntryWithNestedSystemObjectEntry(
+			false,
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY),
-			false);
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
 
 		// Many to one
 
 		_testPutCustomObjectEntryWithNestedSystemObjectEntry(
+			true,
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
-			true);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 		// One to many
 
 		_testPutCustomObjectEntryWithNestedSystemObjectEntry(
+			false,
 			_addObjectRelationship(
 				_objectDefinition1, _userSystemObjectDefinition,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
-			false);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 	}
 
 	@Test
@@ -792,8 +792,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	private void _assertSystemObjectEntry(
-		JSONObject systemObjectEntryJSONObject, UserAccount userAccount,
-		String systemObjectFieldName, String systemObjectFieldValue) {
+		JSONObject systemObjectEntryJSONObject, String systemObjectFieldName,
+		String systemObjectFieldValue, UserAccount userAccount) {
 
 		Assert.assertEquals(
 			systemObjectEntryJSONObject.get("emailAddress"),
@@ -821,8 +821,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	private JSONObject _createSystemObjectJSONObject(
-			UserAccount userAccount, String systemFieldName,
-			String systemFieldValue)
+			String systemFieldName, String systemFieldValue,
+			UserAccount userAccount)
 		throws Exception {
 
 		JSONObject userAccountJSONObject = JSONFactoryUtil.createJSONObject(
@@ -1088,14 +1088,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	private void _testPostCustomObjectEntryWithNestedSystemObjectEntry(
-			ObjectRelationship objectRelationship, boolean manyToOne)
+			boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
 		UserAccount userAccount = _randomUserAccount();
 
 		JSONObject userAccountJSONObject = _createSystemObjectJSONObject(
-			userAccount, _SYSTEM_OBJECT_FIELD_NAME_1,
-			_SYSTEM_OBJECT_FIELD_VALUE);
+			_SYSTEM_OBJECT_FIELD_NAME_1, _SYSTEM_OBJECT_FIELD_VALUE,
+			userAccount);
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			_toBody(manyToOne, objectRelationship, userAccountJSONObject),
@@ -1122,19 +1122,19 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.GET);
 
 		_assertSystemObjectEntry(
-			systemObjectEntryJSONObject, userAccount,
-			_SYSTEM_OBJECT_FIELD_NAME_1, _SYSTEM_OBJECT_FIELD_VALUE);
+			systemObjectEntryJSONObject, _SYSTEM_OBJECT_FIELD_NAME_1,
+			_SYSTEM_OBJECT_FIELD_VALUE, userAccount);
 	}
 
 	private void _testPutCustomObjectEntryWithNestedSystemObjectEntry(
-			ObjectRelationship objectRelationship, boolean manyToOne)
+			boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
 		UserAccount postUserAccount = _randomUserAccount();
 
 		JSONObject userAccountJSONObject = _createSystemObjectJSONObject(
-			postUserAccount, _SYSTEM_OBJECT_FIELD_NAME_2,
-			_SYSTEM_OBJECT_FIELD_VALUE);
+			_SYSTEM_OBJECT_FIELD_NAME_2, _SYSTEM_OBJECT_FIELD_VALUE,
+			postUserAccount);
 
 		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invoke(
 			_toBody(manyToOne, objectRelationship, userAccountJSONObject),
@@ -1179,8 +1179,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				"@liferay.com");
 
 		userAccountJSONObject = _createSystemObjectJSONObject(
-			putUserAccount, _SYSTEM_OBJECT_FIELD_NAME_2,
-			_NEW_SYSTEM_OBJECT_FIELD_VALUE);
+			_SYSTEM_OBJECT_FIELD_NAME_2, _NEW_SYSTEM_OBJECT_FIELD_VALUE,
+			putUserAccount);
 
 		HTTPTestUtil.invoke(
 			_toBody(manyToOne, objectRelationship, userAccountJSONObject),
@@ -1202,8 +1202,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.GET);
 
 		_assertSystemObjectEntry(
-			systemObjectEntryJSONObject, putUserAccount,
-			_SYSTEM_OBJECT_FIELD_NAME_2, _NEW_SYSTEM_OBJECT_FIELD_VALUE);
+			systemObjectEntryJSONObject, _SYSTEM_OBJECT_FIELD_NAME_2,
+			_NEW_SYSTEM_OBJECT_FIELD_VALUE, putUserAccount);
 	}
 
 	private String _toBody(

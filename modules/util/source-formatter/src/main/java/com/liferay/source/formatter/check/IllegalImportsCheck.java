@@ -200,24 +200,22 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (isAttributeValue(_CHECK_TAGLIBS_KEY, absolutePath)) {
-					for (String replacedTaglib : replacedTaglibs) {
-						String[] replacedTaglibArray = StringUtil.split(
-							replacedTaglib, "->");
+				for (String replacedTaglib : replacedTaglibs) {
+					String[] replacedTaglibArray = StringUtil.split(
+						replacedTaglib, "->");
 
-						if (replacedTaglibArray.length != 2) {
-							continue;
-						}
+					if (replacedTaglibArray.length != 2) {
+						continue;
+					}
 
-						if (line.contains(replacedTaglibArray[0])) {
-							addMessage(
-								fileName,
-								StringBundler.concat(
-									"Use ", replacedTaglibArray[1],
-									" instead of ", replacedTaglibArray[0]));
+					if (line.contains(replacedTaglibArray[0])) {
+						addMessage(
+							fileName,
+							StringBundler.concat(
+								"Use ", replacedTaglibArray[1], " instead of ",
+								replacedTaglibArray[0]));
 
-							break;
-						}
+						break;
 					}
 				}
 
@@ -245,8 +243,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 	private static final String _AVOID_OPTIONAL_KEY = "avoidOptional";
 
 	private static final String _AVOID_STREAM_KEY = "avoidStream";
-
-	private static final String _CHECK_TAGLIBS_KEY = "checkTaglibs";
 
 	private static final String _ENFORCE_COOKIES_MANAGER_UTIL_KEY =
 		"enforceCookiesManagerUtil";

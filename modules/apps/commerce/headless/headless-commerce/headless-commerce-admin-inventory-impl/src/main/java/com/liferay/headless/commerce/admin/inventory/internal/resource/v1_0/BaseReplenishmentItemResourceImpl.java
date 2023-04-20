@@ -595,7 +595,7 @@ public abstract class BaseReplenishmentItemResourceImpl
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			replenishmentItemUnsafeConsumer =
 				replenishmentItem -> postReplenishmentItem(
-					Long.parseLong((String)parameters.get("warehouseId")),
+					_parseLong((String)parameters.get("warehouseId")),
 					(String)parameters.get("sku"), replenishmentItem);
 		}
 
@@ -703,7 +703,7 @@ public abstract class BaseReplenishmentItemResourceImpl
 				replenishmentItem -> patchReplenishmentItem(
 					replenishmentItem.getId() != null ?
 						replenishmentItem.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("replenishmentItemId")),
 					replenishmentItem);
 		}
@@ -723,6 +723,14 @@ public abstract class BaseReplenishmentItemResourceImpl
 				replenishmentItemUnsafeConsumer.accept(replenishmentItem);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

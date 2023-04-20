@@ -440,8 +440,7 @@ public abstract class BaseGroupedProductResourceImpl
 			groupedProductUnsafeConsumer =
 				groupedProduct -> patchGroupedProduct(
 					groupedProduct.getId() != null ? groupedProduct.getId() :
-						Long.parseLong(
-							(String)parameters.get("groupedProductId")),
+						_parseLong((String)parameters.get("groupedProductId")),
 					groupedProduct);
 		}
 
@@ -460,6 +459,14 @@ public abstract class BaseGroupedProductResourceImpl
 				groupedProductUnsafeConsumer.accept(groupedProduct);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

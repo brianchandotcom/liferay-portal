@@ -740,7 +740,7 @@ public abstract class BaseListTypeDefinitionResourceImpl
 				listTypeDefinition -> patchListTypeDefinition(
 					listTypeDefinition.getId() != null ?
 						listTypeDefinition.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("listTypeDefinitionId")),
 					listTypeDefinition);
 		}
@@ -750,7 +750,7 @@ public abstract class BaseListTypeDefinitionResourceImpl
 				listTypeDefinition -> putListTypeDefinition(
 					listTypeDefinition.getId() != null ?
 						listTypeDefinition.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("listTypeDefinitionId")),
 					listTypeDefinition);
 		}
@@ -770,6 +770,14 @@ public abstract class BaseListTypeDefinitionResourceImpl
 				listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -547,7 +547,7 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 					patchAccountChannelShippingOption(
 						accountChannelShippingOption.getId() != null ?
 							accountChannelShippingOption.getId() :
-								Long.parseLong(
+								_parseLong(
 									(String)parameters.get(
 										"accountChannelShippingOptionId")),
 						accountChannelShippingOption);
@@ -572,6 +572,14 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 					accountChannelShippingOption);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -459,7 +459,7 @@ public abstract class BaseProcessResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			processUnsafeConsumer = process -> putProcess(
 				process.getId() != null ? process.getId() :
-					Long.parseLong((String)parameters.get("processId")),
+					_parseLong((String)parameters.get("processId")),
 				process);
 		}
 
@@ -477,6 +477,14 @@ public abstract class BaseProcessResourceImpl
 				processUnsafeConsumer.accept(process);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

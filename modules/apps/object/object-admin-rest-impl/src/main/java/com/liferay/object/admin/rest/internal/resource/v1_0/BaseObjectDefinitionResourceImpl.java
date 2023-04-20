@@ -859,7 +859,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinition -> patchObjectDefinition(
 					objectDefinition.getId() != null ?
 						objectDefinition.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("objectDefinitionId")),
 					objectDefinition);
 		}
@@ -869,7 +869,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinition -> putObjectDefinition(
 					objectDefinition.getId() != null ?
 						objectDefinition.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("objectDefinitionId")),
 					objectDefinition);
 		}
@@ -889,6 +889,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinitionUnsafeConsumer.accept(objectDefinition);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

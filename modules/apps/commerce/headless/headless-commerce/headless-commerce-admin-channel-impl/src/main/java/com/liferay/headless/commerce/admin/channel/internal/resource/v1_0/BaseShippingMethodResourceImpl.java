@@ -249,8 +249,7 @@ public abstract class BaseShippingMethodResourceImpl
 
 		if (parameters.containsKey("channelId")) {
 			return getChannelShippingMethodsPage(
-				Long.parseLong((String)parameters.get("channelId")),
-				pagination);
+				_parseLong((String)parameters.get("channelId")), pagination);
 		}
 		else {
 			throw new NotSupportedException(
@@ -288,6 +287,14 @@ public abstract class BaseShippingMethodResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

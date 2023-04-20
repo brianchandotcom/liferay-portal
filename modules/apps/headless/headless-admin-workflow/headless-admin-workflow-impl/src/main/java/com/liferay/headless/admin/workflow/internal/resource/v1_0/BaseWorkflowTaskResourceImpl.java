@@ -895,9 +895,8 @@ public abstract class BaseWorkflowTaskResourceImpl
 
 		if (parameters.containsKey("workflowInstanceId")) {
 			return getWorkflowInstanceWorkflowTasksPage(
-				Long.parseLong((String)parameters.get("workflowInstanceId")),
-				Boolean.parseBoolean((String)parameters.get("completed")),
-				pagination);
+				_parseLong((String)parameters.get("workflowInstanceId")),
+				_parseBoolean((String)parameters.get("completed")), pagination);
 		}
 		else {
 			throw new NotSupportedException(
@@ -935,6 +934,22 @@ public abstract class BaseWorkflowTaskResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

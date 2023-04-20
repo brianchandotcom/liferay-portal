@@ -546,7 +546,7 @@ public abstract class BaseListTypeEntryResourceImpl
 			if (parameters.containsKey("listTypeDefinitionId")) {
 				listTypeEntryUnsafeConsumer =
 					listTypeEntry -> postListTypeDefinitionListTypeEntry(
-						Long.parseLong(
+						_parseLong(
 							(String)parameters.get("listTypeDefinitionId")),
 						listTypeEntry);
 			}
@@ -658,7 +658,7 @@ public abstract class BaseListTypeEntryResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			listTypeEntryUnsafeConsumer = listTypeEntry -> putListTypeEntry(
 				listTypeEntry.getId() != null ? listTypeEntry.getId() :
-					Long.parseLong((String)parameters.get("listTypeEntryId")),
+					_parseLong((String)parameters.get("listTypeEntryId")),
 				listTypeEntry);
 		}
 
@@ -677,6 +677,14 @@ public abstract class BaseListTypeEntryResourceImpl
 				listTypeEntryUnsafeConsumer.accept(listTypeEntry);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

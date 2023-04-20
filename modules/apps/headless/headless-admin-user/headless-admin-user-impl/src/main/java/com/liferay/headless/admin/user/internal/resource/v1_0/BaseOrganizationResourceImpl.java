@@ -1487,12 +1487,12 @@ public abstract class BaseOrganizationResourceImpl
 
 		if (parameters.containsKey("accountId")) {
 			return getAccountOrganizationsPage(
-				Long.parseLong((String)parameters.get("accountId")), search,
-				filter, pagination, sorts);
+				_parseLong((String)parameters.get("accountId")), search, filter,
+				pagination, sorts);
 		}
 		else {
 			return getOrganizationsPage(
-				Boolean.parseBoolean((String)parameters.get("flatten")), search,
+				_parseBoolean((String)parameters.get("flatten")), search,
 				filter, pagination, sorts);
 		}
 	}
@@ -1560,6 +1560,22 @@ public abstract class BaseOrganizationResourceImpl
 				organizationUnsafeConsumer.accept(organization);
 			}
 		}
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

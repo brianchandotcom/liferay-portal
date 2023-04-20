@@ -441,9 +441,8 @@ public abstract class BaseWorkflowInstanceResourceImpl
 
 		return getWorkflowInstancesPage(
 			(String)parameters.get("assetClassName"),
-			Long.parseLong((String)parameters.get("assetPrimaryKey")),
-			Boolean.parseBoolean((String)parameters.get("completed")),
-			pagination);
+			_parseLong((String)parameters.get("assetPrimaryKey")),
+			_parseBoolean((String)parameters.get("completed")), pagination);
 	}
 
 	@Override
@@ -476,6 +475,22 @@ public abstract class BaseWorkflowInstanceResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

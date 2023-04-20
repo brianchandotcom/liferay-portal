@@ -1296,14 +1296,14 @@ public abstract class BaseObjectEntryResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			objectEntryUnsafeConsumer = objectEntry -> patchObjectEntry(
 				objectEntry.getId() != null ? objectEntry.getId() :
-					Long.parseLong((String)parameters.get("objectEntryId")),
+					_parseLong((String)parameters.get("objectEntryId")),
 				objectEntry);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			objectEntryUnsafeConsumer = objectEntry -> putObjectEntry(
 				objectEntry.getId() != null ? objectEntry.getId() :
-					Long.parseLong((String)parameters.get("objectEntryId")),
+					_parseLong((String)parameters.get("objectEntryId")),
 				objectEntry);
 		}
 
@@ -1322,6 +1322,14 @@ public abstract class BaseObjectEntryResourceImpl
 				objectEntryUnsafeConsumer.accept(objectEntry);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

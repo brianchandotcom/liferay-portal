@@ -857,14 +857,14 @@ public abstract class BaseOrderItemResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			orderItemUnsafeConsumer = orderItem -> patchOrderItem(
 				orderItem.getId() != null ? orderItem.getId() :
-					Long.parseLong((String)parameters.get("orderItemId")),
+					_parseLong((String)parameters.get("orderItemId")),
 				orderItem);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			orderItemUnsafeConsumer = orderItem -> putOrderItem(
 				orderItem.getId() != null ? orderItem.getId() :
-					Long.parseLong((String)parameters.get("orderItemId")),
+					_parseLong((String)parameters.get("orderItemId")),
 				orderItem);
 		}
 
@@ -883,6 +883,14 @@ public abstract class BaseOrderItemResourceImpl
 				orderItemUnsafeConsumer.accept(orderItem);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

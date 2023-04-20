@@ -1775,7 +1775,7 @@ public abstract class BaseUserAccountResourceImpl
 			if (parameters.containsKey("accountId")) {
 				userAccountUnsafeConsumer =
 					userAccount -> postAccountUserAccount(
-						Long.parseLong((String)parameters.get("accountId")),
+						_parseLong((String)parameters.get("accountId")),
 						userAccount);
 			}
 		}
@@ -1854,8 +1854,8 @@ public abstract class BaseUserAccountResourceImpl
 		}
 		else if (parameters.containsKey("accountId")) {
 			return getAccountUserAccountsPage(
-				Long.parseLong((String)parameters.get("accountId")), search,
-				filter, pagination, sorts);
+				_parseLong((String)parameters.get("accountId")), search, filter,
+				pagination, sorts);
 		}
 		else if (parameters.containsKey("organizationId")) {
 			return getOrganizationUserAccountsPage(
@@ -1903,14 +1903,14 @@ public abstract class BaseUserAccountResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			userAccountUnsafeConsumer = userAccount -> patchUserAccount(
 				userAccount.getId() != null ? userAccount.getId() :
-					Long.parseLong((String)parameters.get("userAccountId")),
+					_parseLong((String)parameters.get("userAccountId")),
 				userAccount);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			userAccountUnsafeConsumer = userAccount -> putUserAccount(
 				userAccount.getId() != null ? userAccount.getId() :
-					Long.parseLong((String)parameters.get("userAccountId")),
+					_parseLong((String)parameters.get("userAccountId")),
 				userAccount);
 		}
 
@@ -1929,6 +1929,14 @@ public abstract class BaseUserAccountResourceImpl
 				userAccountUnsafeConsumer.accept(userAccount);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

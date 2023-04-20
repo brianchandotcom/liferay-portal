@@ -464,7 +464,7 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 				availabilityEstimate -> putAvailabilityEstimate(
 					availabilityEstimate.getId() != null ?
 						availabilityEstimate.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"availabilityEstimateId")),
 					availabilityEstimate);
@@ -487,6 +487,14 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 				availabilityEstimateUnsafeConsumer.accept(availabilityEstimate);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

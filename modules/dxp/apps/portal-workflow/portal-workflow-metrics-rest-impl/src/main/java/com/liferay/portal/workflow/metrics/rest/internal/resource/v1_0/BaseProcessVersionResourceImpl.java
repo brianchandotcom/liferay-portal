@@ -237,7 +237,7 @@ public abstract class BaseProcessVersionResourceImpl
 
 		if (parameters.containsKey("processId")) {
 			return getProcessProcessVersionsPage(
-				Long.parseLong((String)parameters.get("processId")));
+				_parseLong((String)parameters.get("processId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -275,6 +275,14 @@ public abstract class BaseProcessVersionResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

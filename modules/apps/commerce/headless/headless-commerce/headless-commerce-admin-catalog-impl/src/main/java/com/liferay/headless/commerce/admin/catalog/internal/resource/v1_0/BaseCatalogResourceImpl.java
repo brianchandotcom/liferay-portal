@@ -694,7 +694,7 @@ public abstract class BaseCatalogResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			catalogUnsafeConsumer = catalog -> patchCatalog(
 				catalog.getId() != null ? catalog.getId() :
-					Long.parseLong((String)parameters.get("catalogId")),
+					_parseLong((String)parameters.get("catalogId")),
 				catalog);
 		}
 
@@ -712,6 +712,14 @@ public abstract class BaseCatalogResourceImpl
 				catalogUnsafeConsumer.accept(catalog);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

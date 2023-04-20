@@ -454,8 +454,7 @@ public abstract class BaseOptionCategoryResourceImpl
 			optionCategoryUnsafeConsumer =
 				optionCategory -> patchOptionCategory(
 					optionCategory.getId() != null ? optionCategory.getId() :
-						Long.parseLong(
-							(String)parameters.get("optionCategoryId")),
+						_parseLong((String)parameters.get("optionCategoryId")),
 					optionCategory);
 		}
 
@@ -474,6 +473,14 @@ public abstract class BaseOptionCategoryResourceImpl
 				optionCategoryUnsafeConsumer.accept(optionCategory);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -1563,7 +1563,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				taxonomyVocabulary -> patchTaxonomyVocabulary(
 					taxonomyVocabulary.getId() != null ?
 						taxonomyVocabulary.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("taxonomyVocabularyId")),
 					taxonomyVocabulary);
 		}
@@ -1573,7 +1573,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				taxonomyVocabulary -> putTaxonomyVocabulary(
 					taxonomyVocabulary.getId() != null ?
 						taxonomyVocabulary.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("taxonomyVocabularyId")),
 					taxonomyVocabulary);
 		}
@@ -1593,6 +1593,14 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				taxonomyVocabularyUnsafeConsumer.accept(taxonomyVocabulary);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

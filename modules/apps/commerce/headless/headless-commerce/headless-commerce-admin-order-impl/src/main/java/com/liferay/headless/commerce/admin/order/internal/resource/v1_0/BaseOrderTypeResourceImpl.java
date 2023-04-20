@@ -669,7 +669,7 @@ public abstract class BaseOrderTypeResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			orderTypeUnsafeConsumer = orderType -> patchOrderType(
 				orderType.getId() != null ? orderType.getId() :
-					Long.parseLong((String)parameters.get("orderTypeId")),
+					_parseLong((String)parameters.get("orderTypeId")),
 				orderType);
 		}
 
@@ -688,6 +688,14 @@ public abstract class BaseOrderTypeResourceImpl
 				orderTypeUnsafeConsumer.accept(orderType);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

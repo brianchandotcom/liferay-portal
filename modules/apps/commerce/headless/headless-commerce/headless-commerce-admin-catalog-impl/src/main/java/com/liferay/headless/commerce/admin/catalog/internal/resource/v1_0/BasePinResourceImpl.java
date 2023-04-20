@@ -444,7 +444,7 @@ public abstract class BasePinResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			pinUnsafeConsumer = pin -> patchPin(
 				pin.getId() != null ? pin.getId() :
-					Long.parseLong((String)parameters.get("pinId")),
+					_parseLong((String)parameters.get("pinId")),
 				pin);
 		}
 
@@ -462,6 +462,14 @@ public abstract class BasePinResourceImpl
 				pinUnsafeConsumer.accept(pin);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

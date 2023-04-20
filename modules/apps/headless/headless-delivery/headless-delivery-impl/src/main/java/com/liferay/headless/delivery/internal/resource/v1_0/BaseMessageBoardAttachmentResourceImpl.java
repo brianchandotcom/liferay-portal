@@ -809,14 +809,14 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 			if (parameters.containsKey("messageBoardMessageId")) {
 				messageBoardAttachmentUnsafeConsumer = messageBoardAttachment ->
 					postMessageBoardMessageMessageBoardAttachment(
-						Long.parseLong(
+						_parseLong(
 							(String)parameters.get("messageBoardMessageId")),
 						(MultipartBody)parameters.get("multipartBody"));
 			}
 			else if (parameters.containsKey("messageBoardThreadId")) {
 				messageBoardAttachmentUnsafeConsumer = messageBoardAttachment ->
 					postMessageBoardThreadMessageBoardAttachment(
-						Long.parseLong(
+						_parseLong(
 							(String)parameters.get("messageBoardThreadId")),
 						(MultipartBody)parameters.get("multipartBody"));
 			}
@@ -894,12 +894,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 		if (parameters.containsKey("messageBoardMessageId")) {
 			return getMessageBoardMessageMessageBoardAttachmentsPage(
-				Long.parseLong(
-					(String)parameters.get("messageBoardMessageId")));
+				_parseLong((String)parameters.get("messageBoardMessageId")));
 		}
 		else if (parameters.containsKey("messageBoardThreadId")) {
 			return getMessageBoardThreadMessageBoardAttachmentsPage(
-				Long.parseLong((String)parameters.get("messageBoardThreadId")));
+				_parseLong((String)parameters.get("messageBoardThreadId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -937,6 +936,14 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

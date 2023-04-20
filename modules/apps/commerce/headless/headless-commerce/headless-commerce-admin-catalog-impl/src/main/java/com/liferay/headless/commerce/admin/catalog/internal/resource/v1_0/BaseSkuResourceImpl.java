@@ -711,7 +711,7 @@ public abstract class BaseSkuResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			skuUnsafeConsumer = sku -> patchSku(
 				sku.getId() != null ? sku.getId() :
-					Long.parseLong((String)parameters.get("skuId")),
+					_parseLong((String)parameters.get("skuId")),
 				sku);
 		}
 
@@ -729,6 +729,14 @@ public abstract class BaseSkuResourceImpl
 				skuUnsafeConsumer.accept(sku);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

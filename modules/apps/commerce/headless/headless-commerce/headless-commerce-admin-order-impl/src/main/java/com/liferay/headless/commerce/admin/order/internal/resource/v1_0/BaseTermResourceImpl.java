@@ -597,7 +597,7 @@ public abstract class BaseTermResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			termUnsafeConsumer = term -> patchTerm(
 				term.getId() != null ? term.getId() :
-					Long.parseLong((String)parameters.get("termId")),
+					_parseLong((String)parameters.get("termId")),
 				term);
 		}
 
@@ -615,6 +615,14 @@ public abstract class BaseTermResourceImpl
 				termUnsafeConsumer.accept(term);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

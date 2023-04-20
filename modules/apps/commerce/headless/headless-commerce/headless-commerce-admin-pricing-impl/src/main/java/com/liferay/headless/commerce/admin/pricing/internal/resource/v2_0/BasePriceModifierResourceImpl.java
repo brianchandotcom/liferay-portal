@@ -635,7 +635,7 @@ public abstract class BasePriceModifierResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			priceModifierUnsafeConsumer = priceModifier -> patchPriceModifier(
 				priceModifier.getId() != null ? priceModifier.getId() :
-					Long.parseLong((String)parameters.get("priceModifierId")),
+					_parseLong((String)parameters.get("priceModifierId")),
 				priceModifier);
 		}
 
@@ -654,6 +654,14 @@ public abstract class BasePriceModifierResourceImpl
 				priceModifierUnsafeConsumer.accept(priceModifier);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

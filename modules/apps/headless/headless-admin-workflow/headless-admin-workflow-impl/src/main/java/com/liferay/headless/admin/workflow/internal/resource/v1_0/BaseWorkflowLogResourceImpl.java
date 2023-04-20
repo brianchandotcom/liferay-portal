@@ -413,12 +413,12 @@ public abstract class BaseWorkflowLogResourceImpl
 
 		if (parameters.containsKey("workflowInstanceId")) {
 			return getWorkflowInstanceWorkflowLogsPage(
-				Long.parseLong((String)parameters.get("workflowInstanceId")),
+				_parseLong((String)parameters.get("workflowInstanceId")),
 				(String[])parameters.get("types"), pagination);
 		}
 		else if (parameters.containsKey("workflowTaskId")) {
 			return getWorkflowTaskWorkflowLogsPage(
-				Long.parseLong((String)parameters.get("workflowTaskId")),
+				_parseLong((String)parameters.get("workflowTaskId")),
 				(String[])parameters.get("types"), pagination);
 		}
 		else {
@@ -457,6 +457,14 @@ public abstract class BaseWorkflowLogResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

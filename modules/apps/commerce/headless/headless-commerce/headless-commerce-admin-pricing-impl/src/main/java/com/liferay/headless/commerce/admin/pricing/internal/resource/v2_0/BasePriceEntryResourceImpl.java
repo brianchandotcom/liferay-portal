@@ -626,7 +626,7 @@ public abstract class BasePriceEntryResourceImpl
 			priceEntryUnsafeConsumer = priceEntry -> patchPriceEntry(
 				(priceEntry.getPriceEntryId() != null) ?
 					priceEntry.getPriceEntryId() :
-						Long.parseLong((String)parameters.get("priceEntryId")),
+						_parseLong((String)parameters.get("priceEntryId")),
 				priceEntry);
 		}
 
@@ -645,6 +645,14 @@ public abstract class BasePriceEntryResourceImpl
 				priceEntryUnsafeConsumer.accept(priceEntry);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

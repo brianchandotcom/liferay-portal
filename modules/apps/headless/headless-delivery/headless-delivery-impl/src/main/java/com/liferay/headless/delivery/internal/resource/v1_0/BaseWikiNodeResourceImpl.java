@@ -1129,7 +1129,7 @@ public abstract class BaseWikiNodeResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			wikiNodeUnsafeConsumer = wikiNode -> putWikiNode(
 				wikiNode.getId() != null ? wikiNode.getId() :
-					Long.parseLong((String)parameters.get("wikiNodeId")),
+					_parseLong((String)parameters.get("wikiNodeId")),
 				wikiNode);
 		}
 
@@ -1148,6 +1148,14 @@ public abstract class BaseWikiNodeResourceImpl
 				wikiNodeUnsafeConsumer.accept(wikiNode);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

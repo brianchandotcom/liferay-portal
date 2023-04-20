@@ -458,7 +458,7 @@ public abstract class BaseTaskResourceImpl
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			if (parameters.containsKey("processId")) {
 				taskUnsafeConsumer = task -> postProcessTask(
-					Long.parseLong((String)parameters.get("processId")), task);
+					_parseLong((String)parameters.get("processId")), task);
 			}
 			else {
 				throw new NotSupportedException(
@@ -526,7 +526,7 @@ public abstract class BaseTaskResourceImpl
 
 		if (parameters.containsKey("processId")) {
 			return getProcessTasksPage(
-				Long.parseLong((String)parameters.get("processId")));
+				_parseLong((String)parameters.get("processId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -563,6 +563,14 @@ public abstract class BaseTaskResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

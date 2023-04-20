@@ -871,14 +871,14 @@ public abstract class BaseUserGroupResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			userGroupUnsafeConsumer = userGroup -> patchUserGroup(
 				userGroup.getId() != null ? userGroup.getId() :
-					Long.parseLong((String)parameters.get("userGroupId")),
+					_parseLong((String)parameters.get("userGroupId")),
 				userGroup);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			userGroupUnsafeConsumer = userGroup -> putUserGroup(
 				userGroup.getId() != null ? userGroup.getId() :
-					Long.parseLong((String)parameters.get("userGroupId")),
+					_parseLong((String)parameters.get("userGroupId")),
 				userGroup);
 		}
 
@@ -897,6 +897,14 @@ public abstract class BaseUserGroupResourceImpl
 				userGroupUnsafeConsumer.accept(userGroup);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

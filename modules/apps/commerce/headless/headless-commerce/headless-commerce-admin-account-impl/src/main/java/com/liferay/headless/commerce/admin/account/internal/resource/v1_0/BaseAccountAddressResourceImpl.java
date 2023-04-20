@@ -780,15 +780,14 @@ public abstract class BaseAccountAddressResourceImpl
 			accountAddressUnsafeConsumer =
 				accountAddress -> patchAccountAddress(
 					accountAddress.getId() != null ? accountAddress.getId() :
-						Long.parseLong(
-							(String)parameters.get("accountAddressId")),
+						_parseLong((String)parameters.get("accountAddressId")),
 					accountAddress);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			accountAddressUnsafeConsumer = accountAddress -> putAccountAddress(
 				accountAddress.getId() != null ? accountAddress.getId() :
-					Long.parseLong((String)parameters.get("accountAddressId")),
+					_parseLong((String)parameters.get("accountAddressId")),
 				accountAddress);
 		}
 
@@ -807,6 +806,14 @@ public abstract class BaseAccountAddressResourceImpl
 				accountAddressUnsafeConsumer.accept(accountAddress);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

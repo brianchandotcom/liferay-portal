@@ -783,14 +783,14 @@ public abstract class BaseChannelResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			channelUnsafeConsumer = channel -> patchChannel(
 				channel.getId() != null ? channel.getId() :
-					Long.parseLong((String)parameters.get("channelId")),
+					_parseLong((String)parameters.get("channelId")),
 				channel);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			channelUnsafeConsumer = channel -> putChannel(
 				channel.getId() != null ? channel.getId() :
-					Long.parseLong((String)parameters.get("channelId")),
+					_parseLong((String)parameters.get("channelId")),
 				channel);
 		}
 
@@ -808,6 +808,14 @@ public abstract class BaseChannelResourceImpl
 				channelUnsafeConsumer.accept(channel);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

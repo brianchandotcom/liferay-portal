@@ -609,7 +609,7 @@ public abstract class BaseObjectRelationshipResourceImpl
 				objectRelationshipUnsafeConsumer =
 					objectRelationship ->
 						postObjectDefinitionObjectRelationship(
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("objectDefinitionId")),
 							objectRelationship);
 			}
@@ -682,7 +682,7 @@ public abstract class BaseObjectRelationshipResourceImpl
 
 		if (parameters.containsKey("objectDefinitionId")) {
 			return getObjectDefinitionObjectRelationshipsPage(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				_parseLong((String)parameters.get("objectDefinitionId")),
 				search, filter, pagination);
 		}
 		else {
@@ -730,7 +730,7 @@ public abstract class BaseObjectRelationshipResourceImpl
 				objectRelationship -> putObjectRelationship(
 					objectRelationship.getId() != null ?
 						objectRelationship.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("objectRelationshipId")),
 					objectRelationship);
 		}
@@ -750,6 +750,14 @@ public abstract class BaseObjectRelationshipResourceImpl
 				objectRelationshipUnsafeConsumer.accept(objectRelationship);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -548,7 +548,7 @@ public abstract class BaseMappedProductResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			mappedProductUnsafeConsumer = mappedProduct -> patchMappedProduct(
 				mappedProduct.getId() != null ? mappedProduct.getId() :
-					Long.parseLong((String)parameters.get("mappedProductId")),
+					_parseLong((String)parameters.get("mappedProductId")),
 				mappedProduct);
 		}
 
@@ -567,6 +567,14 @@ public abstract class BaseMappedProductResourceImpl
 				mappedProductUnsafeConsumer.accept(mappedProduct);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

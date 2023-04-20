@@ -585,7 +585,7 @@ public abstract class BaseDiscountResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			discountUnsafeConsumer = discount -> patchDiscount(
 				discount.getId() != null ? discount.getId() :
-					Long.parseLong((String)parameters.get("discountId")),
+					_parseLong((String)parameters.get("discountId")),
 				discount);
 		}
 
@@ -604,6 +604,14 @@ public abstract class BaseDiscountResourceImpl
 				discountUnsafeConsumer.accept(discount);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

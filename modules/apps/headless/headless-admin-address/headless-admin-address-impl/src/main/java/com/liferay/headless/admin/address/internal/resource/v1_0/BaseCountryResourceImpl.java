@@ -686,14 +686,14 @@ public abstract class BaseCountryResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			countryUnsafeConsumer = country -> patchCountry(
 				country.getId() != null ? country.getId() :
-					Long.parseLong((String)parameters.get("countryId")),
+					_parseLong((String)parameters.get("countryId")),
 				country);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			countryUnsafeConsumer = country -> putCountry(
 				country.getId() != null ? country.getId() :
-					Long.parseLong((String)parameters.get("countryId")),
+					_parseLong((String)parameters.get("countryId")),
 				country);
 		}
 
@@ -711,6 +711,14 @@ public abstract class BaseCountryResourceImpl
 				countryUnsafeConsumer.accept(country);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

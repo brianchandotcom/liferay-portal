@@ -300,8 +300,8 @@ public abstract class BasePlacedOrderItemResourceImpl
 
 		if (parameters.containsKey("placedOrderId")) {
 			return getPlacedOrderPlacedOrderItemsPage(
-				Long.parseLong((String)parameters.get("placedOrderId")),
-				Long.parseLong((String)parameters.get("skuId")), pagination);
+				_parseLong((String)parameters.get("placedOrderId")),
+				_parseLong((String)parameters.get("skuId")), pagination);
 		}
 		else {
 			throw new NotSupportedException(
@@ -339,6 +339,14 @@ public abstract class BasePlacedOrderItemResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

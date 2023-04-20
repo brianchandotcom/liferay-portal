@@ -704,8 +704,7 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 		throws Exception {
 
 		return getWorkflowDefinitionsPage(
-			Boolean.parseBoolean((String)parameters.get("active")), pagination,
-			sorts);
+			_parseBoolean((String)parameters.get("active")), pagination, sorts);
 	}
 
 	@Override
@@ -747,7 +746,7 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 				workflowDefinition -> putWorkflowDefinition(
 					workflowDefinition.getId() != null ?
 						workflowDefinition.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get("workflowDefinitionId")),
 					workflowDefinition);
 		}
@@ -767,6 +766,22 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 				workflowDefinitionUnsafeConsumer.accept(workflowDefinition);
 			}
 		}
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

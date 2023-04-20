@@ -650,7 +650,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 				knowledgeBaseAttachmentUnsafeConsumer =
 					knowledgeBaseAttachment ->
 						postKnowledgeBaseArticleKnowledgeBaseAttachment(
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"knowledgeBaseArticleId")),
 							(MultipartBody)parameters.get("multipartBody"));
@@ -730,8 +730,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 		if (parameters.containsKey("knowledgeBaseArticleId")) {
 			return getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-				Long.parseLong(
-					(String)parameters.get("knowledgeBaseArticleId")));
+				_parseLong((String)parameters.get("knowledgeBaseArticleId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -769,6 +768,14 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

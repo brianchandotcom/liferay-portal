@@ -604,7 +604,7 @@ public abstract class BaseSXPElementResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			sxpElementUnsafeConsumer = sxpElement -> patchSXPElement(
 				sxpElement.getId() != null ? sxpElement.getId() :
-					Long.parseLong((String)parameters.get("sxpElementId")),
+					_parseLong((String)parameters.get("sxpElementId")),
 				sxpElement);
 		}
 
@@ -623,6 +623,14 @@ public abstract class BaseSXPElementResourceImpl
 				sxpElementUnsafeConsumer.accept(sxpElement);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

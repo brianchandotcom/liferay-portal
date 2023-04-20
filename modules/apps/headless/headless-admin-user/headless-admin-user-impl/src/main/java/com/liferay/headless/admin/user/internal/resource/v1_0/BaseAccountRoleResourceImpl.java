@@ -810,7 +810,7 @@ public abstract class BaseAccountRoleResourceImpl
 			if (parameters.containsKey("accountId")) {
 				accountRoleUnsafeConsumer =
 					accountRole -> postAccountAccountRole(
-						Long.parseLong((String)parameters.get("accountId")),
+						_parseLong((String)parameters.get("accountId")),
 						accountRole);
 			}
 			else {
@@ -881,7 +881,7 @@ public abstract class BaseAccountRoleResourceImpl
 
 		if (parameters.containsKey("accountId")) {
 			return getAccountAccountRolesPage(
-				Long.parseLong((String)parameters.get("accountId")),
+				_parseLong((String)parameters.get("accountId")),
 				(String)parameters.get("keywords"), filter, pagination, sorts);
 		}
 		else {
@@ -920,6 +920,14 @@ public abstract class BaseAccountRoleResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

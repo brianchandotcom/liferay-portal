@@ -550,7 +550,7 @@ public abstract class BaseShipmentItemResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			shipmentItemUnsafeConsumer = shipmentItem -> patchShipmentItem(
 				shipmentItem.getId() != null ? shipmentItem.getId() :
-					Long.parseLong((String)parameters.get("shipmentItemId")),
+					_parseLong((String)parameters.get("shipmentItemId")),
 				shipmentItem);
 		}
 
@@ -569,6 +569,14 @@ public abstract class BaseShipmentItemResourceImpl
 				shipmentItemUnsafeConsumer.accept(shipmentItem);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

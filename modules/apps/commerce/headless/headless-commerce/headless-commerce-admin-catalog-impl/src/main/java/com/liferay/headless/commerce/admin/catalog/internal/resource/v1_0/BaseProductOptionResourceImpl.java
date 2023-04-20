@@ -497,7 +497,7 @@ public abstract class BaseProductOptionResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			productOptionUnsafeConsumer = productOption -> patchProductOption(
 				productOption.getId() != null ? productOption.getId() :
-					Long.parseLong((String)parameters.get("productOptionId")),
+					_parseLong((String)parameters.get("productOptionId")),
 				productOption);
 		}
 
@@ -516,6 +516,14 @@ public abstract class BaseProductOptionResourceImpl
 				productOptionUnsafeConsumer.accept(productOption);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

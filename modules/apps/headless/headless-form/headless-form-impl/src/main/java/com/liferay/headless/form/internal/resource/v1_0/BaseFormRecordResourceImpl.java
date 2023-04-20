@@ -437,8 +437,7 @@ public abstract class BaseFormRecordResourceImpl
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			if (parameters.containsKey("formId")) {
 				formRecordUnsafeConsumer = formRecord -> postFormFormRecord(
-					Long.parseLong((String)parameters.get("formId")),
-					formRecord);
+					_parseLong((String)parameters.get("formId")), formRecord);
 			}
 			else {
 				throw new NotSupportedException(
@@ -508,7 +507,7 @@ public abstract class BaseFormRecordResourceImpl
 
 		if (parameters.containsKey("formId")) {
 			return getFormFormRecordsPage(
-				Long.parseLong((String)parameters.get("formId")), pagination);
+				_parseLong((String)parameters.get("formId")), pagination);
 		}
 		else {
 			throw new NotSupportedException(
@@ -552,7 +551,7 @@ public abstract class BaseFormRecordResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			formRecordUnsafeConsumer = formRecord -> putFormRecord(
 				formRecord.getId() != null ? formRecord.getId() :
-					Long.parseLong((String)parameters.get("formRecordId")),
+					_parseLong((String)parameters.get("formRecordId")),
 				formRecord);
 		}
 
@@ -571,6 +570,14 @@ public abstract class BaseFormRecordResourceImpl
 				formRecordUnsafeConsumer.accept(formRecord);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

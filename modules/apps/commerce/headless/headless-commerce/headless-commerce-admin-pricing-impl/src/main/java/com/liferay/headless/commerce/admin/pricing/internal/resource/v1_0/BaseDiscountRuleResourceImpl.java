@@ -500,7 +500,7 @@ public abstract class BaseDiscountRuleResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			discountRuleUnsafeConsumer = discountRule -> patchDiscountRule(
 				discountRule.getId() != null ? discountRule.getId() :
-					Long.parseLong((String)parameters.get("discountRuleId")),
+					_parseLong((String)parameters.get("discountRuleId")),
 				discountRule);
 		}
 
@@ -519,6 +519,14 @@ public abstract class BaseDiscountRuleResourceImpl
 				discountRuleUnsafeConsumer.accept(discountRule);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

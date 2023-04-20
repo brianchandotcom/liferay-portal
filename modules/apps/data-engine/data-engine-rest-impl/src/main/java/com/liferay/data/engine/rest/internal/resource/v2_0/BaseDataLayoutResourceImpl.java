@@ -601,8 +601,7 @@ public abstract class BaseDataLayoutResourceImpl
 			if (parameters.containsKey("dataDefinitionId")) {
 				dataLayoutUnsafeConsumer =
 					dataLayout -> postDataDefinitionDataLayout(
-						Long.parseLong(
-							(String)parameters.get("dataDefinitionId")),
+						_parseLong((String)parameters.get("dataDefinitionId")),
 						dataLayout);
 			}
 			else {
@@ -674,7 +673,7 @@ public abstract class BaseDataLayoutResourceImpl
 
 		if (parameters.containsKey("dataDefinitionId")) {
 			return getDataDefinitionDataLayoutsPage(
-				Long.parseLong((String)parameters.get("dataDefinitionId")),
+				_parseLong((String)parameters.get("dataDefinitionId")),
 				(String)parameters.get("keywords"), pagination, sorts);
 		}
 		else {
@@ -719,7 +718,7 @@ public abstract class BaseDataLayoutResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			dataLayoutUnsafeConsumer = dataLayout -> putDataLayout(
 				dataLayout.getId() != null ? dataLayout.getId() :
-					Long.parseLong((String)parameters.get("dataLayoutId")),
+					_parseLong((String)parameters.get("dataLayoutId")),
 				dataLayout);
 		}
 
@@ -738,6 +737,14 @@ public abstract class BaseDataLayoutResourceImpl
 				dataLayoutUnsafeConsumer.accept(dataLayout);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

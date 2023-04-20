@@ -262,7 +262,7 @@ public abstract class BaseFieldMappingInfoResourceImpl
 		throws Exception {
 
 		return getFieldMappingInfosPage(
-			Boolean.parseBoolean((String)parameters.get("external")),
+			_parseBoolean((String)parameters.get("external")),
 			(String)parameters.get("indexName"),
 			(String)parameters.get("query"));
 	}
@@ -297,6 +297,14 @@ public abstract class BaseFieldMappingInfoResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -249,7 +249,7 @@ public abstract class BasePlacedOrderItemShipmentResourceImpl
 
 		if (parameters.containsKey("placedOrderItemId")) {
 			return getPlacedOrderItemPlacedOrderItemShipmentsPage(
-				Long.parseLong((String)parameters.get("placedOrderItemId")));
+				_parseLong((String)parameters.get("placedOrderItemId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -287,6 +287,14 @@ public abstract class BasePlacedOrderItemShipmentResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

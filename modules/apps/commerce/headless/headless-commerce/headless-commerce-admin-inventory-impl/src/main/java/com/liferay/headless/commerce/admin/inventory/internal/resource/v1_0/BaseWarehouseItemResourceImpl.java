@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -260,10 +261,10 @@ public abstract class BaseWarehouseItemResourceImpl
 	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("end")
-			java.util.Date end,
+			Date end,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("start")
-			java.util.Date start,
+			Date start,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -710,7 +711,7 @@ public abstract class BaseWarehouseItemResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			warehouseItemUnsafeConsumer = warehouseItem -> patchWarehouseItem(
 				warehouseItem.getId() != null ? warehouseItem.getId() :
-					Long.parseLong((String)parameters.get("warehouseItemId")),
+					_parseLong((String)parameters.get("warehouseItemId")),
 				warehouseItem);
 		}
 
@@ -729,6 +730,14 @@ public abstract class BaseWarehouseItemResourceImpl
 				warehouseItemUnsafeConsumer.accept(warehouseItem);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

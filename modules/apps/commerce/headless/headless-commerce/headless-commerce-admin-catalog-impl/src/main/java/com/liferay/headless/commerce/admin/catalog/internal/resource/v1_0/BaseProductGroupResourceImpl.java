@@ -617,7 +617,7 @@ public abstract class BaseProductGroupResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			productGroupUnsafeConsumer = productGroup -> patchProductGroup(
 				productGroup.getId() != null ? productGroup.getId() :
-					Long.parseLong((String)parameters.get("productGroupId")),
+					_parseLong((String)parameters.get("productGroupId")),
 				productGroup);
 		}
 
@@ -636,6 +636,14 @@ public abstract class BaseProductGroupResourceImpl
 				productGroupUnsafeConsumer.accept(productGroup);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

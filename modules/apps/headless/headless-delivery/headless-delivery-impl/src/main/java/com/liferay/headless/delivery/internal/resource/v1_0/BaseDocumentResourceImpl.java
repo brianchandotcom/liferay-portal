@@ -2058,7 +2058,7 @@ public abstract class BaseDocumentResourceImpl
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			if (parameters.containsKey("documentFolderId")) {
 				documentUnsafeConsumer = document -> postDocumentFolderDocument(
-					Long.parseLong((String)parameters.get("documentFolderId")),
+					_parseLong((String)parameters.get("documentFolderId")),
 					(MultipartBody)parameters.get("multipartBody"));
 			}
 			else if (parameters.containsKey("assetLibraryId")) {
@@ -2149,20 +2149,20 @@ public abstract class BaseDocumentResourceImpl
 		if (parameters.containsKey("assetLibraryId")) {
 			return getAssetLibraryDocumentsPage(
 				(Long)parameters.get("assetLibraryId"),
-				Boolean.parseBoolean((String)parameters.get("flatten")), search,
-				null, filter, pagination, sorts);
+				_parseBoolean((String)parameters.get("flatten")), search, null,
+				filter, pagination, sorts);
 		}
 		else if (parameters.containsKey("siteId")) {
 			return getSiteDocumentsPage(
 				(Long)parameters.get("siteId"),
-				Boolean.parseBoolean((String)parameters.get("flatten")), search,
-				null, filter, pagination, sorts);
+				_parseBoolean((String)parameters.get("flatten")), search, null,
+				filter, pagination, sorts);
 		}
 		else if (parameters.containsKey("documentFolderId")) {
 			return getDocumentFolderDocumentsPage(
-				Long.parseLong((String)parameters.get("documentFolderId")),
-				Boolean.parseBoolean((String)parameters.get("flatten")), search,
-				null, filter, pagination, sorts);
+				_parseLong((String)parameters.get("documentFolderId")),
+				_parseBoolean((String)parameters.get("flatten")), search, null,
+				filter, pagination, sorts);
 		}
 		else {
 			throw new NotSupportedException(
@@ -2206,14 +2206,14 @@ public abstract class BaseDocumentResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			documentUnsafeConsumer = document -> patchDocument(
 				document.getId() != null ? document.getId() :
-					Long.parseLong((String)parameters.get("documentId")),
+					_parseLong((String)parameters.get("documentId")),
 				null);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			documentUnsafeConsumer = document -> putDocument(
 				document.getId() != null ? document.getId() :
-					Long.parseLong((String)parameters.get("documentId")),
+					_parseLong((String)parameters.get("documentId")),
 				null);
 		}
 
@@ -2232,6 +2232,22 @@ public abstract class BaseDocumentResourceImpl
 				documentUnsafeConsumer.accept(document);
 			}
 		}
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

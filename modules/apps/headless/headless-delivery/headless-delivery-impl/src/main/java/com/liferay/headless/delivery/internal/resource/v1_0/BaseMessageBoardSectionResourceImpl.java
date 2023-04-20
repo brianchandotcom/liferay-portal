@@ -1252,8 +1252,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		if (parameters.containsKey("siteId")) {
 			return getSiteMessageBoardSectionsPage(
 				(Long)parameters.get("siteId"),
-				Boolean.parseBoolean((String)parameters.get("flatten")), search,
-				null, filter, pagination, sorts);
+				_parseBoolean((String)parameters.get("flatten")), search, null,
+				filter, pagination, sorts);
 		}
 		else {
 			throw new NotSupportedException(
@@ -1300,7 +1300,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 				messageBoardSection -> patchMessageBoardSection(
 					messageBoardSection.getId() != null ?
 						messageBoardSection.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"messageBoardSectionId")),
 					messageBoardSection);
@@ -1311,7 +1311,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 				messageBoardSection -> putMessageBoardSection(
 					messageBoardSection.getId() != null ?
 						messageBoardSection.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"messageBoardSectionId")),
 					messageBoardSection);
@@ -1334,6 +1334,22 @@ public abstract class BaseMessageBoardSectionResourceImpl
 				messageBoardSectionUnsafeConsumer.accept(messageBoardSection);
 			}
 		}
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

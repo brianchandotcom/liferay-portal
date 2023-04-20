@@ -280,7 +280,7 @@ public abstract class BasePlacedOrderCommentResourceImpl
 
 		if (parameters.containsKey("placedOrderId")) {
 			return getPlacedOrderPlacedOrderCommentsPage(
-				Long.parseLong((String)parameters.get("placedOrderId")),
+				_parseLong((String)parameters.get("placedOrderId")),
 				pagination);
 		}
 		else {
@@ -319,6 +319,14 @@ public abstract class BasePlacedOrderCommentResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

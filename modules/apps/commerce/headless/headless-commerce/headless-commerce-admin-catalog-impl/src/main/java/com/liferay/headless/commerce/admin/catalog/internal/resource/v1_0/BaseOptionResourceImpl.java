@@ -615,7 +615,7 @@ public abstract class BaseOptionResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			optionUnsafeConsumer = option -> patchOption(
 				option.getId() != null ? option.getId() :
-					Long.parseLong((String)parameters.get("optionId")),
+					_parseLong((String)parameters.get("optionId")),
 				option);
 		}
 
@@ -633,6 +633,14 @@ public abstract class BaseOptionResourceImpl
 				optionUnsafeConsumer.accept(option);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

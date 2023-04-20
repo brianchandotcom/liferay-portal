@@ -888,15 +888,14 @@ public abstract class BaseDataDefinitionResourceImpl
 			dataDefinitionUnsafeConsumer =
 				dataDefinition -> patchDataDefinition(
 					dataDefinition.getId() != null ? dataDefinition.getId() :
-						Long.parseLong(
-							(String)parameters.get("dataDefinitionId")),
+						_parseLong((String)parameters.get("dataDefinitionId")),
 					dataDefinition);
 		}
 
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			dataDefinitionUnsafeConsumer = dataDefinition -> putDataDefinition(
 				dataDefinition.getId() != null ? dataDefinition.getId() :
-					Long.parseLong((String)parameters.get("dataDefinitionId")),
+					_parseLong((String)parameters.get("dataDefinitionId")),
 				dataDefinition);
 		}
 
@@ -915,6 +914,14 @@ public abstract class BaseDataDefinitionResourceImpl
 				dataDefinitionUnsafeConsumer.accept(dataDefinition);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

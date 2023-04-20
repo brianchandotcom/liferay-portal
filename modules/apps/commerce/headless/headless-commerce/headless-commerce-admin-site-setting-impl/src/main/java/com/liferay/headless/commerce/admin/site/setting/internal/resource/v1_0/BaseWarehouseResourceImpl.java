@@ -432,7 +432,7 @@ public abstract class BaseWarehouseResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			warehouseUnsafeConsumer = warehouse -> putWarehouse(
 				warehouse.getId() != null ? warehouse.getId() :
-					Long.parseLong((String)parameters.get("warehouseId")),
+					_parseLong((String)parameters.get("warehouseId")),
 				warehouse);
 		}
 
@@ -451,6 +451,14 @@ public abstract class BaseWarehouseResourceImpl
 				warehouseUnsafeConsumer.accept(warehouse);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

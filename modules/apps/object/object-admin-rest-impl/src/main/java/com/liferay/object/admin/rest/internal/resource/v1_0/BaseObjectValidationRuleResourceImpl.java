@@ -717,7 +717,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 			if (parameters.containsKey("objectDefinitionId")) {
 				objectValidationRuleUnsafeConsumer = objectValidationRule ->
 					postObjectDefinitionObjectValidationRule(
-						Long.parseLong(
+						_parseLong(
 							(String)parameters.get("objectDefinitionId")),
 						objectValidationRule);
 			}
@@ -794,7 +794,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 
 		if (parameters.containsKey("objectDefinitionId")) {
 			return getObjectDefinitionObjectValidationRulesPage(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				_parseLong((String)parameters.get("objectDefinitionId")),
 				search, pagination);
 		}
 		else {
@@ -842,7 +842,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 				objectValidationRule -> patchObjectValidationRule(
 					objectValidationRule.getId() != null ?
 						objectValidationRule.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"objectValidationRuleId")),
 					objectValidationRule);
@@ -853,7 +853,7 @@ public abstract class BaseObjectValidationRuleResourceImpl
 				objectValidationRule -> putObjectValidationRule(
 					objectValidationRule.getId() != null ?
 						objectValidationRule.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"objectValidationRuleId")),
 					objectValidationRule);
@@ -876,6 +876,14 @@ public abstract class BaseObjectValidationRuleResourceImpl
 				objectValidationRuleUnsafeConsumer.accept(objectValidationRule);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

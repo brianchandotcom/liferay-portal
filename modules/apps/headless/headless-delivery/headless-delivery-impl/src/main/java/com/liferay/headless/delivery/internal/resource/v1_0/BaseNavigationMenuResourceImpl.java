@@ -909,7 +909,7 @@ public abstract class BaseNavigationMenuResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			navigationMenuUnsafeConsumer = navigationMenu -> putNavigationMenu(
 				navigationMenu.getId() != null ? navigationMenu.getId() :
-					Long.parseLong((String)parameters.get("navigationMenuId")),
+					_parseLong((String)parameters.get("navigationMenuId")),
 				navigationMenu);
 		}
 
@@ -928,6 +928,14 @@ public abstract class BaseNavigationMenuResourceImpl
 				navigationMenuUnsafeConsumer.accept(navigationMenu);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

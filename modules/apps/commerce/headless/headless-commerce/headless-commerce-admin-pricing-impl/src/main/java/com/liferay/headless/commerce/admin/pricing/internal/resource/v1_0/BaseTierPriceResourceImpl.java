@@ -600,7 +600,7 @@ public abstract class BaseTierPriceResourceImpl
 		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 			tierPriceUnsafeConsumer = tierPrice -> patchTierPrice(
 				tierPrice.getId() != null ? tierPrice.getId() :
-					Long.parseLong((String)parameters.get("tierPriceId")),
+					_parseLong((String)parameters.get("tierPriceId")),
 				tierPrice);
 		}
 
@@ -619,6 +619,14 @@ public abstract class BaseTierPriceResourceImpl
 				tierPriceUnsafeConsumer.accept(tierPrice);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

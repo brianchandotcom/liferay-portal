@@ -550,7 +550,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			if (parameters.containsKey("wikiPageId")) {
 				wikiPageAttachmentUnsafeConsumer =
 					wikiPageAttachment -> postWikiPageWikiPageAttachment(
-						Long.parseLong((String)parameters.get("wikiPageId")),
+						_parseLong((String)parameters.get("wikiPageId")),
 						(MultipartBody)parameters.get("multipartBody"));
 			}
 			else {
@@ -622,7 +622,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 
 		if (parameters.containsKey("wikiPageId")) {
 			return getWikiPageWikiPageAttachmentsPage(
-				Long.parseLong((String)parameters.get("wikiPageId")));
+				_parseLong((String)parameters.get("wikiPageId")));
 		}
 		else {
 			throw new NotSupportedException(
@@ -660,6 +660,14 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -125,7 +126,7 @@ public abstract class BaseSkuForecastResourceImpl
 			Integer forecastLength,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("forecastStartDate")
-			java.util.Date forecastStartDate,
+			Date forecastStartDate,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("historyLength")
 			Integer historyLength,

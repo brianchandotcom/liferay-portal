@@ -961,8 +961,7 @@ public abstract class BaseWikiPageResourceImpl
 		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			if (parameters.containsKey("wikiNodeId")) {
 				wikiPageUnsafeConsumer = wikiPage -> postWikiNodeWikiPage(
-					Long.parseLong((String)parameters.get("wikiNodeId")),
-					wikiPage);
+					_parseLong((String)parameters.get("wikiNodeId")), wikiPage);
 			}
 			else {
 				throw new NotSupportedException(
@@ -1041,8 +1040,8 @@ public abstract class BaseWikiPageResourceImpl
 
 		if (parameters.containsKey("wikiNodeId")) {
 			return getWikiNodeWikiPagesPage(
-				Long.parseLong((String)parameters.get("wikiNodeId")), search,
-				null, filter, pagination, sorts);
+				_parseLong((String)parameters.get("wikiNodeId")), search, null,
+				filter, pagination, sorts);
 		}
 		else {
 			throw new NotSupportedException(
@@ -1086,7 +1085,7 @@ public abstract class BaseWikiPageResourceImpl
 		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
 			wikiPageUnsafeConsumer = wikiPage -> putWikiPage(
 				wikiPage.getId() != null ? wikiPage.getId() :
-					Long.parseLong((String)parameters.get("wikiPageId")),
+					_parseLong((String)parameters.get("wikiPageId")),
 				wikiPage);
 		}
 
@@ -1105,6 +1104,14 @@ public abstract class BaseWikiPageResourceImpl
 				wikiPageUnsafeConsumer.accept(wikiPage);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	protected String getPermissionCheckerActionsResourceName(Object id)

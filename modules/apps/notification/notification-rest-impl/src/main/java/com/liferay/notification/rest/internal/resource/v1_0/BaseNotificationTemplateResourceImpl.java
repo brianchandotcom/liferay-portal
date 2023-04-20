@@ -865,7 +865,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate -> patchNotificationTemplate(
 					notificationTemplate.getId() != null ?
 						notificationTemplate.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"notificationTemplateId")),
 					notificationTemplate);
@@ -876,7 +876,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate -> putNotificationTemplate(
 					notificationTemplate.getId() != null ?
 						notificationTemplate.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"notificationTemplateId")),
 					notificationTemplate);
@@ -899,6 +899,14 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplateUnsafeConsumer.accept(notificationTemplate);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

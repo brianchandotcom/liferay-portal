@@ -450,7 +450,7 @@ public abstract class BaseProductSpecificationResourceImpl
 				productSpecification -> patchProductSpecification(
 					productSpecification.getId() != null ?
 						productSpecification.getId() :
-							Long.parseLong(
+							_parseLong(
 								(String)parameters.get(
 									"productSpecificationId")),
 					productSpecification);
@@ -473,6 +473,14 @@ public abstract class BaseProductSpecificationResourceImpl
 				productSpecificationUnsafeConsumer.accept(productSpecification);
 			}
 		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

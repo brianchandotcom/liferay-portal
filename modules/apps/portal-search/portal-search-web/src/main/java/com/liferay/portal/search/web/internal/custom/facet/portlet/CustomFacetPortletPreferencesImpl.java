@@ -35,27 +35,17 @@ public class CustomFacetPortletPreferencesImpl
 	}
 
 	@Override
-	public Optional<String> getAggregationFieldOptional() {
-		return _portletPreferencesHelper.getString(
-			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD);
-	}
-
-	@Override
 	public String getAggregationFieldString() {
-		Optional<String> optional = getAggregationFieldOptional();
+		Optional<String> optional = _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD);
 
 		return optional.orElse(StringPool.BLANK);
 	}
 
 	@Override
-	public Optional<String> getCustomHeadingOptional() {
-		return _portletPreferencesHelper.getString(
-			CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING);
-	}
-
-	@Override
 	public String getCustomHeadingString() {
-		Optional<String> optional = getCustomHeadingOptional();
+		Optional<String> optional = _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING);
 
 		return optional.orElse(StringPool.BLANK);
 	}
@@ -88,14 +78,9 @@ public class CustomFacetPortletPreferencesImpl
 	}
 
 	@Override
-	public Optional<String> getParameterNameOptional() {
-		return _portletPreferencesHelper.getString(
-			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME);
-	}
-
-	@Override
 	public String getParameterNameString() {
-		Optional<String> optional = getParameterNameOptional();
+		Optional<String> optional = _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME);
 
 		return optional.orElse(StringPool.BLANK);
 	}

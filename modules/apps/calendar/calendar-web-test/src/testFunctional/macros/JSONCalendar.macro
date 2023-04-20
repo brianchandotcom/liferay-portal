@@ -1,5 +1,15 @@
 definition {
 
+	macro tearDown {
+		JSONCalendar.tearDownBookings();
+
+		var calendarIdList = JSONCalendarAPI.getNotDefaultCalendars();
+
+		for (var calendarId : list ${calendarIdList}) {
+			JSONCalendarAPI.deleteCalendar(calendarId = ${calendarId});
+		}
+	}
+
 	macro tearDownBookings {
 		var calendarIdList = JSONCalendarAPI.searchAllCalendars();
 
@@ -9,14 +19,6 @@ definition {
 			for (var calendarBookingId : list ${calendarBookingIdList}) {
 				JSONCalendarAPI.deleteCalendarBooking(calendarBookingId = ${calendarBookingId});
 			}
-		}
-	}
-
-	macro tearDownNonDefaultCalendars {
-		var calendarIdList = JSONCalendarAPI.getNotDefaultCalendars();
-
-		for (var calendarId : list ${calendarIdList}) {
-			JSONCalendarAPI.deleteCalendar(calendarId = ${calendarId});
 		}
 	}
 

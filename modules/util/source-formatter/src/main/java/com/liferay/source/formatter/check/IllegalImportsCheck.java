@@ -195,7 +195,7 @@ public class IllegalImportsCheck extends BaseFileCheck {
 			List<String> replacedTaglibs = getAttributeValues(
 				_REPLACED_TAGLIBS_KEY, absolutePath);
 
-			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
+			for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
 				if (!line.startsWith(StringPool.PLUS)) {
 					continue;
 				}

@@ -69,7 +69,7 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 			sourceFormatterArgs.getBaseDirName(),
 			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
 
-		for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
+		for (String line : StringUtil.splitLines(currentBranchFileDiff)) {
 			if (!line.startsWith(StringPool.PLUS)) {
 				continue;
 			}

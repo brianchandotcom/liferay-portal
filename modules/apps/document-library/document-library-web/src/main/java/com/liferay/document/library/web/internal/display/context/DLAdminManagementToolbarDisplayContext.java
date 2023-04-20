@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
@@ -45,6 +46,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -53,12 +55,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -69,6 +75,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -79,6 +86,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -650,6 +658,35 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 	}
 
+	private String _getAssetTagSelectorURL() throws PortalException {
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_liferayPortletRequest, AssetTag.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setParameter(
+			"eventName",
+			_liferayPortletResponse.getNamespace() + "selectedAssetTag"
+		).setParameter(
+			"groupIds",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return StringUtil.merge(
+					GroupLocalServiceUtil.getGroupIds(
+						themeDisplay.getCompanyId(), true),
+					StringPool.COMMA);
+			}
+		).setParameter(
+			"selectedTagNames",
+			StringUtil.merge(
+				_getSelectedAssetTagIds(_httpServletRequest), StringPool.COMMA)
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
 	private PortletURL _getCurrentSortingURL() {
 		int deltaEntry = ParamUtil.getInteger(
 			_httpServletRequest, "deltaEntry");
@@ -832,6 +869,12 @@ public class DLAdminManagementToolbarDisplayContext
 		).add(
 			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
+				dropdownItem.putData("action", "openTagsSelector");
+				dropdownItem.putData(
+					"tagsFilterURL", _getAssetTagSelectorURL());
+				dropdownItem.setActive(
+					SetUtil.isNotEmpty(
+						_getSelectedAssetTagIds(_httpServletRequest)));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "tags") +
 						StringPool.TRIPLE_PERIOD);
@@ -905,6 +948,19 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private long _getRepositoryId() {
 		return _dlAdminDisplayContext.getRepositoryId();
+	}
+
+	private Set<String> _getSelectedAssetTagIds(
+		HttpServletRequest httpServletRequest) {
+
+		if (_assetTagIds != null) {
+			return _assetTagIds;
+		}
+
+		_assetTagIds = SetUtil.fromArray(
+			ParamUtil.getStringValues(httpServletRequest, "assetTagId"));
+
+		return _assetTagIds;
 	}
 
 	private boolean _hasValidAssetVocabularies(long scopeGroupId)
@@ -981,6 +1037,7 @@ public class DLAdminManagementToolbarDisplayContext
 		return false;
 	}
 
+	private Set<String> _assetTagIds;
 	private final PortletURL _currentURLObj;
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
 	private final DLPortletInstanceSettingsHelper

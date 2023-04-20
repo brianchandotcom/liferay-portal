@@ -65,7 +65,7 @@ type BillingAddress = {
 	countryISOCode: string;
 	name?: string;
 	phoneNumber?: string;
-	region?: string;
+	regionISOCode?: string;
 	street1?: string;
 	street2?: string;
 	zip?: string;

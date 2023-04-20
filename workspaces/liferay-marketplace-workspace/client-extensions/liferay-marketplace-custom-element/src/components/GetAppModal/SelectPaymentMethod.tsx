@@ -10,7 +10,6 @@ export function SelectPaymentMethod({
 	billingAddress,
 	email,
 	enableTrialMethod,
-	phoneNumber,
 	purchaseOrderNumber,
 	selectedAddress,
 	selectedPaymentMethod,
@@ -22,11 +21,10 @@ export function SelectPaymentMethod({
 	setShowNewAddressButton,
 	showNewAddressButton,
 }: {
-	addresses: PostalAddressResponse[];
+	addresses: BillingAddress[];
 	billingAddress: BillingAddress;
 	email: string;
 	enableTrialMethod: string;
-	phoneNumber: string;
 	purchaseOrderNumber: string;
 	selectedAddress: string;
 	selectedPaymentMethod: PaymentMethodSelector;
@@ -81,7 +79,6 @@ export function SelectPaymentMethod({
 			<BillingAddress
 				addresses={addresses}
 				billingAddress={billingAddress}
-				phoneNumber={phoneNumber}
 				selectedAddress={selectedAddress}
 				setBillingAddress={setBillingAddress}
 				setSelectedAddress={setSelectedAddress}

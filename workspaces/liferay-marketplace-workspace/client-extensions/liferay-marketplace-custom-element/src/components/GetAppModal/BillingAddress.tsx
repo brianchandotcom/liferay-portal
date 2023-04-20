@@ -7,28 +7,26 @@ import {RadioCard} from '../RadioCard/RadioCard';
 export function BillingAddress({
 	addresses,
 	billingAddress,
-	phoneNumber,
 	selectedAddress,
 	setBillingAddress,
 	setSelectedAddress,
 	setShowNewAddressButton,
 	showNewAddressButton,
 }: {
-	addresses: PostalAddressResponse[];
+	addresses: BillingAddress[];
 	billingAddress: BillingAddress;
-	phoneNumber: string;
 	selectedAddress: string;
-	showNewAddressButton: boolean;
 	setBillingAddress: (value: BillingAddress) => void;
 	setSelectedAddress: (value: string) => void;
 	setShowNewAddressButton: (value: boolean) => void;
+	showNewAddressButton: boolean;
 }) {
-	function getPostalAddressDescription(address: PostalAddressResponse) {
-		const description = `${address.streetAddressLine1}, ${
-			address.streetAddressLine2 ? address.streetAddressLine2 + ',' : ''
-		} ${address.addressLocality}, ${address.addressRegion}, ${
-			address.addressCountry
-		} ${address.postalCode} `;
+	function getPostalAddressDescription(address: BillingAddress) {
+		const description = `${address.street1}, ${
+			address.street2 ? address.street2 + ',' : ''
+		} ${address.city}, ${address.regionISOCode}, ${
+			address.countryISOCode
+		} ${address.zip} `;
 
 		return {
 			description,
@@ -47,31 +45,29 @@ export function BillingAddress({
 						<RadioCard
 							description={description}
 							onChange={() => {
-								setSelectedAddress(address.streetAddressLine1);
+								setSelectedAddress(address.name as string);
 
 								const postalAddress = addresses.find(
 									(address) => address.name === title
 								);
 
 								const billingAddress: BillingAddress = {
-									city: postalAddress?.addressLocality,
-									country: postalAddress?.addressCountry,
+									city: postalAddress?.city,
+									country: postalAddress?.countryISOCode,
 									countryISOCode: 'US',
 									name: postalAddress?.name,
-									phoneNumber,
-									region: postalAddress?.addressRegion,
-									street1: postalAddress?.streetAddressLine1,
-									street2: postalAddress?.streetAddressLine2,
-									zip: postalAddress?.postalCode,
+									phoneNumber: postalAddress?.phoneNumber,
+									regionISOCode: postalAddress?.regionISOCode,
+									street1: postalAddress?.street1,
+									street2: postalAddress?.street2,
+									zip: postalAddress?.zip,
 								};
 
 								setShowNewAddressButton(false);
 
 								setBillingAddress(billingAddress);
 							}}
-							selected={
-								selectedAddress === address.streetAddressLine1
-							}
+							selected={selectedAddress === address.name}
 							title={title}
 						/>
 					);
@@ -107,7 +103,7 @@ export function BillingAddress({
 									countryISOCode: 'US',
 									name: '',
 									phoneNumber: '',
-									region: '',
+									regionISOCode: '',
 									street1: '',
 									street2: '',
 									zip: '',
@@ -173,11 +169,11 @@ export function BillingAddress({
 								onChange={({target}) => {
 									setBillingAddress({
 										...billingAddress,
-										region: target.value,
+										regionISOCode: target.value,
 									});
 								}}
 								required
-								value={billingAddress?.region}
+								value={billingAddress?.regionISOCode}
 							/>
 						</div>
 

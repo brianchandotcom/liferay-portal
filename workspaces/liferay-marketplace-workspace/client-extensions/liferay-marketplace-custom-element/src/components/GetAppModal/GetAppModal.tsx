@@ -6,6 +6,7 @@ import {useEffect, useState} from 'react';
 import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
 import {
+	getAccountAddressesFromCommerce,
 	getAccountInfo,
 	getAccountInfoFromCommerce,
 	getAccounts,
@@ -83,7 +84,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		skuOptions: [],
 	});
 
-	const [addresses, setAddresses] = useState<PostalAddressResponse[]>([]);
+	const [addresses, setAddresses] = useState<BillingAddress[]>([]);
 
 	const [billingAddress, setBillingAddress] = useState<BillingAddress>(
 		initialBillingAddress
@@ -181,29 +182,11 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				setSelectedPaymentMethod(null);
 			}
 
-			const account = await getAccountInfo({accountId});
+			const billingAddresses = await getAccountAddressesFromCommerce(
+				currentAccountCommerce.id
+			);
 
-			const postalAddresses = account?.accountUserAccounts[0]
-				.userAccountContactInformation
-				.postalAddresses as PostalAddressResponse[];
-
-			let addresses = [] as PostalAddressResponse[];
-
-			postalAddresses?.map((item) => {
-				addresses = [...addresses, item];
-			});
-
-			setAddresses(addresses);
-
-			const telephone =
-				account.accountUserAccounts[0].userAccountContactInformation
-					.telephones[0];
-
-			if (telephone) {
-				setPhoneNumber(
-					`(${telephone.extension}) ${telephone.phoneNumber}`
-				);
-			}
+			setAddresses(billingAddresses.items);
 
 			const versionResponse = await getSKUCustomFieldExpandoValue({
 				companyId: Number(getCompanyId()),
@@ -466,7 +449,6 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 								billingAddress={billingAddress}
 								email={email}
 								enableTrialMethod={enableTrialMethod}
-								phoneNumber={phoneNumber}
 								purchaseOrderNumber={purchaseOrderNumber}
 								selectedAddress={selectedAddress}
 								selectedPaymentMethod={selectedPaymentMethod}

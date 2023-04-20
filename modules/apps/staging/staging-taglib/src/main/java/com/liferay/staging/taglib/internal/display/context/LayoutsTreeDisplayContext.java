@@ -417,7 +417,7 @@ public class LayoutsTreeDisplayContext {
 				for (long selectedLayoutId : selectedLayoutIdsArray) {
 					SessionTreeJSClicks.openLayoutNodes(
 						_httpServletRequest, _getTreeId() + "SelectedNode",
-						isSelectPagesPrivateLayout(), selectedLayoutId, true);
+						isSelectPagesPrivateLayout(), selectedLayoutId, false);
 				}
 			}
 			else {

@@ -546,4 +546,88 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results using multiple filtering options"
+	@priority = 4
+	test CanFilterWithMultipleOptions {
+		task ("Given that the user complete a test with passed status") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			WaitForPageLoad();
+		}
+
+		task ("And that the user has two case result different in the table") {
+			TR2Utils.clickBreadcrumb(text = ${buildName});
+
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result with multiple options") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Click.clickAtNotVisible(
+				key_label = "Status",
+				key_status = "Passed",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 1");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority",
+				value1 = 5);
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee",
+				value1 = "Test");
+
+			TestrayFilter.multiSelect(
+				header = "Component",
+				label = "Component",
+				listMultiSelect = "Component 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only the Case 1, user and status in the table") {
+			TestrayCases.verifyCase(
+				caseComponent = "Component 1",
+				caseName = "Case 1",
+				casePriority = 5);
+
+			TestrayTestflow.userAvatarPresent(
+				label = "Tests",
+				status = "Test Test");
+
+			TestrayTestflow.assertStatus(
+				label = "Tests",
+				status = "Passed");
+		}
+
+		task ("And do not see Case 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

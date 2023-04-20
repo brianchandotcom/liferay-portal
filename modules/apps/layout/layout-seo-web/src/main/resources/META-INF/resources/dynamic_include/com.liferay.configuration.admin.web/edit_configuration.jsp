@@ -20,6 +20,24 @@
 	defaultTitleDisabled="<%= true %>"
 	dismissible="<%= true %>"
 	displayType="warning"
-	message='<%= GetterUtil.getString((String)request.getAttribute("edit-configuration.jsp-configurationURL")) %>'
+	message='<%=
+		LanguageUtil.format(
+			request, "to-set-up-the-user-agents-go-to-crawler-user-agents",
+			new String[] {
+				"<a href=" +
+					PortletURLBuilder.create(
+						PortalUtil.getControlPanelPortletURL(request, ConfigurationAdminPortletKeys.SYSTEM_SETTINGS, PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/configuration_admin/edit_configuration"
+					).setRedirect(
+						PortalUtil.getCurrentCompleteURL(request)
+					).setParameter(
+						"factoryPid", CrawlerUserAgentsConfiguration.class.getName()
+					).setParameter(
+						"pid", CrawlerUserAgentsConfiguration.class.getName()
+					).buildString() + ">",
+				"</a>"
+			})
+	%>'
 	symbol="warning-full"
 />

@@ -175,9 +175,12 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			"__CLIENT_EXTENSION_ID__",
 			StringUtil.toAlphaNumericLowerCase(_project.getName()));
 
-		_createDockerConfig(classificationGrouping, substitutionMap);
-
-		_createLCPJSONConfig(classificationGrouping, substitutionMap);
+		_writeToOutputFile(
+			classificationGrouping, getInputDockerfileFile(), getDockerFile(),
+			substitutionMap);
+		_writeToOutputFile(
+			classificationGrouping, getInputLcpJsonFile(), getLcpJsonFile(),
+			substitutionMap);
 
 		_createClientExtensionConfigFile(jsonMap);
 	}
@@ -268,58 +271,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 		catch (Exception exception) {
 			throw new GradleException(exception.getMessage(), exception);
-		}
-	}
-
-	private void _createDockerConfig(
-		String classificationGrouping, Map<String, String> substitutionMap) {
-
-		File outputDockerFile = getDockerFile();
-
-		try {
-			String dockerFileContent = _getFileContent(
-				getInputDockerfileFile());
-
-			if (dockerFileContent == null) {
-				dockerFileContent = _loadTemplate(
-					"templates/" + classificationGrouping + "/Dockerfile.tpl",
-					substitutionMap);
-			}
-
-			if (dockerFileContent == null) {
-				throw new GradleException("Dockerfile not specified");
-			}
-
-			Files.write(
-				outputDockerFile.toPath(), dockerFileContent.getBytes());
-		}
-		catch (IOException ioException) {
-			throw new GradleException(ioException.getMessage(), ioException);
-		}
-	}
-
-	private void _createLCPJSONConfig(
-		String classificationGrouping, Map<String, String> substitutionMap) {
-
-		File outputLcpJsonFile = getLcpJsonFile();
-
-		try {
-			String lcpJsonContent = _getFileContent(getInputLcpJsonFile());
-
-			if (lcpJsonContent == null) {
-				lcpJsonContent = _loadTemplate(
-					"templates/" + classificationGrouping + "/LCP.json.tpl",
-					substitutionMap);
-			}
-
-			if (lcpJsonContent == null) {
-				throw new GradleException("LCP.json not specified");
-			}
-
-			Files.write(outputLcpJsonFile.toPath(), lcpJsonContent.getBytes());
-		}
-		catch (IOException ioException) {
-			throw new GradleException(ioException.getMessage(), ioException);
 		}
 	}
 
@@ -544,6 +495,39 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 
 		return "frontend";
+	}
+
+	private void _writeToOutputFile(
+		String classificationGrouping, File inputFile, File outputFile,
+		Map<String, String> substitutionMap) {
+
+		if (inputFile.exists()) {
+			_project.copy(
+				copy -> {
+					copy.from(inputFile);
+					copy.into(outputFile.getParentFile());
+				});
+
+			return;
+		}
+
+		try {
+			String fileContent = _loadTemplate(
+				String.format(
+					"templates/%s/%s.tpl", classificationGrouping,
+					inputFile.getName()),
+				substitutionMap);
+
+			if (fileContent == null) {
+				throw new GradleException(
+					inputFile.getName() + " not specified");
+			}
+
+			Files.write(outputFile.toPath(), fileContent.getBytes());
+		}
+		catch (IOException ioException) {
+			throw new GradleException(ioException.getMessage(), ioException);
+		}
 	}
 
 	private static final String _CLIENT_EXTENSION_CONFIG_FILE_NAME =

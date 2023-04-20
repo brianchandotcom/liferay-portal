@@ -11,4 +11,4 @@ FTLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies ru
 FTLTagAttributesCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts and formats attributes values in tags. |
 FTLTagCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases where consecutive `#assign` can be combined. |
 FTLWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary whitespace in `.ftl` files. |
-IllegalTaglibCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases of incorrect use of certain taglib. |
+IllegalTaglibsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases of incorrect use of certain taglibs. |

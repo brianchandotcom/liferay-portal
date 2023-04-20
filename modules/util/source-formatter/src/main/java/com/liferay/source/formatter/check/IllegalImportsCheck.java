@@ -82,8 +82,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 			addMessage(fileName, "Illegal import: jodd.util.StringPool");
 		}
 
-		// LPS-39508
-
 		if (!isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath) &&
 			!isExcludedPath(_SECURE_RANDOM_EXCLUDES, absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
@@ -96,8 +94,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 						"LPS-39508");
 		}
 
-		// LPS-45027
-
 		if (content.contains(
 				"com.liferay.portal.kernel.util.UnmodifiableList")) {
 
@@ -108,8 +104,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 						"LPS-45027");
 		}
 
-		// LPS-47682
-
 		if (isPortalSource() && absolutePath.contains("/portal-kernel/") &&
 			content.contains("import javax.servlet.jsp.")) {
 
@@ -119,16 +113,12 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"LPS-47682");
 		}
 
-		// LPS-55690
-
 		if (content.contains("org.testng.Assert")) {
 			addMessage(
 				fileName,
 				"Use org.junit.Assert instead of org.testng.Assert, see " +
 					"LPS-55690");
 		}
-
-		// LPS-60473
 
 		if (content.contains(".supportsBatchUpdates()") &&
 			!fileName.endsWith("AutoBatchPreparedStatementUtil.java")) {
@@ -139,8 +129,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"DatabaseMetaData.supportsBatchUpdates, see LPS-60473");
 		}
 
-		// LPS-62786
-
 		if (!fileName.endsWith("TypeConvertorUtil.java") &&
 			content.contains("org.apache.commons.beanutils.PropertyUtils")) {
 
@@ -149,8 +137,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 				"Do not use org.apache.commons.beanutils.PropertyUtils, see " +
 					"LPS-62786");
 		}
-
-		// LPS-64056
 
 		if (content.contains("Configurable.createConfigurable(") &&
 			!fileName.endsWith("ConfigurableUtil.java")) {
@@ -161,8 +147,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"Configurable.createConfigurable, see LPS-64056");
 		}
 
-		// LPS-65229
-
 		if (fileName.endsWith("ResourceCommand.java") &&
 			content.contains("ServletResponseUtil.sendFile(")) {
 
@@ -172,16 +156,12 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"ServletResponseUtil.sendFile, see LPS-65229");
 		}
 
-		// LPS-70963
-
 		if (content.contains("java.util.WeakHashMap")) {
 			addMessage(
 				fileName,
 				"Do not use java.util.WeakHashMap because it is not " +
 					"thread-safe, see LPS-70963");
 		}
-
-		// LPS-164101
 
 		if (isAttributeValue(_ENFORCE_COOKIES_MANAGER_UTIL_KEY, absolutePath) &&
 			content.contains("com.liferay.portal.kernel.util.CookieKeys")) {
@@ -201,8 +181,6 @@ public class IllegalImportsCheck extends BaseFileCheck {
 				"Use com.liferay.portal.kernel.log.Log instead of " +
 					"org.slf4j.Logger");
 		}
-
-		// LPS-170503
 
 		SourceProcessor sourceProcessor = getSourceProcessor();
 

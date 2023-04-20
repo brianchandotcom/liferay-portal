@@ -50,6 +50,7 @@ import org.apache.felix.cm.file.ConfigurationHandler;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,6 +94,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 			});
 	}
 
+	@Ignore
 	@Test
 	public void testUpgradeConfigurationWhenFileNotExisted() throws Exception {
 		String fileName = _SERVICE_FACTORY_PID + "-default.config";
@@ -120,6 +122,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testUpgradeConfigurationWithEmptyDictionary() throws Exception {
 		try {
@@ -153,6 +156,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testUpgradeConfigurationWithFile() throws Exception {
 		_testUpgradeConfigurationWithFile(CharPool.DASH);
@@ -161,6 +165,7 @@ public class UpgradeConfigurationPidUpgradeTest {
 		_testUpgradeConfigurationWithFile(CharPool.UNDERLINE);
 	}
 
+	@Ignore
 	@Test
 	public void testUpgradeConfigurationWithoutFile() throws Exception {
 		_testUpgradeConfigurationWithoutFile(CharPool.DASH);

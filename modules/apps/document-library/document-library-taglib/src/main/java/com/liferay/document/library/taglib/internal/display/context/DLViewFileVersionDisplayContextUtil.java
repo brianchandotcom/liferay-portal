@@ -16,21 +16,15 @@ package com.liferay.document.library.taglib.internal.display.context;
 
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {})
 public class DLViewFileVersionDisplayContextUtil {
 
 	public static DLViewFileVersionDisplayContext
@@ -38,25 +32,16 @@ public class DLViewFileVersionDisplayContextUtil {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
-		return _dlViewFileVersionDisplayContextUtil._dlDisplayContextProvider.
-			getDLViewFileVersionDisplayContext(
-				httpServletRequest, httpServletResponse, fileVersion);
+		DLDisplayContextProvider dlDisplayContextProvider =
+			_dlDisplayContextProviderSnapshot.get();
+
+		return dlDisplayContextProvider.getDLViewFileVersionDisplayContext(
+			httpServletRequest, httpServletResponse, fileVersion);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_dlViewFileVersionDisplayContextUtil = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dlViewFileVersionDisplayContextUtil = null;
-	}
-
-	private static DLViewFileVersionDisplayContextUtil
-		_dlViewFileVersionDisplayContextUtil;
-
-	@Reference
-	private DLDisplayContextProvider _dlDisplayContextProvider;
+	private static final Snapshot<DLDisplayContextProvider>
+		_dlDisplayContextProviderSnapshot = new Snapshot<>(
+			DLViewFileVersionDisplayContextUtil.class,
+			DLDisplayContextProvider.class);
 
 }

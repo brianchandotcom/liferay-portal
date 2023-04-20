@@ -22,15 +22,21 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
+import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
+import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.dto.v1_0.StyleBook;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.petra.string.StringBundler;
@@ -53,6 +59,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -68,6 +75,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
@@ -78,6 +86,7 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -104,6 +113,8 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.Serializable;
 
@@ -113,6 +124,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -345,6 +357,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		layout = _layoutLocalService.updateLayout(layout);
 
+		layout = _updateLayoutSettings(layout, sitePage.getPageDefinition());
+
 		_updateSEOEntry(layout, sitePage);
 
 		PagePermission[] pagePermissions = sitePage.getPagePermissions();
@@ -382,10 +396,16 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
+		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
+
+		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.put("published", Boolean.TRUE.toString());
+
+		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		draftLayout = _layoutLocalService.updateLayout(draftLayout);
 
@@ -643,6 +663,20 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return themeDisplay;
 	}
 
+	private String _getThemeId(long companyId, String themeName) {
+		List<Theme> themes = ListUtil.filter(
+			_themeLocalService.getThemes(companyId),
+			theme -> Objects.equals(theme.getName(), themeName));
+
+		if (ListUtil.isNotEmpty(themes)) {
+			Theme theme = themes.get(0);
+
+			return theme.getThemeId();
+		}
+
+		return null;
+	}
+
 	private SegmentsExperience _getUserSegmentsExperience(Layout layout)
 		throws Exception {
 
@@ -772,6 +806,91 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
 	}
 
+	private Layout _updateLayoutSettings(
+		Layout layout, PageDefinition pageDefinition) {
+
+		if (pageDefinition == null) {
+			return layout;
+		}
+
+		Settings settings = pageDefinition.getSettings();
+
+		if (settings == null) {
+			layout.setThemeId(null);
+
+			layout.setColorSchemeId(null);
+
+			return _layoutLocalService.updateLayout(layout);
+		}
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		Map<String, String> themeSettings =
+			(Map<String, String>)settings.getThemeSettings();
+
+		Set<Map.Entry<String, String>> entrySet = unicodeProperties.entrySet();
+
+		entrySet.removeIf(
+			entry -> {
+				String key = entry.getKey();
+
+				return key.startsWith("lfr-theme:");
+			});
+
+		if (themeSettings != null) {
+			for (Map.Entry<String, String> entry : themeSettings.entrySet()) {
+				unicodeProperties.put(entry.getKey(), entry.getValue());
+			}
+
+			layout.setTypeSettingsProperties(unicodeProperties);
+		}
+
+		if (Validator.isNotNull(settings.getThemeName())) {
+			String themeId = _getThemeId(
+				layout.getCompanyId(), settings.getThemeName());
+
+			layout.setThemeId(themeId);
+		}
+
+		if (Validator.isNotNull(settings.getColorSchemeName())) {
+			layout.setColorSchemeId(settings.getColorSchemeName());
+		}
+
+		if (Validator.isNotNull(settings.getCss())) {
+			layout.setCss(settings.getCss());
+		}
+
+		MasterPage masterPage = settings.getMasterPage();
+
+		if (masterPage != null) {
+			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						layout.getGroupId(), masterPage.getKey());
+
+			if (masterLayoutPageTemplateEntry != null) {
+				layout.setMasterLayoutPlid(
+					masterLayoutPageTemplateEntry.getPlid());
+			}
+		}
+
+		StyleBook styleBook = settings.getStyleBook();
+
+		if (styleBook != null) {
+			StyleBookEntry styleBookEntry =
+				_styleBookEntryLocalService.fetchStyleBookEntry(
+					layout.getGroupId(), styleBook.getKey());
+
+			if (styleBookEntry != null) {
+				layout.setStyleBookEntryId(
+					styleBookEntry.getStyleBookEntryId());
+			}
+		}
+
+		return _layoutLocalService.updateLayout(layout);
+	}
+
 	private void _updateSEOEntry(Layout layout, SitePage sitePage)
 		throws Exception {
 
@@ -876,7 +995,14 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private LayoutCopyHelper _layoutCopyHelper;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutSEOEntryService _layoutSEOEntryService;
@@ -912,6 +1038,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private DTOConverter<Layout, SitePage> _sitePageDTOConverter;
 
 	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Reference
 	private TeamLocalService _teamLocalService;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 }

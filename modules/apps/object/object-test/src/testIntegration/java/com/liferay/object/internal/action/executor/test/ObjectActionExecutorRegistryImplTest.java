@@ -108,8 +108,8 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
-				ObjectActionExecutor.UNRESTRICTED_BY_COMPANY,
-				"_objectActionExecutor1", Arrays.asList("Account", "Address"));
+				ObjectActionExecutor.ALL_COMPANIES, "_objectActionExecutor1",
+				Arrays.asList("Account", "Address"));
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
@@ -141,7 +141,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		ObjectActionExecutor objectActionExecutor2 =
 			_registerObjectActionExecutor(
 				_companyId1, "_objectActionExecutor2",
-				ObjectActionExecutor.UNRESTRICTED_BY_OBJECT_DEFINITIONS);
+				ObjectActionExecutor.ALL_OBJECT_DEFINITIONS);
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(

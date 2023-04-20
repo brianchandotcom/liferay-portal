@@ -82,8 +82,7 @@ definition {
 		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
 			FrontendDataSetAdmin.createDataSetView(
 				description = "Test Description",
-				key_name = "View Test",
-				reps = "1,2,3,4,5,6");
+				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
 		}
 
 		task ("And changing the page to 4 entries.") {
@@ -91,11 +90,7 @@ definition {
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
-			for (var num : list "1,2,3,4") {
-				AssertElementPresent(
-					entryName = "View Test ${num}",
-					locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
-			}
+			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
@@ -105,11 +100,7 @@ definition {
 		}
 
 		task ("Then 2 entries are displayed") {
-			for (var num : list "5,6") {
-				AssertElementPresent(
-					entryName = "View Test ${num}",
-					locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
-			}
+			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 5,View Test 6");
 
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}

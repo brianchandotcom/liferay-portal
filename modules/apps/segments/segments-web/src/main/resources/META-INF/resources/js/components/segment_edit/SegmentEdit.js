@@ -61,12 +61,14 @@ function SegmentEdit({
 	validateForm,
 	values,
 }) {
+	const contributors = initialContributorsToContributors(
+		initialContributors,
+		propertyGroups
+	);
+
 	const [data, setData] = useState({
-		contributors: initialContributorsToContributors(
-			initialContributors,
-			propertyGroups
-		),
-		disabledSave: queryIsEmpty(initialContributors),
+		contributors,
+		disabledSave: queryIsEmpty(contributors),
 		editing: showInEditMode,
 		hasChanged: false,
 		hasEmptyValues: false,

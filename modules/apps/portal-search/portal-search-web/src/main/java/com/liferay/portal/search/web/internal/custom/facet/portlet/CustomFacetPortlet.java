@@ -122,13 +122,13 @@ public class CustomFacetPortlet extends MVCPortlet {
 				parameterName, portletSharedSearchResponse, renderRequest);
 
 		return customFacetDisplayContextBuilder.setCustomDisplayCaption(
-			customFacetPortletPreferences.getCustomHeadingString()
+			customFacetPortletPreferences.getCustomHeading()
 		).setFacet(
 			_getFacet(
 				portletSharedSearchResponse, customFacetPortletPreferences,
 				renderRequest)
 		).setFieldToAggregate(
-			customFacetPortletPreferences.getAggregationFieldString()
+			customFacetPortletPreferences.getAggregationField()
 		).setFrequenciesVisible(
 			customFacetPortletPreferences.isFrequenciesVisible()
 		).setFrequencyThreshold(
@@ -196,15 +196,14 @@ public class CustomFacetPortlet extends MVCPortlet {
 	private String _getParameterName(
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
 
-		String parameterName =
-			customFacetPortletPreferences.getParameterNameString();
+		String parameterName = customFacetPortletPreferences.getParameterName();
 
 		if (Validator.isNotNull(parameterName)) {
 			return parameterName;
 		}
 
 		String aggregationField =
-			customFacetPortletPreferences.getAggregationFieldString();
+			customFacetPortletPreferences.getAggregationField();
 
 		if (Validator.isNotNull(aggregationField)) {
 			return aggregationField;

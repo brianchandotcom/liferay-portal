@@ -52,7 +52,7 @@ public class CustomFacetPortletSharedSearchContributor
 				portletSharedSearchSettings.getPortletPreferencesOptional());
 
 		String fieldToAggregate =
-			customFacetPortletPreferences.getAggregationFieldString();
+			customFacetPortletPreferences.getAggregationField();
 
 		if (Validator.isNull(fieldToAggregate)) {
 			return;
@@ -202,15 +202,14 @@ public class CustomFacetPortletSharedSearchContributor
 	private String _getParameterName(
 		CustomFacetPortletPreferences customFacetPortletPreferences) {
 
-		String parameterName =
-			customFacetPortletPreferences.getParameterNameString();
+		String parameterName = customFacetPortletPreferences.getParameterName();
 
 		if (Validator.isNotNull(parameterName)) {
 			return parameterName;
 		}
 
 		String aggregationField =
-			customFacetPortletPreferences.getAggregationFieldString();
+			customFacetPortletPreferences.getAggregationField();
 
 		if (Validator.isNotNull(aggregationField)) {
 			return aggregationField;

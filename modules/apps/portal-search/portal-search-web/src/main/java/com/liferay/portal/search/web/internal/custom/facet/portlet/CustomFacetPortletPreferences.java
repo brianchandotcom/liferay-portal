@@ -39,9 +39,9 @@ public interface CustomFacetPortletPreferences {
 
 	public static final String PREFERENCE_KEY_PARAMETER_NAME = "parameterName";
 
-	public String getAggregationFieldString();
+	public String getAggregationField();
 
-	public String getCustomHeadingString();
+	public String getCustomHeading();
 
 	public String getFederatedSearchKey();
 
@@ -51,7 +51,7 @@ public interface CustomFacetPortletPreferences {
 
 	public String getOrder();
 
-	public String getParameterNameString();
+	public String getParameterName();
 
 	public boolean isFrequenciesVisible();
 

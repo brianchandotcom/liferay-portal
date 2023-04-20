@@ -1,6 +1,6 @@
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
-[#assign claim_status_style = {"draft": "label label-tonal-dark ml-2", "pendingMarketingReview": "label label-tonal-warning ml-2", "approved": "label label-tonal-success ml-2", "moreInfoRequested": "label label-tonal-warning ml-2", "rejected": "label label-tonal-danger ml-2", "expired": "label label-tonal-danger ml-2", "claimPaid": "label label-tonal-info ml-2", "inFinanceReview": "label label-tonal-light ml-2"}]
+[#assign claim_status_style = {"draft": "label label-tonal-dark ml-2", "pendingMarketingReview": "label label-tonal-warning ml-2", "approved": "label label-tonal-success ml-2", "moreInfoRequested": "label label-tonal-warning ml-2", "rejected": "label label-tonal-danger ml-2", "expired": "label label-tonal-danger ml-2", "claimPaid": "label label-tonal-info ml-2", "inFinanceReview": "label label-tonal-light ml-2", "canceled": "label label-tonal-danger ml-2"}]
 
 [#function check_claim status_key]
 	[#return status_key != "draft" && status_key != "expired" && status_key != "rejected" /]

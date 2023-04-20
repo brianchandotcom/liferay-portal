@@ -103,12 +103,6 @@ public class CustomFieldsUtil {
 			if (ExpandoColumnConstants.DATE == attributeType) {
 				map.put(fieldName, _parseDate(String.valueOf(data)));
 			}
-			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-				map.put(fieldName, ArrayUtil.toDoubleArray((List<Number>)data));
-			}
-			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-				map.put(fieldName, ArrayUtil.toFloatArray((List<Number>)data));
-			}
 			else if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 				Geo geo = customValue.getGeo();
 
@@ -120,22 +114,36 @@ public class CustomFieldsUtil {
 						"longitude", geo.getLongitude()
 					).toString());
 			}
-			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-				map.put(fieldName, ArrayUtil.toIntArray((List<Number>)data));
-			}
-			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
-				map.put(fieldName, ArrayUtil.toLongArray((List<Number>)data));
-			}
-			else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
-				List<?> list = (List<?>)data;
-
-				map.put(fieldName, list.toArray(new String[0]));
-			}
 			else if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
 				map.put(
 					fieldName,
 					(Serializable)LocalizedMapUtil.getLocalizedMap(
 						locale, (String)data, customValue.getData_i18n()));
+			}
+			else if (data instanceof List) {
+				if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
+					map.put(
+						fieldName, ArrayUtil.toDoubleArray((List<Number>)data));
+				}
+				else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
+					map.put(
+						fieldName, ArrayUtil.toFloatArray((List<Number>)data));
+				}
+				else if (ExpandoColumnConstants.INTEGER_ARRAY ==
+							attributeType) {
+
+					map.put(
+						fieldName, ArrayUtil.toIntArray((List<Number>)data));
+				}
+				else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
+					map.put(
+						fieldName, ArrayUtil.toLongArray((List<Number>)data));
+				}
+				else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
+					List<?> list = (List<?>)data;
+
+					map.put(fieldName, list.toArray(new String[0]));
+				}
 			}
 			else {
 				map.put(fieldName, (Serializable)data);

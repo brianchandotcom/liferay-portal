@@ -107,18 +107,6 @@ public class CustomFieldsUtil {
 				continue;
 			}
 
-			if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-				map.put(name, ArrayUtil.toDoubleArray((List<Number>)data));
-
-				continue;
-			}
-
-			if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-				map.put(name, ArrayUtil.toFloatArray((List<Number>)data));
-
-				continue;
-			}
-
 			if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 				Geo geo = customValue.getGeo();
 
@@ -133,26 +121,6 @@ public class CustomFieldsUtil {
 				continue;
 			}
 
-			if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-				map.put(name, ArrayUtil.toIntArray((List<Number>)data));
-
-				continue;
-			}
-
-			if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
-				map.put(name, ArrayUtil.toLongArray((List<Number>)data));
-
-				continue;
-			}
-
-			if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
-				List<?> list = (List<?>)data;
-
-				map.put(name, list.toArray(new String[0]));
-
-				continue;
-			}
-
 			if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
 				map.put(
 					name,
@@ -160,6 +128,40 @@ public class CustomFieldsUtil {
 						locale, (String)data, customValue.getData_i18n()));
 
 				continue;
+			}
+
+			if (data instanceof List<?>) {
+				if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
+					map.put(name, ArrayUtil.toDoubleArray((List<Number>)data));
+
+					continue;
+				}
+
+				if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
+					map.put(name, ArrayUtil.toFloatArray((List<Number>)data));
+
+					continue;
+				}
+
+				if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
+					map.put(name, ArrayUtil.toIntArray((List<Number>)data));
+
+					continue;
+				}
+
+				if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
+					map.put(name, ArrayUtil.toLongArray((List<Number>)data));
+
+					continue;
+				}
+
+				if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
+					List<?> list = (List<?>)data;
+
+					map.put(name, list.toArray(new String[0]));
+
+					continue;
+				}
 			}
 
 			map.put(name, (Serializable)data);

@@ -124,12 +124,6 @@ public class CustomFieldsUtil {
 		if (ExpandoColumnConstants.DATE == attributeType) {
 			return _parseDate(String.valueOf(data));
 		}
-		else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-			return ArrayUtil.toDoubleArray((List<Number>)data);
-		}
-		else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-			return ArrayUtil.toFloatArray((List<Number>)data);
-		}
 		else if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 			Geo geo = customValue.getGeo();
 
@@ -139,20 +133,28 @@ public class CustomFieldsUtil {
 				"longitude", geo.getLongitude()
 			).toString();
 		}
-		else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-			return ArrayUtil.toIntArray((List<Number>)data);
-		}
-		else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
-			return ArrayUtil.toLongArray((List<Number>)data);
-		}
-		else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
-			List<?> list = (List<?>)data;
-
-			return list.toArray(new String[0]);
-		}
 		else if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
 			return (Serializable)LocalizedMapUtil.getLocalizedMap(
 				locale, (String)data, customValue.getData_i18n());
+		}
+		else if (data instanceof List) {
+			if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
+				return ArrayUtil.toDoubleArray((List<Number>)data);
+			}
+			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
+				return ArrayUtil.toFloatArray((List<Number>)data);
+			}
+			if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
+				return ArrayUtil.toIntArray((List<Number>) data);
+			}
+			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
+				return ArrayUtil.toLongArray((List<Number>) data);
+			}
+			else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
+				List<?> list = (List<?>) data;
+
+				return list.toArray(new String[0]);
+			}
 		}
 
 		return (Serializable)data;

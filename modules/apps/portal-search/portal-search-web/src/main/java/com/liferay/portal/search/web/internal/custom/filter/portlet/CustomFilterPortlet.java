@@ -119,23 +119,23 @@ public class CustomFilterPortlet extends MVCPortlet {
 		SearchRequest searchRequest = searchResponse.getRequest();
 
 		return CustomFilterDisplayContextBuilder.builder(
-		).customHeadingOptional(
-			customFilterPortletPreferences.getCustomHeadingOptional()
+		).customHeading(
+			customFilterPortletPreferences.getCustomHeadingString()
 		).disabled(
 			customFilterPortletPreferences.isDisabled()
-		).filterFieldOptional(
-			customFilterPortletPreferences.getFilterFieldOptional()
+		).filterField(
+			customFilterPortletPreferences.getFilterFieldString()
 		).immutable(
 			customFilterPortletPreferences.isImmutable()
-		).filterValueOptional(
-			customFilterPortletPreferences.getFilterValueOptional()
+		).filterValue(
+			customFilterPortletPreferences.getFilterValueString()
 		).parameterName(
 			parameterName
 		).parameterValueOptional(
 			portletSharedSearchResponse.getParameter(
 				parameterName, renderRequest)
-		).queryNameOptional(
-			customFilterPortletPreferences.getQueryNameOptional()
+		).queryName(
+			customFilterPortletPreferences.getQueryNameString()
 		).renderNothing(
 			_isRenderNothing(searchRequest)
 		).themeDisplay(

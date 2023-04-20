@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
-
-import java.util.stream.Stream;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author André de Oliveira
@@ -26,11 +24,21 @@ public class CustomFilterPortletUtil {
 	public static String getParameterName(
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
-		return SearchOptionalUtil.findFirstPresent(
-			Stream.of(
-				customFilterPortletPreferences.getParameterNameOptional(),
-				customFilterPortletPreferences.getFilterFieldOptional()),
-			"customfilter");
+		String parameterName =
+			customFilterPortletPreferences.getParameterNameString();
+
+		if (Validator.isNotNull(parameterName)) {
+			return parameterName;
+		}
+
+		String filterField =
+			customFilterPortletPreferences.getFilterFieldString();
+
+		if (Validator.isNotNull(filterField)) {
+			return filterField;
+		}
+
+		return "customfilter";
 	}
 
 }

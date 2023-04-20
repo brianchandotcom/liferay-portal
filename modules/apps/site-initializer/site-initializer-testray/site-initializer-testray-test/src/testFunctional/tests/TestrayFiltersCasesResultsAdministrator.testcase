@@ -110,7 +110,7 @@ definition {
 				runName = "Option 2");
 		}
 
-		task ("Go to Testray 2 and Go to the case result page") {
+		task ("Go to Testray 2 and Go to the build page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by case name"
-	@priority = 3
+	@priority = 4
 	test CanFilterByCaseName {
 		task ("Given that the user has two cases different in the table") {
 			AssertElementPresent(
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by error"
-	@priority = 3
+	@priority = 4
 	test CanFilterByError {
 		task ("Given that the user has two case result with errors different in the table") {
 			AssertElementPresent(
@@ -685,6 +685,42 @@ definition {
 
 		task ("And can see message no results found") {
 			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an User I should be able to search by a filter"
+	@priority = 2
+	test CanSearchByFilter {
+		task ("Given that the user has two field different in the filter") {
+			AssertElementPresent(
+				key_projectName = "Priority",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Run",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user searches for a field called run") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.searchFilter(value = "Run");
+		}
+
+		task ("Then the user can see the field label called run") {
+			AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Run");
+		}
+
+		task ("And the user no more see the field called priority in the filter") {
+			AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority");
 		}
 	}
 

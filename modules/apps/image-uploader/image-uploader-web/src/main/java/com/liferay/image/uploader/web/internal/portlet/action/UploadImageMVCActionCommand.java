@@ -205,7 +205,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			TempFileEntryUtil.deleteTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				UploadImageUtil.getTempImageFolderName(), fileName);
+				UploadImageUtil.TEMP_IMAGE_FOLDER_NAME, fileName);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -215,7 +215,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			UploadImageUtil.getTempImageFolderName(), fileName, file,
+			UploadImageUtil.TEMP_IMAGE_FOLDER_NAME, fileName, file,
 			contentType);
 	}
 
@@ -376,7 +376,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 					TempFileEntryUtil.deleteTempFileEntry(
 						themeDisplay.getScopeGroupId(),
 						themeDisplay.getUserId(),
-						UploadImageUtil.getTempImageFolderName(),
+						UploadImageUtil.TEMP_IMAGE_FOLDER_NAME,
 						_getTempImageFileName(actionRequest));
 				}
 				catch (Exception exception) {
@@ -387,7 +387,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 				return TempFileEntryUtil.addTempFileEntry(
 					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					UploadImageUtil.getTempImageFolderName(),
+					UploadImageUtil.TEMP_IMAGE_FOLDER_NAME,
 					_getTempImageFileName(actionRequest), file,
 					tempFileEntry.getMimeType());
 			}

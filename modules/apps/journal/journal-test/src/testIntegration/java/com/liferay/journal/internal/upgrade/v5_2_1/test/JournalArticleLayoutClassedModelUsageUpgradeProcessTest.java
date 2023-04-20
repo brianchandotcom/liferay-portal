@@ -31,6 +31,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -409,6 +410,8 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				_upgradeStepRegistrator, _CLASS_NAME);
 
 			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
 		}
 	}
 
@@ -503,6 +506,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;

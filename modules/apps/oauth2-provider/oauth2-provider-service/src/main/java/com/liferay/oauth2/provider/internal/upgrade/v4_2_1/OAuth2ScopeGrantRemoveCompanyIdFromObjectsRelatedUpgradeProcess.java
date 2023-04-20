@@ -37,7 +37,7 @@ public class OAuth2ScopeGrantRemoveCompanyIdFromObjectsRelatedUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select oauth2ScopeGrantId, companyId, applicationName, " +
+				"select oAuth2ScopeGrantId, companyId, applicationName, " +
 					"scopeAliases from OAuth2ScopeGrant where " +
 						"bundleSymbolicName = ?")) {
 
@@ -58,7 +58,7 @@ public class OAuth2ScopeGrantRemoveCompanyIdFromObjectsRelatedUpgradeProcess
 					0, applicationName.length() - companyId.length());
 
 				_updateOAuth2ScopeGrant(
-					newApplicationName, resultSet.getLong("oauth2ScopeGrantId"),
+					newApplicationName, resultSet.getLong("oAuth2ScopeGrantId"),
 					TransformUtil.transformToList(
 						StringUtil.split(
 							resultSet.getString("scopeAliases"),

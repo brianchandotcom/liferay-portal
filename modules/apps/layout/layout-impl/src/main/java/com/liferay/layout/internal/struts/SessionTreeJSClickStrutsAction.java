@@ -16,13 +16,9 @@ package com.liferay.layout.internal.struts;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
@@ -32,8 +28,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionTreeJSClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.ConcurrentModificationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,10 +125,6 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 				}
 			}
 
-			if (!cmd.isEmpty()) {
-				updateCheckedLayoutPlids(httpServletRequest, treeId);
-			}
-
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 			String json = _getCheckedLayoutIds(httpServletRequest, treeId);
@@ -149,58 +139,6 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 		}
 
 		return null;
-	}
-
-	protected void updateCheckedLayoutPlids(
-		HttpServletRequest httpServletRequest, String treeId) {
-
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			httpServletRequest, "privateLayout");
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		while (true) {
-			try {
-				PortalPreferences portalPreferences =
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						httpServletRequest);
-
-				long[] checkedLayoutIds = StringUtil.split(
-					portalPreferences.getValue(
-						SessionTreeJSClicks.class.getName(), treeId),
-					0L);
-
-				for (long checkedLayoutId : checkedLayoutIds) {
-					if (checkedLayoutId == LayoutConstants.DEFAULT_PLID) {
-						jsonArray.put(
-							String.valueOf(LayoutConstants.DEFAULT_PLID));
-					}
-
-					Layout checkedLayout = _layoutLocalService.fetchLayout(
-						groupId, privateLayout, checkedLayoutId);
-
-					if (checkedLayout == null) {
-						continue;
-					}
-
-					jsonArray.put(String.valueOf(checkedLayout.getPlid()));
-				}
-
-				portalPreferences.setValue(
-					SessionTreeJSClicks.class.getName(), treeId + "Plid",
-					jsonArray.toString());
-
-				return;
-			}
-			catch (ConcurrentModificationException
-						concurrentModificationException) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(concurrentModificationException);
-				}
-			}
-		}
 	}
 
 	private String _getCheckedLayoutIds(
@@ -228,14 +166,8 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 		return jsonArray.toString();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SessionTreeJSClickStrutsAction.class);
-
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

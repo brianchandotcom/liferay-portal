@@ -22,7 +22,7 @@
 	displayType="warning"
 	message='<%=
 		LanguageUtil.format(
-			request, "to-set-up-the-user-agents-go-to-crawler-user-agents",
+			request, "to-set-up-the-user-agents-go-to-system-settings-pages-crawler-user-agents",
 			new String[] {
 				"<a href=" +
 					PortletURLBuilder.create(

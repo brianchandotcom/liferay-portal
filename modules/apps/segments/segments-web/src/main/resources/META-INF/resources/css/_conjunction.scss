@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .conjunction-button {
 	margin-bottom: $gap * 2;
 	margin-top: $gap * 2;
@@ -15,7 +17,7 @@
 }
 
 .conjunction-label {
-	color: $mainLighten28;
+	color: $secondary;
 	font-size: 14px;
 	font-weight: 600;
 	margin-bottom: $gap * 2;

@@ -1,6 +1,8 @@
+@import 'atlas-variables';
+
 .criteria-sidebar-root {
 	background-color: $white;
-	border-left: 1px solid $mainLighten74;
+	border-left: 1px solid $gray-300;
 	display: flex;
 	flex-direction: column;
 	min-height: 100%;
@@ -56,7 +58,7 @@
 	}
 
 	.sidebar-collapse-header {
-		color: $main;
+		color: $dark;
 		display: flex;
 		font-size: 0.875rem;
 		justify-content: space-between;
@@ -80,7 +82,7 @@
 		}
 
 		&:after {
-			border-top: 1px solid $mainLighten52;
+			border-top: 1px solid $secondary-l1;
 			bottom: 0;
 			content: '';
 			left: 1.5rem;
@@ -106,7 +108,7 @@
 		will-change: border-color, opacity;
 
 		.lexicon-icon-drag {
-			color: $mainLighten52;
+			color: $secondary-l1;
 			opacity: 0;
 			transition: opacity $segmentsTransition;
 			will-change: opacity;
@@ -125,7 +127,7 @@
 		}
 
 		&:hover {
-			border-color: $chartBlue;
+			border-color: $blue;
 			cursor: grab;
 
 			@include generatePropertyGroupLoop(

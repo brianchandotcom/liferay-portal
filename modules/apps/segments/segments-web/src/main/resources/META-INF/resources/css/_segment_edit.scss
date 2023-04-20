@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .segment-edit-page-root {
 	display: flex;
 	flex-direction: column;
@@ -16,10 +18,10 @@
 
 	.form-header {
 		background-color: $white;
-		border-bottom: 1px solid $mainLighten65;
+		border-bottom: 1px solid $secondary-l2;
 
 		.edit-icon {
-			color: $mainLighten52;
+			color: $secondary-l1;
 		}
 
 		.form-header-container {

@@ -1,28 +1,11 @@
+@import 'atlas-variables';
+
 // ---------- Colors ----------
 
-$chartBlue: #4b9bff;
-$chartOrange: #f6bf84;
-$chartPurple: #af78ff;
-
 $propertyGroupsColors: (
-	'context': $chartPurple,
-	'user-organization': $chartOrange,
+	'context': $purple,
+	'user-organization': $orange,
 );
-
-$main: #272833;
-$mainLighten4: #30313f;
-$mainLighten8: #393a4a;
-$mainLighten28: #6b6c7e;
-$mainLighten52: #a7a9bc;
-$mainLighten65: #cdced9;
-$mainLighten74: #e7e7ed;
-$secondaryHover: #f7f8f9;
-
-$primary: #0b5fff;
-$primaryLight: #f0f5ff;
-$primaryL1: #80acff;
-$lightBackground: #f1f2f5;
-$white: #fff;
 
 // ---------- Sizes ----------
 

@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .input-localized :not(.has-error) > .form-control {
 	background-color: transparent;
 	border-color: transparent;
@@ -5,12 +7,12 @@
 	font-weight: bold;
 
 	&:hover {
-		border-color: $mainLighten74;
+		border-color: $gray-300;
 	}
 
 	&:focus {
-		background-color: $primaryLight;
-		border-color: $primaryL1;
+		background-color: $primary-l3;
+		border-color: $primary-l1;
 	}
 
 	&:read-only {

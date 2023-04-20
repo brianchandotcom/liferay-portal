@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .contributor-builder-root {
 	height: 100%;
 
@@ -23,7 +25,7 @@
 		}
 
 		.contributor-container {
-			background-color: $lightBackground;
+			background-color: $light;
 			height: 100%;
 			overflow: auto;
 			position: absolute;
@@ -36,7 +38,7 @@
 
 				.content-wrapper {
 					.panel-header-link {
-						border-bottom: 1px solid $mainLighten74;
+						border-bottom: 1px solid $gray-300;
 						border-bottom-left-radius: 0;
 						border-bottom-right-radius: 0;
 						padding-bottom: 16px;
@@ -58,8 +60,8 @@
 					}
 
 					.empty-contributors {
-						background: $secondaryHover;
-						border: 2px dashed $mainLighten65;
+						background: $light-l1;
+						border: 2px dashed $secondary-l2;
 					}
 				}
 			}
@@ -69,7 +71,7 @@
 			padding-bottom: 1.5rem;
 
 			.criterion-string {
-				color: $mainLighten28;
+				color: $secondary;
 				font-weight: 600;
 
 				b {
@@ -95,7 +97,7 @@
 	}
 
 	.drag-icon {
-		color: $mainLighten52;
+		color: $secondary-l1;
 
 		&:active {
 			cursor: grabbing;
@@ -107,11 +109,11 @@
 	}
 
 	.empty-state {
-		background-color: $lightBackground;
-		border: 1px solid $mainLighten74;
-		border-left: 3px solid $chartBlue;
+		background-color: $light;
+		border: 1px solid $gray-300;
+		border-left: 3px solid $blue;
 		border-radius: 4px;
-		color: $mainLighten28;
+		color: $secondary;
 		cursor: pointer;
 		font-weight: 600;
 		padding: 16px 32px;

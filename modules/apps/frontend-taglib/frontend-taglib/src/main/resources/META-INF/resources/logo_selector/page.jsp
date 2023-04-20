@@ -18,6 +18,7 @@
 
 <%
 String defaultLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:defaultLogoURL");
+String label = (String)request.getAttribute("liferay-frontend:logo-selector:label");
 String logoURL = (String)request.getAttribute("liferay-frontend:logo-selector:logoURL");
 String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selector:selectLogoURL");
 %>
@@ -28,6 +29,8 @@ String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selec
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultLogoURL", defaultLogoURL
+			).put(
+				"label", label
 			).put(
 				"logoURL", logoURL
 			).put(

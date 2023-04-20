@@ -46,6 +46,10 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
+		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
+			return content;
+		}
+
 		List<String> replacedTaglibs = null;
 
 		if (sourceProcessor instanceof FTLSourceProcessor) {
@@ -57,9 +61,7 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 				_JSP_REPLACED_TAGLIBS_KEY, absolutePath);
 		}
 
-		if (!sourceFormatterArgs.isFormatCurrentBranch() ||
-			ListUtil.isEmpty(replacedTaglibs)) {
-
+		if (ListUtil.isEmpty(replacedTaglibs)) {
 			return content;
 		}
 

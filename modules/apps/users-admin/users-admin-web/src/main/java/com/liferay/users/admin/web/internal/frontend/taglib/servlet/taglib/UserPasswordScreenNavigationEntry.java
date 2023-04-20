@@ -52,7 +52,7 @@ public class UserPasswordScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, User selUser) {
-		if (selUser == null) {
+		if ((selUser == null) || selUser.isServiceAccountUser()) {
 			return false;
 		}
 

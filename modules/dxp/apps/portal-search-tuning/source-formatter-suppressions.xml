@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CompanyIterationCheck" files=".*" />
+		<suppress checks="ComponentExposureCheck" files="portal-search-tuning-rankings-web/src/main/java/com/liferay/portal/search/tuning/rankings/web/internal/util/RankingResultUtil\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaUpgradeVersionCheck" files="portal-search-tuning-rankings-web/src/main/java/com/liferay/portal/search/tuning/rankings/web/internal/upgrade/registry/RankingsWebUpgradeStepRegistrator\.java" />

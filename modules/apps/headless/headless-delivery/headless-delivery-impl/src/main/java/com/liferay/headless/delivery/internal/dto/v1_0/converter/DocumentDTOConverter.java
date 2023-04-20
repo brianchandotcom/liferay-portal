@@ -129,7 +129,7 @@ public class DocumentDTOConverter
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()));
 				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
-				contentUrl = _dlURLHelper.getPreviewURL(
+				contentUrl = _dlURLHelper.getDownloadURL(
 					fileEntry, fileVersion, null, "");
 				contentValue = ContentValueUtil.toContentValue(
 					"contentValue", fileEntry::getContentStream,

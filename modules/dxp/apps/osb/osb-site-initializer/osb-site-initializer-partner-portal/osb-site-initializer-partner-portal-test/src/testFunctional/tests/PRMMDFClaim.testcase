@@ -19,7 +19,7 @@ definition {
 			PRMUtils.addSite();
 
 			PRMUtils.connectWithSalesforce();
-		}
+		  }
 
 		task ("Add a Partner user") {
 			JSONUser.addUser(
@@ -468,6 +468,48 @@ definition {
 		task ("Then the Claim Type is Partial") {
 			PRMMDFClaim.viewClaimType(claimType = "Partial");
 		}
+	}
+
+	@description = "This is a test for LPS-179371. Verify that the Total Claim Amount reflects the value claimed per budget"
+	@priority = "5"
+	test TotalClaimAmountReflectsBudgetValue {	
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "manager@liferay.com",
+			userLoginFullName = "manager");
+
+		JSONPRM.createMDFRequest(
+			accountEntryName = "Company Name 1",
+			campaignName = "Campaign Name 1",
+			secondBudgetValueList = 1000);
+	
+		PRMUtils.gotoPRM();
+			
+		PRMHomePage.gotoQuickLinksOption(
+			buttonLink = "mdf",
+			buttonText = "MDF");
+		
+		Click(
+			key_index = 1,
+			locator1 = "PRMMDFClaim#CLAIM_ID_INDEX");
+	
+		PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+
+
+		PRMMDFClaim.partialNewClaim(
+			activityIndex = 0,
+			budgetIndex = 0);
+						
+		var actualValue = PRMMDFRequest.getRequestedAmoundValue(nametest = "activities[0].budgets[0].invoiceAmount");
+		
+		var expectedValue =  ${actualValue}/2;
+					
+		var test = PRMMDFRequest.getRequestedAmoundValue(nametest = "totalClaimAmount");
+			
+		TestUtils.assertPartialEquals(
+			actual = ${test},
+			expected = ${expectedValue});
+		
 	}
 
 }

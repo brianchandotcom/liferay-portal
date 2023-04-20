@@ -21,8 +21,10 @@
 
 		<%
 		String signedInAs = HtmlUtil.escape(user.getFullName());
+
 		if (themeDisplay.isShowMyAccountIcon() && (themeDisplay.getURLMyAccount() != null)) {
 			String myAccountURL = String.valueOf(themeDisplay.getURLMyAccount());
+
 			signedInAs = "<a class=\"signed-in\" href=\"" + HtmlUtil.escape(myAccountURL) + "\">" + signedInAs + "</a>";
 		}
 		%>
@@ -33,16 +35,21 @@
 
 		<%
 		String formName = "loginForm";
+
 		if (windowState.equals(LiferayWindowState.EXCLUSIVE)) {
 			formName += "Modal";
 		}
+
 		String redirect = ParamUtil.getString(request, "redirect");
 		String login = (String)SessionErrors.get(renderRequest, "login");
+
 		if (Validator.isNull(login)) {
 			login = LoginUtil.getLogin(request, "login", company);
 		}
+
 		String password = StringPool.BLANK;
 		boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
+
 		if (Validator.isNull(authType)) {
 			authType = company.getAuthType();
 		}
@@ -154,6 +161,7 @@
 
 					<%
 					String loginLabel = null;
+
 					if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 						loginLabel = "email-address";
 					}

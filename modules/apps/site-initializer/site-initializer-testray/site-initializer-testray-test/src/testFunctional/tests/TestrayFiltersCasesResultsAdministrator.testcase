@@ -319,4 +319,53 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by enviroments"
+	@priority = 3
+	test CanFilterByEnviroments {
+		task ("Given that the user has two enviroments different in the table") {
+			TestrayFilter.clickColumn();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.selectColumns(listColumn = "Environment");
+
+			AssertElementPresent(
+				key_projectName = "Option 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Option 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result by enviroment") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_fieldLabel = "Environment",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Option 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only the option 1 in the table") {
+			AssertElementPresent(
+				key_projectName = "Option 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see option 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Option 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

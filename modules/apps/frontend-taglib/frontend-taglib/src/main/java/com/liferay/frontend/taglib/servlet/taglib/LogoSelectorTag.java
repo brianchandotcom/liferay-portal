@@ -48,10 +48,6 @@ public class LogoSelectorTag extends IncludeTag {
 		return _defaultLogoURL;
 	}
 
-	public String getTempImageFileName() {
-		return _tempImageFileName;
-	}
-
 	public boolean isPreserveRatio() {
 		return _preserveRatio;
 	}
@@ -79,10 +75,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_preserveRatio = preserveRatio;
 	}
 
-	public void setTempImageFileName(String tempImageFileName) {
-		_tempImageFileName = tempImageFileName;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -91,7 +83,6 @@ public class LogoSelectorTag extends IncludeTag {
 		_currentLogoURL = null;
 		_defaultLogoURL = null;
 		_preserveRatio = false;
-		_tempImageFileName = null;
 	}
 
 	@Override
@@ -139,8 +130,6 @@ public class LogoSelectorTag extends IncludeTag {
 				"/image_uploader/upload_image"
 			).setCMD(
 				Constants.GET_TEMP
-			).setParameter(
-				"tempImageFileName", getTempImageFileName()
 			).buildString();
 		}
 
@@ -167,8 +156,6 @@ public class LogoSelectorTag extends IncludeTag {
 			"preserveRatio", isPreserveRatio()
 		).setParameter(
 			"randomNamespace", randomNamespace
-		).setParameter(
-			"tempImageFileName", getTempImageFileName()
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -180,6 +167,5 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _currentLogoURL;
 	private String _defaultLogoURL;
 	private boolean _preserveRatio;
-	private String _tempImageFileName;
 
 }

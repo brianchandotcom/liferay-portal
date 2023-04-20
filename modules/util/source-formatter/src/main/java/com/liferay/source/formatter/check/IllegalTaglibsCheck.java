@@ -57,35 +57,37 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 				_JSP_REPLACED_TAGLIBS_KEY, absolutePath);
 		}
 
-		if (sourceFormatterArgs.isFormatCurrentBranch() &&
-			ListUtil.isNotEmpty(replacedTaglibs)) {
+		if (!sourceFormatterArgs.isFormatCurrentBranch() ||
+			ListUtil.isEmpty(replacedTaglibs)) {
 
-			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
-				sourceFormatterArgs.getBaseDirName(),
-				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
+			return content;
+		}
 
-			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
-				if (!line.startsWith(StringPool.PLUS)) {
+		String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
+
+		for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
+			if (!line.startsWith(StringPool.PLUS)) {
+				continue;
+			}
+
+			for (String replacedTaglib : replacedTaglibs) {
+				String[] replacedTaglibArray = StringUtil.split(
+					replacedTaglib, "->");
+
+				if (replacedTaglibArray.length != 2) {
 					continue;
 				}
 
-				for (String replacedTaglib : replacedTaglibs) {
-					String[] replacedTaglibArray = StringUtil.split(
-						replacedTaglib, "->");
+				if (line.contains(replacedTaglibArray[0])) {
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Use ", replacedTaglibArray[1], " instead of ",
+							replacedTaglibArray[0]));
 
-					if (replacedTaglibArray.length != 2) {
-						continue;
-					}
-
-					if (line.contains(replacedTaglibArray[0])) {
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Use ", replacedTaglibArray[1], " instead of ",
-								replacedTaglibArray[0]));
-
-						break;
-					}
+					break;
 				}
 			}
 		}

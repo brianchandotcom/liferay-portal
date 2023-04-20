@@ -55,7 +55,6 @@
 		<suppress checks="ComponentExposureCheck" files="rss/rss-taglib/src/main/java/com/liferay/rss/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="segments/segments-web/src/main/java/com/liferay/segments/web/internal/util/SegmentsSourceDetailsProviderUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="site-navigation/site-navigation-taglib/src/main/java/com/liferay/site/navigation/taglib/internal/portlet/display/template/PortletDisplayTemplateUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="site-navigation/site-navigation-taglib/src/main/java/com/liferay/site/navigation/taglib/internal/servlet/NavItemClassNameIdUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="site-navigation/site-navigation-taglib/src/main/java/com/liferay/site/navigation/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="site-navigation/site-navigation-taglib/src/main/java/com/liferay/site/navigation/taglib/internal/util/NavItemUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="social/social-bookmarks-taglib/src/main/java/com/liferay/social/bookmarks/taglib/internal/util/SocialBookmarksRegistryUtil\.java" />

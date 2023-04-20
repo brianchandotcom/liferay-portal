@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,7 +34,6 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
-import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.taglib.internal.util.NavItemUtil;
 import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItemImpl;
@@ -105,7 +105,7 @@ public class NavigationMenuTag extends IncludeTag {
 		DDMTemplate portletDisplayDDMTemplate =
 			portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 				getDisplayStyleGroupId(),
-				NavItemClassNameIdUtil.getNavItemClassNameId(),
+				ClassNameLocalServiceUtil.getClassNameId(NavItem.class),
 				getDisplayStyle(), true);
 
 		if (portletDisplayDDMTemplate == null) {

@@ -157,6 +157,8 @@ definition {
 			menuItem = "Configure",
 			pageName = "Search");
 
+		Navigator.gotoNavTab(navTab = "Design");
+
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		AssertTextNotPresent(value1 = "Classic");
@@ -301,6 +303,8 @@ definition {
 			menuItem = "Configure",
 			pageName = "Search");
 
+		Navigator.gotoNavTab(navTab = "Design");
+
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		Theme.configureLookAndFeelSpecificLook();
@@ -388,6 +392,8 @@ definition {
 			menuItem = "Configure",
 			pageName = "Search");
 
+		Navigator.gotoNavTab(navTab = "Design");
+
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		Theme.configureLookAndFeelSpecificLook();
@@ -426,6 +432,8 @@ definition {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "Search");
+
+		Navigator.gotoNavTab(navTab = "Design");
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 
@@ -629,6 +637,8 @@ definition {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "Search");
+
+		Navigator.gotoNavTab(navTab = "Design");
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 

@@ -122,6 +122,79 @@ definition {
 		}
 	}
 
+	@description = "Can add a new page with master template into a Publication and publish"
+	@priority = 3
+	test CanAddNewPageWithMasterTemplateWithinPublication {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		task ("Add a Master Page Template with footer fragment") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Site Name",
+				masterPageTemplateEntryName = "Custom Master Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Master Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Footers",
+				dropTarget = "Footer",
+				fragmentName = "Footer Nav Dark",
+				scope = "Master");
+
+			MastersPageTemplates.publishMaster();
+		}
+
+		task ("Add a content page based on custom master") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Master Page Template",
+				pageName = "Test Page");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert the fragment is shown in the content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page",
+				siteName = "Site Name");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+
+		task ("Review changes and assert the Master Page Template change displays") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Fragment Entry Link",
+				changeSite = "Site Name",
+				changeTitle = "Footer Nav Dark for Custom Master Page Template.",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Asset",
+				changeSite = "Site Name",
+				changeTitle = "Custom Master Page Template",
+				changeType = "Added",
+				changeUser = "Test Test",
+				showAllItems = "true");
+		}
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+	}
+
 	@description = "Add style book and apply it within Publications"
 	@priority = 3
 	test CanAddStyleBookAndApplyItWithinPublications {
@@ -261,79 +334,6 @@ definition {
 
 			Publications.viewPublicationPublished(publicationName = "Publication Name");
 		}
-	}
-
-	@description = "Can add a new page with master template into a Publication and publish"
-	@priority = 3
-	test CanAddNewPageWithMasterTemplateWithinPublication {
-		JSONPublications.addPublication(publicationName = "Publication Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name");
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		task ("Add a Master Page Template with footer fragment") {
-			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = "Site Name",
-				masterPageTemplateEntryName = "Custom Master Page Template");
-
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
-
-			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Master Page Template");
-
-			PageEditor.addFragment(
-				collectionName = "Footers",
-				dropTarget = "Footer",
-				fragmentName = "Footer Nav Dark",
-				scope = "Master");
-
-			MastersPageTemplates.publishMaster();
-		}
-
-		task ("Add a content page based on custom master") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
-
-			ContentPages.addPage(
-				masterLayoutName = "Custom Master Page Template",
-				pageName = "Test Page");
-
-			PageEditor.publish();
-		}
-
-		task ("Assert the fragment is shown in the content page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page",
-				siteName = "Site Name");
-
-			AssertVisible(
-				key_type = "dark",
-				locator1 = "PageEditor#FOOTERS");
-		}
-
-		task ("Review changes and assert the Master Page Template change displays") {
-			PublicationsNavigator.gotoReviewChanges();
-
-			PublicationsChanges.viewChanges(
-				changeCategory = "Fragment Entry Link",
-				changeSite = "Site Name",
-				changeTitle = "Footer Nav Dark for Custom Master Page Template.",
-				changeType = "Added",
-				changeUser = "Test Test");
-
-			PublicationsChanges.viewChanges(
-				changeCategory = "Asset",
-				changeSite = "Site Name",
-				changeTitle = "Custom Master Page Template",
-				changeType = "Added",
-				changeUser = "Test Test",
-				showAllItems = "true");
-		}
-
-		PublicationsNavigator.gotoPublish(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Create content page template into a Publication and publish"

@@ -228,7 +228,8 @@ public class ObjectDefinitionResourceTest
 			testPostObjectDefinition_addObjectDefinition(
 				randomObjectDefinition);
 
-		Assert.assertEquals(status, postObjectDefinition.getStatus());
+		assertEquals(postObjectDefinition, randomObjectDefinition);
+		assertValid(postObjectDefinition);
 	}
 
 	@Override
@@ -262,7 +263,7 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name"};
+		return new String[] {"name", "status"};
 	}
 
 	@Override

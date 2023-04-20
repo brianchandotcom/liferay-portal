@@ -51,7 +51,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -397,34 +396,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return false;
 	}
 
-	private String _loadTemplate(
-		String name, Map<String, String> substitutionMap) {
-
-		try (InputStream inputStream =
-				CreateClientExtensionConfigTask.class.getResourceAsStream(
-					"dependencies/" + name)) {
-
-			Set<Map.Entry<String, String>> entrySet =
-				substitutionMap.entrySet();
-
-			Stream<Map.Entry<String, String>> substitutions = entrySet.stream();
-
-			return substitutions.map(
-				entry -> (Function<String, String>)s -> s.replace(
-					entry.getKey(), entry.getValue())
-			).reduce(
-				Function::andThen
-			).orElse(
-				Function.identity()
-			).apply(
-				StringUtil.read(inputStream)
-			);
-		}
-		catch (Exception exception) {
-			return null;
-		}
-	}
-
 	private void _storePluginPackageProperties(
 		Properties pluginPackageProperties) {
 
@@ -511,22 +482,25 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			return;
 		}
 
-		try {
-			String fileContent = _loadTemplate(
-				String.format(
-					"templates/%s/%s.tpl", classificationGrouping,
-					inputFile.getName()),
-				substitutionMap);
+		String templatePath = String.format(
+			"dependencies/templates/%s/%s.tpl", classificationGrouping,
+			inputFile.getName());
 
-			if (fileContent == null) {
-				throw new GradleException(
-					inputFile.getName() + " not specified");
+		try (InputStream inputStream =
+				CreateClientExtensionConfigTask.class.getResourceAsStream(
+					templatePath)) {
+
+			String fileContent = StringUtil.read(inputStream);
+
+			for (Map.Entry<String, String> entry : substitutionMap.entrySet()) {
+				fileContent = fileContent.replace(
+					entry.getKey(), entry.getValue());
 			}
 
 			Files.write(outputFile.toPath(), fileContent.getBytes());
 		}
 		catch (IOException ioException) {
-			throw new GradleException(ioException.getMessage(), ioException);
+			throw new GradleException(inputFile.getName() + " not specified");
 		}
 	}
 

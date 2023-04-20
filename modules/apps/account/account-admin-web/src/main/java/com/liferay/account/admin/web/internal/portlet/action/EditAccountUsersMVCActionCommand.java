@@ -58,7 +58,21 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.DEACTIVATE) ||
 				cmd.equals(Constants.RESTORE)) {
 
-				_updateAccountUsersStatus(actionRequest);
+				long[] accountUserIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "accountUserIds"), 0L);
+
+				for (long accountUserId : accountUserIds) {
+					int status = WorkflowConstants.STATUS_APPROVED;
+
+					if (cmd.equals(Constants.DEACTIVATE)) {
+						status = WorkflowConstants.STATUS_INACTIVE;
+					}
+
+					_userService.updateStatus(
+						accountUserId, status,
+						ServiceContextFactory.getInstance(
+							User.class.getName(), actionRequest));
+				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				_deleteUsers(actionRequest);
@@ -94,28 +108,6 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long accountUserId : accountUserIds) {
 			_userService.deleteUser(accountUserId);
-		}
-	}
-
-	private void _updateAccountUsersStatus(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] accountUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "accountUserIds"), 0L);
-
-		for (long accountUserId : accountUserIds) {
-			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			if (cmd.equals(Constants.DEACTIVATE)) {
-				status = WorkflowConstants.STATUS_INACTIVE;
-			}
-
-			_userService.updateStatus(
-				accountUserId, status,
-				ServiceContextFactory.getInstance(
-					User.class.getName(), actionRequest));
 		}
 	}
 

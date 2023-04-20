@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/card": "3.92.0",
+		"@clayui/card": "3.93.0",
 		"@clayui/charts": "3.65.0",
 		"@clayui/icon": "3.56.0",
-		"@clayui/panel": "3.92.0",
+		"@clayui/panel": "3.93.0",
 		"@clayui/table": "3.56.0",
 		"classnames": "2.3.1",
 		"react": "16.12.0",

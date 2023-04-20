@@ -1095,13 +1095,13 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@clayui/alert@3.92.0":
-  version "3.92.0"
-  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.92.0.tgz#00f752926cee7cb4824eb99db70fc2f5d7f8ac82"
-  integrity sha512-HlDlyjUxhTd6dTAfcGqDpqQ9Pd4pP5jCAUM2zYRVYKi4MOA2H/IutEQjY+YfbiHBIMq4GAe9srJ07zIGSpnOwQ==
+"@clayui/alert@3.93.0":
+  version "3.93.0"
+  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.93.0.tgz#ab77cde1533b8b419d4f7e2f1b5de4f4da1434d0"
+  integrity sha512-NdDrSLl6/6k47wnJx3oy/wLxmkgNfd6rgbihJuAmB/Xi8cAbxGqCja3v/o+XyCM+8u23id/8rWc7rOVVLuXVXw==
   dependencies:
     "@clayui/icon" "^3.56.0"
-    "@clayui/layout" "^3.65.1"
+    "@clayui/layout" "^3.93.0"
     classnames "^2.2.6"
 
 "@clayui/button@3.92.0":
@@ -1130,10 +1130,10 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/layout@^3.65.1":
-  version "3.65.1"
-  resolved "https://registry.yarnpkg.com/@clayui/layout/-/layout-3.65.1.tgz#98eda4eedcbf5c88615840f3834e16cf708c98ea"
-  integrity sha512-eniWhY5KTHuRlL0svBMpyHdlAFCL08DAWRj7UAyVNhLVhhReUiy/fyHevrxwvAvysBSLQTnoAKxzM6ky5kzCew==
+"@clayui/layout@^3.93.0":
+  version "3.93.0"
+  resolved "https://registry.yarnpkg.com/@clayui/layout/-/layout-3.93.0.tgz#3f4b9c19b0d8179dd58dcf1ebded496990b2f1da"
+  integrity sha512-tMusckuJGLaQP6Ra89gaNayNXJKV7iHV6APKdrttRbeHi8t/FbZ2iCOnY50Gj1bjafiGzyVvhtiLvCz2xSqT/Q==
   dependencies:
     classnames "^2.2.6"
     warning "^4.0.3"

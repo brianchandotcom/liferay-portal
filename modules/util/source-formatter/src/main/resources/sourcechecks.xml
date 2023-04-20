@@ -245,7 +245,7 @@
 		</check>
 		<check name="IllegalTaglibsCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases of incorrect use of certain taglib." />
+			<description name="Finds cases of incorrect use of certain taglibs." />
 		</check>
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">
@@ -992,7 +992,7 @@
 		</check>
 		<check name="IllegalTaglibsCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases of incorrect use of certain taglib." />
+			<description name="Finds cases of incorrect use of certain taglibs." />
 		</check>
 		<check name="JSPArrowFunctionCheck">
 			<category name="Bug Prevention" />

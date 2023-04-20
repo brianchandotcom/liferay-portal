@@ -496,44 +496,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-158743: Upgrade report trace line is generated in the console"
-	@priority = 3
-	test UserNotifiedWhereToFindUpgradeReportAfterAutoUpgrade {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
-		property log.context.enabled = "true";
-		property skip.start.app.server = "false";
-		property skip.upgrade-legacy-database = "true";
-		property upgrade.reports.enabled = "false";
-
-		task ("When the upgrade report is finished generating, Then the user is notified in the Portal log file where to find the upgrade report") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			AssertConsoleTextPresent(value1 = "Upgrade report generated in ${liferayHome}/reports/upgrade_report.info");
-		}
-	}
-
-	@description = "LPS-181594: The message with the  upgrade report file path is printed in the logs"
-	@priority = 4
-	test UserNotifiedWhereToFindUpgradeReportInUpgradeTool {
-		task ("Given a user views the upgrade log file") {
-			var upgradeLogContent = Log.getUpgradeLogFileContent();
-		}
-
-		task ("When the upgrade finishes, Then the user is notified in the upgrade log file that the upgrade report is being generated") {
-			if (!(contains(${upgradeLogContent}, "Starting upgrade report generation"))) {
-				fail("Starting upgrade report generation message not present in the logs");
-			}
-		}
-
-		task ("When the upgrade report is finished generating, Then the user is notified in the upgrade log file where to find the upgrade report") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			if (!(contains(${upgradeLogContent}, "Upgrade report generated in ${liferayHome}/tools/portal-tools-db-upgrade-client/./reports/upgrade_report.info"))) {
-				fail("Upgrade report file path message not present");
-			}
-		}
-	}
-
 	@description = "LPS-154683: The Upgrade Report logs the row counts for each table."
 	@priority = 3
 	test RowCountsLogged {
@@ -632,6 +594,44 @@ definition {
 				echo(${upgradeReportContent});
 
 				fail("Total runtime in upgrade report does not match the runtime in upgrade.log file.");
+			}
+		}
+	}
+
+	@description = "LPS-158743: Upgrade report trace line is generated in the console"
+	@priority = 3
+	test UserNotifiedWhereToFindUpgradeReportAfterAutoUpgrade {
+		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
+		property log.context.enabled = "true";
+		property skip.start.app.server = "false";
+		property skip.upgrade-legacy-database = "true";
+		property upgrade.reports.enabled = "false";
+
+		task ("When the upgrade report is finished generating, Then the user is notified in the Portal log file where to find the upgrade report") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			AssertConsoleTextPresent(value1 = "Upgrade report generated in ${liferayHome}/reports/upgrade_report.info");
+		}
+	}
+
+	@description = "LPS-181594: The message with the upgrade report file path is printed in the logs"
+	@priority = 4
+	test UserNotifiedWhereToFindUpgradeReportInUpgradeTool {
+		task ("Given a user views the upgrade log file") {
+			var upgradeLogContent = Log.getUpgradeLogFileContent();
+		}
+
+		task ("When the upgrade finishes, Then the user is notified in the upgrade log file that the upgrade report is being generated") {
+			if (!(contains(${upgradeLogContent}, "Starting upgrade report generation"))) {
+				fail("Starting upgrade report generation message not present in the logs");
+			}
+		}
+
+		task ("When the upgrade report is finished generating, Then the user is notified in the upgrade log file where to find the upgrade report") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			if (!(contains(${upgradeLogContent}, "Upgrade report generated in ${liferayHome}/tools/portal-tools-db-upgrade-client/./reports/upgrade_report.info"))) {
+				fail("Upgrade report file path message not present");
 			}
 		}
 	}

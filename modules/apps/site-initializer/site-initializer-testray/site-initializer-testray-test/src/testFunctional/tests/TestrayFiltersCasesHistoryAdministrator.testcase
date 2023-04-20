@@ -577,4 +577,68 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should not see case results that don't exist when I try filtering for them"
+	@priority = 3
+	test AdminCanNotFilterForNonExistentCaseResult {
+		task ("Given that the user filter a case result history existent") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			WaitForPageLoad();
+
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Run 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_fieldLabel = "Environment",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Run");
+		}
+
+		task ("And can see the Run 1 and 2 in the list and not see Run 3") {
+			AssertElementPresent(
+				key_projectName = "Run 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementNotPresent(
+				key_projectName = "Run 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a Run by its non-existent name") {
+			Refresh();
+
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_fieldLabel = "Environment",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Run 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can not see the run 3 in the list") {
+			AssertElementNotPresent(
+				key_projectName = "Run 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And can see message no results found") {
+			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
 }

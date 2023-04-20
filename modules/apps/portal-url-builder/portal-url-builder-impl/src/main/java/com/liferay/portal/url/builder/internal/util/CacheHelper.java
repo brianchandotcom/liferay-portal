@@ -112,8 +112,12 @@ public class CacheHelper {
 
 		String digest = digests.get(cacheKey);
 
-		if (digest == _NULL_HOLDER) {
-			return null;
+		if (digest != null) {
+			if (digest == _NULL_HOLDER) {
+				return null;
+			}
+
+			return digest;
 		}
 
 		URL url = bundle.getResource(path);

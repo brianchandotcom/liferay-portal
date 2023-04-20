@@ -44,11 +44,11 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
-		List<String> shouldReplaceTagLibs = getAttributeValues(
-			_SHOULD_REPLACE_TAGLIB_KEY, absolutePath);
+		List<String> replacedTaglibs = getAttributeValues(
+			_REPLACED_TAGLIBS_KEY, absolutePath);
 
 		if (sourceFormatterArgs.isFormatCurrentBranch() &&
-			ListUtil.isNotEmpty(shouldReplaceTagLibs)) {
+			ListUtil.isNotEmpty(replacedTaglibs)) {
 
 			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
 				sourceFormatterArgs.getBaseDirName(),
@@ -59,16 +59,16 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				for (String shouldReplaceTaglib : shouldReplaceTagLibs) {
-					String[] shouldReplaceTaglibArray = StringUtil.split(
-						shouldReplaceTaglib, "->");
+				for (String replacedTaglib : replacedTaglibs) {
+					String[] replacedTaglibArray = StringUtil.split(
+						replacedTaglib, "->");
 
-					if (shouldReplaceTaglibArray.length != 3) {
+					if (replacedTaglibArray.length != 3) {
 						continue;
 					}
 
-					String fileType = shouldReplaceTaglibArray[0];
-					String oldTaglib = shouldReplaceTaglibArray[1];
+					String fileType = replacedTaglibArray[0];
+					String oldTaglib = replacedTaglibArray[1];
 
 					if (((fileName.endsWith(".jsp") &&
 						  StringUtil.equals(fileType, "jsp")) ||
@@ -81,8 +81,7 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 							StringBundler.concat(
 								"Do not use following old taglib. '", oldTaglib,
 								"' should be replaced by '",
-								shouldReplaceTaglibArray[2],
-								"', see LPS-179523"));
+								replacedTaglibArray[2], "', see LPS-179523"));
 					}
 				}
 			}
@@ -91,7 +90,6 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _SHOULD_REPLACE_TAGLIB_KEY =
-		"shouldReplaceTaglib";
+	private static final String _REPLACED_TAGLIBS_KEY = "replacedTaglibs";
 
 }

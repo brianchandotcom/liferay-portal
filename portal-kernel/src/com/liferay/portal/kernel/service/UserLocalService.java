@@ -2548,6 +2548,8 @@ public interface UserLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public User updateUser(User user);
 
+	public void validateCompanyMaxUsers(long companyId) throws PortalException;
+
 	/**
 	 * Verifies the email address of the ticket.
 	 *

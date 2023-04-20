@@ -98,10 +98,21 @@ const ActivityClaimPanel = ({
 					}}
 				>
 					{displayActivityClaimCheckbox && (
-						<PRMFormik.Field
-							component={PRMForm.Checkbox}
-							name={`activities[${activityIndex}].selected`}
-						/>
+						<div
+							onClick={() =>
+								activity.budgets?.map((_, index) =>
+									setFieldValue(
+										`activities[${activityIndex}].budgets[${index}].selected`,
+										false
+									)
+								)
+							}
+						>
+							<PRMFormik.Field
+								component={PRMForm.Checkbox}
+								name={`activities[${activityIndex}].selected`}
+							/>
+						</div>
 					)}
 
 					<div className="flex-grow-1 mx-3">

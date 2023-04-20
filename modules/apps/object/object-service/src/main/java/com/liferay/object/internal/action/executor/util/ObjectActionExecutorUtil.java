@@ -27,7 +27,7 @@ public class ObjectActionExecutorUtil {
 		long companyId, ObjectActionExecutor objectActionExecutor) {
 
 		if ((objectActionExecutor.getCompanyId() ==
-				ObjectActionExecutor.UNRESTRICTED_BY_COMPANY) ||
+				ObjectActionExecutor.ALL_COMPANIES) ||
 			(objectActionExecutor.getCompanyId() == companyId)) {
 
 			return true;

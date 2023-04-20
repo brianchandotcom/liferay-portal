@@ -584,17 +584,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		long[] selectedPlids = StringUtil.split(selectedNodes, 0L);
+		long[] selectedLayoutIds = StringUtil.split(selectedNodes, 0L);
 
 		for (Layout layout :
 				_layoutLocalService.getLayouts(
 					groupId, privateLayout,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
 
-			_populateLayoutsJSON(jsonArray, layout, selectedPlids);
+			_populateLayoutsJSON(jsonArray, layout, selectedLayoutIds);
 		}
 
-		if (ArrayUtil.contains(selectedPlids, 0)) {
+		if (ArrayUtil.contains(selectedLayoutIds, 0)) {
 			jsonArray.put(
 				JSONUtil.put(
 					"includeChildren", true

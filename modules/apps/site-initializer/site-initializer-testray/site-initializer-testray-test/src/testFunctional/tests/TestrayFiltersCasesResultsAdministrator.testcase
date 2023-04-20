@@ -630,4 +630,62 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
+	@priority = 3
+	test CanNotFilterForNonexistant {
+		task ("Given that the user filter a case result existent") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case");
+		}
+
+		task ("And can see the case result in the list and not see case result 3") {
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementNotPresent(
+				key_projectName = "Case 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result by its non-existent name") {
+			Refresh();
+
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 3");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then can not see the case result in the list") {
+			AssertElementNotPresent(
+				key_projectName = "Case 3",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And can see message no results found") {
+			TestrayFilter.assertNoResultsFound();
+		}
+	}
+
 }

@@ -648,6 +648,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testReferenceFieldAuthority() throws Exception {
+		test(
+			"BaseReferenceFieldAuthority.testjava",
+			"@Reference annotation should be on protected fields rather than " +
+				"private fields",
+			28);
+	}
+
+	@Test
 	public void testReferenceMethods() throws Exception {
 		test(
 			"ReferenceMethods.testjava",

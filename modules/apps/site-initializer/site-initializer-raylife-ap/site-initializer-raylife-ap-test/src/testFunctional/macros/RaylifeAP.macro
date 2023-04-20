@@ -266,6 +266,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "Click on the user's avatar and choose an option when the user is logged into the RaylifeAP site"
 	macro userAvatarFunctionality {
 		Click(locator1 = "RaylifeAP#USER_AVATAR");
 
@@ -274,6 +275,7 @@ definition {
 			locator1 = "RaylifeAP#USER_AVATAR_OPTION");
 	}
 
+	@summary = "Make Login in RaylifeAp with an account other than 'test teste'"
 	macro userLoginInRaylife {
 		var passwordRaylife = "portal4all";
 		var email = "${email}@mailinator.com";

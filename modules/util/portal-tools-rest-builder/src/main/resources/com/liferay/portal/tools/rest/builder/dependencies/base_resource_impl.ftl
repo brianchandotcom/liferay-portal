@@ -72,6 +72,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -415,6 +416,8 @@ public abstract class Base${schemaName}ResourceImpl
 
 			createStrategies = freeMarkerTool.getVulcanBatchImplementationCreateStrategies(javaMethodSignatures, properties)
 			updateStrategies = freeMarkerTool.getVulcanBatchImplementationUpdateStrategies(javaMethodSignatures)
+
+			parserMethodDataTypes = []
 		/>
 		@Override
 		@SuppressWarnings("PMD.UnusedLocalVariable")
@@ -773,6 +776,22 @@ public abstract class Base${schemaName}ResourceImpl
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			</#if>
 		}
+
+		<#list freeMarkerTool.distinct(parserMethodDataTypes) as parserMethodDataType>
+			private ${parserMethodDataType} _parse${parserMethodDataType}(String value){
+				if (value != null){
+				<#if stringUtil.equals(parserMethodDataType, "Date")>
+					return new Date(value);
+				<#elseif stringUtil.equals(parserMethodDataType, "Integer")>
+					return Integer.parseInt(value);
+				<#else>
+					return ${parserMethodDataType}.parse${parserMethodDataType}(value);
+				</#if>
+				}
+
+				return null;
+			}
+		</#list>
 	</#if>
 
 	<#if generateGetPermissionCheckerMethods>
@@ -1139,15 +1158,20 @@ public abstract class Base${schemaName}ResourceImpl
 		(${type})parameters.get("${value}")
 	<#else>
 		<#if type?contains("java.lang.Boolean")>
-			Boolean.parseBoolean(
+			<#assign parserMethodDataTypes = parserMethodDataTypes + ["Boolean"] />
+				_parseBoolean(
 		<#elseif type?contains("java.util.Date")>
-			new java.util.Date(
+			<#assign parserMethodDataTypes = parserMethodDataTypes + ["Date"] />
+				_parseDate(
 		<#elseif type?contains("java.lang.Double")>
-			Double.parseDouble(
+			<#assign parserMethodDataTypes = parserMethodDataTypes + ["Double"] />
+				_parseDouble(
 		<#elseif type?contains("java.lang.Integer")>
-			Integer.parseInt(
+			<#assign parserMethodDataTypes = parserMethodDataTypes + ["Integer"] />
+				_parseInteger(
 		<#elseif type?contains("java.lang.Long")>
-			Long.parseLong(
+			<#assign parserMethodDataTypes = parserMethodDataTypes + ["Long"] />
+				_parseLong(
 		</#if>
 
 		(String)parameters.get("${value}")

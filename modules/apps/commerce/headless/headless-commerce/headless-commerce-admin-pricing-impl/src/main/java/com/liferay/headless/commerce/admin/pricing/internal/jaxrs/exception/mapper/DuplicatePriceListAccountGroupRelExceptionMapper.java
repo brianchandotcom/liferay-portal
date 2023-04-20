@@ -44,7 +44,8 @@ public class DuplicatePriceListAccountGroupRelExceptionMapper
 			duplicateCommercePriceListCommerceAccountGroupRelException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "Duplicate account group relation");
+			Response.Status.CONFLICT,
+			"The account group relation already exists");
 	}
 
 }

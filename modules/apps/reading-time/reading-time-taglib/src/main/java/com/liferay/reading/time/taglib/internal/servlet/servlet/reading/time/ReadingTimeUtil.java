@@ -20,22 +20,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Sergio González
  */
-@Component(service = {})
 public class ReadingTimeUtil {
 
 	public static ReadingTimeMessageProvider getReadingTimeMessageProvider(
 		String displayStyle) {
 
 		ReadingTimeMessageProvider readingTimeMessageProvider =
-			_readingTimeUtil._serviceTrackerMap.getService(displayStyle);
+			_serviceTrackerMap.getService(displayStyle);
 
 		if (readingTimeMessageProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -49,27 +46,18 @@ public class ReadingTimeUtil {
 		return readingTimeMessageProvider;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_readingTimeUtil = this;
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ReadingTimeMessageProvider.class, "display.style");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_readingTimeUtil = null;
-
-		_serviceTrackerMap.close();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReadingTimeUtil.class);
 
-	private static ReadingTimeUtil _readingTimeUtil;
-
-	private ServiceTrackerMap<String, ReadingTimeMessageProvider>
+	private static final ServiceTrackerMap<String, ReadingTimeMessageProvider>
 		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ReadingTimeUtil.class);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundle.getBundleContext(), ReadingTimeMessageProvider.class,
+			"display.style");
+	}
 
 }

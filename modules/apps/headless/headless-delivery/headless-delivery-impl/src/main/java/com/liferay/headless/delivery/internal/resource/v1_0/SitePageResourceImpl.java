@@ -354,33 +354,23 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT, null, hidden,
 			friendlyUrlMap, 0, _createServiceContext(siteId, sitePage));
 
+		layout = _updateLayoutSettings(layout, sitePage.getPageDefinition());
+
+		Layout draftLayout = _updateDraftLayout(layout);
+
+		layout.setModifiedDate(draftLayout.getModifiedDate());
+
 		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		layout = _layoutLocalService.updateLayout(layout);
 
-		layout = _updateLayoutSettings(layout, sitePage.getPageDefinition());
+		_updateModelResourcePermissions(
+			layout.getCompanyId(), siteId, layout.getPlid(), sitePage);
 
-		_updateLayoutPermissions(siteId, sitePage, layout);
+		_updateSEOEntry(
+			layout.getCompanyId(), siteId, layout.getLayoutId(), sitePage);
 
-		_updateSEOEntry(layout, sitePage);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
-
-		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			draftLayout.getTypeSettingsProperties();
-
-		typeSettingsUnicodeProperties.put("published", Boolean.TRUE.toString());
-
-		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-		draftLayout = _layoutLocalService.updateLayout(draftLayout);
-
-		return _layoutLocalService.updateLayout(
-			siteId, false, layout.getLayoutId(), draftLayout.getModifiedDate());
+		return layout;
 	}
 
 	private ServiceContext _createServiceContext(
@@ -500,9 +490,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return ddmFormValuesJSONObject.toString();
 	}
 
-	private long _getDDMStructurePrimaryKey(Layout layout) throws Exception {
-		Company company = _companyLocalService.getCompany(
-			layout.getCompanyId());
+	private long _getDDMStructurePrimaryKey(long companyId) throws Exception {
+		Company company = _companyLocalService.getCompany(companyId);
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			company.getGroupId(),
@@ -776,60 +765,37 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
 	}
 
-	private void _updateLayoutPermissions(
-			Long siteId, SitePage sitePage, Layout layout)
-		throws Exception {
+	private Layout _updateDraftLayout(Layout layout) throws Exception {
+		Layout draftLayout = layout.fetchDraftLayout();
 
-		PagePermission[] pagePermissions = sitePage.getPagePermissions();
+		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
 
-		if (pagePermissions != null) {
-			Map<String, String[]> modelPermissionsParameterMap = new HashMap<>(
-				pagePermissions.length);
+		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-			for (PagePermission pagePermission : pagePermissions) {
-				String roleKey = pagePermission.getRoleKey();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			draftLayout.getTypeSettingsProperties();
 
-				Team team = _teamLocalService.fetchTeam(siteId, roleKey);
+		typeSettingsUnicodeProperties.put("published", Boolean.TRUE.toString());
 
-				if (team != null) {
-					roleKey = String.valueOf(team.getTeamId());
-				}
+		draftLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
-				modelPermissionsParameterMap.put(
-					roleKey, pagePermission.getActionKeys());
-			}
-
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				modelPermissionsParameterMap, null);
-
-			_resourcePermissionLocalService.deleteResourcePermissions(
-				layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()));
-
-			_resourcePermissionLocalService.addModelResourcePermissions(
-				layout.getCompanyId(), siteId, contextUser.getUserId(),
-				Layout.class.getName(), String.valueOf(layout.getPlid()),
-				modelPermissions);
-		}
+		return _layoutLocalService.updateLayout(draftLayout);
 	}
 
 	private Layout _updateLayoutSettings(
 		Layout layout, PageDefinition pageDefinition) {
 
-		if (pageDefinition == null) {
-			return layout;
-		}
+		if ((pageDefinition == null) ||
+			(pageDefinition.getSettings() == null)) {
 
-		Settings settings = pageDefinition.getSettings();
-
-		if (settings == null) {
 			layout.setThemeId(null);
 
 			layout.setColorSchemeId(null);
 
 			return _layoutLocalService.updateLayout(layout);
 		}
+
+		Settings settings = pageDefinition.getSettings();
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -899,7 +865,44 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return _layoutLocalService.updateLayout(layout);
 	}
 
-	private void _updateSEOEntry(Layout layout, SitePage sitePage)
+	private void _updateModelResourcePermissions(
+			long companyId, long groupId, long plid, SitePage sitePage)
+		throws Exception {
+
+		PagePermission[] pagePermissions = sitePage.getPagePermissions();
+
+		if (pagePermissions != null) {
+			Map<String, String[]> modelPermissionsParameterMap = new HashMap<>(
+				pagePermissions.length);
+
+			for (PagePermission pagePermission : pagePermissions) {
+				String roleKey = pagePermission.getRoleKey();
+
+				Team team = _teamLocalService.fetchTeam(groupId, roleKey);
+
+				if (team != null) {
+					roleKey = String.valueOf(team.getTeamId());
+				}
+
+				modelPermissionsParameterMap.put(
+					roleKey, pagePermission.getActionKeys());
+			}
+
+			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+				modelPermissionsParameterMap, null);
+
+			_resourcePermissionLocalService.deleteResourcePermissions(
+				companyId, Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(plid));
+
+			_resourcePermissionLocalService.addModelResourcePermissions(
+				companyId, groupId, contextUser.getUserId(),
+				Layout.class.getName(), String.valueOf(plid), modelPermissions);
+		}
+	}
+
+	private void _updateSEOEntry(
+			long companyId, long groupId, long layoutId, SitePage sitePage)
 		throws Exception {
 
 		PageSettings pageSettings = sitePage.getPageSettings();
@@ -960,23 +963,22 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
-				null, layout.getGroupId(), contextHttpServletRequest, null);
+				null, groupId, contextHttpServletRequest, null);
 
 		String ddmFormValues = _getDDMFormValues(pageSettings);
 
 		if (Validator.isNotNull(ddmFormValues)) {
-			long ddmStructurePrimaryKey = _getDDMStructurePrimaryKey(layout);
+			long ddmStructurePrimaryKey = _getDDMStructurePrimaryKey(companyId);
 
 			serviceContext.setAttribute(
 				ddmStructurePrimaryKey + "ddmFormValues", ddmFormValues);
 		}
 
 		_layoutSEOEntryService.updateLayoutSEOEntry(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			canonicalURLEnabled, canonicalURLMap, openGraphDescriptionEnabled,
-			openGraphDescriptionMap, openImageAltMap,
-			_getFileEntryId(openGraphSettings), openGraphTitleEnabled,
-			openGraphTitleMap, serviceContext);
+			groupId, false, layoutId, canonicalURLEnabled, canonicalURLMap,
+			openGraphDescriptionEnabled, openGraphDescriptionMap,
+			openImageAltMap, _getFileEntryId(openGraphSettings),
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

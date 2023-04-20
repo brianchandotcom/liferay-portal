@@ -503,4 +503,78 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results using multiple filtering options"
+	@priority = 4
+	test AdminCanFilterWithMultipleOptions {
+		task ("Given that the user complete a test with passed status") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user filter a case result history with multiple options") {
+			TR2Utils.clickBreadcrumb(text = ${buildName});
+
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			WaitForPageLoad();
+
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Click.clickAtNotVisible(
+				key_label = "Status",
+				key_status = "Passed",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
+
+			Type(
+				key_text = "errors",
+				locator1 = "TextArea#ANY",
+				value1 = "Failed to run on CI");
+
+			TestrayFilter.multiSelect(
+				header = "Product Version Name",
+				label = "Product Version Name",
+				listMultiSelect = "7.0");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee",
+				value1 = "Test");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only the error, run and product version in the table") {
+			AssertElementPresent(
+				key_projectName = "Run 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "7.0",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Failed to run on CI",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see Case 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

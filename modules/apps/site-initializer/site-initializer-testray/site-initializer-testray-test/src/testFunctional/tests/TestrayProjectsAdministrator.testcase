@@ -205,9 +205,9 @@ definition {
 		property test.name.skip.portal.instance = "TestrayProjectsAdministrator#CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds";
 
 		task ("Given that the user Create a Project") {
-			Testray.createProjectTestray(
-				description = "Projects_1 Description",
-				key_name = "Projects_1 Project");
+			JSONTestray.addProject(
+				projectDescription = "Project Description 1",
+				projectName = ${projectName});
 
 			Testray.changePagination(
 				numberItems = 20,
@@ -215,7 +215,7 @@ definition {
 		}
 
 		task ("And add a new team") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 
@@ -225,7 +225,7 @@ definition {
 		}
 
 		task ("And add a component") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Projects_1 Project");
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
@@ -241,7 +241,7 @@ definition {
 				numberItems = 20,
 				valuePagination = 150);
 
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
 
@@ -287,7 +287,7 @@ definition {
 		}
 
 		task ("When the user tries to delete a project with associated constructions") {
-			Testray.deleteProject(projectName = "Projects_1 Project");
+			Testray.deleteProject(projectName = ${projectName});
 		}
 
 		task ("Then an error message is displayed") {

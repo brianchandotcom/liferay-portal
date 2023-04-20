@@ -212,8 +212,22 @@ definition {
 				routine = ${routineName},
 				status = "In Analysis",
 				taskName = "Task_1");
+		}
 
-			TestrayTestflow.goToTask(taskName = "Task_1");
+		task ("And go to task through build") {
+			TestrayLayout.clickResultsOnSidebar();
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Button.click(button = "View Task");
 
 			Button.click(button = "Complete");
 

@@ -130,6 +130,10 @@ definition {
 			var statusCaseResult = "Untested";
 		}
 
+		if (!(isSet(messageError))) {
+			var messageError = "";
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -142,6 +146,7 @@ definition {
 						"key": "${key}",
 						"name": "${statusCaseResult}"
 					},
+					"errors": "${messageError}",
 					"name": "${caseResultName}",
 					"r_buildToCaseResult_c_buildId": "${buildId}",
 					"r_caseToCaseResult_c_caseId": "${casesId}",

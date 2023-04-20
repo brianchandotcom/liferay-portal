@@ -397,8 +397,6 @@ definition {
 		}
 
 		task ("When the user clear the filters") {
-			TestrayFilter.clickFilter();
-
 			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 		}
 

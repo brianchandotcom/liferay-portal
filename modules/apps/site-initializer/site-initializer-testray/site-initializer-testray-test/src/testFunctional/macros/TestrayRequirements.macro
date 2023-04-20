@@ -78,11 +78,8 @@ definition {
 	}
 
 	macro goToRequirement {
-		var key_requirementSummary = ${requirementSummary};
-		var key = selenium.getText("TestrayRequirements#REQUIREMENT_SUMMARY");
-
 		Click(
-			key_projectName = ${key},
+			key_projectName = ${requirementSummary},
 			locator1 = "Testray#ITEM_NAME");
 	}
 

@@ -172,7 +172,7 @@ definition {
 
 			Testray.projectTabNavigator(navTabName = "Requirements");
 
-			TestrayRequirements.goToRequirement(requirementSummary = ${requirementName});
+			TestrayRequirements.goToRequirement(requirementSummary = "Requirement Summary");
 		}
 
 		task ("When I add a case to the requirement") {

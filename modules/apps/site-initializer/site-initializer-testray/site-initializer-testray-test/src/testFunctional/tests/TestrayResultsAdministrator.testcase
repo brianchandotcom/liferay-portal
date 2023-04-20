@@ -396,6 +396,10 @@ definition {
 		task ("Then the user view results by component") {
 			Testray.projectTabNavigator(navTabName = "Components");
 
+			ScrollWebElementIntoView(
+				key_projectName = ${componentName},
+				locator1 = "Testray#ITEM_NAME");
+
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);

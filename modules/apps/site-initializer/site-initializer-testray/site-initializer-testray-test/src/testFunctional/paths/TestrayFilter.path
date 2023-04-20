@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>CLEAR_FILTER</td>
-	<td>//div[@class='popover-body']//button[contains(text(),'Clear')]</td>
+	<td>//div[@class='tbar-section']//button[contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
 <tr>

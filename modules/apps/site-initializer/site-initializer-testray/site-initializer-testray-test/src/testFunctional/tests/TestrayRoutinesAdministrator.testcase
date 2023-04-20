@@ -70,9 +70,13 @@ definition {
 				object = "routines",
 				objectName = ${routineName});
 
-			TR2Utils.clickBreadcrumb(text = ${projectName});
+			TestrayLayout.clickResultsOnSidebar();
 
-			Testray.projectTabNavigator(navTabName = "Routines");
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Testray.assertItemNotPresent(itemName = ${routineName});
 		}

@@ -157,7 +157,7 @@
 </tr>
 <tr>
 	<td>SELECT_BREADCRUMB</td>
-	<td>//*[contains(@class, 'cursor-pointer')]//*[text()='${key_text}']</td>
+	<td>//*[contains(@class, 'tr-header')]//*[text()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

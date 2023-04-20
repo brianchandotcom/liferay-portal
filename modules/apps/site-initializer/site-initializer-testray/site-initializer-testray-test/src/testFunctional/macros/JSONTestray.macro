@@ -27,6 +27,7 @@ definition {
 			caseResultName = ${caseResultName},
 			casesId = ${casesId},
 			componentId = ${componentId},
+			messageError = ${messageError},
 			runId = ${runId});
 	}
 

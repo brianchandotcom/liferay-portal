@@ -342,32 +342,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
-	@priority = 2
-	test AdminCanFilterOptionsToFilter {
-		task ("When the user searches for a field called routine") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
-
-			Testray.projectTabNavigator(navTabName = "History");
-
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.searchFilter(value = "Routines");
-		}
-
-		task ("Then the user can see the field label called routine") {
-			AssertElementPresent(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Routines");
-		}
-
-		task ("And the user no more see the field called assigne in the filter") {
-			AssertElementNotPresent(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Assignee");
-		}
-	}
-
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by environment"
 	@priority = 3
 	test AdminCanFilterCaseHistoryByEnvironment {
@@ -500,6 +474,32 @@ definition {
 			AssertElementPresent(
 				key_projectName = "Run 2",
 				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
+	@priority = 2
+	test AdminCanFilterOptionsToFilter {
+		task ("When the user searches for a field called routine") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			TestrayFilter.clickFilter();
+
+			TestrayFilter.searchFilter(value = "Routines");
+		}
+
+		task ("Then the user can see the field label called routine") {
+			AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Routines");
+		}
+
+		task ("And the user no more see the field called assigne in the filter") {
+			AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee");
 		}
 	}
 

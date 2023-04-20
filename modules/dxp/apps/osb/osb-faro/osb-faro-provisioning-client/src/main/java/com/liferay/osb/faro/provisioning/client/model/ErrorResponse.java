@@ -19,9 +19,6 @@ package com.liferay.osb.faro.provisioning.client.model;
  */
 public class ErrorResponse {
 
-	public ErrorResponse() {
-	}
-
 	public String getException() {
 		return _exception;
 	}

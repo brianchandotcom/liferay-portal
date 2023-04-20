@@ -29,6 +29,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTLED_STATUS</td>
+	<td>//*[contains(@class,'text-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLAIM_NUMBER</td>
+	<td>//*[contains(@class, 'cursor-pointer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLAIM_BACK_BUTTON</td>
+	<td>//*[contains(@class,'component-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLICY_DETAIL_REDIRECT</td>
+	<td>//*[contains(@class,'component-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLICY_DETAIL_TITLE</td>
+	<td>//*[contains(@class, 'policy-detail-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TASKS_SECTION</td>
 	<td>//div[contains(@class, "tasks-container")]//div[contains(text(),'${key_subsection}')]</td>
 	<td></td>

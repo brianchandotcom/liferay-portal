@@ -43,12 +43,27 @@ definition {
 	}
 
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if the user can access the policy details page through policy number link."
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanUserAccessPolicyDetails {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserAccessPolicyDetails";
 
-		// TODO LPS-181068 CanUserAccessPolicyDetails pending implementation
+		task ("Given I go to the Applications page") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
+		}
+
+		task ("When I click on the Claim Number") {
+			RaylifeAP.clickOnClaimNumber();
+		}
+
+		task ("Then go back to Policy Detail Page") {
+			RaylifeAP.clickOnPolicyNumberOnClaimDetais();
+		}
+
+		task ("Then validate if the user are on Policy Detail Page") {
+			RaylifeAP.assertPolicyDetailPage();	
+		}
 
 	}
 
@@ -58,8 +73,23 @@ definition {
 	test CanUserCanGoBackToClaimsPage {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#CanUserCanGoBackToClaimsPage";
 
-		// TODO LPS-181067 CanUserCanGoBackToClaimsPage pending implementation
+		task ("Given I go to the Applications page") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
 
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
+		}
+
+		task ("When I click on the Claim Number") {
+			RaylifeAP.clickOnClaimNumber();
+		}
+
+		task ("Then go back to Claims Page") {
+			RaylifeAP.clickOnBackToClaimsPage();
+		}
+
+		task ("Then validate if the user are on Claims Page") {
+			RaylifeAP.assertClaimNumberVisible();
+		}
 	}
 
 	@description = "Story ID: LPS-160816 | Test Summary: Verify if a claim with the settled status, the status is displayed green and theres settled date and settled amount displayed."
@@ -68,7 +98,19 @@ definition {
 	test VerifyDisplayedStatusGreen {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyDisplayedStatusGreen";
 
-		// TODO LPS-181069 VerifyDisplayedStatusGreen pending implementation
+		task ("Given I go to the Applications page") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
+		}
+
+		task ("When I click on the Claim Number") {
+			RaylifeAP.clickOnClaimNumber();
+		}
+
+		task ("Validate the Settled Status") {
+			RaylifeAP.assertSettledStatus();
+		}
 
 	}
 
@@ -78,7 +120,19 @@ definition {
 	test VerifyStatusNotSettled {
 		property test.name.skip.portal.instance = "RaylifeAPClaimsDetails#VerifyStatusNotSettled";
 
-		// TODO LPS-181070 VerifyStatusNotSettled pending implementation
+		task ("Given I go to the Applications page") {
+			ApplicationsMenu.gotoSite(site = "Raylife AP");
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Claims");
+		}
+
+		task ("When I click on the Claim Number") {
+			RaylifeAP.clickOnClaimNumber();
+		}
+
+		task ("Validate the Settled Status") {
+			RaylifeAP.assertSettledStatus();
+		}
 
 	}
 

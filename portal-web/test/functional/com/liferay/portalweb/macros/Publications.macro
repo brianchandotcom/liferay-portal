@@ -227,6 +227,10 @@ definition {
 			panel = "Applications",
 			portlet = "Publications");
 
+		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Settings");
+
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
 
 		Click(locator1 = "Button#SAVE");

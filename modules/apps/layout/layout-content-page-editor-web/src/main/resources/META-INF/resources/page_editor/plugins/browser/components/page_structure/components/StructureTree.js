@@ -142,12 +142,10 @@ export default function PageStructureSidebar() {
 				activeItemId,
 				canUpdateEditables,
 				canUpdateItemConfiguration,
-				dragAndDropHoveredItemId,
 				editingNodeId,
 				fragmentEntryLinks,
 				hoveredItemId,
 				isMasterPage,
-				keyboardMovementTargetId,
 				layoutData,
 				layoutDataRef,
 				mappingFields,
@@ -164,12 +162,10 @@ export default function PageStructureSidebar() {
 			canUpdateItemConfiguration,
 			data.items,
 			data.rootItems.main,
-			dragAndDropHoveredItemId,
 			editingNodeId,
 			fragmentEntryLinks,
 			hoveredItemId,
 			isMasterPage,
-			keyboardMovementTargetId,
 			layoutData,
 			layoutDataRef,
 			mappingFields,
@@ -310,6 +306,28 @@ export default function PageStructureSidebar() {
 			]);
 		}
 	}, [activeItemId, layoutData, masterLayoutData]);
+
+	useEffect(() => {
+		if (dragAndDropHoveredItemId) {
+			setExpandedKeys((previousExpanedKeys) => [
+				...new Set([
+					...previousExpanedKeys,
+					...[dragAndDropHoveredItemId],
+				]),
+			]);
+		}
+	}, [dragAndDropHoveredItemId]);
+
+	useEffect(() => {
+		if (keyboardMovementTargetId) {
+			setExpandedKeys((previousExpanedKeys) => [
+				...new Set([
+					...previousExpanedKeys,
+					...[keyboardMovementTargetId],
+				]),
+			]);
+		}
+	}, [keyboardMovementTargetId]);
 
 	return (
 		<div
@@ -589,13 +607,11 @@ function visit(
 		activeItemId,
 		canUpdateEditables,
 		canUpdateItemConfiguration,
-		dragAndDropHoveredItemId,
 		editingNodeId,
 		fragmentEntryLinks,
 		hasHiddenAncestor,
 		hoveredItemId,
 		isMasterPage,
-		keyboardMovementTargetId,
 		layoutData,
 		layoutDataRef,
 		mappingFields,
@@ -674,7 +690,6 @@ function visit(
 						canActivateEditable(selectedViewportSize, type),
 					active: childId === activeItemId,
 					children: [],
-					dragAndDropHoveredItemId,
 					draggable: false,
 					hidable: false,
 					hidden: false,
@@ -699,7 +714,6 @@ function visit(
 						activeItemId,
 						canUpdateEditables,
 						canUpdateItemConfiguration,
-						dragAndDropHoveredItemId,
 						editingNodeId,
 						fragmentEntryLinks,
 						hasHiddenAncestor: hasHiddenAncestor || hidden,
@@ -749,13 +763,11 @@ function visit(
 						activeItemId,
 						canUpdateEditables,
 						canUpdateItemConfiguration,
-						dragAndDropHoveredItemId,
 						editingNodeId,
 						fragmentEntryLinks,
 						hasHiddenAncestor: hasHiddenAncestor || hidden,
 						hoveredItemId,
 						isMasterPage,
-						keyboardMovementTargetId,
 						layoutData,
 						layoutDataRef,
 						mappingFields,
@@ -774,13 +786,11 @@ function visit(
 					activeItemId,
 					canUpdateEditables,
 					canUpdateItemConfiguration,
-					dragAndDropHoveredItemId,
 					editingNodeId,
 					fragmentEntryLinks,
 					hasHiddenAncestor: hasHiddenAncestor || hidden,
 					hoveredItemId,
 					isMasterPage,
-					keyboardMovementTargetId,
 					layoutData,
 					layoutDataRef,
 					mappingFields,

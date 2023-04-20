@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -66,7 +67,8 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 				long viewActionId = resultSet.getLong("viewActionId");
 
 				preparedStatement.setLong(1, mvccVersion);
-				preparedStatement.setLong(2, increment());
+				preparedStatement.setLong(
+					2, increment(ResourcePermission.class.getName()));
 				preparedStatement.setLong(3, companyId);
 				preparedStatement.setString(
 					4,

@@ -82,7 +82,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 
 			ResourcePermission newResourcePermission =
 				_resourcePermissionLocalService.createResourcePermission(
-					increment());
+					increment(ResourcePermission.class.getName()));
 
 			newResourcePermission.setCompanyId(
 				resourcePermission.getCompanyId());

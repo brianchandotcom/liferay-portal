@@ -498,14 +498,14 @@ definition {
 
 	@description = "LPS-158743: Upgrade report trace line is generated in the console"
 	@priority = 3
-	test ReportTraceLineLoggedWithAutoUpgrade {
+	test UserNotifiedWhereToFindUpgradeReportAfterAutoUpgrade {
 		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
 		property log.context.enabled = "true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";
 		property upgrade.reports.enabled = "false";
 
-		task ("Check report is generated console") {
+		task ("When the upgrade report is finished generating, Then the user is notified in the Portal log file where to find the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 			AssertConsoleTextPresent(value1 = "Upgrade report generated in ${liferayHome}/reports/upgrade_report.info");
@@ -514,18 +514,18 @@ definition {
 
 	@description = "LPS-181594: The message with the  upgrade report file path is printed in the logs"
 	@priority = 4
-	test ReportTraceLineLoggedWithDBUpgradeTool {
-		task ("Look for the upgrade logs") {
+	test UserNotifiedWhereToFindUpgradeReportInUpgradeTool {
+		task ("Given a user views the upgrade log file") {
 			var upgradeLogContent = Log.getUpgradeLogFileContent();
 		}
 
-		task ("Given A upgrade is completed When Upgrade Report is enabled Then a message saying 'Starting upgrade report generation' is printed at the end of the upgrade log.") {
+		task ("When the upgrade finishes, Then the user is notified in the upgrade log file that the upgrade report is being generated") {
 			if (!(contains(${upgradeLogContent}, "Starting upgrade report generation"))) {
 				fail("Starting upgrade report generation message not present in the logs");
 			}
 		}
 
-		task ("Given A upgrade is completed When Upgrade Report is enabled Then a message with the report trace line is printed at the end of the upgrade log.") {
+		task ("When the upgrade report is finished generating, Then the user is notified in the upgrade log file where to find the upgrade report") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 			if (!(contains(${upgradeLogContent}, "Upgrade report generated in ${liferayHome}/tools/portal-tools-db-upgrade-client/./reports/upgrade_report.info"))) {

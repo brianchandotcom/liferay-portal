@@ -150,7 +150,7 @@ function TreeItem({
 			if (event.keyCode === SPACE_KEYCODE) {
 				event.stopPropagation();
 
-				onSelectedChange(selection.has(item.id) ? false : true, item);
+				onSelectedChange(!selection.has(item.id), item);
 			}
 		},
 		[onSelectedChange, selection]

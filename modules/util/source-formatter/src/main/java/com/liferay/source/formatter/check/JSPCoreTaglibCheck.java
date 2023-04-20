@@ -105,7 +105,7 @@ public class JSPCoreTaglibCheck extends BaseJSPTermsCheck {
 					else {
 						addMessage(
 							fileName,
-							"Use 'c:choose` tag instead of if/else-statement",
+							"Use 'c:choose' tag instead of if/else-statement",
 							firstClause.getStartLineNumber());
 					}
 

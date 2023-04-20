@@ -12,6 +12,7 @@ const formatCurrency = (value, currencyKey) =>
 	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		currency: currencyKey ? currencyKey : 'USD',
 		notation: 'compact',
+		roundingPriority: 'morePrecision',
 		style: 'currency',
 	}).format(value);
 

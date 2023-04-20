@@ -91,12 +91,12 @@ export default function () {
 							accountData.partnerLevel === PartnershipLevels.GOLD
 						) {
 							const hasMatchingARR =
-								accountData.aRRAmount ===
+								accountData.aRRAmount >=
 								partnerLevelProperties[accountData.partnerLevel]
 									.growthARR;
 
 							const hastMatchingNPOrNB =
-								accountData.newProjectExistingBusiness ===
+								accountData.newProjectExistingBusiness >=
 								partnerLevelProperties[accountData.partnerLevel]
 									.newProjectExistingBusiness;
 

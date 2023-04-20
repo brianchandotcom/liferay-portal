@@ -450,4 +450,59 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by status"
+	@priority = 3
+	test CanFilterByStatus {
+		task ("Given that the user complete a test with passed status") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			WaitForPageLoad();
+		}
+
+		task ("And that the user has two status different in the table") {
+			TR2Utils.clickBreadcrumb(text = ${buildName});
+
+			AssertElementPresent(
+				key_projectName = "Untested",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Passed",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result with passed status") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			Click.clickAtNotVisible(
+				key_label = "Status",
+				key_status = "Passed",
+				locator1 = "TestrayFilter#STATUS_IN_FILTER");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see passed status in the table") {
+			AssertElementPresent(
+				key_projectName = "Passed",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see status Untested in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Untested",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

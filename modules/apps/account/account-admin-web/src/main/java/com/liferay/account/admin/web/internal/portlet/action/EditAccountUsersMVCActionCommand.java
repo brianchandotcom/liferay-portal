@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
@@ -64,6 +67,13 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 					WorkflowConstants.STATUS_INACTIVE);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				_userLocalService.validateCompanyMaxUsers(
+					themeDisplay.getCompanyId());
+
 				_updateUsers(
 					actionRequest, accountUserIds,
 					WorkflowConstants.STATUS_APPROVED);
@@ -113,6 +123,9 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 					User.class.getName(), actionRequest));
 		}
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

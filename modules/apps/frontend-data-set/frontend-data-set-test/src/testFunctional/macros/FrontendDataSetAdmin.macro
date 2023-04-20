@@ -18,16 +18,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteAllDatasetEntries {
-		JSONFrontendDatasetEntries._deleteFDSEntry();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet");
-		
-		AssertElementPresent(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
-	}
-
 	macro createDataSetView {
 		LexiconEntry.gotoAdd();
 
@@ -40,6 +30,16 @@ definition {
 			value1 = ${description});
 
 		PortletEntry.save();
+	}
+
+	macro deleteAllDatasetEntries {
+		JSONFrontendDatasetEntries._deleteFDSEntry();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet");
+
+		AssertElementPresent(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
 	}
 
 	macro deleteDataSet {

@@ -166,4 +166,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an User I should be able to search by a filter"
+	@priority = 2
+	test CanSearchByFilter {
+		task ("When the user searches for a field called priority") {
+			TestrayFilter.clickFilter();
+
+            ScrollWebElementIntoView(
+				key_numberItems = "20",
+				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
+
+			TestrayFilter.searchFilter(value = "Priority");
+		}
+
+		task ("Then the user can see the field label called team") {
+			AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority");
+		}
+
+		task ("And the user no more see the field called Case Type") {
+			AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Case Type");
+		}
+	}
+
 }

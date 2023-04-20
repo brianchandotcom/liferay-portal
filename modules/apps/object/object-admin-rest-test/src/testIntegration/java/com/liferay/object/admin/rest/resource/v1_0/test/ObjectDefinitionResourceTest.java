@@ -204,10 +204,10 @@ public class ObjectDefinitionResourceTest
 					objectDefinitionsJSONObject.getString("items"))));
 	}
 
+	@Override
 	@Test
 	public void testPostObjectDefinition() throws Exception {
-
-		// Create an approved object definition
+		super.testPostObjectDefinition();
 
 		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
 
@@ -231,8 +231,11 @@ public class ObjectDefinitionResourceTest
 		Assert.assertEquals(status, postObjectDefinition.getStatus());
 	}
 
+	@Override
 	@Test
-	public void testPutObjectDefinitionWithStorageType() throws Exception {
+	public void testPutObjectDefinition() throws Exception {
+		super.testPutObjectDefinition();
+
 		ObjectDefinition postObjectDefinition =
 			testPutObjectDefinition_addObjectDefinition();
 

@@ -1,5 +1,3 @@
-assemble:
-    - into: static
 liferay-sample-instance-settings-d5f7j8:
     invitationEmailBody:
         en_US: |

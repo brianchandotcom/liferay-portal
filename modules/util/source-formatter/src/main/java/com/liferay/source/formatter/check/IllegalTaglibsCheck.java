@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
@@ -38,22 +39,20 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!isAttributeValue(_AVOID_OLD_TAGLIB_KEY, absolutePath)) {
-			return content;
-		}
-
 		SourceProcessor sourceProcessor = getSourceProcessor();
 
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
-		if (sourceFormatterArgs.isFormatCurrentBranch()) {
+		List<String> shouldReplaceTagLibs = getAttributeValues(
+			_SHOULD_REPLACE_TAGLIB_KEY, absolutePath);
+
+		if (sourceFormatterArgs.isFormatCurrentBranch() &&
+			ListUtil.isNotEmpty(shouldReplaceTagLibs)) {
+
 			String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
 				sourceFormatterArgs.getBaseDirName(),
 				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
-
-			List<String> shouldReplaceTagLibs = getAttributeValues(
-				_SHOULD_REPLACE_TAGLIB_KEY, absolutePath);
 
 			for (String line : StringUtil.split(currentBranchFileDiff, "\n")) {
 				if (!line.startsWith(StringPool.PLUS)) {
@@ -91,8 +90,6 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 
 		return content;
 	}
-
-	private static final String _AVOID_OLD_TAGLIB_KEY = "avoidOldTaglib";
 
 	private static final String _SHOULD_REPLACE_TAGLIB_KEY =
 		"shouldReplaceTaglib";

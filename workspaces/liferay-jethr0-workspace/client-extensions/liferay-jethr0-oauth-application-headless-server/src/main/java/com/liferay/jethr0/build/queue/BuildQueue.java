@@ -25,9 +25,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class BuildQueue {
 
 	public void addBuild(Build build) {
@@ -74,6 +78,10 @@ public class BuildQueue {
 
 	public ProjectQueue getProjectQueue() {
 		return _projectQueue;
+	}
+
+	public void initialize() {
+		_sort();
 	}
 
 	public Build nextBuild(JenkinsNode jenkinsNode) {
@@ -141,7 +149,9 @@ public class BuildQueue {
 		}
 	}
 
+	@Autowired
 	private ProjectQueue _projectQueue;
+
 	private final List<Build> _sortedBuilds = new ArrayList<>();
 
 }

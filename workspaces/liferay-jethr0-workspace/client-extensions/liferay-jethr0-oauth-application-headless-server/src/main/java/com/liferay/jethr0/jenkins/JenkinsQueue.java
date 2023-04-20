@@ -35,8 +35,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JenkinsQueue {
 
-	public void invoke() {
+	public void initialize() {
+		if ((_jenkinsServerURLs != null) && !_jenkinsServerURLs.isEmpty()) {
+			for (String jenkinsServerURL : _jenkinsServerURLs.split(",")) {
+				JenkinsServer jenkinsServer = _jenkinsServerRepository.getByURL(
+					jenkinsServerURL);
+
+				if (jenkinsServer != null) {
+					continue;
+				}
+
+				jenkinsServer = _jenkinsServerRepository.add(jenkinsServerURL);
+
+				_jenkinsNodeRepository.addAll(jenkinsServer);
+			}
+		}
+
 		for (JenkinsServer jenkinsServer : _jenkinsServerRepository.getAll()) {
+			jenkinsServer.update();
+
 			for (JenkinsNode jenkinsNode : jenkinsServer.getJenkinsNodes()) {
 				if (!jenkinsNode.isAvailable()) {
 					continue;
@@ -59,27 +76,6 @@ public class JenkinsQueue {
 				_buildRepository.update(build);
 				_buildRunRepository.update(buildRun);
 			}
-		}
-	}
-
-	public void update() {
-		if ((_jenkinsServerURLs != null) && !_jenkinsServerURLs.isEmpty()) {
-			for (String jenkinsServerURL : _jenkinsServerURLs.split(",")) {
-				JenkinsServer jenkinsServer = _jenkinsServerRepository.getByURL(
-					jenkinsServerURL);
-
-				if (jenkinsServer != null) {
-					continue;
-				}
-
-				jenkinsServer = _jenkinsServerRepository.add(jenkinsServerURL);
-
-				_jenkinsNodeRepository.addAll(jenkinsServer);
-			}
-		}
-
-		for (JenkinsServer jenkinsServer : _jenkinsServerRepository.getAll()) {
-			jenkinsServer.update();
 		}
 	}
 

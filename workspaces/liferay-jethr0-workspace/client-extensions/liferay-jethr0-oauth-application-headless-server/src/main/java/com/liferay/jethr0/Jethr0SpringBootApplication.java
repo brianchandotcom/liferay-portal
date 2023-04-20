@@ -16,16 +16,9 @@ package com.liferay.jethr0;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
-import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.comparator.ProjectComparator;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 import com.liferay.jethr0.project.queue.ProjectQueue;
-import com.liferay.jethr0.project.repository.ProjectComparatorRepository;
-import com.liferay.jethr0.project.repository.ProjectPrioritizerRepository;
-import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import javax.jms.ConnectionFactory;
 
@@ -54,12 +47,20 @@ public class Jethr0SpringBootApplication {
 		ConfigurableApplicationContext configurableApplicationContext =
 			SpringApplication.run(Jethr0SpringBootApplication.class, args);
 
+		ProjectQueue projectQueue = configurableApplicationContext.getBean(
+			ProjectQueue.class);
+
+		projectQueue.initialize();
+
+		BuildQueue buildQueue = configurableApplicationContext.getBean(
+			BuildQueue.class);
+
+		buildQueue.initialize();
+
 		JenkinsQueue jenkinsQueue = configurableApplicationContext.getBean(
 			JenkinsQueue.class);
 
-		jenkinsQueue.update();
-
-		jenkinsQueue.invoke();
+		jenkinsQueue.initialize();
 	}
 
 	@Bean
@@ -72,15 +73,6 @@ public class Jethr0SpringBootApplication {
 		activeMQConnectionFactory.setUserName(_jmsUserName);
 
 		return activeMQConnectionFactory;
-	}
-
-	@Bean
-	public BuildQueue getBuildQueue(ProjectQueue projectQueue) {
-		BuildQueue buildQueue = new BuildQueue();
-
-		buildQueue.setProjectQueue(projectQueue);
-
-		return buildQueue;
 	}
 
 	@Bean
@@ -116,68 +108,6 @@ public class Jethr0SpringBootApplication {
 			_liferayOAuthApplicationExternalReferenceCodes);
 	}
 
-	@Bean
-	public ProjectQueue getProjectQueue(
-		ProjectComparatorRepository projectComparatorRepository,
-		ProjectPrioritizerRepository projectPrioritizerRepository,
-		ProjectRepository projectRepository) {
-
-		ProjectQueue projectQueue = new ProjectQueue();
-
-		projectQueue.setProjectPrioritizer(
-			_getDefaultProjectPrioritizer(
-				projectComparatorRepository, projectPrioritizerRepository));
-
-		projectQueue.addProjects(
-			projectRepository.getByStates(
-				Project.State.QUEUED, Project.State.RUNNING));
-
-		for (Project project : projectQueue.getProjects()) {
-			Project.State projectState = Project.State.COMPLETED;
-
-			for (Build projectBuild : project.getBuilds()) {
-				Build.State buildState = projectBuild.getState();
-
-				if (buildState != Build.State.COMPLETED) {
-					projectState = Project.State.RUNNING;
-
-					break;
-				}
-			}
-
-			if (projectState == Project.State.COMPLETED) {
-				project.setState(projectState);
-
-				projectRepository.update(project);
-			}
-		}
-
-		return projectQueue;
-	}
-
-	private ProjectPrioritizer _getDefaultProjectPrioritizer(
-		ProjectComparatorRepository projectComparatorRepository,
-		ProjectPrioritizerRepository projectPrioritizerRepository) {
-
-		ProjectPrioritizer projectPrioritizer =
-			projectPrioritizerRepository.getByName(_liferayProjectPrioritizer);
-
-		if (projectPrioritizer != null) {
-			return projectPrioritizer;
-		}
-
-		projectPrioritizer = projectPrioritizerRepository.add(
-			_liferayProjectPrioritizer);
-
-		projectComparatorRepository.add(
-			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
-			null);
-		projectComparatorRepository.add(
-			projectPrioritizer, 2, ProjectComparator.Type.FIFO, null);
-
-		return projectPrioritizer;
-	}
-
 	@Value("${jms.broker.url}")
 	private String _jmsBrokerURL;
 
@@ -192,8 +122,5 @@ public class Jethr0SpringBootApplication {
 
 	@Value("${liferay.oauth.application.external.reference.codes}")
 	private String _liferayOAuthApplicationExternalReferenceCodes;
-
-	@Value("${liferay.jethr0.project.prioritizer}")
-	private String _liferayProjectPrioritizer;
 
 }

@@ -14,19 +14,28 @@
 
 package com.liferay.jethr0.project.queue;
 
+import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.comparator.BaseProjectComparator;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.repository.ProjectComparatorRepository;
+import com.liferay.jethr0.project.repository.ProjectPrioritizerRepository;
+import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class ProjectQueue {
 
 	public void addProject(Project project) {
@@ -63,6 +72,34 @@ public class ProjectQueue {
 		return _projects;
 	}
 
+	public void initialize() {
+		setProjectPrioritizer(_getDefaultProjectPrioritizer());
+
+		addProjects(
+			_projectRepository.getByStates(
+				Project.State.QUEUED, Project.State.RUNNING));
+
+		for (Project project : getProjects()) {
+			Project.State projectState = Project.State.COMPLETED;
+
+			for (Build projectBuild : project.getBuilds()) {
+				Build.State buildState = projectBuild.getState();
+
+				if (buildState != Build.State.COMPLETED) {
+					projectState = Project.State.RUNNING;
+
+					break;
+				}
+			}
+
+			if (projectState == Project.State.COMPLETED) {
+				project.setState(projectState);
+
+				_projectRepository.update(project);
+			}
+		}
+	}
+
 	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer) {
 		_projectPrioritizer = projectPrioritizer;
 
@@ -88,7 +125,40 @@ public class ProjectQueue {
 		_projects.sort(new PrioritizedProjectComparator());
 	}
 
+	private ProjectPrioritizer _getDefaultProjectPrioritizer() {
+		ProjectPrioritizer projectPrioritizer =
+			_projectPrioritizerRepository.getByName(_liferayProjectPrioritizer);
+
+		if (projectPrioritizer != null) {
+			return projectPrioritizer;
+		}
+
+		projectPrioritizer = _projectPrioritizerRepository.add(
+			_liferayProjectPrioritizer);
+
+		_projectComparatorRepository.add(
+			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
+			null);
+		_projectComparatorRepository.add(
+			projectPrioritizer, 2, ProjectComparator.Type.FIFO, null);
+
+		return projectPrioritizer;
+	}
+
+	@Value("${liferay.jethr0.project.prioritizer}")
+	private String _liferayProjectPrioritizer;
+
+	@Autowired
+	private ProjectComparatorRepository _projectComparatorRepository;
+
 	private ProjectPrioritizer _projectPrioritizer;
+
+	@Autowired
+	private ProjectPrioritizerRepository _projectPrioritizerRepository;
+
+	@Autowired
+	private ProjectRepository _projectRepository;
+
 	private final List<Project> _projects = new ArrayList<>();
 	private final List<ProjectComparator> _sortedProjectComparators =
 		new ArrayList<>();

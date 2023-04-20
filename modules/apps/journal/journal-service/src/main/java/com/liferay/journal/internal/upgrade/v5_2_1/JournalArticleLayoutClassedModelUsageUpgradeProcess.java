@@ -14,14 +14,15 @@
 
 package com.liferay.journal.internal.upgrade.v5_2_1;
 
-import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Eudaldo Alonso
@@ -40,42 +41,70 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		List<LayoutRevision> layoutRevisions =
-			_layoutRevisionLocalService.getLayoutRevisions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select 1 from LayoutClassedModelUsage where classNameId ",
+					"= ? and classPK = ? and containerKey = ? and ",
+					"containerType = ? and plid = ?"));
 
-		for (LayoutRevision layoutRevision : layoutRevisions) {
-			List<LayoutClassedModelUsage> layoutClassedModelUsages =
-				_layoutClassedModelUsageLocalService.
-					getLayoutClassedModelUsagesByPlid(
-						layoutRevision.getLayoutRevisionId());
+			String sql = StringBundler.concat(
+				"select distinct ",
+				"LayoutClassedModelUsage.layoutClassedModelUsageId, ",
+				"LayoutClassedModelUsage.classNameId, ",
+				"LayoutClassedModelUsage.classPK, ",
+				"LayoutClassedModelUsage.containerKey, ",
+				"LayoutClassedModelUsage.containerType, LayoutRevision.plid ",
+				"from LayoutClassedModelUsage inner join LayoutRevision on ",
+				"LayoutRevision.layoutRevisionId = ",
+				"LayoutClassedModelUsage.plid");
 
-			for (LayoutClassedModelUsage layoutClassedModelUsage :
-					layoutClassedModelUsages) {
+			processConcurrently(
+				sql,
+				"update LayoutClassedModelUsage set plid = ? where " +
+					"layoutClassedModelUsageId = ?",
+				resultSet -> new Object[] {
+					resultSet.getLong("layoutClassedModelUsageId"),
+					resultSet.getLong("classNameId"),
+					resultSet.getLong("classPK"),
+					GetterUtil.getString(resultSet.getString("containerKey")),
+					resultSet.getLong("containerType"),
+					resultSet.getLong("plid")
+				},
+				(values, preparedStatement) -> {
+					long layoutClassedModelUsageId = (Long)values[0];
 
-				LayoutClassedModelUsage existingLayoutClassedModelUsage =
-					_layoutClassedModelUsageLocalService.
-						fetchLayoutClassedModelUsage(
-							layoutClassedModelUsage.getClassNameId(),
-							layoutClassedModelUsage.getClassPK(),
-							layoutClassedModelUsage.getContainerKey(),
-							layoutClassedModelUsage.getContainerType(),
-							layoutRevision.getPlid());
+					long classNameId = (Long)values[1];
+					long classPK = (Long)values[2];
+					String containerKey = (String)values[3];
+					long containerType = (Long)values[4];
+					long plid = (Long)values[5];
 
-				if (existingLayoutClassedModelUsage != null) {
-					_layoutClassedModelUsageLocalService.
-						deleteLayoutClassedModelUsage(
-							layoutClassedModelUsage.
-								getLayoutClassedModelUsageId());
+					preparedStatement1.setLong(1, classNameId);
+					preparedStatement1.setLong(2, classPK);
+					preparedStatement1.setString(3, containerKey);
+					preparedStatement1.setLong(4, containerType);
+					preparedStatement1.setLong(5, plid);
 
-					continue;
-				}
+					try (ResultSet resultSet =
+							preparedStatement1.executeQuery()) {
 
-				layoutClassedModelUsage.setPlid(layoutRevision.getPlid());
+						if (resultSet.next()) {
+							runSQL(
+								"delete from LayoutClassedModelUsage where " +
+									"layoutClassedModelUsageId = " +
+										layoutClassedModelUsageId);
+						}
+						else {
+							preparedStatement.setLong(1, plid);
+							preparedStatement.setLong(
+								2, layoutClassedModelUsageId);
 
-				_layoutClassedModelUsageLocalService.
-					updateLayoutClassedModelUsage(layoutClassedModelUsage);
-			}
+							preparedStatement.addBatch();
+						}
+					}
+				},
+				"Unable update layout classed model usages");
 		}
 	}
 

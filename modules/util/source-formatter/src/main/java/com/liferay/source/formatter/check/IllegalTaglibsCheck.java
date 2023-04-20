@@ -86,8 +86,8 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Use ", replacedTaglibArray[1], " instead of ",
-							replacedTaglibArray[0]));
+							"Use <", replacedTaglibArray[1],
+							"> tag instead of <", replacedTaglibArray[0], ">"));
 
 					break;
 				}

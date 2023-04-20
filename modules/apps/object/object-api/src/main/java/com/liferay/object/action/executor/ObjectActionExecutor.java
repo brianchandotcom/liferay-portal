@@ -26,10 +26,9 @@ import java.util.List;
  */
 public interface ObjectActionExecutor {
 
-	public static int UNRESTRICTED_BY_COMPANY = 0;
+	public static int ALL_COMPANIES = 0;
 
-	public static List<String> UNRESTRICTED_BY_OBJECT_DEFINITIONS =
-		Collections.emptyList();
+	public static List<String> ALL_OBJECT_DEFINITIONS = Collections.emptyList();
 
 	public void execute(
 			long companyId, UnicodeProperties parametersUnicodeProperties,
@@ -37,13 +36,13 @@ public interface ObjectActionExecutor {
 		throws Exception;
 
 	public default long getCompanyId() {
-		return UNRESTRICTED_BY_COMPANY;
+		return ALL_COMPANIES;
 	}
 
 	public String getKey();
 
 	public default List<String> getObjectDefinitionNames() {
-		return UNRESTRICTED_BY_OBJECT_DEFINITIONS;
+		return ALL_OBJECT_DEFINITIONS;
 	}
 
 }

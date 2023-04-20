@@ -22,7 +22,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
-	value="look-and-feel"
+	value="customization"
 />
 
 <liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "form.navigator.entry.order:Integer=180",
 	service = FormNavigatorEntry.class
 )
-public class LayoutSetLookAndFeelFormNavigatorEntry
+public class LayoutSetCustomizationFormNavigatorEntry
 	extends BaseLayoutSetFormNavigatorEntry {
 
 	@Override
@@ -39,7 +39,7 @@ public class LayoutSetLookAndFeelFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "look-and-feel";
+		return "customization";
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class LayoutSetLookAndFeelFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/layout_set/look_and_feel.jsp";
+		return "/layout_set/customization.jsp";
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")

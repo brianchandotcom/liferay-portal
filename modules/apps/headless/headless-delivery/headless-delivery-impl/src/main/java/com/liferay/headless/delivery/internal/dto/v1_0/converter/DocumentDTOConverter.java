@@ -59,10 +59,13 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -129,8 +132,7 @@ public class DocumentDTOConverter
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()));
 				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);
-				contentUrl = _dlURLHelper.getDownloadURL(
-					fileEntry, fileVersion, null, "");
+				contentUrl = _getContentUrl(fileEntry, fileVersion);
 				contentValue = ContentValueUtil.toContentValue(
 					"contentValue", fileEntry::getContentStream,
 					dtoConverterContext.getUriInfo());
@@ -211,6 +213,21 @@ public class DocumentDTOConverter
 			adaptiveMedia -> _toAdaptedImage(
 				adaptiveMedia, dtoConverterContext.getUriInfo()),
 			AdaptedImage.class);
+	}
+
+	private String _getContentUrl(FileEntry fileEntry, FileVersion fileVersion)
+		throws Exception {
+
+		if ((fileVersion.getSize() == 0) ||
+			!fileEntry.containsPermission(
+				PermissionThreadLocal.getPermissionChecker(),
+				ActionKeys.DOWNLOAD)) {
+
+			return StringPool.BLANK;
+		}
+
+		return _dlURLHelper.getDownloadURL(
+			fileEntry, fileVersion, null, StringPool.BLANK);
 	}
 
 	private List<DDMFormValues> _getDDMFormValues(

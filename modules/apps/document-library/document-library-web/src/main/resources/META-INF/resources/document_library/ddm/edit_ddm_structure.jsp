@@ -63,7 +63,7 @@ renderResponse.setTitle(title);
 			<clay:container-fluid>
 				<ul class="tbar-nav">
 					<li class="tbar-item tbar-item-expand">
-						<aui:input cssClass="form-control-inline" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "metadata-set") %>' wrapperCssClass="mb-0" />
+						<aui:input cssClass="form-control-inline" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "metadata-set") %>' wrapperCssClass="mb-0" />
 					</li>
 					<li class="tbar-item">
 						<div class="metadata-type-button-row tbar-section text-right">

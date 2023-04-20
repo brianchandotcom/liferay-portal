@@ -12,14 +12,14 @@ definition {
 			var userPassword = "test";
 		}
 
-		if (!(isSet(datasetEntriestIdList))) {
-			var datasetEntriestIdList = JSONFrontendDatasetEntries._getDatasetEntryIds();
+		if (!(isSet(datasetEntriesIdList))) {
+			var datasetEntriesIdList = JSONFrontendDatasetEntries._getDatasetEntryIds();
 		}
 
-		if (${datasetEntriestIdList} != "") {
-			for (var dataSetEntrytId : list ${datasetEntriestIdList}) {
+		if (${datasetEntriesIdList} != "") {
+			for (var dataSetEntryId : list ${datasetEntriesIdList}) {
 				var curl = '''
-					${portalURL}/o/c/fdsentries/${dataSetEntrytId} \
+					${portalURL}/o/c/fdsentries/${dataSetEntryId} \
 						-u ${userEmailAddress}:${userPassword}
 				''';
 
@@ -27,7 +27,7 @@ definition {
 			}
 		}
 		else {
-			echo("No Datasets entries to be deleted");
+			echo("FAIL. No Datasets entries to be deleted");
 		}
 	}
 
@@ -47,13 +47,15 @@ definition {
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var datasetEntrytIds = JSONCurlUtil.get(${curl}, "$..['id']");
+		var siteId = JSONCurlUtil.get(${curl}, "$..items[0].creator.id");
 
-		if (${datasetEntrytIds} == "") {
+		var datasetEntryIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
+
+		if (${datasetEntryIds} == "") {
 			fail("FAIL. No datasets was found");
 		}
 		else {
-			return ${datasetEntrytIds};
+			return ${datasetEntryIds};
 		}
 	}
 

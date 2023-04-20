@@ -60,7 +60,7 @@ definition {
 				componentName = ${componentName},
 				projectName = ${projectName});
 
-            JSONTestray.addCases(
+			JSONTestray.addCases(
 				caseName = "Case 2",
 				caseType = "Case Type 2",
 				componentName = ${componentName},
@@ -118,7 +118,7 @@ definition {
 
 			TestrayBuild.goToBuild(buildName = ${buildName});
 
-            Testray.projectTabNavigator(navTabName = "Teams");
+			Testray.projectTabNavigator(navTabName = "Teams");
 		}
 	}
 
@@ -166,37 +166,11 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an User I should be able to search by a filter"
-	@priority = 2
-	test CanSearchByFilter {
-		task ("When the user searches for a field called priority") {
-			TestrayFilter.clickFilter();
-
-            ScrollWebElementIntoView(
-				key_numberItems = "20",
-				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
-
-			TestrayFilter.searchFilter(value = "Priority");
-		}
-
-		task ("Then the user can see the field label called team") {
-			AssertElementPresent(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Priority");
-		}
-
-		task ("And the user no more see the field called Case Type") {
-			AssertElementNotPresent(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Case Type");
-		}
-	}
-
-    @description = "Story ID: LPS-173527 | Test Summary: Verify if as an Administrator I should be able to filter team by team name"
+	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an Administrator I should be able to filter team by team name"
 	@priority = 3
 	test AdminCanFilterTeamByTeamName {
-        task ("Given that the user has two teams different in the table") {
-            Testray.changePagination(
+		task ("Given that the user has two teams different in the table") {
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -210,12 +184,12 @@ definition {
 		}
 
 		task ("When the user filter a team by team name") {
-            Refresh();
+			Refresh();
 
 			TestrayFilter.clickFilter();
 
-            ScrollWebElementIntoView(
-				key_numberItems = "20",
+			ScrollWebElementIntoView(
+				key_numberItems = 20,
 				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
 			TestrayFilter.multiSelect(
@@ -237,6 +211,32 @@ definition {
 				key_projectName = "Team 2",
 				locator1 = "Testray#ITEM_NAME");
 		}
-    }
+	}
+
+	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an User I should be able to search by a filter"
+	@priority = 2
+	test CanSearchByFilter {
+		task ("When the user searches for a field called priority") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_numberItems = 20,
+				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
+
+			TestrayFilter.searchFilter(value = "Priority");
+		}
+
+		task ("Then the user can see the field label called team") {
+			AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority");
+		}
+
+		task ("And the user no more see the field called Case Type") {
+			AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Case Type");
+		}
+	}
 
 }

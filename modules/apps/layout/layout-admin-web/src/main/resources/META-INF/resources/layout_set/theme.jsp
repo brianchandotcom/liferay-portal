@@ -18,31 +18,16 @@
 
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
-	value="customization"
+	value="theme"
 />
 
-<%
-LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
-
-List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
-%>
-
-<div class="mt-5">
-	<clay:tabs
-		tabsItems="<%= tabsItems %>"
-	>
-
-		<%
-		for (TabsItem tabsItem : tabsItems) {
-		%>
-
-			<div>
-				<liferay-util:include page='<%= "/layout_set/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
-			</div>
-
-		<%
-		}
-		%>
-
-	</clay:tabs>
-</div>
+<c:choose>
+	<c:when test='<%= ParamUtil.getBoolean(request, "editable", true) %>'>
+		<div id="<portlet:namespace />currentThemeContainer">
+			<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/look_and_feel_themes_info.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>

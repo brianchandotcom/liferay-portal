@@ -67,6 +67,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_CHECKBOX</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_experienceName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_CHECKBOX_POSITION</td>
 	<td>//li[contains(@class,'list-group-item')][${key_position}]//input[@type='checkbox']</td>
 	<td></td>

@@ -17,16 +17,11 @@ package com.liferay.document.library.web.internal.util;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.IGDisplayContextProvider;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Iván Zaera
  */
-@Component(service = {})
 public class DLWebComponentProvider {
 
 	public static DLWebComponentProvider getDLWebComponentProvider() {
@@ -34,36 +29,26 @@ public class DLWebComponentProvider {
 	}
 
 	public DLAdminDisplayContextProvider getDlAdminDisplayContextProvider() {
-		return _dlAdminDisplayContextProvider;
+		return _dlAdminDisplayContextProviderSnapshot.get();
 	}
 
 	public DLDisplayContextProvider getDLDisplayContextProvider() {
-		return _dlDisplayContextProvider;
+		return _dlDisplayContextProviderSnapshot.get();
 	}
 
 	public IGDisplayContextProvider getIGDisplayContextProvider() {
-		return _igDisplayContextProvider;
+		return _igDisplayContextProviderSnapshot.get();
 	}
 
-	@Activate
-	protected void activate() {
-		_dlWebComponentProvider = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dlWebComponentProvider = null;
-	}
-
+	private static final Snapshot<DLAdminDisplayContextProvider>
+		_dlAdminDisplayContextProviderSnapshot = new Snapshot<>(
+			DLWebComponentProvider.class, DLAdminDisplayContextProvider.class);
+	private static final Snapshot<DLDisplayContextProvider>
+		_dlDisplayContextProviderSnapshot = new Snapshot<>(
+			DLWebComponentProvider.class, DLDisplayContextProvider.class);
 	private static DLWebComponentProvider _dlWebComponentProvider;
-
-	@Reference
-	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
-
-	@Reference
-	private DLDisplayContextProvider _dlDisplayContextProvider;
-
-	@Reference
-	private IGDisplayContextProvider _igDisplayContextProvider;
+	private static final Snapshot<IGDisplayContextProvider>
+		_igDisplayContextProviderSnapshot = new Snapshot<>(
+			DLWebComponentProvider.class, IGDisplayContextProvider.class);
 
 }

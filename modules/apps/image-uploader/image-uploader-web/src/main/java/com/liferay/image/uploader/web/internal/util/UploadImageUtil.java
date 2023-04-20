@@ -14,33 +14,20 @@
 
 package com.liferay.image.uploader.web.internal.util;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.image.uploader.web.internal.helper.UploadImageHelper;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
-
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
-@Component(
-	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
-	service = {}
-)
 public class UploadImageUtil {
 
 	public static final String TEMP_IMAGE_FILE_NAME = "tempImageFileName";
@@ -48,25 +35,9 @@ public class UploadImageUtil {
 	public static final String TEMP_IMAGE_FOLDER_NAME = "java.lang.Class";
 
 	public static long getMaxFileSize(PortletRequest portletRequest) {
-		String currentLogoURL = portletRequest.getParameter("currentLogoURL");
+		UploadImageHelper uploadImageHelper = _uploadImageHelperSnapshot.get();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (StringUtil.startsWith(
-				currentLogoURL,
-				themeDisplay.getPathImage() + "/user_female_portrait") ||
-			StringUtil.startsWith(
-				currentLogoURL,
-				themeDisplay.getPathImage() + "/user_male_portrait") ||
-			StringUtil.startsWith(
-				currentLogoURL,
-				themeDisplay.getPathImage() + "/user_portrait")) {
-
-			return _userFileUploadsConfiguration.imageMaxSize();
-		}
-
-		return _uploadServletRequestConfigurationProvider.getMaxSize();
+		return uploadImageHelper.getMaxFileSize(portletRequest);
 	}
 
 	public static FileEntry getTempImageFileEntry(PortletRequest portletRequest)
@@ -81,25 +52,8 @@ public class UploadImageUtil {
 			ParamUtil.getString(portletRequest, TEMP_IMAGE_FILE_NAME));
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_userFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			UserFileUploadsConfiguration.class, properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setUploadServletRequestConfigurationHelper(
-		UploadServletRequestConfigurationProvider
-			uploadServletRequestConfigurationProvider) {
-
-		_uploadServletRequestConfigurationProvider =
-			uploadServletRequestConfigurationProvider;
-	}
-
-	private static UploadServletRequestConfigurationProvider
-		_uploadServletRequestConfigurationProvider;
-	private static volatile UserFileUploadsConfiguration
-		_userFileUploadsConfiguration;
+	private static final Snapshot<UploadImageHelper>
+		_uploadImageHelperSnapshot = new Snapshot<>(
+			UploadImageUtil.class, UploadImageHelper.class);
 
 }

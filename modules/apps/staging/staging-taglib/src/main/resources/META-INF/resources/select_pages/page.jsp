@@ -16,17 +16,21 @@
 
 <%@ include file="/select_pages/init.jsp" %>
 
+<%
+LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(group, groupId, request, renderRequest, renderResponse);
+%>
+
 <aui:fieldset cssClass="options-group" id="pages-fieldset" markupView="lexicon">
 	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="pages" /></h3>
 
 		<div class="d-flex flex-wrap layout-selector" id="<portlet:namespace />pages">
-			<c:if test="<%= (!disableInputs && selectPagesGroup.isPrivateLayoutsEnabled()) || LayoutStagingUtil.isBranchingLayoutSet(selectPagesGroup, selectPagesPrivateLayout) %>">
+			<c:if test="<%= (!layoutsTreeDisplayContext.isDisableInputs() && layoutsTreeDisplayContext.isPrivateLayoutsEnabled()) || LayoutStagingUtil.isBranchingLayoutSet(layoutsTreeDisplayContext.getSelectPagesGroup(), layoutsTreeDisplayContext.isSelectPagesPrivateLayout()) %>">
 				<div class="layout-selector-options">
 					<aui:fieldset label="pages-options">
-						<c:if test="<%= !disableInputs && selectPagesGroup.isPrivateLayoutsEnabled() %>">
+						<c:if test="<%= !layoutsTreeDisplayContext.isDisableInputs() && layoutsTreeDisplayContext.isPrivateLayoutsEnabled() %>">
 							<c:choose>
-								<c:when test="<%= selectPagesPrivateLayout %>">
+								<c:when test="<%= layoutsTreeDisplayContext.isSelectPagesPrivateLayout() %>">
 									<aui:button id="changeToPublicLayoutsButton" value="change-to-public-pages" />
 								</c:when>
 								<c:otherwise>
@@ -35,32 +39,16 @@
 							</c:choose>
 						</c:if>
 
-						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(selectPagesGroup, selectPagesPrivateLayout) %>">
-
-							<%
-							List<LayoutSetBranch> layoutSetBranches = null;
-
-							long layoutSetBranchId = MapUtil.getLong(parameterMap, "layoutSetBranchId");
-
-							if (disableInputs && (layoutSetBranchId > 0)) {
-								layoutSetBranches = new ArrayList<>(1);
-
-								layoutSetBranches.add(LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId));
-							}
-							else {
-								layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(selectPagesGroupId, selectPagesPrivateLayout);
-							}
-							%>
-
-							<aui:select disabled="<%= disableInputs %>" label="site-pages-variation" name="layoutSetBranchId">
+						<c:if test="<%= LayoutStagingUtil.isBranchingLayoutSet(layoutsTreeDisplayContext.getSelectPagesGroup(), layoutsTreeDisplayContext.isSelectPagesPrivateLayout()) %>">
+							<aui:select disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>" label="site-pages-variation" name="layoutSetBranchId">
 
 								<%
-								for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+								for (LayoutSetBranch layoutSetBranch : layoutsTreeDisplayContext.getLayoutSetBranches()) {
 									boolean translateLayoutSetBranchName = LayoutSetBranchConstants.MASTER_BRANCH_NAME.equals(HtmlUtil.escape(layoutSetBranch.getName()));
 
 									boolean selected = false;
 
-									if ((layoutSetBranchId == layoutSetBranch.getLayoutSetBranchId()) || ((layoutSetBranchId == 0) && layoutSetBranch.isMaster())) {
+									if ((layoutsTreeDisplayContext.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId()) || ((layoutsTreeDisplayContext.getLayoutSetBranchId() == 0) && layoutSetBranch.isMaster())) {
 										selected = true;
 									}
 								%>
@@ -78,47 +66,14 @@
 			</c:if>
 
 			<div class="layout-selector-options">
-
-				<%
-				String childPageHelpMessage = "child-page-export-process-warning";
-
-				if (action.equals(Constants.PUBLISH)) {
-					childPageHelpMessage = "child-page-publish-process-warning";
-
-					StagingConfiguration stagingConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(StagingConfiguration.class, company.getCompanyId());
-
-					if (!stagingConfiguration.publishParentLayoutsByDefault()) {
-						childPageHelpMessage = null;
-					}
-				}
-				%>
-
-				<aui:fieldset helpMessage="<%= childPageHelpMessage %>" label='<%= "pages-to-" + action %>'>
+				<aui:fieldset helpMessage="<%= layoutsTreeDisplayContext.getChildPageHelpMessage() %>" label='<%= "pages-to-" + layoutsTreeDisplayContext.getAction() %>'>
 					<c:choose>
-						<c:when test="<%= disableInputs %>">
+						<c:when test="<%= layoutsTreeDisplayContext.isDisableInputs() %>">
 							<liferay-util:buffer
 								var="badgeHTML"
 							>
 								<span class="badge badge-info">
-
-									<%
-									int messageKeyLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(selectPagesGroup, selectPagesPrivateLayout, selectedLayoutIdsArray);
-
-									int totalLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(selectPagesGroup, selectPagesPrivateLayout);
-
-									if (messageKeyLayoutsCount > totalLayoutsCount) {
-										messageKeyLayoutsCount = totalLayoutsCount;
-									}
-									%>
-
-									<c:choose>
-										<c:when test="<%= totalLayoutsCount == 0 %>">
-											<liferay-ui:message key="none" />
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message arguments='<%= new String[] {"<strong>" + String.valueOf(messageKeyLayoutsCount) + "</strong>", String.valueOf(totalLayoutsCount)} %>' key="x-of-x" />
-										</c:otherwise>
-									</c:choose>
+									<liferay-ui:message key="<%= layoutsTreeDisplayContext.getLayoutsCountMessageKey() %>" />
 								</span>
 							</liferay-util:buffer>
 
@@ -127,11 +82,6 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-
-							<%
-							LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayContext(selectPagesGroup, selectPagesGroupId, request, selectPagesPrivateLayout, renderResponse, selectedLayoutIdsArray, treeId);
-							%>
-
 							<div>
 								<react:component
 									module="select_pages/js/PagesTree"
@@ -146,38 +96,38 @@
 			<div class="layout-selector-options">
 				<aui:fieldset label="look-and-feel">
 					<liferay-staging:checkbox
-						checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, ParamUtil.getBoolean(request, PortletDataHandlerKeys.THEME_REFERENCE, true)) %>"
-						disabled="<%= disableInputs %>"
+						checked="<%= MapUtil.getBoolean(layoutsTreeDisplayContext.getParameterMap(), PortletDataHandlerKeys.THEME_REFERENCE, ParamUtil.getBoolean(request, PortletDataHandlerKeys.THEME_REFERENCE, true)) %>"
+						disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>"
 						label="theme-settings"
 						name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>"
 						popover="export-import-theme-settings-help"
 					/>
 
 					<liferay-staging:checkbox
-						checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LOGO, true)) %>"
-						disabled="<%= disableInputs %>"
+						checked="<%= MapUtil.getBoolean(layoutsTreeDisplayContext.getParameterMap(), PortletDataHandlerKeys.LOGO, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LOGO, true)) %>"
+						disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>"
 						label="logo"
 						name="<%= PortletDataHandlerKeys.LOGO %>"
 					/>
 
 					<liferay-staging:checkbox
-						checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true)) %>"
-						disabled="<%= disableInputs %>"
+						checked="<%= MapUtil.getBoolean(layoutsTreeDisplayContext.getParameterMap(), PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS, true)) %>"
+						disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>"
 						label="site-pages-settings"
 						name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>"
 					/>
 
 					<liferay-staging:checkbox
-						checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, true)) %>"
-						disabled="<%= disableInputs %>"
+						checked="<%= MapUtil.getBoolean(layoutsTreeDisplayContext.getParameterMap(), PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS, true)) %>"
+						disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>"
 						label="site-template-settings"
 						name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS %>"
 					/>
 
-					<c:if test="<%= action.equals(Constants.PUBLISH) %>">
+					<c:if test="<%= Objects.equals(layoutsTreeDisplayContext.getAction(), Constants.PUBLISH) %>">
 						<liferay-staging:checkbox
-							checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, false)) %>"
-							disabled="<%= disableInputs %>"
+							checked="<%= MapUtil.getBoolean(layoutsTreeDisplayContext.getParameterMap(), PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, ParamUtil.getBoolean(request, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS, false)) %>"
+							disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>"
 							label="delete-missing-layouts"
 							name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>"
 							popover="delete-missing-layouts-staging-help"
@@ -187,29 +137,15 @@
 			</div>
 		</div>
 
-		<c:if test="<%= action.equals(Constants.PUBLISH) %>">
+		<c:if test="<%= Objects.equals(layoutsTreeDisplayContext.getAction(), Constants.PUBLISH) %>">
 			<div class="d-flex deletions flex-wrap layout-selector" id="<portlet:namespace />pagedeletions">
 				<div class="layout-selector-options">
 					<aui:fieldset label="page-deletions">
-
-						<%
-						DateRange dateRange = null;
-
-						if (useRequestValues) {
-							dateRange = ExportImportDateUtil.getDateRange(renderRequest, selectPagesGroupId, selectPagesPrivateLayout, 0, null, ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
-						}
-						else {
-							dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
-						}
-
-						PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), selectPagesGroupId, (range != null) ? range : ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, dateRange.getStartDate(), dateRange.getEndDate());
-						%>
-
 						<span>
 							<liferay-staging:checkbox
-								checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_LAYOUTS, false) %>"
-								deletions="<%= ExportImportHelperUtil.getLayoutModelDeletionCount(portletDataContext, selectPagesPrivateLayout) %>"
-								disabled="<%= disableInputs %>"
+								checked="<%= MapUtil.getBoolean(layoutsTreeDisplayContext.getParameterMap(), PortletDataHandlerKeys.DELETE_LAYOUTS, false) %>"
+								deletions="<%= ExportImportHelperUtil.getLayoutModelDeletionCount(layoutsTreeDisplayContext.getPortletDataContext(), layoutsTreeDisplayContext.isSelectPagesPrivateLayout()) %>"
+								disabled="<%= layoutsTreeDisplayContext.isDisableInputs() %>"
 								label="publish-page-deletions"
 								name="<%= PortletDataHandlerKeys.DELETE_LAYOUTS %>"
 								popover="affected-by-the-content-sections-date-range-selector"

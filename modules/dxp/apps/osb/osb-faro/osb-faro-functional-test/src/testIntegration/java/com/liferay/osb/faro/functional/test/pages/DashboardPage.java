@@ -26,6 +26,8 @@ import cucumber.api.Transform;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -75,7 +77,8 @@ public class DashboardPage {
 				_faroSelenium.click(xpath);
 			}
 
-			WebDriverWait waitDriverWait = new WebDriverWait(_faroSelenium, 30);
+			WebDriverWait waitDriverWait = new WebDriverWait(
+				_faroSelenium, Duration.ofSeconds(30));
 
 			waitDriverWait.until(
 				webDriver -> {

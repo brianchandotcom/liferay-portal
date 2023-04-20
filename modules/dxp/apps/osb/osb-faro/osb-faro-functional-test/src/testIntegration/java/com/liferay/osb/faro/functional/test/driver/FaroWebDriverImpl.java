@@ -37,10 +37,11 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.time.Duration;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -87,8 +88,8 @@ public class FaroWebDriverImpl
 
 		RemoteWebElement remoteWebElement = (RemoteWebElement)webElement;
 
-		List<WebElement> childWebElements =
-			remoteWebElement.findElementsByXPath("./*");
+		List<WebElement> childWebElements = remoteWebElement.findElements(
+			By.xpath("./*"));
 
 		for (WebElement childWebElement : childWebElements) {
 			String childWebElementText = childWebElement.getText();
@@ -280,9 +281,9 @@ public class FaroWebDriverImpl
 
 		FluentWait fluentWait = new FluentWait(this);
 
-		fluentWait.withTimeout(timeout, TimeUnit.SECONDS);
+		fluentWait.withTimeout(Duration.ofSeconds(timeout));
 
-		Wait wait = fluentWait.pollingEvery(pollInterval, TimeUnit.SECONDS);
+		Wait wait = fluentWait.pollingEvery(Duration.ofSeconds(pollInterval));
 
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
@@ -328,9 +329,9 @@ public class FaroWebDriverImpl
 
 		FluentWait fluentWait = new FluentWait(this);
 
-		fluentWait.withTimeout(timeout, TimeUnit.SECONDS);
+		fluentWait.withTimeout(Duration.ofSeconds(timeout));
 
-		Wait wait = fluentWait.pollingEvery(pollInterval, TimeUnit.SECONDS);
+		Wait wait = fluentWait.pollingEvery(Duration.ofSeconds(pollInterval));
 
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
@@ -373,9 +374,9 @@ public class FaroWebDriverImpl
 
 		FluentWait fluentWait = new FluentWait(this);
 
-		fluentWait.withTimeout(timeout, TimeUnit.SECONDS);
+		fluentWait.withTimeout(Duration.ofSeconds(timeout));
 
-		Wait wait = fluentWait.pollingEvery(pollInterval, TimeUnit.SECONDS);
+		Wait wait = fluentWait.pollingEvery(Duration.ofSeconds(pollInterval));
 
 		Function<FaroSelenium, Boolean> function = faroSelenium -> {
 			FaroRestUtil.clearCache();
@@ -450,7 +451,8 @@ public class FaroWebDriverImpl
 			return;
 		}
 
-		WebDriverWait webDriverWait = new WebDriverWait(this, 3);
+		WebDriverWait webDriverWait = new WebDriverWait(
+			this, Duration.ofSeconds(3));
 
 		WebElement webElement = findElement(locator);
 
@@ -571,7 +573,8 @@ public class FaroWebDriverImpl
 	@Override
 	public void waitForPageLoadingComplete() {
 		WebDriverWait waitDriverWait = new WebDriverWait(
-			WebDriverUtil.getWebDriver(StringPool.BLANK), 30);
+			WebDriverUtil.getWebDriver(StringPool.BLANK),
+			Duration.ofSeconds(30));
 
 		waitDriverWait.until(
 			webDriver -> {

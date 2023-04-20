@@ -752,7 +752,7 @@ public class MainServlet extends HttpServlet {
 				GetterUtil.getString(
 					PropsValues.COMPANY_DEFAULT_VIRTUAL_HOST_MAIL_DOMAIN,
 					PropsValues.COMPANY_DEFAULT_WEB_ID),
-				0, true);
+				0, true, null, null, null, null, null, null);
 		}
 
 		String[] webIds = PortalInstances.getWebIds();

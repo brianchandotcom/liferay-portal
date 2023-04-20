@@ -183,6 +183,67 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			0, layoutRevision.getLayoutRevisionId());
 	}
 
+	@Test
+	public void testUpgradeProcessExistingLayoutClassedModelUsagesByPlid()
+		throws Exception {
+
+		_assertAssetEntryLayoutClassedModelUsages();
+
+		Group stagingGroup = _liveGroup.getStagingGroup();
+
+		Layout stagingLayout = _getStagingLayout(stagingGroup.getGroupId());
+
+		_pushServiceContext(stagingGroup, stagingLayout);
+
+		_updateAssetPublisherPortletPreference(stagingLayout);
+
+		_assertAssetEntryLayoutClassedModelUsages(stagingLayout);
+
+		_publishToLive(stagingLayout);
+
+		_assertAssetEntryLayoutClassedModelUsages(stagingLayout, _layout);
+
+		LayoutRevision layoutRevision = _getLayoutRevision(stagingLayout);
+
+		_addLayoutClassedModelUsage(stagingLayout, layoutRevision);
+
+		_runUpgrade();
+
+		_assertLayoutClassedModelUsagesByPlidCount(1, stagingLayout.getPlid());
+
+		_assertLayoutClassedModelUsagesByPlidCount(
+			0, layoutRevision.getLayoutRevisionId());
+	}
+
+	private void _addLayoutClassedModelUsage(
+		Layout layout, LayoutRevision layoutRevision) {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.
+				getLayoutClassedModelUsagesByPlid(layout.getPlid());
+
+		Assert.assertEquals(
+			layoutClassedModelUsages.toString(), 1,
+			layoutClassedModelUsages.size());
+
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			layoutClassedModelUsages.get(0);
+
+		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			layoutClassedModelUsage.getGroupId(),
+			layoutClassedModelUsage.getClassNameId(),
+			layoutClassedModelUsage.getClassPK(),
+			layoutClassedModelUsage.getContainerKey(),
+			layoutClassedModelUsage.getContainerType(),
+			layoutRevision.getLayoutRevisionId(),
+			ServiceContextThreadLocal.getServiceContext());
+
+		_assertLayoutClassedModelUsagesByPlidCount(1, layout.getPlid());
+
+		_assertLayoutClassedModelUsagesByPlidCount(
+			1, layoutRevision.getLayoutRevisionId());
+	}
+
 	private void _assertAssetEntryLayoutClassedModelUsages(Layout... layouts) {
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
 			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(

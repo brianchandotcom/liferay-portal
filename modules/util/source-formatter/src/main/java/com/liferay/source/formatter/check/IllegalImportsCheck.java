@@ -93,7 +93,7 @@ public class IllegalImportsCheck extends BaseFileCheck {
 				fileName,
 				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
 					"SecureRandom instead of java.security.SecureRandom, see " +
-						"LPS-39058");
+						"LPS-39508");
 		}
 
 		// LPS-45027

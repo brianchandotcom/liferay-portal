@@ -235,6 +235,8 @@ definition {
 
 		LiferayEvent.waitForPortletReady();
 
+		ValidateSmokeUpgrade.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.viewPG(dmDocumentTitle = "Document txt Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");

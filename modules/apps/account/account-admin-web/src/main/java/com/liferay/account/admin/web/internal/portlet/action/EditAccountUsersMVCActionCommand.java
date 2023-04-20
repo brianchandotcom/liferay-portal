@@ -55,27 +55,21 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.DEACTIVATE) ||
-				cmd.equals(Constants.RESTORE)) {
+			long[] accountUserIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "accountUserIds"), 0L);
 
-				long[] accountUserIds = StringUtil.split(
-					ParamUtil.getString(actionRequest, "accountUserIds"), 0L);
-
-				for (long accountUserId : accountUserIds) {
-					int status = WorkflowConstants.STATUS_APPROVED;
-
-					if (cmd.equals(Constants.DEACTIVATE)) {
-						status = WorkflowConstants.STATUS_INACTIVE;
-					}
-
-					_userService.updateStatus(
-						accountUserId, status,
-						ServiceContextFactory.getInstance(
-							User.class.getName(), actionRequest));
-				}
+			if (cmd.equals(Constants.DEACTIVATE)) {
+				_updateUsers(
+					actionRequest, accountUserIds,
+					WorkflowConstants.STATUS_INACTIVE);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				_updateUsers(
+					actionRequest, accountUserIds,
+					WorkflowConstants.STATUS_APPROVED);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				_deleteUsers(actionRequest);
+				_deleteUsers(accountUserIds);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -102,12 +96,21 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _deleteUsers(ActionRequest actionRequest) throws Exception {
-		long[] accountUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "accountUserIds"), 0L);
-
+	private void _deleteUsers(long[] accountUserIds) throws Exception {
 		for (long accountUserId : accountUserIds) {
 			_userService.deleteUser(accountUserId);
+		}
+	}
+
+	private void _updateUsers(
+			ActionRequest actionRequest, long[] accountUserIds, int status)
+		throws Exception {
+
+		for (long accountUserId : accountUserIds) {
+			_userService.updateStatus(
+				accountUserId, status,
+				ServiceContextFactory.getInstance(
+					User.class.getName(), actionRequest));
 		}
 	}
 

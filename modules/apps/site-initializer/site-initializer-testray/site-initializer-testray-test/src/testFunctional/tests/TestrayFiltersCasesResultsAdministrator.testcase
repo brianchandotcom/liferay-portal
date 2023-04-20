@@ -278,4 +278,45 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by component"
+	@priority = 3
+	test CanFilterByComponent {
+		task ("Given that the user has two component different in the table") {
+			AssertElementPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result by component") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.multiSelect(
+				header = "Component",
+				label = "Component",
+				listMultiSelect = "Component 2");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only component 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the component 1 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

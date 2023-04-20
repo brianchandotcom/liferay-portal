@@ -192,4 +192,51 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-173527 | Test Summary: Verify if as an Administrator I should be able to filter team by team name"
+	@priority = 3
+	test AdminCanFilterTeamByTeamName {
+        task ("Given that the user has two teams different in the table") {
+            Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			AssertElementPresent(
+				key_projectName = "Team 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Team 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a team by team name") {
+            Refresh();
+
+			TestrayFilter.clickFilter();
+
+            ScrollWebElementIntoView(
+				key_numberItems = "20",
+				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
+
+			TestrayFilter.multiSelect(
+				header = "Team",
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only team 1 in the table") {
+			AssertElementPresent(
+				key_projectName = "Team 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the team 2 with in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Team 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+    }
+
 }

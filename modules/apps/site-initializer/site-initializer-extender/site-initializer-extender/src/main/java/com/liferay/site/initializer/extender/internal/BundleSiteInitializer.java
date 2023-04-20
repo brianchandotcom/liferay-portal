@@ -2875,8 +2875,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateOrganization(
-		JSONObject jsonObject, Organization parentOrganization,
-		ServiceContext serviceContext)
+			JSONObject jsonObject, Organization parentOrganization,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Organization organization = Organization.toDTO(jsonObject.toString());

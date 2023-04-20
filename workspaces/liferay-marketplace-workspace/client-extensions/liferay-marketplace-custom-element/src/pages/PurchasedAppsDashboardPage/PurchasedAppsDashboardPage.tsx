@@ -103,7 +103,7 @@ export function PurchasedAppsDashboardPage() {
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
 	const [selectedNavigationItem, setSelectedNavigationItem] =
-		useState('Apps');
+		useState('My Apps');
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 
 	const messages = {
@@ -346,7 +346,7 @@ export function PurchasedAppsDashboardPage() {
 				setSelectedAccount={setSelectedAccount}
 			/>
 
-			{selectedNavigationItem === 'Apps' && (
+			{selectedNavigationItem === 'My Apps' && (
 				<DashboardPage
 					buttonMessage="Add Apps"
 					dashboardNavigationItems={dashboardNavigationItems}

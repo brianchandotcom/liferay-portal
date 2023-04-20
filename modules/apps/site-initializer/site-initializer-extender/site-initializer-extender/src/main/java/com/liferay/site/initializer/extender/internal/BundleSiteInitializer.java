@@ -2875,16 +2875,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrUpdateOrganization(
-			String json, Organization parentOrganization,
-			ServiceContext serviceContext)
+		JSONObject jsonObject, Organization parentOrganization,
+		ServiceContext serviceContext)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
-
-		Organization organization = Organization.toDTO(json);
+		Organization organization = Organization.toDTO(jsonObject.toString());
 
 		if (organization == null) {
-			_log.error("Unable to transform organization from JSON: " + json);
+			_log.error(
+				"Unable to transform organization from JSON: " + jsonObject);
 
 			return;
 		}
@@ -2901,31 +2900,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getRequest()
 			).build();
 
-		Page<Organization> organizationsPage = null;
-
-		if (parentOrganization == null) {
-			organizationsPage = organizationResource.getOrganizationsPage(
-				null, null,
-				organizationResource.toFilter(
-					StringBundler.concat(
-						"name eq '", organization.getName(), "'")),
-				null, null);
-		}
-		else {
-			organizationsPage =
-				organizationResource.getOrganizationChildOrganizationsPage(
-					parentOrganization.getId(), null, null, null, null, null);
-		}
-
-		Organization existingOrganization = organizationsPage.fetchFirstItem();
-
-		if (existingOrganization == null) {
-			organization = organizationResource.postOrganization(organization);
-		}
-		else {
-			organization = organizationResource.putOrganization(
-				existingOrganization.getId(), organization);
-		}
+		organization =
+			organizationResource.putOrganizationByExternalReferenceCode(
+				organization.getExternalReferenceCode(), organization);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("childOrganizations");
 
@@ -2935,29 +2912,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			_addOrUpdateOrganization(
-				jsonArray.getString(i), organization, serviceContext);
+				jsonArray.getJSONObject(i), organization, serviceContext);
 		}
 	}
 
 	private void _addOrUpdateOrganizations(ServiceContext serviceContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/organizations");
+		String jsonPath = "/site-initializer/organizations.json";
 
-		if (SetUtil.isEmpty(resourcePaths)) {
+		String json = SiteInitializerUtil.read(jsonPath, _servletContext);
+
+		if (json == null) {
 			return;
 		}
 
-		for (String resourcePath : resourcePaths) {
-			String json = SiteInitializerUtil.read(
-				resourcePath, _servletContext);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
-			if (json == null) {
-				return;
-			}
-
-			_addOrUpdateOrganization(json, null, serviceContext);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			_addOrUpdateOrganization(
+				jsonArray.getJSONObject(i), null, serviceContext);
 		}
 	}
 

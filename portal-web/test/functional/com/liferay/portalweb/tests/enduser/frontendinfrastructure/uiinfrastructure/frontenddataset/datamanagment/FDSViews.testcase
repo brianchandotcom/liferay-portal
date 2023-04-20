@@ -180,9 +180,7 @@ definition {
 		}
 
 		task ("Then The dataset is present in the data set Admin page") {
-			AssertElementPresent(
-				entryName = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
 		}
 	}
 

@@ -39,6 +39,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
+import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
@@ -359,40 +360,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		layout = _updateLayoutSettings(layout, sitePage.getPageDefinition());
 
+		_updateLayoutPermissions(siteId, sitePage, layout);
+
 		_updateSEOEntry(layout, sitePage);
-
-		PagePermission[] pagePermissions = sitePage.getPagePermissions();
-
-		if (pagePermissions != null) {
-			Map<String, String[]> modelPermissionsParameterMap = new HashMap<>(
-				pagePermissions.length);
-
-			for (PagePermission pagePermission : pagePermissions) {
-				String roleKey = pagePermission.getRoleKey();
-
-				Team team = _teamLocalService.fetchTeam(siteId, roleKey);
-
-				if (team != null) {
-					roleKey = String.valueOf(team.getTeamId());
-				}
-
-				modelPermissionsParameterMap.put(
-					roleKey, pagePermission.getActionKeys());
-			}
-
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				modelPermissionsParameterMap, null);
-
-			_resourcePermissionLocalService.deleteResourcePermissions(
-				layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()));
-
-			_resourcePermissionLocalService.addModelResourcePermissions(
-				layout.getCompanyId(), siteId, contextUser.getUserId(),
-				Layout.class.getName(), String.valueOf(layout.getPlid()),
-				modelPermissions);
-		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -804,6 +774,44 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
+	}
+
+	private void _updateLayoutPermissions(
+			Long siteId, SitePage sitePage, Layout layout)
+		throws Exception {
+
+		PagePermission[] pagePermissions = sitePage.getPagePermissions();
+
+		if (pagePermissions != null) {
+			Map<String, String[]> modelPermissionsParameterMap = new HashMap<>(
+				pagePermissions.length);
+
+			for (PagePermission pagePermission : pagePermissions) {
+				String roleKey = pagePermission.getRoleKey();
+
+				Team team = _teamLocalService.fetchTeam(siteId, roleKey);
+
+				if (team != null) {
+					roleKey = String.valueOf(team.getTeamId());
+				}
+
+				modelPermissionsParameterMap.put(
+					roleKey, pagePermission.getActionKeys());
+			}
+
+			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+				modelPermissionsParameterMap, null);
+
+			_resourcePermissionLocalService.deleteResourcePermissions(
+				layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()));
+
+			_resourcePermissionLocalService.addModelResourcePermissions(
+				layout.getCompanyId(), siteId, contextUser.getUserId(),
+				Layout.class.getName(), String.valueOf(layout.getPlid()),
+				modelPermissions);
+		}
 	}
 
 	private Layout _updateLayoutSettings(

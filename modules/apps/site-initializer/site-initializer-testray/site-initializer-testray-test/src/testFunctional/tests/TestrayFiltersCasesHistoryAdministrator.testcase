@@ -462,4 +462,45 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by team"
+	@priority = 3
+	test AdminCanFilterCaseHistoryTeam {
+		task ("Given that the user has a team in the table") {
+			AssertElementPresent(
+				key_projectName = "Team 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result history by team") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			WaitForPageLoad();
+
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Run 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.multiSelect(
+				header = "Team",
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only Team 1 with two runs in the table") {
+			AssertElementPresent(
+				key_projectName = "Run 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

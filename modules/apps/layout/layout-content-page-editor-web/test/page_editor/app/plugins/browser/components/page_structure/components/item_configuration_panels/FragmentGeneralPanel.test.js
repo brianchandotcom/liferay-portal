@@ -18,7 +18,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -92,6 +92,7 @@ const item = {
 const renderGeneralPanel = ({
 	segmentsExperienceId,
 	fragmentEntryLink = defaultFragmentEntryLink(),
+	restrictedItemIds = new Set(),
 }) => {
 	const state = {
 		availableSegmentsExperiences: {
@@ -129,6 +130,7 @@ const renderGeneralPanel = ({
 		fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
 		languageId: 'en_US',
 		permissions: {UPDATE: true},
+		restrictedItemIds,
 		segmentsExperienceId,
 		selectedViewportSize: VIEWPORT_SIZES.desktop,
 	};
@@ -147,6 +149,14 @@ const renderGeneralPanel = ({
 };
 
 describe('FragmentGeneralPanel', () => {
+	beforeAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = true;
+	});
+
+	afterAll(() => {
+		Liferay.FeatureFlags['LPS-169923'] = false;
+	});
+
 	afterEach(() => {
 		FragmentService.updateConfigurationValues.mockClear();
 		FragmentService.renderFragmentEntryLinkContent.mockClear();
@@ -324,5 +334,15 @@ describe('FragmentGeneralPanel', () => {
 		);
 
 		expect(wrapperDiv.querySelector('.sr-only')).toHaveTextContent('en-US');
+	});
+
+	it('renders the permission retriction message when the mapped item does not have permissions', () => {
+		renderGeneralPanel({restrictedItemIds: new Set(['1'])});
+
+		expect(
+			screen.getByText(
+				'this-content-cannot-be-displayed-due-to-permission-restrictions'
+			)
+		).toBeInTheDocument();
 	});
 });

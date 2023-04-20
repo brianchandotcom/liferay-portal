@@ -64,6 +64,7 @@ const renderComponent = ({
 	hasUpdatePermissions = true,
 	lockedExperience = false,
 	masterRootItemChildren = ['11-container'],
+	restrictedItemIds = new Set(),
 	rootItemChildren = ['01-container'],
 	viewportSize = VIEWPORT_SIZES.desktop,
 } = {}) => {
@@ -250,7 +251,7 @@ const renderComponent = ({
 							UPDATE: hasUpdatePermissions,
 						},
 
-						restrictedItemIds: new Set(),
+						restrictedItemIds,
 
 						selectedViewportSize: viewportSize,
 					})}
@@ -468,6 +469,22 @@ describe('PageStructureSidebar', () => {
 			expect(
 				baseElement.querySelector('.lexicon-icon-plus')
 			).not.toBeInTheDocument();
+		});
+
+		it('shows a permission restriction message when the fragment is restricted', () => {
+			renderComponent({
+				activeItemId: '11-container',
+				restrictedItemIds: new Set(['04-fragment']),
+				rootItemChildren: ['04-fragment'],
+			});
+
+			expect(screen.getByText('Fragment 1')).toBeInTheDocument();
+
+			expect(
+				screen.getByText(
+					'this-content-cannot-be-displayed-due-to-permission-restrictions'
+				)
+			).toBeInTheDocument();
 		});
 	});
 });

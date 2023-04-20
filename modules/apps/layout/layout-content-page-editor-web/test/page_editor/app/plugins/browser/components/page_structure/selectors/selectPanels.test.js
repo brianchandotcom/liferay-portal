@@ -183,6 +183,30 @@ describe('selectPanels', () => {
 		);
 	});
 
+	it('returns only general panel if the fragment is restricted', () => {
+		const nextState = {
+			...STATE,
+			permissions: {
+				UPDATE: true,
+			},
+			restrictedItemIds: new Set(['fragment']),
+		};
+
+		const panels = selectPanels(
+			'fragment',
+			ITEM_TYPES.layoutDataItem,
+			nextState
+		);
+
+		expect(panels).toEqual(
+			expect.objectContaining({
+				panelsIds: expect.objectContaining({
+					fragmentGeneral: true,
+				}),
+			})
+		);
+	});
+
 	it('return styles panel if the user does not have UPDATE or UPDATE_LAYOUT_LIMITED for container and row types', () => {
 		const nextState = {
 			...STATE,

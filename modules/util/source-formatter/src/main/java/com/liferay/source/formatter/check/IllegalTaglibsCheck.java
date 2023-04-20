@@ -83,6 +83,8 @@ public class IllegalTaglibsCheck extends BaseFileCheck {
 							StringBundler.concat(
 								"Use ", replacedTaglibArray[1], " instead of ",
 								replacedTaglibArray[0]));
+
+						break;
 					}
 				}
 			}

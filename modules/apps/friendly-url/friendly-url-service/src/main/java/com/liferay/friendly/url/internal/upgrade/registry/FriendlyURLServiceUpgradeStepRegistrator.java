@@ -14,14 +14,17 @@
 
 package com.liferay.friendly.url.internal.upgrade.registry;
 
+import com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration;
 import com.liferay.friendly.url.internal.upgrade.v2_0_0.util.FriendlyURLEntryTable;
 import com.liferay.friendly.url.internal.upgrade.v3_0_0.UpgradeCompanyId;
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author José Ángel Jiménez
@@ -48,6 +51,24 @@ public class FriendlyURLServiceUpgradeStepRegistrator
 		registry.register("3.1.0", "3.1.1", new DummyUpgradeStep());
 
 		registry.register("3.1.1", "3.2.0", new DummyUpgradeStep());
+
+		registry.register(
+			"3.2.0", "3.3.0",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.friendly.url.internal.configuration." +
+					"FriendlyURLRedirectionConfiguration",
+				FriendlyURLRedirectionConfiguration.class.getName()));
+
+		registry.register(
+			"3.3.0", "3.4.0",
+			_configurationUpgradeStepFactory.createUpgradeStep(
+				"com.liferay.friendly.url.internal.configuration." +
+					"FriendlyURLRedirectionConfiguration.scoped",
+				FriendlyURLRedirectionConfiguration.class.getName() +
+					".scoped"));
 	}
+
+	@Reference
+	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
 
 }

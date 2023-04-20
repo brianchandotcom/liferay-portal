@@ -1202,10 +1202,10 @@
     classnames "^2.2.6"
     fuzzy "^0.1.3"
 
-"@clayui/badge@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@clayui/badge/-/badge-3.0.0.tgz#985973849c09e25b0e2450802c688b2264d9daab"
-  integrity sha512-ESXxFBcgAzQ2yCJ9RlUo+BDjSBDTndcDG3FjfowViEsr2wCbFieXGjYh1yH3dql8pPkIdt+wJPrKKmSVRSWFcA==
+"@clayui/badge@^3.92.0":
+  version "3.92.0"
+  resolved "https://registry.yarnpkg.com/@clayui/badge/-/badge-3.92.0.tgz#e368431997a132737253f17b816a2e83db010563"
+  integrity sha512-iR14nHwt9fEhNzAHM/Ngxn/sRpHIUZvrIu2ztpDo++6uOm34gasROnHAwHPyV7P9Ic4xxBjiSGT+parT3vVx7Q==
   dependencies:
     classnames "^2.2.6"
 

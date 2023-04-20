@@ -26,9 +26,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.account.model.AccountEntry" %><%@
-page import="com.liferay.commerce.account.constants.CommerceAccountWebKeys" %><%@
 page import="com.liferay.commerce.account.web.internal.constants.CommerceAccountFDSNames" %><%@
 page import="com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext" %><%@
+page import="com.liferay.commerce.constants.CommerceAccountWebKeys" %><%@
 page import="com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel" %><%@
 page import="com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryRelException" %><%@

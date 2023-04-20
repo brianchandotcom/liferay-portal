@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.search.spi.model.permission;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.context.CommerceGroupThreadLocal;
 import com.liferay.commerce.internal.util.AccountEntryUtil;

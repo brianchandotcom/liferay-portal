@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.constants;
+package com.liferay.commerce.constants;
 
 /**
  * @author Andrea Sbarra

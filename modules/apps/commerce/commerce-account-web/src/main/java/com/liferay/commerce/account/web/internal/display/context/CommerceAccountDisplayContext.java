@@ -16,8 +16,8 @@ package com.liferay.commerce.account.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.web.internal.display.context.helper.CommerceAccountRelRequestHelper;
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;

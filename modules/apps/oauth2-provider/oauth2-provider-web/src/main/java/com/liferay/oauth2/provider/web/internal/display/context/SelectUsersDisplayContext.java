@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -220,7 +222,15 @@ public class SelectUsersDisplayContext {
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
 
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> userParams =
+			LinkedHashMapBuilder.<String, Object>put(
+				"types",
+				new long[] {
+					UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT,
+					UserConstants.TYPE_REGULAR,
+					UserConstants.TYPE_SERVICE_ACCOUNT
+				}
+			).build();
 
 		if (group.isLimitedToParentSiteMembers()) {
 			userParams.put("inherit", Boolean.TRUE);

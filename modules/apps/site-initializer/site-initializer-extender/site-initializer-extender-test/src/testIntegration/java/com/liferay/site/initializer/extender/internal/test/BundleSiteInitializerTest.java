@@ -1687,7 +1687,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("oneToMany", objectRelationshipType4.toString());
 	}
 
-	private void _assertOrganizations() throws Exception {
+	private void _assertOrganizations1() throws Exception {
 		OrganizationResource.Builder organizationResourceBuilder =
 			_organizationResourceFactory.create();
 
@@ -1696,36 +1696,65 @@ public class BundleSiteInitializerTest {
 				_serviceContext.fetchUser()
 			).build();
 
-		Page<Organization> organizationsPage1 =
-			organizationResource.getOrganizationsPage(
-				null, null,
-				organizationResource.toFilter("name eq 'Test Organization 1'"),
-				null, null);
-
-		Organization organization1 = organizationsPage1.fetchFirstItem();
+		Organization organization1 =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				"TEST1");
 
 		Assert.assertNotNull(organization1);
+		Assert.assertEquals("Test Organization 1", organization1.getName());
 
-		Page<Organization> organizationsPage2 =
-			organizationResource.getOrganizationsPage(
-				null, null,
-				organizationResource.toFilter("name eq 'Test Organization 2'"),
-				null, null);
-
-		Organization organization2 = organizationsPage2.fetchFirstItem();
+		Organization organization2 =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				"TEST2");
 
 		Assert.assertNotNull(organization2);
+		Assert.assertEquals("Test Organization 2", organization2.getName());
 
-		Assert.assertEquals(1, organizationsPage2.getTotalCount());
-
-		Page<Organization> organizationsPage3 =
-			organizationResource.getOrganizationChildOrganizationsPage(
-				organization2.getId(), null, null, null, null, null);
-
-		Organization organization3 = organizationsPage3.fetchFirstItem();
+		Organization organization3 =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				"TEST3");
 
 		Assert.assertNotNull(organization3);
 		Assert.assertEquals("Test Organization 3", organization3.getName());
+	}
+
+	private void _assertOrganizations2() throws Exception {
+		OrganizationResource.Builder organizationResourceBuilder =
+			_organizationResourceFactory.create();
+
+		OrganizationResource organizationResource =
+			organizationResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
+
+		Organization organization1 =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				"TEST1");
+
+		Assert.assertNotNull(organization1);
+		Assert.assertEquals("Test Organization 1", organization1.getName());
+
+		Organization organization2 =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				"TEST2");
+
+		Assert.assertNotNull(organization2);
+		Assert.assertEquals(
+			"Test Organization 2 Update", organization2.getName());
+
+		Organization organization3 =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				"TEST3");
+
+		Assert.assertNotNull(organization3);
+		Assert.assertEquals("Test Organization 3", organization3.getName());
+
+		Organization organization4 =
+			organizationResource.getOrganizationByExternalReferenceCode(
+				"TEST4");
+
+		Assert.assertNotNull(organization4);
+		Assert.assertEquals("Test Organization 4", organization4.getName());
 	}
 
 	private void _assertPermissions() throws Exception {
@@ -2663,7 +2692,7 @@ public class BundleSiteInitializerTest {
 		_assertListTypeDefinitions1();
 		_assertNotificationTemplate();
 		_assertObjectDefinitions1();
-		_assertOrganizations();
+		_assertOrganizations1();
 		_assertPermissions();
 		_assertPortletSettings();
 		_assertSAPEntries();
@@ -2685,6 +2714,7 @@ public class BundleSiteInitializerTest {
 		_assertExpandoColumns2();
 		_assertListTypeDefinitions2();
 		_assertObjectDefinitions2();
+		_assertOrganizations2();
 		_assertResourcePermission2();
 		_assertUserAccounts2();
 	}

@@ -1,0 +1,16 @@
+[
+	{
+		"externalReferenceCode": "TEST1",
+		"name": "Test Organization 1"
+	},
+	{
+		"childOrganizations": [
+			{
+				"externalReferenceCode": "TEST3",
+				"name": "Test Organization 3"
+			}
+		],
+		"externalReferenceCode": "TEST2",
+		"name": "Test Organization 2"
+	}
+]

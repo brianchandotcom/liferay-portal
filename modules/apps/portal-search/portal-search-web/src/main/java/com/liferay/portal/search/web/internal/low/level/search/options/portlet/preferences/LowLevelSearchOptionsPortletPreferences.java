@@ -43,16 +43,16 @@ public interface LowLevelSearchOptionsPortletPreferences {
 
 	public String getAttributesString();
 
-	public String getConnectionIdString();
+	public String getConnectionId();
 
-	public String getContributorsToExcludeString();
+	public String getContributorsToExclude();
 
-	public String getContributorsToIncludeString();
+	public String getContributorsToInclude();
 
 	public String getFederatedSearchKey();
 
-	public String getFieldsToReturnString();
+	public String getFieldsToReturn();
 
-	public String getIndexesString();
+	public String getIndexes();
 
 }

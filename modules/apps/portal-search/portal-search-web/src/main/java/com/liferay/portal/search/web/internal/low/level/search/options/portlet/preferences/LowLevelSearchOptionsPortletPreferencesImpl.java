@@ -70,7 +70,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getConnectionIdString() {
+	public String getConnectionId() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONNECTION_ID);
@@ -79,7 +79,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getContributorsToExcludeString() {
+	public String getContributorsToExclude() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE);
@@ -88,7 +88,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getContributorsToIncludeString() {
+	public String getContributorsToInclude() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE);
@@ -104,7 +104,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getFieldsToReturnString() {
+	public String getFieldsToReturn() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_FIELDS_TO_RETURN);
@@ -113,7 +113,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	}
 
 	@Override
-	public String getIndexesString() {
+	public String getIndexes() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES);
 

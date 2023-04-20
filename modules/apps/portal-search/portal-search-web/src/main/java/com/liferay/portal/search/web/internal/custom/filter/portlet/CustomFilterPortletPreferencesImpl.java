@@ -36,7 +36,7 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
-	public String getBoostString() {
+	public String getBoost() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_BOOST);
 
@@ -44,7 +44,7 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
-	public String getCustomHeadingString() {
+	public String getCustomHeading() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING);
 
@@ -59,7 +59,7 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
-	public String getFilterFieldString() {
+	public String getFilterField() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_FIELD);
 
@@ -74,7 +74,7 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
-	public String getFilterValueString() {
+	public String getFilterValue() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_VALUE);
 
@@ -88,7 +88,7 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
-	public String getParameterNameString() {
+	public String getParameterName() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME);
 
@@ -96,7 +96,7 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
-	public String getParentQueryNameString() {
+	public String getParentQueryName() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_PARENT_QUERY_NAME);
 
@@ -104,7 +104,7 @@ public class CustomFilterPortletPreferencesImpl
 	}
 
 	@Override
-	public String getQueryNameString() {
+	public String getQueryName() {
 		Optional<String> optional = _portletPreferencesHelper.getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_QUERY_NAME);
 

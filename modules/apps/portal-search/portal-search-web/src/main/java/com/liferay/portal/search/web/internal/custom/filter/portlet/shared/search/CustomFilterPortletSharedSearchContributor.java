@@ -59,13 +59,13 @@ public class CustomFilterPortletSharedSearchContributor
 			).disabled(
 				customFilterPortletPreferences.isDisabled()
 			).field(
-				customFilterPortletPreferences.getFilterFieldString()
+				customFilterPortletPreferences.getFilterField()
 			).name(
-				customFilterPortletPreferences.getQueryNameString()
+				customFilterPortletPreferences.getQueryName()
 			).occur(
 				customFilterPortletPreferences.getOccur()
 			).parent(
-				customFilterPortletPreferences.getParentQueryNameString()
+				customFilterPortletPreferences.getParentQueryName()
 			).type(
 				customFilterPortletPreferences.getFilterQueryType()
 			).value(
@@ -77,7 +77,7 @@ public class CustomFilterPortletSharedSearchContributor
 	private Float _getBoost(
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
-		String boost = customFilterPortletPreferences.getBoostString();
+		String boost = customFilterPortletPreferences.getBoost();
 
 		if (Validator.isNull(boost)) {
 			return null;
@@ -90,8 +90,7 @@ public class CustomFilterPortletSharedSearchContributor
 		PortletSharedSearchSettings portletSharedSearchSettings,
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
-		String filterValue =
-			customFilterPortletPreferences.getFilterValueString();
+		String filterValue = customFilterPortletPreferences.getFilterValue();
 
 		if (customFilterPortletPreferences.isImmutable()) {
 			if (Validator.isNotNull(filterValue)) {

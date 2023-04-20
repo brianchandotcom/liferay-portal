@@ -25,14 +25,13 @@ public class CustomFilterPortletUtil {
 		CustomFilterPortletPreferences customFilterPortletPreferences) {
 
 		String parameterName =
-			customFilterPortletPreferences.getParameterNameString();
+			customFilterPortletPreferences.getParameterName();
 
 		if (Validator.isNotNull(parameterName)) {
 			return parameterName;
 		}
 
-		String filterField =
-			customFilterPortletPreferences.getFilterFieldString();
+		String filterField = customFilterPortletPreferences.getFilterField();
 
 		if (Validator.isNotNull(filterField)) {
 			return filterField;

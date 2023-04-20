@@ -120,22 +120,22 @@ public class CustomFilterPortlet extends MVCPortlet {
 
 		return CustomFilterDisplayContextBuilder.builder(
 		).customHeading(
-			customFilterPortletPreferences.getCustomHeadingString()
+			customFilterPortletPreferences.getCustomHeading()
 		).disabled(
 			customFilterPortletPreferences.isDisabled()
 		).filterField(
-			customFilterPortletPreferences.getFilterFieldString()
+			customFilterPortletPreferences.getFilterField()
 		).immutable(
 			customFilterPortletPreferences.isImmutable()
 		).filterValue(
-			customFilterPortletPreferences.getFilterValueString()
+			customFilterPortletPreferences.getFilterValue()
 		).parameterName(
 			parameterName
 		).parameterValueOptional(
 			portletSharedSearchResponse.getParameter(
 				parameterName, renderRequest)
 		).queryName(
-			customFilterPortletPreferences.getQueryNameString()
+			customFilterPortletPreferences.getQueryName()
 		).renderNothing(
 			_isRenderNothing(searchRequest)
 		).themeDisplay(

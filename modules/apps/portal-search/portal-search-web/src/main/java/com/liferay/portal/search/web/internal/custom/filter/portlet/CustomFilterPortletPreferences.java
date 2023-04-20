@@ -49,25 +49,25 @@ public interface CustomFilterPortletPreferences {
 
 	public static final String PREFERENCE_KEY_QUERY_NAME = "queryName";
 
-	public String getBoostString();
+	public String getBoost();
 
-	public String getCustomHeadingString();
+	public String getCustomHeading();
 
 	public String getFederatedSearchKey();
 
-	public String getFilterFieldString();
+	public String getFilterField();
 
 	public String getFilterQueryType();
 
-	public String getFilterValueString();
+	public String getFilterValue();
 
 	public String getOccur();
 
-	public String getParameterNameString();
+	public String getParameterName();
 
-	public String getParentQueryNameString();
+	public String getParentQueryName();
 
-	public String getQueryNameString();
+	public String getQueryName();
 
 	public boolean isDisabled();
 

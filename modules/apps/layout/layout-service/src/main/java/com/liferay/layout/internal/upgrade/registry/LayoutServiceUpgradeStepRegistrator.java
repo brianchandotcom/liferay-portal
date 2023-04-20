@@ -17,6 +17,8 @@ package com.liferay.layout.internal.upgrade.registry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutClassedModelUsageUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutPermissionsUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutUpgradeProcess;
@@ -79,7 +81,9 @@ public class LayoutServiceUpgradeStepRegistrator
 		registry.register("1.2.3", "1.3.0", LayoutLocalizationTable.create());
 
 		registry.register(
-			"1.3.0", "1.3.1", new LayoutLocalizationUpgradeProcess(_portal));
+			"1.3.0", "1.3.1",
+			new LayoutLocalizationUpgradeProcess(
+				_ctCollectionLocalService, _ctEntryLocalService, _portal));
 	}
 
 	@Reference
@@ -90,6 +94,12 @@ public class LayoutServiceUpgradeStepRegistrator
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

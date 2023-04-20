@@ -349,9 +349,13 @@ create index IX_CD25266E on PasswordPolicyRel (passwordPolicyId);
 
 create index IX_326F75BD on PasswordTracker (userId);
 
-create index IX_812CE07A on Phone (companyId, classNameId, classPK, primary_);
-create index IX_F202B9CE on Phone (userId);
-create index IX_B271FA88 on Phone (uuid_[$COLUMN_LENGTH:75$], companyId);
+create index IX_F5B219C7 on Phone (companyId, classNameId, classPK, ctCollectionId);
+create index IX_51CB82D8 on Phone (companyId, classNameId, classPK, primary_, ctCollectionId);
+create index IX_AA7CD218 on Phone (companyId, classNameId, ctCollectionId);
+create index IX_BC4C7872 on Phone (companyId, ctCollectionId);
+create index IX_ED8C342C on Phone (userId, ctCollectionId);
+create index IX_2E6C0E6 on Phone (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_AECDDBFE on Phone (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create unique index IX_7171B2E8 on PluginSetting (companyId, pluginId[$COLUMN_LENGTH:75$], pluginType[$COLUMN_LENGTH:75$]);
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -33,8 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface PhoneModel
-	extends AttachedModel, BaseModel<Phone>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends AttachedModel, BaseModel<Phone>, CTModel<Phone>, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -47,6 +48,7 @@ public interface PhoneModel
 	 *
 	 * @return the primary key of this phone
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -54,6 +56,7 @@ public interface PhoneModel
 	 *
 	 * @param primaryKey the primary key of this phone
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -71,6 +74,22 @@ public interface PhoneModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this phone.
+	 *
+	 * @return the ct collection ID of this phone
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this phone.
+	 *
+	 * @param ctCollectionId the ct collection ID of this phone
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this phone.

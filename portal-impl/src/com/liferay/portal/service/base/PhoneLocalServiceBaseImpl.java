@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PhonePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -580,8 +582,22 @@ public abstract class PhoneLocalServiceBaseImpl
 		return PhoneLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<Phone> getCTPersistence() {
+		return phonePersistence;
+	}
+
+	@Override
+	public Class<Phone> getModelClass() {
 		return Phone.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<Phone>, R, E> updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(phonePersistence);
 	}
 
 	protected String getModelClassName() {

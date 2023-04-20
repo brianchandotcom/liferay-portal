@@ -941,8 +941,9 @@ create table PasswordTracker (
 
 create table Phone (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	phoneId LONG not null primary key,
+	phoneId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -953,7 +954,8 @@ create table Phone (
 	number_ VARCHAR(75) null,
 	extension VARCHAR(75) null,
 	listTypeId LONG,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	primary key (phoneId, ctCollectionId)
 );
 
 create table PluginSetting (

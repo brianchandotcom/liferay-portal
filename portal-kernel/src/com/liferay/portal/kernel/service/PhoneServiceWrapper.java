@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.model.Phone;
+
 /**
  * Provides a wrapper for {@link PhoneService}.
  *
@@ -33,10 +35,9 @@ public class PhoneServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone addPhone(
-			java.lang.String className, long classPK, java.lang.String number,
-			java.lang.String extension, long typeId, boolean primary,
-			ServiceContext serviceContext)
+	public Phone addPhone(
+			String className, long classPK, String number, String extension,
+			long typeId, boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.addPhone(
@@ -57,29 +58,28 @@ public class PhoneServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _phoneService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone getPhone(long phoneId)
+	public Phone getPhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.getPhone(phoneId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones(
-			java.lang.String className, long classPK)
+	public java.util.List<Phone> getPhones(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.getPhones(className, classPK);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Phone updatePhone(
-			long phoneId, java.lang.String number, java.lang.String extension,
-			long typeId, boolean primary)
+	public Phone updatePhone(
+			long phoneId, String number, String extension, long typeId,
+			boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _phoneService.updatePhone(

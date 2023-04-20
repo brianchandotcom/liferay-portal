@@ -123,6 +123,8 @@ public class PhonePersistenceTest {
 
 		newPhone.setMvccVersion(RandomTestUtil.nextLong());
 
+		newPhone.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newPhone.setUuid(RandomTestUtil.randomString());
 
 		newPhone.setCompanyId(RandomTestUtil.nextLong());
@@ -154,6 +156,8 @@ public class PhonePersistenceTest {
 
 		Assert.assertEquals(
 			existingPhone.getMvccVersion(), newPhone.getMvccVersion());
+		Assert.assertEquals(
+			existingPhone.getCtCollectionId(), newPhone.getCtCollectionId());
 		Assert.assertEquals(existingPhone.getUuid(), newPhone.getUuid());
 		Assert.assertEquals(existingPhone.getPhoneId(), newPhone.getPhoneId());
 		Assert.assertEquals(
@@ -261,11 +265,11 @@ public class PhonePersistenceTest {
 
 	protected OrderByComparator<Phone> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Phone", "mvccVersion", true, "uuid", true, "phoneId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"number", true, "extension", true, "listTypeId", true, "primary",
-			true);
+			"Phone", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
+			"phoneId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "number", true, "extension", true, "listTypeId",
+			true, "primary", true);
 	}
 
 	@Test
@@ -472,6 +476,8 @@ public class PhonePersistenceTest {
 		Phone phone = _persistence.create(pk);
 
 		phone.setMvccVersion(RandomTestUtil.nextLong());
+
+		phone.setCtCollectionId(RandomTestUtil.nextLong());
 
 		phone.setUuid(RandomTestUtil.randomString());
 

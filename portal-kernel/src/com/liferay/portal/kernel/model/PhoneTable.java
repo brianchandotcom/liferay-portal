@@ -34,6 +34,8 @@ public class PhoneTable extends BaseTable<PhoneTable> {
 
 	public final Column<PhoneTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<PhoneTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<PhoneTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PhoneTable, Long> phoneId = createColumn(

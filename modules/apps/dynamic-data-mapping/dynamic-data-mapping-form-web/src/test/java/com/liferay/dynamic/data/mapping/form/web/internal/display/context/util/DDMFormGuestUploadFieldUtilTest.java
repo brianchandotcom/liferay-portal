@@ -61,7 +61,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_setUpDDMForm();
+		_ddmForm = DDMFormTestUtil.createDDMForm();
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -160,10 +160,6 @@ public class DDMFormGuestUploadFieldUtilTest {
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
 				_mockDDMFormInstance(), _mockHttpServletRequest(true),
 				_MAXIMUM_SUBMISSIONS));
-	}
-
-	private static void _setUpDDMForm() {
-		_ddmForm = DDMFormTestUtil.createDDMForm();
 	}
 
 	private void _addUploadField(boolean allowGuestUsers) {

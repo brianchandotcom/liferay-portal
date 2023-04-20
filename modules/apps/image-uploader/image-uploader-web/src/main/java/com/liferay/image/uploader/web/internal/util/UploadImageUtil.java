@@ -43,6 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UploadImageUtil {
 
+	public static final String TEMP_IMAGE_FILE_NAME = "tempImageFileName";
+
 	public static final String TEMP_IMAGE_FOLDER_NAME = "java.lang.Class";
 
 	public static long getMaxFileSize(PortletRequest portletRequest) {
@@ -75,11 +77,8 @@ public class UploadImageUtil {
 
 		return TempFileEntryUtil.getTempFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			TEMP_IMAGE_FOLDER_NAME, getTempImageFileName(portletRequest));
-	}
-
-	public static String getTempImageFileName(PortletRequest portletRequest) {
-		return ParamUtil.getString(portletRequest, "tempImageFileName");
+			TEMP_IMAGE_FOLDER_NAME,
+			ParamUtil.getString(portletRequest, TEMP_IMAGE_FILE_NAME));
 	}
 
 	@Activate

@@ -146,7 +146,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse,
 					JSONUtil.put(
-						"tempImageFileName",
+						UploadImageUtil.TEMP_IMAGE_FILE_NAME,
 						() -> {
 							FileEntry tempImageFileEntry =
 								_addTempImageFileEntry(actionRequest);
@@ -373,7 +373,9 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getScopeGroupId(),
 						themeDisplay.getUserId(),
 						UploadImageUtil.TEMP_IMAGE_FOLDER_NAME,
-						UploadImageUtil.getTempImageFileName(actionRequest));
+						ParamUtil.getString(
+							actionRequest,
+							UploadImageUtil.TEMP_IMAGE_FILE_NAME));
 				}
 				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
@@ -384,8 +386,9 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				return TempFileEntryUtil.addTempFileEntry(
 					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 					UploadImageUtil.TEMP_IMAGE_FOLDER_NAME,
-					UploadImageUtil.getTempImageFileName(actionRequest), file,
-					tempFileEntry.getMimeType());
+					ParamUtil.getString(
+						actionRequest, UploadImageUtil.TEMP_IMAGE_FILE_NAME),
+					file, tempFileEntry.getMimeType());
 			}
 		}
 		catch (NoSuchFileEntryException noSuchFileEntryException) {

@@ -149,4 +149,55 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by assignee"
+	@priority = 3
+	test CanFilterByAssignee {
+		task ("Adding a user") {
+			JSONUser.addUser(
+				userEmailAddress = "user@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Given that the user assign to me a case result") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			TestrayTestflow.userAvatarNotPresent(
+				label = "Dates",
+				status = "Test Test");
+
+			Button.click(button = "Assign to Me");
+		}
+
+		task ("When the user filter a case result by assign") {
+			TR2Utils.clickBreadcrumb(text = ${buildName});
+
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Assignee",
+				value1 = "Test");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user can see user avatar in the table") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			TestrayTestflow.userAvatarPresent(
+				label = "Dates",
+				status = "Test Test");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+		}
+	}
+
 }

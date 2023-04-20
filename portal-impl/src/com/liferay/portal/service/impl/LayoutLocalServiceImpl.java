@@ -990,12 +990,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public Layout fetchDefaultLayout(long groupId, boolean privateLayout) {
 		if (groupId > 0) {
-			List<Layout> layouts = layoutPersistence.findByG_P(
-				groupId, privateLayout, 0, 1);
-
-			if (!layouts.isEmpty()) {
-				return layouts.get(0);
-			}
+			return layoutPersistence.fetchByG_P_First(
+				groupId, privateLayout, null);
 		}
 
 		return null;
@@ -1163,12 +1159,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public long getDefaultPlid(long groupId) {
 		if (groupId > 0) {
-			List<Layout> layouts = layoutPersistence.findByGroupId(
-				groupId, 0, 1);
+			Layout layout = layoutPersistence.fetchByGroupId_First(
+				groupId, null);
 
-			if (!layouts.isEmpty()) {
-				Layout layout = layouts.get(0);
-
+			if (layout != null) {
 				return layout.getPlid();
 			}
 		}
@@ -2140,12 +2134,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			getCounterName(groupId, privateLayout));
 
 		if (nextLayoutId == 1) {
-			List<Layout> layouts = layoutPersistence.findByG_P(
-				groupId, privateLayout, 0, 1, new LayoutComparator());
+			Layout layout = layoutPersistence.fetchByG_P_First(
+				groupId, privateLayout, new LayoutComparator());
 
-			if (!layouts.isEmpty()) {
-				Layout layout = layouts.get(0);
-
+			if (layout != null) {
 				nextLayoutId = layout.getLayoutId() + 1;
 
 				counterLocalService.reset(

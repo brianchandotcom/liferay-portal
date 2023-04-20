@@ -101,7 +101,7 @@ public abstract class BasePortletManager
 
 	@Override
 	public long[] getCompanyIds() {
-		Set<Long> companyIds = _serverStatistics.getCompanyIds();
+		Set<Long> companyIds = serverStatistics.getCompanyIds();
 
 		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
 	}
@@ -278,7 +278,7 @@ public abstract class BasePortletManager
 
 	@Override
 	public String[] getPortletIds() {
-		Set<String> portletIds = _serverStatistics.getPortletIds();
+		Set<String> portletIds = serverStatistics.getPortletIds();
 
 		return portletIds.toArray(new String[0]);
 	}
@@ -465,29 +465,29 @@ public abstract class BasePortletManager
 
 	@Override
 	public String[] getWebIds() {
-		Set<String> webIds = _serverStatistics.getWebIds();
+		Set<String> webIds = serverStatistics.getWebIds();
 
 		return webIds.toArray(new String[0]);
 	}
 
 	@Override
 	public void reset() {
-		_serverStatistics.reset();
+		serverStatistics.reset();
 	}
 
 	@Override
 	public void reset(long companyId) {
-		_serverStatistics.reset(companyId);
+		serverStatistics.reset(companyId);
 	}
 
 	@Override
 	public void reset(String webId) {
-		_serverStatistics.reset(webId);
+		serverStatistics.reset(webId);
 	}
 
 	protected abstract PortletSummaryStatistics getPortletSummaryStatistics();
 
 	@Reference
-	private ServerStatistics _serverStatistics;
+	protected ServerStatistics serverStatistics;
 
 }

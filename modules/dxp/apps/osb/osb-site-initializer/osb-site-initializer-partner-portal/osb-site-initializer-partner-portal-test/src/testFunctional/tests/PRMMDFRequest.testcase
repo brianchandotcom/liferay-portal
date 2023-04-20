@@ -16,8 +16,8 @@ definition {
 		}
 
 		task ("Create a new Partner Portal Site and connect with Salesforce") {
-			PRMUtils.addSite();
-
+			// PRMUtils.addSite();
+			
 			PRMUtils.connectWithSalesforce();
 		}
 
@@ -69,16 +69,16 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	// tearDown {
+	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			PRMUtils.tearDown();
-		}
-	}
+	// 	if (${testPortalInstance} == "true") {
+	// 		PortalInstances.tearDownCP();
+	// 	}
+	// 	else {
+	// 		PRMUtils.tearDown();
+	// 	}
+	// }
 
 	@description = "This is a test for LPS-172917. Verify that If there are multiple activities, the review page will display them as dropdown items that can be expandable"
 	@priority = 5
@@ -1130,6 +1130,43 @@ definition {
 
 		task ("Then I can see that the status will be 'Marketing Director Review'") {
 			PRMMDFRequest.viewMDFStatus(key_status = "Marketing Director Review");
+		}
+
+	}
+	@description = "This is a test for LPS-177320. Verify that when a MDF is created with the Total MDF Requested Amount less than 15k, after submitted, the MDF status will be ‘Pending Marketing Review’."
+	@priority = 5
+	test ViewMDFStatusWithRequestValueLessThan15K {
+		task ("Given that I submit an MDF with the Total MDF Requested Amount value less than 15k") {
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				additionalOptions = "6.x to DXP Migration/Upgrade,Migration from competitor platform",
+				budgetList = "Sponsorship Fee-20000,Room Rental-9000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				countryName = "Global",
+				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education,Energy",
+				targetOfLeads = "test",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When I go to the submitted MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then I can see that the status will be 'Pending Marketing Review'") {
+			PRMMDFRequest.viewMDFStatus(key_status = "Pending Marketing Review");
 		}
 	}
 

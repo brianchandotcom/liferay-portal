@@ -800,6 +800,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<jar
 				destfile="@{merged.jar}"
 				update="true"
+				zip64Mode="always"
 			>
 				<fileset
 					dir="${merged-classes}"

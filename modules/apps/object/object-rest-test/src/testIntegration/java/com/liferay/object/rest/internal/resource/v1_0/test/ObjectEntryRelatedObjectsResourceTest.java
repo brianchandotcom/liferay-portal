@@ -26,6 +26,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -59,7 +60,6 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -518,14 +518,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	public void testPostCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
 
-		_objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			_userSystemObjectDefinition.getObjectDefinitionId(),
+		ObjectFieldTestUtil.createObjectField(
+			TestPropsValues.getUserId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-			LocalizedMapUtil.getLocalizedMap(_CUSTOM_OBJECT_FIELD_NAME_1),
-			false, _CUSTOM_OBJECT_FIELD_NAME_1, false, false,
-			_getObjectFieldSettings("Text"));
+			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
+			_CUSTOM_OBJECT_FIELD_NAME_1,
+			_getObjectFieldSettings(ObjectFieldConstants.BUSINESS_TYPE_TEXT));
 
 		// Many to many
 
@@ -565,14 +563,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
 
-		_objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			_userSystemObjectDefinition.getObjectDefinitionId(),
+		ObjectFieldTestUtil.createObjectField(
+			TestPropsValues.getUserId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-			LocalizedMapUtil.getLocalizedMap(_CUSTOM_OBJECT_FIELD_NAME_2),
-			false, _CUSTOM_OBJECT_FIELD_NAME_2, false, false,
-			_getObjectFieldSettings("Text"));
+			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
+			_CUSTOM_OBJECT_FIELD_NAME_2,
+			_getObjectFieldSettings(ObjectFieldConstants.BUSINESS_TYPE_TEXT));
 
 		// Many to many
 

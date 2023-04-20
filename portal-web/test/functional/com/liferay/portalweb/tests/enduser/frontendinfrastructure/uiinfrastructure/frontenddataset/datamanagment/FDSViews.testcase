@@ -85,4 +85,40 @@ definition {
 
 	}
 
+	@description = "LPS-181354. Confirm that the user can create more than one view"
+	@priority = 4
+	test CanCreateMultipleViews{
+
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("And Adding a new view called "View Test" and the description field with "Test Description"") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
+
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_name = "View Test");
+		}
+
+		task ("And Adding a new view called "Bob Test" and the description field with "Bob Description"") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Bob Description",
+				key_name = "Bob Test");
+		}
+
+		task ("Then Assert that the 2 views are created") {
+			AssertElementPresent(
+				entryName = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+
+			AssertElementPresent(
+				entryName = "Bob Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+		}
+
+	}
+
 }

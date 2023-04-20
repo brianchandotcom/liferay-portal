@@ -277,7 +277,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		File outputDockerFile = getDockerFile();
 
 		try {
-			String dockerFileContent = _getFileContentFromProject("Dockerfile");
+			String dockerFileContent = _getFileContent(
+				getInputDockerfileFile());
 
 			if (dockerFileContent == null) {
 				dockerFileContent = _loadTemplate(
@@ -303,7 +304,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		File outputLcpJsonFile = getLcpJsonFile();
 
 		try {
-			String lcpJsonContent = _getFileContentFromProject("LCP.json");
+			String lcpJsonContent = _getFileContent(getInputLcpJsonFile());
 
 			if (lcpJsonContent == null) {
 				lcpJsonContent = _loadTemplate(
@@ -362,9 +363,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 	}
 
-	private String _getFileContentFromProject(String path) {
-		File file = _project.file(path);
-
+	private String _getFileContent(File file) {
 		if (file.exists()) {
 			try {
 				return new String(Files.readAllBytes(file.toPath()));
@@ -424,8 +423,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		Properties pluginPackageProperties = new Properties();
 
 		try {
-			String pluginPackagePropertiesFileContent =
-				_getFileContentFromProject("liferay-plugin-package.properties");
+			String pluginPackagePropertiesFileContent = _getFileContent(
+				getInputPluginPackagePropertiesFile());
 
 			if (pluginPackagePropertiesFileContent != null) {
 				pluginPackageProperties.load(

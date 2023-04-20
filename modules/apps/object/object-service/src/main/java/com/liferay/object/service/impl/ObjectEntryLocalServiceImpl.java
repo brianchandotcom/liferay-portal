@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -154,6 +155,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -2617,6 +2619,12 @@ public class ObjectEntryLocalServiceImpl
 
 		Map<String, Serializable> values = new HashMap<>();
 
+		List<ObjectField> encryptedObjectFields = ListUtil.filter(
+			_objectFieldPersistence.findByObjectDefinitionId(
+				objectDefinitionId),
+			objectField -> objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED));
+
 		for (int i = 0; i < selectExpressions.length; i++) {
 			Expression<?> selectExpression = selectExpressions[i];
 
@@ -2647,6 +2655,27 @@ public class ObjectEntryLocalServiceImpl
 
 			if (columnName.endsWith(StringPool.UNDERLINE)) {
 				columnName = columnName.substring(0, columnName.length() - 1);
+
+				if (!encryptedObjectFields.isEmpty()) {
+					ObjectField objectField =
+						_objectFieldLocalService.fetchObjectField(
+							objectDefinitionId, columnName);
+
+					if ((objectField != null) &&
+						objectField.compareBusinessType(
+							ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+						encryptedObjectFields.remove(objectField);
+
+						try {
+							objects[i] = _encryptor.decrypt(
+								_getKeyObj(), (String)objects[i]);
+						}
+						catch (EncryptorException encryptorException) {
+							throw new RuntimeException(encryptorException);
+						}
+					}
+				}
 			}
 
 			_putValue(javaTypeClass, columnName, objects[i], values);

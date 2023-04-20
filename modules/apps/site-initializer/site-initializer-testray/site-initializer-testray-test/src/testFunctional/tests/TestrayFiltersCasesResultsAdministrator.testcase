@@ -241,4 +241,41 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by case type"
+	@priority = 3
+	test CanFilterByCaseType {
+		task ("Given that the user has case type 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Case Type 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result by case type") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.multiSelect(
+				header = "Case Type",
+				label = "Case Type",
+				listMultiSelect = "Case Type 2");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only case type 2 in the table") {
+			AssertElementPresent(
+				key_projectName = "Case Type 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the case type 1 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Case Type 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

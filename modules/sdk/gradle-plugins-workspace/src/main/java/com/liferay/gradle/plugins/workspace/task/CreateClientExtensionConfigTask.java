@@ -64,6 +64,7 @@ import org.gradle.api.file.RegularFile;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskOutputs;
 
@@ -187,6 +188,21 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	public File getDockerFile() {
 		return GradleUtil.toFile(_project, _dockerFile);
+	}
+
+	@InputFiles
+	public File getInputDockerfileFile() {
+		return GradleUtil.toFile(_project, "Dockerfile");
+	}
+
+	@InputFiles
+	public File getInputLcpJsonFile() {
+		return GradleUtil.toFile(_project, "LCP.json");
+	}
+
+	@InputFiles
+	public File getInputPluginPackagePropertiesFile() {
+		return GradleUtil.toFile(_project, "liferay-plugin-package.properties");
 	}
 
 	public File getLcpJsonFile() {

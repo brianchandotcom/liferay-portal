@@ -1,5 +1,13 @@
 definition {
 
+	macro assertDataSetView {
+		for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
+			AssertElementPresent(
+				entryName = ${key_dataSetViewName},
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+		}
+	}
+
 	macro changePagination {
 		Click(locator1 = "FrontendDataSetAdmin#ITEMS_PER_PAGE_SELECT");
 
@@ -19,17 +27,34 @@ definition {
 	}
 
 	macro createDataSetView {
-		LexiconEntry.gotoAdd();
+		if (isSet(key_dataSetViewNameList)) {
+			for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
+				LexiconEntry.gotoAdd();
 
-		Type(
-			locator1 = "TextInput#NAME",
-			value1 = ${key_name});
+				Type(
+					locator1 = "TextInput#NAME",
+					value1 = ${key_dataSetViewName});
 
-		Type(
-			locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
-			value1 = ${description});
+				Type(
+					locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+					value1 = ${description});
 
-		PortletEntry.save();
+				PortletEntry.save();
+			}
+		}
+		else {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = ${key_name});
+
+			Type(
+				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				value1 = ${description});
+
+			PortletEntry.save();
+		}
 	}
 
 	macro deleteAllDatasetEntries {

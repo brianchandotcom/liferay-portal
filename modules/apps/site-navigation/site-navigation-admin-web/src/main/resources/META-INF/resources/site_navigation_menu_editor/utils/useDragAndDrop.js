@@ -148,6 +148,7 @@ export function useDropTarget(item) {
 function useNewDropTarget(item) {
 	const {siteNavigationMenuItemId} = item;
 
+	const cardWidthRef = useRef();
 	const [nestingLevel, setNestingLevel] = useState(0);
 	const nextItemNestingRef = useRef(null);
 	const items = useItems();
@@ -171,6 +172,7 @@ function useNewDropTarget(item) {
 			setTargetItemId(null);
 			setNestingLevel(0);
 
+			cardWidthRef.current = null;
 			nextItemNestingRef.current = null;
 			targetRectRef.current = null;
 
@@ -204,6 +206,12 @@ function useNewDropTarget(item) {
 				if (!targetRef.current || itemPath.includes(source.id)) {
 					return;
 				}
+
+				cardWidthRef.current =
+					cardWidthRef.current ||
+					targetRef.current
+						.querySelector('.card')
+						.getBoundingClientRect().width;
 
 				targetRectRef.current =
 					targetRectRef.current ||
@@ -247,7 +255,9 @@ function useNewDropTarget(item) {
 				if (rtl) {
 					nesting =
 						Math.round(
-							(targetRect.width - itemPosition.x) / NESTING_MARGIN
+							(targetRect.right -
+								(itemPosition.x + cardWidthRef.current)) /
+								NESTING_MARGIN
 						) + 1;
 				}
 				else {

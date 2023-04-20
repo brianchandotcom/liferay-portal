@@ -72,7 +72,6 @@ import com.liferay.journal.internal.upgrade.v5_1_1.JournalArticleAssetEntryClass
 import com.liferay.journal.internal.upgrade.v5_2_0.JournalFeedDDMStructureIdUpgradeProcess;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -89,7 +88,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -391,9 +389,7 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"5.2.0", "5.2.1",
 			new com.liferay.journal.internal.upgrade.v5_2_1.
-				JournalArticleLayoutClassedModelUsageUpgradeProcess(
-					_layoutClassedModelUsageLocalService,
-					_layoutRevisionLocalService));
+				JournalArticleLayoutClassedModelUsageUpgradeProcess());
 	}
 
 	private void _deleteTempImages() throws Exception {
@@ -483,14 +479,7 @@ public class JournalServiceUpgradeStepRegistrator
 	private Language _language;
 
 	@Reference
-	private LayoutClassedModelUsageLocalService
-		_layoutClassedModelUsageLocalService;
-
-	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 	@Reference
 	private Localization _localization;

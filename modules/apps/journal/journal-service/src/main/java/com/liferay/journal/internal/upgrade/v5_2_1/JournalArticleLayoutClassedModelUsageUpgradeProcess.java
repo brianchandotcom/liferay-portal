@@ -14,9 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v5_2_1;
 
-import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -29,15 +27,6 @@ import java.sql.ResultSet;
  */
 public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 	extends UpgradeProcess {
-
-	public JournalArticleLayoutClassedModelUsageUpgradeProcess(
-		LayoutClassedModelUsageLocalService layoutClassedModelUsageLocalService,
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		_layoutClassedModelUsageLocalService =
-			layoutClassedModelUsageLocalService;
-		_layoutRevisionLocalService = layoutRevisionLocalService;
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -107,9 +96,5 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				"Unable update layout classed model usages");
 		}
 	}
-
-	private final LayoutClassedModelUsageLocalService
-		_layoutClassedModelUsageLocalService;
-	private final LayoutRevisionLocalService _layoutRevisionLocalService;
 
 }

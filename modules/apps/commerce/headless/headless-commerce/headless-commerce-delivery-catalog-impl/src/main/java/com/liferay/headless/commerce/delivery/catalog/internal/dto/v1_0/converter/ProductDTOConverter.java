@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -102,6 +103,10 @@ public class ProductDTOConverter
 						Company company = _companyLocalService.getCompany(
 							cpDefinition.getCompanyId());
 
+						String portalURL = _portal.getPortalURL(
+							company.getVirtualHostname(),
+							_portal.getPortalServerPort(false), true);
+
 						String defaultImageFileURL =
 							_cpDefinitionHelper.getDefaultImageFileURL(
 								CommerceUtil.getCommerceAccountId(
@@ -109,7 +114,7 @@ public class ProductDTOConverter
 										getCommerceContext()),
 								cpDefinition.getCPDefinitionId());
 
-						return company.getPortalURL(0) + defaultImageFileURL;
+						return portalURL + defaultImageFileURL;
 					});
 			}
 		};
@@ -163,5 +168,8 @@ public class ProductDTOConverter
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

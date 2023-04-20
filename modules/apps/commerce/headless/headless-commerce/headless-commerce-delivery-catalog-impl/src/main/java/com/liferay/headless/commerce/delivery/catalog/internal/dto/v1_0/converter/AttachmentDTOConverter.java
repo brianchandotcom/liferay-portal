@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -64,7 +65,9 @@ public class AttachmentDTOConverter
 		Company company = _companyLocalService.getCompany(
 			cpAttachmentFileEntry.getCompanyId());
 
-		String portalURL = company.getPortalURL(0);
+		String portalURL = _portal.getPortalURL(
+			company.getVirtualHostname(), _portal.getPortalServerPort(false),
+			true);
 
 		String downloadURL = _commerceMediaResolver.getDownloadURL(
 			attachmentDTOConverterContext.getCommerceAccountId(),
@@ -129,5 +132,8 @@ public class AttachmentDTOConverter
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -410,7 +410,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"icon", layout.getIcon()
 		).put(
-			"id", layout.getPlid()
+			"id", layout.getLayoutId()
 		).put(
 			"layoutId", layout.getLayoutId()
 		).put(

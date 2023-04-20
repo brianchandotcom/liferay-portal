@@ -232,6 +232,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 									<div class="btn-group-item">
 										<clay:link
+											data-senna-off="<%= true %>"
 											displayType="secondary"
 											href="<%= editCategoryURL %>"
 											label="add-category[message-board]"

@@ -5908,7 +5908,9 @@ information. Make sure to commit in all format-javadoc results.
 
 		<prepare-aws-s3-configuration />
 
-		<ant antfile="build-test-s3-store.xml" target="create-s3-bucket" />
+		<ant antfile="build-test-s3-store.xml" target="create-s3-bucket">
+			<property name="aws.store.enabled" value="true" />
+		</ant>
 
 		<trycatch>
 			<try>
@@ -5920,7 +5922,9 @@ information. Make sure to commit in all format-javadoc results.
 			</try>
 
 			<finally>
-				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket" />
+				<ant antfile="build-test-s3-store.xml" target="delete-s3-bucket">
+					<property name="aws.store.enabled" value="true" />
+				</ant>
 			</finally>
 		</trycatch>
 	</target>

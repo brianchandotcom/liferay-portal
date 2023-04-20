@@ -3,12 +3,27 @@
 <project basedir="." name="portal-test-s3-store" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<if>
+		<not>
+			<isset property="aws.store.enabled" />
+		</not>
+		<then>
+			<get-testcase-property property.name="aws.store.enabled" />
+		</then>
+	</if>
+
+	<if>
+		<not>
+			<isset property="ibm.store.enabled" />
+		</not>
+		<then>
+			<get-testcase-property property.name="ibm.store.enabled" />
+		</then>
+	</if>
+
 	<macrodef name="delete-expired-buckets">
 		<sequential>
 			<local name="bucket.list" />
-
-			<get-testcase-property property.name="aws.store.enabled" />
-			<get-testcase-property property.name="ibm.store.enabled" />
 
 			<if>
 				<equals arg1="${aws.store.enabled}" arg2="true" />
@@ -86,9 +101,6 @@
 	<target name="assert-document-in-bucket">
 		<local name="bucket.objects" />
 
-		<get-testcase-property property.name="aws.store.enabled" />
-		<get-testcase-property property.name="ibm.store.enabled" />
-
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
@@ -122,9 +134,6 @@
 
 	<target name="assert-no-document-in-bucket">
 		<local name="bucket.objects" />
-
-		<get-testcase-property property.name="aws.store.enabled" />
-		<get-testcase-property property.name="ibm.store.enabled" />
 
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
@@ -212,9 +221,6 @@
 	<target name="create-s3-bucket">
 		<local name="bucket.create.output" />
 
-		<get-testcase-property property.name="aws.store.enabled" />
-		<get-testcase-property property.name="ibm.store.enabled" />
-
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
@@ -246,9 +252,6 @@
 	</target>
 
 	<target name="delete-s3-bucket">
-		<get-testcase-property property.name="aws.store.enabled" />
-		<get-testcase-property property.name="ibm.store.enabled" />
-
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>

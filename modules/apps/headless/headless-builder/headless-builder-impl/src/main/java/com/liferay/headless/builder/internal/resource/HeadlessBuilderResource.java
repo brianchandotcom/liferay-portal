@@ -71,7 +71,9 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 			return Response.status(
 				Response.Status.NOT_FOUND
 			).entity(
-				new Problem(Response.Status.NOT_FOUND, "Operation not found")
+				new Problem(
+					Response.Status.NOT_FOUND,
+					"The operation could not be found")
 			).build();
 		}
 

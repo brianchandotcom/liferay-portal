@@ -43,7 +43,7 @@ public class DuplicatePriceListChannelRelExceptionMapper
 			duplicateCommercePriceListChannelRelException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "Duplicate channel relation");
+			Response.Status.CONFLICT, "The channel relation already exists");
 	}
 
 }

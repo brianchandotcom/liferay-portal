@@ -43,8 +43,8 @@ public class RequiredOrganizationExceptionMapper
 
 		return new Problem(
 			Response.Status.FORBIDDEN,
-			"Remove all child organizations and users before deleting this " +
-				"organization");
+			"All child organizations and users must be deleted before " +
+				"deleting this organization");
 	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.type.virtual.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPInstanceScreenNavigationConstants;
+import com.liferay.commerce.product.type.virtual.web.internal.constants.CPTypeVirtualScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -37,8 +38,8 @@ public class CPInstanceVirtualSettingsScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return CPInstanceScreenNavigationConstants.
-			CATEGORY_KEY_VIRTUAL_SETTINGS;
+		return CPTypeVirtualScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_VIRTUAL_SETTINGS;
 	}
 
 	@Override

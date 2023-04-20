@@ -28,9 +28,6 @@ public class CPInstanceScreenNavigationConstants {
 	public static final String CATEGORY_KEY_SUBSCRIPTION_OVERRIDE =
 		"subscription-override";
 
-	public static final String CATEGORY_KEY_VIRTUAL_SETTINGS =
-		"virtual-settings";
-
 	public static final String SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL =
 		"cp.instance.general";
 

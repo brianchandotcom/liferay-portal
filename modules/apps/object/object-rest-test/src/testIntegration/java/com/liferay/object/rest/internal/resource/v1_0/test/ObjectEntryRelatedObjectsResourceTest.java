@@ -21,7 +21,6 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
@@ -29,8 +28,6 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestU
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -64,7 +61,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -522,15 +518,11 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			TestPropsValues.getUserId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
-			_CUSTOM_OBJECT_FIELD_NAME_1,
-			_getObjectFieldSettings(ObjectFieldConstants.BUSINESS_TYPE_TEXT));
+			_SYSTEM_OBJECT_FIELD_NAME_1);
 
 		// Many to many
 
 		_testPostCustomObjectEntryWithNestedSystemObjectEntry(
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_1, _CUSTOM_OBJECT_FIELD_VALUE
-			},
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY),
@@ -539,9 +531,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		// Many to one
 
 		_testPostCustomObjectEntryWithNestedSystemObjectEntry(
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_1, _CUSTOM_OBJECT_FIELD_VALUE
-			},
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
@@ -550,9 +539,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		// One to many
 
 		_testPostCustomObjectEntryWithNestedSystemObjectEntry(
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_1, _CUSTOM_OBJECT_FIELD_VALUE
-			},
 			_addObjectRelationship(
 				_objectDefinition1, _userSystemObjectDefinition,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
@@ -567,18 +553,11 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			TestPropsValues.getUserId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
-			_CUSTOM_OBJECT_FIELD_NAME_2,
-			_getObjectFieldSettings(ObjectFieldConstants.BUSINESS_TYPE_TEXT));
+			_SYSTEM_OBJECT_FIELD_NAME_2);
 
 		// Many to many
 
 		_testPutCustomObjectEntryWithNestedSystemObjectEntry(
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_2, _CUSTOM_OBJECT_FIELD_VALUE
-			},
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_2, _NEW_CUSTOM_OBJECT_FIELD_VALUE
-			},
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY),
@@ -587,12 +566,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		// Many to one
 
 		_testPutCustomObjectEntryWithNestedSystemObjectEntry(
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_2, _CUSTOM_OBJECT_FIELD_VALUE
-			},
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_2, _NEW_CUSTOM_OBJECT_FIELD_VALUE
-			},
 			_addObjectRelationship(
 				_userSystemObjectDefinition, _objectDefinition1,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
@@ -601,12 +574,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		// One to many
 
 		_testPutCustomObjectEntryWithNestedSystemObjectEntry(
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_2, _CUSTOM_OBJECT_FIELD_VALUE
-			},
-			new String[] {
-				_CUSTOM_OBJECT_FIELD_NAME_2, _NEW_CUSTOM_OBJECT_FIELD_VALUE
-			},
 			_addObjectRelationship(
 				_objectDefinition1, _userSystemObjectDefinition,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY),
@@ -824,13 +791,17 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		Assert.assertEquals(2, itemsJSONArray.length());
 	}
 
-	private void _assertSystemObjectEntryValue(
-		JSONObject systemObjectEntryJSONObject, String systemObjectEntryValue,
-		String systemObjectFieldName) {
+	private void _assertSystemObjectEntry(
+		JSONObject systemObjectEntryJSONObject, UserAccount userAccount,
+		String systemObjectFieldName, String systemObjectFieldValue) {
+
+		Assert.assertEquals(
+			systemObjectEntryJSONObject.get("emailAddress"),
+			userAccount.getEmailAddress());
 
 		Assert.assertEquals(
 			systemObjectEntryJSONObject.get(systemObjectFieldName),
-			systemObjectEntryValue);
+			systemObjectFieldValue);
 	}
 
 	private Http.Options _createOptions(
@@ -847,6 +818,17 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		options.setMethod(httpMethod);
 
 		return options;
+	}
+
+	private JSONObject _createSystemObjectJSONObject(
+			UserAccount userAccount, String systemFieldName,
+			String systemFieldValue)
+		throws Exception {
+
+		JSONObject userAccountJSONObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
+		return userAccountJSONObject.put(systemFieldName, systemFieldValue);
 	}
 
 	private String _getLocation(
@@ -876,26 +858,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	private String _getLocation(String name, long primaryKey) {
 		return StringBundler.concat(
 			_getLocation(name), StringPool.SLASH, primaryKey);
-	}
-
-	private List<ObjectFieldSetting> _getObjectFieldSettings(
-		String businessType) {
-
-		if (Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) ||
-			Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
-
-			ObjectFieldSetting objectFieldSetting =
-				ObjectFieldSettingLocalServiceUtil.createObjectFieldSetting(0);
-
-			objectFieldSetting.setName("showCounter");
-			objectFieldSetting.setValue("false");
-
-			return Collections.singletonList(objectFieldSetting);
-		}
-
-		return null;
 	}
 
 	private String _getSystemObjectEntryId(
@@ -1115,30 +1077,28 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		UserAccount userAccount = _randomUserAccount();
 
+		JSONObject userAccountJSONObject = JSONFactoryUtil.createJSONObject(
+			userAccount.toString());
+
 		JSONObject jsonObject = HTTPTestUtil.invoke(
-			_toBody(null, manyToOne, objectRelationship, userAccount),
+			_toBody(manyToOne, objectRelationship, userAccountJSONObject),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 	}
 
 	private void _testPostCustomObjectEntryWithNestedSystemObjectEntry(
-			String[] customObjectField, ObjectRelationship objectRelationship,
-			boolean manyToOne)
+			ObjectRelationship objectRelationship, boolean manyToOne)
 		throws Exception {
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		UserAccount userAccount = _randomUserAccount();
 
-		userAccount.setEmailAddress(
-			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
-				"@liferay.com");
+		JSONObject userAccountJSONObject = _createSystemObjectJSONObject(
+			userAccount, _SYSTEM_OBJECT_FIELD_NAME_1,
+			_SYSTEM_OBJECT_FIELD_VALUE);
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
-			_toBody(
-				customObjectField, manyToOne, objectRelationship, userAccount),
+			_toBody(manyToOne, objectRelationship, userAccountJSONObject),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals(
@@ -1149,6 +1109,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				"code"
 			));
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
 		JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
@@ -1158,29 +1121,23 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					jsonObject.getString("id"), manyToOne, objectRelationship)),
 			Http.Method.GET);
 
-		_assertSystemObjectEntryValue(
-			systemObjectEntryJSONObject, userAccount.getEmailAddress(),
-			"emailAddress");
-
-		_assertSystemObjectEntryValue(
-			systemObjectEntryJSONObject, _CUSTOM_OBJECT_FIELD_VALUE,
-			_CUSTOM_OBJECT_FIELD_NAME_1);
+		_assertSystemObjectEntry(
+			systemObjectEntryJSONObject, userAccount,
+			_SYSTEM_OBJECT_FIELD_NAME_1, _SYSTEM_OBJECT_FIELD_VALUE);
 	}
 
 	private void _testPutCustomObjectEntryWithNestedSystemObjectEntry(
-			String[] customObjectField, String[] newCustomObjectField,
 			ObjectRelationship objectRelationship, boolean manyToOne)
 		throws Exception {
 
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
-
 		UserAccount postUserAccount = _randomUserAccount();
 
+		JSONObject userAccountJSONObject = _createSystemObjectJSONObject(
+			postUserAccount, _SYSTEM_OBJECT_FIELD_NAME_2,
+			_SYSTEM_OBJECT_FIELD_VALUE);
+
 		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invoke(
-			_toBody(
-				customObjectField, manyToOne, objectRelationship,
-				postUserAccount),
+			_toBody(manyToOne, objectRelationship, userAccountJSONObject),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		String customObjectEntryId = customObjectEntryJSONObject.getString(
@@ -1216,18 +1173,24 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				return systemObjectEntryJSONObject.getString(
 					"externalReferenceCode");
 			});
+
 		putUserAccount.setEmailAddress(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 				"@liferay.com");
 
+		userAccountJSONObject = _createSystemObjectJSONObject(
+			putUserAccount, _SYSTEM_OBJECT_FIELD_NAME_2,
+			_NEW_SYSTEM_OBJECT_FIELD_VALUE);
+
 		HTTPTestUtil.invoke(
-			_toBody(
-				newCustomObjectField, manyToOne, objectRelationship,
-				putUserAccount),
+			_toBody(manyToOne, objectRelationship, userAccountJSONObject),
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 				customObjectEntryId),
 			Http.Method.PUT);
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invoke(
 			null,
@@ -1238,27 +1201,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					customObjectEntryId, manyToOne, objectRelationship)),
 			Http.Method.GET);
 
-		_assertSystemObjectEntryValue(
-			systemObjectEntryJSONObject, putUserAccount.getEmailAddress(),
-			"emailAddress");
-
-		_assertSystemObjectEntryValue(
-			systemObjectEntryJSONObject, _NEW_CUSTOM_OBJECT_FIELD_VALUE,
-			_CUSTOM_OBJECT_FIELD_NAME_2);
+		_assertSystemObjectEntry(
+			systemObjectEntryJSONObject, putUserAccount,
+			_SYSTEM_OBJECT_FIELD_NAME_2, _NEW_SYSTEM_OBJECT_FIELD_VALUE);
 	}
 
 	private String _toBody(
-			String[] customObjectField, boolean manyToOne,
-			ObjectRelationship objectRelationship, UserAccount userAccount)
-		throws Exception {
-
-		JSONObject userAccountJSONObject = JSONFactoryUtil.createJSONObject(
-			userAccount.toString());
-
-		if (customObjectField != null) {
-			userAccountJSONObject = userAccountJSONObject.put(
-				customObjectField[0], customObjectField[1]);
-		}
+		boolean manyToOne, ObjectRelationship objectRelationship,
+		JSONObject userAccountJSONObject) {
 
 		return JSONUtil.put(
 			objectRelationship.getName(),
@@ -1267,16 +1217,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		).toString();
 	}
 
-	private static final String _CUSTOM_OBJECT_FIELD_NAME_1 =
-		"x" + RandomTestUtil.randomString();
-
-	private static final String _CUSTOM_OBJECT_FIELD_NAME_2 =
-		"x" + RandomTestUtil.randomString();
-
-	private static final String _CUSTOM_OBJECT_FIELD_VALUE =
-		RandomTestUtil.randomString();
-
-	private static final String _NEW_CUSTOM_OBJECT_FIELD_VALUE =
+	private static final String _NEW_SYSTEM_OBJECT_FIELD_VALUE =
 		RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_1 =
@@ -1289,6 +1230,15 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_2 =
+		RandomTestUtil.randomString();
+
+	private static final String _SYSTEM_OBJECT_FIELD_NAME_1 =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _SYSTEM_OBJECT_FIELD_NAME_2 =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _SYSTEM_OBJECT_FIELD_VALUE =
 		RandomTestUtil.randomString();
 
 	@DeleteAfterTestRun
@@ -1308,9 +1258,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry3;
-
-	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private ObjectRelationship _objectRelationship;
 

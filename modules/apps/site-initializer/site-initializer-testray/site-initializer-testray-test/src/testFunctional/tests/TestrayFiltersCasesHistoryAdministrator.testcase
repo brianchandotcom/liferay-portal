@@ -415,4 +415,51 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by error"
+	@priority = 4
+	test AdminCanFilterCaseHistoryByError {
+		task ("Given that the user has two case result with errors different in the table") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Testray.projectTabNavigator(navTabName = "History");
+
+			WaitForPageLoad();
+
+			AssertElementPresent(
+				key_projectName = "Failed to run on CI",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Aborted prior to running test",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter the case result by error") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Run 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_text = "errors",
+				locator1 = "TextArea#ANY",
+				value1 = "Failed to run on CI");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only case result 1 with error in the table") {
+			AssertElementPresent(
+				key_projectName = "Failed to run on CI",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the case result 2 with error in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Aborted prior to running test",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

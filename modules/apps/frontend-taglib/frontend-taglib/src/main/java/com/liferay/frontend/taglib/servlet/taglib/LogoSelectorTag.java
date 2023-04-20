@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletResponse;
@@ -48,6 +50,14 @@ public class LogoSelectorTag extends IncludeTag {
 		return _defaultLogoURL;
 	}
 
+	public String getLabel(HttpServletRequest httpServletRequest) {
+		if (Validator.isNull(_label)) {
+			return LanguageUtil.get(httpServletRequest, "logo");
+		}
+
+		return _label;
+	}
+
 	public boolean isPreserveRatio() {
 		return _preserveRatio;
 	}
@@ -62,6 +72,10 @@ public class LogoSelectorTag extends IncludeTag {
 
 	public void setDefaultLogoURL(String defaultLogoURL) {
 		_defaultLogoURL = defaultLogoURL;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
 	}
 
 	@Override
@@ -82,6 +96,7 @@ public class LogoSelectorTag extends IncludeTag {
 		_aspectRatio = 0;
 		_currentLogoURL = null;
 		_defaultLogoURL = null;
+		_label = null;
 		_preserveRatio = false;
 	}
 
@@ -94,6 +109,9 @@ public class LogoSelectorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:defaultLogoURL", _defaultLogoURL);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:logo-selector:label",
+			getLabel(httpServletRequest));
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:logoURL",
 			_getLogoURL(httpServletRequest));
@@ -166,6 +184,7 @@ public class LogoSelectorTag extends IncludeTag {
 	private int _aspectRatio;
 	private String _currentLogoURL;
 	private String _defaultLogoURL;
+	private String _label;
 	private boolean _preserveRatio;
 
 }

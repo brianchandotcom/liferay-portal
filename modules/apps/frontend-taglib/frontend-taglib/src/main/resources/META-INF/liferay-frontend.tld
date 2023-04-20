@@ -562,6 +562,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>preserveRatio</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

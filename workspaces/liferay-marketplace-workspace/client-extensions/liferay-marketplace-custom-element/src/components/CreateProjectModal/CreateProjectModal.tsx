@@ -27,6 +27,8 @@ import {RulesAndGuidelines} from './RulesAndGuidelines';
 interface CreateProjectModalProps {
 	handleClose: () => void;
 	selectedAccount: Account;
+	setShowDashboardNavigation: (value: boolean) => void;
+	setShowNextStepsPage: (value: boolean) => void;
 }
 
 const multiStepItemsInitialValues = [
@@ -45,6 +47,8 @@ const multiStepItemsInitialValues = [
 export function CreateProjectModal({
 	handleClose,
 	selectedAccount,
+	setShowDashboardNavigation,
+	setShowNextStepsPage,
 }: CreateProjectModalProps) {
 	const [multiStepItems, setMultiStepItems] = useState(
 		multiStepItemsInitialValues
@@ -196,6 +200,9 @@ export function CreateProjectModal({
 		await patchOrderByERC(cartResponse.orderUUID, orderCustomFields);
 
 		handleClose();
+
+		setShowDashboardNavigation(false);
+		setShowNextStepsPage(true);
 	};
 
 	return (

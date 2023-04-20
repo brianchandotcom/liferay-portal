@@ -1,27 +1,48 @@
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import {ReactNode, useState} from 'react';
 
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 
-import './NextStepPage.scss';
-
-import {useEffect, useState} from 'react';
-
 import {
 	getAccountInfoFromCommerce,
 	getCart,
 	getCartItems,
-	getChannels,
-	getDeliveryProduct,
 } from '../../utils/api';
 
-export function NextStepPage() {
+import './NextStepPage.scss';
+
+interface NextStepPageProps {
+	continueButtonText?: string;
+	children?: ReactNode;
+	header?: {
+		description?: string;
+		title?: string;
+	};
+	linkText?: string;
+	onClickContinue?: () => void;
+	size?: 'lg';
+	showBackButton?: boolean;
+	showOrderId?: boolean;
+}
+
+export function NextStepPage({
+	children,
+	continueButtonText,
+	header,
+	linkText,
+	onClickContinue,
+	showBackButton,
+	showOrderId = true,
+	size,
+}: NextStepPageProps) {
 	const queryString = window.location.search;
 
 	const urlParams = new URLSearchParams(queryString);
-	const orderId = urlParams.get('orderId') as string;
+	const orderId = urlParams.get('orderId');
 
 	const [accountLogo, setAccountLogo] = useState(urlParams.get('logoURL'));
 	const [accountName, setAccountName] = useState(
@@ -56,51 +77,71 @@ export function NextStepPage() {
 
 	return (
 		<>
-			<div className="next-step-page-container">
+			<div
+				className={classNames('next-step-page-container', {
+					'next-step-page-container-larger': size === 'lg',
+				})}
+			>
 				<div className="next-step-page-content">
-					<div className="next-step-page-cards">
-						<AccountAndAppCard
-							category="Application"
-							logo={appLogo ?? ''}
-							title={appName ?? ''}
-						></AccountAndAppCard>
+					{!children && (
+						<>
+							<div className="next-step-page-cards">
+								<AccountAndAppCard
+									category="Application"
+									logo={appLogo ?? ''}
+									title={appName ?? ''}
+								></AccountAndAppCard>
 
-						<ClayIcon
-							className="next-step-page-icon"
-							symbol="arrow-right-full"
-						/>
+								<ClayIcon
+									className="next-step-page-icon"
+									symbol="arrow-right-full"
+								/>
 
-						<AccountAndAppCard
-							category="DXP Console"
-							logo={accountLogo ?? ''}
-							title={accountName ?? ''}
-						></AccountAndAppCard>
-					</div>
+								<AccountAndAppCard
+									category="DXP Console"
+									logo={accountLogo ?? ''}
+									title={accountName ?? ''}
+								></AccountAndAppCard>
+							</div>
+						</>
+					)}
 
 					<div className="next-step-page-text">
 						<Header
-							description={[
+							description={
+								header?.description ??
+								[
 								'Congratulations on the purchase of ',
 								<b>{appName}</b>,
 								'. You will now need to configure the app in the Cloud Console. To access the Cloud Console, click the button below and provide your Order ID when prompted.',
-							]}
-							title="Next steps"
+							]
+							}
+							title={header?.title ?? 'Next steps'}
 						/>
 
-						<span>
-							Your Order ID is: <strong>{orderId}</strong>
-						</span>
+						{showOrderId ?? (
+							<span>
+								Your Order ID is: <strong>{orderId}</strong>
+							</span>
+						)}
 					</div>
+
+					{children}
 
 					<NewAppPageFooterButtons
 						backButtonText="Go Back to Dashboard"
-						continueButtonText="Continue Configuration"
+						continueButtonText={
+							continueButtonText ?? 'Continue Configuration'
+						}
 						onClickBack={() => window.location.href = `${window.location.origin}/web/guest/publisher-dashboard`}
-						onClickContinue={() => window.location.href = 'https://console.liferay.cloud/'}
+						onClickContinue={onClickContinue ?? (() => window.location.href = 'https://console.liferay.cloud/')}
+						showBackButton={showBackButton}
 					/>
 
 					<div className="next-step-page-link">
-						<a>Learn more about App configuration</a>
+						<a>
+							{linkText ?? 'Learn more about App configuration'}
+						</a>
 					</div>
 				</div>
 

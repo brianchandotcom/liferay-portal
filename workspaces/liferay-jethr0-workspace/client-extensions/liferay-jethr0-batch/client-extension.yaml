@@ -1,7 +1,0 @@
-assemble:
-    - from: batch
-      into: batch
-liferay-jethr0-batch:
-    name: Liferay Sample Batch
-    oAuthApplicationHeadlessServer: liferay-jethr0-oauth-application-headless-server
-    type: batch

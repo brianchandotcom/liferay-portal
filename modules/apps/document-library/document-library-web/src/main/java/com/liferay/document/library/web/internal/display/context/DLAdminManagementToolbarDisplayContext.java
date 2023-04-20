@@ -829,6 +829,13 @@ public class DLAdminManagementToolbarDisplayContext
 					LanguageUtil.get(_httpServletRequest, "extension") +
 						StringPool.TRIPLE_PERIOD);
 			}
+		).add(
+			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
+			dropdownItem -> {
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "tags") +
+						StringPool.TRIPLE_PERIOD);
+			}
 		).build();
 	}
 

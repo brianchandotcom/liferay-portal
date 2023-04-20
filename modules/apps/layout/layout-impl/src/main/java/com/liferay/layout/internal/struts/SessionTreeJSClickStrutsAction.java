@@ -73,24 +73,23 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 			}
 			else if (cmd.equals("layoutCheck")) {
 				long plid = ParamUtil.getLong(httpServletRequest, "plid");
+				boolean privateLayout = ParamUtil.getBoolean(
+					httpServletRequest, "privateLayout");
 
 				if (plid == LayoutConstants.DEFAULT_PLID) {
-					boolean privateLayout = ParamUtil.getBoolean(
-						httpServletRequest, "privateLayout");
-
 					SessionTreeJSClicks.openLayoutNodes(
 						httpServletRequest, treeId, privateLayout,
 						LayoutConstants.DEFAULT_PLID, true);
 				}
 				else {
+					long layoutId = ParamUtil.getLong(
+						httpServletRequest, "layoutId");
 					boolean recursive = ParamUtil.getBoolean(
 						httpServletRequest, "recursive");
 
-					Layout layout = _layoutLocalService.getLayout(plid);
-
 					SessionTreeJSClicks.openLayoutNodes(
-						httpServletRequest, treeId, layout.isPrivateLayout(),
-						layout.getLayoutId(), recursive);
+						httpServletRequest, treeId, privateLayout, layoutId,
+						recursive);
 				}
 			}
 			else if (cmd.equals("layoutCollapse")) {
@@ -102,14 +101,16 @@ public class SessionTreeJSClickStrutsAction implements StrutsAction {
 					SessionTreeJSClicks.closeNodes(httpServletRequest, treeId);
 				}
 				else {
+					boolean privateLayout = ParamUtil.getBoolean(
+						httpServletRequest, "privateLayout");
+					long layoutId = ParamUtil.getLong(
+						httpServletRequest, "layoutId");
 					boolean recursive = ParamUtil.getBoolean(
 						httpServletRequest, "recursive");
 
-					Layout layout = _layoutLocalService.getLayout(plid);
-
 					SessionTreeJSClicks.closeLayoutNodes(
-						httpServletRequest, treeId, layout.isPrivateLayout(),
-						layout.getLayoutId(), recursive);
+						httpServletRequest, treeId, privateLayout, layoutId,
+						recursive);
 				}
 			}
 			else if (cmd.equals("layoutUncollapse")) {

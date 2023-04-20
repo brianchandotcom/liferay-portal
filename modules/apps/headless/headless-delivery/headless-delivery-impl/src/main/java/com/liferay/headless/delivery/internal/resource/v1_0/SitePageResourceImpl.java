@@ -334,8 +334,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		PagePermission[] pagePermissions = sitePage.getPagePermissions();
 
 		if (pagePermissions != null) {
-			HashMap<String, String[]> modelPermissionsParameterMap =
-				new HashMap<>(pagePermissions.length);
+			Map<String, String[]> modelPermissionsParameterMap = new HashMap<>(
+				pagePermissions.length);
 
 			for (PagePermission pagePermission : pagePermissions) {
 				String roleKey = pagePermission.getRoleKey();

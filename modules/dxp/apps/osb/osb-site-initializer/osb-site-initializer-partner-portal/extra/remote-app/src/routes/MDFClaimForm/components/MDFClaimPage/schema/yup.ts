@@ -195,6 +195,24 @@ const claimSchema = object({
 				)
 		)
 		.test(
+			'selectedActivityNeedsAtLeastOneBudget',
+			'Need at least one budget per activity selected',
+			(activities) => {
+				return Boolean(
+					!activities
+						?.map((activity) => {
+							return activity.selected
+								? activity.selected &&
+										activity?.budgets?.some(
+											(budget) => budget.selected
+										)
+								: true;
+						})
+						.includes(false)
+				);
+			}
+		)
+		.test(
 			'needMoreThanOneBudgetInvoice',
 			'Need at least one budget invoice added',
 			(activities) =>

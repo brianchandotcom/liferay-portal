@@ -409,4 +409,45 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by priority "
+	@priority = 3
+	test CanFilterByPriority {
+		task ("Given that the user has two priority different in the table") {
+			AssertElementPresent(
+				key_projectName = 5,
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = 3,
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a case result by priority") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority",
+				value1 = 3);
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only the priority 3 in the table") {
+			AssertElementPresent(
+				key_projectName = 3,
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see priority 5 in the table") {
+			AssertElementNotPresent(
+				key_projectName = 5,
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

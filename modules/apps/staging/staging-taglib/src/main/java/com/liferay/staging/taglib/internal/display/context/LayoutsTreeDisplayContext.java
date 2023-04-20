@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -414,11 +415,9 @@ public class LayoutsTreeDisplayContext {
 				selectedLayoutIdsArray = ExportImportHelperUtil.getAllLayoutIds(
 					_getSelectPagesGroupId(), isSelectPagesPrivateLayout());
 
-				for (long selectedLayoutId : selectedLayoutIdsArray) {
-					SessionTreeJSClicks.openLayoutNodes(
-						_httpServletRequest, _getTreeId() + "SelectedNode",
-						isSelectPagesPrivateLayout(), selectedLayoutId, false);
-				}
+				SessionTreeJSClicks.openNodes(
+					_httpServletRequest, _getTreeId() + "SelectedNode",
+					ArrayUtil.toStringArray(selectedLayoutIdsArray));
 			}
 			else {
 				selectedLayoutIdsArray = GetterUtil.getLongValues(

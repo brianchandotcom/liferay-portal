@@ -1,4 +1,11 @@
-[#assign organizations = (restClient.get("/c/evporganizations/").items)! /]
+[#assign response = restClient.get("/c/evporganizations/")]
+
+[#if response?has_content]
+	[#assign organizations = response.items! /]
+[#else]
+	#assign organizations = [] /]
+[/#if]
+
 <div class="token-sample">
 	<label class="" for="0">
 		Organization<span class="text-danger"> *</span>

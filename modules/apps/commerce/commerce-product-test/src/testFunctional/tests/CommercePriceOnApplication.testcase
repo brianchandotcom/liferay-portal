@@ -1,0 +1,89 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-11030. Verify that the Request a Quote button is visible in the Mini Cart and in the Order's Details Page."
+	@priority = 5
+	test CanAssertRequestAQuoteButtonIsVisible {
+		property portal.acceptance = "true";
+
+		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Request a Quote",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("When the buyer user adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("Then the 'Request a Quote' button is visible in the Mini Cart") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_text = "Request a Quote",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And after clicking the button, it is visible also in the Order's Details Page") {
+			Button.click(button = "Request a Quote");
+
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			WaitForElementPresent(locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+			var openOrderId = selenium.getText("CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+			TestUtils.assertEquals(
+				actual = ${activeOrderId},
+				expected = ${openOrderId});
+
+			AssertElementPresent(
+				key_text = "Request a Quote",
+				locator1 = "Button#ANY");
+		}
+	}
+
+}

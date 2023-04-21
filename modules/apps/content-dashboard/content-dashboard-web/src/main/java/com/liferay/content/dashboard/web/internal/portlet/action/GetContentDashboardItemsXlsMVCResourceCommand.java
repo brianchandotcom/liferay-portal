@@ -182,6 +182,16 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		).cell(
 			_toString(contentDashboardItem.getModifiedDate())
 		).cell(
+			() -> {
+				Date reviewDate = contentDashboardItem.getReviewDate();
+
+				if (reviewDate != null) {
+					return _toString(reviewDate);
+				}
+
+				return StringPool.DASH;
+			}
+		).cell(
 			contentDashboardItem.getDescription(locale)
 		);
 
@@ -228,6 +238,8 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			"tags"
 		).localizedCell(
 			"modified-date"
+		).localizedCell(
+			"review-date"
 		).localizedCell(
 			"description"
 		).localizedCell(

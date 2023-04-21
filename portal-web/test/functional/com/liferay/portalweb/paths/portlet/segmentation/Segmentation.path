@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>CRITERION_INPUT_ANY</td>
-	<td>//*[contains(@class,'edit-container')] //*[contains(@class,'form-control') and not(contains(@class,'operator-input')) and not(@placeholder='Key')]</td>
+	<td>//*[contains(@class,'edit-container')] //*[contains(@class,'form-control') and not(@type='hidden') and not(contains(@class,'operator-input')) and not(@placeholder='Key')]</td>
 	<td></td>
 </tr>
 <tr>

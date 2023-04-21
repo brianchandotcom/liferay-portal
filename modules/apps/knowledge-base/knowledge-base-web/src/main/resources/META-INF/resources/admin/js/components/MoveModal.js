@@ -28,7 +28,9 @@ const ITEM_TYPES_SYMBOL = {
 	folder: 'folder',
 };
 
-export default function MoveModal({items: initialItems, itemToMoveId}) {
+const SELECT_EVENT_NAME = 'selectKBMoveFolder';
+
+export default function MoveModal({itemToMoveId, items: initialItems}) {
 	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
 
 	const searchItems = useMemo(() => getSearchItems(initialItems), [
@@ -38,9 +40,8 @@ export default function MoveModal({items: initialItems, itemToMoveId}) {
 	const [searchActive, setSearchActive] = useState(false);
 
 	const handleItemMove = (item, parentItem, index) => {
-		getOpener().Liferay.fire('selectKBMoveFolder', {
+		getOpener().Liferay.fire(SELECT_EVENT_NAME, {
 			index,
-			item,
 			parentItem,
 		});
 	};
@@ -48,8 +49,8 @@ export default function MoveModal({items: initialItems, itemToMoveId}) {
 	const onItemClick = (event, parentItem) => {
 		event.stopPropagation();
 
-		const index = {next: parentItem.children.length, previous: 0};
-		getOpener().Liferay.fire('selectKBMoveFolder', {index, parentItem});
+		const index = {next: parentItem.children.length};
+		getOpener().Liferay.fire(SELECT_EVENT_NAME, {index, parentItem});
 	};
 
 	const handleSearchChange = ({isSearchActive}) => {
@@ -128,6 +129,6 @@ const itemShape = {
 itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 
 MoveModal.propTypes = {
-	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
 	itemToMoveId: PropTypes.string,
+	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
 };

@@ -129,8 +129,6 @@ public class KBAdminNavigationDisplayContext {
 			));
 	}
 
-	
-
 	public List<JSONObject> getVerticalNavigationJSONObjects()
 		throws PortalException {
 

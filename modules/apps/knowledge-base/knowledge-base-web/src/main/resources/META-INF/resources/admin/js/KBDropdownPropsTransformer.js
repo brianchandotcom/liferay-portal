@@ -44,11 +44,11 @@ const ACTIONS = {
 
 	move(
 		{
-			moveItemActionUrl,
-			moveItemModalUrl,
 			itemClassNameId,
 			itemId,
 			itemType,
+			moveItemActionUrl,
+			moveItemModalUrl,
 		},
 		portletNamespace
 	) {
@@ -56,17 +56,9 @@ const ACTIONS = {
 			buttonAddLabel: Liferay.Language.get('move'),
 			height: '50vh',
 			multiple: true,
-			onSelect: ({index, item, parentItem}) => {
-				if (!item) {
-					item = {
-						classNameId: itemClassNameId,
-						id: itemId,
-						type: itemType,
-					};
-				}
-
+			onSelect: ({index, parentItem}) => {
 				if (
-					item.type === ITEM_TYPES.folder &&
+					itemType === ITEM_TYPES.folder &&
 					parentItem.type === ITEM_TYPES.article
 				) {
 					openToast({
@@ -83,8 +75,8 @@ const ACTIONS = {
 					body: objectToFormData({
 						[`${portletNamespace}dragAndDrop`]: true,
 						[`${portletNamespace}position`]: index?.next ?? -1,
-						[`${portletNamespace}resourceClassNameId`]: item.classNameId,
-						[`${portletNamespace}resourcePrimKey`]: item.id,
+						[`${portletNamespace}resourceClassNameId`]: itemClassNameId,
+						[`${portletNamespace}resourcePrimKey`]: itemId,
 						[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,
 						[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,
 					}),

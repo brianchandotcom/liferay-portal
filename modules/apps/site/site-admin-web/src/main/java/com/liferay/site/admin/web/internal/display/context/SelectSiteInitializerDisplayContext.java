@@ -127,6 +127,8 @@ public class SelectSiteInitializerDisplayContext {
 			"/site_admin/select_site_initializer"
 		).setRedirect(
 			getBackURL()
+		).setParameter(
+			"parentGroupId", getParentGroupId()
 		).buildPortletURL();
 	}
 

@@ -4,7 +4,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.22.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.24.RELEASE"
 	compileOnly project(":apps:portal-rules-engine:portal-rules-engine-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")

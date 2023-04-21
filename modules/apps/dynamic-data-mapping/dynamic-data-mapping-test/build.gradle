@@ -33,7 +33,7 @@ dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
-	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "5.2.22.RELEASE"
+	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "5.2.24.RELEASE"
 	testIntegrationCompile project(":apps:data-engine:data-engine-rest-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-builder")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")

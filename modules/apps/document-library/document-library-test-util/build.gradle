@@ -4,7 +4,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	compileOnly group: "junit", name: "junit", version: "4.13.1"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	compileOnly group: "org.springframework", name: "spring-test", version: "5.2.22.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-test", version: "5.2.24.RELEASE"
 	compileOnly project(":core:petra:petra-string")
 }
 

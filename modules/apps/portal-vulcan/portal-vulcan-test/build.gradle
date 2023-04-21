@@ -5,7 +5,7 @@ dependencies {
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
 	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.10"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	testIntegrationCompile group: "org.springframework", name: "spring-test", version: "5.2.22.RELEASE"
+	testIntegrationCompile group: "org.springframework", name: "spring-test", version: "5.2.24.RELEASE"
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

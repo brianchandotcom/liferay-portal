@@ -11,8 +11,8 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly group: "org.springframework", name: "spring-aop", version: "5.2.22.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.22.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-aop", version: "5.2.24.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.24.RELEASE"
 	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-api")

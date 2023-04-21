@@ -4,7 +4,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly group: "org.springframework", name: "spring-aop", version: "5.2.22.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-aop", version: "5.2.24.RELEASE"
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-string")

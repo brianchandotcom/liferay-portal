@@ -95,6 +95,8 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
+									role="button"
+									tabIndex="0"
 									verticalCard="<%= verticalCard %>"
 								/>
 							</liferay-ui:search-container-column-text>

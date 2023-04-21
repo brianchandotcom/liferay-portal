@@ -3053,11 +3053,11 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
-	<target name="archived-module-smoke-jdk8">
+	<target name="archived-module-smoke-mysql57-jdk8">
 		<run-archived-module-smoke />
 	</target>
 
-	<target name="archived-modules-test-jdk8">
+	<target name="archived-modules-test-mysql57-jdk8">
 		<run-archived-modules-test />
 	</target>
 
@@ -3243,7 +3243,7 @@ information. Make sure to commit in all build-lib-versions results.
 		</run-batch-test>
 	</target>
 
-	<target name="bundle-blacklist-restart-jdk8">
+	<target name="bundle-blacklist-restart-mysql57-jdk8">
 		<run-bundle-blacklist-restart-test />
 	</target>
 
@@ -3313,7 +3313,7 @@ information. Make sure to commit in all build-lib-versions results.
 		</parallel>
 	</target>
 
-	<target name="empty-osgi-core-dir-jdk8">
+	<target name="empty-osgi-core-dir-mysql57-jdk8">
 		<run-empty-osgi-core-dir-test />
 	</target>
 
@@ -5577,7 +5577,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="gogo-shell-client-jdk8">
+	<target name="gogo-shell-client-mysql57-jdk8">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -5710,7 +5710,7 @@ information. Make sure to commit in all format-javadoc results.
 		<ant antfile="build-test-batch/jsf.xml" target="jsf-jdk8" />
 	</target>
 
-	<target name="jsp-runtime-compile-jdk8">
+	<target name="jsp-runtime-compile-mysql57-jdk8">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -5791,23 +5791,23 @@ information. Make sure to commit in all format-javadoc results.
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 
-	<target name="lpkg-container-jdk8">
+	<target name="lpkg-container-mysql57-jdk8">
 		<run-lpkg-container-test />
 	</target>
 
-	<target name="lpkg-controller-jdk8">
+	<target name="lpkg-controller-mysql57-jdk8">
 		<run-lpkg-controller-test />
 	</target>
 
-	<target name="lpkg-override-jdk8">
+	<target name="lpkg-override-mysql57-jdk8">
 		<run-lpkg-override-test />
 	</target>
 
-	<target name="lpkg-persistence-jdk8">
+	<target name="lpkg-persistence-mysql57-jdk8">
 		<run-lpkg-persistence-test />
 	</target>
 
-	<target name="lpkg-startup-jdk8">
+	<target name="lpkg-startup-mysql57-jdk8">
 		<run-lpkg-startup-test />
 	</target>
 
@@ -6745,7 +6745,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="patching-tool-jdk8">
+	<target name="patching-tool-mysql57-jdk8">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -6937,7 +6937,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="portal-license-smoke-jdk8">
+	<target name="portal-license-smoke-mysql57-jdk8">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -6987,7 +6987,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="portal-renamed-tomcat-in-path-jdk8">
+	<target name="portal-renamed-tomcat-in-path-mysql57-jdk8">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
@@ -7060,7 +7060,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="portal-second-startup-space-in-path-jdk8">
+	<target name="portal-second-startup-space-in-path-mysql57-jdk8">
 		<sequential>
 			<run-batch-test>
 				<test-action>
@@ -7142,7 +7142,7 @@ ${output.content}</echo>
 		</sequential>
 	</target>
 
-	<target name="portal-startup-space-in-path-jdk8">
+	<target name="portal-startup-space-in-path-mysql57-jdk8">
 		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
 
 		<sequential>
@@ -7365,15 +7365,15 @@ ${output.content}</echo>
 		<antcall target="functional-bundle-tomcat-mysql57-jdk11_open" />
 	</target>
 
-	<target name="release-osgi-state-exploded-test-jdk8">
+	<target name="release-osgi-state-exploded-test-mysql57-jdk8">
 		<run-release-osgi-state-exploded-test />
 	</target>
 
-	<target name="release-osgi-state-lpkg-change-directory-test-jdk8">
+	<target name="release-osgi-state-lpkg-change-directory-test-mysql57-jdk8">
 		<run-release-osgi-state-lpkg-change-directory-test />
 	</target>
 
-	<target name="release-osgi-state-lpkg-test-jdk8">
+	<target name="release-osgi-state-lpkg-test-mysql57-jdk8">
 		<run-release-osgi-state-lpkg-test />
 	</target>
 

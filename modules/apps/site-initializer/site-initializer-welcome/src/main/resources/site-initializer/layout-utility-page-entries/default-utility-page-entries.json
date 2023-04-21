@@ -1,3 +1,4 @@
 {
-	"ErrorCode404": "404"
+	"ErrorCode404": "404",
+	"ErrorCode500": "500"
 }

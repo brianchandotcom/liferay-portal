@@ -6818,6 +6818,8 @@ public class PortalImpl implements Portal {
 			dynamicRequest.setParameter("layoutId", StringPool.BLANK);
 			dynamicRequest.setParameter("privateLayout", StringPool.BLANK);
 
+			dynamicRequest.setAttribute("status_code", status);
+
 			httpServletRequest = dynamicRequest;
 
 			redirect = PATH_MAIN + "/portal/status";

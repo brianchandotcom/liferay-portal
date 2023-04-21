@@ -51,7 +51,8 @@ public class ProjectTemplatesSimulationPanelEntryTest
 		return Arrays.asList(
 			new Object[][] {
 				{"dxp", "7.0.10.17"}, {"dxp", "7.1.10.7"}, {"dxp", "7.2.10.7"},
-				{"portal", "7.3.7"}, {"portal", "7.4.3.36"}
+				{"portal", "7.3.7"}, {"portal", "7.4.3.36"},
+				{"dxp", "7.4.13.u72"}
 			});
 	}
 
@@ -88,8 +89,7 @@ public class ProjectTemplatesSimulationPanelEntryTest
 			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
 			mavenExecutor);
 
-		String liferayWorkspaceProduct = getLiferayWorkspaceProduct(
-			_liferayVersion);
+		String liferayWorkspaceProduct = _getLiferayWorkspaceProduct();
 
 		if (liferayWorkspaceProduct != null) {
 			writeGradlePropertiesInWorkspace(
@@ -107,7 +107,7 @@ public class ProjectTemplatesSimulationPanelEntryTest
 
 		testExists(gradleProjectDir, "bnd.bnd");
 
-		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
+		if (_liferayProduct.equals("dxp")) {
 			testContains(
 				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
 		}
@@ -129,6 +129,26 @@ public class ProjectTemplatesSimulationPanelEntryTest
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
 			mavenExecutor);
+
+		if (_liferayVersion.startsWith("7.4") &&
+				_liferayProduct.endsWith("dxp")) {
+
+			updateMavenPomProperties(
+					mavenWorkspaceDir, "liferay.bom.version", "liferay.bom.version",
+				_liferayVersion);
+
+			updateMavenPomElementText(
+				mavenWorkspaceDir, "//artifactId[text()='release.portal.bom']",
+				"release.dxp.bom");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//artifactId[text()='release.portal.bom.compile.only']",
+				"release.dxp.bom.compile.only");
+			updateMavenPomElementText(
+				mavenWorkspaceDir,
+				"//artifactId[text()='release.portal.bom.third.party']",
+				"release.dxp.bom.third.party");
+		}
 
 		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
 
@@ -153,6 +173,30 @@ public class ProjectTemplatesSimulationPanelEntryTest
 				mavenProjectDir, gradleOutputDir, mavenOutputDir,
 				":modules:" + name + GRADLE_TASK_PATH_BUILD);
 		}
+	}
+
+	private String _getLiferayWorkspaceProduct() {
+		if (_liferayVersion.startsWith("7.0")) {
+			return "dxp-7.0-sp17";
+		}
+		else if (_liferayVersion.startsWith("7.1")) {
+			return "dxp-7.1-sp7";
+		}
+		else if (_liferayVersion.startsWith("7.2")) {
+			return "dxp-7.2-sp7";
+		}
+		else if (_liferayVersion.startsWith("7.3")) {
+			return "portal-7.3-ga8";
+		}
+		else if (_liferayVersion.startsWith("7.4")) {
+			if (_liferayProduct.equals("dxp")) {
+				return "dxp-7.4-u72";
+			}
+
+			return "portal-7.4-ga36";
+		}
+
+		return null;
 	}
 
 	@Rule

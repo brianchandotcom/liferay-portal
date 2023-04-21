@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "form.navigator.entry.order:Integer=100",
 	service = FormNavigatorEntry.class
 )
-public class LayoutDetailsFormNavigatorEntry
+public class LayoutBasicInfoFormNavigatorEntry
 	extends BaseLayoutFormNavigatorEntry {
 
 	@Override
@@ -41,7 +41,7 @@ public class LayoutDetailsFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "details";
+		return "basic-info";
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class LayoutDetailsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/layout/details.jsp";
+		return "/layout/basic_info.jsp";
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")

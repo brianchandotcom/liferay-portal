@@ -253,7 +253,12 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				_objectEntryOpenAPIResourceProvider.
 					getObjectEntryOpenAPIResource(objectDefinition);
 
-			sourceSchemas = objectEntryOpenAPIResource.getSchemas();
+			if (objectEntryOpenAPIResource != null) {
+				sourceSchemas = objectEntryOpenAPIResource.getSchemas();
+			}
+			else {
+				sourceSchemas = new HashMap<>();
+			}
 		}
 
 		OpenAPIContributorUtil.copySchemas(

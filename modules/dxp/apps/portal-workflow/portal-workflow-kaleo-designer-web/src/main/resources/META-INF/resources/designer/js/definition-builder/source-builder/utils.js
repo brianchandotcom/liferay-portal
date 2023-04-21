@@ -223,8 +223,7 @@ export function parseNotifications(node) {
 				],
 			});
 		}
-
-		if (item['user']) {
+		else if (item['user']) {
 			if (item['user'].some((item) => item['email-address'])) {
 				const emailAddress = [];
 

@@ -276,7 +276,7 @@ public class BlogEntriesDisplayContextTest {
 		Object blogEntriesDisplayContext =
 			mockLiferayPortletRenderRequest.getAttribute(
 				"com.liferay.blogs.web.internal.display.context." +
-					"BlogEntriesDisplayContext");
+					"BlogsViewEntriesDisplayContext");
 
 		return ReflectionTestUtil.invoke(
 			blogEntriesDisplayContext, "getSearchContainer", new Class<?>[0],

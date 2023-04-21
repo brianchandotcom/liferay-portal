@@ -228,7 +228,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "nilColumn", "LONG default 2 not null"));
 	}
-	
+
 	@Test
 	public void testAlterColumnTypeChangeToNotNull() throws Exception {
 		alterColumnType(_TABLE_NAME, "nilColumn", "VARCHAR(75) not null");

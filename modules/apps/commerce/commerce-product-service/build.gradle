@@ -20,7 +20,6 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
-	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-currency-api")
 	compileOnly project(":apps:commerce:commerce-discount-api")

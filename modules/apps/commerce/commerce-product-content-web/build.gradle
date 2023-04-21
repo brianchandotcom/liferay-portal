@@ -22,7 +22,6 @@ dependencies {
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:asset:asset-info-api")
 	compileOnly project(":apps:asset:asset-service")
-	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-cart-taglib")
 	compileOnly project(":apps:commerce:commerce-currency-api")

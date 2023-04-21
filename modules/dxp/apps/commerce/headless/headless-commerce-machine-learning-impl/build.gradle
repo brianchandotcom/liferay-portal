@@ -15,7 +15,6 @@ dependencies {
 	compileOnly project(":apps:analytics:analytics-settings-api")
 	compileOnly project(":apps:analytics:analytics-settings-rest-api")
 	compileOnly project(":apps:batch-engine:batch-engine-api")
-	compileOnly project(":apps:commerce:commerce-account-api")
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-currency-api")
 	compileOnly project(":apps:commerce:commerce-product-api")

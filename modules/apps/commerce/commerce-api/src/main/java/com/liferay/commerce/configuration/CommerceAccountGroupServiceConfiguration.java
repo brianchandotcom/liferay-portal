@@ -16,7 +16,7 @@ package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**

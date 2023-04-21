@@ -1,0 +1,56 @@
+[#assign mdfRequestId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
+
+[#if mdfRequestId?has_content]
+	[#assign mdfRequest = restClient.get("/c/mdfrequests/${mdfRequestId}") /]
+	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Request%27&pageSize=-1") /]
+	[#assign hasCancelAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "CANCEL")?has_content /]
+
+	[#assign mdfRequestStatusKey = mdfRequest.mdfRequestStatus.key /]
+
+	[#if hasCancelAction && mdfRequestStatusKey != 'canceled']
+		<script>
+			const updateCanceledStatus = async () => {
+				const statusManagerResponse = await fetch(
+					`/o/c/mdfrequests/${mdfRequestId}`,
+					{
+						body: `{"mdfRequestStatus": "canceled"}`,
+						headers: {
+							'content-type': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+						method: 'PUT',
+					}
+				);
+
+				if (statusManagerResponse.ok) {
+					location.reload();
+
+					return;
+				}
+
+				Liferay.Util.openToast({
+					message: 'The MDF Request Status cannot be changed.',
+					type: 'danger',
+				});
+			};
+
+			const callConfirmCancelModal = () => Liferay.Util.openConfirmModal({
+				message: 'Do you want to cancel this MDF?',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						updateCanceledStatus();
+					}
+				},
+			});
+		</script>
+
+		<button class="border-neutral-10 btn btn-secondary mr-2 mt-2" onclick="callConfirmCancelModal()">
+			Cancel
+		</button>
+	[/#if]
+[#else]
+	<div class="alert alert-info">
+		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>
+		<p class="mb-0">It's important to note that this will only display the attributes of a display page when you view the published display page not when you are editing it.</p>
+	</div>
+[/#if]

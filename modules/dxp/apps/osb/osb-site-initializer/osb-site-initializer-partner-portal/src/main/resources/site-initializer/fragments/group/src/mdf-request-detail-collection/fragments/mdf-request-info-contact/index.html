@@ -1,0 +1,63 @@
+[#assign mdfRequestId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
+
+[#if mdfRequestId?has_content]
+	[#assign mdfRequest = restClient.get("/c/mdfrequests/${mdfRequestId}?nestedFields=user") /]
+
+	[#assign firstName = mdfRequest.r_usrToMDFReqs_user.givenName /]
+	[#assign lastName = mdfRequest.r_usrToMDFReqs_user.familyName /]
+	[#assign infoEmail = mdfRequest.r_usrToMDFReqs_user.emailAddress /]
+	[#assign telephones = mdfRequest.r_usrToMDFReqs_user.userAccountContactInformation.telephones?map(telephone -> telephone.phoneNumber)?join(', ') /]
+
+	<table class="table table-borderless w-100">
+		<thead>
+			<tr>
+				<th class="w-50">
+					<p class="text-neutral-10" id="tableTitle" type="rich-text">
+						Contact Info
+					</p>
+				</th>
+				<th class="w-50"></th>
+			</tr>
+		</thead>
+
+		<tbody class="ml-1">
+			<tr>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">First Name</p>
+				</td>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">${firstName}</p>
+				</td>
+			</tr>
+			<tr>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">Last Name</p>
+				</td>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">${lastName}</p>
+				</td>
+			</tr>
+			<tr>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">Email</p>
+				</td>
+				<td>
+					<p class="text-neutral-10" type="rich-text">${infoEmail}</p>
+				</td>
+			</tr>
+			<tr>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">Telephone</p>
+				</td>
+				<td>
+					<p class="text-neutral-10" type="rich-text">${telephones}</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+[#else]
+	<div class="alert alert-info">
+		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>
+		<p class="mb-0">It's important to note that this will only display the attributes of a display page when you view the published display page not when you are editing it.</p>
+	</div>
+[/#if]

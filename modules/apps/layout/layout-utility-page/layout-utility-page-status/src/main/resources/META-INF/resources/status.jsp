@@ -23,7 +23,11 @@
 	<%
 	StatusDisplayContext statusDisplayContext = new StatusDisplayContext(request);
 
-	int status = ParamUtil.getInteger(request, "status");
+	int status = GetterUtil.getInteger(request.getAttribute("status_code"));
+
+	if (status == 0) {
+		status = ParamUtil.getInteger(request, "status");
+	}
 
 	if (status > 0) {
 		response.setStatus(status);

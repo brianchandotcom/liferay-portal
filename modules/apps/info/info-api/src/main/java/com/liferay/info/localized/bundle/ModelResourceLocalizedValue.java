@@ -56,7 +56,7 @@ public class ModelResourceLocalizedValue implements InfoLocalizedValue<String> {
 
 	@Override
 	public Locale getDefaultLocale() {
-		return LocaleUtil.getDefault();
+		return LocaleUtil.getSiteDefault();
 	}
 
 	@Override

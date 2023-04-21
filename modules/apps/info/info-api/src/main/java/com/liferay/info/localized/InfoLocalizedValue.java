@@ -149,7 +149,7 @@ public interface InfoLocalizedValue<T> {
 		@Override
 		public Locale getDefaultLocale() {
 			if (_builder._defaultLocale == null) {
-				return LocaleUtil.getDefault();
+				return LocaleUtil.getSiteDefault();
 			}
 
 			return _builder._defaultLocale;

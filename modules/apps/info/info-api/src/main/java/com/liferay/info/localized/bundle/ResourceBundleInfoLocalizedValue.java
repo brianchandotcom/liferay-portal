@@ -73,7 +73,7 @@ public class ResourceBundleInfoLocalizedValue
 
 	@Override
 	public Locale getDefaultLocale() {
-		return LocaleUtil.getDefault();
+		return LocaleUtil.getSiteDefault();
 	}
 
 	@Override

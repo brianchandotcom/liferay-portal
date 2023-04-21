@@ -56,7 +56,7 @@ public class FunctionInfoLocalizedValue<T> implements InfoLocalizedValue<T> {
 
 	@Override
 	public Locale getDefaultLocale() {
-		return LocaleUtil.getDefault();
+		return LocaleUtil.getSiteDefault();
 	}
 
 	@Override

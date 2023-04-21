@@ -31,4 +31,6 @@ public class ErrorCodes {
 
 	public static final int UNEXPECTED_ERROR = 255;
 
+	public static final int VALIDATION_ERROR = 20;
+
 }

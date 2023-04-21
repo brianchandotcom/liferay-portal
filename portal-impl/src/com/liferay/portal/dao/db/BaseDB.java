@@ -198,6 +198,80 @@ public abstract class BaseDB implements DB {
 		throws IOException, SQLException;
 
 	@Override
+	public void copyTableRows(
+			Connection connection, String sourceTableName,
+			String targetTableName)
+		throws Exception {
+
+		String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
+			connection, sourceTableName);
+
+		StringBundler sb = new StringBundler(
+			14 + (((primaryKeyColumnNames.length - 1) * 8) + 7));
+
+		sb.append("insert into ");
+		sb.append(targetTableName);
+		sb.append(" select ");
+		sb.append(sourceTableName);
+		sb.append(".* from ");
+		sb.append(sourceTableName);
+		sb.append(" left join ");
+		sb.append(targetTableName);
+		sb.append(" on ");
+
+		for (int i = 0; i < primaryKeyColumnNames.length; i++) {
+			String primaryKeyColumnName = primaryKeyColumnNames[i];
+
+			sb.append(sourceTableName);
+			sb.append(".");
+			sb.append(primaryKeyColumnName);
+			sb.append(" = ");
+			sb.append(targetTableName);
+			sb.append(".");
+			sb.append(primaryKeyColumnName);
+
+			if (i < (primaryKeyColumnNames.length - 1)) {
+				sb.append(" and ");
+			}
+		}
+
+		sb.append(" where ");
+		sb.append(targetTableName);
+		sb.append(".");
+		sb.append(primaryKeyColumnNames[0]);
+		sb.append(" IS NULL");
+
+		runSQL(sb.toString());
+	}
+
+	@Override
+	public void copyTableStructure(
+			Connection connection, String tableName, String newTableName,
+			String indexNamePrefix)
+		throws Exception {
+
+		runSQL(connection, getCopyTableStructureSQL(tableName, newTableName));
+
+		addPrimaryKey(
+			connection, newTableName,
+			getPrimaryKeyColumnNames(connection, tableName));
+
+		List<IndexMetadata> indexMetadatas = new ArrayList<>();
+
+		for (IndexMetadata indexMetadata :
+				getIndexes(connection, tableName, null, false)) {
+
+			indexMetadatas.add(
+				new IndexMetadata(
+					indexNamePrefix.concat(indexMetadata.getIndexName()),
+					newTableName, indexMetadata.isUnique(),
+					indexMetadata.getColumnNames()));
+		}
+
+		addIndexes(connection, indexMetadatas);
+	}
+
+	@Override
 	public List<IndexMetadata> dropIndexes(
 			Connection connection, String tableName, String columnName)
 		throws IOException, SQLException {
@@ -210,6 +284,15 @@ public abstract class BaseDB implements DB {
 		}
 
 		return indexMetadatas;
+	}
+
+	@Override
+	public String getCopyTableStructureSQL(
+		String tableName, String newTableName) {
+
+		return StringBundler.concat(
+			"create table ", newTableName, " as select * from ", tableName,
+			" where 1 = 0");
 	}
 
 	@Override

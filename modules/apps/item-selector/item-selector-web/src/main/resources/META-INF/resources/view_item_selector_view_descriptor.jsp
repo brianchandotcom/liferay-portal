@@ -95,6 +95,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
+									aria-label='<%= LanguageUtil.format(request, "select-x", verticalCard.getTitle()) %>'
 									role="button"
 									tabIndex="0"
 									verticalCard="<%= verticalCard %>"

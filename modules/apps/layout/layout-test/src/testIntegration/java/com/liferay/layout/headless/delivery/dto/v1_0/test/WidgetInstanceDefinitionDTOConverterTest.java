@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.headless.delivery.dto.v1_0.test;
+package com.liferay.layout.headless.delivery.dto.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;

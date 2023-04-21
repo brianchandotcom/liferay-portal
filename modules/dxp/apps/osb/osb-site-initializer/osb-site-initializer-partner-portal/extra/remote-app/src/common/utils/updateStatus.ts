@@ -25,7 +25,8 @@ const updateStatus = (
 
 	if (!currentRequestStatus && id) {
 		status = Status.PENDING;
-	} else {
+	}
+	else {
 		if (changeStatus && currentRequestStatus !== Status.DRAFT) {
 			status = Status.PENDING;
 		}

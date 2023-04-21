@@ -17,7 +17,7 @@
 
 	[#if mdfClaimStatusKey != 'approved']
 		[#if hasMarketingReviewAction || hasFinanceReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction || hasDirectorReviewAction]
-			<script>				
+			<script>
 				const updateStatus = async (status) => {
 					const responde = await fetch(
 						`/o/c/mdfclaims/${mdfRequestId}`,
@@ -51,23 +51,13 @@
 						}
 					},
 				});
-			</script>	
+			</script>
 
-			<button
-				aria-expanded="false"
-				aria-haspopup="true"
-				class="btn btn-secondary dropdown-toggle"
-				data-toggle="liferay-dropdown"
-				id="dropdownMDFClaimStatus"
-				type="button"
-			>
+		<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFClaimStatus" type="button">
 				${mdfClaim.mdfClaimStatus.name} [@clay.icon symbol="caret-bottom" /]
 			</button>
-			<ul
-				aria-labelledby="dropdownMDFClaimStatus"
-				class="dropdown-menu"
-				x-placement="bottom-start"
-			>
+
+		<ul aria-labelledby="dropdownMDFClaimStatus" class="dropdown-menu" x-placement="bottom-start">
 				[#if mdfClaimStatusKey == 'pendingMarketingReview']
 					[#if hasRequestMoreInfoAction]
 						<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
@@ -146,7 +136,7 @@
 							Approved
 						</li>
 					[/#if]
-					
+
 					[#if hasClaimPaidAction]
 						<li class="dropdown-item" onclick="callModal('claimPaid')">
 							Claim Paid

@@ -1,68 +1,68 @@
 {
 	"object-entries": [
 		{
-			"externalReferenceCode": "VIEW",
 			"action": "VIEW",
+			"externalReferenceCode": "VIEW",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "UPDATE",
 			"action": "UPDATE",
+			"externalReferenceCode": "UPDATE",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "UPDATE-WO-CHANGE-STATUS",
 			"action": "UPDATE-WO-CHANGE-STATUS",
+			"externalReferenceCode": "UPDATE-WO-CHANGE-STATUS",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "DELETE",
 			"action": "DELETE",
+			"externalReferenceCode": "DELETE",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "CREATE",
 			"action": "CREATE",
+			"externalReferenceCode": "CREATE",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "SEE-RESTRICTED-FIELDS",
 			"action": "SEE-RESTRICTED-FIELDS",
+			"externalReferenceCode": "SEE-RESTRICTED-FIELDS",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "EXPORT",
 			"action": "EXPORT",
+			"externalReferenceCode": "EXPORT",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "MARKETING-REVIEW-STATUS-UPDATE",
 			"action": "MARKETING-REVIEW-STATUS-UPDATE",
+			"externalReferenceCode": "MARKETING-REVIEW-STATUS-UPDATE",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
 			"action": "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
+			"externalReferenceCode": "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "REQUEST-MORE-INFO",
 			"action": "REQUEST-MORE-INFO",
+			"externalReferenceCode": "REQUEST-MORE-INFO",
 			"object": "MDF Request"
 		},
 		{
+			"action": "EXPIRE",
 			"externalReferenceCode": "EXPIRE",
-			"action": "EXPIRE",
 			"object": "MDF Request"
 		},
 		{
+			"action": "EXPIRE",
 			"externalReferenceCode": "REJECT",
-			"action": "EXPIRE",
 			"object": "MDF Request"
 		},
 		{
-			"externalReferenceCode": "APPROVE",
 			"action": "EXPIRE",
+			"externalReferenceCode": "APPROVE",
 			"object": "MDF Request"
 		}
 	],

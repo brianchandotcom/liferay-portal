@@ -30,7 +30,7 @@
 						[/#if]
 					[/#list]
 				};
-				
+
 				const updateStatus = async (status) => {
 					const responde = await fetch(
 						`/o/c/mdfrequests/${mdfRequestId}`,
@@ -68,23 +68,13 @@
 						}
 					},
 				});
-			</script>	
+			</script>
 
-			<button
-				aria-expanded="false"
-				aria-haspopup="true"
-				class="btn btn-secondary dropdown-toggle"
-				data-toggle="liferay-dropdown"
-				id="dropdownMDFRequestStatus"
-				type="button"
-			>
+		<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFRequestStatus" type="button">
 				${mdfRequest.mdfRequestStatus.name} [@clay.icon symbol="caret-bottom" /]
 			</button>
-			<ul
-				aria-labelledby="dropdownMDFRequestStatus"
-				class="dropdown-menu"
-				x-placement="bottom-start"
-			>
+
+		<ul aria-labelledby="dropdownMDFRequestStatus" class="dropdown-menu" x-placement="bottom-start">
 				[#if mdfRequestStatusKey == 'pendingMarketingReview']
 					[#if hasMarketingDirectorReviewAction]
 						<li class="dropdown-item" onclick="callModal('marketingDirectorReview')">

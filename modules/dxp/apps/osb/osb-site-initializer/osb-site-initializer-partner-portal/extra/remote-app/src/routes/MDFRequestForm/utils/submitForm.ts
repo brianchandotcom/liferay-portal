@@ -54,13 +54,15 @@ export default async function submitForm(
 
 	if (values.mdfRequestStatus !== Status.DRAFT) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	} else if (values.id) {
+	}
+	else if (values.id) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values,
 			values.id
 		);
-	} else {
+	}
+	else {
 		dtoMDFRequest = await createMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values

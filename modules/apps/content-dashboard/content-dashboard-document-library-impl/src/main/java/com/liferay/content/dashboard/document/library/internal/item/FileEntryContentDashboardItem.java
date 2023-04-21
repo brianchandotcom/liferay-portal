@@ -353,6 +353,11 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public Date getReviewDate() {
+		return _fileEntry.getReviewDate();
+	}
+
+	@Override
 	public String getScopeName(Locale locale) {
 		if (_group == null) {
 			return StringPool.BLANK;

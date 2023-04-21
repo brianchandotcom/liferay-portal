@@ -348,6 +348,11 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public Date getReviewDate() {
+		return _journalArticle.getReviewDate();
+	}
+
+	@Override
 	public String getScopeName(Locale locale) {
 		if (_group == null) {
 			return StringPool.BLANK;

@@ -48,6 +48,15 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
+	public String getCopyTableStructureSQL(
+		String tableName, String newTableName) {
+
+		return StringBundler.concat(
+			"create table ", newTableName, " as (select * from ", tableName,
+			") without data");
+	}
+
+	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
 		return StringPool.BLANK;
 	}

@@ -32,6 +32,7 @@ import com.liferay.commerce.internal.upgrade.v8_4_0.util.CommerceShippingOptionA
 import com.liferay.commerce.internal.upgrade.v8_5_0.CommerceAddressTypeUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v8_9_1.CommerceChannelAccountEntryRelUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v8_9_4.CommerceOrderUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v9_3_0.ConfigurationUpgradeProcess;
 import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
 import com.liferay.commerce.model.impl.CommerceAvailabilityEstimateModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -457,6 +458,8 @@ public class CommerceServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"CommerceOrderItem", "replacedCPInstanceId LONG",
 				"replacedSku VARCHAR(75) null"));
+
+		registry.register("9.2.0", "9.3.0", new ConfigurationUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

@@ -156,6 +156,29 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = "DM SubFolder2 Name");
 	}
 
+	@priority = 3
+	test CanChangeRatingTypeForFolder {
+		var responseFromFolder = DocumentFolderAPI.addDocumentFolder(
+			groupName = "Guest",
+			name = "DM Folder Name");
+
+		Ratings.configureRatingType(
+			applications = "document",
+			portlet = "Ratings",
+			ratingType = "Like",
+			siteURLKey = "guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateLike();
+
+		Ratings.viewRateLike(ratingLikeCount = 1);
+	}
+
 	@priority = 5
 	@refactordone
 	test CanDeleteDocumentInFolder {
@@ -212,6 +235,23 @@ definition {
 	}
 
 	@priority = 5
+	test CanDeleteRatingForFolder {
+		var responseFromFolder = DocumentFolderAPI.addDocumentFolder(
+			groupName = "Guest",
+			name = "DM Folder Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateStar(ratingStarCount = 5);
+
+		Ratings.revokeStarsRating();
+	}
+
+	@priority = 5
 	@refactordone
 	test CanDeleteSubFolderInSite {
 		property custom.properties = "dl.actions.visible=true";
@@ -258,6 +298,31 @@ definition {
 			dmFolderNameEdit = "DM Folder Name Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
+	}
+
+	@priority = 5
+	test CanEditRatingForFolder {
+		var responseFromFolder = DocumentFolderAPI.addDocumentFolder(
+			groupName = "Guest",
+			name = "DM Folder Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateStar(ratingStarCount = 5);
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "5.0",
+			ratingStarCount = 5);
+
+		Ratings.rateStar(ratingStarCount = 3);
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "3.0",
+			ratingStarCount = 3);
 	}
 
 	@priority = 5
@@ -456,6 +521,29 @@ definition {
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",
 			dmFolderName = "DM Folder Name");
+	}
+
+	@priority = 3
+	test ViewRatingForFolderAfterPostByAPI {
+		var responseFromFolder = DocumentFolderAPI.addDocumentFolder(
+			groupName = "Guest",
+			name = "DM Folder Name");
+
+		var documentFolderId = JSONPathUtil.getIdValue(response = ${responseFromFolder});
+
+		var response = DocumentFolderAPI.postRatingWithFolderID(
+			folderId = ${documentFolderId},
+			ratingValue = 1);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.expandInfo();
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "5.0",
+			ratingStarCount = 5);
 	}
 
 }

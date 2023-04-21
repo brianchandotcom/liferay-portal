@@ -60,11 +60,38 @@ public class AccountGroupServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountGroup
+			fetchAccountGroupByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.fetchAccountGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountGroup getAccountGroup(
 			long accountGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountGroupService.getAccountGroup(accountGroupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountGroup>
+			getAccountGroupsByAccountId(long accountEntryId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.getAccountGroupsByAccountId(
+			accountEntryId, start, end);
+	}
+
+	@Override
+	public int getAccountGroupsByAccountIdCount(long accountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.getAccountGroupsByAccountIdCount(
+			accountEntryId);
 	}
 
 	/**

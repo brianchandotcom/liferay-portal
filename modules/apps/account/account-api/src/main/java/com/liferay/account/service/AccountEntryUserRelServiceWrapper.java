@@ -108,6 +108,70 @@ public class AccountEntryUserRelServiceWrapper
 			accountEntryId, accountUserIds);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntryUserRel
+			fetchAccountEntryUserRel(long accountEntryUserRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.fetchAccountEntryUserRel(
+			accountEntryUserRelId);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntryUserRel
+			fetchAccountEntryUserRel(long accountEntryId, long accountUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.fetchAccountEntryUserRel(
+			accountEntryId, accountUserId);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntryUserRel getAccountEntryUserRel(
+			long accountEntryId, long accountUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.getAccountEntryUserRel(
+			accountEntryId, accountUserId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryUserRel>
+			getAccountEntryUserRelsByAccountEntryId(long accountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.
+			getAccountEntryUserRelsByAccountEntryId(accountEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryUserRel>
+			getAccountEntryUserRelsByAccountEntryId(
+				long accountEntryId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.
+			getAccountEntryUserRelsByAccountEntryId(accountEntryId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryUserRel>
+			getAccountEntryUserRelsByAccountUserId(long accountUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.
+			getAccountEntryUserRelsByAccountUserId(accountUserId);
+	}
+
+	@Override
+	public long getAccountEntryUserRelsCountByAccountEntryId(
+			long accountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.
+			getAccountEntryUserRelsCountByAccountEntryId(accountEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

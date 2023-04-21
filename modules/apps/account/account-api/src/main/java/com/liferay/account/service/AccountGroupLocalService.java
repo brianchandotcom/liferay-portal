@@ -291,6 +291,13 @@ public interface AccountGroupLocalService
 	public List<AccountGroup> getAccountGroupsByAccountGroupId(
 		long[] accountGroupIds);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountGroup> getAccountGroupsByAccountId(
+		long accountEntryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountGroupsByAccountIdCount(long accountEntryId);
+
 	/**
 	 * Returns the number of account groups.
 	 *

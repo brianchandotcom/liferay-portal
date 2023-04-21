@@ -321,6 +321,17 @@ public class AccountGroupLocalServiceUtil {
 		return getService().getAccountGroupsByAccountGroupId(accountGroupIds);
 	}
 
+	public static List<AccountGroup> getAccountGroupsByAccountId(
+		long accountEntryId, int start, int end) {
+
+		return getService().getAccountGroupsByAccountId(
+			accountEntryId, start, end);
+	}
+
+	public static int getAccountGroupsByAccountIdCount(long accountEntryId) {
+		return getService().getAccountGroupsByAccountIdCount(accountEntryId);
+	}
+
 	/**
 	 * Returns the number of account groups.
 	 *

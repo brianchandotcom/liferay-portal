@@ -55,12 +55,29 @@ public class AccountGroupRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountGroupRel deleteAccountGroupRel(
+			long accountGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupRelService.deleteAccountGroupRel(accountGroupRelId);
+	}
+
+	@Override
 	public void deleteAccountGroupRels(
 			long accountGroupId, String className, long[] classPKs)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_accountGroupRelService.deleteAccountGroupRels(
 			accountGroupId, className, classPKs);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroupRel fetchAccountGroupRel(
+			long accountGroupId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupRelService.fetchAccountGroupRel(
+			accountGroupId, className, classPK);
 	}
 
 	/**

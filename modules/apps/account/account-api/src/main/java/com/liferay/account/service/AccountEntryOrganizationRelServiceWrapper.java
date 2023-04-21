@@ -75,6 +75,53 @@ public class AccountEntryOrganizationRelServiceWrapper
 			accountEntryId, organizationIds);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntryOrganizationRel
+			fetchAccountEntryOrganizationRel(long accountEntryOrganizationRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryOrganizationRelService.
+			fetchAccountEntryOrganizationRel(accountEntryOrganizationRelId);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntryOrganizationRel
+			fetchAccountEntryOrganizationRel(
+				long accountEntryId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryOrganizationRelService.
+			fetchAccountEntryOrganizationRel(accountEntryId, organizationId);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntryOrganizationRel
+			getAccountEntryOrganizationRel(
+				long accountEntryId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryOrganizationRelService.
+			getAccountEntryOrganizationRel(accountEntryId, organizationId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryOrganizationRel>
+			getAccountEntryOrganizationRels(
+				long accountEntryId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryOrganizationRelService.
+			getAccountEntryOrganizationRels(accountEntryId, start, end);
+	}
+
+	@Override
+	public int getAccountEntryOrganizationRelsCount(long accountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryOrganizationRelService.
+			getAccountEntryOrganizationRelsCount(accountEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

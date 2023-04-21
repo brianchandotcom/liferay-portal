@@ -210,25 +210,23 @@ const Issue = ({issue}) => {
 
 	return (
 		issueTotal > 0 && (
-			<ClayList.Item action className="border-0 rounded-0" flex>
-				<ClayButton
-					className="w-100"
-					displayType="unstyled"
-					onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
+			<ClayButton
+				className="p-1 w-100"
+				displayType="unstyled"
+				onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
+			>
+				<span
+					className="align-items-center c-inner d-flex justify-content-between m-0 px-2 text-secondary w-100"
+					tabIndex="-1"
 				>
-					<span
-						className="align-items-center c-inner d-flex justify-content-between m-0 px-2 text-secondary w-100"
-						tabIndex="-1"
-					>
-						{issue.title}
+					{issue.title}
 
-						<ClayBadge
-							displayType={issueTotal === 0 ? 'success' : 'info'}
-							label={issueTotal}
-						/>
-					</span>
-				</ClayButton>
-			</ClayList.Item>
+					<ClayBadge
+						displayType={issueTotal === 0 ? 'success' : 'info'}
+						label={issueTotal}
+					/>
+				</span>
+			</ClayButton>
 		)
 	);
 };

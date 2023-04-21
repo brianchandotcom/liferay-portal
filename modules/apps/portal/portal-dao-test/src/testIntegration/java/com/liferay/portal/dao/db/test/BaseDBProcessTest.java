@@ -214,6 +214,22 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
+	public void testAlterColumnTypeChangeToDefaultNotNull() throws Exception {
+		try {
+			alterColumnType(
+				_TABLE_NAME, "nilColumn", "LONG default 2 not null");
+
+			Assert.fail();
+		}
+		catch (SQLException sqlException) {
+		}
+
+		Assert.assertFalse(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "nilColumn", "LONG default 2 not null"));
+	}
+	
+	@Test
 	public void testAlterColumnTypeChangeToNotNull() throws Exception {
 		alterColumnType(_TABLE_NAME, "nilColumn", "VARCHAR(75) not null");
 

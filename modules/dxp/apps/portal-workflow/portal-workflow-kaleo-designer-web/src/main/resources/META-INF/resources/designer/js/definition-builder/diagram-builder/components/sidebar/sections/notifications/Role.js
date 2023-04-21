@@ -39,11 +39,19 @@ const Role = ({notificationIndex}) => {
 				id:
 					selectedItem.data.notifications?.recipients?.[
 						notificationIndex
-					]?.sectionsData?.id || '',
+					]?.[0]?.sectionsData?.id ||
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.sectionsData?.id ||
+					'',
 				name:
 					selectedItem.data.notifications?.recipients?.[
 						notificationIndex
-					]?.sectionsData?.name || '',
+					]?.[0]?.sectionsData?.name ||
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.sectionsData?.name ||
+					'',
 			}}
 			inputLabel={Liferay.Language.get('role-id')}
 			selectLabel={Liferay.Language.get('role-name')}

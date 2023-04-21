@@ -21,8 +21,6 @@
 >
 
 	<%
-	StatusDisplayContext statusDisplayContext = new StatusDisplayContext(request);
-
 	int status = GetterUtil.getInteger(request.getAttribute("status_code"));
 
 	if (status == 0) {

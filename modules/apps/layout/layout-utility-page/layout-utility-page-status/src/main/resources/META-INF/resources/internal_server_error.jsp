@@ -19,4 +19,18 @@
 <liferay-layout:render-layout-utility-page-entry
 	type="<%= LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR %>"
 >
+	<h3 class="alert alert-danger">
+		<liferay-ui:message key="internal-server-error" />
+	</h3>
+
+	<liferay-ui:message key="an-error-occurred-while-accessing-the-requested-resource" />
+
+	<br /><br />
+
+	<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
+
+	<%
+	statusDisplayContext.logSessionErrors();
+	%>
+
 </liferay-layout:render-layout-utility-page-entry>

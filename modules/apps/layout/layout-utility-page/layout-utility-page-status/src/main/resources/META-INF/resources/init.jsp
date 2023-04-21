@@ -35,3 +35,5 @@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <liferay-theme:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>
+
+<% StatusDisplayContext statusDisplayContext = new StatusDisplayContext(request); %>

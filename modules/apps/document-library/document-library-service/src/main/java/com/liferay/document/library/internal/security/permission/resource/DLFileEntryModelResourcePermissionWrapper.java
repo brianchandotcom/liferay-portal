@@ -111,6 +111,10 @@ public class DLFileEntryModelResourcePermissionWrapper
 							return null;
 						}
 
+						if (actionId.equals(ActionKeys.DOWNLOAD)) {
+							actionId = ActionKeys.VIEW;
+						}
+
 						Boolean hasResourcePermission =
 							ResourcePermissionCheckerUtil.
 								containsResourcePermission(

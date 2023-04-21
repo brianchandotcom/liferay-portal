@@ -80,7 +80,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
-import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -128,9 +127,6 @@ public class ObjectEntryDTOConverter
 			long primaryKey)
 		throws Exception {
 
-		NestedFieldsSupplier<Map<String, Serializable>> nestedFieldsSupplier =
-			NestedFieldsContextThreadLocal.getNestedFieldsSupplier();
-
 		String objectFieldNameNestedField = StringUtil.replaceLast(
 			objectFieldName.substring(
 				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
@@ -143,7 +139,7 @@ public class ObjectEntryDTOConverter
 			new AtomicReference<>();
 
 		Map<String, Serializable> nestedFieldValues =
-			nestedFieldsSupplier.supply(
+			NestedFieldsSupplier.supply(
 				nestedFieldName -> {
 					if (!StringUtil.equals(nestedFieldName, objectFieldName) &&
 						!StringUtil.equals(
@@ -298,10 +294,7 @@ public class ObjectEntryDTOConverter
 			ObjectDefinition objectDefinition, long primaryKey)
 		throws Exception {
 
-		NestedFieldsSupplier<Map<String, Serializable>> nestedFieldsSupplier =
-			NestedFieldsContextThreadLocal.getNestedFieldsSupplier();
-
-		return nestedFieldsSupplier.supply(
+		return NestedFieldsSupplier.supply(
 			nestedFieldName -> {
 				ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.
@@ -422,10 +415,7 @@ public class ObjectEntryDTOConverter
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
 
-		NestedFieldsSupplier<AuditEvent[]> nestedFieldsSupplier =
-			NestedFieldsContextThreadLocal.getNestedFieldsSupplier();
-
-		return nestedFieldsSupplier.supply(
+		return NestedFieldsSupplier.supply(
 			"auditEvents",
 			nestedFieldNames -> {
 				if (!objectDefinition.isEnableObjectEntryHistory() ||

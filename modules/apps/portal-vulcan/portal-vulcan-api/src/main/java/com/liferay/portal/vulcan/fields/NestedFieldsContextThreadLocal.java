@@ -25,10 +25,6 @@ public class NestedFieldsContextThreadLocal {
 		return _nestedContextThreadLocal.get();
 	}
 
-	public static <T> NestedFieldsSupplier<T> getNestedFieldsSupplier() {
-		return new NestedFieldsSupplier<>(_nestedContextThreadLocal.get());
-	}
-
 	public static void setNestedFieldsContext(
 		NestedFieldsContext nestedFieldsContext) {
 

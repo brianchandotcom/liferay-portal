@@ -45,6 +45,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 
 <liferay-frontend:edit-form
 	action="<%= editLayoutSetURL %>"
+	cssClass="pt-0"
 	enctype="multipart/form-data"
 	method="post"
 	name="fm"

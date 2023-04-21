@@ -117,6 +117,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 
 		<liferay-frontend:edit-form
 			action='<%= HttpComponentsUtil.addParameter(editLayoutURL, "refererPlid", plid) %>'
+			cssClass="pt-0"
 			enctype="multipart/form-data"
 			method="post"
 			name="editLayoutFm"

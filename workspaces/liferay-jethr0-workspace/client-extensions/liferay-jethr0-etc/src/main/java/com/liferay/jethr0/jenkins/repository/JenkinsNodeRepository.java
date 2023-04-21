@@ -21,7 +21,9 @@ import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -137,6 +139,27 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 		}
 
 		return null;
+	}
+
+	public Set<JenkinsNode> getAll(JenkinsServer jenkinsServer) {
+		Set<JenkinsNode> jenkinsNodes = new HashSet<>();
+
+		Set<Long> jenkinsNodeIds =
+			_jenkinsServerToJenkinsNodesDALO.getChildEntityIds(jenkinsServer);
+
+		for (JenkinsNode jenkinsNode : getAll()) {
+			if (!jenkinsNodeIds.contains(jenkinsNode.getId())) {
+				continue;
+			}
+
+			jenkinsNode.setJenkinsServer(jenkinsServer);
+
+			jenkinsServer.addJenkinsNode(jenkinsNode);
+
+			jenkinsNodes.add(jenkinsNode);
+		}
+
+		return jenkinsNodes;
 	}
 
 	@Override

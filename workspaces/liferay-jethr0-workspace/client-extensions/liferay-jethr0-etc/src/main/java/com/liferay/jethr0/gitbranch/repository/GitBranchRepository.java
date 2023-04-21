@@ -20,6 +20,9 @@ import com.liferay.jethr0.gitbranch.dalo.GitBranchDALO;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectsToGitBranchesDALO;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +31,27 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class GitBranchRepository extends BaseEntityRepository<GitBranch> {
+
+	public Set<GitBranch> getAll(Project project) {
+		Set<GitBranch> projectGitBranches = new HashSet<>();
+
+		Set<Long> gitBranchIds = _projectsToGitBranchesDALO.getChildEntityIds(
+			project);
+
+		for (GitBranch gitBranch : getAll()) {
+			if (!gitBranchIds.contains(gitBranch.getId())) {
+				continue;
+			}
+
+			gitBranch.addProject(project);
+
+			project.addGitBranch(gitBranch);
+
+			projectGitBranches.add(gitBranch);
+		}
+
+		return projectGitBranches;
+	}
 
 	@Override
 	public GitBranchDALO getEntityDALO() {

@@ -21,6 +21,9 @@ import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -28,6 +31,27 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class BuildParameterRepository
 	extends BaseEntityRepository<BuildParameter> {
+
+	public Set<BuildParameter> getAll(Build build) {
+		Set<BuildParameter> buildParameters = new HashSet<>();
+
+		Set<Long> buildParameterIds =
+			_buildToBuildParametersDALO.getChildEntityIds(build);
+
+		for (BuildParameter buildParameter : getAll()) {
+			if (!buildParameterIds.contains(buildParameter.getId())) {
+				continue;
+			}
+
+			build.addBuildParameter(buildParameter);
+
+			buildParameter.setBuild(build);
+
+			buildParameters.add(buildParameter);
+		}
+
+		return buildParameters;
+	}
 
 	@Override
 	public EntityDALO<BuildParameter> getEntityDALO() {

@@ -20,6 +20,9 @@ import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.testsuite.dalo.ProjectsToTestSuitesDALO;
 import com.liferay.jethr0.testsuite.dalo.TestSuiteDALO;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +31,27 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class TestSuiteRepository extends BaseEntityRepository<TestSuite> {
+
+	public Set<TestSuite> getAll(Project project) {
+		Set<TestSuite> projectTestSuites = new HashSet<>();
+
+		Set<Long> testSuiteIds = _projectsToTestSuitesDALO.getChildEntityIds(
+			project);
+
+		for (TestSuite testSuite : getAll()) {
+			if (!testSuiteIds.contains(testSuite.getId())) {
+				continue;
+			}
+
+			project.addTestSuite(testSuite);
+
+			testSuite.addProject(project);
+
+			projectTestSuites.add(testSuite);
+		}
+
+		return projectTestSuites;
+	}
 
 	@Override
 	public TestSuiteDALO getEntityDALO() {

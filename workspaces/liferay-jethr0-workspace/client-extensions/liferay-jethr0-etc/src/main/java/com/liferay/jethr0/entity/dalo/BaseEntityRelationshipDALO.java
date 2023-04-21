@@ -70,6 +70,17 @@ public abstract class BaseEntityRelationshipDALO
 	}
 
 	@Override
+	public Set<Long> getChildEntityIds(T parentEntity) {
+		Set<Long> childEntityIds = new HashSet<>();
+
+		for (U childEntity : getChildEntities(parentEntity)) {
+			childEntityIds.add(childEntity.getId());
+		}
+
+		return childEntityIds;
+	}
+
+	@Override
 	public Set<T> getParentEntities(U childEntity) {
 		Set<T> parentEntities = new HashSet<>();
 
@@ -82,6 +93,17 @@ public abstract class BaseEntityRelationshipDALO
 		}
 
 		return parentEntities;
+	}
+
+	@Override
+	public Set<Long> getParentEntityIds(U childEntity) {
+		Set<Long> parentEntityIds = new HashSet<>();
+
+		for (T parentEntity : getParentEntities(childEntity)) {
+			parentEntityIds.add(parentEntity.getId());
+		}
+
+		return parentEntityIds;
 	}
 
 	@Override

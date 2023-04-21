@@ -14,10 +14,15 @@
 
 package com.liferay.jethr0.environment.repository;
 
+import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.dalo.BuildToEnvironmentsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.environment.dalo.EnvironmentDALO;
 import com.liferay.jethr0.project.dalo.ProjectToTasksDALO;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,6 +30,27 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Michael Hashimoto
  */
 public class EnvironmentRepository extends BaseEntityRepository<Environment> {
+
+	public Set<Environment> getAll(Build build) {
+		Set<Environment> buildEnvironments = new HashSet<>();
+
+		Set<Long> environmentIds = _buildToEnvironmentsDALO.getChildEntityIds(
+			build);
+
+		for (Environment environment : getAll()) {
+			if (!environmentIds.contains(environment.getId())) {
+				continue;
+			}
+
+			build.addEnvironment(environment);
+
+			environment.setBuild(build);
+
+			buildEnvironments.add(environment);
+		}
+
+		return buildEnvironments;
+	}
 
 	@Override
 	public EnvironmentDALO getEntityDALO() {
@@ -44,6 +70,9 @@ public class EnvironmentRepository extends BaseEntityRepository<Environment> {
 
 		return environment;
 	}
+
+	@Autowired
+	private BuildToEnvironmentsDALO _buildToEnvironmentsDALO;
 
 	@Autowired
 	private EnvironmentDALO _environmentDALO;

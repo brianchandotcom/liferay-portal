@@ -16,9 +16,13 @@ package com.liferay.jethr0.build.repository;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.dalo.BuildRunDALO;
+import com.liferay.jethr0.build.dalo.BuildToBuildRunsDALO;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -53,6 +57,26 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 		return add(buildRun);
 	}
 
+	public Set<BuildRun> getAll(Build build) {
+		Set<BuildRun> buildRuns = new HashSet<>();
+
+		Set<Long> buildRunIds = _buildToBuildRunsDALO.getChildEntityIds(build);
+
+		for (BuildRun buildRun : getAll()) {
+			if (!buildRunIds.contains(buildRun.getId())) {
+				continue;
+			}
+
+			build.addBuildRun(buildRun);
+
+			buildRun.setBuild(build);
+
+			buildRuns.add(buildRun);
+		}
+
+		return buildRuns;
+	}
+
 	@Override
 	public EntityDALO<BuildRun> getEntityDALO() {
 		return _buildRunDALO;
@@ -60,5 +84,8 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 
 	@Autowired
 	private BuildRunDALO _buildRunDALO;
+
+	@Autowired
+	private BuildToBuildRunsDALO _buildToBuildRunsDALO;
 
 }

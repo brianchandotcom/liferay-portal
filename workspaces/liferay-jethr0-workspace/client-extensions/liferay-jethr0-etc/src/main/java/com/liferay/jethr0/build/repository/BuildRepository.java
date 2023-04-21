@@ -25,8 +25,12 @@ import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
 import com.liferay.jethr0.task.Task;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +40,26 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BuildRepository extends BaseEntityRepository<Build> {
+
+	public Set<Build> getAll(Project project) {
+		Set<Build> projectBuilds = new HashSet<>();
+
+		Set<Long> buildIds = _projectToBuildsDALO.getChildEntityIds(project);
+
+		for (Build build : getAll()) {
+			if (!buildIds.contains(build.getId())) {
+				continue;
+			}
+
+			build.setProject(project);
+
+			project.addBuild(build);
+
+			projectBuilds.add(build);
+		}
+
+		return projectBuilds;
+	}
 
 	@Override
 	public EntityDALO<Build> getEntityDALO() {

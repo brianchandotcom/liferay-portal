@@ -32,9 +32,13 @@ public interface EntityRelationshipDALO<T extends Entity, U extends Entity> {
 
 	public EntityFactory<U> getChildEntityFactory();
 
+	public Set<Long> getChildEntityIds(T parentEntity);
+
 	public Set<T> getParentEntities(U childEntity);
 
 	public EntityFactory<T> getParentEntityFactory();
+
+	public Set<Long> getParentEntityIds(U childEntity);
 
 	public void updateChildEntities(T parentEntity);
 

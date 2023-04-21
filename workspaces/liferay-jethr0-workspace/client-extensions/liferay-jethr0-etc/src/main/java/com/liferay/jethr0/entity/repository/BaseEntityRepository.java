@@ -17,11 +17,11 @@ package com.liferay.jethr0.entity.repository;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,20 +40,20 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		T entity = entityDALO.create(jsonObject);
 
-		addAll(Collections.singletonList(entity));
+		addAll(Collections.singleton(entity));
 
 		return entity;
 	}
 
 	@Override
 	public T add(T entity) {
-		addAll(Collections.singletonList(entity));
+		addAll(Collections.singleton(entity));
 
 		return entity;
 	}
 
 	@Override
-	public void addAll(List<T> entities) {
+	public void addAll(Set<T> entities) {
 		if (entities == null) {
 			return;
 		}
@@ -74,10 +74,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 	}
 
 	@Override
-	public List<T> getAll() {
+	public Set<T> getAll() {
 		Map<Long, T> entitiesMap = _getEntitiesMap();
 
-		return new ArrayList<>(entitiesMap.values());
+		return new HashSet<>(entitiesMap.values());
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public abstract class BaseEntityRepository<T extends Entity>
 	}
 
 	@Override
-	public void remove(List<T> entities) {
+	public void remove(Set<T> entities) {
 		if (entities == null) {
 			return;
 		}
@@ -108,7 +108,7 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	@Override
 	public void remove(T entity) {
-		remove(Collections.singletonList(entity));
+		remove(Collections.singleton(entity));
 	}
 
 	@Override

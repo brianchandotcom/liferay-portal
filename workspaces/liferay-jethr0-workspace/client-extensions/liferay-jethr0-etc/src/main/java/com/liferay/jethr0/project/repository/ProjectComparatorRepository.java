@@ -26,6 +26,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Michael Hashimoto
  */
@@ -58,6 +61,30 @@ public class ProjectComparatorRepository
 		projectPrioritizer.addProjectComparator(projectComparator);
 
 		return add(projectComparator);
+	}
+
+	public Set<ProjectComparator> getAll(
+		ProjectPrioritizer projectPrioritizer) {
+
+		Set<ProjectComparator> projectComparators = new HashSet<>();
+
+		Set<Long> projectComparatorIds =
+			_projectPrioritizerToProjectComparatorsDALO.getChildEntityIds(
+				projectPrioritizer);
+
+		for (ProjectComparator projectComparator : getAll()) {
+			if (!projectComparatorIds.contains(projectComparator.getId())) {
+				continue;
+			}
+
+			projectPrioritizer.addProjectComparator(projectComparator);
+
+			projectComparator.setProjectPrioritizer(projectPrioritizer);
+
+			projectComparators.add(projectComparator);
+		}
+
+		return projectComparators;
 	}
 
 	@Override

@@ -72,6 +72,10 @@ public interface ContentDashboardItem<T> {
 
 	public Date getModifiedDate();
 
+	public default Date getReviewDate() {
+		return null;
+	}
+
 	public String getScopeName(Locale locale);
 
 	public List<SpecificInformation<?>> getSpecificInformationList(

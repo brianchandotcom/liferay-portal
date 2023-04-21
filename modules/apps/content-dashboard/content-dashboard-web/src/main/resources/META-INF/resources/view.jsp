@@ -288,6 +288,20 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						value="<%= contentDashboardItem.getModifiedDate() %>"
 					/>
 
+					<liferay-ui:search-container-column-text
+						cssClass="text-nowrap"
+						name="review-date"
+					>
+						<c:choose>
+							<c:when test="<%= contentDashboardItem.getReviewDate() != null %>">
+								<%= contentDashboardAdminDisplayContext.toString(contentDashboardItem.getReviewDate()) %>
+							</c:when>
+							<c:otherwise>
+								-
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
 							additionalProps='<%=

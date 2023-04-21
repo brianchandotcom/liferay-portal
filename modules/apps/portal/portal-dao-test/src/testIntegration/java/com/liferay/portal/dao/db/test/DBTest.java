@@ -237,6 +237,17 @@ public class DBTest {
 	}
 
 	@Test
+	public void testAlterTableAddColumnDefaultNotNull() throws Exception {
+		_db.alterTableAddColumn(
+			_connection, _TABLE_NAME_1, "testColumn",
+			"LONG default 0 not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "testColumn", "LONG default 0 not null"));
+	}
+
+	@Test
 	public void testAlterTableDropIndexedColumn() throws Exception {
 		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
 

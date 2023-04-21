@@ -54,12 +54,14 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 	</div>
 </c:if>
 
-<div class="<%= selLayout.isLayoutPrototypeLinkActive() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
-	<liferay-util:include page="/layout_type_resources.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="id" value="<%= selLayout.getType() %>" />
-		<liferay-util:param name="type" value="<%= selLayout.getType() %>" />
-	</liferay-util:include>
-</div>
+<c:if test="<%= !selLayout.isTypeAssetDisplay() && !selLayout.isTypeContent() %>">
+	<div class="<%= selLayout.isLayoutPrototypeLinkActive() ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />typeOptions">
+		<liferay-util:include page="/layout_type_resources.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="id" value="<%= selLayout.getType() %>" />
+			<liferay-util:param name="type" value="<%= selLayout.getType() %>" />
+		</liferay-util:include>
+	</div>
+</c:if>
 
 <aui:script sandbox="<%= true %>">
 	Liferay.Util.toggleBoxes(

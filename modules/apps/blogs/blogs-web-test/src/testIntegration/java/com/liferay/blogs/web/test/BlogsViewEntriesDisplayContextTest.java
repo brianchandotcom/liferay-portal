@@ -70,7 +70,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class BlogEntriesDisplayContextTest {
+public class BlogsViewEntriesDisplayContextTest {
 
 	@ClassRule
 	@Rule

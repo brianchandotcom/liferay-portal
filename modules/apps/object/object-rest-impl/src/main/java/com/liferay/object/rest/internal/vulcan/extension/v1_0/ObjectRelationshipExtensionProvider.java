@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.extension.validation.DefaultPropertyValidator;
 import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
-import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -67,13 +66,10 @@ public class ObjectRelationshipExtensionProvider
 			long companyId, String className, Object entity)
 		throws Exception {
 
-		NestedFieldsSupplier<Map<String, Serializable>> nestedFieldsSupplier =
-			NestedFieldsContextThreadLocal.getNestedFieldsSupplier();
-
 		ObjectDefinition objectDefinition = fetchObjectDefinition(
 			companyId, className);
 
-		return nestedFieldsSupplier.supply(
+		return NestedFieldsSupplier.supply(
 			nestedFieldName -> {
 				ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.

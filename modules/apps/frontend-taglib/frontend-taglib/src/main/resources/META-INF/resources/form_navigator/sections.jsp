@@ -42,7 +42,7 @@ for (FormNavigatorEntry<Object> curFormNavigatorEntry : formNavigatorEntries) {
 			<clay:sheet-section
 				cssClass="mb-5"
 			>
-				<h3 class="mb-4 text-uppercase"><%= label %></h3>
+				<h3 class="mb-4"><%= label %></h3>
 
 				<%
 				PortalIncludeUtil.include(pageContext, curFormNavigatorEntry::include);

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Taglib
 Bundle-SymbolicName: com.liferay.frontend.taglib
-Bundle-Version: 11.3.1
+Bundle-Version: 12.0.0
 Export-Package:\
 	com.liferay.frontend.taglib.servlet.taglib,\
 	com.liferay.frontend.taglib.servlet.taglib.util

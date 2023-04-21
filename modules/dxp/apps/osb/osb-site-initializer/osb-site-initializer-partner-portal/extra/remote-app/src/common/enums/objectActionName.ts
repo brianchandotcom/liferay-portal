@@ -11,4 +11,5 @@
 
 export enum ObjectActionName {
 	MDF_REQUEST = 'MDF Request',
+	MDF_CLAIM = 'MDF Claim',
 }

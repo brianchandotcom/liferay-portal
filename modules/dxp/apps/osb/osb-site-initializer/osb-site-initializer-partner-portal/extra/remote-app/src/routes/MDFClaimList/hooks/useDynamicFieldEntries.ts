@@ -37,12 +37,7 @@ export default function useDynamicFieldEntries() {
 	);
 
 	return {
-		accountRoleEntries: (accountId?: number) =>
-			userAccount?.accountBriefs.find(
-				(accountBrief) => accountBrief.id === accountId
-			)?.roleBriefs ?? [],
 		companiesEntries,
 		fieldEntries,
-		roleEntries: userAccount?.roleBriefs,
 	};
 }

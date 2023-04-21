@@ -1,8 +1,226 @@
-<div>
-	<lfr-drop-zone></lfr-drop-zone>
-	<p class="mb-2 text-neutral-7 text-paragraph" id="mdf-claim-status-display"></p>
-</div>
+[#assign mdfClaimId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
-<div class="status-buttons">
-	<lfr-drop-zone></lfr-drop-zone>
-</div>
+[#if mdfClaimId?has_content]
+	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Claim%27&pageSize=-1") /]
+	[#assign mdfClaim = restClient.get("/c/mdfclaims/${mdfClaimId}") /]
+
+	[#assign hasMarketingReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "MARKETING-REVIEW-STATUS-UPDATE")?has_content /]
+	[#assign hasApproveAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "APPROVE")?has_content /]
+	[#assign hasFinanceReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "IN-FINANCE-REVIEW-STATUS")?has_content /]
+	[#assign hasRequestMoreInfoAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "REQUEST-MORE-INFO")?has_content /]
+	[#assign hasRejectAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "REJECT")?has_content /]
+	[#assign hasExpireAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "EXPIRE")?has_content /]
+	[#assign hasDirectorReviewAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "IN-DIRECTOR-REVIEW-STATUS")?has_content /]
+	[#assign hasClaimPaidAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "CLAIM-PAID-STATUS")?has_content /]
+
+	[#assign mdfClaimStatusKey = mdfClaim.mdfClaimStatus.key /]
+
+	[#if mdfClaimStatusKey != 'approved']
+		[#if hasMarketingReviewAction || hasFinanceReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction || hasDirectorReviewAction]
+			<script>				
+				const updateStatus = async (status) => {
+					const responde = await fetch(
+						`/o/c/mdfclaims/${mdfRequestId}`,
+						{
+							body: `{"mdfClaimsStatus": "` + status +`"}`,
+							headers: {
+								'content-type': 'application/json',
+								'x-csrf-token': Liferay.authToken,
+							},
+							method: 'PUT',
+						}
+					);
+
+					if (responde.ok) {
+						location.reload();
+
+						return;
+					}
+
+					Liferay.Util.openToast({
+						message: 'The MDF Claim Status cannot be changed.',
+						type: 'danger',
+					});
+				};
+
+				const callModal = (status) => Liferay.Util.openConfirmModal({
+					message: 'Are you sure?',
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							updateStatus(status);
+						}
+					},
+				});
+			</script>	
+
+			<button
+				aria-expanded="false"
+				aria-haspopup="true"
+				class="btn btn-secondary dropdown-toggle"
+				data-toggle="liferay-dropdown"
+				id="dropdownMDFClaimStatus"
+				type="button"
+			>
+				${mdfClaim.mdfClaimStatus.name} [@clay.icon symbol="caret-bottom" /]
+			</button>
+			<ul
+				aria-labelledby="dropdownMDFClaimStatus"
+				class="dropdown-menu"
+				x-placement="bottom-start"
+			>
+				[#if mdfClaimStatusKey == 'pendingMarketingReview']
+					[#if hasRequestMoreInfoAction]
+						<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+							Request More Info
+						</li>
+					[/#if]
+
+					[#if hasRejectAction]
+						<li class="dropdown-item" onclick="callModal('rejected')">
+							Rejected
+						</li>
+					[/#if]
+
+					[#if hasApproveAction]
+						<li class="dropdown-item" onclick="callModal('approved')">
+							Approved
+						</li>
+					[/#if]
+
+					[#if hasFinanceReviewAction]
+						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+							In Finance Review
+						</li>
+					[/#if]
+				[/#if]
+
+				[#if mdfClaimStatusKey == 'approved']
+					[#if hasFinanceReviewAction]
+						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+							In Finance Review
+						</li>
+					[/#if]
+				[/#if]
+
+				[#if mdfClaimStatusKey == 'inFinanceReview']
+					[#if hasApproveAction]
+						<li class="dropdown-item" onclick="callModal('approved')">
+							Approved
+						</li>
+					[/#if]
+
+					[#if hasClaimPaidAction]
+						<li class="dropdown-item" onclick="callModal('claimPaid')">
+							Claim Paid
+						</li>
+					[/#if]
+
+					[#if hasRequestMoreInfoAction]
+						<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+							Request More Info
+						</li>
+					[/#if]
+
+					[#if hasRejectAction]
+						<li class="dropdown-item" onclick="callModal('rejected')">
+							Rejected
+						</li>
+					[/#if]
+
+					[#if hasDirectorReviewAction]
+						<li class="dropdown-item" onclick="callModal('inDirectorReview')">
+							Rejected
+						</li>
+					[/#if]
+				[/#if]
+
+				[#if mdfClaimStatusKey == 'moreInfoRequested']
+					[#if hasMarketingReviewAction]
+						<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+							Pending Marketing Review
+						</li>
+					[/#if]
+
+					[#if hasApproveAction]
+						<li class="dropdown-item" onclick="callModal('approved')">
+							Approved
+						</li>
+					[/#if]
+					
+					[#if hasClaimPaidAction]
+						<li class="dropdown-item" onclick="callModal('claimPaid')">
+							Claim Paid
+						</li>
+					[/#if]
+
+					[#if hasFinanceReviewAction]
+						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+							In Finance Review
+						</li>
+					[/#if]
+
+					[#if hasRejectAction]
+						<li class="dropdown-item" onclick="callModal('rejected')">
+							Rejected
+						</li>
+					[/#if]
+				[/#if]
+
+				[#if mdfClaimStatusKey == 'rejected']
+					[#if hasMarketingReviewAction]
+						<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+							Pending Marketing Review
+						</li>
+					[/#if]
+				[/#if]
+
+				[#if mdfClaimStatusKey == 'draft']
+					[#if hasMarketingReviewAction]
+						<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+							Pending Marketing Review
+						</li>
+					[/#if]
+				[/#if]
+
+				[#if mdfClaimStatusKey == 'inDirectorReview']
+					[#if hasApproveAction]
+						<li class="dropdown-item" onclick="callModal('approved')">
+							Approved
+						</li>
+					[/#if]
+
+					[#if hasFinanceReviewAction]
+						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+							In Finance Review
+						</li>
+					[/#if]
+
+					[#if hasRejectAction]
+						<li class="dropdown-item" onclick="callModal('rejected')">
+							Rejected
+						</li>
+					[/#if]
+
+					[#if hasRequestMoreInfoAction]
+						<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+							Request More Info
+						</li>
+					[/#if]
+				[/#if]
+
+				[#if mdfClaimStatusKey == 'canceled']
+					[#if hasApproveAction]
+						<li class="dropdown-item" onclick="callModal('approved')">
+							Approved
+						</li>
+					[/#if]
+				[/#if]
+			</ul>
+		[/#if]
+	[/#if]
+[#else]
+	<div class="alert alert-info">
+		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>
+		<p class="mb-0">It's important to note that this will only display the attributes of a display page when you view the published display page not when you are editing it.</p>
+	</div>
+[/#if]

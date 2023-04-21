@@ -13,7 +13,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useFormikContext} from 'formik';
-import {useCallback, useMemo} from 'react';
+import {useCallback} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
@@ -24,8 +24,6 @@ import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
 import {Status} from '../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
-import {isLiferayManager} from '../../../../common/utils/isLiferayManager';
-import {isPartnerManager} from '../../../../common/utils/isPartnerManager';
 import useDynamicFieldEntries from '../../../MDFClaimList/hooks/useDynamicFieldEntries';
 import ActivityClaimPanel from './components/ActivityClaimPanel';
 import useActivitiesAmount from './hooks/useActivitiesAmount';
@@ -56,12 +54,7 @@ const MDFClaimPage = ({
 		)
 	);
 
-	const {
-		accountRoleEntries,
-		companiesEntries,
-		fieldEntries,
-		roleEntries,
-	} = useDynamicFieldEntries();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
 	const claimsFiltered = mdfRequest.mdfReqToMDFClms?.filter(
 		(mdfRequestToMdfClaim) => {
@@ -77,30 +70,13 @@ const MDFClaimPage = ({
 		}
 	).length;
 
-	const isPartnerManagerRole = useMemo(() => {
-		if (companiesEntries) {
-			const roles = accountRoleEntries(
-				companiesEntries[0]?.value as number
-			);
-
-			return roles && isPartnerManager(roles);
-		}
-
-		return false;
-	}, [accountRoleEntries, companiesEntries]);
-
 	const getClaimPage = () => {
-		if (!fieldEntries || !roleEntries || !companiesEntries) {
+		if (!fieldEntries || !companiesEntries) {
 			return <ClayLoadingIndicator />;
 		}
 
-		const userAccountRolesCanEdit = isLiferayManager(roleEntries);
-
 		if (
 			values.id &&
-			!roleEntries &&
-			!isPartnerManagerRole &&
-			!userAccountRolesCanEdit &&
 			values.mdfClaimStatus?.key !== 'draft' &&
 			values.mdfClaimStatus?.key !== 'moreInfoRequested'
 		) {

@@ -14,7 +14,6 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useMemo} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
@@ -25,12 +24,13 @@ import DateFilter from '../../common/components/TableHeader/Filter/components/fi
 import Search from '../../common/components/TableHeader/Search';
 import {LiferayPicklistName} from '../../common/enums/liferayPicklistName';
 import {MDFClaimColumnKey} from '../../common/enums/mdfClaimColumnKey';
+import {ObjectActionName} from '../../common/enums/objectActionName';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
+import usePermissionActions from '../../common/hooks/usePermissionActions';
 import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
-import {isPartnerManager} from '../../common/utils/isPartnerManager';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 import useFilters from './hooks/useFilters';
 import useGetListItemsFromMDFClaims from './hooks/useGetListItemsFromMDFClaims';
@@ -42,12 +42,7 @@ type MDFClaimItem = {
 };
 
 const MDFClaimList = () => {
-	const {
-		accountRoleEntries,
-		companiesEntries,
-		fieldEntries,
-		roleEntries,
-	} = useDynamicFieldEntries();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
 
@@ -58,25 +53,11 @@ const MDFClaimList = () => {
 		filtersTerm
 	);
 
-	const isPartnerManagerRole = useMemo(() => {
-		if (companiesEntries) {
-			const roles = accountRoleEntries(
-				companiesEntries[0]?.value as number
-			);
-
-			return roles && isPartnerManager(roles);
-		}
-
-		return false;
-	}, [accountRoleEntries, companiesEntries]);
-
 	const siteURL = useLiferayNavigate();
 
-	const columns = getMDFClaimListColumns(
-		isPartnerManagerRole,
-		siteURL,
-		roleEntries
-	);
+	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);
+
+	const columns = getMDFClaimListColumns(siteURL, actions);
 
 	const getTable = (
 		totalCount: number,

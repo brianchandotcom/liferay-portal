@@ -64,7 +64,7 @@ export default function getMDFListColumns(
 						onClick: () =>
 							Liferay.Util.navigate(
 								`${siteURL}/${
-									PRMPageRoute.CREATE_MDF_REQUEST
+									PRMPageRoute.EDIT_MDF_REQUEST
 								}/#/${row[MDFColumnKey.ID]}`
 							),
 					});

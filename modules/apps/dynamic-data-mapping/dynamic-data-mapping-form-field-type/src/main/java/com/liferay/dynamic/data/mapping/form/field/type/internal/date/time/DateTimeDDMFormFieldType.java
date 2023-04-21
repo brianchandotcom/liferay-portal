@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=date-time",
 		"ddm.form.field.type.label=date-and-time",
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE_TIME,
-		"ddm.form.field.type.scope=forms"
+		"ddm.form.field.type.scope=forms,journal"
 	},
 	service = DDMFormFieldType.class
 )

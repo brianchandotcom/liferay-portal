@@ -15,20 +15,17 @@
 package com.liferay.portal.tools.db.virtual.instance.migration;
 
 import com.liferay.portal.tools.db.virtual.instance.migration.error.ErrorCodes;
+import com.liferay.portal.tools.db.virtual.instance.migration.internal.util.Database;
 import com.liferay.portal.tools.db.virtual.instance.migration.internal.util.Version;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -105,16 +102,12 @@ public class VirtualInstanceMigration {
 				}
 
 				if (commandLine.hasOption("destination-schema-prefix")) {
-					_schemaPrefix = commandLine.getOptionValue(
-						"destination-schema-prefix");
+					Database.setSchemaPrefix(
+						commandLine.getOptionValue(
+							"destination-schema-prefix"));
 				}
 
-				String destinationSchemaName = _getSchemaName(
-					destinationJdbcUrl);
-
-				if (!_checkIsDefaultPartition(
-						_destinationConnection, destinationSchemaName)) {
-
+				if (!Database.isDefaultPartition(_destinationConnection)) {
 					System.err.println(
 						"ERROR: Destination database is not the default " +
 							"partition");
@@ -150,28 +143,40 @@ public class VirtualInstanceMigration {
 		}
 	}
 
-	private static boolean _checkIsDefaultPartition(
-			Connection connection, String schemaName)
+	private static boolean _checkTables(
+			Connection sourceConnection, Connection destinationConnection)
 		throws SQLException {
 
-		boolean defaultPartition = true;
+		boolean valid = true;
 
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		List<String> sourceTables = Database.getTables(sourceConnection);
+		List<String> destinationTables = Database.getTables(
+			destinationConnection);
 
-		for (String tableName : _controlTableNames) {
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					schemaName, schemaName, tableName,
-					new String[] {"TABLE"})) {
+		for (String tableName : sourceTables) {
+			if (destinationTables.contains(tableName)) {
+				destinationTables.remove(tableName);
 
-				if (!resultSet.next()) {
-					defaultPartition = false;
-
-					break;
-				}
+				continue;
 			}
+
+			System.out.println(
+				"WARNING: Table " + tableName +
+					" is not present in destination database");
+			valid = false;
 		}
 
-		return defaultPartition;
+		if (!destinationTables.isEmpty()) {
+			for (String tableName : destinationTables) {
+				System.out.println(
+					"WARNING: Table " + tableName +
+						" is not present in source database");
+			}
+
+			valid = false;
+		}
+
+		return valid;
 	}
 
 	private static void _exitWithCode(int code) {
@@ -222,23 +227,6 @@ public class VirtualInstanceMigration {
 		return options;
 	}
 
-	private static String _getSchemaName(String jdbcUrl) {
-		String schemaName;
-
-		int paramsIndex = jdbcUrl.indexOf("?");
-
-		if (paramsIndex == -1) {
-			schemaName = jdbcUrl.substring(jdbcUrl.lastIndexOf("/") + 1);
-		}
-		else {
-			String onlyUrl = jdbcUrl.substring(0, paramsIndex);
-
-			schemaName = onlyUrl.substring(onlyUrl.lastIndexOf("/") + 1);
-		}
-
-		return schemaName;
-	}
-
 	private static void _printErrorMessages(
 		List<String> modules, String message) {
 
@@ -277,6 +265,8 @@ public class VirtualInstanceMigration {
 
 		valid &= _validateReleaseTableModules(
 			sourceConnection, destinationConnection);
+
+		valid &= _checkTables(sourceConnection, destinationConnection);
 
 		return valid;
 	}
@@ -404,10 +394,7 @@ public class VirtualInstanceMigration {
 		return stateOk;
 	}
 
-	private static final Set<String> _controlTableNames = new HashSet<>(
-		Arrays.asList("Company", "VirtualHost"));
 	private static Connection _destinationConnection;
-	private static String _schemaPrefix = "lpartition_";
 	private static Connection _sourceConnection;
 
 }

@@ -1,8 +1,10 @@
+assemble:
+    - into: static
 liferay-sample-instance-settings-d5f7j8:
     invitationEmailBody:
         en_US: |
             <p>
-                [$INVITE_SENDER_NAME$] has invited you to join [$ACCOUNT_NAME$].
+                😀 [$INVITE_SENDER_NAME$] has invited you to join [$ACCOUNT_NAME$].
             </p>
             <p>
                 Follow the link below to set up your account:<br />
@@ -12,7 +14,7 @@ liferay-sample-instance-settings-d5f7j8:
             </p>
     invitationEmailSubject:
         en_US: |
-            [$INVITE_SENDER_NAME$] has invited you to join [$ACCOUNT_NAME$]
+            😀 [$INVITE_SENDER_NAME$] has invited you to join [$ACCOUNT_NAME$]
     invitationTokenExpirationTime: 72
     name: Liferay Sample Instance Settings D5F7J8
     pid: com.liferay.account.configuration.AccountEntryEmailConfiguration

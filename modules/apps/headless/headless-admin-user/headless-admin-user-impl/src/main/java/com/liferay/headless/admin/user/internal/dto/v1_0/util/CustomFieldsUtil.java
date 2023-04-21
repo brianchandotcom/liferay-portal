@@ -38,12 +38,13 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.function.Function;
 
 /**
  * @author Javier Gamarra
@@ -107,6 +108,18 @@ public class CustomFieldsUtil {
 				continue;
 			}
 
+			if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
+				map.put(name, _toArray(data, ArrayUtil::toDoubleArray));
+
+				continue;
+			}
+
+			if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
+				map.put(name, _toArray(data, ArrayUtil::toFloatArray));
+
+				continue;
+			}
+
 			if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 				Geo geo = customValue.getGeo();
 
@@ -121,6 +134,29 @@ public class CustomFieldsUtil {
 				continue;
 			}
 
+			if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
+				map.put(name, _toArray(data, ArrayUtil::toIntArray));
+
+				continue;
+			}
+
+			if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
+				map.put(
+					name,
+					_toArray(
+						data,
+						(Function<Collection<Number>, Serializable>)
+							ArrayUtil::toLongArray));
+
+				continue;
+			}
+
+			if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
+				map.put(name, _toArray(data, ArrayUtil::toStringArray));
+
+				continue;
+			}
+
 			if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
 				map.put(
 					name,
@@ -128,40 +164,6 @@ public class CustomFieldsUtil {
 						locale, (String)data, customValue.getData_i18n()));
 
 				continue;
-			}
-
-			if (data instanceof List<?>) {
-				if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-					map.put(name, ArrayUtil.toDoubleArray((List<Number>)data));
-
-					continue;
-				}
-
-				if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-					map.put(name, ArrayUtil.toFloatArray((List<Number>)data));
-
-					continue;
-				}
-
-				if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-					map.put(name, ArrayUtil.toIntArray((List<Number>)data));
-
-					continue;
-				}
-
-				if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
-					map.put(name, ArrayUtil.toLongArray((List<Number>)data));
-
-					continue;
-				}
-
-				if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
-					List<?> list = (List<?>)data;
-
-					map.put(name, list.toArray(new String[0]));
-
-					continue;
-				}
 			}
 
 			map.put(name, (Serializable)data);
@@ -245,6 +247,16 @@ public class CustomFieldsUtil {
 			throw new IllegalArgumentException(
 				"Unable to parse date from " + data, parseException);
 		}
+	}
+
+	private static <T> Serializable _toArray(
+		Object data, Function<Collection<T>, Serializable> transformFunction) {
+
+		if (data instanceof Collection) {
+			return transformFunction.apply((Collection)data);
+		}
+
+		return (Serializable)data;
 	}
 
 	private static CustomField _toCustomField(

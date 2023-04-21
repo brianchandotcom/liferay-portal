@@ -19,6 +19,7 @@
 			"enum": [
 				"Error",
 				"ErrorCode404",
+				"ErrorCode500",
 				"TermsOfUse"
 			],
 			"title": "The type Schema",

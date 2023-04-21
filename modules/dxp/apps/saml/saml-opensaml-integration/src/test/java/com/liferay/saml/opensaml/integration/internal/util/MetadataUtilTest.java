@@ -17,13 +17,10 @@ package com.liferay.saml.opensaml.integration.internal.util;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
 
 import java.io.InputStream;
 
 import net.shibboleth.utilities.java.support.xml.BasicParserPool;
-import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -51,22 +48,13 @@ public class MetadataUtilTest {
 
 		PortletClassLoaderUtil.setServletContextName("saml-portlet");
 
-		OpenSamlBootstrap.bootstrap();
+		Class.forName(ConfigurationServiceBootstrapUtil.class.getName());
 
 		_metadataUtilImpl = new MetadataUtilImpl();
 
 		BasicParserPool parserPool = new BasicParserPool();
 
 		parserPool.initialize();
-
-		_metadataUtilImpl.parserPoolProvider = new ParserPoolProvider() {
-
-			@Override
-			public ParserPool getParserPool() {
-				return parserPool;
-			}
-
-		};
 	}
 
 	@AfterClass

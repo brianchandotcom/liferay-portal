@@ -22,6 +22,7 @@ import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,10 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 		throws Exception {
 
 		prepareServiceProvider(SP_ENTITY_ID);
+
+		ReflectionTestUtil.invoke(
+			new SecurityConfigurationBootstrap(), "activate",
+			new Class<?>[] {Map.class}, Collections.emptyMap());
 
 		Assert.assertTrue(
 			_checkMatch(

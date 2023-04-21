@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
 import com.liferay.saml.opensaml.integration.internal.credential.FileSystemKeyStoreManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.credential.KeyStoreCredentialResolver;
 import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierGeneratorStrategyFactory;
@@ -50,6 +48,7 @@ import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerIm
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
+import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.impl.SamlPeerBindingImpl;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
@@ -109,7 +108,7 @@ public abstract class BaseSamlTestCase {
 	public void setUp() throws Exception {
 		_setupProps();
 
-		OpenSamlBootstrap.bootstrap();
+		Class.forName(ConfigurationServiceBootstrapUtil.class.getName());
 
 		_setupConfiguration();
 		_setupIdentifiers();
@@ -644,16 +643,6 @@ public abstract class BaseSamlTestCase {
 			metadataManagerImpl, "_localEntityManager", credentialResolver);
 
 		ReflectionTestUtil.setFieldValue(
-			metadataManagerImpl, "_parserPoolProvider",
-			new ParserPoolProvider() {
-
-				@Override
-				public ParserPool getParserPool() {
-					return parserPool;
-				}
-
-			});
-		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_portal", portal);
 		ReflectionTestUtil.setFieldValue(
 			metadataManagerImpl, "_samlProviderConfigurationHelper",
@@ -777,16 +766,6 @@ public abstract class BaseSamlTestCase {
 				@Override
 				public HttpClient getHttpClient() {
 					return httpClient;
-				}
-
-			});
-		ReflectionTestUtil.setFieldValue(
-			samlBindingProvider, "_parserPoolProvider",
-			new ParserPoolProvider() {
-
-				@Override
-				public ParserPool getParserPool() {
-					return parserPool;
 				}
 
 			});

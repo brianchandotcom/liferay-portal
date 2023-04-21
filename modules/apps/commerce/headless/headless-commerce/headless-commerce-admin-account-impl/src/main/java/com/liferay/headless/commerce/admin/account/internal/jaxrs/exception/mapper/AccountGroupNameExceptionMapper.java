@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.account.exception.CommerceAccountGroupNameException;
+import com.liferay.account.exception.AccountGroupNameException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 )
 @Provider
 public class AccountGroupNameExceptionMapper
-	extends BaseExceptionMapper<CommerceAccountGroupNameException> {
+	extends BaseExceptionMapper<AccountGroupNameException> {
 
 	@Override
 	public String getErrorDescription() {

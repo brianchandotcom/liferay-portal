@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
@@ -135,7 +135,7 @@ public class LinkedProductResourceImpl
 					accountId = GetterUtil.getLong(accountIdString);
 				}
 				else {
-					throw new NoSuchAccountException();
+					throw new NoSuchEntryException();
 				}
 			}
 		}

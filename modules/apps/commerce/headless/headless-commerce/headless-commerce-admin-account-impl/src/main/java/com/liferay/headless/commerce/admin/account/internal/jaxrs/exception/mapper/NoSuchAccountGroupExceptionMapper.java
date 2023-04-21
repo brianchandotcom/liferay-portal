@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 )
 @Provider
 public class NoSuchAccountGroupExceptionMapper
-	extends BaseExceptionMapper<NoSuchAccountGroupException> {
+	extends BaseExceptionMapper<NoSuchGroupException> {
 
 	@Override
 	public String getErrorDescription() {

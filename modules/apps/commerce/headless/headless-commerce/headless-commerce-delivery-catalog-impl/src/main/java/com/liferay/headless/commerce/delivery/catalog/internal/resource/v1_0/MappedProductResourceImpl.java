@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.product.constants.CPField;
@@ -96,7 +96,7 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 
 		if (countUserCommerceAccounts > 1) {
 			if (accountId == null) {
-				throw new NoSuchAccountException();
+				throw new NoSuchEntryException();
 			}
 		}
 		else {

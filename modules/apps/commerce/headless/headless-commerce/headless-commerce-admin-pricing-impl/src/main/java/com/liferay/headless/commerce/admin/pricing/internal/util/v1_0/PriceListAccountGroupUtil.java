@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.util.v1_0;
 
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupService;
-import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
@@ -61,7 +61,7 @@ public class PriceListAccountGroupUtil {
 					priceListAccountGroup.
 						getAccountGroupExternalReferenceCode();
 
-				throw new NoSuchAccountGroupException(
+				throw new NoSuchGroupException(
 					"Unable to find account group with external reference " +
 						"code " + accountGroupExternalReferenceCode);
 			}

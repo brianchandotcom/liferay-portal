@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.account.exception.CommerceAccountUserRelEmailAddressException;
+import com.liferay.account.exception.AccountEntryUserRelEmailAddressException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 )
 @Provider
 public class AccountUserRelEmailAddressExceptionMapper
-	extends BaseExceptionMapper<CommerceAccountUserRelEmailAddressException> {
+	extends BaseExceptionMapper<AccountEntryUserRelEmailAddressException> {
 
 	@Override
 	public String getErrorDescription() {

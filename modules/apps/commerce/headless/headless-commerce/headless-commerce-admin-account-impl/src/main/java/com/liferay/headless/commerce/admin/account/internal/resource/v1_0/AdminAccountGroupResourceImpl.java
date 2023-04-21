@@ -15,11 +15,11 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.exception.NoSuchEntryException;
+import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountGroupService;
-import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AdminAccountGroup;
 import com.liferay.headless.commerce.admin.account.internal.odata.entity.v1_0.AccountGroupEntityModel;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
@@ -77,7 +77,7 @@ public class AdminAccountGroupResourceImpl
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountGroup == null) {
-			throw new NoSuchAccountGroupException(
+			throw new NoSuchGroupException(
 				"Unable to find account group with external reference code " +
 					externalReferenceCode);
 		}
@@ -128,7 +128,7 @@ public class AdminAccountGroupResourceImpl
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountGroup == null) {
-			throw new NoSuchAccountGroupException(
+			throw new NoSuchGroupException(
 				"Unable to find account group with external reference code " +
 					externalReferenceCode);
 		}
@@ -197,7 +197,7 @@ public class AdminAccountGroupResourceImpl
 				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountGroup == null) {
-			throw new NoSuchAccountGroupException(
+			throw new NoSuchGroupException(
 				"Unable to find account group with external reference code " +
 					externalReferenceCode);
 		}

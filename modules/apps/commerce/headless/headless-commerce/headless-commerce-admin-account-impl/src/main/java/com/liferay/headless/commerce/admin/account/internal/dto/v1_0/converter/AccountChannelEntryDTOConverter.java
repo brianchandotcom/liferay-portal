@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 
+import com.liferay.account.exception.NoSuchGroupAccountEntryRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
-import com.liferay.commerce.account.exception.NoSuchAccountGroupCommerceAccountRelException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.model.CommerceAddress;
@@ -69,7 +69,7 @@ public class AccountChannelEntryDTOConverter
 					(Long)dtoConverterContext.getId());
 
 		if (commerceChannelAccountEntryRel == null) {
-			throw new NoSuchAccountGroupCommerceAccountRelException();
+			throw new NoSuchGroupAccountEntryRelException();
 		}
 
 		return new AccountChannelEntry() {

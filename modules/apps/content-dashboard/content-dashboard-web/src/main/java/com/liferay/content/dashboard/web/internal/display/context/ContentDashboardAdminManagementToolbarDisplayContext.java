@@ -433,7 +433,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"title", "modified-date"};
+		return new String[] {"title", "modified-date", "review-date"};
 	}
 
 	private void _addContentDashboardItemFilterProviders(

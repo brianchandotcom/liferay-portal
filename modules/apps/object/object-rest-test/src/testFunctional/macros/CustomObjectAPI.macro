@@ -97,45 +97,11 @@ definition {
 		}
 
 		if (isSet(nestedField)) {
-			var size = ${numberOfRelatedObjectEntries};
-
-			if (!(isSet(externalReferenceCode))) {
-				var externalReferenceCode = "";
-			}
-
-			var entryBody = '''
-				"${nestedField}": [
-			''';
-			var i = 0;
-
-			while ((${i} != ${size}) && (maxIterations = "10")) {
-				var relatedEntryFieldValue = "${relatedEntryFieldName}${i}";
-
-				if (isSet(objectEntryId)) {
-					var relatedEntryFieldValue = "${relatedEntryFieldName}${i}-update";
-				}
-
-				var relatedObjectEntry = '''
-					"${relatedEntryFieldName}": "${relatedEntryFieldValue}"
-				''';
-
-				if (isSet(relatedEntryExternalReferenceCode)) {
-					var relatedObjectEntry = StringUtil.add("${relatedObjectEntry},", "\"externalReferenceCode\": \"${relatedEntryExternalReferenceCode}${i}\"", "");
-				}
-
-				var j = ${i} + 1;
-
-				if (${j} == ${size}) {
-					var entryBody = StringUtil.add(${entryBody}, "{${relatedObjectEntry}}]", "");
-				}
-				else {
-					var entryBody = StringUtil.add(${entryBody}, "{${relatedObjectEntry}},", "");
-				}
-
-				var i = ${i} + 1;
-			}
-
-			var body = StringUtil.add("${body},", ${entryBody}, "");
+			var body = CustomObjectAPI.nObjectEntryBodyAsNestedField(
+				body = ${body},
+				nestedField = ${nestedField},
+				numberOfRelatedObjectEntries = ${numberOfRelatedObjectEntries},
+				relatedEntryFieldName = ${relatedEntryFieldName});
 		}
 
 		return ${body};
@@ -201,6 +167,65 @@ definition {
 		var response = JSONCurlUtil.get(${curl});
 
 		return ${response};
+	}
+
+	macro nObjectEntryBodyAsNestedField {
+		Variables.assertDefined(parameterList = "${body},${nestedField},${numberOfRelatedObjectEntries},${relatedEntryFieldName}");
+
+		var size = ${numberOfRelatedObjectEntries};
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		if (${oneToManyChild} == "true") {
+			var entryBody = '''
+				"${nestedField}": {
+			''';
+		}
+		else {
+			var entryBody = '''
+				"${nestedField}": [
+			''';
+		}
+
+		var i = 0;
+
+		while ((${i} != ${size}) && (maxIterations = "10")) {
+			var relatedEntryFieldValue = "${relatedEntryFieldName}${i}";
+
+			if (isSet(objectEntryId) || isSet(userAccountId)) {
+				var relatedEntryFieldValue = "${relatedEntryFieldName}${i}-update";
+			}
+
+			var relatedObjectEntry = '''
+					"${relatedEntryFieldName}": "${relatedEntryFieldValue}"
+				''';
+
+			if (isSet(relatedEntryExternalReferenceCode)) {
+				var relatedObjectEntry = StringUtil.add("${relatedObjectEntry},", "\"externalReferenceCode\": \"${relatedEntryExternalReferenceCode}${i}\"", "");
+			}
+
+			var j = ${i} + 1;
+
+			if (${oneToManyChild} == "true") {
+				var entryBody = StringUtil.add(${entryBody}, "${relatedObjectEntry}}", "");
+			}
+			else {
+				if (${j} == ${size}) {
+					var entryBody = StringUtil.add(${entryBody}, "{${relatedObjectEntry}}]", "");
+				}
+				else {
+					var entryBody = StringUtil.add(${entryBody}, "{${relatedObjectEntry}},", "");
+				}
+			}
+
+			var i = ${i} + 1;
+		}
+
+		var body = StringUtil.add("${body},", ${entryBody}, "");
+
+		return ${body};
 	}
 
 	macro staticObjectDefinitionId {

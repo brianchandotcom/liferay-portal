@@ -1,0 +1,640 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-153117=true${line.separator}feature.flag.LPS-162964=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("And Given Subject object with name field created and published") {
+			var subjectObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "subject",
+				en_US_plural_label = "subjects",
+				name = "Subject",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given a many-to-many usersSubjects relationship created between system User and custom Subject objects") {
+			var userObjectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "User");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "usersSubjects",
+				name = "usersSubjects",
+				objectDefinitionId1 = ${userObjectDefinitionId},
+				objectDefinitionId2 = ${subjectObjectDefinitionId},
+				type = "manyToMany");
+		}
+
+		task ("And Given a many-to-many subjectsUsers relationship created between system User and custom Subject objects") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "subjectsUsers",
+				name = "subjectsUsers",
+				objectDefinitionId1 = ${subjectObjectDefinitionId},
+				objectDefinitionId2 = ${userObjectDefinitionId},
+				type = "manyToMany");
+		}
+
+		task ("And Given Student object with name field created and published") {
+			var studentObjectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given a one-to-many studentUsers relationship created between custom Student and system User objects") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "studentUsers",
+				name = "studentUsers",
+				objectDefinitionId1 = ${studentObjectDefinitionId},
+				objectDefinitionId2 = ${userObjectDefinitionId},
+				type = "oneToMany");
+		}
+
+		task ("And Given a one-to-many userStudents relationship created between system User and custom Student objects") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "userStudents",
+				name = "userStudents",
+				objectDefinitionId1 = ${userObjectDefinitionId},
+				objectDefinitionId2 = ${studentObjectDefinitionId},
+				type = "oneToMany");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedStudentsWithPatchParentSystemObjectInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Student entries are created with postUserAccount including userStudents with Student entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Josh",
+				nestedField = "userStudents",
+				numberOfRelatedObjectEntries = 3,
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including userStudents to update existing user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "userStudents",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then the existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+		}
+
+		task ("And Then new student entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = 5,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedStudentsWithPutParentSystemObjectInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Student entries are created with postUserAccount including userStudents with Student entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Caroline",
+				nestedField = "userStudents",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with putUserAccount and userAccountId including userStudents to update existing user account") {
+			UserAccountAPI.updateUserAccountAndRelatedObjects(
+				alternateName = "userUpdated",
+				emailAddress = "userupdated@liferay.com",
+				familyName = "Updated",
+				givenName = "Jane",
+				nestedField = "userStudents",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then the existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userupdated@liferay.com");
+		}
+
+		task ("And Then new Student entry is created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = 2,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedStudentWithPatchChildSystemObjectInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Student entry are created with postUserAccount including studentUsers with Student entry information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Josh",
+				nestedField = "studentUsers",
+				numberOfRelatedObjectEntries = 1,
+				oneToManyChild = "true",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including usersSubjects to update existing user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "studentUsers",
+				numberOfRelatedObjectEntries = 1,
+				oneToManyChild = "true",
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+		}
+
+		task ("And Then new Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = 2,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedStudentWithPutChildSystemObjectInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and a Student entry are created with postUserAccount including studentUsers with Student entry information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Jane",
+				nestedField = "studentUsers",
+				numberOfRelatedObjectEntries = 1,
+				oneToManyChild = "true",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with putUserAccount and userAccountId including studentUsers to update existing user account") {
+			UserAccountAPI.updateUserAccountAndRelatedObjects(
+				alternateName = "userUpdated",
+				emailAddress = "userupdated@liferay.com",
+				familyName = "Updated",
+				givenName = "Jane",
+				nestedField = "studentUsers",
+				numberOfRelatedObjectEntries = 1,
+				oneToManyChild = "true",
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then the existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userupdated@liferay.com");
+		}
+
+		task ("And Then new Student entry is created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = 2,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedSubjectsWithPatchParentSystemObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Subject entries are created with postUserAccount including usersSubjects with Subject entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Josh",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including usersSubjects to update existing user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 2,
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+		}
+
+		task ("And Then new Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = 3,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedSubjectsWithPatchRequestInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Subject entries are created with postUserAccount including usersSubjects with Subject entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Jane",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErc",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including subjectsUsers to update existing user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "subjectsUsers",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then the existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+		}
+
+		task ("And Then new Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = 2,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedSubjectsWithPutChildSystemObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Subject entries are created with postUserAccount including usersSubjects with Subject entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Jane",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErc",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with putUserAccount and userAccountId including subjectsUsers to update existing user account") {
+			UserAccountAPI.updateUserAccountAndRelatedObjects(
+				alternateName = "userUpdated",
+				emailAddress = "userupdated@liferay.com",
+				familyName = "Updated",
+				givenName = "Jane",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 3,
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then the existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userupdated@liferay.com");
+		}
+
+		task ("And Then new Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = 4,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndCreateRelatedSubjectsWithPutParentSystemObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Subject entries are created with postUserAccount including usersSubjects with Subject entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Jane",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 3,
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with putUserAccount and userAccountId including usersSubjects to update existing user account") {
+			UserAccountAPI.updateUserAccountAndRelatedObjects(
+				alternateName = "userUpdated",
+				emailAddress = "userupdated@liferay.com",
+				familyName = "Updated",
+				givenName = "Jane",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 3,
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then existing user account is updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userupdated@liferay.com");
+		}
+
+		task ("And Then new Subject entries are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = 6,
+				objectJsonPath = "$.totalCount");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndRelatedStudentsWithPatchParentSystemObjectInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Student entries with custom ERCs are created with postUserAccount including userStudents with Student entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Brenda",
+				nestedField = "userStudents",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErcUserStudents",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including userStudents with modified name of Students and their ERCs to update user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "userStudents",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErcUserStudents",
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then both the existing user account and student entries are updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = "name0-update",
+				objectJsonPath = "$.items[*].name");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndRelatedStudentWithPatchChildSystemObjectInOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Student entry with custom ERC are created with postUserAccount including studentUsers with Student entry information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Margaret",
+				nestedField = "studentUsers",
+				numberOfRelatedObjectEntries = 1,
+				oneToManyChild = "true",
+				relatedEntryExternalReferenceCode = "customErcStudentUsers",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including studentUsers with modified name of Student and its ERC to update user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "studentUsers",
+				numberOfRelatedObjectEntries = 1,
+				oneToManyChild = "true",
+				relatedEntryExternalReferenceCode = "customErcStudentUsers",
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then both the existing user account and student are updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "students",
+				expectedValues = "name0-update",
+				objectJsonPath = "$.items[*].name");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndRelatedSubjectsWithPatchParentSystemObjectInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Subject entries with custom ERCs are created with postUserAccount including usersSubjects with Subject entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Jane",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErc",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including usersSubjects with modified names of Subject entries and their ERCs to update user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErc",
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then both User and Subject entries are updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = "name0-update",
+				objectJsonPath = "$.items[*].name");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanUpdateUserAndRelatedSubjectsWithPatchRequestInManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("And Given a new user account and Subject entries with custom ERCs are created with postUserAccount including usersSubjects with Subject entries information") {
+			var response = UserAccountAPI.createUserAccountAndRelatedObjects(
+				alternateName = "userCreated",
+				emailAddress = "usercreated@liferay.com",
+				familyName = "Created",
+				givenName = "Brandon",
+				nestedField = "usersSubjects",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErcUsersSubjects",
+				relatedEntryFieldName = "name");
+
+			var userAccountId = JSONPathUtil.getIdValue(response = ${response});
+		}
+
+		task ("When with patchUserAccount and userAccountId including subjectsUsers with modified names of Subject entries and their ERCs to update user account") {
+			UserAccountAPI.partialUpdateUserAccountAndRelatedObjects(
+				emailAddress = "userpartiallyupdated@liferay.com",
+				nestedField = "subjectsUsers",
+				numberOfRelatedObjectEntries = 1,
+				relatedEntryExternalReferenceCode = "customErcUsersSubjects",
+				relatedEntryFieldName = "name",
+				userAccountId = ${userAccountId});
+		}
+
+		task ("Then both User and Subject entries are updated") {
+			var currentEmailAddress = JSONUserGetter.getEmailAddressNoSelenium(userId = ${userAccountId});
+
+			TestUtils.assertEquals(
+				actual = ${currentEmailAddress},
+				expected = "userpartiallyupdated@liferay.com");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = 1,
+				objectJsonPath = "$.totalCount");
+
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "subjects",
+				expectedValues = "name0-update",
+				objectJsonPath = "$.items[*].name");
+		}
+	}
+
+}

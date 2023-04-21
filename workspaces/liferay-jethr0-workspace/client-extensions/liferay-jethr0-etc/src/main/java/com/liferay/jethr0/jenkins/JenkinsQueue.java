@@ -52,6 +52,14 @@ public class JenkinsQueue {
 		}
 
 		for (JenkinsServer jenkinsServer : _jenkinsServerRepository.getAll()) {
+			for (JenkinsNode jenkinsNode :
+					_jenkinsNodeRepository.getAll(jenkinsServer)) {
+
+				jenkinsServer.addJenkinsNode(jenkinsNode);
+
+				jenkinsNode.setJenkinsServer(jenkinsServer);
+			}
+
 			jenkinsServer.update();
 
 			for (JenkinsNode jenkinsNode : jenkinsServer.getJenkinsNodes()) {

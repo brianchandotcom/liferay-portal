@@ -15,6 +15,8 @@
 package com.liferay.jethr0.project.queue;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.gitbranch.repository.GitBranchRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.comparator.BaseProjectComparator;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
@@ -22,11 +24,15 @@ import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 import com.liferay.jethr0.project.repository.ProjectComparatorRepository;
 import com.liferay.jethr0.project.repository.ProjectPrioritizerRepository;
 import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.task.repository.TaskRepository;
+import com.liferay.jethr0.testsuite.repository.TestSuiteRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +54,7 @@ public class ProjectQueue {
 		sort();
 	}
 
-	public void addProjects(List<Project> projects) {
+	public void addProjects(Set<Project> projects) {
 		if (projects == null) {
 			return;
 		}
@@ -73,29 +79,35 @@ public class ProjectQueue {
 	}
 
 	public void initialize() {
+		for (ProjectPrioritizer projectPrioritizer :
+				_projectPrioritizerRepository.getAll()) {
+
+			_projectComparatorRepository.getAll(projectPrioritizer);
+		}
+
 		setProjectPrioritizer(_getDefaultProjectPrioritizer());
 
-		addProjects(
-			_projectRepository.getByStates(
-				Project.State.QUEUED, Project.State.RUNNING));
+		Set<Project> projects = new HashSet<>();
+
+		for (Project project :
+				_projectRepository.getByStates(
+					Project.State.QUEUED, Project.State.RUNNING)) {
+
+			_buildRepository.getAll(project);
+			_gitBranchRepository.getAll(project);
+			_taskRepository.getAll(project);
+			_testSuiteRepository.getAll(project);
+
+			projects.add(project);
+		}
+
+		addProjects(projects);
 
 		for (Project project : getProjects()) {
-			Project.State projectState = Project.State.COMPLETED;
+			System.out.println(project);
 
-			for (Build projectBuild : project.getBuilds()) {
-				Build.State buildState = projectBuild.getState();
-
-				if (buildState != Build.State.COMPLETED) {
-					projectState = Project.State.RUNNING;
-
-					break;
-				}
-			}
-
-			if (projectState == Project.State.COMPLETED) {
-				project.setState(projectState);
-
-				_projectRepository.update(project);
+			for (Build build : project.getBuilds()) {
+				System.out.println("> " + build);
 			}
 		}
 	}
@@ -145,6 +157,12 @@ public class ProjectQueue {
 		return projectPrioritizer;
 	}
 
+	@Autowired
+	private BuildRepository _buildRepository;
+
+	@Autowired
+	private GitBranchRepository _gitBranchRepository;
+
 	@Value("${liferay.jethr0.project.prioritizer}")
 	private String _liferayProjectPrioritizer;
 
@@ -162,6 +180,12 @@ public class ProjectQueue {
 	private final List<Project> _projects = new ArrayList<>();
 	private final List<ProjectComparator> _sortedProjectComparators =
 		new ArrayList<>();
+
+	@Autowired
+	private TaskRepository _taskRepository;
+
+	@Autowired
+	private TestSuiteRepository _testSuiteRepository;
 
 	private class PrioritizedProjectComparator implements Comparator<Project> {
 

@@ -15,9 +15,16 @@
 package com.liferay.jethr0.build.queue;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.repository.BuildParameterRepository;
+import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.build.repository.BuildRunRepository;
+import com.liferay.jethr0.environment.repository.EnvironmentRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
 import com.liferay.jethr0.project.queue.ProjectQueue;
+import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.task.repository.TaskRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +88,20 @@ public class BuildQueue {
 	}
 
 	public void initialize() {
+		for (Project project : _projectQueue.getProjects()) {
+			for (Build build : project.getBuilds()) {
+				_buildRunRepository.getAll(build);
+				_buildParameterRepository.getAll(build);
+				_environmentRepository.getAll(build);
+				_taskRepository.getAll(build);
+			}
+		}
+
 		_sort();
+
+		for (Build build : getBuilds()) {
+			System.out.println(build);
+		}
 	}
 
 	public Build nextBuild(JenkinsNode jenkinsNode) {
@@ -150,8 +170,29 @@ public class BuildQueue {
 	}
 
 	@Autowired
+	private BuildParameterRepository _buildParameterRepository;
+
+	@Autowired
+	private BuildRepository _buildRepository;
+
+	@Autowired
+	private BuildRunRepository _buildRunRepository;
+
+	@Autowired
+	private EnvironmentRepository _environmentRepository;
+
+	@Autowired
 	private ProjectQueue _projectQueue;
 
+	@Autowired
+	private ProjectRepository _projectRepository;
+
+	@Autowired
+	private ProjectToBuildsDALO _projectToBuildsDALO;
+
 	private final List<Build> _sortedBuilds = new ArrayList<>();
+
+	@Autowired
+	private TaskRepository _taskRepository;
 
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -63,6 +64,9 @@ public class FileEntryInfoItemFormVariationsProvider
 		return new InfoItemFormVariation(
 			groupId, String.valueOf(dlFileEntryType.getFileEntryTypeId()),
 			InfoLocalizedValue.<String>builder(
+			).defaultLocale(
+				LocaleUtil.fromLanguageId(
+					dlFileEntryType.getDefaultLanguageId())
 			).values(
 				dlFileEntryType.getNameMap()
 			).build());
@@ -103,6 +107,9 @@ public class FileEntryInfoItemFormVariationsProvider
 					dlFileEntryType.getGroupId(),
 					String.valueOf(dlFileEntryType.getFileEntryTypeId()),
 					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							dlFileEntryType.getDefaultLanguageId())
 					).values(
 						dlFileEntryType.getNameMap()
 					).build()));

@@ -94,7 +94,28 @@ public class OpenAPIResourceTest {
 
 	@FeatureFlags("LPS-180090")
 	@Test
-	public void testGetActionsOpenAPI() throws Exception {
+	public void testGetCollectionActionsOpenAPI() throws Exception {
+		List<String> availableActions = Arrays.asList(
+			"create", "updateBatch", "createBatch", "deleteBatch");
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		JSONObject actionsJSONObject = _getActionsJSONObject(
+			jsonObject, "Page" + _objectDefinition1.getShortName());
+
+		for (String action : availableActions) {
+			JSONObject actionJSONObject = actionsJSONObject.getJSONObject(
+				action);
+
+			Assert.assertNotNull(actionJSONObject.get("properties"));
+		}
+	}
+
+	@FeatureFlags("LPS-180090")
+	@Test
+	public void testGetEntityActionsOpenAPI() throws Exception {
 		String objectActionName = RandomTestUtil.randomString();
 
 		List<String> availableActions = Arrays.asList(
@@ -115,22 +136,14 @@ public class OpenAPIResourceTest {
 			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
-		JSONObject actionsJSONObject = jsonObject.getJSONObject(
-			"components"
-		).getJSONObject(
-			"schemas"
-		).getJSONObject(
-			_objectDefinition1.getShortName()
-		).getJSONObject(
-			"properties"
-		).getJSONObject(
-			"actions"
-		).getJSONObject(
-			"properties"
-		);
+		JSONObject actionsJSONObject = _getActionsJSONObject(
+			jsonObject, _objectDefinition1.getShortName());
 
 		for (String action : availableActions) {
-			Assert.assertNotNull(actionsJSONObject.get(action));
+			JSONObject actionJSONObject = actionsJSONObject.getJSONObject(
+				action);
+
+			Assert.assertNotNull(actionJSONObject.get("properties"));
 		}
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
@@ -247,6 +260,24 @@ public class OpenAPIResourceTest {
 				_objectDefinitionLocalService.updateObjectDefinition(
 					_objectDefinition1);
 		}
+	}
+
+	private JSONObject _getActionsJSONObject(
+		JSONObject jsonObject, String schemaName) {
+
+		return jsonObject.getJSONObject(
+			"components"
+		).getJSONObject(
+			"schemas"
+		).getJSONObject(
+			schemaName
+		).getJSONObject(
+			"properties"
+		).getJSONObject(
+			"actions"
+		).getJSONObject(
+			"properties"
+		);
 	}
 
 	private String _getNestedEntitySchema(

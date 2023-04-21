@@ -16,6 +16,9 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.ServletContext;
 
@@ -45,6 +48,17 @@ public class LayoutLayoutFormNavigatorEntry
 	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Override
+	public boolean isVisible(User user, Layout layout) {
+		if ((!layout.isTypeAssetDisplay() && !layout.isTypeContent()) ||
+			Validator.isNotNull(layout.getLayoutPrototypeUuid())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -786,7 +786,7 @@ definition {
 			fieldLabel = "Host Address",
 			text = "test");
 
-		PortletEntry.save();
+		SemanticSearch.saveAndContinue();
 	}
 
 	test ViewTxtaiSystemSettingsTestConfiguration {

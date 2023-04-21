@@ -15,15 +15,19 @@
 package com.liferay.portal.tools.db.virtual.instance.migration;
 
 import com.liferay.portal.tools.db.virtual.instance.migration.error.ErrorCodes;
+import com.liferay.portal.tools.db.virtual.instance.migration.internal.util.Version;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
@@ -116,6 +120,10 @@ public class VirtualInstanceMigration {
 							"partition");
 
 					_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
+				}
+
+				if (!_validate(_sourceConnection, _destinationConnection)) {
+					_exitWithCode(ErrorCodes.VALIDATION_ERROR);
 				}
 			}
 			catch (ParseException parseException) {
@@ -229,6 +237,171 @@ public class VirtualInstanceMigration {
 		}
 
 		return schemaName;
+	}
+
+	private static void _printErrorMessages(
+		List<String> modules, String message) {
+
+		for (String module : modules) {
+			System.out.println("ERROR: Module " + module + message);
+		}
+	}
+
+	private static void _printWarningMessages(
+		List<String> modules, String message) {
+
+		for (String module : modules) {
+			System.out.println("WARNING: Module " + module + message);
+		}
+	}
+
+	private static boolean _validate(
+			Connection sourceConnection, Connection destinationConnection)
+		throws SQLException {
+
+		boolean valid = true;
+
+		if (!_validateReleaseTableState(sourceConnection)) {
+			System.out.println(
+				"ERROR: Source database Release_ table has records with an " +
+					"invalid state_");
+			valid = false;
+		}
+
+		if (!_validateReleaseTableState(destinationConnection)) {
+			System.out.println(
+				"ERROR: Destination database Release_ table has records with " +
+					"an invalid state_");
+			valid = false;
+		}
+
+		valid &= _validateReleaseTableModules(
+			sourceConnection, destinationConnection);
+
+		return valid;
+	}
+
+	private static boolean _validateReleaseTableModules(
+			Connection sourceConnection, Connection destinationConnection)
+		throws SQLException {
+
+		boolean valid = true;
+
+		try (PreparedStatement preparedStatement1 =
+				sourceConnection.prepareStatement(
+					"select servletContextName, schemaVersion, verified from " +
+						" Release_");
+			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+
+			List<String> missingModules = new ArrayList<>();
+			List<String> missingServiceModules = new ArrayList<>();
+			List<String> lowerVersionModules = new ArrayList<>();
+			List<String> higherVersionModules = new ArrayList<>();
+			List<String> sourceUnverifiedModules = new ArrayList<>();
+			List<String> destinationUnverifiedModules = new ArrayList<>();
+
+			while (resultSet1.next()) {
+				String sourceServletContextName = resultSet1.getString(1);
+				Version sourceVersion = Version.parseVersion(
+					resultSet1.getString(2));
+				boolean sourceVerified = resultSet1.getBoolean(3);
+
+				try (PreparedStatement preparedStatement2 =
+						destinationConnection.prepareStatement(
+							"select servletContextName, schemaVersion, " +
+								"verified from Release_ where " +
+									"servletContextName = ?")) {
+
+					preparedStatement2.setString(1, sourceServletContextName);
+
+					try (ResultSet resultSet2 =
+							preparedStatement2.executeQuery()) {
+
+						if (!resultSet2.next()) {
+							if (sourceServletContextName.endsWith(".service")) {
+								missingServiceModules.add(
+									sourceServletContextName);
+							}
+							else {
+								missingModules.add(sourceServletContextName);
+							}
+
+							continue;
+						}
+
+						Version destinationVersion = Version.parseVersion(
+							resultSet2.getString(2));
+						boolean destinationVerified = resultSet2.getBoolean(3);
+
+						if (sourceVersion.compareTo(destinationVersion) < 0) {
+							lowerVersionModules.add(sourceServletContextName);
+						}
+						else if (sourceVersion.compareTo(destinationVersion) >
+									0) {
+
+							higherVersionModules.add(sourceServletContextName);
+						}
+
+						if (sourceVerified && !destinationVerified) {
+							destinationUnverifiedModules.add(
+								sourceServletContextName);
+						}
+						else if (!sourceVerified && destinationVerified) {
+							sourceUnverifiedModules.add(
+								sourceServletContextName);
+						}
+					}
+				}
+			}
+
+			_printErrorMessages(
+				missingServiceModules,
+				" will not be available in the destination");
+			_printErrorMessages(
+				lowerVersionModules,
+				" needs to be upgraded in source database before the " +
+					"migration");
+			_printErrorMessages(
+				higherVersionModules,
+				" is in a lower version in destination database");
+			_printErrorMessages(
+				sourceUnverifiedModules,
+				" needs to be verified in the source before the migration");
+			_printErrorMessages(
+				destinationUnverifiedModules,
+				" needs to be verified in the destination before the " +
+					"migration");
+			_printWarningMessages(
+				missingModules, " will not be available in the destination");
+
+			if (!missingModules.isEmpty() || !missingServiceModules.isEmpty() ||
+				!lowerVersionModules.isEmpty() ||
+				!higherVersionModules.isEmpty() ||
+				!sourceUnverifiedModules.isEmpty() ||
+				!destinationUnverifiedModules.isEmpty()) {
+
+				valid = false;
+			}
+		}
+
+		return valid;
+	}
+
+	private static boolean _validateReleaseTableState(Connection connection)
+		throws SQLException {
+
+		boolean stateOk = true;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select servletContextName from Release_ where state_ != 0;");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				stateOk = false;
+			}
+		}
+
+		return stateOk;
 	}
 
 	private static final Set<String> _controlTableNames = new HashSet<>(

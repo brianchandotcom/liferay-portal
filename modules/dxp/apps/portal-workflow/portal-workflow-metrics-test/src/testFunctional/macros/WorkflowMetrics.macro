@@ -671,7 +671,7 @@ definition {
 
 		var scriptContent = TestCase.getFileContent(fileName = "addUsersWithRoles.groovy");
 
-		var scriptContent = StringUtil.regexReplaceFirst(${scriptContent}, numberOfUsers = 0, numberOfUsers = ${numberOfUsers});
+		var scriptContent = StringUtil.regexReplaceFirst(${scriptContent}, "numberOfUsers = 0", "numberOfUsers = ${numberOfUsers}");
 
 		ServerAdministration.executeScript(
 			language = "Groovy",

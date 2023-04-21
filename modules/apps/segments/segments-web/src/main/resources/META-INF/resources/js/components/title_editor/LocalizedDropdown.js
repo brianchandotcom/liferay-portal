@@ -12,15 +12,17 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 function LocalizedDropdown({
 	availableLanguages = [],
 	defaultLang,
 	initialLang,
-	initialOpen,
 	onLanguageChange,
 }) {
 	const [currentLangKey, setCurrentLangKey] = useState(
@@ -29,31 +31,11 @@ function LocalizedDropdown({
 	const [currentLangTag, setCurrentLangTag] = useState(
 		keyLangToLanguageTag(initialLang, false)
 	);
-	const [open, setOpen] = useState(initialOpen);
-
-	const timerRef = useRef(null);
-
-	const onButtonClick = () => {
-		setOpen(!open);
-	};
-
-	const onButtonBlur = () => {
-		if (open) {
-			timerRef.current = setTimeout(() => {
-				setOpen(false);
-			}, 200);
-		}
-	};
 
 	const onChangeLanguage = (langKey) => {
 		setCurrentLangKey(keyLangToLanguageTag(langKey));
 		setCurrentLangTag(keyLangToLanguageTag(langKey, false));
-		setOpen(false);
 		onLanguageChange(langKey);
-	};
-
-	const onItemFocus = () => {
-		clearTimeout(timerRef.current);
 	};
 
 	const onLanguageClick = (langKey) => () => onChangeLanguage(langKey);
@@ -65,88 +47,67 @@ function LocalizedDropdown({
 	};
 
 	return (
-		<div
-			className={`dropdown postion-relative lfr-icon-menu ${
-				open ? 'open' : ''
-			}`}
-		>
-			<button
-				aria-expanded="false"
-				aria-haspopup="true"
-				className="btn btn-monospaced btn-secondary dropdown-toggle"
-				data-testid="localized-dropdown-button"
-				onBlur={onButtonBlur}
-				onClick={onButtonClick}
-				role="button"
-				title=""
-				type="button"
-			>
-				<span className="inline-item">
+		<ClayDropDown
+			closeOnClick
+			hasLeftSymbols
+			hasRightSymbols
+			trigger={
+				<ClayButton
+					className="btn-monospaced"
+					data-testid="localized-dropdown-button"
+					displayType="secondary"
+				>
 					<ClayIcon key={currentLangKey} symbol={currentLangKey} />
-				</span>
 
-				<span className="btn-section">{currentLangTag}</span>
-			</button>
+					<span className="btn-section">{currentLangTag}</span>
+				</ClayButton>
+			}
+		>
+			<ClayDropDown.ItemList>
+				{availableLanguages.map((entry) => {
+					const {hasValue, key} = entry;
 
-			{open && (
-				<ul className="d-block dropdown-menu" role="menu">
-					{availableLanguages.map((entry) => {
-						const {hasValue, key} = entry;
+					return (
+						<ClayDropDown.Item
+							key={key}
+							onClick={onLanguageClick(key)}
+							onKeyDown={onLanguageKeyboard(key)}
+							role="presentation"
+							symbolLeft={keyLangToLanguageTag(key)}
+						>
+							{currentLangKey === keyLangToLanguageTag(key) ? (
+								<strong>
+									{keyLangToLanguageTag(key, false)}
+								</strong>
+							) : (
+								<span>{keyLangToLanguageTag(key, false)}</span>
+							)}
 
-						return (
-							<li
-								key={key}
-								onBlur={onButtonBlur}
-								onClick={onLanguageClick(key)}
-								onFocus={onItemFocus}
-								onKeyDown={onLanguageKeyboard(key)}
-								role="presentation"
-							>
-								<span
-									className="dropdown-item lfr-icon-item palette-item taglib-icon"
-									role="menuitem"
-									tabIndex="0"
-									target="_self"
-								>
-									<span className="inline-item inline-item-before">
-										<ClayIcon
-											symbol={keyLangToLanguageTag(key)}
-										/>
-									</span>
+							<span className="dropdown-item-indicator-end w-auto">
+								{defaultLang === key && (
+									<ClayLabel displayType="info">
+										{Liferay.Language.get('default')}
+									</ClayLabel>
+								)}
 
-									<span className="taglib-text-icon">
-										{keyLangToLanguageTag(key, false)}
-
-										{defaultLang === key && (
-											<span className="label label-info ml-1">
-												{Liferay.Language.get(
-													'default'
-												)}
-											</span>
-										)}
-
-										{defaultLang !== key &&
-											(hasValue ? (
-												<span className="label label-success ml-1">
-													{Liferay.Language.get(
-														'translated'
-													)}
-												</span>
-											) : (
-												<span className="label label-warning ml-1">
-													{Liferay.Language.get(
-														'not-translated'
-													)}
-												</span>
-											))}
-									</span>
-								</span>
-							</li>
-						);
-					})}
-				</ul>
-			)}
-		</div>
+								{defaultLang !== key &&
+									(hasValue ? (
+										<ClayLabel displayType="success">
+											{Liferay.Language.get('translated')}
+										</ClayLabel>
+									) : (
+										<ClayLabel displayType="warning">
+											{Liferay.Language.get(
+												'not-translated'
+											)}
+										</ClayLabel>
+									))}
+							</span>
+						</ClayDropDown.Item>
+					);
+				})}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
 	);
 }
 
@@ -154,7 +115,6 @@ LocalizedDropdown.propTypes = {
 	availableLanguages: PropTypes.array,
 	defaultLang: PropTypes.string,
 	initialLang: PropTypes.string,
-	initialOpen: PropTypes.bool,
 	onLanguageChange: PropTypes.func,
 };
 

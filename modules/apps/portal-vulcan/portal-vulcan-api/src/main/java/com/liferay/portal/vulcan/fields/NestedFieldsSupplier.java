@@ -26,44 +26,50 @@ import java.util.Map;
  */
 public class NestedFieldsSupplier<T> {
 
-	public <T> T supply(
+	public static <T> T supply(
 			String fieldName,
 			UnsafeFunction<String, T, Exception> unsafeFunction)
 		throws Exception {
 
-		if (!_mustProcessNestedFields(_nestedFieldsContext)) {
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		if (!_mustProcessNestedFields(nestedFieldsContext)) {
 			return null;
 		}
 
-		List<String> fieldNames = _nestedFieldsContext.getFieldNames();
+		List<String> fieldNames = nestedFieldsContext.getFieldNames();
 
 		if (!fieldNames.contains(fieldName)) {
 			return null;
 		}
 
-		_nestedFieldsContext.incrementCurrentDepth();
+		nestedFieldsContext.incrementCurrentDepth();
 
 		try {
 			return unsafeFunction.apply(fieldName);
 		}
 		finally {
-			_nestedFieldsContext.decrementCurrentDepth();
+			nestedFieldsContext.decrementCurrentDepth();
 		}
 	}
 
-	public <T> Map<String, T> supply(
+	public static <T> Map<String, T> supply(
 			UnsafeFunction<String, T, Exception> unsafeFunction)
 		throws Exception {
 
-		if (!_mustProcessNestedFields(_nestedFieldsContext)) {
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		if (!_mustProcessNestedFields(nestedFieldsContext)) {
 			return null;
 		}
 
 		Map<String, T> nestedFields = new HashMap<>();
 
-		_nestedFieldsContext.incrementCurrentDepth();
+		nestedFieldsContext.incrementCurrentDepth();
 
-		for (String nestedFieldName : _nestedFieldsContext.getFieldNames()) {
+		for (String nestedFieldName : nestedFieldsContext.getFieldNames()) {
 			T value = unsafeFunction.apply(nestedFieldName);
 
 			if (value != null) {
@@ -71,16 +77,12 @@ public class NestedFieldsSupplier<T> {
 			}
 		}
 
-		_nestedFieldsContext.decrementCurrentDepth();
+		nestedFieldsContext.decrementCurrentDepth();
 
 		return nestedFields;
 	}
 
-	protected NestedFieldsSupplier(NestedFieldsContext nestedFieldsContext) {
-		_nestedFieldsContext = nestedFieldsContext;
-	}
-
-	private boolean _mustProcessNestedFields(
+	private static boolean _mustProcessNestedFields(
 		NestedFieldsContext nestedFieldsContext) {
 
 		if ((nestedFieldsContext != null) &&
@@ -93,7 +95,5 @@ public class NestedFieldsSupplier<T> {
 
 		return false;
 	}
-
-	private final NestedFieldsContext _nestedFieldsContext;
 
 }

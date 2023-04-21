@@ -1,0 +1,8 @@
+{
+	"active": "true",
+	"friendlyURL": "/home",
+	"name_i18n": {
+		"en-US": "Home: Liferay Channels w/o CEM"
+	},
+	"segmentsEntryId": "[$SEGMENTS_ENTRY_ID:CHANNEL-CEM$]"
+}

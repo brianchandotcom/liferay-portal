@@ -2,6 +2,14 @@
 	{
 		"active": "true",
 		"name_i18n": {
+			"en-US": "Liferay Partners"
+		},
+		"segmentsEntryKey": "PARTNER",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
 			"en-US": "Partner Marketing User (PMU)"
 		},
 		"segmentsEntryKey": "PMU",
@@ -26,9 +34,57 @@
 	{
 		"active": "true",
 		"name_i18n": {
-			"en-US": "Channel"
+			"en-US": "Liferay Channels w/o CEM"
 		},
-		"segmentsEntryKey": "CHANNEL",
+		"segmentsEntryKey": "CHANNEL-CEM",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Channel Account Manager (CAM)"
+		},
+		"segmentsEntryKey": "CAM",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Channel Operations Manager (COM)"
+		},
+		"segmentsEntryKey": "COM",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Channel Marketing Manager (CMM)"
+		},
+		"segmentsEntryKey": "CMM",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Channel Marketing Director (CMD)"
+		},
+		"segmentsEntryKey": "CMD",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Channel Finance Manager (CFM)"
+		},
+		"segmentsEntryKey": "CFM",
+		"type": "com.liferay.portal.kernel.model.User"
+	},
+	{
+		"active": "true",
+		"name_i18n": {
+			"en-US": "Channel Enablement Manager (CEM)"
+		},
+		"segmentsEntryKey": "CEM",
 		"type": "com.liferay.portal.kernel.model.User"
 	}
 ]

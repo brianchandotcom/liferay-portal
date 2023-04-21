@@ -1,0 +1,70 @@
+{
+	"object-entries": [
+		{
+			"externalReferenceCode": "VIEW",
+			"action": "VIEW",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "UPDATE",
+			"action": "UPDATE",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "UPDATE-WO-CHANGE-STATUS",
+			"action": "UPDATE-WO-CHANGE-STATUS",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "DELETE",
+			"action": "DELETE",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "CREATE",
+			"action": "CREATE",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "SEE-RESTRICTED-FIELDS",
+			"action": "SEE-RESTRICTED-FIELDS",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "EXPORT",
+			"action": "EXPORT",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "MARKETING-REVIEW-STATUS-UPDATE",
+			"action": "MARKETING-REVIEW-STATUS-UPDATE",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
+			"action": "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "REQUEST-MORE-INFO",
+			"action": "REQUEST-MORE-INFO",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "EXPIRE",
+			"action": "EXPIRE",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "REJECT",
+			"action": "EXPIRE",
+			"object": "MDF Request"
+		},
+		{
+			"externalReferenceCode": "APPROVE",
+			"action": "EXPIRE",
+			"object": "MDF Request"
+		}
+	],
+	"objectDefinitionName": "PermissionAction"
+}

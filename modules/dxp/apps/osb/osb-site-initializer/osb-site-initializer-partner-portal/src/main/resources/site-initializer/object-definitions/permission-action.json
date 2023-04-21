@@ -1,0 +1,40 @@
+{
+	"externalReferenceCode": "77f86154-5b7b-41b8-94b5-85d5e91540a6",
+	"label": {
+		"en_US": "Permission Action"
+	},
+	"name": "PermissionAction",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "87c3a806-928c-4671-a2c3-a2972a8f310a",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Action"
+			},
+			"name": "action",
+			"required": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "e97ab323-e4cd-4320-82f2-ef41ec48e55f",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Object"
+			},
+			"name": "object",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "PermissionActions"
+	},
+	"scope": "company"
+}

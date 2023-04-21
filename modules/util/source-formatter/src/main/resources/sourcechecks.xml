@@ -507,6 +507,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that `java.text.Collator` is used when comparing localized values." />
 		</check>
+		<check name="JavaLocalServiceImplErcUsageCheck">
+			<category name="Productivity" />
+			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method." />
+		</check>
 		<check name="JavaLongLinesCheck">
 			<category name="Styling" />
 			<description name="Finds lines that are longer than the specified maximum line length." />
@@ -557,6 +561,10 @@
 		<check name="JavaServiceImplCheck">
 			<category name="Bug Prevention" />
 			<description name="Ensures that `afterPropertiesSet` and `destroy` methods in `*ServiceImpl` always call the method with the same name in the superclass." />
+		</check>
+		<check name="JavaServiceImplErcUsageCheck">
+			<category name="Productivity" />
+			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in remote `*ServiceImpl` add method." />
 		</check>
 		<check name="JavaSessionCheck">
 			<category name="Performance" />

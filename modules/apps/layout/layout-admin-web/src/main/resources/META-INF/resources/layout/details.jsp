@@ -26,12 +26,6 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 Locale defaultLocale = LocaleUtil.getDefault();
 
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-String friendlyURLBase = StringPool.BLANK;
-
-if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem()) {
-	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();
-}
 %>
 
 <liferay-ui:error-marker
@@ -51,20 +45,6 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 			</div>
 		</c:if>
 
-		<c:choose>
-			<c:when test="<%= selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
-				<liferay-friendly-url:input
-					className="<%= Layout.class.getName() %>"
-					classPK="<%= selLayout.getPlid() %>"
-					inputAddon="<%= friendlyURLBase %>"
-					name="friendlyURL"
-				/>
-			</c:when>
-			<c:otherwise>
-				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
-			</c:otherwise>
-		</c:choose>
-
 		<c:if test="<%= group.isLayoutSetPrototype() %>">
 
 			<%
@@ -78,6 +58,5 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 	</c:when>
 	<c:otherwise>
 		<aui:input name='<%= "nameMapAsXML_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
-		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
 	</c:otherwise>
 </c:choose>

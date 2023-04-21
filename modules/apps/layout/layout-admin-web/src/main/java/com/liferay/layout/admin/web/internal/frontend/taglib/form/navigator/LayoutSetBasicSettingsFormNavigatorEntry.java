@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	property = "form.navigator.entry.order:Integer=220",
+	property = "form.navigator.entry.order:Integer=200",
 	service = FormNavigatorEntry.class
 )
 public class LayoutSetBasicSettingsFormNavigatorEntry

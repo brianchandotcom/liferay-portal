@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +32,24 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectRepository extends BaseEntityRepository<Project> {
+
+	public Project add(
+		String name, int priority, Project.State state, Project.Type type) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"name", name
+		).put(
+			"priority", priority
+		).put(
+			"state", state.getJSONObject()
+		).put(
+			"type", type.getJSONObject()
+		);
+
+		return add(jsonObject);
+	}
 
 	public List<Project> getByStates(Project.State... states) {
 		List<Project.State> statesList = Arrays.asList(states);

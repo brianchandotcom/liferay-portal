@@ -24,6 +24,8 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,6 +35,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildParameterRepository
 	extends BaseEntityRepository<BuildParameter> {
+
+	public BuildParameter add(Build build, String name, String value) {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"name", name
+		).put(
+			"r_buildToBuildParameters_c_buildId", build.getId()
+		).put(
+			"value", value
+		);
+
+		return add(jsonObject);
+	}
 
 	public Set<BuildParameter> getAll(Build build) {
 		Set<BuildParameter> buildParameters = new HashSet<>();

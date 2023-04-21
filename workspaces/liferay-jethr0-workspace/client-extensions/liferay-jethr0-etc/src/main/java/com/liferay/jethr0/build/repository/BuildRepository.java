@@ -24,6 +24,8 @@ import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,6 +34,30 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BuildRepository extends BaseEntityRepository<Build> {
+
+	public Build add(
+		Project project, String buildName, String jobName, Build.State state) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"buildName", buildName
+		).put(
+			"jobName", jobName
+		).put(
+			"r_projectToBuilds_c_projectId", project.getId()
+		).put(
+			"state", state.getJSONObject()
+		);
+
+		Build build = add(jsonObject);
+
+		build.setProject(project);
+
+		project.addBuild(build);
+
+		return build;
+	}
 
 	public Set<Build> getAll(Project project) {
 		Set<Build> projectBuilds = new HashSet<>();

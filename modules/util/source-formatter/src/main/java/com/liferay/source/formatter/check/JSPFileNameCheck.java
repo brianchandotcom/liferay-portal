@@ -17,6 +17,9 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
@@ -35,10 +38,10 @@ public class JSPFileNameCheck extends BaseFileCheck {
 
 		String shortFileName = absolutePath.substring(x + 1, y);
 
-		if (shortFileName.endsWith("-compat") ||
-			shortFileName.endsWith("-ext")) {
-
-			return content;
+		for (String suffix : _allowSuffixes) {
+			if (shortFileName.endsWith(suffix)) {
+				return content;
+			}
 		}
 
 		for (char c : shortFileName.toCharArray()) {
@@ -51,5 +54,8 @@ public class JSPFileNameCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final List<String> _allowSuffixes = Arrays.asList(
+		"-compat", "-ext", "-ext-post", "-ext-pre");
 
 }

@@ -283,7 +283,7 @@ public class UtilityPageTemplate implements Serializable {
 	public static enum Type {
 
 		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
-		TERMS_OF_USE("TermsOfUse");
+		ERROR_CODE500("ErrorCode500"), TERMS_OF_USE("TermsOfUse");
 
 		@JsonCreator
 		public static Type create(String value) {

@@ -156,7 +156,7 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 	public static enum Type {
 
 		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
-		TERMS_OF_USE("TermsOfUse");
+		ERROR_CODE500("ErrorCode500"), TERMS_OF_USE("TermsOfUse");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

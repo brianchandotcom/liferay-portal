@@ -2,68 +2,138 @@
 	"object-entries": [
 		{
 			"action": "VIEW",
-			"externalReferenceCode": "VIEW",
+			"externalReferenceCode": "MDF-REQUEST-VIEW",
 			"object": "MDF Request"
 		},
 		{
 			"action": "UPDATE",
-			"externalReferenceCode": "UPDATE",
+			"externalReferenceCode": "MDF-REQUEST-UPDATE",
 			"object": "MDF Request"
 		},
 		{
 			"action": "UPDATE-WO-CHANGE-STATUS",
-			"externalReferenceCode": "UPDATE-WO-CHANGE-STATUS",
+			"externalReferenceCode": "MDF-REQUEST-UPDATE-WO-CHANGE-STATUS",
 			"object": "MDF Request"
 		},
 		{
 			"action": "DELETE",
-			"externalReferenceCode": "DELETE",
+			"externalReferenceCode": "MDF-REQUEST-DELETE",
 			"object": "MDF Request"
 		},
 		{
 			"action": "CREATE",
-			"externalReferenceCode": "CREATE",
+			"externalReferenceCode": "MDF-REQUEST-CREATE",
 			"object": "MDF Request"
 		},
 		{
 			"action": "SEE-RESTRICTED-FIELDS",
-			"externalReferenceCode": "SEE-RESTRICTED-FIELDS",
+			"externalReferenceCode": "MDF-REQUEST-SEE-RESTRICTED-FIELDS",
 			"object": "MDF Request"
 		},
 		{
 			"action": "EXPORT",
-			"externalReferenceCode": "EXPORT",
+			"externalReferenceCode": "MDF-REQUEST-EXPORT",
 			"object": "MDF Request"
 		},
 		{
 			"action": "MARKETING-REVIEW-STATUS-UPDATE",
-			"externalReferenceCode": "MARKETING-REVIEW-STATUS-UPDATE",
+			"externalReferenceCode": "MDF-REQUEST-MARKETING-REVIEW-STATUS-UPDATE",
 			"object": "MDF Request"
 		},
 		{
 			"action": "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
-			"externalReferenceCode": "MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
+			"externalReferenceCode": "MDF-REQUEST-MARKETING-DIRECTOR-REVIEW-STATUS-UPDATE",
 			"object": "MDF Request"
 		},
 		{
 			"action": "REQUEST-MORE-INFO",
-			"externalReferenceCode": "REQUEST-MORE-INFO",
+			"externalReferenceCode": "MDF-REQUEST-REQUEST-MORE-INFO",
 			"object": "MDF Request"
 		},
 		{
 			"action": "EXPIRE",
-			"externalReferenceCode": "EXPIRE",
+			"externalReferenceCode": "MDF-REQUEST-EXPIRE",
 			"object": "MDF Request"
 		},
 		{
-			"action": "EXPIRE",
-			"externalReferenceCode": "REJECT",
+			"action": "REJECT",
+			"externalReferenceCode": "MDF-REQUEST-REJECT",
 			"object": "MDF Request"
 		},
 		{
-			"action": "EXPIRE",
-			"externalReferenceCode": "APPROVE",
+			"action": "APPROVE",
+			"externalReferenceCode": "MDF-REQUEST-APPROVE",
 			"object": "MDF Request"
+		},
+		{
+			"action": "VIEW",
+			"externalReferenceCode": "MDF-CLAIM-VIEW",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "UPDATE",
+			"externalReferenceCode": "MDF-CLAIM-UPDATE",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "DELETE",
+			"externalReferenceCode": "MDF-CLAIM-DELETE",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "CREATE",
+			"externalReferenceCode": "MDF-CLAIM-CREATE",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "EXPORT",
+			"externalReferenceCode": "MDF-CLAIM-EXPORT",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "MARKETING-REVIEW-STATUS-UPDATE",
+			"externalReferenceCode": "MDF-CLAIM-MARKETING-REVIEW-STATUS-UPDATE",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "APPROVE",
+			"externalReferenceCode": "MDF-CLAIM-APPROVE",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "IN-FINANCE-REVIEW-STATUS",
+			"externalReferenceCode": "MDF-CLAIM-IN-FINANCE-REVIEW-STATUS",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "IN-FINANCE-REVIEW-STATUS",
+			"externalReferenceCode": "MDF-CLAIM-IN-FINANCE-REVIEW-STATUS",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "REQUEST-MORE-INFO",
+			"externalReferenceCode": "MDF-CLAIM-REQUEST-MORE-INFO",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "REJECT",
+			"externalReferenceCode": "MDF-CLAIM-REJECT",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "EXPIRE",
+			"externalReferenceCode": "MDF-CLAIM-EXPIRE",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "IN-DIRECTOR-REVIEW-STATUS",
+			"externalReferenceCode": "MDF-CLAIM-IN-DIRECTOR-REVIEW-STATUS",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "CLAIM-PAID-STATUS",
+			"externalReferenceCode": "MDF-CLAIM-CLAIM-PAID-STATUS",
+			"object": "MDF Claim"
 		}
 	],
 	"objectDefinitionName": "PermissionAction"

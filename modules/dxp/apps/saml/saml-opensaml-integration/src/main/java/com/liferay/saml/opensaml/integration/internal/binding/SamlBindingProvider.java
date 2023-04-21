@@ -17,7 +17,7 @@ package com.liferay.saml.opensaml.integration.internal.binding;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
 import com.liferay.saml.runtime.SamlException;
@@ -52,7 +52,7 @@ public class SamlBindingProvider {
 	}
 
 	private Map<String, SamlBinding> _createSamlBindings() {
-		ParserPool parserPool = _parserPoolProvider.getParserPool();
+		ParserPool parserPool = ParserPoolUtil.getParserPool();
 
 		HttpPostBinding httpPostBinding = new HttpPostBinding(
 			parserPool, VelocityEngineFactory.getVelocityEngine());
@@ -74,9 +74,6 @@ public class SamlBindingProvider {
 
 	@Reference
 	private HttpClientFactory _httpClientFactory;
-
-	@Reference
-	private ParserPoolProvider _parserPoolProvider;
 
 	private final DCLSingleton<Map<String, SamlBinding>>
 		_samlBingsDCLSingleton = new DCLSingleton<>();

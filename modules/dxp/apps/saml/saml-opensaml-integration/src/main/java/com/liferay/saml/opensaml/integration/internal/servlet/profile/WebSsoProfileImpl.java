@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
-import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolProvider;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublisherImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverRegistry;
@@ -47,6 +47,7 @@ import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverReg
 import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.SubjectAssertionContext;
 import com.liferay.saml.opensaml.integration.internal.resolver.UserResolverSAMLContextImpl;
+import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
@@ -101,7 +102,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 
-import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.messaging.context.InOutOperationContext;
 import org.opensaml.messaging.context.MessageContext;
@@ -1918,7 +1918,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		CriteriaSet criteriaSet = new CriteriaSet(
 			new EncryptionConfigurationCriterion(
-				ConfigurationService.get(EncryptionConfiguration.class)),
+				ConfigurationServiceBootstrapUtil.get(
+					EncryptionConfiguration.class)),
 			new RoleDescriptorCriterion(spSSODescriptor));
 
 		if (!samlIdpSpConnection.isEncryptionForced()) {
@@ -2115,9 +2116,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	@Reference
 	private NameIdResolverRegistry _nameIdResolverRegistry;
 
-	@Reference
-	private ParserPoolProvider _parserPoolProvider;
-
 	private SamlConfiguration _samlConfiguration;
 
 	@Reference
@@ -2158,7 +2156,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		@Override
 		protected ParserPool buildParserPool() {
-			return _parserPoolProvider.getParserPool();
+			return ParserPoolUtil.getParserPool();
 		}
 
 	}

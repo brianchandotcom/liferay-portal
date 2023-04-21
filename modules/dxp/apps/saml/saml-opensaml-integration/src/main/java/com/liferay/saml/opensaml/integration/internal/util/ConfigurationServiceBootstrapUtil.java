@@ -12,11 +12,10 @@
  *
  */
 
-package com.liferay.saml.opensaml.integration.internal.bootstrap;
+package com.liferay.saml.opensaml.integration.internal.util;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.shibboleth.utilities.java.support.xml.BasicParserPool;
@@ -31,33 +30,55 @@ import org.opensaml.xmlsec.signature.support.SignatureValidator;
 import org.opensaml.xmlsec.signature.support.Signer;
 
 /**
- * @author Mika Koivisto
+ * @author Shuyang Zhou
  */
-public class OpenSamlBootstrap {
+public class ConfigurationServiceBootstrapUtil {
 
-	public static synchronized void bootstrap()
-		throws IllegalAccessException, InitializationException,
-			   InvocationTargetException, NoSuchMethodException {
+	public static <T> T get(Class<T> configurationClass) {
+		return ConfigurationService.get(configurationClass);
+	}
 
-		InitializationService.initialize();
+	public static <T> void register(
+		Class<T> configurationClass, T configuration) {
 
-		_initializeParserPool();
+		ConfigurationService.register(configurationClass, configuration);
+	}
 
-		Method method = Signer.class.getDeclaredMethod("getSignerProvider");
+	static {
+		Thread currentThread = Thread.currentThread();
 
-		method.setAccessible(true);
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
-		method.invoke(null);
+		try {
+			currentThread.setContextClassLoader(
+				ConfigurationServiceBootstrapUtil.class.getClassLoader());
 
-		method = SignatureValidator.class.getDeclaredMethod(
-			"getSignatureValidationProvider");
+			InitializationService.initialize();
 
-		method.setAccessible(true);
+			_initializeParserPool();
 
-		method.invoke(null);
+			Method method = Signer.class.getDeclaredMethod("getSignerProvider");
 
-		if (XMLSecurityConstants.xmlOutputFactory == null) {
-			throw new IllegalStateException();
+			method.setAccessible(true);
+
+			method.invoke(null);
+
+			method = SignatureValidator.class.getDeclaredMethod(
+				"getSignatureValidationProvider");
+
+			method.setAccessible(true);
+
+			method.invoke(null);
+
+			if (XMLSecurityConstants.xmlOutputFactory == null) {
+				throw new IllegalStateException();
+			}
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
+		finally {
+			currentThread.setContextClassLoader(classLoader);
 		}
 	}
 

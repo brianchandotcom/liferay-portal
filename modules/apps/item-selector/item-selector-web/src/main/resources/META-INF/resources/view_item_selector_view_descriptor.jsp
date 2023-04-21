@@ -238,58 +238,74 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 		<aui:script require="frontend-js-web/index as frontendJsWeb">
 			var {delegate} = frontendJsWeb;
 
-			var selectItemHandler = delegate(
+			var selectItem = () => {
+				var activeCards = document.querySelectorAll('.form-check-card.active');
+
+				if (activeCards.length) {
+					activeCards.forEach((card) => {
+						card.classList.remove('active');
+					});
+				}
+
+				var target = event.delegateTarget;
+
+				var newSelectedCard = target.closest('.form-check-card');
+
+				if (newSelectedCard) {
+					newSelectedCard.classList.add('active');
+				}
+
+				var domElement = target.closest('li');
+
+				if (domElement == null) {
+					domElement = target.closest('tr');
+				}
+
+				if (domElement == null) {
+					domElement = target.closest('dd');
+				}
+
+				var itemValue = '';
+
+				if (domElement != null) {
+					itemValue = domElement.dataset.value;
+				}
+
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
+					{
+						data: {
+							returnType:
+								'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
+							value: itemValue,
+						},
+					}
+				);
+			};
+
+			var onClickHandler = delegate(
 				document.querySelector('#<portlet:namespace />entriesContainer'),
 				'click',
 				'.entry',
 				(event) => {
-					var activeCards = document.querySelectorAll('.form-check-card.active');
+					selectItem();
+				}
+			);
 
-					if (activeCards.length) {
-						activeCards.forEach((card) => {
-							card.classList.remove('active');
-						});
+			var onKeydownHandler = delegate(
+				document.querySelector('#<portlet:namespace />entriesContainer'),
+				'keydown',
+				'.entry',
+				(event) => {
+					if (event.code === 'Enter') {
+						selectItem();
 					}
-
-					var target = event.delegateTarget;
-
-					var newSelectedCard = target.closest('.form-check-card');
-
-					if (newSelectedCard) {
-						newSelectedCard.classList.add('active');
-					}
-
-					var domElement = target.closest('li');
-
-					if (domElement == null) {
-						domElement = target.closest('tr');
-					}
-
-					if (domElement == null) {
-						domElement = target.closest('dd');
-					}
-
-					var itemValue = '';
-
-					if (domElement != null) {
-						itemValue = domElement.dataset.value;
-					}
-
-					Liferay.Util.getOpener().Liferay.fire(
-						'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
-						{
-							data: {
-								returnType:
-									'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
-								value: itemValue,
-							},
-						}
-					);
 				}
 			);
 
 			Liferay.on('destroyPortlet', function removeListener() {
-				selectItemHandler.dispose();
+				onClickHandler.dispose();
+				onKeydownHandler.dispose();
 
 				Liferay.detach('destroyPortlet', removeListener);
 			});

@@ -144,9 +144,22 @@ const NotificationsInfo = ({
 		selectedItem.data.notifications?.recipients?.[notificationIndex]
 			?.length !== 0
 	) {
-		recipientTypeHolder = getRecipientType(
-			selectedItem.data.notifications?.recipients?.[notificationIndex]
-		);
+		if (
+			!selectedItem.data.notifications?.recipients?.[
+				notificationIndex
+			]?.[0]
+		) {
+			recipientTypeHolder = getRecipientType(
+				selectedItem.data.notifications?.recipients?.[notificationIndex]
+			);
+		}
+		else {
+			recipientTypeHolder = getRecipientType(
+				selectedItem.data.notifications?.recipients?.[
+					notificationIndex
+				][0]
+			);
+		}
 	}
 	else {
 		recipientTypeHolder = 'assetCreator';
@@ -375,7 +388,8 @@ const NotificationsInfo = ({
 
 		const recipients =
 			selectedItem.data.notifications &&
-			selectedItem.data.notifications.recipients[notificationIndex];
+			(selectedItem.data.notifications.recipients[notificationIndex][0] ||
+				selectedItem.data.notifications.recipients[notificationIndex]);
 
 		if (recipients && recipientType === 'roleType') {
 			for (let i = 0; i < recipients.roleType.length; i++) {

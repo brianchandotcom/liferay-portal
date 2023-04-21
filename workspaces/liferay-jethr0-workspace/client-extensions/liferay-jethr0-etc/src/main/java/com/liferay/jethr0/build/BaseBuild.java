@@ -129,6 +129,12 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 			"state", state.getJSONObject()
 		);
 
+		Project project = getProject();
+
+		if (project != null) {
+			jsonObject.put("r_projectToBuilds_c_projectId", project.getId());
+		}
+
 		return jsonObject;
 	}
 

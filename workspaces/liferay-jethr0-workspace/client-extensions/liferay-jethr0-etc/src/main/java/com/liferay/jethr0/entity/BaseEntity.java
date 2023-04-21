@@ -89,9 +89,9 @@ public abstract class BaseEntity implements Entity {
 
 	@Override
 	public int hashCode() {
-		JSONObject jsonObject = getJSONObject();
+		String string = StringUtil.combine(getClass(), getId());
 
-		return jsonObject.hashCode();
+		return string.hashCode();
 	}
 
 	@Override

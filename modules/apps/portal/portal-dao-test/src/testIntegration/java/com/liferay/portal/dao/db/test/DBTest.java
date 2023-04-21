@@ -322,6 +322,68 @@ public class DBTest {
 	}
 
 	@Test
+	public void testCopyTableRows() throws Exception {
+		_db.runSQL(
+			StringBundler.concat(
+				"create table ", _TABLE_NAME_2, " (id LONG not null primary ",
+				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
+				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
+				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
+				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
+				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn, typeString) values (1, '1', ",
+				"'testValue1'), (2, '2', 'testValue2')"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_2,
+				" (id, notNilColumn, typeString) values (1, '1', ",
+				"'testValue1')"));
+
+		_db.copyTableRows(_connection, _TABLE_NAME_1, _TABLE_NAME_2);
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME_2 + " order by id asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(1, resultSet.getLong("id"));
+			Assert.assertEquals("1", resultSet.getString("notNilColumn"));
+			Assert.assertEquals(
+				"testValue1", resultSet.getString("typeString"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals("2", resultSet.getString("notNilColumn"));
+			Assert.assertEquals(
+				"testValue2", resultSet.getString("typeString"));
+
+			Assert.assertFalse(resultSet.next());
+		}
+	}
+
+	@Test
+	public void testCopyTableStructure() throws Exception {
+		String[] indexColumnNames = {"typeVarchar", "typeBoolean"};
+
+		_addIndex(indexColumnNames);
+
+		_db.copyTableStructure(
+			_connection, _TABLE_NAME_1, _TABLE_NAME_2, "tmp_");
+
+		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
+		Assert.assertTrue(
+			_dbInspector.hasIndex(_TABLE_NAME_2, "tmp_" + _INDEX_NAME));
+		Assert.assertArrayEquals(
+			new String[] {_dbInspector.normalizeName("id")},
+			_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2));
+	}
+
+	@Test
 	public void testGetPrimaryKeyColumnNames() throws Exception {
 		_db.runSQL(_SQL_CREATE_TABLE_2);
 
@@ -355,13 +417,20 @@ public class DBTest {
 			_connection, indexMetadatas);
 	}
 
-	private void _validateIndex(String[] columnNames) throws Exception {
-		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
+	private List<IndexMetadata> _getIndexes(
+		String tableName, String[] columnNames) {
+
+		return ReflectionTestUtil.invoke(
 			_db, "getIndexes",
 			new Class<?>[] {
 				Connection.class, String.class, String.class, boolean.class
 			},
-			_connection, _TABLE_NAME_1, columnNames[0], false);
+			_connection, tableName, columnNames[0], false);
+	}
+
+	private void _validateIndex(String[] columnNames) throws Exception {
+		List<IndexMetadata> indexMetadatas = _getIndexes(
+			_TABLE_NAME_1, columnNames);
 
 		Assert.assertEquals(
 			indexMetadatas.toString(), 1, indexMetadatas.size());

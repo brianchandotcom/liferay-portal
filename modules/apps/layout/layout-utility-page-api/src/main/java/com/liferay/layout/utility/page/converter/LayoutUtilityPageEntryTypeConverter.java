@@ -50,6 +50,9 @@ public class LayoutUtilityPageEntryTypeConverter {
 		).put(
 			"ErrorCode404", LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND
 		).put(
+			"ErrorCode500",
+			LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR
+		).put(
 			"TermsOfUse", LayoutUtilityPageEntryConstants.TYPE_TERMS_OF_USE
 		).build();
 

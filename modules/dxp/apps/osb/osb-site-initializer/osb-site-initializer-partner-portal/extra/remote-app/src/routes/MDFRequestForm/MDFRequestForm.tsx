@@ -146,7 +146,11 @@ const MDFRequestForm = () => {
 		),
 	};
 
-	if (((isValidating || !data) && mdfRequestId) || !myUserAccountData) {
+	if (
+		((isValidating || !data) && mdfRequestId) ||
+		!myUserAccountData ||
+		!actions
+	) {
 		return <ClayLoadingIndicator />;
 	}
 

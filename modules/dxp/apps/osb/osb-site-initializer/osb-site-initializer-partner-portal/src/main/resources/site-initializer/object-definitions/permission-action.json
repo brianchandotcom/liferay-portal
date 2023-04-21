@@ -34,7 +34,7 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "PermissionActions"
+		"en_US": "Permission Actions"
 	},
 	"scope": "company"
 }

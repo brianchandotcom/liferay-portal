@@ -106,11 +106,6 @@
 			"object": "MDF Claim"
 		},
 		{
-			"action": "IN-FINANCE-REVIEW-STATUS",
-			"externalReferenceCode": "MDF-CLAIM-IN-FINANCE-REVIEW-STATUS",
-			"object": "MDF Claim"
-		},
-		{
 			"action": "REQUEST-MORE-INFO",
 			"externalReferenceCode": "MDF-CLAIM-REQUEST-MORE-INFO",
 			"object": "MDF Claim"

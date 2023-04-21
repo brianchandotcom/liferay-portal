@@ -126,7 +126,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Jürgen Kappler
  */
 @RunWith(Arquillian.class)
-public class LayoutsImporterTest {
+public class PageTemplatesImporterTest {
 
 	@ClassRule
 	@Rule
@@ -1419,7 +1419,7 @@ public class LayoutsImporterTest {
 	private void _registerTestPortlet(String portletId) throws Exception {
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				Portlet.class, new LayoutsImporterTest.TestPortlet(),
+				Portlet.class, new PageTemplatesImporterTest.TestPortlet(),
 				HashMapDictionaryBuilder.put(
 					"com.liferay.portlet.instanceable", "true"
 				).put(

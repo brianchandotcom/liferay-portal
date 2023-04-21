@@ -16,7 +16,6 @@ import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayFile from '../../../common/interfaces/liferayFile';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
-import Role from '../../../common/interfaces/role';
 import {Liferay} from '../../../common/services/liferay';
 import createDocumentFolderDocument from '../../../common/services/liferay/headless-delivery/createDocumentFolderDocument';
 import createMDFClaimActivity from '../../../common/services/liferay/object/claim-activity/createMDFClaimActivity';
@@ -38,15 +37,14 @@ export default async function submitForm(
 	mdfRequest: MDFRequestDTO,
 	claimParentFolderId: number,
 	siteURL: string,
-	currentClaimStatus?: LiferayPicklist,
-	roles?: Role[]
+	currentClaimStatus?: LiferayPicklist
 ) {
 	formikHelpers.setSubmitting(true);
 
 	const updatedStatus = updateStatus(
 		values.mdfClaimStatus,
 		currentClaimStatus,
-		roles,
+		false,
 		values.id
 	);
 
@@ -60,16 +58,14 @@ export default async function submitForm(
 
 	if (values.mdfClaimStatus !== Status.DRAFT) {
 		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
-	}
-	else if (values.id) {
+	} else if (values.id) {
 		dtoMDFClaim = await updateMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,
 			mdfRequest,
 			values.id
 		);
-	}
-	else {
+	} else {
 		dtoMDFClaim = await createMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,

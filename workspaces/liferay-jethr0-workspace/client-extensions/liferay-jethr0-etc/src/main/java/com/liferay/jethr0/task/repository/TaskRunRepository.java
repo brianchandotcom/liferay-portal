@@ -15,9 +15,7 @@
 package com.liferay.jethr0.task.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.task.dalo.TaskRunDALO;
-import com.liferay.jethr0.task.dalo.TaskToTaskRunsDALO;
 import com.liferay.jethr0.task.run.TaskRun;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,28 +32,7 @@ public class TaskRunRepository extends BaseEntityRepository<TaskRun> {
 		return _taskRunDALO;
 	}
 
-	@Override
-	public TaskRun updateEntityRelationshipsInDatabase(TaskRun taskRun) {
-		for (Task task : _taskToTaskRunsDALO.getParentEntities(taskRun)) {
-			taskRun.setTask(task);
-
-			task.addTaskRun(taskRun);
-		}
-
-		return taskRun;
-	}
-
-	@Override
-	protected TaskRun updateEntityRelationshipsFromDatabase(TaskRun taskRun) {
-		_taskToTaskRunsDALO.updateParentEntities(taskRun);
-
-		return taskRun;
-	}
-
 	@Autowired
 	private TaskRunDALO _taskRunDALO;
-
-	@Autowired
-	private TaskToTaskRunsDALO _taskToTaskRunsDALO;
 
 }

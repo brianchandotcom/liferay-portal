@@ -58,26 +58,6 @@ public class TestSuiteRepository extends BaseEntityRepository<TestSuite> {
 		return _testSuiteDALO;
 	}
 
-	@Override
-	public TestSuite updateEntityRelationshipsInDatabase(TestSuite testSuite) {
-		_projectsToTestSuitesDALO.updateParentEntities(testSuite);
-
-		return testSuite;
-	}
-
-	@Override
-	protected TestSuite updateEntityRelationshipsFromDatabase(
-		TestSuite testSuite) {
-
-		for (Project project :
-				_projectsToTestSuitesDALO.getParentEntities(testSuite)) {
-
-			testSuite.addProject(project);
-		}
-
-		return testSuite;
-	}
-
 	@Autowired
 	private ProjectsToTestSuitesDALO _projectsToTestSuitesDALO;
 

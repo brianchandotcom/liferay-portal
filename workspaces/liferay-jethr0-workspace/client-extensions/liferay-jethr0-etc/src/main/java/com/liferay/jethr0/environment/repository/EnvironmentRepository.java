@@ -19,16 +19,17 @@ import com.liferay.jethr0.build.dalo.BuildToEnvironmentsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.environment.dalo.EnvironmentDALO;
-import com.liferay.jethr0.project.dalo.ProjectToTasksDALO;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class EnvironmentRepository extends BaseEntityRepository<Environment> {
 
 	public Set<Environment> getAll(Build build) {
@@ -57,27 +58,10 @@ public class EnvironmentRepository extends BaseEntityRepository<Environment> {
 		return _environmentDALO;
 	}
 
-	@Override
-	public Environment updateEntityRelationshipsInDatabase(
-		Environment environment) {
-
-		return environment;
-	}
-
-	@Override
-	protected Environment updateEntityRelationshipsFromDatabase(
-		Environment environment) {
-
-		return environment;
-	}
-
 	@Autowired
 	private BuildToEnvironmentsDALO _buildToEnvironmentsDALO;
 
 	@Autowired
 	private EnvironmentDALO _environmentDALO;
-
-	@Autowired
-	private ProjectToTasksDALO _projectToTasksDALO;
 
 }

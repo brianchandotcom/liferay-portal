@@ -21,13 +21,13 @@ import com.liferay.jethr0.project.dalo.ProjectComparatorDALO;
 import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsDALO;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -90,32 +90,6 @@ public class ProjectComparatorRepository
 	@Override
 	public ProjectComparatorDALO getEntityDALO() {
 		return _projectComparatorDALO;
-	}
-
-	@Override
-	public ProjectComparator updateEntityRelationshipsInDatabase(
-		ProjectComparator projectComparator) {
-
-		_projectPrioritizerToProjectComparatorsDALO.updateParentEntities(
-			projectComparator);
-
-		return projectComparator;
-	}
-
-	@Override
-	protected ProjectComparator updateEntityRelationshipsFromDatabase(
-		ProjectComparator projectComparator) {
-
-		for (ProjectPrioritizer projectPrioritizer :
-				_projectPrioritizerToProjectComparatorsDALO.getParentEntities(
-					projectComparator)) {
-
-			projectComparator.setProjectPrioritizer(projectPrioritizer);
-
-			projectPrioritizer.addProjectComparator(projectComparator);
-		}
-
-		return projectComparator;
 	}
 
 	@Autowired

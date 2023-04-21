@@ -25,10 +25,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Michael Hashimoto
  */
+@Configuration
 public class BuildParameterRepository
 	extends BaseEntityRepository<BuildParameter> {
 
@@ -56,30 +58,6 @@ public class BuildParameterRepository
 	@Override
 	public EntityDALO<BuildParameter> getEntityDALO() {
 		return _buildParameterDALO;
-	}
-
-	@Override
-	protected BuildParameter updateEntityRelationshipsFromDatabase(
-		BuildParameter buildParameter) {
-
-		for (Build build :
-				_buildToBuildParametersDALO.getParentEntities(buildParameter)) {
-
-			buildParameter.setBuild(build);
-
-			build.addBuildParameter(buildParameter);
-		}
-
-		return buildParameter;
-	}
-
-	@Override
-	protected BuildParameter updateEntityRelationshipsInDatabase(
-		BuildParameter buildParameter) {
-
-		_buildToBuildParametersDALO.updateParentEntities(buildParameter);
-
-		return buildParameter;
 	}
 
 	@Autowired

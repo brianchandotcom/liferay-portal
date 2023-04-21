@@ -58,25 +58,6 @@ public class GitBranchRepository extends BaseEntityRepository<GitBranch> {
 		return _gitBranchDALO;
 	}
 
-	@Override
-	public GitBranch updateEntityRelationshipsInDatabase(GitBranch gitBranch) {
-		for (Project project : gitBranch.getProjects()) {
-			_projectsToGitBranchesDALO.updateChildEntities(project);
-		}
-
-		return gitBranch;
-	}
-
-	@Override
-	protected GitBranch updateEntityRelationshipsFromDatabase(
-		GitBranch gitBranch) {
-
-		gitBranch.addProjects(
-			_projectsToGitBranchesDALO.getParentEntities(gitBranch));
-
-		return gitBranch;
-	}
-
 	@Autowired
 	private GitBranchDALO _gitBranchDALO;
 

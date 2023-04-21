@@ -17,12 +17,10 @@ package com.liferay.jethr0.task.repository;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.dalo.BuildToTasksDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToTasksDALO;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.task.dalo.TaskDALO;
-import com.liferay.jethr0.task.dalo.TaskToEnvironmentsDALO;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -81,40 +79,6 @@ public class TaskRepository extends BaseEntityRepository<Task> {
 		return _taskDALO;
 	}
 
-	@Override
-	public Task updateEntityRelationshipsInDatabase(Task task) {
-		for (Build build : _buildToTasksDALO.getParentEntities(task)) {
-			task.setBuild(build);
-
-			build.addTask(task);
-		}
-
-		for (Project project : _projectToTasksDALO.getParentEntities(task)) {
-			task.setProject(project);
-
-			project.addTask(task);
-		}
-
-		for (Environment environment :
-				_taskToEnvironmentsDALO.getChildEntities(task)) {
-
-			environment.setTask(task);
-
-			task.addEnvironment(environment);
-		}
-
-		return task;
-	}
-
-	@Override
-	protected Task updateEntityRelationshipsFromDatabase(Task task) {
-		_buildToTasksDALO.updateParentEntities(task);
-		_projectToTasksDALO.updateParentEntities(task);
-		_taskToEnvironmentsDALO.updateChildEntities(task);
-
-		return task;
-	}
-
 	@Autowired
 	private BuildToTasksDALO _buildToTasksDALO;
 
@@ -123,8 +87,5 @@ public class TaskRepository extends BaseEntityRepository<Task> {
 
 	@Autowired
 	private TaskDALO _taskDALO;
-
-	@Autowired
-	private TaskToEnvironmentsDALO _taskToEnvironmentsDALO;
 
 }

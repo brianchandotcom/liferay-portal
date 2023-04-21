@@ -16,18 +16,10 @@ package com.liferay.jethr0.build.repository;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.dalo.BuildDALO;
-import com.liferay.jethr0.build.dalo.BuildToBuildParametersDALO;
-import com.liferay.jethr0.build.dalo.BuildToBuildRunsDALO;
-import com.liferay.jethr0.build.dalo.BuildToEnvironmentsDALO;
-import com.liferay.jethr0.build.dalo.BuildToTasksDALO;
-import com.liferay.jethr0.build.parameter.BuildParameter;
-import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
-import com.liferay.jethr0.task.Task;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -66,66 +58,8 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 		return _buildDALO;
 	}
 
-	@Override
-	protected Build updateEntityRelationshipsFromDatabase(Build build) {
-		build.addBuildParameters(
-			_buildToBuildParametersDALO.getChildEntities(build));
-		build.addBuildRuns(_buildToBuildRunsDALO.getChildEntities(build));
-		build.addEnvironments(_buildToEnvironmentsDALO.getChildEntities(build));
-		build.addTasks(_buildToTasksDALO.getChildEntities(build));
-
-		return build;
-	}
-
-	@Override
-	protected Build updateEntityRelationshipsInDatabase(Build build) {
-		for (BuildParameter buildParameter :
-				_buildToBuildParametersDALO.getChildEntities(build)) {
-
-			buildParameter.setBuild(build);
-
-			build.addBuildParameter(buildParameter);
-		}
-
-		for (BuildRun buildRun :
-				_buildToBuildRunsDALO.getChildEntities(build)) {
-
-			buildRun.setBuild(build);
-
-			build.addBuildRun(buildRun);
-		}
-
-		for (Environment environment :
-				_buildToEnvironmentsDALO.getChildEntities(build)) {
-
-			environment.setBuild(build);
-
-			build.addEnvironment(environment);
-		}
-
-		for (Task task : _buildToTasksDALO.getChildEntities(build)) {
-			task.setBuild(build);
-
-			build.addTask(task);
-		}
-
-		return build;
-	}
-
 	@Autowired
 	private BuildDALO _buildDALO;
-
-	@Autowired
-	private BuildToBuildParametersDALO _buildToBuildParametersDALO;
-
-	@Autowired
-	private BuildToBuildRunsDALO _buildToBuildRunsDALO;
-
-	@Autowired
-	private BuildToEnvironmentsDALO _buildToEnvironmentsDALO;
-
-	@Autowired
-	private BuildToTasksDALO _buildToTasksDALO;
 
 	@Autowired
 	private ProjectToBuildsDALO _projectToBuildsDALO;

@@ -121,17 +121,7 @@ public abstract class BaseEntityRepository<T extends Entity>
 			add(entity);
 		}
 
-		updateEntityRelationshipsInDatabase(entity);
-
 		return entityDALO.update(entity);
-	}
-
-	protected T updateEntityRelationshipsFromDatabase(T entity) {
-		return entity;
-	}
-
-	protected T updateEntityRelationshipsInDatabase(T entity) {
-		return entity;
 	}
 
 	private Map<Long, T> _getEntitiesMap() {
@@ -145,8 +135,6 @@ public abstract class BaseEntityRepository<T extends Entity>
 			EntityDALO<T> entityDALO = getEntityDALO();
 
 			for (T entity : entityDALO.getAll()) {
-				entity = updateEntityRelationshipsFromDatabase(entity);
-
 				_entitiesMap.put(entity.getId(), entity);
 			}
 

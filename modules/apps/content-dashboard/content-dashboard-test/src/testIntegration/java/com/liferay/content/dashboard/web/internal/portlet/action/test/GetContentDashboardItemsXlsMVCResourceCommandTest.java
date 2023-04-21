@@ -121,9 +121,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			Collections.addAll(
 				expectedWorkbookHeaders, "ID", "Title", "Author", "Type",
 				"Subtype", "Site or Asset Library", "Status", "Categories",
-				"Tags", "Modified Date", "Description", "Extension",
-				"File Name", "Size", "Display Date", "Creation Date",
-				"Languages Translated Into");
+				"Tags", "Modified Date", "Review Date", "Description",
+				"Extension", "File Name", "Size", "Display Date",
+				"Creation Date", "Languages Translated Into");
 
 			List<String> expectedWorkbookValues = new ArrayList<>();
 
@@ -131,7 +131,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 				expectedWorkbookValues,
 				String.valueOf(fileEntry.getFileEntryId()), "fileName.pdf",
 				"Test Test", "Document", "Basic Document (Vectorial)",
-				"Test Site", "Approved", "", "", "2021-10-22T11:37:32", "",
+				"Test Site", "Approved", "", "", "2021-10-22T11:37:32", "-", "",
 				"pdf", "fileName.pdf", "0 B", "", "2021-09-01T15:16:15", "");
 
 			_assertWorkbook(

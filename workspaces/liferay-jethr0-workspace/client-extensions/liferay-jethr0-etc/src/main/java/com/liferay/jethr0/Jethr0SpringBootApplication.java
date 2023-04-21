@@ -18,6 +18,7 @@ import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBo
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
+import com.liferay.jethr0.jms.JMSEventHandler;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 
 import javax.jms.ConnectionFactory;
@@ -59,6 +60,9 @@ public class Jethr0SpringBootApplication {
 
 		JenkinsQueue jenkinsQueue = configurableApplicationContext.getBean(
 			JenkinsQueue.class);
+
+		jenkinsQueue.setJmsEventHandler(
+			configurableApplicationContext.getBean(JMSEventHandler.class));
 
 		jenkinsQueue.initialize();
 	}

@@ -61,7 +61,13 @@ public class JenkinsQueue {
 			}
 
 			jenkinsServer.update();
+		}
 
+		invoke();
+	}
+
+	public void invoke() {
+		for (JenkinsServer jenkinsServer : _jenkinsServerRepository.getAll()) {
 			for (JenkinsNode jenkinsNode : jenkinsServer.getJenkinsNodes()) {
 				if (!jenkinsNode.isAvailable()) {
 					continue;
@@ -87,6 +93,10 @@ public class JenkinsQueue {
 		}
 	}
 
+	public void setJmsEventHandler(JMSEventHandler jmsEventHandler) {
+		_jmsEventHandler = jmsEventHandler;
+	}
+
 	@Autowired
 	private BuildQueue _buildQueue;
 
@@ -105,7 +115,6 @@ public class JenkinsQueue {
 	@Value("${jenkins.server.urls}")
 	private String _jenkinsServerURLs;
 
-	@Autowired
 	private JMSEventHandler _jmsEventHandler;
 
 }

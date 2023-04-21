@@ -27,10 +27,10 @@ import com.liferay.jethr0.project.repository.ProjectRepository;
 import com.liferay.jethr0.task.repository.TaskRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -51,7 +51,7 @@ public class BuildQueue {
 		_sort();
 	}
 
-	public void addBuilds(List<Build> builds) {
+	public void addBuilds(Set<Build> builds) {
 		if (builds == null) {
 			return;
 		}
@@ -68,10 +68,10 @@ public class BuildQueue {
 	}
 
 	public void addProject(Project project) {
-		addProjects(Arrays.asList(project));
+		addProjects(Collections.singleton(project));
 	}
 
-	public void addProjects(List<Project> projects) {
+	public void addProjects(Set<Project> projects) {
 		for (Project project : projects) {
 			_projectQueue.addProject(project);
 		}

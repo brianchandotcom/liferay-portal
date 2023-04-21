@@ -45,13 +45,7 @@ import org.springframework.context.annotation.Configuration;
 public class ProjectQueue {
 
 	public void addProject(Project project) {
-		if (project == null) {
-			return;
-		}
-
-		_projects.add(project);
-
-		sort();
+		addProjects(Collections.singleton(project));
 	}
 
 	public void addProjects(Set<Project> projects) {
@@ -65,9 +59,21 @@ public class ProjectQueue {
 			return;
 		}
 
-		_projects.addAll(projects);
+		boolean sort = false;
 
-		sort();
+		for (Project project : projects) {
+			if (_projects.contains(project)) {
+				continue;
+			}
+
+			_projects.add(project);
+
+			sort = true;
+		}
+
+		if (sort) {
+			sort();
+		}
 	}
 
 	public ProjectPrioritizer getProjectPrioritizer() {
@@ -124,6 +130,22 @@ public class ProjectQueue {
 		}
 
 		_projects.removeAll(Collections.singleton(null));
+
+		for (Project project : new ArrayList<>(_projects)) {
+			boolean keepProject = false;
+
+			for (Build build : project.getBuilds()) {
+				if (build.getState() != Build.State.COMPLETED) {
+					keepProject = true;
+
+					break;
+				}
+			}
+
+			if (!keepProject) {
+				_projects.remove(project);
+			}
+		}
 
 		_sortedProjectComparators.clear();
 

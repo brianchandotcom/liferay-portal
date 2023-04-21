@@ -10,102 +10,140 @@
  */
 
 import Dropdown from '../../../common/components/Dropdown';
+import {DropdownOption} from '../../../common/components/Dropdown/Dropdown';
 import StatusBadge from '../../../common/components/StatusBadge';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
+import {PermissionActionType} from '../../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
-import Role from '../../../common/interfaces/role';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import {Status} from '../../../common/utils/constants/status';
-import {isLiferayManager} from '../../../common/utils/isLiferayManager';
 
 export default function getMDFListColumns(
-	columns?: TableColumn<MDFRequestListItem>[],
-	siteURL?: string,
-	roleEntries?: Role[],
-	isPartnerManagerRole?: boolean
+	hasUserAccountSameAccountEntryCurrentMDFRequest: (
+		index: number
+	) => boolean | undefined,
+	siteURL: string,
+	actions?: PermissionActionType[]
 ): TableColumn<MDFRequestListItem>[] | undefined {
-	const getDropdownOptions = (row: MDFRequestListItem) => {
-		const userAccountRolesCanEdit =
-			isLiferayManager(roleEntries as Role[]) || isPartnerManagerRole;
+	const getDropdownOptions = (row: MDFRequestListItem, index: number) => {
+		const isUserAssociated = hasUserAccountSameAccountEntryCurrentMDFRequest(
+			index
+		);
 
-		if (
-			!userAccountRolesCanEdit &&
-			row[MDFColumnKey.STATUS] !== Status.DRAFT.name &&
-			row[MDFColumnKey.STATUS] !== Status.REQUEST_MORE_INFO.name
-		) {
-			return (
-				<Dropdown
-					closeOnClick={true}
-					options={[
-						{
-							icon: 'view',
-							key: 'approve',
-							label: ' View',
-							onClick: () =>
-								Liferay.Util.navigate(
-									`${siteURL}/l/${row[MDFColumnKey.ID]}`
-								),
-						},
-					]}
-				></Dropdown>
-			);
-		}
+		const options = actions?.reduce<DropdownOption[]>(
+			(previousValue, currentValue) => {
+				const currentMDFRequestHasValidStatusToEdit =
+					row[MDFColumnKey.STATUS] === Status.DRAFT.name ||
+					row[MDFColumnKey.STATUS] === Status.REQUEST_MORE_INFO.name;
 
-		const options = [
-			{
-				icon: 'view',
-				key: 'approve',
-				label: ' View',
-				onClick: () =>
-					Liferay.Util.navigate(
-						`${siteURL}/l/${row[MDFColumnKey.ID]}`
-					),
-			},
-			{
-				icon: 'pencil',
-				key: 'edit',
-				label: ' Edit',
-				onClick: () =>
-					Liferay.Util.navigate(
-						`${siteURL}/${PRMPageRoute.CREATE_MDF_REQUEST}/#/${
-							row[MDFColumnKey.ID]
-						}`
-					),
-			},
-		];
-
-		return <Dropdown closeOnClick={true} options={options}></Dropdown>;
-	};
-
-	return (
-		columns && [
-			{
-				columnKey: MDFColumnKey.ID,
-				label: 'Request ID',
-				render: (data, row) => (
-					<a
-						className="link"
-						onClick={() =>
+				if (currentValue === PermissionActionType.VIEW) {
+					previousValue.push({
+						icon: 'view',
+						key: 'approve',
+						label: ' View',
+						onClick: () =>
 							Liferay.Util.navigate(
 								`${siteURL}/l/${row[MDFColumnKey.ID]}`
-							)
-						}
-					>{`Request-${data}`}</a>
-				),
+							),
+					});
+				}
+
+				if (
+					(currentValue === PermissionActionType.UPDATE ||
+						currentValue ===
+							PermissionActionType.UPDATE_WO_CHANGE_STATUS) &&
+					isUserAssociated &&
+					currentMDFRequestHasValidStatusToEdit
+				) {
+					previousValue.push({
+						icon: 'pencil',
+						key: 'edit',
+						label: ' Edit',
+						onClick: () =>
+							Liferay.Util.navigate(
+								`${siteURL}/${
+									PRMPageRoute.CREATE_MDF_REQUEST
+								}/#/${row[MDFColumnKey.ID]}`
+							),
+					});
+				}
+
+				return previousValue;
 			},
-			{
-				columnKey: MDFColumnKey.STATUS,
-				label: 'Status',
-				render: (data) => <StatusBadge status={data as string} />,
-			},
-			...columns,
-			{
-				columnKey: MDFColumnKey.ACTION,
-				label: '',
-				render: (_, row) => getDropdownOptions(row),
-			},
-		]
-	);
+			[]
+		);
+
+		return (
+			<Dropdown closeOnClick={true} options={options || []}></Dropdown>
+		);
+	};
+
+	return [
+		{
+			columnKey: MDFColumnKey.ID,
+			label: 'Request ID',
+			render: (data, row) => (
+				<a
+					className="link"
+					onClick={() =>
+						Liferay.Util.navigate(
+							`${siteURL}/l/${row[MDFColumnKey.ID]}`
+						)
+					}
+				>{`Request-${data}`}</a>
+			),
+		},
+		{
+			columnKey: MDFColumnKey.STATUS,
+			label: 'Status',
+			render: (data) => <StatusBadge status={data as string} />,
+		},
+		{
+			columnKey: MDFColumnKey.ACTIVITY_PERIOD,
+			label: 'Activity Period',
+		},
+		{
+			columnKey: MDFColumnKey.PARTNER,
+			label: 'Partner',
+		},
+		{
+			columnKey: MDFColumnKey.TOTAL_COST,
+			label: 'Total Cost',
+		},
+		{
+			columnKey: MDFColumnKey.NAME,
+			label: 'Name',
+		},
+		{
+			columnKey: MDFColumnKey.REQUESTED,
+			label: 'Requested',
+		},
+		{
+			columnKey: MDFColumnKey.AMOUNT_CLAIMED,
+			label: 'Amout Claimed',
+		},
+		{
+			columnKey: MDFColumnKey.APPROVED,
+			label: 'Approved',
+		},
+		{
+			columnKey: MDFColumnKey.PAID,
+			label: 'Paid',
+		},
+		{
+			columnKey: MDFColumnKey.DATE_SUBMITTTED,
+			label: 'Date Submitted',
+		},
+		{
+			columnKey: MDFColumnKey.LAST_MODIFIED,
+			label: 'Last Modified',
+		},
+		{
+			columnKey: MDFColumnKey.ACTION,
+			label: '',
+			render: (_, row, index) => getDropdownOptions(row, index),
+		},
+	];
 }

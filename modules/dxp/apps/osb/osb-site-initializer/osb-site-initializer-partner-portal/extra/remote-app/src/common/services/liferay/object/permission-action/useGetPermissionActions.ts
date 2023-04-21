@@ -12,31 +12,18 @@
 import useSWR from 'swr';
 
 import {Liferay} from '../..';
-import {MDFColumnKey} from '../../../../enums/mdfColumnKey';
-import {MDFRequestListItem} from '../../../../interfaces/mdfRequestListItem';
-import TableColumn from '../../../../interfaces/tableColumn';
+import PermissionAction from '../../../../interfaces/permissionAction';
 import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-interface MDFListingColumn {
-	externalReferenceCode: MDFColumnKey;
-	label: string;
-	render?: () => JSX.Element;
-}
-
-export default function useGetMDFListingColumns() {
-	const swr = useSWR(
-		[`/o/${LiferayAPIs.OBJECT}/mdflistingcolumns`, Liferay.authToken],
+export default function useGetPermissionActions(ObjectName: string) {
+	return useSWR(
+		[
+			`/o/${LiferayAPIs.OBJECT}/permissionactions?filter=object eq '${ObjectName}'&pageSize=-1`,
+			Liferay.authToken,
+		],
 		(url, token) =>
-			liferayFetcher<LiferayItems<MDFListingColumn[]>>(url, token)
+			liferayFetcher<LiferayItems<PermissionAction[]>>(url, token)
 	);
-
-	return {
-		...swr,
-		data: swr.data?.items.map<TableColumn<MDFRequestListItem>>((item) => ({
-			columnKey: item.externalReferenceCode,
-			label: item.label,
-		})),
-	};
 }

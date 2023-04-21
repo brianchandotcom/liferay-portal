@@ -12,22 +12,18 @@
 import {useMemo} from 'react';
 
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
-import useGetMDFRequests from '../../../common/services/liferay/object/mdf-requests/useGetMDFRequests';
+import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import getMDFActivityPeriod from '../utils/getMDFActivityPeriod';
 import getMDFBudgetInfos from '../utils/getMDFBudgetInfos';
 import getMDFDates from '../utils/getMDFDates';
 import getSummaryMDFClaims from '../utils/getSummaryMDFClaims';
 
 export default function useGetListItemsFromMDFRequests(
-	page: number,
-	pageSize: number,
-	filtersTerm: string
+	items?: MDFRequestDTO[]
 ) {
-	const swrResponse = useGetMDFRequests(page, pageSize, filtersTerm);
-
-	const listItems = useMemo(
+	return useMemo(
 		() =>
-			swrResponse.data?.items.map((item) => ({
+			items?.map((item) => ({
 				...getSummaryMDFClaims(item.currency, item.mdfReqToMDFClms),
 				[MDFColumnKey.ID]: String(item.id),
 				[MDFColumnKey.NAME]: item.overallCampaignName,
@@ -44,14 +40,6 @@ export default function useGetListItemsFromMDFRequests(
 					item.currency
 				),
 			})),
-		[swrResponse.data?.items]
+		[items]
 	);
-
-	return {
-		...swrResponse,
-		data: {
-			...swrResponse.data,
-			items: listItems,
-		},
-	};
 }

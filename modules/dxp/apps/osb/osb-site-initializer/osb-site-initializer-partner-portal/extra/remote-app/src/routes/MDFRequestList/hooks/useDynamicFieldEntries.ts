@@ -22,36 +22,13 @@ export default function useDynamicFieldEntries() {
 		LiferayPicklistName.MDF_REQUEST_STATUS,
 	]);
 
-	const companiesEntries = useMemo(
-		() =>
-			userAccount?.accountBriefs.map((accountBrief) => ({
-				label: accountBrief.name,
-				value: accountBrief.id,
-			})) as React.OptionHTMLAttributes<HTMLOptionElement>[],
-		[userAccount?.accountBriefs]
-	);
-	const userAccountRoles = useMemo(
-		() =>
-			userAccount?.roleBriefs.map((roleBrief) => ({
-				label: roleBrief.name,
-				value: roleBrief.id,
-			})) as React.OptionHTMLAttributes<HTMLOptionElement>[],
-		[userAccount?.roleBriefs]
-	);
-
 	const fieldEntries = useMemo(
 		() => getEntriesByListTypeDefinitions(listTypeDefinitions?.items),
 		[listTypeDefinitions?.items]
 	);
 
 	return {
-		accountRoleEntries: (accountId?: number) =>
-			userAccount?.accountBriefs.find(
-				(accountBrief) => accountBrief.id === accountId
-			)?.roleBriefs,
-		companiesEntries,
 		fieldEntries,
-		roleEntries: userAccount?.roleBriefs,
-		userAccountRoles,
+		userAccount,
 	};
 }

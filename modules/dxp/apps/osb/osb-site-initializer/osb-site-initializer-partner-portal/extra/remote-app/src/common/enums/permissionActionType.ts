@@ -9,16 +9,12 @@
  * distribution rights of the Software.
  */
 
-import Role from '../interfaces/role';
-
-export enum RoleTypes {
-	PARTNER_MANAGER = 'Partner Manager (PM)',
-}
-
-export function isPartnerManager(roles: Role[]) {
-	const allowedPartnerRole = [RoleTypes.PARTNER_MANAGER];
-
-	return roles.some((role) =>
-		allowedPartnerRole.includes(role.name as RoleTypes)
-	);
+export enum PermissionActionType {
+	VIEW = 'VIEW',
+	UPDATE = 'UPDATE',
+	UPDATE_WO_CHANGE_STATUS = 'UPDATE-WO-CHANGE-STATUS',
+	DELETE = 'DELETE',
+	CREATE = 'CREATE',
+	SEE_RESTRICTED_FIELDS = 'SEE-RESTRICTED-FIELDS',
+	EXPORT = 'EXPORT',
 }

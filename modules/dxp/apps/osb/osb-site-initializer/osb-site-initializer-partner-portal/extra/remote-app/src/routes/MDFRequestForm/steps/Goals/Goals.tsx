@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayAlert from '@clayui/alert';
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useFormikContext} from 'formik';
@@ -21,12 +20,9 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
-import Role from '../../../../common/interfaces/role';
 import {Status} from '../../../../common/utils/constants/status';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
-import {isLiferayManager} from '../../../../common/utils/isLiferayManager';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
-import {isPartnerManager} from '../../../../common/utils/isPartnerManager';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
@@ -44,12 +40,7 @@ const Goals = ({
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
-	const {
-		accountRoleEntries,
-		companiesEntries,
-		fieldEntries,
-		roleEntries,
-	} = useDynamicFieldEntries();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		companiesEntries,
@@ -109,52 +100,9 @@ const Goals = ({
 		return errors;
 	}, [errors]);
 
-	const isPartnerManagerRole = useMemo(() => {
-		const roles = accountRoleEntries(values.company?.id);
-
-		return isPartnerManager(roles as Role[]);
-	}, [accountRoleEntries, values.company?.id]);
-
 	const getRequestPage = () => {
-		if (!fieldEntries || !roleEntries || !companiesEntries) {
+		if (!fieldEntries || !companiesEntries) {
 			return <ClayLoadingIndicator />;
-		}
-
-		const userAccountRolesCanEdit = isLiferayManager(roleEntries);
-
-		if (
-			values.id &&
-			roleEntries &&
-			!isPartnerManagerRole &&
-			!userAccountRolesCanEdit &&
-			values.mdfRequestStatus?.key !== 'draft' &&
-			values.mdfRequestStatus?.key !== 'moreInfoRequested'
-		) {
-			return (
-				<PRMForm name="" title="MDF Request">
-					<div className="d-flex justify-content-center mt-4">
-						<ClayAlert
-							className="m-0 w-100"
-							displayType="info"
-							title="Info:"
-						>
-							This MDF Request can not be edited.
-						</ClayAlert>
-					</div>
-
-					<PRMForm.Footer>
-						<div className="d-flex mr-auto">
-							<Button
-								className="mr-4"
-								displayType="secondary"
-								onClick={() => onCancel()}
-							>
-								Cancel
-							</Button>
-						</div>
-					</PRMForm.Footer>
-				</PRMForm>
-			);
 		}
 
 		return (

@@ -10,14 +10,12 @@
  */
 
 import LiferayPicklist from '../interfaces/liferayPicklist';
-import Role from '../interfaces/role';
 import {Status} from './constants/status';
-import {isLiferayManager} from './isLiferayManager';
 
 const updateStatus = (
 	status: LiferayPicklist,
 	currentRequestStatus?: LiferayPicklist,
-	roles?: Role[],
+	changeStatus?: boolean,
 	id?: number,
 	totalMDFRequestAmount?: number
 ) => {
@@ -27,19 +25,13 @@ const updateStatus = (
 
 	if (!currentRequestStatus && id) {
 		status = Status.PENDING;
-	}
-	else {
-		if (
-			roles &&
-			!isLiferayManager(roles) &&
-			currentRequestStatus !== Status.DRAFT
-		) {
+	} else {
+		if (changeStatus && currentRequestStatus !== Status.DRAFT) {
 			status = Status.PENDING;
 		}
 
 		if (
-			roles &&
-			!isLiferayManager(roles) &&
+			changeStatus &&
 			totalMDFRequestAmount &&
 			totalMDFRequestAmount >= 15000 &&
 			status !== Status.DRAFT

@@ -9,8 +9,18 @@
  * distribution rights of the Software.
  */
 
-export default interface TableColumn<T> {
-	columnKey: string;
-	label: string | JSX.Element;
-	render?: (data: T[keyof T], item: T, index: number) => JSX.Element;
+import {useMemo} from 'react';
+
+import useGetPermissionActions from '../services/liferay/object/permission-action/useGetPermissionActions';
+
+export default function usePermissionActions(objectName: string) {
+	const response = useGetPermissionActions(objectName);
+
+	return useMemo(
+		() =>
+			response.data?.items.map(
+				(permissionAction) => permissionAction.action
+			),
+		[response.data?.items]
+	);
 }

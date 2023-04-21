@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-export default interface TableColumn<T> {
-	columnKey: string;
-	label: string | JSX.Element;
-	render?: (data: T[keyof T], item: T, index: number) => JSX.Element;
+export enum ObjectActionName {
+	MDF_REQUEST = 'MDF Request',
 }

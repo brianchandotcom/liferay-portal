@@ -50,9 +50,9 @@ const Table = <T extends unknown>({
 		</ClayTable.Head>
 
 		<ClayTable.Body>
-			{rows.map((row, index) => (
-				<ClayTable.Row key={index}>
-					{columns.map((column, index) => {
+			{rows.map((row, rowIndex) => (
+				<ClayTable.Row key={rowIndex}>
+					{columns.map((column, colIndex) => {
 						const data = row[column.columnKey as keyof T];
 
 						return (
@@ -60,7 +60,7 @@ const Table = <T extends unknown>({
 								align="left"
 								className="border-0 font-weight-normal py-4 text-neutral-10"
 								headingCell
-								key={index}
+								key={colIndex}
 								noWrap
 								onClick={() => {
 									if (customClickOnRow) {
@@ -70,7 +70,7 @@ const Table = <T extends unknown>({
 								truncate
 							>
 								{column.render
-									? column.render(data, row)
+									? column.render(data, row, rowIndex)
 									: data}
 							</ClayTable.Cell>
 						);

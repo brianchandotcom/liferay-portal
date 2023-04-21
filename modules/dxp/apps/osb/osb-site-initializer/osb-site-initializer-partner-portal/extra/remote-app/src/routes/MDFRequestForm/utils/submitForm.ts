@@ -15,7 +15,6 @@ import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
 import mdfRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
-import Role from '../../../common/interfaces/role';
 import {Liferay} from '../../../common/services/liferay';
 import createMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import deleteMDFRequestActivities from '../../../common/services/liferay/object/activity/deleteMDFRequestActivities';
@@ -37,14 +36,14 @@ export default async function submitForm(
 	formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,
 	siteURL: string,
 	currentRequestStatus?: LiferayPicklist,
-	roles?: Role[]
+	changeStatus?: boolean
 ) {
 	formikHelpers.setSubmitting(true);
 
 	const updatedStatus = updateStatus(
 		values.mdfRequestStatus,
 		currentRequestStatus,
-		roles,
+		changeStatus,
 		values.id,
 		values.totalMDFRequestAmount
 	);
@@ -55,15 +54,13 @@ export default async function submitForm(
 
 	if (values.mdfRequestStatus !== Status.DRAFT) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	}
-	else if (values.id) {
+	} else if (values.id) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values,
 			values.id
 		);
-	}
-	else {
+	} else {
 		dtoMDFRequest = await createMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values

@@ -9,8 +9,10 @@
  * distribution rights of the Software.
  */
 
-export default interface TableColumn<T> {
-	columnKey: string;
-	label: string | JSX.Element;
-	render?: (data: T[keyof T], item: T, index: number) => JSX.Element;
+import {PermissionActionType} from '../enums/permissionActionType';
+import LiferayObject from './liferayObject';
+
+export default interface PermissionAction extends LiferayObject {
+	action: PermissionActionType;
+	object: string;
 }

@@ -12,7 +12,8 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-interface DropdownOption {
+
+export interface DropdownOption {
 	icon: string;
 	key: string;
 	label: string;

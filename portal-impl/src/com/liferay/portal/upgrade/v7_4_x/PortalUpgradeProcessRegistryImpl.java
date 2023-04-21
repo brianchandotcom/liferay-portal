@@ -299,6 +299,10 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.addColumns(
 				"Company", "indexNameCurrent VARCHAR(75)",
 				"indexNameNext VARCHAR(75)"));
+
+		upgradeVersionTreeMap.put(
+			new Version(26, 2, 0),
+			new CTModelUpgradeProcess("Address", "Phone"));
 	}
 
 }

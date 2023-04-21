@@ -1,6 +1,8 @@
 #!/bin/bash
 
 function clone_repository {
+	eval `ssh-agent -s`
+
 	echo -e "-----BEGIN OPENSSH PRIVATE KEY-----\n${LIFERAY_LEARN_ETC_CRON_GITHUB_DEPLOY_KEY}\n-----END OPENSSH PRIVATE KEY-----"| ssh-add -
 
 	local github_branch=master
@@ -26,7 +28,7 @@ function clone_repository {
 
 	local git_log=$(git -C ~/liferay-learn log -1 --pretty="%B %H %aN")
 
-	echo send_slack_message "Cloned *${github_url}*: *${git_log//$\"\n\"/}*"
+	send_slack_message "Cloned *${github_url}*: *${git_log//$\"\n\"/}*"
 }
 
 function copy_images {
@@ -57,9 +59,9 @@ function generate_zip_files {
 		local output_dir_name=$(dirname "${output_dir_name}")
 		local output_dir_name=$(dirname "${output_dir_name}")
 
-		echo mkdir -p "/${output_dir_name}"
+		mkdir -p "/${output_dir_name}"
 
-		echo mv "${zip_dir_name}"/"${zip_file_name}" "${output_dir_name}"
+		mv "${zip_dir_name}"/"${zip_file_name}" "${output_dir_name}"
 	done
 
 	popd > /dev/null
@@ -81,7 +83,7 @@ function get_reference_docs {
 
 	mkdir -p /public_html/reference/latest/en/dxp
 
-	mv liferay-ce-portal-doc-${LIFERAY_LEARN_PORTAL_GIT_TAG_VALUE}/* /public_html/reference/latest/en/dxp
+	cp -R liferay-ce-portal-doc-${LIFERAY_LEARN_PORTAL_GIT_TAG_VALUE}/* /public_html/reference/latest/en/dxp
 
 	rmdir liferay-ce-portal-doc-${LIFERAY_LEARN_PORTAL_GIT_TAG_VALUE}
 
@@ -130,9 +132,9 @@ function main {
 
 	copy_images
 
-	get_reference_docs
-
 	replace_tokens
+
+	get_reference_docs
 
 	prepare_import
 }

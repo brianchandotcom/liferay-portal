@@ -13,7 +13,8 @@
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "@liferay-url",
 		"LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR": "../docs",
 		"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops",
-		"LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT": "@slack-endpoint"
+		"LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT": "@slack-endpoint",
+		"LIFERAY_JAR_RUNNER_JAVA_OPTS": "-Xmx2048m"
 	},
 	"environments": {
 		"extprd": {

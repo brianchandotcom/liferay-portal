@@ -34,13 +34,6 @@ Group group = layoutsAdminDisplayContext.getGroup();
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
-
-if (Validator.isNotNull(backURL)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
-}
-
-renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayout, locale));
 %>
 
 <portlet:actionURL name="/layout_admin/edit_layout" var="editLayoutURL">

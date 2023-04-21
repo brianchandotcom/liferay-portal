@@ -672,7 +672,7 @@
 												"mt-n2"
 											],
 											"fragment": {
-												"key": "dialect-dialect-button"
+												"key": "DIALECT-dialect-button"
 											},
 											"fragmentConfig": {
 												"buttonSize": "",
@@ -887,7 +887,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1080,7 +1080,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1269,7 +1269,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",
@@ -1464,7 +1464,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-text"
+														"key": "DIALECT-dialect-text"
 													},
 													"fragmentConfig": {
 														"textType": "h6",

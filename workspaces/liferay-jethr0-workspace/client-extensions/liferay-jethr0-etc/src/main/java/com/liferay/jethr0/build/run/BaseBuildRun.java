@@ -17,6 +17,7 @@ package com.liferay.jethr0.build.run;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -58,7 +59,18 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 				buildParameter.getName(), buildParameter.getValue());
 		}
 
-		jobParametersJSONObject.put("BUILD_RUN_ID", String.valueOf(getId()));
+		jobParametersJSONObject.put(
+			"BUILD_ID", String.valueOf(build.getId())
+		).put(
+			"BUILD_RUN_ID", String.valueOf(getId())
+		);
+
+		Project project = build.getProject();
+
+		if (project != null) {
+			jobParametersJSONObject.put(
+				"PROJECT_ID", String.valueOf(project.getId()));
+		}
 
 		invokeJSONObject.put("jobParameters", jobParametersJSONObject);
 

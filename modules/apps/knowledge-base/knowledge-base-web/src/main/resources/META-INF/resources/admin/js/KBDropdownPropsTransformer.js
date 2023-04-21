@@ -47,8 +47,8 @@ const ACTIONS = {
 			itemClassNameId,
 			itemId,
 			itemType,
-			moveItemActionUrl,
-			moveItemModalUrl,
+			moveKBItemActionURL,
+			moveKBItemModalURL,
 		},
 		portletNamespace
 	) {
@@ -56,10 +56,10 @@ const ACTIONS = {
 			buttonAddLabel: Liferay.Language.get('move'),
 			height: '50vh',
 			multiple: true,
-			onSelect: ({index, parentItem}) => {
+			onSelect: ({destinationItem, index}) => {
 				if (
 					itemType === ITEM_TYPES.folder &&
-					parentItem.type === ITEM_TYPES.article
+					destinationItem.type === ITEM_TYPES.article
 				) {
 					openToast({
 						message: Liferay.Language.get(
@@ -71,14 +71,14 @@ const ACTIONS = {
 					return false;
 				}
 
-				fetch(moveItemActionUrl, {
+				fetch(moveKBItemActionURL, {
 					body: objectToFormData({
 						[`${portletNamespace}dragAndDrop`]: true,
 						[`${portletNamespace}position`]: index?.next ?? -1,
 						[`${portletNamespace}resourceClassNameId`]: itemClassNameId,
 						[`${portletNamespace}resourcePrimKey`]: itemId,
-						[`${portletNamespace}parentResourceClassNameId`]: parentItem.classNameId,
-						[`${portletNamespace}parentResourcePrimKey`]: parentItem.id,
+						[`${portletNamespace}parentResourceClassNameId`]: destinationItem.classNameId,
+						[`${portletNamespace}parentResourcePrimKey`]: destinationItem.id,
 					}),
 					method: 'POST',
 				})
@@ -114,7 +114,7 @@ const ACTIONS = {
 			selectEventName: `selectKBMoveFolder`,
 			size: 'md',
 			title: Liferay.Language.get('move'),
-			url: moveItemModalUrl,
+			url: moveKBItemModalURL,
 		});
 	},
 

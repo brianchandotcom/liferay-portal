@@ -39,18 +39,18 @@ export default function MoveModal({itemToMoveId, items: initialItems}) {
 
 	const [searchActive, setSearchActive] = useState(false);
 
-	const handleItemMove = (item, parentItem, index) => {
+	const handleItemMove = (currentItem, destinationItem, index) => {
 		getOpener().Liferay.fire(SELECT_EVENT_NAME, {
+			destinationItem,
 			index,
-			parentItem,
 		});
 	};
 
-	const onItemClick = (event, parentItem) => {
+	const onItemClick = (destinationItem, event) => {
 		event.stopPropagation();
 
-		const index = {next: parentItem.children.length};
-		getOpener().Liferay.fire(SELECT_EVENT_NAME, {index, parentItem});
+		const index = {next: destinationItem.children.length};
+		getOpener().Liferay.fire(SELECT_EVENT_NAME, {destinationItem, index});
 	};
 
 	const handleSearchChange = ({isSearchActive}) => {
@@ -81,7 +81,7 @@ export default function MoveModal({itemToMoveId, items: initialItems}) {
 										item.id === itemToMoveId,
 								})}
 								onClick={(event) => {
-									onItemClick(event, item);
+									onItemClick(item, event);
 								}}
 							>
 								<ClayTreeView.ItemStack>

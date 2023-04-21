@@ -740,7 +740,7 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"moveItemModalUrl",
+					"moveKBItemModalURL",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
@@ -758,7 +758,7 @@ public class KBDropdownItemsProvider {
 					"itemId", String.valueOf(kbArticle.getResourcePrimKey()));
 				dropdownItem.putData("itemType", "article");
 				dropdownItem.putData(
-					"moveItemActionUrl",
+					"moveKBItemActionURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(
@@ -808,7 +808,7 @@ public class KBDropdownItemsProvider {
 			return dropdownItem -> {
 				dropdownItem.putData("action", "move");
 				dropdownItem.putData(
-					"moveItemModalUrl",
+					"moveKBItemModalURL",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
 					).setMVCPath(
@@ -826,7 +826,7 @@ public class KBDropdownItemsProvider {
 					"itemId", String.valueOf(kbFolder.getKbFolderId()));
 				dropdownItem.putData("itemType", "folder");
 				dropdownItem.putData(
-					"moveItemActionUrl",
+					"moveKBItemActionURL",
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setActionName(

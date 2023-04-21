@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public class JournalArticleInfoItemFormVariationsProvider
 		return new InfoItemFormVariation(
 			groupId, String.valueOf(ddmStructure.getStructureId()),
 			InfoLocalizedValue.<String>builder(
+			).defaultLocale(
+				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId())
 			).values(
 				ddmStructure.getNameMap()
 			).build());
@@ -102,6 +105,9 @@ public class JournalArticleInfoItemFormVariationsProvider
 					ddmStructure.getGroupId(),
 					String.valueOf(ddmStructure.getStructureId()),
 					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							ddmStructure.getDefaultLanguageId())
 					).values(
 						ddmStructure.getNameMap()
 					).build()));

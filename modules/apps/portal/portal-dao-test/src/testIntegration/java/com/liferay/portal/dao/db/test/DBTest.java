@@ -237,7 +237,7 @@ public class DBTest {
 	}
 
 	@Test
-	public void testAlterTableAddColumnNotNullDefaultType() throws Exception {
+	public void testAlterTableAddColumnDefaultNotNull() throws Exception {
 		_db.alterTableAddColumn(
 			_connection, _TABLE_NAME_1, "testColumn",
 			"LONG default 0 not null");

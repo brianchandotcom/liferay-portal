@@ -238,6 +238,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 					formModelBean="<%= selLayout %>"
 					id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
 					showButtons="<%= false %>"
+					type="<%= FormNavigatorConstants.FormNavigatorType.SHEET_SECTIONS %>"
 				/>
 			</liferay-frontend:edit-form-body>
 

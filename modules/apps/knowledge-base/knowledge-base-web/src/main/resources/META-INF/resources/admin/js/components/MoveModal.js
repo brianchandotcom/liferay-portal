@@ -28,7 +28,7 @@ const ITEM_TYPES_SYMBOL = {
 	folder: 'folder',
 };
 
-export default function MoveModal({items: initialItems, selectedItemId}) {
+export default function MoveModal({items: initialItems, itemToMoveId}) {
 	const items = useMemo(() => normalizeItems(initialItems), [initialItems]);
 
 	const searchItems = useMemo(() => getSearchItems(initialItems), [
@@ -66,7 +66,7 @@ export default function MoveModal({items: initialItems, selectedItemId}) {
 			{!searchActive && (
 				<ClayTreeView
 					defaultItems={items}
-					defaultSelectedKeys={new Set([selectedItemId])}
+					defaultSelectedKeys={new Set([itemToMoveId])}
 					dragAndDrop
 					nestedKey="children"
 					onItemMove={handleItemMove}
@@ -77,7 +77,7 @@ export default function MoveModal({items: initialItems, selectedItemId}) {
 							<ClayTreeView.Item
 								className={classnames({
 									'knowledge-base-navigation-item-active':
-										item.id === selectedItemId,
+										item.id === itemToMoveId,
 								})}
 								onClick={(event) => {
 									onItemClick(event, item);
@@ -129,5 +129,5 @@ itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 
 MoveModal.propTypes = {
 	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
-	selectedItemId: PropTypes.string,
+	itemToMoveId: PropTypes.string,
 };

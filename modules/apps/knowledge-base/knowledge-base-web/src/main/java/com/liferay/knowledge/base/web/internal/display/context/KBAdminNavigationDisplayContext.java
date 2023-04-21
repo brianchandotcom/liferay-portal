@@ -129,11 +129,7 @@ public class KBAdminNavigationDisplayContext {
 			));
 	}
 
-	public long getSelectedItemId() {
-		return ParamUtil.getLong(
-			_httpServletRequest, "selectedItemId",
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
+	
 
 	public List<JSONObject> getVerticalNavigationJSONObjects()
 		throws PortalException {

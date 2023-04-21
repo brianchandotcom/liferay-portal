@@ -46,9 +46,9 @@ const ACTIONS = {
 		{
 			moveItemActionUrl,
 			moveItemModalUrl,
-			selectedItemClassNameId,
-			selectedItemId,
-			selectedItemType,
+			itemClassNameId,
+			itemId,
+			itemType,
 		},
 		portletNamespace
 	) {
@@ -59,9 +59,9 @@ const ACTIONS = {
 			onSelect: ({index, item, parentItem}) => {
 				if (!item) {
 					item = {
-						classNameId: selectedItemClassNameId,
-						id: selectedItemId,
-						type: selectedItemType,
+						classNameId: itemClassNameId,
+						id: itemId,
+						type: itemType,
 					};
 				}
 

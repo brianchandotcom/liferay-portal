@@ -1729,6 +1729,9 @@
 			},
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -1750,7 +1753,7 @@
 							"gutters": true,
 							"indexed": true,
 							"modulesPerRow": 2,
-							"numberOfColumns": 4,
+							"numberOfColumns": 5,
 							"reverseOrder": false,
 							"rowViewports": [
 								{
@@ -1865,7 +1868,7 @@
 											"id": "tablet"
 										}
 									],
-									"size": 6
+									"size": 4
 								},
 								"pageElements": [
 									{
@@ -1901,7 +1904,7 @@
 											"id": "tablet"
 										}
 									],
-									"size": 6
+									"size": 4
 								},
 								"pageElements": [
 									{
@@ -1910,6 +1913,42 @@
 												"widgetConfig": {
 												},
 												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-LEVEL-CHART$]"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-RENEWALS-CHART$]"
 											}
 										},
 										"type": "Widget"

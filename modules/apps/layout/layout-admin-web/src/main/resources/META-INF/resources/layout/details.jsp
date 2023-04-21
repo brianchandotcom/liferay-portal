@@ -26,6 +26,12 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 Locale defaultLocale = LocaleUtil.getDefault();
 
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+String friendlyURLBase = StringPool.BLANK;
+
+if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem()) {
+	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();
+}
 %>
 
 <liferay-ui:error-marker
@@ -34,50 +40,6 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-
-<%
-String friendlyURLBase = StringPool.BLANK;
-%>
-
-<c:if test="<%= !group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
-	<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-friendly-url-is-already-in-use.-please-enter-a-unique-friendly-url" />
-
-	<%
-	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();
-	%>
-
-	<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="friendlyURL">
-
-		<%
-		Locale exceptionLocale = null;
-		LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)errorException;
-		%>
-
-		<%@ include file="/error_friendly_url_exception.jspf" %>
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= LayoutFriendlyURLsException.class %>" focusField="friendlyURL">
-
-		<%
-		LayoutFriendlyURLsException lfurlse = (LayoutFriendlyURLsException)errorException;
-
-		Map<Locale, Exception> localizedExceptionsMap = lfurlse.getLocalizedExceptionsMap();
-
-		for (Map.Entry<Locale, Exception> entry : localizedExceptionsMap.entrySet()) {
-			Locale exceptionLocale = entry.getKey();
-			LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)entry.getValue();
-		%>
-
-			<%@ include file="/error_friendly_url_exception.jspf" %>
-
-		<%
-		}
-		%>
-
-	</liferay-ui:error>
-</c:if>
-
-<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
 <c:choose>
 	<c:when test="<%= !group.isLayoutPrototype() %>">

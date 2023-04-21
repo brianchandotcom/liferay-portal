@@ -79,6 +79,44 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:success key="layoutAdded" message="the-page-was-created-successfully" />
 
+		<%
+		LayoutType selLayoutType = selLayout.getLayoutType();
+		%>
+
+		<c:if test="<%= !group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
+			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-friendly-url-is-already-in-use.-please-enter-a-unique-friendly-url" />
+
+			<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="friendlyURL">
+
+				<%
+				Locale exceptionLocale = null;
+				LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)errorException;
+				%>
+
+				<%@ include file="/error_friendly_url_exception.jspf" %>
+			</liferay-ui:error>
+
+			<liferay-ui:error exception="<%= LayoutFriendlyURLsException.class %>" focusField="friendlyURL">
+
+				<%
+				LayoutFriendlyURLsException lfurlse = (LayoutFriendlyURLsException)errorException;
+
+				Map<Locale, Exception> localizedExceptionsMap = lfurlse.getLocalizedExceptionsMap();
+
+				for (Map.Entry<Locale, Exception> entry : localizedExceptionsMap.entrySet()) {
+					Locale exceptionLocale = entry.getKey();
+					LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)entry.getValue();
+				%>
+
+					<%@ include file="/error_friendly_url_exception.jspf" %>
+
+				<%
+				}
+				%>
+
+			</liferay-ui:error>
+		</c:if>
+
 		<liferay-ui:error exception="<%= LayoutTypeException.class %>">
 
 			<%
@@ -118,6 +156,8 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />
+
+		<liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
 		<c:if test="<%= layoutRevision != null %>">
 			<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />

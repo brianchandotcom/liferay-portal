@@ -30,6 +30,10 @@ const populateNotificationsData = (
 			const recipients = element.data.notifications.recipients;
 
 			recipients.map((recipient, index) => {
+				if (recipient[0] !== undefined) {
+					recipient = recipient[0];
+				}
+
 				if (recipient?.assignmentType?.[0] === 'roleId') {
 					retrieveRoleById(recipient.roleId)
 						.then((response) => response.json())

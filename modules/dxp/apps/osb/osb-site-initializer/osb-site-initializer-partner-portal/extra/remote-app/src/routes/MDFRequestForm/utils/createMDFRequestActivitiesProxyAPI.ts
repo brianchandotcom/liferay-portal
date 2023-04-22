@@ -28,10 +28,8 @@ export default async function createMDFRequestActivitiesProxyAPI(
 		| undefined = undefined;
 
 	if (
-		mdfRequestActivity.externalReferenceCode &&
-		mdfRequestActivity.externalReferenceCodeSF &&
-		mdfRequestActivity.externalReferenceCode ===
-			mdfRequestActivity.externalReferenceCodeSF
+		mdfRequestActivity.externalReferenceCode ||
+		mdfRequestActivity.externalReferenceCodeSF
 	) {
 		dtoMDFRequestActivitySFResponse = await updateMDFRequestActivitiesSF(
 			ResourceName.ACTIVITY_SALESFORCE,
@@ -40,8 +38,7 @@ export default async function createMDFRequestActivitiesProxyAPI(
 			mdfRequestId,
 			mdfRequestActivity.externalReferenceCode
 		);
-	}
-	else {
+	} else {
 		dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
 			ResourceName.ACTIVITY_SALESFORCE,
 			mdfRequestActivity,
@@ -53,7 +50,7 @@ export default async function createMDFRequestActivitiesProxyAPI(
 
 	let dtoMDFRequestResponse: MDFRequestActivityDTO | undefined = undefined;
 
-	if (dtoMDFRequestActivitySFResponse.externalReferenceCode) {
+	if (dtoMDFRequestActivitySFResponse?.externalReferenceCode) {
 		if (mdfRequestActivity.id) {
 			dtoMDFRequestResponse = await updateMDFRequestActivities(
 				ResourceName.ACTIVITY_DXP,
@@ -61,18 +58,15 @@ export default async function createMDFRequestActivitiesProxyAPI(
 				company,
 				mdfRequestId,
 				mdFRequestExternalReferenceCode,
-				dtoMDFRequestActivitySFResponse.externalReferenceCode,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
-		}
-		else {
+		} else {
 			dtoMDFRequestResponse = await createMDFRequestActivities(
 				ResourceName.ACTIVITY_DXP,
 				mdfRequestActivity,
 				company,
 				mdfRequestId,
 				mdFRequestExternalReferenceCode,
-				dtoMDFRequestActivitySFResponse.externalReferenceCode,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
 		}

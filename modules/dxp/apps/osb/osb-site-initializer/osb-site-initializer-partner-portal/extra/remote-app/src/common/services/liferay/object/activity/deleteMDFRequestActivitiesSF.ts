@@ -14,7 +14,7 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
 
-export default async function deleteMDFRequestActivities(
+export default async function deleteMDFRequestActivitiesSF(
 	apiOption: ResourceName,
 	externalReferenceCode: string
 ) {

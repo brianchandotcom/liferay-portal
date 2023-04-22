@@ -23,8 +23,7 @@ export default async function updateMDFRequestActivities(
 	company?: LiferayAccountBrief,
 	mdfRequestId?: number,
 	mdfRequestExternalReferenceCode?: string,
-	externalReferenceCode?: string,
-	externalReferenceCodeSF?: string
+	externalReferenceCode?: string
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/${mdfRequestActivity.id}`,
@@ -34,8 +33,7 @@ export default async function updateMDFRequestActivities(
 			company,
 			mdfRequestId,
 			mdfRequestExternalReferenceCode,
-			externalReferenceCode,
-			externalReferenceCodeSF
+			externalReferenceCode
 		)
 	);
 }

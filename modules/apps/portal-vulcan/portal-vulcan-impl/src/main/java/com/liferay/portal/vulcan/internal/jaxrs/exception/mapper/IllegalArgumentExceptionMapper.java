@@ -12,29 +12,18 @@
  * details.
  */
 
-package com.liferay.headless.site.internal.jaxrs.exception.mapper;
+package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * Converts any {@code IllegalArgumentExceptionMapper} to a {@code 400} error.
  *
  * @author Rubén Pulido
  */
-@Component(
-	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Site)",
-		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Site.IllegalArgumentExceptionMapper"
-	},
-	service = ExceptionMapper.class
-)
 public class IllegalArgumentExceptionMapper
 	extends BaseExceptionMapper<IllegalArgumentException> {
 

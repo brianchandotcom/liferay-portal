@@ -2919,9 +2919,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addOrUpdateOrganizations(ServiceContext serviceContext)
 		throws Exception {
 
-		String jsonPath = "/site-initializer/organizations.json";
-
-		String json = SiteInitializerUtil.read(jsonPath, _servletContext);
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/organizations.json", _servletContext);
 
 		if (json == null) {
 			return;

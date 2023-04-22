@@ -23,9 +23,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.json.JSONObject;
 
 /**
@@ -62,29 +59,30 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		EntityDALO<T> entityDALO = getEntityDALO();
 
-		Map<Long, T> entitiesMap = _getEntitiesMap();
-
 		for (T entity : entities) {
 			if (entity.getId() == 0) {
 				entity = entityDALO.create(entity);
 			}
 
-			entitiesMap.put(entity.getId(), entity);
+			_entitiesMap.put(entity.getId(), entity);
 		}
 	}
 
 	@Override
 	public Set<T> getAll() {
-		Map<Long, T> entitiesMap = _getEntitiesMap();
-
-		return new HashSet<>(entitiesMap.values());
+		return new HashSet<>(_entitiesMap.values());
 	}
 
 	@Override
 	public T getById(long id) {
-		Map<Long, T> entitiesMap = _getEntitiesMap();
+		return _entitiesMap.get(id);
+	}
 
-		return entitiesMap.get(id);
+	@Override
+	public void initialize() {
+		EntityDALO<T> entityDALO = getEntityDALO();
+
+		addAll(entityDALO.getAll());
 	}
 
 	@Override
@@ -97,10 +95,8 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		EntityDALO<T> entityDALO = getEntityDALO();
 
-		Map<Long, T> entitiesMap = _getEntitiesMap();
-
 		for (T entity : entities) {
-			entitiesMap.remove(entity.getId());
+			_entitiesMap.remove(entity.getId());
 
 			entityDALO.delete(entity);
 		}
@@ -124,26 +120,6 @@ public abstract class BaseEntityRepository<T extends Entity>
 		return entityDALO.update(entity);
 	}
 
-	private Map<Long, T> _getEntitiesMap() {
-		synchronized (_log) {
-			if (_entitiesMap != null) {
-				return _entitiesMap;
-			}
-
-			_entitiesMap = new HashMap<>();
-
-			EntityDALO<T> entityDALO = getEntityDALO();
-
-			for (T entity : entityDALO.getAll()) {
-				_entitiesMap.put(entity.getId(), entity);
-			}
-
-			return _entitiesMap;
-		}
-	}
-
-	private static final Log _log = LogFactory.getLog(EntityRepository.class);
-
-	private Map<Long, T> _entitiesMap;
+	private final Map<Long, T> _entitiesMap = new HashMap<>();
 
 }

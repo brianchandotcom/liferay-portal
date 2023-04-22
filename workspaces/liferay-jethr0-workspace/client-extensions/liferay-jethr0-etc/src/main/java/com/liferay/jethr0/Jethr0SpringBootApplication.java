@@ -17,6 +17,7 @@ package com.liferay.jethr0;
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 import com.liferay.jethr0.build.queue.BuildQueue;
+import com.liferay.jethr0.entity.repository.EntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jms.JMSEventHandler;
 import com.liferay.jethr0.project.queue.ProjectQueue;
@@ -47,6 +48,19 @@ public class Jethr0SpringBootApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext configurableApplicationContext =
 			SpringApplication.run(Jethr0SpringBootApplication.class, args);
+
+		for (String beanDefinitionName :
+				configurableApplicationContext.getBeanDefinitionNames()) {
+
+			Object bean = configurableApplicationContext.getBean(
+				beanDefinitionName);
+
+			if (bean instanceof EntityRepository) {
+				EntityRepository entityRepository = (EntityRepository)bean;
+
+				entityRepository.initialize();
+			}
+		}
 
 		ProjectQueue projectQueue = configurableApplicationContext.getBean(
 			ProjectQueue.class);

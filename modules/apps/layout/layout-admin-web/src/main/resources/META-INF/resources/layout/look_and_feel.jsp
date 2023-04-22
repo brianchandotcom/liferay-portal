@@ -108,39 +108,6 @@ else {
 <clay:sheet-section
 	cssClass="mb-5"
 >
-	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="basic-settings" /></h3>
-
-	<div>
-		<react:component
-			module="js/layout/look_and_feel/Favicon"
-			props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
-		/>
-	</div>
-
-	<div class="d-flex">
-		<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
-			<div class="flex-grow-1 mr-4">
-				<react:component
-					module="js/layout/look_and_feel/MasterLayoutConfiguration"
-					props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"
-				/>
-			</div>
-		</c:if>
-
-		<div class="flex-grow-1">
-			<react:component
-				module="js/layout/look_and_feel/StyleBookConfiguration"
-				props="<%= layoutLookAndFeelDisplayContext.getStyleBookConfigurationProps() %>"
-			/>
-		</div>
-	</div>
-</clay:sheet-section>
-
-<hr class="mb-5 separator" />
-
-<clay:sheet-section
-	cssClass="mb-5"
->
 	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="customization" /></h3>
 
 	<%

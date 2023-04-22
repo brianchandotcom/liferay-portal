@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -274,9 +273,7 @@ public class ServiceComponentLocalServiceTest {
 		}
 
 		@Override
-		public void upgrade(DBProcessContext dbProcessContext)
-			throws UpgradeException {
-
+		public void upgrade() throws UpgradeException {
 			try {
 				_db.runSQL(
 					"create table " + _TEST_TABLE + " (name VARCHAR(20))");

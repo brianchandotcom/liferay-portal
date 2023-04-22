@@ -106,8 +106,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
-import java.io.PrintWriter;
-
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -149,14 +147,12 @@ public class JournalServiceUpgradeStepRegistrator
 			new UpgradeJournalDisplayPreferences(),
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsLocatorHelper),
-			dbProcessContext -> {
+			() -> {
 				try {
 					_deleteTempImages();
 				}
 				catch (Exception exception) {
-					exception.printStackTrace(
-						new PrintWriter(
-							dbProcessContext.getOutputStream(), true));
+					_log.error(exception);
 				}
 			});
 

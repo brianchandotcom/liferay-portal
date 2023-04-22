@@ -19,7 +19,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -89,6 +88,7 @@ public abstract class UpgradeProcess
 			getPostUpgradeSteps());
 	}
 
+	@Override
 	public void upgrade() throws UpgradeException {
 		if (this instanceof DummyUpgradeProcess) {
 			return;
@@ -148,13 +148,6 @@ public abstract class UpgradeProcess
 						System.currentTimeMillis() - start, " ms"));
 			}
 		}
-	}
-
-	@Override
-	public void upgrade(DBProcessContext dbProcessContext)
-		throws UpgradeException {
-
-		upgrade();
 	}
 
 	public void upgrade(UpgradeProcess upgradeProcess) throws UpgradeException {

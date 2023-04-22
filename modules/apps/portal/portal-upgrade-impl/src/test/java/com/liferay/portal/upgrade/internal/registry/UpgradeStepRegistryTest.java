@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.internal.registry;
 
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -235,7 +234,7 @@ public class UpgradeStepRegistryTest {
 	private static class TestUpgradeStep implements UpgradeStep {
 
 		@Override
-		public void upgrade(DBProcessContext dbProcessContext) {
+		public void upgrade() {
 		}
 
 	}

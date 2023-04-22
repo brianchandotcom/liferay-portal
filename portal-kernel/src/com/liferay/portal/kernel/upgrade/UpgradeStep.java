@@ -14,14 +14,11 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
-
 /**
  * @author Carlos Sierra Andrés
  */
 public interface UpgradeStep {
 
-	public void upgrade(DBProcessContext dbProcessContext)
-		throws UpgradeException;
+	public void upgrade() throws UpgradeException;
 
 }

@@ -296,7 +296,7 @@ public class ConfigurationUpgradeStepFactoryTest {
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				_TEST_PID_OLD, _TEST_PID_NEW);
 
-		upgradeStep.upgrade(null);
+		upgradeStep.upgrade();
 
 		_assert(factory, data, configFile, felixFileName, true);
 	}

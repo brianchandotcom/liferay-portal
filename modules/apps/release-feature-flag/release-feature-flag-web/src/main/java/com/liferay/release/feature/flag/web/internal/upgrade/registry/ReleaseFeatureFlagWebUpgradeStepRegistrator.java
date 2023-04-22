@@ -15,7 +15,6 @@
 package com.liferay.release.feature.flag.web.internal.upgrade.registry;
 
 import com.liferay.portal.events.StartupHelperUtil;
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -51,7 +50,7 @@ public class ReleaseFeatureFlagWebUpgradeStepRegistrator
 		}
 
 		@Override
-		public void upgrade(DBProcessContext dbProcessContext) {
+		public void upgrade() {
 			if (ReleaseInfo.isDXP() && !StartupHelperUtil.isDBNew() &&
 				StartupHelperUtil.isUpgrading()) {
 

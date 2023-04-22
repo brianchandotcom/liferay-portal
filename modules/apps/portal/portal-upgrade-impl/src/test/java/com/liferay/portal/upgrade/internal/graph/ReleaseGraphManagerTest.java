@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.internal.graph;
 
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
@@ -293,7 +292,7 @@ public class ReleaseGraphManagerTest {
 		}
 
 		@Override
-		public void upgrade(DBProcessContext dbProcessContext) {
+		public void upgrade() {
 		}
 
 		private final String _name;

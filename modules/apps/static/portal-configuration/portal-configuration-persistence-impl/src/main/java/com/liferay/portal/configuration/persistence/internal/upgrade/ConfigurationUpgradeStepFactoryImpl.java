@@ -49,7 +49,7 @@ public class ConfigurationUpgradeStepFactoryImpl
 
 	@Override
 	public UpgradeStep createUpgradeStep(String oldPid, String newPid) {
-		return dbProcessContext -> {
+		return () -> {
 			try {
 				Enumeration<Dictionary<String, String>> enumeration =
 					_persistenceManager.getDictionaries();

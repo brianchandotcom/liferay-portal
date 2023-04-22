@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -34,8 +33,6 @@ import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.registry.UpgradeStepRegistratorTracker;
 import com.liferay.portal.upgrade.internal.release.ReleasePublisher;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
-
-import java.io.OutputStream;
 
 import java.util.Dictionary;
 import java.util.List;
@@ -208,15 +205,7 @@ public class UpgradeExecutor {
 			for (UpgradeInfo upgradeInfo : upgradeInfos) {
 				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
-				upgradeStep.upgrade(
-					new DBProcessContext() {
-
-						@Override
-						public OutputStream getOutputStream() {
-							return null;
-						}
-
-					});
+				upgradeStep.upgrade();
 
 				_releaseLocalService.updateRelease(
 					bundleSymbolicName, upgradeInfo.getToSchemaVersionString(),

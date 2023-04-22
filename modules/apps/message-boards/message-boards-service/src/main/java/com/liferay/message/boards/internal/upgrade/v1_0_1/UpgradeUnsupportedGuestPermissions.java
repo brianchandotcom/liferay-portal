@@ -18,7 +18,6 @@ import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,9 +48,7 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 	}
 
 	@Override
-	public void upgrade(DBProcessContext dbProcessContext)
-		throws UpgradeException {
-
+	public void upgrade() throws UpgradeException {
 		_removeResourceActions(MBCategory.class.getName(), ActionKeys.DELETE);
 		_removeResourceActions(
 			MBCategory.class.getName(), ActionKeys.MOVE_THREAD);

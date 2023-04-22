@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.exception.OldServiceComponentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -50,7 +49,6 @@ import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import java.lang.reflect.Field;
 
@@ -277,15 +275,7 @@ public class ServiceComponentLocalServiceImpl
 			try {
 				UpgradeStep upgradeStep = upgradeStepHolder._upgradeStep;
 
-				upgradeStep.upgrade(
-					new DBProcessContext() {
-
-						@Override
-						public OutputStream getOutputStream() {
-							return null;
-						}
-
-					});
+				upgradeStep.upgrade();
 
 				_releaseLocalService.updateRelease(
 					servletContextName, "0.0.1", "0.0.0");

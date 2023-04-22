@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.release;
 
-import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -34,7 +33,7 @@ public class ReleaseRenamingUpgradeStep implements UpgradeStep {
 	}
 
 	@Override
-	public void upgrade(DBProcessContext dbProcessContext) {
+	public void upgrade() {
 		Release oldRelease = _releaseLocalService.fetchRelease(
 			_oldServletContextName);
 

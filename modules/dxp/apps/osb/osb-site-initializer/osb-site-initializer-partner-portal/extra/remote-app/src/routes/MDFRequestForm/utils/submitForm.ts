@@ -102,24 +102,24 @@ export default async function submitForm(
 
 				if (activity.budgets?.length && dtoActivity?.id) {
 					activity.budgets?.map(async (budget) => {
-						if (budget.id && budget.removed) {
-							await deleteMDFRequestActivityBudgets(
-								ResourceName.BUDGET,
-								budget.id as number
-							);
-						}
-
 						if (budget?.id) {
-							return updateMDFRequestActivityBudget(
+							await updateMDFRequestActivityBudget(
+								dtoActivity.id as number,
+								budget
+							);
+						} else {
+							await createMDFRequestActivityBudget(
 								dtoActivity.id as number,
 								budget
 							);
 						}
 
-						return createMDFRequestActivityBudget(
-							dtoActivity.id as number,
-							budget
-						);
+						if (budget.id && budget.removed) {
+							return deleteMDFRequestActivityBudgets(
+								ResourceName.BUDGET,
+								budget.id as number
+							);
+						}
 					});
 				}
 			});

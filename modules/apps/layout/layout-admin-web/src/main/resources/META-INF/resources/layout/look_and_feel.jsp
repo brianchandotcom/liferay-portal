@@ -62,12 +62,7 @@ else {
 }
 %>
 
-<clay:sheet-section
-	cssClass='<%= (selLayout.getMasterLayoutPlid() <= 0) ? "mb-5" : "hide mb-5" %>'
-	id='<%= liferayPortletResponse.getNamespace() + "themeContainer" %>'
->
-	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="theme" /></h3>
-
+<div class="<%= (selLayout.getMasterLayoutPlid() <= 0) ? "" : "hide" %>" id="<portlet:namespace />themeContainer">
 	<clay:radio
 		checked="<%= selLayout.isInheritLookAndFeel() %>"
 		id='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
@@ -97,7 +92,7 @@ else {
 	<div class="lfr-inherit-theme-options <%= !selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
-</clay:sheet-section>
+</div>
 
 <aui:script sandbox="<%= true %>">
 	const regularCss = document.getElementById('<portlet:namespace />regularCss');

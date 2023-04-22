@@ -23,9 +23,24 @@ export default async function submitForm(
 ) {
 	formikHelpers.setSubmitting(true);
 
-	await createDealRegistrationProxyAPI(values);
+	try {
+		await createDealRegistrationProxyAPI(values);
 
-	Liferay.Util.navigate(
-		`${siteURL}/${PRMPageRoute.DEAL_REGISTRATION_LISTING}`
-	);
+		Liferay.Util.navigate(
+			`${siteURL}/${PRMPageRoute.DEAL_REGISTRATION_LISTING}`
+		);
+
+		Liferay.Util.openToast({
+			message: 'Deal successfully registered!',
+			title: 'Sucesso',
+			type: 'success',
+		});
+	}
+	catch (error: unknown) {
+		Liferay.Util.openToast({
+			message: 'Deal can not be registered. Duplicated data.',
+			title: 'Error',
+			type: 'danger',
+		});
+	}
 }

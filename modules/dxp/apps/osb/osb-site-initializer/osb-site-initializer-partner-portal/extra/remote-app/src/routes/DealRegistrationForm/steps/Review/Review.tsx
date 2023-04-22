@@ -17,7 +17,6 @@ import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import Table from '../../../../common/components/Table';
 import DealRegistration from '../../../../common/interfaces/dealRegistration';
-import {Liferay} from '../../../../common/services/liferay';
 import {StepType} from '../../enums/stepType';
 import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProps';
 
@@ -25,16 +24,7 @@ const Review = ({
 	onCancel,
 	onPrevious,
 }: PRMFormikPageProps & DealRegistrationStepProps) => {
-	const {isSubmitting, submitCount, values} = useFormikContext<
-		DealRegistration
-	>();
-
-	if (!isSubmitting && submitCount > 0) {
-		Liferay.Util.openToast({
-			message: 'Deal Registration successfully submitted.',
-			type: 'success',
-		});
-	}
+	const {isSubmitting, values} = useFormikContext<DealRegistration>();
 
 	return (
 		<>

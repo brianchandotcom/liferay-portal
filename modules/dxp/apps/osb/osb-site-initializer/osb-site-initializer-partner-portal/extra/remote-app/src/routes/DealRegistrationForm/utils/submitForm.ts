@@ -32,7 +32,7 @@ export default async function submitForm(
 
 		Liferay.Util.openToast({
 			message: 'Deal successfully registered!',
-			title: 'Sucesso',
+			title: 'Success',
 			type: 'success',
 		});
 	}

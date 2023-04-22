@@ -100,7 +100,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public Set<T> getAll() {
-		return getAll(null, false, null, null);
+		return getAll(null, null);
 	}
 
 	@Override
@@ -114,12 +114,10 @@ public abstract class BaseEntityDALO<T extends Entity>
 		return entity;
 	}
 
-	protected Set<T> getAll(
-		String filter, boolean flatten, String search, String sort) {
-
+	protected Set<T> getAll(String filter, String search) {
 		Set<T> entities = new HashSet<>();
 
-		for (JSONObject jsonObject : _get(filter, flatten, search, sort)) {
+		for (JSONObject jsonObject : _get(filter, search)) {
 			T entity = newEntity(jsonObject);
 
 			entities.add(entity);
@@ -230,9 +228,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 		}
 	}
 
-	private Set<JSONObject> _get(
-		String filter, boolean flatten, String search, String sort) {
-
+	private Set<JSONObject> _get(String filter, String search) {
 		Set<JSONObject> jsonObjects = new HashSet<>();
 
 		int currentPage = 1;
@@ -256,16 +252,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 								uriBuilder.queryParam("filter", filter);
 							}
 
-							if (flatten) {
-								uriBuilder.queryParam("flatten", "true");
-							}
-
 							if (search != null) {
 								uriBuilder.queryParam("search", search);
-							}
-
-							if (sort != null) {
-								uriBuilder.queryParam("sort", sort);
 							}
 
 							return uriBuilder.build();

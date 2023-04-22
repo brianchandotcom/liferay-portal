@@ -51,7 +51,7 @@ public class ProjectDALO extends BaseEntityDALO<Project> {
 
 		List<Project.State> statesList = Arrays.asList(states);
 
-		for (Project project : getAll(filter, false, null, null)) {
+		for (Project project : getAll(filter, null)) {
 			if (!statesList.contains(project.getState())) {
 				continue;
 			}

@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import javax.portlet.PortletURL;
 
@@ -38,8 +40,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ObjectEntriesPanelApp extends BasePanelApp {
 
-	public ObjectEntriesPanelApp(ObjectDefinition objectDefinition) {
+	public ObjectEntriesPanelApp(
+		ObjectDefinition objectDefinition, Supplier<Portlet> supplier) {
+
 		_objectDefinition = objectDefinition;
+		_supplier = supplier;
 	}
 
 	@Override
@@ -51,6 +56,19 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 	@Override
 	public String getLabel(Locale locale) {
 		return _objectDefinition.getPluralLabel(locale);
+	}
+
+	@Override
+	public Portlet getPortlet() {
+		Portlet portlet = _portlet;
+
+		if (portlet == null) {
+			portlet = _supplier.get();
+
+			_portlet = portlet;
+		}
+
+		return portlet;
 	}
 
 	@Override
@@ -99,5 +117,7 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 	}
 
 	private final ObjectDefinition _objectDefinition;
+	private volatile Portlet _portlet;
+	private final Supplier<Portlet> _supplier;
 
 }

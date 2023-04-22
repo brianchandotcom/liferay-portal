@@ -261,6 +261,10 @@ public abstract class BaseCartResourceImpl
 			existingCart.setPrintedNote(cart.getPrintedNote());
 		}
 
+		if (cart.getPurchaseOrderNumber() != null) {
+			existingCart.setPurchaseOrderNumber(cart.getPurchaseOrderNumber());
+		}
+
 		if (cart.getShippingAddressId() != null) {
 			existingCart.setShippingAddressId(cart.getShippingAddressId());
 		}

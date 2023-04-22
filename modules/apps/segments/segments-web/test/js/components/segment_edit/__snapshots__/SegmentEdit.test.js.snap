@@ -41,29 +41,24 @@ exports[`SegmentEdit renders 1`] = `
             class="input-group input-localized input-localized-input"
           >
             <div
-              class="dropdown postion-relative lfr-icon-menu "
+              class="dropdown"
             >
               <button
+                aria-controls="clay-dropdown-menu-1"
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="btn btn-monospaced btn-secondary dropdown-toggle"
+                class="dropdown-toggle btn-monospaced btn btn-secondary"
                 data-testid="localized-dropdown-button"
-                role="button"
-                title=""
                 type="button"
               >
-                <span
-                  class="inline-item"
+                <svg
+                  class="lexicon-icon lexicon-icon-en-us"
+                  role="presentation"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-en-us"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#en-us"
-                    />
-                  </svg>
-                </span>
+                  <use
+                    xlink:href="#en-us"
+                  />
+                </svg>
                 <span
                   class="btn-section"
                 >
@@ -136,29 +131,24 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
             class="input-group input-localized input-localized-input"
           >
             <div
-              class="dropdown postion-relative lfr-icon-menu "
+              class="dropdown"
             >
               <button
+                aria-controls="clay-dropdown-menu-2"
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="btn btn-monospaced btn-secondary dropdown-toggle"
+                class="dropdown-toggle btn-monospaced btn btn-secondary"
                 data-testid="localized-dropdown-button"
-                role="button"
-                title=""
                 type="button"
               >
-                <span
-                  class="inline-item"
+                <svg
+                  class="lexicon-icon lexicon-icon-en-us"
+                  role="presentation"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-en-us"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#en-us"
-                    />
-                  </svg>
-                </span>
+                  <use
+                    xlink:href="#en-us"
+                  />
+                </svg>
                 <span
                   class="btn-section"
                 >
@@ -280,29 +270,24 @@ exports[`SegmentEdit renders with given values 1`] = `
             class="input-group input-localized input-localized-input"
           >
             <div
-              class="dropdown postion-relative lfr-icon-menu "
+              class="dropdown"
             >
               <button
+                aria-controls="clay-dropdown-menu-4"
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="btn btn-monospaced btn-secondary dropdown-toggle"
+                class="dropdown-toggle btn-monospaced btn btn-secondary"
                 data-testid="localized-dropdown-button"
-                role="button"
-                title=""
                 type="button"
               >
-                <span
-                  class="inline-item"
+                <svg
+                  class="lexicon-icon lexicon-icon-en-us"
+                  role="presentation"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-en-us"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#en-us"
-                    />
-                  </svg>
-                </span>
+                  <use
+                    xlink:href="#en-us"
+                  />
+                </svg>
                 <span
                   class="btn-section"
                 >
@@ -814,29 +799,24 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
             class="input-group input-localized input-localized-input"
           >
             <div
-              class="dropdown postion-relative lfr-icon-menu "
+              class="dropdown"
             >
               <button
+                aria-controls="clay-dropdown-menu-3"
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="btn btn-monospaced btn-secondary dropdown-toggle"
+                class="dropdown-toggle btn-monospaced btn btn-secondary"
                 data-testid="localized-dropdown-button"
-                role="button"
-                title=""
                 type="button"
               >
-                <span
-                  class="inline-item"
+                <svg
+                  class="lexicon-icon lexicon-icon-en-us"
+                  role="presentation"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-en-us"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#en-us"
-                    />
-                  </svg>
-                </span>
+                  <use
+                    xlink:href="#en-us"
+                  />
+                </svg>
                 <span
                   class="btn-section"
                 >

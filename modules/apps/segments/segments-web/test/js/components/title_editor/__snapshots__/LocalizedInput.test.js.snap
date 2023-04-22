@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocalizedInput rendering with pre-existing value renders 1`] = `
+<DocumentFragment>
+  <div
+    class="input-group input-localized input-localized-input"
+  >
+    <div
+      class="dropdown"
+    >
+      <button
+        aria-controls="clay-dropdown-menu-3"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="dropdown-toggle btn-monospaced btn btn-secondary"
+        data-testid="localized-dropdown-button"
+        type="button"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-en-us"
+          role="presentation"
+        >
+          <use
+            xlink:href="#en-us"
+          />
+        </svg>
+        <span
+          class="btn-section"
+        >
+          en-US
+        </span>
+      </button>
+    </div>
+    <div
+      class="input-group-item ml-2"
+    >
+      <input
+        aria-label=""
+        class="form-control field form-control-inline language-value rounded"
+        data-testid="localized-main-input"
+        placeholder=""
+        type="text"
+        value="Testing default value"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`LocalizedInput with minimal configuration renders 1`] = `
+<DocumentFragment>
+  <div
+    class="input-group input-localized input-localized-input"
+  >
+    <div
+      class="dropdown"
+    >
+      <button
+        aria-controls="clay-dropdown-menu-1"
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="dropdown-toggle btn-monospaced btn btn-secondary"
+        data-testid="localized-dropdown-button"
+        type="button"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-en-us"
+          role="presentation"
+        >
+          <use
+            xlink:href="#en-us"
+          />
+        </svg>
+        <span
+          class="btn-section"
+        >
+          en-US
+        </span>
+      </button>
+    </div>
+    <div
+      class="input-group-item ml-2"
+    >
+      <input
+        aria-label=""
+        class="form-control field form-control-inline language-value rounded"
+        data-testid="localized-main-input"
+        placeholder=""
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

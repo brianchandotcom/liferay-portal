@@ -100,15 +100,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public Set<T> getAll() {
-		Set<T> entities = new HashSet<>();
-
-		for (JSONObject jsonObject : _get()) {
-			T entity = newEntity(jsonObject);
-
-			entities.add(entity);
-		}
-
-		return entities;
+		return getAll(null, false, null, null);
 	}
 
 	@Override
@@ -120,6 +112,20 @@ public abstract class BaseEntityDALO<T extends Entity>
 		}
 
 		return entity;
+	}
+
+	protected Set<T> getAll(
+		String filter, boolean flatten, String search, String sort) {
+
+		Set<T> entities = new HashSet<>();
+
+		for (JSONObject jsonObject : _get(filter, flatten, search, sort)) {
+			T entity = newEntity(jsonObject);
+
+			entities.add(entity);
+		}
+
+		return entities;
 	}
 
 	protected abstract EntityFactory<T> getEntityFactory();
@@ -224,7 +230,9 @@ public abstract class BaseEntityDALO<T extends Entity>
 		}
 	}
 
-	private Set<JSONObject> _get() {
+	private Set<JSONObject> _get(
+		String filter, boolean flatten, String search, String sort) {
+
 		Set<JSONObject> jsonObjects = new HashSet<>();
 
 		int currentPage = 1;
@@ -240,9 +248,28 @@ public abstract class BaseEntityDALO<T extends Entity>
 							_liferayPortalURL, _getEntityURLPath())
 					).get(
 					).uri(
-						uriBuilder -> uriBuilder.queryParam(
-							"page", String.valueOf(finalCurrentPage)
-						).build()
+						uriBuilder -> {
+							uriBuilder = uriBuilder.queryParam(
+								"page", String.valueOf(finalCurrentPage));
+
+							if (filter != null) {
+								uriBuilder.queryParam("filter", filter);
+							}
+
+							if (flatten) {
+								uriBuilder.queryParam("flatten", "true");
+							}
+
+							if (search != null) {
+								uriBuilder.queryParam("search", search);
+							}
+
+							if (sort != null) {
+								uriBuilder.queryParam("sort", sort);
+							}
+
+							return uriBuilder.build();
+						}
 					).accept(
 						MediaType.APPLICATION_JSON
 					).header(

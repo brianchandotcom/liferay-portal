@@ -18,10 +18,6 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectDALO;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,25 +47,18 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 		return add(jsonObject);
 	}
 
-	public List<Project> getByStates(Project.State... states) {
-		List<Project.State> statesList = Arrays.asList(states);
-
-		List<Project> projects = new ArrayList<>();
-
-		for (Project project : getAll()) {
-			if (!statesList.contains(project.getState())) {
-				continue;
-			}
-
-			projects.add(project);
-		}
-
-		return projects;
-	}
-
 	@Override
 	public ProjectDALO getEntityDALO() {
 		return _projectDALO;
+	}
+
+	@Override
+	public void initialize() {
+		ProjectDALO projectDALO = getEntityDALO();
+
+		addAll(
+			projectDALO.getProjectsByState(
+				Project.State.QUEUED, Project.State.RUNNING));
 	}
 
 	@Autowired

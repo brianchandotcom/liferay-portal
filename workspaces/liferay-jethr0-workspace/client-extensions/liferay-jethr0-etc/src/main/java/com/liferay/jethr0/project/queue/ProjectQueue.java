@@ -95,10 +95,7 @@ public class ProjectQueue {
 
 		Set<Project> projects = new HashSet<>();
 
-		for (Project project :
-				_projectRepository.getByStates(
-					Project.State.QUEUED, Project.State.RUNNING)) {
-
+		for (Project project : _projectRepository.getAll()) {
 			_buildRepository.getAll(project);
 			_gitBranchRepository.getAll(project);
 			_taskRepository.getAll(project);

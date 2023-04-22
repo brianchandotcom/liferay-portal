@@ -20,6 +20,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -36,6 +37,20 @@ public class StringUtil {
 
 		for (Object object : objects) {
 			sb.append(String.valueOf(object));
+		}
+
+		return sb.toString();
+	}
+
+	public static String join(String delimiter, Collection<String> strings) {
+		StringBuilder sb = new StringBuilder();
+
+		for (Object string : strings) {
+			if (sb.length() > 0) {
+				sb.append(delimiter);
+			}
+
+			sb.append(string);
 		}
 
 		return sb.toString();

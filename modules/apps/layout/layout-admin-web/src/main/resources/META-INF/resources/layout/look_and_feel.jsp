@@ -35,10 +35,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<%
-LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
-%>
-
 <liferay-util:buffer
 	var="rootNodeNameLink"
 >
@@ -101,36 +97,6 @@ else {
 	<div class="lfr-inherit-theme-options <%= !selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
-</clay:sheet-section>
-
-<hr class="mb-5 separator" />
-
-<clay:sheet-section
-	cssClass="mb-5"
->
-	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="customization" /></h3>
-
-	<%
-	List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
-	%>
-
-	<clay:tabs
-		tabsItems="<%= tabsItems %>"
-	>
-
-		<%
-		for (TabsItem tabsItem : tabsItems) {
-		%>
-
-			<div>
-				<liferay-util:include page='<%= "/layout/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
-			</div>
-
-		<%
-		}
-		%>
-
-	</clay:tabs>
 </clay:sheet-section>
 
 <aui:script sandbox="<%= true %>">

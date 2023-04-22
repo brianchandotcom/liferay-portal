@@ -46,7 +46,6 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	enctype="multipart/form-data"
 	method="post"
 	name="editLayoutFm"
-	onSubmit="event.preventDefault();"
 >
 	<aui:input name="redirect" type="hidden" value="<%= themeDisplay.getURLCurrent() %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -175,28 +174,3 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 		</c:if>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<aui:script>
-	var form = document.getElementById('<portlet:namespace />editLayoutFm');
-
-	form.addEventListener('submit', (event) => {
-		var applyLayoutPrototype = document.getElementById(
-			'<portlet:namespace />applyLayoutPrototype'
-		);
-
-		if (!applyLayoutPrototype || applyLayoutPrototype.value === 'false') {
-			submitForm(form);
-		}
-		else if (applyLayoutPrototype && applyLayoutPrototype.value === 'true') {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<%= UnicodeLanguageUtil.get(request, "reactivating-inherited-changes-may-update-the-page-with-the-possible-changes-that-could-have-been-made-in-the-original-template") %>',
-				onConfirm: (isConfirm) => {
-					if (isConfirm) {
-						submitForm(form);
-					}
-				},
-			});
-		}
-	});
-</aui:script>

@@ -17,9 +17,10 @@ import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import Role from '../../../common/interfaces/role';
 import {Liferay} from '../../../common/services/liferay';
-import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
-import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
+import deleteMDFRequestActivities from '../../../common/services/liferay/object/activity/deleteMDFRequestActivities';
+import deleteMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/deleteMDFRequestActivitiesSF';
 import createMDFRequestActivityBudget from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
+import deleteMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/deleteMDFRequestActivityBudgets';
 import updateMDFRequestActivityBudget from '../../../common/services/liferay/object/budgets/updateMDFRequestActivityBudgets';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import createMDFRequest from '../../../common/services/liferay/object/mdf-requests/createMDFRequest';
@@ -52,15 +53,13 @@ export default async function submitForm(
 
 	if (values.mdfRequestStatus !== Status.DRAFT) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	}
-	else if (values.id) {
+	} else if (values.id) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values,
 			values.id
 		);
-	}
-	else {
+	} else {
 		dtoMDFRequest = await createMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values
@@ -69,7 +68,7 @@ export default async function submitForm(
 
 	if (values?.activities?.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
-			values?.activities?.map((activity) => {
+			values?.activities?.map(async (activity) => {
 				if (values.mdfRequestStatus !== Status.DRAFT) {
 					return createMDFRequestActivitiesProxyAPI(
 						activity,
@@ -79,48 +78,51 @@ export default async function submitForm(
 					);
 				}
 
-				if (activity.id) {
-					return updateMDFRequestActivities(
-						ResourceName.ACTIVITY_DXP,
-						activity,
-						values.company,
-						dtoMDFRequest?.id,
-						dtoMDFRequest?.externalReferenceCode
-					);
-				}
+				if (activity.id && activity.removed) {
+					if (activity.externalReferenceCodeSF) {
+						await deleteMDFRequestActivitiesSF(
+							ResourceName.ACTIVITY_SALESFORCE,
+							activity.externalReferenceCodeSF as string
+						);
+					}
 
-				return createMDFRequestActivities(
-					ResourceName.ACTIVITY_DXP,
-					activity,
-					values.company,
-					dtoMDFRequest?.id,
-					dtoMDFRequest?.externalReferenceCode
-				);
+					await deleteMDFRequestActivities(
+						ResourceName.ACTIVITY_DXP,
+						activity.id as number
+					);
+
+					return null;
+				}
 			})
 		);
 
 		if (dtoMDFRequestActivities?.length) {
-			await Promise.all(
-				values.activities.map((activity, index) => {
-					const dtoActivity = dtoMDFRequestActivities[index];
+			values.activities.map((activity, index) => {
+				const dtoActivity = dtoMDFRequestActivities[index];
 
-					if (activity.budgets?.length && dtoActivity?.id) {
-						activity.budgets?.map((budget) => {
-							if (budget?.id) {
-								return updateMDFRequestActivityBudget(
-									dtoActivity.id as number,
-									budget
-								);
-							}
+				if (activity.budgets?.length && dtoActivity?.id) {
+					activity.budgets?.map(async (budget) => {
+						if (budget.id && budget.removed) {
+							await deleteMDFRequestActivityBudgets(
+								ResourceName.BUDGET,
+								budget.id as number
+							);
+						}
 
-							createMDFRequestActivityBudget(
+						if (budget?.id) {
+							return updateMDFRequestActivityBudget(
 								dtoActivity.id as number,
 								budget
 							);
-						});
-					}
-				})
-			);
+						}
+
+						return createMDFRequestActivityBudget(
+							dtoActivity.id as number,
+							budget
+						);
+					});
+				}
+			});
 		}
 	}
 

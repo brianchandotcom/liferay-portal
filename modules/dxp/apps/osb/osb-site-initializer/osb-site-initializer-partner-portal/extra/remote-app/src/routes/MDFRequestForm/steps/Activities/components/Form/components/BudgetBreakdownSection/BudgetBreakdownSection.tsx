@@ -19,11 +19,8 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import ResumeCard from '../../../../../../../../common/components/ResumeCard';
 import LiferayPicklist from '../../../../../../../../common/interfaces/liferayPicklist';
 import MDFRequestBudget from '../../../../../../../../common/interfaces/mdfRequestBudget';
-import deleteMDFRequestActivityBudgets from '../../../../../../../../common/services/liferay/object/budgets/deleteMDFRequestActivityBudgets';
-import {ResourceName} from '../../../../../../../../common/services/liferay/object/enum/resourceName';
 import getIntlNumberFormat from '../../../../../../../../common/utils/getIntlNumberFormat';
 import getPicklistOptions from '../../../../../../../../common/utils/getPicklistOptions';
-import handleError from '../../../../../../../../common/utils/handleError';
 import useBudgetsAmount from './hooks/useBudgetsAmount';
 import getNewBudget from './utils/getNewBudget';
 
@@ -61,7 +58,7 @@ const BudgetBreakdownSection = ({
 	);
 
 	const budgetsAmount = useBudgetsAmount(
-		budgets,
+		budgets.filter((budget) => !budget.removed),
 		useCallback(
 			(amountValue) => {
 				setFieldValue(
@@ -78,23 +75,11 @@ const BudgetBreakdownSection = ({
 		)
 	);
 
-	const onRemove = async (index: number) => {
-		if (budgets[index].id) {
-			try {
-				await deleteMDFRequestActivityBudgets(
-					ResourceName.BUDGET,
-					budgets[index].id as number
-				);
-			}
-			catch (error: any) {
-				handleError(error.message);
-
-				return;
-			}
-		}
-
-		arrayHelpers.remove(index);
-	};
+	const onRemove = (index: number) =>
+		setFieldValue(
+			`activities[${currentActivityIndex}].budgets[${index}].removed`,
+			true
+		);
 
 	return (
 		<PRMForm.Section
@@ -102,43 +87,51 @@ const BudgetBreakdownSection = ({
 			title="Budget Breakdown"
 		>
 			<div>
-				{budgets.map((_, index) => (
-					<div className="align-items-center d-flex" key={index}>
-						<PRMForm.Group className="mr-4">
-							<PRMFormik.Field
-								component={PRMForm.Select}
-								label="Expense"
-								name={`activities[${currentActivityIndex}].budgets[${index}].expense`}
-								onChange={(
-									event: React.ChangeEvent<HTMLInputElement>
-								) => onExpenseSelected(event, index)}
-								options={expensesOptions}
-								required
-							/>
+				{budgets.map(
+					({removed}, index) =>
+						!removed && (
+							<div
+								className="align-items-center d-flex"
+								key={index}
+							>
+								<PRMForm.Group className="mr-4">
+									<PRMFormik.Field
+										component={PRMForm.Select}
+										label="Expense"
+										name={`activities[${currentActivityIndex}].budgets[${index}].expense`}
+										onChange={(
+											event: React.ChangeEvent<
+												HTMLInputElement
+											>
+										) => onExpenseSelected(event, index)}
+										options={expensesOptions}
+										required
+									/>
 
-							<PRMFormik.Field
-								component={PRMForm.InputCurrency}
-								label="Budget"
-								name={`activities[${currentActivityIndex}].budgets[${index}].cost`}
-								onAccept={(value: number) =>
-									setFieldValue(
-										`activities[${currentActivityIndex}].budgets[${index}].cost`,
-										value
-									)
-								}
-								required
-							/>
-						</PRMForm.Group>
+									<PRMFormik.Field
+										component={PRMForm.InputCurrency}
+										label="Budget"
+										name={`activities[${currentActivityIndex}].budgets[${index}].cost`}
+										onAccept={(value: number) =>
+											setFieldValue(
+												`activities[${currentActivityIndex}].budgets[${index}].cost`,
+												value
+											)
+										}
+										required
+									/>
+								</PRMForm.Group>
 
-						<ClayButtonWithIcon
-							className="mt-2"
-							displayType="secondary"
-							onClick={() => onRemove(index)}
-							small
-							symbol="hr"
-						/>
-					</div>
-				))}
+								<ClayButtonWithIcon
+									className="mt-2"
+									displayType="secondary"
+									onClick={() => onRemove(index)}
+									small
+									symbol="hr"
+								/>
+							</div>
+						)
+				)}
 
 				<Button
 					className="align-items-center d-flex"

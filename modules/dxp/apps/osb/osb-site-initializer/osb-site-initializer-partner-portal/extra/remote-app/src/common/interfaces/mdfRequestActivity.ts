@@ -24,6 +24,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	externalReferenceCodeSF?: string;
 	mdfRequestAmount: number;
 	name: string;
+	removed?: boolean;
 	startDate?: string;
 	tactic: LiferayPicklist;
 	totalCostOfExpense: number;

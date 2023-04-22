@@ -18,11 +18,7 @@ import {useCallback, useEffect, useState} from 'react';
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
-import deleteMDFRequestActivities from '../../../../common/services/liferay/object/activity/deleteMDFRequestActivities';
-import deleteMDFRequestActivitiesSF from '../../../../common/services/liferay/object/activity/deleteMDFRequestActivitiesSF';
-import {ResourceName} from '../../../../common/services/liferay/object/enum/resourceName';
 import {Status} from '../../../../common/utils/constants/status';
-import handleError from '../../../../common/utils/handleError';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -127,30 +123,8 @@ const Activities = ({
 		updateEditableActivity();
 	};
 
-	const onRemove = async (index: number) => {
-		if (values.activities[index].id) {
-			try {
-				if (values.activities[index].externalReferenceCodeSF) {
-					await deleteMDFRequestActivitiesSF(
-						ResourceName.ACTIVITY_SALESFORCE,
-						values.activities[index]
-							.externalReferenceCodeSF as string
-					);
-				}
-
-				await deleteMDFRequestActivities(
-					ResourceName.ACTIVITY_DXP,
-					values.activities[index].id as number
-				);
-			}
-			catch (error: any) {
-				handleError(error.message);
-
-				return;
-			}
-		}
-
-		arrayHelpers.remove(index);
+	const onRemove = (index: number) => {
+		setFieldValue(`activities[${index}].removed`, true);
 	};
 
 	const hasActivityErrorsByIndex = (index: number): boolean =>
@@ -189,7 +163,9 @@ const Activities = ({
 			) : (
 				<Listing
 					{...arrayHelpers}
-					activities={values.activities}
+					activities={values.activities?.filter(
+						(activity) => !activity.removed
+					)}
 					currency={values.currency}
 					hasActivityErrorsByIndex={hasActivityErrorsByIndex}
 					onAdd={onAdd}

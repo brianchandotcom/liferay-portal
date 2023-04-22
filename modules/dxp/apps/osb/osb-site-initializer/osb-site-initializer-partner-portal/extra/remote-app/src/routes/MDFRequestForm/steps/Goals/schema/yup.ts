@@ -17,15 +17,21 @@ const goalsSchema = object({
 	company: object({
 		id: number(),
 		name: string(),
-	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
+	})
+		.default(undefined)
+		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	country: object({
 		key: string(),
 		name: string(),
-	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
+	})
+		.default(undefined)
+		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	currency: object({
 		key: string(),
 		name: string(),
-	}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
+	})
+		.default(undefined)
+		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	liferayBusinessSalesGoals: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),

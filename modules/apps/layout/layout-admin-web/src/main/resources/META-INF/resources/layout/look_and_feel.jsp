@@ -185,31 +185,3 @@ else {
 		});
 	}
 </aui:script>
-
-<c:if test="<%= layoutLookAndFeelDisplayContext.hasStyleBooks() %>">
-	<aui:script sandbox="<%= true %>">
-		const regularInheritLookAndFeel = document.getElementById(
-			'<portlet:namespace />regularInheritLookAndFeel'
-		);
-
-		const regularUniqueLookAndFeelCheckbox = document.getElementById(
-			'<portlet:namespace />regularUniqueLookAndFeel'
-		);
-
-		const styleBookWarning = document.getElementById(
-			'<portlet:namespace />styleBookWarning'
-		);
-
-		regularInheritLookAndFeel.addEventListener('change', (event) => {
-			if (event.target.checked) {
-				styleBookWarning.classList.add('hide');
-			}
-		});
-
-		regularUniqueLookAndFeelCheckbox.addEventListener('change', (event) => {
-			if (event.target.checked) {
-				styleBookWarning.classList.remove('hide');
-			}
-		});
-	</aui:script>
-</c:if>

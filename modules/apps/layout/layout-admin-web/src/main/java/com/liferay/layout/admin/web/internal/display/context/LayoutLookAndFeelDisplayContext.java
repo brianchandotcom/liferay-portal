@@ -19,7 +19,6 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -54,7 +53,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.List;
@@ -382,29 +380,6 @@ public class LayoutLookAndFeelDisplayContext {
 		return _hasMasterLayout;
 	}
 
-	public boolean hasStyleBooks() {
-		if (_hasStyleBooks != null) {
-			return _hasStyleBooks;
-		}
-
-		boolean hasStyleBooks = false;
-
-		Group liveGroup = StagingUtil.getLiveGroup(
-			_layoutsAdminDisplayContext.getGroup());
-
-		int styleBookEntriesCount =
-			StyleBookEntryLocalServiceUtil.getStyleBookEntriesCount(
-				liveGroup.getGroupId());
-
-		if (styleBookEntriesCount > 0) {
-			hasStyleBooks = true;
-		}
-
-		_hasStyleBooks = hasStyleBooks;
-
-		return _hasStyleBooks;
-	}
-
 	private JSONObject _getCETJSONObject(
 		ClientExtensionEntryRel clientExtensionEntryRel, boolean inherited,
 		String inheritedLabel) {
@@ -523,7 +498,6 @@ public class LayoutLookAndFeelDisplayContext {
 
 	private Boolean _hasEditableMasterLayout;
 	private Boolean _hasMasterLayout;
-	private Boolean _hasStyleBooks;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;

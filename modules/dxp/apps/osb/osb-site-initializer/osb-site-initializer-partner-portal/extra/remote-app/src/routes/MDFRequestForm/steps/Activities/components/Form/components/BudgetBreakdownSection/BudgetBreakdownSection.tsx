@@ -58,7 +58,7 @@ const BudgetBreakdownSection = ({
 	);
 
 	const budgetsAmount = useBudgetsAmount(
-		budgets.filter((budget) => !budget.removed),
+		budgets,
 		useCallback(
 			(amountValue) => {
 				setFieldValue(

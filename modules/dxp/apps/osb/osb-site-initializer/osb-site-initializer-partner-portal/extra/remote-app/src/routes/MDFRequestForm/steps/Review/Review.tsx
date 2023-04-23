@@ -47,8 +47,9 @@ const Review = ({
 			<Body name="Activities" title="Insurance Industry Lead Gen">
 				<div className="border mb-3"></div>
 
-				{values?.activities.map(
-					(activity: MDFRequestActivity, index: number) => (
+				{values?.activities
+					.filter((activity) => !activity.removed)
+					.map((activity: MDFRequestActivity, index: number) => (
 						<ActivityPanel
 							activity={activity}
 							detail
@@ -59,8 +60,7 @@ const Review = ({
 								mdfRequestActivity={activity}
 							/>
 						</ActivityPanel>
-					)
-				)}
+					))}
 			</Body>
 
 			<Body>

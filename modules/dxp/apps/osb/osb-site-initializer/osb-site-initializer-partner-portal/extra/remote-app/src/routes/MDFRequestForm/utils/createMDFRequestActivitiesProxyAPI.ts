@@ -44,7 +44,8 @@ export default async function createMDFRequestActivitiesProxyAPI(
 			mdfRequestActivity,
 			company,
 			mdfRequestId,
-			mdFRequestExternalReferenceCode
+			mdFRequestExternalReferenceCode,
+			mdfRequestActivity.externalReferenceCode
 		);
 	}
 

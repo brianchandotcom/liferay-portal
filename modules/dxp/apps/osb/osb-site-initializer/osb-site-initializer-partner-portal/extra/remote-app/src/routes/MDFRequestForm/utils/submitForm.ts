@@ -17,8 +17,10 @@ import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import Role from '../../../common/interfaces/role';
 import {Liferay} from '../../../common/services/liferay';
+import createMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import deleteMDFRequestActivities from '../../../common/services/liferay/object/activity/deleteMDFRequestActivities';
 import deleteMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/deleteMDFRequestActivitiesSF';
+import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
 import createMDFRequestActivityBudget from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
 import deleteMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/deleteMDFRequestActivityBudgets';
 import updateMDFRequestActivityBudget from '../../../common/services/liferay/object/budgets/updateMDFRequestActivityBudgets';
@@ -69,20 +71,11 @@ export default async function submitForm(
 	if (values?.activities?.length && dtoMDFRequest?.id) {
 		const dtoMDFRequestActivities = await Promise.all(
 			values?.activities?.map(async (activity) => {
-				if (values.mdfRequestStatus !== Status.DRAFT) {
-					return createMDFRequestActivitiesProxyAPI(
-						activity,
-						values.company,
-						dtoMDFRequest?.id,
-						dtoMDFRequest?.externalReferenceCode
-					);
-				}
-
 				if (activity.id && activity.removed) {
-					if (activity.externalReferenceCodeSF) {
+					if (activity.externalReferenceCode) {
 						await deleteMDFRequestActivitiesSF(
 							ResourceName.ACTIVITY_SALESFORCE,
-							activity.externalReferenceCodeSF as string
+							activity.externalReferenceCode as string
 						);
 					}
 
@@ -92,6 +85,34 @@ export default async function submitForm(
 					);
 
 					return null;
+				}
+				if (values.mdfRequestStatus !== Status.DRAFT) {
+					return createMDFRequestActivitiesProxyAPI(
+						activity,
+						values.company,
+						dtoMDFRequest?.id,
+						dtoMDFRequest?.externalReferenceCode
+					);
+				} else {
+					if (activity.id) {
+						await updateMDFRequestActivities(
+							ResourceName.ACTIVITY_DXP,
+							activity,
+							values.company,
+							dtoMDFRequest?.id,
+							dtoMDFRequest?.externalReferenceCode,
+							activity.externalReferenceCode
+						);
+					} else {
+						await createMDFRequestActivitiesSF(
+							ResourceName.ACTIVITY_DXP,
+							activity,
+							values.company,
+							dtoMDFRequest?.id,
+							dtoMDFRequest?.externalReferenceCode,
+							activity.externalReferenceCode
+						);
+					}
 				}
 			})
 		);
@@ -107,17 +128,16 @@ export default async function submitForm(
 								dtoActivity.id as number,
 								budget
 							);
+							if (budget.removed) {
+								await deleteMDFRequestActivityBudgets(
+									ResourceName.BUDGET,
+									budget.id as number
+								);
+							}
 						} else {
 							await createMDFRequestActivityBudget(
 								dtoActivity.id as number,
 								budget
-							);
-						}
-
-						if (budget.id && budget.removed) {
-							return deleteMDFRequestActivityBudgets(
-								ResourceName.BUDGET,
-								budget.id as number
 							);
 						}
 					});

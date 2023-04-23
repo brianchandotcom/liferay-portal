@@ -97,8 +97,6 @@
 		<suppress checks="JavaXMLSecurityCheck" files="portal-impl/src/com/liferay/portal/xml/SAXReaderFactory\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="util-java/src/com/liferay/util/xml/XMLMergerRunner\.java" />
 		<suppress checks="JSPIllegalSyntaxCheck" files="modules/apps/portal-remote/portal-remote-json-web-service-web/src/main/resources/META-INF/resources/action\.jsp" />
-		<suppress checks="JSPFileNameCheck" files="modules/apps/notifications/notifications-web/src/main/resources/META-INF/resources/notifications/view-ext-post\.jsp" />
-		<suppress checks="JSPFileNameCheck" files="modules/apps/notifications/notifications-web/src/main/resources/META-INF/resources/notifications/view-ext-pre\.jsp" />
 		<suppress checks="JSPLanguageKeysCheck" files="portal-web/docroot/html/portal/saml/.*" />
 		<suppress checks="JSPLineBreakCheck" files="portal-web/docroot/html/portal/progress_poller\.jsp" />
 		<suppress checks="LocaleUtilCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/LocaleUtil\.java" />

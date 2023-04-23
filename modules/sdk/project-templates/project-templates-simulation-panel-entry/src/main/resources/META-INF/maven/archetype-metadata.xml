@@ -39,7 +39,7 @@
 			<validationRegex>^[0-7]\.\d+\.\d+.*</validationRegex>
 		</requiredProperty>
 		<requiredProperty key="newTemplate">
-            <defaultValue>false</defaultValue>
-        </requiredProperty>
+			<defaultValue>false</defaultValue>
+		</requiredProperty>
 	</requiredProperties>
 </archetype-descriptor>

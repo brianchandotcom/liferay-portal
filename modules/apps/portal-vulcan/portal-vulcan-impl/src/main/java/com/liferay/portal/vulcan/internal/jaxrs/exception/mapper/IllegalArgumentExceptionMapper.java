@@ -17,8 +17,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
-import javax.ws.rs.core.Response;
-
 /**
  * Converts any {@code IllegalArgumentExceptionMapper} to a {@code 400} error.
  *
@@ -31,8 +29,7 @@ public class IllegalArgumentExceptionMapper
 	protected Problem getProblem(
 		IllegalArgumentException illegalArgumentException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST, illegalArgumentException.getMessage());
+		return new Problem(illegalArgumentException);
 	}
 
 }

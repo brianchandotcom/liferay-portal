@@ -71,16 +71,7 @@ public class ${className}SimulationPanelApp extends BaseJSPPanelApp {
 	}
 
 	@Override
-#if (${liferayVersion.startsWith("7.4")})
-#set ($lastPointPos = $liferayVersion.lastIndexOf("."))
-#if (${liferayProduct.startsWith("dxp")})
-#set ($lastPointPos = $lastPointPos + 2)
-#set ($qualifiedVersion = $liferayVersion.substring($lastPointPos))
-#else
-#set ($lastPointPos = $lastPointPos + 1)
-#set ($qualifiedVersion = $liferayVersion.substring($lastPointPos))
-#end
-#if ($qualifiedVersion >= 72)
+#if (${newTemplate.equals("true")})
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -89,15 +80,6 @@ public class ${className}SimulationPanelApp extends BaseJSPPanelApp {
 		target = "(osgi.web.symbolicname=${artifactId})"
 	)
 	private ServletContext _servletContext;
-#else
-	@Reference(
-		target = "(osgi.web.symbolicname=${artifactId})",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-#end
 #else
 	@Reference(
 		target = "(osgi.web.symbolicname=${artifactId})",

@@ -98,6 +98,11 @@ public class NotificationUpgradeStepRegistrator
 			"3.5.0", "3.5.1",
 			UpgradeProcessFactory.alterColumnType(
 				"NotificationQueueEntry", "subject", "TEXT"));
+
+		registry.register(
+			"3.5.1", "3.5.2",
+			UpgradeProcessFactory.alterColumnType(
+				"NotificationTemplate", "description", "VARCHAR(255) null"));
 	}
 
 }

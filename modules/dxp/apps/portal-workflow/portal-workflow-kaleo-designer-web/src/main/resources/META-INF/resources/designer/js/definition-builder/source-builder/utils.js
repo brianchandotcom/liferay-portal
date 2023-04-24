@@ -214,14 +214,21 @@ export function parseNotifications(node) {
 		}
 
 		if (item.assignees) {
-			notifications.recipients[index].push({
-				assignmentType: ['taskAssignees'],
-				receptionType: [
-					item.receptionType?.[
-						notifications.recipients[index].length
+			if (item.receptionType) {
+				notifications.recipients[index].push({
+					assignmentType: ['taskAssignees'],
+					receptionType: [
+						item.receptionType[
+							notifications.recipients[index].length
+						],
 					],
-				],
-			});
+				});
+			}
+			else {
+				notifications.recipients[index].push({
+					assignmentType: ['taskAssignees'],
+				});
+			}
 		}
 
 		if (item['user']) {
@@ -232,15 +239,23 @@ export function parseNotifications(node) {
 					emailAddress.push(item['email-address']);
 				});
 
-				notifications.recipients[index].push({
-					assignmentType: ['user'],
-					emailAddress,
-					receptionType: [
-						item.receptionType?.[
-							notifications.recipients[index].length
+				if (item.receptionType) {
+					notifications.recipients[index].push({
+						assignmentType: ['user'],
+						emailAddress,
+						receptionType: [
+							item.receptionType[
+								notifications.recipients[index].length
+							],
 						],
-					],
-				});
+					});
+				}
+				else {
+					notifications.recipients[index].push({
+						assignmentType: ['user'],
+						emailAddress,
+					});
+				}
 			}
 
 			if (item['user'].some((item) => item['user-id'])) {
@@ -250,15 +265,23 @@ export function parseNotifications(node) {
 					userId.push(item['user-id']);
 				});
 
-				notifications.recipients[index].push({
-					assignmentType: ['user'],
-					receptionType: [
-						item.receptionType?.[
-							notifications.recipients[index].length
+				if (item.receptionType) {
+					notifications.recipients[index].push({
+						assignmentType: ['user'],
+						receptionType: [
+							item.receptionType[
+								notifications.recipients[index].length
+							],
 						],
-					],
-					userId,
-				});
+						userId,
+					});
+				}
+				else {
+					notifications.recipients[index].push({
+						assignmentType: ['user'],
+						userId,
+					});
+				}
 			}
 
 			if (item['user'].some((item) => item['screen-name'])) {
@@ -268,42 +291,68 @@ export function parseNotifications(node) {
 					screenName.push(item['screen-name']);
 				});
 
-				notifications.recipients[index].push({
-					assignmentType: ['user'],
-					receptionType: [
-						item.receptionType?.[
-							notifications.recipients[index].length
+				if (item.receptionType) {
+					notifications.recipients[index].push({
+						assignmentType: ['user'],
+						receptionType: [
+							item.receptionType[
+								notifications.recipients[index].length
+							],
 						],
-					],
-					screenName,
-				});
+						screenName,
+					});
+				}
+				else {
+					notifications.recipients[index].push({
+						assignmentType: ['user'],
+						screenName,
+					});
+				}
 			}
 		}
 
 		if (item['role-type']) {
-			notifications.recipients[index].push({
-				assignmentType: ['roleType'],
-				autoCreate: item['auto-create'],
-				receptionType: [
-					item.receptionType?.[
-						notifications.recipients[index].length
+			if (item.receptionType) {
+				notifications.recipients[index].push({
+					assignmentType: ['roleType'],
+					autoCreate: item['auto-create'],
+					receptionType: [
+						item.receptionType[
+							notifications.recipients[index].length
+						],
 					],
-				],
-				roleKey: item['role-name'],
-				roleType: item['role-type'],
-			});
+					roleKey: item['role-name'],
+					roleType: item['role-type'],
+				});
+			}
+			else {
+				notifications.recipients[index].push({
+					assignmentType: ['roleType'],
+					autoCreate: item['auto-create'],
+					roleKey: item['role-name'],
+					roleType: item['role-type'],
+				});
+			}
 		}
 
 		if (item['role-id']) {
-			notifications.recipients[index].push({
-				assignmentType: ['roleId'],
-				receptionType: [
-					item.receptionType?.[
-						notifications.recipients[index].length
+			if (item.receptionType) {
+				notifications.recipients[index].push({
+					assignmentType: ['roleId'],
+					receptionType: [
+						item.receptionType[
+							notifications.recipients[index].length
+						],
 					],
-				],
-				roleId: item['role-id'][0],
-			});
+					roleId: item['role-id'][0],
+				});
+			}
+			else {
+				notifications.recipients[index].push({
+					assignmentType: ['roleId'],
+					roleId: item['role-id'][0],
+				});
+			}
 		}
 
 		if (item['scripted-recipient']) {
@@ -312,27 +361,43 @@ export function parseNotifications(node) {
 			const script = scriptedRecipient.script;
 			const scriptLanguage = scriptedRecipient['script-language'];
 
-			notifications.recipients[index].push({
-				assignmentType: ['scriptedRecipient'],
-				receptionType: [
-					item.receptionType?.[
-						notifications.recipients[index].length
+			if (item.receptionType) {
+				notifications.recipients[index].push({
+					assignmentType: ['scriptedRecipient'],
+					receptionType: [
+						item.receptionType[
+							notifications.recipients[index].length
+						],
 					],
-				],
-				script: [script],
-				scriptLanguage: scriptLanguage || [DEFAULT_LANGUAGE],
-			});
+					script: [script],
+					scriptLanguage: scriptLanguage || [DEFAULT_LANGUAGE],
+				});
+			}
+			else {
+				notifications.recipients[index].push({
+					assignmentType: ['scriptedRecipient'],
+					script: [script],
+					scriptLanguage: scriptLanguage || [DEFAULT_LANGUAGE],
+				});
+			}
 		}
 
 		if (!notifications.recipients[index].length) {
-			notifications.recipients[index].push({
-				assignmentType: ['user'],
-				receptionType: [
-					item.receptionType?.[
-						notifications.recipients[index].length
+			if (item.receptionType) {
+				notifications.recipients[index].push({
+					assignmentType: ['user'],
+					receptionType: [
+						item.receptionType[
+							notifications.recipients[index].length
+						],
 					],
-				],
-			});
+				});
+			}
+			else {
+				notifications.recipients[index].push({
+					assignmentType: ['user'],
+				});
+			}
 		}
 	});
 

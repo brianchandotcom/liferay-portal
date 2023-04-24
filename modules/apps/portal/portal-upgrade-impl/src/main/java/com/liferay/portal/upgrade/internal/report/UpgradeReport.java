@@ -455,7 +455,7 @@ public class UpgradeReport {
 			"warnings",
 			_getMessagesPrinters(upgradeStatusImpl.getWarningMessages())
 		).put(
-			"osgi.status",
+			"status.message",
 			() -> {
 				if (releaseManager == null) {
 					return "Unable to determine. Upgrade check not available";

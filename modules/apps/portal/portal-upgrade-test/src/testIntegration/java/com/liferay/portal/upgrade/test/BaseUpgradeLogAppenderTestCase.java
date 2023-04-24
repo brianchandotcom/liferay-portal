@@ -391,7 +391,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_releaseLocalService.updateRelease(release);
 
 		_assertLogContextContains(
-			"upgrade.report.osgi.status",
+			"upgrade.report.status.message",
 			StringBundler.concat(
 				"There are upgrade processes available for ",
 				bundleSymbolicName, " from 0.0.1 to ", currentSchemaVersion));

@@ -398,8 +398,8 @@ definition {
 				fail("upgrade.report.warnings is not present in portal log.");
 			}
 
-			if (!(contains(${fileContent}, "upgrade.report.osgi.status="))) {
-				fail("upgrade.report.osgi.status is not present in portal log.");
+			if (!(contains(${fileContent}, "upgrade.report.status.message="))) {
+				fail("upgrade.report.status.message is not present in portal log.");
 			}
 		}
 

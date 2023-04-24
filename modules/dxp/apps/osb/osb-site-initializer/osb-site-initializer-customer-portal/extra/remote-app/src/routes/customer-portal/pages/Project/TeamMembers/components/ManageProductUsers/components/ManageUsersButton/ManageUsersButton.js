@@ -10,14 +10,20 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import PopoverIcon from '../../../../../../../components/ActivationStatus/DXPCloud/components/PopoverIcon';
 
 const ManageUsersButton = ({href, title}) => (
 	<a
-		className="align-items-stretch border border-secondary btn d-flex mr-3 p-2 text-neutral-10"
+		className="align-items-center border border-secondary btn cp-manage-users-button d-flex mr-3 p-2 text-neutral-10"
 		href={href}
 		rel="noopener noreferrer"
 		target="_blank"
 	>
+		<PopoverIcon
+			symbol="question-circle-full"
+			title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+		/>
+
 		<h6 className="font-weight-semi-bold m-0 pr-1">{title}</h6>
 
 		<span className="inline-item inline-item-after mt-0">

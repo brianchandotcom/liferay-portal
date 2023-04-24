@@ -34,6 +34,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -282,11 +283,21 @@ public class TemplateInfoItemFieldSetProviderTest {
 				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
+		Object value = infoFieldValue.getValue();
+
+		Assert.assertNotNull(value);
+
+		Assert.assertTrue(
+			value.toString(), value instanceof FunctionInfoLocalizedValue<?>);
+
+		FunctionInfoLocalizedValue functionInfoLocalizedValue =
+			(FunctionInfoLocalizedValue)value;
+
 		Assert.assertEquals(
 			infoFieldValue.toString(),
 			nameValue.getString(
 				_portal.getSiteDefaultLocale(_group.getGroupId())),
-			infoFieldValue.getValue());
+			functionInfoLocalizedValue.getValue());
 	}
 
 	@Test

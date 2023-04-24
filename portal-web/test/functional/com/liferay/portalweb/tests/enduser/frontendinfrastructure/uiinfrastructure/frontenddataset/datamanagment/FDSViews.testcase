@@ -344,6 +344,7 @@ definition {
 				entryName = "View Test",
 				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
 		}
+	}
 
 	@description = "LPS-180895  Confirm that the view was really deleted"
 	@priority = 5
@@ -368,7 +369,7 @@ definition {
 
 		task ("Then confirm that the views column shows 1 views") {
 			AssertElementPresent(
-				locator1 = "FrontendDataSetAdmin#NUMBER_ON_VIEWS",
+				locator1 = "FrontendDataSetAdmin#NUMBER_OF_VIEWS",
 				numberOfViews = 1);
 		}
 
@@ -393,7 +394,6 @@ definition {
 				locator1 = "FrontendDataSetAdmin#NUMBER_OF_VIEWS",
 				numberOfViews = 0);
 		}
-
 	}
 
 }

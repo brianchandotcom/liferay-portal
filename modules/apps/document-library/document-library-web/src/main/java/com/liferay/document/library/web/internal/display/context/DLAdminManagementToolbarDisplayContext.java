@@ -45,6 +45,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -88,6 +89,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
@@ -340,6 +342,8 @@ public class DLAdminManagementToolbarDisplayContext
 			new LabelItemListBuilder.LabelItemListWrapper();
 
 		_addExtensionFilterLabelItems(labelItemListWrapper);
+
+		_addAssetTagsFilterLabelItems(labelItemListWrapper);
 
 		labelItemListWrapper.add(
 			() -> fileEntryTypeId != -1,
@@ -624,6 +628,40 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		return false;
+	}
+
+	private void _addAssetTagsFilterLabelItems(
+		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
+
+		Set<String> assetTagIds = _getSelectedAssetTagIds(_httpServletRequest);
+
+		for (String assetTagId : assetTagIds) {
+			labelItemListWrapper.add(
+				labelItem -> {
+					labelItem.putData(
+						"removeLabelURL",
+						_getRemoveLabelURL(
+							"assetTagId",
+							() -> TransformUtil.transformToArray(
+								assetTagIds,
+								curAssetTagId -> {
+									if (Objects.equals(
+											assetTagId, curAssetTagId)) {
+
+										return null;
+									}
+
+									return curAssetTagId;
+								},
+								String.class)));
+					labelItem.setCloseable(true);
+					labelItem.setLabel(
+						String.format(
+							"%s: %s",
+							LanguageUtil.get(_httpServletRequest, "tag"),
+							HtmlUtil.escape(assetTagId)));
+				});
+		}
 	}
 
 	private void _addExtensionFilterLabelItems(
@@ -944,6 +982,19 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private String _getOrderByType() {
 		return _dlAdminDisplayContext.getOrderByType();
+	}
+
+	private String _getRemoveLabelURL(
+			String key,
+			PortletURLBuilder.UnsafeSupplier<Object, Exception>
+				valueUnsafeSupplier)
+		throws PortletException {
+
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
+		).setParameter(
+			key, valueUnsafeSupplier
+		).buildString();
 	}
 
 	private long _getRepositoryId() {

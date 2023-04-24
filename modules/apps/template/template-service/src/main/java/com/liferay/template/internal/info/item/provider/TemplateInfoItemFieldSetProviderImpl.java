@@ -190,6 +190,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 					catch (Exception exception) {
 						_log.error("Unable to transform template", exception);
 					}
+					finally {
+						themeDisplay.setLocale(currentThemeDisplay.getLocale());
+					}
 
 					return StringPool.BLANK;
 				}));

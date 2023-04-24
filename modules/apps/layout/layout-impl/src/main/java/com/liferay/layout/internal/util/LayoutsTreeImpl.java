@@ -83,7 +83,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return _getLayoutsJSONArray(
 			_getAncestorLayouts(httpServletRequest), false, expandedLayoutIds,
 			groupId, httpServletRequest, includeActions, incomplete, loadMore,
-			parentLayoutId, privateLayout, themeDisplay, treeId);
+			_isPaginationEnabled(httpServletRequest), parentLayoutId,
+			privateLayout, themeDisplay, treeId);
 	}
 
 	private Layout _fetchCurrentLayout(HttpServletRequest httpServletRequest) {
@@ -146,8 +147,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			List<Layout> ancestorLayouts, boolean childLayout,
 			Set<Long> expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
-			boolean incomplete, boolean loadMore, long parentLayoutId,
-			boolean privateLayout, ThemeDisplay themeDisplay, String treeId)
+			boolean incomplete, boolean loadMore, boolean paginationEnabled,
+			long parentLayoutId, boolean privateLayout,
+			ThemeDisplay themeDisplay, String treeId)
 		throws Exception {
 
 		int count = _layoutService.getLayoutsCount(
@@ -160,8 +162,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		JSONArray layoutsJSONArray = _jsonFactory.createJSONArray();
 
 		List<Layout> layouts = _getPaginatedLayouts(
-			httpServletRequest, groupId, privateLayout, parentLayoutId,
-			loadMore, incomplete, treeId, childLayout, count,
+			httpServletRequest, groupId, paginationEnabled, privateLayout,
+			parentLayoutId, loadMore, incomplete, treeId, childLayout, count,
 			_layoutLocalService.getLayoutsCount(
 				_groupLocalService.getGroup(groupId), privateLayout,
 				parentLayoutId));
@@ -194,7 +196,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
 						ancestorLayouts, true, expandedLayoutIds,
 						virtualLayout.getSourceGroupId(), httpServletRequest,
-						includeActions, incomplete, loadMore,
+						includeActions, incomplete, loadMore, paginationEnabled,
 						virtualLayout.getLayoutId(),
 						virtualLayout.isPrivateLayout(), themeDisplay, treeId);
 				}
@@ -202,7 +204,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
 						ancestorLayouts, true, expandedLayoutIds, groupId,
 						httpServletRequest, includeActions, incomplete,
-						loadMore, layout.getLayoutId(),
+						loadMore, paginationEnabled, layout.getLayoutId(),
 						layout.isPrivateLayout(), themeDisplay, treeId);
 				}
 
@@ -263,12 +265,12 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private List<Layout> _getPaginatedLayouts(
 			HttpServletRequest httpServletRequest, long groupId,
-			boolean privateLayout, long parentLayoutId, boolean loadMore,
-			boolean incomplete, String treeId, boolean childLayout, int count,
-			int totalCount)
+			boolean paginationEnabled, boolean privateLayout,
+			long parentLayoutId, boolean loadMore, boolean incomplete,
+			String treeId, boolean childLayout, int count, int totalCount)
 		throws Exception {
 
-		if (!_isPaginationEnabled(httpServletRequest)) {
+		if (!paginationEnabled) {
 			return _layoutService.getLayouts(
 				groupId, privateLayout, parentLayoutId, incomplete,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);

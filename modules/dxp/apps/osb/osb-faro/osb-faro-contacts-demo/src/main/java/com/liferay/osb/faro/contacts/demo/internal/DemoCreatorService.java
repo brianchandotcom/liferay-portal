@@ -25,6 +25,7 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -87,11 +88,8 @@ public abstract class DemoCreatorService {
 	protected static String encodeAuthorizationFields(
 		String userName, String password) {
 
-		String authorizationString = userName.concat(
-			StringPool.COLON
-		).concat(
-			password
-		);
+		String authorizationString = StringBundler.concat(
+			userName, StringPool.COLON, password);
 
 		return new String(
 			Base64.encodeBase64(
@@ -169,9 +167,10 @@ public abstract class DemoCreatorService {
 
 			user = userLocalService.addUserWithWorkflow(
 				UserConstants.USER_ID_DEFAULT, portal.getDefaultCompanyId(),
-				false, "test", "test", true, screenName, emailAddress, 0, null,
+				false, "test", "test", true, screenName, emailAddress,
 				LocaleUtil.US, firstName, null, lastName, 0, 0, true, 1, 1,
-				1970, null, null, null, null, null, false, null);
+				1970, null, UserConstants.TYPE_GUEST, null, null, null, null,
+				false, null);
 
 			user.setPasswordReset(false);
 			user.setPasswordModifiedDate(new Date());

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ContactsDemo {
 
 	@Activate
@@ -65,7 +65,7 @@ public class ContactsDemo {
 						break;
 					}
 					catch (Exception exception) {
-						_log.error(exception, exception);
+						_log.error(exception);
 
 						Thread.sleep(Time.SECOND * 30);
 					}

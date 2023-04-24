@@ -14,93 +14,334 @@ definition {
 		CommerceConfiguration.commerceTearDown(doLogout = "true");
 	}
 
-	@description = "This is a functional test for COMMERCE-8145 - Without an account, add to cart and quantity selector are disabled for admin user"
-	@priority = 4
-	test AddToCartButtonAndQuantitySelectorAreDisabledForAdminUser {
+	@description = "This is a test for COMMERCE-10783. The add to cart button and quantity selector are disabled for a guest user on the default B2B scenario"
+	@priority = 3
+	test AddToCartButtonAndQuantitySelectorAreDisabledOnB2BScenarioForGuestUser {
 		property portal.acceptance = "false";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("And the View permission of Catalog page for Guest is checked") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "minium");
 
-		Pagination.changePagination(itemsPerPage = 60);
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Catalog");
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "guest");
+		}
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		task ("When a guest user navigates to the Minium catalog page") {
+			User.logoutPG();
 
-		Click(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+		}
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+		task ("Then the quantity selector and the 'add to cart' button are disabled") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
-
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
-
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
 	}
 
-	@description = "This is a functional test for COMMERCE-8145 - Without an account, add to cart and quantity selector are disabled for non-admin user"
+	@description = "This is a test for COMMERCE-8145 and COMMERCE-10783. The add to cart button and quantity selector are disabled for the default admin user on a default B2B scenario when no account is created"
+	@priority = 4
+	test AddToCartButtonAndQuantitySelectorAreDisabledOnB2BScenarioForLoggedAdminUser {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin navigates to the Minium catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		task ("Then the quantity selector and the 'add to cart' button are disabled on both Catalog and the product detail pages") {
+			Pagination.changePagination(itemsPerPage = 60);
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+
+			Click(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-8145 and COMMERCE-10783. The add to cart button and quantity selector are disabled for a non-admin user on the default B2B scenario when no account is created"
 	@priority = 5
-	test AddToCartButtonAndQuantitySelectorAreDisabledForNewUser {
+	test AddToCartButtonAndQuantitySelectorAreDisabledOnB2BScenarioForLoggedNonAdminUser {
 		property portal.acceptance = "true";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		task ("Given a Minium site with a user without a role is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			JSONUser.addUser(
+				userEmailAddress = "testuser@liferay.com",
+				userFirstName = "test",
+				userLastName = "user",
+				userScreenName = "testuser");
 
-		JSONUser.addUser(
-			userEmailAddress = "testuser@liferay.com",
-			userFirstName = "test",
-			userLastName = "user",
-			userScreenName = "testuser");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "testuser@liferay.com");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "testuser@liferay.com");
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
 
-		JSONUser.addUserToSite(
-			groupName = "Minium",
-			userEmailAddress = "testuser@liferay.com");
+		task ("When the user logs in") {
+			User.logoutPG();
 
-		User.logoutPG();
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
 
-		CommerceLogin.miniumLogin(
-			password = "test",
-			urlAppend = "web/minium",
-			userEmailAddress = "testuser@liferay.com");
+		task ("Then the quantity selector and the 'add to cart' button are disabled on both Catalog and the product detail pages") {
+			Pagination.changePagination(itemsPerPage = 60);
 
-		Pagination.changePagination(itemsPerPage = 60);
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+			Click(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
-		Click(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 
-		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
+	}
 
-		AssertElementNotPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+	@description = "This is a test for COMMERCE-10783. The add to cart button and quantity selector are enabled for a guest user on B2C scenario"
+	@priority = 3
+	test AddToCartButtonAndQuantitySelectorAreEnabledOnB2CScenarioForGuestUser {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And 'B2C' site type is set for the Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Select(
+				key_fieldLabel = "Commerce Site Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "B2C");
+
+			Button.clickSave();
+		}
+
+		task ("And the View permission of Catalog page for Guest is checked") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "minium");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Catalog");
+
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "guest");
+		}
+
+		task ("When a guest user navigates to the Minium catalog page") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+		}
+
+		task ("Then the quantity selector and the 'add to cart' button are enabled") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10783. The add to cart button and quantity selector are enabled for a logged user on B2C scenario"
+	@priority = 3
+	test AddToCartButtonAndQuantitySelectorAreEnabledOnB2CScenarioForLoggedUser {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a user without a role is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONUser.addUser(
+				userEmailAddress = "testuser@liferay.com",
+				userFirstName = "test",
+				userLastName = "user",
+				userScreenName = "testuser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "testuser@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("And 'B2C' site type is set for the Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Select(
+				key_fieldLabel = "Commerce Site Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "B2C");
+
+			Button.clickSave();
+		}
+
+		task ("When the user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("Then the quantity selector and the 'add to cart' button are enabled") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10783. The add to cart button and quantity selector are enabled for a guest user on B2X scenario"
+	@priority = 3
+	test AddToCartButtonAndQuantitySelectorAreEnabledOnB2XScenarioForGuestUser {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And 'B2X' site type is set for the Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Select(
+				key_fieldLabel = "Commerce Site Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "B2X");
+
+			Button.clickSave();
+		}
+
+		task ("And the View permission of Catalog page for Guest is checked") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "minium");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Catalog");
+
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "guest");
+		}
+
+		task ("When a guest user navigates to the Minium catalog page") {
+			User.logoutPG();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+		}
+
+		task ("Then the quantity selector and the 'add to cart' button are enabled") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-10783. The add to cart button and quantity selector are enabled for a logged user on B2X scenario"
+	@priority = 3
+	test AddToCartButtonAndQuantitySelectorAreEnabledOnB2XScenarioForLoggedUser {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a user without any roles is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONUser.addUser(
+				userEmailAddress = "testuser@liferay.com",
+				userFirstName = "test",
+				userLastName = "user",
+				userScreenName = "testuser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "testuser@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("And 'B2X' site type is set for the Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Select(
+				key_fieldLabel = "Commerce Site Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "B2X");
+
+			Button.clickSave();
+		}
+
+		task ("When the user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "testuser@liferay.com");
+		}
+
+		task ("Then the quantity selector and the 'add to cart' button are enabled") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_ADD_TO_CART_BUTTON_ENABLED");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#GENERAL_QUANTITY_SELECTOR_INPUT_FIELD_ENABLED");
+		}
 	}
 
 	@description = "COMMERCE-5725. New functional test for COMMERCE-5485"

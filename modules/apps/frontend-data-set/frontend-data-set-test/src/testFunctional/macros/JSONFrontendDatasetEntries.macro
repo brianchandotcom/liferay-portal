@@ -36,6 +36,46 @@ definition {
 		}
 	}
 
+	macro _createFDSViewViaAPI {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(datasetEntriesIdList))) {
+			var datasetEntriesIdList = JSONFrontendDatasetEntries._getDatasetEntryIdsByName();
+		}
+
+		if (${datasetEntriesIdList} != "") {
+			for (var dataSetEntryId : list ${datasetEntriesIdList}) {
+				var curl = '''
+					${portalURL}/o/c/fdsviews \
+						-u ${userEmailAddress}:${userPassword} \
+						-H accept: application/json \
+						-H Content-Type: application/json \
+						-d {
+							"symbol": "catalog",
+							"description": "${dataSetViewDescription}",
+							"defaultItemsPerPage": 0,
+							"listOfItemsPerPage": "string",
+							"label": "${dataSetViewName}",
+							"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${dataSetEntryId}
+						}
+				''';
+
+				JSONCurlUtil.post(${curl});
+			}
+		}
+		else {
+			echo("FAIL. No Datasets entries to be deleted");
+		}
+	}
+
 	@summary = "This calls the JSON WS API to delete all data sets"
 	macro _deleteFDSEntry {
 		var portalURL = JSONCompany.getPortalURL();

@@ -170,10 +170,17 @@ definition {
 	}
 
 	macro selectTag {
-		Click(
-			key_fieldLabel = "Tags",
-			key_text = "Select",
-			locator1 = "Button#ANY_WITH_LABEL");
+		if (isSet(tagRow)) {
+			Click(
+				key_tagRow = ${tagRow},
+				locator1 = "AssetCategorization#TAGS_FRAGMENT_BY_ROW");
+		}
+		else {
+			Click(
+				key_fieldLabel = "Tags",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
+		}
 
 		IFrame.selectTagFrame();
 

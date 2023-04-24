@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.batch.planner.exception;
 
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeExcepti
 /**
  * @author Igor Beslic
  */
-public class DuplicateBatchPlannerPlanExternalReferenceCodeException extends DuplicateExternalReferenceCodeException {
+public class DuplicateBatchPlannerPlanExternalReferenceCodeException
+	extends DuplicateExternalReferenceCodeException {
 
 	public DuplicateBatchPlannerPlanExternalReferenceCodeException() {
 	}
@@ -27,11 +29,15 @@ public class DuplicateBatchPlannerPlanExternalReferenceCodeException extends Dup
 		super(msg);
 	}
 
-	public DuplicateBatchPlannerPlanExternalReferenceCodeException(String msg, Throwable throwable) {
+	public DuplicateBatchPlannerPlanExternalReferenceCodeException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateBatchPlannerPlanExternalReferenceCodeException(Throwable throwable) {
+	public DuplicateBatchPlannerPlanExternalReferenceCodeException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

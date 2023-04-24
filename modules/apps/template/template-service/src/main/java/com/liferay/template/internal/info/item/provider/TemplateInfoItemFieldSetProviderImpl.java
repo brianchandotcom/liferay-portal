@@ -126,38 +126,39 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 		return new InfoFieldValue<>(
 			_getInfoField(templateEntry),
-			() -> {
-				InfoItemFieldValues infoItemFieldValues =
-					InfoItemFieldValues.builder(
-					).build();
+			() -> InfoLocalizedValue.function(
+				locale -> {
+					InfoItemFieldValues infoItemFieldValues =
+						InfoItemFieldValues.builder(
+						).build();
 
-				InfoItemFieldValuesProvider<Object>
-					infoItemFieldValuesProvider =
-						_infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFieldValuesProvider.class,
-							templateEntry.getInfoItemClassName());
+					InfoItemFieldValuesProvider<Object>
+						infoItemFieldValuesProvider =
+							_infoItemServiceRegistry.getFirstInfoItemService(
+								InfoItemFieldValuesProvider.class,
+								templateEntry.getInfoItemClassName());
 
-				if (infoItemFieldValuesProvider != null) {
-					infoItemFieldValues =
-						infoItemFieldValuesProvider.getInfoItemFieldValues(
-							itemObject);
-				}
+					if (infoItemFieldValuesProvider != null) {
+						infoItemFieldValues =
+							infoItemFieldValuesProvider.getInfoItemFieldValues(
+								itemObject);
+					}
 
-				TemplateDisplayTemplateTransformer
-					templateDisplayTemplateTransformer =
-						new TemplateDisplayTemplateTransformer(
-							templateEntry, infoItemFieldValues,
-							_templateNodeFactory);
+					TemplateDisplayTemplateTransformer
+						templateDisplayTemplateTransformer =
+							new TemplateDisplayTemplateTransformer(
+								templateEntry, infoItemFieldValues,
+								_templateNodeFactory);
 
-				try {
-					return templateDisplayTemplateTransformer.transform();
-				}
-				catch (Exception exception) {
-					_log.error("Unable to transform template", exception);
-				}
+					try {
+						return templateDisplayTemplateTransformer.transform();
+					}
+					catch (Exception exception) {
+						_log.error("Unable to transform template", exception);
+					}
 
-				return StringPool.BLANK;
-			});
+					return StringPool.BLANK;
+				}));
 	}
 
 	private List<TemplateEntry> _getTemplateEntries(

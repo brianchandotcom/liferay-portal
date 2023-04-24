@@ -58,6 +58,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -116,7 +117,7 @@ public class LayoutsTreeDisplayContext {
 	public String getLayoutsCountMessageKey() throws PortalException {
 		int messageKeyLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 			_selectPagesGroup, isSelectPagesPrivateLayout(),
-			_getSelectedLayoutIdsArray());
+			ArrayUtil.toLongArray(_getSelectedLayoutIdsArray()));
 
 		int totalLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 			_getSelectPagesGroupId(), isSelectPagesPrivateLayout());
@@ -192,7 +193,7 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"privateLayout", isSelectPagesPrivateLayout()
 		).put(
-			"selectedLayoutIds", SetUtil.fromArray(_getSelectedLayoutIdsArray())
+			"selectedLayoutIds", _getSelectedLayoutIdsArray()
 		).put(
 			"treeId", _treeId
 		).build();
@@ -377,7 +378,7 @@ public class LayoutsTreeDisplayContext {
 			));
 	}
 
-	private long[] _getSelectedLayoutIdsArray() throws PortalException {
+	private Set<Long> _getSelectedLayoutIdsArray() throws PortalException {
 		if (_selectedLayoutIdsArray != null) {
 			return _selectedLayoutIdsArray;
 		}
@@ -423,7 +424,7 @@ public class LayoutsTreeDisplayContext {
 			}
 		}
 
-		_selectedLayoutIdsArray = selectedLayoutIdsArray;
+		_selectedLayoutIdsArray = SetUtil.fromArray(selectedLayoutIdsArray);
 
 		return _selectedLayoutIdsArray;
 	}
@@ -463,7 +464,7 @@ public class LayoutsTreeDisplayContext {
 	private Map<String, String[]> _parameterMap;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private long[] _selectedLayoutIdsArray;
+	private Set<Long> _selectedLayoutIdsArray;
 	private Group _selectPagesGroup;
 	private Long _selectPagesGroupId;
 	private Boolean _selectPagesPrivateLayout;

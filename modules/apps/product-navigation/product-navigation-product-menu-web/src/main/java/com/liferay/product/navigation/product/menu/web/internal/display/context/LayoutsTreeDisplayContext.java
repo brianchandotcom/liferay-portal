@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.SessionTreeJSClicks;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -72,6 +73,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
@@ -391,10 +393,11 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private JSONArray _getLayoutsJSONArray() throws Exception {
-		long[] openNodes = StringUtil.split(
-			SessionTreeJSClicks.getOpenNodes(
-				_httpServletRequest, "productMenuPagesTree"),
-			0L);
+		Set<Long> openNodes = SetUtil.fromArray(
+			StringUtil.split(
+				SessionTreeJSClicks.getOpenNodes(
+					_httpServletRequest, "productMenuPagesTree"),
+				0L));
 
 		JSONArray layoutsJSONArray = _layoutsTree.getLayoutsJSONArray(
 			openNodes, _getGroupId(), _httpServletRequest, true, true, false,

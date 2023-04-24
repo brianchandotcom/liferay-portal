@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,6 +49,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -70,7 +70,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Override
 	public JSONArray getLayoutsJSONArray(
-			long[] expandedLayoutIds, long groupId,
+			Set<Long> expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			boolean incomplete, boolean loadMore, long parentLayoutId,
 			boolean privateLayout, String treeId)
@@ -144,7 +144,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONArray _getLayoutsJSONArray(
 			List<Layout> ancestorLayouts, boolean childLayout,
-			long[] expandedLayoutIds, long groupId,
+			Set<Long> expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			boolean incomplete, boolean loadMore, long parentLayoutId,
 			boolean privateLayout, ThemeDisplay themeDisplay, String treeId)
@@ -331,10 +331,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	}
 
 	private boolean _isExpandableLayout(
-		List<Layout> ancestorLayouts, long[] expandedLayoutIds, Layout layout) {
+		List<Layout> ancestorLayouts, Set<Long> expandedLayoutIds,
+		Layout layout) {
 
 		if (ancestorLayouts.contains(layout) ||
-			ArrayUtil.contains(expandedLayoutIds, layout.getLayoutId())) {
+			expandedLayoutIds.contains(layout.getLayoutId())) {
 
 			return true;
 		}

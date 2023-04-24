@@ -18,7 +18,7 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 /**
- * Converts any {@code IllegalArgumentExceptionMapper} to a {@code 400} error.
+ * Converts any {@code IllegalArgumentException} to a {@code 400} error.
  *
  * @author Rubén Pulido
  * @review

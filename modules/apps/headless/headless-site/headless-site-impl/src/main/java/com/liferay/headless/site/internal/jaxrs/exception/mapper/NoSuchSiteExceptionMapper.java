@@ -28,7 +28,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code NoSuchGroupExceptionMapper} to a {@code 404} error.
+ * Converts any {@code NoSuchGroupException} to a {@code 404} error.
  *
  * @author Rubén Pulido
  */

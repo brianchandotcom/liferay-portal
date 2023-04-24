@@ -179,7 +179,7 @@ definition {
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run A");
 
-            TestrayContextMenu.clickContextMenuProjects(name = "Run 2");
+			TestrayContextMenu.clickContextMenuProjects(name = "Run 2");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run B");
 
@@ -224,6 +224,65 @@ definition {
 		task ("And do not see case 2 in the table") {
 			AssertElementNotPresent(
 				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
+	@description = "Story ID: LPS-162623 | Test Summary: Verify if as an Administrator I am able to filter the cases Tab in a Run Comparison Result by priority"
+	@priority = 3
+	test AdminCanFilterDetailsTabInRunComparisonResultByPriority {
+		task ("Given that the user select two runs for compare runs") {
+			Testray.projectTabNavigator(navTabName = "Runs");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Run 1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run A");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Run 2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run B");
+		}
+
+		task ("And that the user has two priority different in the table") {
+			TestrayManage.selectOptionsManage(itemValue = "Compare Runs");
+
+			Button.click(button = "Compare Runs");
+
+			Testray.projectTabNavigator(navTabName = "Cases");
+
+			AssertElementPresent(
+				key_projectName = 3,
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = 5,
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a compare runs by priority") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority",
+				value1 = 3);
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see priority 3 in the table") {
+			AssertElementPresent(
+				key_projectName = 3,
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see priority 5 in the table") {
+			AssertElementNotPresent(
+				key_projectName = 5,
 				locator1 = "Testray#ITEM_NAME");
 		}
 	}

@@ -95,4 +95,36 @@ definition {
 		}
 	}
 
+	macro _getDatasetEntryIdsByName {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(datasetName))) {
+			var datasetName = "Dataset Test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/fdsentries \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var label = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetName}')].label");
+
+		var datasetEntryIdByName = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${label}')].id");
+
+		if (${datasetEntryIdByName} == "") {
+			fail("FAIL. No datasets was found");
+		}
+		else {
+			return ${datasetEntryIdByName};
+		}
+	}
+
 }

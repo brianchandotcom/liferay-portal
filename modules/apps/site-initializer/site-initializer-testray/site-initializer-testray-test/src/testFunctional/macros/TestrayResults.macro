@@ -1,5 +1,12 @@
 definition {
 
+	macro assertIssue {
+		AssertElementPresent(
+			locator1 = "TestrayResults#ISSUE_WITH_LABEL",
+			key_issue = ${issue},
+			key_label = ${label});
+	}
+
 	macro caseResultsMetrics {
 		AssertTextEquals(
 			locator1 = "TestrayResults#TOTAL_TEST_CASE_RESULTS",

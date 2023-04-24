@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.HashMap;
@@ -264,6 +265,8 @@ public class JournalArticleInfoItemFormProvider
 					StringPool.CLOSE_PARENTHESIS));
 
 			return InfoLocalizedValue.<String>builder(
+			).defaultLocale(
+				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId())
 			).values(
 				nameMap
 			).build();

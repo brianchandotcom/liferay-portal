@@ -25,6 +25,7 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +58,9 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 			if (fieldSetNameInfoLocalizedValue == null) {
 				fieldSetNameInfoLocalizedValue =
 					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							ddmStructure.getDefaultLanguageId())
 					).values(
 						ddmStructure.getNameMap()
 					).build();

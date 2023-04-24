@@ -369,9 +369,15 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		Layout draftLayout = _getDraftLayout(layout);
 
-		boolean hasUpdatePermission =
-			_layoutPermission.containsLayoutUpdatePermission(
-				themeDisplay.getPermissionChecker(), layout);
+		boolean hasUpdatePermission = true;
+
+		if (includeActions) {
+			hasUpdatePermission =
+				_layoutPermission.containsLayoutUpdatePermission(
+					themeDisplay.getPermissionChecker(), layout);
+		}
+
+		boolean finalHasUpdatePermission = hasUpdatePermission;
 
 		JSONObject jsonObject = JSONUtil.put(
 			"actions",
@@ -419,8 +425,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"name",
 			() -> {
-				if ((draftLayout != null) &&
-					(hasUpdatePermission || !layout.isPublished() ||
+				if (includeActions &&
+					(draftLayout != null) &&
+					(finalHasUpdatePermission || !layout.isPublished() ||
 					 _layoutContentModelResourcePermission.contains(
 						 themeDisplay.getPermissionChecker(), layout.getPlid(),
 						 ActionKeys.UPDATE))) {
@@ -449,7 +456,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"regularURL",
 			() -> {
-				if (hasUpdatePermission || layout.isPublished()) {
+				if (includeActions &&
+					(finalHasUpdatePermission || layout.isPublished())) {
+
 					return layout.getRegularURL(httpServletRequest);
 				}
 

@@ -151,6 +151,30 @@ definition {
 		}
 	}
 
+	macro addSitePageWithConfirmViaSiteTemplateCP {
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Manage",
+			rowEntry = ${siteTemplateName});
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
+
+		LexiconCard.clickCard(card = "Widget Page");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = ${pageName});
+
+		ClickNoError(
+			key_text = "Add",
+			locator1 = "Button#ANY");
+	}
+
 	macro AddSiteTemplateJavaScript {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -459,6 +483,29 @@ definition {
 			value1 = ${siteTemplateName});
 
 		SelectWindow(locator1 = "Home - ${siteTemplateName} - ${siteName}");
+	}
+
+	macro grantUserAccessToSiteTemplates {
+		JSONRole.addRegularRole(roleTitle = "Access Site Templates");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet",
+			roleTitle = "Access Site Templates");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.portal.kernel.model.LayoutSetPrototype",
+			roleTitle = "Access Site Templates");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.kernel.model.LayoutSetPrototype",
+			roleTitle = "Access Site Templates");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Access Site Templates",
+			userEmailAddress = ${userEmailAddress});
 	}
 
 	macro openSiteTemplateInEditMode {

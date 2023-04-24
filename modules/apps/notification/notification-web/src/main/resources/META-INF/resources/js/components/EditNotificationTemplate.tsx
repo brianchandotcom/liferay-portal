@@ -139,9 +139,13 @@ export default function EditNotificationTemplate({
 
 			window.location.assign(document.referrer);
 		}
-		else if (response.status === 404) {
+		else if (response.status === 400) {
+			const {title} = (await response.json()) as {
+				title: string;
+			};
+
 			openToast({
-				message: Liferay.Language.get('an-error-occurred'),
+				message: title,
 				type: 'danger',
 			});
 		}

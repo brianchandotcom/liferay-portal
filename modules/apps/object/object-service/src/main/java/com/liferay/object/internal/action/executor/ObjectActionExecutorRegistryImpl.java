@@ -71,9 +71,8 @@ public class ObjectActionExecutorRegistryImpl
 				objectActionExecutor ->
 					ObjectActionExecutorUtil.isAllowedCompany(
 						companyId, objectActionExecutor) &&
-					ObjectActionExecutorUtil.
-						isAllowedObjectDefinition(
-							objectActionExecutor, objectDefinitionName)),
+					ObjectActionExecutorUtil.isAllowedObjectDefinition(
+						objectActionExecutor, objectDefinitionName)),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {
 

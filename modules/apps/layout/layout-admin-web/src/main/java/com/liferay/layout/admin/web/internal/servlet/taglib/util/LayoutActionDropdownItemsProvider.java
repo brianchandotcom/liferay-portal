@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -142,31 +141,11 @@ public class LayoutActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-177031"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.addContext(
 						_getCopyLayoutWithPermissionsActionUnsafeConsumer(
 							layout)
-					).add(
-						() ->
-							_layoutsAdminDisplayContext.
-								isShowExportTranslationAction(layout),
-						_getExportForTranslationLayoutActionUnsafeConsumer(
-							draftLayout, layout)
-					).add(
-						() -> _isShowImportTranslationAction(layout),
-						_getImportTranslationLayoutActionUnsafeConsumer(
-							draftLayout, layout)
-					).build());
-				dropdownGroupItem.setSeparator(true);
-			}
-		).addGroup(
-			() -> !FeatureFlagManagerUtil.isEnabled("LPS-177031"),
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
-						_getCopyLayoutActionUnsafeConsumer(layout)
 					).add(
 						() ->
 							_layoutsAdminDisplayContext.
@@ -277,26 +256,6 @@ public class LayoutActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_httpServletRequest, "convert-to-content-page..."));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getCopyLayoutActionUnsafeConsumer(Layout layout) {
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "copyLayout");
-			dropdownItem.putData(
-				"copyLayoutURL",
-				_layoutsAdminDisplayContext.getCopyLayoutRenderURL(
-					false, layout));
-
-			if (!_layoutsAdminDisplayContext.isShowCopyLayoutAction(layout)) {
-				dropdownItem.setDisabled(true);
-			}
-
-			dropdownItem.setIcon("copy");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "copy-page"));
 		};
 	}
 

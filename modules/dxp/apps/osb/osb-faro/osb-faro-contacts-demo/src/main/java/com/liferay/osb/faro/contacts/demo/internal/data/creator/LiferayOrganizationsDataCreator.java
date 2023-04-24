@@ -17,9 +17,9 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -65,32 +65,31 @@ public class LiferayOrganizationsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> organization = new HashMap<>();
-
-		organization.put("id", number.randomNumber(8, false));
-		organization.put("modifiedDate", formatDate(new Date()));
-
 		String name = (String)params[0];
-
-		organization.put("name", name);
 
 		Map<String, Object> parentOrganization = (Map<String, Object>)params[1];
 
-		organization.put(
-			"nameTreePath", _getNameTreePath(name, parentOrganization));
-
-		organization.put("organizationId", number.randomNumber(8, false));
-		organization.put("osbAsahDataSourceId", _dataSourceId);
-		organization.put(
+		return HashMapBuilder.<String, Object>put(
+			"id", number.randomNumber(8, false)
+		).put(
+			"modifiedDate", formatDate(new Date())
+		).put(
+			"name", name
+		).put(
+			"nameTreePath", _getNameTreePath(name, parentOrganization)
+		).put(
+			"organizationId", number.randomNumber(8, false)
+		).put(
+			"osbAsahDataSourceId", _dataSourceId
+		).put(
 			"parentName",
-			parentOrganization.getOrDefault("name", StringPool.BLANK));
-		organization.put(
+			parentOrganization.getOrDefault("name", StringPool.BLANK)
+		).put(
 			"parentOrganizationId",
-			parentOrganization.getOrDefault(
-				"organizationId", StringPool.BLANK));
-		organization.put("type", "organization");
-
-		return organization;
+			parentOrganization.getOrDefault("organizationId", StringPool.BLANK)
+		).put(
+			"type", "organization"
+		).build();
 	}
 
 	private String _getNameTreePath(

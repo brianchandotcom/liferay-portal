@@ -16,8 +16,8 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -46,24 +46,22 @@ public class LiferayTeamsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> team = new HashMap<>();
-
 		Map<String, Object> group = (Map<String, Object>)params[0];
 
-		team.put("dataSourceId", _dataSourceId);
-		team.put(
+		return HashMapBuilder.<String, Object>put(
+			"dataSourceId", _dataSourceId
+		).put(
 			"fields",
-			new HashMap<String, Object>() {
-				{
-					put("groupId", group.get("groupId"));
-					put("name", lordOfTheRings.location());
-					put("teamId", number.randomNumber(8, false));
-				}
-			});
-
-		team.put("id", number.randomNumber(8, false));
-
-		return team;
+			HashMapBuilder.<String, Object>put(
+				"groupId", group.get("groupId")
+			).put(
+				"name", lordOfTheRings.location()
+			).put(
+				"teamId", number.randomNumber(8, false)
+			).build()
+		).put(
+			"id", number.randomNumber(8, false)
+		).build();
 	}
 
 	private final String _dataSourceId;

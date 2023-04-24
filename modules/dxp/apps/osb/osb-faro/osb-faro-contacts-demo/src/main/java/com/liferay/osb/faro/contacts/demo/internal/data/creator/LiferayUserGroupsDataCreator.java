@@ -16,8 +16,8 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -47,21 +47,18 @@ public class LiferayUserGroupsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> userGroup = new HashMap<>();
-
-		userGroup.put("dataSourceId", _dataSourceId);
-		userGroup.put(
+		return HashMapBuilder.<String, Object>put(
+			"dataSourceId", _dataSourceId
+		).put(
 			"fields",
-			new HashMap<String, Object>() {
-				{
-					put("name", country.name());
-					put("userGroupId", number.randomNumber(8, false));
-				}
-			});
-
-		userGroup.put("id", number.randomNumber(8, false));
-
-		return userGroup;
+			HashMapBuilder.<String, Object>put(
+				"name", country.name()
+			).put(
+				"userGroupId", number.randomNumber(8, false)
+			)
+		).put(
+			"id", number.randomNumber(8, false)
+		).build();
 	}
 
 	private final String _dataSourceId;

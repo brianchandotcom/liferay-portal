@@ -21,7 +21,9 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 
 import java.nio.charset.StandardCharsets;
@@ -58,12 +60,12 @@ public class AnalyticEventsDataCreator extends DataCreator {
 	protected void addData(List<Map<String, Object>> objects) {
 		Http.Options options = new Http.Options();
 
-		Map<String, String> headers = new HashMap<>();
-
-		headers.put("Content-Type", ContentTypes.APPLICATION_JSON);
-		headers.put("X-Forwarded-For", internet.publicIpV4Address());
-
-		options.setHeaders(headers);
+		options.setHeaders(
+			HashMapBuilder.put(
+				"Content-Type", ContentTypes.APPLICATION_JSON
+			).put(
+				"X-Forwarded-For", internet.publicIpV4Address()
+			).build());
 
 		options.setLocation(_OSB_ASAH_PUBLISHER_URL);
 		options.setPost(true);
@@ -78,28 +80,22 @@ public class AnalyticEventsDataCreator extends DataCreator {
 				HttpUtil.URLtoString(options);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 	}
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> analyticEvent = new HashMap<>();
-
 		Map<String, Object> context = new HashMap<>(
 			_pageContextsDataCreator.getRandom());
 
 		if (bool.bool()) {
-			String encodePath = HttpUtil.encodePath(
+			String encodePath = HttpComponentsUtil.encodePath(
 				_SEARCH_TERMS[random.nextInt(_SEARCH_TERMS.length)]);
 
 			context.put("url", context.get("url") + "?q=" + encodePath);
 		}
-
-		analyticEvent.put("context", context);
-
-		analyticEvent.put("dataSourceId", params[0]);
 
 		List<Map<String, Object>> events = new ArrayList<>();
 
@@ -107,21 +103,28 @@ public class AnalyticEventsDataCreator extends DataCreator {
 			dateAndTime.past(30, TimeUnit.DAYS));
 
 		if (bool.bool()) {
-			Map<String, Object> assetEvent = new HashMap<>(
-				_assetEvents.get(random.nextInt(_assetEvents.size())));
-
-			assetEvent.put("eventDate", eventDateString);
-
-			events.add(assetEvent);
+			events.add(
+				HashMapBuilder.putAll(
+					_assetEvents.get(random.nextInt(_assetEvents.size()))
+				).put(
+					"eventDate", eventDateString
+				).build());
 		}
 
-		Map<String, Object> pageEvent = new HashMap<>(_pageEvent);
+		events.add(
+			HashMapBuilder.putAll(
+				_pageEvent
+			).put(
+				"eventDate", eventDateString
+			).build());
 
-		pageEvent.put("eventDate", eventDateString);
-
-		events.add(pageEvent);
-
-		analyticEvent.put("events", events);
+		Map<String, Object> analyticEvent = HashMapBuilder.<String, Object>put(
+			"context", context
+		).put(
+			"dataSourceId", params[0]
+		).put(
+			"events", events
+		).build();
 
 		_activitiesCount += events.size();
 
@@ -141,29 +144,33 @@ public class AnalyticEventsDataCreator extends DataCreator {
 	private Map<String, Object> _createEvent(
 		String applicationId, String eventId, Map<String, Object> properties) {
 
-		Map<String, Object> event = new HashMap<>();
-
-		event.put("applicationId", applicationId);
-		event.put("eventId", eventId);
-		event.put("properties", properties);
-
-		return event;
+		return HashMapBuilder.<String, Object>put(
+			"applicationId", applicationId
+		).put(
+			"eventId", eventId
+		).put(
+			"properties", properties
+		).build();
 	}
 
 	private void _createEvents() {
 		for (String blogTitle : _BLOG_TITLES) {
 			long blogEntryId = number.randomNumber(8, false);
 
-			Map<String, Object> blogAssetEvent = new HashMap<String, Object>() {
-				{
-					put("classPK", blogEntryId);
-					put("depth", number.randomNumber(2, false));
-					put("entryId", blogEntryId);
-					put("numberOfWords", number.randomNumber());
-					put("score", number.randomDouble(1, 0, 1));
-					put("title", blogTitle);
-				}
-			};
+			Map<String, Object> blogAssetEvent =
+				HashMapBuilder.<String, Object>put(
+					"classPK", blogEntryId
+				).put(
+					"depth", number.randomNumber(2, false)
+				).put(
+					"entryId", blogEntryId
+				).put(
+					"numberOfWords", number.randomNumber()
+				).put(
+					"score", number.randomDouble(1, 0, 1)
+				).put(
+					"title", blogTitle
+				).build();
 
 			_assetEvents.add(
 				_createEvent("Blog", "blogDepthReached", blogAssetEvent));
@@ -175,14 +182,15 @@ public class AnalyticEventsDataCreator extends DataCreator {
 
 		for (int i = 0; i < 10; i++) {
 			Map<String, Object> documentAssetEvent =
-				new HashMap<String, Object>() {
-					{
-						put("fileEntryId", number.randomNumber(8, false));
-						put("fileEntryUUID", internet.uuid());
-						put("title", company.bs());
-						put("version", "1.0");
-					}
-				};
+				HashMapBuilder.<String, Object>put(
+					"fileEntryId", number.randomNumber(8, false)
+				).put(
+					"fileEntryUUID", internet.uuid()
+				).put(
+					"title", company.bs()
+				).put(
+					"version", "1.0"
+				).build();
 
 			_assetEvents.add(
 				_createEvent(
@@ -193,12 +201,12 @@ public class AnalyticEventsDataCreator extends DataCreator {
 		}
 
 		for (String formTitle : _FORM_TITLES) {
-			Map<String, Object> formAssetEvent = new HashMap<String, Object>() {
-				{
-					put("formId", number.randomNumber(8, false));
-					put("title", formTitle);
-				}
-			};
+			Map<String, Object> formAssetEvent =
+				HashMapBuilder.<String, Object>put(
+					"formId", number.randomNumber(8, false)
+				).put(
+					"title", formTitle
+				).build();
 
 			_assetEvents.add(
 				_createEvent("Form", "formSubmitted", formAssetEvent));
@@ -210,22 +218,20 @@ public class AnalyticEventsDataCreator extends DataCreator {
 			_assetEvents.add(
 				_createEvent(
 					"WebContent", "webContentViewed",
-					new HashMap<String, Object>() {
-						{
-							put("articleId", number.randomNumber(8, false));
-							put("numberOfWords", number.randomNumber());
-							put("title", company.bs());
-						}
-					}));
+					HashMapBuilder.<String, Object>put(
+						"articleId", number.randomNumber(8, false)
+					).put(
+						"numberOfWords", number.randomNumber()
+					).put(
+						"title", company.bs()
+					).build()));
 		}
 
 		_pageEvent = _createEvent(
 			"Page", "pageViewed",
-			new HashMap<String, Object>() {
-				{
-					put("page", "/web/guest/home");
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"page", "/web/guest/home"
+			).build());
 	}
 
 	private static final String[] _BLOG_TITLES = {

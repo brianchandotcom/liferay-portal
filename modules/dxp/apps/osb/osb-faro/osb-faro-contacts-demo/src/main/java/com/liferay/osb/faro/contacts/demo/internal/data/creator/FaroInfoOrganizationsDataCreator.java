@@ -16,9 +16,9 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -36,28 +36,29 @@ public class FaroInfoOrganizationsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> faroInfoOrganization = new HashMap<>();
-
 		Map<String, Object> organization = (Map<String, Object>)params[0];
 
-		faroInfoOrganization.put(
-			"dataSourceId", organization.get("osbAsahDataSourceId"));
-
-		faroInfoOrganization.put("dateCreated", formatDate(new Date()));
-		faroInfoOrganization.put(
-			"dateModified", organization.get("modifiedDate"));
-		faroInfoOrganization.put("id", number.randomNumber(8, false));
-		faroInfoOrganization.put("name", organization.get("name"));
-		faroInfoOrganization.put(
-			"nameTreePath", organization.get("nameTreePath"));
-		faroInfoOrganization.put(
-			"organizationPK", organization.get("organizationId"));
-		faroInfoOrganization.put("parentName", organization.get("parentName"));
-		faroInfoOrganization.put(
-			"parentOrganizationPK", organization.get("parentOrganizationId"));
-		faroInfoOrganization.put("type", organization.get("type"));
-
-		return faroInfoOrganization;
+		return HashMapBuilder.<String, Object>put(
+			"dataSourceId", organization.get("osbAsahDataSourceId")
+		).put(
+			"dateCreated", formatDate(new Date())
+		).put(
+			"dateModified", organization.get("modifiedDate")
+		).put(
+			"id", number.randomNumber(8, false)
+		).put(
+			"name", organization.get("name")
+		).put(
+			"nameTreePath", organization.get("nameTreePath")
+		).put(
+			"organizationPK", organization.get("organizationId")
+		).put(
+			"parentName", organization.get("parentName")
+		).put(
+			"parentOrganizationPK", organization.get("parentOrganizationId")
+		).put(
+			"type", organization.get("type")
+		).build();
 	}
 
 }

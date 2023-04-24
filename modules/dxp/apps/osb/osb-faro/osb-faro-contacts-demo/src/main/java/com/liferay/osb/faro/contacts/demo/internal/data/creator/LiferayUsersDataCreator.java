@@ -22,12 +22,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -54,13 +54,14 @@ public class LiferayUsersDataCreator extends DataCreator {
 	protected void addData(List<Map<String, Object>> objects) {
 		Http.Options options = new Http.Options();
 
-		Map<String, String> headers = new HashMap<>();
-
-		headers.put("Content-Type", ContentTypes.APPLICATION_JSON);
-		headers.put("OSB-Asah-Data-Source-ID", _dataSourceId);
-		headers.put("X-Forwarded-For", internet.publicIpV4Address());
-
-		options.setHeaders(headers);
+		options.setHeaders(
+			HashMapBuilder.put(
+				"Content-Type", ContentTypes.APPLICATION_JSON
+			).put(
+				"OSB-Asah-Data-Source-ID", _dataSourceId
+			).put(
+				"X-Forwarded-For", internet.publicIpV4Address()
+			).build());
 
 		options.setLocation(_OSB_ASAH_PUBLISHER_URL + "/dxp-entities");
 		options.setPost(true);
@@ -73,30 +74,14 @@ public class LiferayUsersDataCreator extends DataCreator {
 			HttpUtil.URLtoString(options);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 	}
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> dxpEntity = new HashMap<>();
-
-		dxpEntity.put("action", "update");
-		dxpEntity.put("osbAsahDataSourceId", _dataSourceId);
-
-		Map<String, Object> liferayUser = new HashMap<>();
-
-		liferayUser.put("birthday", dateAndTime.past(18250, TimeUnit.DAYS));
-		liferayUser.put("createDate", System.currentTimeMillis());
-
 		String firstName = name.firstName();
 		String lastName = name.lastName();
-
-		liferayUser.put(
-			"emailAddress",
-			internet.emailAddress(firstName + StringPool.PERIOD + lastName));
-
-		liferayUser.put("firstName", firstName);
 
 		String gender = "male";
 
@@ -104,21 +89,41 @@ public class LiferayUsersDataCreator extends DataCreator {
 			gender = "female";
 		}
 
-		liferayUser.put("gender", gender);
-
-		liferayUser.put("jobTitle", company.profession());
-		liferayUser.put("lastName", lastName);
-		liferayUser.put("modifiedDate", System.currentTimeMillis());
-		liferayUser.put("screenName", firstName + StringPool.PERIOD + lastName);
-		liferayUser.put("timeZoneId", "UTC");
-		liferayUser.put("userId", number.randomNumber(8, false));
-		liferayUser.put("uuid", internet.uuid());
-
-		dxpEntity.put("objectJSONObject", liferayUser);
-
-		dxpEntity.put("type", "com.liferay.portal.kernel.model.User");
-
-		return dxpEntity;
+		return HashMapBuilder.<String, Object>put(
+			"action", "update"
+		).put(
+			"objectJSONObject",
+			HashMapBuilder.<String, Object>put(
+				"birthday", dateAndTime.past(18250, TimeUnit.DAYS)
+			).put(
+				"createDate", System.currentTimeMillis()
+			).put(
+				"emailAddress",
+				internet.emailAddress(firstName + StringPool.PERIOD + lastName)
+			).put(
+				"firstName", firstName
+			).put(
+				"gender", gender
+			).put(
+				"jobTitle", company.profession()
+			).put(
+				"lastName", lastName
+			).put(
+				"modifiedDate", System.currentTimeMillis()
+			).put(
+				"screenName", firstName + StringPool.PERIOD + lastName
+			).put(
+				"timeZoneId", "UTC"
+			).put(
+				"userId", number.randomNumber(8, false)
+			).put(
+				"uuid", internet.uuid()
+			).build()
+		).put(
+			"osbAsahDataSourceId", _dataSourceId
+		).put(
+			"type", "com.liferay.portal.kernel.model.User"
+		).build();
 	}
 
 	private static final String _OSB_ASAH_PUBLISHER_URL = System.getenv(

@@ -14,10 +14,10 @@
 
 package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,50 +33,56 @@ public class PageContextsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> pageContext = new HashMap<>();
-
-		pageContext.put("browserName", "Chrome");
-
-		ObjectValuePair<String, String> page = _pages.get(_count++);
-
-		pageContext.put("canonicalUrl", page.getKey());
-
 		String userAgentString = internet.userAgentAny();
 
 		UserAgent userAgent = UserAgent.parseUserAgentString(userAgentString);
 
-		Browser browser = userAgent.getBrowser();
-
-		pageContext.put("browserName", browser.getName());
-
-		pageContext.put("contentLanguageId", "en-US");
-		pageContext.put("crawler", "False");
+		ObjectValuePair<String, String> page = _pages.get(_count++);
 
 		OperatingSystem operatingSystem = userAgent.getOperatingSystem();
 
-		String deviceName = null;
+		return HashMapBuilder.<String, Object>put(
+			"browserName",
+			() -> {
+				Browser browser = userAgent.getBrowser();
 
-		DeviceType deviceType = operatingSystem.getDeviceType();
+				return browser.getName();
+			}
+		).put(
+			"canonicalUrl", page.getKey()
+		).put(
+			"contentLanguageId", "en-US"
+		).put(
+			"crawler", "False"
+		).put(
+			"deviceType",
+			() -> {
+				String deviceName = null;
 
-		if (deviceType == DeviceType.COMPUTER) {
-			deviceName = "Desktop";
-		}
-		else {
-			deviceName = deviceType.getName();
-		}
+				DeviceType deviceType = operatingSystem.getDeviceType();
 
-		pageContext.put("deviceType", deviceName);
+				if (deviceType == DeviceType.COMPUTER) {
+					deviceName = "Desktop";
+				}
+				else {
+					deviceName = deviceType.getName();
+				}
 
-		pageContext.put("languageId", "en-US");
-
-		pageContext.put("platformName", operatingSystem.getName());
-
-		pageContext.put("referrer", page.getKey());
-		pageContext.put("title", page.getValue());
-		pageContext.put("url", page.getKey());
-		pageContext.put("userAgent", userAgentString);
-
-		return pageContext;
+				return deviceName;
+			}
+		).put(
+			"languageId", "en-US"
+		).put(
+			"platformName", operatingSystem.getName()
+		).put(
+			"referrer", page.getKey()
+		).put(
+			"title", page.getValue()
+		).put(
+			"url", page.getKey()
+		).put(
+			"userAgent", userAgentString
+		).build();
 	}
 
 	private static int _count;

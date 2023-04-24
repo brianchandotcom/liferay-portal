@@ -17,6 +17,7 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
 import java.util.Date;
@@ -53,74 +54,101 @@ public class SalesforceIndividualsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> salesforceIndividual = new HashMap<>();
-
-		salesforceIndividual.put("dataSourceId", _dataSourceId);
-
-		Map<String, Object> fields = new HashMap<>();
-
 		Map<String, Object> liferayUser = new HashMap<>();
 		Map<String, Object> salesforceAccount = new HashMap<>();
 
 		if (params != null) {
-			liferayUser = (Map<String, Object>)params[0];
-			salesforceAccount = (Map<String, Object>)params[1];
+			liferayUser.putAll((Map<String, Object>)params[0]);
+			salesforceAccount.putAll((Map<String, Object>)params[1]);
 		}
 
 		Object accountPKs = salesforceAccount.get("id");
-
-		if (accountPKs != null) {
-			fields.put("accountPKs", Collections.singletonList(accountPKs));
-		}
-
-		fields.put(
-			"birthDate",
-			liferayUser.getOrDefault(
-				"birthday", dateAndTime.past(18250, TimeUnit.DAYS)));
-		fields.put("city", address.city());
-		fields.put(
-			"company", salesforceAccount.getOrDefault("Name", company.name()));
-
-		if (!salesforceAccount.isEmpty()) {
-			fields.put("contactId", number.randomNumber(8, false));
-		}
-
-		fields.put("country", address.country());
-		fields.put("department", commerce.department());
-		fields.put("description", company.buzzword());
-		fields.put("doNotCall", bool.bool());
 
 		String firstName = (String)liferayUser.getOrDefault(
 			"firstName", name.firstName());
 		String lastName = (String)liferayUser.getOrDefault(
 			"lastName", name.lastName());
 
-		fields.put(
-			"email",
-			liferayUser.getOrDefault(
-				"emailAddress",
-				internet.emailAddress(
-					firstName + StringPool.PERIOD + lastName)));
+		Map<String, Object> salesforceIndividual =
+			HashMapBuilder.<String, Object>put(
+				"dataSourceId", _dataSourceId
+			).put(
+				"fields",
+				HashMapBuilder.<String, Object>put(
+					"accountPKs",
+					() -> {
+						if (accountPKs != null) {
+							return Collections.singletonList(accountPKs);
+						}
 
-		fields.put("fax", phoneNumber.phoneNumber());
-		fields.put("firstName", firstName);
-		fields.put("fullName", firstName + StringPool.SPACE + lastName);
-		fields.put(
-			"industry",
-			salesforceAccount.getOrDefault("Industry", company.industry()));
-		fields.put("lastName", lastName);
-		fields.put("middleName", name.firstName());
-		fields.put("mobilePhone", phoneNumber.cellPhone());
-		fields.put("modifiedDate", formatDate(new Date()));
-		fields.put("phone", phoneNumber.phoneNumber());
-		fields.put("postalCode", address.zipCode());
-		fields.put("state", address.state());
-		fields.put("street", address.streetAddress());
-		fields.put("suffix", name.suffix());
-		fields.put("title", name.title());
+						return null;
+					}
+				).put(
+					"birthDate",
+					liferayUser.getOrDefault(
+						"birthday", dateAndTime.past(18250, TimeUnit.DAYS))
+				).put(
+					"city", address.city()
+				).put(
+					"company",
+					salesforceAccount.getOrDefault("Name", company.name())
+				).put(
+					"contactId",
+					() -> {
+						if (!salesforceAccount.isEmpty()) {
+							return number.randomNumber(8, false);
+						}
 
-		salesforceIndividual.put("fields", fields);
-		salesforceIndividual.put("id", internet.uuid());
+						return null;
+					}
+				).put(
+					"country", address.country()
+				).put(
+					"department", commerce.department()
+				).put(
+					"description", company.buzzword()
+				).put(
+					"doNotCall", bool.bool()
+				).put(
+					"email",
+					liferayUser.getOrDefault(
+						"emailAddress",
+						internet.emailAddress(
+							firstName + StringPool.PERIOD + lastName))
+				).put(
+					"fax", phoneNumber.phoneNumber()
+				).put(
+					"firstName", firstName
+				).put(
+					"fullName", firstName + StringPool.SPACE + lastName
+				).put(
+					"industry",
+					salesforceAccount.getOrDefault(
+						"Industry", company.industry())
+				).put(
+					"lastName", lastName
+				).put(
+					"middleName", name.firstName()
+				).put(
+					"mobilePhone", phoneNumber.cellPhone()
+				).put(
+					"modifiedDate", formatDate(new Date())
+				).put(
+					"phone", phoneNumber.phoneNumber()
+				).put(
+					"postalCode", address.zipCode()
+				).put(
+					"state", address.state()
+				).put(
+					"street", address.streetAddress()
+				).put(
+					"suffix", name.suffix()
+				).put(
+					"title", name.title()
+				)
+			).put(
+				"id", internet.uuid()
+			).build();
 
 		_salesforceAuditEventsDataCreator.create(
 			new Object[] {salesforceIndividual});

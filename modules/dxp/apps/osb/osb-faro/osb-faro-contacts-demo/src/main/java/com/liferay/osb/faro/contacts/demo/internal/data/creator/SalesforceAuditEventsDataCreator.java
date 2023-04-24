@@ -16,9 +16,9 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,19 +39,21 @@ public class SalesforceAuditEventsDataCreator extends DataCreator {
 
 	@Override
 	protected Map<String, Object> doCreate(Object[] params) {
-		Map<String, Object> auditEvent = new HashMap<>();
-
 		Map<String, Object> salesforceObject = (Map<String, Object>)params[0];
 
-		auditEvent.put("additionalInfo", salesforceObject);
-		auditEvent.put("dataSourceId", salesforceObject.get("dataSourceId"));
-
-		auditEvent.put("dateCreated", formatDate(new Date()));
-		auditEvent.put("eventType", "UPDATE");
-		auditEvent.put("recordId", salesforceObject.get("id"));
-		auditEvent.put("typeName", _typeName);
-
-		return auditEvent;
+		return HashMapBuilder.<String, Object>put(
+			"additionalInfo", salesforceObject
+		).put(
+			"dataSourceId", salesforceObject.get("dataSourceId")
+		).put(
+			"dateCreated", formatDate(new Date())
+		).put(
+			"eventType", "UPDATE"
+		).put(
+			"recordId", salesforceObject.get("id")
+		).put(
+			"typeName", _typeName
+		).build();
 	}
 
 	private final String _typeName;

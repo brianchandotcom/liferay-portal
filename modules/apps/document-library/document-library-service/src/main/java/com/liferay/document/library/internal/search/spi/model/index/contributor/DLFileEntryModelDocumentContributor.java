@@ -130,6 +130,7 @@ public class DLFileEntryModelDocumentContributor
 					dlFileEntry.getMimeType(), CharPool.FORWARD_SLASH,
 					CharPool.UNDERLINE));
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
+			document.addDate("reviewDate", dlFileEntry.getReviewDate());
 			document.addNumber("size", dlFileEntry.getSize());
 			document.addNumber(
 				"versionCount", GetterUtil.getDouble(dlFileEntry.getVersion()));

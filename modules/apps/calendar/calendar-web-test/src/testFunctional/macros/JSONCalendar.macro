@@ -1,5 +1,17 @@
 definition {
 
+	macro setCalendarColor {
+		var calendarId = JSONCalendarAPI.getCalendarId(calendarName = ${calendarName});
+
+		if (!(isSet(color))) {
+			var color = 14247526;
+		}
+
+		JSONCalendarAPI.updateColor(
+			calendarId = ${calendarId},
+			color = ${color});
+	}
+
 	macro tearDown {
 		JSONCalendar.tearDownBookings();
 

@@ -28,6 +28,20 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	macro deleteCalendarResource {
+		Variables.assertDefined(parameterList = ${calendarResourceId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/calendar.calendarresource/delete-calendar-resource \
+				-u test@liferay.com:test \
+				-d calendarResourceId=${calendarResourceId}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro getCalendarBookings {
 		Variables.assertDefined(parameterList = ${calendarId});
 
@@ -70,6 +84,35 @@ definition {
 		var calendarId = JSONCurlUtil.post(${curl}, "$..['calendarId']");
 
 		return ${calendarId};
+	}
+
+	macro getCalendarResources {
+		var companyId = JSONCompany.getCompanyId();
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(active))) {
+			var active = "true";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/calendar.calendarresource/search \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d groupIds= \
+				-d classNameIds= \
+				-d keywords='' \
+				-d active=${active} \
+				-d andOperator=true \
+				-d "start=-1" \
+				-d "end=-1" \
+				-d -orderByComparator=
+		''';
+
+		JSONCurlUtil.post(${curl});
+
+		var calendarResourceIdList = JSONCurlUtil.post(${curl}, "$..['calendarResourceId']");
+
+		return ${calendarResourceIdList};
 	}
 
 	macro getNotDefaultCalendars {

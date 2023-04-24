@@ -42,4 +42,14 @@ definition {
 		}
 	}
 
+	macro tearDownCalendarResources {
+		for (var active : list "true,false") {
+			var calendarResourceIdList = JSONCalendarAPI.getCalendarResources(active = ${active});
+
+			for (var calendarResourceId : list ${calendarResourceIdList}) {
+				JSONCalendarAPI.deleteCalendarResource(calendarResourceId = ${calendarResourceId});
+			}
+		}
+	}
+
 }

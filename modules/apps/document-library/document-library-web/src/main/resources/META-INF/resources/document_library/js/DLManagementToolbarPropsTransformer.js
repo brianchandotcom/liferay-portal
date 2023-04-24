@@ -32,6 +32,7 @@ export default function propsTransformer({
 		editEntryURL,
 		folderConfiguration,
 		openViewMoreFileEntryTypesURL,
+		selectAssetTagsURL,
 		selectExtensionURL,
 		selectFileEntryTypeURL,
 		selectFolderURL,
@@ -225,6 +226,20 @@ export default function propsTransformer({
 			buttonAddLabel: Liferay.Language.get('select'),
 			height: '70vh',
 			multiple: true,
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const url = selectedItem.reduce(
+						(acc, item) =>
+							addParams(
+								`${portletNamespace}assetTagId=${item.value}`,
+								acc
+							),
+						selectAssetTagsURL
+					);
+
+					navigate(url);
+				}
+			},
 			selectEventName: `${portletNamespace}selectedAssetTag`,
 			size: 'lg',
 			title: Liferay.Language.get('filter-by-tags'),

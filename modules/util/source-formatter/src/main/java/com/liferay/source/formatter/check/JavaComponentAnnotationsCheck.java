@@ -490,10 +490,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			_CHECK_MISMATCHED_SERVICE_ATTRIBUTE_KEY, absolutePath);
 		boolean checkSelfRegistration = isAttributeValue(
 			_CHECK_SELF_REGISTRATION_KEY, absolutePath);
-
-		if (!checkMismatchedServiceAttribute && !checkSelfRegistration) {
-			return annotation;
-		}
+		boolean checkHasMultipleServiceTypes = isAttributeValue(
+			_CHECK_HAS_MULTIPLE_SERVICE_TYPES_KEY, absolutePath);
 
 		if (checkMismatchedServiceAttribute &&
 			!serviceAttributeValue.equals(expectedServiceAttributeValue)) {
@@ -508,6 +506,28 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				fileName,
 				"No need to register '" + className +
 					"' in @Component 'service' attribute");
+		}
+
+		if (checkHasMultipleServiceTypes) {
+			List<String> allowedMultipleServicesClassNames = getAttributeValues(
+				_ALLOWED_MULTIPLE_SERVICE_TYPES_CLASS_NAMES_KEY, absolutePath);
+
+			for (String allowedMultipleServicesClassName :
+					allowedMultipleServicesClassNames) {
+
+				if (absolutePath.contains(allowedMultipleServicesClassName)) {
+					return annotation;
+				}
+			}
+
+			if (StringUtil.startsWith(serviceAttributeValue, '{') &&
+				serviceAttributeValue.contains(",")) {
+
+				addMessage(
+					fileName,
+					"@Component classes should only specify one service type " +
+						"in the 'service' attribute, see LPS-180838");
+			}
 		}
 
 		return annotation;
@@ -586,11 +606,18 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private static final String _ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY =
 		"allowedImmediateAttributeClassNames";
 
+	private static final String
+		_ALLOWED_MULTIPLE_SERVICE_TYPES_CLASS_NAMES_KEY =
+			"allowedMultipleServiceTypesClassNames";
+
 	private static final String _CHECK_CONFIGURATION_PID_ATTRIBUTE_KEY =
 		"checkConfigurationPidAttribute";
 
 	private static final String _CHECK_CONFIGURATION_POLICY_ATTRIBUTE_KEY =
 		"checkConfigurationPolicyAttribute";
+
+	private static final String _CHECK_HAS_MULTIPLE_SERVICE_TYPES_KEY =
+		"checkHasMultipleServiceTypes";
 
 	private static final String _CHECK_IMMEDIATE_ATTRIBUTE_KEY =
 		"checkImmediateAttribute";

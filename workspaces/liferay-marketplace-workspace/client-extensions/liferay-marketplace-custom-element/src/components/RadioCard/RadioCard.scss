@@ -39,8 +39,18 @@
 
 			&-background {
 				background-color: #fff;
+				border: #e2e2e4 1px solid;
+				border-radius: 4px;
+				display: flex;
 				height: 28px;
+				justify-content: center;
+				padding-top: 4px;
 				width: 40px;
+
+				img {
+					height: 18px;
+					width: 15px;
+				}
 			}
 
 			&-text-small {

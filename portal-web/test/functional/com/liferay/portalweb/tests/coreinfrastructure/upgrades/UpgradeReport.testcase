@@ -314,7 +314,7 @@ definition {
 		}
 
 		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains(${upgradeReportNew}, "Osgi status: Unable to determine. Upgrade check not available"))) {
+			if (!(contains(${upgradeReportNew}, "Status: Unable to determine. Release manager not available"))) {
 				echo(${upgradeReportNew});
 
 				fail("New upgrade report contains unexpected upgrades.");
@@ -398,8 +398,8 @@ definition {
 				fail("upgrade.report.warnings is not present in portal log.");
 			}
 
-			if (!(contains(${fileContent}, "upgrade.report.osgi.status="))) {
-				fail("upgrade.report.osgi.status is not present in portal log.");
+			if (!(contains(${fileContent}, "upgrade.report.status="))) {
+				fail("upgrade.report.status is not present in portal log.");
 			}
 		}
 
@@ -463,7 +463,7 @@ definition {
 		}
 
 		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains(${upgradeReportNew}, "Osgi status: Unable to determine. Upgrade check not available"))) {
+			if (!(contains(${upgradeReportNew}, "Status: Unable to determine. Release manager not available"))) {
 				echo(${upgradeReportNew});
 
 				fail("New upgrade report contains unexpected upgrades.");

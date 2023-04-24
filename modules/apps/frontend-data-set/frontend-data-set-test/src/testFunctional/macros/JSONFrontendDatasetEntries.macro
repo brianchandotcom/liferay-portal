@@ -1,5 +1,41 @@
 definition {
 
+	@summary = "This calls the JSON WS API to add a DataSet"
+	macro _createDatasetEntry {
+		Variables.assertDefined(parameterList = "${datasetName},${restApplication},${restEndpoint},${restSchema}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/fdsentries \
+				-u ${userEmailAddress}:${userPassword} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+					"label": "${datasetName}",
+					"restApplication": "${restApplication}",
+					"restEndpoint": "${restEndpoint}",
+					"restSchema": "${restSchema}"
+				}
+		''';
+
+		JSONCurlUtil.post(${curl});
+
+		var datasetEntriestIdList = JSONFrontendDatasetEntries._getDatasetEntryIds();
+
+		if (${datasetEntriestIdList} == "") {
+			fail("FAIL. No Dataset entry was created");
+		}
+	}
+
 	@summary = "This calls the JSON WS API to delete all data sets"
 	macro _deleteFDSEntry {
 		var portalURL = JSONCompany.getPortalURL();

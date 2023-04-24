@@ -81,6 +81,13 @@ definition {
 		}
 	}
 
+	macro createFDSViewViaAPI {
+		JSONFrontendDatasetEntries._createFDSViewViaAPI(
+			datasetName = ${datasetName},
+			dataSetViewDescription = ${dataSetViewDescription},
+			dataSetViewName = ${dataSetViewName});
+	}
+
 	macro dataSetVariables {
 		var datasetEntryIds = ${datasetEntryIds};
 		var dataSetName = ${dataSetName};

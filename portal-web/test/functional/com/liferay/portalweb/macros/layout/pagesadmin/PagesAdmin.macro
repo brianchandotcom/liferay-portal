@@ -247,6 +247,34 @@ definition {
 			sitePageType = ${sitePageType});
 	}
 
+	macro addChildPageWithConfirm {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		MouseOver(
+			key_itemName = ${parentPageName},
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+
+		Click(
+			key_pageName = ${parentPageName},
+			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
+
+		DropdownMenuItem.click(menuItem = "Add Page");
+
+		LexiconCard.clickCard(card = "Widget Page");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = ${childPageName});
+
+		ClickNoError(
+			key_text = "Add",
+			locator1 = "Button#ANY");
+	}
+
 	macro addCSSExtensions {
 		WaitForEditable(
 			key_text = "Add CSS Client Extensions",
@@ -930,7 +958,14 @@ definition {
 			locator1 = "TextInput#INPUT_ID",
 			value1 = ${friendlyURLEdit});
 
-		PortletEntry.save();
+		if (isSet(confirm)) {
+			ClickNoError(
+				key_text = "Save",
+				locator1 = "Button#ANY");
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro editName {

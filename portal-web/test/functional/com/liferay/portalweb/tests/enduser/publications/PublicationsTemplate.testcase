@@ -218,7 +218,7 @@ definition {
 
 	@priority = 3
 	test UseDefaultTemplateWhenCreatingNewPublication {
-		task ("Add new user with publications permitions") {
+		task ("Add new user with publications permissions") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",

@@ -80,6 +80,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteFailureDuplicateName();
 		_testPostSiteFailureInvalidKey();
 		_testPostSiteFailureNoName();
+		_testPostSiteFailureParentSiteNotFound();
 		_testPostSiteFailureSiteTemplateInactive();
 		_testPostSiteSuccessChild();
 		_testPostSiteSuccessMembershipTypePrivate();
@@ -169,6 +170,27 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			String title = problem.getTitle();
 
 			Assert.assertTrue(title.contains("name must not be empty"));
+		}
+	}
+
+	private void _testPostSiteFailureParentSiteNotFound() throws Exception {
+		Site randomSite = randomSite();
+
+		randomSite.setParentSiteKey(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+		try {
+			testPostSite_addSite(randomSite);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+
+			Assert.assertEquals(
+				"Could not find parent site", problem.getTitle());
 		}
 	}
 

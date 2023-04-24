@@ -108,12 +108,10 @@ public class StartupHelperUtil {
 					UpgradeLogContext.getInstance());
 			}
 
-			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				DBUpgrader.startUpgradeReportLogAppender();
-			}
+			DBUpgrader.startUpgradeLogAppender();
 		}
 		else {
-			DBUpgrader.stopUpgradeReportLogAppender();
+			DBUpgrader.stopUpgradeLogAppender();
 
 			LogContextRegistryUtil.unregisterLogContext(
 				UpgradeLogContext.getInstance());

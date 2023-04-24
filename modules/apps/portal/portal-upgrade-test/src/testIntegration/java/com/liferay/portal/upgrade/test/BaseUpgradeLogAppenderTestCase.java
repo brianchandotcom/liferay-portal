@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +69,7 @@ import org.junit.Test;
 /**
  * @author Sam Ziemer
  */
-public abstract class BaseUpgradeReportLogAppenderTestCase {
+public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@ClassRule
 	@Rule
@@ -85,6 +87,10 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED",
 			_originalUpgradeLogContextEnabled);
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_ENABLED",
+			_originalUpgradeReportEnabled);
 	}
 
 	@Before
@@ -103,6 +109,11 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 			"com.liferay.portal.upgrade.internal.report.UpgradeReport");
 
 		_upgradeReportLogger.addAppender(_logContextAppender);
+
+		_originalErrorMessages.clear();
+		_originalSchemaVersionsMap.clear();
+		_originalUpgradeProcessMessages.clear();
+		_originalWarningMessages.clear();
 	}
 
 	@After
@@ -335,8 +346,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	public void testLogEvents() throws Exception {
 		_appender.start();
 
-		Log log = LogFactoryUtil.getLog(
-			BaseUpgradeReportLogAppenderTestCase.class);
+		Log log = LogFactoryUtil.getLog(BaseUpgradeLogAppenderTestCase.class);
 
 		log.warn("Warning");
 		log.warn("Warning");
@@ -381,7 +391,7 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_releaseLocalService.updateRelease(release);
 
 		_assertLogContextContains(
-			"upgrade.report.osgi.status",
+			"upgrade.report.status.message",
 			StringBundler.concat(
 				"There are upgrade processes available for ",
 				bundleSymbolicName, " from 0.0.1 to ", currentSchemaVersion));
@@ -501,17 +511,24 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 		_db.runSQL(
 			"create table UpgradeReportTable2 (id_ LONG not null primary key)");
 
-		_originalUpgradeClient = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_upgradeClient");
-
-		ReflectionTestUtil.setFieldValue(
+		_originalUpgradeClient = ReflectionTestUtil.getAndSetFieldValue(
 			DBUpgrader.class, "_upgradeClient", upgradeClient);
 
-		_originalUpgradeLogContextEnabled = ReflectionTestUtil.getFieldValue(
-			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED");
+		_originalUpgradeLogContextEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
 
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "UPGRADE_LOG_CONTEXT_ENABLED", true);
+		_originalUpgradeReportEnabled = ReflectionTestUtil.getAndSetFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_ENABLED", true);
+
+		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
+			_upgradeStatus, "_errorMessages");
+		_originalSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
+			_upgradeStatus, "_schemaVersionsMap");
+		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
+			_upgradeStatus, "_upgradeProcessMessages");
+		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
+			_upgradeStatus, "_warningMessages");
 	}
 
 	protected abstract String getFilePath();
@@ -623,13 +640,22 @@ public abstract class BaseUpgradeReportLogAppenderTestCase {
 	private static Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
+	private static Map<String, Map<String, Integer>> _originalErrorMessages;
+	private static Map<String, Object> _originalSchemaVersionsMap;
 	private static boolean _originalUpgradeClient;
 	private static boolean _originalUpgradeLogContextEnabled;
+	private static Map<String, ArrayList<String>>
+		_originalUpgradeProcessMessages;
+	private static boolean _originalUpgradeReportEnabled;
+	private static Map<String, Map<String, Integer>> _originalWarningMessages;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 	private static Logger _upgradeReportLogger;
 
-	@Inject(filter = "appender.name=UpgradeReportLogAppender")
+	@Inject
+	private static UpgradeStatus _upgradeStatus;
+
+	@Inject(filter = "appender.name=UpgradeLogAppender")
 	private Appender _appender;
 
 	@Inject

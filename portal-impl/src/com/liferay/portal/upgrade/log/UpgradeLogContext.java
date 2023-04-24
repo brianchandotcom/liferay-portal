@@ -112,6 +112,7 @@ public class UpgradeLogContext implements LogContext {
 		"com.liferay.portal.upgrade.internal.registry." +
 			"UpgradeStepRegistratorTracker",
 		"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl",
-		"com.liferay.portal.upgrade.internal.report.UpgradeReport");
+		"com.liferay.portal.upgrade.internal.report.UpgradeReport",
+		"com.liferay.portal.upgrade.internal.status.UpgradeStatusImpl");
 
 }

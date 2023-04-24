@@ -29,6 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -51,6 +52,15 @@ public class DBUpgraderTest {
 	public static void setUpClass() throws SQLException {
 		_currentBuildNumber = _getReleaseColumnValue("buildNumber");
 		_currentState = _getReleaseColumnValue("state_");
+
+		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
+			StartupHelperUtil.class, "_upgrading", true);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			StartupHelperUtil.class, "_upgrading", _upgrading);
 	}
 
 	@After
@@ -64,13 +74,7 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_GOOD);
 
-		boolean upgrading = StartupHelperUtil.isUpgrading();
-
-		StartupHelperUtil.setUpgrading(true);
-
 		DBUpgrader.upgradePortal();
-
-		StartupHelperUtil.setUpgrading(upgrading);
 	}
 
 	@Test
@@ -79,19 +83,12 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
-		boolean upgrading = StartupHelperUtil.isUpgrading();
-
-		StartupHelperUtil.setUpgrading(true);
-
 		try {
 			DBUpgrader.upgradePortal();
 
 			Assert.fail();
 		}
 		catch (IllegalStateException illegalStateException) {
-		}
-		finally {
-			StartupHelperUtil.setUpgrading(upgrading);
 		}
 	}
 
@@ -101,13 +98,7 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
-		boolean upgrading = StartupHelperUtil.isUpgrading();
-
-		StartupHelperUtil.setUpgrading(true);
-
 		DBUpgrader.upgradePortal();
-
-		StartupHelperUtil.setUpgrading(upgrading);
 	}
 
 	private static int _getReleaseColumnValue(String columnName) {
@@ -132,5 +123,6 @@ public class DBUpgraderTest {
 
 	private static int _currentBuildNumber;
 	private static int _currentState;
+	private static boolean _upgrading;
 
 }

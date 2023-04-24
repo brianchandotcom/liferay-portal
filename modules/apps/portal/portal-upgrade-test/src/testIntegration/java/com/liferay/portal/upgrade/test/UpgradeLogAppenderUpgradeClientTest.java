@@ -12,18 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.upgrade;
+package com.liferay.portal.upgrade.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
 
 /**
- * @author Samuel Ziemer
- * @author Alberto Chaparro
+ * @author Luis Ortiz
  */
-public interface ReleaseManager {
+@RunWith(Arquillian.class)
+public class UpgradeLogAppenderUpgradeClientTest
+	extends BaseUpgradeLogAppenderTestCase {
 
-	public String getShortStatusMessage(boolean onlyRequiredUpgrades);
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		setUpClass(true);
+	}
 
-	public boolean getStatus() throws Exception;
-
-	public String getStatusMessage(boolean showUpgradeSteps);
+	@Override
+	protected String getFilePath() {
+		return ".";
+	}
 
 }

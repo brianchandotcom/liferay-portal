@@ -12,29 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.test;
-
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.util.PropsValues;
-
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
+package com.liferay.portal.kernel.upgrade;
 
 /**
- * @author Luis Ortiz
+ * @author Alberto Chaparro
  */
-@RunWith(Arquillian.class)
-public class UpgradeReportLogAppenderUpgradeOnStartupTest
-	extends BaseUpgradeReportLogAppenderTestCase {
+public interface UpgradeStatus {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		setUpClass(false);
-	}
+	public String getState();
 
-	@Override
-	protected String getFilePath() {
-		return PropsValues.LIFERAY_HOME;
-	}
+	public String getType();
 
 }

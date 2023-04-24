@@ -15,9 +15,11 @@
 package com.liferay.portal.upgrade.internal.apache.logging.log4j.core;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
+import com.liferay.portal.upgrade.internal.status.UpgradeStatusImpl;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -36,15 +38,16 @@ import org.apache.logging.log4j.message.Message;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sam Ziemer
  */
 @Component(
-	immediate = true, property = "appender.name=UpgradeReportLogAppender",
-	service = Appender.class
+	property = "appender.name=UpgradeLogAppender", service = Appender.class
 )
-public class UpgradeReportLogAppender implements Appender {
+public class UpgradeLogAppender implements Appender {
 
 	@Override
 	public void append(LogEvent logEvent) {
@@ -59,7 +62,7 @@ public class UpgradeReportLogAppender implements Appender {
 		}
 
 		if (logEvent.getLevel() == Level.ERROR) {
-			_upgradeReport.addErrorMessage(
+			_upgradeStatusImpl.addErrorMessage(
 				logEvent.getLoggerName(), formattedMessage);
 		}
 		else if (logEvent.getLevel() == Level.INFO) {
@@ -67,12 +70,12 @@ public class UpgradeReportLogAppender implements Appender {
 					logEvent.getLoggerName(), UpgradeProcess.class.getName()) &&
 				formattedMessage.startsWith("Completed upgrade process ")) {
 
-				_upgradeReport.addEventMessage(
+				_upgradeStatusImpl.addUpgradeProcessMessage(
 					logEvent.getLoggerName(), formattedMessage);
 			}
 		}
 		else if (logEvent.getLevel() == Level.WARN) {
-			_upgradeReport.addWarningMessage(
+			_upgradeStatusImpl.addWarningMessage(
 				logEvent.getLoggerName(), message.getFormattedMessage());
 		}
 	}
@@ -89,7 +92,7 @@ public class UpgradeReportLogAppender implements Appender {
 
 	@Override
 	public String getName() {
-		return "UpgradeReportLogAppender";
+		return "UpgradeLogAppender";
 	}
 
 	@Override
@@ -124,7 +127,11 @@ public class UpgradeReportLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		_upgradeReport = new UpgradeReport();
+		_upgradeStatusImpl.start();
+
+		if (PropsValues.UPGRADE_REPORT_ENABLED) {
+			_upgradeReport = new UpgradeReport();
+		}
 
 		_rootLogger.addAppender(this);
 	}
@@ -132,13 +139,19 @@ public class UpgradeReportLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
-			_upgradeReport.generateReport(
-				_persistenceManager, _releaseManagerOSGiCommands);
+			_upgradeStatusImpl.finish();
 
-			_upgradeReport = null;
+			if (_upgradeReport != null) {
+				_upgradeReport.generateReport(
+					_persistenceManager, _releaseManager, _upgradeStatusImpl);
+
+				_upgradeReport = null;
+			}
 		}
 
 		_started = false;
+
+		_rootLogger.removeAppender(this);
 	}
 
 	private static final Logger _rootLogger =
@@ -147,10 +160,17 @@ public class UpgradeReportLogAppender implements Appender {
 	@Reference
 	private PersistenceManager _persistenceManager;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ReleaseManager _releaseManager;
 
 	private volatile boolean _started;
-	private volatile UpgradeReport _upgradeReport;
+	private UpgradeReport _upgradeReport;
+
+	@Reference
+	private volatile UpgradeStatusImpl _upgradeStatusImpl;
 
 }

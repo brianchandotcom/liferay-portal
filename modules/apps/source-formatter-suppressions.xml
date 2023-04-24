@@ -21,7 +21,6 @@
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-taglib/src/main/java/com/liferay/document/library/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/icon/provider/DLFileEntryTypeIconProviderUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/util/DLWebComponentProvider\.java" />
-		<suppress checks="ComponentExposureCheck" files="dynamic-data-mapping/dynamic-data-mapping-form-taglib/src/main/java/com/liferay/dynamic/data/mapping/form/taglib/internal/servlet/taglib/util/DDMFormTaglibUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="dynamic-data-mapping/dynamic-data-mapping-form-web/src/main/java/com/liferay/dynamic/data/mapping/form/web/internal/display/context/util/DDMFormGuestUploadFieldUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="dynamic-data-mapping/dynamic-data-mapping-taglib/src/main/java/com/liferay/dynamic/data/mapping/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="expando/expando-taglib/src/main/java/com/liferay/expando/taglib/internal/servlet/ServletContextUtil\.java" />

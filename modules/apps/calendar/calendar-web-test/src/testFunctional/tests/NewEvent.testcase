@@ -43,15 +43,9 @@ definition {
 		else {
 			Navigator.gotoPage(pageName = "Calendar Page");
 
-			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
-				CalendarEvent.tearDown();
-			}
+			JSONCalendar.tearDown();
 
-			Calendar.tearDown();
-
-			Calendar.tearDownColor();
-
-			CalendarResource.tearDown();
+			JSONCalendar.tearDownCalendarResources();
 
 			CalendarConfiguration.tearDown();
 

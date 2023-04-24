@@ -43,11 +43,7 @@ definition {
 		else {
 			Navigator.gotoPage(pageName = "Calendar Page");
 
-			if (IsElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_GENERIC")) {
-				CalendarEvent.tearDown();
-			}
-
-			Calendar.tearDown();
+			JSONCalendar.tearDown();
 
 			CalendarConfiguration.tearDown();
 
@@ -240,7 +236,7 @@ definition {
 	@description = "LRQA-71360 - Verify that when the user change the calendar color it also changes the color column on the Manage Calendar page"
 	@priority = 3
 	test CheckTheColorColumnIsChanged {
-		Calendar.tearDownColor();
+		JSONCalendar.setCalendarColor(calendarName = "Test Test");
 
 		CalendarNavigator.gotoMyCalendarsManage();
 

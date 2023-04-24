@@ -20,6 +20,14 @@ definition {
 		for (var calendarId : list ${calendarIdList}) {
 			JSONCalendarAPI.deleteCalendar(calendarId = ${calendarId});
 		}
+
+		for (var calendarName : list "Test Test,Liferay DXP") {
+			var calendarId = JSONCalendarAPI.getCalendarId(calendarName = ${calendarName});
+
+			JSONCalendarAPI.updateColor(
+				calendarId = ${calendarId},
+				color = 14247526);
+		}
 	}
 
 	macro tearDownBookings {

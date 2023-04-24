@@ -12,7 +12,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FormikHelpers, setNestedObjectValues} from 'formik';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 
 import PRMFormik from '../../common/components/PRMFormik';
 import {ObjectActionName} from '../../common/enums/objectActionName';
@@ -73,9 +73,24 @@ const MDFRequestForm = () => {
 	const {data: myUserAccountData} = useGetMyUserAccount();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
+	const hasPermissionToAccess = useMemo(
+		() =>
+			actions?.some(
+				(action) =>
+					action === PermissionActionType.CREATE ||
+					action === PermissionActionType.UPDATE ||
+					action === PermissionActionType.UPDATE_WO_CHANGE_STATUS
+			),
+		[actions]
+	);
+
 	const currentMDFRequestHasValidStatus =
 		data?.mdfRequestStatus.key === Status.DRAFT.key ||
 		data?.mdfRequestStatus.key === Status.REQUEST_MORE_INFO.key;
+
+	const hasPermissionShowForm = mdfRequestId
+		? hasPermissionToAccess && currentMDFRequestHasValidStatus
+		: hasPermissionToAccess;
 
 	const onCancel = () =>
 		Liferay.Util.navigate(
@@ -154,12 +169,15 @@ const MDFRequestForm = () => {
 		return <ClayLoadingIndicator />;
 	}
 
-	return actions?.some(
-		(action) =>
-			action === PermissionActionType.CREATE ||
-			action === PermissionActionType.UPDATE ||
-			action === PermissionActionType.UPDATE_WO_CHANGE_STATUS
-	) && currentMDFRequestHasValidStatus ? (
+	if (!hasPermissionShowForm) {
+		return (
+			<ClayAlert className="m-0 w-100" displayType="info" title="Info:">
+				You don&apos;t have permission
+			</ClayAlert>
+		);
+	}
+
+	return (
 		<PRMFormik
 			initialValues={
 				mdfRequestId
@@ -182,10 +200,6 @@ const MDFRequestForm = () => {
 		>
 			{StepFormComponent[step]}
 		</PRMFormik>
-	) : (
-		<ClayAlert className="m-0 w-100" displayType="info" title="Info:">
-			You don&apos;t have permission
-		</ClayAlert>
 	);
 };
 

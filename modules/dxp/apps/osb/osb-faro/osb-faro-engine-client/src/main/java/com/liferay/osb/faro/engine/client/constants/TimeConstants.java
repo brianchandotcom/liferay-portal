@@ -14,7 +14,8 @@
 
 package com.liferay.osb.faro.engine.client.constants;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 /**
@@ -50,25 +51,27 @@ public class TimeConstants {
 		return _timeSpans;
 	}
 
-	private static final Map<String, String> _intervals =
-		new HashMap<String, String>() {
-			{
-				put(INTERVAL_DAY, INTERVAL_DAY);
-				put(INTERVAL_MONTH, INTERVAL_MONTH);
-				put(INTERVAL_QUARTER, INTERVAL_QUARTER);
-				put(INTERVAL_WEEK, INTERVAL_WEEK);
-				put(INTERVAL_YEAR, INTERVAL_YEAR);
-			}
-		};
-	private static final Map<String, String> _timeSpans =
-		new HashMap<String, String>() {
-			{
-				put("1YearAgo", TIME_SPAN_1_YEAR_AGO);
-				put("7DaysAgo", TIME_SPAN_7_DAYS_AGO);
-				put("30DaysAgo", TIME_SPAN_30_DAYS_AGO);
-				put("allTime", TIME_SPAN_ALL_TIME);
-				put("today", TIME_SPAN_TODAY);
-			}
-		};
+	private static final Map<String, String> _intervals = HashMapBuilder.put(
+		INTERVAL_DAY, INTERVAL_DAY
+	).put(
+		INTERVAL_MONTH, INTERVAL_MONTH
+	).put(
+		INTERVAL_QUARTER, INTERVAL_QUARTER
+	).put(
+		INTERVAL_WEEK, INTERVAL_WEEK
+	).put(
+		INTERVAL_YEAR, INTERVAL_YEAR
+	).build();
+	private static final Map<String, String> _timeSpans = HashMapBuilder.put(
+		"1YearAgo", TIME_SPAN_1_YEAR_AGO
+	).put(
+		"7DaysAgo", TIME_SPAN_7_DAYS_AGO
+	).put(
+		"30DaysAgo", TIME_SPAN_30_DAYS_AGO
+	).put(
+		"allTime", TIME_SPAN_ALL_TIME
+	).put(
+		"today", TIME_SPAN_TODAY
+	).build();
 
 }

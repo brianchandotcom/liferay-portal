@@ -15,14 +15,12 @@
 package com.liferay.osb.faro.engine.client.constants;
 
 import com.liferay.osb.faro.engine.client.model.FieldMappingMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Shinn Lok
@@ -79,12 +77,11 @@ public class FieldMappingConstants {
 			return _liferayFieldNames;
 		}
 
-		Stream<FieldMappingMap> stream = _liferayFieldMappingMaps.stream();
-
-		_liferayFieldNames = stream.collect(
-			Collectors.toMap(
-				FieldMappingMap::getDataSourceFieldName,
-				FieldMappingMap::getName));
+		for (FieldMappingMap fieldMappingMap : _liferayFieldMappingMaps) {
+			_liferayFieldNames.put(
+				fieldMappingMap.getDataSourceFieldName(),
+				fieldMappingMap.getName());
+		}
 
 		return _liferayFieldNames;
 	}
@@ -107,15 +104,15 @@ public class FieldMappingConstants {
 		return _searchFieldMappingNames;
 	}
 
-	private static final Map<String, String> _contexts =
-		new HashMap<String, String>() {
-			{
-				put(CONTEXT_CUSTOM, CONTEXT_CUSTOM);
-				put(CONTEXT_DEMOGRAPHICS, CONTEXT_DEMOGRAPHICS);
-				put(CONTEXT_INTERESTS, CONTEXT_INTERESTS);
-				put(CONTEXT_ORGANIZATION, CONTEXT_ORGANIZATION);
-			}
-		};
+	private static final Map<String, String> _contexts = HashMapBuilder.put(
+		CONTEXT_CUSTOM, CONTEXT_CUSTOM
+	).put(
+		CONTEXT_DEMOGRAPHICS, CONTEXT_DEMOGRAPHICS
+	).put(
+		CONTEXT_INTERESTS, CONTEXT_INTERESTS
+	).put(
+		CONTEXT_ORGANIZATION, CONTEXT_ORGANIZATION
+	).build();
 	private static final List<FieldMappingMap> _defaultFieldMappingMaps =
 		Arrays.asList(
 			new FieldMappingMap(null, "email", TYPE_TEXT),
@@ -124,15 +121,15 @@ public class FieldMappingConstants {
 			new FieldMappingMap(null, "image", TYPE_TEXT),
 			new FieldMappingMap(null, "jobTitle", TYPE_TEXT),
 			new FieldMappingMap(null, "worksFor", TYPE_TEXT));
-	private static final Map<String, String> _fieldTypes =
-		new HashMap<String, String>() {
-			{
-				put("boolean", TYPE_BOOLEAN);
-				put("date", TYPE_DATE);
-				put("number", TYPE_NUMBER);
-				put("string", TYPE_TEXT);
-			}
-		};
+	private static final Map<String, String> _fieldTypes = HashMapBuilder.put(
+		"boolean", TYPE_BOOLEAN
+	).put(
+		"date", TYPE_DATE
+	).put(
+		"number", TYPE_NUMBER
+	).put(
+		"string", TYPE_TEXT
+	).build();
 	private static final List<FieldMappingMap> _liferayFieldMappingMaps =
 		Arrays.asList(
 			new FieldMappingMap("addresses", "address", TYPE_TEXT),
@@ -145,14 +142,13 @@ public class FieldMappingConstants {
 			new FieldMappingMap("middleName", "additionalName", TYPE_TEXT),
 			new FieldMappingMap("phones", "telephone", TYPE_TEXT));
 	private static Map<String, String> _liferayFieldNames;
-	private static final Map<String, String> _ownerTypes =
-		new HashMap<String, String>() {
-			{
-				put(OWNER_TYPE_ACCOUNT, OWNER_TYPE_ACCOUNT);
-				put(OWNER_TYPE_INDIVIDUAL, OWNER_TYPE_INDIVIDUAL);
-				put(OWNER_TYPE_ORGANIZATION, OWNER_TYPE_ORGANIZATION);
-			}
-		};
+	private static final Map<String, String> _ownerTypes = HashMapBuilder.put(
+		OWNER_TYPE_ACCOUNT, OWNER_TYPE_ACCOUNT
+	).put(
+		OWNER_TYPE_INDIVIDUAL, OWNER_TYPE_INDIVIDUAL
+	).put(
+		OWNER_TYPE_ORGANIZATION, OWNER_TYPE_ORGANIZATION
+	).build();
 	private static final List<FieldMappingMap>
 		_salesforceAccountFieldMappingMaps = Arrays.asList(
 			new FieldMappingMap("id", "accountId", TYPE_TEXT),

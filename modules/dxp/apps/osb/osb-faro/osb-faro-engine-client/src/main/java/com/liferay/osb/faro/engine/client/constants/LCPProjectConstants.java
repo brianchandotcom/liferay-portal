@@ -15,8 +15,8 @@
 package com.liferay.osb.faro.engine.client.constants;
 
 import com.liferay.osb.faro.engine.client.model.LCPProject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,16 +28,18 @@ public class LCPProjectConstants {
 		return _locations;
 	}
 
-	private static final Map<String, String> _locations =
-		new HashMap<String, String>() {
-			{
-				put("DEV", LCPProject.Cluster.DEV.toString());
-				put("EU2", LCPProject.Cluster.EU2.toString());
-				put("EU3", LCPProject.Cluster.EU3.toString());
-				put("SA", LCPProject.Cluster.SA.toString());
-				put("UAT", LCPProject.Cluster.UAT.toString());
-				put("US", LCPProject.Cluster.US.toString());
-			}
-		};
+	private static final Map<String, String> _locations = HashMapBuilder.put(
+		"DEV", LCPProject.Cluster.DEV.toString()
+	).put(
+		"EU2", LCPProject.Cluster.EU2.toString()
+	).put(
+		"EU3", LCPProject.Cluster.EU3.toString()
+	).put(
+		"SA", LCPProject.Cluster.SA.toString()
+	).put(
+		"UAT", LCPProject.Cluster.UAT.toString()
+	).put(
+		"US", LCPProject.Cluster.US.toString()
+	).build();
 
 }

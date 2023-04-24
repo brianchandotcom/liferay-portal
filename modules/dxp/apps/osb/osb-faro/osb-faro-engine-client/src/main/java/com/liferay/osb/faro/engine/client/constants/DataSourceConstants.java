@@ -19,8 +19,8 @@ import com.liferay.osb.faro.engine.client.model.DataSourceProgress;
 import com.liferay.osb.faro.engine.client.model.provider.CSVProvider;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -45,38 +45,38 @@ public class DataSourceConstants {
 	}
 
 	private static final Map<String, String> _displayStatuses =
-		new HashMap<String, String>() {
-			{
-				put("active", DataSource.Status.ACTIVE.name());
-				put("configuring", DataSource.State.CONFIGURING.name());
-				put("deleteError", DataSource.State.DELETE_ERROR.name());
-				put("inactive", DataSource.Status.INACTIVE.name());
-				put("inDeletion", DataSource.State.IN_DELETION.name());
-			}
-		};
+		HashMapBuilder.put(
+			"active", DataSource.Status.ACTIVE.name()
+		).put(
+			"configuring", DataSource.State.CONFIGURING.name()
+		).put(
+			"deleteError", DataSource.State.DELETE_ERROR.name()
+		).put(
+			"inactive", DataSource.Status.INACTIVE.name()
+		).put(
+			"inDeletion", DataSource.State.IN_DELETION.name()
+		).build();
 	private static final Map<String, String> _progressStatuses =
-		new HashMap<String, String>() {
-			{
-				put("completed", DataSourceProgress.Status.COMPLETED.name());
-				put("failed", DataSourceProgress.Status.FAILED.name());
-				put("inProgress", DataSourceProgress.Status.IN_PROGRESS.name());
-				put("started", DataSourceProgress.Status.STARTED.name());
-			}
-		};
-	private static final Map<String, String> _statuses =
-		new HashMap<String, String>() {
-			{
-				put("active", DataSource.Status.ACTIVE.name());
-				put("inactive", DataSource.Status.INACTIVE.name());
-			}
-		};
-	private static final Map<String, String> _types =
-		new HashMap<String, String>() {
-			{
-				put("csv", CSVProvider.TYPE);
-				put("liferay", LiferayProvider.TYPE);
-				put("salesforce", SalesforceProvider.TYPE);
-			}
-		};
+		HashMapBuilder.put(
+			"completed", DataSourceProgress.Status.COMPLETED.name()
+		).put(
+			"failed", DataSourceProgress.Status.FAILED.name()
+		).put(
+			"inProgress", DataSourceProgress.Status.IN_PROGRESS.name()
+		).put(
+			"started", DataSourceProgress.Status.STARTED.name()
+		).build();
+	private static final Map<String, String> _statuses = HashMapBuilder.put(
+		"active", DataSource.Status.ACTIVE.name()
+	).put(
+		"inactive", DataSource.Status.INACTIVE.name()
+	).build();
+	private static final Map<String, String> _types = HashMapBuilder.put(
+		"csv", CSVProvider.TYPE
+	).put(
+		"liferay", LiferayProvider.TYPE
+	).put(
+		"salesforce", SalesforceProvider.TYPE
+	).build();
 
 }

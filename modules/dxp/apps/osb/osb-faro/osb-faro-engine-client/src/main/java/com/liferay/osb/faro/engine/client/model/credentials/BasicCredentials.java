@@ -23,9 +23,6 @@ public class BasicCredentials implements Credentials {
 
 	public static final String TYPE = "Basic Authentication";
 
-	public BasicCredentials() {
-	}
-
 	@Override
 	public void clearPasswords() {
 		_password = null;

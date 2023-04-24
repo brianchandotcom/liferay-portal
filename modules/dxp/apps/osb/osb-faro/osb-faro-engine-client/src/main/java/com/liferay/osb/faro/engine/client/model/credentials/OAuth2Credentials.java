@@ -26,9 +26,6 @@ public class OAuth2Credentials implements Credentials {
 
 	public static final String TYPE = "OAuth 2 Authentication";
 
-	public OAuth2Credentials() {
-	}
-
 	@Override
 	public void clearPasswords() {
 		_oAuthRefreshToken = null;

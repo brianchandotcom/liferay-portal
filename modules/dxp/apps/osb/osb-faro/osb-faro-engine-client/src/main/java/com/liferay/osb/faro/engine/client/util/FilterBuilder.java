@@ -14,6 +14,7 @@
 
 package com.liferay.osb.faro.engine.client.util;
 
+import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;

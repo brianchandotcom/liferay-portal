@@ -34,10 +34,12 @@ import com.liferay.osb.faro.engine.client.web.client.ResponseErrorHandler;
 import com.liferay.osb.faro.engine.client.web.util.UriTemplateHandler;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.FaroThreadLocal;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,7 +54,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -179,7 +180,7 @@ public abstract class BaseEngineClient {
 							typeReference));
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
+					_log.error(exception);
 
 					responses.add(null);
 				}
@@ -341,7 +342,7 @@ public abstract class BaseEngineClient {
 			return EngineServiceURLUtil.getBackendExternalURL(faroProject);
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			_log.error(uriSyntaxException, uriSyntaxException);
+			_log.error(uriSyntaxException);
 		}
 
 		return _OSB_ASAH_BACKEND_URL;
@@ -445,16 +446,14 @@ public abstract class BaseEngineClient {
 			return null;
 		}
 
-		Optional<Link> link = resource.getLink(type);
+		Link link = resource.getRequiredLink(type);
 
-		if (!link.isPresent()) {
-			throw new IllegalStateException(
+		if (link == null) {
+			throw new IllegalArgumentException(
 				"URL does not exist for type: " + type);
 		}
 
-		String href = link.map(
-			Link::getHref
-		).get();
+		String href = link.getHref();
 
 		_urlPaths.put(
 			type,
@@ -488,11 +487,9 @@ public abstract class BaseEngineClient {
 	}
 
 	protected Map<String, Object> getUriVariables(FaroProject faroProject) {
-		Map<String, Object> uriVariables = new HashMap<>();
-
-		uriVariables.put("weDeployKey", faroProject.getWeDeployKey());
-
-		return uriVariables;
+		return HashMapBuilder.<String, Object>put(
+			"weDeployKey", faroProject.getWeDeployKey()
+		).build();
 	}
 
 	protected Map<String, Object> getUriVariables(
@@ -533,20 +530,23 @@ public abstract class BaseEngineClient {
 			return uriVariables;
 		}
 
-		List<String> sort = new ArrayList<>();
+		uriVariables.put(
+			"sort",
+			TransformUtil.transform(
+				orderByFields,
+				orderByField -> {
+					String fieldName = orderByField.getFieldName();
 
-		for (OrderByField orderByField : orderByFields) {
-			String fieldName = orderByField.getFieldName();
+					if (!orderByField.isSystem() &&
+						(fieldNameContext != null)) {
 
-			if (!orderByField.isSystem() && (fieldNameContext != null)) {
-				fieldName = StringUtil.replace(
-					fieldNameContext, CharPool.QUESTION, fieldName);
-			}
+						fieldName = StringUtil.replace(
+							fieldNameContext, CharPool.QUESTION, fieldName);
+					}
 
-			sort.add(fieldName + StringPool.COMMA + orderByField.getOrderBy());
-		}
-
-		uriVariables.put("sort", sort);
+					return fieldName + StringPool.COMMA +
+						orderByField.getOrderBy();
+				}));
 
 		return uriVariables;
 	}

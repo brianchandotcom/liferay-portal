@@ -50,9 +50,6 @@ public class SalesforceProvider implements Provider {
 
 	public static class AccountsConfiguration {
 
-		public AccountsConfiguration() {
-		}
-
 		public boolean isEnableAllAccounts() {
 			return _enableAllAccounts;
 		}
@@ -66,9 +63,6 @@ public class SalesforceProvider implements Provider {
 	}
 
 	public static class ContactsConfiguration {
-
-		public ContactsConfiguration() {
-		}
 
 		public boolean isEnableAllContacts() {
 			return _enableAllContacts;

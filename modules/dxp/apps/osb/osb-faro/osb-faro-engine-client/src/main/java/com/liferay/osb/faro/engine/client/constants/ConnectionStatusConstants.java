@@ -14,7 +14,8 @@
 
 package com.liferay.osb.faro.engine.client.constants;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 /**
@@ -34,14 +35,14 @@ public class ConnectionStatusConstants {
 		return _statuses;
 	}
 
-	private static final Map<String, Integer> _statuses =
-		new HashMap<String, Integer>() {
-			{
-				put("notSyncing", STATUS_NOT_SYNCING);
-				put("synced", STATUS_SYNCED);
-				put("syncing", STATUS_SYNCING);
-				put("unconfigured", STATUS_UNCONFIGURED);
-			}
-		};
+	private static final Map<String, Integer> _statuses = HashMapBuilder.put(
+		"notSyncing", STATUS_NOT_SYNCING
+	).put(
+		"synced", STATUS_SYNCED
+	).put(
+		"syncing", STATUS_SYNCING
+	).put(
+		"unconfigured", STATUS_UNCONFIGURED
+	).build();
 
 }

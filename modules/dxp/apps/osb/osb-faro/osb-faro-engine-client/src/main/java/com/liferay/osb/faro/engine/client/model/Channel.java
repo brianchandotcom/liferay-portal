@@ -25,9 +25,6 @@ import java.util.Map;
  */
 public class Channel {
 
-	public Channel() {
-	}
-
 	public List<Map<String, Object>> getDataSources() {
 		return _dataSources;
 	}

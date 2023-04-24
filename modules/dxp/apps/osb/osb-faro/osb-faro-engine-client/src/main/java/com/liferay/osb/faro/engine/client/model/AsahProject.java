@@ -29,20 +29,16 @@ public class AsahProject {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (obj == null) {
+		if ((object == null) || !(object instanceof AsahProject)) {
 			return false;
 		}
 
-		if (!(obj instanceof AsahProject)) {
-			return false;
-		}
-
-		AsahProject project = (AsahProject)obj;
+		AsahProject project = (AsahProject)object;
 
 		if (Objects.equals(_id, project._id)) {
 			return true;

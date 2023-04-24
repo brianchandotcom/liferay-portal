@@ -25,9 +25,6 @@ import java.util.Map;
  */
 public class ActivityGroup {
 
-	public ActivityGroup() {
-	}
-
 	public String getActivityType() {
 		return _activityType;
 	}

@@ -17,11 +17,11 @@ package com.liferay.osb.faro.engine.client.constants;
 import com.liferay.osb.faro.engine.client.model.Activity;
 import com.liferay.osb.faro.engine.client.model.Asset;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -138,15 +138,16 @@ public class ActivityConstants {
 		return _actions;
 	}
 
-	private static final Map<String, Integer> _actions =
-		new HashMap<String, Integer>() {
-			{
-				put("comments", ACTION_COMMENTS);
-				put("downloads", ACTION_DOWNLOADS);
-				put("previews", ACTION_PREVIEWS);
-				put("submissions", ACTION_SUBMISSIONS);
-				put("visits", ACTION_VISITS);
-			}
-		};
+	private static final Map<String, Integer> _actions = HashMapBuilder.put(
+		"comments", ACTION_COMMENTS
+	).put(
+		"downloads", ACTION_DOWNLOADS
+	).put(
+		"previews", ACTION_PREVIEWS
+	).put(
+		"submissions", ACTION_SUBMISSIONS
+	).put(
+		"visits", ACTION_VISITS
+	).build();
 
 }

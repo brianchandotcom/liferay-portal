@@ -26,12 +26,12 @@ public class InvalidFilterException extends FaroEngineClientException {
 		super(msg);
 	}
 
-	public InvalidFilterException(String msg, Throwable cause) {
-		super(msg, cause);
+	public InvalidFilterException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public InvalidFilterException(Throwable cause) {
-		super(cause);
+	public InvalidFilterException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

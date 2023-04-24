@@ -19,9 +19,6 @@ package com.liferay.osb.faro.engine.client.model;
  */
 public class PageVisited {
 
-	public PageVisited() {
-	}
-
 	public String getDataSourceId() {
 		return _dataSourceId;
 	}

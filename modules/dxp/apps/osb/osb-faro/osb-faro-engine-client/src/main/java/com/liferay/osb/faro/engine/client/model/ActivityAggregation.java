@@ -21,9 +21,6 @@ import java.util.Date;
  */
 public class ActivityAggregation {
 
-	public ActivityAggregation() {
-	}
-
 	public Date getIntervalInitDate() {
 		if (_intervalInitDate == null) {
 			return null;

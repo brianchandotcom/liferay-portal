@@ -21,9 +21,6 @@ import java.util.Map;
  */
 public class ErrorResponse {
 
-	public ErrorResponse() {
-	}
-
 	public Map<String, Object> getDebugInfo() {
 		return _debugInfo;
 	}

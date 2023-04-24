@@ -14,8 +14,7 @@
 
 package com.liferay.osb.faro.engine.client.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.liferay.petra.function.transform.TransformUtil;
 
 /**
  * @author Shinn Lok
@@ -26,13 +25,9 @@ public abstract class PagedModel<T, R>
 	public Results<R> getResults() {
 		Results<R> results = new Results<>();
 
-		List<R> items = new ArrayList<>();
-
-		for (T content : getContent()) {
-			items.add(processContent(content));
-		}
-
-		results.setItems(items);
+		results.setItems(
+			TransformUtil.transform(
+				getContent(), content -> processContent(content)));
 
 		PageMetadata pageMetadata = getMetadata();
 

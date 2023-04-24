@@ -24,9 +24,6 @@ import java.util.Map;
  */
 public class Account {
 
-	public Account() {
-	}
-
 	public long getActivitiesCount() {
 		return _activitiesCount;
 	}

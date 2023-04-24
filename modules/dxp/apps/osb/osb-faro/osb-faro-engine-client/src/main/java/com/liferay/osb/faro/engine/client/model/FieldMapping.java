@@ -24,9 +24,6 @@ import java.util.Map;
  */
 public class FieldMapping {
 
-	public FieldMapping() {
-	}
-
 	public String getContext() {
 		return _context;
 	}
@@ -120,9 +117,6 @@ public class FieldMapping {
 	}
 
 	public static class DataSourceFieldName {
-
-		public DataSourceFieldName() {
-		}
 
 		public String getDataSourceFieldName() {
 			return _dataSourceFieldName;

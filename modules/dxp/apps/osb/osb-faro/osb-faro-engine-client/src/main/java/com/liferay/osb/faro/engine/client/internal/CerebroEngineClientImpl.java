@@ -22,6 +22,7 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.time.Instant;
@@ -31,8 +32,6 @@ import java.time.ZonedDateTime;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,19 +44,17 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = CerebroEngineClient.class)
+@Component(service = CerebroEngineClient.class)
 public class CerebroEngineClientImpl implements CerebroEngineClient {
 
 	@Override
 	public long getPageViews(
-			FaroProject faroProject, Optional<Date> fromDateOptional,
-			Optional<Date> toDateOptional)
+			FaroProject faroProject, Date fromDate, Date toDate)
 		throws Exception {
 
 		ResponseEntity<String> responseEntity = _getResponseEntity(
 			faroProject,
-			_getPagesCountGraphQLRequestHttpEntity(
-				fromDateOptional, toDateOptional));
+			_getPagesCountGraphQLRequestHttpEntity(fromDate, toDate));
 
 		JSONObject rootJSONObject = _jsonFactory.createJSONObject(
 			responseEntity.getBody());
@@ -93,13 +90,13 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 		graphQLRequest.setQuery(sb.toString());
 
 		graphQLRequest.setVariables(
-			new HashMap<String, Object>() {
-				{
-					put("channelId", channelId);
-					put("interval", interval);
-					put("rangeKey", rangeKey);
-				}
-			});
+			HashMapBuilder.<String, Object>put(
+				"channelId", channelId
+			).put(
+				"interval", interval
+			).put(
+				"rangeKey", rangeKey
+			).build());
 
 		ResponseEntity<String> responseEntity = _getResponseEntity(
 			faroProject, graphQLRequest);
@@ -140,12 +137,10 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 			_getTimeZoneGraphQLRequestHttpEntity(faroProject.getTimeZoneId()));
 	}
 
-	private String _getDateTimeString(Optional<Date> dateOptional) {
-		if (!dateOptional.isPresent()) {
+	private String _getDateTimeString(Date date) {
+		if (date == null) {
 			return StringPool.BLANK;
 		}
-
-		Date date = dateOptional.get();
 
 		Instant instant = date.toInstant();
 
@@ -157,7 +152,7 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 	}
 
 	private GraphQLRequest _getPagesCountGraphQLRequestHttpEntity(
-		Optional<Date> fromDateOptional, Optional<Date> toDateOptional) {
+		Date fromDate, Date toDate) {
 
 		GraphQLRequest graphQLRequest = new GraphQLRequest();
 
@@ -165,18 +160,18 @@ public class CerebroEngineClientImpl implements CerebroEngineClient {
 
 		sb.append("{pagesCount");
 
-		if (fromDateOptional.isPresent() || toDateOptional.isPresent()) {
+		if ((fromDate != null) || (toDate != null)) {
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			if (fromDateOptional.isPresent()) {
+			if (fromDate != null) {
 				sb.append(" fromDate: \"");
-				sb.append(_getDateTimeString(fromDateOptional));
+				sb.append(_getDateTimeString(fromDate));
 				sb.append(StringPool.QUOTE);
 			}
 
-			if (toDateOptional.isPresent()) {
+			if (toDate != null) {
 				sb.append(" toDate: \"");
-				sb.append(_getDateTimeString(toDateOptional));
+				sb.append(_getDateTimeString(toDate));
 				sb.append(StringPool.QUOTE);
 			}
 

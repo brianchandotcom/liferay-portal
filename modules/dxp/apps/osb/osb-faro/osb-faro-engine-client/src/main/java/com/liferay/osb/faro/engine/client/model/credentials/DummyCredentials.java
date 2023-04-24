@@ -23,9 +23,6 @@ public class DummyCredentials implements Credentials {
 
 	public static final String TYPE = "Dummy Authentication";
 
-	public DummyCredentials() {
-	}
-
 	@Override
 	public String getType() {
 		return TYPE;

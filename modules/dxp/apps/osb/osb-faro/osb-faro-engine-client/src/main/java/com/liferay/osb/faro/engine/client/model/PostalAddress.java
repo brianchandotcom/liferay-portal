@@ -19,9 +19,6 @@ package com.liferay.osb.faro.engine.client.model;
  */
 public class PostalAddress {
 
-	public PostalAddress() {
-	}
-
 	public String getAddressCountry() {
 		return _addressCountry;
 	}

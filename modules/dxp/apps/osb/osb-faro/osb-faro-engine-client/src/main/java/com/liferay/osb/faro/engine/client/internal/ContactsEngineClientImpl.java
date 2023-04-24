@@ -21,6 +21,7 @@ import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.constants.ActivityConstants;
 import com.liferay.osb.faro.engine.client.constants.AssetConstants;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
+import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.Activity;
@@ -62,10 +63,10 @@ import com.liferay.osb.faro.engine.client.model.credentials.TokenCredentials;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
-import com.liferay.osb.faro.engine.client.util.FilterConstants;
 import com.liferay.osb.faro.engine.client.util.FilterUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
@@ -73,6 +74,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -87,17 +89,13 @@ import java.time.ZoneOffset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,7 +113,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = ContactsEngineClient.class)
+@Component(service = ContactsEngineClient.class)
 public class ContactsEngineClientImpl
 	extends BaseEngineClient implements ContactsEngineClient {
 
@@ -125,25 +123,18 @@ public class ContactsEngineClientImpl
 
 		Map<String, Object> response = post(
 			faroProject, Rels.BLOCKED_KEYWORDS,
-			new HashMap<String, Object>() {
-				{
-					put("keywords", keywords);
-				}
-			},
+			HashMapBuilder.<String, Object>put("keywords", keywords),
 			Map.class);
 
 		List<Object> blockedKeywords = (List<Object>)response.get(
 			"blocked-keywords");
 
-		Stream<Object> stream = blockedKeywords.stream();
-
-		List<BlockedKeyword> items = stream.map(
-			map -> objectMapper.convertValue(map, BlockedKeyword.class)
-		).collect(
-			Collectors.toList()
-		);
-
-		return new Results<>(items, items.size());
+		return new Results<>(
+			TransformUtil.transform(
+				blockedKeywords,
+				blockedKeywordObject -> objectMapper.convertValue(
+					blockedKeywordObject, BlockedKeyword.class)),
+			blockedKeywords.size());
 	}
 
 	@Override
@@ -164,13 +155,18 @@ public class ContactsEngineClientImpl
 		int byteSize = 0;
 
 		for (Map<String, Object> fieldsMap : fieldsMaps) {
-			Map<String, Object> individualMap = new HashMap<>();
-
-			individualMap.put("dataSourceId", dataSourceId);
-			individualMap.put("dataSourceIndividualPK", UUID.randomUUID());
-			individualMap.put("faroProject", faroProject.getWeDeployKey());
-			individualMap.put("fields", fieldsMap);
-			individualMap.put("individualSegmentIds", individualSegmentIds);
+			Map<String, Object> individualMap =
+				HashMapBuilder.<String, Object>put(
+					"dataSourceId", dataSourceId
+				).put(
+					"dataSourceIndividualPK", UUID.randomUUID()
+				).put(
+					"faroProject", faroProject.getWeDeployKey()
+				).put(
+					"fields", fieldsMap
+				).put(
+					"individualSegmentIds", individualSegmentIds
+				).build();
 
 			byte[] bytes = objectMapper.writeValueAsBytes(individualMap);
 
@@ -345,24 +341,22 @@ public class ContactsEngineClientImpl
 		FaroProject faroProject, String individualSegmentId,
 		List<String> individualIds) {
 
-		List<IndividualSegmentMembership> individualSegmentMemberships =
-			new ArrayList<>();
-
-		for (String individualId : individualIds) {
-			IndividualSegmentMembership individualSegmentMembership =
-				new IndividualSegmentMembership();
-
-			individualSegmentMembership.setIndividualId(individualId);
-
-			individualSegmentMemberships.add(individualSegmentMembership);
-		}
-
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, individualSegmentId);
 
 		post(
 			faroProject, Rels.INDIVIDUAL_SEGMENT_MEMBERSHIPS,
-			individualSegmentMemberships, Void.class, uriVariables);
+			TransformUtil.transform(
+				individualIds,
+				individualId -> {
+					IndividualSegmentMembership individualSegmentMembership =
+						new IndividualSegmentMembership();
+
+					individualSegmentMembership.setIndividualId(individualId);
+
+					return individualSegmentMembership;
+				}),
+			Void.class, uriVariables);
 	}
 
 	@Override
@@ -498,13 +492,12 @@ public class ContactsEngineClientImpl
 	public void deleteProject(FaroProject faroProject, boolean deleteData)
 		throws Exception {
 
-		Map<String, List<String>> queryParameters = new HashMap<>();
-
-		queryParameters.put(
-			"deleteData",
-			Collections.singletonList(String.valueOf(deleteData)));
-
-		delete(faroProject, queryParameters);
+		delete(
+			faroProject,
+			HashMapBuilder.<String, List<String>>put(
+				"deleteData",
+				Collections.singletonList(String.valueOf(deleteData))
+			).build());
 	}
 
 	@Override
@@ -681,31 +674,30 @@ public class ContactsEngineClientImpl
 		FaroProject faroProject, List<String> groupIds, String query,
 		int action, int cur, int delta, List<OrderByField> orderByFields) {
 
-		List<Map<String, Object>> uriVariablesList = new ArrayList<>();
-
-		for (String groupId : groupIds) {
-			Map<String, Object> uriVariables = getUriVariables(
-				faroProject, cur, delta, orderByFields);
-
-			FilterBuilder filterBuilder = new FilterBuilder();
-
-			addActionFilter(
-				filterBuilder, ActivityConstants.getActionKeys(action));
-
-			filterBuilder.addFilter(
-				"groupId", FilterConstants.COMPARISON_OPERATOR_EQUALS, groupId);
-			filterBuilder.addSearchFilter(query, "object/name");
-
-			uriVariables.put("filter", filterBuilder.build());
-
-			uriVariablesList.add(uriVariables);
-		}
-
 		return bulk(
 			faroProject, Rels.ACTIVITIES, HttpMethod.GET,
 			new TypeReference<List<Activity>>() {
 			},
-			uriVariablesList);
+			TransformUtil.transform(
+				groupIds,
+				groupId -> {
+					Map<String, Object> uriVariables = getUriVariables(
+						faroProject, cur, delta, orderByFields);
+
+					FilterBuilder filterBuilder = new FilterBuilder();
+
+					addActionFilter(
+						filterBuilder, ActivityConstants.getActionKeys(action));
+
+					filterBuilder.addFilter(
+						"groupId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+						groupId);
+					filterBuilder.addSearchFilter(query, "object/name");
+
+					uriVariables.put("filter", filterBuilder.build());
+
+					return uriVariables;
+				}));
 	}
 
 	@Override
@@ -1277,11 +1269,11 @@ public class ContactsEngineClientImpl
 				faroProject, Rels.INDIVIDUALS_ENRICHED_PROFILES_COUNT),
 			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
 
-		return Optional.ofNullable(
-			responseEntity.getBody()
-		).orElse(
-			Long.valueOf(0)
-		);
+		if (responseEntity.getBody() == null) {
+			return 0L;
+		}
+
+		return responseEntity.getBody();
 	}
 
 	@Override
@@ -1609,8 +1601,6 @@ public class ContactsEngineClientImpl
 			return new Results<>();
 		}
 
-		List<Object> values = new ArrayList<>();
-
 		uriVariables.put("apply", getGroupBy(fieldMapping));
 
 		FilterBuilder filterBuilder = new FilterBuilder();
@@ -1634,21 +1624,20 @@ public class ContactsEngineClientImpl
 		List<IndividualTransformation> individualTransformations =
 			results.getItems();
 
-		for (IndividualTransformation individualTransformation :
-				individualTransformations) {
+		return new Results<>(
+			TransformUtil.transform(
+				individualTransformations,
+				individualTransformation -> {
+					Map<String, Object> terms =
+						individualTransformation.getTerms();
 
-			Map<String, Object> terms = individualTransformation.getTerms();
+					List<Object> objects = new ArrayList<>(terms.values());
 
-			Collection<Object> curValues = terms.values();
+					objects.get(0);
 
-			Stream<Object> stream = curValues.stream();
-
-			Optional<Object> optionalFieldValue = stream.findFirst();
-
-			values.add(optionalFieldValue.get());
-		}
-
-		return new Results<>(values, results.getTotal());
+					return objects.get(0);
+				}),
+			results.getTotal());
 	}
 
 	@Override
@@ -1904,11 +1893,11 @@ public class ContactsEngineClientImpl
 			getTemplatedURL(faroProject, Rels.INDIVIDUALS_COUNT),
 			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
 
-		return Optional.ofNullable(
-			responseEntity.getBody()
-		).orElse(
-			0L
-		);
+		if (responseEntity.getBody() == null) {
+			return 0L;
+		}
+
+		return responseEntity.getBody();
 	}
 
 	@Override
@@ -2405,13 +2394,14 @@ public class ContactsEngineClientImpl
 		FaroProject faroProject, String id, String dataSourceId,
 		List<Map<String, String>> groups) {
 
-		Map<String, Object> channelPatch = new HashMap<>();
-
-		channelPatch.put("dataSourceId", dataSourceId);
-		channelPatch.put("groups", groups);
-
 		Map<String, Object> patchChannelObject = patch(
-			faroProject, Rels.CHANNEL, id, channelPatch, Map.class);
+			faroProject, Rels.CHANNEL, id,
+			HashMapBuilder.<String, Object>put(
+				"dataSourceId", dataSourceId
+			).put(
+				"groups", groups
+			).build(),
+			Map.class);
 
 		return objectMapper.convertValue(
 			patchChannelObject.get("channel"), Channel.class);
@@ -2465,13 +2455,13 @@ public class ContactsEngineClientImpl
 		FaroProject faroProject, String id, String dataSourceId,
 		String fieldName) {
 
-		Map<String, Object> fieldMappingPatch = new HashMap<>();
-
-		fieldMappingPatch.put("dataSourceId", dataSourceId);
-		fieldMappingPatch.put("fieldName", fieldName);
-
 		return patch(
-			faroProject, Rels.FIELD_MAPPING, id, fieldMappingPatch,
+			faroProject, Rels.FIELD_MAPPING, id,
+			HashMapBuilder.<String, Object>put(
+				"dataSourceId", dataSourceId
+			).put(
+				"fieldName", fieldName
+			).build(),
 			FieldMapping.class);
 	}
 
@@ -2691,14 +2681,13 @@ public class ContactsEngineClientImpl
 	}
 
 	protected String getGroupBy(FieldMapping fieldMapping) {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("groupby((");
 		sb.append(fieldMapping.getContext());
 		sb.append(StringPool.SLASH);
 		sb.append(fieldMapping.getFieldName());
-		sb.append(StringPool.SLASH);
-		sb.append("value))");
+		sb.append("/value))");
 
 		return sb.toString();
 	}

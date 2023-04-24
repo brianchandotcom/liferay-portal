@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = WorkspaceEngineClient.class)
+@Component(service = WorkspaceEngineClient.class)
 public class WorkspaceEngineClientImpl implements WorkspaceEngineClient {
 
 	@Override

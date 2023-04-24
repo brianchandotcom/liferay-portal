@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -142,6 +143,10 @@ public class PersonalApplicationURLUtil {
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, portletId, layout, PortletRequest.RENDER_PHASE);
+
+		String backURL = ParamUtil.getString(httpServletRequest, "currentURL");
+
+		liferayPortletURL.setParameter("backURL", backURL);
 
 		return liferayPortletURL.toString();
 	}

@@ -37,6 +37,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SortedArrayList;
 
@@ -100,6 +101,9 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 						assetVocabulary.getName()
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.<String>builder(
+						).defaultLocale(
+							LocaleUtil.fromLanguageId(
+								assetVocabulary.getDefaultLanguageId())
 						).values(
 							assetVocabulary.getTitleMap()
 						).build()
@@ -193,6 +197,9 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 						assetVocabulary.getName()
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.<String>builder(
+						).defaultLocale(
+							LocaleUtil.fromLanguageId(
+								assetVocabulary.getDefaultLanguageId())
 						).values(
 							assetVocabulary.getTitleMap()
 						).build()

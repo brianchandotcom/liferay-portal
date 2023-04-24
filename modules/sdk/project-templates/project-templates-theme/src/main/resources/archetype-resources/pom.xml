@@ -89,8 +89,10 @@
 				<artifactId>com.liferay.css.builder</artifactId>
 #if (${liferayVersion.startsWith("7.0")})
 				<version>3.0.0</version>
-#else
+#elseif (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 				<version>3.0.3</version>
+#else
+				<version>3.1.2</version>
 #end
 				<executions>
 					<execution>

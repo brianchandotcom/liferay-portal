@@ -231,78 +231,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-170820 | Test Summary: Verify if as an Administrator, I should be able to see that the Issues List displays properly"
-	@priority = 5
-	test AdminCanSeeIssuesInAllTables {
-		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayBuild.goToBuild(buildName = ${buildName});
-		}
-
-		task ("And the user goes to assign a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-		}
-
-		task ("When the user edit test with Failed and add thw issue") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
-
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(
-				issues = "LPS-111222",
-				selectStatus = "Failed");
-
-			WaitForPageLoad();
-		}
-
-		task ("Then the issue appear in the table in case result") {
-			TestrayResults.assertIssue(
-				issue = "LPS-111222",
-				label = "Dates");
-		}
-
-		task ("Then the issue appear in the table in case result") {
-			Testray.projectTabNavigator(navTabName = "History");
-
-			TestrayResults.assertIssue(
-				issue = "LPS-111222",
-				label = "Test History");
-		}
-
-		task ("Then the issue appear in the table in case result") {
-			TR2Utils.clickBreadcrumb(text = "Build 1");
-
-			TestrayResults.assertIssue(
-				issue = "LPS-111222",
-				label = "Details");
-
-			TestrayResults.assertIssue(
-				issue = "LPS-111222",
-				label = "Tests");
-		}
-
-		task ("Then the issue appear in the table in case result") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
-
-			Click(locator1 = "TestrayResults#VIEW_CASE_LINK");
-
-			TestrayResults.assertIssue(
-				issue = "LPS-111222",
-				label = "Details");
-
-			TestrayResults.assertIssue(
-				issue = "LPS-111222",
-				label = "Test History");
-		}
-	}
-
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Reopen Tests"
 	@priority = 4
 	test AdminCanReopenTests {
@@ -377,6 +305,78 @@ definition {
 			TestrayTestflow.assertStatus(
 				label = "Test Details",
 				status = "Untested");
+		}
+	}
+
+	@description = "Story ID: LPS-170820 | Test Summary: Verify if as an Administrator, I should be able to see that the Issues List displays properly"
+	@priority = 5
+	test AdminCanSeeIssuesInAllTables {
+		task ("Given that the user go to case results") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+		}
+
+		task ("And the user goes to assign a case results") {
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign");
+
+			TestrayTestflow.assignUsers(userName = "Test Test");
+		}
+
+		task ("When the user edit test with Failed and add thw issue") {
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(
+				issues = "LPS-111222",
+				selectStatus = "Failed");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the issue appear in the table in case result") {
+			TestrayResults.assertIssue(
+				issue = "LPS-111222",
+				label = "Dates");
+		}
+
+		task ("Then the issue appear in the table in case result") {
+			Testray.projectTabNavigator(navTabName = "History");
+
+			TestrayResults.assertIssue(
+				issue = "LPS-111222",
+				label = "Test History");
+		}
+
+		task ("Then the issue appear in the table in case result") {
+			TR2Utils.clickBreadcrumb(text = "Build 1");
+
+			TestrayResults.assertIssue(
+				issue = "LPS-111222",
+				label = "Details");
+
+			TestrayResults.assertIssue(
+				issue = "LPS-111222",
+				label = "Tests");
+		}
+
+		task ("Then the issue appear in the table in case result") {
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+
+			Click(locator1 = "TestrayResults#VIEW_CASE_LINK");
+
+			TestrayResults.assertIssue(
+				issue = "LPS-111222",
+				label = "Details");
+
+			TestrayResults.assertIssue(
+				issue = "LPS-111222",
+				label = "Test History");
 		}
 	}
 

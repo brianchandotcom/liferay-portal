@@ -21,9 +21,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>VIEW_CASE_LINK</td>
-    <td>//a[normalize-space()='View Case']</td>
-    <td></td>
+	<td>VIEW_CASE_LINK</td>
+	<td>//a[normalize-space()='View Case']</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

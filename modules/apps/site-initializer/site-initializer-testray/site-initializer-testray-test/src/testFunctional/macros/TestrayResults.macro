@@ -2,9 +2,9 @@ definition {
 
 	macro assertIssue {
 		AssertElementPresent(
-			locator1 = "TestrayResults#ISSUE_WITH_LABEL",
 			key_issue = ${issue},
-			key_label = ${label});
+			key_label = ${label},
+			locator1 = "TestrayResults#ISSUE_WITH_LABEL");
 	}
 
 	macro caseResultsMetrics {

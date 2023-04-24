@@ -29,6 +29,118 @@ definition {
 		}
 	}
 
+	@description = "LPS-169877 10 instances of Tags fragment can be added into the same form container"
+	@priority = 4
+	test CanAdd10TagsFragmentsToPage {
+		task ("Given an object with scope to a site") {
+			for (var i : list "1,2") {
+				JSONAssettag.addTag(
+					groupName = "Global",
+					tagName = "global tag ${i}");
+			}
+
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "local tag");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "MyObject",
+				objectName = "MyObject",
+				pluralLabelName = "MyObject",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "MyObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "MyObject");
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
+
+			Button.clickSave();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+
+			PageEditor.viewInputStyle(
+				label = "Name",
+				showLabel = "true",
+				type = "text-input");
+
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Tags",
+					targetFragmentName = "Text Input");
+			}
+
+			PageEditor.publish();
+		}
+
+		task ("When we add tags as input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			FormViewBuilder.editText(
+				fieldName = "Name",
+				fieldValue = "Test Name");
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "global tag 1",
+				tagRow = 1);
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "global tag 2",
+				tagRow = 4);
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "global tag 2,local tag",
+				tagRow = 6);
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "global tag 1,global tag 2,local tag",
+				tagRow = 7);
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+			for (var tagName : list "global tag 1,global tag 2,local tag") {
+				LexiconTable.viewTableEntryInfo(
+					columnName = "usages",
+					tableEntry = ${tagName},
+					tableEntryInfo = 1);
+			}
+		}
+	}
+
 	@description = "The user cannot add a tag with an empty name."
 	@priority = 4
 	@uitest

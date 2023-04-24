@@ -54,7 +54,10 @@ function DateTimeInput({
 	}, [value]);
 
 	const saveDateTimeValue = () => {
-		const validDate = toDisplayDate(displayDate);
+		const validDate = toDisplayDate(
+			displayDate,
+			previousDisplayDateRef.current
+		);
 
 		setDisplayDate(validDate);
 
@@ -137,15 +140,17 @@ function datesAreEqual(dateA: string, dateB: string) {
 	return dateA === dateB;
 }
 
-function toDisplayDate(internalOrIsoDate: string) {
+function toDisplayDate(internalOrIsoDate: string, previousDate?: string) {
 	let dateObject = new Date(internalOrIsoDate);
 
+	const resetDate = previousDate ? new Date(previousDate) : new Date();
+
 	if (!isValid(dateObject)) {
-		dateObject = parse(internalOrIsoDate, INTERNAL_DATE_FORMAT, new Date());
+		dateObject = parse(internalOrIsoDate, INTERNAL_DATE_FORMAT, resetDate);
 	}
 
 	if (!isValid(dateObject)) {
-		dateObject = new Date();
+		dateObject = resetDate;
 	}
 
 	return format(dateObject, DISPLAY_DATE_FORMAT);

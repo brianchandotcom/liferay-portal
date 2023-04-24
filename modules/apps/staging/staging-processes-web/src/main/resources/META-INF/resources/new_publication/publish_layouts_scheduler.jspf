@@ -55,17 +55,52 @@
 		}
 		%>
 
-		Liferay.Util.postForm(document.<portlet:namespace />exportPagesFm, {
-			data: {
-				<%= Constants.CMD %>: '<%= scheduleCMD %>',
+		var deletePortletDataBeforeImportingCheckbox = document.getElementById(
+			'<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>'
+		);
 
-				<portlet:renderURL var="scheduledPublicationRedirectURL">
+		if (
+			deletePortletDataBeforeImportingCheckbox &&
+			deletePortletDataBeforeImportingCheckbox.checked
+		) {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						Liferay.Util.postForm(
+							document.<portlet:namespace />exportPagesFm,
+							{
+								data: {
+									<%= Constants.CMD %>: '<%= scheduleCMD %>',
+
+									<portlet:renderURL var="scheduledPublicationRedirectURL">
+									<portlet:param name="mvcPath" value="/view.jsp" />
+									<portlet:param name="tabs1" value="scheduled" />
+									</portlet:renderURL>
+
+									redirect:
+										'<%= scheduledPublicationRedirectURL %>',
+								},
+							}
+						);
+					}
+				},
+			});
+		}
+		else {
+			Liferay.Util.postForm(document.<portlet:namespace />exportPagesFm, {
+				data: {
+					<%= Constants.CMD %>: '<%= scheduleCMD %>',
+
+					<portlet:renderURL var="scheduledPublicationRedirectURL">
 					<portlet:param name="mvcPath" value="/view.jsp" />
 					<portlet:param name="tabs1" value="scheduled" />
-				</portlet:renderURL>
+					</portlet:renderURL>
 
-				redirect: '<%= scheduledPublicationRedirectURL %>',
-			},
-		});
+					redirect: '<%= scheduledPublicationRedirectURL %>',
+				},
+			});
+		}
 	}
 </script>

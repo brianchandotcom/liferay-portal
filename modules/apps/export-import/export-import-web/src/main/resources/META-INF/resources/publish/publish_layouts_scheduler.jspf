@@ -50,6 +50,10 @@
 			'<portlet:namespace />ExportImportComponent'
 		);
 
+		var deletePortletDataBeforeImportingCheckbox = document.getElementById(
+			'<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>'
+		);
+
 		var dateChecker = exportImport.getDateRangeChecker();
 
 		var rangeEndsLater = false;
@@ -90,12 +94,39 @@
 		}
 
 		if (!rangeEndsLater) {
-			Liferay.Util.postForm(document.<portlet:namespace />publishPagesFm, {
-				data: {
-					<%= Constants.CMD %>: '<%= scheduleCMD %>',
-					redirect: '<%= scheduledEventsURL %>',
-				},
-			});
+			if (
+				deletePortletDataBeforeImportingCheckbox &&
+				deletePortletDataBeforeImportingCheckbox.checked
+			) {
+				Liferay.Util.openConfirmModal({
+					message:
+						'<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>',
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							Liferay.Util.postForm(
+								document.<portlet:namespace />publishPagesFm,
+								{
+									data: {
+										<%= Constants.CMD %>: '<%= scheduleCMD %>',
+										redirect: '<%= scheduledEventsURL %>',
+									},
+								}
+							);
+						}
+					},
+				});
+			}
+			else {
+				Liferay.Util.postForm(
+					document.<portlet:namespace />publishPagesFm,
+					{
+						data: {
+							<%= Constants.CMD %>: '<%= scheduleCMD %>',
+							redirect: '<%= scheduledEventsURL %>',
+						},
+					}
+				);
+			}
 		}
 		else {
 			exportImport.showNotification(dateChecker, rangeEndsLater);

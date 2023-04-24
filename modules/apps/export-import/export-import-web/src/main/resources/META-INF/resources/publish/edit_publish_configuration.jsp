@@ -323,10 +323,32 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			'<portlet:namespace />ExportImportComponent'
 		);
 
+		var deletePortletDataBeforeImportingCheckbox = document.getElementById(
+			'<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>'
+		);
+
 		var dateChecker = exportImport.getDateRangeChecker();
 
 		if (dateChecker.validRange) {
-			submitForm(document.<portlet:namespace />publishPagesFm);
+			var form = document.<portlet:namespace />publishPagesFm;
+
+			if (
+				deletePortletDataBeforeImportingCheckbox &&
+				deletePortletDataBeforeImportingCheckbox.checked
+			) {
+				Liferay.Util.openConfirmModal({
+					message:
+						'<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>',
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							submitForm(form);
+						}
+					},
+				});
+			}
+			else {
+				submitForm(form);
+			}
 		}
 		else {
 			exportImport.showNotification(dateChecker);

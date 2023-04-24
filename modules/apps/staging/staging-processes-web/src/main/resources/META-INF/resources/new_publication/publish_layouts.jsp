@@ -139,7 +139,7 @@
 		);
 
 		var deletePortletDataBeforeImportingCheckbox = document.getElementById(
-			'<portlet:namespace />deletePortletDataBeforeImportingCheckbox'
+			'<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>'
 		);
 
 		var dateChecker = exportImport.getDateRangeChecker();

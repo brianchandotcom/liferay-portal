@@ -169,4 +169,63 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-162623 | Test Summary: Verify if as an Administrator I am able to filter the cases Tab in a Run Comparison Result by case name"
+	@priority = 3
+	test AdminCanFilterCasesTabInRunComparisonResultByCaseName {
+		task ("Given that the user select two runs for compare runs") {
+			Testray.projectTabNavigator(navTabName = "Runs");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Run 1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run A");
+
+            TestrayContextMenu.clickContextMenuProjects(name = "Run 2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run B");
+
+			TestrayManage.selectOptionsManage(itemValue = "Compare Runs");
+
+			Button.click(button = "Compare Runs");
+
+			Testray.projectTabNavigator(navTabName = "Cases");
+		}
+
+		task ("And that the user has two cases different in the table") {
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a compare runs by case name") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see case 1 in the table") {
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see case 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

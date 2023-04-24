@@ -21,16 +21,13 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -60,12 +57,10 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -522,7 +517,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		// Many to many
 
-		_addCustomObjectField(
+		ObjectFieldTestUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
@@ -558,7 +553,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		// Many to many
 
-		_addCustomObjectField(
+		ObjectFieldTestUtil.addCustomObjectField(
 			TestPropsValues.getUserId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
@@ -722,34 +717,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		jsonArray = jsonObject.getJSONArray("items");
 
 		_assertEquals(_user1, jsonArray);
-	}
-
-	private ObjectField _addCustomObjectField(
-			long userId, String businessType, String dbType,
-			ObjectDefinition objectDefinition, String objectFieldName)
-		throws Exception {
-
-		List<ObjectFieldSetting> objectFieldSettings = null;
-
-		if (Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) ||
-			Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
-
-			ObjectFieldSetting objectFieldSetting =
-				ObjectFieldSettingLocalServiceUtil.createObjectFieldSetting(0);
-
-			objectFieldSetting.setName("showCounter");
-			objectFieldSetting.setValue("false");
-
-			objectFieldSettings = Collections.singletonList(objectFieldSetting);
-		}
-
-		return ObjectFieldLocalServiceUtil.addCustomObjectField(
-			null, userId, 0, objectDefinition.getObjectDefinitionId(),
-			businessType, dbType, false, true, "",
-			LocalizedMapUtil.getLocalizedMap(objectFieldName), false,
-			objectFieldName, false, false, objectFieldSettings);
 	}
 
 	private ObjectRelationship _addObjectRelationship(

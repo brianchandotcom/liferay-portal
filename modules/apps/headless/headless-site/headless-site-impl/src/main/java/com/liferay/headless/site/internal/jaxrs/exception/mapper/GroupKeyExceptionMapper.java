@@ -41,7 +41,7 @@ public class GroupKeyExceptionMapper
 
 	@Override
 	protected Problem getProblem(GroupKeyException groupKeyException) {
-		return new Problem(Response.Status.BAD_REQUEST, "Invalid site key");
+		return new Problem(Response.Status.BAD_REQUEST, "Site key is invalid");
 	}
 
 }

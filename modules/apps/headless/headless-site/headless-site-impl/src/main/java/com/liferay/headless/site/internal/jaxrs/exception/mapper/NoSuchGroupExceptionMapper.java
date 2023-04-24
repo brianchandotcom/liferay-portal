@@ -15,8 +15,12 @@
 package com.liferay.headless.site.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -42,7 +46,31 @@ public class NoSuchGroupExceptionMapper
 	@Override
 	protected Problem getProblem(NoSuchGroupException noSuchGroupException) {
 		return new Problem(
-			Response.Status.NOT_FOUND, "Could not find parent site");
+			Response.Status.NOT_FOUND, _getTitle(noSuchGroupException));
 	}
+
+	private String _getTitle(NoSuchGroupException noSuchGroupException) {
+		String title = "No site exists";
+
+		if (noSuchGroupException.getMessage() == null) {
+			return title;
+		}
+
+		Matcher matcher = _pattern.matcher(noSuchGroupException.getMessage());
+
+		if (!matcher.matches()) {
+			return title;
+		}
+
+		String siteKey = matcher.group(1);
+
+		if (Validator.isNotNull(siteKey)) {
+			title = title + " for site key " + siteKey;
+		}
+
+		return title;
+	}
+
+	private static final Pattern _pattern = Pattern.compile(".+groupKey=(.+)}");
 
 }

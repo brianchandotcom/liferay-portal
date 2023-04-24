@@ -69,7 +69,9 @@
 		<field localized="true" name="body" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="description" type="String" />
+		<field name="description" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="editorType" type="String" />
 		<field localized="true" name="name" type="String" />
 		<field name="recipientType" type="String" />

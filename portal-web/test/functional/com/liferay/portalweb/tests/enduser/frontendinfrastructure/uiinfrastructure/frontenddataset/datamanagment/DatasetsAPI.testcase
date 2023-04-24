@@ -20,32 +20,22 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else if (IsElementPresent(locator1 = "FrontendDataSet#TABLE_BODY")) {
-			FrontendDataSetAdmin.tearDownCP();
-		}
 		else {
-			AssertElementPresent(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
+			FrontendDataSetAdmin.deleteAllDatasetEntries();
 		}
 	}
 
 	@description = "LPS-178777. Confirm that the user can create a dataset view via API"
 	@priority = 5
-	test CanCreateDataSetViaAPI {
+	test CanCreateDatasetEntryViaAPI {
 		task ("Given creating a Data Set via API") {
-			FDSJSON.addDataSetViaAPI(
-				dataSetName = "Test Dataset",
-				restApplication = "/analytics-settings-rest/v1.0",
-				restEndpoint = "/v1.0/channels",
-				restSchema = "Channel");
+			FrontendDataSetAdmin.createDatasetEntryViaAPI(
+				datasetName = "Test Dataset",
+				restApplication = "/c/fdsentries");
 		}
 
 		task ("and given access Datasets admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Datasets");
+			FrontendDataSetAdmin.goToDatasetAdminPage();
 
 			WaitForElementPresent(
 				key_itemName = "Test Dataset",

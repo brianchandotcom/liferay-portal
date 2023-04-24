@@ -774,7 +774,7 @@ public class SourceFormatter {
 		}
 
 		return StringBundler.concat(
-			"Found ", index - 1, " formatting issues:\n", sb.toString());
+			"Found ", index - 1, " formatting issues:\n", sb);
 	}
 
 	private List<ExcludeSyntaxPattern> _getExcludeSyntaxPatterns(

@@ -147,8 +147,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Annotation ", sb.toString(), " required for '", methodName,
-					"'"),
+					"Annotation ", sb, " required for '", methodName, "'"),
 				javaTerm.getLineNumber());
 		}
 	}

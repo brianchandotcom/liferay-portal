@@ -377,7 +377,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Library '", packageName, ":", version.toString(),
+						"Library '", packageName, ":", version,
 						"' contains known vulnerabilities(",
 						securityVulnerabilityNode.getSummary(), ", ",
 						securityVulnerabilityNode.getPermalink(), ")"));

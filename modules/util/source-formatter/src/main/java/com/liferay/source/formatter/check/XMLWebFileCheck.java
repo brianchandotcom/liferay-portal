@@ -100,8 +100,7 @@ public class XMLWebFileCheck extends BaseFileCheck {
 		}
 
 		return StringBundler.concat(
-			content.substring(0, x - 3), sb.toString(),
-			content.substring(y + 15));
+			content.substring(0, x - 3), sb, content.substring(y + 15));
 	}
 
 	private String _formatServletMappings(
@@ -146,7 +145,7 @@ public class XMLWebFileCheck extends BaseFileCheck {
 		}
 
 		return StringBundler.concat(
-			content.substring(0, x), sb.toString(), content.substring(y + 19));
+			content.substring(0, x), sb, content.substring(y + 19));
 	}
 
 	private Set<String> _getURLPatterns(String absolutePath)

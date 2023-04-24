@@ -48,7 +48,6 @@ const initialBillingAddress = {
 	countryISOCode: 'US',
 	name: '',
 	phoneNumber: '',
-	region: '',
 	street1: '',
 	street2: '',
 	zip: '',

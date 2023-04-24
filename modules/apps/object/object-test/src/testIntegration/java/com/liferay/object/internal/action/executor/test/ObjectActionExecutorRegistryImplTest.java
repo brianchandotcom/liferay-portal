@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -87,24 +85,22 @@ public class ObjectActionExecutorRegistryImplTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		CompanyThreadLocal.setCompanyId(_companyId1);
-
 		_unregisterObjectActionExecutors();
 	}
 
 	@Test
-	public void testGetObjectActionExecutors() throws Exception {
+	public void testGetObjectActionExecutors() {
 
 		// Available for all companies' object definitions
 
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "Account"),
 			_ootbObjectActionExecutors);
 
-		CompanyThreadLocal.setCompanyId(_companyId2);
-
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId2, "Address"),
 			_ootbObjectActionExecutors);
 
 		// Available for all companies' restricted object definitions
@@ -117,51 +113,49 @@ public class ObjectActionExecutorRegistryImplTest {
 				Arrays.asList("Account", "Address"));
 
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "Account"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor1));
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "Address"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor1));
 
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("User"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "User"),
 			_ootbObjectActionExecutors);
 
-		CompanyThreadLocal.setCompanyId(_companyId2);
-
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId2, "Account"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor1));
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId2, "Address"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor1));
 
 		_unregisterObjectActionExecutors();
 
 		// Available for a restricted company's object definitions
 
-		CompanyThreadLocal.setCompanyId(_companyId1);
-
 		ObjectActionExecutor objectActionExecutor2 =
 			_registerObjectActionExecutor(
-				_companyId1, "_objectActionExecutor2",
-				Collections.emptyList());
+				_companyId1, "_objectActionExecutor2", Collections.emptyList());
 
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "Account"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor2));
 
-		CompanyThreadLocal.setCompanyId(_companyId2);
-
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId2, "Account"),
 			_ootbObjectActionExecutors);
 
 		_unregisterObjectActionExecutors();
 
 		// Available for a restricted company's restricted object definitions
-
-		CompanyThreadLocal.setCompanyId(_companyId1);
 
 		ObjectActionExecutor objectActionExecutor3 =
 			_registerObjectActionExecutor(
@@ -169,23 +163,26 @@ public class ObjectActionExecutorRegistryImplTest {
 				Arrays.asList("Account", "Address"));
 
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "Account"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor3));
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "Address"),
 			_concatOOTBObjectActionExecutors(objectActionExecutor3));
 
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("User"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId1, "User"),
 			_ootbObjectActionExecutors);
 
-		CompanyThreadLocal.setCompanyId(_companyId2);
-
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Account"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId2, "Account"),
 			_ootbObjectActionExecutors);
 		_assertObjectActionExecutors(
-			_objectActionExecutorRegistry.getObjectActionExecutors("Address"),
+			_objectActionExecutorRegistry.getObjectActionExecutors(
+				_companyId2, "Address"),
 			_ootbObjectActionExecutors);
 	}
 

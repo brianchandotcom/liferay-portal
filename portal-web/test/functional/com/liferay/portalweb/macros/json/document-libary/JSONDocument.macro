@@ -156,6 +156,14 @@ definition {
 			echo("## * reviewDate: ${reviewDate}");
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		var serviceContext = JSONDocumentSetter.setServiceContext(
 			addGroupPermissions = ${groupPermissions},
 			addGuestPermissions = ${guestPermissions},
@@ -167,7 +175,7 @@ definition {
 		if (isSet(reviewDate)) {
 			var curl = '''
 				${portalURL}/api/jsonws/dlapp/add-file-entry \
-					-u test@liferay.com:test \
+					-u ${userEmailAddress}:${userPassword}  \
 					-F externalReferenceCode= \
 					-F repositoryId=${repositoryId} \
 					-F folderId=${folderId} \
@@ -186,7 +194,7 @@ definition {
 		else {
 			var curl = '''
 				${portalURL}/api/jsonws/dlapp/add-file-entry \
-					-u test@liferay.com:test \
+					-u ${userEmailAddress}:${userPassword} \
 					-F externalReferenceCode= \
 					-F repositoryId=${repositoryId} \
 					-F folderId=${folderId} \

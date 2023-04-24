@@ -121,11 +121,15 @@ public class LayoutInfoItemFieldValuesProviderHelper {
 				}
 			}
 
+			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+
 			valuesMap.computeIfAbsent(
-				LocaleUtil.fromLanguageId(defaultLanguageId),
+				defaultLocale,
 				locale -> valuesJSONObject.getString("defaultValue"));
 
 			return InfoLocalizedValue.<String>builder(
+			).defaultLocale(
+				defaultLocale
 			).values(
 				valuesMap
 			).build();

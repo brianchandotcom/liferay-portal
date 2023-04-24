@@ -51,4 +51,43 @@ definition {
 		}
 	}
 
+	@description = "LPS-181355. Confirm that views can be created through API"
+	@priority = 4
+	test CanCreateViewsThroughAPI {
+		task ("And Add a Dataset") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Datasets");
+
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("And a dataset view created via api") {
+			FrontendDataSetAdmin.createFDSViewViaAPI(
+				datasetName = "Dataset Test",
+				dataSetViewDescription = "FDSViewDescription",
+				dataSetViewName = "View Test");
+		}
+
+		task ("When access to Datasets admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Datasets");
+		}
+
+		task ("And going to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("Then Confirm the dataset view was created.") {
+			AssertElementPresent(
+				entryName = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
+		}
+	}
+
 }

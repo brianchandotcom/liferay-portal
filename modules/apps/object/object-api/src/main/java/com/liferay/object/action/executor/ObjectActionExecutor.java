@@ -26,9 +26,9 @@ import java.util.List;
  */
 public interface ObjectActionExecutor {
 
-	public static int ALL_COMPANIES = 0;
+	public static int COMPANY_ID_ALL = 0;
 
-	public static List<String> ALL_OBJECT_DEFINITIONS = Collections.emptyList();
+	public static List<String> OBJECT_DEFINITIONS_ALL = Collections.emptyList();
 
 	public void execute(
 			long companyId, UnicodeProperties parametersUnicodeProperties,
@@ -36,13 +36,13 @@ public interface ObjectActionExecutor {
 		throws Exception;
 
 	public default long getCompanyId() {
-		return ALL_COMPANIES;
+		return COMPANY_ID_ALL;
 	}
 
 	public String getKey();
 
 	public default List<String> getObjectDefinitionNames() {
-		return ALL_OBJECT_DEFINITIONS;
+		return OBJECT_DEFINITIONS_ALL;
 	}
 
 }

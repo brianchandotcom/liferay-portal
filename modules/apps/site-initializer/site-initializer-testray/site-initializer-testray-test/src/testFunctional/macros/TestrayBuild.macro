@@ -227,12 +227,6 @@ definition {
 	}
 
 	macro selectDefaultEnvironmentFactors {
-		Refresh();
-
-		TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
-
 		WaitForElementPresent(
 			key_environmentFactors = "Application Server",
 			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");

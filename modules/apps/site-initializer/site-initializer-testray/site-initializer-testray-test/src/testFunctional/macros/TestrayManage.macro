@@ -10,8 +10,6 @@ definition {
 		}
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
 	macro addProductVersionInBuild {

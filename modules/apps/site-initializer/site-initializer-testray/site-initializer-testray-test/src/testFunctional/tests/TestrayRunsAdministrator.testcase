@@ -156,6 +156,8 @@ definition {
 
 			Testray.goToProjectPage(projectName = ${projectName});
 
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
 			TestrayRoutines.selectDefaultEnvironmentFactors(
 				categoryField = "Category 1",
 				categoryField2 = "Category 2",
@@ -163,8 +165,6 @@ definition {
 				listOption = "Option 1",
 				listOption2 = "Option 3",
 				routineName = ${routineName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = "Build 2",

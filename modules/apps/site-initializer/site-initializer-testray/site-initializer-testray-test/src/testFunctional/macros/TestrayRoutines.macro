@@ -60,9 +60,7 @@ definition {
 	}
 
 	macro selectDefaultEnvironmentFactors {
-		TestrayContextMenu.clickContextMenuProjects(name = ${routineName});
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+		Testray.kebabMenuOption(kebabOption = "Select Default Environment Factors");
 
 		WaitForElementPresent(
 			key_environmentFactors = "Application Server",

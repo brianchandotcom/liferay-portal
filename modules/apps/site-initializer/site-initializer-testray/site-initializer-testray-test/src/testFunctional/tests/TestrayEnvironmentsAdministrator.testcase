@@ -153,11 +153,11 @@ definition {
 
 			Testray.goToProjectPage(projectName = ${projectName});
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${routineName});
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
 		}
 
 		task ("Then I assert affirm the Enviroment Factor created") {
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+			Testray.kebabMenuOption(kebabOption = "Select Default Environment Factors");
 
 			TestrayBuild.verifySpecificEnvironmentFactors(
 				label = ${categoryName},

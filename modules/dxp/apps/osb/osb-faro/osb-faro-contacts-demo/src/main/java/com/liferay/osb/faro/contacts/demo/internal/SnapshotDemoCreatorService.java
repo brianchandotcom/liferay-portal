@@ -17,6 +17,7 @@ package com.liferay.osb.faro.contacts.demo.internal;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -47,7 +48,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -201,16 +201,10 @@ public class SnapshotDemoCreatorService extends DemoCreatorService {
 					entry.getValue() instanceof List) {
 
 					if (dateField && (entry.getValue() instanceof List)) {
-						List<String> values = (List<String>)entry.getValue();
-
-						Stream<String> stream = values.stream();
-
 						entry.setValue(
-							stream.map(
-								value -> _addOffset(value, timeOffset)
-							).collect(
-								Collectors.toList()
-							));
+							TransformUtil.transform(
+								(List<String>)entry.getValue(),
+								value -> _addOffset(value, timeOffset)));
 					}
 					else {
 						_adjustTime(entry.getValue(), timeOffset);

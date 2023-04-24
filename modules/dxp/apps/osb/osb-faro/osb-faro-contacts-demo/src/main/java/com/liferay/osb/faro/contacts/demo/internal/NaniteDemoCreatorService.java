@@ -44,6 +44,7 @@ import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.util.FaroThreadLocal;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -54,7 +55,6 @@ import com.liferay.portal.kernel.util.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -223,25 +223,20 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 
 		liferayGroupsDataCreator.execute();
 
-		List<Map<String, String>> groups = new ArrayList<>();
-
-		for (Map<String, Object> liferayGroup :
-				liferayGroupsDataCreator.getObjects()) {
-
-			Map<String, String> group = new HashMap<>();
-
-			Map<String, Object> fields = (Map<String, Object>)liferayGroup.get(
-				"fields");
-
-			group.put("id", String.valueOf(fields.get("groupId")));
-			group.put("name", (String)fields.get("name"));
-
-			groups.add(group);
-		}
-
 		contactsEngineClient.patchChannel(
 			faroProject, channelId, liferayUsersDataCreator.getDataSourceId(),
-			groups);
+			TransformUtil.transform(
+				liferayGroupsDataCreator.getObjects(),
+				liferayGroup -> {
+					Map<String, Object> fields =
+						(Map<String, Object>)liferayGroup.get("fields");
+
+					return HashMapBuilder.put(
+						"id", String.valueOf(fields.get("groupId"))
+					).put(
+						"name", (String)fields.get("name")
+					).build();
+				}));
 
 		// Organizations
 

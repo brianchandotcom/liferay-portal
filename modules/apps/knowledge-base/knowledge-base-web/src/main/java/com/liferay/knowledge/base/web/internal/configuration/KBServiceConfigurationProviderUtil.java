@@ -15,32 +15,27 @@
 package com.liferay.knowledge.base.web.internal.configuration;
 
 import com.liferay.knowledge.base.configuration.KBServiceConfigurationProvider;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
  */
-@Component(service = {})
 public class KBServiceConfigurationProviderUtil {
 
 	public static int getExpirationDateNotificationDateWeeks()
 		throws ConfigurationException {
 
-		return _kbServiceConfigurationProvider.
+		KBServiceConfigurationProvider kbServiceConfigurationProvider =
+			_kbServiceConfigurationProviderSnapshot.get();
+
+		return kbServiceConfigurationProvider.
 			getExpirationDateNotificationDateWeeks();
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBServiceConfigurationProvider(
-		KBServiceConfigurationProvider kbServiceConfigurationProvider) {
-
-		_kbServiceConfigurationProvider = kbServiceConfigurationProvider;
-	}
-
-	private static KBServiceConfigurationProvider
-		_kbServiceConfigurationProvider;
+	private static final Snapshot<KBServiceConfigurationProvider>
+		_kbServiceConfigurationProviderSnapshot = new Snapshot<>(
+			KBServiceConfigurationProviderUtil.class,
+			KBServiceConfigurationProvider.class);
 
 }

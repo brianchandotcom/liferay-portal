@@ -58,7 +58,7 @@ public class BatchPlannerPlanLocalServiceImpl
 	extends BatchPlannerPlanLocalServiceBaseImpl {
 
 	@Override
-	public BatchPlannerPlan addBatchPlannerPlan(
+	public BatchPlannerPlan addBatchPlannerPlan(String externalReferenceCode, 
 			long userId, boolean export, String externalType,
 			String externalURL, String internalClassName, String name, int size,
 			String taskItemDelegateName, boolean template)
@@ -78,6 +78,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.create(
 			counterLocalService.increment());
 
+		batchPlannerPlan.setExternalReferenceCode(externalReferenceCode);
 		batchPlannerPlan.setCompanyId(user.getCompanyId());
 		batchPlannerPlan.setUserId(userId);
 		batchPlannerPlan.setUserName(user.getFullName());

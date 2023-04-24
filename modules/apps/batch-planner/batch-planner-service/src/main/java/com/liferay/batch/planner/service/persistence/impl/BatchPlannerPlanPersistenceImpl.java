@@ -14,6 +14,7 @@
 
 package com.liferay.batch.planner.service.persistence.impl;
 
+import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanExternalReferenceCodeException;
 import com.liferay.batch.planner.exception.NoSuchPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.model.BatchPlannerPlanTable;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -5848,6 +5850,262 @@ public class BatchPlannerPlanPersistenceImpl
 	private static final String _FINDER_COLUMN_C_E_T_TEMPLATE_2 =
 		"batchPlannerPlan.template = ?";
 
+	private FinderPath _finderPathFetchByERC_C;
+	private FinderPath _finderPathCountByERC_C;
+
+	/**
+	 * Returns the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPlanException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching batch planner plan
+	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
+	 */
+	@Override
+	public BatchPlannerPlan findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchPlanException {
+
+		BatchPlannerPlan batchPlannerPlan = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (batchPlannerPlan == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchPlanException(sb.toString());
+		}
+
+		return batchPlannerPlan;
+	}
+
+	/**
+	 * Returns the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
+	 */
+	@Override
+	public BatchPlannerPlan fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
+	 */
+	@Override
+	public BatchPlannerPlan fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof BatchPlannerPlan) {
+			BatchPlannerPlan batchPlannerPlan = (BatchPlannerPlan)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					batchPlannerPlan.getExternalReferenceCode()) ||
+				(companyId != batchPlannerPlan.getCompanyId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_BATCHPLANNERPLAN_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<BatchPlannerPlan> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					BatchPlannerPlan batchPlannerPlan = list.get(0);
+
+					result = batchPlannerPlan;
+
+					cacheResult(batchPlannerPlan);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (BatchPlannerPlan)result;
+		}
+	}
+
+	/**
+	 * Removes the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the batch planner plan that was removed
+	 */
+	@Override
+	public BatchPlannerPlan removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchPlanException {
+
+		BatchPlannerPlan batchPlannerPlan = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(batchPlannerPlan);
+	}
+
+	/**
+	 * Returns the number of batch planner plans where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching batch planner plans
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByERC_C;
+
+		Object[] finderArgs = new Object[] {externalReferenceCode, companyId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_BATCHPLANNERPLAN_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"batchPlannerPlan.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(batchPlannerPlan.externalReferenceCode IS NULL OR batchPlannerPlan.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"batchPlannerPlan.companyId = ?";
+
 	public BatchPlannerPlanPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -5873,6 +6131,14 @@ public class BatchPlannerPlanPersistenceImpl
 	public void cacheResult(BatchPlannerPlan batchPlannerPlan) {
 		entityCache.putResult(
 			BatchPlannerPlanImpl.class, batchPlannerPlan.getPrimaryKey(),
+			batchPlannerPlan);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				batchPlannerPlan.getExternalReferenceCode(),
+				batchPlannerPlan.getCompanyId()
+			},
 			batchPlannerPlan);
 	}
 
@@ -5944,6 +6210,19 @@ public class BatchPlannerPlanPersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(BatchPlannerPlanImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		BatchPlannerPlanModelImpl batchPlannerPlanModelImpl) {
+
+		Object[] args = new Object[] {
+			batchPlannerPlanModelImpl.getExternalReferenceCode(),
+			batchPlannerPlanModelImpl.getCompanyId()
+		};
+
+		finderCache.putResult(_finderPathCountByERC_C, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByERC_C, args, batchPlannerPlanModelImpl);
 	}
 
 	/**
@@ -6074,6 +6353,38 @@ public class BatchPlannerPlanPersistenceImpl
 		BatchPlannerPlanModelImpl batchPlannerPlanModelImpl =
 			(BatchPlannerPlanModelImpl)batchPlannerPlan;
 
+		if (Validator.isNull(batchPlannerPlan.getExternalReferenceCode())) {
+			batchPlannerPlan.setExternalReferenceCode(
+				String.valueOf(batchPlannerPlan.getPrimaryKey()));
+		}
+		else {
+			BatchPlannerPlan ercBatchPlannerPlan = fetchByERC_C(
+				batchPlannerPlan.getExternalReferenceCode(),
+				batchPlannerPlan.getCompanyId());
+
+			if (isNew) {
+				if (ercBatchPlannerPlan != null) {
+					throw new DuplicateBatchPlannerPlanExternalReferenceCodeException(
+						"Duplicate batch planner plan with external reference code " +
+							batchPlannerPlan.getExternalReferenceCode() +
+								" and company " +
+									batchPlannerPlan.getCompanyId());
+				}
+			}
+			else {
+				if ((ercBatchPlannerPlan != null) &&
+					(batchPlannerPlan.getBatchPlannerPlanId() !=
+						ercBatchPlannerPlan.getBatchPlannerPlanId())) {
+
+					throw new DuplicateBatchPlannerPlanExternalReferenceCodeException(
+						"Duplicate batch planner plan with external reference code " +
+							batchPlannerPlan.getExternalReferenceCode() +
+								" and company " +
+									batchPlannerPlan.getCompanyId());
+				}
+			}
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -6121,6 +6432,8 @@ public class BatchPlannerPlanPersistenceImpl
 
 		entityCache.putResult(
 			BatchPlannerPlanImpl.class, batchPlannerPlanModelImpl, false, true);
+
+		cacheUniqueFindersCache(batchPlannerPlanModelImpl);
 
 		if (isNew) {
 			batchPlannerPlan.setNew(false);
@@ -6525,6 +6838,16 @@ public class BatchPlannerPlanPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "export", "template"}, false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_finderPathCountByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, false);
 
 		_setBatchPlannerPlanUtilPersistence(this);
 	}

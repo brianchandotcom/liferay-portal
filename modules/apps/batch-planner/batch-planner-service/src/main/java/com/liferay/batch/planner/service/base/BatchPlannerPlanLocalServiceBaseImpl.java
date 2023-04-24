@@ -254,6 +254,23 @@ public abstract class BatchPlannerPlanLocalServiceBaseImpl
 			batchPlannerPlanId);
 	}
 
+	@Override
+	public BatchPlannerPlan fetchBatchPlannerPlanByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return batchPlannerPlanPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public BatchPlannerPlan getBatchPlannerPlanByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return batchPlannerPlanPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the batch planner plan with the primary key.
 	 *

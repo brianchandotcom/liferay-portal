@@ -35,6 +35,10 @@ public class BatchPlannerPlanTable extends BaseTable<BatchPlannerPlanTable> {
 
 	public final Column<BatchPlannerPlanTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<BatchPlannerPlanTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<BatchPlannerPlanTable, Long> batchPlannerPlanId =
 		createColumn(
 			"batchPlannerPlanId", Long.class, Types.BIGINT,

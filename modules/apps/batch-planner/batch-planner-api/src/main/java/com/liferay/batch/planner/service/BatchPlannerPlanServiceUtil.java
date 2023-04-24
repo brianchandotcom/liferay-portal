@@ -40,14 +40,14 @@ public class BatchPlannerPlanServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerPlanServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static BatchPlannerPlan addBatchPlannerPlan(
-			boolean export, String externalType, String externalURL,
-			String internalClassName, String name, int size,
+			String externalReferenceCode, boolean export, String externalType,
+			String externalURL, String internalClassName, String name, int size,
 			String taskItemDelegateName, boolean template)
 		throws PortalException {
 
 		return getService().addBatchPlannerPlan(
-			export, externalType, externalURL, internalClassName, name, size,
-			taskItemDelegateName, template);
+			externalReferenceCode, export, externalType, externalURL,
+			internalClassName, name, size, taskItemDelegateName, template);
 	}
 
 	public static BatchPlannerPlan deleteBatchPlannerPlan(

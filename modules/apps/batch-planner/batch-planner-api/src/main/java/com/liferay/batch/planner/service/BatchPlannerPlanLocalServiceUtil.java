@@ -62,14 +62,15 @@ public class BatchPlannerPlanLocalServiceUtil {
 	}
 
 	public static BatchPlannerPlan addBatchPlannerPlan(
-			long userId, boolean export, String externalType,
-			String externalURL, String internalClassName, String name, int size,
-			String taskItemDelegateName, boolean template)
+			String externalReferenceCode, long userId, boolean export,
+			String externalType, String externalURL, String internalClassName,
+			String name, int size, String taskItemDelegateName,
+			boolean template)
 		throws PortalException {
 
 		return getService().addBatchPlannerPlan(
-			userId, export, externalType, externalURL, internalClassName, name,
-			size, taskItemDelegateName, template);
+			externalReferenceCode, userId, export, externalType, externalURL,
+			internalClassName, name, size, taskItemDelegateName, template);
 	}
 
 	/**
@@ -235,6 +236,13 @@ public class BatchPlannerPlanLocalServiceUtil {
 		return getService().fetchBatchPlannerPlan(batchPlannerPlanId);
 	}
 
+	public static BatchPlannerPlan fetchBatchPlannerPlanByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchBatchPlannerPlanByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -252,6 +260,14 @@ public class BatchPlannerPlanLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getBatchPlannerPlan(batchPlannerPlanId);
+	}
+
+	public static BatchPlannerPlan getBatchPlannerPlanByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getBatchPlannerPlanByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**

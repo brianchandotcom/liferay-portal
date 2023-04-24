@@ -1746,6 +1746,76 @@ public class BatchPlannerPlanUtil {
 	}
 
 	/**
+	 * Returns the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPlanException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching batch planner plan
+	 * @throws NoSuchPlanException if a matching batch planner plan could not be found
+	 */
+	public static BatchPlannerPlan findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.batch.planner.exception.NoSuchPlanException {
+
+		return getPersistence().findByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
+	 */
+	public static BatchPlannerPlan fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching batch planner plan, or <code>null</code> if a matching batch planner plan could not be found
+	 */
+	public static BatchPlannerPlan fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_C(
+			externalReferenceCode, companyId, useFinderCache);
+	}
+
+	/**
+	 * Removes the batch planner plan where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the batch planner plan that was removed
+	 */
+	public static BatchPlannerPlan removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.batch.planner.exception.NoSuchPlanException {
+
+		return getPersistence().removeByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the number of batch planner plans where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching batch planner plans
+	 */
+	public static int countByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().countByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
 	 * Caches the batch planner plan in the entity cache if it is enabled.
 	 *
 	 * @param batchPlannerPlan the batch planner plan

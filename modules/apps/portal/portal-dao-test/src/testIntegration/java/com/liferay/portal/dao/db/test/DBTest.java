@@ -286,7 +286,7 @@ public class DBTest {
 				_TABLE_NAME_1, "testColumn",
 				"VARCHAR(40) default 'test value' not null"));
 	}
-
+	
 	@Test
 	public void testAlterTableDropIndexedColumn() throws Exception {
 		_addIndex(new String[] {"typeVarchar", "typeBoolean"});

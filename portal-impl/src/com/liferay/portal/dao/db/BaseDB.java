@@ -297,6 +297,18 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public String getDefaultValue(String databaseStoredDefaultValue) {
+		Matcher matcher = databaseStoredDefaultValuePattern.matcher(
+			databaseStoredDefaultValue);
+
+		if (matcher.find()) {
+			return matcher.group(2);
+		}
+
+		return databaseStoredDefaultValue;
+	}
+
+	@Override
 	public List<Index> getIndexes(Connection connection) throws SQLException {
 		return TransformUtil.transform(
 			getIndexes(connection, null, null, false),
@@ -1054,6 +1066,8 @@ public abstract class BaseDB implements DB {
 
 	protected static final Pattern columnTypePattern = Pattern.compile(
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern databaseStoredDefaultValuePattern =
+		Pattern.compile("^('?)(\\d+|.*)\\1(::.*| )?", Pattern.CASE_INSENSITIVE);
 
 	private void _addIndexes(
 			Connection connection, String indexesSQL,

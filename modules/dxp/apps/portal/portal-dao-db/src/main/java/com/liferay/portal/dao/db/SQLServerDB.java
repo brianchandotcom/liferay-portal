@@ -37,6 +37,8 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alexander Chow
@@ -104,6 +106,23 @@ public class SQLServerDB extends BaseDB {
 			new String[] {"\\", "''", "\"", "\n", "\r"});
 
 		return template;
+	}
+
+	@Override
+	public String getDefaultValue(String databaseStoredDefaultValue) {
+		Matcher matcher = databaseStoredDefaultValuePattern.matcher(
+			databaseStoredDefaultValue);
+
+		if (matcher.find()) {
+
+			if (matcher.group(1) == null) {
+				return matcher.group(2);
+			}
+
+			return matcher.group(1);
+		}
+
+		return databaseStoredDefaultValue;
 	}
 
 	@Override
@@ -292,6 +311,10 @@ public class SQLServerDB extends BaseDB {
 			return sb.toString();
 		}
 	}
+
+	protected static final Pattern databaseStoredDefaultValuePattern =
+		Pattern.compile(
+			"^\\('(.*)'\\)|\\(\\((\\d*)\\)\\)", Pattern.CASE_INSENSITIVE);
 
 	private void _dropDefaultConstraint(
 			Connection connection, String tableName, String columnName)

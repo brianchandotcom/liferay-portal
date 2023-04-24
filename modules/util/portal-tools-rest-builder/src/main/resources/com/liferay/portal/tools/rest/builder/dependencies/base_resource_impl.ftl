@@ -384,6 +384,8 @@ public abstract class Base${schemaName}ResourceImpl
 								existing${schemaName}.set${propertyName?cap_first}(${schemaVarName}.get${propertyName?cap_first}());
 							</#if>
 						}
+					<#elseif stringUtil.equals(properties[propertyName], "CustomField[]")>
+						existing${schemaName}.set${propertyName?cap_first}(${schemaVarName}.get${propertyName?cap_first}());
 					</#if>
 				</#list>
 

@@ -14,53 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.form.taglib.internal.servlet.taglib.util;
 
-import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
-import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
-import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
  */
 @Component(service = {})
 public class DDMFormTaglibUtil {
-
-	public static DDMFormBuilderSettingsResponse getDDMFormBuilderSettings(
-		DDMFormBuilderSettingsRequest ddmFormBuilderSettingsRequest) {
-
-		if (_ddmFormBuilderSettingsRetriever == null) {
-			throw new IllegalStateException();
-		}
-
-		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever =
-			_ddmFormBuilderSettingsRetriever;
-
-		return ddmFormBuilderSettingsRetriever.getSettings(
-			ddmFormBuilderSettingsRequest);
-	}
-
-	public static String getNPMResolvedPackageName() {
-		return _npmResolver.resolveModuleName(
-			"dynamic-data-mapping-form-builder");
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormBuilderSettingsRetriever(
-		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever) {
-
-		_ddmFormBuilderSettingsRetriever = ddmFormBuilderSettingsRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setNPMResolver(NPMResolver npmResolver) {
-		_npmResolver = npmResolver;
-	}
-
-	private static DDMFormBuilderSettingsRetriever
-		_ddmFormBuilderSettingsRetriever;
-	private static NPMResolver _npmResolver;
-
 }

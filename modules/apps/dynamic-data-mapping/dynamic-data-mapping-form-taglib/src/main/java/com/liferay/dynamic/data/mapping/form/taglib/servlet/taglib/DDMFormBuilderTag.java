@@ -19,13 +19,14 @@ import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderConte
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
-import com.liferay.dynamic.data.mapping.form.taglib.internal.servlet.taglib.util.DDMFormTaglibUtil;
+import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
 import com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib.base.BaseDDMFormBuilderTag;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -126,11 +127,18 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 	protected DDMFormBuilderSettingsResponse getDDMFormBuilderSettings(
 		HttpServletRequest httpServletRequest) {
 
+		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever =
+			_ddmFormBuilderSettingsRetrieverSnapshot.get();
+
+		if (ddmFormBuilderSettingsRetriever == null) {
+			throw new IllegalStateException();
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return DDMFormTaglibUtil.getDDMFormBuilderSettings(
+		return ddmFormBuilderSettingsRetriever.getSettings(
 			DDMFormBuilderSettingsRequest.with(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				getFieldSetClassNameId(),
@@ -176,9 +184,13 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 		setNamespacedAttribute(
 			httpServletRequest, "functionsURL",
 			ddmFormBuilderSettingsResponse.getFunctionsURL());
+
+		NPMResolver npmResolver = _npmResolverSnapshot.get();
+
 		setNamespacedAttribute(
 			httpServletRequest, "npmResolvedPackageName",
-			DDMFormTaglibUtil.getNPMResolvedPackageName());
+			npmResolver.resolveModuleName("dynamic-data-mapping-form-builder"));
+
 		setNamespacedAttribute(
 			httpServletRequest, "rolesURL",
 			ddmFormBuilderSettingsResponse.getRolesURL());
@@ -190,5 +202,10 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 	private static final Snapshot<DDMFormBuilderContextFactory>
 		_ddmFormBuilderContextFactorySnapshot = new Snapshot<>(
 			DDMFormBuilderTag.class, DDMFormBuilderContextFactory.class);
+	private static final Snapshot<DDMFormBuilderSettingsRetriever>
+		_ddmFormBuilderSettingsRetrieverSnapshot = new Snapshot<>(
+			DDMFormBuilderTag.class, DDMFormBuilderSettingsRetriever.class);
+	private static final Snapshot<NPMResolver> _npmResolverSnapshot =
+		new Snapshot<>(DDMFormBuilderTag.class, NPMResolver.class);
 
 }

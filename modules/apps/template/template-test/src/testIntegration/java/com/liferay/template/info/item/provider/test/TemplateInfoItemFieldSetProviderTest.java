@@ -399,6 +399,36 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	@Test
+	public void testGetInfoFieldValuesLocalizedContentDifferentDefaultLocale()
+		throws Exception {
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			ListUtil.fromArray(
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			LocaleUtil.SPAIN);
+
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);
+
+		Map<Locale, String> contentMap = _getRandomLocalizedMap();
+
+		_journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			_getRandomLocalizedMap(), _getRandomLocalizedMap(), contentMap,
+			LocaleUtil.US, false, false, _serviceContext);
+
+		_assertLocalizedValues(
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, contentMap.get(LocaleUtil.US)
+			).put(
+				LocaleUtil.SPAIN, contentMap.get(LocaleUtil.SPAIN)
+			).put(
+				LocaleUtil.US, contentMap.get(LocaleUtil.US)
+			).build());
+	}
+
+	@Test
 	public void testGetInfoFieldValuesRenderingCategoriesInfoFieldType()
 		throws Exception {
 

@@ -712,4 +712,62 @@ definition {
 		}
 	}
 
+	@description = "LPS-169877 A warning message is shown if the object does not have categorization enabled and we try to use tags"
+	@priority = 4
+	test ViewWarningMessageWithCategorizationDisabled {
+		task ("Given an object with categorization disabled") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "MyObject",
+				objectName = "MyObject",
+				pluralLabelName = "MyObject",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "MyObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "MyObject");
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
+
+			Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#ENABLE_CATEGORIZATION_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("When we try to use tag fragments") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Tags",
+				targetFragmentName = "Text Input");
+		}
+
+		task ("Then a warning message is shown") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Categorization is disabled for the selected content. To show categories in this fragment, categorization must be enabled.");
+		}
+	}
+
 }

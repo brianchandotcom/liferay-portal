@@ -66,6 +66,146 @@ definition {
 		}
 	}
 
+	@description = "LPS-169877 The tag field can be used in a page template"
+	@priority = 5
+	test CanUseTagsInPageTemplate {
+		task ("Given a page template with the tag fragment") {
+			for (var i : list "1,2") {
+				JSONAssettag.addTag(
+					groupName = "Global",
+					tagName = "global tag ${i}");
+			}
+
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "local tag");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "MyObject",
+				objectName = "MyObject",
+				pluralLabelName = "MyObject",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "MyObject");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "MyObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "MyObject");
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
+
+			Button.clickSave();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "MyObject");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldLabelName = "Name",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addCategorizationOnLayoutTab();
+
+			Button.clickSave();
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+
+			PageEditor.viewInputStyle(
+				label = "Name",
+				showLabel = "true",
+				type = "text-input");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Tags",
+				targetFragmentName = "Text Input");
+
+			PageEditor.publish();
+		}
+
+		task ("When we create a page with the created template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Page Template Name");
+
+			PageEditor.publish();
+		}
+
+		task ("Then it is possible to send tags as entries") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			FormViewBuilder.editText(
+				fieldName = "Name",
+				fieldValue = "Test Name");
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "global tag 1,global tag 2,local tag");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			ProductMenu.gotoPortlet(
+                category = "Categorization",
+                portlet = "MyObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Test Name");
+
+			for (var tagName : list "global tag 1,global tag 2,local tag") {
+				AssetCategorization.viewTag(tagName = "${tagName}");
+			}
+		}
+	}
+
 	@description = "The user can delete multiple tags via Toolbar management."
 	@priority = 4
 	test DeleteMultipleTagsViaToolbar {

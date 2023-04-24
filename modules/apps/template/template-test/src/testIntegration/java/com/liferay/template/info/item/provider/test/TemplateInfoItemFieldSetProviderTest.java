@@ -442,6 +442,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_group.getGroupId(),
 			ListUtil.fromArray(LocaleUtil.US, LocaleUtil.SPAIN), LocaleUtil.US);
 
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
@@ -490,6 +492,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(),
 			ListUtil.fromArray(LocaleUtil.US, LocaleUtil.SPAIN), LocaleUtil.US);
+
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 
 		TemplateEntry journalArticleTemplateEntry =
 			TemplateTestUtil.addTemplateEntry(
@@ -596,6 +600,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_group.getGroupId(),
 			ListUtil.fromArray(LocaleUtil.US, LocaleUtil.SPAIN), LocaleUtil.US);
 
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+
 		String expectedKey1 = RandomTestUtil.randomString(10);
 		String expectedKey2 = RandomTestUtil.randomString(10);
 
@@ -669,6 +675,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_group.getGroupId(),
 			ListUtil.fromArray(LocaleUtil.US, LocaleUtil.SPAIN), LocaleUtil.US);
 
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+
 		DDMFormField ddmFormField = _createDDMFormField(
 			false,
 			HashMapBuilder.put(
@@ -723,6 +731,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(),
 			ListUtil.fromArray(LocaleUtil.US, LocaleUtil.SPAIN), LocaleUtil.US);
+
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 
 		String expectedKey = RandomTestUtil.randomString(10);
 

@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -385,6 +386,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 						objectField.getName()
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.<String>builder(
+						).defaultLocale(
+							LocaleUtil.fromLanguageId(
+								objectField.getDefaultLanguageId())
 						).values(
 							objectField.getLabelMap()
 						).build()
@@ -456,6 +460,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					relatedObjectField.getName()
 				).labelInfoLocalizedValue(
 					InfoLocalizedValue.<String>builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							relatedObjectField.getDefaultLanguageId())
 					).values(
 						relatedObjectField.getLabelMap()
 					).build()

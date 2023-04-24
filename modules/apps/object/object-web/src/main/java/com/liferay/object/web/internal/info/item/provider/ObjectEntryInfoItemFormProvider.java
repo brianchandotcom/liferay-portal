@@ -615,6 +615,9 @@ public class ObjectEntryInfoItemFormProvider
 								editable
 							).labelInfoLocalizedValue(
 								InfoLocalizedValue.<String>builder(
+								).defaultLocale(
+									LocaleUtil.fromLanguageId(
+										objectField.getDefaultLanguageId())
 								).values(
 									objectField.getLabelMap()
 								).build()

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
@@ -170,6 +172,8 @@ public class AssetEntriesCheckerHelper {
 		}
 
 		_notifySubscribers(
+			_portal.getLayoutFullURL(
+				layout.getGroupId(), portletPreferencesModel.getPortletId()),
 			_subscriptionLocalService.getSubscriptions(
 				portletPreferencesModel.getCompanyId(),
 				com.liferay.portal.kernel.model.PortletPreferences.class.
@@ -419,7 +423,8 @@ public class AssetEntriesCheckerHelper {
 	}
 
 	private SubscriptionSender _getSubscriptionSender(
-		PortletPreferences portletPreferences, List<AssetEntry> assetEntries) {
+		String layoutURL, PortletPreferences portletPreferences,
+		List<AssetEntry> assetEntries) {
 
 		if (assetEntries.isEmpty()) {
 			return null;
@@ -448,6 +453,7 @@ public class AssetEntriesCheckerHelper {
 				assetEntries,
 				entry -> entry.getTitle(LocaleUtil.getSiteDefault()),
 				StringPool.COMMA_AND_SPACE));
+		subscriptionSender.setEntryURL(layoutURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setGroupId(assetEntry.getGroupId());
 		subscriptionSender.setHtmlFormat(true);
@@ -456,6 +462,8 @@ public class AssetEntriesCheckerHelper {
 			PortletConfigurationUtil.getPortletTitleMap(portletPreferences));
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("asset_entry", assetEntry.getEntryId());
+		subscriptionSender.setNotificationType(
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY);
 		subscriptionSender.setPortletId(
 			AssetPublisherPortletKeys.ASSET_PUBLISHER);
 		subscriptionSender.setReplyToAddress(fromAddress);
@@ -464,8 +472,8 @@ public class AssetEntriesCheckerHelper {
 	}
 
 	private void _notifySubscribers(
-		List<Subscription> subscriptions, PortletPreferences portletPreferences,
-		List<AssetEntry> assetEntries) {
+		String layoutURL, List<Subscription> subscriptions,
+		PortletPreferences portletPreferences, List<AssetEntry> assetEntries) {
 
 		if (!_assetPublisherWebHelper.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
@@ -507,7 +515,7 @@ public class AssetEntriesCheckerHelper {
 				assetEntriesToUsersMap.entrySet()) {
 
 			SubscriptionSender subscriptionSender = _getSubscriptionSender(
-				portletPreferences, entry.getKey());
+				layoutURL, portletPreferences, entry.getKey());
 
 			if (subscriptionSender == null) {
 				continue;
@@ -555,6 +563,9 @@ public class AssetEntriesCheckerHelper {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

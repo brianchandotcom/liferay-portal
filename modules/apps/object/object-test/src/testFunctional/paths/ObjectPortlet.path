@@ -201,6 +201,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ENABLE_CATEGORIZATION_BUTTON</td>
+		<td>//span[text()='Enable Categorization']/preceding-sibling::span/input</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_EMPTY_LABEL_IN_DATE_ENTRY</td>
 		<td>//input[contains(@placeholder,'__/__/____')]</td>
 		<td></td>

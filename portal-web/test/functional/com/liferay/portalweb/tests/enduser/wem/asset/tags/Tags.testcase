@@ -302,6 +302,166 @@ definition {
 		}
 	}
 
+	@description = "LPS-169877 Both site and global tags are shown when the object scope is set to the site"
+	@priority = 5
+	test ViewAllTagsShownInObjectSiteScoped {
+		task ("Given an object with scope to a site") {
+			for (var i : list "1,2") {
+				JSONAssettag.addTag(
+					groupName = "Global",
+					tagName = "global tag ${i}");
+			}
+
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "local tag");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "MyObject",
+				objectName = "MyObject",
+				pluralLabelName = "MyObject",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "MyObject");
+
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = "MyObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "MyObject");
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
+
+			Button.clickSave();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "MyObject");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			ObjectAdmin.markLayoutAsDefault();
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldLabelName = "Name",
+				tabName = "Field Tab");
+
+			ObjectAdmin.addCategorizationOnLayoutTab();
+
+			Button.clickSave();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Tags",
+				targetFragmentName = "Form Container");
+
+			Alert.viewErrorMessage(errorMessage = "Fragments cannot be placed inside an unmapped form container.");
+
+			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+
+			PageEditor.viewInputStyle(
+				label = "Name",
+				showLabel = "true",
+				type = "text-input");
+
+			PageEditor.viewFragmentNotPresent(fragmentName = "Tags");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Tags",
+				targetFragmentName = "Text Input");
+
+			PageEditor.publish();
+		}
+
+		task ("When we add tags as input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			FormViewBuilder.editText(
+				fieldName = "Name",
+				fieldValue = "Test Name");
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "global tag 1,global tag 2,local tag");
+		}
+
+		task ("Then both site and global tags are shown") {
+			for (var i : list "1,2") {
+				AssertTextEquals(
+					key_tagName = "global tag ${i}",
+					locator1 = "AssetCategorization#TAG",
+					value1 = "global tag ${i}");
+			}
+
+			AssertTextEquals(
+				key_tagName = "local tag",
+				locator1 = "AssetCategorization#TAG",
+				value1 = "local tag");
+
+			AssetCategorization.removeTag(tagName = "local tag");
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "local tag");
+
+			for (var i : list "1,2") {
+				AssetCategorization.removeTag(tagName = "global tag ${i}");
+			}
+
+			AssetCategorization.removeTag(tagName = "local tag");
+
+			AssetCategorization.selectTag(
+				skipSelectFrame = "true",
+				tagNameList = "global tag 1,global tag 2,local tag");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "MyObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Test Name");
+
+			for (var tagName : list "global tag 1,global tag 2,local tag") {
+				AssetCategorization.viewTag(tagName = "${tagName}");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of tags admin."
 	@priority = 4
 	test ViewDropdownMenuIconsInTagsAdmin {

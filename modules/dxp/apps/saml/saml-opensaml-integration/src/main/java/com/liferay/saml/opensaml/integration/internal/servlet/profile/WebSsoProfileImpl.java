@@ -1029,34 +1029,35 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		DecryptionParametersResolver decryptionParametersResolver =
 			new BasicDecryptionParametersResolver();
 
-		DecryptionParameters decryptionParameters = null;
-
 		try {
-			decryptionParameters = decryptionParametersResolver.resolveSingle(
-				new CriteriaSet(
-					new DecryptionConfigurationCriterion(
-						SecurityConfigurationSupport.
-							getGlobalDecryptionConfiguration())));
+			DecryptionParameters decryptionParameters =
+				decryptionParametersResolver.resolveSingle(
+					new CriteriaSet(
+						new DecryptionConfigurationCriterion(
+							SecurityConfigurationSupport.
+								getGlobalDecryptionConfiguration())));
+
+			if (decryptionParameters == null) {
+				throw new RuntimeException(
+					"Unable to resolve decryption parameters from the " +
+						"configuration");
+			}
+
+			decryptionParameters.setKEKKeyInfoCredentialResolver(
+				new DefaultKeyInfoCredentialResolver());
+
+			Decrypter decrypter = new CustomParserPoolDecrypter(
+				decryptionParameters);
+
+			decrypter.setRootInNewDocument(true);
+
+			return decrypter;
 		}
 		catch (ResolverException resolverException) {
-			throw new RuntimeException(resolverException);
+			_log.error(resolverException);
 		}
 
-		if (decryptionParameters == null) {
-			throw new RuntimeException(
-				"Unable to resolve decryption parameters from the " +
-					"configuration");
-		}
-
-		decryptionParameters.setKEKKeyInfoCredentialResolver(
-			new DefaultKeyInfoCredentialResolver());
-
-		Decrypter decrypter = new CustomParserPoolDecrypter(
-			decryptionParameters);
-
-		decrypter.setRootInNewDocument(true);
-
-		return decrypter;
+		return null;
 	}
 
 	private SAMLMetadataEncryptionParametersResolver
@@ -1173,17 +1174,29 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		Decrypter decrypter = _decrypterDCLSingleton.getSingleton(
 			this::_createDecrypter);
 
-		for (EncryptedAssertion encryptedAssertion : encryptedAssertions) {
-			try {
-				assertions.add(decrypter.decrypt(encryptedAssertion));
-			}
-			catch (DecryptionException decryptionException) {
-				_log.error(
-					"Unable to assertion decryption", decryptionException);
+		if (decrypter == null) {
+			if (!encryptedAssertions.isEmpty()) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Message returned encrypted assertions but there is " +
+							"no decrypter available");
+				}
 			}
 		}
+		else {
+			for (EncryptedAssertion encryptedAssertion : encryptedAssertions) {
+				try {
+					assertions.add(decrypter.decrypt(encryptedAssertion));
+				}
+				catch (DecryptionException decryptionException) {
+					_log.error(
+						"Unable to assertion decryption", decryptionException);
+				}
+			}
 
-		inboundMessageContext.addSubcontext(new DecrypterContext(decrypter));
+			inboundMessageContext.addSubcontext(
+				new DecrypterContext(decrypter));
+		}
 
 		SignatureTrustEngine signatureTrustEngine =
 			metadataManager.getSignatureTrustEngine();

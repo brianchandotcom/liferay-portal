@@ -18,13 +18,15 @@ $zIndexContent: 0;
 		100vh -
 			(
 				var(--control-menu-height) + var(--toolbar-height) +
-					var(--change-tracking-indicator-height, 0px)
+					var(--change-tracking-indicator-height, 0px) +
+					var(--zoom-alert-height)
 			)
 	);
 	position: fixed;
 	top: calc(
 		var(--control-menu-height) + var(--toolbar-height) +
-			var(--change-tracking-indicator-height, 0px)
+			var(--change-tracking-indicator-height, 0px) +
+			var(--zoom-alert-height)
 	);
 	/* stylelint-enable */
 	z-index: $sidebarZIndex;
@@ -122,7 +124,8 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 			100vh -
 				(
 					var(--control-menu-height) + var(--toolbar-height) +
-						var(--change-tracking-indicator-height, 0px)
+						var(--change-tracking-indicator-height, 0px) +
+						var(--zoom-alert-height)
 				)
 		);
 		/* stylelint-enable */
@@ -208,7 +211,8 @@ html#{$cadmin-selector} .page-editor__wrapper {
 		100vh -
 			(
 				var(--control-menu-height) + var(--toolbar-height) +
-					var(--change-tracking-indicator-height, 0px) + #{$toolbarBorders}
+					var(--change-tracking-indicator-height, 0px) +
+					var(--zoom-alert-height) + #{$toolbarBorders}
 			)
 	);
 	/* stylelint-enable */

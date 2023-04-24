@@ -13,16 +13,6 @@ html#{$cadmin-selector} {
 				border-bottom: 1px solid $cadmin-primary-l1;
 			}
 
-			.page-editor__resolution-info-alert {
-				display: none;
-			}
-
-			@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
-				.page-editor__resolution-info-alert {
-					display: block;
-				}
-			}
-
 			.btn-secondary:active,
 			.btn-secondary[aria-pressed='true'],
 			.btn-secondary[aria-pressed='true']:hover {

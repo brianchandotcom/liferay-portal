@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
@@ -42,6 +41,7 @@ import PublishButton from './PublishButton';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 import ViewportSizeSelector from './ViewportSizeSelector';
+import ZoomAlert from './ZoomAlert';
 import Undo from './undo/Undo';
 
 const {Suspense, useCallback, useRef} = React;
@@ -219,11 +219,7 @@ function ToolbarBody({className}) {
 			onClick={deselectItem}
 			ref={dropClearRef}
 		>
-			<div className="p-2 page-editor__resolution-info-alert w-100">
-				<ClayAlert className="mb-0" displayType="info">
-					This editor is not optimized for mobile or 400% zooming.
-				</ClayAlert>
-			</div>
+			<ZoomAlert />
 
 			<ul className="navbar-nav start" onClick={deselectItem}>
 				{config.toolbarPlugins.map(

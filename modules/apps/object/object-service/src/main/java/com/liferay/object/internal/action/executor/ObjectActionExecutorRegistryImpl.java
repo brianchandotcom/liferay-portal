@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -77,12 +76,11 @@ public class ObjectActionExecutorRegistryImpl
 						return false;
 					}
 
-					Set<String> allowedObjectDefinitionNames =
-						objectActionExecutor.getAllowedObjectDefinitionNames();
+					List<String> objectDefinitionNames =
+						objectActionExecutor.getObjectDefinitionNames();
 
-					return allowedObjectDefinitionNames.isEmpty() ||
-						   allowedObjectDefinitionNames.contains(
-							   objectDefinitionName);
+					return objectDefinitionNames.isEmpty() ||
+						   objectDefinitionNames.contains(objectDefinitionName);
 				}),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {

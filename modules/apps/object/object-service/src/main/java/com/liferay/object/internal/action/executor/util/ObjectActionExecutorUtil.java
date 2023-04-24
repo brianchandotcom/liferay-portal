@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class ObjectActionExecutorUtil {
 
-	public static boolean isCompanyRestrictionCriteriaMet(
+	public static boolean isAllowedCompany(
 		long companyId, ObjectActionExecutor objectActionExecutor) {
 
 		if ((objectActionExecutor.getCompanyId() == 0) ||
@@ -35,7 +35,7 @@ public class ObjectActionExecutorUtil {
 		return false;
 	}
 
-	public static boolean isObjectDefinitionsRestrictionCriteriaMet(
+	public static boolean isAllowedObjectDefinition(
 		ObjectActionExecutor objectActionExecutor,
 		String objectDefinitionName) {
 

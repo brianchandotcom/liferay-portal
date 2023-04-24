@@ -454,7 +454,7 @@ public class ObjectActionLocalServiceImpl
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				objectActionExecutorKey);
 
-		if (!ObjectActionExecutorUtil.isCompanyRestrictionCriteriaMet(
+		if (!ObjectActionExecutorUtil.isAllowedCompany(
 				objectDefinition.getCompanyId(), objectActionExecutor)) {
 
 			throw new ObjectActionExecutorKeyException(
@@ -464,7 +464,7 @@ public class ObjectActionLocalServiceImpl
 					String.valueOf(CompanyThreadLocal.getCompanyId())));
 		}
 
-		if (!ObjectActionExecutorUtil.isObjectDefinitionsRestrictionCriteriaMet(
+		if (!ObjectActionExecutorUtil.isAllowedObjectDefinition(
 				objectActionExecutor, objectDefinition.getName())) {
 
 			throw new ObjectActionExecutorKeyException(

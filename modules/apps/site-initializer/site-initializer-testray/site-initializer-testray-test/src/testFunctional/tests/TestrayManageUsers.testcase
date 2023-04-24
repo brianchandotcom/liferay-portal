@@ -200,4 +200,45 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173531 | Test Summary: Verify that as an administrator can add and delete a new user"
+	@priority = 5
+	test AdminCanAddAndDeleteNewUser {
+		task ("When that the administrator add a user") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			Click(locator1 = "Button#PLUS");
+
+			TestrayManageUser.addUser(
+				userEmailAddressEdit = "userfirst@liferay.com",
+				userFirstNameEdit = "changedfirstname",
+				userLastNameEdit = "Updateln",
+				userScreenNameEdit = "testscreen",
+				userPassword = "test1",
+				rePassword = "test1",
+				listRoles = "Testray User");
+		}
+			
+		task ("Then can see the user created in the list") {
+			AssertElementPresent(
+				key_projectName = "changedfirstname Updateln",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When delete the user") {
+			Testray.goToProjectPage(projectName = "userfirst@liferay.com");
+
+			Button.click(button = "Delete User");
+		}
+
+		task ("Then can not see the user in the list") {
+			Refresh();
+
+			AssertElementNotPresent(
+				key_projectName = "changedfirstname Updateln",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.staging.StagingGroupHelper;
@@ -131,7 +132,32 @@ public class TemplateInfoItemFieldSetProviderImpl
 					ServiceContext serviceContext =
 						ServiceContextThreadLocal.getServiceContext();
 
-					if (serviceContext == null) {
+					if ((serviceContext == null) ||
+						(serviceContext.getThemeDisplay() == null)) {
+
+						return StringPool.BLANK;
+					}
+
+					ThemeDisplay currentThemeDisplay =
+						serviceContext.getThemeDisplay();
+
+					ThemeDisplay themeDisplay = null;
+
+					try {
+						themeDisplay =
+							(ThemeDisplay)currentThemeDisplay.clone();
+
+						themeDisplay.setLocale(locale);
+					}
+					catch (CloneNotSupportedException
+								cloneNotSupportedException) {
+
+						_log.error(
+							"Unable to clone theme display",
+							cloneNotSupportedException);
+					}
+
+					if (themeDisplay == null) {
 						return StringPool.BLANK;
 					}
 
@@ -159,7 +185,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 					try {
 						return templateDisplayTemplateTransformer.transform(
-							serviceContext.getThemeDisplay());
+							themeDisplay);
 					}
 					catch (Exception exception) {
 						_log.error("Unable to transform template", exception);

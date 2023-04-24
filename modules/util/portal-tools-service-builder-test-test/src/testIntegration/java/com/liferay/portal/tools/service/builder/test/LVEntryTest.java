@@ -892,8 +892,8 @@ public class LVEntryTest {
 
 		Assert.assertTrue(
 			StringBundler.concat(
-				"Failed to find ", expectedLVEntryLocalization.toString(),
-				" in ", lvEntryLocalizations.toString()),
+				"Failed to find ", expectedLVEntryLocalization, " in ",
+				lvEntryLocalizations),
 			found);
 	}
 

@@ -1157,8 +1157,7 @@ public class RESTBuilder {
 		Info info = openAPIYAML.getInfo();
 
 		if (info == null) {
-			return StringBundler.concat(
-				"info:\n", licenseSB.toString(), '\n', yamlString);
+			return StringBundler.concat("info:\n", licenseSB, '\n', yamlString);
 		}
 
 		License license = info.getLicense();

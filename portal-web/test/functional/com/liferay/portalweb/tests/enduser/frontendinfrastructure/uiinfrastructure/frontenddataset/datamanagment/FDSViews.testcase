@@ -252,7 +252,7 @@ definition {
 		task ("When The user goes to add a new Dataset") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "Channel");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("And Add a new view") {

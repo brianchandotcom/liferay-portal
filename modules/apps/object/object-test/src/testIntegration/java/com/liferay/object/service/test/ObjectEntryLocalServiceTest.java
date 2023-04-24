@@ -145,7 +145,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags({"LPS-135398", "LPS-163716"})
+@FeatureFlags("LPS-163716")
 @RunWith(Arquillian.class)
 public class ObjectEntryLocalServiceTest {
 
@@ -194,7 +194,15 @@ public class ObjectEntryLocalServiceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					"Email Address", "emailAddress", false),
+					"Email Address", "emailAddress",
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+						).value(
+							Boolean.TRUE.toString()
+						).build()),
+					false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
@@ -546,6 +554,20 @@ public class ObjectEntryLocalServiceTest {
 					"emailAddressRequired", "john@liferay.com"
 				).put(
 					"firstName", "Judas"
+				).build()));
+
+		_assertFailure(
+			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
+			"Unique value constraint violation for " +
+				_objectDefinition.getDBTableName() +
+					".emailAddress_ with value james@liferay.com",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", "james@liferay.com"
+				).put(
+					"emailAddressRequired", "james@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build()));
 	}
 
@@ -1947,6 +1969,27 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(), objectEntryId,
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", RandomTestUtil.randomString(281)
+				).build(),
+				ServiceContextTestUtil.getServiceContext()));
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", "james@liferay.com"
+			).put(
+				"emailAddressRequired", "james@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		_assertFailure(
+			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
+			"Unique value constraint violation for " +
+				_objectDefinition.getDBTableName() +
+					".emailAddress_ with value james@liferay.com",
+			() -> _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntryId,
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", "james@liferay.com"
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
 

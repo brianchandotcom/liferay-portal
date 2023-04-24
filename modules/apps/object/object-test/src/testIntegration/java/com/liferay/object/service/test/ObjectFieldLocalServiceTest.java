@@ -38,6 +38,7 @@ import com.liferay.object.exception.ObjectFieldStateException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
@@ -240,6 +241,31 @@ public class ObjectFieldLocalServiceTest {
 									NAME_DEFAULT_VALUE_TYPE
 							).value(
 								ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+							).build())
+					).build())));
+
+		String uniqueValues = RandomTestUtil.randomString();
+
+		_assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			"The value " + uniqueValues +
+				" of setting uniqueValues is invalid for object field text",
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"text"
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+							).value(
+								uniqueValues
 							).build())
 					).build())));
 
@@ -948,6 +974,66 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
 			).build());
 
+		// Business type integer
+
+		ObjectField integerObjectField = _addCustomObjectField(
+			new IntegerObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"integer"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+					).value(
+						"TRUE"
+					).build())
+			).build());
+
+		_assertObjectFieldSettingsValues(
+			integerObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES, "TRUE"
+			).build());
+
+		_updateCustomObjectField(
+			integerObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+				).value(
+					"False"
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			integerObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES, "False"
+			).build());
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		_assertFailure(
+			ObjectFieldSettingValueException.UnmodifiableValue.class,
+			"The value of setting uniqueValues is unmodifiable when object " +
+				"definition is published",
+			() -> _updateCustomObjectField(
+				integerObjectField,
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+					).value(
+						"true"
+					).build())));
+
 		// Business type picklist
 
 		ObjectField picklistObjectField = _addPicklistObjectField(
@@ -962,10 +1048,6 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
 			).build());
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId());
 
 		_assertObjectEntryDefaultValue(
 			_listTypeEntryKey, picklistObjectField, new HashMap<>());

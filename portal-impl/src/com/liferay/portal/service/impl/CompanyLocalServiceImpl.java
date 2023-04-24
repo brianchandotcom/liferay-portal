@@ -2053,6 +2053,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					defaultAdminLastName = PropsValues.DEFAULT_ADMIN_LAST_NAME;
 				}
 
+				if (Validator.isNull(defaultAdminPassword)) {
+					defaultAdminPassword = PropsValues.DEFAULT_ADMIN_PASSWORD;
+				}
+
 				_userLocalService.addDefaultAdminUser(
 					company.getCompanyId(), defaultAdminPassword,
 					defaultAdminScreenName, defaultAdminEmailAddress,

@@ -22,8 +22,7 @@ String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));
 
 <form action="<%= HtmlUtil.escapeAttribute(action) %>" class="form <%= cssClass %> <%= inlineLabels ? "field-labels-inline" : StringPool.BLANK %>" data-fm-namespace="<%= namespace %>" id="<%= fullName %>" method="<%= method %>" name="<%= fullName %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-		<fieldset class="input-container" disabled="disabled">
-			<legend class="sr-only"><%= HtmlUtil.escape(portletDisplay.getTitle()) %></legend>
+		<div aria-label="<%= HtmlUtil.escape(portletDisplay.getTitle()) %>" class="input-container" role="group">
 	</c:if>
 
 	<aui:input name="formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />

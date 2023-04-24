@@ -21,7 +21,7 @@
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-		</fieldset>
+		</div>
 	</c:if>
 </form>
 

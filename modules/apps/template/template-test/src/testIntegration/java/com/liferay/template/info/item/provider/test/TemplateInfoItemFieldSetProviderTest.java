@@ -86,6 +86,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -111,6 +112,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_originalServiceContext = ServiceContextThreadLocal.getServiceContext();
+		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
+		_originalThemeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
 		_group = GroupTestUtil.addGroup();
 
 		_assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
@@ -133,6 +138,13 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_getMockHttpServletRequest(_getThemeDisplay()));
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.pushServiceContext(_originalServiceContext);
+		LocaleThreadLocal.setThemeDisplayLocale(_originalThemeDisplayLocale);
+		LocaleThreadLocal.setSiteDefaultLocale(_originalSiteDefaultLocale);
 	}
 
 	@Test
@@ -876,6 +888,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
+	private ServiceContext _originalServiceContext;
+	private Locale _originalSiteDefaultLocale;
+	private Locale _originalThemeDisplayLocale;
 
 	@Inject
 	private Portal _portal;

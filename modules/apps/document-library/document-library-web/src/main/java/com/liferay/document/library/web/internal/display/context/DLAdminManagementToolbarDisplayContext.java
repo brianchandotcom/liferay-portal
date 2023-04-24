@@ -790,12 +790,14 @@ public class DLAdminManagementToolbarDisplayContext
 		long fileEntryTypeId = _getFileEntryTypeId();
 		String navigation = ParamUtil.getString(
 			_httpServletRequest, "navigation", "home");
+		boolean selectedAssetTagIdsIsEmpty = SetUtil.isEmpty(
+			_getSelectedAssetTagIds(_httpServletRequest));
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(
 					extensionsIsEmpty && (fileEntryTypeId == -1) &&
-					navigation.equals("home"));
+					navigation.equals("home") && selectedAssetTagIdsIsEmpty);
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -804,6 +806,8 @@ public class DLAdminManagementToolbarDisplayContext
 						"/document_library/view"
 					).setNavigation(
 						"home"
+					).setParameter(
+						"assetTagId", (String)null
 					).setParameter(
 						"browseBy", (String)null
 					).setParameter(
@@ -892,9 +896,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.putData("action", "openTagsSelector");
 				dropdownItem.putData(
 					"tagsFilterURL", _getAssetTagSelectorURL());
-				dropdownItem.setActive(
-					SetUtil.isNotEmpty(
-						_getSelectedAssetTagIds(_httpServletRequest)));
+				dropdownItem.setActive(!selectedAssetTagIdsIsEmpty);
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "tags") +
 						StringPool.TRIPLE_PERIOD);

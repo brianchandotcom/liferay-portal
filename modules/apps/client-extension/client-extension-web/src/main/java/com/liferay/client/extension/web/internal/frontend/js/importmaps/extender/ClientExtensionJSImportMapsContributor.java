@@ -15,7 +15,7 @@
 package com.liferay.client.extension.web.internal.frontend.js.importmaps.extender;
 
 import com.liferay.client.extension.web.internal.type.deployer.Registrable;
-import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
+import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -24,15 +24,15 @@ import java.util.Dictionary;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionJSImportmapsContributor
-	implements JSImportmapsContributor, Registrable {
+public class ClientExtensionJSImportMapsContributor
+	implements JSImportMapsContributor, Registrable {
 
-	public ClientExtensionJSImportmapsContributor(
+	public ClientExtensionJSImportMapsContributor(
 		String bareSpecifier, JSONFactory jsonFactory, String url) {
 
-		_importmapsJSONObject = jsonFactory.createJSONObject();
+		_importMapsJSONObject = jsonFactory.createJSONObject();
 
-		_importmapsJSONObject.put(bareSpecifier, url);
+		_importMapsJSONObject.put(bareSpecifier, url);
 	}
 
 	@Override
@@ -41,10 +41,10 @@ public class ClientExtensionJSImportmapsContributor
 	}
 
 	@Override
-	public JSONObject getImportmapsJSONObject() {
-		return _importmapsJSONObject;
+	public JSONObject getImportMapsJSONObject() {
+		return _importMapsJSONObject;
 	}
 
-	private final JSONObject _importmapsJSONObject;
+	private final JSONObject _importMapsJSONObject;
 
 }

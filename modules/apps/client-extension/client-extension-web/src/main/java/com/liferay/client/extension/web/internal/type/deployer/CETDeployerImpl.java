@@ -18,15 +18,15 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.IFrameCET;
-import com.liferay.client.extension.type.JSImportmapsEntryCET;
+import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
-import com.liferay.client.extension.web.internal.frontend.js.importmaps.extender.ClientExtensionJSImportmapsContributor;
+import com.liferay.client.extension.web.internal.frontend.js.importmaps.extender.ClientExtensionJSImportMapsContributor;
 import com.liferay.client.extension.web.internal.portlet.ClientExtensionWebFriendlyURLMapper;
 import com.liferay.client.extension.web.internal.portlet.CustomElementCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.IframeCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.ClientExtensionWebConfigurationAction;
 import com.liferay.client.extension.web.internal.util.CETUtil;
-import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
+import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -71,9 +71,9 @@ public class CETDeployerImpl implements CETDeployer {
 		}
 		else if (Objects.equals(
 					cet.getType(),
-					ClientExtensionEntryConstants.TYPE_JS_IMPORTMAPS_ENTRY)) {
+					ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY)) {
 
-			return _deployJsImportmapsEntryCET((JSImportmapsEntryCET)cet);
+			return _deployJsImportMapsEntryCET((JSImportMapsEntryCET)cet);
 		}
 
 		return Collections.emptyList();
@@ -149,14 +149,14 @@ public class CETDeployerImpl implements CETDeployer {
 		return serviceRegistrations;
 	}
 
-	private List<ServiceRegistration<?>> _deployJsImportmapsEntryCET(
-		JSImportmapsEntryCET jsImportmapsEntryCET) {
+	private List<ServiceRegistration<?>> _deployJsImportMapsEntryCET(
+		JSImportMapsEntryCET jsImportMapsEntryCET) {
 
 		ServiceRegistration<?> serviceRegistration = _register(
-			JSImportmapsContributor.class,
-			new ClientExtensionJSImportmapsContributor(
-				jsImportmapsEntryCET.getBareSpecifier(), _jsonFactory,
-				jsImportmapsEntryCET.getURL()));
+			JSImportMapsContributor.class,
+			new ClientExtensionJSImportMapsContributor(
+				jsImportMapsEntryCET.getBareSpecifier(), _jsonFactory,
+				jsImportMapsEntryCET.getURL()));
 
 		return Arrays.asList(serviceRegistration);
 	}

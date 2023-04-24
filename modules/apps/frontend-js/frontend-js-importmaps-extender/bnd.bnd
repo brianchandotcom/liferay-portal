@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Frontend JS Importmaps Extender
+Bundle-Name: Liferay Frontend JS Import Maps Extender
 Bundle-SymbolicName: com.liferay.frontend.js.importmaps.extender
 Bundle-Version: 1.0.10
 Web-ContextPath: /frontend-js-importmaps-extender

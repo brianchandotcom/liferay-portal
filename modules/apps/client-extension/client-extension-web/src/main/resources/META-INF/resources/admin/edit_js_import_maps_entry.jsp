@@ -17,11 +17,11 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryDisplayContext<JSImportmapsEntryCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
+EditClientExtensionEntryDisplayContext<JSImportMapsEntryCET> editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-JSImportmapsEntryCET jsImportmapsEntryCET = editClientExtensionEntryDisplayContext.getCET();
+JSImportMapsEntryCET jsImportMapsEntryCET = editClientExtensionEntryDisplayContext.getCET();
 %>
 
-<aui:input label="bare-specifier" name="bareSpecifier" required="<%= true %>" type="text" value="<%= jsImportmapsEntryCET.getBareSpecifier() %>" />
+<aui:input label="bare-specifier" name="bareSpecifier" required="<%= true %>" type="text" value="<%= jsImportMapsEntryCET.getBareSpecifier() %>" />
 
-<aui:input label="js-url" name="url" required="<%= true %>" type="text" value="<%= jsImportmapsEntryCET.getURL() %>" />
+<aui:input label="js-url" name="url" required="<%= true %>" type="text" value="<%= jsImportMapsEntryCET.getURL() %>" />

@@ -12,27 +12,13 @@
  * details.
  */
 
-package com.liferay.client.extension.type;
-
-import com.liferay.client.extension.type.annotation.CETProperty;
-import com.liferay.client.extension.type.annotation.CETType;
-
-import org.osgi.annotation.versioning.ProviderType;
+package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 
 /**
  * @author Iván Zaera Avellón
  */
-@CETType(description = "JS Importmaps Entry.", name = "jsImportmapsEntry")
-@ProviderType
-public interface JSImportmapsEntryCET extends CET {
+public interface JSImportMapsRegistration {
 
-	@CETProperty(
-		defaultValue = "", name = "bareSpecifier",
-		type = CETProperty.Type.String
-	)
-	public String getBareSpecifier();
-
-	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
-	public String getURL();
+	public void unregister();
 
 }

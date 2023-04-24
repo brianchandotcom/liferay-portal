@@ -173,6 +173,7 @@
 		<exception>NotificationQueueEntryStatus</exception>
 		<exception>NotificationRecipientSettingValue</exception>
 		<exception>NotificationTemplateAttachmentObjectFieldId</exception>
+		<exception>NotificationTemplateDescription</exception>
 		<exception>NotificationTemplateEditorType</exception>
 		<exception>NotificationTemplateFrom</exception>
 		<exception>NotificationTemplateName</exception>

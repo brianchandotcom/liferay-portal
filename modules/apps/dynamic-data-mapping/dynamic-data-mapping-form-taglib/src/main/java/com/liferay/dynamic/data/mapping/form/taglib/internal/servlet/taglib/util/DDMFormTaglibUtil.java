@@ -20,18 +20,11 @@ import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderConte
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
-import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -52,12 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = {})
 public class DDMFormTaglibUtil {
-
-	public static DDMFormValues createDDMFormValues(
-		HttpServletRequest httpServletRequest, DDMForm ddmForm) {
-
-		return _ddmFormValuesFactory.create(httpServletRequest, ddmForm);
-	}
 
 	public static DDMForm getDDMForm(
 		long ddmStructureId, long ddmStructureVersionId) {
@@ -150,22 +137,6 @@ public class DDMFormTaglibUtil {
 			"dynamic-data-mapping-form-builder");
 	}
 
-	public static DDMFormValues mergeDDMFormValues(
-		DDMFormValues newDDMFormValues, DDMFormValues existingDDMFormValues) {
-
-		return _ddmFormValuesMerger.merge(
-			newDDMFormValues, existingDDMFormValues);
-	}
-
-	public static String renderForm(
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException {
-
-		return _ddmFormRenderer.render(
-			ddmForm, ddmFormLayout, ddmFormRenderingContext);
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDMFormBuilderContextFactory(
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory) {
@@ -178,25 +149,6 @@ public class DDMFormTaglibUtil {
 		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever) {
 
 		_ddmFormBuilderSettingsRetriever = ddmFormBuilderSettingsRetriever;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
-		_ddmFormRenderer = ddmFormRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesFactory(
-		DDMFormValuesFactory ddmFormValuesFactory) {
-
-		_ddmFormValuesFactory = ddmFormValuesFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesMerger(
-		DDMFormValuesMerger ddmFormValuesMerger) {
-
-		_ddmFormValuesMerger = ddmFormValuesMerger;
 	}
 
 	@Reference(unbind = "-")
@@ -226,9 +178,6 @@ public class DDMFormTaglibUtil {
 	private static DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
 	private static DDMFormBuilderSettingsRetriever
 		_ddmFormBuilderSettingsRetriever;
-	private static DDMFormRenderer _ddmFormRenderer;
-	private static DDMFormValuesFactory _ddmFormValuesFactory;
-	private static DDMFormValuesMerger _ddmFormValuesMerger;
 	private static DDMStructureLocalService _ddmStructureLocalService;
 	private static DDMStructureVersionLocalService
 		_ddmStructureVersionLocalService;

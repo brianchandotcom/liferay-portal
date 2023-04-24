@@ -15,10 +15,11 @@
 package com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.taglib.internal.security.permission.DDMFormInstancePermission;
-import com.liferay.dynamic.data.mapping.form.taglib.internal.servlet.taglib.util.DDMFormTaglibUtil;
 import com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib.base.BaseDDMFormRendererTag;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -32,6 +33,8 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -175,7 +178,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 
 		try {
-			ddmFormHTML = DDMFormTaglibUtil.renderForm(
+			DDMFormRenderer ddmFormRenderer = _ddmFormRendererSnapshot.get();
+
+			ddmFormHTML = ddmFormRenderer.render(
 				ddmForm, ddmFormLayout, createDDMFormRenderingContext(ddmForm));
 		}
 		catch (PortalException portalException) {
@@ -423,7 +428,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 	protected void setDDMFormValues(
 		DDMFormRenderingContext ddmFormRenderingContext, DDMForm ddmForm) {
 
-		DDMFormValues ddmFormValues = DDMFormTaglibUtil.createDDMFormValues(
+		DDMFormValuesFactory ddmFormValuesFactory =
+			_ddmFormValuesFactorySnapshot.get();
+
+		DDMFormValues ddmFormValues = ddmFormValuesFactory.create(
 			getRequest(), ddmForm);
 
 		try {
@@ -434,7 +442,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 							getDdmFormInstanceRecordVersionId());
 
 				if (ddmFormInstanceRecordVersion != null) {
-					ddmFormValues = DDMFormTaglibUtil.mergeDDMFormValues(
+					DDMFormValuesMerger ddmFormValuesMerger =
+						_ddmFormValuesMergerSnapshot.get();
+
+					ddmFormValues = ddmFormValuesMerger.merge(
 						ddmFormInstanceRecordVersion.getDDMFormValues(),
 						ddmFormValues);
 				}
@@ -446,7 +457,10 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 							getDdmFormInstanceRecordId());
 
 				if (ddmFormInstanceRecord != null) {
-					ddmFormValues = DDMFormTaglibUtil.mergeDDMFormValues(
+					DDMFormValuesMerger ddmFormValuesMerger =
+						_ddmFormValuesMergerSnapshot.get();
+
+					ddmFormValues = ddmFormValuesMerger.merge(
 						ddmFormInstanceRecord.getDDMFormValues(),
 						ddmFormValues);
 				}
@@ -499,5 +513,14 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormRendererTag.class);
+
+	private static final Snapshot<DDMFormRenderer> _ddmFormRendererSnapshot =
+		new Snapshot<>(DDMFormRendererTag.class, DDMFormRenderer.class);
+	private static final Snapshot<DDMFormValuesFactory>
+		_ddmFormValuesFactorySnapshot = new Snapshot<>(
+			DDMFormRendererTag.class, DDMFormValuesFactory.class);
+	private static final Snapshot<DDMFormValuesMerger>
+		_ddmFormValuesMergerSnapshot = new Snapshot<>(
+			DDMFormRendererTag.class, DDMFormValuesMerger.class);
 
 }

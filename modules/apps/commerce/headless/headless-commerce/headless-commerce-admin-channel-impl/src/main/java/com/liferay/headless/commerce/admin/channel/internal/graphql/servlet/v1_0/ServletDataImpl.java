@@ -308,6 +308,12 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TermResourceImpl.class,
 							"getShippingFixedOptionTermTerm"));
+
+					put(
+						"query#Channel.shippingMethods",
+						new ObjectValuePair<>(
+							ShippingMethodResourceImpl.class,
+							"getChannelShippingMethodsPage"));
 				}
 			};
 

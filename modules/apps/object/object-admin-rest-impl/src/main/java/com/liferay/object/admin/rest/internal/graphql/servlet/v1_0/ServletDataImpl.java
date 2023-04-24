@@ -526,6 +526,51 @@ public class ServletDataImpl implements ServletData {
 						"query#objectView",
 						new ObjectValuePair<>(
 							ObjectViewResourceImpl.class, "getObjectView"));
+
+					put(
+						"query#ObjectLayoutTab.objectRelationship",
+						new ObjectValuePair<>(
+							ObjectRelationshipResourceImpl.class,
+							"getObjectRelationship"));
+					put(
+						"query#ObjectView.objectDefinition",
+						new ObjectValuePair<>(
+							ObjectDefinitionResourceImpl.class,
+							"getObjectDefinition"));
+					put(
+						"query#ObjectDefinition.byExternalReferenceCodeObjectViews",
+						new ObjectValuePair<>(
+							ObjectViewResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectViewsPage"));
+					put(
+						"query#ObjectFieldSetting.objectField",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class, "getObjectField"));
+					put(
+						"query#ObjectDefinition.byExternalReferenceCodeObjectRelationships",
+						new ObjectValuePair<>(
+							ObjectRelationshipResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage"));
+					put(
+						"query#ObjectDefinition.byExternalReferenceCodeObjectActions",
+						new ObjectValuePair<>(
+							ObjectActionResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectActionsPage"));
+					put(
+						"query#ObjectDefinition.byExternalReferenceCodeObjectFields",
+						new ObjectValuePair<>(
+							ObjectFieldResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectFieldsPage"));
+					put(
+						"query#ObjectDefinition.byExternalReferenceCodeObjectLayouts",
+						new ObjectValuePair<>(
+							ObjectLayoutResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectLayoutsPage"));
+					put(
+						"query#ObjectDefinition.byExternalReferenceCodeObjectValidationRules",
+						new ObjectValuePair<>(
+							ObjectValidationRuleResourceImpl.class,
+							"getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage"));
 				}
 			};
 

@@ -199,6 +199,16 @@ public class ServletDataImpl implements ServletData {
 						"query#region",
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "getRegion"));
+
+					put(
+						"query#Region.country",
+						new ObjectValuePair<>(
+							CountryResourceImpl.class, "getCountry"));
+					put(
+						"query#Country.regionByRegionCode",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"getCountryRegionByRegionCode"));
 				}
 			};
 

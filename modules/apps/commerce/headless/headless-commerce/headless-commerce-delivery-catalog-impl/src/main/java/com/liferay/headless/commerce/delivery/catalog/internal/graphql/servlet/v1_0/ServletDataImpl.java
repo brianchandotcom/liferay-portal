@@ -261,6 +261,12 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WishListItemResourceImpl.class,
 							"getWishListItemsPage"));
+
+					put(
+						"query#WishList.items",
+						new ObjectValuePair<>(
+							WishListItemResourceImpl.class,
+							"getWishListItemsPage"));
 				}
 			};
 

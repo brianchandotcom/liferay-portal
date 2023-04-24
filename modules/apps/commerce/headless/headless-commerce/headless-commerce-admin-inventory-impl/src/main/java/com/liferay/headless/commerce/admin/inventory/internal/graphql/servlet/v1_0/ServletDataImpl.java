@@ -371,6 +371,37 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WarehouseOrderTypeResourceImpl.class,
 							"getWarehouseIdWarehouseOrderTypesPage"));
+
+					put(
+						"query#ReplenishmentItem.warehouseByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseResourceImpl.class,
+							"getWarehouseByExternalReferenceCode"));
+					put(
+						"query#ReplenishmentItem.warehouseItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"getWarehouseItemByExternalReferenceCode"));
+					put(
+						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseOrderTypes",
+						new ObjectValuePair<>(
+							WarehouseOrderTypeResourceImpl.class,
+							"getWarehouseByExternalReferenceCodeWarehouseOrderTypesPage"));
+					put(
+						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseItems",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"getWarehouseByExternalReferenceCodeWarehouseItemsPage"));
+					put(
+						"query#ReplenishmentItem.warehouseByExternalReferenceCodeWarehouseChannels",
+						new ObjectValuePair<>(
+							WarehouseChannelResourceImpl.class,
+							"getWarehouseByExternalReferenceCodeWarehouseChannelsPage"));
+					put(
+						"query#Warehouse.replenishmentItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ReplenishmentItemResourceImpl.class,
+							"getReplenishmentItemByExternalReferenceCode"));
 				}
 			};
 

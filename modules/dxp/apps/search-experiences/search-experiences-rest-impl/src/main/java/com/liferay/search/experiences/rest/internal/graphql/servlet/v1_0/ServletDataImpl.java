@@ -339,6 +339,21 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SearchableAssetNameDisplayResourceImpl.class,
 							"getSearchableAssetNameLanguagePage"));
+
+					put(
+						"query#SXPElement.export",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"getSXPElementExport"));
+					put(
+						"query#ElementInstance.sXPElement",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class, "getSXPElement"));
+					put(
+						"query#SXPBlueprint.export",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class,
+							"getSXPBlueprintExport"));
 				}
 			};
 

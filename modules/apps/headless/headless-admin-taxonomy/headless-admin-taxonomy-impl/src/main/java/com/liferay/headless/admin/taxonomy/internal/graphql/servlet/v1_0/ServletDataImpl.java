@@ -393,6 +393,37 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TaxonomyVocabularyResourceImpl.class,
 							"getTaxonomyVocabularyPermissionsPage"));
+
+					put(
+						"query#TaxonomyCategory.permissions",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"getTaxonomyCategoryPermissionsPage"));
+					put(
+						"query#TaxonomyVocabulary.permissions",
+						new ObjectValuePair<>(
+							TaxonomyVocabularyResourceImpl.class,
+							"getTaxonomyVocabularyPermissionsPage"));
+					put(
+						"query#TaxonomyVocabulary.taxonomyCategories",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"getTaxonomyVocabularyTaxonomyCategoriesPage"));
+					put(
+						"query#TaxonomyCategory.taxonomyCategories",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"getTaxonomyCategoryTaxonomyCategoriesPage"));
+					put(
+						"query#TaxonomyCategory.taxonomyVocabulary",
+						new ObjectValuePair<>(
+							TaxonomyVocabularyResourceImpl.class,
+							"getTaxonomyVocabulary"));
+					put(
+						"query#TaxonomyVocabulary.taxonomyCategoryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							TaxonomyCategoryResourceImpl.class,
+							"getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"));
 				}
 			};
 

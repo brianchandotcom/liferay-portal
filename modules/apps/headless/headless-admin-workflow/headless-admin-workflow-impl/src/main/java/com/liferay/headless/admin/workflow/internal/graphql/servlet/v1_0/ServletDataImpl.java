@@ -377,6 +377,66 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							WorkflowTaskResourceImpl.class,
 							"getWorkflowTaskHasAssignableUsers"));
+
+					put(
+						"query#WorkflowInstance.workflowTasks",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class,
+							"getWorkflowInstanceWorkflowTasksPage"));
+					put(
+						"query#WorkflowInstance.workflowLogs",
+						new ObjectValuePair<>(
+							WorkflowLogResourceImpl.class,
+							"getWorkflowInstanceWorkflowLogsPage"));
+					put(
+						"query#WorkflowTask.hasAssignableUsers",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class,
+							"getWorkflowTaskHasAssignableUsers"));
+					put(
+						"query#WorkflowInstance.workflowTasksAssignedToMe",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class,
+							"getWorkflowInstanceWorkflowTasksAssignedToMePage"));
+					put(
+						"query#WorkflowTask.workflowInstance",
+						new ObjectValuePair<>(
+							WorkflowInstanceResourceImpl.class,
+							"getWorkflowInstance"));
+					put(
+						"query#WorkflowTasksBulkSelection.workflowDefinition",
+						new ObjectValuePair<>(
+							WorkflowDefinitionResourceImpl.class,
+							"getWorkflowDefinition"));
+					put(
+						"query#WorkflowTaskAssignToUser.workflowTask",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class, "getWorkflowTask"));
+					put(
+						"query#WorkflowTask.assignableUsers",
+						new ObjectValuePair<>(
+							AssigneeResourceImpl.class,
+							"getWorkflowTaskAssignableUsersPage"));
+					put(
+						"query#WorkflowTask.nextTransitions",
+						new ObjectValuePair<>(
+							TransitionResourceImpl.class,
+							"getWorkflowTaskNextTransitionsPage"));
+					put(
+						"query#WorkflowInstance.workflowTasksAssignedToUser",
+						new ObjectValuePair<>(
+							WorkflowTaskResourceImpl.class,
+							"getWorkflowInstanceWorkflowTasksAssignedToUserPage"));
+					put(
+						"query#WorkflowInstance.nextTransitions",
+						new ObjectValuePair<>(
+							TransitionResourceImpl.class,
+							"getWorkflowInstanceNextTransitionsPage"));
+					put(
+						"query#WorkflowTask.workflowLogs",
+						new ObjectValuePair<>(
+							WorkflowLogResourceImpl.class,
+							"getWorkflowTaskWorkflowLogsPage"));
 				}
 			};
 

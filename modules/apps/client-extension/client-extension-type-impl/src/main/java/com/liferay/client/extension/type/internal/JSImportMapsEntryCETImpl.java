@@ -16,7 +16,7 @@ package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.type.JSImportmapsEntryCET;
+import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -30,14 +30,14 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class JSImportmapsEntryCETImpl
-	extends BaseCETImpl implements JSImportmapsEntryCET {
+public class JSImportMapsEntryCETImpl
+	extends BaseCETImpl implements JSImportMapsEntryCET {
 
-	public JSImportmapsEntryCETImpl(ClientExtensionEntry clientExtensionEntry) {
+	public JSImportMapsEntryCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
 	}
 
-	public JSImportmapsEntryCETImpl(PortletRequest portletRequest) {
+	public JSImportMapsEntryCETImpl(PortletRequest portletRequest) {
 		this(
 			StringPool.BLANK,
 			UnicodePropertiesBuilder.create(
@@ -50,7 +50,7 @@ public class JSImportmapsEntryCETImpl
 			).build());
 	}
 
-	public JSImportmapsEntryCETImpl(
+	public JSImportMapsEntryCETImpl(
 		String baseURL, long companyId, String description,
 		String externalReferenceCode, String name, Properties properties,
 		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
@@ -60,7 +60,7 @@ public class JSImportmapsEntryCETImpl
 			properties, sourceCodeURL, typeSettingsUnicodeProperties);
 	}
 
-	public JSImportmapsEntryCETImpl(
+	public JSImportMapsEntryCETImpl(
 		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
 		super(baseURL, typeSettingsUnicodeProperties);
@@ -73,12 +73,12 @@ public class JSImportmapsEntryCETImpl
 
 	@Override
 	public String getEditJSP() {
-		return "/admin/edit_js_importmaps_entry.jsp";
+		return "/admin/edit_js_import_maps_entry.jsp";
 	}
 
 	@Override
 	public String getType() {
-		return ClientExtensionEntryConstants.TYPE_JS_IMPORTMAPS_ENTRY;
+		return ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY;
 	}
 
 	@Override
@@ -97,6 +97,6 @@ public class JSImportmapsEntryCETImpl
 	}
 
 	private static final Set<String> _urlCETPropertyNames =
-		getURLCETPropertyNames(JSImportmapsEntryCET.class);
+		getURLCETPropertyNames(JSImportMapsEntryCET.class);
 
 }

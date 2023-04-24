@@ -22,10 +22,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * @author Iván Zaera Avellón
  */
-@CETType(
-	description = "Frontend Data Set custom cell renderer.",
-	name = "fdsCellRenderer"
-)
+@CETType(description = "This is a description.", name = "fdsCellRenderer")
 @ProviderType
 public interface FDSCellRendererCET extends CET {
 

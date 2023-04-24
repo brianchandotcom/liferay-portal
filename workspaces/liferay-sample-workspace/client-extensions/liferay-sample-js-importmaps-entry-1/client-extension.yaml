@@ -3,14 +3,13 @@ assemble:
       into: static
 liferay-sample-js-importmaps-entry-1:
     bareSpecifier: my-utils
-    name: Liferay Sample JS Importmaps Entry 1
-    type: jsImportmapsEntry
+    name: Liferay Sample JS Import Maps Entry 1
+    type: jsImportMapsEntry
     url: my-utils/index.js
 liferay-sample-js-importmaps-entry-1-custom-element:
     htmlElementName: liferay-sample-js-importmaps-entry-1-custom-element
     instanceable: false
-    name: Liferay Sample JS Importmaps Entry 1 Custom Element
-    name: Liferay Sample JS Importmaps Entry Custom Element
+    name: Liferay Sample JS Import Maps Entry 1 Custom Element
     portletCategoryName: category.client-extensions
     type: customElement
     urls:

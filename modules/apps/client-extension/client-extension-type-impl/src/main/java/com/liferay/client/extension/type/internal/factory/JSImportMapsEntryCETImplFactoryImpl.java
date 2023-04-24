@@ -16,9 +16,9 @@ package com.liferay.client.extension.type.internal.factory;
 
 import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.type.JSImportmapsEntryCET;
+import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.client.extension.type.factory.CETImplFactory;
-import com.liferay.client.extension.type.internal.JSImportmapsEntryCETImpl;
+import com.liferay.client.extension.type.internal.JSImportMapsEntryCETImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -31,32 +31,32 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class JSImportmapsEntryCETImplFactoryImpl
-	implements CETImplFactory<JSImportmapsEntryCET> {
+public class JSImportMapsEntryCETImplFactoryImpl
+	implements CETImplFactory<JSImportMapsEntryCET> {
 
 	@Override
-	public JSImportmapsEntryCET create(
+	public JSImportMapsEntryCET create(
 			ClientExtensionEntry clientExtensionEntry)
 		throws PortalException {
 
-		return new JSImportmapsEntryCETImpl(clientExtensionEntry);
+		return new JSImportMapsEntryCETImpl(clientExtensionEntry);
 	}
 
 	@Override
-	public JSImportmapsEntryCET create(PortletRequest portletRequest)
+	public JSImportMapsEntryCET create(PortletRequest portletRequest)
 		throws PortalException {
 
-		return new JSImportmapsEntryCETImpl(portletRequest);
+		return new JSImportMapsEntryCETImpl(portletRequest);
 	}
 
 	@Override
-	public JSImportmapsEntryCET create(
+	public JSImportMapsEntryCET create(
 			String baseURL, long companyId, String description,
 			String externalReferenceCode, String name, Properties properties,
 			String sourceCodeURL, UnicodeProperties unicodeProperties)
 		throws PortalException {
 
-		return new JSImportmapsEntryCETImpl(
+		return new JSImportMapsEntryCETImpl(
 			baseURL, companyId, description, externalReferenceCode, name,
 			properties, sourceCodeURL, unicodeProperties);
 	}
@@ -67,16 +67,16 @@ public class JSImportmapsEntryCETImplFactoryImpl
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		JSImportmapsEntryCET jsImportmapsEntryCET =
-			new JSImportmapsEntryCETImpl(
+		JSImportMapsEntryCET jsImportMapsEntryCET =
+			new JSImportMapsEntryCETImpl(
 				StringPool.BLANK, newTypeSettingsUnicodeProperties);
 
-		if (Validator.isNull(jsImportmapsEntryCET.getBareSpecifier())) {
+		if (Validator.isNull(jsImportMapsEntryCET.getBareSpecifier())) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"please-enter-a-valid-bare-specifier");
 		}
 
-		if (!Validator.isUrl(jsImportmapsEntryCET.getURL(), true)) {
+		if (!Validator.isUrl(jsImportMapsEntryCET.getURL(), true)) {
 			throw new ClientExtensionEntryTypeSettingsException(
 				"please-enter-a-valid-url");
 		}

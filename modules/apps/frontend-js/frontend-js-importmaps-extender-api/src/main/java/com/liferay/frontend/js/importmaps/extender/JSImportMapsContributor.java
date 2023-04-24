@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 /**
  * @author Iván Zaera Avellón
  */
-public interface JSImportmapsContributor {
+public interface JSImportMapsContributor {
 
 	/**
-	 * Contribute a chunk of the whole importmaps JSON object. The returned
+	 * Contribute a chunk of the whole import maps JSON object. The returned
 	 * object must be a plain JSON object containing key value pairs, where keys
 	 * are bare identifiers and values are JavaScript module URIs to which those
 	 * bare identifiers must be resolved.
@@ -31,10 +31,10 @@ public interface JSImportmapsContributor {
 	 * @return a pure JSON object
 	 * @review
 	 */
-	public JSONObject getImportmapsJSONObject();
+	public JSONObject getImportMapsJSONObject();
 
 	/**
-	 * Get the scope for the contributed chunks of importmaps.
+	 * Get the scope for the contributed chunks of import maps.
 	 *
 	 * @return a valid URL or null to register a global mapping
 	 * @review

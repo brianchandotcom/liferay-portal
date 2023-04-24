@@ -23,15 +23,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
 @Meta.OCD(
-	description = "frontend-js-importmaps-description",
+	description = "frontend-js-import-maps-description",
 	id = "com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration",
 	localization = "content/Language",
-	name = "frontend-js-importmaps-configuration-name"
+	name = "frontend-js-import-maps-configuration-name"
 )
-public interface JSImportmapsConfiguration {
+public interface JSImportMapsConfiguration {
 
-	@Meta.AD(deflt = "true", name = "enable-importmaps", required = false)
-	public boolean enableImportmaps();
+	@Meta.AD(deflt = "true", name = "enable-import-maps", required = false)
+	public boolean enableImportMaps();
 
 	@Meta.AD(
 		deflt = "false", description = "enable-es-module-shims-help",

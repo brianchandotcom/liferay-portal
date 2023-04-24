@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.js.dependencies.web.internal.js.importmaps.extender;
+package com.liferay.frontend.js.react.web.internal.js.importmaps.extender;
 
-import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
+import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -27,37 +28,38 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = JSImportmapsContributor.class)
-public class FrontendJSDependenciesWebJSImportmapsContributor
-	implements JSImportmapsContributor {
+@Component(service = JSImportMapsContributor.class)
+public class FrontendJSReactWebJSImportMapsContributor
+	implements JSImportMapsContributor {
 
 	@Override
-	public JSONObject getImportmapsJSONObject() {
-		return _importmapsJSONObject;
+	public JSONObject getImportMapsJSONObject() {
+		return _importMapsJSONObject;
 	}
 
 	@Activate
 	protected void activate() {
-		_importmapsJSONObject = _jsonFactory.createJSONObject();
+		_importMapsJSONObject = _jsonFactory.createJSONObject();
 
-		_importmapsJSONObject.put(
-			"@liferay/frontend-js-api",
-			_servletContext.getContextPath() +
-				"/__liferay__/exports/@liferay$js-api.js"
-		).put(
-			"@liferay/frontend-js-api/data-set",
-			_servletContext.getContextPath() +
-				"/__liferay__/exports/@liferay$js-api$data-set.js"
-		);
+		String contextPath = _servletContext.getContextPath();
+
+		for (String moduleName : _MODULE_NAMES) {
+			_importMapsJSONObject.put(
+				moduleName,
+				StringBundler.concat(
+					contextPath, "/__liferay__/exports/", moduleName, ".js"));
+		}
 	}
 
-	private JSONObject _importmapsJSONObject;
+	private static final String[] _MODULE_NAMES = {"react", "react-dom"};
+
+	private JSONObject _importMapsJSONObject;
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.js.dependencies.web)",
+		target = "(osgi.web.symbolicname=com.liferay.frontend.js.react.web)",
 		unbind = "-"
 	)
 	private ServletContext _servletContext;

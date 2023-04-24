@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.internal.js.importmaps.extender;
 
-import com.liferay.frontend.js.importmaps.extender.JSImportmapsContributor;
+import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -33,18 +33,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = JSImportmapsContributor.class)
-public class FrontendTaglibClayJSImportmapsContributor
-	implements JSImportmapsContributor {
+@Component(service = JSImportMapsContributor.class)
+public class FrontendTaglibClayJSImportMapsContributor
+	implements JSImportMapsContributor {
 
 	@Override
-	public JSONObject getImportmapsJSONObject() {
-		return _importmapsJSONObject;
+	public JSONObject getImportMapsJSONObject() {
+		return _importMapsJSONObject;
 	}
 
 	@Activate
 	protected void activate() throws IOException, JSONException {
-		_importmapsJSONObject = _jsonFactory.createJSONObject();
+		_importMapsJSONObject = _jsonFactory.createJSONObject();
 
 		JSONObject packageJSONObject = _getPackageJSONObject();
 
@@ -56,7 +56,7 @@ public class FrontendTaglibClayJSImportmapsContributor
 				continue;
 			}
 
-			_importmapsJSONObject.put(
+			_importMapsJSONObject.put(
 				moduleName,
 				StringBundler.concat(
 					_servletContext.getContextPath(), "/__liferay__/exports/",
@@ -68,14 +68,14 @@ public class FrontendTaglibClayJSImportmapsContributor
 		throws IOException, JSONException {
 
 		try (InputStream inputStream =
-				FrontendTaglibClayJSImportmapsContributor.class.
+				FrontendTaglibClayJSImportMapsContributor.class.
 					getResourceAsStream("dependencies/package.json")) {
 
 			return _jsonFactory.createJSONObject(StringUtil.read(inputStream));
 		}
 	}
 
-	private JSONObject _importmapsJSONObject;
+	private JSONObject _importMapsJSONObject;
 
 	@Reference
 	private JSONFactory _jsonFactory;

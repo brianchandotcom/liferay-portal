@@ -58,7 +58,7 @@
 		]
 	},
 	{
-		"description": "Frontend Data Set custom cell renderer.",
+		"description": "This is a description.",
 		"name": "fdsCellRenderer",
 		"properties": [
 			{
@@ -185,8 +185,8 @@
 		]
 	},
 	{
-		"description": "JS Importmaps Entry.",
-		"name": "jsImportmapsEntry",
+		"description": "This is a description.",
+		"name": "jsImportMapsEntry",
 		"properties": [
 			{
 				"name": "description",

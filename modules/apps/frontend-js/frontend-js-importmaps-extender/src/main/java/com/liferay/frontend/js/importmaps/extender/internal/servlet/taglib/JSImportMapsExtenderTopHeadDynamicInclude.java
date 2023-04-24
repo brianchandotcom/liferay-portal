@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 
-import com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration;
+import com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportMapsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -50,10 +50,10 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration",
 	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = {
-		DynamicInclude.class, JSImportmapsExtenderTopHeadDynamicInclude.class
+		DynamicInclude.class, JSImportMapsExtenderTopHeadDynamicInclude.class
 	}
 )
-public class JSImportmapsExtenderTopHeadDynamicInclude
+public class JSImportMapsExtenderTopHeadDynamicInclude
 	extends BaseDynamicInclude {
 
 	@Override
@@ -64,12 +64,12 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		if (_jsImportmapsConfiguration.enableImportmaps() &&
-			(!_globalImportmaps.isEmpty() || !_scopedImportmaps.isEmpty())) {
+		if (_jsImportMapsConfiguration.enableImportMaps() &&
+			(!_globalImportMaps.isEmpty() || !_scopedImportMaps.isEmpty())) {
 
 			printWriter.print("<script type=\"");
 
-			if (_jsImportmapsConfiguration.enableESModuleShims()) {
+			if (_jsImportMapsConfiguration.enableESModuleShims()) {
 				printWriter.print("importmap-shim");
 			}
 			else {
@@ -77,11 +77,11 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 			}
 
 			printWriter.print("\">");
-			printWriter.print(_importmaps.get());
+			printWriter.print(_importMaps.get());
 			printWriter.print("</script>");
 		}
 
-		if (_jsImportmapsConfiguration.enableESModuleShims()) {
+		if (_jsImportMapsConfiguration.enableESModuleShims()) {
 			printWriter.print("<script type=\"esms-options\">{\"shimMode\": ");
 			printWriter.print("true}</script><script src=\"");
 
@@ -104,35 +104,35 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
-	public JSImportmapsRegistration register(
+	public JSImportMapsRegistration register(
 		String scope, JSONObject jsonObject) {
 
 		if (scope == null) {
 			long globalId = _nextGlobalId.getAndIncrement();
 
-			_globalImportmaps.put(globalId, jsonObject);
+			_globalImportMaps.put(globalId, jsonObject);
 
-			_rebuildImportmaps();
+			_rebuildImportMaps();
 
-			return new JSImportmapsRegistration() {
+			return new JSImportMapsRegistration() {
 
 				@Override
 				public void unregister() {
-					_globalImportmaps.remove(globalId);
+					_globalImportMaps.remove(globalId);
 				}
 
 			};
 		}
 
-		_scopedImportmaps.put(scope, jsonObject);
+		_scopedImportMaps.put(scope, jsonObject);
 
 		_getScopesJSONObject();
 
-		return new JSImportmapsRegistration() {
+		return new JSImportMapsRegistration() {
 
 			@Override
 			public void unregister() {
-				_scopedImportmaps.remove(scope);
+				_scopedImportMaps.remove(scope);
 			}
 
 		};
@@ -144,7 +144,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 
 		_bundleContext = bundleContext;
 
-		_rebuildImportmaps();
+		_rebuildImportMaps();
 
 		modified(properties);
 	}
@@ -154,23 +154,23 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 
 		// See LPS-165021
 
-		_jsImportmapsConfiguration = ConfigurableUtil.createConfigurable(
-			JSImportmapsConfiguration.class,
+		_jsImportMapsConfiguration = ConfigurableUtil.createConfigurable(
+			JSImportMapsConfiguration.class,
 			HashMapBuilder.put(
 				"enable-es-module-shims", false
 			).put(
-				"enable-importmaps", true
+				"enable-import-maps", true
 			).build());
 
 		FrontendESMUtil.setScriptType(
-			_jsImportmapsConfiguration.enableESModuleShims() ? "module-shim" :
+			_jsImportMapsConfiguration.enableESModuleShims() ? "module-shim" :
 				"module");
 	}
 
 	private JSONObject _getGlobalJSONObject() {
 		JSONObject globalJSONObject = _jsonFactory.createJSONObject();
 
-		for (JSONObject jsonObject : _globalImportmaps.values()) {
+		for (JSONObject jsonObject : _globalImportMaps.values()) {
 			for (String key : jsonObject.keySet()) {
 				globalJSONObject.put(key, jsonObject.getString(key));
 			}
@@ -183,7 +183,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 		JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
 
 		for (Map.Entry<String, JSONObject> entry :
-				_scopedImportmaps.entrySet()) {
+				_scopedImportMaps.entrySet()) {
 
 			scopesJSONObject.put(entry.getKey(), entry.getValue());
 		}
@@ -191,7 +191,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 		return scopesJSONObject;
 	}
 
-	private synchronized void _rebuildImportmaps() {
+	private synchronized void _rebuildImportMaps() {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
@@ -200,23 +200,23 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 			"scopes", _getScopesJSONObject()
 		);
 
-		_importmaps.set(_jsonFactory.looseSerializeDeep(jsonObject));
+		_importMaps.set(_jsonFactory.looseSerializeDeep(jsonObject));
 	}
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile BundleContext _bundleContext;
-	private final ConcurrentMap<Long, JSONObject> _globalImportmaps =
+	private final ConcurrentMap<Long, JSONObject> _globalImportMaps =
 		new ConcurrentHashMap<>();
-	private final AtomicReference<String> _importmaps = new AtomicReference<>();
-	private volatile JSImportmapsConfiguration _jsImportmapsConfiguration;
+	private final AtomicReference<String> _importMaps = new AtomicReference<>();
+	private volatile JSImportMapsConfiguration _jsImportMapsConfiguration;
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	private final AtomicLong _nextGlobalId = new AtomicLong();
-	private final ConcurrentMap<String, JSONObject> _scopedImportmaps =
+	private final ConcurrentMap<String, JSONObject> _scopedImportMaps =
 		new ConcurrentHashMap<>();
 
 }

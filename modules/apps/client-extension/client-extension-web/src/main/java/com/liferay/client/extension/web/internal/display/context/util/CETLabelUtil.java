@@ -76,9 +76,9 @@ public class CETLabelUtil {
 		}
 		else if (Objects.equals(
 					type,
-					ClientExtensionEntryConstants.TYPE_JS_IMPORTMAPS_ENTRY)) {
+					ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY)) {
 
-			return "js-importmaps-entry";
+			return "js-import-maps-entry";
 		}
 		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_STATIC_CONTENT)) {

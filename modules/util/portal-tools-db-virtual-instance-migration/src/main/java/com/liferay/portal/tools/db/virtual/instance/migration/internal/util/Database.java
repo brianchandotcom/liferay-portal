@@ -56,6 +56,20 @@ public class Database {
 		return tableNames;
 	}
 
+	public static String getWebId(Connection connection) throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select webId from Company, CompanyInfo where " +
+					"CompanyInfo.companyId = Company.companyId");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getString(1);
+			}
+
+			return null;
+		}
+	}
+
 	public static boolean isDefaultPartition(Connection connection)
 		throws SQLException {
 

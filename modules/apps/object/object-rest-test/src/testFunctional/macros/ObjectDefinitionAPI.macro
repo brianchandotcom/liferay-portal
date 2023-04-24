@@ -1021,7 +1021,7 @@ definition {
 			en_US_plural_label = ${parent_plural_label},
 			name = ${parentEntryName});
 
-		var curl = ObjectDefinitionAPI._curlObjectEntriesRelationship(
+		var curl = ObjectDefinitionAPI.relateObjectEntries(
 			en_US_plural_label = ${parent_plural_label},
 			objectEntry1 = ${parentEntryId},
 			objectEntry2 = ${childEntryId},

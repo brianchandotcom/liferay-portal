@@ -52,4 +52,50 @@ definition {
 			value1 = ${firstName});
 	}
 
+	macro addUser {
+		if (isSet(userFirstNameEdit)) {
+			Type(
+				locator1 = "TextInput#FIRST_NAME",
+				value1 = ${userFirstNameEdit});
+		}
+
+		if (isSet(userLastNameEdit)) {
+			Type(
+				locator1 = "TextInput#LAST_NAME",
+				value1 = ${userLastNameEdit});
+		}
+
+		if (isSet(userEmailAddressEdit)) {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = ${userEmailAddressEdit});
+		}
+
+		if (isSet(userScreenNameEdit)) {
+			Type(
+				locator1 = "TextInput#SCREEN_NAME",
+				value1 = ${userScreenNameEdit});
+		}
+
+		if (isSet(userPassword)) {
+			Type(
+				locator1 = "OktaLogin#LOGIN_PASSWORD_FIELD",
+				value1 = ${userPassword});
+		}
+
+		if (isSet(rePassword)) {
+			Type(
+				locator1 = "TestrayUser#CONFIRM_PASSWORD_2",
+				value1 = ${rePassword});
+		}
+
+		for (var roleName : list ${listRoles}) {
+			Click(
+				key_fieldLabel = ${roleName},
+				locator1 = "Checkbox#CHECKBOX_LABEL");
+		}
+
+		Button.clickSave();
+	}
+
 }

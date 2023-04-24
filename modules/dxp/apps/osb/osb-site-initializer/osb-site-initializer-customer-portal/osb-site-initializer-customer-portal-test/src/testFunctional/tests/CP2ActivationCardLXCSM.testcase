@@ -54,6 +54,10 @@ definition {
 			Account.addAssigneeToRoleViaUsersTab(
 				accountRoleTitle = "Account Administrator",
 				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Provisioning",
+				accountUserName = "Test Test");
 		}
 
 		task ("Given I go to the test account") {

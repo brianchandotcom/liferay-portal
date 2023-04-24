@@ -1,0 +1,1122 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account QA 7.4";
+	var testProduct = "DXP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Automation ID: LPS-157445 | Test Summary: Verify if the fields (Environment Name - Host Name) are required"
+	@ignore = "true"
+	@priority = 5
+	test CanViewAMandatoryMessageForBothFields {
+		task ("Given I go to next form at Genarate New Key") {
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+
+		task ("And I fulfill the Environment and Host name fields") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+		}
+
+		task ("Then The Generate button should be active") {
+			CustomerPortal.assertButtonIsActive(text = "Generate 1 Key");
+		}
+
+		task ("When I erase the Environment Name field content") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "Environment Name");
+		}
+
+		task ("Then I should see the alert with the text 'This field is required.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
+		}
+
+		task ("And The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+
+		task ("When I erase the Host Name field content") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "Host Name");
+		}
+
+		task ("Then The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate 1 Key");
+		}
+	}
+
+	@description = "Automation Ticket: LPS-157448 | Test Summary: Verify if the button '+ Add Activation Key' is disabled when the user reaches the maximum number of activation keys allowed."
+	@ignore = "true"
+	@priority = 4
+	test CanViewTheAddActivationKeysButtonIsDisabled {
+		task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+		}
+
+		task ("When I add the maximum of Activation Keys") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("Then I should be able to see the '+ Add Activation Key' button disabled") {
+			CustomerPortal.assertButtonIsDisabled(text = "Add Activation Key");
+		}
+
+		task ("When I put the mouse over the '+ Add Activation Key' button") {
+			CustomerPortal.putMouseOverButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to see the tool tip with the text 'Maximum number of Activation Keys reached for this subscription.'") {
+			CP2ActivationKeys.assertTooltipIsVisible(text = "Maximum number of Activation Keys reached for this subscription.");
+		}
+	}
+
+	@description = "Automation ID: LPS-150811 | Test Summary: Verify if the right pane displays the following data (Product - Version - Environment Type - Subscription - Key Activations Available - Instance size)"
+	@ignore = "true"
+	@priority = 2
+	test CanViewTheDataInThePanel {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("Then the card will show all the details of the generated activation key") {
+			CP2ActivationKeys.assertInfoNewKeyCard(
+				activationsAvailable = 62,
+				instanceSize = 1,
+				licenseType = "Production (Virtual Cluster)",
+				product = "DXP",
+				subscription = "Jun 30, 2021 - Mar 30, 2023",
+				version = "7.4");
+		}
+	}
+
+	@description = "Automation ID: LPS-157446 | Test Summary: Verify if the user enters an invalid IP address and Mac Address an error message appears"
+	@ignore = "true"
+	@priority = 3
+	test CanViewTheErrorMessageForInvalidIPAddressAndMACAddress {
+		task ("Given I active IP and MAC Address field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "IP Address");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "",
+				field = "MAC Address");
+		}
+
+		task ("Given I fulfill the IP Address field with a invalid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = 1234567789,
+				field = "IP Address");
+		}
+
+		task ("Then I should see the alert with the text 'Invalid IP.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid IP.");
+		}
+
+		task ("Given I fulfill the IP Address field with a IP with white spaces") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "192.168 .1.1",
+				field = "IP Address");
+		}
+
+		task ("Then I should see the alert with the text 'The IP most not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The IP must not have spaces.");
+		}
+
+		task ("When I fulfill the IP Address field with a valid IP") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "192.168.1.1",
+				field = "IP Address");
+		}
+
+		task ("Then I should not see the alert with the text 'Invalid IP.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid IP.");
+		}
+
+		task ("Then I should not see the alert with the text 'The IP must not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "The IP must not have spaces.");
+		}
+
+		task ("When I fulfill the MAC Address field with a invalid MAC") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "InvalidMACAddress",
+				field = "MAC Address");
+		}
+
+		task ("Then I should see the alert with the text 'Invalid Mac.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "Invalid MAC.");
+		}
+
+		task ("When I fulfill the MAC Address field with a MAC with white spaces") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "A0-B1-C2- D3-E4-F5",
+				field = "MAC Address");
+		}
+
+		task ("Then I should see the alert with the text 'The Mac must not have spaces.'") {
+			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "The MAC must not have spaces.");
+		}
+
+		task ("When I fulfill the MAC Address field with a valid MAC") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "A0-B1-C2-D3-E4-F5",
+				field = "MAC Address");
+		}
+
+		task ("Then I should not see the alert with the text 'Invalid MAC.'") {
+			CustomerPortal.assertErrorMessageIsNotVisible(errorMessage = "Invalid MAC.");
+		}
+	}
+
+	@description = "Automation ID: LPS-150809 | Test Summary: Verify that after filling out all required fields the Generate Cluster (Keys) button is enabled"
+	@ignore = "true"
+	@priority = 4
+	test CanViewTheGenerateClusterButtonEnabled {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And The Generate button should be deactivated") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate Cluster ( Keys)");
+		}
+
+		task ("After filling in the Cluster Nodes field the button is then enabled") {
+			CP2ActivationKeys.environmentDetails(
+				environmentDetails = "name",
+				value = "Liferay Test");
+
+			CP2ActivationKeys.selectClusterNodes(key_option = 1);
+		}
+
+		task ("Then I should be able to see that the Next button is enabled") {
+			CustomerPortal.assertButtonIsActive(text = "Generate Cluster (1 Keys)");
+		}
+	}
+
+	@description = "Automation ID: LPS-150805 | Test Summary: Verify if the user clicks the Cancel button the modal closes without saving anything"
+	@ignore = "true"
+	@priority = 3
+	test CanViewTheModalClosing {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("I fulfill first phase form for Generate New License and click the Cancel button") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Cancel");
+		}
+
+		task ("So I should be able to see that no previously filled data is filled now") {
+			CP2ActivationKeys.generateNewKey();
+
+			CP2ActivationKeys.assertSignatureWithNoKeysIsVisible();
+		}
+	}
+
+	@description = "Automation ID: LPS-150810 | Test Summary: Verify if the button name changes according to the number of keys generated by the user"
+	@ignore = "true"
+	@priority = 2
+	test CanViewTheNumberOfKeysInTheButtonText {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the user can go through the first flow") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			Button.click(button = "Next");
+		}
+
+		task ("The button will then display the number of keys selected") {
+			CP2ActivationKeys.selectClusterNodes(key_option = 1);
+
+			CP2ActivationKeys.assertTextButton(text = "Generate Cluster (1 Keys)");
+
+			CP2ActivationKeys.selectClusterNodes(key_option = 2);
+
+			CP2ActivationKeys.assertTextButton(text = "Generate Cluster (2 Keys)");
+		}
+	}
+
+	@description = "Automation Ticket: LPS-157449 | Test Summary: Verify that when you click Previous you go back to the previous step with the same selections you entered"
+	@ignore = "true"
+	@priority = 4
+	test CanViewTheRemoveActivationKeyButton {
+		task ("Given I fulfill the Environment field") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+		}
+
+		task ("And the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields") {
+			CP2ActivationKeys.fulfillActivationKey();
+		}
+
+		task ("And I click at '+ Add Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Add Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("And I fulfill all fields two times") {
+			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = 3);
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then I should be able to view '- Remove Activation Key' button") {
+			CustomerPortal.viewButton(text = "Remove Activation Key");
+		}
+
+		task ("When I click at '- Remove Activation Key' button") {
+			CustomerPortal.clickAtButton(text = "Remove Activation Key");
+		}
+
+		task ("Then the '- Remove Activation Key' button should not preset") {
+			CustomerPortal.assertButtonNotPresent(text = "Remove Activation Key");
+		}
+	}
+
+	@description = "Automation Ticket: LPS-157452 | Test Summary: Verify if the success message after the user generates a key"
+	@ignore = "true"
+	@priority = 4
+	test CanViewTheSuccessMessage {
+		task ("Given I fulfill All fields for the product") {
+			var numberOfActivationKeys = 3;
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Description",
+				field = "Description");
+
+			CP2ActivationKeys.fulfillActivationKey(numberOfActivationKeys = ${numberOfActivationKeys});
+		}
+
+		task ("And click at Generate Keys button") {
+			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
+
+			CustomerPortal.clickAtButton(text = ${generateButtom});
+		}
+
+		task ("Then I should be able to view the success message with the text 'Activation Key was generated successfully'") {
+			CustomerPortal.viewAlert(alertText = "Activation Key was generated successfully");
+		}
+	}
+
+	@description = "Automation ID: LPS-150812 | Test Summary: Verify that when the user downloads the keys a success message appears"
+	@priority = 3
+	test CanViewTheSuccessMessageAfterDownloadingTheNewKey {
+
+		// TODO LPS-150812 CanViewTheSuccessMessageAfterDownloadingTheNewKey pending implementation
+
+	}
+
+	@description = "LPS-149705 - Verify if the amount of available keys are shown on subscriptions."
+	@ignore = "true"
+	@priority = 5
+	test IfAvailableKeysAreDisplayedOnSubscriptions {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the subscription option will display remaining available key activations") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE",
+				value1 = "Key activation available: 1 of");
+		}
+	}
+
+	@description = "LPS-149727 - Verify if 'Cancel' button brings user back to Product Actiation DXP Page."
+	@ignore = "true"
+	@priority = 4
+	test IfCancelButtonBringsToActivationDXPPage {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then clicking 'Cancel' will redirect back to the Product Activation page") {
+			Button.click(button = "Cancel");
+
+			AssertElementPresent(
+				key_productType = ${testProduct},
+				locator1 = "CP2ActivationKeys#ACTIVE_PRODUCT_TYPE");
+		}
+	}
+
+	@description = "LPS-149703 - Verify if user can select the Key Type when generating a new key."
+	@ignore = "true"
+	@priority = 4
+	test IfKeyTypeCanBeSelected {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the user can select the Key Type") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+		}
+	}
+
+	@description = "LPS-149707 - Verify a message with valid activation dates appears after a subscription is selected"
+	@ignore = "true"
+	@priority = 3
+	test IfMessageAppearsAfterSelectSubscription {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("And when the user goes to generate a new key and selects a Key Type that does not have permanent licenses") {
+			CP2ActivationKeys.generateNewKey();
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+		}
+
+		task ("Then a message will appear after the user selects a subscription with the active dates") {
+			var key_position = 1;
+			var activeDate = selenium.getText("CP2ActivationKeys#SUBSCRIPTION_LENGTH");
+
+			CP2ActivationKeys.selectSubscription(position = ${key_position});
+
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "Activation Keys will be valid ${activeDate}");
+		}
+	}
+
+	@description = "LPS-149708 - Verify a message appears after selecting a subscription with a permanent license"
+	@ignore = "true"
+	@priority = 3
+	test IfMessageAppearsOnSubscriptionsThatAllowPermanentLicenses {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then a message will appear after the user selects a subscription with a permanent license type") {
+			CP2ActivationKeys.selectSubscription(position = 1);
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#INFO",
+				value1 = "Activation Keys will be valid indefinitely");
+		}
+	}
+
+	@description = "LPS-149706 - Verify if a subscription has 0 keys then the option is disabled."
+	@ignore = "true"
+	@priority = 5
+	test IfNoAvailableKeysAreDisplayedOnSubscriptions {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then a user can see that disabled subscriptions will have 0 keys available") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_DISABLED",
+				value1 = "Key activation available: 0 of");
+		}
+	}
+
+	@description = "LPS-149731 - Verify if product field is already enabled with the product the user selected in product activation."
+	@ignore = "true"
+	@priority = 4
+	test IfProductEnabledFromStart {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a DXP project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the product field will be filled in by default with the project selected - DXP") {
+			AssertTextEquals(
+				locator1 = "CP2ActivationKeys#ENABLED_PRODUCT",
+				value1 = ${testProduct});
+		}
+	}
+
+	@description = "LPS-149702 - Verify if user can select the Version when generating a new key."
+	@ignore = "true"
+	@priority = 5
+	test IfProductVersionCanBeSelected {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the user can select the Product Version") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.3");
+		}
+	}
+
+	@description = "LPS-149704 - Verify if start and end dates are displayed on subscriptions."
+	@ignore = "true"
+	@priority = 4
+	test IfStartAndEndDateAreDisplayedOnSubscriptions {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the subscription options will display a start and end date") {
+			AssertTextEquals(
+				key_position = 1,
+				locator1 = "CP2ActivationKeys#SUBSCRIPTION_LENGTH",
+				value1 = "Aug 2, 2022 - Jul 3, 2023");
+		}
+	}
+
+	@description = "Automation Ticket: LPS-157450 | Test Summary: Verify that when you click Previous you go back to the previous step with the same selections you entered"
+	@ignore = "true"
+	@priority = 4
+	test IfYouClickOnThePreviousButtonTheUserGoesBackToThePreviousStep {
+		task ("Given I click at 'Provious' button") {
+			CustomerPortal.clickAtButton(text = "Previous");
+		}
+
+		task ("Then I should be able to view the previous forms fields values") {
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Key Type",
+				option = "Production");
+		}
+
+		task ("When I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.0");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Non-Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And I click at 'Provious' button") {
+			CustomerPortal.clickAtButton(text = "Previous");
+		}
+
+		task ("Then I should be able to view the previous forms fields values") {
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Version",
+				option = "7.0");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Key Type",
+				option = "Non-Production");
+		}
+	}
+
+	@description = "LPS-149715 - Verify the 'Next' button is disabled until required options are selected."
+	@ignore = "true"
+	@priority = 3
+	test NextButtonOnlyAvailableIfAllOptionsAreSelected {
+		property portal.upstream = "quarantine";
+
+		// Needs refactor since it depends on example Solutions account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("When a user selects a project in Customer Portal and goes to 'Generate New' in Actions") {
+			CustomerPortal.enterOnProject(title = "Test Account Solutions");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the 'Next' button will be disabled until after the user makes a subscription selection. All other required fields have a default option selected") {
+			AssertElementPresent(
+				key_text = "Next",
+				locator1 = "Button#ANY_DISABLED");
+
+			CP2ActivationKeys.selectSubscription(position = 1);
+
+			AssertElementPresent(
+				key_text = "Next",
+				locator1 = "Button#ANY_ENABLED");
+		}
+	}
+
+	@description = "Automation ID: LPS-150807 | Test Summary: Verify if the user goes back to the previous screen no changes have been made"
+	@ignore = "true"
+	@priority = 3
+	test UserGoesBackToThePreviousScreenAndNoChangesAreMade {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("I fulfill first phase form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("Given I click at 'Provious' button") {
+			CustomerPortal.clickAtButton(text = "Previous");
+		}
+
+		task ("Then I should be able to view the previous forms fields values") {
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Product",
+				option = "DXP");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Version",
+				option = "7.4");
+
+			CP2ActivationKeys.assertSelectedFieldText(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+		}
+	}
+
+	@description = "Automation ID: LPS-150804 | Test Summary: Verify if the Cluster Nodes field is required"
+	@ignore = "true"
+	@priority = 4
+	test VerifyClusterNodesField {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the user can go through the first flow") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production (Virtual Cluster)");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			Button.click(button = "Next");
+		}
+
+		task ("And the Generate button must be disabled") {
+			CustomerPortal.assertButtonIsDisabled(text = "Generate Cluster ( Keys)");
+		}
+
+		task ("After filling in the Cluster Nodes field the button is then enabled") {
+			CP2ActivationKeys.environmentDetails(
+				environmentDetails = "name",
+				value = "Liferay Test");
+
+			CP2ActivationKeys.selectClusterNodes(key_option = 2);
+
+			CustomerPortal.assertButtonIsActive(text = "Generate Cluster (2 Keys)");
+		}
+	}
+
+	@description = "Automation ID: LPS-150803 | Test Summary: Verify if the Environment Name field is required"
+	@ignore = "true"
+	@priority = 4
+	test VerifyEnvironmentNameField {
+
+		// Needs refactor since it depends on example FIFA account
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Given I go to the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("And I click on DXP product") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("Then the 'Generate New'z option is selected in the drop-down of the Action button") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("Then the user can go through the first flow") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput();
+
+			Button.click(button = "Next");
+		}
+
+		task ("When the Environment Name field is not filled the message 'This field is required.' is displayed") {
+			CP2ActivationKeys.environmentDetails(
+				environmentDetails = "name",
+				value = "Liferay Test");
+
+			CP2ActivationKeys.environmentDetails(
+				environmentDetails = "name",
+				value = "");
+
+			KeyPress(
+				locator1 = "CustomerPortalSite#BODY",
+				value1 = "\ESCAPE");
+
+			Alert.viewErrorMessage(errorMessage = "This field is required.");
+		}
+	}
+
+}

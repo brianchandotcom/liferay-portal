@@ -55,13 +55,9 @@ definition {
 		}
 
 		task ("And I go through onboarding") {
-			CP2Utils.onboardingFlow();
-		}
+			Button.click(button = "Start Project Setup");
 
-		task ("Then I click on the AC product") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+			Button.click(button = "Skip for now");
 		}
 	}
 
@@ -82,8 +78,6 @@ definition {
 	@priority = 3
 	test AddingAdditionalIncidentReportContacts {
 		task ("And I assert that one more 'Incident Report Contact' field has been added") {
-			CustomerPortal.clickOnFinishActivationButton();
-
 			CustomerPortal.clickAtButton(text = "Add Incident Report Contact");
 
 			CP2AnalyticsCloudSetup.assertFieldExtraIsVisible(
@@ -99,8 +93,6 @@ definition {
 			CP2AnalyticsCloudSetup.assertFieldExtraIsNotVisible(
 				field = "email",
 				position = 2);
-
-			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
@@ -110,8 +102,6 @@ definition {
 		property solutions.acceptance = "true";
 
 		task ("When I fill in all the required fields") {
-			CustomerPortal.clickOnFinishActivationButton();
-
 			CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
 
 			Button.click(button = "Submit");
@@ -141,10 +131,6 @@ definition {
 	@description = "Automation ID: LPS-150654 | Test Summary: Verify if the user enters a wrong value in 'Owner Email' an error message is displayed"
 	@priority = 3
 	test CanSeeTheErrorMessageInTheOwnerEmailField {
-		task ("And I enter Setup AC") {
-			CustomerPortal.clickOnFinishActivationButton();
-		}
-
 		task ("Then I assert that the 'Owner Email' field is required") {
 			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 				label = "Address",
@@ -153,8 +139,6 @@ definition {
 			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
-
-			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
@@ -162,8 +146,6 @@ definition {
 	@priority = 4
 	test CanViewTheAdministratorSubmitTheForm {
 		task ("And the Submit button must be disabled") {
-			CustomerPortal.clickOnFinishActivationButton();
-
 			CustomerPortal.assertButtonIsDisabled(text = "Submit");
 		}
 
@@ -173,18 +155,12 @@ definition {
 
 		task ("Then The Submit button should be active") {
 			CustomerPortal.assertButtonIsActive(text = "Submit");
-
-			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
 	@description = "Automation ID: LPS-150659 | Test Summary: Verify if the user enters an invalid e-mail address for the owner and contacts in the incident report an error message is displayed"
 	@priority = 3
 	test CanViewTheErrorMessageInTheIncidentReportContactField {
-		task ("And I enter Setup AC") {
-			CustomerPortal.clickOnFinishActivationButton();
-		}
-
 		task ("Then I assert that the 'Incident Report Contact' field is required") {
 			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 				label = "email",
@@ -193,18 +169,12 @@ definition {
 			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
-
-			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 
 	@description = "Automation ID: LPS-150657 | Test Summary: Verify if the user enters a wrong value in 'Workspace Name', an error message is displayed"
 	@priority = 3
 	test CanViewTheErrorMessageInTheWorkspaceNameField {
-		task ("And I enter Setup AC") {
-			CustomerPortal.clickOnFinishActivationButton();
-		}
-
 		task ("Then I assert that the 'Workspace Name' field is required") {
 			CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 				label = "workspaceName",
@@ -213,8 +183,6 @@ definition {
 			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
-
-			CustomerPortal.clickAtButton(text = "Cancel");
 		}
 	}
 

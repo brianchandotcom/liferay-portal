@@ -9,7 +9,7 @@ definition {
 
 	var testSiteName = "Customer Portal Site";
 	var testSiteURL = "customer-portal-site";
-	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud";
+	var testAccounts = "Test Account LXC - SM,Test Account Analytics Cloud,Test Account DXP";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -39,6 +39,396 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Automation ID: LPS-150004 | Test Summary: Verify if the user clicks the Cancel button he stays on the Team Members page"
+	@priority = 4
+	test AfterCancellingTheActionHeStaysOnTheSamePage {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0 and login to okta") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
+		}
+
+		task ("Open the action menu and click the Remove option") {
+			CP2Utils.openActionMenu(
+				menuItem = "Remove",
+				openUser = "Test Test");
+
+			Button.click(button = "Cancel");
+		}
+
+		task ("Assert that the user remained on the Team Members page") {
+			CP2TeamMembers.viewTeamMembersPage();
+		}
+	}
+
+	@description = "Automation ID: LPS-149746 | Test Summary: Verify if the team member table contains the following data (Name - Email - Support Seat - Role - Status)"
+	@priority = 4
+	test AssertAllItemsInTheTable {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
+		}
+
+		task ("Assert the details of the table and page") {
+			CP2TeamMembers.viewTableValue(
+				email = "test@liferay.com",
+				name = "Test Test",
+				role = "Administrator",
+				status = "Active");
+
+			CP2TeamMembers.viewSupportSeatsAvailable(available = "2 of 3 available");
+
+			AssertElementPresent(
+				key_text = "Invite",
+				locator1 = "CustomerPortalSite#ANY_BUTTON");
+
+			Tooltip.viewHelpInfo(info = "The limit of support seats available counts the total of Administrators & Requesters roles assigned due to both have role permissions to open support tickets.");
+		}
+	}
+
+	@description = "Automation ID: LPS-158568 | Test Summary: Verify that when the project reaches zero available support seats the administrator and requester roles are disabled in the drop-down list"
+	@ignore = "true"
+	@priority = 4
+	test AssertThatTheDropdownOptionsAreDisabled {
+
+		// Needs refactor since it depends on example Avangrid Portals account
+
+		var testAccount = "Avangrid Portals";
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+		}
+
+		task ("Then I go to the Customer Portal Site") {
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
+		}
+
+		task ("And I enter the test account and go to Team Members page") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CP2TeamMembers.teamMembersFlow(testAccount = ${testAccount});
+		}
+
+		task ("Then I assert that when the project reaches zero available support seats, the administrator and requester roles are disabled") {
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = 0,
+				positionNumber = 0,
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				addMembers = "true",
+				position = 1,
+				positionNumber = 1,
+				rowEmail = "test02@project.com",
+				rowRole = "Requester");
+
+			CP2TeamMembers.assertThatFunctionIsDisabled(
+				positionNumber = 2,
+				role = "Administrator");
+
+			CP2TeamMembers.assertThatFunctionIsDisabled(
+				positionNumber = 2,
+				role = "Requester");
+
+			CustomerPortal.clickAtButton(text = "Cancel");
+		}
+	}
+
+	@description = "Automation ID: LPS-170211 | Test Summary: Assert that when the user reaches the limit of available support seats the User function becomes default for the next invited"
+	@priority = 3
+	test AssertThatTheUserFunctionBecomesDefault {
+
+		// TODO LPS-170211 AssertThatTheUserFunctionBecomesDefault pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-149752 | Test Summary: Verify that in the table the guest user is below the current user and its status is displayed as invited"
+	@priority = 5
+	test AssertTheStatusAndOrderOfTheGuestUser {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
+		task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.assignUsers(
+				accountName = ${testAccount},
+				assigneeName = "Test User");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
+		}
+
+		task ("Assert the users and their respective statuses") {
+			CP2TeamMembers.assertTheInvitedUser(
+				name = "Test User",
+				status = "Invited");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
+		}
+	}
+
+	@description = "Automation ID: LPS-146292 | Test Summary: Check if there is a 'Cancel' button if the user wants to leave the process"
+	@ignore = "true"
+	@priority = 4
+	test CancelButtonIsPresent {
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
+
+		// Reason: Not able to reproduce scenario without OKTA workaround.
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+		}
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.enterOnProject(projectName = ${testAccount});
+		}
+
+		task ("Go to the Team Members page and open the invitation modal") {
+			CP2NavigationMenu.goToTeamMembers();
+
+			CustomerPortal.clickAtButton(text = "Invite");
+		}
+
+		task ("Click the Cancel button and assert that the user has returned to the Team Members page") {
+			CP2NavigationMenu.cancelTeamMembersInvitation();
+
+			CP2TeamMembers.viewTeamMembersPage();
+		}
+	}
+
+	@description = "Automation ID: LPS-146292 | Test Summary: Verify if after inviting member, the screen goes back to previous screen (Team Members page)"
+	@ignore = "true"
+	@priority = 4
+	test CanGoBackOnTeamMembersPage {
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Partner Manager",
+				accountUserName = "Test Test");
+		}
+
+		// Reason: Not able to reproduce scenario without OKTA workaround.
+
+		task ("Login in Okta") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+		}
+
+		task ("Go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.enterOnProject(projectName = ${testAccount});
+		}
+
+		task ("Go to the invite modal and invite a member to the project") {
+			CP2NavigationMenu.goToTeamMembers();
+
+			CustomerPortal.clickAtButton(text = "Invite");
+
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				position = 0,
+				positionNumber = 0,
+				rowEmail = "test1@liferay.com",
+				rowRole = "User");
+
+			CP2TeamMembers.clickTeamMembersSendInvitation();
+		}
+
+		task ("Assert that remained on the Team Members page") {
+			CP2TeamMembers.viewTeamMembersPage();
+		}
+	}
+
+	@description = "Automation ID: LPS-150013 | Test Summary: Verify that after the user clicks Edit a Cancel button is available"
+	@priority = 5
+	test CanViewCancelButton {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
+		task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.assignUsers(
+				accountName = ${testAccount},
+				assigneeName = "Test User");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0 and login to okta") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
+		}
+
+		task ("Open the action menu and click the Edit option") {
+			CP2Utils.openActionMenu(
+				menuItem = "Edit",
+				openUser = "Test User");
+		}
+
+		task ("Click the Cancel button and affirm that you have remained on the Team Members page") {
+			CP2Utils.changeRole(role = "User");
+
+			Button.click(button = "Cancel");
+
+			CP2Utils.assertNotChangeRole(role = "Administrator");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
 		}
 	}
 
@@ -73,6 +463,238 @@ definition {
 
 		task ("Assert the error message") {
 			Alert.viewErrorMessage(errorMessage = "Please insert a valid email.");
+		}
+	}
+
+	@description = "Automation ID: LPS-150005 | Test Summary: Verify that if the user clicks the Remove confirmation button the staff member is indeed removed"
+	@priority = 5
+	test CanViewIfTheUserIsRemoved {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
+		task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.assignUsers(
+				accountName = ${testAccount},
+				assigneeName = "Test User");
+		}
+
+		task ("Change the role of the current user in the project") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0 and login to okta") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
+		}
+
+		task ("Close the confirmation modal") {
+			CP2Utils.openActionMenu(
+				menuItem = "Remove",
+				openUser = "Test User");
+
+			AssertElementPresent(
+				locator1 = "CP2Utils#MODAL",
+				value = "Are you sure you want to remove this team member from the project?");
+
+			Button.click(button = "Remove");
+		}
+
+		task ("Assert the success message when submitting the form") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
+		}
+	}
+
+	@description = "Automation ID: LPS-150012 | Test Summary: Verify that after the user clicks Edit a Save button is available"
+	@priority
+	test CanViewSaveButton {
+		property portal.upstream = "quarantine";
+
+		// "Reason: Not able to reproduce scenario without OKTA workaround."
+
+		task ("Adding a user to the project") {
+			JSONUser.addUser(
+				userEmailAddress = "test.user@liferay.com",
+				userFirstName = "Test",
+				userLastName = "User",
+				userScreenName = "Testing");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test.user@liferay.com");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.assignUsers(
+				accountName = ${testAccount},
+				assigneeName = "Test User");
+		}
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Go to CP2.0 and login to okta") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.loginOktaToUpdateCP();
+
+			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Get into the project and go to Team Members page") {
+			CP2TeamMembers.teamMembersFlow(testAccount = "Test Account DXP");
+		}
+
+		task ("Open the action menu and click the Edit option") {
+			CP2Utils.openActionMenu(
+				menuItem = "Edit",
+				openUser = "Test User");
+		}
+
+		task ("Change the guest user role and save") {
+			CP2Utils.changeRole(role = "User");
+
+			Button.click(button = "Save");
+		}
+
+		task ("Assert that the role really has changed") {
+			CP2Utils.assertChangeRole(
+				email = "test.user@liferay.com",
+				role = "User");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "test.user@liferay.com");
+		}
+	}
+
+	@description = "Automation ID: LPS-150206 | Test Summary: Verify that below the number of seats the modal displays an explanation of the support tickets"
+	@priority = 3
+	test CanViewTipMessage {
+
+		// TODO LPS-150206 CanViewTipMessage pending implementation
+
+	}
+
+	@description = "Automation ID: LPS-150204 | Test Summary: Verify if the user can change an administrator role already selected to requester, or the requester role to administrator"
+	@ignore = "true"
+	@priority = 4
+	test ChangesToAlreadySelectedFunctions {
+
+		// Needs refactor since it depends on example FIFA account
+
+		var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+
+		task ("Change the user role in the project") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+		}
+
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+		}
+
+		task ("Then I go to the Customer Portal Site") {
+			CP2Utils.goToCustomerPortalSiteWithRefresh();
+		}
+
+		task ("And I enter the test account") {
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		task ("Starting the Setup") {
+			CustomerPortal.clickOnStartProjectSetup();
+		}
+
+		task ("Given that I invite a user into the project") {
+			CP2TeamMembers.addFieldsTeamMembersExtra(
+				position = 0,
+				positionNumber = 0,
+				rowEmail = "test01@project.com",
+				rowRole = "Administrator");
+
+			CP2TeamMembers.clickTeamMembersSendInvitation();
+		}
+
+		task ("Then I open the action menu and edit the invited user role") {
+			CP2NavigationMenu.goToTeamMembers();
+
+			CP2Utils.openActionMenu(
+				menuItem = "Edit",
+				openUser = "test01@project.com");
+
+			CP2TeamMembers.tableChangeRole(
+				changeRole = "Requester",
+				roleDefault = "Administrator");
+
+			CustomerPortal.clickAtButton(text = "Save");
+		}
+
+		task ("And I assert that the function has been changed") {
+			CP2Utils.assertChangeRole(
+				email = "test01@project.com",
+				role = "Requester");
+		}
+
+		task ("Delete the entries and objects created") {
+			CP2Utils.deleteSpecificObjectEntry(
+				entry = "test01@project.com",
+				portlet = "Team Members Invitation");
 		}
 	}
 

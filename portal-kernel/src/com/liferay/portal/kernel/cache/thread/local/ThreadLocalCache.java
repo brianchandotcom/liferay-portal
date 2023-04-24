@@ -68,8 +68,7 @@ public class ThreadLocalCache<T> {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{cache=", _cache.toString(), ", id=", _id, ", lifecycle=",
-			_lifecycle, "}");
+			"{cache=", _cache, ", id=", _id, ", lifecycle=", _lifecycle, "}");
 	}
 
 	private Map<String, T> _cache;

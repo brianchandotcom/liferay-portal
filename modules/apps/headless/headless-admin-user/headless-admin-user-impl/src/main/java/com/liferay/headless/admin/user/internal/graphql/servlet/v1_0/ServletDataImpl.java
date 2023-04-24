@@ -891,6 +891,157 @@ public class ServletDataImpl implements ServletData {
 						"query#webUrl",
 						new ObjectValuePair<>(
 							WebUrlResourceImpl.class, "getWebUrl"));
+
+					put(
+						"query#Account.userAccounts",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getAccountUserAccountsPage"));
+					put(
+						"query#UserAccount.phones",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"getUserAccountPhonesPage"));
+					put(
+						"query#Account.accountRoles",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"getAccountAccountRolesPage"));
+					put(
+						"query#Account.accountRolesByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"getAccountAccountRolesByExternalReferenceCodePage"));
+					put(
+						"query#Organization.accountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getAccountByExternalReferenceCode"));
+					put(
+						"query#Organization.accounts",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getOrganizationAccountsPage"));
+					put(
+						"query#Site.userAccountSegments",
+						new ObjectValuePair<>(
+							SegmentResourceImpl.class,
+							"getSiteUserAccountSegmentsPage"));
+					put(
+						"query#UserAccount.postalAddresses",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"getUserAccountPostalAddressesPage"));
+					put(
+						"query#UserAccount.emailAddresses",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"getUserAccountEmailAddressesPage"));
+					put(
+						"query#Account.userAccountByExternalReferenceCode",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getUserAccountByExternalReferenceCode"));
+					put(
+						"query#Organization.postalAddresses",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"getOrganizationPostalAddressesPage"));
+					put(
+						"query#Account.byExternalReferenceCodeOrganizations",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"getAccountByExternalReferenceCodeOrganizationsPage"));
+					put(
+						"query#AccountRole.account",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class, "getAccount"));
+					put(
+						"query#Organization.organizations",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"getOrganizationOrganizationsPage"));
+					put(
+						"query#Organization.emailAddresses",
+						new ObjectValuePair<>(
+							EmailAddressResourceImpl.class,
+							"getOrganizationEmailAddressesPage"));
+					put(
+						"query#Account.userGroupByExternalReferenceCode",
+						new ObjectValuePair<>(
+							UserGroupResourceImpl.class,
+							"getUserGroupByExternalReferenceCode"));
+					put(
+						"query#Site.userAccounts",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getSiteUserAccountsPage"));
+					put(
+						"query#Account.userAccountsByExternalReferenceCode",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getAccountUserAccountsByExternalReferenceCodePage"));
+					put(
+						"query#AccountRole.role",
+						new ObjectValuePair<>(
+							RoleResourceImpl.class, "getRole"));
+					put(
+						"query#Account.organizations",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"getAccountOrganizationsPage"));
+					put(
+						"query#Account.byExternalReferenceCodeUserAccountByEmailAddressAccountRoles",
+						new ObjectValuePair<>(
+							AccountRoleResourceImpl.class,
+							"getAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPage"));
+					put(
+						"query#Site.segments",
+						new ObjectValuePair<>(
+							SegmentResourceImpl.class, "getSiteSegmentsPage"));
+					put(
+						"query#Organization.webUrls",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"getOrganizationWebUrlsPage"));
+					put(
+						"query#UserAccount.emailVerificationTicket",
+						new ObjectValuePair<>(
+							TicketResourceImpl.class,
+							"getUserAccountEmailVerificationTicket"));
+					put(
+						"query#Subscription.site",
+						new ObjectValuePair<>(
+							SiteResourceImpl.class, "getSite"));
+					put(
+						"query#UserAccount.webUrls",
+						new ObjectValuePair<>(
+							WebUrlResourceImpl.class,
+							"getUserAccountWebUrlsPage"));
+					put(
+						"query#UserAccount.passwordResetTicket",
+						new ObjectValuePair<>(
+							TicketResourceImpl.class,
+							"getUserAccountPasswordResetTicket"));
+					put(
+						"query#Account.postalAddresses",
+						new ObjectValuePair<>(
+							PostalAddressResourceImpl.class,
+							"getAccountPostalAddressesPage"));
+					put(
+						"query#Account.organizationByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OrganizationResourceImpl.class,
+							"getOrganizationByExternalReferenceCode"));
+					put(
+						"query#Organization.phones",
+						new ObjectValuePair<>(
+							PhoneResourceImpl.class,
+							"getOrganizationPhonesPage"));
+					put(
+						"query#UserAccount.userUserGroups",
+						new ObjectValuePair<>(
+							UserGroupResourceImpl.class, "getUserUserGroups"));
 				}
 			};
 

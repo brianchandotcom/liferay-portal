@@ -169,6 +169,22 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PlacedOrderItemShipmentResourceImpl.class,
 							"getPlacedOrderItemPlacedOrderItemShipmentsPage"));
+
+					put(
+						"query#PlacedOrder.paymentURL",
+						new ObjectValuePair<>(
+							PlacedOrderResourceImpl.class,
+							"getPlacedOrderPaymentURL"));
+					put(
+						"query#PlacedOrder.placedOrderBillingAddres",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderPlacedOrderBillingAddres"));
+					put(
+						"query#PlacedOrder.placedOrderShippingAddres",
+						new ObjectValuePair<>(
+							PlacedOrderAddressResourceImpl.class,
+							"getPlacedOrderPlacedOrderShippingAddres"));
 				}
 			};
 

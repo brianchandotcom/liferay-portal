@@ -201,6 +201,12 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ListTypeEntryResourceImpl.class,
 							"getListTypeEntry"));
+
+					put(
+						"query#ListTypeDefinition.byExternalReferenceCodeListTypeEntries",
+						new ObjectValuePair<>(
+							ListTypeEntryResourceImpl.class,
+							"getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage"));
 				}
 			};
 

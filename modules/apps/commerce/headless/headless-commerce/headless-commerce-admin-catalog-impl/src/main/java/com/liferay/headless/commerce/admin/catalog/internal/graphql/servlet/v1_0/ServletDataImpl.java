@@ -1244,6 +1244,176 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SpecificationResourceImpl.class,
 							"getSpecification"));
+
+					put(
+						"query#Catalog.productByExternalReferenceCodeConfiguration",
+						new ObjectValuePair<>(
+							ProductConfigurationResourceImpl.class,
+							"getProductByExternalReferenceCodeConfiguration"));
+					put(
+						"query#Catalog.productByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductResourceImpl.class,
+							"getProductByExternalReferenceCode"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeCategories",
+						new ObjectValuePair<>(
+							CategoryResourceImpl.class,
+							"getProductByExternalReferenceCodeCategoriesPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeGroupedProducts",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"getProductByExternalReferenceCodeGroupedProductsPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeProductChannels",
+						new ObjectValuePair<>(
+							ProductChannelResourceImpl.class,
+							"getProductByExternalReferenceCodeProductChannelsPage"));
+					put(
+						"query#Catalog.skuByExternalReferenceCodeSkuSubscriptionConfiguration",
+						new ObjectValuePair<>(
+							SkuSubscriptionConfigurationResourceImpl.class,
+							"getSkuByExternalReferenceCodeSkuSubscriptionConfiguration"));
+					put(
+						"query#Catalog.optionValueByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionValueResourceImpl.class,
+							"getOptionValueByExternalReferenceCode"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeCatalog",
+						new ObjectValuePair<>(
+							CatalogResourceImpl.class,
+							"getProductByExternalReferenceCodeCatalog"));
+					put(
+						"query#Option.catalogByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CatalogResourceImpl.class,
+							"getCatalogByExternalReferenceCode"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeMappedProducts",
+						new ObjectValuePair<>(
+							MappedProductResourceImpl.class,
+							"getProductByExternalReferenceCodeMappedProductsPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeDiagram",
+						new ObjectValuePair<>(
+							DiagramResourceImpl.class,
+							"getProductByExternalReferenceCodeDiagram"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeProductAccountGroups",
+						new ObjectValuePair<>(
+							ProductAccountGroupResourceImpl.class,
+							"getProductByExternalReferenceCodeProductAccountGroupsPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeSkus",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"getProductByExternalReferenceCodeSkusPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeShippingConfiguration",
+						new ObjectValuePair<>(
+							ProductShippingConfigurationResourceImpl.class,
+							"getProductByExternalReferenceCodeShippingConfiguration"));
+					put(
+						"query#Catalog.skuByExternalReferenceCode",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class,
+							"getSkuByExternalReferenceCode"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeByVersion",
+						new ObjectValuePair<>(
+							ProductResourceImpl.class,
+							"getProductByExternalReferenceCodeByVersion"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeAttachments",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getProductByExternalReferenceCodeAttachmentsPage"));
+					put(
+						"query#Diagram.productIdPins",
+						new ObjectValuePair<>(
+							PinResourceImpl.class, "getProductIdPinsPage"));
+					put(
+						"query#Catalog.optionByExternalReferenceCodeOptionValues",
+						new ObjectValuePair<>(
+							OptionValueResourceImpl.class,
+							"getOptionByExternalReferenceCodeOptionValuesPage"));
+					put(
+						"query#Sku.productMappedProductBySequence",
+						new ObjectValuePair<>(
+							MappedProductResourceImpl.class,
+							"getProductMappedProductBySequence"));
+					put(
+						"query#Diagram.productIdGroupedProducts",
+						new ObjectValuePair<>(
+							GroupedProductResourceImpl.class,
+							"getProductIdGroupedProductsPage"));
+					put(
+						"query#Catalog.productGroupByExternalReferenceCodeProductGroupProducts",
+						new ObjectValuePair<>(
+							ProductGroupProductResourceImpl.class,
+							"getProductGroupByExternalReferenceCodeProductGroupProductsPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeProductOptions",
+						new ObjectValuePair<>(
+							ProductOptionResourceImpl.class,
+							"getProductByExternalReferenceCodeProductOptionsPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeRelatedProducts",
+						new ObjectValuePair<>(
+							RelatedProductResourceImpl.class,
+							"getProductByExternalReferenceCodeRelatedProductsPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeMappedProductBySequence",
+						new ObjectValuePair<>(
+							MappedProductResourceImpl.class,
+							"getProductByExternalReferenceCodeMappedProductBySequence"));
+					put(
+						"query#Diagram.productIdMappedProducts",
+						new ObjectValuePair<>(
+							MappedProductResourceImpl.class,
+							"getProductIdMappedProductsPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeTaxConfiguration",
+						new ObjectValuePair<>(
+							ProductTaxConfigurationResourceImpl.class,
+							"getProductByExternalReferenceCodeTaxConfiguration"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeImages",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getProductByExternalReferenceCodeImagesPage"));
+					put(
+						"query#Catalog.productByExternalReferenceCodePins",
+						new ObjectValuePair<>(
+							PinResourceImpl.class,
+							"getProductByExternalReferenceCodePinsPage"));
+					put(
+						"query#Catalog.optionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							OptionResourceImpl.class,
+							"getOptionByExternalReferenceCode"));
+					put(
+						"query#Catalog.productGroupByExternalReferenceCode",
+						new ObjectValuePair<>(
+							ProductGroupResourceImpl.class,
+							"getProductGroupByExternalReferenceCode"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeSubscriptionConfiguration",
+						new ObjectValuePair<>(
+							ProductSubscriptionConfigurationResourceImpl.class,
+							"getProductByExternalReferenceCodeSubscriptionConfiguration"));
+					put(
+						"query#Catalog.productByExternalReferenceCodeProductVirtualSettings",
+						new ObjectValuePair<>(
+							ProductVirtualSettingsResourceImpl.class,
+							"getProductByExternalReferenceCodeProductVirtualSettings"));
+					put(
+						"query#Diagram.productIdLinkedProducts",
+						new ObjectValuePair<>(
+							LinkedProductResourceImpl.class,
+							"getProductIdLinkedProductsPage"));
 				}
 			};
 

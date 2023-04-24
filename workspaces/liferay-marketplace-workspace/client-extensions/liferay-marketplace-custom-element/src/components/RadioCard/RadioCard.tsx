@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import radioChecked from '../../assets/icons/radio-button-checked.svg';
 import radioUnchecked from '../../assets/icons/radio-button-unchecked.svg';
+import paypal from '../../assets/images/paypal.png';
 
 import './RadioCard.scss';
 
@@ -88,7 +89,9 @@ export function RadioCard({
 
 					{small ? (
 						<div className="radio-card-main-info-small">
-							<div className="radio-card-main-info-small-background"></div>
+							<div className="radio-card-main-info-small-background">
+								<img src={paypal} alt="paypal" />
+							</div>
 
 							<span className="radio-card-main-info-small-text-small">
 								{title}

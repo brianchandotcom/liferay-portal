@@ -20,15 +20,10 @@ import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderConte
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -47,7 +42,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.Group;
@@ -58,7 +52,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,26 +104,6 @@ public class DDMFormTaglibUtil {
 
 		return ddmFormBuilderSettingsRetriever.getSettings(
 			ddmFormBuilderSettingsRequest);
-	}
-
-	public static JSONArray getDDMFormFieldTypesJSONArray()
-		throws PortalException {
-
-		List<DDMFormFieldType> formFieldTypes =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypes();
-
-		DDMFormFieldTypesSerializerSerializeRequest.Builder builder =
-			DDMFormFieldTypesSerializerSerializeRequest.Builder.newBuilder(
-				formFieldTypes);
-
-		DDMFormFieldTypesSerializerSerializeResponse
-			ddmFormFieldTypesSerializerSerializeResponse =
-				_ddmFormFieldTypesSerializer.serialize(builder.build());
-
-		String serializedFormFieldTypes =
-			ddmFormFieldTypesSerializerSerializeResponse.getContent();
-
-		return _jsonFactory.createJSONArray(serializedFormFieldTypes);
 	}
 
 	public static DDMFormInstance getDDMFormInstance(long ddmFormInstanceId) {
@@ -261,22 +234,6 @@ public class DDMFormTaglibUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypeServicesRegistry(
-		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry) {
-
-		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
-	}
-
-	@Reference(
-		target = "(ddm.form.field.types.serializer.type=json)", unbind = "-"
-	)
-	protected void setDDMFormFieldTypesSerializer(
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer) {
-
-		_ddmFormFieldTypesSerializer = ddmFormFieldTypesSerializer;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDMFormInstanceLocalService(
 		DDMFormInstanceLocalService ddmFormInstanceLocalService) {
 
@@ -376,9 +333,6 @@ public class DDMFormTaglibUtil {
 	private static DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
 	private static DDMFormBuilderSettingsRetriever
 		_ddmFormBuilderSettingsRetriever;
-	private static DDMFormFieldTypeServicesRegistry
-		_ddmFormFieldTypeServicesRegistry;
-	private static DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
 	private static DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private static DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;

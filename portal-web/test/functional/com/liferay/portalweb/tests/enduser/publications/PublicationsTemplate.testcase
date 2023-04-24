@@ -216,6 +216,7 @@ definition {
 		}
 	}
 
+	@description = "This is the use case for LPS-176196."
 	@priority = 3
 	test UseDefaultTemplateWhenCreatingNewPublication {
 		task ("Add new user with publications permissions") {

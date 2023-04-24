@@ -470,25 +470,11 @@ definition {
 	macro removeViewPermissions {
 		CalendarNavigator.gotoView(viewType = "Week");
 
-		if (${calendarType} == "My Calendars") {
-			var key_user = ${user};
+		var key_site = ${site};
 
-			Click(locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
+		Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
 
-			Calendar._gotoMenulistOption(menuListOption = "Permissions");
-		}
-		else if (${calendarType} == "Current Site Calendars") {
-			var key_site = ${site};
-
-			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
-
-			Calendar._gotoMenulistOption(menuListOption = "Permissions");
-		}
-		else if (${calendarType} == "Other Calendars") {
-			Calendar.chooseOtherCalendarMenulistOption(
-				calendarName = ${calendarName},
-				menuListOption = "Permissions");
-		}
+		Calendar._gotoMenulistOption(menuListOption = "Permissions");
 
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 

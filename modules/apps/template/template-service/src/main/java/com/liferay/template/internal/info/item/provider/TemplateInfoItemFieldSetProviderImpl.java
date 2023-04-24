@@ -44,6 +44,7 @@ import com.liferay.template.transformer.TemplateNodeFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -128,74 +129,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 		return new InfoFieldValue<>(
 			_getInfoField(templateEntry),
 			() -> InfoLocalizedValue.function(
-				locale -> {
-					ServiceContext serviceContext =
-						ServiceContextThreadLocal.getServiceContext();
-
-					if ((serviceContext == null) ||
-						(serviceContext.getThemeDisplay() == null)) {
-
-						return StringPool.BLANK;
-					}
-
-					ThemeDisplay currentThemeDisplay =
-						serviceContext.getThemeDisplay();
-
-					ThemeDisplay themeDisplay = null;
-
-					try {
-						themeDisplay =
-							(ThemeDisplay)currentThemeDisplay.clone();
-
-						themeDisplay.setLocale(locale);
-					}
-					catch (CloneNotSupportedException
-								cloneNotSupportedException) {
-
-						_log.error(
-							"Unable to clone theme display",
-							cloneNotSupportedException);
-					}
-
-					if (themeDisplay == null) {
-						return StringPool.BLANK;
-					}
-
-					InfoItemFieldValues infoItemFieldValues =
-						InfoItemFieldValues.builder(
-						).build();
-
-					InfoItemFieldValuesProvider<Object>
-						infoItemFieldValuesProvider =
-							_infoItemServiceRegistry.getFirstInfoItemService(
-								InfoItemFieldValuesProvider.class,
-								templateEntry.getInfoItemClassName());
-
-					if (infoItemFieldValuesProvider != null) {
-						infoItemFieldValues =
-							infoItemFieldValuesProvider.getInfoItemFieldValues(
-								itemObject);
-					}
-
-					TemplateDisplayTemplateTransformer
-						templateDisplayTemplateTransformer =
-							new TemplateDisplayTemplateTransformer(
-								templateEntry, infoItemFieldValues,
-								_templateNodeFactory);
-
-					try {
-						return templateDisplayTemplateTransformer.transform(
-							themeDisplay);
-					}
-					catch (Exception exception) {
-						_log.error("Unable to transform template", exception);
-					}
-					finally {
-						themeDisplay.setLocale(currentThemeDisplay.getLocale());
-					}
-
-					return StringPool.BLANK;
-				}));
+				locale -> _getValue(itemObject, locale, templateEntry)));
 	}
 
 	private List<TemplateEntry> _getTemplateEntries(
@@ -224,6 +158,66 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 			return Collections.emptyList();
 		}
+	}
+
+	private String _getValue(
+		Object itemObject, Locale locale, TemplateEntry templateEntry) {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext == null) ||
+			(serviceContext.getThemeDisplay() == null)) {
+
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay currentThemeDisplay = serviceContext.getThemeDisplay();
+
+		ThemeDisplay themeDisplay = null;
+
+		try {
+			themeDisplay = (ThemeDisplay)currentThemeDisplay.clone();
+
+			themeDisplay.setLocale(locale);
+		}
+		catch (CloneNotSupportedException cloneNotSupportedException) {
+			_log.error(
+				"Unable to clone theme display", cloneNotSupportedException);
+		}
+
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).build();
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				templateEntry.getInfoItemClassName());
+
+		if (infoItemFieldValuesProvider != null) {
+			infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(itemObject);
+		}
+
+		TemplateDisplayTemplateTransformer templateDisplayTemplateTransformer =
+			new TemplateDisplayTemplateTransformer(
+				templateEntry, infoItemFieldValues, _templateNodeFactory);
+
+		try {
+			return templateDisplayTemplateTransformer.transform(themeDisplay);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to transform template", exception);
+		}
+		finally {
+			themeDisplay.setLocale(currentThemeDisplay.getLocale());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

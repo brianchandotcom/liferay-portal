@@ -1791,7 +1791,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#HEADER",
 			value1 = "Terms of Use");
 

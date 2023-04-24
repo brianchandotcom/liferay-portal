@@ -100,6 +100,10 @@ public class ServletDataImpl implements ServletData {
 			<#list queryJavaMethodSignatures as javaMethodSignature>
 				put("query#${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, queryJavaMethodSignatures)}", new ObjectValuePair<>(${javaMethodSignature.schemaName}ResourceImpl.class, "${javaMethodSignature.methodName}"));
 			</#list>
+
+			<#list freeMarkerTool.getGraphQLRelationJavaMethodSignatures(configYAML, "query", openAPIYAML) as javaMethodSignature>
+				put("query#${javaMethodSignature.parentSchemaName}.${freeMarkerTool.getGraphQLRelationName(javaMethodSignature, queryJavaMethodSignatures)}", new ObjectValuePair<>(${javaMethodSignature.schemaName}ResourceImpl.class, "${javaMethodSignature.methodName}"));
+			</#list>
 		}
 	};
 

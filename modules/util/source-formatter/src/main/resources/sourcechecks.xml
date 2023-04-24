@@ -1576,6 +1576,10 @@
 			<category name="Upgrade" />
 			<description name="Run code migration of file import from a Velocity file to a Freemarker file with the syntax replacements" />
 		</check>
+		<check name="UpgradeVelocityForeachMigrationCheck">
+			<category name="Upgrade" />
+			<description name="Run code migration of references to Foreach statement from a Velocity file to a Freemarker file with the syntax replacements" />
+		</check>
 		<check name="UpgradeVelocityIfStatementsMigrationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of references to If statements from a Velocity file to a Freemarker file with the syntax replacements" />

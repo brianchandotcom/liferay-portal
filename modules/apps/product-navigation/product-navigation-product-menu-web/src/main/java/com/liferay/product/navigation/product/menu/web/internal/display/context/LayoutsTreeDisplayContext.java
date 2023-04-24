@@ -69,7 +69,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -658,7 +657,8 @@ public class LayoutsTreeDisplayContext {
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
 
 		return JSONUtil.put(
 			"children",
@@ -706,19 +706,6 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		return _siteNavigationMenuItemsJSONArray;
-	}
-
-	private SiteNavigationMenuItemType _getSiteNavigationMenuItemType(
-		String type) {
-
-		if (!_siteNavigationMenuItemTypesMap.containsKey(type)) {
-			_siteNavigationMenuItemTypesMap.put(
-				type,
-				_siteNavigationMenuItemTypeRegistry.
-					getSiteNavigationMenuItemType(type));
-		}
-
-		return _siteNavigationMenuItemTypesMap.get(type);
 	}
 
 	private String _getSiteNavigationMenuItemURL(
@@ -973,8 +960,6 @@ public class LayoutsTreeDisplayContext {
 	private JSONArray _siteNavigationMenuItemsJSONArray;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
-	private final Map<String, SiteNavigationMenuItemType>
-		_siteNavigationMenuItemTypesMap = new HashMap<>();
 	private JSONArray _siteNavigationMenuJSONArray;
 	private final SiteNavigationMenuLocalService
 		_siteNavigationMenuLocalService;

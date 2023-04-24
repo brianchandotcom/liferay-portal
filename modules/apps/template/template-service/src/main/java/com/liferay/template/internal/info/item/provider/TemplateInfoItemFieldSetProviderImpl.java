@@ -108,11 +108,10 @@ public class TemplateInfoItemFieldSetProviderImpl
 			TextInfoFieldType.HTML, true
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
-			).value(
-				LocaleUtil.getDefault(),
-				ddmTemplate.getName(LocaleUtil.getDefault())
+			).values(
+				ddmTemplate.getNameMap()
 			).defaultLocale(
-				LocaleUtil.getDefault()
+				LocaleUtil.fromLanguageId(ddmTemplate.getDefaultLanguageId())
 			).build()
 		).build();
 	}

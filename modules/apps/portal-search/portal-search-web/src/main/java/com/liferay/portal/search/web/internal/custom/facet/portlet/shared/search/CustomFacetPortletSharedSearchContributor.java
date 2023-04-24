@@ -51,35 +51,35 @@ public class CustomFacetPortletSharedSearchContributor
 			new CustomFacetPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferencesOptional());
 
-		String fieldToAggregate =
+		String aggregationField =
 			customFacetPortletPreferences.getAggregationField();
 
-		if (Validator.isNull(fieldToAggregate)) {
+		if (Validator.isNull(aggregationField)) {
 			return;
 		}
 
 		if (!ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
-			fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_ARRAY)) {
+			aggregationField.startsWith(DDMIndexer.DDM_FIELD_ARRAY)) {
 
 			_contributeWithDDMFieldArray(
-				customFacetPortletPreferences, fieldToAggregate,
+				customFacetPortletPreferences, aggregationField,
 				portletSharedSearchSettings);
 		}
 		else if (!ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
-				 fieldToAggregate.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+				 aggregationField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
 
 			_contributeWithDDMField(
-				customFacetPortletPreferences, fieldToAggregate,
+				customFacetPortletPreferences, aggregationField,
 				portletSharedSearchSettings);
 		}
-		else if (fieldToAggregate.startsWith("nestedFieldArray")) {
+		else if (aggregationField.startsWith("nestedFieldArray")) {
 			_contributeWithNestedFieldArray(
-				customFacetPortletPreferences, fieldToAggregate,
+				customFacetPortletPreferences, aggregationField,
 				portletSharedSearchSettings);
 		}
 		else {
 			_contributeWithCustomFacet(
-				customFacetPortletPreferences, fieldToAggregate,
+				customFacetPortletPreferences, aggregationField,
 				portletSharedSearchSettings);
 		}
 	}

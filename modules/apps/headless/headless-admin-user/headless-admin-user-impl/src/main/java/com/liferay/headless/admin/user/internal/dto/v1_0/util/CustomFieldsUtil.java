@@ -250,10 +250,10 @@ public class CustomFieldsUtil {
 	}
 
 	private static <T> Serializable _toArray(
-		Object data, Function<Collection<T>, Serializable> transformFunction) {
+		Object data, Function<Collection<T>, Serializable> function) {
 
 		if (data instanceof Collection) {
-			return transformFunction.apply((Collection)data);
+			return function.apply((Collection)data);
 		}
 
 		return (Serializable)data;

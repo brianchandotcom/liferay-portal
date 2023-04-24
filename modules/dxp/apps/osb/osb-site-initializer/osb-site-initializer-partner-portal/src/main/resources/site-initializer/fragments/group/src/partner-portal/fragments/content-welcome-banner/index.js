@@ -34,15 +34,3 @@ fragmentElement.querySelector('.dismiss-button').onclick = () => {
 if (!isBannerClosed) {
 	toggleBanner();
 }
-
-const videoButtons = fragmentElement.querySelectorAll('.video-tour-button');
-
-if (layoutMode !== 'edit') {
-	for (const videoButton of videoButtons) {
-		videoButton.onclick = () =>
-			Liferay.Util.openModal({
-				bodyHTML: `<iframe width="100%" height="500" src=${configuration.videoButtonLink} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
-				size: 'lg',
-			});
-	}
-}

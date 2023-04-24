@@ -51,7 +51,6 @@
 								"key": "content-welcome-banner"
 							},
 							"fragmentConfig": {
-								"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
 							},
 							"fragmentFields": [
 								{
@@ -343,13 +342,36 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "clay-icon-link"
+												"key": "button-welcome-banner"
 											},
 											"fragmentConfig": {
-												"iconLink": "",
-												"iconName": "video"
+												"videoButtonLink": "https://www.youtube.com/embed/bZeAh7dpskw"
 											},
 											"fragmentFields": [
+												{
+													"id": "first-banner-primary-button-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Watch a Video Tour",
+																"ca_ES": "Watch a Video Tour",
+																"de_DE": "Watch a Video Tour",
+																"en_US": "Watch a Video Tour",
+																"es_ES": "Watch a Video Tour",
+																"fi_FI": "Watch a Video Tour",
+																"fr_FR": "Watch a Video Tour",
+																"hu_HU": "Watch a Video Tour",
+																"ja_JP": "Watch a Video Tour",
+																"nl_NL": "Watch a Video Tour",
+																"pt_BR": "Watch a Video Tour",
+																"sv_SE": "Watch a Video Tour",
+																"zh_CN": "Watch a Video Tour"
+															}
+														}
+													}
+												}
 											],
 											"indexed": true
 										},

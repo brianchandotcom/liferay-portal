@@ -128,19 +128,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	}
 
 	@Override
-	public boolean getStatus() throws Exception {
-		try (Connection connection = DataAccess.getConnection()) {
-			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
-				_isPendingModuleUpgrades()) {
-
-				return false;
-			}
-		}
-
-		return _checkUnsatisfiedUpgradeComponents();
-	}
-
-	@Override
 	public String getStatusMessage(boolean showUpgradeSteps) {
 		StringBundler sb = new StringBundler(6);
 
@@ -152,7 +139,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 		sb.append(_checkModules(showUpgradeSteps));
 
-		if (!_checkUnsatisfiedUpgradeComponents()) {
+		if (!_hasUnsatisfiedUpgradeComponents()) {
 			sb.append("Unsatisfied components prevent upgrade processes to ");
 			sb.append("be registered");
 
@@ -176,6 +163,19 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 	public List<UpgradeInfo> getUpgradeInfos(String bundleSymbolicName) {
 		return _serviceTrackerMap.getService(bundleSymbolicName);
+	}
+
+	@Override
+	public boolean isUpgraded() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			if (!PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
+				_isPendingModuleUpgrades()) {
+
+				return false;
+			}
+		}
+
+		return _hasUnsatisfiedUpgradeComponents();
 	}
 
 	@Activate
@@ -356,12 +356,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		return StringPool.BLANK;
 	}
 
-	private boolean _checkUnsatisfiedUpgradeComponents() {
-		String result = _systemChecker.check();
-
-		return !result.contains("UpgradeStepRegistrator");
-	}
-
 	private String _getModulePendingUpgradeMessage(
 		String moduleName, String currentSchemaVersion,
 		String finalSchemaVersion) {
@@ -394,6 +388,12 @@ public class ReleaseManagerImpl implements ReleaseManager {
 		sb.append(upgradeClass.getName());
 
 		return sb.toString();
+	}
+
+	private boolean _hasUnsatisfiedUpgradeComponents() {
+		String result = _systemChecker.check();
+
+		return !result.contains("UpgradeStepRegistrator");
 	}
 
 	private boolean _isPendingModuleUpgrades() {

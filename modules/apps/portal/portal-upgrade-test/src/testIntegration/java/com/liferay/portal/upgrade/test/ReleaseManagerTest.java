@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -55,12 +56,18 @@ public class ReleaseManagerTest {
 	}
 
 	@Test
-	public void testCheck() throws Exception {
-		Assert.assertTrue(_releaseManager.getStatus());
+	public void testSuccessfulUpgrade() throws Exception {
+		Assert.assertTrue(_releaseManager.isUpgraded());
+		Assert.assertTrue(
+			Validator.isBlank(_releaseManager.getShortStatusMessage(false)));
+		Assert.assertTrue(
+			Validator.isBlank(_releaseManager.getStatusMessage(false)));
 	}
 
 	@Test
-	public void testCheckMissingModuleUpgrade() throws Exception {
+	public void testUnsuccessfulUpgradeByMissingModuleUpgrade()
+		throws Exception {
+
 		Bundle bundle = FrameworkUtil.getBundle(ReleaseManagerTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -77,7 +84,12 @@ public class ReleaseManagerTest {
 
 			release = _releaseLocalService.updateRelease(release);
 
-			Assert.assertFalse(_releaseManager.getStatus());
+			Assert.assertFalse(_releaseManager.isUpgraded());
+			Assert.assertFalse(
+				Validator.isBlank(
+					_releaseManager.getShortStatusMessage(false)));
+			Assert.assertFalse(
+				Validator.isBlank(_releaseManager.getStatusMessage(false)));
 		}
 		finally {
 			_releaseLocalService.deleteRelease(release);
@@ -85,7 +97,9 @@ public class ReleaseManagerTest {
 	}
 
 	@Test
-	public void testCheckMissingPortalUpgrade() throws Exception {
+	public void testUnsuccessfulUpgradeByMissingPortalUpgrade()
+		throws Exception {
+
 		Release release = _releaseLocalService.fetchRelease(
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
@@ -96,7 +110,12 @@ public class ReleaseManagerTest {
 
 			release = _releaseLocalService.updateRelease(release);
 
-			Assert.assertFalse(_releaseManager.getStatus());
+			Assert.assertFalse(_releaseManager.isUpgraded());
+			Assert.assertFalse(
+				Validator.isBlank(
+					_releaseManager.getShortStatusMessage(false)));
+			Assert.assertFalse(
+				Validator.isBlank(_releaseManager.getStatusMessage(false)));
 		}
 		finally {
 			release.setSchemaVersion(currentSchemaVersion);

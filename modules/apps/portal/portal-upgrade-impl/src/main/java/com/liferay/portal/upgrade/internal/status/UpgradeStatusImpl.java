@@ -173,9 +173,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		}
 
 		try {
-			boolean releaseStatus = _releaseManager.getStatus();
-
-			if (!releaseStatus) {
+			if (!_releaseManager.hasSuccessfullyUpgraded()) {
 				return "unresolved";
 			}
 		}

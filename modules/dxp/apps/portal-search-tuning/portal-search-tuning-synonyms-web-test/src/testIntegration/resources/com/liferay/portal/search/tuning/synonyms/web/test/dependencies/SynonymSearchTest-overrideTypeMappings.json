@@ -786,6 +786,11 @@
 				"store": true,
 				"type": "date"
 			},
+			"reviewDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
 			"rightOrganizationId": {
 				"store": true,
 				"type": "keyword"

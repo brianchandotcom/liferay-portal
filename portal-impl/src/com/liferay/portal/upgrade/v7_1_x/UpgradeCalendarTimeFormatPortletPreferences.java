@@ -29,9 +29,8 @@ public class UpgradeCalendarTimeFormatPortletPreferences
 	@Override
 	protected String getUpdatePortletPreferencesWhereClause() {
 		return StringBundler.concat(
-			"(preferences like '%isoTimeFormat%", Boolean.TRUE.toString(),
-			"%') or (preferences like '%isoTimeFormat%",
-			Boolean.FALSE.toString(), "%')");
+			"(preferences like '%isoTimeFormat%", Boolean.TRUE,
+			"%') or (preferences like '%isoTimeFormat%", Boolean.FALSE, "%')");
 	}
 
 	@Override

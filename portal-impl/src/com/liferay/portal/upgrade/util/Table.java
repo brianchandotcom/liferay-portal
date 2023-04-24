@@ -84,7 +84,7 @@ public class Table {
 			throw new UpgradeException(
 				StringBundler.concat(
 					"Nulls should never be inserted into the database. ",
-					"Attempted to append column to ", sb.toString(), "."));
+					"Attempted to append column to ", sb, "."));
 		}
 		else if (value instanceof byte[]) {
 			sb.append(Base64.encode((byte[])value));

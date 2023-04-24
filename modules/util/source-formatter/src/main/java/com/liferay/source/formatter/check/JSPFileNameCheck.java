@@ -38,8 +38,8 @@ public class JSPFileNameCheck extends BaseFileCheck {
 
 		String shortFileName = absolutePath.substring(x + 1, y);
 
-		for (String suffix : _allowedSuffixes) {
-			if (shortFileName.endsWith(suffix)) {
+		for (String allowedSuffix : _allowedSuffixes) {
+			if (shortFileName.endsWith(allowedSuffix)) {
 				return content;
 			}
 		}

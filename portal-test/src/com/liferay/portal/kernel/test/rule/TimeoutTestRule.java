@@ -63,7 +63,7 @@ public class TimeoutTestRule implements TestRule {
 
 							System.out.println(
 								StringBundler.concat(
-									"Thread dump for ", description.toString(),
+									"Thread dump for ", description,
 									" timeout after waited ", _timeout, "ms:",
 									ThreadUtil.threadDump()));
 

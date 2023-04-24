@@ -383,8 +383,8 @@ public class SynchronousDestinationTestRule
 					catch (InterruptedException interruptedException) {
 						System.out.println(
 							StringBundler.concat(
-								"Stopped waiting for destination ",
-								filter.toString(), " due to interruption"));
+								"Stopped waiting for destination ", filter,
+								" due to interruption"));
 
 						return;
 					}

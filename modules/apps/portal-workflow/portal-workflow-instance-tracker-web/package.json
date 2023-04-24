@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"dagre": "0.8.2",
-		"react-flow-renderer": "9.1.0"
+		"react-flow-renderer": "9.7.0"
 	},
 	"jest": {
 		"collectCoverageFrom": [

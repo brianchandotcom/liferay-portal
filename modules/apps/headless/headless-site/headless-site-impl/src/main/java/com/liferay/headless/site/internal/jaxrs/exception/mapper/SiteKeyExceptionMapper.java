@@ -14,7 +14,7 @@
 
 package com.liferay.headless.site.internal.jaxrs.exception.mapper;
 
-import com.liferay.portal.kernel.exception.DuplicateGroupException;
+import com.liferay.portal.kernel.exception.GroupKeyException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -24,7 +24,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code DuplicateGroupException} to a {@code 409} error.
+ * Converts any {@code GroupKeyExceptionMapper} to a {@code 400} error.
  *
  * @author Rubén Pulido
  */
@@ -32,20 +32,16 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Site)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Site.DuplicateGroupExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Site.SiteKeyExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class DuplicateGroupExceptionMapper
-	extends BaseExceptionMapper<DuplicateGroupException> {
+public class SiteKeyExceptionMapper
+	extends BaseExceptionMapper<GroupKeyException> {
 
 	@Override
-	protected Problem getProblem(
-		DuplicateGroupException duplicateGroupException) {
-
-		return new Problem(
-			Response.Status.CONFLICT,
-			"A site with the same key already exists");
+	protected Problem getProblem(GroupKeyException groupKeyException) {
+		return new Problem(Response.Status.BAD_REQUEST, "Site key is invalid");
 	}
 
 }

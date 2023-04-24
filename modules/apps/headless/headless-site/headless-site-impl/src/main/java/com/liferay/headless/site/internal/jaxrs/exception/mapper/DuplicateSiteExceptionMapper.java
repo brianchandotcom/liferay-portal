@@ -14,13 +14,9 @@
 
 package com.liferay.headless.site.internal.jaxrs.exception.mapper;
 
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -28,7 +24,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code NoSuchGroupExceptionMapper} to a {@code 404} error.
+ * Converts any {@code DuplicateGroupException} to a {@code 409} error.
  *
  * @author Rubén Pulido
  */
@@ -36,41 +32,20 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Site)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Site.NoSuchGroupExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Site.DuplicateSiteExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
-public class NoSuchGroupExceptionMapper
-	extends BaseExceptionMapper<NoSuchGroupException> {
+public class DuplicateSiteExceptionMapper
+	extends BaseExceptionMapper<DuplicateGroupException> {
 
 	@Override
-	protected Problem getProblem(NoSuchGroupException noSuchGroupException) {
+	protected Problem getProblem(
+		DuplicateGroupException duplicateGroupException) {
+
 		return new Problem(
-			Response.Status.NOT_FOUND, _getTitle(noSuchGroupException));
+			Response.Status.CONFLICT,
+			"A site with the same key already exists");
 	}
-
-	private String _getTitle(NoSuchGroupException noSuchGroupException) {
-		String title = "No site exists";
-
-		if (noSuchGroupException.getMessage() == null) {
-			return title;
-		}
-
-		Matcher matcher = _pattern.matcher(noSuchGroupException.getMessage());
-
-		if (!matcher.matches()) {
-			return title;
-		}
-
-		String siteKey = matcher.group(1);
-
-		if (Validator.isNotNull(siteKey)) {
-			title = title + " for site key " + siteKey;
-		}
-
-		return title;
-	}
-
-	private static final Pattern _pattern = Pattern.compile(".+groupKey=(.+)}");
 
 }

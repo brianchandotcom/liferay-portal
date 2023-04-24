@@ -2185,41 +2185,6 @@ public class ServiceBuilder {
 		return sb.toString();
 	}
 
-	public static class CharacterCounter {
-
-		public CharacterCounter(char character) {
-			_character = character;
-		}
-
-		public void count(String line) {
-			for (int i = 0; i < line.length(); i++) {
-				if (line.charAt(i) == _character) {
-					_count++;
-				}
-
-				for (CharacterCounter characterCounter : _characterCounters) {
-					if (line.charAt(i) == characterCounter._character) {
-						characterCounter._count++;
-					}
-				}
-			}
-		}
-
-		public CharacterCounter getLinkedCharacterCounter(char character) {
-			CharacterCounter characterCounter = new CharacterCounter(character);
-
-			_characterCounters.add(characterCounter);
-
-			return characterCounter;
-		}
-
-		private final char _character;
-		private final List<CharacterCounter> _characterCounters =
-			new ArrayList<>();
-		private int _count;
-
-	}
-
 	private static SAXReader _getSAXReader() {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
@@ -8061,14 +8026,10 @@ public class ServiceBuilder {
 	private String _updateBody(
 		String line, Entity entity, Scanner scanner, int sessionType) {
 
-		CharacterCounter openCurlyBraceCharacterCounter = new CharacterCounter(
-			CharPool.OPEN_CURLY_BRACE);
-
-		CharacterCounter closeCurlyBraceCharacterCounter =
-			openCurlyBraceCharacterCounter.getLinkedCharacterCounter(
-				CharPool.CLOSE_CURLY_BRACE);
-
-		openCurlyBraceCharacterCounter.count(line);
+		int closeCurlyBraceCount = StringUtil.count(
+			line, CharPool.CLOSE_CURLY_BRACE);
+		int openCurlyBraceCount = StringUtil.count(
+			line, CharPool.OPEN_CURLY_BRACE);
 
 		String targetExpression = _getExternalReferenceCodeExpression(
 			entity, sessionType);
@@ -8079,9 +8040,7 @@ public class ServiceBuilder {
 
 		stringBuilder.append(StringPool.NEW_LINE);
 
-		while (closeCurlyBraceCharacterCounter._count <=
-					openCurlyBraceCharacterCounter._count) {
-
+		while (closeCurlyBraceCount <= openCurlyBraceCount) {
 			if (line.contains(targetExpression)) {
 				targetExpressionPresent = true;
 
@@ -8108,11 +8067,12 @@ public class ServiceBuilder {
 
 			stringBuilder.append(line);
 
-			openCurlyBraceCharacterCounter.count(line);
+			closeCurlyBraceCount += StringUtil.count(
+				line, CharPool.CLOSE_CURLY_BRACE);
+			openCurlyBraceCount += StringUtil.count(
+				line, CharPool.OPEN_CURLY_BRACE);
 
-			if (closeCurlyBraceCharacterCounter._count <=
-					openCurlyBraceCharacterCounter._count) {
-
+			if (closeCurlyBraceCount <= openCurlyBraceCount) {
 				stringBuilder.append(StringPool.NEW_LINE);
 			}
 		}

@@ -128,7 +128,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("CONFLICT", problem.getStatus());
-
 			Assert.assertEquals(
 				"A site with the same key already exists", problem.getTitle());
 		}
@@ -148,7 +147,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-
 			Assert.assertEquals("Site key is invalid", problem.getTitle());
 		}
 	}
@@ -189,7 +187,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-
 			Assert.assertEquals(
 				"No site exists for site key " + randomSite.getParentSiteKey(),
 				problem.getTitle());
@@ -214,7 +211,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-
 			Assert.assertEquals(
 				"No site initializer was found for site template key " +
 					randomSite.getTemplateKey(),
@@ -252,7 +248,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-
 			Assert.assertEquals(
 				"Site template with site template key " +
 					randomSite.getTemplateKey() + " is inactive",
@@ -275,7 +270,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-
 			Assert.assertEquals(
 				"No site template was found for site template key " +
 					randomSite.getTemplateKey(),
@@ -300,7 +294,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-
 			Assert.assertEquals(
 				"Template type cannot be empty if template key is specified",
 				problem.getTitle());
@@ -323,7 +316,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-
 			Assert.assertEquals(
 				"Template key cannot be empty if template type is specified",
 				problem.getTitle());

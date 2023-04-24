@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
-import com.liferay.portal.upgrade.internal.status.UpgradeStatusImpl;
+import com.liferay.portal.upgrade.internal.status.UpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
@@ -62,7 +62,7 @@ public class UpgradeLogAppender implements Appender {
 		}
 
 		if (logEvent.getLevel() == Level.ERROR) {
-			_upgradeStatusImpl.addErrorMessage(
+			_upgradeStatus.addErrorMessage(
 				logEvent.getLoggerName(), formattedMessage);
 		}
 		else if (logEvent.getLevel() == Level.INFO) {
@@ -70,12 +70,12 @@ public class UpgradeLogAppender implements Appender {
 					logEvent.getLoggerName(), UpgradeProcess.class.getName()) &&
 				formattedMessage.startsWith("Completed upgrade process ")) {
 
-				_upgradeStatusImpl.addUpgradeProcessMessage(
+				_upgradeStatus.addUpgradeProcessMessage(
 					logEvent.getLoggerName(), formattedMessage);
 			}
 		}
 		else if (logEvent.getLevel() == Level.WARN) {
-			_upgradeStatusImpl.addWarningMessage(
+			_upgradeStatus.addWarningMessage(
 				logEvent.getLoggerName(), message.getFormattedMessage());
 		}
 	}
@@ -127,7 +127,7 @@ public class UpgradeLogAppender implements Appender {
 	public void start() {
 		_started = true;
 
-		_upgradeStatusImpl.start();
+		_upgradeStatus.start();
 
 		if (PropsValues.UPGRADE_REPORT_ENABLED) {
 			_upgradeReport = new UpgradeReport();
@@ -139,11 +139,11 @@ public class UpgradeLogAppender implements Appender {
 	@Override
 	public void stop() {
 		if (_started) {
-			_upgradeStatusImpl.finish();
+			_upgradeStatus.finish();
 
 			if (_upgradeReport != null) {
 				_upgradeReport.generateReport(
-					_persistenceManager, _releaseManager, _upgradeStatusImpl);
+					_persistenceManager, _releaseManager, _upgradeStatus);
 
 				_upgradeReport = null;
 			}
@@ -171,6 +171,6 @@ public class UpgradeLogAppender implements Appender {
 	private UpgradeReport _upgradeReport;
 
 	@Reference
-	private volatile UpgradeStatusImpl _upgradeStatusImpl;
+	private volatile UpgradeStatus _upgradeStatus;
 
 }

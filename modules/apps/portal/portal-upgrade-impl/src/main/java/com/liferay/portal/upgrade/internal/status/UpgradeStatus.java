@@ -18,7 +18,6 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
-import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,8 +48,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Luis Ortiz
  */
-@Component(service = {UpgradeStatus.class, UpgradeStatusImpl.class})
-public class UpgradeStatusImpl implements UpgradeStatus {
+@Component(service = UpgradeStatus.class)
+public class UpgradeStatus {
 
 	public void addErrorMessage(String loggerName, String message) {
 		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
@@ -141,12 +140,10 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		return schemaVersions._getInitial();
 	}
 
-	@Override
 	public String getState() {
 		return _state;
 	}
 
-	@Override
 	public String getType() {
 		return _type;
 	}
@@ -173,7 +170,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 		}
 
 		try {
-			if (!_releaseManager.hasSuccessfullyUpgraded()) {
+			if (!_releaseManager.isUpgraded()) {
 				return "unresolved";
 			}
 		}
@@ -294,8 +291,7 @@ public class UpgradeStatusImpl implements UpgradeStatus {
 			"SidecarManager"
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeStatusImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeStatus.class);
 
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();

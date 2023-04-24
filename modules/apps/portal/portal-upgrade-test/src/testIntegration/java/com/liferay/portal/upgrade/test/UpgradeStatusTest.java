@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -99,9 +98,9 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("failure", _upgradeStatus.getState());
+		Assert.assertEquals("failure", _getState());
 
-		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _getType());
 	}
 
 	@Test
@@ -127,37 +126,37 @@ public class UpgradeStatusTest {
 			_releaseLocalService.updateRelease(release);
 		}
 
-		Assert.assertEquals("unresolved", _upgradeStatus.getState());
+		Assert.assertEquals("unresolved", _getState());
 
-		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _getType());
 	}
 
 	@Test
 	public void testMajorUpgrade() {
 		_testUpgrade("major");
 
-		Assert.assertEquals("major", _upgradeStatus.getType());
+		Assert.assertEquals("major", _getType());
 	}
 
 	@Test
 	public void testMicroUpgrade() {
 		_testUpgrade("micro");
 
-		Assert.assertEquals("micro", _upgradeStatus.getType());
+		Assert.assertEquals("micro", _getType());
 	}
 
 	@Test
 	public void testMinorUpgrade() {
 		_testUpgrade("minor");
 
-		Assert.assertEquals("minor", _upgradeStatus.getType());
+		Assert.assertEquals("minor", _getType());
 	}
 
 	@Test
 	public void testQualifierUpgrade() {
 		_testUpgrade("qualifier");
 
-		Assert.assertEquals("micro", _upgradeStatus.getType());
+		Assert.assertEquals("micro", _getType());
 	}
 
 	@Test
@@ -166,9 +165,9 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("success", _upgradeStatus.getState());
+		Assert.assertEquals("success", _getState());
 
-		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _getType());
 	}
 
 	@Test
@@ -181,9 +180,17 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("warning", _upgradeStatus.getState());
+		Assert.assertEquals("warning", _getState());
 
-		Assert.assertEquals("no upgrade", _upgradeStatus.getType());
+		Assert.assertEquals("no upgrade", _getType());
+	}
+
+	private String _getState() {
+		return ReflectionTestUtil.getFieldValue(_upgradeStatus, "_state");
+	}
+
+	private String _getType() {
+		return ReflectionTestUtil.getFieldValue(_upgradeStatus, "_type");
 	}
 
 	private void _testUpgrade(String type) {
@@ -276,8 +283,11 @@ public class UpgradeStatusTest {
 		_originalUpgradeProcessMessages;
 	private static Map<String, Map<String, Integer>> _originalWarningMessages;
 
-	@Inject
-	private static UpgradeStatus _upgradeStatus;
+	@Inject(
+		filter = "component.name=com.liferay.portal.upgrade.internal.status.UpgradeStatus",
+		type = Inject.NoType.class
+	)
+	private static Object _upgradeStatus;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;

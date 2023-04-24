@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStatus;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -652,8 +651,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
 	private static Logger _upgradeReportLogger;
 
-	@Inject
-	private static UpgradeStatus _upgradeStatus;
+	@Inject(
+		filter = "component.name=com.liferay.portal.upgrade.internal.status.UpgradeStatus",
+		type = Inject.NoType.class
+	)
+	private static Object _upgradeStatus;
 
 	@Inject(filter = "appender.name=UpgradeLogAppender")
 	private Appender _appender;

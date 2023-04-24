@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
-import com.liferay.portal.upgrade.internal.status.UpgradeStatusImpl;
+import com.liferay.portal.upgrade.internal.status.UpgradeStatus;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -78,14 +78,14 @@ public class UpgradeReport {
 
 	public void generateReport(
 		PersistenceManager persistenceManager, ReleaseManager releaseManager,
-		UpgradeStatusImpl upgradeStatusImpl) {
+		UpgradeStatus upgradeStatus) {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Starting upgrade report generation");
 		}
 
 		Map<String, Object> reportData = _getReportData(
-			persistenceManager, releaseManager, upgradeStatusImpl);
+			persistenceManager, releaseManager, upgradeStatus);
 
 		_printToLogContext(reportData);
 		_writeToFile(reportData);
@@ -146,7 +146,7 @@ public class UpgradeReport {
 
 	private Map<String, Object> _getReportData(
 		PersistenceManager persistenceManager, ReleaseManager releaseManager,
-		UpgradeStatusImpl upgradeStatusImpl) {
+		UpgradeStatus upgradeStatus) {
 
 		return LinkedHashMapBuilder.<String, Object>put(
 			"execution.date",
@@ -173,7 +173,7 @@ public class UpgradeReport {
 				"initial.schema.version",
 				() -> {
 					String initialSchemaVersion =
-						upgradeStatusImpl.getInitialSchemaVersion(
+						upgradeStatus.getInitialSchemaVersion(
 							ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 					if ((initialSchemaVersion != null) &&
@@ -198,9 +198,8 @@ public class UpgradeReport {
 			).put(
 				"final.schema.version",
 				() -> {
-					String schemaVersion =
-						upgradeStatusImpl.getFinalSchemaVersion(
-							ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+					String schemaVersion = upgradeStatus.getFinalSchemaVersion(
+						ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 					if (schemaVersion != null) {
 						return schemaVersion;
@@ -233,9 +232,9 @@ public class UpgradeReport {
 				}
 			).build()
 		).put(
-			"type", upgradeStatusImpl.getType()
+			"type", upgradeStatus.getType()
 		).put(
-			"result", upgradeStatusImpl.getState()
+			"result", upgradeStatus.getState()
 		).put(
 			"database.version",
 			() -> {
@@ -387,7 +386,7 @@ public class UpgradeReport {
 			"longest.upgrade.processes",
 			() -> {
 				Map<String, ArrayList<String>> eventMessages =
-					upgradeStatusImpl.getUpgradeProcessMessages();
+					upgradeStatus.getUpgradeProcessMessages();
 
 				List<String> messages = eventMessages.get(
 					UpgradeProcess.class.getName());
@@ -450,10 +449,9 @@ public class UpgradeReport {
 				return longestRunningUpgradeProcesses;
 			}
 		).put(
-			"errors", _getMessagesPrinters(upgradeStatusImpl.getErrorMessages())
+			"errors", _getMessagesPrinters(upgradeStatus.getErrorMessages())
 		).put(
-			"warnings",
-			_getMessagesPrinters(upgradeStatusImpl.getWarningMessages())
+			"warnings", _getMessagesPrinters(upgradeStatus.getWarningMessages())
 		).put(
 			"status",
 			() -> {

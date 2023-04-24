@@ -15,26 +15,30 @@
 package com.liferay.item.selector.taglib.internal.util;
 
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Cristina González
@@ -46,6 +50,31 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_bundleContext = SystemBundleUtil.getBundleContext();
+
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			_bundleContext.getBundle()
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+	}
+
+	@After
+	public void tearDown() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
+	}
+
 	@Test
 	public void testGetGroupItemSelectorProviderOptionalWithoutRegisteredGroupItemSelectorProvider() {
 		Assert.assertNull(
@@ -55,11 +84,9 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 
 	@Test
 	public void testGetGroupItemSelectorProviderOptionalWithRegisteredGroupItemSelectorProvider() {
-		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
-			new MockServiceTrackerMap(
-				Collections.singletonMap(
-					"test", new MockGroupItemSelectorProvider())));
+		_serviceRegistration = _bundleContext.registerService(
+			GroupItemSelectorProvider.class,
+			new MockGroupItemSelectorProvider(), null);
 
 		GroupItemSelectorProvider groupItemSelectorProvider =
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
@@ -68,18 +95,14 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 		Assert.assertNotNull(groupItemSelectorProvider);
 		Assert.assertEquals("icon", groupItemSelectorProvider.getIcon());
 
-		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
-			null);
+		_serviceRegistration.unregister();
 	}
 
 	@Test
 	public void testGetGroupItemSelectorProviderOptionalWithRegisteredInactiveGroupItemSelectorProvider() {
-		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
-			new MockServiceTrackerMap(
-				Collections.singletonMap(
-					"test", new MockGroupItemSelectorProvider(false))));
+		_serviceRegistration = _bundleContext.registerService(
+			GroupItemSelectorProvider.class,
+			new MockGroupItemSelectorProvider(false), null);
 
 		Assert.assertNull(
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
@@ -89,9 +112,7 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 				GroupItemSelectorProviderRegistryUtil.
 					getGroupItemSelectorProviderTypes()));
 
-		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
-			null);
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -104,21 +125,23 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 
 	@Test
 	public void testGetGroupItemSelectorProviderTypesWithRegisteredGroupItemSelectorProvider() {
-		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
-			new MockServiceTrackerMap(
-				Collections.singletonMap(
-					"test", new MockGroupItemSelectorProvider())));
+		_serviceRegistration = _bundleContext.registerService(
+			GroupItemSelectorProvider.class,
+			new MockGroupItemSelectorProvider(), null);
 
 		Assert.assertEquals(
 			Collections.singleton("test"),
 			GroupItemSelectorProviderRegistryUtil.
 				getGroupItemSelectorProviderTypes());
 
-		ReflectionTestUtil.setFieldValue(
-			GroupItemSelectorProviderRegistryUtil.class, "_serviceTrackerMap",
-			null);
+		_serviceRegistration.unregister();
 	}
+
+	private static BundleContext _bundleContext;
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static ServiceRegistration<GroupItemSelectorProvider>
+		_serviceRegistration;
 
 	private static class MockGroupItemSelectorProvider
 		implements GroupItemSelectorProvider {
@@ -171,45 +194,6 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 		}
 
 		private boolean _active;
-
-	}
-
-	private static class MockServiceTrackerMap
-		implements ServiceTrackerMap<String, GroupItemSelectorProvider> {
-
-		public MockServiceTrackerMap(
-			Map<String, GroupItemSelectorProvider>
-				groupItemSelectorProviderMap) {
-
-			_groupItemSelectorProviderMap = groupItemSelectorProviderMap;
-		}
-
-		@Override
-		public void close() {
-		}
-
-		@Override
-		public boolean containsKey(String key) {
-			return _groupItemSelectorProviderMap.containsKey(key);
-		}
-
-		@Override
-		public GroupItemSelectorProvider getService(String key) {
-			return _groupItemSelectorProviderMap.get(key);
-		}
-
-		@Override
-		public Set<String> keySet() {
-			return _groupItemSelectorProviderMap.keySet();
-		}
-
-		@Override
-		public Collection<GroupItemSelectorProvider> values() {
-			return _groupItemSelectorProviderMap.values();
-		}
-
-		private final Map<String, GroupItemSelectorProvider>
-			_groupItemSelectorProviderMap;
 
 	}
 

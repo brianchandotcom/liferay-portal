@@ -179,6 +179,32 @@ public class VirtualInstanceMigration {
 		return valid;
 	}
 
+	private static boolean _checkWebIds(
+			Connection sourceConnection, Connection destinationConnection)
+		throws SQLException {
+
+		String sourceWebId = Database.getWebId(sourceConnection);
+
+		try (PreparedStatement preparedStatement =
+				destinationConnection.prepareStatement(
+					"select companyId from Company where webId = ?")) {
+
+			preparedStatement.setString(1, sourceWebId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					System.out.println(
+						"WARNING: webId " + sourceWebId +
+							" already exists in destination database");
+
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	private static void _exitWithCode(int code) {
 		try {
 			if (_sourceConnection != null) {
@@ -267,6 +293,8 @@ public class VirtualInstanceMigration {
 			sourceConnection, destinationConnection);
 
 		valid &= _checkTables(sourceConnection, destinationConnection);
+
+		valid &= _checkWebIds(sourceConnection, destinationConnection);
 
 		return valid;
 	}

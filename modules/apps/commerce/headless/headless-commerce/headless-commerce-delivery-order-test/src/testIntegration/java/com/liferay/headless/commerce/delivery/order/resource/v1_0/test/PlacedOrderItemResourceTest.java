@@ -162,7 +162,8 @@ public class PlacedOrderItemResourceTest
 
 	@Override
 	protected PlacedOrderItem randomPlacedOrderItem() throws Exception {
-		return _addPlacedOrderItem(0, RandomTestUtil.randomString());
+		return _toPlacedOrderItem(
+			_addCPDefinition(0, RandomTestUtil.randomString()));
 	}
 
 	@Override
@@ -195,7 +196,7 @@ public class PlacedOrderItemResourceTest
 		return _addPlacedOrderItem(randomPlacedOrderItem());
 	}
 
-	private PlacedOrderItem _addPlacedOrderItem(long fileEntryId, String url)
+	private CPDefinition _addCPDefinition(long fileEntryId, String url)
 		throws Exception {
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
@@ -203,12 +204,6 @@ public class PlacedOrderItemResourceTest
 			true);
 
 		_commerceCPDefinitions.add(cpDefinition);
-
-		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
-
-		CPInstance cpInstance = cpInstances.get(0);
-
-		_commerceCPInstances.addAll(cpInstances);
 
 		_cpDefinitionVirtualSetting =
 			_cpDefinitionVirtualSettingLocalService.
@@ -221,18 +216,7 @@ public class PlacedOrderItemResourceTest
 
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
-		return new PlacedOrderItem() {
-			{
-				id = RandomTestUtil.randomLong();
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				productId = cpDefinition.getCProductId();
-				quantity = RandomTestUtil.randomInt(1, 100);
-				sku = cpInstance.getSku();
-				skuId = cpInstance.getCPInstanceId();
-				subscription = false;
-				valid = true;
-			}
-		};
+		return cpDefinition;
 	}
 
 	private PlacedOrderItem _addPlacedOrderItem(PlacedOrderItem placedOrderItem)
@@ -294,11 +278,9 @@ public class PlacedOrderItemResourceTest
 				PlacedOrderItemResourceTest.class, "dependencies/image.jpg"),
 			null, null, _serviceContext);
 
-		PlacedOrderItem placedOrderItem = _addPlacedOrderItem(
-			_fileEntry.getFileEntryId(), null);
-
 		PlacedOrderItem postPlacedOrderItem = _addPlacedOrderItem(
-			placedOrderItem);
+			_toPlacedOrderItem(
+				_addCPDefinition(_fileEntry.getFileEntryId(), null)));
 
 		PlacedOrderItem getPlacedOrderItem =
 			placedOrderItemResource.getPlacedOrderItem(
@@ -326,10 +308,8 @@ public class PlacedOrderItemResourceTest
 	private void _testGetPlacedOrderItemWithURL() throws Exception {
 		String url = "http://www.example.com/myfiles/download";
 
-		PlacedOrderItem placedOrderItem = _addPlacedOrderItem(0, url);
-
 		PlacedOrderItem postPlacedOrderItem = _addPlacedOrderItem(
-			placedOrderItem);
+			_toPlacedOrderItem(_addCPDefinition(0, url)));
 
 		PlacedOrderItem getPlacedOrderItem =
 			placedOrderItemResource.getPlacedOrderItem(
@@ -339,6 +319,25 @@ public class PlacedOrderItemResourceTest
 
 		Assert.assertEquals(
 			virtualItemURLs, getPlacedOrderItem.getVirtualItemURLs());
+	}
+
+	private PlacedOrderItem _toPlacedOrderItem(CPDefinition cpDefinition) {
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		return new PlacedOrderItem() {
+			{
+				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				productId = cpDefinition.getCProductId();
+				quantity = RandomTestUtil.randomInt(1, 100);
+				sku = cpInstance.getSku();
+				skuId = cpInstance.getCPInstanceId();
+				subscription = false;
+				valid = true;
+			}
+		};
 	}
 
 	@DeleteAfterTestRun
@@ -361,9 +360,6 @@ public class PlacedOrderItemResourceTest
 
 	@DeleteAfterTestRun
 	private final List<CPDefinition> _commerceCPDefinitions = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private final List<CPInstance> _commerceCPInstances = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;

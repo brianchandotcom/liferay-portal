@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
@@ -64,21 +64,21 @@ export default function ContributorBuilder({
 		setEditingId(editing ? undefined : id);
 	};
 
-	const rootClasses = getCN('contributor-builder-root', {
-		editing,
-	});
-
 	const showDisabledSegmentationAlert =
 		!isSegmentationEnabled && !isSegmentationDisabledAlertDismissed;
 
-	const sidebarClasses = getCN('criteria-builder-section-sidebar', {
-		'criteria-builder-section-sidebar--with-warning': showDisabledSegmentationAlert,
-	});
-
 	return (
 		<DndProvider backend={HTML5Backend}>
-			<div className={rootClasses}>
-				<div className={sidebarClasses}>
+			<div
+				className={classNames('contributor-builder-root', {
+					editing,
+				})}
+			>
+				<div
+					className={classNames('criteria-builder-section-sidebar', {
+						'criteria-builder-section-sidebar--with-warning': showDisabledSegmentationAlert,
+					})}
+				>
 					<CriteriaSidebar
 						onTitleClicked={_handleCriteriaEdit}
 						propertyGroups={propertyGroups}

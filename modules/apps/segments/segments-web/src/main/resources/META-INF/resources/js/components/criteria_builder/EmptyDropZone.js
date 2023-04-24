@@ -12,7 +12,7 @@
  * details.
  */
 
-import getCN from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
@@ -50,24 +50,26 @@ function drop(props, monitor) {
 function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
 	const displayEmptyDropZone = canDrop || !emptyContributors;
 
-	const emptyZoneClasses = getCN('empty-drop-zone-root', {
-		'empty-drop-zone-dashed border-primary rounded':
-			displayEmptyDropZone && (!canDrop || !hover),
-	});
-
-	const targetClasses = getCN(
-		emptyContributors ? 'empty-drop-zone-target' : 'drop-zone-target p-5',
-		{
-			'empty-drop-zone-target-solid dnd-hover border-primary rounded':
-				canDrop && hover,
-		}
-	);
-
 	return (
-		<div className={emptyZoneClasses}>
+		<div
+			className={classNames('empty-drop-zone-root', {
+				'empty-drop-zone-dashed border-primary rounded':
+					displayEmptyDropZone && (!canDrop || !hover),
+			})}
+		>
 			{connectDropTarget(
 				displayEmptyDropZone ? (
-					<div className={targetClasses}>
+					<div
+						className={classNames(
+							emptyContributors
+								? 'empty-drop-zone-target'
+								: 'drop-zone-target p-5',
+							{
+								'empty-drop-zone-target-solid dnd-hover border-primary rounded':
+									canDrop && hover,
+							}
+						)}
+					>
 						<div className="empty-drop-zone-indicator" />
 					</div>
 				) : (

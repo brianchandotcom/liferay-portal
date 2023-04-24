@@ -14,7 +14,7 @@
 
 import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import {parse} from 'date-fns';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -101,18 +101,18 @@ const CriteriaSidebarCollapse = ({
 					? filterProperties(properties, searchValue)
 					: properties;
 
-				const activeClasses = getCN({
+				const activeClasses = classNames({
 					active,
 				});
 
-				const sidebarCollapseListClasses = getCN(
-					'sidebar-collapse-item',
-					`sidebar-collapse-${propertyGroup.propertyKey}`,
-					activeClasses
-				);
-
 				return (
-					<li className={sidebarCollapseListClasses} key={key}>
+					<li
+						className={classNames(
+							`sidebar-collapse-item sidebar-collapse-${propertyGroup.propertyKey}`,
+							activeClasses
+						)}
+						key={key}
+					>
 						<a
 							className="sidebar-collapse-header"
 							onClick={_handleClick(key, active)}

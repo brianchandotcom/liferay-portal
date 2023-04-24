@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -24,7 +24,7 @@ import {SUPPORTED_CONJUNCTIONS} from '../../utils/constants';
 function Conjunction({className, conjunctionName, editing, onSelect}) {
 	const [active, setActive] = useState(false);
 
-	const classnames = getCN(
+	const classnames = classNames(
 		{
 			'conjunction-button': editing,
 			'conjunction-label': !editing,

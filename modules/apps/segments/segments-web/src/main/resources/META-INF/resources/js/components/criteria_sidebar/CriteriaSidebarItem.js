@@ -13,7 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {DragSource as dragSource} from 'react-dnd';
@@ -39,10 +39,15 @@ function CriteriaSidebarItem({
 	label,
 	type,
 }) {
-	const classes = getCN('criteria-sidebar-item-root', {dragging}, className);
-
 	return connectDragSource(
-		<li className={classes} tabIndex="0">
+		<li
+			className={classNames(
+				'criteria-sidebar-item-root',
+				{dragging},
+				className
+			)}
+			tabIndex="0"
+		>
 			<span className="inline-item">
 				<ClayIcon symbol="drag" />
 			</span>

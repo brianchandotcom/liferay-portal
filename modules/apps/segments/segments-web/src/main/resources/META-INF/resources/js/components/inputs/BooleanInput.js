@@ -13,7 +13,7 @@
  */
 
 import {ClaySelectWithOption} from '@clayui/form';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -24,14 +24,12 @@ function BooleanInput({className, disabled, onChange, propertyLabel, value}) {
 		onChange({value: event.target.value});
 	};
 
-	const classes = getCN('criterion-input', 'form-control', className);
-
 	return (
 		<ClaySelectWithOption
 			aria-label={`${propertyLabel}: ${Liferay.Language.get(
 				'select-option'
 			)}`}
-			className={classes}
+			className={classNames('criterion-input form-control', className)}
 			data-testid="options-boolean"
 			disabled={disabled}
 			onChange={handleChange}

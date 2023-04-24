@@ -12,7 +12,7 @@
  * details.
  */
 
-import getCN from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {DropTarget as dropTarget} from 'react-dnd';
@@ -95,14 +95,14 @@ function drop(props, monitor) {
 }
 
 function DropZone({before, canDrop, connectDropTarget, hover}) {
-	const targetClasses = getCN('drop-zone-target', {
-		'drop-zone-target-before': before,
-	});
-
 	return (
 		<div className="drop-zone-root">
 			{connectDropTarget(
-				<div className={targetClasses}>
+				<div
+					className={classNames('drop-zone-target', {
+						'drop-zone-target-before': before,
+					})}
+				>
 					{canDrop && hover && (
 						<div className="drop-zone-indicator" />
 					)}

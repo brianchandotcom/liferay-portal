@@ -13,7 +13,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -96,10 +96,6 @@ export default function LocalizedInput({
 		return !!parsedValue;
 	};
 
-	const inputGroupItemClasses = getCN('input-group-item ml-2', {
-		'has-error': hasError,
-	});
-
 	return (
 		<div className="input-group input-localized input-localized-input">
 			<LocalizedDropdown
@@ -110,7 +106,11 @@ export default function LocalizedInput({
 				onLanguageChange={onLanguageChange}
 			/>
 
-			<div className={inputGroupItemClasses}>
+			<div
+				className={classNames('input-group-item ml-2', {
+					'has-error': hasError,
+				})}
+			>
 				<ClayInput
 					aria-label={placeholder}
 					className="field form-control-inline language-value rounded"

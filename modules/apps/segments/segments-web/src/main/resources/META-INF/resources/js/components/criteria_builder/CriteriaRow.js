@@ -13,7 +13,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
@@ -332,18 +332,18 @@ function CriteriaRow({
 		});
 	}
 
-	const classes = getCN('criterion-row-root', {
-		'criterion-row-root-error': error,
-		'criterion-row-root-warning': warning,
-		'dnd-drag': dragging,
-		'dnd-hover': hover && canDrop,
-	});
-
 	return (
 		<>
 			{connectDropTarget(
 				connectDragPreview(
-					<div className={classes}>
+					<div
+						className={classNames('criterion-row-root', {
+							'criterion-row-root-error': error,
+							'criterion-row-root-warning': warning,
+							'dnd-drag': dragging,
+							'dnd-hover': hover && canDrop,
+						})}
+					>
 						{editing ? (
 							<CriteriaRowEditable
 								connectDragSource={connectDragSource}

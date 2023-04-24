@@ -13,7 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import getCN from 'classnames';
+import classNames from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {Fragment, useMemo} from 'react';
 import {DragSource as dragSource} from 'react-dnd';
@@ -194,12 +194,12 @@ function CriteriaGroup({
 	};
 
 	const _renderCriterion = (criterion, index) => {
-		const classes = getCN('criterion', {
-			'criterion-group': criterion.items,
-		});
-
 		return (
-			<div className={classes}>
+			<div
+				className={classNames('criterion', {
+					'criterion-group': criterion.items,
+				})}
+			>
 				{criterion.items ? (
 					<NestedCriteriaGroupWithDrag
 						criteria={criterion}
@@ -245,20 +245,20 @@ function CriteriaGroup({
 		);
 	};
 
-	const classes = getCN(
-		{
-			'criteria-group-root': criteria,
-		},
-		`criteria-group-item${root ? '-root' : ''}`,
-		`color--${propertyKey}`,
-		{
-			'dnd-drag': dragging,
-		}
-	);
 	const singleRow = criteria && criteria.items && criteria.items.length === 1;
 
 	return connectDragPreview(
-		<div className={classes}>
+		<div
+			className={classNames(
+				{
+					'criteria-group-root': criteria,
+					'dnd-drag': dragging,
+				},
+				`color--${propertyKey} criteria-group-item${
+					root ? '-root' : ''
+				}`
+			)}
+		>
 			{_isCriteriaEmpty() ? (
 				<EmptyDropZone
 					emptyContributors={emptyContributors}

@@ -54,9 +54,9 @@ public class BatchPlannerPlanServiceImpl
 	extends BatchPlannerPlanServiceBaseImpl {
 
 	@Override
-	public BatchPlannerPlan addBatchPlannerPlan(String externalReferenceCode, 
-			boolean export, String externalType, String externalURL,
-			String internalClassName, String name, int size,
+	public BatchPlannerPlan addBatchPlannerPlan(
+			String externalReferenceCode, boolean export, String externalType,
+			String externalURL, String internalClassName, String name, int size,
 			String taskItemDelegateName, boolean template)
 		throws PortalException {
 
@@ -67,9 +67,9 @@ public class BatchPlannerPlanServiceImpl
 			BatchPlannerActionKeys.ADD_BATCH_PLANNER_PLAN);
 
 		return batchPlannerPlanLocalService.addBatchPlannerPlan(
-
-			externalReferenceCode,			permissionChecker.getUserId(), export, externalType, externalURL,
-			internalClassName, name, size, taskItemDelegateName, template);
+			externalReferenceCode, permissionChecker.getUserId(), export,
+			externalType, externalURL, internalClassName, name, size,
+			taskItemDelegateName, template);
 	}
 
 	@Override

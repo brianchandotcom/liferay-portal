@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -35,6 +36,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
@@ -277,6 +279,42 @@ public class JournalArticleStagedModelDataHandlerTest
 			portletDataContext, exportedStagedModel);
 
 		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
+	}
+
+	@Test
+	public void testCopyAsNewCreatesNewJournalArticle() throws Exception {
+		initExport();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalArticle);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(
+			journalArticle);
+
+		portletDataContext.setDataStrategy(
+			PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
+
+		initImport();
+
+		portletDataContext.setDataStrategy(
+			PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
+
+		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
+			liveGroup.getGroupId());
+
+		Assert.assertEquals(articles.toString(), 2, articles.size());
 	}
 
 	@Test
@@ -820,6 +858,9 @@ public class JournalArticleStagedModelDataHandlerTest
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private Portal _portal;

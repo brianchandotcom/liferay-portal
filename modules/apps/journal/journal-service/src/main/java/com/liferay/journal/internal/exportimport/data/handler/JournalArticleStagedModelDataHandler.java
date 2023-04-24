@@ -965,6 +965,11 @@ public class JournalArticleStagedModelDataHandler
 				}
 			}
 			else {
+				if (Validator.isNull(newArticleId)) {
+					articleId = StringPool.BLANK;
+					autoArticleId = true;
+				}
+
 				JournalArticle existingArticle =
 					_journalArticleLocalService.fetchArticle(
 						portletDataContext.getScopeGroupId(), articleId,

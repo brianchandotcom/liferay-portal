@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.graphql.validation;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContext;
 
@@ -70,6 +71,25 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 		return _servletData.isJaxRsResourceInvocation();
 	}
 
+	private String _getMethodName(Method method) {
+		String methodName = method.getName();
+
+		Class<?> declaringClass = method.getDeclaringClass();
+
+		if (declaringClass != null) {
+			GraphQLTypeExtension graphQLTypeExtension =
+				declaringClass.getAnnotation(GraphQLTypeExtension.class);
+
+			if (graphQLTypeExtension != null) {
+				Class<?> value = graphQLTypeExtension.value();
+
+				methodName = value.getSimpleName() + "." + methodName;
+			}
+		}
+
+		return methodName;
+	}
+
 	private String _getNamespace(ServletData servletData) {
 		if ((servletData == null) ||
 			(servletData.getGraphQLNamespace() == null)) {
@@ -90,7 +110,7 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 
 		ObjectValuePair<Class<?>, String> resourceMethodObjectValuePair =
 			servletData.getResourceMethodObjectValuePair(
-				method.getName(), mutation);
+				_getMethodName(method), mutation);
 
 		if (resourceMethodObjectValuePair == null) {
 			return null;
@@ -108,7 +128,7 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 
 		ObjectValuePair<Class<?>, String> resourceMethodObjectValuePair =
 			servletData.getResourceMethodObjectValuePair(
-				method.getName(), mutation);
+				_getMethodName(method), mutation);
 
 		if (resourceMethodObjectValuePair == null) {
 			return null;

@@ -21,6 +21,7 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 /**
  * @author Guilherme Camacho
@@ -39,6 +40,9 @@ public class ObjectEntryInfoItemDetailsProvider
 		return new InfoItemClassDetails(
 			_objectDefinition.getClassName(),
 			InfoLocalizedValue.<String>builder(
+			).defaultLocale(
+				LocaleUtil.fromLanguageId(
+					_objectDefinition.getDefaultLanguageId())
 			).values(
 				_objectDefinition.getLabelMap()
 			).build());

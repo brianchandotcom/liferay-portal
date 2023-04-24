@@ -63,7 +63,6 @@
 		<suppress checks="ComponentExposureCheck" files="template/template-taglib/src/main/java/com/liferay/template/taglib/internal/util/PortletDisplayTemplateUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="trash/trash-taglib/src/main/java/com/liferay/trash/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-engine-creole/src/main/java/com/liferay/wiki/engine/creole/internal/util/WikiEngineCreoleComponentProvider\.java" />
-		<suppress checks="ComponentExposureCheck" files="wiki/wiki-engine-input-editor-common/src/main/java/com/liferay/wiki/engine/input/editor/common/internal/util/WikiEngineInputEditorCommonComponentProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/display/context/DLMimeTypeDisplayContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/util/WikiWebComponentProvider\.java" />
 	</checkstyle>

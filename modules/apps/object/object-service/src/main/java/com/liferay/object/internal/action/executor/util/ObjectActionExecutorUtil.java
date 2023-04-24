@@ -26,8 +26,7 @@ public class ObjectActionExecutorUtil {
 	public static boolean isCompanyRestrictionCriteriaMet(
 		long companyId, ObjectActionExecutor objectActionExecutor) {
 
-		if ((objectActionExecutor.getCompanyId() ==
-				ObjectActionExecutor.UNRESTRICTED_BY_COMPANY) ||
+		if ((objectActionExecutor.getCompanyId() == 0) ||
 			(objectActionExecutor.getCompanyId() == companyId)) {
 
 			return true;
@@ -43,9 +42,7 @@ public class ObjectActionExecutorUtil {
 		List<String> objectDefinitionNames =
 			objectActionExecutor.getObjectDefinitionNames();
 
-		if (objectDefinitionNames ==
-				ObjectActionExecutor.UNRESTRICTED_BY_OBJECT_DEFINITIONS) {
-
+		if (objectDefinitionNames.isEmpty()) {
 			return true;
 		}
 

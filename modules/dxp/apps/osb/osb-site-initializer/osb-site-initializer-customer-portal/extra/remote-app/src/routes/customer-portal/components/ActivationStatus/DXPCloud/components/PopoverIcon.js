@@ -13,7 +13,10 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import i18n from '../../../../../../common/I18n';
 
-const PopoverIcon = () => (
+const PopoverIcon = ({
+	symbol = 'info-circle',
+	title = 'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed',
+}) => (
 	<ClayTooltipProvider>
 		<span>
 			<ClayButtonWithIcon
@@ -21,10 +24,8 @@ const PopoverIcon = () => (
 				data-tooltip-align="right"
 				displayType={null}
 				size="sm"
-				symbol="info-circle"
-				title={i18n.translate(
-					'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed'
-				)}
+				symbol={symbol}
+				title={i18n.translate(title)}
 			/>
 		</span>
 	</ClayTooltipProvider>

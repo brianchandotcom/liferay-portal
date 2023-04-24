@@ -54,25 +54,25 @@ function DateTimeInput({
 	}, [value]);
 
 	const saveDateTimeValue = () => {
+		const validDate = toDisplayDate(displayDate);
+
+		setDisplayDate(validDate);
+
 		const internalDate =
 			propertyType === PROPERTY_TYPES.DATE_TIME
-				? toInternalDateTime(displayDate)
-				: toInternalDate(displayDate);
+				? toInternalDateTime(validDate)
+				: toInternalDate(validDate);
 
 		const previousDisplayDate = previousDisplayDateRef.current;
 
-		if (!datesAreEqual(previousDisplayDate, displayDate)) {
-			previousDisplayDateRef.current = displayDate;
+		if (!datesAreEqual(previousDisplayDate, validDate)) {
+			previousDisplayDateRef.current = validDate;
 
 			onChange({
 				type: propertyType,
 				value: internalDate,
 			});
 		}
-	};
-
-	const onDisplayDateChange = (nextDisplayDate: string) => {
-		setDisplayDate(toDisplayDate(nextDisplayDate));
 	};
 
 	const onExpandedChange = (nextExpanded: boolean) => {
@@ -121,7 +121,7 @@ function DateTimeInput({
 					`${Liferay.Language.get('december')}`,
 				]}
 				onBlur={saveDateTimeValue}
-				onChange={onDisplayDateChange}
+				onChange={setDisplayDate}
 				onExpandedChange={onExpandedChange}
 				value={displayDate}
 				years={{

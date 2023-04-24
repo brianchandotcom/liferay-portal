@@ -19,9 +19,6 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 /**
  * @author Adolfo Pérez
  */
@@ -33,25 +30,21 @@ public class DeleteStalePWCVersionsUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select DLFileEntry.companyId, DLFileEntry.repositoryId, ",
-					"DLFileEntry.name from DLFileEntry where ? not in (",
-					"select version from DLFileVersion where ",
-					"DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)"))) {
-
-			preparedStatement.setString(
-				1, DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					_store.deleteFile(
-						resultSet.getLong(1), resultSet.getLong(2),
-						resultSet.getString(3),
-						DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
-				}
-			}
-		}
+		processConcurrently(
+			StringBundler.concat(
+				"select DLFileEntry.companyId, DLFileEntry.repositoryId, ",
+				"DLFileEntry.name from DLFileEntry where '",
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+				"' not in (select version from DLFileVersion where ",
+				"DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)"),
+			resultSet -> new Object[] {
+				resultSet.getLong(1), resultSet.getLong(2),
+				resultSet.getString(3)
+			},
+			columns -> _store.deleteFile(
+				(long)columns[0], (long)columns[1], (String)columns[2],
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION),
+			"Unable to delete PWC version data in the store");
 	}
 
 	private final Store _store;

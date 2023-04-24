@@ -92,7 +92,7 @@ definition {
 				en_US_plural_label = "students",
 				name = "Dora");
 
-			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+			ObjectDefinitionAPI.createObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Art");
 
@@ -113,7 +113,8 @@ definition {
 				en_US_plural_label = "universities",
 				entryId = ${universityId},
 				fieldLabel = "mode",
-				fieldValue = "[\"distance\"]",
+				fieldValue = "distance",
+				pickList = "true",
 				requiredFieldLabel = "name",
 				requiredFieldValue = "Wisconsin");
 

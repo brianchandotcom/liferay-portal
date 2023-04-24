@@ -73,7 +73,7 @@ definition {
 				en_US_plural_label = "students",
 				name = "Niamh");
 
-			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+			ObjectDefinitionAPI.createObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Economy");
 

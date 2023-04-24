@@ -96,10 +96,17 @@ definition {
 				-u test@liferay.com:test \
 				-H Content-Type: application/json \
 				-d {
-					"${fieldLabel}": "${fieldValue}",
-					"${requiredFieldLabel}": "${requiredFieldValue}"
-				}
+					"${requiredFieldLabel}": "${requiredFieldValue}",
 		''';
+
+		if (isSet(pickList)) {
+			var fieldInBody = '''"${fieldLabel}": {"key":"${fieldValue}"}''';
+		}
+		else {
+			var fieldInBody = '''"${fieldLabel}": "${fieldValue}"''';
+		}
+
+		var curl = StringUtil.add(${curl}, "${fieldInBody}}", "");
 
 		JSONCurlUtil.patch(${curl});
 	}

@@ -156,6 +156,8 @@ definition {
 
 	@priority = 3
 	test ChangeColorCalendarSiteCalendarsEventRegular {
+		property ci.retries.disabled = "true";
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		CalendarNavigator.gotoAddEvent();

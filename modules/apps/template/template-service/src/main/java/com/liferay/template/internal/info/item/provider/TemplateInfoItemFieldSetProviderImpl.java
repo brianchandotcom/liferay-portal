@@ -88,7 +88,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 				_getTemplateEntries(
 					infoItemClassName, infoItemFormVariationKey)) {
 
-			infoFieldValues.add(_getInfoFieldValue(templateEntry, itemObject));
+			infoFieldValues.add(
+				new InfoFieldValue<>(
+					_getInfoField(templateEntry),
+					() -> InfoLocalizedValue.function(
+						locale -> _getValue(
+							itemObject, locale, templateEntry))));
 		}
 
 		return infoFieldValues;
@@ -117,19 +122,6 @@ public class TemplateInfoItemFieldSetProviderImpl
 				LocaleUtil.getDefault()
 			).build()
 		).build();
-	}
-
-	private InfoFieldValue<Object> _getInfoFieldValue(
-		TemplateEntry templateEntry, Object itemObject) {
-
-		if (templateEntry == null) {
-			return null;
-		}
-
-		return new InfoFieldValue<>(
-			_getInfoField(templateEntry),
-			() -> InfoLocalizedValue.function(
-				locale -> _getValue(itemObject, locale, templateEntry)));
 	}
 
 	private List<TemplateEntry> _getTemplateEntries(

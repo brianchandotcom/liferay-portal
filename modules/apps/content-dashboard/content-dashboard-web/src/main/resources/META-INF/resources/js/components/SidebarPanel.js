@@ -75,6 +75,7 @@ const dataReducer = (state, action) => {
 			return {
 				...state,
 				isOpen: true,
+				loading: true,
 			};
 
 		case 'SET_ERROR':

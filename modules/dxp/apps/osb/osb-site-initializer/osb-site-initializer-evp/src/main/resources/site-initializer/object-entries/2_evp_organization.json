@@ -18,7 +18,6 @@
 			"street": "Street, 1",
 			"subsidiaryGroupId": 1,
 			"taxId": "11111111111",
-			"taxIdentificationNumber": "1111111",
 			"zip": "11111"
 		},
 		{
@@ -40,7 +39,6 @@
 			"street": "Street, 2",
 			"subsidiaryGroupId": 2,
 			"taxId": "22222222222",
-			"taxIdentificationNumber": "2222222",
 			"zip": "22222"
 		},
 		{
@@ -62,7 +60,6 @@
 			"street": "Street, 3",
 			"subsidiaryGroupId": 3,
 			"taxId": "33333333333",
-			"taxIdentificationNumber": "3333333",
 			"zip": "33333"
 		},
 		{
@@ -84,7 +81,6 @@
 			"street": "Street, 4",
 			"subsidiaryGroupId": 4,
 			"taxId": "44444444444",
-			"taxIdentificationNumber": "4444444",
 			"zip": "44444"
 		}
 	],

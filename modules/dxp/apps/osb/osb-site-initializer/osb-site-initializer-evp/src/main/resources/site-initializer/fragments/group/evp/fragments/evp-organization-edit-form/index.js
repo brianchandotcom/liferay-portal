@@ -32,7 +32,7 @@ const userRoles = document.querySelector('.userRoles').value;
 searchParams.set('filter', `id eq '${organizationId}'`);
 searchParams.set(
 	'fields',
-	'bankingInfo,city,contactEmail,contactName,contactPhone,country,id,organizationName,organizationSiteSocialMediaLink,smallDescription,state,street,taxId,taxIdentificationNumber,zip'
+	'bankingInfo,city,contactEmail,contactName,contactPhone,country,id,organizationName,organizationSiteSocialMediaLink,smallDescription,state,street,taxId,zip'
 );
 
 function getOrganizationFormValues() {

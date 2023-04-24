@@ -95,6 +95,7 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusSm",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
@@ -274,6 +275,7 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusSm",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
@@ -507,6 +509,7 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusSm",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
@@ -1030,6 +1033,7 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusSm",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
@@ -1552,6 +1556,7 @@
 						"definition": {
 							"fragmentStyle": {
 								"borderRadius": "borderRadiusSm",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
@@ -1935,20 +1940,12 @@
 								"borderWidth": "0",
 								"marginBottom": "7",
 								"marginTop": "2",
+								"paddingLeft": "2",
 								"shadow": "boxShadow"
 							},
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 8,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -2114,7 +2111,7 @@
 												"definition": {
 													"fragment": {
 														"key": "evp-payment-date",
-														"siteKey": "EVP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},

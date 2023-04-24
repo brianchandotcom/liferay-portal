@@ -1820,7 +1820,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Tax Identification Number"
+																				"en_US": "Tax Id"
 																			}
 																		}
 																	}
@@ -1873,7 +1873,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "ObjectField_taxIdentificationNumber",
+																				"fieldKey": "ObjectField_taxId",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}

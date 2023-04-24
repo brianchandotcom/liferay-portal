@@ -371,7 +371,7 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputFieldId": "ObjectField_taxIdentificationNumber",
+										"inputFieldId": "ObjectField_taxId",
 										"inputRequired": true,
 										"showCharactersCount": false
 									},

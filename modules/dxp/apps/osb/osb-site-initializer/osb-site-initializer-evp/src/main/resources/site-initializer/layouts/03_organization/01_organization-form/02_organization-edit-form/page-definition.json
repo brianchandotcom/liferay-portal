@@ -374,7 +374,7 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputFieldId": "ObjectField_taxIdentificationNumber",
+										"inputFieldId": "ObjectField_taxId",
 										"inputRequired": true,
 										"showCharactersCount": false
 									},
@@ -571,56 +571,6 @@
 								"inputFieldId": "ObjectField_bankingInfo",
 								"inputRequired": true,
 								"showCharactersCount": false
-							},
-							"fragmentFields": [
-							],
-							"fragmentStyle": {
-								"marginBottom": "3"
-							},
-							"indexed": true
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"fragment": {
-								"key": "DIALECT-dialect-text"
-							},
-							"fragmentConfig": {
-								"textType": "h5",
-								"truncateText": false
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"value_i18n": {
-												"en_US": "Tax Information"
-											}
-										}
-									}
-								}
-							],
-							"fragmentStyle": {
-								"fontWeight": "fontWeightBold",
-								"marginBottom": "3",
-								"textColor": "colorNeutral9"
-							},
-							"indexed": true
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"fragment": {
-								"key": "INPUTS-text-input"
-							},
-							"fragmentConfig": {
-								"inputFieldId": "ObjectField_taxId",
-								"inputRequired": true
 							},
 							"fragmentFields": [
 							],

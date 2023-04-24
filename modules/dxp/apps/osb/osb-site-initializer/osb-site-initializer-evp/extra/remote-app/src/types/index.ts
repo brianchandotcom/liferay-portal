@@ -36,7 +36,7 @@ export type OrganizationFilterType = {
 	state: string;
 	status: string[];
 	street: string;
-	taxIdentificationNumber: string;
+	taxId: string;
 	zip: string;
 };
 

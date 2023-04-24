@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
@@ -151,6 +152,17 @@ public class FilterUtil {
 					queryTerm.getField(), queryFilter,
 					nestedFieldName -> new WildcardQueryImpl(
 						nestedFieldName, queryTerm.getValue()));
+			}
+			else if (query instanceof TermRangeQuery) {
+				TermRangeQuery termRangeQuery = (TermRangeQuery)query;
+
+				return _createNestedQueryFilter(
+					termRangeQuery.getField(), queryFilter,
+					nestedFieldName -> new TermRangeQueryImpl(
+						nestedFieldName, termRangeQuery.getLowerTerm(),
+						termRangeQuery.getUpperTerm(),
+						termRangeQuery.includesLower(),
+						termRangeQuery.includesUpper()));
 			}
 
 			return queryFilter;

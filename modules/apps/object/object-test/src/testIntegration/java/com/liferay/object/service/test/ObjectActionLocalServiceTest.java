@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
+import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
@@ -33,6 +34,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
+import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
@@ -47,6 +49,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.test.util.ObjectActionTestUtil;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -55,9 +58,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -70,6 +75,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -77,6 +83,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -97,6 +104,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -111,15 +119,19 @@ import java.util.Set;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -132,6 +144,27 @@ public class ObjectActionLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectActionLocalServiceTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+
+		_companyId1 = CompanyThreadLocal.getCompanyId();
+
+		Company company = CompanyTestUtil.addCompany();
+
+		_companyId2 = company.getCompanyId();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		CompanyThreadLocal.setCompanyId(_companyId1);
+
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -149,6 +182,9 @@ public class ObjectActionLocalServiceTest {
 				ObjectScriptingExecutor.class, "_objectScriptingExecutor",
 				ObjectActionExecutorConstants.KEY_GROOVY);
 		_user = UserTestUtil.addUser();
+		_userObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), User.class.getName());
 	}
 
 	@After
@@ -168,6 +204,8 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object actions
 
+		// Error message is null
+
 		try {
 			_addObjectAction(
 				StringPool.BLANK, RandomTestUtil.randomString(),
@@ -185,6 +223,70 @@ public class ObjectActionLocalServiceTest {
 				objectActionErrorMessageException.getMessage());
 		}
 
+		// Object action executor unmet company restriction criteria
+
+		ObjectActionExecutor objectActionExecutor1 =
+			_registerObjectActionExecutor(
+				_companyId2, RandomTestUtil.randomString(), "User");
+
+		try {
+			_objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), objectActionExecutor1.getKey(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				new UnicodeProperties());
+
+			Assert.fail();
+		}
+		catch (ObjectActionExecutorKeyException
+					objectActionExecutorKeyException) {
+
+			Assert.assertEquals(
+				objectActionExecutorKeyException.getMessage(),
+				StringBundler.concat(
+					"The object action executor key ",
+					objectActionExecutor1.getKey(),
+					" is not allowed for company ",
+					String.valueOf(_companyId1)));
+		}
+
+		// Object action executor unmet object definitions restriction criteria
+
+		ObjectActionExecutor objectActionExecutor2 =
+			_registerObjectActionExecutor(
+				_companyId1, RandomTestUtil.randomString(), "User");
+
+		try {
+			_objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), objectActionExecutor2.getKey(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				new UnicodeProperties());
+
+			Assert.fail();
+		}
+		catch (ObjectActionExecutorKeyException
+					objectActionExecutorKeyException) {
+
+			Assert.assertEquals(
+				objectActionExecutorKeyException.getMessage(),
+				StringBundler.concat(
+					"The object action executor key ",
+					objectActionExecutor2.getKey(),
+					" is not allowed for object definition ",
+					_objectDefinition.getName()));
+		}
+
+		// Label is null
+
 		try {
 			_addObjectAction(
 				StringPool.BLANK, RandomTestUtil.randomString(),
@@ -199,6 +301,8 @@ public class ObjectActionLocalServiceTest {
 				objectActionLabelException.getMessage());
 		}
 
+		// Name is null
+
 		try {
 			_addObjectAction(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -211,6 +315,8 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(
 				"Name is null", objectActionNameException.getMessage());
 		}
+
+		// Name must be less than 41 characters
 
 		try {
 			_addObjectAction(
@@ -225,6 +331,8 @@ public class ObjectActionLocalServiceTest {
 				"Name must be less than 41 characters",
 				objectActionNameException.getMessage());
 		}
+
+		// Name must only contain letters and digits
 
 		try {
 			_addObjectAction(
@@ -255,6 +363,8 @@ public class ObjectActionLocalServiceTest {
 		}
 
 		String name = RandomTestUtil.randomString();
+
+		// Duplicate name
 
 		ObjectAction objectAction1 = _addObjectAction(
 			name, ObjectActionExecutorConstants.KEY_WEBHOOK,
@@ -479,6 +589,7 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction2);
 		_objectActionLocalService.deleteObjectAction(objectAction3);
 		_objectActionLocalService.deleteObjectAction(objectAction4);
+		_objectActionLocalService.deleteObjectAction(objectAction5);
 	}
 
 	@Test
@@ -872,16 +983,10 @@ public class ObjectActionLocalServiceTest {
 				originalPermissionChecker);
 		}
 
-		// User system object
-
-		ObjectDefinition userObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				TestPropsValues.getCompanyId(), User.class.getName());
-
 		ObjectField objectField1 =
 			_objectFieldLocalService.addCustomObjectField(
 				null, TestPropsValues.getUserId(), 0,
-				userObjectDefinition.getObjectDefinitionId(),
+				_userObjectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -890,7 +995,7 @@ public class ObjectActionLocalServiceTest {
 		ObjectField objectField2 =
 			_objectFieldLocalService.addCustomObjectField(
 				null, TestPropsValues.getUserId(), 0,
-				userObjectDefinition.getObjectDefinitionId(),
+				_userObjectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -905,7 +1010,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"objectDefinitionId",
-				userObjectDefinition.getObjectDefinitionId()
+				_userObjectDefinition.getObjectDefinitionId()
 			).put(
 				"predefinedValues",
 				JSONUtil.putAll(
@@ -951,7 +1056,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectAction objectAction4 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			userObjectDefinition.getObjectDefinitionId(), true,
+			_userObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -960,7 +1065,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"objectDefinitionId",
-				userObjectDefinition.getObjectDefinitionId()
+				_userObjectDefinition.getObjectDefinitionId()
 			).put(
 				"predefinedValues",
 				JSONUtil.putAll(
@@ -1007,7 +1112,7 @@ public class ObjectActionLocalServiceTest {
 			Map<String, Serializable> values =
 				_objectEntryLocalService.
 					getExtensionDynamicObjectDefinitionTableValues(
-						userObjectDefinition, user.getUserId());
+						_userObjectDefinition, user.getUserId());
 
 			Assert.assertEquals("John", values.get(objectField1.getName()));
 			Assert.assertEquals("Peter", values.get(objectField2.getName()));
@@ -1297,12 +1402,9 @@ public class ObjectActionLocalServiceTest {
 	private ObjectEntryResource _getObjectEntryResource(User user)
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			ObjectActionLocalServiceTest.class);
-
 		try (ServiceTrackerMap<String, ObjectEntryResource> serviceTrackerMap =
 				ServiceTrackerMapFactory.openSingleValueMap(
-					bundle.getBundleContext(), ObjectEntryResource.class,
+					_bundleContext, ObjectEntryResource.class,
 					"entity.class.name")) {
 
 			ObjectEntryResource objectEntryResource =
@@ -1354,6 +1456,27 @@ public class ObjectActionLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectActionExecutor _registerObjectActionExecutor(
+		long companyId, String key, String... objectDefinitionNames) {
+
+		ServiceRegistration<ObjectActionExecutor> serviceRegistration =
+			_bundleContext.registerService(
+				ObjectActionExecutor.class,
+				ObjectActionTestUtil.createProxyObjectActionExecutor(
+					companyId, key, Arrays.asList(objectDefinitionNames)),
+				new HashMapDictionary<>());
+
+		_serviceRegistrations.add(serviceRegistration);
+
+		return _bundleContext.getService(serviceRegistration.getReference());
+	}
+
+	private static BundleContext _bundleContext;
+	private static long _companyId1;
+	private static long _companyId2;
+	private static final List<ServiceRegistration<ObjectActionExecutor>>
+		_serviceRegistrations = new ArrayList<>();
+
 	private final Queue<Object[]> _argumentsList = new LinkedList<>();
 
 	@Inject
@@ -1402,5 +1525,7 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	private ObjectDefinition _userObjectDefinition;
 
 }

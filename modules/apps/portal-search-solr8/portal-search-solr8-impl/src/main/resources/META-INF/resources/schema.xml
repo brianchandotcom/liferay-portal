@@ -553,6 +553,7 @@
 		<field docValues="true" indexed="true" name="removedByUser" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="removedDate" stored="true" type="string" />
 		<field indexed="true" name="requestCount" stored="true" type="long" />
+		<field docValues="true" indexed="true" name="reviewDate" stored="true" type="string" />
 		<field indexed="true" name="rightOrganizationId" stored="true" type="tlong" />
 		<field docValues="true" indexed="true" multiValued="true" name="roleId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="roleIds" stored="true" type="string" />

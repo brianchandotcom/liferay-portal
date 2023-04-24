@@ -92,17 +92,17 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_ACTIVE</td>
-	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')][contains(@class,'active')]/div[@role='button']</td>
+	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')][contains(@aria-selected,'true')]/div[@role='button']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_ACTIVE_INDEX</td>
-	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')][contains(@class,'active')]/div[@role='button'])[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')][contains(@aria-selected,'true')]/div[@role='button'])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_COLLAPSED</td>
-	<td>//div[contains(@role,'treeitem') and contains(.,'${key_nodeName}')]//button[contains(@class,'treeview-node-list') and @aria-expanded='false']</td>
+	<td>//div[contains(@role,'treeitem') and contains(.,'${key_nodeName}')]//button[contains(@class,'component-expander') and @aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_POSITION</td>
-	<td>xpath=(//div[contains(@role,'treeitem')])[${key_position}]//div[contains(@class,'list-item__node')][contains(.,'${key_nodeName}')]</td>
+	<td>xpath=(//div[contains(@role,'treeitem')])[${key_position}][contains(.,'${key_nodeName}')]</td>
 	<td></td>
 </tr>
 <tr>

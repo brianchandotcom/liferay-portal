@@ -740,10 +740,14 @@ public class LayoutsTreeDisplayContext {
 	private SiteNavigationMenuItemType _getSiteNavigationMenuItemType(
 		String type) {
 
-		return _siteNavigationMenuItemTypesMap.putIfAbsent(
-			type,
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				type));
+		if (!_siteNavigationMenuItemTypesMap.containsKey(type)) {
+			_siteNavigationMenuItemTypesMap.put(
+				type,
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemType(type));
+		}
+
+		return _siteNavigationMenuItemTypesMap.get(type);
 	}
 
 	private String _getSiteNavigationMenuItemURL(

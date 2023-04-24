@@ -165,6 +165,8 @@ public class JournalArticleModelDocumentContributor
 		document.addKeyword(
 			"latest", JournalUtil.isLatestArticle(journalArticle));
 
+		document.addDate("reviewDate", journalArticle.getReviewDate());
+
 		// Scheduled listable articles should be visible in asset browser
 
 		if (journalArticle.isScheduled() && headListable) {

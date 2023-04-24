@@ -47,7 +47,10 @@ export default function LogoSelector({
 			},
 			id: `${portletNamespace}changeLogo`,
 			title: sub(Liferay.Language.get('upload-x'), label),
-			uri: selectLogoURL,
+			uri: selectLogoURL.replace(
+				escape('[$CURRENT_LOGO_URL$]'),
+				escape(logoURL)
+			),
 		});
 	};
 

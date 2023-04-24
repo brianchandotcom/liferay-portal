@@ -169,7 +169,7 @@ public class LogoSelectorTag extends IncludeTag {
 		).setParameter(
 			"aspectRatio", getAspectRatio()
 		).setParameter(
-			"currentLogoURL", getCurrentLogoURL()
+			"currentLogoURL", "[$CURRENT_LOGO_URL$]"
 		).setParameter(
 			"preserveRatio", isPreserveRatio()
 		).setParameter(

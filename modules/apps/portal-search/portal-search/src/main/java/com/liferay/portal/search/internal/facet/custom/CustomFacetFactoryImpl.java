@@ -15,7 +15,6 @@
 package com.liferay.portal.search.internal.facet.custom;
 
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.custom.CustomFacetFactory;
 import com.liferay.portal.search.internal.facet.FacetImpl;
@@ -25,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Wade Cao
  */
-@Component(service = {CustomFacetFactory.class, FacetFactory.class})
+@Component(service = CustomFacetFactory.class)
 public class CustomFacetFactoryImpl implements CustomFacetFactory {
 
 	@Override

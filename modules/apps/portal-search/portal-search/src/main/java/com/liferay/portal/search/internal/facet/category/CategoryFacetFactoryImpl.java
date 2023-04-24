@@ -18,7 +18,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
 import com.liferay.portal.search.facet.Facet;
-import com.liferay.portal.search.facet.FacetFactory;
 import com.liferay.portal.search.facet.category.CategoryFacetFactory;
 import com.liferay.portal.search.internal.facet.FacetImpl;
 
@@ -33,7 +32,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration",
-	service = {CategoryFacetFactory.class, FacetFactory.class}
+	service = CategoryFacetFactory.class
 )
 public class CategoryFacetFactoryImpl implements CategoryFacetFactory {
 

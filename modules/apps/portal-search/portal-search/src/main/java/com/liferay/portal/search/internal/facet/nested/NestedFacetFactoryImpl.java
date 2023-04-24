@@ -15,7 +15,6 @@
 package com.liferay.portal.search.internal.facet.nested;
 
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.nested.NestedFacetFactory;
 import com.liferay.portal.search.internal.facet.NestedFacetImpl;
@@ -25,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Díaz
  */
-@Component(service = {FacetFactory.class, NestedFacetFactory.class})
+@Component(service = NestedFacetFactory.class)
 public class NestedFacetFactoryImpl implements NestedFacetFactory {
 
 	@Override

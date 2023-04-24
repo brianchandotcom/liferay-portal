@@ -17,7 +17,6 @@ package com.liferay.portal.search.internal.facet.tag;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.facet.Facet;
-import com.liferay.portal.search.facet.FacetFactory;
 import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
 import com.liferay.portal.search.internal.facet.FacetImpl;
 
@@ -26,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author André de Oliveira
  */
-@Component(service = {AssetTagNamesFacetFactory.class, FacetFactory.class})
+@Component(service = AssetTagNamesFacetFactory.class)
 public class AssetTagNamesFacetFactoryImpl
 	implements AssetTagNamesFacetFactory {
 

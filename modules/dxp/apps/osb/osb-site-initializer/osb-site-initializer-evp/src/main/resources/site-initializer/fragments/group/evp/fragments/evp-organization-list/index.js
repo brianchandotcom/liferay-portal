@@ -29,11 +29,11 @@ selectBtn.addEventListener('click', () => {
 });
 
 function closeDropDown(event) {
-	if (event.target === selectBtn || wrapper.contains(event.target)) {
-		return;
+	const isOutsideWrapper =
+		selectBtn.contains(event.target) || wrapper.contains(event.target);
+	if (!isOutsideWrapper) {
+		wrapper.classList.remove('active');
 	}
-
-	wrapper.classList.remove('active');
 }
 
 allOptions.forEach((option) => {

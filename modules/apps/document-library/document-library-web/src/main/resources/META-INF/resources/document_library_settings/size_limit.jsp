@@ -22,7 +22,9 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 
 <aui:form action="<%= dlSizeLimitConfigurationDisplayContext.getEditDLSizeLimitConfigurationURL() %>" method="post" name="fm">
 	<clay:sheet>
-		<clay:sheet-header>
+		<clay:sheet-header
+			cssClass="c-mb-4"
+		>
 			<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="mime-type-size-limit-error" />
 
 			<h2>
@@ -31,15 +33,15 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 		</clay:sheet-header>
 
 		<clay:sheet-section>
-			<aui:input label="file-max-size" name="fileMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />
-
-			<p class="text-muted">
+			<p class="c-mb-4 text-3 text-secondary">
 				<liferay-ui:message key="file-max-size-help" />
 			</p>
+
+			<aui:input label="file-max-size" name="fileMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<h3 class="sheet-subtitle"><liferay-ui:message key="maximum-file-size-and-mimetypes" /></h3>
+			<h3 class="c-mb-2 sheet-subtitle text-2 text-secondary"><liferay-ui:message key="maximum-file-size-and-mimetypes" /></h3>
 
 			<div>
 				<span aria-hidden="true" class="loading-animation"></span>

@@ -78,6 +78,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		super.testPostSite();
 
 		_testPostSiteFailureDuplicateName();
+		_testPostSiteFailureInvalidKey();
 		_testPostSiteFailureNoName();
 		_testPostSiteFailureSiteTemplateInactive();
 		_testPostSiteSuccessChild();
@@ -126,6 +127,27 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Assert.assertEquals(
 				"There is already a site with the same key",
 				problem.getTitle());
+		}
+	}
+
+	private void _testPostSiteFailureInvalidKey() throws Exception {
+		Site randomSite = randomSite();
+
+		randomSite.setName("*");
+
+		try {
+			testPostSite_addSite(randomSite);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+
+			String title = problem.getTitle();
+
+			Assert.assertTrue(title.contains("Invalid site key"));
 		}
 	}
 

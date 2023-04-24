@@ -23,7 +23,6 @@ import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
-import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -32,14 +31,7 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,45 +55,10 @@ import org.osgi.service.component.annotations.Reference;
 		"fds.data.provider.key=" + CommerceChannelFDSNames.TAX_METHOD,
 		"frontend.data.set.name=" + CommerceChannelFDSNames.TAX_METHOD
 	},
-	service = {FDSActionProvider.class, FDSDataProvider.class, FDSView.class}
+	service = {FDSDataProvider.class, FDSView.class}
 )
 public class CommerceTaxMethodTableFDSView
-	extends BaseTableFDSView
-	implements FDSActionProvider, FDSDataProvider<TaxMethod> {
-
-	@Override
-	public List<DropdownItem> getDropdownItems(
-			long groupId, HttpServletRequest httpServletRequest, Object model)
-		throws PortalException {
-
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					PortletURLBuilder.create(
-						PortletProviderUtil.getPortletURL(
-							httpServletRequest,
-							CommerceTaxMethod.class.getName(),
-							PortletProvider.Action.EDIT)
-					).setParameter(
-						"commerceChannelId",
-						ParamUtil.getLong(
-							httpServletRequest, "commerceChannelId")
-					).setParameter(
-						"commerceTaxMethodEngineKey",
-						() -> {
-							TaxMethod taxMethod = (TaxMethod)model;
-
-							return taxMethod.getKey();
-						}
-					).setWindowState(
-						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.setLabel(
-					_language.get(httpServletRequest, "edit"));
-				dropdownItem.setTarget("sidePanel");
-			}
-		).build();
-	}
+	extends BaseTableFDSView implements FDSDataProvider<TaxMethod> {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -206,8 +163,5 @@ public class CommerceTaxMethodTableFDSView
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
-
-	@Reference
-	private Language _language;
 
 }

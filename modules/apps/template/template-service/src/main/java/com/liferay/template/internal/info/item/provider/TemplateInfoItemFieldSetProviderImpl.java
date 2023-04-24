@@ -128,6 +128,13 @@ public class TemplateInfoItemFieldSetProviderImpl
 			_getInfoField(templateEntry),
 			() -> InfoLocalizedValue.function(
 				locale -> {
+					ServiceContext serviceContext =
+						ServiceContextThreadLocal.getServiceContext();
+
+					if (serviceContext == null) {
+						return StringPool.BLANK;
+					}
+
 					InfoItemFieldValues infoItemFieldValues =
 						InfoItemFieldValues.builder(
 						).build();
@@ -151,7 +158,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 								_templateNodeFactory);
 
 					try {
-						return templateDisplayTemplateTransformer.transform();
+						return templateDisplayTemplateTransformer.transform(
+							serviceContext.getThemeDisplay());
 					}
 					catch (Exception exception) {
 						_log.error("Unable to transform template", exception);

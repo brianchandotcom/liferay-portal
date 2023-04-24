@@ -125,6 +125,13 @@ public class TemplateInfoItemTemplatedRenderer<T>
 		T t, String templateEntryId, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return;
+		}
+
 		try {
 			Writer writer = httpServletResponse.getWriter();
 
@@ -152,7 +159,9 @@ public class TemplateInfoItemTemplatedRenderer<T>
 						templateEntry, infoItemFieldValues,
 						_templateNodeFactory);
 
-			writer.write(templateDisplayTemplateTransformer.transform());
+			writer.write(
+				templateDisplayTemplateTransformer.transform(
+					serviceContext.getThemeDisplay()));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

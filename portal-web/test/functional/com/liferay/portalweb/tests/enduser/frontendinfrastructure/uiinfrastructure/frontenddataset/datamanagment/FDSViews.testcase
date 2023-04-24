@@ -32,40 +32,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-180896 Confirm that the dataset view deletion is recoverable"
-	@priority = 5
-	test CanCancelDeletionOnCancelButton {
-		task ("The user goes to add a new Dataset") {
-			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
-				key_type = "/c/fdsentries");
-		}
-
-		task ("And Add a new view") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
-
-			FrontendDataSetAdmin.createDataSetView(
-				description = "Description Test",
-				key_name = "View Test");
-		}
-
-		task ("And select delete and in the modal, click the cancel button") {
-			Click(
-				key_name = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
-
-			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
-
-			Button.clickCancel();
-		}
-
-		task ("Then the dataset View is not deleted") {
-			AssertElementPresent(
-				key_itemName = "View Test",
-				locator1 = "FrontendDataSetAdmin#NAME_OF_VIEWS");
-		}
-	}
-
 	@description = "LPS-181348. Confirm that a dataset view can be deleted"
 	@priority = 5
 	test AssertNumberOfCharactersExceededInNameField {
@@ -144,6 +110,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-180896 Confirm that the dataset view deletion is recoverable"
+	@priority = 5
+	test CanCancelDeletionOnCancelButton {
+		task ("The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("And Add a new view") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
+
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test");
+		}
+
+		task ("And select delete and in the modal, click the cancel button") {
+			Click(
+				key_name = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+			Button.clickCancel();
+		}
+
+		task ("Then the dataset View is not deleted") {
+			AssertElementPresent(
+				key_itemName = "View Test",
+				locator1 = "FrontendDataSetAdmin#NAME_OF_VIEWS");
+		}
+	}
+
 	@description = "LPS-180898. Confirm that the user can cancel deletion when clicking close (X) button"
 	@priority = 3
 	test CanCancelDeletionOnCloseButton {
@@ -181,6 +181,42 @@ definition {
 
 		task ("Then The dataset is present in the data set Admin page") {
 			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test");
+		}
+	}
+
+	@description = "LPS-181342. Confirm that the user can cancel a view criation by clicking on cancel button"
+	@priority = 5
+	test CanCancelViewCreationOnCancelButton {
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("And Filling the name with 'View Test") {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Test Description");
+
+			Type(
+				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				value1 = "View Test");
+		}
+
+		task ("And Clicking Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then Confirm that the View was not created") {
+			AssertElementNotPresent(
+				entryName = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
 		}
 	}
 
@@ -273,42 +309,6 @@ definition {
 
 		task ("Then the corresponding view is displayed") {
 			AssertElementPresent(
-				entryName = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
-		}
-	}
-
-	@description = "LPS-181342. Confirm that the user can cancel a view criation by clicking on cancel button"
-	@priority = 5
-	test CanCancelViewCreationOnCancelButton {
-		task ("And Add a Dataset") {
-			FrontendDataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/c/fdsentries");
-		}
-
-		task ("When go to the View page of the dataset created.") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
-		}
-
-		task ("And Filling the name with 'View Test") {
-			LexiconEntry.gotoAdd();
-
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Test Description");
-
-			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
-				value1 = "View Test");
-		}
-
-		task ("And Clicking Cancel button") {
-			Button.clickCancel();
-		}
-
-		task ("Then Confirm that the View was not created") {
-			AssertElementNotPresent(
 				entryName = "View Test",
 				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
 		}

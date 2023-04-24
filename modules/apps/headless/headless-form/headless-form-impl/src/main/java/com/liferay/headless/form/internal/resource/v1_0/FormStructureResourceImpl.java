@@ -21,6 +21,7 @@ import com.liferay.headless.form.dto.v1_0.util.StructureUtil;
 import com.liferay.headless.form.resource.v1_0.FormStructureResource;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -35,7 +36,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/form-structure.properties",
-	scope = ServiceScope.PROTOTYPE, service = FormStructureResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		FormStructureResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 @Deprecated
 public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -49,7 +50,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/category.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {CategoryResource.class, NestedFieldSupport.class}
+	service = {
+		CategoryResource.class, NestedFieldSupport.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 @CTAware
 public class CategoryResourceImpl

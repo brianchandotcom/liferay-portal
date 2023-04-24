@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -42,7 +43,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-action.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ObjectActionResource.class}
+	service = {
+		NestedFieldSupport.class, ObjectActionResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class ObjectActionResourceImpl
 	extends BaseObjectActionResourceImpl implements NestedFieldSupport {

@@ -68,6 +68,7 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -91,7 +92,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/data-record.properties",
-	scope = ServiceScope.PROTOTYPE, service = DataRecordResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		DataRecordResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 @CTAware
 public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {

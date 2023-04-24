@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinitionProvider;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPParameterContributorDefinition;
@@ -31,7 +32,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/sxp-parameter-contributor-definition.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = SXPParameterContributorDefinitionResource.class
+	service = {
+		SXPParameterContributorDefinitionResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class SXPParameterContributorDefinitionResourceImpl
 	extends BaseSXPParameterContributorDefinitionResourceImpl {

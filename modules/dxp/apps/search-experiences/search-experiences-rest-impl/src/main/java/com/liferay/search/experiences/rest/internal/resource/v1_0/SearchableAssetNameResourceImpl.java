@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetName;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
@@ -29,7 +30,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/searchable-asset-name.properties",
-	scope = ServiceScope.PROTOTYPE, service = SearchableAssetNameResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		SearchableAssetNameResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class SearchableAssetNameResourceImpl
 	extends BaseSearchableAssetNameResourceImpl {

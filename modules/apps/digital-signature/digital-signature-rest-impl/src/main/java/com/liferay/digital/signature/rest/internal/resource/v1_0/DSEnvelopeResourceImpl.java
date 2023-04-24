@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,7 +35,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/ds-envelope.properties",
-	scope = ServiceScope.PROTOTYPE, service = DSEnvelopeResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		DSEnvelopeResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 

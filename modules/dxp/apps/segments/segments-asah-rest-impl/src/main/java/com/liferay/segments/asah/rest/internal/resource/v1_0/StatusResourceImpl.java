@@ -16,6 +16,7 @@ package com.liferay.segments.asah.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.dto.v1_0.Status;
 import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
@@ -34,7 +35,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/status.properties",
-	scope = ServiceScope.PROTOTYPE, service = StatusResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {StatusResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class StatusResourceImpl extends BaseStatusResourceImpl {
 

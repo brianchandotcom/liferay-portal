@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.FieldMappingInfo;
 import com.liferay.search.experiences.rest.internal.web.cache.FieldMappingsWebCacheItem;
@@ -46,7 +47,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/field-mapping-info.properties",
-	scope = ServiceScope.PROTOTYPE, service = FieldMappingInfoResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		FieldMappingInfoResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class FieldMappingInfoResourceImpl
 	extends BaseFieldMappingInfoResourceImpl {

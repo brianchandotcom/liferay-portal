@@ -24,6 +24,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderNote;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -43,7 +44,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/order-note.properties",
-	scope = ServiceScope.PROTOTYPE, service = OrderNoteResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {OrderNoteResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class OrderNoteResourceImpl extends BaseOrderNoteResourceImpl {
 

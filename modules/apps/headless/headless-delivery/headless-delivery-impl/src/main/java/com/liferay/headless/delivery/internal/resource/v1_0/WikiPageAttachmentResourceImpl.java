@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -44,7 +45,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/wiki-page-attachment.properties",
-	scope = ServiceScope.PROTOTYPE, service = WikiPageAttachmentResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		VulcanBatchEngineTaskItemDelegate.class,
+		WikiPageAttachmentResource.class
+	}
 )
 @CTAware
 public class WikiPageAttachmentResourceImpl

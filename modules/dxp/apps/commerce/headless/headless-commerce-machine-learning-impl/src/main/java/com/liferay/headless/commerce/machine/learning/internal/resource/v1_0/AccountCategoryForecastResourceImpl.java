@@ -22,6 +22,7 @@ import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converte
 import com.liferay.headless.commerce.machine.learning.internal.helper.v1_0.CommerceAccountPermissionHelper;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountCategoryForecastResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -46,7 +47,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/account-category-forecast.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = AccountCategoryForecastResource.class
+	service = {
+		AccountCategoryForecastResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class AccountCategoryForecastResourceImpl
 	extends BaseAccountCategoryForecastResourceImpl {

@@ -30,6 +30,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -53,7 +54,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/account-member.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {AccountMemberResource.class, NestedFieldSupport.class}
+	service = {
+		AccountMemberResource.class, NestedFieldSupport.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class AccountMemberResourceImpl
 	extends BaseAccountMemberResourceImpl implements NestedFieldSupport {

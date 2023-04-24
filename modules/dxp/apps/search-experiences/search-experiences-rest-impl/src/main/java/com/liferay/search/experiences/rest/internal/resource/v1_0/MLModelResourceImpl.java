@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.MLModel;
 import com.liferay.search.experiences.rest.resource.v1_0.MLModelResource;
@@ -40,7 +41,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/ml-model.properties",
-	scope = ServiceScope.PROTOTYPE, service = MLModelResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {MLModelResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class MLModelResourceImpl extends BaseMLModelResourceImpl {
 

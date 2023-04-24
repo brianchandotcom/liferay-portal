@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -54,7 +55,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/account-role.properties",
-	scope = ServiceScope.PROTOTYPE, service = AccountRoleResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		AccountRoleResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 

@@ -277,8 +277,8 @@ definition {
 
 		task ("Move the Heading fragment to the cell of Collection Display via Selection panel") {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')]//div[@role='button'][contains(@aria-label,'Collection Item')]");
+				locator1 = "//div[contains(@class,'__tree-node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']",
+				locator2 = "//ul[contains(@class,'treeview')][@role='group']/li/div[contains(@role,'treeitem')]//div[@role='button'][contains(@aria-label,'Collection Item')]");
 
 			PageEditor.waitForAutoSave();
 

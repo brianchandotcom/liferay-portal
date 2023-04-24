@@ -14,14 +14,16 @@
 
 package com.liferay.image.uploader.web.internal.util;
 
-import com.liferay.image.uploader.web.internal.helper.UploadImageHelper;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 import javax.portlet.PortletRequest;
 
@@ -35,9 +37,28 @@ public class UploadImageUtil {
 	public static final String TEMP_IMAGE_FOLDER_NAME = "java.lang.Class";
 
 	public static long getMaxFileSize(PortletRequest portletRequest) {
-		UploadImageHelper uploadImageHelper = _uploadImageHelperSnapshot.get();
+		String currentLogoURL = portletRequest.getParameter("currentLogoURL");
 
-		return uploadImageHelper.getMaxFileSize(portletRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (StringUtil.startsWith(
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_female_portrait") ||
+			StringUtil.startsWith(
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_male_portrait") ||
+			StringUtil.startsWith(
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_portrait")) {
+
+			UserFileUploadsSettings userFileUploadsSettings =
+				_userFileUploadSettingsSnapshot.get();
+
+			return userFileUploadsSettings.getImageMaxSize();
+		}
+
+		return UploadServletRequestConfigurationProviderUtil.getMaxSize();
 	}
 
 	public static FileEntry getTempImageFileEntry(PortletRequest portletRequest)
@@ -52,8 +73,8 @@ public class UploadImageUtil {
 			ParamUtil.getString(portletRequest, TEMP_IMAGE_FILE_NAME));
 	}
 
-	private static final Snapshot<UploadImageHelper>
-		_uploadImageHelperSnapshot = new Snapshot<>(
-			UploadImageUtil.class, UploadImageHelper.class);
+	private static final Snapshot<UserFileUploadsSettings>
+		_userFileUploadSettingsSnapshot = new Snapshot<>(
+			UploadImageUtil.class, UserFileUploadsSettings.class);
 
 }

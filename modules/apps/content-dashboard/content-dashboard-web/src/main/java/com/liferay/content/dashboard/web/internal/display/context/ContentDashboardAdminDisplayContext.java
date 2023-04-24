@@ -363,6 +363,16 @@ public class ContentDashboardAdminDisplayContext {
 			"com.liferay.content.dashboard.web_panelState", "closed");
 	}
 
+	public String getReviewDate() {
+		if (_reviewDate != null) {
+			return _reviewDate;
+		}
+
+		_reviewDate = ParamUtil.getString(_liferayPortletRequest, "reviewDate");
+
+		return _reviewDate;
+	}
+
 	public long getScopeId() {
 		if (_scopeId > 0) {
 			return _scopeId;
@@ -547,6 +557,7 @@ public class ContentDashboardAdminDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final Portal _portal;
 	private final ResourceBundle _resourceBundle;
+	private String _reviewDate;
 	private long _scopeId;
 	private final SearchContainer<ContentDashboardItem<?>> _searchContainer;
 	private Integer _status;

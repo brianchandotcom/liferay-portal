@@ -536,7 +536,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 							listTypeEntry.getName(serviceContext.getLocale()),
 							InfoLocalizedValue.<String>builder(
 							).defaultLocale(
-								serviceContext.getLocale()
+								LocaleUtil.fromLanguageId(
+									listTypeEntry.getDefaultLanguageId())
 							).values(
 								listTypeEntry.getNameMap()
 							).build()));
@@ -559,7 +560,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					listTypeEntry.getName(serviceContext.getLocale()),
 					InfoLocalizedValue.<String>builder(
 					).defaultLocale(
-						serviceContext.getLocale()
+						LocaleUtil.fromLanguageId(
+							listTypeEntry.getDefaultLanguageId())
 					).values(
 						listTypeEntry.getNameMap()
 					).build()));

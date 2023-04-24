@@ -116,7 +116,7 @@ public class NotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(75) null,editorType VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,type_ VARCHAR(75) null)";
+		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,body TEXT null,description VARCHAR(255) null,editorType VARCHAR(75) null,name STRING null,recipientType VARCHAR(75) null,subject STRING null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";

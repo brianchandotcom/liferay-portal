@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
 @Meta.OCD(
 	description = "frontend-js-import-maps-description",
-	id = "com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportmapsConfiguration",
+	id = "com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportMapsConfiguration",
 	localization = "content/Language",
 	name = "frontend-js-import-maps-configuration-name"
 )

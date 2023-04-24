@@ -88,8 +88,8 @@ definition {
 
 		task ("Move the Asset Publisher up to the Container via the Selection panel") {
 			DragAndDrop.javaScriptDragAndDropToUp(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
+				locator1 = "//div[contains(@class,'__tree-node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'__tree-node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -121,8 +121,8 @@ definition {
 
 		task ("Move the Container down to the Heading via the Selection panel") {
 			DragAndDrop.javaScriptDragAndDropToBottom(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
+				locator1 = "//div[contains(@class,'__tree-node')][contains(.,'Container')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'__tree-node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
 
 			PageEditor.waitForAutoSave();
 		}
@@ -208,8 +208,8 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
+				locator1 = "//div[contains(@class,'__tree-node')][contains(.,'Button')]//div[@role='button'][@draggable='true']",
+				locator2 = "//div[contains(@class,'__tree-node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
 			PageEditor.waitForAutoSave();
 
@@ -225,8 +225,8 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
-				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')][1]//div[@role='button'][contains(@aria-label,'Module')]");
+				locator1 = "//div[contains(@class,'__tree-node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
+				locator2 = "//ul[contains(@class,'treeview')][@role='group']/li/div[contains(@role,'treeitem')][1]//div[@role='button'][contains(@aria-label,'Module')]");
 
 			PageEditor.waitForAutoSave();
 
@@ -1002,7 +1002,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Container')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Container')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
@@ -1013,7 +1013,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Container')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Container')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
@@ -1024,7 +1024,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Grid')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Grid')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
@@ -1035,7 +1035,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Grid')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Grid')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
@@ -1048,7 +1048,7 @@ definition {
 					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
 
 				AssertCssValue(
-					locator1 = "xpath=(//div[contains(@role,'treeitem')])[${position}]//div[contains(@class,'list-item__node')][contains(.,'Module')]/div[contains(@class,'tree-node')]",
+					locator1 = "xpath=(//div[contains(@role,'treeitem')])[${position}]",
 					locator2 = "background-color",
 					value1 = "rgba(240, 245, 255, 1)");
 			}
@@ -1060,7 +1060,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Heading')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Heading')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
@@ -1071,7 +1071,7 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'Heading')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Heading')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
@@ -1082,18 +1082,18 @@ definition {
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/ancestor::div[contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
 
-		task ("Assert the background color of Heading node when it is selected") {
+		task ("Assert the background color of element-text node when it is selected") {
 			Click(
 				key_nodeName = "element-text",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/parent::div[contains(@class,'tree-node')]",
+				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/ancestor::div[contains(@class,'treeview-link')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}

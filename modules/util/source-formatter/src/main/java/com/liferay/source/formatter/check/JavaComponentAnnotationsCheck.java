@@ -20,7 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -29,6 +31,7 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.io.File;
 
@@ -50,8 +53,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	@Override
 	protected String formatAnnotation(
-		String fileName, String absolutePath, JavaClass javaClass,
-		String fileContent, String annotation, String indent) {
+			String fileName, String absolutePath, JavaClass javaClass,
+			String fileContent, String annotation, String indent)
+		throws Exception {
 
 		String trimmedAnnotation = StringUtil.trim(annotation);
 
@@ -143,6 +147,64 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		return newProperties + properties;
+	}
+
+	private void _checkHasMultipleServiceTypes(
+			String fileName, String absolutePath)
+		throws Exception {
+
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
+			return;
+		}
+
+		List<String> allowedMultipleServicesClassNames = getAttributeValues(
+			_ALLOWED_MULTIPLE_SERVICE_TYPES_CLASS_NAMES_KEY, absolutePath);
+
+		for (String allowedMultipleServicesClassName :
+				allowedMultipleServicesClassNames) {
+
+			if (absolutePath.contains(allowedMultipleServicesClassName)) {
+				return;
+			}
+		}
+
+		String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);
+
+		for (String currentBranchFileDiffBlock :
+				StringUtil.split(currentBranchFileDiff, "\n@@")) {
+
+			if (currentBranchFileDiffBlock.startsWith("diff") ||
+				!currentBranchFileDiffBlock.contains("@Component")) {
+
+				continue;
+			}
+
+			for (String line :
+					StringUtil.splitLines(currentBranchFileDiffBlock)) {
+
+				if (!line.startsWith(StringPool.PLUS)) {
+					continue;
+				}
+
+				if (line.contains("service = {") &&
+					!line.contains("service = {}")) {
+
+					addMessage(
+						fileName,
+						"@Component classes should only specify one service " +
+							"type in the 'service' attribute, see LPS-180838");
+
+					break;
+				}
+			}
+		}
 	}
 
 	private void _checkImmediateAttribute(
@@ -472,8 +534,9 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	}
 
 	private String _formatServiceAttribute(
-		String fileName, String absolutePath, String className,
-		String annotation, List<String> implementedClassNames) {
+			String fileName, String absolutePath, String className,
+			String annotation, List<String> implementedClassNames)
+		throws Exception {
 
 		String expectedServiceAttributeValue =
 			_getExpectedServiceAttributeValue(implementedClassNames);
@@ -509,25 +572,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		if (checkHasMultipleServiceTypes) {
-			List<String> allowedMultipleServicesClassNames = getAttributeValues(
-				_ALLOWED_MULTIPLE_SERVICE_TYPES_CLASS_NAMES_KEY, absolutePath);
-
-			for (String allowedMultipleServicesClassName :
-					allowedMultipleServicesClassNames) {
-
-				if (absolutePath.contains(allowedMultipleServicesClassName)) {
-					return annotation;
-				}
-			}
-
-			if (StringUtil.startsWith(serviceAttributeValue, '{') &&
-				serviceAttributeValue.contains(",")) {
-
-				addMessage(
-					fileName,
-					"@Component classes should only specify one service type " +
-						"in the 'service' attribute, see LPS-180838");
-			}
+			_checkHasMultipleServiceTypes(fileName, absolutePath);
 		}
 
 		return annotation;

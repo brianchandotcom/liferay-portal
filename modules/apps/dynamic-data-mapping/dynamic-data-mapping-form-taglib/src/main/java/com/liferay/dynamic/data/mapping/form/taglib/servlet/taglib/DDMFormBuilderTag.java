@@ -99,10 +99,11 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 			ddmFormBuilderContextResponse.getContext());
 	}
 
-	protected DDMForm getDDMForm() {
+	protected DDMForm getDDMForm(
+		long ddmStructureId, long ddmStructureVersionId) {
+
 		return DDMFormTaglibUtil.getDDMForm(
-			GetterUtil.getLong(getDdmStructureId()),
-			GetterUtil.getLong(getDdmStructureVersionId()));
+			ddmStructureId, ddmStructureVersionId);
 	}
 
 	protected DDMFormBuilderSettingsResponse getDDMFormBuilderSettings(
@@ -115,7 +116,10 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 		return DDMFormTaglibUtil.getDDMFormBuilderSettings(
 			DDMFormBuilderSettingsRequest.with(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				getFieldSetClassNameId(), getDDMForm(),
+				getFieldSetClassNameId(),
+				getDDMForm(
+					GetterUtil.getLong(getDdmStructureId()),
+					GetterUtil.getLong(getDdmStructureVersionId())),
 				themeDisplay.getLocale()));
 	}
 

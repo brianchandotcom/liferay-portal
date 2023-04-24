@@ -81,6 +81,18 @@ definition {
 		}
 	}
 
+	macro dataSetVariables {
+		var datasetEntryIds = ${datasetEntryIds};
+		var dataSetName = ${dataSetName};
+		var dataSetViewDescription = ${dataSetViewDescription};
+		var dataSetViewName = ${dataSetViewName};
+		var restApplication = ${restApplication};
+		var restEndpoint = ${restEndpoint};
+		var restSchema = ${restSchema};
+		var userEmailAddress = ${userEmailAddress};
+		var userPassword = ${userPassword};
+	}
+
 	macro deleteAllDatasetEntries {
 		JSONFrontendDatasetEntries._deleteFDSEntry();
 

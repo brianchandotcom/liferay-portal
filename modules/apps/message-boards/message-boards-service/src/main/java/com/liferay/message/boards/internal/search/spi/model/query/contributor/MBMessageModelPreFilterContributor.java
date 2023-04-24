@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -80,9 +81,14 @@ public class MBMessageModelPreFilterContributor
 
 					User user = permissionChecker.getUser();
 
+					long groupId = GroupConstants.DEFAULT_LIVE_GROUP_ID;
+
+					if (user.getGroup() != null) {
+						groupId = user.getGroupId();
+					}
+
 					if (permissionChecker.isContentReviewer(
-							CompanyThreadLocal.getCompanyId(),
-							user.getGroupId())) {
+							CompanyThreadLocal.getCompanyId(), groupId)) {
 
 						add(
 							new BooleanFilter() {

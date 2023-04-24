@@ -17,11 +17,6 @@ package com.liferay.dynamic.data.mapping.form.taglib.internal.servlet.taglib.uti
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRetriever;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,31 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = {})
 public class DDMFormTaglibUtil {
-
-	public static DDMForm getDDMForm(
-		long ddmStructureId, long ddmStructureVersionId) {
-
-		if (ddmStructureVersionId > 0) {
-			DDMStructureVersion ddmStructureVersion =
-				_ddmStructureVersionLocalService.fetchDDMStructureVersion(
-					ddmStructureVersionId);
-
-			if (ddmStructureVersion != null) {
-				return ddmStructureVersion.getDDMForm();
-			}
-		}
-
-		if (ddmStructureId > 0) {
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
-
-			if (ddmStructure != null) {
-				return ddmStructure.getDDMForm();
-			}
-		}
-
-		return new DDMForm();
-	}
 
 	public static DDMFormBuilderSettingsResponse getDDMFormBuilderSettings(
 		DDMFormBuilderSettingsRequest ddmFormBuilderSettingsRequest) {
@@ -85,29 +55,12 @@ public class DDMFormTaglibUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureVersionLocalService(
-		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
-
-		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setNPMResolver(NPMResolver npmResolver) {
 		_npmResolver = npmResolver;
 	}
 
 	private static DDMFormBuilderSettingsRetriever
 		_ddmFormBuilderSettingsRetriever;
-	private static DDMStructureLocalService _ddmStructureLocalService;
-	private static DDMStructureVersionLocalService
-		_ddmStructureVersionLocalService;
 	private static NPMResolver _npmResolver;
 
 }

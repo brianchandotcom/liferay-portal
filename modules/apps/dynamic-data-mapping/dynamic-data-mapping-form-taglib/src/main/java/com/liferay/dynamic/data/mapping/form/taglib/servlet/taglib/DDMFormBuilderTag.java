@@ -75,8 +75,7 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 		Locale locale = themeDisplay.getSiteDefaultLocale();
 
 		if ((ddmStructure != null) || (ddmStructureVersion != null)) {
-			DDMForm ddmForm = DDMFormTaglibUtil.getDDMForm(
-				ddmStructureId, ddmStructureVersionId);
+			DDMForm ddmForm = getDDMForm(ddmStructureId, ddmStructureVersionId);
 
 			locale = ddmForm.getDefaultLocale();
 		}
@@ -102,8 +101,26 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 	protected DDMForm getDDMForm(
 		long ddmStructureId, long ddmStructureVersionId) {
 
-		return DDMFormTaglibUtil.getDDMForm(
-			ddmStructureId, ddmStructureVersionId);
+		if (ddmStructureVersionId > 0) {
+			DDMStructureVersion ddmStructureVersion =
+				DDMStructureVersionLocalServiceUtil.fetchDDMStructureVersion(
+					ddmStructureVersionId);
+
+			if (ddmStructureVersion != null) {
+				return ddmStructureVersion.getDDMForm();
+			}
+		}
+
+		if (ddmStructureId > 0) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
+
+			if (ddmStructure != null) {
+				return ddmStructure.getDDMForm();
+			}
+		}
+
+		return new DDMForm();
 	}
 
 	protected DDMFormBuilderSettingsResponse getDDMFormBuilderSettings(

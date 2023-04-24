@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
@@ -92,8 +93,8 @@ public class ContentDashboardSearchContextBuilder {
 				ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
 				ParamUtil.getLongValues(_httpServletRequest, "authorIds"),
 				PortalUtil.getCompanyId(_httpServletRequest),
-				ParamUtil.getStringValues(
-					_httpServletRequest, "fileExtension")));
+				ParamUtil.getStringValues(_httpServletRequest, "fileExtension"),
+				ParamUtil.getString(_httpServletRequest, "reviewDate")));
 
 		String[] contentDashboardItemSubtypePayloads =
 			ParamUtil.getParameterValues(
@@ -266,7 +267,8 @@ public class ContentDashboardSearchContextBuilder {
 
 	private BooleanClause[] _getBooleanClauses(
 		AssetCategoryIds assetCategoryIds, String[] assetTagNames,
-		long[] authorIds, long companyId, String[] fileExtensions) {
+		long[] authorIds, long companyId, String[] fileExtensions,
+		String reviewDate) {
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
@@ -278,7 +280,8 @@ public class ContentDashboardSearchContextBuilder {
 					_getAssetTagNamesFilter(assetTagNames),
 					_getAuthorIdsFilter(authorIds),
 					_getFileExtensionsFilter(fileExtensions),
-					_getGoogleDriveShortcutFilter(companyId))) {
+					_getGoogleDriveShortcutFilter(companyId),
+					_getReviewDate(reviewDate))) {
 
 			if (filter != null) {
 				booleanFilter.add(filter, BooleanClauseOccur.MUST);
@@ -333,6 +336,20 @@ public class ContentDashboardSearchContextBuilder {
 		}
 
 		return null;
+	}
+
+	private Filter _getReviewDate(String reviewDate) {
+		if (Validator.isNull(reviewDate)) {
+			return null;
+		}
+
+		ExistsFilter existsFilter = new ExistsFilter("reviewDate");
+
+		BooleanFilter existBooleanFilter = new BooleanFilter();
+
+		existBooleanFilter.add(existsFilter, BooleanClauseOccur.MUST);
+
+		return existBooleanFilter;
 	}
 
 	private BooleanFilter _getTermsFilter(String field, long[] values) {

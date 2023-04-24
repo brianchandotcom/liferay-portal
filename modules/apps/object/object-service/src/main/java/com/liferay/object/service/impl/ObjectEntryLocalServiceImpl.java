@@ -3367,10 +3367,13 @@ public class ObjectEntryLocalServiceImpl
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
+		String key = _getValue(String.valueOf(values.get(entry.getKey())));
+
 		ListTypeEntry originalListTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
 				listTypeDefinitionId,
-				_getValue(String.valueOf(values.get(entry.getKey()))));
+				key.isEmpty() ? _getValue(String.valueOf(entry.getValue())) :
+					key);
 
 		ObjectStateFlow objectStateFlow =
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(

@@ -126,6 +126,11 @@ To run source formatting through the [Source Formatter Gradle Plugin](https://gi
 gradlew formatSource
 ```
 
+To run source formatting only on Poshi files through the [Source Formatter Gradle Plugin](https://github.com/liferay/liferay-portal/blob/master/modules/sdk/gradle-plugins-source-formatter/README.markdown):
+```
+gradlew formatPoshi
+```
+
 ### Running a test
 
 To run a test, use the following command:

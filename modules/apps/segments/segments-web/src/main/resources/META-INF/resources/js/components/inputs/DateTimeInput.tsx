@@ -16,7 +16,6 @@ import ClayDatePicker from '@clayui/date-picker';
 import {format, isValid, parse} from 'date-fns';
 import {default as React, useEffect, useRef, useState} from 'react';
 
-import {DateValue} from '../../../types/Date';
 import {PROPERTY_TYPES} from '../../utils/constants';
 
 const INTERNAL_DATE_FORMAT = 'yyyy-MM-dd';
@@ -24,11 +23,10 @@ const DISPLAY_DATE_FORMAT = 'yyyy/MM/dd';
 
 interface Props {
 	disabled?: boolean;
-	onChange: (payload: {type: string; value: DateValue}) => void;
+	onChange: (payload: {type: string; value: string}) => void;
 	propertyLabel: string;
 	propertyType: string;
-	range?: boolean;
-	value?: DateValue;
+	value?: string;
 }
 
 function DateTimeInput({
@@ -36,21 +34,19 @@ function DateTimeInput({
 	onChange,
 	propertyLabel,
 	propertyType,
-	range,
 	value,
 }: Props) {
 	const [expanded, setExpanded] = useState(false);
 
-	const [displayDate, setDisplayDate] = useState<DateValue>(() =>
-		transformDate(value || new Date().toISOString(), toDisplayDate)
+	const [displayDate, setDisplayDate] = useState<string>(() =>
+		toDisplayDate(value || new Date().toISOString())
 	);
 
 	const previousDisplayDateRef = useRef(displayDate);
 
 	useEffect(() => {
-		const nextDisplayDate = transformDate(
-			value || new Date().toISOString(),
-			toDisplayDate
+		const nextDisplayDate = toDisplayDate(
+			value || new Date().toISOString()
 		);
 
 		previousDisplayDateRef.current = nextDisplayDate;
@@ -58,12 +54,10 @@ function DateTimeInput({
 	}, [value]);
 
 	const saveDateTimeValue = () => {
-		const internalDate = transformDate(
-			displayDate,
+		const internalDate =
 			propertyType === PROPERTY_TYPES.DATE_TIME
-				? toInternalDateTime
-				: toInternalDate
-		);
+				? toInternalDateTime(displayDate)
+				: toInternalDate(displayDate);
 
 		const previousDisplayDate = previousDisplayDateRef.current;
 
@@ -78,14 +72,7 @@ function DateTimeInput({
 	};
 
 	const onDisplayDateChange = (nextDisplayDate: string) => {
-		if (range) {
-			const [start, end] = nextDisplayDate.split(' - ');
-
-			setDisplayDate(transformDate({end, start}, toDisplayDate));
-		}
-		else {
-			setDisplayDate(transformDate(nextDisplayDate, toDisplayDate));
-		}
+		setDisplayDate(toDisplayDate(nextDisplayDate));
 	};
 
 	const onExpandedChange = (nextExpanded: boolean) => {
@@ -136,12 +123,7 @@ function DateTimeInput({
 				onBlur={saveDateTimeValue}
 				onChange={onDisplayDateChange}
 				onExpandedChange={onExpandedChange}
-				range={range}
-				value={
-					typeof displayDate === 'object'
-						? `${displayDate.start} - ${displayDate.end}`
-						: displayDate
-				}
+				value={displayDate}
 				years={{
 					end: new Date().getFullYear(),
 					start: 1900,
@@ -151,15 +133,8 @@ function DateTimeInput({
 	);
 }
 
-function datesAreEqual(dateA: DateValue, dateB: DateValue) {
-	if (typeof dateA === 'object' && typeof dateB === 'object') {
-		return dateA.start === dateB.start && dateA.end === dateB.end;
-	}
-	else if (typeof dateA === 'string' && typeof dateB === 'string') {
-		return dateA === dateB;
-	}
-
-	return false;
+function datesAreEqual(dateA: string, dateB: string) {
+	return dateA === dateB;
 }
 
 function toDisplayDate(internalOrIsoDate: string) {
@@ -192,17 +167,6 @@ function toInternalDate(displayOrIsoDate: string) {
 
 function toInternalDateTime(displayOrIsoDate: string) {
 	return new Date(toInternalDate(displayOrIsoDate)).toISOString();
-}
-
-function transformDate(date: DateValue, transform: (date: string) => string) {
-	if (typeof date === 'object') {
-		const end = transform(date.end);
-		const start = transform(date.start);
-
-		return start && end ? {end, start} : '';
-	}
-
-	return transform(date);
 }
 
 export default DateTimeInput;

@@ -14,14 +14,28 @@
 
 package com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
+import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsRequest;
 import com.liferay.dynamic.data.mapping.form.builder.settings.DDMFormBuilderSettingsResponse;
 import com.liferay.dynamic.data.mapping.form.taglib.internal.servlet.taglib.util.DDMFormTaglibUtil;
 import com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib.base.BaseDDMFormBuilderTag;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
+import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,9 +47,56 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 	public String getDDMFormBuilderContext(
 		HttpServletRequest httpServletRequest) {
 
-		return DDMFormTaglibUtil.getFormBuilderContext(
-			GetterUtil.getLong(getDdmStructureId()),
-			GetterUtil.getLong(getDdmStructureVersionId()), httpServletRequest);
+		String serializedFormBuilderContext = ParamUtil.getString(
+			httpServletRequest, "serializedFormBuilderContext");
+
+		if (Validator.isNotNull(serializedFormBuilderContext)) {
+			return serializedFormBuilderContext;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		long ddmStructureId = GetterUtil.getLong(getDdmStructureId());
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
+
+		long ddmStructureVersionId = GetterUtil.getLong(
+			getDdmStructureVersionId());
+
+		DDMStructureVersion ddmStructureVersion =
+			DDMStructureVersionLocalServiceUtil.fetchDDMStructureVersion(
+				ddmStructureVersionId);
+
+		Locale locale = themeDisplay.getSiteDefaultLocale();
+
+		if ((ddmStructure != null) || (ddmStructureVersion != null)) {
+			DDMForm ddmForm = DDMFormTaglibUtil.getDDMForm(
+				ddmStructureId, ddmStructureVersionId);
+
+			locale = ddmForm.getDefaultLocale();
+		}
+
+		DDMFormBuilderContextRequest ddmFormBuilderContextRequest =
+			DDMFormBuilderContextRequest.with(
+				ddmStructure, themeDisplay.getRequest(),
+				themeDisplay.getResponse(), locale, true);
+
+		ddmFormBuilderContextRequest.addProperty(
+			"ddmStructureVersion", ddmStructureVersion);
+
+		DDMFormBuilderContextFactory ddmFormBuilderContextFactory =
+			_ddmFormBuilderContextFactorySnapshot.get();
+
+		DDMFormBuilderContextResponse ddmFormBuilderContextResponse =
+			ddmFormBuilderContextFactory.create(ddmFormBuilderContextRequest);
+
+		return jsonSerializer.serializeDeep(
+			ddmFormBuilderContextResponse.getContext());
 	}
 
 	protected DDMForm getDDMForm() {
@@ -104,5 +165,9 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 			httpServletRequest, "serializedDDMFormRules",
 			ddmFormBuilderSettingsResponse.getSerializedDDMFormRules());
 	}
+
+	private static final Snapshot<DDMFormBuilderContextFactory>
+		_ddmFormBuilderContextFactorySnapshot = new Snapshot<>(
+			DDMFormBuilderTag.class, DDMFormBuilderContextFactory.class);
 
 }

@@ -38,7 +38,7 @@ public class JSPFileNameCheck extends BaseFileCheck {
 
 		String shortFileName = absolutePath.substring(x + 1, y);
 
-		for (String suffix : _allowSuffixes) {
+		for (String suffix : _allowedSuffixes) {
 			if (shortFileName.endsWith(suffix)) {
 				return content;
 			}
@@ -55,7 +55,7 @@ public class JSPFileNameCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final List<String> _allowSuffixes = Arrays.asList(
+	private static final List<String> _allowedSuffixes = Arrays.asList(
 		"-compat", "-ext", "-ext-post", "-ext-pre");
 
 }

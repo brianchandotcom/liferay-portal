@@ -260,8 +260,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Panel.expandPanel(panel = "Look and Feel");
-
 		Click(locator1 = "ClientExtension#THEME_SPRITEMAP_CLIENT_EXTENSION_INPUT");
 
 		WaitForVisible(locator1 = "IFrame#IFRAME");

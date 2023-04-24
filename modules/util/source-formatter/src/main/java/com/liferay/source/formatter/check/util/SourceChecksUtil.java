@@ -155,8 +155,9 @@ public class SourceChecksUtil {
 				}
 
 				sourceChecksResult = _processJavaTermCheck(
-					sourceChecksResult, (JavaTermCheck)sourceCheck, javaClass,
-					anonymousClasses, fileName, absolutePath);
+					sourceProcessor, sourceChecksResult,
+					(JavaTermCheck)sourceCheck, javaClass, anonymousClasses,
+					fileName, absolutePath);
 			}
 
 			sourceChecksResult.setMostRecentProcessedSourceCheck(sourceCheck);
@@ -391,6 +392,7 @@ public class SourceChecksUtil {
 	}
 
 	private static SourceChecksResult _processJavaTermCheck(
+			SourceProcessor sourceProcessor,
 			SourceChecksResult sourceChecksResult, JavaTermCheck javaTermCheck,
 			JavaClass javaClass, List<JavaClass> anonymousClasses,
 			String fileName, String absolutePath)
@@ -398,7 +400,7 @@ public class SourceChecksUtil {
 
 		sourceChecksResult.setContent(
 			javaTermCheck.process(
-				fileName, absolutePath, javaClass,
+				sourceProcessor, fileName, absolutePath, javaClass,
 				sourceChecksResult.getContent()));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
@@ -411,7 +413,7 @@ public class SourceChecksUtil {
 		for (JavaClass anonymousClass : anonymousClasses) {
 			sourceChecksResult.setContent(
 				javaTermCheck.process(
-					fileName, absolutePath, anonymousClass,
+					sourceProcessor, fileName, absolutePath, anonymousClass,
 					sourceChecksResult.getContent()));
 
 			for (SourceFormatterMessage sourceFormatterMessage :

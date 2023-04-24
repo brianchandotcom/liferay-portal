@@ -23,6 +23,7 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,13 @@ public abstract class BaseJavaTermCheck
 
 	@Override
 	public String process(
-			String fileName, String absolutePath, JavaClass javaClass,
-			String content)
+			SourceProcessor sourceProcessor, String fileName,
+			String absolutePath, JavaClass javaClass, String content)
 		throws Exception {
 
 		clearSourceFormatterMessages(fileName);
+
+		setSourceProcessor(sourceProcessor);
 
 		return _walkJavaClass(
 			fileName, absolutePath, javaClass, content, content);

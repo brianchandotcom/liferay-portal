@@ -14,21 +14,18 @@
 
 /// <reference types="react" />
 
-import {DateValue} from '../../../types/Date';
 interface Props {
 	disabled?: boolean;
-	onChange: (payload: {type: string; value: DateValue}) => void;
+	onChange: (payload: {type: string; value: string}) => void;
 	propertyLabel: string;
 	propertyType: string;
-	range?: boolean;
-	value?: DateValue;
+	value?: string;
 }
 declare function DateTimeInput({
 	disabled,
 	onChange,
 	propertyLabel,
 	propertyType,
-	range,
 	value,
 }: Props): JSX.Element;
 export default DateTimeInput;

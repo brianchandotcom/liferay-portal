@@ -18,10 +18,8 @@ import com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNam
 import com.liferay.commerce.channel.web.internal.model.HealthCheck;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatus;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
-import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -30,23 +28,14 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,55 +51,10 @@ import org.osgi.service.component.annotations.Reference;
 		"fds.data.provider.key=" + CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK,
 		"frontend.data.set.name=" + CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK
 	},
-	service = {FDSActionProvider.class, FDSDataProvider.class, FDSView.class}
+	service = {FDSDataProvider.class, FDSView.class}
 )
 public class CommerceChannelHealthCheckTableFDSView
-	extends BaseTableFDSView
-	implements FDSActionProvider, FDSDataProvider<HealthCheck> {
-
-	@Override
-	public List<DropdownItem> getDropdownItems(
-			long groupId, HttpServletRequest httpServletRequest, Object model)
-		throws PortalException {
-
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				PortletURL portletURL = PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-						PortletRequest.ACTION_PHASE)
-				).setActionName(
-					"/commerce_channels/edit_commerce_channel_health_status"
-				).setRedirect(
-					ParamUtil.getString(
-						httpServletRequest, "currentUrl",
-						_portal.getCurrentURL(httpServletRequest))
-				).setParameter(
-					"commerceChannelHealthStatusKey",
-					() -> {
-						HealthCheck healthCheck = (HealthCheck)model;
-
-						return healthCheck.getKey();
-					}
-				).buildPortletURL();
-
-				long commerceChannelId = ParamUtil.getLong(
-					httpServletRequest, "commerceChannelId");
-
-				portletURL.setParameter(
-					"commerceChannelId", String.valueOf(commerceChannelId));
-
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", _portal.getLocale(httpServletRequest),
-					getClass());
-
-				dropdownItem.setHref(portletURL.toString());
-				dropdownItem.setLabel(
-					_language.get(
-						httpServletRequest, resourceBundle, "fix-issue"));
-			}
-		).build();
-	}
+	extends BaseTableFDSView implements FDSDataProvider<HealthCheck> {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -204,9 +148,6 @@ public class CommerceChannelHealthCheckTableFDSView
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -53,7 +53,7 @@ public class BufferedIncreasableEntry<K, T>
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			_aopMethodInvocation.toString(), StringPool.OPEN_PARENTHESIS,
+			_aopMethodInvocation, StringPool.OPEN_PARENTHESIS,
 			Arrays.toString(_arguments), StringPool.CLOSE_PARENTHESIS);
 	}
 

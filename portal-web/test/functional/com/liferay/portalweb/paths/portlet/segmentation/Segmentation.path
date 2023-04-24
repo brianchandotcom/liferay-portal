@@ -157,7 +157,7 @@
 </tr>
 <tr>
 	<td>TRANSLATION_STATUS_TITLE</td>
-	<td>//ul[contains(@class, 'dropdown-menu')]/li[contains(@role, 'presentation')]/descendant::span[contains(text(), '${key_locale}')]/span</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//li[contains(@role, 'presentation')]//span[contains(text(), '${key_locale}')]</td>
 	<td></td>
 </tr>
 </tbody>

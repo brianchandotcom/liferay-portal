@@ -66,7 +66,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -461,7 +461,7 @@ public class ObjectActionLocalServiceImpl
 				StringBundler.concat(
 					"The object action executor key ", objectActionExecutorKey,
 					" is not allowed for company ",
-					String.valueOf(CompanyThreadLocal.getCompanyId())));
+					objectDefinition.getCompanyId()));
 		}
 
 		if (!ObjectActionExecutorUtil.isAllowedObjectDefinition(

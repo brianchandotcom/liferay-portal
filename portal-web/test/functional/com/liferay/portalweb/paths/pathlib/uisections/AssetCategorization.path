@@ -70,6 +70,11 @@
 	<td>//span[(contains(@class,'label-item'))]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TAGS_FRAGMENT_BY_ROW</td>
+	<td>//form//div[contains(@class,"tagsinputfragmentrenderer")][${key_tagRow}]//button</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

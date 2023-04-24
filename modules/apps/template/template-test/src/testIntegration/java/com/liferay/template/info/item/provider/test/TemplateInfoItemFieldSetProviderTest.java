@@ -118,15 +118,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
-
-		_assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), _assetVocabulary.getVocabularyId());
-
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
-		_journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -138,6 +130,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_getMockHttpServletRequest(_getThemeDisplay()));
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		_journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@After
@@ -313,31 +309,45 @@ public class TemplateInfoItemFieldSetProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFieldValuesByClassNameWhenNoTemplateEntryExists() {
+	public void testGetInfoFieldValuesByClassNameWhenNoTemplateEntryExists()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
-				AssetCategory.class.getName(), _assetCategory);
+				AssetCategory.class.getName(), assetCategory);
 
 		Assert.assertTrue(infoFieldValues.isEmpty());
 	}
 
 	@Test
 	public void testGetInfoFieldValuesByClassNameWhenTemplateEntryExists()
-		throws PortalException {
+		throws Exception {
 
 		TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
 			String.valueOf(_journalArticle.getDDMStructureId()),
 			_serviceContext);
 
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
 		TemplateEntry categoryTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			AssetCategory.class.getName(), StringPool.BLANK,
-			_assetCategory.getName(), RandomTestUtil.randomString(),
+			assetCategory.getName(), RandomTestUtil.randomString(),
 			JournalTestUtil.getSampleTemplateFTL(), _serviceContext);
 
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
-				AssetCategory.class.getName(), _assetCategory);
+				AssetCategory.class.getName(), assetCategory);
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
@@ -353,7 +363,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 			infoField.getName());
 
 		Assert.assertEquals(
-			infoFieldValue.toString(), _assetCategory.getName(),
+			infoFieldValue.toString(), assetCategory.getName(),
 			infoFieldValue.getValue(
 				_portal.getSiteDefaultLocale(_group.getGroupId())));
 	}
@@ -852,12 +862,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 		return themeDisplay;
 	}
 
-	private AssetCategory _assetCategory;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	private AssetVocabulary _assetVocabulary;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

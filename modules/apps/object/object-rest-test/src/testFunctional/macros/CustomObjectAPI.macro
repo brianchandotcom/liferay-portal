@@ -75,36 +75,6 @@ definition {
 		return ${curl};
 	}
 
-	macro _getObjectEntryById {
-		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectId}");
-
-		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
-
-		if (isSet(virtualHost)) {
-			if (!(isSet(port))) {
-				var port = 8080;
-			}
-
-			var portalURL = "http://${virtualHost}:${port}";
-		}
-		else {
-			var portalURL = JSONCompany.getPortalURL();
-		}
-
-		var curl = '''
-			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId} \
-				-u test@liferay.com:test
-		''';
-
-		if (isSet(token)) {
-			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
-		}
-
-		var response = JSONCurlUtil.get(${curl});
-
-		return ${response};
-	}
-
 	macro _setNObjectEntriesBody {
 		Variables.assertDefined(parameterList = "${fieldName},${fieldValue}");
 
@@ -195,11 +165,31 @@ definition {
 	macro getObjectEntryById {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
 
-		var curl = CustomObjectAPI._getObjectEntryById(
-			en_US_plural_label = ${en_US_plural_label},
-			objectId = ${objectEntryId});
+		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
 
-		return ${curl};
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntryId} \
+				-u test@liferay.com:test
+		''';
+
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
 	}
 
 	macro getObjectEntryIdByName {

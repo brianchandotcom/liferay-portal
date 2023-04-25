@@ -687,9 +687,9 @@ definition {
 			token = ${token},
 			virtualHost = ${virtualHost});
 
-		var response = CustomObjectAPI._getObjectEntryById(
+		var response = CustomObjectAPI.getObjectEntryById(
 			en_US_plural_label = ${en_US_plural_label},
-			objectId = ${objectId},
+			objectEntryId = ${objectId},
 			token = ${token},
 			virtualHost = ${virtualHost});
 

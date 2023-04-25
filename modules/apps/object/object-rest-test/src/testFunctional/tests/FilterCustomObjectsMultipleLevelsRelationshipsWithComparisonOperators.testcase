@@ -161,9 +161,9 @@ definition {
 		}
 
 		task ("When in GetUniversitiesPage filtering by 'subjectUniversities/studentSubjects/externalReferenceCode eq '{AnnErcValue}'") {
-			var getAnnResponse = CustomObjectAPI._getObjectEntryById(
+			var getAnnResponse = CustomObjectAPI.getObjectEntryById(
 				en_US_plural_label = "students",
-				objectId = ${annId});
+				objectEntryId = ${annId});
 
 			var annErc = JSONPathUtil.getErcValue(response = ${getAnnResponse});
 

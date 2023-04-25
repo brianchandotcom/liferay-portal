@@ -1861,6 +1861,10 @@ definition {
 
 			Account.openAccountsAdmin();
 
+			WaitForElementPresent(
+				key_rowEntry = "Accounts Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
 			LexiconEntry.gotoEntry(rowEntry = "Accounts Name");
 
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");

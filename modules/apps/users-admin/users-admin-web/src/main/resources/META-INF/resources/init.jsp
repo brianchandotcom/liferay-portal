@@ -195,6 +195,7 @@ page import="com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil"
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Arrays" %><%@
 page import="java.util.Calendar" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.HashMap" %><%@

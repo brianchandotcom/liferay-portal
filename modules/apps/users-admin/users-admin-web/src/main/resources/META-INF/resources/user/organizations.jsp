@@ -21,6 +21,8 @@ User selUser = userDisplayContext.getSelectedUser();
 
 List<Organization> organizations = userDisplayContext.getOrganizations();
 
+long[] organizationIds = selUser.getOrganizationIds();
+
 String organizationIdsString = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
 
 currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() + "organizations");
@@ -156,6 +158,10 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			addOrganizationIds.push(organizationValues);
 		}
 
+		var organizationIds = <%= Arrays.toString(organizationIds) %>;
+
+		organizationIds = organizationIds.map(String);
+
 		var deleteOrganizationIds = [];
 
 		var searchContainer = Liferay.SearchContainer.get(
@@ -248,7 +254,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						}
 					},
 					selectEventName: '<portlet:namespace />selectOrganization',
-					selectedData: searchContainer.getData(true),
+					selectedData: organizationIds,
 					title:
 						'<liferay-ui:message arguments="organization" key="select-x" />',
 					url:

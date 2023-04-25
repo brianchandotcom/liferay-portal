@@ -318,6 +318,22 @@ components:
             required:
                 - className
             type: object
+        ClientExtension:
+            # @review
+            description:
+                Represents a client extension
+            properties:
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The client extension's external reference code.
+                    type: string
+                name:
+                    description:
+                        The client extension's name.
+                    readOnly: true
+                    type: string
+            type: object
         CollectionViewport:
             # @review
             description:
@@ -4537,11 +4553,30 @@ components:
                     description:
                         The page's CSS.
                     type: string
+                cssClientExtensions:
+                    description:
+                        The client extensions for css associated to the page.
+                    items:
+                        $ref: "#/components/schemas/ClientExtension"
+                    type: array
+                favIcon:
+                    # @review
+                    description:
+                        The FavIcon of the page
+                    oneOf:
+                        - $ref: "#/components/schemas/ClientExtension"
+                        - $ref: "#/components/schemas/ContentDocument"
                 javascript:
                     # @review
                     description:
                         The page's JavaScript.
                     type: string
+                javascriptClientExtensions:
+                    description:
+                        The client extensions for js associated to the page.
+                    items:
+                        $ref: "#/components/schemas/ClientExtension"
+                    type: array
                 masterPage:
                     allOf:
                         - $ref: "#/components/schemas/MasterPage"
@@ -4564,6 +4599,12 @@ components:
                                 The stylebook's name.
                             type: string
                     type: object
+                themeCssClientExtension:
+                    allOf:
+                        - $ref: "#/components/schemas/ClientExtension"
+                    # @review
+                    description:
+                        The Client Extension for the theme of a page
                 themeName:
                     # @review
                     description:

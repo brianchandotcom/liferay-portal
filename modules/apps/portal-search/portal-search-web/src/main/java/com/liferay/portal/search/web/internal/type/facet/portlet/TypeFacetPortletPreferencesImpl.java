@@ -88,11 +88,11 @@ public class TypeFacetPortletPreferencesImpl
 			_portletPreferencesHelper.getString(
 				TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES);
 
-		return assetTypesOptional.map(
-			StringUtil::split
-		).orElse(
-			getAllAssetTypes(companyId)
-		);
+		if (assetTypesOptional.isPresent()) {
+			return StringUtil.split(assetTypesOptional.get());
+		}
+
+		return getAllAssetTypes(companyId);
 	}
 
 	@Override

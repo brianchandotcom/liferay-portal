@@ -45,7 +45,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class CustomElementCETPortlet extends CETPortlet<CustomElementCET> {
+public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 
 	public CustomElementCETPortlet(
 		CustomElementCET customElementCET, NPMResolver npmResolver,

@@ -33,10 +33,10 @@ import javax.portlet.RenderRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public abstract class CETPortlet<T extends CET>
+public abstract class BaseCETPortlet<T extends CET>
 	extends MVCPortlet implements Registrable {
 
-	public CETPortlet(T cet, NPMResolver npmResolver) {
+	public BaseCETPortlet(T cet, NPMResolver npmResolver) {
 		this.cet = cet;
 		this.npmResolver = npmResolver;
 	}

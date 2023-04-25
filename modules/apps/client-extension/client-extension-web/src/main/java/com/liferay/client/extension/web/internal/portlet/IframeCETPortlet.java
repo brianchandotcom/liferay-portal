@@ -38,7 +38,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class IframeCETPortlet extends CETPortlet<IFrameCET> {
+public class IframeCETPortlet extends BaseCETPortlet<IFrameCET> {
 
 	public IframeCETPortlet(
 		IFrameCET iFrameCET, NPMResolver npmResolver, String portletId) {

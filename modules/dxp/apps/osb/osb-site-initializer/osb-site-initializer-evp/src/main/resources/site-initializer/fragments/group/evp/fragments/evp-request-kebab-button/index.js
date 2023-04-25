@@ -11,6 +11,12 @@
  * distribution rights of the Software.
  */
 
+const ROLE = {
+	FINANCE_USER: 'Finance User',
+};
+
+const userRoles = document.querySelector('.userRoles').value;
+
 const updateStatus = async (key, name, message) => {
 	const requestID = fragmentElement.querySelector('.requestID').value;
 
@@ -81,11 +87,21 @@ const openModal = () => {
 			{
 				label: 'Approve',
 				async onClick() {
+					const status =
+						userRoles === ROLE.FINANCE_USER
+							? {
+									key: 'awaitingPaymentConfirmation',
+									value: 'Awaiting Payment Confirmation',
+							  }
+							: {
+									key: 'awaitingFinanceReview',
+									value: 'Awaiting Finance Review',
+							  };
 					await layerForDendingUpdateStatus(
 						getMessage(),
 						getAttributeHidden(),
-						'awaitingFinanceReview',
-						'Awaiting Finance Review'
+						status.key,
+						status.value
 					);
 				},
 				type: 'submit',
@@ -98,5 +114,5 @@ const openModal = () => {
 };
 const btnOpenModal = fragmentElement.querySelector('.btnOpenModal');
 if (btnOpenModal) {
-	btnOpenModal.onclick = openModal;
+	btnOpenModal.onclick = () => openModal();
 }

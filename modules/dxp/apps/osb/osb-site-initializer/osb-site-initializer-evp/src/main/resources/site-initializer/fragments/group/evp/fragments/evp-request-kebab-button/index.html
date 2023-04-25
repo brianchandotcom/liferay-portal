@@ -16,6 +16,8 @@ Await Company Verification", "Awaiting Finance Review"] /]
 
 <input class="requestName" hidden value="${requestName}" />
 
+<input class="userRoles" hidden value="${userRoles[1].name}" />
+
 <div id="evp-request-kebab-button">
 	[@liferay_ui["icon-menu"]
 		direction="left-side"
@@ -38,7 +40,7 @@ Await Company Verification", "Awaiting Finance Review"] /]
 				[/#if]
 			[/#if]
 
-			[#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp"]
+			[#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp" || role.name == "Finance User" && requestStatus == "awaitingFinanceReview"]
 				<div class="btnOpenModal">
 					[@liferay_ui["icon"]
 						message="Review"

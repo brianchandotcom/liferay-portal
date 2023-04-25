@@ -16,11 +16,11 @@ package com.liferay.osb.faro.mock.engine.client.internal;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
+import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.osb.faro.engine.client.model.Field;
 import com.liferay.osb.faro.engine.client.model.Individual;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
-import com.liferay.osb.faro.engine.client.util.FilterConstants;
 import com.liferay.osb.faro.engine.client.util.FilterUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;

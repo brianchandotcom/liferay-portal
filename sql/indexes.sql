@@ -1,11 +1,15 @@
-create index IX_FEAFC68A on Address (companyId, classNameId, classPK, listTypeId);
-create index IX_923BD178 on Address (companyId, classNameId, classPK, mailing);
-create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_);
+create index IX_602D4181 on Address (companyId, classNameId, classPK, ctCollectionId);
+create index IX_336048E8 on Address (companyId, classNameId, classPK, listTypeId, ctCollectionId);
+create index IX_CF84B7D6 on Address (companyId, classNameId, classPK, mailing, ctCollectionId);
+create index IX_23EBCA12 on Address (companyId, classNameId, classPK, primary_, ctCollectionId);
+create index IX_D9B5311E on Address (companyId, classNameId, ctCollectionId);
+create index IX_3E0827AC on Address (companyId, ctCollectionId);
 create unique index IX_CBAD282F on Address (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_5A2093E7 on Address (countryId);
-create index IX_C8E3E87D on Address (regionId);
-create index IX_5BC8B0D4 on Address (userId);
-create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId);
+create index IX_34CBC45 on Address (countryId, ctCollectionId);
+create index IX_8C7024DB on Address (regionId, ctCollectionId);
+create index IX_F67F5F32 on Address (userId, ctCollectionId);
+create index IX_9F7C5C6C on Address (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_E8E63838 on Address (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create index IX_37B0A8A2 on AnnouncementsDelivery (companyId);
 create unique index IX_BA4413D5 on AnnouncementsDelivery (userId, type_[$COLUMN_LENGTH:75$]);

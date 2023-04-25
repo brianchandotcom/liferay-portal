@@ -127,6 +127,8 @@ public class AddressPersistenceTest {
 
 		newAddress.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAddress.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAddress.setUuid(RandomTestUtil.randomString());
 
 		newAddress.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -184,6 +186,9 @@ public class AddressPersistenceTest {
 
 		Assert.assertEquals(
 			existingAddress.getMvccVersion(), newAddress.getMvccVersion());
+		Assert.assertEquals(
+			existingAddress.getCtCollectionId(),
+			newAddress.getCtCollectionId());
 		Assert.assertEquals(existingAddress.getUuid(), newAddress.getUuid());
 		Assert.assertEquals(
 			existingAddress.getExternalReferenceCode(),
@@ -390,9 +395,9 @@ public class AddressPersistenceTest {
 
 	protected OrderByComparator<Address> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Address", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "addressId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+			"Address", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "externalReferenceCode", true, "addressId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"countryId", true, "listTypeId", true, "regionId", true, "city",
 			true, "description", true, "latitude", true, "longitude", true,
@@ -671,6 +676,8 @@ public class AddressPersistenceTest {
 		Address address = _persistence.create(pk);
 
 		address.setMvccVersion(RandomTestUtil.nextLong());
+
+		address.setCtCollectionId(RandomTestUtil.nextLong());
 
 		address.setUuid(RandomTestUtil.randomString());
 

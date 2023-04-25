@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -37,8 +38,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -173,30 +172,27 @@ public class DDMDataProviderInstanceServiceImpl
 			ddmDataProviderInstanceFinder.filterByKeywords(
 				companyId, groupIds, keywords, start, end, orderByComparator);
 
-		Stream<DDMDataProviderInstance> ddmDataProviderInstancesStream =
-			ddmDataProviderInstances.stream();
-
-		return ddmDataProviderInstancesStream.filter(
+		return TransformUtil.transform(
+			ddmDataProviderInstances,
 			ddmDataProviderInstance -> {
 				try {
-					return _ddmDataProviderInstanceModelResourcePermission.
-						contains(
-							getPermissionChecker(),
-							ddmDataProviderInstance.getDataProviderInstanceId(),
-							ActionKeys.VIEW);
+					if (_ddmDataProviderInstanceModelResourcePermission.
+							contains(
+								getPermissionChecker(),
+								ddmDataProviderInstance.
+									getDataProviderInstanceId(),
+								ActionKeys.VIEW)) {
+
+						return _removeAuthenticationData(
+							ddmDataProviderInstance);
+					}
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);
-
-					return false;
 				}
-			}
-		).map(
-			ddmDataProviderInstance -> _removeAuthenticationData(
-				ddmDataProviderInstance)
-		).collect(
-			Collectors.toList()
-		);
+
+				return null;
+			});
 	}
 
 	@Override

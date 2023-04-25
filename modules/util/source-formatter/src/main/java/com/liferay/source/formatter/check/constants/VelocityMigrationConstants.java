@@ -31,6 +31,8 @@ public class VelocityMigrationConstants {
 
 	public static final String FREEMARKER_LIST_START = "<#list";
 
+	public static final String FREEMARKER_MACRO_START = "<#macro";
+
 	public static final String VELOCITY_COMMENT_LINE = "##";
 
 	public static final String VELOCITY_ELSE_START = "#else";

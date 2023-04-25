@@ -1319,6 +1319,80 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
 	}
 
+	@description = "Assert that items are being properly indexed if they exists both in Production and in a Publication"
+	@priority = 3
+	test ViewItemsAreProperlyIndexedInProductionAndPublication {
+		task ("Create a new tag") {
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tag1");
+		}
+
+		task ("Create a Web Content with a tag") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag1",
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+		}
+
+		task ("Add a Widget Page with Asset Publisher") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Select the Web Content Article as Asset Type and assert that 'WC WebContent Title' is being returned by the Asset Publisher") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			AssetPublisherPortlet.configureAssetTypePG(
+				assetSubtype = "Any",
+				selectedAsset = "Web Content Article");
+
+			Button.clickSave();
+
+			Refresh();
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
+		}
+
+		task ("Add new Publication, edit the tag inside the publication and change back to production") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			Tag.openTagsAdmin(siteURLKey = "guest");
+
+			Tag.editCP(
+				tagMenuName = "tag1",
+				tagNameEdit = "tag1Edited");
+
+			Publications.workOnProduction();
+		}
+
+		task ("Clear database cache and excute reindex") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Server Administration");
+
+			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
+
+			SearchAdministration.executeReindex();
+		}
+
+		task ("Go back to Test Page and assert that the Asset Publisher is still present") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "WC WebContent Title");
+		}
+	}
+
 	@description = "Assert Publications change details on Display Data Parents and Children Tabs"
 	@priority = 4
 	test ViewPublicationsChangeDetails {

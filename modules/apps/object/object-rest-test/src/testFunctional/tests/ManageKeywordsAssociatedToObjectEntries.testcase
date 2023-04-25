@@ -1,0 +1,157 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given tag with name 'tag1' created") {
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tag1");
+		}
+
+		task ("Given object definition 'Student' with name field created") {
+			ObjectDefinitionAPI.staticStudentObjectId();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		TaxonomyVocabularyAPI.deleteAllKeywords(
+			groupNameList = "Guest,Global",
+			tagNameList = "tag1,tag2");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@priority = 4
+	test CanCreateKeywordWhileUpdatingEntry {
+		property portal.acceptance = "true";
+
+		task ("Given Student entry created") {
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Jessica");
+		}
+
+		task ("When requesting putStudent with {studentId} to associate unexisting 'tag2'") {
+			CustomObjectAPI.putObjectEntryById(
+				en_US_plural_label = "students",
+				fieldValue = "Jessica",
+				keywords = "tag2",
+				objectEntryId = ${studentEntryId});
+		}
+
+		task ("Then 'tag2' is visible in Categorization --> Tags of Global Site") {
+			var companyId = JSONCompany.getCompanyId();
+
+			var response = TaxonomyVocabularyAPI.getKeywordsByGroupName(groupName = ${companyId});
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "tag2");
+		}
+	}
+
+	@priority = 4
+	test CanEmptyKeywordsOfObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("Given Student entry created with 'tag1' associated") {
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				keywords = "tag1",
+				name = "Jessica");
+		}
+
+		task ("When requesting putStudent with {studentId} and empty "keywords": []") {
+			CustomObjectAPI.putObjectEntryById(
+				en_US_plural_label = "students",
+				fieldValue = "Jessica",
+				keywords = "",
+				objectEntryId = ${studentEntryId});
+
+			var response = CustomObjectAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = ${studentEntryId});
+		}
+
+		task ("Then 'tag1' is not visible in the keywords of the entry") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$..keywords");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "[]");
+		}
+	}
+
+	@priority = 4
+	test CanGetKeywordsOfObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("Given Student entry created with 'tag1' associated") {
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				keywords = "tag1",
+				name = "Jessica");
+		}
+
+		task ("When requesting getStudent with {studentId}") {
+			var response = CustomObjectAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = ${studentEntryId});
+		}
+
+		task ("Then I can see 'tag1' in the keywords of the entry") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.keywords");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "tag1");
+		}
+	}
+
+	@priority = 4
+	test CanUpdateEntryWithExistingKeyword {
+		property portal.acceptance = "true";
+
+		task ("Given Student entry created") {
+			var studentEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Jessica");
+		}
+
+		task ("When requesting putStudent with {studentId} to associate 'tag1'") {
+			CustomObjectAPI.putObjectEntryById(
+				en_US_plural_label = "students",
+				fieldValue = "Jessica",
+				keywords = "tag1",
+				objectEntryId = ${studentEntryId});
+
+			var response = CustomObjectAPI.getObjectEntryById(
+				en_US_plural_label = "students",
+				objectEntryId = ${studentEntryId});
+		}
+
+		task ("Then 'tag1' is visible in the keywords of the entry") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.keywords");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "tag1");
+		}
+	}
+
+}

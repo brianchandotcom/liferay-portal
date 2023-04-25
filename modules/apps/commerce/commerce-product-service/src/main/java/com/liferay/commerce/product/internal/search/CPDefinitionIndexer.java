@@ -486,28 +486,27 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			languageIdToUrlTitleMap.get(cpDefinitionDefaultLanguageId));
 		document.addText("defaultLanguageId", cpDefinitionDefaultLanguageId);
 
-		long[] commerceChannelGroupIds = TransformUtil.transformToLongArray(
-			_commerceChannelRelLocalService.getCommerceChannelRels(
-				cpDefinition.getModelClassName(),
-				cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null),
-			commerceChannelRel -> {
-				CommerceChannel commerceChannel =
-					commerceChannelRel.getCommerceChannel();
-
-				return commerceChannel.getGroupId();
-			});
-
 		document.addNumber(
-			CPField.COMMERCE_CHANNEL_GROUP_IDS, commerceChannelGroupIds);
+			CPField.COMMERCE_CHANNEL_GROUP_IDS,
+			TransformUtil.transformToLongArray(
+				_commerceChannelRelLocalService.getCommerceChannelRels(
+					cpDefinition.getModelClassName(),
+					cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null),
+				commerceChannelRel -> {
+					CommerceChannel commerceChannel =
+						commerceChannelRel.getCommerceChannel();
 
-		long[] commerceAccountGroupIds = TransformUtil.transformToLongArray(
-			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			CommerceAccountGroupRel::getCommerceAccountGroupId);
-
-		document.addNumber("commerceAccountGroupIds", commerceAccountGroupIds);
+					return commerceChannel.getGroupId();
+				}));
+		document.addNumber(
+			"commerceAccountGroupIds",
+			TransformUtil.transformToLongArray(
+				_commerceAccountGroupRelService.getCommerceAccountGroupRels(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null),
+				CommerceAccountGroupRel::getCommerceAccountGroupId));
 
 		List<String> optionNames = new ArrayList<>();
 		List<Long> optionIds = new ArrayList<>();

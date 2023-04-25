@@ -61,8 +61,6 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
-import java.io.Serializable;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -199,9 +197,6 @@ public class JournalArticleExportImportContentProcessor
 				ExportImportPathUtil.getModelPath(stagedModel));
 		}
 
-		_replaceImportJournalArticleReferences(
-			fields, portletDataContext, stagedModel);
-
 		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
@@ -211,6 +206,9 @@ public class JournalArticleExportImportContentProcessor
 		ddmFormValuesTransformer.addTransformer(
 			new ImageImportDDMFormFieldValueTransformer(
 				_dlAppLocalService, portletDataContext, stagedModel));
+		ddmFormValuesTransformer.addTransformer(
+			new JournalArticleImportDDMFormFieldValueTransformer(
+				_journalArticleLocalService, portletDataContext, stagedModel));
 
 		ddmFormValuesTransformer.transform();
 
@@ -451,79 +449,6 @@ public class JournalArticleExportImportContentProcessor
 
 		return _journalConverter.getContent(
 			ddmStructure, fields, ddmStructure.getGroupId());
-	}
-
-	private void _replaceImportJournalArticleReferences(
-			Fields fields, PortletDataContext portletDataContext,
-			StagedModel stagedModel)
-		throws Exception {
-
-		for (Field field : fields) {
-			if (!Objects.equals(
-					field.getType(),
-					JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE)) {
-
-				continue;
-			}
-
-			for (Locale locale : field.getAvailableLocales()) {
-				JSONObject jsonObject = null;
-
-				Serializable serializable = field.getValue(locale);
-
-				try {
-					jsonObject = _jsonFactory.createJSONObject(
-						serializable.toString());
-				}
-				catch (JSONException jsonException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsonException);
-					}
-
-					continue;
-				}
-
-				JournalArticle journalArticle = null;
-
-				long articlePrimaryKey = GetterUtil.getLong(
-					portletDataContext.getNewPrimaryKey(
-						JournalArticle.class + ".primaryKey",
-						jsonObject.getLong("articlePrimaryKey")));
-
-				if (articlePrimaryKey != 0) {
-					journalArticle =
-						_journalArticleLocalService.fetchJournalArticle(
-							articlePrimaryKey);
-				}
-
-				if (journalArticle == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get journal article with primary key " +
-								articlePrimaryKey);
-					}
-
-					portletDataContext.removePrimaryKey(
-						ExportImportPathUtil.getModelPath(stagedModel));
-
-					continue;
-				}
-
-				field.setValue(
-					locale,
-					JSONUtil.put(
-						"className", JournalArticle.class.getName()
-					).put(
-						"classPK", journalArticle.getResourcePrimKey()
-					).put(
-						"title",
-						journalArticle.getTitle(
-							journalArticle.getDefaultLanguageId())
-					).put(
-						"titleMap", journalArticle.getTitleMap()
-					).toString());
-			}
-		}
 	}
 
 	private void _validateJournalArticleReferences(String content)

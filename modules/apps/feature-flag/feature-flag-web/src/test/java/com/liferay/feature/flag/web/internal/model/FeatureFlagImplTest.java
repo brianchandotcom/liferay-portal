@@ -94,35 +94,6 @@ public class FeatureFlagImplTest {
 	}
 
 	@Test
-	public void testGetStatus() {
-		String betaKey = "BETA-123";
-		String devKey = "DEV-123";
-		String releaseKey = "RELEASE-123";
-
-		_setStatus(betaKey, FeatureFlagStatus.BETA);
-		_setStatus(devKey, FeatureFlagStatus.DEV);
-		_setStatus(releaseKey, FeatureFlagStatus.RELEASE);
-
-		withFeatureFlag(
-			featureFlag -> Assert.assertEquals(
-				FeatureFlagStatus.BETA, featureFlag.getFeatureFlagStatus()),
-			betaKey);
-		withFeatureFlag(
-			featureFlag -> Assert.assertEquals(
-				FeatureFlagStatus.DEV, featureFlag.getFeatureFlagStatus()),
-			devKey);
-		withFeatureFlag(
-			featureFlag -> Assert.assertEquals(
-				FeatureFlagStatus.RELEASE, featureFlag.getFeatureFlagStatus()),
-			releaseKey);
-
-		withFeatureFlag(
-			featureFlag -> Assert.assertEquals(
-				FeatureFlagStatus.DEV, featureFlag.getFeatureFlagStatus()),
-			"ABC-123");
-	}
-
-	@Test
 	public void testGetTitle() {
 		String key = "ABC-123";
 		String value = RandomTestUtil.randomString();
@@ -137,6 +108,35 @@ public class FeatureFlagImplTest {
 			featureFlag -> Assert.assertEquals(
 				value, featureFlag.getTitle(null)),
 			key);
+	}
+
+	@Test
+	public void testGetType() {
+		String betaKey = "BETA-123";
+		String devKey = "DEV-123";
+		String releaseKey = "RELEASE-123";
+
+		_setType(betaKey, FeatureFlagType.BETA);
+		_setType(devKey, FeatureFlagType.DEV);
+		_setType(releaseKey, FeatureFlagType.RELEASE);
+
+		withFeatureFlag(
+			featureFlag -> Assert.assertEquals(
+				FeatureFlagType.BETA, featureFlag.getFeatureFlagType()),
+			betaKey);
+		withFeatureFlag(
+			featureFlag -> Assert.assertEquals(
+				FeatureFlagType.DEV, featureFlag.getFeatureFlagType()),
+			devKey);
+		withFeatureFlag(
+			featureFlag -> Assert.assertEquals(
+				FeatureFlagType.RELEASE, featureFlag.getFeatureFlagType()),
+			releaseKey);
+
+		withFeatureFlag(
+			featureFlag -> Assert.assertEquals(
+				FeatureFlagType.DEV, featureFlag.getFeatureFlagType()),
+			"ABC-123");
 	}
 
 	@NewEnv.JVMArgsLine("-Dcompany-id-properties=true")
@@ -223,12 +223,12 @@ public class FeatureFlagImplTest {
 		}
 	}
 
-	private void _setStatus(
-		String featureFlagKey, FeatureFlagStatus featureFlagStatus) {
+	private void _setType(
+		String featureFlagKey, FeatureFlagType featureFlagType) {
 
 		PropsUtil.set(
-			FeatureFlagConstants.getKey(featureFlagKey, "status"),
-			featureFlagStatus.toString());
+			FeatureFlagConstants.getKey(featureFlagKey, "type"),
+			featureFlagType.toString());
 	}
 
 	private CentralizedThreadLocal<Long> _companyIdThreadLocal;

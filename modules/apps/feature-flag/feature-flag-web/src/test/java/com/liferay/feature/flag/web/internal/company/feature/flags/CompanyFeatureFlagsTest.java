@@ -17,7 +17,7 @@ package com.liferay.feature.flag.web.internal.company.feature.flags;
 import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.model.FeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagStatus;
+import com.liferay.feature.flag.web.internal.model.FeatureFlagType;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -67,7 +67,7 @@ public class CompanyFeatureFlagsTest {
 			actualFeatureFlags.size());
 
 		actualFeatureFlags = _companyFeatureFlags.getFeatureFlags(
-			FeatureFlagStatus.BETA.getPredicate());
+			FeatureFlagType.BETA.getPredicate());
 
 		Assert.assertEquals(
 			actualFeatureFlags.toString(), 1, actualFeatureFlags.size());
@@ -115,12 +115,10 @@ public class CompanyFeatureFlagsTest {
 		Assert.assertTrue(_companyFeatureFlags.isEnabled(randomKey));
 	}
 
-	private FeatureFlag _createFeatureFlag(
-		FeatureFlagStatus featureFlagStatus) {
-
+	private FeatureFlag _createFeatureFlag(FeatureFlagType featureFlagType) {
 		return new FeatureFlagImpl(
 			new String[0], RandomTestUtil.randomString(),
-			RandomTestUtil.randomBoolean(), featureFlagStatus, _createKey(),
+			RandomTestUtil.randomBoolean(), featureFlagType, _createKey(),
 			RandomTestUtil.randomString());
 	}
 
@@ -131,12 +129,12 @@ public class CompanyFeatureFlagsTest {
 	}
 
 	private final FeatureFlag _betaFeatureFlag = _createFeatureFlag(
-		FeatureFlagStatus.BETA);
+		FeatureFlagType.BETA);
 	private CompanyFeatureFlags _companyFeatureFlags;
 	private final FeatureFlag _devFeatureFlag = _createFeatureFlag(
-		FeatureFlagStatus.DEV);
+		FeatureFlagType.DEV);
 	private FeatureFlag[] _expectedFeatureFlags;
 	private final FeatureFlag _releaseFeatureFlag = _createFeatureFlag(
-		FeatureFlagStatus.RELEASE);
+		FeatureFlagType.RELEASE);
 
 }

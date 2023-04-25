@@ -18,7 +18,7 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.feature.flag.web.internal.configuration.admin.display.FeatureFlagConfigurationScreen;
 import com.liferay.feature.flag.web.internal.display.FeatureFlagsDisplayContextFactory;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagStatus;
+import com.liferay.feature.flag.web.internal.model.FeatureFlagType;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -59,12 +59,12 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		for (FeatureFlagStatus featureFlagStatus : FeatureFlagStatus.values()) {
+		for (FeatureFlagType featureFlagType : FeatureFlagType.values()) {
 			_serviceRegistrations.add(
 				bundleContext.registerService(
 					ConfigurationScreen.class,
 					new FeatureFlagConfigurationScreen(
-						_featureFlagManager, featureFlagStatus,
+						_featureFlagManager, featureFlagType,
 						_featureFlagsDisplayContextFactory, _servletContext),
 					new HashMapDictionary<>()));
 		}

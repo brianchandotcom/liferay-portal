@@ -34,8 +34,8 @@ public class FeatureFlagImpl implements FeatureFlag {
 				PropsUtil.get(FeatureFlagConstants.getKey(key, "description"))),
 			GetterUtil.getBoolean(
 				PropsUtil.get(FeatureFlagConstants.getKey(key))),
-			FeatureFlagStatus.toFeatureFlagStatus(
-				PropsUtil.get(FeatureFlagConstants.getKey(key, "status"))),
+			FeatureFlagType.toFeatureFlagType(
+				PropsUtil.get(FeatureFlagConstants.getKey(key, "type"))),
 			key,
 			GetterUtil.getString(
 				PropsUtil.get(FeatureFlagConstants.getKey(key, "title")), key));
@@ -43,12 +43,12 @@ public class FeatureFlagImpl implements FeatureFlag {
 
 	public FeatureFlagImpl(
 		String[] dependencyKeys, String description, boolean enabled,
-		FeatureFlagStatus featureFlagStatus, String key, String title) {
+		FeatureFlagType featureFlagType, String key, String title) {
 
 		_dependencyKeys = dependencyKeys;
 		_description = description;
 		_enabled = enabled;
-		_featureFlagStatus = featureFlagStatus;
+		_featureFlagType = featureFlagType;
 		_key = key;
 		_title = title;
 	}
@@ -64,8 +64,8 @@ public class FeatureFlagImpl implements FeatureFlag {
 	}
 
 	@Override
-	public FeatureFlagStatus getFeatureFlagStatus() {
-		return _featureFlagStatus;
+	public FeatureFlagType getFeatureFlagType() {
+		return _featureFlagType;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class FeatureFlagImpl implements FeatureFlag {
 	private final String[] _dependencyKeys;
 	private final String _description;
 	private final boolean _enabled;
-	private final FeatureFlagStatus _featureFlagStatus;
+	private final FeatureFlagType _featureFlagType;
 	private final String _key;
 	private final String _title;
 

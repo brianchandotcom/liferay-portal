@@ -18,7 +18,7 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.feature.flag.web.internal.configuration.admin.category.FeatureFlagConfigurationCategory;
 import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.display.FeatureFlagsDisplayContextFactory;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagStatus;
+import com.liferay.feature.flag.web.internal.model.FeatureFlagType;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -37,13 +37,12 @@ import javax.servlet.http.HttpServletResponse;
 public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	public FeatureFlagConfigurationScreen(
-		FeatureFlagManager featureFlagManager,
-		FeatureFlagStatus featureFlagStatus,
+		FeatureFlagManager featureFlagManager, FeatureFlagType featureFlagType,
 		FeatureFlagsDisplayContextFactory featureFlagsDisplayContextFactory,
 		ServletContext servletContext) {
 
 		_featureFlagManager = featureFlagManager;
-		_featureFlagStatus = featureFlagStatus;
+		_featureFlagType = featureFlagType;
 		_featureFlagsDisplayContextFactory = featureFlagsDisplayContextFactory;
 		_servletContext = servletContext;
 	}
@@ -55,12 +54,12 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public String getKey() {
-		return FeatureFlagConstants.getKey(_featureFlagStatus.toString());
+		return FeatureFlagConstants.getKey(_featureFlagType.toString());
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return _featureFlagStatus.getTitle(locale);
+		return _featureFlagType.getTitle(locale);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public boolean isVisible() {
-		if (_featureFlagStatus.isUIEnabled()) {
+		if (_featureFlagType.isUIEnabled()) {
 			return true;
 		}
 
@@ -86,7 +85,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			_featureFlagsDisplayContextFactory.create(
-				_featureFlagStatus, httpServletRequest));
+				_featureFlagType, httpServletRequest));
 
 		try {
 			RequestDispatcher requestDispatcher =
@@ -103,7 +102,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 	private final FeatureFlagManager _featureFlagManager;
 	private final FeatureFlagsDisplayContextFactory
 		_featureFlagsDisplayContextFactory;
-	private final FeatureFlagStatus _featureFlagStatus;
+	private final FeatureFlagType _featureFlagType;
 	private final ServletContext _servletContext;
 
 }

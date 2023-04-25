@@ -29,19 +29,19 @@ import java.util.function.Predicate;
 /**
  * @author Drew Brokke
  */
-public enum FeatureFlagStatus {
+public enum FeatureFlagType {
 
 	BETA("beta"), DEV("dev"), RELEASE("release");
 
-	public static FeatureFlagStatus toFeatureFlagStatus(String string) {
-		for (FeatureFlagStatus featureFlagStatus : values()) {
-			if (StringUtil.equalsIgnoreCase(featureFlagStatus._value, string)) {
-				return featureFlagStatus;
+	public static FeatureFlagType toFeatureFlagType(String string) {
+		for (FeatureFlagType featureFlagType : values()) {
+			if (StringUtil.equalsIgnoreCase(featureFlagType._value, string)) {
+				return featureFlagType;
 			}
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("String did not match a known feature flag status");
+			_log.debug("String did not match a known feature flag type");
 		}
 
 		return DEV;
@@ -52,7 +52,7 @@ public enum FeatureFlagStatus {
 	}
 
 	public Predicate<FeatureFlag> getPredicate() {
-		return featureFlag -> equals(featureFlag.getFeatureFlagStatus());
+		return featureFlag -> equals(featureFlag.getFeatureFlagType());
 	}
 
 	public String getTitle(Locale locale) {
@@ -70,16 +70,16 @@ public enum FeatureFlagStatus {
 		return _value;
 	}
 
-	private FeatureFlagStatus(String value) {
+	private FeatureFlagType(String value) {
 		_value = value;
 
 		_descriptionLanguageKey = FeatureFlagConstants.getKey(
-			"status.description", value);
-		_titleLanguageKey = FeatureFlagConstants.getKey("status.title", value);
+			"type.description", value);
+		_titleLanguageKey = FeatureFlagConstants.getKey("type.title", value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FeatureFlagStatus.class);
+		FeatureFlagType.class);
 
 	private final String _descriptionLanguageKey;
 	private final String _titleLanguageKey;

@@ -40,13 +40,13 @@ public class DependencyAwareFeatureFlagTest {
 	public void setUp() {
 		_disabledFeatureFlag = new FeatureFlagImpl(
 			new String[0], RandomTestUtil.randomString(), false,
-			FeatureFlagStatus.BETA, "ABC-123", RandomTestUtil.randomString());
+			FeatureFlagType.BETA, "ABC-123", RandomTestUtil.randomString());
 		_enabledFeatureFlag = new FeatureFlagImpl(
 			new String[0], RandomTestUtil.randomString(), true,
-			FeatureFlagStatus.BETA, "ABC-234", RandomTestUtil.randomString());
+			FeatureFlagType.BETA, "ABC-234", RandomTestUtil.randomString());
 		_featureFlag = new FeatureFlagImpl(
 			new String[0], RandomTestUtil.randomString(), true,
-			FeatureFlagStatus.BETA, "ABC-345", RandomTestUtil.randomString());
+			FeatureFlagType.BETA, "ABC-345", RandomTestUtil.randomString());
 	}
 
 	@Test

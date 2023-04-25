@@ -54,9 +54,9 @@ public class UpgradeVelocityForeachMigrationCheck
 				VelocityMigrationUtil.replaceStatementEnd(
 					i, lines,
 					VelocityMigrationConstants.VELOCITY_FOREACH_START);
-			}
 
-			lines[i] = newLine;
+				lines[i] = newLine;
+			}
 		}
 
 		return com.liferay.petra.string.StringUtil.merge(

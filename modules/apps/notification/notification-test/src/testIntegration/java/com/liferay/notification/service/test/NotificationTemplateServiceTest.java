@@ -15,18 +15,11 @@
 package com.liferay.notification.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.notification.constants.NotificationConstants;
-import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
-import com.liferay.notification.model.NotificationRecipient;
-import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplate;
-import com.liferay.notification.service.NotificationRecipientLocalService;
-import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.service.NotificationTemplateService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.notification.service.test.util.NotificationTemplateUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -34,13 +27,10 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -156,52 +146,6 @@ public class NotificationTemplateServiceTest {
 		_testUpdateNotificationTemplate(_user, _user);
 	}
 
-	private NotificationContext _createNotificationContext(User user)
-		throws PortalException {
-
-		NotificationContext notificationContext = new NotificationContext();
-
-		NotificationTemplate notificationTemplate =
-			_notificationTemplateLocalService.createNotificationTemplate(
-				RandomTestUtil.randomInt());
-
-		notificationTemplate.setUserId(user.getUserId());
-		notificationTemplate.setEditorType(
-			NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT);
-		notificationTemplate.setName(RandomTestUtil.randomString());
-		notificationTemplate.setSubject(RandomTestUtil.randomString());
-		notificationTemplate.setType(NotificationConstants.TYPE_EMAIL);
-
-		notificationContext.setNotificationTemplate(notificationTemplate);
-
-		NotificationRecipient notificationRecipient =
-			_notificationRecipientLocalService.createNotificationRecipient(
-				_counterLocalService.increment());
-
-		notificationRecipient.setClassName(
-			NotificationTemplate.class.getName());
-		notificationRecipient.setClassPK(
-			notificationTemplate.getNotificationTemplateId());
-
-		notificationContext.setNotificationRecipient(notificationRecipient);
-
-		NotificationRecipientSetting notificationRecipientSetting =
-			_notificationRecipientSettingLocalService.
-				createNotificationRecipientSetting(
-					_counterLocalService.increment());
-
-		notificationRecipientSetting.setNotificationRecipientId(
-			notificationRecipient.getNotificationRecipientId());
-
-		notificationContext.setNotificationRecipientSettings(
-			Arrays.asList(notificationRecipientSetting));
-
-		notificationContext.setType(
-			NotificationConstants.TYPE_USER_NOTIFICATION);
-
-		return notificationContext;
-	}
-
 	private void _setUser(User user) {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
@@ -217,7 +161,7 @@ public class NotificationTemplateServiceTest {
 
 			notificationTemplate =
 				_notificationTemplateService.addNotificationTemplate(
-					_createNotificationContext(user));
+					NotificationTemplateUtil.createNotificationContext(user));
 		}
 		finally {
 			if ((notificationTemplate != null) &&
@@ -240,7 +184,8 @@ public class NotificationTemplateServiceTest {
 
 			notificationTemplate =
 				_notificationTemplateLocalService.addNotificationTemplate(
-					_createNotificationContext(ownerUser));
+					NotificationTemplateUtil.createNotificationContext(
+						ownerUser));
 
 			deleteNotificationTemplate =
 				_notificationTemplateService.deleteNotificationTemplate(
@@ -264,7 +209,8 @@ public class NotificationTemplateServiceTest {
 
 			notificationTemplate =
 				_notificationTemplateLocalService.addNotificationTemplate(
-					_createNotificationContext(ownerUser));
+					NotificationTemplateUtil.createNotificationContext(
+						ownerUser));
 
 			_notificationTemplateService.getNotificationTemplate(
 				notificationTemplate.getNotificationTemplateId());
@@ -286,7 +232,7 @@ public class NotificationTemplateServiceTest {
 			_setUser(user);
 
 			NotificationContext notificationContext =
-				_createNotificationContext(ownerUser);
+				NotificationTemplateUtil.createNotificationContext(ownerUser);
 
 			notificationTemplate =
 				_notificationTemplateLocalService.addNotificationTemplate(
@@ -307,17 +253,6 @@ public class NotificationTemplateServiceTest {
 	}
 
 	private User _adminUser;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
-
-	@Inject
-	private NotificationRecipientLocalService
-		_notificationRecipientLocalService;
-
-	@Inject
-	private NotificationRecipientSettingLocalService
-		_notificationRecipientSettingLocalService;
 
 	@Inject
 	private NotificationTemplateLocalService _notificationTemplateLocalService;

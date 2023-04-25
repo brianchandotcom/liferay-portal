@@ -165,8 +165,9 @@ export function BasicInfo({
 						/>
 					)}
 
-					{(values.businessType === 'Text' ||
-						values.businessType === 'LongText') && (
+					{(values.businessType === 'Encrypted' ||
+						values.businessType === 'LongText' ||
+						values.businessType === 'Text') && (
 						<MaxLengthProperties
 							disabled={values.system}
 							errors={errors}

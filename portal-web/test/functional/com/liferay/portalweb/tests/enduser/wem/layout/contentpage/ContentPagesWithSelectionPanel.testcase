@@ -1004,7 +1004,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Container')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Assert the background color of Container node when it is selected") {
@@ -1015,7 +1015,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Container')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Assert the background color of Grid node when hover on it") {
@@ -1026,7 +1026,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Grid')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Assert the background color of Grid node when it is selected") {
@@ -1037,7 +1037,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Grid')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Assert the background color of Module nodes when hover on them") {
@@ -1050,7 +1050,7 @@ definition {
 				AssertCssValue(
 					locator1 = "xpath=(//div[contains(@role,'treeitem')])[${position}]",
 					locator2 = "background-color",
-					value1 = "rgba(247, 248, 249, 1)");
+					value1 = "rgba(240, 245, 255, 1)");
 			}
 		}
 
@@ -1062,7 +1062,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Heading')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Assert the background color of Heading node when it is selected") {
@@ -1073,7 +1073,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'clay-tree-node') and contains(.,'Heading')][contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Assert the background color of element-text node when hover on it") {
@@ -1084,7 +1084,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/ancestor::div[contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Assert the background color of element-text node when it is selected") {
@@ -1095,7 +1095,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'page-structure__tree-node') and contains(.,'element-text')]/div[@role='button']/ancestor::div[contains(@class,'treeview-link')]",
 				locator2 = "background-color",
-				value1 = "rgba(247, 248, 249, 1)");
+				value1 = "rgba(240, 245, 255, 1)");
 		}
 	}
 

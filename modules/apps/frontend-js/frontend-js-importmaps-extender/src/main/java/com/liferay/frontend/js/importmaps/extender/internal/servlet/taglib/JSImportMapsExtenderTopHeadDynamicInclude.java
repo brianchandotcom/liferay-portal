@@ -165,37 +165,35 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 				"module");
 	}
 
-	private JSONObject _getGlobalJSONObject() {
-		JSONObject globalJSONObject = _jsonFactory.createJSONObject();
-
-		for (JSONObject jsonObject : _globalImportMaps.values()) {
-			for (String key : jsonObject.keySet()) {
-				globalJSONObject.put(key, jsonObject.getString(key));
-			}
-		}
-
-		return globalJSONObject;
-	}
-
-	private JSONObject _getScopesJSONObject() {
-		JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
-
-		for (Map.Entry<String, JSONObject> entry :
-				_scopedImportMaps.entrySet()) {
-
-			scopesJSONObject.put(entry.getKey(), entry.getValue());
-		}
-
-		return scopesJSONObject;
-	}
-
 	private synchronized void _rebuildImportMaps() {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put(
-			"imports", _getGlobalJSONObject()
+			"imports",
+			() -> {
+				JSONObject globalJSONObject = _jsonFactory.createJSONObject();
+
+				for (JSONObject jsonObject1 : _globalImportMaps.values()) {
+					for (String key : jsonObject1.keySet()) {
+						globalJSONObject.put(key, jsonObject1.getString(key));
+					}
+				}
+
+				return globalJSONObject;
+			}
 		).put(
-			"scopes", _getScopesJSONObject()
+			"scopes",
+			() -> {
+				JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
+
+				for (Map.Entry<String, JSONObject> entry :
+						_scopedImportMaps.entrySet()) {
+
+					scopesJSONObject.put(entry.getKey(), entry.getValue());
+				}
+
+				return scopesJSONObject;
+			}
 		);
 
 		_importMaps.set(_jsonFactory.looseSerializeDeep(jsonObject));

@@ -47,13 +47,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -73,28 +73,17 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.Writer;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 import javax.portlet.MutablePortletParameters;
-import javax.portlet.MutableRenderParameters;
 import javax.portlet.MutableResourceParameters;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
 import javax.portlet.PortletParameters;
-import javax.portlet.PortletSecurityException;
 import javax.portlet.ResourceURL;
-import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
-import javax.portlet.annotations.PortletSerializable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -651,326 +640,86 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	private ServiceContext _serviceContext;
 
+	private static class TestLiferayPortletURL extends MockLiferayPortletURL {
+
+		@Override
+		public MutableResourceParameters getResourceParameters() {
+			return new MutableResourceParameters() {
+
+				@Override
+				public MutablePortletParameters add(
+					PortletParameters portletParameters) {
+
+					return null;
+				}
+
+				@Override
+				public void clear() {
+				}
+
+				@Override
+				public MutableResourceParameters clone() {
+					return null;
+				}
+
+				@Override
+				public Set<String> getNames() {
+					return null;
+				}
+
+				@Override
+				public String getValue(String s) {
+					return null;
+				}
+
+				@Override
+				public String[] getValues(String s) {
+					return new String[0];
+				}
+
+				@Override
+				public boolean isEmpty() {
+					return false;
+				}
+
+				@Override
+				public boolean removeParameter(String s) {
+					return false;
+				}
+
+				@Override
+				public MutablePortletParameters set(
+					PortletParameters portletParameters) {
+
+					return null;
+				}
+
+				@Override
+				public String setValue(String s, String s1) {
+					return null;
+				}
+
+				@Override
+				public String[] setValues(String s, String... strings) {
+					return new String[0];
+				}
+
+				@Override
+				public int size() {
+					return 0;
+				}
+
+			};
+		}
+
+	}
+
 	private static class TestMockLiferayResourceResponse
 		extends MockLiferayResourceResponse {
 
 		@Override
 		public ResourceURL createResourceURL() {
-			return new LiferayPortletURL() {
-
-				@Override
-				public void addParameterIncludedInPath(String name) {
-				}
-
-				@Override
-				public void addProperty(String s, String s1) {
-				}
-
-				@Override
-				public Appendable append(Appendable appendable)
-					throws IOException {
-
-					return null;
-				}
-
-				@Override
-				public Appendable append(Appendable appendable, boolean b)
-					throws IOException {
-
-					return null;
-				}
-
-				@Override
-				public String getCacheability() {
-					return null;
-				}
-
-				@Override
-				public String getLifecycle() {
-					return null;
-				}
-
-				@Override
-				public String getParameter(String name) {
-					return null;
-				}
-
-				@Override
-				public Map<String, String[]> getParameterMap() {
-					return null;
-				}
-
-				@Override
-				public Set<String> getParametersIncludedInPath() {
-					return null;
-				}
-
-				@Override
-				public long getPlid() {
-					return 0;
-				}
-
-				@Override
-				public String getPortletId() {
-					return null;
-				}
-
-				@Override
-				public PortletMode getPortletMode() {
-					return null;
-				}
-
-				@Override
-				public Set<String> getRemovedParameterNames() {
-					return null;
-				}
-
-				@Override
-				public MutableRenderParameters getRenderParameters() {
-					return null;
-				}
-
-				@Override
-				public String getResourceID() {
-					return null;
-				}
-
-				@Override
-				public MutableResourceParameters getResourceParameters() {
-					return new MutableResourceParameters() {
-
-						@Override
-						public MutablePortletParameters add(
-							PortletParameters portletParameters) {
-
-							return null;
-						}
-
-						@Override
-						public void clear() {
-						}
-
-						@Override
-						public MutableResourceParameters clone() {
-							return null;
-						}
-
-						@Override
-						public Set<String> getNames() {
-							return null;
-						}
-
-						@Override
-						public String getValue(String s) {
-							return null;
-						}
-
-						@Override
-						public String[] getValues(String s) {
-							return new String[0];
-						}
-
-						@Override
-						public boolean isEmpty() {
-							return false;
-						}
-
-						@Override
-						public boolean removeParameter(String s) {
-							return false;
-						}
-
-						@Override
-						public MutablePortletParameters set(
-							PortletParameters portletParameters) {
-
-							return null;
-						}
-
-						@Override
-						public String setValue(String s, String s1) {
-							return null;
-						}
-
-						@Override
-						public String[] setValues(String s, String... strings) {
-							return new String[0];
-						}
-
-						@Override
-						public int size() {
-							return 0;
-						}
-
-					};
-				}
-
-				@Override
-				public WindowState getWindowState() {
-					return null;
-				}
-
-				@Override
-				public boolean isAnchor() {
-					return false;
-				}
-
-				@Override
-				public boolean isCopyCurrentRenderParameters() {
-					return false;
-				}
-
-				@Override
-				public boolean isEncrypt() {
-					return false;
-				}
-
-				@Override
-				public boolean isEscapeXml() {
-					return false;
-				}
-
-				@Override
-				public boolean isParameterIncludedInPath(String name) {
-					return false;
-				}
-
-				@Override
-				public boolean isSecure() {
-					return false;
-				}
-
-				@Override
-				public void removePublicRenderParameter(String s) {
-				}
-
-				@Override
-				public void setAnchor(boolean anchor) {
-				}
-
-				@Override
-				public void setBeanParameter(
-					PortletSerializable portletSerializable) {
-				}
-
-				@Override
-				public void setCacheability(String s) {
-				}
-
-				@Override
-				public void setCopyCurrentRenderParameters(
-					boolean copyCurrentRenderParameters) {
-				}
-
-				@Override
-				public void setDoAsGroupId(long doAsGroupId) {
-				}
-
-				@Override
-				public void setDoAsUserId(long doAsUserId) {
-				}
-
-				@Override
-				public void setDoAsUserLanguageId(String doAsUserLanguageId) {
-				}
-
-				@Override
-				public void setEncrypt(boolean encrypt) {
-				}
-
-				@Override
-				public void setEscapeXml(boolean escapeXml) {
-				}
-
-				@Override
-				public void setLifecycle(String lifecycle) {
-				}
-
-				@Override
-				public void setParameter(String s, String s1) {
-				}
-
-				@Override
-				public void setParameter(String s, String... strings) {
-				}
-
-				@Override
-				public void setParameter(
-					String name, String value, boolean append) {
-				}
-
-				@Override
-				public void setParameter(
-					String name, String[] values, boolean append) {
-				}
-
-				@Override
-				public void setParameters(Map<String, String[]> map) {
-				}
-
-				@Override
-				public void setPlid(long plid) {
-				}
-
-				@Override
-				public void setPortletId(String portletId) {
-				}
-
-				@Override
-				public void setPortletMode(PortletMode portletMode)
-					throws PortletModeException {
-				}
-
-				@Override
-				public void setProperty(String s, String s1) {
-				}
-
-				@Override
-				public void setRefererGroupId(long refererGroupId) {
-				}
-
-				@Override
-				public void setRefererPlid(long refererPlid) {
-				}
-
-				@Override
-				public void setRemovedParameterNames(
-					Set<String> removedParamNames) {
-				}
-
-				@Override
-				public void setResourceID(String s) {
-				}
-
-				@Override
-				public void setSecure(boolean b)
-					throws PortletSecurityException {
-				}
-
-				@Override
-				public void setWindowState(WindowState windowState)
-					throws WindowStateException {
-				}
-
-				@Override
-				public void setWindowStateRestoreCurrentView(
-					boolean windowStateRestoreCurrentView) {
-				}
-
-				@Override
-				public void visitReservedParameters(
-					BiConsumer<String, String> biConsumer) {
-				}
-
-				@Override
-				public void write(Writer writer) throws IOException {
-				}
-
-				@Override
-				public void write(Writer writer, boolean b) throws IOException {
-				}
-
-			};
+			return new TestLiferayPortletURL();
 		}
 
 	}

@@ -403,44 +403,102 @@ definition {
 	@description = "LPS-161918 - Verify that it's possible to edit an e-mail notification template"
 	@priority = 3
 	test CanEditEmailTemplate {
+		property test.smtp.server.enabled = "true";
+
 		task ("Given a user creates an email notification template") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
+				emailBody = "Email Body Content",
 				entryTo = "test@liferay.com",
-				fromAddress = "Liferay",
+				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Notification Template",
 				notificationType = "Email",
-				subject = "Subject");
+				subject = "Subject Field");
 
 			PortletEntry.save();
 		}
 
-		task ("When the user edits the template") {
+		task ("and Given a custom object definition") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 161918",
+				objectName = "CustomObject161918",
+				pluralLabelName = "Custom Objects 161918");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject161918");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161918");
+		}
+
+		task ("and Given an action to send the email notification after adding an object entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 161918");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Action shot on add",
+				notificationName = "Notification Template",
+				objectLabel = "Custom Object 161918",
+				thenAction = "Notification",
+				whenAction = "On After Add");
+		}
+
+		task ("When the user edits the email notification template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
 			ObjectNotifications.editNotificationTemplate(
-				emailBody = "Email Body Edit",
+				emailBody = "Email Body Content Edited",
 				entryTo = "test2@liferay.com",
-				externalReferenceCode = "ERC Edit",
-				fromAddress = "Liferay Edit",
-				fromName = "Test Test Edit",
-				name = "New Notification Edit",
+				externalReferenceCode = "ERC Edited",
+				fromAddress = "test2@liferay.com",
+				fromName = "Test Test Edited",
+				name = "Notification Template Edited",
 				notificationTemplateName = "Notification Template",
-				subject = "Subject Edit");
+				subject = "Subject Field Edited");
 
 			PortletEntry.save();
 		}
 
-		task ("Then the notification template will have all edited values") {
+		task ("Then the email notification template is updated") {
 			ObjectNotifications.viewNotificationTemplateDetails(
-				emailBody = "Email Body Edit",
+				emailBody = "Email Body Content Edited",
 				entryTo = "test2@liferay.com",
-				externalReferenceCode = "ERC Edit",
-				fromAddress = "Liferay Edit",
-				fromName = "Test Test Edit",
-				name = "New Notification Edit",
-				subject = "Subject Edit");
+				externalReferenceCode = "ERC Edited",
+				fromAddress = "test2@liferay.com",
+				fromName = "Test Test Edited",
+				name = "Notification Template Edited",
+				subject = "Subject Field Edited");
+		}
+
+		task ("and When an object entry is added") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject161918",
+				value = "Trigger");
+		}
+
+		task ("Then the action is triggered and an email is sent using the updated notification template") {
+			MockMock.viewMail(
+				asset = "Subject Field Edited",
+				content = "Email Body Content Edited",
+				recipient = "test2@liferay",
+				sender = "test2@liferay.com",
+				subject = "Subject Field Edited");
 		}
 	}
 

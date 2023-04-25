@@ -187,8 +187,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			int childLayoutsCount = 0;
 			JSONArray childLayoutsJSONArray = null;
 
-			if (_isExpandableLayout(
-					ancestorLayouts, expandedLayoutIds, layout)) {
+			if (ancestorLayouts.contains(layout) ||
+				expandedLayoutIds.contains(layout.getLayoutId())) {
 
 				if (layout instanceof VirtualLayout) {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
@@ -330,19 +330,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		return _layoutService.getLayouts(
 			groupId, privateLayout, parentLayoutId, incomplete, start, end);
-	}
-
-	private boolean _isExpandableLayout(
-		List<Layout> ancestorLayouts, Set<Long> expandedLayoutIds,
-		Layout layout) {
-
-		if (ancestorLayouts.contains(layout) ||
-			expandedLayoutIds.contains(layout.getLayoutId())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isPaginationEnabled(

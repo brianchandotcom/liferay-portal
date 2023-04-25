@@ -66,13 +66,14 @@ public class EditFormBodyTag extends IncludeTag {
 		EditFormTag editFormTag = (EditFormTag)findAncestorWithClass(
 			this, EditFormTag.class);
 
-		String cssClass = "sheet";
+		if ((editFormTag != null) && !editFormTag.isFluid() &&
+			!themeDisplay.isStatePopUp()) {
 
-		if ((editFormTag != null) && !editFormTag.isFluid()) {
-			cssClass = "sheet sheet-lg";
+			jspWriter.write("<div class=\"sheet sheet-lg\">");
 		}
-
-		jspWriter.write("<div class=\"" + cssClass + "\">");
+		else {
+			jspWriter.write("<div class=\"c-pt-3 c-px-3\">");
+		}
 
 		return EVAL_BODY_INCLUDE;
 	}

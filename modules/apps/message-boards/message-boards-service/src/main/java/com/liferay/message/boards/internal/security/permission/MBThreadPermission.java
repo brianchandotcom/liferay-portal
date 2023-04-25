@@ -43,16 +43,8 @@ public class MBThreadPermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
 	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<MBMessage> modelResourcePermission) {
-
-		_messageModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<MBMessage>
-		_messageModelResourcePermission;
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 }

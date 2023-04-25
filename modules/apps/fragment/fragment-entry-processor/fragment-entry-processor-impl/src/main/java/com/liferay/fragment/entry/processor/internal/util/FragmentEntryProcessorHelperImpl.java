@@ -556,12 +556,12 @@ public class FragmentEntryProcessorHelperImpl
 					InfoLocalizedValue<String> infoLocalizedValue =
 						(InfoLocalizedValue<String>)infoFieldValue.getValue();
 
+					dateLocale = infoLocalizedValue.getDefaultLocale();
+
 					Set<Locale> availableLocales =
 						infoLocalizedValue.getAvailableLocales();
 
-					if (!availableLocales.contains(locale)) {
-						dateLocale = infoLocalizedValue.getDefaultLocale();
-					} else {
+					if (availableLocales.contains(locale)) {
 						dateLocale = locale;
 					}
 				}

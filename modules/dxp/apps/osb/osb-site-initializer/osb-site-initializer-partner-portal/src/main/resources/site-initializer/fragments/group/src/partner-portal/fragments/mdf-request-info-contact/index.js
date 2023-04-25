@@ -33,7 +33,7 @@ const getContactInfo = async () => {
 		if (response.ok) {
 			const data = await response.json();
 			const firstName = data?.r_usrToMDFReqs_user?.givenName;
-			const lastName = data?.r_usrToMDFReqs_user?.alternateName;
+			const lastName = data?.r_usrToMDFReqs_user?.familyName;
 			const infoEmail = data?.r_usrToMDFReqs_user?.emailAddress;
 			const telephones = data?.r_usrToMDFReqs_user?.userAccountContactInformation.telephones
 				.map(({phoneNumber}) => phoneNumber)

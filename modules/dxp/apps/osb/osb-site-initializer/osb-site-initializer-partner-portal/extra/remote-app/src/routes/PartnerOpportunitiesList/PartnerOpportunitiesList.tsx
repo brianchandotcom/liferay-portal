@@ -43,6 +43,7 @@ interface IProps {
 		items: PartnerOpportunitiesItem[]
 	) => PartnerOpportunitiesItem[];
 	name: string;
+	newButtonDeal?: boolean;
 	sort: string;
 }
 
@@ -51,6 +52,7 @@ const PartnerOpportunitiesList = ({
 	getDates,
 	getFilteredItems,
 	name,
+	newButtonDeal = true,
 	sort,
 }: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
@@ -193,16 +195,18 @@ const PartnerOpportunitiesList = ({
 						</CSVLink>
 					)}
 
-					<ClayButton
-						className="mb-2 mb-lg-0 mr-2"
-						onClick={() =>
-							Liferay.Util.navigate(
-								`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`
-							)
-						}
-					>
-						Register New Deal
-					</ClayButton>
+					{newButtonDeal && (
+						<ClayButton
+							className="mb-2 mb-lg-0 mr-2"
+							onClick={() =>
+								Liferay.Util.navigate(
+									`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`
+								)
+							}
+						>
+							Register New Deal
+						</ClayButton>
+					)}
 				</div>
 			</TableHeader>
 

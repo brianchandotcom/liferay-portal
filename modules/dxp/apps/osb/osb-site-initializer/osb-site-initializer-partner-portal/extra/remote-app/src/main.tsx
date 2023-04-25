@@ -87,6 +87,7 @@ const appRoutes: AppRouteComponent = {
 				items.filter((item) => item.STAGE !== 'Closed Lost')
 			}
 			name="Renewal Opportunities"
+			newButtonDeal={false}
 			sort="closeDate:asc"
 		/>
 	),

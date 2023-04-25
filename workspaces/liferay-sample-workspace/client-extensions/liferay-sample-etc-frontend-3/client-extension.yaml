@@ -2,7 +2,7 @@ assemble:
     - from: assets
       into: static
 liferay-sample-etc-frontend-3-custom-element:
-    htmlElementName: liferay-sample-js-import-maps-entry-custom-element
+    htmlElementName: liferay-sample-etc-frontend-3-custom-element
     instanceable: false
     name: Liferay Sample Etc Frontend 3 Custom Element
     portletCategoryName: category.client-extensions

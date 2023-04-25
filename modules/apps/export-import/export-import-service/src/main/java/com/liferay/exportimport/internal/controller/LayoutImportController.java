@@ -551,10 +551,7 @@ public class LayoutImportController implements ImportController {
 			"layout-prototype", "layout-set", "layout-set-prototype"
 		};
 
-		expectedLARTypes = ArrayUtil.filter(
-			expectedLARTypes, type -> type.equals(larType));
-
-		if (expectedLARTypes.length == 0) {
+		if (!ArrayUtil.exists(expectedLARTypes, type -> type.equals(larType))) {
 			throw new LARTypeException(larType, expectedLARTypes);
 		}
 

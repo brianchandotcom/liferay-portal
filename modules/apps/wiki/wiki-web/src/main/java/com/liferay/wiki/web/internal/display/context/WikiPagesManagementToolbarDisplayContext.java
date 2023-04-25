@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -44,7 +45,6 @@ import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.web.internal.display.context.helper.WikiURLHelper;
-import com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor;
 import com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission;
 
 import java.util.ArrayList;
@@ -158,8 +158,8 @@ public class WikiPagesManagementToolbarDisplayContext {
 			return null;
 		}
 
-		WikiPortletToolbarContributor wikiPortletToolbarContributor =
-			(WikiPortletToolbarContributor)_httpServletRequest.getAttribute(
+		PortletToolbarContributor wikiPortletToolbarContributor =
+			(PortletToolbarContributor)_httpServletRequest.getAttribute(
 				WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR);
 
 		List<Menu> menus = wikiPortletToolbarContributor.getPortletTitleMenus(

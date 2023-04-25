@@ -59,7 +59,7 @@ public class SearchResultsPortletSharedSearchContributor
 			searchRequestBuilder.highlightEnabled(true);
 
 			String[] fieldsToDisplay = SearchStringUtil.splitAndUnquote(
-				searchResultsPortletPreferences.getFieldsToDisplayOptional());
+				searchResultsPortletPreferences.getFieldsToDisplayString());
 
 			searchRequestBuilder.highlightFields(fieldsToDisplay);
 		}

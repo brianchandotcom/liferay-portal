@@ -67,7 +67,7 @@ public class CETDeployerImpl implements CETDeployer {
 		else if (Objects.equals(
 					cet.getType(), ClientExtensionEntryConstants.TYPE_IFRAME)) {
 
-			return _deployIframeCET((IFrameCET)cet);
+			return _deployIFrameCET((IFrameCET)cet);
 		}
 		else if (Objects.equals(
 					cet.getType(),
@@ -118,7 +118,7 @@ public class CETDeployerImpl implements CETDeployer {
 		return serviceRegistrations;
 	}
 
-	private List<ServiceRegistration<?>> _deployIframeCET(IFrameCET iFrameCET) {
+	private List<ServiceRegistration<?>> _deployIFrameCET(IFrameCET iFrameCET) {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		String portletId = _getPortletId(iFrameCET);

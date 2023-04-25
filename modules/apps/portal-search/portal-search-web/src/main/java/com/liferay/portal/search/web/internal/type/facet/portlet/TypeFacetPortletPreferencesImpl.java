@@ -69,13 +69,11 @@ public class TypeFacetPortletPreferencesImpl
 	public List<KeyValuePair> getAvailableAssetTypes(
 		long companyId, Locale locale) {
 
-		String[] allAssetTypes = getAllAssetTypes(companyId);
-
 		String[] assetTypes = getCurrentAssetTypesArray(companyId);
 
 		List<KeyValuePair> availableAssetTypes = new ArrayList<>();
 
-		for (String className : allAssetTypes) {
+		for (String className : getAllAssetTypes(companyId)) {
 			if (!ArrayUtil.contains(assetTypes, className)) {
 				availableAssetTypes.add(_getKeyValuePair(locale, className));
 			}

@@ -3155,6 +3155,12 @@ public class UserLocalServiceUtil {
 		return getService().updateUser(user);
 	}
 
+	public static void validateCompanyMaxUsers(long companyId)
+		throws PortalException {
+
+		getService().validateCompanyMaxUsers(companyId);
+	}
+
 	/**
 	 * Verifies the email address of the ticket.
 	 *

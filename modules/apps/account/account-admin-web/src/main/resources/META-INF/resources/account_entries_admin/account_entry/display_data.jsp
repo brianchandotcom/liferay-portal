@@ -27,61 +27,46 @@ String[] types = GetterUtil.getStringValues(request.getAttribute(AccountWebKeys.
 		<liferay-ui:message key="account-display-data" />
 	</h3>
 
-	<clay:row>
-		<clay:col
-			md="6"
-		>
-			<aui:input bean="<%= accountEntryDisplay %>" label="account-name" model="<%= AccountEntry.class %>" name="name" />
+	<liferay-frontend:logo-selector
+		currentLogoURL="<%= accountEntryDisplay.getLogoURL() %>"
+		defaultLogoURL="<%= accountEntryDisplay.getDefaultLogoURL() %>"
+		label='<%= LanguageUtil.get(request, "image") %>'
+	/>
 
-			<c:choose>
-				<c:when test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
-					<aui:input disabled="<%= true %>" label="type" name="type" value="<%= LanguageUtil.get(request, accountEntryDisplay.getType()) %>" />
-				</c:when>
-				<c:otherwise>
-					<aui:select label="type" name="type">
+	<aui:input bean="<%= accountEntryDisplay %>" label="account-name" model="<%= AccountEntry.class %>" name="name" />
 
-						<%
-						for (String type : types) {
-						%>
+	<c:choose>
+		<c:when test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
+			<aui:input disabled="<%= true %>" label="type" name="type" value="<%= LanguageUtil.get(request, accountEntryDisplay.getType()) %>" />
+		</c:when>
+		<c:otherwise>
+			<aui:select label="type" name="type">
 
-							<aui:option label="<%= LanguageUtil.get(request, type) %>" value="<%= type %>" />
+				<%
+				for (String type : types) {
+				%>
 
-						<%
-						}
-						%>
+					<aui:option label="<%= LanguageUtil.get(request, type) %>" value="<%= type %>" />
 
-					</aui:select>
-				</c:otherwise>
-			</c:choose>
+				<%
+				}
+				%>
 
-			<aui:input helpMessage="tax-id-help" label="tax-id" name="taxIdNumber" type="text" value="<%= accountEntryDisplay.getTaxIdNumber() %>">
-				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "taxIdNumber") %></aui:validator>
-			</aui:input>
+			</aui:select>
+		</c:otherwise>
+	</c:choose>
 
-			<liferay-ui:error embed="<%= false %>" key="<%= DuplicateAccountEntryExternalReferenceCodeException.class.getName() %>" message="the-given-external-reference-code-belongs-to-another-account" />
+	<aui:input helpMessage="tax-id-help" label="tax-id" name="taxIdNumber" type="text" value="<%= accountEntryDisplay.getTaxIdNumber() %>">
+		<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "taxIdNumber") %></aui:validator>
+	</aui:input>
 
-			<aui:input bean="<%= accountEntryDisplay %>" label="external-reference-code" model="<%= AccountEntry.class %>" name="externalReferenceCode" />
+	<liferay-ui:error embed="<%= false %>" key="<%= DuplicateAccountEntryExternalReferenceCodeException.class.getName() %>" message="the-given-external-reference-code-belongs-to-another-account" />
 
-			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
-				<aui:input cssClass="disabled" label="account-id" name="accountEntryId" readonly="true" type="text" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-			</c:if>
-		</clay:col>
+	<aui:input bean="<%= accountEntryDisplay %>" label="external-reference-code" model="<%= AccountEntry.class %>" name="externalReferenceCode" />
 
-		<clay:col
-			md="5"
-		>
-			<div align="middle">
-				<label class="control-label"></label>
-
-				<liferay-ui:logo-selector
-					currentLogoURL="<%= accountEntryDisplay.getLogoURL() %>"
-					defaultLogo="<%= accountEntryDisplay.getLogoId() == 0 %>"
-					defaultLogoURL="<%= accountEntryDisplay.getDefaultLogoURL() %>"
-					tempImageFileName="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>"
-				/>
-			</div>
-		</clay:col>
-	</clay:row>
+	<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
+		<aui:input cssClass="disabled" label="account-id" name="accountEntryId" readonly="true" type="text" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+	</c:if>
 
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 		<aui:input name="description" type="textarea" value="<%= accountEntryDisplay.getDescription() %>" />

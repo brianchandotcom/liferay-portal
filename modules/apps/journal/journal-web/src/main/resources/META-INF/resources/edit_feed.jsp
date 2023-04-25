@@ -104,6 +104,10 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 			</liferay-frontend:fieldset>
 		</c:if>
 
+		<%
+		List<DDMTemplate> ddmTemplates = editJournalFeedDisplayContext.getDDMTemplates();
+		%>
+
 		<liferay-frontend:fieldset
 			collapsed="<%= true %>"
 			collapsible="<%= true %>"
@@ -118,10 +122,6 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				<aui:button disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>" name="removeDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
 			</div>
-
-			<%
-			List<DDMTemplate> ddmTemplates = editJournalFeedDisplayContext.getDDMTemplates();
-			%>
 
 			<c:choose>
 				<c:when test="<%= ddmTemplates.isEmpty() %>">
@@ -162,10 +162,6 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 		>
 			<aui:select label="feed-item-content" name="contentFieldSelector">
 				<aui:option label="<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>" selected="<%= Objects.equals(editJournalFeedDisplayContext.getContentField(), JournalFeedConstants.WEB_CONTENT_DESCRIPTION) %>" />
-
-				<%
-				List<DDMTemplate> ddmTemplates = editJournalFeedDisplayContext.getDDMTemplates();
-				%>
 
 				<optgroup label="<liferay-ui:message key="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" />">
 					<aui:option data-contentField="<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>" label="use-default-template" selected="<%= Objects.equals(editJournalFeedDisplayContext.getContentField(), JournalFeedConstants.RENDERED_WEB_CONTENT) %>" value="" />

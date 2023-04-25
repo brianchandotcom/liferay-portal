@@ -152,13 +152,12 @@ public class CETDeployerImpl implements CETDeployer {
 	private List<ServiceRegistration<?>> _deploy(
 		JSImportMapsEntryCET jsImportMapsEntryCET) {
 
-		ServiceRegistration<?> serviceRegistration = _register(
-			JSImportMapsContributor.class,
-			new ClientExtensionJSImportMapsContributor(
-				jsImportMapsEntryCET.getBareSpecifier(), _jsonFactory,
-				jsImportMapsEntryCET.getURL()));
-
-		return Arrays.asList(serviceRegistration);
+		return Arrays.asList(
+			_register(
+				JSImportMapsContributor.class,
+				new ClientExtensionJSImportMapsContributor(
+					jsImportMapsEntryCET.getBareSpecifier(), _jsonFactory,
+					jsImportMapsEntryCET.getURL())));
 	}
 
 	private String _getPortletId(CET cet) {

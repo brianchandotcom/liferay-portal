@@ -160,18 +160,16 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 		String oldName, String newName, long currentActionIds,
 		long oldActionIds) {
 
-		Set<String> actionsIdsList = new HashSet<>();
+		Set<String> actionsIds = new HashSet<>();
 
 		_collectNewActionIds(
-			actionsIdsList,
-			_resourceActionLocalService.getResourceActions(oldName),
+			actionsIds, _resourceActionLocalService.getResourceActions(oldName),
 			oldActionIds);
 
 		List<ResourceAction> newResourceActions =
 			_resourceActionLocalService.getResourceActions(newName);
 
-		_collectNewActionIds(
-			actionsIdsList, newResourceActions, currentActionIds);
+		_collectNewActionIds(actionsIds, newResourceActions, currentActionIds);
 
 		Map<String, Long> map = new HashMap<>();
 
@@ -182,7 +180,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 
 		long sum = 0L;
 
-		for (String actionId : actionsIdsList) {
+		for (String actionId : actionsIds) {
 			sum += MapUtil.getLong(map, actionId);
 		}
 

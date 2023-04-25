@@ -66,6 +66,7 @@ type ObjectFieldBusinessType =
 	| 'Attachment'
 	| 'Date'
 	| 'Decimal'
+	| 'Encrypted'
 	| 'Formula'
 	| 'Integer'
 	| 'LongInteger'

@@ -1,3 +1,4 @@
+import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 
 import './PublishedAppsDashboardTableRow.scss';
@@ -15,12 +16,9 @@ export function DashboardMemberTableRow({
 	const {email, image, name, role} = item;
 
 	return (
-		<ClayTable.Row>
+		<ClayTable.Row onClick={() => onSelectedMemberChange(item)}>
 			<ClayTable.Cell>
-				<div
-					className="dashboard-table-row-name-container"
-					onClick={() => onSelectedMemberChange(item)}
-				>
+				<div className="dashboard-table-row-name-container">
 					<img
 						alt="Member Image"
 						className="dashboard-table-row-name-logo"
@@ -39,6 +37,11 @@ export function DashboardMemberTableRow({
 
 			<ClayTable.Cell>
 				<span className="dashboard-table-row-text">{role}</span>
+
+				<ClayIcon
+					className="dashboard-table-angle-right-small float-right mt-1"
+					symbol="angle-right-small"
+				/>
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);

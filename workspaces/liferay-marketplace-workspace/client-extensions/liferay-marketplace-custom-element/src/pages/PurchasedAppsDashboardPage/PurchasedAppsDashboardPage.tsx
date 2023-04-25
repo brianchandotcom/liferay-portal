@@ -264,26 +264,35 @@ export function PurchasedAppsDashboardPage() {
 							accountBrief.name === selectedAccount.name
 					).roleBriefs;
 
-				customerRoles.forEach((customerRole) => {
-					if (
-						currentUserAccountRoleBriefs.find(
-							(role: {name: string}) => role.name === customerRole
-						)
-					) {
-						currentUserAccount.isCustomerAccount = true;
-					}
-				});
 
-				publisherRoles.forEach((publisherRole) => {
-					if (
-						currentUserAccountRoleBriefs.find(
-							(role: {name: string}) =>
-								role.name === publisherRole
-						)
-					) {
-						currentUserAccount.isCustomerAccount = true;
-					}
-				});
+				const currentUserAccountBriefs =
+					currentUserAccount.accountBriefs.find(
+						(accountBrief: {name: string}) =>
+							accountBrief.name === selectedAccount.name
+					);
+
+				if (currentUserAccountBriefs) {
+					customerRoles.forEach((customerRole) => {
+						if (
+							currentUserAccountBriefs.roleBriefs.find(
+								(role: {name: string}) => role.name === customerRole
+							)
+						) {
+							currentUserAccount.isCustomerAccount = true;
+						}
+					});
+
+					publisherRoles.forEach((publisherRole) => {
+						if (
+							currentUserAccountBriefs.roleBriefs.find(
+								(role: {name: string}) =>
+									role.name === publisherRole
+							)
+						) {
+							currentUserAccount.isPublisherAccount = true;
+						}
+					});
+				}
 
 				const accountsListResponse = await getUserAccounts();
 
@@ -347,7 +356,7 @@ export function PurchasedAppsDashboardPage() {
 	return (
 		<div className="purchased-apps-dashboard-page-container">
 			<DashboardNavigation
-				accountAppsNumber="0"
+				accountAppsNumber={purchasedAppTable.items.length.toString()}
 				accountIcon={accountLogo}
 				accounts={accounts}
 				currentAccount={selectedAccount}

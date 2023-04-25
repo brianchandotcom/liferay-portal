@@ -306,15 +306,6 @@ public class AccountResourceImpl
 				_getServiceContext(account)));
 	}
 
-	@Override
-	protected void preparePatch(Account account, Account existingAccount) {
-		super.preparePatch(account, existingAccount);
-
-		if (account.getCustomFields() != null) {
-			existingAccount.setCustomFields(account.getCustomFields());
-		}
-	}
-
 	private String[] _getDomains(Account account) {
 		String[] domains = account.getDomains();
 

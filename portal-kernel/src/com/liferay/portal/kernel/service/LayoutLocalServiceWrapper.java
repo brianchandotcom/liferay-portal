@@ -1400,6 +1400,14 @@ public class LayoutLocalServiceWrapper
 
 	@Override
 	public int getLayoutsCount(
+		long groupId, boolean privateLayout, long parentLayoutId) {
+
+		return _layoutLocalService.getLayoutsCount(
+			groupId, privateLayout, parentLayoutId);
+	}
+
+	@Override
+	public int getLayoutsCount(
 			long groupId, long userId, boolean privateLayout, String keywords,
 			String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {

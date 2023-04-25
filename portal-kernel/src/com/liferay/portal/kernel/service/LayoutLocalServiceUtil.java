@@ -1297,6 +1297,13 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static int getLayoutsCount(
+		long groupId, boolean privateLayout, long parentLayoutId) {
+
+		return getService().getLayoutsCount(
+			groupId, privateLayout, parentLayoutId);
+	}
+
+	public static int getLayoutsCount(
 			long groupId, long userId, boolean privateLayout, String keywords,
 			String[] types)
 		throws PortalException {

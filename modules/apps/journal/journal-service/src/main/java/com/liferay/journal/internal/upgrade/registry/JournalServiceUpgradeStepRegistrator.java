@@ -386,6 +386,11 @@ public class JournalServiceUpgradeStepRegistrator
 			"5.2.0", "5.2.1",
 			new com.liferay.journal.internal.upgrade.v5_2_1.
 				JournalArticleLayoutClassedModelUsageUpgradeProcess());
+
+		registry.register(
+			"5.2.1", "6.0.0",
+			UpgradeProcessFactory.dropColumns(
+				"JournalArticle", "DDMStructureKey"));
 	}
 
 	private void _deleteTempImages() throws Exception {

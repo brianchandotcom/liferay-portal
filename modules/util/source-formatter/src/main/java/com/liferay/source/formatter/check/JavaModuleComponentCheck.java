@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -58,19 +60,34 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 					fileName,
 					"Do not use @Component in '-api' or '-spi' module");
 			}
+
+			return javaTerm.getContent();
 		}
-		else if (!javaTerm.isAbstract()) {
-			JavaClass javaClass = (JavaClass)javaTerm;
 
-			for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-				if (childJavaTerm.hasAnnotation("Reference")) {
-					addMessage(
-						fileName,
-						"@Reference should not be used in a class without " +
-							"@Component");
+		JavaClass javaClass = (JavaClass)javaTerm;
 
-					break;
-				}
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (!childJavaTerm.hasAnnotation("Reference")) {
+				continue;
+			}
+
+			if (!javaTerm.isAbstract()) {
+				addMessage(
+					fileName,
+					"@Reference should not be used in a class without " +
+						"@Component");
+			}
+			else if (StringUtil.startsWith(javaClass.getName(), "Base") &&
+					 childJavaTerm.isJavaVariable() &&
+					 childJavaTerm.isPrivate()) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"@Reference variable '", childJavaTerm.getName(),
+						"' should be protected instead of private in a class ",
+						"without @Component"),
+					childJavaTerm.getLineNumber());
 			}
 		}
 

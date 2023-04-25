@@ -44,12 +44,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -110,8 +108,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -473,11 +469,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	private Company _company;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.blogs.internal.item.BlogsEntryContentDashboardItemFactory"

@@ -37,93 +37,64 @@ if (organization != null) {
 
 <aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />
 
-<clay:row>
-	<clay:col
-		md="7"
-	>
-		<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
+<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
 
-		<liferay-ui:error exception="<%= OrganizationNameException.class %>">
-			<liferay-ui:message arguments="<%= new String[] {OrganizationConstants.NAME_LABEL, OrganizationConstants.NAME_GENERAL_RESTRICTIONS, OrganizationConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
-		</liferay-ui:error>
+<liferay-ui:error exception="<%= OrganizationNameException.class %>">
+	<liferay-ui:message arguments="<%= new String[] {OrganizationConstants.NAME_LABEL, OrganizationConstants.NAME_GENERAL_RESTRICTIONS, OrganizationConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+</liferay-ui:error>
 
-		<aui:input name="name" />
+<liferay-frontend:logo-selector
+	currentLogoURL='<%= (organization != null) ? organization.getLogoURL() : themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
+	defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
+	label='<%= LanguageUtil.get(request, "image") %>'
+/>
 
-		<c:choose>
-			<c:when test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS %>">
-				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_STATUS %>" message="please-select-a-type" />
+<aui:input name="name" />
 
-				<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusListTypeId" name="statusListTypeId" showEmptyOption="<%= true %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusListTypeId() : ListTypeConstants.ORGANIZATION_STATUS_DEFAULT %>" />
-			</c:otherwise>
-		</c:choose>
+<c:choose>
+	<c:when test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS %>">
+		<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_STATUS %>" message="please-select-a-type" />
 
-		<c:choose>
-			<c:when test="<%= (organization == null) && (organizationsTypes.length > 1) %>">
-				<aui:select name="type">
+		<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusListTypeId" name="statusListTypeId" showEmptyOption="<%= true %>" />
+	</c:when>
+	<c:otherwise>
+		<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusListTypeId() : ListTypeConstants.ORGANIZATION_STATUS_DEFAULT %>" />
+	</c:otherwise>
+</c:choose>
 
-					<%
-					for (String curType : organizationsTypes) {
-					%>
+<c:choose>
+	<c:when test="<%= (organization == null) && (organizationsTypes.length > 1) %>">
+		<aui:select name="type">
 
-						<aui:option label="<%= curType %>" selected="<%= type.equals(curType) %>" />
+			<%
+			for (String curType : organizationsTypes) {
+			%>
 
-					<%
-					}
-					%>
+				<aui:option label="<%= curType %>" selected="<%= type.equals(curType) %>" />
 
-				</aui:select>
-			</c:when>
-			<c:when test="<%= organization == null %>">
-				<aui:input name="type" type="hidden" value="<%= organizationsTypes[0] %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, organization.getType()) %>" />
+			<%
+			}
+			%>
 
-				<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
-			</c:otherwise>
-		</c:choose>
+		</aui:select>
+	</c:when>
+	<c:when test="<%= organization == null %>">
+		<aui:input name="type" type="hidden" value="<%= organizationsTypes[0] %>" />
+	</c:when>
+	<c:otherwise>
+		<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, organization.getType()) %>" />
 
-		<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
+		<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
+	</c:otherwise>
+</c:choose>
 
-		<div class="<%= OrganizationLocalServiceUtil.isCountryEnabled(type) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />countryDiv">
-			<aui:select label="country" name="countryId" />
+<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-			<aui:select label="region" name="regionId" />
-		</div>
-	</clay:col>
+<div class="<%= OrganizationLocalServiceUtil.isCountryEnabled(type) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />countryDiv">
+	<aui:select label="country" name="countryId" />
 
-	<clay:col
-		md="5"
-	>
-		<div align="middle">
-			<c:choose>
-				<c:when test="<%= organization != null %>">
-					<label class="control-label"></label>
-
-					<liferay-ui:logo-selector
-						currentLogoURL="<%= organization.getLogoURL() %>"
-						defaultLogo="<%= organization.getLogoId() == 0 %>"
-						defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-						logoDisplaySelector=".organization-logo"
-						tempImageFileName="<%= String.valueOf(groupId) %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:logo-selector
-						currentLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-						defaultLogo="<%= true %>"
-						defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-						logoDisplaySelector=".organization-logo"
-						tempImageFileName="0"
-					/>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</clay:col>
-</clay:row>
+	<aui:select label="region" name="regionId" />
+</div>
 
 <liferay-frontend:component
 	componentId="CountryRegionDynamicSelect"

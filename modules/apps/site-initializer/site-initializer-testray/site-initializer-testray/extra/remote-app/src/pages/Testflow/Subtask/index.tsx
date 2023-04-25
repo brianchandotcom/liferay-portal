@@ -154,11 +154,9 @@ const Subtasks = () => {
 											<small className="mt-1 text-gray">
 												<Avatar
 													displayName
-													name={`${
+													name={
 														mbMessage.creator?.name
-													} · ${getTimeFromNow(
-														mbMessage.dateCreated
-													)}`}
+													}
 													url={
 														mbMessage.creator?.image
 													}

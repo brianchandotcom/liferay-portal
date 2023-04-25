@@ -6,6 +6,7 @@ import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
 
 import './DashboardPage.scss';
+import { Liferay } from '../../liferay/liferay';
 
 export interface DashboardListItems {
 	itemIcon: string;
@@ -40,6 +41,12 @@ export function DashboardPage({
 	selectedApp,
 	setSelectedApp,
 }: DashBoardPageProps) {
+
+	const baseURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
+		`/customer-dashboard` || `/publisher-dashboard`,
+		''
+	)}`;
+	
 	return (
 		<div className="dashboard-page-container">
 			<div>
@@ -59,7 +66,7 @@ export function DashboardPage({
 								/>
 
 								{buttonMessage && (
-									<a href="/create-new-app">
+									<a href={`${baseURL}/create-new-app`}>
 										<button className="dashboard-page-body-header-button">
 											{buttonMessage}
 										</button>

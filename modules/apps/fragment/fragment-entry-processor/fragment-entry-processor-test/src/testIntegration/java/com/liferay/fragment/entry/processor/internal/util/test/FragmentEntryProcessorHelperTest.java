@@ -62,6 +62,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
@@ -74,7 +76,14 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.InputStream;
 
+import java.text.DateFormat;
+
+import java.time.chrono.IsoChronology;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
+
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -121,7 +130,8 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "AssetTag_tagNames"
-				)));
+				),
+				LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -142,7 +152,8 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "AssetCategory_categories"
-				)));
+				),
+				LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -162,7 +173,8 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "title"
-				)));
+				),
+				LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -182,7 +194,8 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "NoExistingFieldId"
-				)));
+				),
+				LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -209,7 +222,69 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "DDMStructure_" + ddmFormField.getName()
-				)));
+				),
+				LocaleUtil.SPAIN));
+	}
+
+	@Test
+	public void testGetFieldValueFromStringValueDateDDMFormFieldType()
+		throws Exception {
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.DATE);
+
+		Date date = new Date();
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter,
+			DateUtil.getDate(date, "yyyy-MM-dd", LocaleUtil.SPAIN),
+			_group.getGroupId(), _journalConverter);
+
+		Assert.assertEquals(
+			_formatDate(date, LocaleUtil.GERMANY),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "DDMStructure_" + ddmFormField.getName()
+				),
+				LocaleUtil.GERMANY));
+
+		Assert.assertEquals(
+			_formatDate(date, LocaleUtil.SPAIN),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "DDMStructure_" + ddmFormField.getName()
+				),
+				LocaleUtil.SPAIN));
+
+		Assert.assertEquals(
+			_formatDate(date, LocaleUtil.US),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "DDMStructure_" + ddmFormField.getName()
+				),
+				LocaleUtil.US));
 	}
 
 	@Test
@@ -238,7 +313,8 @@ public class FragmentEntryProcessorHelperTest {
 					"classPK", journalArticle.getResourcePrimKey()
 				).put(
 					"fieldId", "DDMStructure_" + ddmFormField.getName()
-				)));
+				),
+				LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -258,7 +334,8 @@ public class FragmentEntryProcessorHelperTest {
 				"classPK", journalArticle.getResourcePrimKey()
 			).put(
 				"fieldId", fieldId
-			));
+			),
+			LocaleUtil.SPAIN);
 
 		Assert.assertTrue(actual instanceof JSONObject);
 	}
@@ -467,12 +544,22 @@ public class FragmentEntryProcessorHelperTest {
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
-	private Object _getFieldValue(JSONObject editableValuesJSONObject)
+	private String _formatDate(Date date, Locale locale) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+				FormatStyle.SHORT, null, IsoChronology.INSTANCE, locale),
+			locale);
+
+		return dateFormat.format(date);
+	}
+
+	private Object _getFieldValue(
+			JSONObject editableValuesJSONObject, Locale locale)
 		throws Exception {
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				null, null, FragmentEntryLinkConstants.EDIT, LocaleUtil.SPAIN);
+				null, null, FragmentEntryLinkConstants.EDIT, locale);
 
 		return _fragmentEntryProcessorHelper.getFieldValue(
 			editableValuesJSONObject, new HashMap<>(),

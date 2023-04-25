@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,12 +42,10 @@ public class DDMFormInstanceRecordJSONWriter
 				ddmFormInstanceRecordWriterRequest)
 		throws Exception {
 
-		List<Map<String, String>> ddmFormFieldsValueList =
-			ddmFormInstanceRecordWriterRequest.getDDMFormFieldValues();
-
 		String json = String.valueOf(
 			JSONUtil.toJSONArray(
-				ddmFormFieldsValueList, this::_createJSONObject));
+				ddmFormInstanceRecordWriterRequest.getDDMFormFieldValues(),
+				this::_createJSONObject));
 
 		DDMFormInstanceRecordWriterResponse.Builder builder =
 			DDMFormInstanceRecordWriterResponse.Builder.newBuilder(
@@ -64,11 +60,9 @@ public class DDMFormInstanceRecordJSONWriter
 	private JSONObject _createJSONObject(
 		Map<String, String> ddmFormFieldsValue) {
 
-		Set<Map.Entry<String, String>> entrySet = ddmFormFieldsValue.entrySet();
-
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		for (Map.Entry<String, String> entry : entrySet) {
+		for (Map.Entry<String, String> entry : ddmFormFieldsValue.entrySet()) {
 			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 

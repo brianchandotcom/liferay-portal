@@ -40,6 +40,7 @@ type ObjectActions = {
 };
 
 type ObjectActionsItems = {
+	create?: ActionPermissionProperties;
 	delete?: ActionPermissionProperties;
 	get?: ActionPermissionProperties;
 	replace?: ActionPermissionProperties;
@@ -292,6 +293,7 @@ export type TestrayRun = {
 } & CaseResultAggregation;
 
 export type TestraySubTask = {
+	actions: ObjectActionsItems;
 	dateCreated: string;
 	dateModified: string;
 	dueStatus: PickList;
@@ -355,6 +357,7 @@ export type TestraySuiteCase = {
 };
 
 export type TestrayTask = {
+	actions: ObjectActionsItems;
 	build?: TestrayBuild;
 	dateCreated: string;
 	dispatchTriggerId: number;

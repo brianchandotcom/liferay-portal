@@ -17,6 +17,7 @@ import ClayButton from '@clayui/button';
 import {DisplayType as ButtonDisplayType} from '@clayui/button/lib/Button';
 import ClayLabel from '@clayui/label';
 import {useNavigate} from 'react-router-dom';
+import {useObjectPermission} from '~/hooks/data/useObjectPermission';
 
 import i18n from '../../../../i18n';
 import {TestrayTask} from '../../../../services/rest';
@@ -71,7 +72,9 @@ const alertProperties: AlertProperties = {
 const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 	const navigate = useNavigate();
 
-	if (!testrayTask) {
+	const taskPermission = useObjectPermission('/tasks');
+
+	if (!testrayTask && taskPermission.canCreate) {
 		return (
 			<ClayButton
 				className="mb-4"
@@ -82,7 +85,7 @@ const BuildAlertBar: React.FC<BuildAlertBarProps> = ({testrayTask}) => {
 		);
 	}
 
-	const alertProperty = alertProperties[testrayTask.dueStatus.key];
+	const alertProperty = alertProperties[testrayTask?.dueStatus?.key];
 
 	if (!alertProperty) {
 		return null;

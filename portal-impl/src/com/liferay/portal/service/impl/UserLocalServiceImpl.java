@@ -3775,6 +3775,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			new EscapableObject<>(serviceContext.getRemoteHost()));
 		mailTemplateContextBuilder.put("[$TO_ADDRESS$]", emailAddress);
 		mailTemplateContextBuilder.put(
+			"[$TO_FIRST_NAME$]", new EscapableObject<>(user.getFirstName()));
+		mailTemplateContextBuilder.put(
 			"[$TO_NAME$]", new EscapableObject<>(user.getFullName()));
 		mailTemplateContextBuilder.put(
 			"[$USER_ID$]", String.valueOf(user.getUserId()));
@@ -6238,6 +6240,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		mailTemplateContextBuilder.put(
 			"[$TO_ADDRESS$]", user.getEmailAddress());
 		mailTemplateContextBuilder.put(
+			"[$TO_FIRST_NAME$]", new EscapableObject<>(user.getFirstName()));
+		mailTemplateContextBuilder.put(
 			"[$TO_NAME$]", new EscapableObject<>(user.getFullName()));
 		mailTemplateContextBuilder.put(
 			"[$PASSWORD_SETUP_URL$]", passwordResetURL);
@@ -6412,6 +6416,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"[$REMOTE_HOST$]",
 			new EscapableObject<>(serviceContext.getRemoteHost()));
 		mailTemplateContextBuilder.put("[$TO_ADDRESS$]", toAddress);
+		mailTemplateContextBuilder.put(
+			"[$TO_FIRST_NAME$]", new EscapableObject<>(user.getFirstName()));
 		mailTemplateContextBuilder.put(
 			"[$TO_NAME$]", new EscapableObject<>(toName));
 		mailTemplateContextBuilder.put(

@@ -19,5 +19,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.json", name: "json", version: "20220320"
+	testCompile group: "org.json", name: "json", version: "20230227"
 }

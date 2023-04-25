@@ -26,7 +26,7 @@ clean {
 
 dependencies {
 	compileInclude group: "com.github.yuchi", name: "npm-semver", version: "1.0.0"
-	compileInclude group: "org.json", name: "json", version: "20220320"
+	compileInclude group: "org.json", name: "json", version: "20230227"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

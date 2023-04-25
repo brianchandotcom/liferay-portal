@@ -12,7 +12,7 @@ apply plugin: "org.jenkins-ci.jpi"
 
 dependencies {
 	compile group: "org.apache.activemq", name: "activemq-client", version: "5.16.5"
-	compile group: "org.json", name: "json", version: "20220320"
+	compile group: "org.json", name: "json", version: "20230227"
 }
 
 jenkinsPlugin {

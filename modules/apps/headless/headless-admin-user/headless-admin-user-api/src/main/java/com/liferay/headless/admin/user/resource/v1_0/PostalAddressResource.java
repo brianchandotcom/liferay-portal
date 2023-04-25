@@ -39,6 +39,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -58,8 +59,18 @@ public interface PostalAddressResource {
 	public Page<PostalAddress> getAccountPostalAddressesPage(Long accountId)
 		throws Exception;
 
+	public Response postAccountPostalAddressesPageExportBatch(
+			Long accountId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
 			String organizationId)
+		throws Exception;
+
+	public Response postOrganizationPostalAddressesPageExportBatch(
+			String organizationId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public PostalAddress getPostalAddress(Long postalAddressId)
@@ -67,6 +78,11 @@ public interface PostalAddressResource {
 
 	public Page<PostalAddress> getUserAccountPostalAddressesPage(
 			Long userAccountId)
+		throws Exception;
+
+	public Response postUserAccountPostalAddressesPageExportBatch(
+			Long userAccountId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

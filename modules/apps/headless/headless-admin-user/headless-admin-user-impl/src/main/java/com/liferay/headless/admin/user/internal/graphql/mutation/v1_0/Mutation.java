@@ -21,8 +21,10 @@ import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
+import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.PhoneResource;
+import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
@@ -80,6 +82,14 @@ public class Mutation {
 			accountRoleResourceComponentServiceObjects;
 	}
 
+	public static void setEmailAddressResourceComponentServiceObjects(
+		ComponentServiceObjects<EmailAddressResource>
+			emailAddressResourceComponentServiceObjects) {
+
+		_emailAddressResourceComponentServiceObjects =
+			emailAddressResourceComponentServiceObjects;
+	}
+
 	public static void setOrganizationResourceComponentServiceObjects(
 		ComponentServiceObjects<OrganizationResource>
 			organizationResourceComponentServiceObjects) {
@@ -94,6 +104,14 @@ public class Mutation {
 
 		_phoneResourceComponentServiceObjects =
 			phoneResourceComponentServiceObjects;
+	}
+
+	public static void setPostalAddressResourceComponentServiceObjects(
+		ComponentServiceObjects<PostalAddressResource>
+			postalAddressResourceComponentServiceObjects) {
+
+		_postalAddressResourceComponentServiceObjects =
+			postalAddressResourceComponentServiceObjects;
 	}
 
 	public static void setRoleResourceComponentServiceObjects(
@@ -613,6 +631,40 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createOrganizationEmailAddressesPageExportBatch(
+			@GraphQLName("organizationId") String organizationId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource ->
+				emailAddressResource.
+					postOrganizationEmailAddressesPageExportBatch(
+						organizationId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createUserAccountEmailAddressesPageExportBatch(
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource ->
+				emailAddressResource.
+					postUserAccountEmailAddressesPageExportBatch(
+						userAccountId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public boolean deleteAccountByExternalReferenceCodeOrganization(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("organizationId") String organizationId)
@@ -966,6 +1018,56 @@ public class Mutation {
 			this::_populateResourceContext,
 			phoneResource -> phoneResource.postUserAccountPhonesPageExportBatch(
 				userAccountId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createAccountPostalAddressesPageExportBatch(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.postAccountPostalAddressesPageExportBatch(
+					accountId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createOrganizationPostalAddressesPageExportBatch(
+			@GraphQLName("organizationId") String organizationId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.
+					postOrganizationPostalAddressesPageExportBatch(
+						organizationId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createUserAccountPostalAddressesPageExportBatch(
+			@GraphQLName("userAccountId") Long userAccountId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_postalAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			postalAddressResource ->
+				postalAddressResource.
+					postUserAccountPostalAddressesPageExportBatch(
+						userAccountId, callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -1884,6 +1986,27 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			EmailAddressResource emailAddressResource)
+		throws Exception {
+
+		emailAddressResource.setContextAcceptLanguage(_acceptLanguage);
+		emailAddressResource.setContextCompany(_company);
+		emailAddressResource.setContextHttpServletRequest(_httpServletRequest);
+		emailAddressResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		emailAddressResource.setContextUriInfo(_uriInfo);
+		emailAddressResource.setContextUser(_user);
+		emailAddressResource.setGroupLocalService(_groupLocalService);
+		emailAddressResource.setRoleLocalService(_roleLocalService);
+
+		emailAddressResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		emailAddressResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			OrganizationResource organizationResource)
 		throws Exception {
 
@@ -1920,6 +2043,27 @@ public class Mutation {
 			_vulcanBatchEngineExportTaskResource);
 
 		phoneResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
+			PostalAddressResource postalAddressResource)
+		throws Exception {
+
+		postalAddressResource.setContextAcceptLanguage(_acceptLanguage);
+		postalAddressResource.setContextCompany(_company);
+		postalAddressResource.setContextHttpServletRequest(_httpServletRequest);
+		postalAddressResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		postalAddressResource.setContextUriInfo(_uriInfo);
+		postalAddressResource.setContextUser(_user);
+		postalAddressResource.setGroupLocalService(_groupLocalService);
+		postalAddressResource.setRoleLocalService(_roleLocalService);
+
+		postalAddressResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		postalAddressResource.setVulcanBatchEngineImportTaskResource(
 			_vulcanBatchEngineImportTaskResource);
 	}
 
@@ -2044,10 +2188,14 @@ public class Mutation {
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AccountRoleResource>
 		_accountRoleResourceComponentServiceObjects;
+	private static ComponentServiceObjects<EmailAddressResource>
+		_emailAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrganizationResource>
 		_organizationResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PhoneResource>
 		_phoneResourceComponentServiceObjects;
+	private static ComponentServiceObjects<PostalAddressResource>
+		_postalAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<RoleResource>
 		_roleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SegmentResource>

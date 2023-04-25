@@ -65,6 +65,30 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createNotificationQueueEntriesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationQueueEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationQueueEntryResource ->
+				notificationQueueEntryResource.
+					postNotificationQueueEntriesPageExportBatch(
+						search,
+						_filterBiFunction.apply(
+							notificationQueueEntryResource, filterString),
+						_sortsBiFunction.apply(
+							notificationQueueEntryResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public boolean deleteNotificationQueueEntry(
 			@GraphQLName("notificationQueueEntryId") Long
 				notificationQueueEntryId)

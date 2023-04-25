@@ -411,6 +411,31 @@ public class Mutation {
 			});
 	}
 
+	@GraphQLField
+	public Response createTaxonomyVocabularyTaxonomyCategoriesPageExportBatch(
+			@GraphQLName("taxonomyVocabularyId") Long taxonomyVocabularyId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyCategoryResource ->
+				taxonomyCategoryResource.
+					postTaxonomyVocabularyTaxonomyCategoriesPageExportBatch(
+						taxonomyVocabularyId, search,
+						_filterBiFunction.apply(
+							taxonomyCategoryResource, filterString),
+						_sortsBiFunction.apply(
+							taxonomyCategoryResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
 	@GraphQLField(
 		description = "Inserts a new taxonomy category in a taxonomy vocabulary."
 	)
@@ -484,6 +509,31 @@ public class Mutation {
 					putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
 						taxonomyVocabularyId, externalReferenceCode,
 						taxonomyCategory));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryTaxonomyVocabulariesPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.
+					postAssetLibraryTaxonomyVocabulariesPageExportBatch(
+						Long.valueOf(assetLibraryId), search,
+						_filterBiFunction.apply(
+							taxonomyVocabularyResource, filterString),
+						_sortsBiFunction.apply(
+							taxonomyVocabularyResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -578,6 +628,31 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField
+	public Response createSiteTaxonomyVocabulariesPageExportBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.
+					postSiteTaxonomyVocabulariesPageExportBatch(
+						Long.valueOf(siteKey), search,
+						_filterBiFunction.apply(
+							taxonomyVocabularyResource, filterString),
+						_sortsBiFunction.apply(
+							taxonomyVocabularyResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(description = "Inserts a new taxonomy vocabulary in a Site.")

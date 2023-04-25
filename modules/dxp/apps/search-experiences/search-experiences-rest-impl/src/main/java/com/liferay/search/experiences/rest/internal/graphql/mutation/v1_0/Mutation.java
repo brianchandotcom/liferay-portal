@@ -39,6 +39,7 @@ import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContribut
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPParameterContributorDefinitionResource;
+import com.liferay.search.experiences.rest.resource.v1_0.SearchIndexResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
 
@@ -128,6 +129,14 @@ public class Mutation {
 
 		_sxpParameterContributorDefinitionResourceComponentServiceObjects =
 			sxpParameterContributorDefinitionResourceComponentServiceObjects;
+	}
+
+	public static void setSearchIndexResourceComponentServiceObjects(
+		ComponentServiceObjects<SearchIndexResource>
+			searchIndexResourceComponentServiceObjects) {
+
+		_searchIndexResourceComponentServiceObjects =
+			searchIndexResourceComponentServiceObjects;
 	}
 
 	public static void setSearchResponseResourceComponentServiceObjects(
@@ -472,6 +481,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createSearchIndexesPageExportBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_searchIndexResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			searchIndexResource ->
+				searchIndexResource.postSearchIndexesPageExportBatch(
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public SearchResponse createSearch(
 			@GraphQLName("query") String query,
 			@GraphQLName("pageSize") int pageSize,
@@ -729,6 +753,26 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			SearchIndexResource searchIndexResource)
+		throws Exception {
+
+		searchIndexResource.setContextAcceptLanguage(_acceptLanguage);
+		searchIndexResource.setContextCompany(_company);
+		searchIndexResource.setContextHttpServletRequest(_httpServletRequest);
+		searchIndexResource.setContextHttpServletResponse(_httpServletResponse);
+		searchIndexResource.setContextUriInfo(_uriInfo);
+		searchIndexResource.setContextUser(_user);
+		searchIndexResource.setGroupLocalService(_groupLocalService);
+		searchIndexResource.setRoleLocalService(_roleLocalService);
+
+		searchIndexResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		searchIndexResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			SearchResponseResource searchResponseResource)
 		throws Exception {
 
@@ -784,6 +828,8 @@ public class Mutation {
 	private static ComponentServiceObjects
 		<SXPParameterContributorDefinitionResource>
 			_sxpParameterContributorDefinitionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SearchIndexResource>
+		_searchIndexResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchableAssetNameResource>

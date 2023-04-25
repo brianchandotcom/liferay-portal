@@ -63,6 +63,11 @@ public interface TaxonomyVocabularyResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postAssetLibraryTaxonomyVocabulariesPageExportBatch(
+			Long assetLibraryId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
+
 	public TaxonomyVocabulary postAssetLibraryTaxonomyVocabulary(
 			Long assetLibraryId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
@@ -101,6 +106,11 @@ public interface TaxonomyVocabularyResource {
 			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Response postSiteTaxonomyVocabulariesPageExportBatch(
+			Long siteId, String search, Filter filter, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(

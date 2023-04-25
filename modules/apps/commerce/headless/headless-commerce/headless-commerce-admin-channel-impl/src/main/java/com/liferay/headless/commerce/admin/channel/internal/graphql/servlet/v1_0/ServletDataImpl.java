@@ -72,6 +72,8 @@ public class ServletDataImpl implements ServletData {
 			_shippingFixedOptionTermResourceComponentServiceObjects);
 		Mutation.setShippingMethodResourceComponentServiceObjects(
 			_shippingMethodResourceComponentServiceObjects);
+		Mutation.setTaxCategoryResourceComponentServiceObjects(
+			_taxCategoryResourceComponentServiceObjects);
 
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
@@ -240,6 +242,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ShippingMethodResourceImpl.class,
 							"postChannelShippingMethodsPageExportBatch"));
+					put(
+						"mutation#createTaxCategoriesPageExportBatch",
+						new ObjectValuePair<>(
+							TaxCategoryResourceImpl.class,
+							"postTaxCategoriesPageExportBatch"));
 
 					put(
 						"query#channels",
@@ -336,12 +343,12 @@ public class ServletDataImpl implements ServletData {
 		_shippingMethodResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<OrderTypeResource>
-		_orderTypeResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TaxCategoryResource>
 		_taxCategoryResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderTypeResource>
+		_orderTypeResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TermResource>

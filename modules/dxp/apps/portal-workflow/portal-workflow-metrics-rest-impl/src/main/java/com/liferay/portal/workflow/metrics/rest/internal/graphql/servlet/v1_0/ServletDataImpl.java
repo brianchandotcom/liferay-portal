@@ -93,6 +93,8 @@ public class ServletDataImpl implements ServletData {
 			_processMetricResourceComponentServiceObjects);
 		Mutation.setProcessVersionResourceComponentServiceObjects(
 			_processVersionResourceComponentServiceObjects);
+		Mutation.setReindexStatusResourceComponentServiceObjects(
+			_reindexStatusResourceComponentServiceObjects);
 		Mutation.setRoleResourceComponentServiceObjects(
 			_roleResourceComponentServiceObjects);
 		Mutation.setSLAResourceComponentServiceObjects(
@@ -184,6 +186,11 @@ public class ServletDataImpl implements ServletData {
 							CalendarResourceImpl.class,
 							"postCalendarsPageExportBatch"));
 					put(
+						"mutation#createIndexesPageExportBatch",
+						new ObjectValuePair<>(
+							IndexResourceImpl.class,
+							"postIndexesPageExportBatch"));
+					put(
 						"mutation#patchIndexRefresh",
 						new ObjectValuePair<>(
 							IndexResourceImpl.class, "patchIndexRefresh"));
@@ -271,6 +278,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProcessVersionResourceImpl.class,
 							"postProcessProcessVersionsPageExportBatch"));
+					put(
+						"mutation#createReindexStatusesPageExportBatch",
+						new ObjectValuePair<>(
+							ReindexStatusResourceImpl.class,
+							"postReindexStatusesPageExportBatch"));
 					put(
 						"mutation#createProcessRolesPageExportBatch",
 						new ObjectValuePair<>(
@@ -467,6 +479,10 @@ public class ServletDataImpl implements ServletData {
 		_processVersionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ReindexStatusResource>
+		_reindexStatusResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<RoleResource>
 		_roleResourceComponentServiceObjects;
 
@@ -489,10 +505,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<NodeMetricResource>
 		_nodeMetricResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<ReindexStatusResource>
-		_reindexStatusResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SLAResultResource>

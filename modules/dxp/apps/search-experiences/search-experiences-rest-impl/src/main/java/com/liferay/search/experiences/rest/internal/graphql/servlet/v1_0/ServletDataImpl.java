@@ -85,6 +85,8 @@ public class ServletDataImpl implements ServletData {
 		Mutation.
 			setSXPParameterContributorDefinitionResourceComponentServiceObjects(
 				_sxpParameterContributorDefinitionResourceComponentServiceObjects);
+		Mutation.setSearchIndexResourceComponentServiceObjects(
+			_searchIndexResourceComponentServiceObjects);
 		Mutation.setSearchResponseResourceComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects);
 		Mutation.setSearchableAssetNameResourceComponentServiceObjects(
@@ -257,6 +259,11 @@ public class ServletDataImpl implements ServletData {
 							SXPParameterContributorDefinitionResourceImpl.class,
 							"postSXPParameterContributorDefinitionsPageExportBatch"));
 					put(
+						"mutation#createSearchIndexesPageExportBatch",
+						new ObjectValuePair<>(
+							SearchIndexResourceImpl.class,
+							"postSearchIndexesPageExportBatch"));
+					put(
 						"mutation#createSearch",
 						new ObjectValuePair<>(
 							SearchResponseResourceImpl.class, "postSearch"));
@@ -375,6 +382,10 @@ public class ServletDataImpl implements ServletData {
 		_sxpParameterContributorDefinitionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SearchIndexResource>
+		_searchIndexResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchResponseResource>
 		_searchResponseResourceComponentServiceObjects;
 
@@ -385,10 +396,6 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<MLModelResource>
 		_mlModelResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SearchIndexResource>
-		_searchIndexResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SearchableAssetNameDisplayResource>

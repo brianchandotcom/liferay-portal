@@ -39,6 +39,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -56,6 +57,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface IndexResource {
 
 	public Page<Index> getIndexesPage() throws Exception;
+
+	public Response postIndexesPageExportBatch(
+			String callbackURL, String contentType, String fieldNames)
+		throws Exception;
 
 	public void patchIndexRefresh(Index index) throws Exception;
 

@@ -46,6 +46,7 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessVersionResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ReindexStatusResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
@@ -143,6 +144,14 @@ public class Mutation {
 			processVersionResourceComponentServiceObjects;
 	}
 
+	public static void setReindexStatusResourceComponentServiceObjects(
+		ComponentServiceObjects<ReindexStatusResource>
+			reindexStatusResourceComponentServiceObjects) {
+
+		_reindexStatusResourceComponentServiceObjects =
+			reindexStatusResourceComponentServiceObjects;
+	}
+
 	public static void setRoleResourceComponentServiceObjects(
 		ComponentServiceObjects<RoleResource>
 			roleResourceComponentServiceObjects) {
@@ -230,6 +239,20 @@ public class Mutation {
 			_calendarResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			calendarResource -> calendarResource.postCalendarsPageExportBatch(
+				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createIndexesPageExportBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_indexResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			indexResource -> indexResource.postIndexesPageExportBatch(
 				callbackURL, contentType, fieldNames));
 	}
 
@@ -522,6 +545,21 @@ public class Mutation {
 				processVersionResource.
 					postProcessProcessVersionsPageExportBatch(
 						processId, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Response createReindexStatusesPageExportBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_reindexStatusResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			reindexStatusResource ->
+				reindexStatusResource.postReindexStatusesPageExportBatch(
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -963,6 +1001,27 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(
+			ReindexStatusResource reindexStatusResource)
+		throws Exception {
+
+		reindexStatusResource.setContextAcceptLanguage(_acceptLanguage);
+		reindexStatusResource.setContextCompany(_company);
+		reindexStatusResource.setContextHttpServletRequest(_httpServletRequest);
+		reindexStatusResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		reindexStatusResource.setContextUriInfo(_uriInfo);
+		reindexStatusResource.setContextUser(_user);
+		reindexStatusResource.setGroupLocalService(_groupLocalService);
+		reindexStatusResource.setRoleLocalService(_roleLocalService);
+
+		reindexStatusResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		reindexStatusResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(RoleResource roleResource)
 		throws Exception {
 
@@ -1057,6 +1116,8 @@ public class Mutation {
 		_processMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessVersionResource>
 		_processVersionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ReindexStatusResource>
+		_reindexStatusResourceComponentServiceObjects;
 	private static ComponentServiceObjects<RoleResource>
 		_roleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SLAResource>

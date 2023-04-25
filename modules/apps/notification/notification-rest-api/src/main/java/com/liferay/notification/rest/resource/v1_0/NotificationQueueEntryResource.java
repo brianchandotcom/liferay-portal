@@ -61,6 +61,11 @@ public interface NotificationQueueEntryResource {
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postNotificationQueueEntriesPageExportBatch(
+			String search, Filter filter, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
 	public void deleteNotificationQueueEntry(Long notificationQueueEntryId)
 		throws Exception;
 

@@ -61,6 +61,11 @@ public interface CountryResource {
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postCountriesPageExportBatch(
+			Boolean active, String search, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
 	public Country postCountry(Country country) throws Exception;
 
 	public Response postCountryBatch(String callbackURL, Object object)

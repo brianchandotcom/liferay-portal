@@ -224,6 +224,31 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createListTypeDefinitionListTypeEntriesPageExportBatch(
+			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeEntryResource ->
+				listTypeEntryResource.
+					postListTypeDefinitionListTypeEntriesPageExportBatch(
+						listTypeDefinitionId, search,
+						_filterBiFunction.apply(
+							listTypeEntryResource, filterString),
+						_sortsBiFunction.apply(
+							listTypeEntryResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public ListTypeEntry createListTypeDefinitionListTypeEntry(
 			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId,
 			@GraphQLName("listTypeEntry") ListTypeEntry listTypeEntry)

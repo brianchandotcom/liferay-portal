@@ -462,6 +462,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							OptionResourceImpl.class, "patchOption"));
 					put(
+						"mutation#createOptionCategoriesPageExportBatch",
+						new ObjectValuePair<>(
+							OptionCategoryResourceImpl.class,
+							"postOptionCategoriesPageExportBatch"));
+					put(
 						"mutation#createOptionCategory",
 						new ObjectValuePair<>(
 							OptionCategoryResourceImpl.class,

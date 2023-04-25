@@ -59,6 +59,11 @@ public interface ObjectEntryResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postObjectEntriesPageExportBatch(
+			String search, Filter filter, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
+
 	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
 		throws Exception;
 

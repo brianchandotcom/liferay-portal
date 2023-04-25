@@ -61,6 +61,11 @@ public interface OptionCategoryResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postOptionCategoriesPageExportBatch(
+			Filter filter, Sort[] sorts, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public OptionCategory postOptionCategory(OptionCategory optionCategory)
 		throws Exception;
 

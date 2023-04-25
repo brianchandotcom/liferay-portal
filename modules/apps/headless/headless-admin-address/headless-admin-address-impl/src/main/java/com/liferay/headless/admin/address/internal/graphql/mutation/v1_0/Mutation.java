@@ -65,6 +65,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createCountriesPageExportBatch(
+			@GraphQLName("active") Boolean active,
+			@GraphQLName("search") String search,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.postCountriesPageExportBatch(
+				active, search,
+				_sortsBiFunction.apply(countryResource, sortsString),
+				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public Country createCountry(@GraphQLName("country") Country country)
 		throws Exception {
 

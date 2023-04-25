@@ -141,6 +141,11 @@ public class ServletDataImpl implements ServletData {
 							ListTypeEntryResourceImpl.class,
 							"postListTypeDefinitionByExternalReferenceCodeListTypeEntry"));
 					put(
+						"mutation#createListTypeDefinitionListTypeEntriesPageExportBatch",
+						new ObjectValuePair<>(
+							ListTypeEntryResourceImpl.class,
+							"postListTypeDefinitionListTypeEntriesPageExportBatch"));
+					put(
 						"mutation#createListTypeDefinitionListTypeEntry",
 						new ObjectValuePair<>(
 							ListTypeEntryResourceImpl.class,

@@ -914,6 +914,26 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createOptionCategoriesPageExportBatch(
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionCategoryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionCategoryResource ->
+				optionCategoryResource.postOptionCategoriesPageExportBatch(
+					_filterBiFunction.apply(
+						optionCategoryResource, filterString),
+					_sortsBiFunction.apply(optionCategoryResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public OptionCategory createOptionCategory(
 			@GraphQLName("optionCategory") OptionCategory optionCategory)
 		throws Exception {

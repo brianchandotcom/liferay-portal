@@ -75,6 +75,12 @@ public interface ListTypeEntryResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Response postListTypeDefinitionListTypeEntriesPageExportBatch(
+			Long listTypeDefinitionId, String search, Filter filter,
+			Sort[] sorts, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public ListTypeEntry postListTypeDefinitionListTypeEntry(
 			Long listTypeDefinitionId, ListTypeEntry listTypeEntry)
 		throws Exception;

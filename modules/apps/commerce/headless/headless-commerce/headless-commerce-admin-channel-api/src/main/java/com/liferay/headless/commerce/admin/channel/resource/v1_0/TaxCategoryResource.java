@@ -40,6 +40,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -58,6 +59,11 @@ public interface TaxCategoryResource {
 
 	public Page<TaxCategory> getTaxCategoriesPage(
 			String search, Pagination pagination)
+		throws Exception;
+
+	public Response postTaxCategoriesPageExportBatch(
+			String search, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public TaxCategory getTaxCategory(Long id) throws Exception;

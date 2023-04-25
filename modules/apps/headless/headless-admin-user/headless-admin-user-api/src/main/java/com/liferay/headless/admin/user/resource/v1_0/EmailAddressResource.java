@@ -39,6 +39,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -61,8 +62,18 @@ public interface EmailAddressResource {
 			String organizationId)
 		throws Exception;
 
+	public Response postOrganizationEmailAddressesPageExportBatch(
+			String organizationId, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
 	public Page<EmailAddress> getUserAccountEmailAddressesPage(
 			Long userAccountId)
+		throws Exception;
+
+	public Response postUserAccountEmailAddressesPageExportBatch(
+			Long userAccountId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

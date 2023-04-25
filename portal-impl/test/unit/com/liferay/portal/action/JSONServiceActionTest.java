@@ -43,8 +43,8 @@ public class JSONServiceActionTest {
 		JSONServiceAction jsonServiceAction = new JSONServiceAction();
 
 		String[] parameters = {
-			"companyId", "keywords", "excludedNames", "types",
-			"excludedTeamRoleId", "teamGroupId", "start", "end"
+			"companyId", "name", "excludedNames", "title", "description",
+			"types", "excludedTeamRoleId", "teamGroupId", "start", "end"
 		};
 
 		Object[] methodAndParameterTypes =

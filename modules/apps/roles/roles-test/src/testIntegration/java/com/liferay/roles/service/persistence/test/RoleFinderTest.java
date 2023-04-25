@@ -87,8 +87,9 @@ public class RoleFinderTest {
 				_user, permissionChecker)) {
 
 			List<Role> roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
-				TestPropsValues.getCompanyId(), null, existingRoleNames, _TYPES,
-				0, _user.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
+				null, _TYPES, 0, _user.getGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 			Assert.assertEquals(roles.toString(), 1, roles.size());
 

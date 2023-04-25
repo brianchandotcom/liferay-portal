@@ -1057,6 +1057,7 @@ definition {
 	@priority = 3
 	test EditProcessFieldSetPaginationAndViewSelectedForm {
 		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessFieldSetPaginationAndViewSelectedForm";
 
 		for (var kfFieldSetName : list "Field1,Field2,Field3,Field4,Field5,Field6") {
 			ProductMenu.gotoPortlet(

@@ -93,6 +93,8 @@ definition {
 	@description = "Verify that a Color Field can be duplicated"
 	@priority = 5
 	test CanBeDuplicated {
+		property test.name.skip.portal.instance = "FormsColorField#CanBeDuplicated";
+
 		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form1");
@@ -418,6 +420,7 @@ definition {
 	@priority = 5
 	test PredefinedValueCanBeAdded {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "FormsColorField#PredefinedValueCanBeAdded";
 
 		FormsAdmin.addForm();
 

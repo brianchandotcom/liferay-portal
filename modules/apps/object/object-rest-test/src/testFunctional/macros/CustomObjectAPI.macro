@@ -75,6 +75,36 @@ definition {
 		return ${curl};
 	}
 
+	macro _getObjectEntryById {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectId}");
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId} \
+				-u test@liferay.com:test
+		''';
+
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
 	macro _setNObjectEntriesBody {
 		Variables.assertDefined(parameterList = "${fieldName},${fieldValue}");
 
@@ -89,7 +119,12 @@ definition {
 		}
 
 		if (isSet(keywords)) {
-			var body = StringUtil.add("${body},", "\"keywords\": [\"${keywords}\"]", "");
+			if (${keywords} == "") {
+				var body = StringUtil.add("${body},", "\"keywords\": []", "");
+			}
+			else {
+				var body = StringUtil.add("${body},", "\"keywords\": [\"${keywords}\"]", "");
+			}
 		}
 
 		if (isSet(taxonomyCategoryIds)) {
@@ -155,6 +190,16 @@ definition {
 		var response = JSONCurlUtil.post(${curl});
 
 		return ${response};
+	}
+
+	macro getObjectEntryById {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
+
+		var curl = CustomObjectAPI._getObjectEntryById(
+			en_US_plural_label = ${en_US_plural_label},
+			objectId = ${objectEntryId});
+
+		return ${curl};
 	}
 
 	macro getObjectEntryIdByName {
@@ -251,6 +296,21 @@ definition {
 		var body = StringUtil.add("${body},", ${entryBody}, "");
 
 		return ${body};
+	}
+
+	macro putObjectEntryById {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldValue},${objectEntryId}");
+
+		var curl = CustomObjectAPI._curlObjectEntries(
+			en_US_plural_label = ${en_US_plural_label},
+			fieldName = "name",
+			fieldValue = ${fieldValue},
+			keywords = ${keywords},
+			objectEntryId = ${objectEntryId});
+
+		var response = JSONCurlUtil.put(${curl});
+
+		return ${response};
 	}
 
 	macro staticObjectDefinitionId {

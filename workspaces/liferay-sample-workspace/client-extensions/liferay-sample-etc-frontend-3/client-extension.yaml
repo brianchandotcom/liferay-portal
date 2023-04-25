@@ -1,11 +1,6 @@
 assemble:
     - from: assets
       into: static
-liferay-sample-etc-frontend-3-js-import-maps-entry:
-    bareSpecifier: my-utils
-    name: Liferay Sample Etc Frontend 3 JS Import Maps Entry
-    type: jsImportMapsEntry
-    url: my-utils/index.js
 liferay-sample-etc-frontend-3-custom-element:
     htmlElementName: liferay-sample-js-import-maps-entry-custom-element
     instanceable: false
@@ -15,3 +10,8 @@ liferay-sample-etc-frontend-3-custom-element:
     urls:
         - custom-element/index.js
     useESM: true
+liferay-sample-etc-frontend-3-js-import-maps-entry:
+    bareSpecifier: my-utils
+    name: Liferay Sample Etc Frontend 3 JS Import Maps Entry
+    type: jsImportMapsEntry
+    url: my-utils/index.js

@@ -15,17 +15,14 @@
 package com.liferay.commerce.order.web.internal.security.permission.resource;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  */
-@Component(service = CommerceOrderPermission.class)
 public class CommerceOrderPermission {
 
 	public static boolean contains(
@@ -33,7 +30,11 @@ public class CommerceOrderPermission {
 			String actionId)
 		throws PortalException {
 
-		return _commerceOrderModelResourcePermission.contains(
+		ModelResourcePermission<CommerceOrder>
+			commerceOrderModelResourcePermission =
+				_commerceOrderModelResourcePermissionSnapshot.get();
+
+		return commerceOrderModelResourcePermission.contains(
 			permissionChecker, commerceOrder, actionId);
 	}
 
@@ -42,21 +43,18 @@ public class CommerceOrderPermission {
 			String actionId)
 		throws PortalException {
 
-		return _commerceOrderModelResourcePermission.contains(
+		ModelResourcePermission<CommerceOrder>
+			commerceOrderModelResourcePermission =
+				_commerceOrderModelResourcePermissionSnapshot.get();
+
+		return commerceOrderModelResourcePermission.contains(
 			permissionChecker, commerceOrderId, actionId);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)",
-		unbind = "-"
-	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<CommerceOrder> modelResourcePermission) {
-
-		_commerceOrderModelResourcePermission = modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<CommerceOrder>
-		_commerceOrderModelResourcePermission;
+	private static final Snapshot<ModelResourcePermission<CommerceOrder>>
+		_commerceOrderModelResourcePermissionSnapshot = new Snapshot<>(
+			CommerceOrderPermission.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.commerce.model.CommerceOrder)");
 
 }

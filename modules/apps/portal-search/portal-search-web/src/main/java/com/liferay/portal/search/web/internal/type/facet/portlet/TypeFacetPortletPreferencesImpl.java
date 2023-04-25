@@ -50,15 +50,6 @@ public class TypeFacetPortletPreferencesImpl
 	}
 
 	@Override
-	public Optional<String[]> getAssetTypesArray() {
-		Optional<String> assetTypesOptional =
-			_portletPreferencesHelper.getString(
-				TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES);
-
-		return assetTypesOptional.map(StringUtil::split);
-	}
-
-	@Override
 	public String getAssetTypesString() {
 		return _portletPreferencesHelper.getString(
 			TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES,
@@ -99,9 +90,15 @@ public class TypeFacetPortletPreferencesImpl
 
 	@Override
 	public String[] getCurrentAssetTypesArray(long companyId) {
-		Optional<String[]> assetTypesOptional = getAssetTypesArray();
+		Optional<String> assetTypesOptional =
+			_portletPreferencesHelper.getString(
+				TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES);
 
-		return assetTypesOptional.orElseGet(() -> getAllAssetTypes(companyId));
+		return assetTypesOptional.map(
+			StringUtil::split
+		).orElse(
+			getAllAssetTypes(companyId)
+		);
 	}
 
 	@Override

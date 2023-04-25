@@ -16,36 +16,30 @@ package com.liferay.saml.opensaml.integration.internal.velocity;
 
 import com.liferay.petra.string.StringPool;
 
-import java.util.Map;
-
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.log.Log4JLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Mika Koivisto
  */
-@Component(service = VelocityEngineFactory.class)
 public class VelocityEngineFactory {
 
-	public VelocityEngine getVelocityEngine() {
+	public static VelocityEngine getVelocityEngine() {
 		return _velocityEngine;
 	}
 
-	public VelocityEngine getVelocityEngine(ClassLoader classLoader) {
+	private static final VelocityEngine _velocityEngine;
+
+	static {
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			currentThread.setContextClassLoader(classLoader);
+			currentThread.setContextClassLoader(
+				VelocityEngineFactory.class.getClassLoader());
 
 			VelocityEngine velocityEngine = new VelocityEngine();
 
@@ -70,28 +64,14 @@ public class VelocityEngineFactory {
 
 			velocityEngine.init();
 
-			return velocityEngine;
+			_velocityEngine = velocityEngine;
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(
-				"Unable to initialize Velocity engine", exception);
+			throw new ExceptionInInitializerError(exception);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
-
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> propertiesMap) {
-
-		Bundle bundle = bundleContext.getBundle();
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		_velocityEngine = getVelocityEngine(bundleWiring.getClassLoader());
-	}
-
-	private VelocityEngine _velocityEngine;
 
 }

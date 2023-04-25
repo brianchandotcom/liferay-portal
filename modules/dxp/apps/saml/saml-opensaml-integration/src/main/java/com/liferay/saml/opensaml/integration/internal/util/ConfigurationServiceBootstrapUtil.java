@@ -12,15 +12,13 @@
  *
  */
 
-package com.liferay.saml.opensaml.integration.internal.bootstrap;
+package com.liferay.saml.opensaml.integration.internal.util;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.shibboleth.utilities.java.support.xml.BasicParserPool;
-import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 import org.apache.xml.security.stax.ext.XMLSecurityConstants;
 
@@ -31,80 +29,56 @@ import org.opensaml.core.xml.config.XMLObjectProviderRegistry;
 import org.opensaml.xmlsec.signature.support.SignatureValidator;
 import org.opensaml.xmlsec.signature.support.Signer;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.wiring.BundleWiring;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-
 /**
- * @author Mika Koivisto
+ * @author Shuyang Zhou
  */
-@Component(service = {})
-public class OpenSamlBootstrap {
+public class ConfigurationServiceBootstrapUtil {
 
-	public static synchronized void bootstrap()
-		throws IllegalAccessException, InitializationException,
-			   InvocationTargetException, NoSuchMethodException {
-
-		InitializationService.initialize();
-
-		_initializeParserPool();
-
-		Method method = Signer.class.getDeclaredMethod("getSignerProvider");
-
-		method.setAccessible(true);
-
-		method.invoke(null);
-
-		method = SignatureValidator.class.getDeclaredMethod(
-			"getSignatureValidationProvider");
-
-		method.setAccessible(true);
-
-		method.invoke(null);
-
-		if (XMLSecurityConstants.xmlOutputFactory == null) {
-			throw new IllegalStateException();
-		}
+	public static <T> T get(Class<T> configurationClass) {
+		return ConfigurationService.get(configurationClass);
 	}
 
-	@Activate
-	protected synchronized void activate(BundleContext bundleContext)
-		throws IllegalAccessException, InitializationException,
-			   InvocationTargetException, NoSuchMethodException {
+	public static <T> void register(
+		Class<T> configurationClass, T configuration) {
 
+		ConfigurationService.register(configurationClass, configuration);
+	}
+
+	static {
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		try {
-			Bundle bundle = bundleContext.getBundle();
+			currentThread.setContextClassLoader(
+				ConfigurationServiceBootstrapUtil.class.getClassLoader());
 
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+			InitializationService.initialize();
 
-			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
+			_initializeParserPool();
 
-			bootstrap();
+			Method method = Signer.class.getDeclaredMethod("getSignerProvider");
 
-			XMLObjectProviderRegistry xmlObjectProviderRegistry =
-				ConfigurationService.get(XMLObjectProviderRegistry.class);
+			method.setAccessible(true);
 
-			_parserPoolServiceRegistration = bundleContext.registerService(
-				ParserPool.class, xmlObjectProviderRegistry.getParserPool(),
-				null);
+			method.invoke(null);
+
+			method = SignatureValidator.class.getDeclaredMethod(
+				"getSignatureValidationProvider");
+
+			method.setAccessible(true);
+
+			method.invoke(null);
+
+			if (XMLSecurityConstants.xmlOutputFactory == null) {
+				throw new IllegalStateException();
+			}
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 		finally {
 			currentThread.setContextClassLoader(classLoader);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_parserPoolServiceRegistration != null) {
-			_parserPoolServiceRegistration.unregister();
 		}
 	}
 
@@ -150,7 +124,5 @@ public class OpenSamlBootstrap {
 				exception);
 		}
 	}
-
-	private ServiceRegistration<ParserPool> _parserPoolServiceRegistration;
 
 }

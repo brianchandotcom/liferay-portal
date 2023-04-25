@@ -14,18 +14,18 @@
 
 package com.liferay.saml.opensaml.integration.internal.binding;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
+import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
 import com.liferay.saml.runtime.SamlException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import net.shibboleth.utilities.java.support.xml.ParserPool;
 
-import org.apache.http.client.HttpClient;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,7 +38,10 @@ public class SamlBindingProvider {
 	public SamlBinding getSamlBinding(String communicationProfileId)
 		throws PortalException {
 
-		SamlBinding samlBinding = _samlBindings.get(communicationProfileId);
+		Map<String, SamlBinding> samlBindings =
+			_samlBingsDCLSingleton.getSingleton(this::_createSamlBindings);
+
+		SamlBinding samlBinding = samlBindings.get(communicationProfileId);
 
 		if (samlBinding != null) {
 			return samlBinding;
@@ -48,37 +51,31 @@ public class SamlBindingProvider {
 			"Unsupported SAML binding " + communicationProfileId);
 	}
 
-	@Activate
-	protected void activate() {
-		HttpPostBinding httpPostBinding = new HttpPostBinding(
-			_parserPool, _velocityEngineFactory.getVelocityEngine());
+	private Map<String, SamlBinding> _createSamlBindings() {
+		ParserPool parserPool = ParserPoolUtil.getParserPool();
 
-		_samlBindings.put(
-			httpPostBinding.getCommunicationProfileId(), httpPostBinding);
+		HttpPostBinding httpPostBinding = new HttpPostBinding(
+			parserPool, VelocityEngineFactory.getVelocityEngine());
 
 		HttpRedirectBinding httpRedirectBinding = new HttpRedirectBinding(
-			_parserPool);
-
-		_samlBindings.put(
-			httpRedirectBinding.getCommunicationProfileId(),
-			httpRedirectBinding);
+			parserPool);
 
 		HttpSoap11Binding httpSoap11Binding = new HttpSoap11Binding(
-			_parserPool, _httpClient);
+			parserPool, _httpClientFactory.getHttpClient());
 
-		_samlBindings.put(
-			httpSoap11Binding.getCommunicationProfileId(), httpSoap11Binding);
+		return HashMapBuilder.<String, SamlBinding>put(
+			httpPostBinding.getCommunicationProfileId(), httpPostBinding
+		).put(
+			httpRedirectBinding.getCommunicationProfileId(), httpRedirectBinding
+		).put(
+			httpSoap11Binding.getCommunicationProfileId(), httpSoap11Binding
+		).build();
 	}
 
 	@Reference
-	private HttpClient _httpClient;
+	private HttpClientFactory _httpClientFactory;
 
-	@Reference
-	private ParserPool _parserPool;
-
-	private final Map<String, SamlBinding> _samlBindings = new HashMap<>();
-
-	@Reference
-	private VelocityEngineFactory _velocityEngineFactory;
+	private final DCLSingleton<Map<String, SamlBinding>>
+		_samlBingsDCLSingleton = new DCLSingleton<>();
 
 }

@@ -14,12 +14,13 @@
 
 package com.liferay.saml.opensaml.integration.internal.bootstrap;
 
+import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.xmlsec.DecryptionConfiguration;
 import org.opensaml.xmlsec.EncryptionConfiguration;
 import org.opensaml.xmlsec.SignatureSigningConfiguration;
@@ -84,14 +85,14 @@ public class SecurityConfigurationBootstrap {
 					(String[])blacklistedAlgorithmsObject));
 		}
 
-		ConfigurationService.register(
+		ConfigurationServiceBootstrapUtil.register(
 			DecryptionConfiguration.class, basicDecryptionConfiguration);
-		ConfigurationService.register(
+		ConfigurationServiceBootstrapUtil.register(
 			EncryptionConfiguration.class, basicEncryptionConfiguration);
-		ConfigurationService.register(
+		ConfigurationServiceBootstrapUtil.register(
 			SignatureSigningConfiguration.class,
 			basicSignatureSigningConfiguration);
-		ConfigurationService.register(
+		ConfigurationServiceBootstrapUtil.register(
 			SignatureValidationConfiguration.class,
 			basicSignatureValidationConfiguration);
 	}

@@ -28,6 +28,7 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBindingProvider;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
+import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
@@ -44,7 +45,6 @@ import javax.servlet.http.HttpSession;
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
 
-import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.MarshallingException;
@@ -190,7 +190,7 @@ public abstract class BaseProfile {
 			basicSignatureValidationParametersResolver.resolveSingle(
 				new CriteriaSet(
 					new SignatureValidationConfigurationCriterion(
-						ConfigurationService.get(
+						ConfigurationServiceBootstrapUtil.get(
 							SignatureValidationConfiguration.class))));
 
 		signatureValidationParameters.setSignatureTrustEngine(

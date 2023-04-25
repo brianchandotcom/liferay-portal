@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
+import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
@@ -67,8 +68,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
-
-import org.apache.http.client.HttpClient;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -1372,7 +1371,8 @@ public class SingleLogoutProfileImpl
 
 			});
 
-		pipelineFactoryHttpSOAPClient.setHttpClient(_httpClient);
+		pipelineFactoryHttpSOAPClient.setHttpClient(
+			_httpClientFactory.getHttpClient());
 
 		pipelineFactoryHttpSOAPClient.initialize();
 
@@ -1449,7 +1449,7 @@ public class SingleLogoutProfileImpl
 		SingleLogoutProfileImpl.class);
 
 	@Reference
-	private HttpClient _httpClient;
+	private HttpClientFactory _httpClientFactory;
 
 	@Reference
 	private SamlHttpRequestUtil _samlHttpRequestUtil;

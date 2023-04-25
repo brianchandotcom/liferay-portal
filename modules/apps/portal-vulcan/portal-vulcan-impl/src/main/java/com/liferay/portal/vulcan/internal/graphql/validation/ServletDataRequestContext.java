@@ -72,22 +72,22 @@ public class ServletDataRequestContext implements GraphQLRequestContext {
 	}
 
 	private String _getMethodName(Method method) {
-		String methodName = method.getName();
-
 		Class<?> declaringClass = method.getDeclaringClass();
 
-		if (declaringClass != null) {
-			GraphQLTypeExtension graphQLTypeExtension =
-				declaringClass.getAnnotation(GraphQLTypeExtension.class);
-
-			if (graphQLTypeExtension != null) {
-				Class<?> value = graphQLTypeExtension.value();
-
-				methodName = value.getSimpleName() + "." + methodName;
-			}
+		if (declaringClass == null) {
+			return method.getName();
 		}
 
-		return methodName;
+		GraphQLTypeExtension graphQLTypeExtension =
+			declaringClass.getAnnotation(GraphQLTypeExtension.class);
+
+		if (graphQLTypeExtension == null) {
+			return method.getName();
+		}
+
+		Class<?> value = graphQLTypeExtension.value();
+
+		return value.getSimpleName() + "." + method.getName();
 	}
 
 	private String _getNamespace(ServletData servletData) {

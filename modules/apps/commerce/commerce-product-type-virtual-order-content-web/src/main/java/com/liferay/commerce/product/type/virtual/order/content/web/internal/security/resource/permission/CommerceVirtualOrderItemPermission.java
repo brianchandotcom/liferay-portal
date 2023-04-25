@@ -38,18 +38,9 @@ public class CommerceVirtualOrderItemPermission {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem)"
 	)
-	protected void setModelResourcePermission(
-		ModelResourcePermission<CommerceVirtualOrderItem>
-			modelResourcePermission) {
-
-		_commerceVirtualOrderItemModelResourcePermission =
-			modelResourcePermission;
-	}
-
-	private static ModelResourcePermission<CommerceVirtualOrderItem>
+	private ModelResourcePermission<CommerceVirtualOrderItem>
 		_commerceVirtualOrderItemModelResourcePermission;
 
 }

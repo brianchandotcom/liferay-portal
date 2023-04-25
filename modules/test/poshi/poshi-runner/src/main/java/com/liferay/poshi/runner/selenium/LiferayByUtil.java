@@ -61,9 +61,6 @@ public class LiferayByUtil {
 		@Override
 		public List<WebElement> findElements(SearchContext searchContext) {
 			if (searchContext instanceof WebDriver) {
-				JavascriptExecutor javascriptExecutor =
-					(JavascriptExecutor)searchContext;
-
 				String[] partialCssSelectors = _cssSelector.split(">>>");
 
 				for (int i = 0; i < (partialCssSelectors.length - 1); i++) {
@@ -73,9 +70,7 @@ public class LiferayByUtil {
 					WebElement webElement = byCssSelector.findElement(
 						searchContext);
 
-					searchContext =
-						(WebElement)javascriptExecutor.executeScript(
-							"return arguments[0].shadowRoot", webElement);
+					searchContext = webElement.getShadowRoot();
 				}
 
 				By.ByCssSelector byCssSelector = new By.ByCssSelector(

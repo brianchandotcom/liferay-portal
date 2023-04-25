@@ -775,7 +775,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		FriendlyURLRedirectionConfiguration
 			friendlyURLRedirectionConfiguration =
 				friendlyURLRedirectionConfigurationProvider.
-					getCompanyConfiguration(companyId);
+					getCompanyFriendlyURLRedirectionConfiguration(companyId);
 
 		return friendlyURLRedirectionConfiguration.redirectionType();
 	}

@@ -32,14 +32,16 @@ public class FriendlyURLRedirectionConfigurationProviderImpl
 	implements FriendlyURLRedirectionConfigurationProvider {
 
 	@Override
-	public FriendlyURLRedirectionConfiguration getCompanyConfiguration(
-		long companyId) {
+	public FriendlyURLRedirectionConfiguration
+		getCompanyFriendlyURLRedirectionConfiguration(long companyId) {
 
 		return _getConfiguration(companyId);
 	}
 
 	@Override
-	public FriendlyURLRedirectionConfiguration getSystemConfiguration() {
+	public FriendlyURLRedirectionConfiguration
+		getSystemFriendlyURLRedirectionConfiguration() {
+
 		return _getConfiguration(CompanyConstants.SYSTEM);
 	}
 

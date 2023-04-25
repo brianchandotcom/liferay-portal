@@ -22,9 +22,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FriendlyURLRedirectionConfigurationProvider {
 
-	public FriendlyURLRedirectionConfiguration getCompanyConfiguration(
-		long companyId);
+	public FriendlyURLRedirectionConfiguration
+		getCompanyFriendlyURLRedirectionConfiguration(long companyId);
 
-	public FriendlyURLRedirectionConfiguration getSystemConfiguration();
+	public FriendlyURLRedirectionConfiguration
+		getSystemFriendlyURLRedirectionConfiguration();
 
 }

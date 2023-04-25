@@ -408,7 +408,7 @@ public class I18nFilter extends BasePortalFilter {
 		FriendlyURLRedirectionConfiguration
 			friendlyURLRedirectionConfiguration =
 				_friendlyURLRedirectionConfigurationProvider.
-					getCompanyConfiguration(companyId);
+					getCompanyFriendlyURLRedirectionConfiguration(companyId);
 
 		return friendlyURLRedirectionConfiguration.redirectionType();
 	}

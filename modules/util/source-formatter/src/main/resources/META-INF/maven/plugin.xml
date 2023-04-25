@@ -337,7 +337,7 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<type>jar</type>
-			<version>20220320</version>
+			<version>20230227</version>
 		</dependency>
 		<dependency>
 			<groupId>org.reflections</groupId>

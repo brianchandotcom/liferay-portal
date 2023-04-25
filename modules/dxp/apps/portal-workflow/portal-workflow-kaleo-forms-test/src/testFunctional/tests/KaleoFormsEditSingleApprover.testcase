@@ -411,6 +411,7 @@ definition {
 
 	@priority = 3
 	test ViewApprovedProcessNotificationWithComments {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "KaleoFormsEditSingleApprover#ViewApprovedProcessNotificationWithComments";
 
 		Navigator.openURL();

@@ -166,6 +166,7 @@ definition {
 
 	@priority = 5
 	test DeactivateAndActivateWorkflowDefinition {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndActivateWorkflowDefinition";
 
@@ -225,6 +226,7 @@ definition {
 
 	@priority = 5
 	test DeactivateAndDeleteWorkflowDefinition {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#DeactivateAndDeleteWorkflowDefinition";
 
@@ -1312,6 +1314,8 @@ definition {
 
 	@priority = 4
 	test EditProcessNewFieldSet {
+		property ci.retries.disabled = "true";
+
 		Navigator.openURL();
 
 		for (var kfFieldSetName : list "Field1,Field2,Field3,Field4,Field5,Field6") {
@@ -1434,6 +1438,7 @@ definition {
 
 	@priority = 5
 	test EditProcessNewWorkflowViaSourceTab {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessNewWorkflowViaSourceTab";
 
@@ -1655,6 +1660,7 @@ definition {
 
 	@priority = 3
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditSingleApproverWorkflowViaViewTabViaAddProcess";
 
 		Navigator.openURL();
@@ -1733,6 +1739,7 @@ definition {
 
 	@priority = 4
 	test EditUploadedWorkflowViaViewTabViaAddProcess {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditUploadedWorkflowViaViewTabViaAddProcess";
 
 		ApplicationsMenu.gotoPortlet(

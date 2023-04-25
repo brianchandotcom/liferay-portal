@@ -1787,6 +1787,7 @@ definition {
 
 	@priority = 4
 	test CompleteProcessWithEditedSingleApproverWorkflow {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithEditedSingleApproverWorkflow";
 
 		Navigator.openURL();
@@ -1908,6 +1909,7 @@ definition {
 
 	@priority = 5
 	test CompleteProcessWithUploadedDefinition {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithUploadedDefinition";
 
@@ -2841,6 +2843,7 @@ definition {
 
 	@priority = 4
 	test EditProcessWorkflowAfterFormSubmission {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessWorkflowAfterFormSubmission";
 
 		ApplicationsMenu.gotoPortlet(
@@ -3004,6 +3007,7 @@ definition {
 
 	@priority = 4
 	test EditProcessWorkflowBeforeFormSubmission {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessWorkflowBeforeFormSubmission";
 
 		ApplicationsMenu.gotoPortlet(

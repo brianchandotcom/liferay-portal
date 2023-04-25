@@ -195,7 +195,9 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		ImportExport.mapExport(exportFields = ${exportFields});
+		if (isSet(exportFields)) {
+			ImportExport.mapExport(exportFields = ${exportFields});
+		}
 
 		if (isSet(templateName)) {
 			ImportExport.saveAsTemplate(templateName = ${templateName});
@@ -247,6 +249,22 @@ definition {
 		if (isSet(templateName)) {
 			ImportExport.saveAsTemplate(templateName = ${templateName});
 		}
+	}
+
+	macro exportEntityWithAllFieldsInJsontFormat {
+		Variables.assertDefined(parameterList = ${entityType});
+
+		ImportExport.openImportExportAdmin();
+
+		ImportExport.gotoExport();
+
+		ImportExport.configureExport(
+			entityType = ${entityType},
+			exportFileFormat = "JSONT");
+
+		Button.click(button = "Export");
+
+		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 	}
 
 	macro exportFile {
@@ -412,6 +430,16 @@ definition {
 		Select(
 			locator1 = "ImportExport#IMPORT_STRATEGY",
 			value1 = ${strategyType});
+	}
+
+	macro unzipDownloadedExportFile {
+		Button.click(button = "Download");
+
+		DownloadTempFile();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-temp-file -DfileName=Export.zip");
 	}
 
 }

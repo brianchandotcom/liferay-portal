@@ -678,12 +678,9 @@ public class DLAdminManagementToolbarDisplayContext
 				labelItem -> {
 					labelItem.putData(
 						"removeLabelURL",
-						PortletURLBuilder.create(
-							PortletURLUtil.clone(
-								_currentURLObj, _liferayPortletResponse)
-						).setParameter(
-							"extension", ArrayUtil.remove(extensions, extension)
-						).buildString());
+						_getRemoveLabelURL(
+							"extension",
+							() -> ArrayUtil.remove(extensions, extension)));
 
 					labelItem.setCloseable(true);
 

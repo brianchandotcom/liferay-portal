@@ -19,6 +19,15 @@
 <portlet:actionURL name="unsubscribe" var="unsubscribeURL" />
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+}
+
 MySubscriptionsManagementToolbarDisplayContext mySubscriptionsManagementToolbarDisplayContext = new MySubscriptionsManagementToolbarDisplayContext(request, liferayPortletResponse, user);
 
 int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotalItems();

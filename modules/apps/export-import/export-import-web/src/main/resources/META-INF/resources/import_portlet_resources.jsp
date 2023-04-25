@@ -40,7 +40,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= importPortletActionURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
+<aui:form action="<%= importPortletActionURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "publishPages();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.IMPORT %>" />
 	<aui:input name="tabs1" type="hidden" value="export_import" />
 	<aui:input name="tabs2" type="hidden" value="import" />
@@ -365,6 +365,34 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 		<aui:button type="submit" value="import" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />publishPages() {
+		var deletePortletDataBeforeImportingCheckbox = document.getElementById(
+			'<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>'
+		);
+
+		var form = document.<portlet:namespace />fm1;
+
+		if (
+			deletePortletDataBeforeImportingCheckbox &&
+			deletePortletDataBeforeImportingCheckbox.checked
+		) {
+			Liferay.Util.openConfirmModal({
+				message:
+					'<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						submitForm(form);
+					}
+				},
+			});
+		}
+		else {
+			submitForm(form);
+		}
+	}
+</aui:script>
 
 <aui:script use="liferay-export-import-export-import">
 	new Liferay.ExportImport({

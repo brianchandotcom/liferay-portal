@@ -14,15 +14,40 @@
 
 package com.liferay.portal.spring.extender.internal.configuration;
 
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.module.util.BundleUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.net.URL;
+import java.net.URLConnection;
+
+import java.nio.ByteBuffer;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -60,18 +85,17 @@ public class PortletConfigurationExtender
 		}
 
 		try {
-			_resourceActions.populateModelResources(
-				classLoader,
-				StringUtil.split(
-					portletConfiguration.get(
-						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+			String[] resourceActionsConfigurations = StringUtil.split(
+				portletConfiguration.get(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
 
-			if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) {
-				_resourceActions.populatePortletResources(
-					classLoader,
-					StringUtil.split(
-						portletConfiguration.get(
-							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+			if (!_isUpToDate(classLoader, resourceActionsConfigurations)) {
+				_resourceActions.populateModelResources(
+					classLoader, resourceActionsConfigurations);
+
+				if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) {
+					_resourceActions.populatePortletResources(
+						classLoader, resourceActionsConfigurations);
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -98,6 +122,10 @@ public class PortletConfigurationExtender
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_urlTimestamps = _loadURLTimestamps(bundleContext);
+
+		_bundleContext = bundleContext;
+
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, this);
 
@@ -107,14 +135,174 @@ public class PortletConfigurationExtender
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
+
+		_saveURLTimestamps(_bundleContext, _refreshedURLTimestamps);
+	}
+
+	private boolean _isUpToDate(
+			ClassLoader classLoader, String[] resourceActionsConfigurations)
+		throws Exception {
+
+		Map<URL, Long> urlTimestamps = _toURLTimestamps(
+			classLoader, resourceActionsConfigurations);
+
+		boolean upToDate = true;
+
+		for (Map.Entry<URL, Long> entry : urlTimestamps.entrySet()) {
+			URL url = entry.getKey();
+
+			String urlString = _trimFwkHash(url.toExternalForm());
+
+			Long cachedLastModifiedTime = _urlTimestamps.get(urlString);
+
+			if ((cachedLastModifiedTime == null) ||
+				!cachedLastModifiedTime.equals(entry.getValue())) {
+
+				upToDate = false;
+			}
+
+			_refreshedURLTimestamps.put(urlString, entry.getValue());
+		}
+
+		return upToDate;
+	}
+
+	private Map<String, Long> _loadURLTimestamps(BundleContext bundleContext) {
+		Map<String, Long> urlTimestamps = new HashMap<>();
+
+		File dataFile = bundleContext.getDataFile("urlTimestamps.data");
+
+		if (dataFile.exists() && !StartupHelperUtil.isDBNew()) {
+			try {
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(FileUtil.getBytes(dataFile)));
+
+				Bundle bundle = bundleContext.getBundle();
+
+				if ((deserializer.readBoolean() ==
+						PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) &&
+					(deserializer.readLong() == bundle.getLastModified())) {
+
+					int size = deserializer.readInt();
+
+					for (int i = 0; i < size; i++) {
+						urlTimestamps.put(
+							deserializer.readString(), deserializer.readLong());
+					}
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to load url timestamps data", exception);
+				}
+			}
+		}
+
+		return urlTimestamps;
+	}
+
+	private void _saveURLTimestamps(
+		BundleContext bundleContext, Map<String, Long> urlTimestamps) {
+
+		Bundle bundle = bundleContext.getBundle();
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeBoolean(
+			PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED);
+
+		serializer.writeLong(bundle.getLastModified());
+
+		serializer.writeInt(urlTimestamps.size());
+
+		for (Map.Entry<String, Long> entry : urlTimestamps.entrySet()) {
+			serializer.writeString(entry.getKey());
+			serializer.writeLong(entry.getValue());
+		}
+
+		File dataFile = bundleContext.getDataFile("urlTimestamps.data");
+
+		try (OutputStream outputStream = new FileOutputStream(dataFile)) {
+			serializer.writeTo(outputStream);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to write url timestamps data", exception);
+			}
+		}
+	}
+
+	private Map<URL, Long> _toURLTimestamps(
+			ClassLoader classLoader, String[] resourceActionsConfigurations)
+		throws Exception {
+
+		Map<URL, Long> urlTimestamps = new HashMap<>();
+
+		Queue<String> queue = new LinkedList<>(
+			Arrays.asList(resourceActionsConfigurations));
+
+		String resourceActionsConfiguration = null;
+
+		while ((resourceActionsConfiguration = queue.poll()) != null) {
+			URL url = classLoader.getResource(resourceActionsConfiguration);
+
+			if (url == null) {
+				continue;
+			}
+
+			URLConnection urlConnection = url.openConnection();
+
+			urlTimestamps.put(url, urlConnection.getLastModified());
+
+			try (InputStream inputStream = urlConnection.getInputStream()) {
+				String content = StreamUtil.toString(inputStream);
+
+				if (content.contains("<resource ")) {
+					Document document = UnsecureSAXReaderUtil.read(
+						content, true);
+
+					Element rootElement = document.getRootElement();
+
+					for (Element resourceElement :
+							rootElement.elements("resource")) {
+
+						queue.add(
+							StringUtil.trim(
+								resourceElement.attributeValue("file")));
+					}
+				}
+			}
+		}
+
+		return urlTimestamps;
+	}
+
+	private String _trimFwkHash(String urlString) {
+		int startIndex = urlString.indexOf(".fwk");
+
+		if (startIndex != -1) {
+			int endIndex = urlString.indexOf(CharPool.SLASH, startIndex + 4);
+
+			if (endIndex != -1) {
+				String head = urlString.substring(0, startIndex);
+
+				return head.concat(urlString.substring(endIndex));
+			}
+		}
+
+		return urlString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationExtender.class);
 
+	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
+	private final Map<String, Long> _refreshedURLTimestamps = new HashMap<>();
 
 	@Reference
 	private ResourceActions _resourceActions;
+
+	private Map<String, Long> _urlTimestamps;
 
 }

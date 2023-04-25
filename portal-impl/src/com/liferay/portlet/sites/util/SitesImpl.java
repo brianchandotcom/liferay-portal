@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
@@ -94,7 +93,6 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.service.persistence.LayoutSetUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1377,107 +1375,8 @@ public class SitesImpl implements Sites {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				layoutSet.getCompanyId(), "LPS-166286")) {
-
-			mergeLayoutSetPrototypeLayoutsInBackground(
-				layoutSetPrototype, layoutSet);
-
-			return;
-		}
-
-		String owner = _acquireLock(
-			LayoutSet.class.getName(), layoutSet.getLayoutSetId(),
-			PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_LOCK_MAX_TIME);
-
-		if (owner == null) {
-			return;
-		}
-
-		EntityCacheUtil.clearLocalCache();
-
-		layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			layoutSet.getLayoutSetId());
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		try {
-			MergeLayoutPrototypesThreadLocal.setInProgress(true);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Applying layout set prototype ",
-						layoutSetPrototype.getUuid(), " (mvccVersion ",
-						layoutSetPrototype.getMvccVersion(), ") to layout set ",
-						layoutSet.getLayoutSetId(), " (mvccVersion ",
-						layoutSet.getMvccVersion(), ")"));
-			}
-
-			boolean importData = true;
-
-			long lastMergeTime = GetterUtil.getLong(
-				settingsUnicodeProperties.getProperty(LAST_MERGE_TIME));
-			long lastResetTime = GetterUtil.getLong(
-				settingsUnicodeProperties.getProperty(LAST_RESET_TIME));
-
-			if ((lastMergeTime > 0) || (lastResetTime > 0)) {
-				importData = false;
-			}
-
-			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				layoutSet.getLayoutSetId());
-
-			if (!isLayoutSetMergeable(group, layoutSet)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Skipping actual merge");
-				}
-
-				return;
-			}
-
-			Map<String, String[]> parameterMap =
-				getLayoutSetPrototypesParameters(importData);
-
-			importLayoutSetPrototype(
-				layoutSetPrototype, layoutSet.getGroupId(),
-				layoutSet.isPrivateLayout(), parameterMap, importData);
-		}
-		catch (Exception exception) {
-			LayoutSet layoutSetPrototypeLayoutSet =
-				layoutSetPrototype.getLayoutSet();
-
-			UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-				layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-			int mergeFailCount = GetterUtil.getInteger(
-				layoutSetPrototypeSettingsUnicodeProperties.getProperty(
-					MERGE_FAIL_COUNT));
-
-			mergeFailCount++;
-
-			_log.error(
-				StringBundler.concat(
-					"Merge fail count increased to ", mergeFailCount,
-					" for layout set prototype ",
-					layoutSetPrototype.getLayoutSetPrototypeId(),
-					" and layout set ", layoutSet.getLayoutSetId()),
-				exception);
-
-			layoutSetPrototypeSettingsUnicodeProperties.setProperty(
-				MERGE_FAIL_COUNT, String.valueOf(mergeFailCount));
-
-			// Invoke updateImpl so that we do not trigger the listeners
-
-			LayoutSetUtil.updateImpl(layoutSetPrototypeLayoutSet);
-		}
-		finally {
-			MergeLayoutPrototypesThreadLocal.setInProgress(false);
-
-			_releaseLock(
-				LayoutSet.class.getName(), layoutSet.getLayoutSetId(), owner);
-		}
+		mergeLayoutSetPrototypeLayoutsInBackground(
+			layoutSetPrototype, layoutSet);
 	}
 
 	@Override

@@ -463,9 +463,18 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			}
 		).put(
 			"target",
-			GetterUtil.getString(
-				HtmlUtil.escape(layout.getTypeSettingsProperty("target")),
-				"_self")
+			() -> {
+				if (includeActions &&
+					(finalHasUpdatePermission || layout.isPublished())) {
+
+					return GetterUtil.getString(
+						HtmlUtil.escape(
+							layout.getTypeSettingsProperty("target")),
+						"_self");
+				}
+
+				return StringPool.BLANK;
+			}
 		).put(
 			"type", layout.getType()
 		);

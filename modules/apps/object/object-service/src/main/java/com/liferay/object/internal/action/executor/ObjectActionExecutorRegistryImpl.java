@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +65,7 @@ public class ObjectActionExecutorRegistryImpl
 
 		return ListUtil.sort(
 			ListUtil.filter(
-				new ArrayList<>(objectActionExecutorsCollection),
+				ListUtil.fromCollection(objectActionExecutorsCollection),
 				objectActionExecutor ->
 					objectActionExecutor.isAllowedCompany(companyId) &&
 					objectActionExecutor.isAllowedObjectDefinition(

@@ -113,7 +113,7 @@ export default function LogoSelector({
 			{logoURL ? (
 				<img
 					alt={sub(Liferay.Language.get('current-x'), label)}
-					className="avatar img-fluid mw-100"
+					className="avatar img-fluid mb-3 mw-100"
 					src={logoURL}
 				/>
 			) : (

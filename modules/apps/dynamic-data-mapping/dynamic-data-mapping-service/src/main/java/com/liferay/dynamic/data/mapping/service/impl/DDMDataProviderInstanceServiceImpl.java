@@ -168,12 +168,9 @@ public class DDMDataProviderInstanceServiceImpl
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
 
-		List<DDMDataProviderInstance> ddmDataProviderInstances =
-			ddmDataProviderInstanceFinder.filterByKeywords(
-				companyId, groupIds, keywords, start, end, orderByComparator);
-
 		return TransformUtil.transform(
-			ddmDataProviderInstances,
+			ddmDataProviderInstanceFinder.filterByKeywords(
+				companyId, groupIds, keywords, start, end, orderByComparator),
 			ddmDataProviderInstance -> {
 				try {
 					if (_ddmDataProviderInstanceModelResourcePermission.

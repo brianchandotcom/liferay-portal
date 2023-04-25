@@ -35,22 +35,6 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 	<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(fileSizeException.getMaxSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
-<p class="text-muted">
-
-	<%
-	Group group = layoutsAdminDisplayContext.getGroup();
-	%>
-
-	<c:choose>
-		<c:when test="<%= group.isPrivateLayoutsEnabled() %>">
-			<liferay-ui:message key='<%= "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-is-used-instead-of-the-default-enterprise-logo" %>' />
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:message key="upload-a-logo-for-pages-that-is-used-instead-of-the-default-enterprise-logo" />
-		</c:otherwise>
-	</c:choose>
-</p>
-
 <c:if test="<%= liveGroup.isLayoutSetPrototype() && !PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO %>">
 	<div class="alert alert-warning">
 		<liferay-ui:message key="modifying-the-site-template-logo-only-affects-sites-that-are-not-yet-created" />
@@ -58,29 +42,24 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 </c:if>
 
 <%
+Group group = layoutsAdminDisplayContext.getGroup();
+
 String companyLogoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId());
 
-boolean defaultLogo = false;
+String logoDescription = null;
 
-if (selLayoutSet.getLogoId() == 0) {
-	defaultLogo = true;
+if (group.isPrivateLayoutsEnabled()) {
+	logoDescription = LanguageUtil.get(request, "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-is-used-instead-of-the-default-enterprise-logo");
 }
 else {
-	LayoutSet guestGroupLayoutSet = layoutsAdminDisplayContext.getGuestGroupLayoutSet(company.getCompanyId());
-
-	if (selLayoutSet.getLogoId() == guestGroupLayoutSet.getLogoId()) {
-		defaultLogo = true;
-	}
+	logoDescription = LanguageUtil.get(request, "upload-a-logo-for-pages-that-is-used-instead-of-the-default-enterprise-logo");
 }
 %>
 
-<liferay-ui:logo-selector
+<liferay-frontend:logo-selector
 	currentLogoURL='<%= (selLayoutSet.getLogoId() == 0) ? companyLogoURL : themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + selLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>'
-	defaultLogo="<%= defaultLogo %>"
 	defaultLogoURL="<%= companyLogoURL %>"
-	logoDisplaySelector=".layoutset-logo"
-	showButtons="<%= GroupPermissionUtil.contains(permissionChecker, layoutsAdminDisplayContext.getSelGroup(), ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
-	tempImageFileName="<%= String.valueOf(selLayoutSet.getLayoutSetId()) %>"
+	description="<%= logoDescription %>"
 />
 
 <%

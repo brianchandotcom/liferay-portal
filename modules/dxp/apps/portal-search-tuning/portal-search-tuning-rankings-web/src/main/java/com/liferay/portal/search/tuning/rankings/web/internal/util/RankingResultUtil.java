@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -87,7 +86,7 @@ public class RankingResultUtil {
 			_getSearchResultInterpreter();
 
 		PortletURL viewContentURL = resourceResponse.createRenderURL();
-		String currentURL = _portal.getCurrentURL(resourceRequest);
+		String currentURL = PortalUtil.getCurrentURL(resourceRequest);
 
 		try {
 			viewContentURL.setParameter("mvcPath", "/view_content.jsp");
@@ -180,11 +179,6 @@ public class RankingResultUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSearchDocumentBuilderFactory(
 		DocumentBuilderFactory documentBuilderFactory) {
 
@@ -207,7 +201,6 @@ public class RankingResultUtil {
 		RankingResultUtil.class);
 
 	private static DocumentBuilderFactory _documentBuilderFactory;
-	private static Portal _portal;
 	private static SearchResultInterpreterProvider
 		_searchResultInterpreterProvider;
 

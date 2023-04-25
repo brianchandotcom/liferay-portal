@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,14 +31,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -134,17 +133,9 @@ public class DDMFormTemplateContextProcessorTest {
 
 		Assert.assertEquals("FieldsGroup12345678", ddmFormField.getName());
 
-		List<DDMFormField> nestedDDMFormFields =
-			ddmFormField.getNestedDDMFormFields();
-
-		Stream<DDMFormField> nestedDDMFormFieldsStream =
-			nestedDDMFormFields.stream();
-
-		Set<String> nestedDDMFormFieldNames = nestedDDMFormFieldsStream.map(
-			DDMFormField::getName
-		).collect(
-			Collectors.toSet()
-		);
+		Set<String> nestedDDMFormFieldNames = SetUtil.fromList(
+			TransformUtil.transform(
+				ddmFormField.getNestedDDMFormFields(), DDMFormField::getName));
 
 		Assert.assertEquals(
 			nestedDDMFormFieldNames.toString(), 2,

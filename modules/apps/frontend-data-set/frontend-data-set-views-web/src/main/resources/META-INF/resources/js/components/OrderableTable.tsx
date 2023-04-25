@@ -205,17 +205,11 @@ const OrderableTable = ({
 		draggedIndex: number;
 		targetIndex: number;
 	}) => {
-		const orderedItems = items.map((item, index) => {
-			if (index === draggedIndex) {
-				return items[targetIndex];
-			}
+		const orderedItems = items.slice(0);
 
-			if (index === targetIndex) {
-				return items[draggedIndex];
-			}
+		orderedItems.splice(draggedIndex, 1);
 
-			return item;
-		});
+		orderedItems.splice(targetIndex, 0, items[draggedIndex]);
 
 		setItems(orderedItems);
 

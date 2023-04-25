@@ -52,7 +52,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,11 +79,29 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _getLayoutsJSONArray(
+		String key = StringBundler.concat(
+			treeId, StringPool.COLON, groupId, StringPool.COLON, privateLayout,
+			":Pagination");
+
+		String paginationJSON = SessionClicks.get(
+			httpServletRequest.getSession(), key, _jsonFactory.getNullJSON());
+
+		JSONObject paginationJSONObject = _jsonFactory.createJSONObject(
+			paginationJSON);
+
+		JSONArray jsonArray = _getLayoutsJSONArray(
 			_getAncestorLayouts(httpServletRequest), false, expandedLayoutIds,
 			groupId, httpServletRequest, includeActions, incomplete, loadMore,
-			_isPaginationEnabled(httpServletRequest), parentLayoutId,
-			privateLayout, themeDisplay, treeId);
+			_isPaginationEnabled(httpServletRequest), paginationJSONObject,
+			parentLayoutId, privateLayout, themeDisplay);
+
+		if (loadMore) {
+			SessionClicks.put(
+				httpServletRequest.getSession(), key,
+				paginationJSONObject.toString());
+		}
+
+		return jsonArray;
 	}
 
 	private Layout _fetchCurrentLayout(HttpServletRequest httpServletRequest) {
@@ -148,8 +165,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			Set<Long> expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			boolean incomplete, boolean loadMore, boolean paginationEnabled,
-			long parentLayoutId, boolean privateLayout,
-			ThemeDisplay themeDisplay, String treeId)
+			JSONObject paginationJSONObject, long parentLayoutId,
+			boolean privateLayout, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		int count = _layoutService.getLayoutsCount(
@@ -162,8 +179,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		JSONArray layoutsJSONArray = _jsonFactory.createJSONArray();
 
 		List<Layout> layouts = _getPaginatedLayouts(
-			httpServletRequest, groupId, paginationEnabled, privateLayout,
-			parentLayoutId, loadMore, incomplete, treeId, childLayout, count,
+			httpServletRequest, groupId, paginationEnabled,
+			paginationJSONObject, privateLayout, parentLayoutId, loadMore,
+			incomplete, childLayout, count,
 			_layoutLocalService.getLayoutsCount(
 				_groupLocalService.getGroup(groupId), privateLayout,
 				parentLayoutId));
@@ -197,15 +215,16 @@ public class LayoutsTreeImpl implements LayoutsTree {
 						ancestorLayouts, true, expandedLayoutIds,
 						virtualLayout.getSourceGroupId(), httpServletRequest,
 						includeActions, incomplete, loadMore, paginationEnabled,
-						virtualLayout.getLayoutId(),
-						virtualLayout.isPrivateLayout(), themeDisplay, treeId);
+						paginationJSONObject, virtualLayout.getLayoutId(),
+						virtualLayout.isPrivateLayout(), themeDisplay);
 				}
 				else {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
 						ancestorLayouts, true, expandedLayoutIds, groupId,
 						httpServletRequest, includeActions, incomplete,
-						loadMore, paginationEnabled, layout.getLayoutId(),
-						layout.isPrivateLayout(), themeDisplay, treeId);
+						loadMore, paginationEnabled, paginationJSONObject,
+						layout.getLayoutId(), layout.isPrivateLayout(),
+						themeDisplay);
 				}
 
 				childLayoutsCount = childLayoutsJSONArray.length();
@@ -245,29 +264,11 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return layoutsJSONArray;
 	}
 
-	private int _getLoadedLayoutsCount(
-			HttpSession httpSession, long groupId, boolean privateLayout,
-			long layoutId, String treeId)
-		throws Exception {
-
-		String key = StringBundler.concat(
-			treeId, StringPool.COLON, groupId, StringPool.COLON, privateLayout,
-			":Pagination");
-
-		String paginationJSON = SessionClicks.get(
-			httpSession, key, _jsonFactory.getNullJSON());
-
-		JSONObject paginationJSONObject = _jsonFactory.createJSONObject(
-			paginationJSON);
-
-		return paginationJSONObject.getInt(String.valueOf(layoutId), 0);
-	}
-
 	private List<Layout> _getPaginatedLayouts(
 			HttpServletRequest httpServletRequest, long groupId,
-			boolean paginationEnabled, boolean privateLayout,
-			long parentLayoutId, boolean loadMore, boolean incomplete,
-			String treeId, boolean childLayout, int count, int totalCount)
+			boolean paginationEnabled, JSONObject paginationJSONObject,
+			boolean privateLayout, long parentLayoutId, boolean loadMore,
+			boolean incomplete, boolean childLayout, int count, int totalCount)
 		throws Exception {
 
 		if (!paginationEnabled) {
@@ -276,9 +277,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 
-		int loadedLayoutsCount = _getLoadedLayoutsCount(
-			httpServletRequest.getSession(), groupId, privateLayout,
-			parentLayoutId, treeId);
+		int loadedLayoutsCount = paginationJSONObject.getInt(
+			String.valueOf(parentLayoutId), 0);
 
 		int start = ParamUtil.getInteger(httpServletRequest, "start");
 
@@ -293,22 +293,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		}
 
 		if (loadMore) {
-			String key = StringBundler.concat(
-				treeId, StringPool.COLON, groupId, StringPool.COLON,
-				privateLayout, ":Pagination");
-
-			String paginationJSON = SessionClicks.get(
-				httpServletRequest.getSession(), key,
-				_jsonFactory.getNullJSON());
-
-			JSONObject paginationJSONObject = _jsonFactory.createJSONObject(
-				paginationJSON);
-
 			paginationJSONObject.put(String.valueOf(parentLayoutId), end);
-
-			SessionClicks.put(
-				httpServletRequest.getSession(), key,
-				paginationJSONObject.toString());
 		}
 
 		end = Math.max(start, Math.min(end, count));

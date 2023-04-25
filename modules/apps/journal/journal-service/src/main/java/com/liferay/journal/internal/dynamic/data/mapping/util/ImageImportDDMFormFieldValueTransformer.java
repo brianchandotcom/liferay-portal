@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.exportimport.content.processor;
+package com.liferay.journal.internal.dynamic.data.mapping.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;

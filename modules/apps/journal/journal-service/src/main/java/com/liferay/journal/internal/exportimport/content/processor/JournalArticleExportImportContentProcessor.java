@@ -34,6 +34,9 @@ import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constant
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.NoSuchArticleException;
+import com.liferay.journal.internal.dynamic.data.mapping.util.ImageExportDDMFormFieldValueTransformer;
+import com.liferay.journal.internal.dynamic.data.mapping.util.ImageImportDDMFormFieldValueTransformer;
+import com.liferay.journal.internal.dynamic.data.mapping.util.JournalArticleImportDDMFormFieldValueTransformer;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;

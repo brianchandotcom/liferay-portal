@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -51,8 +52,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,9 +121,8 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 			fieldValue = _sanitizeFieldValue(t, ddmFormFieldValue, locale);
 		}
 		else {
-			Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
-
-			fieldValue = stream.map(
+			fieldValue = TransformUtil.transform(
+				ddmFormFieldValues,
 				ddmFormFieldValue -> {
 					try {
 						_addNestedFields(
@@ -141,12 +139,7 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 
 						return null;
 					}
-				}
-			).filter(
-				value -> value != null
-			).collect(
-				Collectors.toList()
-			);
+				});
 		}
 
 		if (classTypeValues.containsKey(key)) {

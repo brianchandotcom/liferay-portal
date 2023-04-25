@@ -43,7 +43,6 @@ import java.net.URLConnection;
 
 import java.nio.ByteBuffer;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -137,6 +136,18 @@ public class PortletConfigurationExtender
 		_bundleTracker.close();
 
 		_saveURLTimestamps(_bundleContext, _refreshedURLTimestamps);
+	}
+
+	private void _enqueue(
+		Queue<String> queue, String resourceActionsConfiguration) {
+
+		queue.add(resourceActionsConfiguration);
+
+		if (!resourceActionsConfiguration.endsWith("-ext.xml")) {
+			queue.add(
+				StringUtil.replace(
+					resourceActionsConfiguration, ".xml", "-ext.xml"));
+		}
 	}
 
 	private boolean _isUpToDate(
@@ -238,8 +249,13 @@ public class PortletConfigurationExtender
 
 		Map<URL, Long> urlTimestamps = new HashMap<>();
 
-		Queue<String> queue = new LinkedList<>(
-			Arrays.asList(resourceActionsConfigurations));
+		Queue<String> queue = new LinkedList<>();
+
+		for (String resourceActionsConfiguration :
+				resourceActionsConfigurations) {
+
+			_enqueue(queue, resourceActionsConfiguration);
+		}
 
 		String resourceActionsConfiguration = null;
 
@@ -266,7 +282,8 @@ public class PortletConfigurationExtender
 					for (Element resourceElement :
 							rootElement.elements("resource")) {
 
-						queue.add(
+						_enqueue(
+							queue,
 							StringUtil.trim(
 								resourceElement.attributeValue("file")));
 					}

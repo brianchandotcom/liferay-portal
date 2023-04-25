@@ -35,7 +35,6 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -487,23 +486,20 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			languageIdToUrlTitleMap.get(cpDefinitionDefaultLanguageId));
 		document.addText("defaultLanguageId", cpDefinitionDefaultLanguageId);
 
-		List<Long> commerceChannelGroupIds = new ArrayList<>();
+		long[] commerceChannelGroupIds = TransformUtil.transformToLongArray(
+			_commerceChannelRelLocalService.getCommerceChannelRels(
+				cpDefinition.getModelClassName(),
+				cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null),
+			commerceChannelRel -> {
+				CommerceChannel commerceChannel =
+					commerceChannelRel.getCommerceChannel();
 
-		for (CommerceChannelRel commerceChannelRel :
-				_commerceChannelRelLocalService.getCommerceChannelRels(
-					cpDefinition.getModelClassName(),
-					cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			CommerceChannel commerceChannel =
-				commerceChannelRel.getCommerceChannel();
-
-			commerceChannelGroupIds.add(commerceChannel.getGroupId());
-		}
+				return commerceChannel.getGroupId();
+			});
 
 		document.addNumber(
-			CPField.COMMERCE_CHANNEL_GROUP_IDS,
-			ArrayUtil.toLongArray(commerceChannelGroupIds));
+			CPField.COMMERCE_CHANNEL_GROUP_IDS, commerceChannelGroupIds);
 
 		long[] commerceAccountGroupIds = TransformUtil.transformToLongArray(
 			_commerceAccountGroupRelService.getCommerceAccountGroupRels(

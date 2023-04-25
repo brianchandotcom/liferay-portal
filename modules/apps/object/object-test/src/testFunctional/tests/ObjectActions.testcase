@@ -178,6 +178,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		while ((IsElementNotPresent(label = "Custom Object 183", locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT")) && (maxIterations = "5")) {
+			Refresh();
+		}
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object 183");
 
 		ObjectAdmin.goToActionsTab();

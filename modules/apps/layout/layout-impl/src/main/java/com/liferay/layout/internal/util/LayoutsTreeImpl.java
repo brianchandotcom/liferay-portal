@@ -367,8 +367,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		Layout draftLayout = _getDraftLayout(layout);
-
 		boolean hasUpdatePermission = true;
 
 		if (includeActions) {
@@ -425,8 +423,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"name",
 			() -> {
-				if (includeActions &&
-					(draftLayout != null) &&
+				if (includeActions && (_getDraftLayout(layout) != null) &&
 					(finalHasUpdatePermission || !layout.isPublished() ||
 					 _layoutContentModelResourcePermission.contains(
 						 themeDisplay.getPermissionChecker(), layout.getPlid(),

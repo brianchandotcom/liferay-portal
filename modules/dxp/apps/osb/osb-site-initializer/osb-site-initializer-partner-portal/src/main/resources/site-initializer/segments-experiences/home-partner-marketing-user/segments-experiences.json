@@ -1,8 +1,0 @@
-{
-	"active": "true",
-	"friendlyURL": "/home",
-	"name_i18n": {
-		"en-US": "Home: Partner Marketing User (PMU)"
-	},
-	"segmentsEntryId": "[$SEGMENTS_ENTRY_ID:PMU$]"
-}

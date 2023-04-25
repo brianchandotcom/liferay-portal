@@ -25,16 +25,14 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Comment");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Comments Page");
 
-		PagesAdmin.addPage(pageName = "Page Comments Page");
-
-		Navigator.gotoPage(pageName = "Page Comments Page");
-
-		Portlet.addPG(portletName = "Page Comments");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Page Comments Page",
+			widgetName = "Page Comments");
 	}
 
 	tearDown {

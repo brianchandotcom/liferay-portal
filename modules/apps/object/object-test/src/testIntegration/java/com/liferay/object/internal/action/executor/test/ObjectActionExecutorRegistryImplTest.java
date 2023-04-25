@@ -70,7 +70,7 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		_companyId2 = company.getCompanyId();
 
-		_ootbObjectActionExecutors = Arrays.asList(
+		_defaultObjectActionExecutors = Arrays.asList(
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY),
 			_objectActionExecutorRegistry.getObjectActionExecutor(
@@ -96,12 +96,12 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "Account"),
-			_ootbObjectActionExecutors);
+			_defaultObjectActionExecutors);
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId2, "Address"),
-			_ootbObjectActionExecutors);
+			_defaultObjectActionExecutors);
 
 		// Available for all companies' restricted object definitions
 
@@ -124,7 +124,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "User"),
-			_ootbObjectActionExecutors);
+			_defaultObjectActionExecutors);
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
@@ -151,7 +151,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId2, "Account"),
-			_ootbObjectActionExecutors);
+			_defaultObjectActionExecutors);
 
 		_unregisterObjectActionExecutors();
 
@@ -174,16 +174,16 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "User"),
-			_ootbObjectActionExecutors);
+			_defaultObjectActionExecutors);
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId2, "Account"),
-			_ootbObjectActionExecutors);
+			_defaultObjectActionExecutors);
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId2, "Address"),
-			_ootbObjectActionExecutors);
+			_defaultObjectActionExecutors);
 	}
 
 	private static void _unregisterObjectActionExecutors() {
@@ -217,7 +217,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		ObjectActionExecutor... objectActionExecutors) {
 
 		return ListUtil.concat(
-			Arrays.asList(objectActionExecutors), _ootbObjectActionExecutors);
+			Arrays.asList(objectActionExecutors), _defaultObjectActionExecutors);
 	}
 
 	private ObjectActionExecutor _registerObjectActionExecutor(
@@ -238,11 +238,11 @@ public class ObjectActionExecutorRegistryImplTest {
 	private static BundleContext _bundleContext;
 	private static long _companyId1;
 	private static long _companyId2;
+	private static List<ObjectActionExecutor> _defaultObjectActionExecutors;
 
 	@Inject
 	private static ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 
-	private static List<ObjectActionExecutor> _ootbObjectActionExecutors;
 	private static final List<ServiceRegistration<ObjectActionExecutor>>
 		_serviceRegistrations = new ArrayList<>();
 

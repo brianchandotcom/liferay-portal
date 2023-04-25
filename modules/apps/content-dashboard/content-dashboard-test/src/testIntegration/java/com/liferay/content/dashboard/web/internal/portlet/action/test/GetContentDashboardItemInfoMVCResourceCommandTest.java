@@ -115,8 +115,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertNotNull(jsonObject.getString("extension"));
-		Assert.assertNotNull(jsonObject.getString("size"));
 		Assert.assertNotNull(jsonObject.getString("file-name"));
+		Assert.assertNotNull(jsonObject.getString("size"));
 	}
 
 	@Test
@@ -125,9 +125,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			_createContentDashboardJournalArticleItem());
 
 		Assert.assertNotNull(jsonObject);
-		Assert.assertNotNull(jsonObject.getString("review-date"));
 		Assert.assertNotNull(jsonObject.getString("display-date"));
 		Assert.assertNotNull(jsonObject.getString("expiration-date"));
+		Assert.assertNotNull(jsonObject.getString("review-date"));
 	}
 
 	@Test

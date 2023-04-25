@@ -127,6 +127,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		_scopedImportMapJSONObjects.put(scope, jsonObject);
 
+		_rebuildImportMaps();
+
 		return new JSImportMapsRegistration() {
 
 			@Override

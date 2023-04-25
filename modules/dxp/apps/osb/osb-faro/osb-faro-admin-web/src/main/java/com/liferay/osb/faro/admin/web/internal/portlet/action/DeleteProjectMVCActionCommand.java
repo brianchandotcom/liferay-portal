@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Marcos Martins
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + FaroAdminPortletKeys.FARO_ADMIN,
 		"mvc.command.name=/faro_admin/delete_project"
@@ -77,7 +76,7 @@ public class DeleteProjectMVCActionCommand extends BaseMVCActionCommand {
 			_http.URLtoString(options);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			SessionErrors.add(actionRequest, exception.getClass());
 		}

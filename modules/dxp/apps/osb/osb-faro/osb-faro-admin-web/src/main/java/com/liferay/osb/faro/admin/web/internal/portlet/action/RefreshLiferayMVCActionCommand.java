@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + FaroAdminPortletKeys.FARO_ADMIN,
 		"mvc.command.name=/faro_admin/refresh_liferay"
@@ -57,7 +56,7 @@ public class RefreshLiferayMVCActionCommand extends BaseMVCActionCommand {
 				_faroProjectLocalService.getFaroProject(faroProjectId));
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			SessionErrors.add(actionRequest, exception.getClass());
 		}

@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shinn Lok
  */
 @Component(
-	immediate = true,
 	property = {
 		"panel.app.order:Integer=0",
 		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION
@@ -37,17 +36,23 @@ import org.osgi.service.component.annotations.Reference;
 public class FaroAdminPanelApp extends BasePanelApp {
 
 	@Override
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	@Override
 	public String getPortletId() {
 		return FaroAdminPortletKeys.FARO_ADMIN;
 	}
 
-	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + FaroAdminPortletKeys.FARO_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {
-		super.setPortlet(portlet);
+		_portlet = portlet;
 	}
+
+	private Portlet _portlet;
 
 }

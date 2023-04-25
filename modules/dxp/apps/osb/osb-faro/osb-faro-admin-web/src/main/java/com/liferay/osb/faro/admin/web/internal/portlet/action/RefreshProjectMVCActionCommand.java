@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,7 +49,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + FaroAdminPortletKeys.FARO_ADMIN,
 		"mvc.command.name=/faro_admin/refresh_project"
@@ -112,9 +112,9 @@ public class RefreshProjectMVCActionCommand extends BaseMVCActionCommand {
 		String url = StringBundler.concat(
 			portalURL, "/o/faro/main/project/", groupId);
 
-		url = _http.addParameter(url, "forceUpdate", true);
+		url = HttpComponentsUtil.addParameter(url, "forceUpdate", true);
 
-		return _http.addParameter(url, "updateLastAccess", false);
+		return HttpComponentsUtil.addParameter(url, "updateLastAccess", false);
 	}
 
 	protected void sendRequest(
@@ -127,7 +127,7 @@ public class RefreshProjectMVCActionCommand extends BaseMVCActionCommand {
 			_http.URLtoString(options);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			SessionErrors.add(actionRequest, exception.getClass());
 		}

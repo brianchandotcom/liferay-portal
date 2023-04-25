@@ -41,7 +41,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + FaroAdminPortletKeys.FARO_ADMIN,
 		"mvc.command.name=/faro_admin/info_panel"

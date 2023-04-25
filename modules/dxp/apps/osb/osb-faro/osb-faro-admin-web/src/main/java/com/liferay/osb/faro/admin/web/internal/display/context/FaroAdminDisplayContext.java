@@ -15,27 +15,26 @@
 package com.liferay.osb.faro.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.osb.faro.admin.web.internal.model.FaroProjectAdminDisplay;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class FaroAdminDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -70,53 +69,42 @@ public class FaroAdminDisplayContext {
 			return Collections.emptyList();
 		}
 
-		PortletURL portletURL = _renderResponse.createActionURL();
-
-		portletURL.setParameter(
-			"redirect",
+		PortletURL portletURL = PortletURLBuilder.create(
+			_renderResponse.createActionURL()
+		).setRedirect(
 			ParamUtil.getString(
-				_httpServletRequest, "redirect",
-				_themeDisplay.getURLCurrent()));
+				_httpServletRequest, "redirect", _themeDisplay.getURLCurrent())
+		).buildPortletURL();
 
-		return new DropdownItemList() {
-			{
-				if (GetterUtil.getBoolean(
-						System.getenv("FARO_DELETE_WORKSPACE_ENABLED"))) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								portletURL, ActionRequest.ACTION_NAME,
-								"/faro_admin/delete_project", "faroProjectId",
-								faroProjectAdminDisplay.getFaroProjectId());
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "delete-project"));
-						});
-				}
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							portletURL, ActionRequest.ACTION_NAME,
-							"/faro_admin/refresh_liferay", "faroProjectId",
-							faroProjectAdminDisplay.getFaroProjectId());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "refresh-liferay"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							portletURL, ActionRequest.ACTION_NAME,
-							"/faro_admin/refresh_project", "groupId",
-							faroProjectAdminDisplay.getGroupId());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "refresh-project"));
-					});
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					portletURL, ActionRequest.ACTION_NAME,
+					"/faro_admin/deactivate_project", "faroProjectId",
+					faroProjectAdminDisplay.getFaroProjectId());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "deactivate-project"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					portletURL, ActionRequest.ACTION_NAME,
+					"/faro_admin/refresh_liferay", "faroProjectId",
+					faroProjectAdminDisplay.getFaroProjectId());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "refresh-liferay"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					portletURL, ActionRequest.ACTION_NAME,
+					"/faro_admin/refresh_project", "groupId",
+					faroProjectAdminDisplay.getGroupId());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "refresh-project"));
+			}
+		).build();
 	}
 
 	public PortletURL getPortletURL() {
@@ -218,18 +206,13 @@ public class FaroAdminDisplayContext {
 
 		Hits hits = indexer.search(searchContext);
 
-		List<FaroProjectAdminDisplay> faroProjectAdminDisplays =
-			new ArrayList<>();
-
-		for (Document document : hits.toList()) {
-			faroProjectAdminDisplays.add(new FaroProjectAdminDisplay(document));
-		}
-
-		searchContainer.setResults(faroProjectAdminDisplays);
+		searchContainer.setResultsAndTotal(
+			() -> TransformUtil.transform(
+				hits.toList(), FaroProjectAdminDisplay::new),
+			hits.getLength());
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-		searchContainer.setTotal(hits.getLength());
 
 		_searchContainer = searchContainer;
 

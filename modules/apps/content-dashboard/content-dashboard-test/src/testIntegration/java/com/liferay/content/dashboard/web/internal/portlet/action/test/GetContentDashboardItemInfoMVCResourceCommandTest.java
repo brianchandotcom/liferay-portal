@@ -17,13 +17,9 @@ package com.liferay.content.dashboard.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
@@ -61,7 +57,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -284,29 +279,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(StringPool.BLANK, userJSONObject.getString("url"));
 	}
 
-	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)
-		throws Exception {
-
-		return _assetCategoryLocalService.addCategory(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null, assetVocabulary.getVocabularyId(), null, _serviceContext);
-	}
-
-	private AssetVocabulary _addAssetVocabulary(int visibilityTypePublic)
-		throws Exception {
-
-		return _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _group.getGroupId(), null,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null, null, visibilityTypePublic, new ServiceContext());
-	}
-
 	private void _assertContentDashboardItemLatestVersions(
 		ContentDashboardItem<?> contentDashboardItem, JSONObject jsonObject) {
 
@@ -399,10 +371,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	}
 
 	private void _initCategoryAndVocabulary() throws Exception {
-		AssetVocabulary assetVocabulary = _addAssetVocabulary(
-			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
 
-		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
@@ -439,14 +412,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	}
 
 	@Inject
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
 	private AssetEntryAssetCategoryRelLocalService
 		_assetEntryAssetCategoryRelLocalService;
-
-	@Inject
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.blogs.internal.item.BlogsEntryContentDashboardItemFactory"

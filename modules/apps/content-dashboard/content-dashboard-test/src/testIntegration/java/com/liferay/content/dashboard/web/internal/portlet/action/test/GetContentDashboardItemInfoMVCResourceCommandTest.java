@@ -495,30 +495,23 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
+			_group);
+
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			ContentDashboardTestUtil.getThemeDisplay(_group));
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockLiferayResourceRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
 
 		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, themeDisplay);
 		mockLiferayResourceRequest.setParameter(
 			"className", infoItemReference.getClassName());
 		mockLiferayResourceRequest.setParameter(
 			"classPK", String.valueOf(infoItemReference.getClassPK()));
 
 		return mockLiferayResourceRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
 	}
 
 	private void _initCategoryAndVocabulary() throws Exception {

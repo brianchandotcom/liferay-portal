@@ -66,7 +66,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -185,15 +184,21 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		Stream<DDMField> stream = ddmFields.stream();
+		DDMField rootDDMField = null;
 
-		DDMField rootDDMField = stream.filter(
-			ddmField -> com.liferay.portal.kernel.util.StringUtil.equals(
-				ddmField.getFieldName(), StringPool.BLANK)
-		).findFirst(
-		).orElse(
-			ddmFields.get(0)
-		);
+		for (DDMField ddmField : ddmFields) {
+			if (com.liferay.portal.kernel.util.StringUtil.equals(
+					ddmField.getFieldName(), StringPool.BLANK)) {
+
+				rootDDMField = ddmField;
+
+				break;
+			}
+		}
+
+		if (rootDDMField == null) {
+			rootDDMField = ddmFields.get(0);
+		}
 
 		DDMFieldInfo rootDDMFieldInfo = ddmFieldInfoMap.remove(
 			rootDDMField.getFieldId());

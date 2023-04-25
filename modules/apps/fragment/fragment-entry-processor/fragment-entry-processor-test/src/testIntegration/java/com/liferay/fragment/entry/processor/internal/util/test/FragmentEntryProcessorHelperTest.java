@@ -516,8 +516,7 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	private DDMFormField _createDDMFormField(String type) {
-		DDMFormField ddmFormField = new DDMFormField(
-			RandomTestUtil.randomString(10), type);
+		DDMFormField ddmFormField = new DDMFormField("name", type);
 
 		ddmFormField.setDataType("text");
 		ddmFormField.setIndexType("text");

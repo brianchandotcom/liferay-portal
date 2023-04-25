@@ -961,8 +961,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 	private DDMFormField _createDDMFormField(
 		boolean multiple, Map<String, String> optionsMap, String type) {
 
-		DDMFormField ddmFormField = new DDMFormField(
-			RandomTestUtil.randomString(10), type);
+		DDMFormField ddmFormField = new DDMFormField("name", type);
 
 		ddmFormField.setDataType("text");
 		ddmFormField.setIndexType("text");

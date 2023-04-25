@@ -83,7 +83,7 @@ public class DateTimeDDMFormFieldTypeSettingsTest
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
 					"dataType", "name", "fieldReference", "predefinedValue",
 					"indexType", "showLabel", "repeatable", "readOnly",
-					"rulesActionDisabled", "rulesConditionDisabled")));
+					"rulesActionDisabled", "rulesConditionDisabled", "type")));
 	}
 
 }

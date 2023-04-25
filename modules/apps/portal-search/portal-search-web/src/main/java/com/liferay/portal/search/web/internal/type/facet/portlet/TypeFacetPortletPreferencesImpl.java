@@ -16,6 +16,7 @@ package com.liferay.portal.search.web.internal.type.facet.portlet;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -62,30 +62,24 @@ public class TypeFacetPortletPreferencesImpl
 
 		String[] assetTypes = getCurrentAssetTypesArray(companyId);
 
-		List<KeyValuePair> availableAssetTypes = new ArrayList<>();
+		return TransformUtil.transformToList(
+			getAllAssetTypes(companyId),
+			assetType -> {
+				if (ArrayUtil.contains(assetTypes, assetType)) {
+					return null;
+				}
 
-		for (String className : getAllAssetTypes(companyId)) {
-			if (!ArrayUtil.contains(assetTypes, className)) {
-				availableAssetTypes.add(_getKeyValuePair(locale, className));
-			}
-		}
-
-		return availableAssetTypes;
+				return _getKeyValuePair(locale, assetType);
+			});
 	}
 
 	@Override
 	public List<KeyValuePair> getCurrentAssetTypes(
 		long companyId, Locale locale) {
 
-		String[] assetTypes = getCurrentAssetTypesArray(companyId);
-
-		List<KeyValuePair> currentAssetTypes = new ArrayList<>();
-
-		for (String className : assetTypes) {
-			currentAssetTypes.add(_getKeyValuePair(locale, className));
-		}
-
-		return currentAssetTypes;
+		return TransformUtil.transformToList(
+			getCurrentAssetTypesArray(companyId),
+			assetType -> _getKeyValuePair(locale, assetType));
 	}
 
 	@Override

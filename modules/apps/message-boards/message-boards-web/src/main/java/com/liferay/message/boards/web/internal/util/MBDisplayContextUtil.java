@@ -15,39 +15,19 @@
 package com.liferay.message.boards.web.internal.util;
 
 import com.liferay.message.boards.web.internal.display.context.MBDisplayContextProvider;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.osgi.util.service.Snapshot;
 
 /**
  * @author Iván Zaera
  */
-@Component(service = {})
 public class MBDisplayContextUtil {
 
-	public static MBDisplayContextUtil getMBWebComponentProvider() {
-		return _mbDisplayContextUtil;
+	public static MBDisplayContextProvider getMBDisplayContextProvider() {
+		return _mbDisplayContextProviderSnapshot.get();
 	}
 
-	public MBDisplayContextProvider getMBDisplayContextProvider() {
-		return _mbDisplayContextProvider;
-	}
-
-	@Activate
-	protected void activate() {
-		_mbDisplayContextUtil = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_mbDisplayContextUtil = null;
-	}
-
-	private static MBDisplayContextUtil _mbDisplayContextUtil;
-
-	@Reference
-	private MBDisplayContextProvider _mbDisplayContextProvider;
+	private static final Snapshot<MBDisplayContextProvider>
+		_mbDisplayContextProviderSnapshot = new Snapshot<>(
+			MBDisplayContextUtil.class, MBDisplayContextProvider.class);
 
 }

@@ -27,6 +27,7 @@ import {FDSViewType} from '../FDSViews';
 import OrderableTable from '../components/OrderableTable';
 
 type FDSFieldType = {
+	id: number;
 	label: string;
 	name: string;
 	renderer: string;
@@ -343,7 +344,7 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 			const orderedFDSFieldIds: Array<number> = [];
 
 			storedOrderedFDSFieldIds.forEach((fdsFieldId: string) => {
-				storedFDSFields.forEach((storedFDSField: any) => {
+				storedFDSFields.forEach((storedFDSField: FDSFieldType) => {
 					if (fdsFieldId === String(storedFDSField.id)) {
 						orderedFDSFields.push(storedFDSField);
 
@@ -352,7 +353,7 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 				});
 			});
 
-			storedFDSFields.forEach((storedFDSField: any) => {
+			storedFDSFields.forEach((storedFDSField: FDSFieldType) => {
 				if (!orderedFDSFieldIds.includes(storedFDSField.id)) {
 					orderedFDSFields.push(storedFDSField);
 				}
@@ -364,7 +365,7 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 		}
 		else {
 			fdsFieldsOrderRef.current = storedFDSFields
-				.map((storedFDSField: any) => storedFDSField.id)
+				.map((storedFDSField: FDSFieldType) => storedFDSField.id)
 				.join(',');
 
 			setFDSFields(storedFDSFields);
@@ -475,7 +476,7 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 					onOrderChange={({
 						orderedItems,
 					}: {
-						orderedItems: Array<any>;
+						orderedItems: Array<FDSFieldType>;
 					}) => {
 						fdsFieldsOrderRef.current = orderedItems
 							.map((item) => item.id)

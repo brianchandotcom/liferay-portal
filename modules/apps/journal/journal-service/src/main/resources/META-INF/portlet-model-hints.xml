@@ -109,7 +109,6 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="DDMStructureId" type="long" />
-		<field name="DDMStructureKey" type="String" />
 		<field name="DDMTemplateKey" type="String" />
 		<field name="DDMRendererTemplateKey" type="String" />
 		<field name="delta" type="int">

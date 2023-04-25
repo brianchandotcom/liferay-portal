@@ -80,7 +80,7 @@ public class JournalFeedModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"feedId", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"DDMStructureId", Types.BIGINT},
-		{"DDMStructureKey", Types.VARCHAR}, {"DDMTemplateKey", Types.VARCHAR},
+		{"DDMTemplateKey", Types.VARCHAR},
 		{"DDMRendererTemplateKey", Types.VARCHAR}, {"delta", Types.INTEGER},
 		{"orderByCol", Types.VARCHAR}, {"orderByType", Types.VARCHAR},
 		{"targetLayoutFriendlyUrl", Types.VARCHAR},
@@ -107,7 +107,6 @@ public class JournalFeedModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMStructureId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("DDMStructureKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMTemplateKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMRendererTemplateKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("delta", Types.INTEGER);
@@ -122,7 +121,7 @@ public class JournalFeedModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalFeed (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureId LONG,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(200) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE,lastPublishDate DATE null,primary key (id_, ctCollectionId))";
+		"create table JournalFeed (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureId LONG,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(200) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE,lastPublishDate DATE null,primary key (id_, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table JournalFeed";
 
@@ -293,8 +292,6 @@ public class JournalFeedModelImpl
 			attributeGetterFunctions.put(
 				"DDMStructureId", JournalFeed::getDDMStructureId);
 			attributeGetterFunctions.put(
-				"DDMStructureKey", JournalFeed::getDDMStructureKey);
-			attributeGetterFunctions.put(
 				"DDMTemplateKey", JournalFeed::getDDMTemplateKey);
 			attributeGetterFunctions.put(
 				"DDMRendererTemplateKey",
@@ -372,10 +369,6 @@ public class JournalFeedModelImpl
 			attributeSetterBiConsumers.put(
 				"DDMStructureId",
 				(BiConsumer<JournalFeed, Long>)JournalFeed::setDDMStructureId);
-			attributeSetterBiConsumers.put(
-				"DDMStructureKey",
-				(BiConsumer<JournalFeed, String>)
-					JournalFeed::setDDMStructureKey);
 			attributeSetterBiConsumers.put(
 				"DDMTemplateKey",
 				(BiConsumer<JournalFeed, String>)
@@ -716,26 +709,6 @@ public class JournalFeedModelImpl
 
 	@JSON
 	@Override
-	public String getDDMStructureKey() {
-		if (_DDMStructureKey == null) {
-			return "";
-		}
-		else {
-			return _DDMStructureKey;
-		}
-	}
-
-	@Override
-	public void setDDMStructureKey(String DDMStructureKey) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_DDMStructureKey = DDMStructureKey;
-	}
-
-	@JSON
-	@Override
 	public String getDDMTemplateKey() {
 		if (_DDMTemplateKey == null) {
 			return "";
@@ -1015,7 +988,6 @@ public class JournalFeedModelImpl
 		journalFeedImpl.setName(getName());
 		journalFeedImpl.setDescription(getDescription());
 		journalFeedImpl.setDDMStructureId(getDDMStructureId());
-		journalFeedImpl.setDDMStructureKey(getDDMStructureKey());
 		journalFeedImpl.setDDMTemplateKey(getDDMTemplateKey());
 		journalFeedImpl.setDDMRendererTemplateKey(getDDMRendererTemplateKey());
 		journalFeedImpl.setDelta(getDelta());
@@ -1062,8 +1034,6 @@ public class JournalFeedModelImpl
 			this.<String>getColumnOriginalValue("description"));
 		journalFeedImpl.setDDMStructureId(
 			this.<Long>getColumnOriginalValue("DDMStructureId"));
-		journalFeedImpl.setDDMStructureKey(
-			this.<String>getColumnOriginalValue("DDMStructureKey"));
 		journalFeedImpl.setDDMTemplateKey(
 			this.<String>getColumnOriginalValue("DDMTemplateKey"));
 		journalFeedImpl.setDDMRendererTemplateKey(
@@ -1233,14 +1203,6 @@ public class JournalFeedModelImpl
 
 		journalFeedCacheModel.DDMStructureId = getDDMStructureId();
 
-		journalFeedCacheModel.DDMStructureKey = getDDMStructureKey();
-
-		String DDMStructureKey = journalFeedCacheModel.DDMStructureKey;
-
-		if ((DDMStructureKey != null) && (DDMStructureKey.length() == 0)) {
-			journalFeedCacheModel.DDMStructureKey = null;
-		}
-
 		journalFeedCacheModel.DDMTemplateKey = getDDMTemplateKey();
 
 		String DDMTemplateKey = journalFeedCacheModel.DDMTemplateKey;
@@ -1402,7 +1364,6 @@ public class JournalFeedModelImpl
 	private String _name;
 	private String _description;
 	private long _DDMStructureId;
-	private String _DDMStructureKey;
 	private String _DDMTemplateKey;
 	private String _DDMRendererTemplateKey;
 	private int _delta;
@@ -1459,7 +1420,6 @@ public class JournalFeedModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("DDMStructureId", _DDMStructureId);
-		_columnOriginalValues.put("DDMStructureKey", _DDMStructureKey);
 		_columnOriginalValues.put("DDMTemplateKey", _DDMTemplateKey);
 		_columnOriginalValues.put(
 			"DDMRendererTemplateKey", _DDMRendererTemplateKey);
@@ -1525,29 +1485,27 @@ public class JournalFeedModelImpl
 
 		columnBitmasks.put("DDMStructureId", 8192L);
 
-		columnBitmasks.put("DDMStructureKey", 16384L);
+		columnBitmasks.put("DDMTemplateKey", 16384L);
 
-		columnBitmasks.put("DDMTemplateKey", 32768L);
+		columnBitmasks.put("DDMRendererTemplateKey", 32768L);
 
-		columnBitmasks.put("DDMRendererTemplateKey", 65536L);
+		columnBitmasks.put("delta", 65536L);
 
-		columnBitmasks.put("delta", 131072L);
+		columnBitmasks.put("orderByCol", 131072L);
 
-		columnBitmasks.put("orderByCol", 262144L);
+		columnBitmasks.put("orderByType", 262144L);
 
-		columnBitmasks.put("orderByType", 524288L);
+		columnBitmasks.put("targetLayoutFriendlyUrl", 524288L);
 
-		columnBitmasks.put("targetLayoutFriendlyUrl", 1048576L);
+		columnBitmasks.put("targetPortletId", 1048576L);
 
-		columnBitmasks.put("targetPortletId", 2097152L);
+		columnBitmasks.put("contentField", 2097152L);
 
-		columnBitmasks.put("contentField", 4194304L);
+		columnBitmasks.put("feedFormat", 4194304L);
 
-		columnBitmasks.put("feedFormat", 8388608L);
+		columnBitmasks.put("feedVersion", 8388608L);
 
-		columnBitmasks.put("feedVersion", 16777216L);
-
-		columnBitmasks.put("lastPublishDate", 33554432L);
+		columnBitmasks.put("lastPublishDate", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

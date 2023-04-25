@@ -151,8 +151,6 @@ public class JournalFeedPersistenceTest {
 
 		newJournalFeed.setDDMStructureId(RandomTestUtil.nextLong());
 
-		newJournalFeed.setDDMStructureKey(RandomTestUtil.randomString());
-
 		newJournalFeed.setDDMTemplateKey(RandomTestUtil.randomString());
 
 		newJournalFeed.setDDMRendererTemplateKey(RandomTestUtil.randomString());
@@ -215,9 +213,6 @@ public class JournalFeedPersistenceTest {
 		Assert.assertEquals(
 			existingJournalFeed.getDDMStructureId(),
 			newJournalFeed.getDDMStructureId());
-		Assert.assertEquals(
-			existingJournalFeed.getDDMStructureKey(),
-			newJournalFeed.getDDMStructureKey());
 		Assert.assertEquals(
 			existingJournalFeed.getDDMTemplateKey(),
 			newJournalFeed.getDDMTemplateKey());
@@ -330,11 +325,11 @@ public class JournalFeedPersistenceTest {
 			true, "id", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"feedId", true, "name", true, "description", true, "DDMStructureId",
-			true, "DDMStructureKey", true, "DDMTemplateKey", true,
-			"DDMRendererTemplateKey", true, "delta", true, "orderByCol", true,
-			"orderByType", true, "targetLayoutFriendlyUrl", true,
-			"targetPortletId", true, "contentField", true, "feedFormat", true,
-			"feedVersion", true, "lastPublishDate", true);
+			true, "DDMTemplateKey", true, "DDMRendererTemplateKey", true,
+			"delta", true, "orderByCol", true, "orderByType", true,
+			"targetLayoutFriendlyUrl", true, "targetPortletId", true,
+			"contentField", true, "feedFormat", true, "feedVersion", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -644,8 +639,6 @@ public class JournalFeedPersistenceTest {
 		journalFeed.setDescription(RandomTestUtil.randomString());
 
 		journalFeed.setDDMStructureId(RandomTestUtil.nextLong());
-
-		journalFeed.setDDMStructureKey(RandomTestUtil.randomString());
 
 		journalFeed.setDDMTemplateKey(RandomTestUtil.randomString());
 

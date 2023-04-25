@@ -298,21 +298,6 @@ public interface JournalFeedModel
 	public void setDDMStructureId(long DDMStructureId);
 
 	/**
-	 * Returns the ddm structure key of this journal feed.
-	 *
-	 * @return the ddm structure key of this journal feed
-	 */
-	@AutoEscape
-	public String getDDMStructureKey();
-
-	/**
-	 * Sets the ddm structure key of this journal feed.
-	 *
-	 * @param DDMStructureKey the ddm structure key of this journal feed
-	 */
-	public void setDDMStructureKey(String DDMStructureKey);
-
-	/**
 	 * Returns the ddm template key of this journal feed.
 	 *
 	 * @return the ddm template key of this journal feed

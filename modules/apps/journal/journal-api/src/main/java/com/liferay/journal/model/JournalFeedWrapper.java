@@ -59,7 +59,6 @@ public class JournalFeedWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("DDMStructureId", getDDMStructureId());
-		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("DDMTemplateKey", getDDMTemplateKey());
 		attributes.put("DDMRendererTemplateKey", getDDMRendererTemplateKey());
 		attributes.put("delta", getDelta());
@@ -159,12 +158,6 @@ public class JournalFeedWrapper
 
 		if (DDMStructureId != null) {
 			setDDMStructureId(DDMStructureId);
-		}
-
-		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
-
-		if (DDMStructureKey != null) {
-			setDDMStructureKey(DDMStructureKey);
 		}
 
 		String DDMTemplateKey = (String)attributes.get("DDMTemplateKey");
@@ -299,16 +292,6 @@ public class JournalFeedWrapper
 	@Override
 	public long getDDMStructureId() {
 		return model.getDDMStructureId();
-	}
-
-	/**
-	 * Returns the ddm structure key of this journal feed.
-	 *
-	 * @return the ddm structure key of this journal feed
-	 */
-	@Override
-	public String getDDMStructureKey() {
-		return model.getDDMStructureKey();
 	}
 
 	/**
@@ -584,16 +567,6 @@ public class JournalFeedWrapper
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {
 		model.setDDMStructureId(DDMStructureId);
-	}
-
-	/**
-	 * Sets the ddm structure key of this journal feed.
-	 *
-	 * @param DDMStructureKey the ddm structure key of this journal feed
-	 */
-	@Override
-	public void setDDMStructureKey(String DDMStructureKey) {
-		model.setDDMStructureKey(DDMStructureKey);
 	}
 
 	/**

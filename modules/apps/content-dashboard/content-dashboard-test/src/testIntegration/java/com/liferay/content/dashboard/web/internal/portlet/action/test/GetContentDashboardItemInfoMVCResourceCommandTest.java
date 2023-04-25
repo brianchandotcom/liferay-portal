@@ -155,28 +155,16 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		user.setPortraitId(12345L);
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		_initCategoryAndVocabulary();
 
 		ContentDashboardItem contentDashboardItem =
 			_createContentDashboardFileItem();
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", FileEntry.class.getName());
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
 		InfoItemReference infoItemReference =
 			contentDashboardItem.getInfoItemReference();
 
-		mockLiferayResourceRequest.setParameter(
-			"className", infoItemReference.getClassName());
-		mockLiferayResourceRequest.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayPortletResourceRequest(infoItemReference);
 
 		TestMockLiferayResourceResponse mockLiferayResourceResponse =
 			new TestMockLiferayResourceResponse();
@@ -290,28 +278,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceWithoutSharingButtonAction() throws Exception {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		_initCategoryAndVocabulary();
 
 		ContentDashboardItem contentDashboardItem =
 			_createContentDashboardFileItem();
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", FileEntry.class.getName());
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		InfoItemReference infoItemReference =
-			contentDashboardItem.getInfoItemReference();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", infoItemReference.getClassName());
-		mockLiferayResourceRequest.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+			_getMockLiferayPortletResourceRequest(
+				contentDashboardItem.getInfoItemReference());
 
 		TestMockLiferayResourceResponse mockLiferayResourceResponse =
 			new TestMockLiferayResourceResponse();
@@ -334,29 +308,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	public void testServeResourceWithoutSharingCollaboratorsAction()
 		throws Exception {
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		_initCategoryAndVocabulary();
 
 		ContentDashboardItem contentDashboardItem =
 			_createContentDashboardFileItem();
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", FileEntry.class.getName());
-
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		InfoItemReference infoItemReference =
-			contentDashboardItem.getInfoItemReference();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", infoItemReference.getClassName());
-		mockLiferayResourceRequest.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+			_getMockLiferayPortletResourceRequest(
+				contentDashboardItem.getInfoItemReference());
 
 		TestMockLiferayResourceResponse mockLiferayResourceResponse =
 			new TestMockLiferayResourceResponse();
@@ -382,28 +341,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		user.setPortraitId(12345L);
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		_initCategoryAndVocabulary();
 
 		ContentDashboardItem contentDashboardItem =
 			_createContentDashboardBlogItem(user);
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", FileEntry.class.getName());
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		InfoItemReference infoItemReference =
-			contentDashboardItem.getInfoItemReference();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", infoItemReference.getClassName());
-		mockLiferayResourceRequest.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+			_getMockLiferayPortletResourceRequest(
+				contentDashboardItem.getInfoItemReference());
 
 		TestMockLiferayResourceResponse mockLiferayResourceResponse =
 			new TestMockLiferayResourceResponse();
@@ -423,28 +368,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceWithoutUser() throws Exception {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		_initCategoryAndVocabulary();
 
 		ContentDashboardItem contentDashboardItem =
 			_createContentDashboardFileItem();
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", FileEntry.class.getName());
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		InfoItemReference infoItemReference =
-			contentDashboardItem.getInfoItemReference();
-
-		mockLiferayResourceRequest.setParameter(
-			"className", infoItemReference.getClassName());
-		mockLiferayResourceRequest.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+			_getMockLiferayPortletResourceRequest(
+				contentDashboardItem.getInfoItemReference());
 
 		TestMockLiferayResourceResponse mockLiferayResourceResponse =
 			new TestMockLiferayResourceResponse();
@@ -552,7 +483,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			journalArticle.getResourcePrimKey());
 	}
 
-	private MockLiferayResourceRequest _getMockLiferayPortletResourceRequest()
+	private MockLiferayResourceRequest _getMockLiferayPortletResourceRequest(
+			InfoItemReference infoItemReference)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -569,6 +501,13 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
+		mockLiferayResourceRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+		mockLiferayResourceRequest.setParameter(
+			"className", infoItemReference.getClassName());
+		mockLiferayResourceRequest.setParameter(
+			"classPK", String.valueOf(infoItemReference.getClassPK()));
 
 		return mockLiferayResourceRequest;
 	}

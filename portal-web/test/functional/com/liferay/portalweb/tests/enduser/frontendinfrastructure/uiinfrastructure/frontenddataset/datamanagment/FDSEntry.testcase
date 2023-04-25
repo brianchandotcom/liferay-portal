@@ -37,9 +37,8 @@ definition {
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
-				key_type = "/c/fdsentries",
-				reps = "1,2,3,4,5,6");
+				key_dataSetNameList = "Test Dataset 1,Test Dataset 2,Test Dataset 3,Test Dataset 4,Test Dataset 5,Test Dataset 6",
+				key_type = "/c/fdsentries");
 		}
 
 		task ("When changing the page to 4 entries") {
@@ -47,11 +46,7 @@ definition {
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
-			for (var num : list "1,2,3,4") {
-				AssertElementPresent(
-					key_itemName = "Test Dataset ${num}",
-					locator1 = "FrontendDataSetAdmin#TABLE_CELL");
-			}
+			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Dataset 1,Test Dataset 2,Test Dataset 3,Test Dataset 4");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
@@ -61,11 +56,7 @@ definition {
 		}
 
 		task ("Then 2 entries are displayed") {
-			for (var num : list "5,6") {
-				AssertElementPresent(
-					key_itemName = "Test Dataset ${num}",
-					locator1 = "FrontendDataSetAdmin#TABLE_CELL");
-			}
+			FrontendDataSetAdmin.assertDataSetEntry(key_dataSetNameList = "Test Dataset 5,Test Dataset 6");
 
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}

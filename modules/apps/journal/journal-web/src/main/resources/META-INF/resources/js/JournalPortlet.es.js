@@ -330,6 +330,7 @@ export default function _JournalPortlet({
 			container: alertContainer,
 			message,
 			onClose: () => alertContainer.remove(),
+			title: Liferay.Language.get('error'),
 			type: 'danger',
 		});
 	};

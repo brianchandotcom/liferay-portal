@@ -66,6 +66,71 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for COMMERCE-10820. User with Category Manager role can access Categories from the site admin menu"
+	@priority = 3
+	test CanCategoryManagerAccessCategoriesAdminMenu {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a user with Category Manager role is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Category Manager",
+				userEmailAddress = "category.manager@liferay.com",
+				userFirstName = "Category",
+				userLastName = "Manager",
+				userScreenName = "category.manager");
+
+			JSONUser.addUserToSite(
+				groupName = "Minium",
+				userEmailAddress = "category.manager@liferay.com");
+		}
+
+		// Save permissions as workaround until COMMERCE-11318
+
+		task ("And the permissions of Category Manager are applied") {
+			Role.openRolesAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Category Manager");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Define Permissions");
+
+			Type(
+				locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+				value1 = "Categories");
+
+			AssertClick(
+				key_permissionNavHeader = "Categorization",
+				key_permissionNavItem = "Categories",
+				locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVIGATION",
+				value1 = "Categories");
+
+			PortletEntry.save();
+		}
+
+		task ("When Category Manager logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "category.manager@liferay.com");
+		}
+
+		task ("Then Categories admin menu is shown") {
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "Categories");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Categories");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10322. Create a new Content Page, deploy the widget Categories Navigation, configure it with Minium as Vocabulary, and then verify if when the page is reached by the guest no errors are present"
 	@priority = 5
 	test CanGuestUserViewTheCategoriesNavigationWidgetWithoutErrors {

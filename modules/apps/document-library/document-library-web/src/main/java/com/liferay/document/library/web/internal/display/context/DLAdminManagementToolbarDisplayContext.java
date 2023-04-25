@@ -375,10 +375,7 @@ public class DLAdminManagementToolbarDisplayContext
 				}
 
 				labelItem.setLabel(
-					String.format(
-						"%s: %s",
-						LanguageUtil.get(_httpServletRequest, "document-type"),
-						HtmlUtil.escape(fileEntryTypeName)));
+					_getLabel("document-type", fileEntryTypeName));
 			});
 
 		labelItemListWrapper.add(
@@ -397,11 +394,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 				User user = _themeDisplay.getUser();
 
-				labelItem.setLabel(
-					String.format(
-						"%s: %s",
-						LanguageUtil.get(_httpServletRequest, "owner"),
-						HtmlUtil.escape(user.getFullName())));
+				labelItem.setLabel(_getLabel("owner", user.getFullName()));
 			});
 
 		labelItemListWrapper.add(
@@ -655,11 +648,7 @@ public class DLAdminManagementToolbarDisplayContext
 								},
 								String.class)));
 					labelItem.setCloseable(true);
-					labelItem.setLabel(
-						String.format(
-							"%s: %s",
-							LanguageUtil.get(_httpServletRequest, "tag"),
-							HtmlUtil.escape(assetTagId)));
+					labelItem.setLabel(_getLabel("tag", assetTagId));
 				});
 		}
 	}
@@ -684,11 +673,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 					labelItem.setCloseable(true);
 
-					labelItem.setLabel(
-						String.format(
-							"%s: %s",
-							LanguageUtil.get(_httpServletRequest, "extension"),
-							HtmlUtil.escape(extension)));
+					labelItem.setLabel(_getLabel("extension", extension));
 				});
 		}
 	}
@@ -923,6 +908,12 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		return _dlAdminDisplayContext.getFolderId();
+	}
+
+	private String _getLabel(String key, String value) {
+		return String.format(
+			"%s: %s", LanguageUtil.get(_httpServletRequest, key),
+			HtmlUtil.escape(value));
 	}
 
 	private String _getNavigation() {

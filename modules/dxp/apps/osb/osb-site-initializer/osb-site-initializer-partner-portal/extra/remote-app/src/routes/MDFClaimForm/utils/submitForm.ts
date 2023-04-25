@@ -108,126 +108,116 @@ export default async function submitForm(
 
 	if (values.activities?.length && dtoMDFClaim?.id) {
 		await Promise.all(
-			values.activities
-				.filter((activity) => activity.selected)
-				.map(async (activity) => {
-					const dtoMDFClaimActivity = activity.id
-						? await updateMDFClaimActivity(
+			values.activities.map(async (activity) => {
+				const dtoMDFClaimActivity = activity.id
+					? await updateMDFClaimActivity(
+							activity,
+							dtoMDFClaim?.id,
+							activity.id
+					  )
+					: await createMDFClaimActivity(activity, dtoMDFClaim?.id);
+
+				if (
+					activity.listOfQualifiedLeads &&
+					!activity.listOfQualifiedLeads.id &&
+					dtoMDFClaimActivity.id
+				) {
+					const listOfQualifiedLeadsRenamed = renameFileKeepingExtention(
+						activity.listOfQualifiedLeads,
+						`${activity.listOfQualifiedLeads.name}#${dtoMDFClaimActivity.id}`
+					);
+
+					if (listOfQualifiedLeadsRenamed) {
+						const dtoListOfQualifiedLeads = await createDocumentFolderDocument(
+							claimParentFolderId,
+							listOfQualifiedLeadsRenamed
+						);
+
+						if (dtoListOfQualifiedLeads.id) {
+							updateMDFClaimActivity(
 								activity,
 								dtoMDFClaim?.id,
-								activity.id
-						  )
-						: await createMDFClaimActivity(
-								activity,
-								dtoMDFClaim?.id
-						  );
-
-					if (
-						activity.listOfQualifiedLeads &&
-						!activity.listOfQualifiedLeads.id &&
-						dtoMDFClaimActivity.id
-					) {
-						const listOfQualifiedLeadsRenamed = renameFileKeepingExtention(
-							activity.listOfQualifiedLeads,
-							`${activity.listOfQualifiedLeads.name}#${dtoMDFClaimActivity.id}`
-						);
-
-						if (listOfQualifiedLeadsRenamed) {
-							const dtoListOfQualifiedLeads = await createDocumentFolderDocument(
-								claimParentFolderId,
-								listOfQualifiedLeadsRenamed
+								dtoMDFClaimActivity.id,
+								dtoListOfQualifiedLeads.id as LiferayFile &
+									number
 							);
-
-							if (dtoListOfQualifiedLeads.id) {
-								updateMDFClaimActivity(
-									activity,
-									dtoMDFClaim?.id,
-									dtoMDFClaimActivity.id,
-									dtoListOfQualifiedLeads.id as LiferayFile &
-										number
-								);
-							}
 						}
 					}
+				}
 
-					if (
-						activity.allContents?.length &&
-						dtoMDFClaimActivity.id
-					) {
-						await Promise.all(
-							activity.allContents.map(
-								async (allContentDocument) => {
-									if (!allContentDocument.id) {
-										const allContentDocumentRenamed = renameFileKeepingExtention(
-											allContentDocument,
-											`${allContentDocument.name}#${dtoMDFClaimActivity.id}`
-										);
+				if (activity.allContents?.length && dtoMDFClaimActivity.id) {
+					await Promise.all(
+						activity.allContents.map(async (allContentDocument) => {
+							if (!allContentDocument.id) {
+								const allContentDocumentRenamed = renameFileKeepingExtention(
+									allContentDocument,
+									`${allContentDocument.name}#${dtoMDFClaimActivity.id}`
+								);
 
-										if (allContentDocumentRenamed) {
-											const dtoAllContentDocument = await createDocumentFolderDocument(
-												claimParentFolderId,
-												allContentDocumentRenamed
-											);
-
-											if (dtoAllContentDocument.id) {
-												createMDFClaimActivityDocument(
-													dtoAllContentDocument.id as LiferayFile &
-														number,
-													dtoMDFClaimActivity.id
-												);
-											}
-										}
-									}
-								}
-							)
-						);
-					}
-
-					if (activity.budgets?.length && dtoMDFClaimActivity.id) {
-						await Promise.all(
-							activity.budgets.map(async (budget) => {
-								const dtoMDFClaimBudget = budget.id
-									? await updateMDFClaimActivityBudget(
-											budget,
-											dtoMDFClaimActivity.id,
-											budget.id
-									  )
-									: await createMDFClaimActivityBudget(
-											budget,
-											dtoMDFClaimActivity.id
-									  );
-
-								if (
-									budget.invoice &&
-									!budget.invoice.id &&
-									dtoMDFClaimBudget.id
-								) {
-									const budgetInvoiceRenamed = renameFileKeepingExtention(
-										budget.invoice,
-										`${budget.invoice.name}#${dtoMDFClaimBudget.id}`
+								if (allContentDocumentRenamed) {
+									const dtoAllContentDocument = await createDocumentFolderDocument(
+										claimParentFolderId,
+										allContentDocumentRenamed
 									);
 
-									if (budgetInvoiceRenamed) {
-										const dtoBudgetInvoice = await createDocumentFolderDocument(
-											claimParentFolderId,
-											budgetInvoiceRenamed
+									if (dtoAllContentDocument.id) {
+										createMDFClaimActivityDocument(
+											dtoAllContentDocument.id as LiferayFile &
+												number,
+											dtoMDFClaimActivity.id
 										);
-
-										if (dtoBudgetInvoice.id) {
-											updateMDFClaimActivityBudget(
-												budget,
-												dtoMDFClaimActivity.id,
-												dtoMDFClaimBudget.id,
-												dtoBudgetInvoice.id as LiferayFile &
-													number
-											);
-										}
 									}
 								}
-							})
-						);
-					}
-				})
+							}
+						})
+					);
+				}
+
+				if (activity.budgets?.length && dtoMDFClaimActivity.id) {
+					await Promise.all(
+						activity.budgets.map(async (budget) => {
+							const dtoMDFClaimBudget = budget.id
+								? await updateMDFClaimActivityBudget(
+										budget,
+										dtoMDFClaimActivity.id,
+										budget.id
+								  )
+								: await createMDFClaimActivityBudget(
+										budget,
+										dtoMDFClaimActivity.id
+								  );
+
+							if (
+								budget.invoice &&
+								!budget.invoice.id &&
+								dtoMDFClaimBudget.id
+							) {
+								const budgetInvoiceRenamed = renameFileKeepingExtention(
+									budget.invoice,
+									`${budget.invoice.name}#${dtoMDFClaimBudget.id}`
+								);
+
+								if (budgetInvoiceRenamed) {
+									const dtoBudgetInvoice = await createDocumentFolderDocument(
+										claimParentFolderId,
+										budgetInvoiceRenamed
+									);
+
+									if (dtoBudgetInvoice.id) {
+										updateMDFClaimActivityBudget(
+											budget,
+											dtoMDFClaimActivity.id,
+											dtoMDFClaimBudget.id,
+											dtoBudgetInvoice.id as LiferayFile &
+												number
+										);
+									}
+								}
+							}
+						})
+					);
+				}
+			})
 		);
 	}
 

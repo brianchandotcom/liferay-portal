@@ -149,10 +149,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResource() throws Exception {
-		User user = TestPropsValues.getUser();
-
-		user.setPortraitId(12345L);
-
 		ContentDashboardItem contentDashboardItem =
 			_createContentDashboardFileItem();
 
@@ -281,12 +277,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceWithoutSubtype() throws Exception {
-		User user = TestPropsValues.getUser();
-
-		user.setPortraitId(12345L);
-
 		JSONObject jsonObject = _serveResource(
-			_createContentDashboardBlogItem(user));
+			_createContentDashboardBlogItem());
 
 		Assert.assertEquals(StringPool.BLANK, jsonObject.getString("subType"));
 	}
@@ -351,14 +343,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			expectedJSONObject.toString(), actualJSONObject.toString());
 	}
 
-	private ContentDashboardItem _createContentDashboardBlogItem(User user)
+	private ContentDashboardItem _createContentDashboardBlogItem()
 		throws Exception {
 
 		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
 			2022, 1, 20);
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			user.getUserId(), RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), displayDateCalendar.getTime(),
 			_serviceContext);
 

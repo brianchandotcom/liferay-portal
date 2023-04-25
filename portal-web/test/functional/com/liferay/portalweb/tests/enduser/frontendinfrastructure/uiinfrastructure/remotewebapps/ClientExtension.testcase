@@ -674,7 +674,6 @@ definition {
 	}
 
 	@description = "LPS-163525. Validate Client Extensions UI has a clear error message when all the mandatory fields are empty."
-	@ignore = "true"
 	@priority = 4
 	test HasMandatoryFieldErrorMessagesWhenEmpty {
 		task ("Given Add IFrame Client Extensions admin page") {

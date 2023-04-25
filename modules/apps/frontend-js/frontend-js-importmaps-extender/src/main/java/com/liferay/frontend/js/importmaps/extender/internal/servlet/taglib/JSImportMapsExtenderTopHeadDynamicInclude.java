@@ -171,15 +171,15 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		jsonObject.put(
 			"imports",
 			() -> {
-				JSONObject globalJSONObject = _jsonFactory.createJSONObject();
+				JSONObject importsJSONObject = _jsonFactory.createJSONObject();
 
 				for (JSONObject jsonObject1 : _globalImportMaps.values()) {
 					for (String key : jsonObject1.keySet()) {
-						globalJSONObject.put(key, jsonObject1.getString(key));
+						importsJSONObject.put(key, jsonObject1.getString(key));
 					}
 				}
 
-				return globalJSONObject;
+				return importsJSONObject;
 			}
 		).put(
 			"scopes",

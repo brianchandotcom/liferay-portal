@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -183,8 +182,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			paginationJSONObject, privateLayout, parentLayoutId, loadMore,
 			incomplete, childLayout, count,
 			_layoutLocalService.getLayoutsCount(
-				_groupLocalService.getGroup(groupId), privateLayout,
-				parentLayoutId));
+				groupId, privateLayout, parentLayoutId));
 
 		Layout afterDeleteSelectedLayout = null;
 		Layout secondLayout = null;
@@ -477,9 +475,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		return jsonObject;
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private GroupProvider _groupProvider;

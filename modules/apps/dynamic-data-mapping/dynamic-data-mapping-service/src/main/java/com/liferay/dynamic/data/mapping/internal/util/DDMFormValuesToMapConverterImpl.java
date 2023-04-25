@@ -36,14 +36,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,16 +76,13 @@ public class DDMFormValuesToMapConverterImpl
 		Map<String, Object> values = new LinkedHashMap<>(
 			ddmFormFieldsMap.size());
 
-		Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
-			ddmFormFieldValues.stream();
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (!ddmFormFieldsMap.containsKey(ddmFormFieldValue.getName())) {
+				continue;
+			}
 
-		ddmFormFieldValuesStream.filter(
-			ddmFormFieldValue -> ddmFormFieldsMap.containsKey(
-				ddmFormFieldValue.getName())
-		).forEach(
-			ddmFormFieldValue -> _addValues(
-				ddmFormFieldsMap, ddmFormFieldValue, values)
-		);
+			_addValues(ddmFormFieldsMap, ddmFormFieldValue, values);
+		}
 
 		return values;
 	}
@@ -183,24 +179,23 @@ public class DDMFormValuesToMapConverterImpl
 	private Map<String, Object> _toLocalizedMap(
 		String fieldType, LocalizedValue localizedValue) {
 
-		Set<Locale> availableLocales = localizedValue.getAvailableLocales();
+		Map<String, Object> localizedMap = new HashMap<>();
 
-		Stream<Locale> stream = availableLocales.stream();
+		Function<Locale, Object> function = locale -> GetterUtil.getString(
+			localizedValue.getString(locale));
 
 		if (fieldType.equals(DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
 			fieldType.equals(DDMFormFieldTypeConstants.SELECT)) {
 
-			return stream.collect(
-				Collectors.toMap(
-					_language::getLanguageId,
-					locale -> _toStringList(locale, localizedValue)));
+			function = locale -> _toStringList(locale, localizedValue);
 		}
 
-		return stream.collect(
-			Collectors.toMap(
-				_language::getLanguageId,
-				locale -> GetterUtil.getString(
-					localizedValue.getString(locale))));
+		for (Locale locale : localizedValue.getAvailableLocales()) {
+			localizedMap.put(
+				_language.getLanguageId(locale), function.apply(locale));
+		}
+
+		return localizedMap;
 	}
 
 	private List<String> _toStringList(

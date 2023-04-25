@@ -8205,4 +8205,33 @@ ${output.content}</echo>
 	<target name="unit-jdk8_stable">
 		<antcall target="unit-jdk8" />
 	</target>
+
+	<target name="workspace-compile-jdk8">
+		<run-batch-test>
+			<test-action>
+				<for list="${workspace.names[workspace-compile-jdk8]}" param="workspace.name">
+					<sequential>
+						<local name="workspace.dir" />
+
+						<property name="workspace.dir" value="${project.dir}/workspaces/@{workspace.name}" />
+
+						<if>
+							<available file="${workspace.dir}" />
+							<then>
+								<echo></echo>
+								<echo>#</echo>
+								<echo># @{workspace.name}</echo>
+								<echo>#</echo>
+								<echo></echo>
+
+								<execute dir="${workspace.dir}">
+									./gradlew build
+								</execute>
+							</then>
+						</if>
+					</sequential>
+				</for>
+			</test-action>
+		</run-batch-test>
+	</target>
 </project>

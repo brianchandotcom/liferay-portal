@@ -17,8 +17,6 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Site Page Name");

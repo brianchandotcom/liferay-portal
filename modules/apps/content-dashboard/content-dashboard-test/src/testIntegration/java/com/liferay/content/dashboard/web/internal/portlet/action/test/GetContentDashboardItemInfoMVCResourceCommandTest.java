@@ -115,6 +115,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
+
+		_initCategoryAndVocabulary();
 	}
 
 	@Test
@@ -155,29 +157,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		user.setPortraitId(12345L);
 
-		_initCategoryAndVocabulary();
-
 		ContentDashboardItem contentDashboardItem =
 			_createContentDashboardFileItem();
 
-		InfoItemReference infoItemReference =
-			contentDashboardItem.getInfoItemReference();
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest(infoItemReference);
-
-		TestMockLiferayResourceResponse mockLiferayResourceResponse =
-			new TestMockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			byteArrayOutputStream.toString());
+		JSONObject jsonObject = _serveResource(contentDashboardItem);
 
 		JSONObject vocabulariesJSONObject = jsonObject.getJSONObject(
 			"vocabularies");
@@ -199,6 +182,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				assetCategory.getTitle(LocaleUtil.getSiteDefault()),
 				categoriesJSONArray.getString(0));
 		}
+
+		InfoItemReference infoItemReference =
+			contentDashboardItem.getInfoItemReference();
 
 		Assert.assertEquals(
 			infoItemReference.getClassName(),
@@ -278,27 +264,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceWithoutSharingButtonAction() throws Exception {
-		_initCategoryAndVocabulary();
-
-		ContentDashboardItem contentDashboardItem =
-			_createContentDashboardFileItem();
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest(
-				contentDashboardItem.getInfoItemReference());
-
-		TestMockLiferayResourceResponse mockLiferayResourceResponse =
-			new TestMockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			byteArrayOutputStream.toString());
+		JSONObject jsonObject = _serveResource(
+			_createContentDashboardFileItem());
 
 		Assert.assertEquals(
 			StringPool.BLANK, jsonObject.getString("fetchSharingButtonURL"));
@@ -308,27 +275,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	public void testServeResourceWithoutSharingCollaboratorsAction()
 		throws Exception {
 
-		_initCategoryAndVocabulary();
-
-		ContentDashboardItem contentDashboardItem =
-			_createContentDashboardFileItem();
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest(
-				contentDashboardItem.getInfoItemReference());
-
-		TestMockLiferayResourceResponse mockLiferayResourceResponse =
-			new TestMockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			byteArrayOutputStream.toString());
+		JSONObject jsonObject = _serveResource(
+			_createContentDashboardFileItem());
 
 		Assert.assertEquals(
 			StringPool.BLANK,
@@ -341,62 +289,25 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		user.setPortraitId(12345L);
 
-		_initCategoryAndVocabulary();
-
-		ContentDashboardItem contentDashboardItem =
-			_createContentDashboardBlogItem(user);
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest(
-				contentDashboardItem.getInfoItemReference());
-
-		TestMockLiferayResourceResponse mockLiferayResourceResponse =
-			new TestMockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			byteArrayOutputStream.toString());
+		JSONObject jsonObject = _serveResource(
+			_createContentDashboardBlogItem(user));
 
 		Assert.assertEquals(StringPool.BLANK, jsonObject.getString("subType"));
 	}
 
 	@Test
 	public void testServeResourceWithoutUser() throws Exception {
-		_initCategoryAndVocabulary();
+		JSONObject jsonObject = _serveResource(
+			_createContentDashboardFileItem());
 
-		ContentDashboardItem contentDashboardItem =
-			_createContentDashboardFileItem();
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest(
-				contentDashboardItem.getInfoItemReference());
-
-		TestMockLiferayResourceResponse mockLiferayResourceResponse =
-			new TestMockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			byteArrayOutputStream.toString());
+		User user = TestPropsValues.getUser();
 
 		JSONObject userJSONObject = jsonObject.getJSONObject("user");
 
 		Assert.assertEquals(
-			contentDashboardItem.getUserName(),
-			userJSONObject.getString("name"));
-		Assert.assertEquals(
-			contentDashboardItem.getUserId(), userJSONObject.getLong("userId"));
+			user.getFullName(), userJSONObject.getString("name"));
+		Assert.assertEquals(user.getUserId(), userJSONObject.getLong("userId"));
+
 		Assert.assertEquals(StringPool.BLANK, userJSONObject.getString("url"));
 	}
 
@@ -530,6 +441,27 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			new long[] {assetCategory.getCategoryId()});
 
 		_serviceContext.setAssetTagNames(new String[] {"tag1"});
+	}
+
+	private JSONObject _serveResource(ContentDashboardItem contentDashboardItem)
+		throws Exception {
+
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			_getMockLiferayPortletResourceRequest(
+				contentDashboardItem.getInfoItemReference());
+
+		TestMockLiferayResourceResponse mockLiferayResourceResponse =
+			new TestMockLiferayResourceResponse();
+
+		_mvcResourceCommand.serveResource(
+			mockLiferayResourceRequest, mockLiferayResourceResponse);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			(ByteArrayOutputStream)
+				mockLiferayResourceResponse.getPortletOutputStream();
+
+		return JSONFactoryUtil.createJSONObject(
+			byteArrayOutputStream.toString());
 	}
 
 	@Inject

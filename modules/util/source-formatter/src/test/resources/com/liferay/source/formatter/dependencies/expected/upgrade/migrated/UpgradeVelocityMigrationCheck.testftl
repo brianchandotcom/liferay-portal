@@ -25,7 +25,7 @@
     <a href="${site_default_url}">testLink</a>
 </html>
 
-#macro( navigationBar  nav_item )
+<#macro  navigationBar  nav_item >
     <#if nav_item.hasChildren()>
         <ul class="child-menu">
             <#list nav_item.getChildren() as nav_child>
@@ -45,7 +45,7 @@
             </#list>
         </ul>
     </#if>
-#end
+</#macro>
 
 <#if "${type.getData()}" !="" && "${type.getData()}" =="R1C2">
 	<div class="triggerBanner banner-R1C2">

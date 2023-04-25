@@ -387,7 +387,7 @@ definition {
 
 			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
 				en_US_plural_label = "subjects",
-				expectedValues = 0,
+				expectedValues = 1,
 				objectJsonPath = "$.totalCount");
 		}
 	}

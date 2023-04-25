@@ -104,8 +104,10 @@ definition {
 		if (isSet(nestedField)) {
 			var body = CustomObjectAPI.nObjectEntryBodyAsNestedField(
 				body = ${body},
+				objectEntryId = ${objectEntryId},
 				nestedField = ${nestedField},
 				numberOfRelatedObjectEntries = ${numberOfRelatedObjectEntries},
+				relatedEntryExternalReferenceCode = ${relatedEntryExternalReferenceCode},
 				relatedEntryFieldName = ${relatedEntryFieldName});
 		}
 

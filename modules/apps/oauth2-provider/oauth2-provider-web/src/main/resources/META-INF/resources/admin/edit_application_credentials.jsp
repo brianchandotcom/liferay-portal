@@ -125,6 +125,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 						</clay:col>
 
 						<clay:col
+							cssClass="pt-4"
 							lg="3"
 						>
 							<h3 class="sheet-subtitle"><liferay-ui:message key="icon" /></h3>
@@ -135,11 +136,10 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 
 							<c:choose>
 								<c:when test="<%= oAuth2AdminPortletDisplayContext.hasUpdatePermission(oAuth2Application) %>">
-									<liferay-ui:logo-selector
+									<liferay-frontend:logo-selector
 										currentLogoURL="<%= thumbnailURL %>"
-										defaultLogo="<%= oAuth2Application.getIconFileEntryId() == 0 %>"
 										defaultLogoURL="<%= oAuth2AdminPortletDisplayContext.getDefaultIconURL() %>"
-										tempImageFileName="<%= String.valueOf(oAuth2Application.getClientId()) %>"
+										label='<%= LanguageUtil.get(request, "icon") %>'
 									/>
 								</c:when>
 								<c:otherwise>

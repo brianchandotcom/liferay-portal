@@ -22,7 +22,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.petra.http.invoker", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
 	compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
-	compile group: "org.json", name: "json", version: "20220320"
+	compile group: "org.json", name: "json", version: "20230227"
 	compile group: "org.rauschig", name: "jarchivelib", version: "0.7.1"
 }
 

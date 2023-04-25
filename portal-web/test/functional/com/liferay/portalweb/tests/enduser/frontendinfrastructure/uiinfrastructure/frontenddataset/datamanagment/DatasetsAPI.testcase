@@ -29,6 +29,8 @@ definition {
 	@priority = 5
 	test CanCreateDatasetEntryViaAPI {
 		task ("Given creating a Data Set via API") {
+			FrontendDataSetAdmin.goToDatasetAdminPage();
+
 			FrontendDataSetAdmin.createDatasetEntryViaAPI(
 				datasetName = "Test Dataset",
 				restApplication = "/c/fdsentries");

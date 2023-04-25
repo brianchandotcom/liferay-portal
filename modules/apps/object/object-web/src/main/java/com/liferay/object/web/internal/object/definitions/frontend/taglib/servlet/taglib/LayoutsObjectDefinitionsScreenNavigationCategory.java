@@ -23,16 +23,16 @@ import org.osgi.service.component.annotations.Component;
  * @author Gabriel Albuquerque
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=60",
+	property = "screen.navigation.category.order:Integer=40",
 	service = ScreenNavigationCategory.class
 )
-public class ObjectDefinitionsViewsScreenNavigationCategory
+public class LayoutsObjectDefinitionsScreenNavigationCategory
 	extends BaseObjectDefinitionsScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
 		return ObjectDefinitionsScreenNavigationEntryConstants.
-			CATEGORY_KEY_VIEWS;
+			CATEGORY_KEY_LAYOUTS;
 	}
 
 }

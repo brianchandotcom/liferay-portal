@@ -15,9 +15,10 @@
 package com.liferay.object.web.internal.object.definitions.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
-import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsViewsDisplayContext;
+import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsLayoutsDisplayContext;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -37,18 +38,24 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class ObjectDefinitionsViewsScreenNavigationEntry
+public class LayoutsObjectDefinitionsScreenNavigationEntry
 	extends BaseObjectDefinitionsScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
 		return ObjectDefinitionsScreenNavigationEntryConstants.
-			CATEGORY_KEY_VIEWS;
+			CATEGORY_KEY_LAYOUTS;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/object_definitions/object_definition/views.jsp";
+		return "/object_definitions/object_definition/layouts.jsp";
+	}
+
+	@Override
+	public String getScreenNavigationKey() {
+		return ObjectDefinitionsScreenNavigationEntryConstants.
+			SCREEN_NAVIGATION_KEY_OBJECT_DEFINITION;
 	}
 
 	@Override
@@ -64,8 +71,9 @@ public class ObjectDefinitionsViewsScreenNavigationEntry
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new ObjectDefinitionsViewsDisplayContext(
-				httpServletRequest, _objectDefinitionModelResourcePermission));
+			new ObjectDefinitionsLayoutsDisplayContext(
+				httpServletRequest, _objectDefinitionModelResourcePermission,
+				_objectFieldBusinessTypeRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -75,5 +83,8 @@ public class ObjectDefinitionsViewsScreenNavigationEntry
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 }

@@ -21,18 +21,19 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
+ * @author Gabriel Albuquerque
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=30",
+	property = "screen.navigation.category.order:Integer=20",
 	service = ScreenNavigationCategory.class
 )
-public class ObjectDefinitionsRelationshipsScreenNavigationCategory
+public class FieldsObjectDefinitionsScreenNavigationCategory
 	extends BaseObjectDefinitionsScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
 		return ObjectDefinitionsScreenNavigationEntryConstants.
-			CATEGORY_KEY_RELATIONSHIPS;
+			CATEGORY_KEY_FIELDS;
 	}
 
 }

@@ -20,19 +20,19 @@ import com.liferay.object.web.internal.object.definitions.constants.ObjectDefini
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Selton Guedes
+ * @author Carlos Montenegro
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=60",
+	property = "screen.navigation.category.order:Integer=70",
 	service = ScreenNavigationCategory.class
 )
-public class ObjectDefinitionsValidationsScreeNavigationCategory
+public class StatesObjectDefinitionsScreenNavigationCategory
 	extends BaseObjectDefinitionsScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
 		return ObjectDefinitionsScreenNavigationEntryConstants.
-			CATEGORY_KEY_VALIDATIONS;
+			CATEGORY_KEY_STATE_MANAGER;
 	}
 
 }

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "screen.navigation.category.order:Integer=50",
 	service = ScreenNavigationCategory.class
 )
-public class ObjectDefinitionsActionsScreenNavigationCategory
+public class ActionsObjectDefinitionsScreenNavigationCategory
 	extends BaseObjectDefinitionsScreenNavigationCategory {
 
 	@Override

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class ObjectDefinitionsActionsScreenNavigationEntry
+public class ActionsObjectDefinitionsScreenNavigationEntry
 	extends BaseObjectDefinitionsScreenNavigationEntry {
 
 	@Override

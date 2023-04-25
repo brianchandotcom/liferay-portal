@@ -23,7 +23,8 @@ export default function useBudgetsAmount(
 
 	useEffect(() => {
 		const amountValue = debouncedBudgets.reduce<number>(
-			(previousValue, currentValue) => previousValue + +currentValue.cost,
+			(previousValue, currentValue) =>
+				previousValue + +(!currentValue.removed && currentValue.cost),
 			0
 		);
 

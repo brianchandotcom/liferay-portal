@@ -67,12 +67,14 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 						label: '',
 					},
 				]}
-				rows={mdfRequestActivity.budgets.map((budget) => ({
-					title: budget.expense.name,
-					value: getIntlNumberFormat(
-						mdfRequestActivity.currency
-					).format(budget.cost),
-				}))}
+				rows={mdfRequestActivity.budgets
+					.filter((budget) => !budget.removed)
+					.map((budget) => ({
+						title: budget.expense.name,
+						value: getIntlNumberFormat(
+							mdfRequestActivity.currency
+						).format(budget.cost),
+					}))}
 			/>
 
 			<Table

@@ -16,13 +16,18 @@ export default function getTotalBudget(
 ) {
 	return mdfRequestActivities.reduce(
 		(previousValue: number, currentValue: MDFRequestActivity) => {
-			const sumBudgets = currentValue.budgets.reduce(
-				(previousValue, currentValue) =>
-					previousValue + (Number(currentValue.cost) || 0),
-				0
-			);
+			if (!currentValue.removed) {
+				const sumBudgets = currentValue.budgets.reduce(
+					(previousValue, currentValue) =>
+						previousValue +
+						((!currentValue.removed && currentValue.cost) || 0),
+					0
+				);
 
-			return previousValue + sumBudgets;
+				return previousValue + sumBudgets;
+			}
+
+			return previousValue;
 		},
 		0
 	);

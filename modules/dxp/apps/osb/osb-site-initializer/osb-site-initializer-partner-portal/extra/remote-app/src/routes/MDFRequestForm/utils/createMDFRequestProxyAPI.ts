@@ -25,7 +25,8 @@ export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 			mdfRequest,
 			mdfRequest.externalReferenceCode
 		);
-	} else {
+	}
+	else {
 		dtoMDFRequestSFResponse = await createMDFRequest(
 			ResourceName.MDF_REQUEST_SALESFORCE,
 			mdfRequest
@@ -43,7 +44,8 @@ export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 				dtoMDFRequestSFResponse.externalReferenceCode,
 				dtoMDFRequestSFResponse.externalReferenceCode
 			);
-		} else {
+		}
+		else {
 			dtoMDFRequestResponse = await createMDFRequest(
 				ResourceName.MDF_REQUEST_DXP,
 				mdfRequest,

@@ -55,13 +55,15 @@ export default async function submitForm(
 
 	if (values.mdfRequestStatus !== Status.DRAFT) {
 		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	} else if (values.id) {
+	}
+	else if (values.id) {
 		dtoMDFRequest = await updateMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values,
 			values.id
 		);
-	} else {
+	}
+	else {
 		dtoMDFRequest = await createMDFRequest(
 			ResourceName.MDF_REQUEST_DXP,
 			values
@@ -93,7 +95,8 @@ export default async function submitForm(
 						dtoMDFRequest?.id,
 						dtoMDFRequest?.externalReferenceCode
 					);
-				} else {
+				}
+				else {
 					if (activity.id) {
 						await updateMDFRequestActivities(
 							ResourceName.ACTIVITY_DXP,
@@ -103,7 +106,8 @@ export default async function submitForm(
 							dtoMDFRequest?.externalReferenceCode,
 							activity.externalReferenceCode
 						);
-					} else {
+					}
+					else {
 						await createMDFRequestActivitiesSF(
 							ResourceName.ACTIVITY_DXP,
 							activity,
@@ -134,7 +138,8 @@ export default async function submitForm(
 									budget.id as number
 								);
 							}
-						} else {
+						}
+						else {
 							await createMDFRequestActivityBudget(
 								dtoActivity.id as number,
 								budget

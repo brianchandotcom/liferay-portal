@@ -79,6 +79,7 @@ const activitiesSchema = object({
 							),
 						})
 					)
+					.compact((budget) => budget.removed)
 					.min(1, 'Required'),
 				endDate: date()
 					.test(
@@ -209,6 +210,7 @@ const activitiesSchema = object({
 				),
 			})
 		)
+		.compact((activity) => activity.removed)
 		.min(1),
 });
 

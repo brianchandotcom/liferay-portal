@@ -59,36 +59,6 @@ definition {
 			value1 = ${workflowActivityComment});
 	}
 
-	macro addAssigneeToRegularRole {
-		Role._goToRoleAssigneeType(
-			assigneeType = ${assigneeType},
-			roleTitle = ${roleTitle});
-
-		LexiconEntry.gotoAdd();
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
-
-		Search.searchCP(searchTerm = ${assigneeName});
-
-		var key_userScreenName = ${assigneeName};
-
-		AssertTextEquals(
-			locator1 = "RolesAssignMembers#USER_TABLE_SCREEN_NAME",
-			value1 = ${assigneeName});
-
-		var key_assigneeName = ${assigneeName};
-
-		Check(locator1 = "RolesAssignMembers#ADD_ASSIGNEE_TABLE_CHECKBOX");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		Button.clickAdd();
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro addNewDefinition {
 		LexiconEntry.gotoAdd();
 

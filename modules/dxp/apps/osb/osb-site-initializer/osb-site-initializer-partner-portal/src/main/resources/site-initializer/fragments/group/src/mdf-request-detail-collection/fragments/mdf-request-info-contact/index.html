@@ -6,7 +6,7 @@
 	[#assign firstName = mdfRequest.r_usrToMDFReqs_user.givenName /]
 	[#assign lastName = mdfRequest.r_usrToMDFReqs_user.familyName /]
 	[#assign infoEmail = mdfRequest.r_usrToMDFReqs_user.emailAddress /]
-	[#assign telephones = mdfRequest.r_usrToMDFReqs_user.userAccountContactInformation.telephones?map(telephone -> telephone.phoneNumber)?join(', ') /]
+	[#assign telephones = (mdfRequest.r_usrToMDFReqs_user.userAccountContactInformation.telephones?map(telephone -> telephone.phoneNumber)?join(', '))! /]
 
 	<table class="table table-borderless w-100">
 		<thead>

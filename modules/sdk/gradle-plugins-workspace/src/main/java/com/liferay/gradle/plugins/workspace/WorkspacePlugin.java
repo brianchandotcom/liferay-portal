@@ -27,17 +27,17 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.ExtensionContainer;
 
@@ -60,25 +60,69 @@ public class WorkspacePlugin implements Plugin<Settings> {
 		final WorkspaceExtension workspaceExtension = _addWorkspaceExtension(
 			settings);
 
-		for (ProjectConfigurator projectConfigurator :
-				workspaceExtension.getProjectConfigurators()) {
+		Path rootDirPath = rootDir.toPath();
 
-			for (File defaultRootDir :
-					projectConfigurator.getDefaultRootDirs()) {
+		FileSystem fileSystem = rootDirPath.getFileSystem();
 
-				for (File projectDir :
-						projectConfigurator.getProjectDirs(defaultRootDir)) {
+		StartParameter startParameter = gradle.getStartParameter();
 
-					String projectPath = GradleUtil.getProjectPath(
-						projectDir, rootDir);
+		File currentDir = startParameter.getCurrentDir();
 
-					settings.include(new String[] {projectPath});
+		gradle.settingsEvaluated(
+			settings1 -> {
+				for (ProjectConfigurator projectConfigurator :
+						workspaceExtension.getProjectConfigurators()) {
 
-					_projectConfiguratorsMap.put(
-						projectPath, projectConfigurator);
+					for (File defaultRootDir :
+							projectConfigurator.getDefaultRootDirs()) {
+
+						Iterable<File> projectDirs =
+							projectConfigurator.getProjectDirs(defaultRootDir);
+
+						Iterator<File> iterator = projectDirs.iterator();
+
+						while (iterator.hasNext()) {
+							File projectDir = iterator.next();
+
+							if (Objects.equals(currentDir, projectDir)) {
+								continue;
+							}
+
+							for (String glob :
+									workspaceExtension.getDirExcludesGlobs()) {
+
+								Path relativeProjectPath =
+									rootDirPath.relativize(projectDir.toPath());
+
+								PathMatcher pathMatcher =
+									fileSystem.getPathMatcher("glob:" + glob);
+
+								if (pathMatcher.matches(relativeProjectPath)) {
+									if (_logger.isInfoEnabled()) {
+										_logger.info(
+											"Skipping project evaluation for " +
+												"{} because it matches the " +
+													"exclude pattern {}.",
+											relativeProjectPath, glob);
+									}
+
+									iterator.remove();
+								}
+							}
+						}
+
+						for (File projectDir : projectDirs) {
+							String projectPath = GradleUtil.getProjectPath(
+								projectDir, rootDir);
+
+							settings1.include(new String[] {projectPath});
+
+							_projectConfiguratorsMap.put(
+								projectPath, projectConfigurator);
+						}
+					}
 				}
-			}
-		}
+			});
 
 		gradle.beforeProject(
 			new Closure<Void>(settings) {
@@ -111,54 +155,6 @@ public class WorkspacePlugin implements Plugin<Settings> {
 				}
 
 			});
-
-		Path rootDirPath = rootDir.toPath();
-
-		FileSystem fileSystem = rootDirPath.getFileSystem();
-
-		gradle.afterProject(
-			project -> {
-				StartParameter startParameter = gradle.getStartParameter();
-
-				File projectDir = project.getProjectDir();
-
-				if (Objects.equals(
-						startParameter.getCurrentDir(), projectDir)) {
-
-					return;
-				}
-
-				Path relativeProjectPath = rootDirPath.relativize(
-					projectDir.toPath());
-
-				for (String glob : workspaceExtension.getDirExcludesGlobs()) {
-					PathMatcher pathMatcher = fileSystem.getPathMatcher(
-						"glob:" + glob);
-
-					if (!pathMatcher.matches(relativeProjectPath)) {
-						continue;
-					}
-
-					Logger logger = project.getLogger();
-
-					if (logger.isInfoEnabled()) {
-						logger.info(
-							"Disabling tasks for {} because it matches the " +
-								"exclude pattern {}.",
-							project.getPath(), glob);
-					}
-
-					Map<Project, Set<Task>> map = project.getAllTasks(false);
-
-					for (Map.Entry<Project, Set<Task>> entry : map.entrySet()) {
-						for (Task task : entry.getValue()) {
-							task.setEnabled(false);
-						}
-					}
-
-					return;
-				}
-			});
 	}
 
 	private WorkspaceExtension _addWorkspaceExtension(Settings settings) {
@@ -189,5 +185,7 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 	private static final Map<String, ProjectConfigurator>
 		_projectConfiguratorsMap = new HashMap<>();
+
+	private final Logger _logger = Logging.getLogger(WorkspacePlugin.class);
 
 }

@@ -466,9 +466,9 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 					items={fdsFields}
 					noItemsButtonLabel={Liferay.Language.get('add-fields')}
 					noItemsDescription={Liferay.Language.get(
-						'start-adding-fields-to-show-in-your-view'
+						'add-fields-to-show-in-your-view'
 					)}
-					noItemsTitle={Liferay.Language.get('no-fields-added')}
+					noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
 					onCancelButtonClick={() => navigate(fdsViewsURL)}
 					onCreationButtonClick={onCreationButtonClick}
 					onOrderChange={({

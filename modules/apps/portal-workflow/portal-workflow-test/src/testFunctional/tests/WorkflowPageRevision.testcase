@@ -23,7 +23,10 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page Name");
 
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "true",
+			branchingPublic = "true",
+			groupName = "Site Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 

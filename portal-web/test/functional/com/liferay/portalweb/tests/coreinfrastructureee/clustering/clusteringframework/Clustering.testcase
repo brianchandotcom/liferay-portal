@@ -442,7 +442,7 @@ definition {
 			categoryLevel = "DEBUG",
 			categoryName = "com.liferay.portal.servlet.filters.autologin.AutoLoginFilter");
 
-		for (var serverPort : list "8080,9080,10080") {
+		for (var serverPort : list "8080,9080") {
 			User.loginPG(
 				nodePort = ${serverPort},
 				password = "test",

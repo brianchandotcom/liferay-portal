@@ -22,7 +22,6 @@ import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServic
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
-import com.liferay.headless.admin.user.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
@@ -822,12 +821,6 @@ public class UserAccountResourceImpl
 
 		if (accountBriefs != null) {
 			existingUserAccount.setAccountBriefs(accountBriefs);
-		}
-
-		CustomField[] customFields = userAccount.getCustomFields();
-
-		if (customFields != null) {
-			existingUserAccount.setCustomFields(customFields);
 		}
 
 		OrganizationBrief[] organizationBriefs =

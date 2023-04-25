@@ -36,7 +36,7 @@ public interface TypeFacetPortletPreferences {
 
 	public static final String PREFERENCE_KEY_PARAMETER_NAME = "parameterName";
 
-	public String getAssetTypesString();
+	public String getAssetTypes();
 
 	public List<KeyValuePair> getAvailableAssetTypes(
 		long companyId, Locale locale);

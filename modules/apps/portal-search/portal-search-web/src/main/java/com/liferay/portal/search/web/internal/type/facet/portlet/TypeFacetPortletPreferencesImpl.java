@@ -50,7 +50,7 @@ public class TypeFacetPortletPreferencesImpl
 	}
 
 	@Override
-	public String getAssetTypesString() {
+	public String getAssetTypes() {
 		return _portletPreferencesHelper.getString(
 			TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES,
 			StringPool.BLANK);

@@ -503,14 +503,11 @@ definition {
 	@description = "This is a use case for LPS-56229."
 	@priority = 3
 	test ViewUserCanAddSiteCalendarsWithCalendarPermissions {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		RoleNavigator.gotoRoleType(roleType = "Site");
-
-		Role.add(roleTitle = "Calendar Site Role Name");
+		JSONRole.addSiteRole(
+			roleKey = "Calendar Site Role Name",
+			roleTitle = "Calendar Site Role Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "MANAGE_BOOKINGS",
@@ -525,67 +522,34 @@ definition {
 				roleTitle = "User");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "usersn@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "usersn@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "usersn@liferay.com");
 
 		for (var siteName : list "Site A,Site B,Site C") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			HeadlessSite.addSite(siteName = ${siteName});
 
-			Site.addBlankCP(siteName = ${siteName});
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editUserSiteCP(
-				siteName = ${siteName},
-				userScreenName = "usersn");
+			JSONUser.addUserToSite(
+				groupName = ${siteName},
+				userEmailAddress = "usersn@liferay.com");
 		}
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site A");
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Site A",
+			roleTitle = "Calendar Site Role Name",
+			userEmailAddress = "usersn@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignSiteRoleCP(
-			resourceName = "userfn userln",
-			roleTitle = "Calendar Site Role Name");
-
-		Navigator.gotoPage(pageName = "Calendar Page");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site C");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Memberships");
-
-		Site.assignSiteRoleCP(
-			resourceName = "userfn userln",
-			roleTitle = "Calendar Site Role Name");
-
-		Navigator.gotoPage(pageName = "Calendar Page");
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Site C",
+			roleTitle = "Calendar Site Role Name",
+			userEmailAddress = "usersn@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn@liferay.com",
@@ -594,10 +558,6 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 
 		Portlet.addPG(portletName = "Calendar");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "usersn@liferay.com",
-			userScreenName = "usersn");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
 

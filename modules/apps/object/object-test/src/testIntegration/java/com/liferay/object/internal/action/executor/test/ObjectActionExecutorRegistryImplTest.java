@@ -115,11 +115,15 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "Account"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+			ListUtil.concat(
+				Arrays.asList(objectActionExecutor1),
+				_defaultObjectActionExecutors));
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "Address"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+			ListUtil.concat(
+				Arrays.asList(objectActionExecutor1),
+				_defaultObjectActionExecutors));
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
@@ -129,11 +133,15 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId2, "Account"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+			ListUtil.concat(
+				Arrays.asList(objectActionExecutor1),
+				_defaultObjectActionExecutors));
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId2, "Address"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor1));
+			ListUtil.concat(
+				Arrays.asList(objectActionExecutor1),
+				_defaultObjectActionExecutors));
 
 		_unregisterObjectActionExecutors();
 
@@ -146,7 +154,9 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "Account"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor2));
+			ListUtil.concat(
+				Arrays.asList(objectActionExecutor2),
+				_defaultObjectActionExecutors));
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
@@ -165,11 +175,15 @@ public class ObjectActionExecutorRegistryImplTest {
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "Account"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor3));
+			ListUtil.concat(
+				Arrays.asList(objectActionExecutor3),
+				_defaultObjectActionExecutors));
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
 				_companyId1, "Address"),
-			_concatOOTBObjectActionExecutors(objectActionExecutor3));
+			ListUtil.concat(
+				Arrays.asList(objectActionExecutor3),
+				_defaultObjectActionExecutors));
 
 		_assertObjectActionExecutors(
 			_objectActionExecutorRegistry.getObjectActionExecutors(
@@ -211,13 +225,6 @@ public class ObjectActionExecutorRegistryImplTest {
 				expectedObjectActionExecutor.getKey(),
 				actualObjectActionExecutor.getKey());
 		}
-	}
-
-	private List<ObjectActionExecutor> _concatOOTBObjectActionExecutors(
-		ObjectActionExecutor... objectActionExecutors) {
-
-		return ListUtil.concat(
-			Arrays.asList(objectActionExecutors), _defaultObjectActionExecutors);
 	}
 
 	private ObjectActionExecutor _registerObjectActionExecutor(

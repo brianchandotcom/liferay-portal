@@ -166,6 +166,9 @@ definition {
 		else if (${widgetName} == "Organization Management") {
 			var portletId = "com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet";
 		}
+		else if (${widgetName} == "Page Comments") {
+			var portletId = "com_liferay_comment_page_comments_web_portlet_PageCommentsPortlet";
+		}
 		else if (${widgetName} == "Profile") {
 			var portletId = "com_liferay_contacts_web_portlet_ProfilePortlet";
 		}

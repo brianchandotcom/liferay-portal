@@ -118,7 +118,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 		StringBundler sb = new StringBundler(11);
 
 		sb.append(_analyticsConfiguration.liferayAnalyticsFaroBackendURL());
-		sb.append("/api/1.0/pages/search-keywords?counts=");
+		sb.append("/api/1.0/pages/search-keywords?minCounts=");
 		sb.append(_count);
 
 		if (!Validator.isBlank(_displayLanguageId)) {

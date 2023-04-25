@@ -184,6 +184,24 @@ definition {
 		return ${response};
 	}
 
+	macro deleteAllKeywords {
+		Variables.assertDefined(parameterList = "${groupNameList},${tagNameList}");
+
+		for (var groupName : list ${groupNameList}) {
+			var groupIdList = JSONAssettagSetter.setGroupId(groupName = ${groupName});
+
+			for (var tagName : list ${tagNameList}) {
+				var keywordId = JSONAssettagAPI._getTagId(
+					groupId = ${groupIdList},
+					tagName = ${tagName});
+
+				var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(keywordId = ${keywordId});
+
+				JSONCurlUtil.delete(${curl});
+			}
+		}
+	}
+
 	macro deleteTaxonomyVocabularyByErc {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
@@ -226,6 +244,14 @@ definition {
 		var elementValue = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
 
 		return ${elementValue};
+	}
+
+	macro getKeywordsByGroupName {
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(groupName = ${groupName});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
 	}
 
 	macro getTaxonomyVocabularyByErc {

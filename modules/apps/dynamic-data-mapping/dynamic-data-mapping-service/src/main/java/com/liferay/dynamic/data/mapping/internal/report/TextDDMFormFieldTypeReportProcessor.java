@@ -33,13 +33,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -127,48 +127,46 @@ public class TextDDMFormFieldTypeReportProcessor
 					new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
 
 			List<DDMFormInstanceRecord> ddmFormInstanceRecords =
-				baseModelSearchResult.getBaseModels();
+				ListUtil.filter(
+					baseModelSearchResult.getBaseModels(),
+					currentDDMFormInstanceRecord -> {
+						long ddmFormInstanceRecordId =
+							currentDDMFormInstanceRecord.
+								getFormInstanceRecordId();
 
-			Stream<DDMFormInstanceRecord> stream =
-				ddmFormInstanceRecords.stream();
+						return ddmFormInstanceRecordId != formInstanceRecordId;
+					});
 
-			stream.filter(
-				currentDDMFormInstanceRecord ->
-					currentDDMFormInstanceRecord.getFormInstanceRecordId() !=
-						formInstanceRecordId
-			).limit(
-				_VALUES_MAX_LENGTH
-			).forEach(
-				currentDDMFormInstanceRecord -> {
-					try {
-						DDMFormValues ddmFormValues =
-							currentDDMFormInstanceRecord.getDDMFormValues();
+			for (int i = 0; i < _VALUES_MAX_LENGTH; i++) {
+				DDMFormInstanceRecord currentDDMFormInstanceRecord =
+					ddmFormInstanceRecords.get(i);
 
-						Map<String, List<DDMFormFieldValue>>
-							ddmFormFieldValuesMap =
-								ddmFormValues.getDDMFormFieldValuesMap(true);
+				try {
+					DDMFormValues ddmFormValues =
+						currentDDMFormInstanceRecord.getDDMFormValues();
 
-						List<DDMFormFieldValue> ddmFormFieldValues =
-							ddmFormFieldValuesMap.get(
-								ddmFormFieldValue.getName());
+					Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+						ddmFormValues.getDDMFormFieldValuesMap(true);
 
-						ddmFormFieldValues.forEach(
-							currentDDMFormFieldValue -> valuesJSONArray.put(
-								JSONUtil.put(
-									"formInstanceRecordId",
-									currentDDMFormInstanceRecord.
-										getFormInstanceRecordId()
-								).put(
-									"value", getValue(currentDDMFormFieldValue)
-								)));
-					}
-					catch (PortalException portalException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(portalException);
-						}
+					List<DDMFormFieldValue> ddmFormFieldValues =
+						ddmFormFieldValuesMap.get(ddmFormFieldValue.getName());
+
+					ddmFormFieldValues.forEach(
+						currentDDMFormFieldValue -> valuesJSONArray.put(
+							JSONUtil.put(
+								"formInstanceRecordId",
+								currentDDMFormInstanceRecord.
+									getFormInstanceRecordId()
+							).put(
+								"value", getValue(currentDDMFormFieldValue)
+							)));
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException);
 					}
 				}
-			);
+			}
 
 			if (!nullValue) {
 				totalEntries--;

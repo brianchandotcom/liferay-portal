@@ -1,15 +1,15 @@
 assemble:
     - from: assets
       into: static
-liferay-sample-js-importmaps-entry-1:
+liferay-sample-etc-frontend-3-js-import-maps-entry:
     bareSpecifier: my-utils
-    name: Liferay Sample JS Import Maps Entry 1
+    name: Liferay Sample Etc Frontend 3 JS Import Maps Entry
     type: jsImportMapsEntry
     url: my-utils/index.js
-liferay-sample-js-importmaps-entry-1-custom-element:
-    htmlElementName: liferay-sample-js-importmaps-entry-1-custom-element
+liferay-sample-etc-frontend-3-custom-element:
+    htmlElementName: liferay-sample-js-import-maps-entry-custom-element
     instanceable: false
-    name: Liferay Sample JS Import Maps Entry 1 Custom Element
+    name: Liferay Sample Etc Frontend 3 Custom Element
     portletCategoryName: category.client-extensions
     type: customElement
     urls:

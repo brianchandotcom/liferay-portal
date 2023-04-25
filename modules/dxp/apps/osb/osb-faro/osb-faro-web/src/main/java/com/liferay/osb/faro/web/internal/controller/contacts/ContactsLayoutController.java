@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(
-	immediate = true,
-	service = {ContactsLayoutController.class, FaroController.class}
-)
+@Component(service = {ContactsLayoutController.class, FaroController.class})
 @Path("/{groupId}/contacts_layout")
 @Produces(MediaType.APPLICATION_JSON)
 public class ContactsLayoutController extends BaseFaroController {

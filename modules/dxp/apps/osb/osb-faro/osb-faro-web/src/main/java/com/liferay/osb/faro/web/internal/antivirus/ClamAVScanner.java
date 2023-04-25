@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = ClamAVScanner.class)
+@Component(service = ClamAVScanner.class)
 public class ClamAVScanner {
 
 	public void scan(InputStream inputStream) {

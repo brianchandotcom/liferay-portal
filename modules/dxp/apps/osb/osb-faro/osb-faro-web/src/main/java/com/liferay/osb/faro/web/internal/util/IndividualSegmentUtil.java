@@ -31,15 +31,12 @@ import com.liferay.osb.faro.web.internal.constants.FaroPaginationConstants;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -188,18 +185,23 @@ public class IndividualSegmentUtil {
 					binRange[1]);
 			}
 
-			Results<Individual> curResults =
-				contactsEngineClient.getIndividualsByIndividualSegment(
-					faroProject, individualSegment.getId(), null, null,
-					curFilterBuilder,
-					individualSegment.isIncludeAnonymousUsers(), 1, 1, null);
+			individualFieldDistribution.add(
+				HashMapBuilder.<String, Object>put(
+					"count",
+					() -> {
+						Results<Individual> curResults =
+							contactsEngineClient.
+								getIndividualsByIndividualSegment(
+									faroProject, individualSegment.getId(),
+									null, null, curFilterBuilder,
+									individualSegment.isIncludeAnonymousUsers(),
+									1, 1, null);
 
-			Map<String, Object> fieldValueMap = new HashMap<>();
-
-			fieldValueMap.put("count", curResults.getTotal());
-			fieldValueMap.put("values", binRange);
-
-			individualFieldDistribution.add(fieldValueMap);
+						return curResults.getTotal();
+					}
+				).put(
+					"values", binRange
+				).build());
 		}
 
 		return individualFieldDistribution;
@@ -252,22 +254,19 @@ public class IndividualSegmentUtil {
 		for (IndividualTransformation individualTransformation :
 				individualTransformations.getItems()) {
 
-			Map<String, Object> fieldValueMap = new HashMap<>();
-
-			fieldValueMap.put(
-				"count", individualTransformation.getTotalElements());
-
 			Map<String, Object> terms = individualTransformation.getTerms();
 
-			Collection<Object> values = terms.values();
+			individualFieldDistribution.add(
+				HashMapBuilder.<String, Object>put(
+					"count", individualTransformation.getTotalElements()
+				).put(
+					"values",
+					() -> {
+						List<Object> values = new ArrayList<>(terms.values());
 
-			Stream<Object> stream = values.stream();
-
-			Optional<Object> optionalValue = stream.findFirst();
-
-			fieldValueMap.put("values", new Object[] {optionalValue.get()});
-
-			individualFieldDistribution.add(fieldValueMap);
+						return new Object[] {values.get(0)};
+					}
+				).build());
 		}
 
 		return individualFieldDistribution;

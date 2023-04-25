@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Geyson Silva
  */
 @ApplicationPath("/" + FaroConstants.APPLICATION_ASAH)
-@Component(
-	immediate = true, property = "jaxrs.application=true",
-	service = Application.class
-)
+@Component(property = "jaxrs.application=true", service = Application.class)
 public class AsahApplication extends BaseApplication {
 
 	@Override

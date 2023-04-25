@@ -17,9 +17,9 @@ package com.liferay.osb.faro.web.internal.card.template.type;
 import com.liferay.osb.faro.contacts.model.constants.ContactsCardTemplateConstants;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.TouchpointAttributionContactsCardTemplateDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = ContactsCardTemplateType.class)
+@Component(service = ContactsCardTemplateType.class)
 public class TouchpointAttributionContactsCardTemplateType
 	extends BaseContactsCardTemplateType {
 
@@ -54,12 +54,12 @@ public class TouchpointAttributionContactsCardTemplateType
 	private static final String _DEFAULT_NAME = "Touchpoint Attribution";
 
 	private static final Map<String, Object> _defaultSettings =
-		new HashMap<String, Object>() {
-			{
-				put("filters", Collections.emptyList());
-				put("stage", 0);
-				put("touchpointsEntryIds", Collections.emptyList());
-			}
-		};
+		HashMapBuilder.<String, Object>put(
+			"filters", Collections.emptyList()
+		).put(
+			"stage", 0
+		).put(
+			"touchpointsEntryIds", Collections.emptyList()
+		).build();
 
 }

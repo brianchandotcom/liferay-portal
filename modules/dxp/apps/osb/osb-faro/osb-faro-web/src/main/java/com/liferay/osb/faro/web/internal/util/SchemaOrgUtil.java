@@ -15,9 +15,9 @@
 package com.liferay.osb.faro.web.internal.util;
 
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -64,11 +64,8 @@ public class SchemaOrgUtil {
 
 	private static final String _SCHEMA_ORG_URL = "http://schema.org/";
 
-	private static final Map<String, String> _rawTypes =
-		new HashMap<String, String>() {
-			{
-				put("birthDate", FieldMappingConstants.TYPE_DATE);
-			}
-		};
+	private static final Map<String, String> _rawTypes = HashMapBuilder.put(
+		"birthDate", FieldMappingConstants.TYPE_DATE
+	).build();
 
 }

@@ -15,12 +15,11 @@
 package com.liferay.osb.faro.web.internal.model.display;
 
 import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Shinn Lok
@@ -49,15 +48,8 @@ public class FaroResultsDisplay<T> {
 
 		_disableSearch = disableSearch;
 
-		List<T> items = results.getItems();
-
-		Stream<T> stream = items.stream();
-
-		_items = stream.map(
-			function
-		).collect(
-			Collectors.toList()
-		);
+		_items = TransformUtil.transform(
+			results.getItems(), item -> function.apply(item));
 
 		_total = results.getTotal();
 	}

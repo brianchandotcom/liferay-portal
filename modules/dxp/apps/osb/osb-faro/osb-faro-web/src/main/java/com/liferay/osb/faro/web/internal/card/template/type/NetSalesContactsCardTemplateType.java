@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = ContactsCardTemplateType.class)
+@Component(service = ContactsCardTemplateType.class)
 public class NetSalesContactsCardTemplateType
 	extends BaseContactsCardTemplateType {
 

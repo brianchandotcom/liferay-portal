@@ -20,12 +20,13 @@ import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroEmailLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.util.EmailUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -47,7 +48,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/email",
 		"osgi.http.whiteboard.servlet.name=com.liferay.osb.faro.web.internal.servlet.EmailServlet",
@@ -65,7 +65,7 @@ public class EmailServlet extends BaseAsahServlet {
 
 		try {
 			_sendEmail(
-				JSONFactoryUtil.createJSONObject(
+				_jsonFactory.createJSONObject(
 					StringUtil.read(httpServletRequest.getInputStream())));
 		}
 		catch (Exception exception) {
@@ -76,9 +76,9 @@ public class EmailServlet extends BaseAsahServlet {
 	private String _getDownloadURL(String batchId, long groupId) {
 		String url = _FARO_URL + "/o/proxy/download/data-control-tasks";
 
-		url = _http.addParameter(url, "projectGroupId", groupId);
+		url = HttpComponentsUtil.addParameter(url, "projectGroupId", groupId);
 
-		return _http.addParameter(
+		return HttpComponentsUtil.addParameter(
 			url, "filter", "batchId eq '" + batchId + "'");
 	}
 
@@ -137,6 +137,9 @@ public class EmailServlet extends BaseAsahServlet {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

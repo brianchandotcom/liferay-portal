@@ -17,6 +17,7 @@ package com.liferay.osb.faro.web.internal.util;
 import com.liferay.osb.faro.engine.client.model.LCPProject;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,7 +67,7 @@ public class ProjectHelper {
 		String key = keys.get(0);
 
 		if (key.equals("all")) {
-			return StreamUtil.toList(
+			return TransformUtil.transform(
 				_faroProjectLocalService.getFaroProjects(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				FaroProject::getGroupId);
@@ -77,12 +78,12 @@ public class ProjectHelper {
 			key.equals(LCPProject.Cluster.SA.toString()) ||
 			key.equals(LCPProject.Cluster.US.toString())) {
 
-			return StreamUtil.toList(
+			return TransformUtil.transform(
 				_faroProjectLocalService.getFaroProjects(key),
 				FaroProject::getGroupId);
 		}
 
-		return StreamUtil.toList(keys, GetterUtil::getLong);
+		return TransformUtil.transform(keys, GetterUtil::getLong);
 	}
 
 	private static final Map<Long, Map<String, Object>> _globalStateMaps =

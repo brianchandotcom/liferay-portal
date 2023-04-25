@@ -20,6 +20,7 @@ import com.liferay.osb.faro.web.internal.context.GroupInfo;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,7 +33,6 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = ReportController.class)
+@Component(service = ReportController.class)
 @Path("/reports")
 @Produces(MediaType.APPLICATION_JSON)
 public class ReportController extends BaseFaroController {
@@ -100,6 +100,8 @@ public class ReportController extends BaseFaroController {
 			toDate = _toUTCDate(toDateString);
 		}
 		catch (Exception exception) {
+			_log.error(exception);
+
 			return _reportControllerResponseFactory.create(
 				"Both dates in range must be ISO 8601 compliant " +
 					_ISO_8601_FORMAT,
@@ -121,12 +123,11 @@ public class ReportController extends BaseFaroController {
 		Map<String, Object> responseMap;
 
 		Map<String, List<String>> queryParameters =
-			new HashMap<String, List<String>>() {
-				{
-					put("fromDate", Collections.singletonList(fromDateString));
-					put("toDate", Collections.singletonList(toDateString));
-				}
-			};
+			HashMapBuilder.<String, List<String>>put(
+				"fromDate", Collections.singletonList(fromDateString)
+			).put(
+				"toDate", Collections.singletonList(toDateString)
+			).build();
 
 		try {
 			responseMap = contactsEngineClient.get(
@@ -134,6 +135,8 @@ public class ReportController extends BaseFaroController {
 				Map.class);
 		}
 		catch (Exception exception) {
+			_log.error(exception);
+
 			return _reportControllerResponseFactory.create(
 				"An internal problem happened when trying to reach our " +
 					"services",
@@ -153,16 +156,14 @@ public class ReportController extends BaseFaroController {
 
 				contactsEngineClient.getToOutputStream(
 					faroProject,
-					new HashMap<String, String>() {
-						{
-							put("Accept", "application/octet-stream, */*");
-						}
-					},
+					HashMapBuilder.put(
+						"Accept", "application/octet-stream, */*"
+					).build(),
 					String.format("%s/file", path), queryParameters,
 					outputStream);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 
 			outputStream.flush();
@@ -174,13 +175,13 @@ public class ReportController extends BaseFaroController {
 	}
 
 	private Map<String, String> _createHeaders(URI baseURI) {
-		return new HashMap<String, String>() {
-			{
-				put("X-Forwarded-Host", baseURI.getHost());
-				put("X-Forwarded-Port", String.valueOf(baseURI.getPort()));
-				put("X-Forwarded-Proto", baseURI.getScheme());
-			}
-		};
+		return HashMapBuilder.put(
+			"X-Forwarded-Host", baseURI.getHost()
+		).put(
+			"X-Forwarded-Port", String.valueOf(baseURI.getPort())
+		).put(
+			"X-Forwarded-Proto", baseURI.getScheme()
+		).build();
 	}
 
 	private Date _toUTCDate(String dateString) {

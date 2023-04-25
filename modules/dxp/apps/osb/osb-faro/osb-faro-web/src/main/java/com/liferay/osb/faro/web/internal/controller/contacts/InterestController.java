@@ -42,9 +42,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shinn Lok
  */
-@Component(
-	immediate = true, service = {FaroController.class, InterestController.class}
-)
+@Component(service = {FaroController.class, InterestController.class})
 @Path("/{groupId}/interest")
 @Produces(MediaType.APPLICATION_JSON)
 public class InterestController extends BaseFaroController {

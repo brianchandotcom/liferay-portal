@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/proxy/download",
 		"osgi.http.whiteboard.servlet.name=com.liferay.osb.faro.web.internal.servlet.ProxyDownloadServlet",
@@ -86,7 +85,7 @@ public class ProxyDownloadAsahServlet extends BaseAsahServlet {
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(uriSyntaxException, uriSyntaxException);
+				_log.debug(uriSyntaxException);
 			}
 		}
 	}
@@ -128,7 +127,7 @@ public class ProxyDownloadAsahServlet extends BaseAsahServlet {
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(uriSyntaxException, uriSyntaxException);
+				_log.debug(uriSyntaxException);
 			}
 		}
 	}

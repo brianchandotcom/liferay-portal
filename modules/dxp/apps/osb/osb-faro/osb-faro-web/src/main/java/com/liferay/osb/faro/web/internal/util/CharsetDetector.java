@@ -14,6 +14,9 @@
 
 package com.liferay.osb.faro.web.internal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,6 +50,8 @@ public class CharsetDetector {
 				return Charset.forName(universalDetector.getDetectedCharset());
 			}
 			catch (IllegalArgumentException illegalArgumentException) {
+				_log.error(illegalArgumentException);
+
 				return null;
 			}
 		}
@@ -54,5 +59,8 @@ public class CharsetDetector {
 			universalDetector.reset();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CharsetDetector.class);
 
 }

@@ -26,6 +26,7 @@ import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FaroUserDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroUserComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,11 +40,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -65,9 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(
-	immediate = true, service = {FaroController.class, UserController.class}
-)
+@Component(service = {FaroController.class, UserController.class})
 @Path("/{groupId}/user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserController extends BaseFaroController {
@@ -98,19 +94,14 @@ public class UserController extends BaseFaroController {
 
 		validateUpdate(roleName, Collections.emptyList());
 
-		List<FaroUserDisplay> userDisplays = new ArrayList<>();
-
 		Role role = _roleLocalService.getRole(getCompanyId(), roleName);
 
-		for (String emailAddress : emailAddressesFaroParam.getValue()) {
-			userDisplays.add(
-				new FaroUserDisplay(
-					_faroUserLocalService.addFaroUser(
-						getUserId(), groupId, 0, role.getRoleId(), emailAddress,
-						FaroUserConstants.STATUS_PENDING, sendEmail)));
-		}
-
-		return userDisplays;
+		return TransformUtil.transform(
+			emailAddressesFaroParam.getValue(),
+			emailAddress -> new FaroUserDisplay(
+				_faroUserLocalService.addFaroUser(
+					getUserId(), groupId, 0, role.getRoleId(), emailAddress,
+					FaroUserConstants.STATUS_PENDING, sendEmail)));
 	}
 
 	@DELETE
@@ -123,13 +114,8 @@ public class UserController extends BaseFaroController {
 
 		validateFaroUsers(idsFaroParam.getValue());
 
-		List<FaroUserDisplay> faroUserDisplays = new ArrayList<>();
-
-		for (long id : idsFaroParam.getValue()) {
-			faroUserDisplays.add(delete(groupId, id));
-		}
-
-		return faroUserDisplays;
+		return TransformUtil.transform(
+			idsFaroParam.getValue(), id -> delete(groupId, id));
 	}
 
 	@DELETE
@@ -208,18 +194,12 @@ public class UserController extends BaseFaroController {
 				orderByFieldsFaroParam.getValue());
 		}
 
-		List<FaroUser> faroUsers = _faroUserLocalService.search(
-			groupId, query, statuses, startAndEnd[0], startAndEnd[1],
-			orderByComparator);
-
-		Stream<FaroUser> stream = faroUsers.stream();
-
 		return new FaroResultsDisplay(
-			stream.map(
-				FaroUserDisplay::new
-			).collect(
-				Collectors.toList()
-			),
+			TransformUtil.transform(
+				_faroUserLocalService.search(
+					groupId, query, statuses, startAndEnd[0], startAndEnd[1],
+					orderByComparator),
+				FaroUserDisplay::new),
 			_faroUserLocalService.searchCount(groupId, query, statuses));
 	}
 
@@ -267,21 +247,18 @@ public class UserController extends BaseFaroController {
 
 		validateUpdate(roleName, idsFaroParam.getValue());
 
-		List<FaroUserDisplay> faroUserDisplays = new ArrayList<>();
-
 		Role role = _roleLocalService.getRole(getCompanyId(), roleName);
 
-		for (long id : idsFaroParam.getValue()) {
-			FaroUser faroUser = _faroUserLocalService.getFaroUser(id);
+		return TransformUtil.transform(
+			idsFaroParam.getValue(),
+			id -> {
+				FaroUser faroUser = _faroUserLocalService.getFaroUser(id);
 
-			faroUser.setRoleId(role.getRoleId());
+				faroUser.setRoleId(role.getRoleId());
 
-			faroUserDisplays.add(
-				new FaroUserDisplay(
-					_faroUserLocalService.updateFaroUser(faroUser)));
-		}
-
-		return faroUserDisplays;
+				return new FaroUserDisplay(
+					_faroUserLocalService.updateFaroUser(faroUser));
+			});
 	}
 
 	@Path("/{id}")

@@ -36,11 +36,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -63,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	service = {ContactsLayoutTemplateController.class, FaroController.class}
 )
 @Path("/{groupId}/contacts_layout_template")
@@ -129,16 +126,19 @@ public class ContactsLayoutTemplateController extends BaseFaroController {
 			_contactsLayoutTemplateLocalService.getContactsLayoutTemplates(
 				groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Stream<ContactsLayoutTemplate> stream =
-			contactsLayoutTemplates.stream();
+		List<ContactsLayoutTemplateDisplay> contactsLayoutTemplateDisplays =
+			new ArrayList<>();
 
-		return stream.map(
-			this::getLayoutTemplateDisplay
-		).filter(
-			Objects::nonNull
-		).collect(
-			Collectors.toList()
-		);
+		for (ContactsLayoutTemplate contactsLayoutTemplate :
+				contactsLayoutTemplates) {
+
+			if (getLayoutTemplateDisplay(contactsLayoutTemplate) != null) {
+				contactsLayoutTemplateDisplays.add(
+					getLayoutTemplateDisplay(contactsLayoutTemplate));
+			}
+		}
+
+		return contactsLayoutTemplateDisplays;
 	}
 
 	@Path("/{id}")
@@ -184,7 +184,7 @@ public class ContactsLayoutTemplateController extends BaseFaroController {
 				contactsLayoutTemplate, _contactsCardTemplateManagerUtil);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return null;
 		}

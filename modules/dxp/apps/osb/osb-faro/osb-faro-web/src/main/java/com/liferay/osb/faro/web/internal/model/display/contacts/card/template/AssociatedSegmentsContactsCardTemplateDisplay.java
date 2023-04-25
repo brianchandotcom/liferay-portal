@@ -24,14 +24,13 @@ import com.liferay.osb.faro.web.internal.constants.FaroPaginationConstants;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.IndividualSegmentDisplay;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Shinn Lok
@@ -55,33 +54,29 @@ public class AssociatedSegmentsContactsCardTemplateDisplay
 		FaroProject faroProject, FaroEntityDisplay faroEntityDisplay,
 		ContactsEngineClient contactsEngineClient) {
 
-		Map<String, Object> contactsCardData = new HashMap<>();
-
-		Results<IndividualSegment> results =
-			contactsEngineClient.getIndividualIndividualSegments(
-				faroProject, null, faroEntityDisplay.getId(), StringPool.BLANK,
-				IndividualSegment.Status.ACTIVE.name(), 1,
-				getSize() * _ITEMS_PER_COLUMN,
-				Collections.singletonList(
-					new OrderByField(
-						"name", FaroPaginationConstants.ORDER_BY_TYPE_ASC,
-						true)));
-
-		List<IndividualSegment> individualSegments = results.getItems();
-
-		Stream<IndividualSegment> stream = individualSegments.stream();
-
-		contactsCardData.put(
+		return HashMapBuilder.<String, Object>put(
 			"contactsEntityResults",
-			new FaroResultsDisplay(
-				stream.map(
-					IndividualSegmentDisplay::new
-				).collect(
-					Collectors.toList()
-				),
-				results.getTotal()));
+			() -> {
+				Results<IndividualSegment> results =
+					contactsEngineClient.getIndividualIndividualSegments(
+						faroProject, null, faroEntityDisplay.getId(),
+						StringPool.BLANK,
+						IndividualSegment.Status.ACTIVE.name(), 1,
+						getSize() * _ITEMS_PER_COLUMN,
+						Collections.singletonList(
+							new OrderByField(
+								"name",
+								FaroPaginationConstants.ORDER_BY_TYPE_ASC,
+								true)));
 
-		return contactsCardData;
+				List<IndividualSegment> individualSegments = results.getItems();
+
+				return new FaroResultsDisplay(
+					TransformUtil.transform(
+						individualSegments, IndividualSegmentDisplay::new),
+					results.getTotal());
+			}
+		).build();
 	}
 
 	private static final int _ITEMS_PER_COLUMN = 6;

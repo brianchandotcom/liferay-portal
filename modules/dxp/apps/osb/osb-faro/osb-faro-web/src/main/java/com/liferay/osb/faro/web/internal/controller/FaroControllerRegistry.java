@@ -16,6 +16,7 @@ package com.liferay.osb.faro.web.internal.controller;
 
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.search.FaroSearchContext;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
@@ -30,20 +31,17 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = FaroControllerRegistry.class)
+@Component(service = FaroControllerRegistry.class)
 public class FaroControllerRegistry {
 
 	public List<FaroResultsDisplay> search(
 			long groupId, List<FaroSearchContext> faroSearchContexts)
 		throws Exception {
 
-		List<FaroResultsDisplay> results = new ArrayList<>();
-
-		for (FaroSearchContext faroSearchContext : faroSearchContexts) {
-			results.add(getFaroResultsDisplay(groupId, faroSearchContext));
-		}
-
-		return results;
+		return TransformUtil.transform(
+			faroSearchContexts,
+			faroSearchContext -> getFaroResultsDisplay(
+				groupId, faroSearchContext));
 	}
 
 	@Reference(

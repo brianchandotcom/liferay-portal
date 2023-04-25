@@ -24,14 +24,13 @@ import com.liferay.osb.faro.engine.client.model.provider.CSVProvider;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -114,15 +113,8 @@ public class DataSourceDisplay implements FaroEntityDisplay {
 	protected List<Long> getContainerIds(
 		List<LiferayProvider.Container> containers) {
 
-		Stream<LiferayProvider.Container> stream = containers.stream();
-
-		return stream.map(
-			LiferayProvider.Container::getId
-		).map(
-			GetterUtil::getLong
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			containers, container -> GetterUtil.getLong(container.getId()));
 	}
 
 	private Boolean _contactsSelected;

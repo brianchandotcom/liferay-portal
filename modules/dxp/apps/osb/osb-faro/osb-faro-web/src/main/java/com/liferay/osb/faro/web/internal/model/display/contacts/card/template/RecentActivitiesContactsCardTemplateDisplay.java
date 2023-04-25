@@ -23,13 +23,12 @@ import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.model.display.contacts.ActivityGroupDisplay;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
-import com.liferay.osb.faro.web.internal.util.StreamUtil;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * @author Matthew Kong
@@ -57,22 +56,22 @@ public class RecentActivitiesContactsCardTemplateDisplay
 		FaroProject faroProject, FaroEntityDisplay faroEntityDisplay,
 		ContactsEngineClient contactsEngineClient) {
 
-		Map<String, Object> contactsCardData = new HashMap<>();
+		return HashMapBuilder.<String, Object>put(
+			"activityGroups",
+			() -> {
+				OrderByField orderByField = new OrderByField(
+					"startTime", "desc");
 
-		OrderByField orderByField = new OrderByField("startTime", "desc");
+				Results<ActivityGroup> results =
+					contactsEngineClient.getActivityGroups(
+						faroProject, null, faroEntityDisplay.getId(),
+						FieldMappingConstants.OWNER_TYPE_INDIVIDUAL, null, null,
+						null, 1, 5, Collections.singletonList(orderByField));
 
-		Results<ActivityGroup> results = contactsEngineClient.getActivityGroups(
-			faroProject, null, faroEntityDisplay.getId(),
-			FieldMappingConstants.OWNER_TYPE_INDIVIDUAL, null, null, null, 1, 5,
-			Collections.singletonList(orderByField));
-
-		Function<ActivityGroup, ActivityGroupDisplay> function =
-			ActivityGroupDisplay::new;
-
-		contactsCardData.put(
-			"activityGroups", StreamUtil.toList(results.getItems(), function));
-
-		return contactsCardData;
+				return TransformUtil.transform(
+					results.getItems(), ActivityGroupDisplay::new);
+			}
+		).build();
 	}
 
 	private static final int[] _SUPPORTED_SIZES = {2};

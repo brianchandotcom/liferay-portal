@@ -18,8 +18,8 @@ import com.liferay.osb.faro.contacts.model.constants.ContactsCardTemplateConstan
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ConversionHealthContactsCardTemplateDisplay;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = ContactsCardTemplateType.class)
+@Component(service = ContactsCardTemplateType.class)
 public class ConversionHealthContactsCardTemplateType
 	extends BaseContactsCardTemplateType {
 
@@ -54,17 +54,18 @@ public class ConversionHealthContactsCardTemplateType
 	private static final String _DEFAULT_NAME = "Conversion Health";
 
 	private static final Map<String, Object> _defaultSettings =
-		new HashMap<String, Object>() {
-			{
-				put("endDateTime", 0);
-				put("interval", 30);
-				put("minCurrentStageId", StringPool.BLANK);
-				put("stageId", StringPool.BLANK);
-				put("startDateTime", 0);
-				put(
-					"unit",
-					ContactsCardTemplateConstants.SETTINGS_UNIT_PERCENTAGE);
-			}
-		};
+		HashMapBuilder.<String, Object>put(
+			"endDateTime", 0
+		).put(
+			"interval", 30
+		).put(
+			"minCurrentStageId", StringPool.BLANK
+		).put(
+			"stageId", StringPool.BLANK
+		).put(
+			"startDateTime", 0
+		).put(
+			"unit", ContactsCardTemplateConstants.SETTINGS_UNIT_PERCENTAGE
+		).build();
 
 }

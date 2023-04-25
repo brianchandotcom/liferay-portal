@@ -18,10 +18,10 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.context.GroupInfo;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URI;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = RecommendationController.class)
+@Component(service = RecommendationController.class)
 @Path("/recommendations")
 @Produces(MediaType.APPLICATION_JSON)
 public class RecommendationController extends BaseFaroController {
@@ -77,13 +77,13 @@ public class RecommendationController extends BaseFaroController {
 	}
 
 	private Map<String, String> _createHeaders(URI baseURI) {
-		return new HashMap<String, String>() {
-			{
-				put("X-Forwarded-Host", baseURI.getHost());
-				put("X-Forwarded-Port", String.valueOf(baseURI.getPort()));
-				put("X-Forwarded-Proto", baseURI.getScheme());
-			}
-		};
+		return HashMapBuilder.put(
+			"X-Forwarded-Host", baseURI.getHost()
+		).put(
+			"X-Forwarded-Port", String.valueOf(baseURI.getPort())
+		).put(
+			"X-Forwarded-Proto", baseURI.getScheme()
+		).build();
 	}
 
 }

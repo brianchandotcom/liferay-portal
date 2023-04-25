@@ -14,7 +14,8 @@
 
 package com.liferay.osb.faro.web.internal.constants;
 
-import java.util.HashMap;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
 import java.util.Map;
 
 /**
@@ -31,11 +32,10 @@ public class FaroPreferencesConstants {
 	}
 
 	private static final Map<String, Object> _scopes =
-		new HashMap<String, Object>() {
-			{
-				put(SCOPE_GROUP, SCOPE_GROUP);
-				put(SCOPE_USER, SCOPE_USER);
-			}
-		};
+		HashMapBuilder.<String, Object>put(
+			SCOPE_GROUP, SCOPE_GROUP
+		).put(
+			SCOPE_USER, SCOPE_USER
+		).build();
 
 }

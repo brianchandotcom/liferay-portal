@@ -15,7 +15,9 @@
 package com.liferay.osb.faro.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.osb.faro.contacts.model.constants.ContactsConstants;
@@ -65,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = ContactsCSVHelper.class)
+@Component(service = ContactsCSVHelper.class)
 public class ContactsCSVHelper {
 
 	public long addContactsCSV(
@@ -210,7 +212,7 @@ public class ContactsCSVHelper {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 		finally {
 			csvParser.stopParsing();
@@ -312,10 +314,19 @@ public class ContactsCSVHelper {
 			dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 				groupId, 0, dataSourceId);
 
+			DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(
+				true);
+
 			dlFileEntry = _dlFileEntryLocalService.updateFileEntry(
 				userId, dlFileEntry.getFileEntryId(), fileName,
-				dlFileEntry.getMimeType(), dlFileEntry.getTitle(), null, null,
-				null, -1, null, file, null, file.length(), serviceContext);
+				dlFileEntry.getMimeType(), dlFileEntry.getTitle(), fileName,
+				dlFileEntry.getDescription(), dlFileVersion.getChangeLog(),
+				DLVersionNumberIncrease.AUTOMATIC,
+				dlFileEntry.getFileEntryTypeId(),
+				dlFileEntry.getDDMFormValuesMap(
+					dlFileVersion.getFileVersionId()),
+				file, null, file.length(), dlFileEntry.getExpirationDate(),
+				dlFileEntry.getReviewDate(), serviceContext);
 		}
 		else {
 			Repository repository =
@@ -323,10 +334,11 @@ public class ContactsCSVHelper {
 					groupId, ContactsConstants.SERVICE_NAME, serviceContext);
 
 			dlFileEntry = _dlFileEntryLocalService.addFileEntry(
-				userId, groupId, repository.getRepositoryId(),
+				null, userId, groupId, repository.getRepositoryId(),
 				repository.getDlFolderId(), fileName, ContentTypes.TEXT_CSV,
-				file.getName(), fileName, StringPool.BLANK, -1, null, file,
-				null, file.length(), serviceContext);
+				file.getName(), fileName, repository.getDescription(), null,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, null, file,
+				null, file.length(), null, null, serviceContext);
 		}
 
 		return dlFileEntry.getLatestFileVersion(true);

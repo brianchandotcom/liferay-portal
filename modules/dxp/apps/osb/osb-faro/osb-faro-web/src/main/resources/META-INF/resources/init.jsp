@@ -39,59 +39,48 @@ page import="com.liferay.osb.faro.web.internal.util.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
-<%
-Map<String, Object> faroConstants = new HashMap<>();
-
-faroConstants.put("activityActions", ActivityConstants.getActions());
-faroConstants.put("applications", FaroConstants.getApplications());
-
-String cerebroAssetsURL = (String)request.getAttribute(FaroWebKeys.CEREBRO_ASSETS_URL);
-String cerebroTouchpointsURL = (String)request.getAttribute(FaroWebKeys.CEREBRO_TOUCHPOINTS_URL);
-
-faroConstants.put("cerebroAssetsURL", cerebroAssetsURL);
-faroConstants.put("cerebroTouchpointsURL", cerebroTouchpointsURL);
-
-faroConstants.put("channelPermissionTypes", FaroChannelConstants.getPermissionTypes());
-faroConstants.put("contactsCardTemplateTypes", ContactsCardTemplateConstants.getConstants());
-faroConstants.put("dataSourceDisplayStatuses", DataSourceConstants.getDisplayStatuses());
-faroConstants.put("dataSourceProgressStatuses", DataSourceConstants.getProgressStatuses());
-faroConstants.put("dataSourceStatuses", DataSourceConstants.getStatuses());
-faroConstants.put("dataSourceTypes", DataSourceConstants.getTypes());
-faroConstants.put("documentationURLs", DocumentationConstants.getURLs());
-faroConstants.put("entityTypes", FaroConstants.getTypes());
-faroConstants.put("faroURL", System.getenv("FARO_URL"));
-faroConstants.put("fieldContexts", FieldMappingConstants.getContexts());
-faroConstants.put("fieldOwnerTypes", FieldMappingConstants.getOwnerTypes());
-faroConstants.put("fieldTypes", FieldMappingConstants.getFieldTypes());
-faroConstants.put("locale", locale.toString());
-faroConstants.put("pagination", FaroPaginationConstants.getConstants());
-faroConstants.put("pathThemeImages", themeDisplay.getPathThemeImages());
-faroConstants.put("portletNamespace", PortalUtil.getPortletNamespace(FaroPortletKeys.FARO));
-faroConstants.put("preferencesScopes", FaroPreferencesConstants.getScopes());
-faroConstants.put("projectLocations", LCPProjectConstants.getLocations());
-faroConstants.put("projectStates", FaroProjectConstants.getStates());
-faroConstants.put("segmentStates", SegmentConstants.getSegmentStates());
-faroConstants.put("segmentTypes", SegmentConstants.getSegmentTypes());
-faroConstants.put("subscriptionPlans", FaroSubscriptionConstants.getFaroSubscriptionPlans());
-faroConstants.put("subscriptionStatuses", FaroSubscriptionConstants.getStatuses());
-faroConstants.put("timeIntervals", TimeConstants.getIntervals());
-faroConstants.put("timeSpans", TimeConstants.getTimeSpans());
-
-User currentUser = themeDisplay.getUser();
-
-faroConstants.put("userName", currentUser.getFullName());
-
-faroConstants.put("userRoleNames", UserConstants.getRoleNames());
-faroConstants.put("userStatuses", UserConstants.getStatuses());
-%>
-
 <aui:script position="inline">
-	window.faroConstants = <%= JSONUtil.writeValueAsString(faroConstants) %>;
+	window.faroConstants = <%=
+	JSONUtil.writeValueAsString(
+		HashMapBuilder.<String, Object>put(
+		"activityActions", ActivityConstants.getActions()).
+		.put("applications", FaroConstants.getApplications())
+		.put("cerebroAssetsURL", (String)request.getAttribute(FaroWebKeys.CEREBRO_ASSETS_URL))
+		.put("cerebroTouchpointsURL", (String)request.getAttribute(FaroWebKeys.CEREBRO_TOUCHPOINTS_URL))
+		.put("channelPermissionTypes", FaroChannelConstants.getPermissionTypes())
+		.put("contactsCardTemplateTypes", ContactsCardTemplateConstants.getConstants())
+		.put("dataSourceDisplayStatuses", DataSourceConstants.getDisplayStatuses())
+		.put("dataSourceProgressStatuses", DataSourceConstants.getProgressStatuses())
+		.put("dataSourceStatuses", DataSourceConstants.getStatuses())
+		.put("dataSourceTypes", DataSourceConstants.getTypes())
+		.put("documentationURLs", DocumentationConstants.getURLs())
+		.put("entityTypes", FaroConstants.getTypes())
+		.put("faroURL", System.getenv("FARO_URL"))
+		.put("fieldContexts", FieldMappingConstants.getContexts())
+		.put("fieldOwnerTypes", FieldMappingConstants.getOwnerTypes())
+		.put("fieldTypes", FieldMappingConstants.getFieldTypes())
+		.put("locale", locale.toString())
+		.put("pagination", FaroPaginationConstants.getConstants())
+		.put("pathThemeImages", themeDisplay.getPathThemeImages())
+		.put("portletNamespace", PortalUtil.getPortletNamespace(FaroPortletKeys.FARO))
+		.put("preferencesScopes", FaroPreferencesConstants.getScopes())
+		.put("projectLocations", LCPProjectConstants.getLocations())
+		.put("projectStates", FaroProjectConstants.getStates())
+		.put("segmentStates", SegmentConstants.getSegmentStates())
+		.put("segmentTypes", SegmentConstants.getSegmentTypes())
+		.put("subscriptionPlans", FaroSubscriptionConstants.getFaroSubscriptionPlans())
+		.put("subscriptionStatuses", FaroSubscriptionConstants.getStatuses())
+		.put("timeIntervals", TimeConstants.getIntervals())
+		.put("timeSpans", TimeConstants.getTimeSpans())
+		.put("userName", () -> {
+			User currentUser = themeDisplay.getUser();
+
+			return currentUser.getFullName();
+		})
+		.put("userRoleNames", UserConstants.getRoleNames())
+		.put("userStatuses", UserConstants.getStatuses()).build();) %>;
 </aui:script>

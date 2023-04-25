@@ -14,6 +14,7 @@
 
 package com.liferay.osb.faro.web.internal.controller.api;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -129,13 +130,11 @@ public class ReportControllerResponseFactory {
 	}
 
 	public Response create(String message, Response.Status responseStatus) {
-		Map<String, Object> responseMap = new HashMap<String, Object>() {
-			{
-				put("message", message);
-			}
-		};
-
-		return create(responseMap, responseStatus);
+		return create(
+			HashMapBuilder.<String, Object>put(
+				"message", message
+			).build(),
+			responseStatus);
 	}
 
 }

@@ -25,6 +25,7 @@ import com.liferay.osb.faro.web.internal.application.ApiApplication;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.main.TokenDisplay;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -47,8 +49,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -74,9 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true, service = {FaroController.class, OAuth2Controller.class}
-)
+@Component(service = {FaroController.class, OAuth2Controller.class})
 @Path("/{groupId}/oauth2")
 @Produces(MediaType.APPLICATION_JSON)
 public class OAuth2Controller extends BaseFaroController {
@@ -87,16 +85,10 @@ public class OAuth2Controller extends BaseFaroController {
 	public List<TokenDisplay> getTokens(@PathParam("groupId") long groupId)
 		throws Exception {
 
-		List<OAuth2Authorization> userOAuth2Authorizations =
-			_getUserOAuth2AuthorizationsByGroupId(groupId);
-
-		Stream<OAuth2Authorization> stream = userOAuth2Authorizations.stream();
-
-		return stream.map(
-			this::_mapTokenDisplay
-		).collect(
-			Collectors.toList()
-		);
+		return TransformUtil.transform(
+			_getUserOAuth2AuthorizationsByGroupId(groupId),
+			userOAuth2Authorization -> _mapTokenDisplay(
+				userOAuth2Authorization));
 	}
 
 	@Path("/tokens/new")
@@ -248,18 +240,21 @@ public class OAuth2Controller extends BaseFaroController {
 			long groupId)
 		throws Exception {
 
-		List<OAuth2Authorization> userOAuth2Authorizations =
-			_oAuth2AuthorizationService.getUserOAuth2Authorizations(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<OAuth2Authorization> userOAuth2AuthorizationsFiltered =
+			new ArrayList<>();
 
-		Stream<OAuth2Authorization> stream = userOAuth2Authorizations.stream();
+		for (OAuth2Authorization oAuth2Authorization :
+				_oAuth2AuthorizationService.getUserOAuth2Authorizations(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
-		return stream.filter(
-			oAuth2Authorization -> _filterOAuth2AuthorizationByGroupId(
-				groupId, oAuth2Authorization)
-		).collect(
-			Collectors.toList()
-		);
+			if (_filterOAuth2AuthorizationByGroupId(
+					groupId, oAuth2Authorization)) {
+
+				userOAuth2AuthorizationsFiltered.add(oAuth2Authorization);
+			}
+		}
+
+		return userOAuth2AuthorizationsFiltered;
 	}
 
 	private String _invokeOAuth2Endpoint(String clientId, String clientSecret)

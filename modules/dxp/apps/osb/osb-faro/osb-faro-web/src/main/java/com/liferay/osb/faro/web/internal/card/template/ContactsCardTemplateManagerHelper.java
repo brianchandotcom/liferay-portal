@@ -30,6 +30,7 @@ import com.liferay.osb.faro.web.internal.util.ProjectHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.lang.reflect.Constructor;
 
@@ -46,7 +47,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = ContactsCardTemplateManagerHelper.class)
+@Component(service = ContactsCardTemplateManagerHelper.class)
 public class ContactsCardTemplateManagerHelper {
 
 	public ContactsCardTemplateDisplay getContactsCardTemplateDisplay(
@@ -75,7 +76,7 @@ public class ContactsCardTemplateManagerHelper {
 				contactsCardTemplate, contactsCardTemplateType, size);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		return null;
@@ -137,7 +138,7 @@ public class ContactsCardTemplateManagerHelper {
 				contactsCardTemplateType.getDefaultSettings());
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			return StringPool.BLANK;
 		}
@@ -198,98 +199,83 @@ public class ContactsCardTemplateManagerHelper {
 	private static final Map<Integer, ContactsCardTemplateType>
 		_contactsCardTemplateTypes = new HashMap<>();
 	private static final Map<Integer, int[][]>
-		_defaultContactsCardTemplateTypes = new HashMap<Integer, int[][]>() {
-			{
-				put(
-					FaroConstants.TYPE_ACCOUNT,
-					new int[][] {
-						{
-							ContactsCardTemplateConstants.
-								TYPE_RECENT_ACTIVITIES,
-							ContactsCardTemplateConstants.TYPE_INTEREST,
-							ContactsCardTemplateConstants.
-								TYPE_ASSOCIATED_SEGMENTS
-						},
-						{ContactsCardTemplateConstants.TYPE_ACTIVITY_HISTORY},
-						{
-							ContactsCardTemplateConstants.TYPE_EMPLOYEES,
-							ContactsCardTemplateConstants.TYPE_SIMILAR
-						}
-					});
-				put(
-					FaroConstants.TYPE_INDIVIDUAL,
-					new int[][] {
-						{
-							ContactsCardTemplateConstants.
-								TYPE_RECENT_ACTIVITIES,
-							ContactsCardTemplateConstants.TYPE_INTEREST,
-							ContactsCardTemplateConstants.
-								TYPE_ASSOCIATED_SEGMENTS
-						},
-						{ContactsCardTemplateConstants.TYPE_ACTIVITY_HISTORY},
-						{
-							ContactsCardTemplateConstants.TYPE_COWORKERS,
-							ContactsCardTemplateConstants.TYPE_SIMILAR
-						}
-					});
-				put(
-					FaroConstants.TYPE_SEGMENT_ACCOUNTS,
-					new int[][] {
-						{
-							ContactsCardTemplateConstants.
-								TYPE_CONVERSION_HEALTH,
-							ContactsCardTemplateConstants.TYPE_INTEREST,
-							ContactsCardTemplateConstants.
-								TYPE_SEGMENT_DISTRIBUTION
-						}
-					});
-				put(
-					FaroConstants.TYPE_SEGMENT_INDIVIDUALS,
-					new int[][] {
-						{
-							ContactsCardTemplateConstants.
-								TYPE_CONVERSION_HEALTH,
-							ContactsCardTemplateConstants.TYPE_INTEREST,
-							ContactsCardTemplateConstants.
-								TYPE_SEGMENT_DISTRIBUTION
-						}
-					});
-			}
-		};
+		_defaultContactsCardTemplateTypes =
+			HashMapBuilder.<Integer, int[][]>put(
+				FaroConstants.TYPE_ACCOUNT,
+				new int[][] {
+					{
+						ContactsCardTemplateConstants.TYPE_RECENT_ACTIVITIES,
+						ContactsCardTemplateConstants.TYPE_INTEREST,
+						ContactsCardTemplateConstants.TYPE_ASSOCIATED_SEGMENTS
+					},
+					{ContactsCardTemplateConstants.TYPE_ACTIVITY_HISTORY},
+					{
+						ContactsCardTemplateConstants.TYPE_EMPLOYEES,
+						ContactsCardTemplateConstants.TYPE_SIMILAR
+					}
+				}
+			).put(
+				FaroConstants.TYPE_INDIVIDUAL,
+				new int[][] {
+					{
+						ContactsCardTemplateConstants.TYPE_RECENT_ACTIVITIES,
+						ContactsCardTemplateConstants.TYPE_INTEREST,
+						ContactsCardTemplateConstants.TYPE_ASSOCIATED_SEGMENTS
+					},
+					{ContactsCardTemplateConstants.TYPE_ACTIVITY_HISTORY},
+					{
+						ContactsCardTemplateConstants.TYPE_COWORKERS,
+						ContactsCardTemplateConstants.TYPE_SIMILAR
+					}
+				}
+			).put(
+				FaroConstants.TYPE_SEGMENT_ACCOUNTS,
+				new int[][] {
+					{
+						ContactsCardTemplateConstants.TYPE_CONVERSION_HEALTH,
+						ContactsCardTemplateConstants.TYPE_INTEREST,
+						ContactsCardTemplateConstants.TYPE_SEGMENT_DISTRIBUTION
+					}
+				}
+			).put(
+				FaroConstants.TYPE_SEGMENT_INDIVIDUALS,
+				new int[][] {
+					{
+						ContactsCardTemplateConstants.TYPE_CONVERSION_HEALTH,
+						ContactsCardTemplateConstants.TYPE_INTEREST,
+						ContactsCardTemplateConstants.TYPE_SEGMENT_DISTRIBUTION
+					}
+				}
+			).build();
 	private static final Map<Integer, int[]>
 		_defaultHeaderContactsCardTemplateTypes =
-			new HashMap<Integer, int[]>() {
-				{
-					put(
-						FaroConstants.TYPE_ACCOUNT,
-						new int[] {
-							ContactsCardTemplateConstants.TYPE_PROFILE,
-							ContactsCardTemplateConstants.TYPE_NET_SALES
-						});
-					put(
-						FaroConstants.TYPE_INDIVIDUAL,
-						new int[] {
-							ContactsCardTemplateConstants.TYPE_PROFILE,
-							ContactsCardTemplateConstants.TYPE_NET_SALES
-						});
-					put(
-						FaroConstants.TYPE_SEGMENT_ACCOUNTS,
-						new int[] {
-							ContactsCardTemplateConstants.
-								TYPE_SEGMENT_MEMBERSHIP,
-							ContactsCardTemplateConstants.TYPE_LIFETIME_VALUE,
-							ContactsCardTemplateConstants.TYPE_CLOSED_WON
-						});
-					put(
-						FaroConstants.TYPE_SEGMENT_INDIVIDUALS,
-						new int[] {
-							ContactsCardTemplateConstants.
-								TYPE_SEGMENT_MEMBERSHIP,
-							ContactsCardTemplateConstants.TYPE_LIFETIME_VALUE,
-							ContactsCardTemplateConstants.TYPE_CLOSED_WON
-						});
+			HashMapBuilder.<Integer, int[]>put(
+				FaroConstants.TYPE_ACCOUNT,
+				new int[] {
+					ContactsCardTemplateConstants.TYPE_PROFILE,
+					ContactsCardTemplateConstants.TYPE_NET_SALES
 				}
-			};
+			).put(
+				FaroConstants.TYPE_INDIVIDUAL,
+				new int[] {
+					ContactsCardTemplateConstants.TYPE_PROFILE,
+					ContactsCardTemplateConstants.TYPE_NET_SALES
+				}
+			).put(
+				FaroConstants.TYPE_SEGMENT_ACCOUNTS,
+				new int[] {
+					ContactsCardTemplateConstants.TYPE_SEGMENT_MEMBERSHIP,
+					ContactsCardTemplateConstants.TYPE_LIFETIME_VALUE,
+					ContactsCardTemplateConstants.TYPE_CLOSED_WON
+				}
+			).put(
+				FaroConstants.TYPE_SEGMENT_INDIVIDUALS,
+				new int[] {
+					ContactsCardTemplateConstants.TYPE_SEGMENT_MEMBERSHIP,
+					ContactsCardTemplateConstants.TYPE_LIFETIME_VALUE,
+					ContactsCardTemplateConstants.TYPE_CLOSED_WON
+				}
+			).build();
 
 	@Reference
 	private ContactsCardTemplateLocalService _contactsCardTemplateLocalService;

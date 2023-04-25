@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = MainController.class)
+@Component(service = MainController.class)
 @Path("/{groupId}")
 @Produces(MediaType.APPLICATION_JSON)
 public class MainController extends BaseFaroController {

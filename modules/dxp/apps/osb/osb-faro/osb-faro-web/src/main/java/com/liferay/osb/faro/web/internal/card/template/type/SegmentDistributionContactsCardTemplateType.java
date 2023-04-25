@@ -18,8 +18,8 @@ import com.liferay.osb.faro.contacts.model.constants.ContactsCardTemplateConstan
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.SegmentDistributionContactsCardTemplateDisplay;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = ContactsCardTemplateType.class)
+@Component(service = ContactsCardTemplateType.class)
 public class SegmentDistributionContactsCardTemplateType
 	extends BaseContactsCardTemplateType {
 
@@ -54,16 +54,16 @@ public class SegmentDistributionContactsCardTemplateType
 	private static final String _DEFAULT_NAME = "Segment Distribution";
 
 	private static final Map<String, Object> _defaultSettings =
-		new HashMap<String, Object>() {
-			{
-				put("binSize", -1);
-				put("fieldMappingFieldName", StringPool.BLANK);
-				put(
-					"graphType",
-					ContactsCardTemplateConstants.SETTINGS_GRAPH_TYPE_BAR);
-				put("max", -1);
-				put("numberOfBins", 6);
-			}
-		};
+		HashMapBuilder.<String, Object>put(
+			"binSize", -1
+		).put(
+			"fieldMappingId", StringPool.BLANK
+		).put(
+			"graphType", ContactsCardTemplateConstants.SETTINGS_GRAPH_TYPE_BAR
+		).put(
+			"max", -1
+		).put(
+			"numberOfBins", 6
+		).build();
 
 }

@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  * @author Shinn Lok
  */
 @Component(
-	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=Blocked Countries Filter", "url-pattern=/*"
@@ -56,9 +55,7 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if ((_ipGeocoder != null) &&
-			(_isBlockedCountry(httpServletRequest))) {
-
+		if ((_ipGeocoder != null) && _isBlockedCountry(httpServletRequest)) {
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_FORBIDDEN,
 				"This content is not available in your country");

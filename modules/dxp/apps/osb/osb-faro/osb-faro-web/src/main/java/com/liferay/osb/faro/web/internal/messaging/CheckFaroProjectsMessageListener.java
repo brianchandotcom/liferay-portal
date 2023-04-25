@@ -41,12 +41,11 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.mail.internet.InternetAddress;
 
@@ -99,7 +98,7 @@ public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 					faroProject, (String)null, true, 0, 0, null);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				projectExceptions.put(faroProject, exception);
 			}
@@ -167,32 +166,26 @@ public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 
 		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
-		Stream<User> stream = users.stream();
+		List<InternetAddress> bcc = new ArrayList<>();
 
-		InternetAddress[] bcc = stream.filter(
-			user -> !StringUtil.equals(
-				user.getEmailAddress(), "test@liferay.com")
-		).map(
-			user -> {
+		for (User user : users) {
+			if (!StringUtil.equals(
+					user.getEmailAddress(), "test@liferay.com")) {
+
 				try {
-					return new InternetAddress(
-						user.getEmailAddress(), user.getFullName());
+					bcc.add(
+						new InternetAddress(
+							user.getEmailAddress(), user.getFullName()));
 				}
 				catch (Exception exception) {
-					_log.error(exception, exception);
-
-					return null;
+					_log.error(exception);
 				}
 			}
-		).filter(
-			Objects::nonNull
-		).toArray(
-			InternetAddress[]::new
-		);
+		}
 
 		MailMessage mailMessage = new MailMessage(from, subject, body, false);
 
-		mailMessage.setBCC(bcc);
+		mailMessage.setBCC((InternetAddress[])bcc.toArray());
 
 		_mailService.sendEmail(mailMessage);
 	}

@@ -174,7 +174,8 @@ public class AccountDisplay implements FaroEntityDisplay {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get photo for: " +
-						GetterUtil.getString(getValue("website")));
+						GetterUtil.getString(getValue("website")),
+					exception);
 			}
 
 			return null;

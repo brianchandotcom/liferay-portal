@@ -26,10 +26,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -46,10 +45,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(
-	immediate = true,
-	service = {ActivityGroupController.class, FaroController.class}
-)
+@Component(service = {ActivityGroupController.class, FaroController.class})
 @Path("/{groupId}/activity_group")
 @Produces(MediaType.APPLICATION_JSON)
 public class ActivityGroupController extends BaseFaroController {
@@ -80,18 +76,21 @@ public class ActivityGroupController extends BaseFaroController {
 
 		List<ActivityGroup> activityGroups = results.getItems();
 
-		Stream<ActivityGroup> stream = activityGroups.stream();
+		List<ActivityGroupDisplay> activityGroupDisplays = new ArrayList<>();
+
+		for (ActivityGroup activityGroup : activityGroups) {
+			ActivityGroupDisplay activityGroupDisplay =
+				new ActivityGroupDisplay(activityGroup);
+
+			if (ListUtil.isNotEmpty(
+					activityGroupDisplay.getActivityDisplays())) {
+
+				activityGroupDisplays.add(activityGroupDisplay);
+			}
+		}
 
 		return new FaroResultsDisplay(
-			stream.map(
-				ActivityGroupDisplay::new
-			).filter(
-				activityGroup -> ListUtil.isNotEmpty(
-					activityGroup.getActivityDisplays())
-			).collect(
-				Collectors.toList()
-			),
-			results.getTotal());
+			activityGroupDisplays, results.getTotal());
 	}
 
 }

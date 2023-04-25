@@ -33,6 +33,7 @@ import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.util.FaroQueryUtil;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroChannelComparator;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroUserComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
@@ -44,8 +45,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -66,9 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André Miranda
  */
-@Component(
-	immediate = true, service = {ChannelController.class, FaroController.class}
-)
+@Component(service = {ChannelController.class, FaroController.class})
 @Path("/{groupId}/channel")
 @Produces(MediaType.APPLICATION_JSON)
 public class ChannelController extends BaseFaroController {
@@ -194,14 +191,8 @@ public class ChannelController extends BaseFaroController {
 			id, available, query, statuses, groupId, startAndEnd[0],
 			startAndEnd[1], orderByComparator);
 
-		Stream<FaroUser> stream = faroUsers.stream();
-
 		return new FaroResultsDisplay(
-			stream.map(
-				FaroUserDisplay::new
-			).collect(
-				Collectors.toList()
-			),
+			TransformUtil.transform(faroUsers, FaroUserDisplay::new),
 			_faroChannelLocalService.countFaroUsers(
 				id, available, query, statuses, groupId));
 	}
@@ -294,14 +285,8 @@ public class ChannelController extends BaseFaroController {
 			groupId, query, startAndEnd[0], startAndEnd[1],
 			new FaroChannelComparator(orderByFields));
 
-		Stream<FaroChannel> stream = faroChannels.stream();
-
 		return new FaroResultsDisplay<>(
-			stream.map(
-				FaroChannelDisplay::new
-			).collect(
-				Collectors.toList()
-			),
+			TransformUtil.transform(faroChannels, FaroChannelDisplay::new),
 			_faroChannelLocalService.searchCount(groupId, query));
 	}
 

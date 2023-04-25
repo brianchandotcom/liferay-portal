@@ -18,8 +18,8 @@ import com.liferay.osb.faro.contacts.model.constants.ContactsCardTemplateConstan
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.SimilarContactsCardTemplateDisplay;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Shinn Lok
  */
-@Component(immediate = true, service = ContactsCardTemplateType.class)
+@Component(service = ContactsCardTemplateType.class)
 public class SimilarContactsCardTemplateType
 	extends BaseContactsCardTemplateType {
 
@@ -54,10 +54,8 @@ public class SimilarContactsCardTemplateType
 	private static final String _DEFAULT_NAME = "Similar";
 
 	private static final Map<String, Object> _defaultSettings =
-		new HashMap<String, Object>() {
-			{
-				put("fieldMappingFieldName", StringPool.BLANK);
-			}
-		};
+		HashMapBuilder.<String, Object>put(
+			"fieldMappingId", StringPool.BLANK
+		).build();
 
 }

@@ -22,10 +22,10 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
 import com.liferay.osb.faro.web.internal.util.InterestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -58,16 +58,14 @@ public class InterestContactsCardTemplateDisplay
 		FaroProject faroProject, FaroEntityDisplay faroEntityDisplay,
 		ContactsEngineClient contactsEngineClient) {
 
-		Map<String, Object> contactsCardData = new HashMap<>();
-
 		FaroResultsDisplay results = InterestUtil.getInterests(
 			faroProject, faroEntityDisplay.getId(), null, 1, _max,
 			Collections.singletonList(new OrderByField("score", "desc", true)),
 			contactsEngineClient);
 
-		contactsCardData.put("interests", results.getItems());
-
-		return contactsCardData;
+		return HashMapBuilder.<String, Object>put(
+			"interests", results.getItems()
+		).build();
 	}
 
 	private static final int[] _SUPPORTED_SIZES = {1};

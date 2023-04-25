@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ContactsActivator {
 
 	@Activate

@@ -32,11 +32,11 @@ import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.IndividualDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.search.FaroSearchContext;
-import com.liferay.osb.faro.web.internal.util.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -62,10 +62,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(
-	immediate = true,
-	service = {FaroController.class, IndividualController.class}
-)
+@Component(service = {FaroController.class, IndividualController.class})
 @Path("/{groupId}/individual")
 @Produces(MediaType.APPLICATION_JSON)
 public class IndividualController extends BaseFaroController {
@@ -96,7 +93,8 @@ public class IndividualController extends BaseFaroController {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"The individual already belongs to the segment: " +
-							individualSegmentId);
+							individualSegmentId,
+						duplicateEntryException);
 				}
 			}
 		}
@@ -125,8 +123,6 @@ public class IndividualController extends BaseFaroController {
 			@PathParam("groupId") long groupId, @PathParam("id") String id)
 		throws Exception {
 
-		Map<String, Map<String, List<Field>>> details = new HashMap<>();
-
 		FaroProject faroProject =
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
@@ -146,10 +142,11 @@ public class IndividualController extends BaseFaroController {
 				FieldMappingConstants.OWNER_TYPE_INDIVIDUAL, null, 1, 10000,
 				null));
 
-		details.put("custom", individual.getCustom());
-		details.put("demographics", individual.getDemographics());
-
-		return details;
+		return HashMapBuilder.<String, Map<String, List<Field>>>put(
+			"custom", individual.getCustom()
+		).put(
+			"demographics", individual.getDemographics()
+		).build();
 	}
 
 	@GET
@@ -342,18 +339,18 @@ public class IndividualController extends BaseFaroController {
 			return;
 		}
 
-		Map<String, FieldMapping> fieldMappingMap = StreamUtil.toMap(
-			results.getItems(), FieldMapping::getFieldName,
-			Function.identity());
+		Map<String, FieldMapping> fieldMappingMap = new HashMap<>();
+
+		for (FieldMapping fieldMapping : results.getItems()) {
+			fieldMappingMap.put(fieldMapping.getFieldName(), fieldMapping);
+		}
 
 		for (Map.Entry<String, List<Field>> entry : fieldsMap.entrySet()) {
+			List<Field> fields = entry.getValue();
+
 			FieldMapping fieldMapping = fieldMappingMap.get(entry.getKey());
 
-			if (fieldMapping == null) {
-				continue;
-			}
-
-			for (Field field : entry.getValue()) {
+			for (Field field : fields) {
 				field.setName(fieldMapping.getDisplayName());
 			}
 		}

@@ -35,7 +35,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.filter.name=com.liferay.osb.faro.web.internal.servlet.filter.EmailServletFilter",
 		"osgi.http.whiteboard.filter.pattern=/email/*"

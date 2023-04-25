@@ -25,7 +25,7 @@ import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroEmailLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.util.EmailUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -86,7 +86,7 @@ public class EmailReportHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return;
@@ -112,13 +112,13 @@ public class EmailReportHelper {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
+				_log.debug(exception);
 			}
 
 			return;
 		}
 
-		JSONObject siteMetricsJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject siteMetricsJSONObject = _jsonFactory.createJSONObject(
 			_cerebroEngineClient.getSiteMetrics(
 				channelId, faroProject, "D", _getRangeKey(frequency)));
 
@@ -321,6 +321,9 @@ public class EmailReportHelper {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MailService _mailService;

@@ -20,9 +20,9 @@ import com.liferay.osb.faro.engine.client.model.ActivityAggregation;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -50,16 +50,14 @@ public class ActivityHistoryContactsCardTemplateDisplay
 		FaroProject faroProject, FaroEntityDisplay faroEntityDisplay,
 		ContactsEngineClient contactsEngineClient) {
 
-		Map<String, Object> contactsCardData = new HashMap<>();
-
 		Results<ActivityAggregation> results =
 			contactsEngineClient.getActivityAggregations(
 				faroProject, null, faroEntityDisplay.getId(), null, null, null,
 				_interval, _max);
 
-		contactsCardData.put("activityHistory", results.getItems());
-
-		return contactsCardData;
+		return HashMapBuilder.<String, Object>put(
+			"activityHistory", results.getItems()
+		).build();
 	}
 
 	private static final int[] _SUPPORTED_SIZES = {4};

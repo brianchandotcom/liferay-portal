@@ -44,10 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @ApplicationPath("/" + FaroConstants.APPLICATION_CONTACTS)
-@Component(
-	immediate = true, property = "jaxrs.application=true",
-	service = Application.class
-)
+@Component(property = "jaxrs.application=true", service = Application.class)
 public class ContactsApplication extends BaseApplication {
 
 	@Override

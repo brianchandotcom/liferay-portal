@@ -46,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.http.whiteboard.filter.name=com.liferay.osb.faro.web.internal.servlet.filter.AsahServletFilter",
 		"osgi.http.whiteboard.filter.pattern=/cerebro/graphql/*",

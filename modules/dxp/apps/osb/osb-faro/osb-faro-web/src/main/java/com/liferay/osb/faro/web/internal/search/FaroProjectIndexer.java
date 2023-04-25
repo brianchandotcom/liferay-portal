@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(service = Indexer.class)
 public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 	public static final String CLASS_NAME = FaroProject.class.getName();
@@ -194,6 +194,8 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 		}
 		catch (Exception exception) {
 			document.addKeyword("offline", StringPool.TRUE);
+
+			_log.error(exception);
 		}
 
 		document.addNumber(
@@ -249,8 +251,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 	@Override
 	protected void doReindex(FaroProject faroProject) throws Exception {
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), 0, getDocument(faroProject),
-			isCommitImmediately());
+			faroProject.getFaroProjectId(), getDocument(faroProject));
 	}
 
 	@Override
@@ -283,7 +284,6 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 						}
 					}
 				});
-		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
 	}

@@ -72,7 +72,7 @@ public class ProjectDisplay {
 				faroProject.getSubscription(), FaroSubscriptionDisplay.class);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_friendlyURL = friendlyURL;
@@ -86,7 +86,7 @@ public class ProjectDisplay {
 				});
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 		}
 
 		_name = faroProject.getName();
@@ -168,7 +168,7 @@ public class ProjectDisplay {
 					JSONUtil.writeValueAsString(faroSubscriptionDisplay));
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 			}
 		}
 
@@ -179,7 +179,7 @@ public class ProjectDisplay {
 					FaroSubscriptionDisplay.class);
 			}
 			catch (Exception exception) {
-				_log.error(exception, exception);
+				_log.error(exception);
 
 				return null;
 			}
@@ -190,7 +190,7 @@ public class ProjectDisplay {
 				faroProject, cerebroEngineClient, contactsEngineClient);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(exception);
 
 			_state = FaroProjectConstants.STATE_UNAVAILABLE;
 		}

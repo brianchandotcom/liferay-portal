@@ -55,10 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(
-	immediate = true,
-	service = {FaroController.class, PreferencesController.class}
-)
+@Component(service = {FaroController.class, PreferencesController.class})
 @Path("/{groupId}/preferences")
 @Produces(MediaType.APPLICATION_JSON)
 public class PreferencesController extends BaseFaroController {

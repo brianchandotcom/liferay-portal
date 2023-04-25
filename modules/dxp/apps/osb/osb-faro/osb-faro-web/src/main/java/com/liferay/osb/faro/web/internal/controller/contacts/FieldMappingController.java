@@ -28,6 +28,7 @@ import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FieldMappingDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FieldMappingValuesDisplay;
 import com.liferay.osb.faro.web.internal.util.FieldMappingUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,8 +39,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -57,10 +56,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(
-	immediate = true,
-	service = {FaroController.class, FieldMappingController.class}
-)
+@Component(service = {FaroController.class, FieldMappingController.class})
 @Path("/{groupId}/field_mapping")
 @Produces(MediaType.APPLICATION_JSON)
 public class FieldMappingController extends BaseFaroController {
@@ -200,15 +196,9 @@ public class FieldMappingController extends BaseFaroController {
 
 		List<FieldMapping> fieldMappings = results.getItems();
 
-		Stream<FieldMapping> stream = fieldMappings.stream();
-
 		List<List<Field>> fieldsList = contactsEngineClient.getFieldsList(
 			faroProject, FieldMappingConstants.CONTEXT_DEMOGRAPHICS,
-			stream.map(
-				FieldMapping::getFieldName
-			).collect(
-				Collectors.toList()
-			),
+			TransformUtil.transform(fieldMappings, FieldMapping::getFieldName),
 			1, 1, null);
 
 		for (int i = 0; i < fieldMappings.size(); i++) {

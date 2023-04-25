@@ -16,12 +16,11 @@ package com.liferay.osb.faro.web.internal.model.display.contacts;
 
 import com.liferay.osb.faro.engine.client.model.Field;
 import com.liferay.osb.faro.engine.client.model.FieldMapping;
+import com.liferay.petra.function.transform.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Matthew Kong
@@ -51,13 +50,7 @@ public class FieldMappingValuesDisplay extends FieldMappingDisplay {
 			return;
 		}
 
-		Stream<Field> stream = fields.stream();
-
-		_values = stream.map(
-			Field::getValue
-		).collect(
-			Collectors.toList()
-		);
+		_values = TransformUtil.transform(fields, Field::getValue);
 	}
 
 	private List<String> _values = new ArrayList<>();

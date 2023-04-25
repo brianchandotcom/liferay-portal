@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true,
 	property = {
 		"before-filter=URL Rewrite Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",
@@ -90,7 +89,7 @@ public class FaroFilter extends BaseFilter {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
+				_log.warn(exception);
 			}
 		}
 

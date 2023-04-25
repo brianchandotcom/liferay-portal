@@ -19,12 +19,11 @@ import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AttributesDisplay;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.RoleConstants;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -40,10 +39,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component(
-	immediate = true,
-	service = {DefinitionsController.class, FaroController.class}
-)
+@Component(service = {DefinitionsController.class, FaroController.class})
 @Path("/{groupId}/definitions")
 @Produces(MediaType.APPLICATION_JSON)
 public class DefinitionsController extends BaseFaroController {
@@ -61,14 +57,9 @@ public class DefinitionsController extends BaseFaroController {
 				faroProjectLocalService.getFaroProjectByGroupId(groupId),
 				displayName);
 
-		Stream<FieldMapping> stream = individualAttributes.stream();
-
 		return new FaroResultsDisplay(
-			stream.map(
-				AttributesDisplay::new
-			).collect(
-				Collectors.toList()
-			),
+			TransformUtil.transform(
+				individualAttributes, AttributesDisplay::new),
 			individualAttributes.size());
 	}
 

@@ -29,7 +29,7 @@ import Conjunction from './Conjunction.es';
 import CriteriaBuilder from './CriteriaBuilder';
 import EmptyPlaceholder from './EmptyPlaceholder.es';
 
-export default function ContributorBuilder({
+export default function ContributorsBuilder({
 	contributors = [],
 	editing,
 	emptyContributors,
@@ -238,7 +238,7 @@ export default function ContributorBuilder({
 	);
 }
 
-ContributorBuilder.propTypes = {
+ContributorsBuilder.propTypes = {
 	contributors: PropTypes.arrayOf(contributorShape),
 	editing: PropTypes.bool.isRequired,
 	emptyContributors: PropTypes.bool.isRequired,

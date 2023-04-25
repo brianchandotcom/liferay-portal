@@ -67,7 +67,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 				<input aria-describedby="<%= namespace + HtmlUtil.escapeAttribute(id + fieldSuffix) %>_desc" class="form-control language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>" name="<%= namespace + HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
 			</c:when>
 			<c:when test='<%= type.equals("textarea") %>'>
-				<textarea aria-labelledby='<%= namespace + id %> <%= namespace + id %>_maxCharacters' aria-describedby="<%= namespace + HtmlUtil.escapeAttribute(id + fieldSuffix) %>_desc" class="form-control language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>" name="<%= namespace + HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
+				<textarea maxlength="<%= maxLength %>" aria-labelledby='<%= namespace + id %> <%= namespace + id %>_maxCharacters' aria-describedby="<%= namespace + HtmlUtil.escapeAttribute(id + fieldSuffix) %>_desc" class="form-control language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>" name="<%= namespace + HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
 
 				<span class="sr-only" id="<%= namespace + id %>_maxCharacters">
 					<liferay-ui:message key="characters-maximum" />: <%= maxLength %>
@@ -282,7 +282,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 	<aui:script use="aui-char-counter">
 		new A.CharCounter(
 			{
-				input: '#<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
+				input: '#<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>:not(textarea)',
 				maxLength: <%= maxLength %>
 			}
 		);

@@ -51,6 +51,22 @@ if (hints != null) {
 }
 %>
 
+<liferay-util:buffer
+	var="infoIndicator"
+>
+	<svg class="lexicon-icon lexicon-icon-exclamation-full">
+		<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#exclamation-full"></use>
+	</svg>
+</liferay-util:buffer>
+
+<liferay-util:buffer
+	var="successIndicator"
+>
+	<svg class="lexicon-icon lexicon-icon-check">
+		<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#check"></use>
+	</svg>
+</liferay-util:buffer>
+
 <c:if test="<%= type != null %>">
 	<c:choose>
 		<c:when test='<%= type.equals("boolean") %>'>
@@ -506,7 +522,7 @@ if (hints != null) {
 							/>
 						</c:when>
 						<c:otherwise>
-							<input <%= Validator.isNotNull(autoComplete) ? "autocomplete=\"" + autoComplete + "\"" : StringPool.BLANK %> class="<%= cssClass %> lfr-input-text" <%= disabled ? "disabled=\"disabled\"" : StringPool.BLANK %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> style="<%= upperCase ? "text-transform: uppercase;" : StringPool.BLANK %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
+							<input <%= Validator.isNotNull(autoComplete) ? "autocomplete=\"" + autoComplete + "\"" : StringPool.BLANK %> class="<%= cssClass %> lfr-input-text" <%= disabled ? "disabled=\"disabled\"" : StringPool.BLANK %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> style="<%= upperCase ? "text-transform: uppercase;" : StringPool.BLANK %>" maxLength="<%= maxLength %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -538,13 +554,25 @@ if (hints != null) {
 							/>
 						</c:when>
 						<c:otherwise>
-							<textarea aria-labelledby="<%= namespace + id %> <%= namespace + id %>_maxCharacters" class="<%= cssClass %> lfr-textarea" <%= disabled ? "disabled=\"disabled\"" : StringPool.BLANK %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" onKeyDown="Liferay.Util.disableEsc();" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" wrap="soft"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
+							<textarea maxLength="<%= maxLength %>" aria-labelledby="<%= namespace + id %> <%= namespace + id %>_maxCharacters" class="<%= cssClass %> lfr-textarea" <%= disabled ? "disabled=\"disabled\"" : StringPool.BLANK %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" onKeyDown="Liferay.Util.disableEsc();" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(resourceBundle, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" wrap="soft"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 
 							<span class="sr-only" id="<%= namespace + id %>_maxCharacters">
 								<liferay-ui:message key="characters-maximum" />: <%= maxLength %>
 							</span>
 						</c:otherwise>
 					</c:choose>
+
+					<c:if test="<%= Validator.isNotNull(maxLength) %>">
+						<div class="form-feedback-item">
+							<span class="label-secondary" id="<%= namespace + id %>_counterWrapper">
+								<span class="form-feedback-indicator"></span>
+								<span aria-live="polite" class="form-feedback-message"></span>
+								<span class="form-feedback-counter">
+									0/<%= maxLength %>
+								</span>
+							</span>
+						</div>
+					</c:if>
 
 					<c:if test="<%= autoSize && !localized %>">
 						<aui:script use="aui-autosize">
@@ -567,16 +595,77 @@ if (hints != null) {
 						Liferay.Util.focusFormField('#<%= namespace %><%= id %>');
 					</aui:script>
 				</c:if>
-
-				<aui:script use="aui-char-counter">
-					new A.CharCounter(
-						{
-							input: '#<%= namespace %><%= id %>',
-							maxLength: <%= maxLength %>
-						}
-					);
-				</aui:script>
 			</c:if>
 		</c:when>
 	</c:choose>
 </c:if>
+
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	const {delegate} = frontendJsWeb;
+
+	var state = null;
+	var textarea = document.querySelector('textarea#<portlet:namespace /><%= id %>')
+	var counterWrapper = document.querySelector('#<portlet:namespace /><%= id %>_counterWrapper')
+
+	var setCounter = (textarea) => {
+		var counter = counterWrapper.querySelector('.form-feedback-counter')
+
+		counter.innerHTML = textarea.value.length + "/" + maxLength;
+	}
+
+	if (textarea) {
+		var maxLength = parseInt(textarea.getAttribute('maxLength'));
+
+		setCounter(textarea);
+	}
+
+	var onKeydownHandler = delegate(
+		document.body,
+		'keyup',
+		'textarea[id=<portlet:namespace /><%= id %>]',
+		({target}) => {
+			var indicator = counterWrapper.querySelector('.form-feedback-indicator');
+			var message = counterWrapper.querySelector('.form-feedback-message');
+
+			var feedback = {
+				success: {
+					message: "<%= LanguageUtil.get(resourceBundle, "characters-under-limit") %>",
+					indicator: "<%= UnicodeFormatter.toString(successIndicator) %>"
+				},
+				info: {
+					message: "<%= LanguageUtil.get(resourceBundle, "character-limit-has-been-reached-you-cannot-continue-typing") %>",
+					indicator: "<%= UnicodeFormatter.toString(infoIndicator) %>"
+				},
+			}
+
+			var setStatus = (nextState) => {
+				if (state !== nextState) {
+					counterWrapper.removeAttribute('class')
+					counterWrapper.classList.add('label-' + nextState);
+
+					indicator.innerHTML = feedback[nextState].indicator;
+					message.innerHTML = feedback[nextState].message;
+
+					state = nextState;
+				}
+			}
+
+			if (state !== 'info' && target.value.length === maxLength) {
+				setStatus('info');
+			}
+			else if (state === 'info' && target.value.length < maxLength) {
+				setStatus('success');
+			}
+
+			setCounter(target);
+		}
+	);
+
+	const onDestroyPortlet = () => {
+		onKeydownHandler.dispose();
+
+		Liferay.detach('destroyPortlet', onDestroyPortlet);
+	};
+
+	Liferay.once('destroyPortlet', onDestroyPortlet);
+</aui:script>

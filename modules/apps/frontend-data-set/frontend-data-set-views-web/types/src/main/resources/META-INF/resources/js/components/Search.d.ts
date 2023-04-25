@@ -14,22 +14,9 @@
 
 /// <reference types="react" />
 
-import '../css/FDSView.scss';
-import {FDSViewType} from './FDSViews';
-interface FDSViewSectionInterface {
-	fdsView: FDSViewType;
-	fdsViewsURL: string;
-	namespace: string;
+interface SearchInterface {
+	onSearch: Function;
+	query: string;
 }
-interface FDSViewInterface {
-	fdsViewId: string;
-	fdsViewsURL: string;
-	namespace: string;
-}
-declare const FDSView: ({
-	fdsViewId,
-	fdsViewsURL,
-	namespace,
-}: FDSViewInterface) => JSX.Element;
-export {FDSViewSectionInterface};
-export default FDSView;
+declare const Search: ({onSearch, query}: SearchInterface) => JSX.Element;
+export default Search;

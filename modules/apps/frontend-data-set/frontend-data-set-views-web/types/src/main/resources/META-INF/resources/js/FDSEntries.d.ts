@@ -15,16 +15,31 @@
 /// <reference types="react" />
 
 import '../css/FDSEntries.scss';
+import {OBJECT_RELATIONSHIP} from './Constants';
+import {FDSViewType} from './FDSViews';
+declare type FDSEntryType = {
+	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
+	actions: {
+		delete: {
+			href: string;
+			method: string;
+		};
+	};
+	id: string;
+	label: string;
+	restApplication: string;
+	restEndpoint: string;
+	restSchema: string;
+};
 interface FDSEntriesInterface {
-	fdsEntriesAPIURL: string;
 	fdsViewsURL: string;
 	namespace: string;
 	restApplications: Array<string>;
 }
 declare const FDSEntries: ({
-	fdsEntriesAPIURL,
 	fdsViewsURL,
 	namespace,
 	restApplications,
 }: FDSEntriesInterface) => JSX.Element;
+export {FDSEntryType};
 export default FDSEntries;

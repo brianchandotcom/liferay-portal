@@ -14,17 +14,10 @@
 
 /// <reference types="react" />
 
-import {TFDSView} from '../FDSViews';
-interface IPaginationProps {
-	fdsView: TFDSView;
-	fdsViewsAPIURL: string;
-	fdsViewsURL: string;
-	namespace: string;
-}
+import {FDSViewSectionInterface} from '../FDSView';
 declare function Pagination({
 	fdsView,
-	fdsViewsAPIURL,
 	fdsViewsURL,
 	namespace,
-}: IPaginationProps): JSX.Element;
+}: FDSViewSectionInterface): JSX.Element;
 export default Pagination;

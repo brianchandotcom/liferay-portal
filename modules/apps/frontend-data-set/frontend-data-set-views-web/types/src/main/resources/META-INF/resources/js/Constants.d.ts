@@ -12,9 +12,16 @@
  * details.
  */
 
+declare const API_URL: {
+	FDS_ENTRIES: string;
+	FDS_FIELDS: string;
+	FDS_VIEWS: string;
+};
 declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
+	readonly FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship';
+	readonly FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId';
 };
 declare const PAGINATION_PROPS: {
 	pagination: {
@@ -24,4 +31,4 @@ declare const PAGINATION_PROPS: {
 		initialDelta: number;
 	};
 };
-export {OBJECT_RELATIONSHIP, PAGINATION_PROPS};
+export {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS};

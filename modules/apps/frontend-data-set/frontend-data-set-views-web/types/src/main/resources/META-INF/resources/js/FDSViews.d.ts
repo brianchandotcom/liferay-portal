@@ -14,8 +14,10 @@
 
 /// <reference types="react" />
 
-import '../css/FDSEntries.scss';
-export declare type TFDSView = {
+import {OBJECT_RELATIONSHIP} from './Constants';
+import {FDSEntryType} from './FDSEntries';
+declare type FDSViewType = {
+	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: FDSEntryType;
 	defaultItemsPerPage: number;
 	description: string;
 	externalReferenceCode: string;
@@ -23,18 +25,17 @@ export declare type TFDSView = {
 	label: string;
 	listOfItemsPerPage: string;
 };
-interface IFDSViewsProps {
+interface FDSViewsInterface {
 	fdsEntryId: string;
 	fdsEntryLabel: string;
 	fdsViewURL: string;
-	fdsViewsAPIURL: string;
 	namespace: string;
 }
 declare const FDSViews: ({
 	fdsEntryId,
 	fdsEntryLabel,
 	fdsViewURL,
-	fdsViewsAPIURL,
 	namespace,
-}: IFDSViewsProps) => JSX.Element;
+}: FDSViewsInterface) => JSX.Element;
+export {FDSViewType};
 export default FDSViews;

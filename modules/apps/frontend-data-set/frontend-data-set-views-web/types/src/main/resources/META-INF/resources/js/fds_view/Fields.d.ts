@@ -14,22 +14,9 @@
 
 /// <reference types="react" />
 
-import '../css/FDSView.scss';
-import {FDSViewType} from './FDSViews';
-interface FDSViewSectionInterface {
-	fdsView: FDSViewType;
-	fdsViewsURL: string;
-	namespace: string;
-}
-interface FDSViewInterface {
-	fdsViewId: string;
-	fdsViewsURL: string;
-	namespace: string;
-}
-declare const FDSView: ({
-	fdsViewId,
+import {FDSViewSectionInterface} from '../FDSView';
+declare const Fields: ({
+	fdsView,
 	fdsViewsURL,
-	namespace,
-}: FDSViewInterface) => JSX.Element;
-export {FDSViewSectionInterface};
-export default FDSView;
+}: FDSViewSectionInterface) => JSX.Element;
+export default Fields;

@@ -14,12 +14,17 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.delivery.dto.v1_0.ClientExtension;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
@@ -293,6 +298,29 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				contextUser);
 
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
+	}
+
+	private void _addClientExtensionRel(
+		String cetExternalReferenceCode, Layout layout,
+		ServiceContext serviceContext, String type) {
+
+		CET cet = _cetManager.getCET(
+			layout.getCompanyId(), cetExternalReferenceCode);
+
+		if ((cet == null) || !Objects.equals(type, cet.getType())) {
+			return;
+		}
+
+		try {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				contextUser.getUserId(), layout.getGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), cetExternalReferenceCode, type, null,
+				serviceContext);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 	}
 
 	private Layout _addLayout(
@@ -573,20 +601,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		).build();
 	}
 
-	private long _getFileEntryId(OpenGraphSettings openGraphSettings) {
-		if (openGraphSettings == null) {
-			return 0;
-		}
-
-		ContentDocument contentDocument = openGraphSettings.getImage();
-
-		if (contentDocument == null) {
-			return 0;
-		}
-
+	private long _getFileEntryId(long contentDocumentId) {
 		try {
-			FileEntry fileEntry = _dlAppService.getFileEntry(
-				contentDocument.getId());
+			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
 
 			return fileEntry.getFileEntryId();
 		}
@@ -837,6 +854,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			return _layoutLocalService.updateLayout(layout);
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				null, layout.getGroupId(), contextHttpServletRequest, null);
+
 		Settings settings = pageDefinition.getSettings();
 
 		UnicodeProperties unicodeProperties =
@@ -877,6 +898,22 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			layout.setCss(settings.getCss());
 		}
 
+		Map<String, Serializable> favIconMap =
+			(Map<String, Serializable>)settings.getFavIcon();
+
+		if (MapUtil.isNotEmpty(favIconMap)) {
+			if (Objects.equals(favIconMap.get("contentType"), "Document")) {
+				layout.setFaviconFileEntryId(
+					_getFileEntryId(GetterUtil.getLong(favIconMap.get("id"))));
+			}
+			else if (favIconMap.containsKey("externalReferenceCode")) {
+				_addClientExtensionRel(
+					String.valueOf(favIconMap.get("externalReferenceCode")),
+					layout, serviceContext,
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+			}
+		}
+
 		MasterPage masterPage = settings.getMasterPage();
 
 		if (masterPage != null) {
@@ -902,6 +939,41 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.setStyleBookEntryId(
 					styleBookEntry.getStyleBookEntryId());
 			}
+		}
+
+		ClientExtension[] cssClientExtensions =
+			settings.getCssClientExtensions();
+
+		if (ArrayUtil.isNotEmpty(cssClientExtensions)) {
+			for (ClientExtension cssClientExtension : cssClientExtensions) {
+				_addClientExtensionRel(
+					cssClientExtension.getExternalReferenceCode(), layout,
+					serviceContext,
+					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+			}
+		}
+
+		ClientExtension[] javascriptClientExtensions =
+			settings.getJavascriptClientExtensions();
+
+		if (ArrayUtil.isNotEmpty(javascriptClientExtensions)) {
+			for (ClientExtension javascriptClientExtension :
+					javascriptClientExtensions) {
+
+				_addClientExtensionRel(
+					javascriptClientExtension.getExternalReferenceCode(),
+					layout, serviceContext,
+					ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
+			}
+		}
+
+		ClientExtension themeCssClientExtension =
+			settings.getThemeCssClientExtension();
+
+		if (themeCssClientExtension != null) {
+			_addClientExtensionRel(
+				themeCssClientExtension.getExternalReferenceCode(), layout,
+				serviceContext, ClientExtensionEntryConstants.TYPE_THEME_CSS);
 		}
 
 		return _layoutLocalService.updateLayout(layout);
@@ -974,6 +1046,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		boolean openGraphDescriptionEnabled = false;
 		Map<Locale, String> openGraphDescriptionMap = new HashMap<>();
 		Map<Locale, String> openImageAltMap = new HashMap<>();
+		long openGraphImageFileEntryId = 0;
 		boolean openGraphTitleEnabled = false;
 		Map<Locale, String> openGraphTitleMap = new HashMap<>();
 
@@ -994,6 +1067,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(),
 				openGraphSettings.getImageAlt(),
 				openGraphSettings.getImageAlt_i18n());
+
+			ContentDocument contentDocument = openGraphSettings.getImage();
+
+			if (contentDocument != null) {
+				openGraphImageFileEntryId = _getFileEntryId(
+					contentDocument.getId());
+			}
 
 			openGraphTitleMap = LocalizedMapUtil.getLocalizedMap(
 				contextAcceptLanguage.getPreferredLocale(),
@@ -1021,14 +1101,21 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, false, layoutId, canonicalURLEnabled, canonicalURLMap,
 			openGraphDescriptionEnabled, openGraphDescriptionMap,
-			openImageAltMap, _getFileEntryId(openGraphSettings),
-			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+			openImageAltMap, openGraphImageFileEntryId, openGraphTitleEnabled,
+			openGraphTitleMap, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitePageResourceImpl.class);
 
 	private static final EntityModel _entityModel = new SitePageEntityModel();
+
+	@Reference
+	private CETManager _cetManager;
+
+	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

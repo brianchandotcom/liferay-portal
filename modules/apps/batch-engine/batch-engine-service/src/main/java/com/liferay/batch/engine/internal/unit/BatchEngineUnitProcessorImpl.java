@@ -14,12 +14,6 @@
 
 package com.liferay.batch.engine.internal.unit;
 
-import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
-import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.BatchEngineTaskOperation;
-import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
-import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
@@ -32,22 +26,23 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -81,6 +76,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void _processBatchEngineUnit(BatchEngineUnit batchEngineUnit)
 		throws Exception {
 
@@ -130,36 +126,21 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			return;
 		}
 
-		ExecutorService executorService =
-			_portalExecutorManager.getPortalExecutor(
-				BatchEngineUnitProcessorImpl.class.getName());
-
-		BatchEngineImportTask batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, batchEngineUnitConfiguration.getCompanyId(),
-				batchEngineUnitConfiguration.getUserId(), 100,
-				batchEngineUnitConfiguration.getCallbackURL(),
-				batchEngineUnitConfiguration.getClassName(), content,
-				StringUtil.toUpperCase(contentType),
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				batchEngineUnitConfiguration.getFieldNameMappingMap(),
-				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-				BatchEngineTaskOperation.CREATE.name(),
-				batchEngineUnitConfiguration.getParameters(),
-				batchEngineUnitConfiguration.getTaskItemDelegateName());
-
-		executorService.submit(
-			() -> {
-				_batchEngineImportTaskExecutor.execute(batchEngineImportTask);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Successfully deployed batch engine file ",
-							batchEngineUnit.getFileName(), " ",
-							batchEngineUnit.getDataFileName()));
-				}
-			});
+		_componentFactory.newInstance(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"_vulcanBatchEngineTaskItemDelegate.target",
+				StringBundler.concat(
+					"(batch.engine.entity.class.name=",
+					batchEngineUnitConfiguration.getClassName(), ")")
+			).put(
+				"batchEngineUnit", batchEngineUnit
+			).put(
+				"batchEngineUnitConfiguration", batchEngineUnitConfiguration
+			).put(
+				"content", content
+			).put(
+				"contentType", contentType
+			).build());
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(
@@ -205,17 +186,19 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		BatchEngineUnitProcessorImpl.class);
 
 	@Reference
-	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
-
-	@Reference
-	private BatchEngineImportTaskLocalService
-		_batchEngineImportTaskLocalService;
-
-	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference(
+		target = "(component.factory=batch.engine.import.task.component)"
+	)
+	@SuppressWarnings("rawtypes")
+	private ComponentFactory _componentFactory;
 
 	@Reference
 	private File _file;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

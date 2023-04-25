@@ -2,6 +2,7 @@
 
 <Configuration strict="true">
 	<Loggers>
-		<Logger level="WARN" name="com.liferay.batch.engine.internal.unit" />
+		<Logger level="INFO" name="com.liferay.batch.engine.internal.component" />
+		<Logger level="INFO" name="com.liferay.batch.engine.internal.unit" />
 	</Loggers>
 </Configuration>

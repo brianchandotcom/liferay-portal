@@ -1,5 +1,5 @@
 @component-name = "portal-frontend-infrastructure"
-@description = "Quarantined due to test instability, will investigate in LPS-144125."
+@description = "Quarantined due to test instability, will investigate in LPS-144125/LPS-181924."
 definition {
 
 	property osgi.modules.includes = "frontend-js-a11y-sample-web,frontend-js-a11y-web";

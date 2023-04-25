@@ -372,6 +372,8 @@ public abstract class BaseAccountResourceImpl
 		Account existingAccount = getAccountByExternalReferenceCode(
 			externalReferenceCode);
 
+		existingAccount.setCustomFields(account.getCustomFields());
+
 		if (account.getDescription() != null) {
 			existingAccount.setDescription(account.getDescription());
 		}
@@ -586,6 +588,8 @@ public abstract class BaseAccountResourceImpl
 		throws Exception {
 
 		Account existingAccount = getAccount(accountId);
+
+		existingAccount.setCustomFields(account.getCustomFields());
 
 		if (account.getDescription() != null) {
 			existingAccount.setDescription(account.getDescription());

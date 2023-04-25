@@ -742,6 +742,8 @@ public abstract class BaseOrganizationResourceImpl
 			existingOrganization.setComment(organization.getComment());
 		}
 
+		existingOrganization.setCustomFields(organization.getCustomFields());
+
 		if (organization.getExternalReferenceCode() != null) {
 			existingOrganization.setExternalReferenceCode(
 				organization.getExternalReferenceCode());
@@ -939,6 +941,8 @@ public abstract class BaseOrganizationResourceImpl
 		if (organization.getComment() != null) {
 			existingOrganization.setComment(organization.getComment());
 		}
+
+		existingOrganization.setCustomFields(organization.getCustomFields());
 
 		if (organization.getExternalReferenceCode() != null) {
 			existingOrganization.setExternalReferenceCode(

@@ -703,6 +703,9 @@ public abstract class BaseDocumentFolderResourceImpl
 		DocumentFolder existingDocumentFolder = getDocumentFolder(
 			documentFolderId);
 
+		existingDocumentFolder.setCustomFields(
+			documentFolder.getCustomFields());
+
 		if (documentFolder.getDescription() != null) {
 			existingDocumentFolder.setDescription(
 				documentFolder.getDescription());

@@ -1908,6 +1908,9 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getContentStructureId());
 		}
 
+		existingStructuredContent.setCustomFields(
+			structuredContent.getCustomFields());
+
 		if (structuredContent.getDatePublished() != null) {
 			existingStructuredContent.setDatePublished(
 				structuredContent.getDatePublished());

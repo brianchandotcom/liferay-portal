@@ -367,6 +367,8 @@ public abstract class BaseShipmentResourceImpl
 			existingShipment.setCarrier(shipment.getCarrier());
 		}
 
+		existingShipment.setCustomFields(shipment.getCustomFields());
+
 		if (shipment.getExpectedDate() != null) {
 			existingShipment.setExpectedDate(shipment.getExpectedDate());
 		}

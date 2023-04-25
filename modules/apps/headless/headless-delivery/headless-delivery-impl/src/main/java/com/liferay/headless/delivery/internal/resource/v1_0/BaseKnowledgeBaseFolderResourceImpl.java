@@ -265,6 +265,9 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		KnowledgeBaseFolder existingKnowledgeBaseFolder =
 			getKnowledgeBaseFolder(knowledgeBaseFolderId);
 
+		existingKnowledgeBaseFolder.setCustomFields(
+			knowledgeBaseFolder.getCustomFields());
+
 		if (knowledgeBaseFolder.getDescription() != null) {
 			existingKnowledgeBaseFolder.setDescription(
 				knowledgeBaseFolder.getDescription());

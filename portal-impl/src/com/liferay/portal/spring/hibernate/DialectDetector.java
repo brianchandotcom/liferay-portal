@@ -27,9 +27,6 @@ import com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 
@@ -80,10 +77,6 @@ public class DialectDetector {
 
 			if (dbName.startsWith("HSQL")) {
 				dialect = new HSQLDialect();
-
-				PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
-
-				PropsValues.UPGRADE_DATABASE_AUTO_RUN = false;
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(

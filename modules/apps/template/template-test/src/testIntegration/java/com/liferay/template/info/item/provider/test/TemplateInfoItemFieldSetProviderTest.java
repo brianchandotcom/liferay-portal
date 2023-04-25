@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -80,10 +81,14 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.test.util.TemplateTestUtil;
 
+import java.text.DateFormat;
+
 import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -394,7 +399,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 				LocaleUtil.SPAIN, contentMap.get(LocaleUtil.SPAIN)
 			).put(
 				LocaleUtil.US, contentMap.get(LocaleUtil.US)
-			).build());
+			).build(),
+			"name");
 	}
 
 	@Test
@@ -424,7 +430,8 @@ public class TemplateInfoItemFieldSetProviderTest {
 				LocaleUtil.SPAIN, contentMap.get(LocaleUtil.SPAIN)
 			).put(
 				LocaleUtil.US, contentMap.get(LocaleUtil.US)
-			).build());
+			).build(),
+			"name");
 	}
 
 	@Test
@@ -541,6 +548,40 @@ public class TemplateInfoItemFieldSetProviderTest {
 					IsoChronology.INSTANCE, LocaleUtil.US),
 				LocaleUtil.US),
 			value);
+	}
+
+	@Test
+	public void testGetInfoFieldValuesRenderingDateInfoFieldTypeLocalizedDateFormat()
+		throws Exception {
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			ListUtil.fromArray(
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			LocaleUtil.SPAIN);
+
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			false, Collections.emptyMap(), DDMFormFieldTypeConstants.DATE);
+
+		Date date = new Date();
+
+		_journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter,
+			DateUtil.getDate(date, "yyyy-MM-dd", LocaleUtil.SPAIN),
+			_group.getGroupId(), _journalConverter);
+
+		_assertLocalizedValues(
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, _formatDate(date, LocaleUtil.GERMANY)
+			).put(
+				LocaleUtil.SPAIN, _formatDate(date, LocaleUtil.SPAIN)
+			).put(
+				LocaleUtil.US, _formatDate(date, LocaleUtil.US)
+			).build(),
+			ddmFormField.getName());
 	}
 
 	@Test
@@ -858,14 +899,15 @@ public class TemplateInfoItemFieldSetProviderTest {
 		}
 	}
 
-	private void _assertLocalizedValues(Map<Locale, String> expectedValues)
+	private void _assertLocalizedValues(
+			Map<Locale, String> expectedValues, String fieldName)
 		throws Exception {
 
 		TemplateEntry templateEntry = TemplateTestUtil.addTemplateEntry(
 			JournalArticle.class.getName(),
 			String.valueOf(_journalArticle.getDDMStructureId()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			TemplateTestUtil.getSampleScriptFTL("name"), _serviceContext);
+			TemplateTestUtil.getSampleScriptFTL(fieldName), _serviceContext);
 
 		Locale currentThemeDisplayLocale =
 			LocaleThreadLocal.getThemeDisplayLocale();
@@ -946,6 +988,15 @@ public class TemplateInfoItemFieldSetProviderTest {
 		}
 
 		return ddmFormField;
+	}
+
+	private String _formatDate(Date date, Locale locale) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			DateTimeFormatterBuilder.getLocalizedDateTimePattern(
+				FormatStyle.SHORT, null, IsoChronology.INSTANCE, locale),
+			locale);
+
+		return dateFormat.format(date);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(

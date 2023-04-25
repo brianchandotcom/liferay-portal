@@ -15,7 +15,7 @@
 package com.liferay.journal.internal.exportimport.content.processor;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -148,8 +148,8 @@ public class JournalArticleExportImportContentProcessor
 		ImageExportDDMFormFieldValueTransformer
 			imageExportDDMFormFieldValueTransformer =
 				new ImageExportDDMFormFieldValueTransformer(
-					_dlAppService, exportReferencedContent, portletDataContext,
-					stagedModel);
+					_dlAppLocalService, exportReferencedContent,
+					portletDataContext, stagedModel);
 
 		ddmFormValuesTransformer.addTransformer(
 			imageExportDDMFormFieldValueTransformer);
@@ -215,7 +215,7 @@ public class JournalArticleExportImportContentProcessor
 		ImageImportDDMFormFieldValueTransformer
 			imageImportDDMFormFieldValueTransformer =
 				new ImageImportDDMFormFieldValueTransformer(
-					_dlAppService, portletDataContext, stagedModel);
+					_dlAppLocalService, portletDataContext, stagedModel);
 
 		ddmFormValuesTransformer.addTransformer(
 			imageImportDDMFormFieldValueTransformer);
@@ -656,7 +656,7 @@ public class JournalArticleExportImportContentProcessor
 		_defaultTextExportImportContentProcessor;
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

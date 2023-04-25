@@ -14,7 +14,7 @@
 
 package com.liferay.journal.internal.exportimport.content.processor;
 
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -42,10 +42,10 @@ public class ImageExportDDMFormFieldValueTransformer
 	implements DDMFormFieldValueTransformer {
 
 	public ImageExportDDMFormFieldValueTransformer(
-		DLAppService dlAppService, boolean exportReferencedContent,
+		DLAppLocalService dlAppLocalService, boolean exportReferencedContent,
 		PortletDataContext portletDataContext, StagedModel stagedModel) {
 
-		_dlAppService = dlAppService;
+		_dlAppLocalService = dlAppLocalService;
 		_exportReferencedContent = exportReferencedContent;
 		_portletDataContext = portletDataContext;
 		_stagedModel = stagedModel;
@@ -87,7 +87,8 @@ public class ImageExportDDMFormFieldValueTransformer
 
 			try {
 				FileEntry fileEntry =
-					_dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
+					_dlAppLocalService.getFileEntryByUuidAndGroupId(
+						uuid, groupId);
 
 				if (fileEntry.isInTrash()) {
 					continue;
@@ -119,7 +120,7 @@ public class ImageExportDDMFormFieldValueTransformer
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageExportDDMFormFieldValueTransformer.class);
 
-	private final DLAppService _dlAppService;
+	private final DLAppLocalService _dlAppLocalService;
 	private final boolean _exportReferencedContent;
 	private final PortletDataContext _portletDataContext;
 	private final StagedModel _stagedModel;

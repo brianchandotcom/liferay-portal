@@ -116,36 +116,41 @@
 	</div>
 [/#macro]
 
-[#if mdf_request_id?has_content]
+[#if mdf_request_id?has_content ]
 	[#assign activities = restClient.get("/c/mdfrequests/${mdf_request_id}/mdfReqToActs?nestedFields=actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId&nestedFieldsDepth=3").items /]
 
-	[#list activities as activity]
-		<div class="border-brand-primary-lighten-4 panel" role="tablist">
-			<button aria-controls="mdfRequestActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfRequestActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
-				<div class="py-2 text-dark">
-					[#if activity.endDate?has_content && activity.startDate?has_content]
-						[@range_date end_date=activity.endDate start_date=activity.startDate /]
-					[/#if]
+	[#assign mdf_status = restClient.get("/c/mdfrequests/${mdf_request_id}").mdfRequestStatus.key /]
+	[#if mdf_status != "draft"]
+		[#list activities as activity]
+			<div class="border-brand-primary-lighten-4 panel" role="tablist">
+				<button aria-controls="mdfRequestActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfRequestActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
+					<div class="py-2 text-dark">
+						[#if activity.endDate?has_content && activity.startDate?has_content]
+							[@range_date end_date=activity.endDate start_date=activity.startDate /]
+						[/#if]
 
-					<h4 class="mb-1">${activity.name} (${activity.id})</h4>
+						<h4 class="mb-1">${activity.name} (${activity.id})</h4>
 
-					[@claim_status activity_claims=activity.actToMDFClmActs /]
+						[@claim_status activity_claims=activity.actToMDFClmActs /]
 
-					[@request_status activity_status=activity.activityStatus end_date=(activity.endDate?date)! /]
-				</div>
-			</button>
+						[@request_status activity_status=activity.activityStatus end_date=(activity.endDate?date)! /]
+					</div>
+				</button>
 
-			<div class="collapse panel-collapse" id="mdfRequestActivitiesPanel-${activity.id}" role="tabpanel">
-				<div class="panel-body">
-					[@campaign_table activity=activity /]
+				<div class="collapse panel-collapse" id="mdfRequestActivitiesPanel-${activity.id}" role="tabpanel">
+					<div class="panel-body">
+						[@campaign_table activity=activity /]
 
-					[@budgets_table budgets=activity.actToBgts currency_key=(activity.currency.key)!"USD" /]
+						[@budgets_table budgets=activity.actToBgts currency_key=(activity.currency.key)!"USD" /]
 
-					[@leads_table activity=activity /]
+						[@leads_table activity=activity /]
+					</div>
 				</div>
 			</div>
-		</div>
-	[/#list]
+		[/#list]
+	[#else]
+		[@clay.alert displayType="info" message="Pending MDF Request submission." title="Info" /]
+	[/#if]
 [#else]
 	<div class="alert alert-info">
 		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>

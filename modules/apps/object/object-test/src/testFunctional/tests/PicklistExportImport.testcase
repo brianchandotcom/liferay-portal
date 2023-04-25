@@ -322,7 +322,6 @@ definition {
 				picklistName = "Picklist Test");
 
 			Picklist.gotoPicklists();
-
 		}
 
 		task ("When a picklist is imported with the same ERC as an existing picklist") {

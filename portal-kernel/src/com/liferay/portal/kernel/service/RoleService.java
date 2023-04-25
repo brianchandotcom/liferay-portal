@@ -113,14 +113,15 @@ public interface RoleService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getGroupRolesAndTeamRoles(
-		long companyId, String keywords, List<String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
-		int end);
+		long companyId, String name, List<String> excludedNames, String title,
+		String description, int[] types, long excludedTeamRoleId,
+		long teamGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupRolesAndTeamRolesCount(
-		long companyId, String keywords, List<String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId);
+		long companyId, String name, List<String> excludedNames, String title,
+		String description, int[] types, long excludedTeamRoleId,
+		long teamGroupId);
 
 	/**
 	 * Returns the OSGi service identifier.

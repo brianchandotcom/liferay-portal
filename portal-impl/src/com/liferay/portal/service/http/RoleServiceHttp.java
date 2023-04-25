@@ -244,9 +244,10 @@ public class RoleServiceHttp {
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role>
 		getGroupRolesAndTeamRoles(
-			HttpPrincipal httpPrincipal, long companyId, String keywords,
-			java.util.List<String> excludedNames, int[] types,
-			long excludedTeamRoleId, long teamGroupId, int start, int end) {
+			HttpPrincipal httpPrincipal, long companyId, String name,
+			java.util.List<String> excludedNames, String title,
+			String description, int[] types, long excludedTeamRoleId,
+			long teamGroupId, int start, int end) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -254,8 +255,8 @@ public class RoleServiceHttp {
 				_getGroupRolesAndTeamRolesParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, keywords, excludedNames, types,
-				excludedTeamRoleId, teamGroupId, start, end);
+				methodKey, companyId, name, excludedNames, title, description,
+				types, excludedTeamRoleId, teamGroupId, start, end);
 
 			Object returnObj = null;
 
@@ -280,9 +281,9 @@ public class RoleServiceHttp {
 	}
 
 	public static int getGroupRolesAndTeamRolesCount(
-		HttpPrincipal httpPrincipal, long companyId, String keywords,
-		java.util.List<String> excludedNames, int[] types,
-		long excludedTeamRoleId, long teamGroupId) {
+		HttpPrincipal httpPrincipal, long companyId, String name,
+		java.util.List<String> excludedNames, String title, String description,
+		int[] types, long excludedTeamRoleId, long teamGroupId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -290,8 +291,8 @@ public class RoleServiceHttp {
 				_getGroupRolesAndTeamRolesCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, keywords, excludedNames, types,
-				excludedTeamRoleId, teamGroupId);
+				methodKey, companyId, name, excludedNames, title, description,
+				types, excludedTeamRoleId, teamGroupId);
 
 			Object returnObj = null;
 
@@ -891,13 +892,14 @@ public class RoleServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getGroupRolesAndTeamRolesParameterTypes5 =
 		new Class[] {
-			long.class, String.class, java.util.List.class, int[].class,
-			long.class, long.class, int.class, int.class
+			long.class, String.class, java.util.List.class, String.class,
+			String.class, int[].class, long.class, long.class, int.class,
+			int.class
 		};
 	private static final Class<?>[]
 		_getGroupRolesAndTeamRolesCountParameterTypes6 = new Class[] {
-			long.class, String.class, java.util.List.class, int[].class,
-			long.class, long.class
+			long.class, String.class, java.util.List.class, String.class,
+			String.class, int[].class, long.class, long.class
 		};
 	private static final Class<?>[] _getRoleParameterTypes7 = new Class[] {
 		long.class

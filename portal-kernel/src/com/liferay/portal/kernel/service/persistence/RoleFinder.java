@@ -24,8 +24,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface RoleFinder {
 
 	public int countByGroupRoleAndTeamRole(
-		long companyId, String keywords, java.util.List<String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId);
+		long companyId, String name, java.util.List<String> excludedNames,
+		String title, String description, int[] types, long excludedTeamRoleId,
+		long teamGroupId);
 
 	public int countByKeywords(
 		long companyId, String keywords, Integer[] types);
@@ -53,8 +54,9 @@ public interface RoleFinder {
 		boolean andOperator);
 
 	public int filterCountByGroupRoleAndTeamRole(
-		long companyId, String keywords, java.util.List<String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId);
+		long companyId, String name, java.util.List<String> excludedNames,
+		String title, String description, int[] types, long excludedTeamRoleId,
+		long teamGroupId);
 
 	public int filterCountByKeywords(
 		long companyId, String keywords, Integer[] types,
@@ -80,8 +82,8 @@ public interface RoleFinder {
 
 	public java.util.List<com.liferay.portal.kernel.model.Role>
 		filterFindByGroupRoleAndTeamRole(
-			long companyId, String keywords,
-			java.util.List<String> excludedNames, int[] types,
+			long companyId, String name, java.util.List<String> excludedNames,
+			String title, String description, int[] types,
 			long excludedTeamRoleId, long teamGroupId, int start, int end);
 
 	public java.util.List<com.liferay.portal.kernel.model.Role>
@@ -126,8 +128,8 @@ public interface RoleFinder {
 
 	public java.util.List<com.liferay.portal.kernel.model.Role>
 		findByGroupRoleAndTeamRole(
-			long companyId, String keywords,
-			java.util.List<String> excludedNames, int[] types,
+			long companyId, String name, java.util.List<String> excludedNames,
+			String title, String description, int[] types,
 			long excludedTeamRoleId, long teamGroupId, int start, int end);
 
 	public java.util.List<com.liferay.portal.kernel.model.Role> findByKeywords(

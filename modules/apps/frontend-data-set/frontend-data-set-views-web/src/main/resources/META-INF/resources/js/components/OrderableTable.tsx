@@ -50,7 +50,7 @@ const OrderableTableRow = ({
 	onOrderChange,
 	query,
 }: OrderableTableRowInterface) => {
-	const ref = useRef<HTMLTableRowElement>(null);
+	const tableRowRef = useRef<HTMLTableRowElement>(null);
 
 	const [{isDragging}, dragRef] = useDrag({
 		collect: (monitor) => ({
@@ -65,7 +65,7 @@ const OrderableTableRow = ({
 	const [, dropRef] = useDrop({
 		accept: 'FIELD',
 		hover(item: {index: number; type: string}, monitor) {
-			if (!ref.current || !onOrderChange) {
+			if (!tableRowRef.current || !onOrderChange) {
 				return;
 			}
 
@@ -76,7 +76,7 @@ const OrderableTableRow = ({
 				return;
 			}
 
-			const targetSize = ref.current.getBoundingClientRect();
+			const targetSize = tableRowRef.current.getBoundingClientRect();
 			const targetCenter = (targetSize.bottom - targetSize.top) / 2;
 
 			const draggedOffset: {
@@ -103,7 +103,7 @@ const OrderableTableRow = ({
 		},
 	});
 
-	dragRef(dropRef(ref));
+	dragRef(dropRef(tableRowRef));
 
 	return (
 		<ClayTable.Row
@@ -111,7 +111,7 @@ const OrderableTableRow = ({
 				dragging: isDragging,
 			})}
 			key={index}
-			ref={ref}
+			ref={tableRowRef}
 		>
 			<ClayTable.Cell className="drag-handle-cell">
 				<ClayButtonWithIcon

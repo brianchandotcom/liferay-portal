@@ -149,8 +149,9 @@ const AddFDSFieldsModalContent = ({
 			return false;
 		}
 
-		const selectedFieldsCount =
-			fields.filter((field) => field.selected)?.length || 0;
+		const selectedFields = fields.filter((field) => field.selected);
+
+		const selectedFieldsCount = selectedFields?.length || 0;
 
 		return selectedFieldsCount === fields.length;
 	};

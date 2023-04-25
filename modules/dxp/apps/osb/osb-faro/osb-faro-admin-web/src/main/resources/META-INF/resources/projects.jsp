@@ -90,7 +90,10 @@ FaroAdminDisplayContext faroAdminDisplayContext = new FaroAdminDisplayContext(re
 
 							<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 								<clay:dropdown-actions
+									aria-label=""
+									aria-labelledby=""
 									dropdownItems="<%= dropdownItems %>"
+									title=""
 								/>
 							</c:if>
 						</c:if>

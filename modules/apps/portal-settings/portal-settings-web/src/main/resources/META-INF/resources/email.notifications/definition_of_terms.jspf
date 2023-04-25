@@ -77,6 +77,12 @@
 		<liferay-ui:message key="the-address-of-the-email-recipient" />
 	</dd>
 	<dt>
+		[$TO_FIRST_NAME$]
+	</dt>
+	<dd>
+		<liferay-ui:message key="the-first-name-of-the-email-recipient" />
+	</dd>
+	<dt>
 		[$TO_NAME$]
 	</dt>
 	<dd>

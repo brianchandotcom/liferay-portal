@@ -25,12 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionWebConfigurationAction
+public class CETPortletConfigurationAction
 	extends DefaultConfigurationAction implements Registrable {
 
-	public ClientExtensionWebConfigurationAction(
-		String jspPath, String portletId) {
-
+	public CETPortletConfigurationAction(String jspPath, String portletId) {
 		_jspPath = jspPath;
 		_portletId = portletId;
 	}

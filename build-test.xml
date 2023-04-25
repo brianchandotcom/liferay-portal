@@ -1787,6 +1787,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 	<macrodef name="get-test-url">
 		<sequential>
 			<get-operating-system-property property.name="operating.system.docker.image" />
+
 			<get-testcase-property property.name="analytics.cloud.enabled" />
 			<get-testcase-property property.name="testcase.url" />
 
@@ -7500,8 +7501,10 @@ ${docker.start.error}</fail>
 									<local name="app.server.waiting.url" />
 
 									<get-operating-system-property property.name="operating.system.docker.image" />
+
 									<get-testcase-property property.name="portal.context" />
 									<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+
 									<get-testcase-property property.name="portal.proxy.path" />
 									<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
 
@@ -8100,8 +8103,10 @@ war.path=${app.server.portal.dir}/</echo>
 			<local name="app.server.waiting.url" />
 
 			<get-operating-system-property property.name="operating.system.docker.image" />
+
 			<get-testcase-property property.name="portal.context" />
 			<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+
 			<get-testcase-property property.name="portal.proxy.path" />
 			<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
 
@@ -12586,6 +12591,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<else>
 				<get-testcase-property property.name="portal.context" />
 				<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
+
 				<get-testcase-property property.name="portal.proxy.path" />
 				<propertycopy from="portal.proxy.path[${env.CI_TEST_SUITE}]" name="portal.proxy.path" silent="true" />
 

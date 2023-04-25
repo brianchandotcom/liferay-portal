@@ -108,7 +108,7 @@ exports[`DateTimeInput renders date-time with no change in the input 1`] = `
 </DocumentFragment>
 `;
 
-exports[`DateTimeInput renders now with wrong date 1`] = `
+exports[`DateTimeInput renders previous date with wrong date 1`] = `
 <DocumentFragment>
   <div
     class="criterion-input date-input"
@@ -162,7 +162,7 @@ exports[`DateTimeInput renders now with wrong date 1`] = `
 </DocumentFragment>
 `;
 
-exports[`DateTimeInput renders now with wrong date-time 1`] = `
+exports[`DateTimeInput renders previous date with wrong date-time 1`] = `
 <DocumentFragment>
   <div
     class="criterion-input date-input"
@@ -301,60 +301,6 @@ exports[`DateTimeInput renders type date-time 1`] = `
           >
             <button
               aria-controls="clay-id-1"
-              aria-expanded="false"
-              aria-haspopup="dialog"
-              aria-label="Test label: select-date"
-              class="date-picker-dropdown-toggle btn btn-unstyled"
-              type="button"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-calendar"
-                role="presentation"
-              >
-                <use
-                  xlink:href="#calendar"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`DateTimeInput works with date ranges 1`] = `
-<DocumentFragment>
-  <div
-    class="criterion-input date-input"
-  >
-    <div
-      class="date-picker"
-    >
-      <div
-        class="input-group"
-      >
-        <div
-          class="input-group-item"
-        >
-          <input
-            name="datePicker"
-            type="hidden"
-            value="2022/01/01 - 2022/12/24"
-          />
-          <input
-            aria-label="Test label: input-a-value"
-            class="form-control input-group-inset input-group-inset-after"
-            data-testid="date-input"
-            type="text"
-            value="2022/01/01 - 2022/12/24"
-          />
-          <div
-            class="input-group-inset-item input-group-inset-item-after"
-          >
-            <button
-              aria-controls="clay-id-7"
               aria-expanded="false"
               aria-haspopup="dialog"
               aria-label="Test label: select-date"

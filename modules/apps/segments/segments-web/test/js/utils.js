@@ -56,11 +56,16 @@ export function testControlledDateInput({
 	fireEvent.blur(element);
 
 	if (inputChange) {
-		expect(mockOnChangeFunc.mock.calls.length).toBe(1);
+		if (value === newValueExpected) {
+			expect(mockOnChangeFunc.mock.calls.length).toBe(0);
+		}
+		else {
+			expect(mockOnChangeFunc.mock.calls.length).toBe(1);
 
-		expect(mockOnChangeFunc.mock.calls[0][0]).toMatchObject({
-			value: newValueOnChange,
-		});
+			expect(mockOnChangeFunc.mock.calls[0][0]).toMatchObject({
+				value: newValueOnChange,
+			});
+		}
 	}
 	else {
 		expect(mockOnChangeFunc.mock.calls.length).toBe(0);

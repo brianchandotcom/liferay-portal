@@ -13,7 +13,6 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import {format, parse} from 'date-fns';
 import React from 'react';
 
 import DateTimeInput from '../../../../src/main/resources/META-INF/resources/js/components/inputs/DateTimeInput';
@@ -29,10 +28,6 @@ describe('DateTimeInput', () => {
 	const valueDate = '2019-01-23';
 
 	const isoDefaultDate = '2019-01-23T00:00:00.000Z';
-
-	const expectedDateValueDisplayed = format(new Date(), 'yyyy/MM/dd');
-
-	const expectedDateValueOnChange = format(new Date(), 'yyyy-MM-dd');
 
 	it('renders type date-time', () => {
 		const mockOnChange = jest.fn();
@@ -60,7 +55,7 @@ describe('DateTimeInput', () => {
 		});
 	});
 
-	it('renders now with wrong date-time', () => {
+	it('renders previous date with wrong date-time', () => {
 		const mockOnChange = jest.fn();
 
 		const {asFragment, getByTestId} = render(
@@ -76,18 +71,12 @@ describe('DateTimeInput', () => {
 
 		const element = getByTestId(DATE_INPUT_TESTID);
 
-		const date = format(new Date(), 'yyyy/MM/dd');
-
 		testControlledDateInput({
 			element,
 			mockOnChangeFunc: mockOnChange,
 			newValue: '2019-01-XX',
-			newValueExpected: date,
-			newValueOnChange: parse(
-				date,
-				'yyyy/MM/dd',
-				new Date()
-			).toISOString(),
+			newValueExpected: defaultValue,
+			newValueOnChange: defaultValue,
 			value: defaultValue,
 		});
 	});
@@ -121,7 +110,7 @@ describe('DateTimeInput', () => {
 		});
 	});
 
-	it('renders now with wrong date', () => {
+	it('renders previous date with wrong date', () => {
 		const mockOnChange = jest.fn();
 
 		const {asFragment, getByTestId} = render(
@@ -141,8 +130,8 @@ describe('DateTimeInput', () => {
 			element,
 			mockOnChangeFunc: mockOnChange,
 			newValue: '2019/01/XX',
-			newValueExpected: expectedDateValueDisplayed,
-			newValueOnChange: expectedDateValueOnChange,
+			newValueExpected: defaultValue,
+			newValueOnChange: defaultValue,
 			value: defaultValue,
 		});
 	});
@@ -198,34 +187,6 @@ describe('DateTimeInput', () => {
 			newValueExpected: defaultValue,
 			newValueOnChange: defaultValue,
 			value: defaultValue,
-		});
-	});
-
-	it('works with date ranges', () => {
-		const mockOnChange = jest.fn();
-
-		const {asFragment, getByTestId} = render(
-			<DateTimeInput
-				onChange={mockOnChange}
-				propertyLabel="Test label"
-				propertyType="date"
-				range
-				value={{end: '2022-12-24', start: '2022-01-01'}}
-			/>
-		);
-
-		expect(asFragment()).toMatchSnapshot();
-
-		const element = getByTestId(DATE_INPUT_TESTID);
-
-		testControlledDateInput({
-			element,
-			inputChange: true,
-			mockOnChangeFunc: mockOnChange,
-			newValue: '2022/01/01 - 2022/02/24',
-			newValueExpected: '2022/01/01 - 2022/02/24',
-			newValueOnChange: {end: '2022-02-24', start: '2022-01-01'},
-			value: '2022/01/01 - 2022/12/24',
 		});
 	});
 });

@@ -4577,7 +4577,6 @@ definition {
 	@priority = 5
 	test ViewMultipleFacetURLs {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "Search#ViewMultipleFacetURLs";
 
 		JSONFolder.moveFolderToTrash(
 			folderName = "Provided by Liferay",

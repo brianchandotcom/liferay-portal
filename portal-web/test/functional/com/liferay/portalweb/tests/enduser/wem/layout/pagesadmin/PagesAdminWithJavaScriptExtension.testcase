@@ -918,8 +918,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Panel.expandPanel(panel = "Look and Feel");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			PagesAdmin.addJavaScriptExtensions(
@@ -980,8 +978,6 @@ definition {
 				WaitForPageLoad();
 
 				Navigator.gotoNavTab(navTab = "Design");
-
-				Panel.expandPanel(panel = "Look and Feel");
 
 				Navigator.gotoNavTab(navTab = "JavaScript");
 

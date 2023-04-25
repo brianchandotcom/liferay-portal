@@ -491,8 +491,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Panel.expandPanel(panel = "Look and Feel");
-
 			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
 
 			PortletEntry.save();

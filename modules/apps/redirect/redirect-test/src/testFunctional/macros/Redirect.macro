@@ -195,7 +195,7 @@ definition {
 			var portlet = "InstanceSettingsPortlet";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.friendly.url.internal.configuration.FriendlyURLRedirectionConfiguration");
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration");
 
 		Click(locator1 = "Dropdown#TRIGGER");
 

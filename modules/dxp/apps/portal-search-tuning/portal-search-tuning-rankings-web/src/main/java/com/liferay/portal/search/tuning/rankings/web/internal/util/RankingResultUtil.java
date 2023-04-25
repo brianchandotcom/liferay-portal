@@ -16,6 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -39,19 +40,18 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Wade Cao
  */
-@Component(service = {})
 public class RankingResultUtil {
 
 	public static AssetRenderer<?> getAssetRenderer(
 		String entryClassName, long entryClassPK) {
 
-		Document document = _documentBuilderFactory.builder(
+		DocumentBuilderFactory documentBuilderFactory =
+			_documentBuilderFactorySnapshot.get();
+
+		Document document = documentBuilderFactory.builder(
 		).setString(
 			Field.ENTRY_CLASS_NAME, entryClassName
 		).setLong(
@@ -178,30 +178,22 @@ public class RankingResultUtil {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSearchDocumentBuilderFactory(
-		DocumentBuilderFactory documentBuilderFactory) {
-
-		_documentBuilderFactory = documentBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchResultInterpreterProvider(
-		SearchResultInterpreterProvider searchResultInterpreterProvider) {
-
-		_searchResultInterpreterProvider = searchResultInterpreterProvider;
-	}
-
 	private static SearchResultInterpreter _getSearchResultInterpreter() {
-		return _searchResultInterpreterProvider.getSearchResultInterpreter(
+		SearchResultInterpreterProvider searchResultInterpreterProvider =
+			_searchResultInterpreterProviderSnapshot.get();
+
+		return searchResultInterpreterProvider.getSearchResultInterpreter(
 			ResultRankingsPortletKeys.RESULT_RANKINGS);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RankingResultUtil.class);
 
-	private static DocumentBuilderFactory _documentBuilderFactory;
-	private static SearchResultInterpreterProvider
-		_searchResultInterpreterProvider;
+	private static final Snapshot<DocumentBuilderFactory>
+		_documentBuilderFactorySnapshot = new Snapshot<>(
+			RankingResultUtil.class, DocumentBuilderFactory.class);
+	private static final Snapshot<SearchResultInterpreterProvider>
+		_searchResultInterpreterProviderSnapshot = new Snapshot<>(
+			RankingResultUtil.class, SearchResultInterpreterProvider.class);
 
 }

@@ -390,7 +390,9 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"5.2.1", "6.0.0",
 			UpgradeProcessFactory.dropColumns(
-				"JournalArticle", "DDMStructureKey"));
+				"JournalArticle", "DDMStructureKey"),
+			UpgradeProcessFactory.dropColumns(
+				"JournalFeed", "DDMStructureKey"));
 	}
 
 	private void _deleteTempImages() throws Exception {

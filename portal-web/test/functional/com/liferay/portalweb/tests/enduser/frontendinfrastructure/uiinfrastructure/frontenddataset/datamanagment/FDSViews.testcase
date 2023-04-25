@@ -70,6 +70,48 @@ definition {
 		}
 	}
 
+	@description = "LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
+	@priority = 5
+	test CanAssertPagination {
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
+		}
+
+		task ("And Change the pagination to 4 items") {
+			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
+		}
+
+		task ("Then Confirm that 2 pages are shown") {
+			AssertElementPresent(locator1 = "Pagination#NEXT_LINK");
+
+			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+		}
+
+		task ("When the user deletes two Views") {
+			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test 1");
+
+			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test 2");
+		}
+
+		task ("Then Confirm that only one page is displayed") {
+			Pagination.viewResults(results = "Showing 1 to 4 of 4 entries.");
+		}
+	}
+
 	@description = "LPS-181346. Confirm that pagination works right on views page"
 	@priority = 3
 	test CanAssertPaginationOnFDSViewsPage {
@@ -141,69 +183,6 @@ definition {
 			AssertElementPresent(
 				key_itemName = "View Test",
 				locator1 = "FrontendDataSetAdmin#NAME_OF_VIEWS");
-		}
-	}
-
-	@description = "LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
-	@priority = 5
-	test CanAssertPagination {
-		task ("When The user goes to add a new Dataset") {
-			FrontendDataSetAdmin.createDataSet(
-				key_name = "Test Dataset",
-				key_type = "Channel");
-		}
-
-		task ("And Add a 6 views") {
-			FrontendDataSetAdmin.createDataSetView(
-				dataSetName = "Test Dataset",
-				description = "Description Test",
-				key_name = "View Test 1");
-
-			FrontendDataSetAdmin.addDataSetView(
-				description = "Description Test",
-				key_name = "View Test 2");
-
-			FrontendDataSetAdmin.addDataSetView(
-				description = "Description Test",
-				key_name = "View Test 3");
-
-			FrontendDataSetAdmin.addDataSetView(
-				description = "Description Test",
-				key_name = "View Test 4");
-
-			FrontendDataSetAdmin.addDataSetView(
-				description = "Description Test",
-				key_name = "View Test 5");
-
-			FrontendDataSetAdmin.addDataSetView(
-				description = "Description Test",
-				key_name = "View Test 6");
-		}
-
-		task ("And Change the pagination to 4 items") {
-			FrontendDataSetAdmin.changePagination(itemsPerPage = "4 Items");
-		}
-
-		task ("Then Confirm that 2 pages are shown") {
-			AssertElementPresent(locator1 = "Pagination#NEXT_LINK");
-
-			for (var num : list "1,2,3,4") {
-				AssertElementPresent(
-					entryName = "View Test ${num}",
-					locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
-			}
-
-			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
-		}
-
-		task ("When the user deletes two Views") {
-			for (var num : list "1,2") {
-				FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test");
-			}
-		}
-
-		task ("Then Confirm that only one page is displayed") {
-			Pagination.viewResults(results = "Showing 1 to 4 of 4 entries.");
 		}
 	}
 
@@ -283,32 +262,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-181341. Confirm that The user can create a view with no description"
-	@priority = 4
-	test CanCreateViewWithNoDescription {
-		task ("And Add a Dataset") {
-			FrontendDataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/c/fdsentries");
-		}
-
-		task ("When going to the Dataset View page of the dataset created.") {
-			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
-		}
-
-		task ("And Clicking add button, And Filling the name with 'View Test', And Clicking the Save button") {
-			FrontendDataSetAdmin.createDataSetView(
-				description = "",
-				key_name = "View Test");
-		}
-
-		task ("Then Confirm Data set view was created") {
-			AssertElementPresent(
-				entryName = "View Test",
-				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
-		}
-	}
-
 	@description = "LPS-181339. Confirm that the user can create a view"
 	@priority = 5
 	test CanCreateView {
@@ -338,6 +291,32 @@ definition {
 			AssertElementPresent(
 				locator1 = "FrontendDataSetAdmin#NAME_OF_VIEWS",
 				viewDescription = "Test Description");
+		}
+	}
+
+	@description = "LPS-181341. Confirm that The user can create a view with no description"
+	@priority = 4
+	test CanCreateViewWithNoDescription {
+		task ("And Add a Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("When going to the Dataset View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Dataset Test");
+		}
+
+		task ("And Clicking add button, And Filling the name with 'View Test', And Clicking the Save button") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "",
+				key_name = "View Test");
+		}
+
+		task ("Then Confirm Data set view was created") {
+			AssertElementPresent(
+				entryName = "View Test",
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_NAME");
 		}
 	}
 

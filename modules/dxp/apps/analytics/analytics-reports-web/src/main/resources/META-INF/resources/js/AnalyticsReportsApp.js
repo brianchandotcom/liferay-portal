@@ -62,6 +62,12 @@ export default function AnalyticsReportsApp({context, portletNamespace}) {
 					'com.liferay.analytics.reports.web_panelState',
 					'open'
 				);
+
+				const analyticsReportsPanel = document.getElementById(
+					`${portletNamespace}analyticsReportsPanelId`
+				);
+
+				analyticsReportsPanel.focus();
 			});
 
 			sidenavInstance.on('closed.lexicon.sidenav', () => {

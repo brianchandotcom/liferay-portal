@@ -333,7 +333,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			JspWriter jspWriter = pageContext.getOut();
 
-			StringBundler sb = new StringBundler(23);
+			StringBundler sb = new StringBundler(24);
 
 			sb.append("<div class=\"");
 
@@ -347,7 +347,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 					"lfr-product-menu-panel lfr-analytics-reports-panel ",
 					"sidenav-fixed sidenav-menu-slider sidenav-right\" id=\""));
 			sb.append(_portletNamespace);
-			sb.append("analyticsReportsPanelId\">");
+			sb.append("analyticsReportsPanelId\" ");
+			sb.append("tabindex=\"-1\">");
 			sb.append("<div class=\"sidebar sidebar-light sidenav-menu ");
 			sb.append("sidebar-sm\">");
 			sb.append("<div class=\"lfr-analytics-reports-sidebar\" ");

@@ -1,5 +1,13 @@
 definition {
 
+	macro assertDataSetEntry {
+		for (var key_dataSetName : list ${key_dataSetNameList}) {
+			AssertElementPresent(
+				key_itemName = ${key_dataSetName},
+				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
+		}
+	}
+
 	macro assertDataSetView {
 		for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
 			AssertElementPresent(

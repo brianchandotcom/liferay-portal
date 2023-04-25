@@ -791,6 +791,8 @@ definition {
 	@description = "This is a test for LPS-98077. Set a FieldGroup as repeatable and perform this action in a WebContent"
 	@priority = 4
 	test SetFieldGroupAsRepeatableAndExecuteOnAWebContent {
+		property ci.retries.disabled = "true";
+
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

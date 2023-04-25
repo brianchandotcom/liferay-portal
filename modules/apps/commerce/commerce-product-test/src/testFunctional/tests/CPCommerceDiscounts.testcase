@@ -503,6 +503,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for COMMERCE-10819. User with Discount Manager role can access Discounts from Control Panel"
+	@priority = 3
+	test CanDiscountManagerAccessDiscountsPanel {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a user with Discount Manager role is created") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Discount Manager",
+				userEmailAddress = "discount.manager@liferay.com",
+				userFirstName = "Discount",
+				userLastName = "Manager",
+				userScreenName = "discount.manager");
+		}
+
+		task ("When Discount Manager logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "discount.manager@liferay.com",
+				userLoginFullName = "Discount Manager");
+		}
+
+		task ("Then Discounts panel is shown") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Discounts");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
 	@priority = 3
 	test CannotSelectDiscountEligibilitiesTwice {

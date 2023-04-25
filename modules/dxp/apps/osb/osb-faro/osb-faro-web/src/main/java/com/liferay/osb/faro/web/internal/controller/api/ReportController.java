@@ -31,6 +31,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -82,6 +83,13 @@ public class ReportController extends BaseFaroController {
 			@QueryParam("toDate") String toDateString,
 			@PathParam("type") String type)
 		throws Exception {
+
+		if (!_exportTypes.contains(type)) {
+			return _reportControllerResponseFactory.create(
+				"The \"type\" query parameter must be either \"individual\", " +
+					"\"page\", or \"segment\".",
+				Response.Status.BAD_REQUEST);
+		}
 
 		if (Validator.isBlank(fromDateString) ||
 			Validator.isBlank(toDateString)) {
@@ -201,6 +209,13 @@ public class ReportController extends BaseFaroController {
 
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern(_ISO_8601_FORMAT);
+	private static final List<String> _exportTypes = new ArrayList<String>() {
+		{
+			add("individual");
+			add("page");
+			add("segment");
+		}
+	};
 	private static final ReportControllerResponseFactory
 		_reportControllerResponseFactory =
 			new ReportControllerResponseFactory();

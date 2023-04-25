@@ -182,6 +182,7 @@ definition {
 	@description = "LPS-101075 - Verify that the filter offers an option to see all version together"
 	@priority = 4
 	test CanSeeAllVersionsTogether {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "WorkflowMetricsPerformanceByStep#CanSeeAllVersionsTogether";
 
 		ApplicationsMenu.gotoPortlet(

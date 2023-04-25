@@ -170,6 +170,8 @@ definition {
 	@description = "Verify that a calendar event created on the pop up can be approved"
 	@priority = 4
 	test CalendarPopUpCanBeApproved {
+		property ci.retries.disabled = "true";
+
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
@@ -202,6 +204,8 @@ definition {
 	@description = "Verify that a calendar event created on the pop up can be rejected"
 	@priority = 3
 	test CalendarPopUpCanBeRejected {
+		property ci.retries.disabled = "true";
+
 		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
 
 		CalendarEvent.viewStatusViaDetails(status = "PENDING");

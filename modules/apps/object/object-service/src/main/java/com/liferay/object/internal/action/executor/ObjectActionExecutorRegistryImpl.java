@@ -16,7 +16,6 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
-import com.liferay.object.internal.action.executor.util.ObjectActionExecutorUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -69,10 +68,9 @@ public class ObjectActionExecutorRegistryImpl
 			ListUtil.filter(
 				new ArrayList<>(objectActionExecutorsCollection),
 				objectActionExecutor ->
-					ObjectActionExecutorUtil.isAllowedCompany(
-						companyId, objectActionExecutor) &&
-					ObjectActionExecutorUtil.isAllowedObjectDefinition(
-						objectActionExecutor, objectDefinitionName)),
+					objectActionExecutor.isAllowedCompany(companyId) &&
+					objectActionExecutor.isAllowedObjectDefinition(
+						objectDefinitionName)),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {
 

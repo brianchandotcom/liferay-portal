@@ -32,7 +32,6 @@ import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
-import com.liferay.object.internal.action.executor.util.ObjectActionExecutorUtil;
 import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
@@ -44,6 +43,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -453,8 +452,8 @@ public class ObjectActionLocalServiceImpl
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				objectActionExecutorKey);
 
-		if (!ObjectActionExecutorUtil.isAllowedCompany(
-				objectDefinition.getCompanyId(), objectActionExecutor)) {
+		if (!objectActionExecutor.isAllowedCompany(
+				objectDefinition.getCompanyId())) {
 
 			throw new ObjectActionExecutorKeyException(
 				StringBundler.concat(
@@ -463,8 +462,8 @@ public class ObjectActionLocalServiceImpl
 					objectDefinition.getCompanyId()));
 		}
 
-		if (!ObjectActionExecutorUtil.isAllowedObjectDefinition(
-				objectActionExecutor, objectDefinition.getName())) {
+		if (!objectActionExecutor.isAllowedObjectDefinition(
+				objectDefinition.getName())) {
 
 			throw new ObjectActionExecutorKeyException(
 				StringBundler.concat(

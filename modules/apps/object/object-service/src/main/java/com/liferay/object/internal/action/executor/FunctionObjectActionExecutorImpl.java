@@ -61,22 +61,32 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 	}
 
 	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
 	public String getKey() {
 		return _key;
 	}
 
 	@Override
-	public List<String> getObjectDefinitionNames() {
-		return _objectDefinitionNames;
+	public boolean isAllowedCompany(long companyId) {
+		if (_companyId == companyId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isAllowedObjectDefinition(String objectDefinitionName) {
+		if (_allowedObjectDefinitionNames.isEmpty()) {
+			return true;
+		}
+
+		return _allowedObjectDefinitionNames.contains(objectDefinitionName);
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
+		_allowedObjectDefinitionNames = StringUtil.asList(
+			properties.get("allowedObjectDefinitionNames"));
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionObjectActionExecutorImplConfiguration =
@@ -86,10 +96,9 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 		_key = StringBundler.concat(
 			ObjectActionExecutorConstants.KEY_FUNCTION, StringPool.POUND,
 			ConfigurationFactoryUtil.getExternalReferenceCode(properties));
-		_objectDefinitionNames = StringUtil.asList(
-			properties.get("objectDefinitionNames"));
 	}
 
+	private List<String> _allowedObjectDefinitionNames;
 	private long _companyId;
 
 	@Reference
@@ -98,7 +107,6 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 	private FunctionObjectActionExecutorImplConfiguration
 		_functionObjectActionExecutorImplConfiguration;
 	private String _key;
-	private List<String> _objectDefinitionNames;
 
 	@Reference
 	private PortalCatapult _portalCatapult;

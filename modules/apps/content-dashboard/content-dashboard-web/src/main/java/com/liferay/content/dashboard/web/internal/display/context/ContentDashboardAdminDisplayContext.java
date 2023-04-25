@@ -363,7 +363,7 @@ public class ContentDashboardAdminDisplayContext {
 			"com.liferay.content.dashboard.web_panelState", "closed");
 	}
 
-	public String getReviewDate() {
+	public String getReviewDateString() {
 		if (_reviewDate != null) {
 			return _reviewDate;
 		}

@@ -328,7 +328,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 		labelItemListWrapper.add(
 			() -> Validator.isNotNull(
-				_contentDashboardAdminDisplayContext.getReviewDate()),
+				_contentDashboardAdminDisplayContext.getReviewDateString()),
 			labelItem -> {
 				labelItem.putData(
 					"removeLabelURL",
@@ -440,7 +440,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			"status",
 			String.valueOf(_contentDashboardAdminDisplayContext.getStatus()));
 		portletURL.setParameter(
-			"reviewDate", _contentDashboardAdminDisplayContext.getReviewDate());
+			"reviewDate",
+			_contentDashboardAdminDisplayContext.getReviewDateString());
 
 		return String.valueOf(portletURL);
 	}
@@ -685,7 +686,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterByReviewDateDropdownItems() {
 		String reviewDate =
-			_contentDashboardAdminDisplayContext.getReviewDate();
+			_contentDashboardAdminDisplayContext.getReviewDateString();
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {

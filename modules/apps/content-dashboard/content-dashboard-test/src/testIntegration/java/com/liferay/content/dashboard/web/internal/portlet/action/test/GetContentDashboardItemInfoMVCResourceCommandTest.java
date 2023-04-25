@@ -137,7 +137,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResource() throws Exception {
-		ContentDashboardItem contentDashboardItem =
+		ContentDashboardItem<?> contentDashboardItem =
 			_createContentDashboardFileItem();
 
 		JSONObject jsonObject = _serveResource(contentDashboardItem);
@@ -192,7 +192,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItem.getTitle(LocaleUtil.US),
 			jsonObject.getString("title"));
 
-		ContentDashboardItemSubtype contentDashboardItemSubtype =
+		ContentDashboardItemSubtype<?> contentDashboardItemSubtype =
 			contentDashboardItem.getContentDashboardItemSubtype();
 
 		Assert.assertEquals(
@@ -331,7 +331,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			expectedJSONObject.toString(), actualJSONObject.toString());
 	}
 
-	private ContentDashboardItem _createContentDashboardBlogItem()
+	private ContentDashboardItem<?> _createContentDashboardBlogItem()
 		throws Exception {
 
 		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
@@ -346,7 +346,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			blogsEntry.getPrimaryKey());
 	}
 
-	private ContentDashboardItem _createContentDashboardFileItem()
+	private ContentDashboardItem<?> _createContentDashboardFileItem()
 		throws Exception {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
@@ -359,7 +359,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			fileEntry.getPrimaryKey());
 	}
 
-	private ContentDashboardItem _createContentDashboardJournalArticleItem()
+	private ContentDashboardItem<?> _createContentDashboardJournalArticleItem()
 		throws Exception {
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -419,7 +419,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		_serviceContext.setAssetTagNames(new String[] {"tag1"});
 	}
 
-	private JSONObject _serveResource(ContentDashboardItem contentDashboardItem)
+	private JSONObject _serveResource(
+			ContentDashboardItem<?> contentDashboardItem)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
@@ -453,17 +454,17 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.blogs.internal.item.BlogsEntryContentDashboardItemFactory"
 	)
-	private ContentDashboardItemFactory _contentDashboardBlogsItemFactory;
+	private ContentDashboardItemFactory<?> _contentDashboardBlogsItemFactory;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.document.library.internal.item.FileEntryContentDashboardItemFactory"
 	)
-	private ContentDashboardItemFactory _contentDashboardFileItemFactory;
+	private ContentDashboardItemFactory<?> _contentDashboardFileItemFactory;
 
 	@Inject(
 		filter = "component.name=com.liferay.content.dashboard.journal.internal.item.JournalArticleContentDashboardItemFactory"
 	)
-	private ContentDashboardItemFactory _contentDashboardJournalItemFactory;
+	private ContentDashboardItemFactory<?> _contentDashboardJournalItemFactory;
 
 	@DeleteAfterTestRun
 	private Group _group;

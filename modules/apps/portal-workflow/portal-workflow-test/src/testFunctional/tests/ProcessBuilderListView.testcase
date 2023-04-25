@@ -229,6 +229,12 @@ definition {
 			key_value = "Title",
 			locator1 = "ProcessBuilderListView#DROPDOWN_ITEM");
 
+		WaitForElementPresent(
+			key_index = 1,
+			key_processName = "A Workflow",
+			key_section = "Published",
+			locator1 = "ProcessBuilderListView#PROCESS_NAME_IN_SECTION_BY_INDEX");
+
 		AssertElementPresent(
 			key_index = 1,
 			key_processName = "A Workflow",

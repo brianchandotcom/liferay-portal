@@ -23,15 +23,13 @@ definition {
 	}
 
 	macro createDataSet {
-		var reps = ${reps};
-
-		if (isSet(reps)) {
-			for (var num : list ${reps}) {
+		if (isSet(key_dataSetNameList)) {
+			for (var key_dataSetName : list ${key_dataSetNameList}) {
 				LexiconEntry.gotoAdd();
 
 				Type(
 					locator1 = "TextInput#NAME",
-					value1 = "${key_name} ${num}");
+					value1 = ${key_dataSetName});
 
 				FrontendDataSetAdmin.selectProvider(key_type = ${key_type});
 

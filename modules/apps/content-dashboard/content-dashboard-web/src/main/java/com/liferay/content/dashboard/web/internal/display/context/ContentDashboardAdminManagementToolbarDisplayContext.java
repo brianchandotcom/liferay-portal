@@ -180,7 +180,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			}
 		).addGroup(
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getFilterByReviewDate());
+				dropdownGroupItem.setDropdownItems(
+					_getFilterByReviewDateDropdownItems());
 				dropdownGroupItem.setLabel(
 					_language.get(httpServletRequest, "filter-by-review-date"));
 			}
@@ -682,7 +683,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			).build());
 	}
 
-	private List<DropdownItem> _getFilterByReviewDate() {
+	private List<DropdownItem> _getFilterByReviewDateDropdownItems() {
 		String reviewDate =
 			_contentDashboardAdminDisplayContext.getReviewDate();
 

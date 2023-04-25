@@ -231,7 +231,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 								name: string;
 							}) => customField.name === 'CatalogId'
 						);
-	
+
 						return catalogIdField?.customValue.data == catalogId;
 					}
 				}
@@ -327,15 +327,26 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			await postCheckoutCart({cartId: cartResponse.id});
 		}
 
-		const url = `${origin}/next-steps?orderId=${cartResponse.id}&logoURL=${account?.logoURL}&appLogoURL=${app?.urlImage}&accountName=${account?.name}&accountLogo=${account?.logoURL}&appName=${app.name}`;
+		const appName = typeof app?.name === 'string' ? app?.name : app?.name.en_US;
+
+		const appNameURL = appName.trim().toLowerCase().replace(' ', '-');
+
+		const nextStepsCallbackURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
+			`/p/${appNameURL}`,
+			''
+		)}/next-steps?orderId=${cartResponse.id}&logoURL=${
+			account?.logoURL
+		}&appLogoURL=${app?.urlImage}&accountName=${
+			account?.name
+		}&accountLogo=${account?.logoURL}&appName=${app.name}`;
 
 		const paymentMethodURL = await getPaymentMethodURL(
 			cartResponse.id,
-			url
+			nextStepsCallbackURL
 		);
 
 		window.location.href =
-			selectedPaymentMethod === 'pay' ? paymentMethodURL : url;
+			selectedPaymentMethod === 'pay' ? paymentMethodURL : nextStepsCallbackURL;
 
 		onClose();
 	}
@@ -405,7 +416,6 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 										<span className="get-app-modal-body-content-app-info-version">
 											{appVersion} by{' '}
-
 											{accountPublisher?.name}
 										</span>
 									</div>

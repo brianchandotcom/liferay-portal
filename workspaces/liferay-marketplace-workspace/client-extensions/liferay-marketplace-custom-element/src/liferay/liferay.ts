@@ -2,6 +2,7 @@ interface ILiferay {
 	MarketplaceCustomerFlow: {appId: number};
 	Service: Function;
 	ThemeDisplay: {
+		getCanonicalURL: () => string;
 		getCompanyId: () => string;
 		getPathThemeImages: () => string;
 		isSignedIn: () => boolean;
@@ -19,6 +20,7 @@ export const Liferay = window.Liferay || {
 	MarketplaceCustomerFlow: 0,
 	Service: {},
 	ThemeDisplay: {
+		getCanonicalURL: () => window.location.href,
 		getCompanyId: () => '',
 		getPathThemeImages: () => '',
 		isSignedIn: () => {

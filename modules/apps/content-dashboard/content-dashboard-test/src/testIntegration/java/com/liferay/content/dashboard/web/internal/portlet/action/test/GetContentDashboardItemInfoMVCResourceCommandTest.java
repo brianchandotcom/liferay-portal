@@ -156,7 +156,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				vocabularyDataJSONObject.getJSONArray("categories");
 
 			Assert.assertEquals(1, categoriesJSONArray.length());
-
 			Assert.assertEquals(
 				assetCategory.getTitle(LocaleUtil.getSiteDefault()),
 				categoriesJSONArray.getString(0));
@@ -223,7 +222,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			Assert.assertEquals(
 				specificFieldJSONObject.getString("title"),
 				specificInformationJSONObject.getString("title"));
-
 			Assert.assertEquals(
 				specificFieldJSONObject.getString("value"),
 				specificInformationJSONObject.getString("value"));

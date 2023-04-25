@@ -263,7 +263,7 @@
 />
 
 <#if validator.isNotNull(portlet_id) && layout.isSystem() && !layout.isTypeControlPanel() && stringUtil.equals(layout_friendly_url, "/manage")>
-	<#assign the_title = portalUtil.getPortletTitle(portlet_id, locale) />
+	<#assign the_title = htmlUtil.escape(portalUtil.getPortletTitle(portlet_id, locale)) />
 </#if>
 
 <#if the_title ?has_content && !stringUtil.equals(company_name, site_name) && !page_group.isLayoutPrototype()>

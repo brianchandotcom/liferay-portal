@@ -476,22 +476,23 @@ public class RoleLocalServiceUtil {
 	}
 
 	public static List<Role> getGroupRolesAndTeamRoles(
-		long companyId, String keywords, List<String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
-		int end) {
+		long companyId, String name, String title, String description,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId, int start, int end) {
 
 		return getService().getGroupRolesAndTeamRoles(
-			companyId, keywords, excludedNames, types, excludedTeamRoleId,
-			teamGroupId, start, end);
+			companyId, name, title, description, excludedNames, types,
+			excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	public static int getGroupRolesAndTeamRolesCount(
-		long companyId, String keywords, List<String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId) {
+		long companyId, String name, String title, String description,
+		List<String> excludedNames, int[] types, long excludedTeamRoleId,
+		long teamGroupId) {
 
 		return getService().getGroupRolesAndTeamRolesCount(
-			companyId, keywords, excludedNames, types, excludedTeamRoleId,
-			teamGroupId);
+			companyId, name, title, description, excludedNames, types,
+			excludedTeamRoleId, teamGroupId);
 	}
 
 	public static int getGroupRolesCount(long groupId) {

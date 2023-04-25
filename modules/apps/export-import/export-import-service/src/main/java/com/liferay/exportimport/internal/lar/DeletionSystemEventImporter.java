@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.xml.ElementProcessor;
 import java.io.StringReader;
 
 import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -126,27 +124,17 @@ public class DeletionSystemEventImporter {
 			return true;
 		}
 
-		Stream<StagedModelType> stream = stagedModelTypes.stream();
+		for (StagedModelType curStagedModelType : stagedModelTypes) {
+			if ((curStagedModelType.getClassNameId() ==
+					stagedModelType.getClassNameId()) &&
+				(StagedModelType.REFERRER_CLASS_NAME_ALL.equals(
+					curStagedModelType.getReferrerClassName()) ||
+				 (Validator.isNotNull(stagedModelType.getReferrerClassName()) &&
+				  StagedModelType.REFERRER_CLASS_NAME_ANY.equals(
+					  curStagedModelType.getReferrerClassName())))) {
 
-		Predicate<StagedModelType> classNameIdPredicate =
-			smt -> smt.getClassNameId() == stagedModelType.getClassNameId();
-
-		Predicate<StagedModelType> allReferrerClassNamePredicate =
-			smt -> StagedModelType.REFERRER_CLASS_NAME_ALL.equals(
-				smt.getReferrerClassName());
-
-		Predicate<StagedModelType> anyReferrerClassNamePredicate = smt ->
-			Validator.isNotNull(stagedModelType.getReferrerClassName()) &&
-			StagedModelType.REFERRER_CLASS_NAME_ANY.equals(
-				smt.getReferrerClassName());
-
-		boolean hasSimilar = stream.anyMatch(
-			classNameIdPredicate.and(
-				allReferrerClassNamePredicate.or(
-					anyReferrerClassNamePredicate)));
-
-		if (hasSimilar) {
-			return true;
+				return true;
+			}
 		}
 
 		return false;

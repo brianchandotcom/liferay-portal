@@ -1118,53 +1118,6 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h5",
-																"truncateText": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Insurance Industry Lead Gen",
-																				"ca_ES": "Insurance Industry Lead Gen",
-																				"de_DE": "Insurance Industry Lead Gen",
-																				"en_US": "Insurance Industry Lead Gen",
-																				"es_ES": "Insurance Industry Lead Gen",
-																				"fi_FI": "Insurance Industry Lead Gen",
-																				"fr_FR": "Insurance Industry Lead Gen",
-																				"hu_HU": "Insurance Industry Lead Gen",
-																				"ja_JP": "Insurance Industry Lead Gen",
-																				"nl_NL": "Insurance Industry Lead Gen",
-																				"pt_BR": "Insurance Industry Lead Gen",
-																				"sv_SE": "Insurance Industry Lead Gen",
-																				"zh_CN": "Insurance Industry Lead Gen"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"borderRadius": "",
-																"fontWeight": "fontWeightBold",
-																"marginBottom": "1",
-																"shadow": "",
-																"textAlign": "",
-																"textColor": "colorNeutral9"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
 																"key": "BASIC_COMPONENT-separator"
 															},
 															"fragmentConfig": {

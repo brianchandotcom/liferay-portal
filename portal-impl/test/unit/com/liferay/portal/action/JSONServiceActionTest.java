@@ -43,8 +43,8 @@ public class JSONServiceActionTest {
 		JSONServiceAction jsonServiceAction = new JSONServiceAction();
 
 		String[] parameters = {
-			"companyId", "keywords", "excludedNames", "types",
-			"excludedTeamRoleId", "teamGroupId", "start", "end"
+			"companyId", "name", "title", "description", "excludedNames",
+			"types", "excludedTeamRoleId", "teamGroupId", "start", "end"
 		};
 
 		Object[] methodAndParameterTypes =
@@ -62,7 +62,7 @@ public class JSONServiceActionTest {
 
 		Object value = jsonServiceAction.getArgValue(
 			mockHttpServletRequest, RoleServiceUtil.class, method.getName(),
-			parameters[2], parameterTypes[2]);
+			parameters[4], parameterTypes[4]);
 
 		Assert.assertEquals("[]", value.toString());
 
@@ -73,7 +73,7 @@ public class JSONServiceActionTest {
 
 		value = jsonServiceAction.getArgValue(
 			mockHttpServletRequest, RoleServiceUtil.class, method.getName(),
-			parameters[2], parameterTypes[2]);
+			parameters[4], parameterTypes[4]);
 
 		Assert.assertEquals(
 			"{class=com.liferay.portal.kernel.dao.orm.EntityCacheUtil}",

@@ -145,10 +145,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		JSONObject vocabulariesJSONObject = jsonObject.getJSONObject(
 			"vocabularies");
 
-		List<AssetCategory> assetCategories =
-			contentDashboardItem.getAssetCategories();
+		for (AssetCategory assetCategory :
+				contentDashboardItem.getAssetCategories()) {
 
-		for (AssetCategory assetCategory : assetCategories) {
 			JSONObject vocabularyDataJSONObject =
 				vocabulariesJSONObject.getJSONObject(
 					String.valueOf(assetCategory.getVocabularyId()));

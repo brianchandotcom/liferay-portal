@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -36,8 +37,6 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -95,25 +94,22 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		JSONArray fieldTypesJSONArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = null;
 
-		Set<String> ddmFormFieldTypeNames =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames();
-
-		Stream<String> stream = ddmFormFieldTypeNames.stream();
-
-		stream.map(
-			ddmFormFieldTypeName -> _getFieldTypeMetadataJSONObject(
-				ddmFormFieldTypeName, Collections.emptyMap())
-		).forEach(
-			fieldTypesJSONArray::put
-		);
+		try {
+			jsonArray = JSONUtil.toJSONArray(
+				_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames(),
+				ddmFormFieldTypeName -> _getFieldTypeMetadataJSONObject(
+					ddmFormFieldTypeName, Collections.emptyMap()));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		ServletResponseUtil.write(
-			httpServletResponse, fieldTypesJSONArray.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
 	}
 
 	@Reference

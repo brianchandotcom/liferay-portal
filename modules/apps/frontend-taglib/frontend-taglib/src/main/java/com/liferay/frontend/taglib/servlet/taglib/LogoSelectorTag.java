@@ -50,6 +50,10 @@ public class LogoSelectorTag extends IncludeTag {
 		return _defaultLogoURL;
 	}
 
+	public String getDescription() {
+		return _description;
+	}
+
 	public String getLabel(HttpServletRequest httpServletRequest) {
 		if (Validator.isNull(_label)) {
 			return LanguageUtil.get(httpServletRequest, "logo");
@@ -74,6 +78,10 @@ public class LogoSelectorTag extends IncludeTag {
 		_defaultLogoURL = defaultLogoURL;
 	}
 
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public void setLabel(String label) {
 		_label = label;
 	}
@@ -96,6 +104,7 @@ public class LogoSelectorTag extends IncludeTag {
 		_aspectRatio = 0;
 		_currentLogoURL = null;
 		_defaultLogoURL = null;
+		_description = null;
 		_label = null;
 		_preserveRatio = false;
 	}
@@ -109,6 +118,8 @@ public class LogoSelectorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:defaultLogoURL", _defaultLogoURL);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:logo-selector:description", _description);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:label",
 			getLabel(httpServletRequest));
@@ -184,6 +195,7 @@ public class LogoSelectorTag extends IncludeTag {
 	private int _aspectRatio;
 	private String _currentLogoURL;
 	private String _defaultLogoURL;
+	private String _description;
 	private String _label;
 	private boolean _preserveRatio;
 

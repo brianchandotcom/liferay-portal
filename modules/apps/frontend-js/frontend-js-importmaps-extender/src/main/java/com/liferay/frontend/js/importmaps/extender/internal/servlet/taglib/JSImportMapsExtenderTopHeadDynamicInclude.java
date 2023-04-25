@@ -65,7 +65,8 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		if (_jsImportMapsConfiguration.enableImportMaps() &&
-			(!_globalImportMaps.isEmpty() || !_scopedImportMaps.isEmpty())) {
+			(!_globalImportMapJSONObjects.isEmpty() ||
+			 !_scopedImportMapJSONObjects.isEmpty())) {
 
 			printWriter.print("<script type=\"");
 
@@ -110,7 +111,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		if (scope == null) {
 			long globalId = _nextGlobalId.getAndIncrement();
 
-			_globalImportMaps.put(globalId, jsonObject);
+			_globalImportMapJSONObjects.put(globalId, jsonObject);
 
 			_rebuildImportMaps();
 
@@ -118,19 +119,19 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 				@Override
 				public void unregister() {
-					_globalImportMaps.remove(globalId);
+					_globalImportMapJSONObjects.remove(globalId);
 				}
 
 			};
 		}
 
-		_scopedImportMaps.put(scope, jsonObject);
+		_scopedImportMapJSONObjects.put(scope, jsonObject);
 
 		return new JSImportMapsRegistration() {
 
 			@Override
 			public void unregister() {
-				_scopedImportMaps.remove(scope);
+				_scopedImportMapJSONObjects.remove(scope);
 			}
 
 		};
@@ -173,9 +174,12 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			() -> {
 				JSONObject importsJSONObject = _jsonFactory.createJSONObject();
 
-				for (JSONObject jsonObject1 : _globalImportMaps.values()) {
-					for (String key : jsonObject1.keySet()) {
-						importsJSONObject.put(key, jsonObject1.getString(key));
+				for (JSONObject globalImportMapJSONObject :
+						_globalImportMapJSONObjects.values()) {
+
+					for (String key : globalImportMapJSONObject.keySet()) {
+						importsJSONObject.put(
+							key, globalImportMapJSONObject.getString(key));
 					}
 				}
 
@@ -187,7 +191,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 				JSONObject scopesJSONObject = _jsonFactory.createJSONObject();
 
 				for (Map.Entry<String, JSONObject> entry :
-						_scopedImportMaps.entrySet()) {
+						_scopedImportMapJSONObjects.entrySet()) {
 
 					scopesJSONObject.put(entry.getKey(), entry.getValue());
 				}
@@ -203,7 +207,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile BundleContext _bundleContext;
-	private final ConcurrentMap<Long, JSONObject> _globalImportMaps =
+	private final ConcurrentMap<Long, JSONObject> _globalImportMapJSONObjects =
 		new ConcurrentHashMap<>();
 	private final AtomicReference<String> _importMaps = new AtomicReference<>();
 	private volatile JSImportMapsConfiguration _jsImportMapsConfiguration;
@@ -212,7 +216,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 	private JSONFactory _jsonFactory;
 
 	private final AtomicLong _nextGlobalId = new AtomicLong();
-	private final ConcurrentMap<String, JSONObject> _scopedImportMaps =
-		new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, JSONObject>
+		_scopedImportMapJSONObjects = new ConcurrentHashMap<>();
 
 }

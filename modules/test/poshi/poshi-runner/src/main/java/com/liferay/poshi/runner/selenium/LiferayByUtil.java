@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -73,10 +72,9 @@ public class LiferayByUtil {
 					searchContext = webElement.getShadowRoot();
 				}
 
-				By.ByCssSelector byCssSelector = new By.ByCssSelector(
-					partialCssSelectors[partialCssSelectors.length - 1]);
-
-				return byCssSelector.findElements(searchContext);
+				return searchContext.findElements(
+					By.cssSelector(
+						partialCssSelectors[partialCssSelectors.length - 1]));
 			}
 
 			throw new WebDriverException(

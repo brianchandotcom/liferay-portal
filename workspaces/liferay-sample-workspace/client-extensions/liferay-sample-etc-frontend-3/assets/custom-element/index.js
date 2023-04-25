@@ -30,5 +30,8 @@ Farewell in:
 }
 
 if (!customElements.get('liferay-sample-etc-frontend-3-custom-element')) {
-	customElements.define('liferay-sample-etc-frontend-3-custom-element', CustomElement);
+	customElements.define(
+		'liferay-sample-etc-frontend-3-custom-element',
+		CustomElement
+	);
 }

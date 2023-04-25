@@ -11,7 +11,7 @@ exports[`CriteriaBuilder renders 1`] = `
       x-with-property-x
     </h3>
     <div
-      class="criteria-group-item-root color--user"
+      class="color--user criteria-group-item-root"
     >
       <div
         class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"

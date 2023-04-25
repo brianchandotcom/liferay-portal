@@ -619,7 +619,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                       x-with-property-x
                     </h3>
                     <div
-                      class="criteria-group-root criteria-group-item-root color--first-test-values-group"
+                      class="criteria-group-root color--first-test-values-group criteria-group-item-root"
                     >
                       <div
                         class="drop-zone-root"

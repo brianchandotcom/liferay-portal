@@ -3,7 +3,7 @@
 exports[`CriteriaGroup renders 1`] = `
 <DocumentFragment>
   <div
-    class="criteria-group-item color--user"
+    class="color--user criteria-group-item"
   >
     <div
       class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"

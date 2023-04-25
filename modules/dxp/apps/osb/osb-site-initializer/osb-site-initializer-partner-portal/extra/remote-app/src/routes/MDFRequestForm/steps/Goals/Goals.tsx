@@ -208,7 +208,8 @@ const Goals = ({
 						>
 							Save as Draft
 							{isSubmitting &&
-								values.mdfRequestStatus === Status.DRAFT && (
+								values.mdfRequestStatus.key ===
+									Status.DRAFT.key && (
 									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
 								)}
 						</Button>

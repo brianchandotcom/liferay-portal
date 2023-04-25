@@ -27,7 +27,7 @@ const updateStatus = (
 		status = Status.PENDING;
 	}
 	else {
-		if (changeStatus && currentRequestStatus !== Status.DRAFT) {
+		if (changeStatus && currentRequestStatus?.key !== Status.DRAFT.key) {
 			status = Status.PENDING;
 		}
 
@@ -35,7 +35,7 @@ const updateStatus = (
 			changeStatus &&
 			totalMDFRequestAmount &&
 			totalMDFRequestAmount >= 15000 &&
-			status !== Status.DRAFT
+			status.key !== Status.DRAFT.key
 		) {
 			status = Status.MARKETING_DIRECTOR_REVIEW;
 		}

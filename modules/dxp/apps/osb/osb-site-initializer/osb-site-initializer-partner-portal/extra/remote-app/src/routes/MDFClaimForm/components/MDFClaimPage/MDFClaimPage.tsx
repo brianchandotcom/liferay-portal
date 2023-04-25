@@ -251,7 +251,8 @@ const MDFClaimPage = ({
 						>
 							Submit
 							{isSubmitting &&
-								values.mdfClaimStatus === Status.PENDING && (
+								values.mdfClaimStatus.key ===
+									Status.PENDING.key && (
 									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
 								)}
 						</ClayButton>

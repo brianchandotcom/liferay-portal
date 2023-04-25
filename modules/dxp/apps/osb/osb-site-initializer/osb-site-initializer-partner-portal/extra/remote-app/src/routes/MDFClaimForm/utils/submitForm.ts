@@ -56,7 +56,7 @@ export default async function submitForm(
 
 	let dtoMDFClaim: mdfClaimDTO | undefined = undefined;
 
-	if (values.mdfClaimStatus !== Status.DRAFT) {
+	if (values.mdfClaimStatus.key !== Status.DRAFT.key) {
 		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
 	}
 	else if (values.id) {

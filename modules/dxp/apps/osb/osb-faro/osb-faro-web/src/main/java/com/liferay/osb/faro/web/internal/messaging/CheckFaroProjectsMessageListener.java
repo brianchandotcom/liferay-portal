@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -58,25 +58,41 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = CheckFaroProjectsMessageListener.class)
+@Component(service = CheckFaroProjectsMessageListener.class)
 public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate() {
-		Class<?> clazz = getClass();
+		try {
+			Class<?> clazz = getClass();
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			clazz.getName(), clazz.getName(), new Date(), null,
-			"0 0/15 * * * ?");
+			_trigger = _triggerFactory.createTrigger(
+				clazz.getName(), clazz.getName(), new Date(), null,
+				"0 0/15 * * * ?");
 
-		_schedulerEngineHelper.register(
-			this, new SchedulerEntryImpl(clazz.getName(), trigger),
-			DestinationNames.SCHEDULER_DISPATCH);
+			_schedulerEngineHelper.schedule(
+				_trigger, StorageType.PERSISTED, null,
+				DestinationNames.SCHEDULER_DISPATCH, null);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+		try {
+			if (_trigger == null) {
+				return;
+			}
+
+			_schedulerEngineHelper.unschedule(
+				_trigger.getJobName(), _trigger.getGroupName(),
+				StorageType.PERSISTED);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Override
@@ -212,6 +228,8 @@ public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	private Trigger _trigger;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

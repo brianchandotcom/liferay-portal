@@ -14,8 +14,10 @@
 
 package com.liferay.osb.faro.web.internal.messaging;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 
 import java.util.Date;
@@ -27,32 +29,52 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Rachael Koestartyo
  */
-@Component(
-	immediate = true, service = SendDailyEmailReportMessageListener.class
-)
+@Component(service = SendDailyEmailReportMessageListener.class)
 public class SendDailyEmailReportMessageListener
 	extends BaseEmailReportMessageListener {
 
 	@Activate
 	protected void activate() {
-		Class<?> clazz = getClass();
+		try {
+			Class<?> clazz = getClass();
 
-		Trigger trigger = triggerFactory.createTrigger(
-			clazz.getName(), clazz.getName(), new Date(), null, "0 0 0 * * ?");
+			_trigger = triggerFactory.createTrigger(
+				clazz.getName(), clazz.getName(), new Date(), null,
+				"0 0 0 * * ?");
 
-		schedulerEngineHelper.register(
-			this, new SchedulerEntryImpl(clazz.getName(), trigger),
-			DestinationNames.SCHEDULER_DISPATCH);
+			schedulerEngineHelper.schedule(
+				_trigger, StorageType.PERSISTED, null,
+				DestinationNames.SCHEDULER_DISPATCH, null);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		schedulerEngineHelper.unregister(this);
+		try {
+			if (_trigger == null) {
+				return;
+			}
+
+			schedulerEngineHelper.unschedule(
+				_trigger.getJobName(), _trigger.getGroupName(),
+				StorageType.PERSISTED);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Override
 	protected String getFrequency() {
 		return "daily";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SendDailyEmailReportMessageListener.class);
+
+	private Trigger _trigger;
 
 }

@@ -23,11 +23,13 @@ import com.liferay.osb.faro.engine.client.model.DataSource;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -46,24 +48,41 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(immediate = true, service = CleanDLFileEntryMessageListener.class)
+@Component(service = CleanDLFileEntryMessageListener.class)
 public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate() {
-		Class<?> clazz = getClass();
+		try {
+			Class<?> clazz = getClass();
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			clazz.getName(), clazz.getName(), new Date(), null, "0 0 0 * * ?");
+			_trigger = _triggerFactory.createTrigger(
+				clazz.getName(), clazz.getName(), new Date(), null,
+				"0 0 0 * * ?");
 
-		_schedulerEngineHelper.register(
-			this, new SchedulerEntryImpl(clazz.getName(), trigger),
-			DestinationNames.SCHEDULER_DISPATCH);
+			_schedulerEngineHelper.schedule(
+				_trigger, StorageType.PERSISTED, null,
+				DestinationNames.SCHEDULER_DISPATCH, null);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+		try {
+			if (_trigger == null) {
+				return;
+			}
+
+			_schedulerEngineHelper.unschedule(
+				_trigger.getJobName(), _trigger.getGroupName(),
+				StorageType.PERSISTED);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Override
@@ -108,6 +127,9 @@ public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 		activate();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CleanDLFileEntryMessageListener.class);
+
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
@@ -116,6 +138,8 @@ public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	private Trigger _trigger;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

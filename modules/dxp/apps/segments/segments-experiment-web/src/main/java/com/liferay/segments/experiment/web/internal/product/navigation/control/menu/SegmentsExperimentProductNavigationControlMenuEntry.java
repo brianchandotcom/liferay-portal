@@ -407,7 +407,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		JspWriter jspWriter = pageContext.getOut();
 
 		try {
-			StringBundler sb = new StringBundler(26);
+			StringBundler sb = new StringBundler(27);
 
 			sb.append("<div class=\"");
 
@@ -423,7 +423,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			sb.append("sidenav-fixed sidenav-menu-slider sidenav-right\" ");
 			sb.append("id=\"");
 			sb.append(_portletNamespace);
-			sb.append("segmentsExperimentPanelId\">");
+			sb.append("segmentsExperimentPanelId\" ");
+			sb.append("tabindex=\"-1\">");
 			sb.append("<div class=\"sidebar sidebar-light sidenav-menu ");
 			sb.append("sidebar-sm\">");
 

@@ -42,6 +42,12 @@ export default function SegmentsExperimentApp({context}) {
 					SEGMENTS_EXPERIMENT_PANEL_ID,
 					SEGMENTS_EXPERIMENT_OPEN_PANEL_VALUE
 				);
+
+				const segmentsExperimentPanel = document.getElementById(
+					`${namespace}segmentsExperimentPanelId`
+				);
+
+				segmentsExperimentPanel.focus();
 			});
 
 			sidenavInstance.on('closed.lexicon.sidenav', () => {
@@ -55,7 +61,7 @@ export default function SegmentsExperimentApp({context}) {
 				Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
 			});
 		}
-	}, [segmentsExperimentPanelToggle]);
+	}, [namespace, segmentsExperimentPanelToggle]);
 
 	useEventListener(
 		'mouseenter',

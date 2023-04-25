@@ -69,11 +69,9 @@ public class TypeFacetPortletPreferencesImpl
 	public List<KeyValuePair> getAvailableAssetTypes(
 		long companyId, Locale locale) {
 
-		Optional<String[]> assetTypesOptional = getAssetTypesArray();
-
 		String[] allAssetTypes = getAllAssetTypes(companyId);
 
-		String[] assetTypes = assetTypesOptional.orElse(allAssetTypes);
+		String[] assetTypes = getCurrentAssetTypesArray(companyId);
 
 		List<KeyValuePair> availableAssetTypes = new ArrayList<>();
 

@@ -93,7 +93,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -506,17 +505,11 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			CPField.COMMERCE_CHANNEL_GROUP_IDS,
 			ArrayUtil.toLongArray(commerceChannelGroupIds));
 
-		List<CommerceAccountGroupRel> commerceAccountGroupRels =
+		long[] commerceAccountGroupIds = TransformUtil.transformToLongArray(
 			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceAccountGroupRel> stream =
-			commerceAccountGroupRels.stream();
-
-		long[] commerceAccountGroupIds = stream.mapToLong(
-			CommerceAccountGroupRel::getCommerceAccountGroupId
-		).toArray();
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			CommerceAccountGroupRel::getCommerceAccountGroupId);
 
 		document.addNumber("commerceAccountGroupIds", commerceAccountGroupIds);
 

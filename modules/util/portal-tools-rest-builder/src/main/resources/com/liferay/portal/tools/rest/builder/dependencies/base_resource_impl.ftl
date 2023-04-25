@@ -128,12 +128,12 @@ public abstract class Base${schemaName}ResourceImpl
 
 		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
 			<#assign deleteBatchJavaMethodSignature = javaMethodSignature />
-		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "sPage")>
-			<#if stringUtil.equals(javaMethodSignature.methodName, "getAssetLibrary" + schemaName + "sPage")>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaNames + "Page")>
+			<#if stringUtil.equals(javaMethodSignature.methodName, "getAssetLibrary" + schemaNames + "Page")>
 				<#assign getAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "sPage")>
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaNames + "Page")>
 				<#assign getSiteBatchJavaMethodSignature = javaMethodSignature />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "sPage")>
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaNames + "Page")>
 				<#if parentSchemaName?has_content>
 					<#assign getParentBatchJavaMethodSignatures = getParentBatchJavaMethodSignatures + [javaMethodSignature] />
 				<#else>
@@ -182,7 +182,7 @@ public abstract class Base${schemaName}ResourceImpl
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${javaDataType}.class.getName(), callbackURL, object)
 				).build();
-			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "sPageExportBatch")>
+			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaNames + "PageExportBatch")>
 				vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
 				vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
 				vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);

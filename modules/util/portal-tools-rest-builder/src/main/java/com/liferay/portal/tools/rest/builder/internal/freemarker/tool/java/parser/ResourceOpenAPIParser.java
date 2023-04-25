@@ -327,7 +327,8 @@ public class ResourceOpenAPIParser {
 
 			if (methodName.equals(
 					StringBundler.concat(
-						"get", parentSchemaName, schemaName, "sPage"))) {
+						"get", parentSchemaName,
+						TextFormatter.formatPlural(schemaName), "Page"))) {
 
 				return true;
 			}
@@ -381,7 +382,8 @@ public class ResourceOpenAPIParser {
 		if (ConfigUtil.isVersionCompatible(configYAML, 2) &&
 			methodName.equals(
 				StringBundler.concat(
-					"get", parentSchemaName, schemaName, "sPage"))) {
+					"get", parentSchemaName,
+					TextFormatter.formatPlural(schemaName), "Page"))) {
 
 			batchOperationType = BatchOperationType.EXPORT;
 		}

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Matthew Kong
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=100",
 	service = ContactsEngineClient.class
 )
 public class MockContactsEngineClientImpl

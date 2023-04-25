@@ -95,7 +95,7 @@ public class IframeCETPortlet extends BaseCETPortlet<IFrameCET> {
 		StringBuffer stringBuffer = stringWriter.getBuffer();
 
 		outputData.setDataSB(
-			CETPortlet.class.toString(), WebKeys.PAGE_TOP,
+			IframeCETPortlet.class.toString(), WebKeys.PAGE_TOP,
 			new StringBundler(stringBuffer.toString()));
 
 		PrintWriter printWriter = renderResponse.getWriter();

@@ -218,8 +218,6 @@ definition {
 
 	@priority = 5
 	test SchedulePublishToLiveWithEventAndResource {
-		property portal.upstream = "quarantine";
-
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
@@ -292,7 +290,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		while ((IsElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC", value1 = "Site Name Staged Event")) && (maxIterations = "200")) {
+		while ((IsElementNotPresent(key_eventTitle = "Site Name Staged Event", locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC")) && (maxIterations = "200")) {
 			Refresh();
 		}
 

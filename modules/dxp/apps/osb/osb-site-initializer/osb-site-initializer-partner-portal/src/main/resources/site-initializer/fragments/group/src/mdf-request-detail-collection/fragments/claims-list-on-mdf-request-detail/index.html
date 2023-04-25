@@ -51,7 +51,7 @@
 			[@panel claim=claim site_url=site_url /]
 		[/#list]
 
-		[#if mdf_request.mdfRequestStatus.key != "canceled" ]
+		[#if mdf_request.mdfRequestStatus.key != "canceled" && mdf_request.mdfRequestStatus.key != "draft" ]
 			<div class="align-items-start d-flex justify-content-between">
 				<div>
 					<h6 class="font-weight-normal text-neutral-9">
@@ -77,7 +77,7 @@
 			</div>
 		[/#if]
 	[#else]
-		[@clay.alert displayType="info" message="Waiting for manager approval." title="Info" /]
+		[@clay.alert displayType="info" message="No claim information available." title="Info" /]
 	[/#if]
 [#else]
 	<div class="alert alert-info">

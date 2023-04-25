@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.PortletServlet;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -75,7 +74,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.portlet.MutablePortletParameters;
@@ -117,13 +115,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testGetFileSpecificFields() throws Exception {
-		ContentDashboardItem contentDashboardItem =
-			_createContentDashboardFileItem();
-
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "_getSpecificFieldsJSONObject",
-			new Class<?>[] {ContentDashboardItem.class, Locale.class},
-			contentDashboardItem, LocaleUtil.SPAIN);
+		JSONObject jsonObject = _serveResource(
+			_createContentDashboardFileItem());
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertNotNull(jsonObject.getString("extension"));
@@ -133,13 +126,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testGetJournalArticleSpecificFields() throws Exception {
-		ContentDashboardItem contentDashboardItem =
-			_createContentDashboardJournalArticleItem();
-
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "_getSpecificFieldsJSONObject",
-			new Class<?>[] {ContentDashboardItem.class, Locale.class},
-			contentDashboardItem, LocaleUtil.SPAIN);
+		JSONObject jsonObject = _serveResource(
+			_createContentDashboardJournalArticleItem());
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertNotNull(jsonObject.getString("review-date"));

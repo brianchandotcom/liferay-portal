@@ -111,7 +111,6 @@ public class JournalFeedLocalServiceImpl
 		feed.setName(name);
 		feed.setDescription(description);
 		feed.setDDMStructureId(ddmStructure.getStructureId());
-		feed.setDDMStructureKey(ddmStructure.getStructureKey());
 		feed.setDDMTemplateKey(ddmTemplateKey);
 		feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
 		feed.setDelta(delta);
@@ -338,7 +337,6 @@ public class JournalFeedLocalServiceImpl
 		feed.setName(name);
 		feed.setDescription(description);
 		feed.setDDMStructureId(ddmStructure.getStructureId());
-		feed.setDDMStructureKey(ddmStructure.getStructureKey());
 		feed.setDDMTemplateKey(ddmTemplateKey);
 		feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
 		feed.setDelta(delta);

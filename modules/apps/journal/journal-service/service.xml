@@ -373,7 +373,6 @@
 		<column name="name" type="String" uad-nonanonymizable="true" />
 		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="DDMStructureId" type="long" />
-		<column name="DDMStructureKey" type="String" />
 		<column name="DDMTemplateKey" type="String" />
 		<column name="DDMRendererTemplateKey" type="String" />
 		<column name="delta" type="int" />

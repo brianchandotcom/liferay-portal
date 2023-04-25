@@ -1,97 +1,104 @@
 [#assign mdf_claim_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
-[#function get_currency value currency_key="USD"] [#return
-value?string["¤,##0.00;; currencyCode=${currency_key}"] /] [/#function] [#macro
-activity_panel activity]
-<div class="panel panel-secondary" role="tablist">
-<button aria-controls="mdfClaimActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfClaimActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
-		<div>
-			<div class="d-flex">
-				<div class="w-100">
-					<h5 class="text-neutral-10">${activity.name}</h5>
 
-					<div class="d-flex justify-content-between">
-						<h5 class="justify-content-end text-neutral-10">
-							${get_currency(activity.totalCost?number,
-							(activity.currency.key)!"USD")}
-						</h5>
+[#function get_currency value currency_key="USD"]
+	[#return value?string["¤,##0.00;; currencyCode=${currency_key}"] /]
+[/#function]
+
+[#macro activity_panel activity]
+	<div class="panel panel-secondary" role="tablist">
+		<button aria-controls="mdfClaimActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfClaimActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
+			<div>
+				<div class="d-flex">
+					<div class="w-100">
+						<h5 class="text-neutral-10">${activity.name}</h5>
+
+						<div class="d-flex justify-content-between">
+							<h5 class="justify-content-end text-neutral-10">
+								${get_currency(activity.totalCost?number,
+								(activity.currency.key)!"USD")}
+							</h5>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</button>
+		</button>
 
-	<div class="collapse panel-collapse" id="mdfClaimActivitiesPanel-${activity.id}" role="tabpanel">
-		<div class="panel-body">
-			[#if activity.listOfQualifiedLeads?has_content]
-		<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${activity.listOfQualifiedLeads.link.href}">
-				<span class="mr-2 mt-3 text-neutral-5">
-					[@clay.icon class="mr-2 mt-3 text-neutral-5"
-					symbol="file-xsl" /]
-				</span>
+		<div class="collapse panel-collapse" id="mdfClaimActivitiesPanel-${activity.id}" role="tabpanel">
+			<div class="panel-body">
+				[#if activity.listOfQualifiedLeads?has_content]
+					<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${activity.listOfQualifiedLeads.link.href}">
+						<span class="mr-2 mt-3 text-neutral-5">
+							[@clay.icon class="mr-2 mt-3 text-neutral-5"
+							symbol="file-xsl" /]
+						</span>
 
-				<div>
-					<h5 class="mb-0 text-neutral-9">
-						${activity.listOfQualifiedLeads.name?keep_before("#")}
-					</h5>
+						<div>
+							<h5 class="mb-0 text-neutral-9">
+								${activity.listOfQualifiedLeads.name?keep_before("#")}
+							</h5>
+						</div>
+					</a>
+				[/#if]
+
+				<div class="table-responsive">
+				<table class="bg-brand-primary-lighten-6 border-0 show-quick-actions-on-hover table table-autofit table-hover table-list table-striped">
+						<thead>
+							<tr>
+							<th class="border-neutral-2 border-top rounded-0 table-cell-expand w-50">
+									<p class="mt-4 text-neutral-10">
+										Budget Breakdown
+									</p>
+								</th>
+							<td class="border-neutral-2 border-top rounded-0 w-50" />
+							</tr>
+						</thead>
+
+						<tbody>
+							[#list activity.mdfClmActToMDFClmBgts?filter(budget -> budget.selected == true) as budget]
+								<tr>
+									<td class="border-0">
+										<p class="text-neutral-10">
+											${budget.expenseName}
+										</p>
+
+										<p class="text-neutral-10">
+											${get_currency(budget.invoiceAmount?number,
+											(activity.currency.key)!"USD")}
+										</p>
+									</td>
+									<td class="align-baseline border-0">
+										[#if budget.invoice?has_content]
+									<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${budget.invoice.link.href}">
+											<span class="mr-2 mt-3 text-neutral-5">
+												[@clay.icon class="mr-2 mt-3
+												text-neutral-5" symbol="document-table"
+												/]
+											</span>
+
+											<div>
+												<h5 class="mb-0 text-neutral-9">
+													${budget.invoice.name?keep_before("#")}
+												</h5>
+											</div>
+										</a>
+										[/#if]
+									</td>
+								</tr>
+							[/#list]
+						</tbody>
+					</table>
 				</div>
-			</a>
-			[/#if]
-
-			<div class="table-responsive">
-			<table class="bg-brand-primary-lighten-6 border-0 show-quick-actions-on-hover table table-autofit table-hover table-list table-striped">
-					<thead>
-						<tr>
-						<th class="border-neutral-2 border-top rounded-0 table-cell-expand w-50">
-								<p class="mt-4 text-neutral-10">
-									Budget Breakdown
-								</p>
-							</th>
-						<td class="border-neutral-2 border-top rounded-0 w-50" />
-						</tr>
-					</thead>
-
-					<tbody>
-						[#list activity.mdfClmActToMDFClmBgts as budget] [#if
-						budget.selected]
-						<tr>
-							<td class="border-0">
-								<p class="text-neutral-10">
-									${budget.expenseName}
-								</p>
-
-								<p class="text-neutral-10">
-									${get_currency(budget.invoiceAmount?number,
-									(activity.currency.key)!"USD")}
-								</p>
-							</td>
-							<td class="align-baseline border-0">
-								[#if budget.invoice?has_content]
-							<a class="align-items-end d-flex mx-2 my-3 text-decoration-none" href="${budget.invoice.link.href}">
-									<span class="mr-2 mt-3 text-neutral-5">
-										[@clay.icon class="mr-2 mt-3
-										text-neutral-5" symbol="document-table"
-										/]
-									</span>
-
-									<div>
-										<h5 class="mb-0 text-neutral-9">
-											${budget.invoice.name?keep_before("#")}
-										</h5>
-									</div>
-								</a>
-								[/#if]
-							</td>
-						</tr>
-						[/#if] [/#list]
-					</tbody>
-				</table>
 			</div>
 		</div>
 	</div>
-</div>
-[/#macro] [#if mdf_claim_id?has_content] [#assign activities =
-restClient.get("/c/mdfclaims/${mdf_claim_id}/mdfClmToMDFClmActs?nestedFields=mdfClmActToMDFClmBgts").items
-/] [#list activities as activity] [@activity_panel activity=activity /] [/#list]
+[/#macro]
+
+[#if mdf_claim_id?has_content]
+	[#assign activities = restClient.get("/c/mdfclaims/${mdf_claim_id}/mdfClmToMDFClmActs?nestedFields=mdfClmActToMDFClmBgts").items /]
+
+	[#list activities?filter(activity -> activity.selected == true) as activity]
+		[@activity_panel activity=activity /]
+	[/#list]
 [#else]
 <div class="alert alert-info">
 	<p>

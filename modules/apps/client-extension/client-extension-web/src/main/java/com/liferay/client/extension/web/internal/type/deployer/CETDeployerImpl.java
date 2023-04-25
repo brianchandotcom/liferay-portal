@@ -23,7 +23,7 @@ import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.web.internal.frontend.js.importmaps.extender.ClientExtensionJSImportMapsContributor;
 import com.liferay.client.extension.web.internal.portlet.ClientExtensionWebFriendlyURLMapper;
 import com.liferay.client.extension.web.internal.portlet.CustomElementCETPortlet;
-import com.liferay.client.extension.web.internal.portlet.IframeCETPortlet;
+import com.liferay.client.extension.web.internal.portlet.IFrameCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.ClientExtensionWebConfigurationAction;
 import com.liferay.client.extension.web.internal.util.CETUtil;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
@@ -144,7 +144,7 @@ public class CETDeployerImpl implements CETDeployer {
 		serviceRegistrations.add(
 			_register(
 				Portlet.class,
-				new IframeCETPortlet(iFrameCET, _npmResolver, portletId)));
+				new IFrameCETPortlet(iFrameCET, _npmResolver, portletId)));
 
 		return serviceRegistrations;
 	}

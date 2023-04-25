@@ -38,9 +38,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class IframeCETPortlet extends BaseCETPortlet<IFrameCET> {
+public class IFrameCETPortlet extends BaseCETPortlet<IFrameCET> {
 
-	public IframeCETPortlet(
+	public IFrameCETPortlet(
 		IFrameCET iFrameCET, NPMResolver npmResolver, String portletId) {
 
 		super(iFrameCET, npmResolver);
@@ -95,7 +95,7 @@ public class IframeCETPortlet extends BaseCETPortlet<IFrameCET> {
 		StringBuffer stringBuffer = stringWriter.getBuffer();
 
 		outputData.setDataSB(
-			IframeCETPortlet.class.toString(), WebKeys.PAGE_TOP,
+			IFrameCETPortlet.class.toString(), WebKeys.PAGE_TOP,
 			new StringBundler(stringBuffer.toString()));
 
 		PrintWriter printWriter = renderResponse.getWriter();

@@ -18,8 +18,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
 <%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
@@ -43,8 +42,6 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%@ page import="java.util.Collections" %>
 
 <liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
 
 <%
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = (WorkflowInstanceViewDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);

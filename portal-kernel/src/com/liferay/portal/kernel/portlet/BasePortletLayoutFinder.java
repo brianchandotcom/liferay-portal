@@ -239,9 +239,15 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 			long groupId, long scopeGroupId, String portletId)
 		throws PortalException {
 
+		String[] portletTypes = {
+			LayoutConstants.TYPE_CONTENT,
+			LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+			LayoutConstants.TYPE_PORTLET
+		};
+
 		for (boolean privateLayout : Arrays.asList(false, true)) {
 			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+				groupId, privateLayout, portletTypes);
 
 			for (Layout layout : layouts) {
 				LayoutTypePortlet layoutTypePortlet =

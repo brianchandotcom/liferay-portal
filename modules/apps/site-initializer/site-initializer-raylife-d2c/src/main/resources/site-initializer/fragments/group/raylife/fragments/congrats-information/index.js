@@ -35,13 +35,18 @@ const nowDate = new Date().toISOString().split('T')[0];
 
 const fetchHeadless = async (url, options) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${window.location.origin}/${url}`, {
-		...options,
-		headers: {
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-	});
+	const response = await fetch(
+		`${
+			window.location.origin
+		}${Liferay.ThemeDisplay.getPathContext()}/${url}`,
+		{
+			...options,
+			headers: {
+				'Content-Type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
 
 	const data = await response.json();
 
@@ -55,7 +60,7 @@ const addPolicyEntryData = async ({
 	price,
 	productName,
 }) => {
-	await fetchHeadless(`/o/c/raylifepolicies/`, {
+	await fetchHeadless(`o/c/raylifepolicies/`, {
 		body: JSON.stringify({
 			commission: (price * 0.2).toString(),
 			currencyType: 'USD',

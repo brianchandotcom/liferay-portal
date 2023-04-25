@@ -196,7 +196,7 @@ const PaymentMethod = () => {
 
 		const {data: paymentMethodURL} = await getPaymentMethodURL(
 			orderId,
-			`${origin}${getLiferaySiteName()}/congrats`
+			`${origin}${Liferay.ThemeDisplay.getPathContext()}${getLiferaySiteName()}/congrats`
 		);
 
 		window.location.href = paymentMethodURL;

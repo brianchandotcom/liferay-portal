@@ -19,7 +19,8 @@ const fragmentName = 'raylife-tip-container';
 const elementName = `.dynamic-web-content-${containerId}`;
 const eventName = `${fragmentName}-${containerId}`;
 const eventNameDismiss = `${fragmentName}-dismiss-${containerId}`;
-const headlessBaseURL = `${window.location.origin}/o/headless-delivery/v1.0`;
+const baseURL = window.location.origin + Liferay.ThemeDisplay.getPathContext();
+const headlessBaseURL = `${baseURL}/o/headless-delivery/v1.0`;
 const siteGroupId = Liferay.ThemeDisplay.getSiteGroupId();
 
 /**

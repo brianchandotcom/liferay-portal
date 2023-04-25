@@ -12,9 +12,11 @@
  * details.
  */
 
+import {Liferay} from '../utils/liferay';
 import {getRaylifeAuthentication} from './raylife-authentication';
 
-const baseURL = Liferay.ThemeDisplay.getPortalURL();
+const baseURL =
+	Liferay.ThemeDisplay.getPortalURL() + Liferay.ThemeDisplay.getPathContext();
 
 export async function getGuestPermissionToken() {
 	const authentication = await getRaylifeAuthentication();

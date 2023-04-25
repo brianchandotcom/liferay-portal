@@ -17,5 +17,5 @@ import {getLiferaySiteName} from './liferay';
 export function getWebDavUrl() {
 	const siteName = getLiferaySiteName().replace('/web/', '');
 
-	return `/webdav/${siteName}/document_library/`;
+	return `${Liferay.ThemeDisplay.getPathContext()}/webdav/${siteName}/document_library/`;
 }

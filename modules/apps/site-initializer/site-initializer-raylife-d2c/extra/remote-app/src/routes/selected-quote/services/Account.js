@@ -14,9 +14,10 @@
  */
 
 const DeliveryAPI = 'o/headless-admin-user';
+const baseURL = window.location.origin + Liferay.ThemeDisplay.getPathContext();
 
 const fetchHeadless = async (url, options) => {
-	const response = await fetch(`${window.location.origin}/${url}`, {
+	const response = await fetch(`${baseURL}/${url}`, {
 		...options,
 		headers: {
 			'Content-Type': 'application/json',

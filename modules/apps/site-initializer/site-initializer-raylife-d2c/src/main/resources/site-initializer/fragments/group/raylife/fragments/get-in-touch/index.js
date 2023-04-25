@@ -19,6 +19,7 @@ const btnCall = fragmentElement.querySelector('#contact-agent-btn-call');
 const contextualMessageIdKey = 'raylife-contextual-message';
 const valueCall = fragmentElement.querySelector('#value-number-call')
 	.textContent;
+const baseURL = window.location.origin + Liferay.ThemeDisplay.getPathContext();
 
 const consentType = Liferay.Util.LocalStorage.TYPES.NECESSARY;
 
@@ -59,7 +60,7 @@ if (contextualMessage) {
 
 const fetchHeadless = async (url, options) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${window.location.origin}/${url}`, {
+	const response = await fetch(`${baseURL}/${url}`, {
 		...options,
 		headers: {
 			'Content-Type': 'application/json',

@@ -13,18 +13,22 @@
  */
 
 const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+
 const urlPaths = pathname.split('/').filter(Boolean);
+
 const siteName = `/${urlPaths.slice(0, urlPaths.length - 1).join('/')}`;
 const applicationId = Liferay.Util.LocalStorage.getItem(
 	'raylife-application-id',
 	Liferay.Util.LocalStorage.TYPES.NECESSARY
 );
 
+const baseURL = window.location.origin + Liferay.ThemeDisplay.getPathContext();
+
 const NEXT_STEP_DELAY = 1000;
 
 const fetchHeadless = async (url, options) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${window.location.origin}/${url}`, {
+	const response = await fetch(`${baseURL}/${url}`, {
 		...options,
 		headers: {
 			'Content-Type': 'application/json',
@@ -46,7 +50,7 @@ const fetchHeadlessWithToken = async (url) => {
 	);
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${window.location.origin}/${url}`, {
+	const response = await fetch(`${baseURL}/${url}`, {
 		headers: {
 			'Authorization': `Bearer ${token}`,
 			'Content-Type': 'application/json',

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.constants.VelocityMigrationConstants;
 
 import java.util.Stack;
 
@@ -64,50 +65,59 @@ public class VelocityMigrationUtil {
 
 			String nextLine = lines[nextLineIndex];
 
-			if (nextLine.contains(_VELOCITY_IF_START) &&
-				isVelocityStatement(nextLine, _VELOCITY_IF_START)) {
+			if (nextLine.contains(
+					VelocityMigrationConstants.VELOCITY_IF_START) &&
+				isVelocityStatement(
+					nextLine, VelocityMigrationConstants.VELOCITY_IF_START)) {
 
-				stack.push(_VELOCITY_IF_START);
+				stack.push(VelocityMigrationConstants.VELOCITY_IF_START);
 			}
 
-			if (nextLine.contains(_VELOCITY_FOREACH_START)) {
-				stack.push(_VELOCITY_FOREACH_START);
+			if (nextLine.contains(
+					VelocityMigrationConstants.VELOCITY_FOREACH_START)) {
+
+				stack.push(VelocityMigrationConstants.VELOCITY_FOREACH_START);
 			}
 
-			if (nextLine.contains(_VELOCITY_MACRO_START) &&
-				isVelocityStatement(nextLine, _VELOCITY_MACRO_START)) {
+			if (nextLine.contains(
+					VelocityMigrationConstants.VELOCITY_MACRO_START) &&
+				isVelocityStatement(
+					nextLine,
+					VelocityMigrationConstants.VELOCITY_MACRO_START)) {
 
-				stack.push(_VELOCITY_MACRO_START);
+				stack.push(VelocityMigrationConstants.VELOCITY_MACRO_START);
 			}
 
-			if (nextLine.contains(_VELOCITY_END)) {
+			if (nextLine.contains(VelocityMigrationConstants.VELOCITY_END)) {
 				stack.pop();
 			}
 
 			if (stack.empty()) {
-				if (statement.equals(_VELOCITY_IF_START)) {
+				if (statement.equals(
+						VelocityMigrationConstants.VELOCITY_IF_START)) {
+
 					lines[nextLineIndex] = StringUtil.replace(
-						nextLine, _VELOCITY_END, "</#if>");
+						nextLine, VelocityMigrationConstants.VELOCITY_END,
+						"</#if>");
 				}
-				else if (statement.equals(_VELOCITY_FOREACH_START)) {
+				else if (statement.equals(
+							VelocityMigrationConstants.
+								VELOCITY_FOREACH_START)) {
+
 					lines[nextLineIndex] = StringUtil.replace(
-						nextLine, _VELOCITY_END, "</#list>");
+						nextLine, VelocityMigrationConstants.VELOCITY_END,
+						"</#list>");
 				}
 
-				if (statement.equals(_VELOCITY_MACRO_START)) {
+				if (statement.equals(
+						VelocityMigrationConstants.VELOCITY_MACRO_START)) {
+
 					lines[nextLineIndex] = StringUtil.replace(
-						nextLine, _VELOCITY_END, "</#macro>");
+						nextLine, VelocityMigrationConstants.VELOCITY_END,
+						"</#macro>");
 				}
 			}
 		}
 	}
-
-	private static final String _VELOCITY_END = "#end";
-
-	private static final String _VELOCITY_FOREACH_START = "#foreach";
-
-	private static final String _VELOCITY_IF_START = "#if";
-
-	private static final String _VELOCITY_MACRO_START = "#macro";
 
 }

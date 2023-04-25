@@ -561,6 +561,8 @@ public class FragmentEntryProcessorHelperImpl
 
 					if (!availableLocales.contains(locale)) {
 						dateLocale = infoLocalizedValue.getDefaultLocale();
+					} else {
+						dateLocale = locale;
 					}
 				}
 

@@ -34,12 +34,10 @@ import javax.portlet.WindowState;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionWebFriendlyURLMapper
+public class CETPortletFriendlyURLMapper
 	extends DefaultFriendlyURLMapper implements FriendlyURLMapper, Registrable {
 
-	public ClientExtensionWebFriendlyURLMapper(
-		String mapping, String portletId) {
-
+	public CETPortletFriendlyURLMapper(String mapping, String portletId) {
 		_mapping = mapping;
 		_portletId = portletId;
 

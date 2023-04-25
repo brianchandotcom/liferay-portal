@@ -21,7 +21,7 @@ import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.JSImportMapsEntryCET;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.web.internal.frontend.js.importmaps.extender.ClientExtensionJSImportMapsContributor;
-import com.liferay.client.extension.web.internal.portlet.ClientExtensionWebFriendlyURLMapper;
+import com.liferay.client.extension.web.internal.portlet.CETPortletFriendlyURLMapper;
 import com.liferay.client.extension.web.internal.portlet.CustomElementCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.IFrameCETPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.ClientExtensionWebConfigurationAction;
@@ -105,7 +105,7 @@ public class CETDeployerImpl implements CETDeployer {
 			serviceRegistrations.add(
 				_register(
 					FriendlyURLMapper.class,
-					new ClientExtensionWebFriendlyURLMapper(
+					new CETPortletFriendlyURLMapper(
 						friendlyURLMapping, portletId)));
 		}
 
@@ -137,7 +137,7 @@ public class CETDeployerImpl implements CETDeployer {
 			serviceRegistrations.add(
 				_register(
 					FriendlyURLMapper.class,
-					new ClientExtensionWebFriendlyURLMapper(
+					new CETPortletFriendlyURLMapper(
 						friendlyURLMapping, portletId)));
 		}
 

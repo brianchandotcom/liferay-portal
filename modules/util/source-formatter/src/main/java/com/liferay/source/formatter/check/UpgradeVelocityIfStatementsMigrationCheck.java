@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.constants.VelocityMigrationConstants;
 import com.liferay.source.formatter.check.util.VelocityMigrationUtil;
 
 /**
@@ -36,34 +37,42 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 
 			boolean parenthesis = false;
 
-			if (line.contains(_VELOCITY_IF_START) &&
+			if (line.contains(VelocityMigrationConstants.VELOCITY_IF_START) &&
 				VelocityMigrationUtil.isVelocityStatement(
-					line, _VELOCITY_IF_START)) {
+					line, VelocityMigrationConstants.VELOCITY_IF_START)) {
 
 				parenthesis = true;
 
 				newLine = StringUtil.replace(
-					newLine, _VELOCITY_IF_START, "<#if");
+					newLine, VelocityMigrationConstants.VELOCITY_IF_START,
+					"<#if");
 
 				VelocityMigrationUtil.replaceStatementEnd(
-					i, lines, _VELOCITY_IF_START);
+					i, lines, VelocityMigrationConstants.VELOCITY_IF_START);
 			}
-			else if (line.contains(_VELOCITY_ELSEIF_START) &&
+			else if (line.contains(
+						VelocityMigrationConstants.VELOCITY_ELSEIF_START) &&
 					 VelocityMigrationUtil.isVelocityStatement(
-						 line, _VELOCITY_ELSEIF_START)) {
+						 line,
+						 VelocityMigrationConstants.VELOCITY_ELSEIF_START)) {
 
 				parenthesis = true;
 
 				newLine = StringUtil.replace(
-					newLine, _VELOCITY_ELSEIF_START, "<#elseif");
+					newLine, VelocityMigrationConstants.VELOCITY_ELSEIF_START,
+					"<#elseif");
 			}
-			else if (line.contains(_VELOCITY_ELSE_START) &&
-					 !line.contains(_VELOCITY_ELSEIF_START) &&
+			else if (line.contains(
+						VelocityMigrationConstants.VELOCITY_ELSE_START) &&
+					 !line.contains(
+						 VelocityMigrationConstants.VELOCITY_ELSEIF_START) &&
 					 VelocityMigrationUtil.isVelocityStatement(
-						 line, _VELOCITY_ELSE_START)) {
+						 line,
+						 VelocityMigrationConstants.VELOCITY_ELSE_START)) {
 
 				newLine = StringUtil.replace(
-					newLine, _VELOCITY_ELSE_START, "<#else>");
+					newLine, VelocityMigrationConstants.VELOCITY_ELSE_START,
+					"<#else>");
 			}
 
 			if (parenthesis) {
@@ -99,11 +108,5 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 
 		return false;
 	}
-
-	private static final String _VELOCITY_ELSE_START = "#else";
-
-	private static final String _VELOCITY_ELSEIF_START = "#elseif";
-
-	private static final String _VELOCITY_IF_START = "#if";
 
 }

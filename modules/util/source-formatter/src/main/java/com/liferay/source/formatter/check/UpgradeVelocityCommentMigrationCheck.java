@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.constants.VelocityMigrationConstants;
 
 /**
  * @author Nícolas Moura
@@ -41,14 +42,12 @@ public class UpgradeVelocityCommentMigrationCheck
 			}
 		}
 
-		StringUtil.replace(content, "#*", _COMMENT_START);
-		StringUtil.replace(content, "*#", _COMMENT_END);
+		StringUtil.replace(
+			content, "#*", VelocityMigrationConstants.FREEMARKER_COMMENT_START);
+		StringUtil.replace(
+			content, "*#", VelocityMigrationConstants.FREEMARKER_COMMENT_END);
 
 		return StringUtil.removeSubstring(content, "##");
 	}
-
-	private static final String _COMMENT_END = " -->";
-
-	private static final String _COMMENT_START = "<#--";
 
 }

@@ -373,13 +373,22 @@ public class JournalFeedLocalServiceImpl
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalFeed.class);
 
-		DDMStructureLink ddmStructureLink =
-			_ddmStructureLinkLocalService.getUniqueStructureLink(
-				classNameId, feed.getPrimaryKey());
+		int count = _ddmStructureLinkLocalService.getStructureLinksCount(
+			classNameId, feed.getId());
 
-		_ddmStructureLinkLocalService.updateStructureLink(
-			ddmStructureLink.getStructureLinkId(), classNameId,
-			feed.getPrimaryKey(), ddmStructure.getStructureId());
+		if (count == 0) {
+			_ddmStructureLinkLocalService.addStructureLink(
+				classNameId, feed.getId(), ddmStructure.getStructureId());
+		}
+		else {
+			DDMStructureLink ddmStructureLink =
+				_ddmStructureLinkLocalService.getUniqueStructureLink(
+					classNameId, feed.getId());
+
+			_ddmStructureLinkLocalService.updateStructureLink(
+				ddmStructureLink.getStructureLinkId(), classNameId,
+				feed.getId(), ddmStructure.getStructureId());
+		}
 
 		return feed;
 	}

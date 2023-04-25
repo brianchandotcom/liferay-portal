@@ -4,54 +4,56 @@ $treeNodeNameMappedColor: #954cff;
 
 html#{$cadmin-selector} {
 	.cadmin {
-		.page-editor__page-structure__clay-tree-node {
-			min-width: 100%;
-			width: initial;
+		.treeview-light {
+			.page-editor__page-structure__clay-tree-node {
+				min-width: 100%;
+				width: initial;
 
-			&.treeview-link {
-				width: fit-content;
-			}
-
-			.c-inner {
-				width: auto;
-			}
-
-			& > .autofit-col-expand {
-				flex-shrink: 0;
-			}
-
-			&--active.treeview-link {
-				box-shadow: inset 0 0 0 1px $cadmin-primary-l1;
-				font-weight: 600;
-			}
-
-			&--hovered.treeview-link,
-			&--active.treeview-link {
-				background-color: $cadmin-primary-l3;
-				border-radius: 4px;
-			}
-			&--mapped.treeview-link {
-				&.page-editor__page-structure__clay-tree-node--active {
-					background-color: fade_out($cadmin-purple, 0.92);
-					box-shadow: inset 0 0 0 1px $cadmin-purple;
+				&.treeview-link {
+					width: fit-content;
 				}
 
-				&.page-editor__page-structure__clay-tree-node--hovered {
-					background-color: fade_out($cadmin-purple, 0.92);
+				.c-inner {
+					width: auto;
 				}
-			}
 
-			&--master-item.treeview-link {
-				background-color: $cadmin-light-l1;
-			}
+				& > .autofit-col-expand {
+					flex-shrink: 0;
+				}
 
-			.page-editor__page-structure__tree-node__actions-button,
-			.page-editor__page-structure__tree-node__visibility-button {
-				color: $cadmin-secondary;
-				visibility: hidden;
+				&--active.treeview-link {
+					box-shadow: inset 0 0 0 1px $cadmin-primary-l1;
+					font-weight: 600;
+				}
 
-				&--visible {
-					visibility: visible;
+				&--hovered.treeview-link,
+				&--active.treeview-link {
+					background-color: $cadmin-primary-l3;
+					border-radius: 4px;
+				}
+				&--mapped.treeview-link {
+					&.page-editor__page-structure__clay-tree-node--active {
+						background-color: fade_out($cadmin-purple, 0.92);
+						box-shadow: inset 0 0 0 1px $cadmin-purple;
+					}
+
+					&.page-editor__page-structure__clay-tree-node--hovered {
+						background-color: fade_out($cadmin-purple, 0.92);
+					}
+				}
+
+				&--master-item.treeview-link {
+					background-color: $cadmin-light-l1;
+				}
+
+				.page-editor__page-structure__tree-node__actions-button,
+				.page-editor__page-structure__tree-node__visibility-button {
+					color: $cadmin-secondary;
+					visibility: hidden;
+
+					&--visible {
+						visibility: visible;
+					}
 				}
 			}
 		}

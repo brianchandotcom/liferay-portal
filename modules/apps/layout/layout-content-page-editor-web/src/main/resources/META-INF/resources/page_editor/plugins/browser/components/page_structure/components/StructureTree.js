@@ -694,6 +694,7 @@ function visit(
 					hidable: false,
 					hidden: false,
 					hiddenAncestor: hasHiddenAncestor || hidden,
+					hovered: childId === hoveredItemId,
 					icon: EDITABLE_TYPE_ICONS[type],
 					id: childId,
 					isMasterItem: !isMasterPage && itemInMasterLayout,

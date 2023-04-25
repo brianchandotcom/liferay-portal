@@ -30,7 +30,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +49,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class UpgradeStatusTest {
+public class UpgradeRecorderTest {
 
 	@ClassRule
 	@Rule
@@ -59,15 +58,6 @@ public class UpgradeStatusTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_originalErrorMessages = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_errorMessages");
-		_originalSchemaVersionsMap = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_schemaVersionsMap");
-		_originalUpgradeProcessMessages = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_upgradeProcessMessages");
-		_originalWarningMessages = ReflectionTestUtil.getFieldValue(
-			_upgradeStatus, "_warningMessages");
-
 		_originalStopWatch = ReflectionTestUtil.getFieldValue(
 			DBUpgrader.class, "_stopWatch");
 	}
@@ -80,11 +70,6 @@ public class UpgradeStatusTest {
 
 	@Before
 	public void setUp() {
-		_originalErrorMessages.clear();
-		_originalSchemaVersionsMap.clear();
-		_originalUpgradeProcessMessages.clear();
-		_originalWarningMessages.clear();
-
 		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
 	}
 
@@ -98,7 +83,7 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("failure", _getState());
+		Assert.assertEquals("failure", _getResult());
 
 		Assert.assertEquals("no upgrade", _getType());
 	}
@@ -126,7 +111,7 @@ public class UpgradeStatusTest {
 			_releaseLocalService.updateRelease(release);
 		}
 
-		Assert.assertEquals("unresolved", _getState());
+		Assert.assertEquals("unresolved", _getResult());
 
 		Assert.assertEquals("no upgrade", _getType());
 	}
@@ -165,7 +150,7 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("success", _getState());
+		Assert.assertEquals("success", _getResult());
 
 		Assert.assertEquals("no upgrade", _getType());
 	}
@@ -180,17 +165,17 @@ public class UpgradeStatusTest {
 
 		StartupHelperUtil.setUpgrading(false);
 
-		Assert.assertEquals("warning", _getState());
+		Assert.assertEquals("warning", _getResult());
 
 		Assert.assertEquals("no upgrade", _getType());
 	}
 
-	private String _getState() {
-		return ReflectionTestUtil.getFieldValue(_upgradeStatus, "_state");
+	private String _getResult() {
+		return ReflectionTestUtil.getFieldValue(_upgradeRecorder, "_result");
 	}
 
 	private String _getType() {
-		return ReflectionTestUtil.getFieldValue(_upgradeStatus, "_type");
+		return ReflectionTestUtil.getFieldValue(_upgradeRecorder, "_type");
 	}
 
 	private void _testUpgrade(String type) {
@@ -276,18 +261,13 @@ public class UpgradeStatusTest {
 		}
 	}
 
-	private static Map<String, Map<String, Integer>> _originalErrorMessages;
-	private static Map<String, Object> _originalSchemaVersionsMap;
 	private static StopWatch _originalStopWatch;
-	private static Map<String, ArrayList<String>>
-		_originalUpgradeProcessMessages;
-	private static Map<String, Map<String, Integer>> _originalWarningMessages;
 
 	@Inject(
-		filter = "component.name=com.liferay.portal.upgrade.internal.status.UpgradeStatus",
+		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",
 		type = Inject.NoType.class
 	)
-	private static Object _upgradeStatus;
+	private static Object _upgradeRecorder;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
@@ -298,7 +278,7 @@ public class UpgradeStatusTest {
 		protected void doUpgrade() {
 			Map<String, Map<String, Integer>> errorMessages =
 				ReflectionTestUtil.getFieldValue(
-					_upgradeStatus, "_errorMessages");
+					_upgradeRecorder, "_errorMessages");
 
 			errorMessages.put(
 				"ErrorUpgradeProcess",

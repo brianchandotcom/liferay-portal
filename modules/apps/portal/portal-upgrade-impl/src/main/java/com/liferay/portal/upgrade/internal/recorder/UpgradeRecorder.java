@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.internal.status;
+package com.liferay.portal.upgrade.internal.recorder;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.log.Log;
@@ -48,71 +48,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Luis Ortiz
  */
-@Component(service = UpgradeStatus.class)
-public class UpgradeStatus {
-
-	public void addErrorMessage(String loggerName, String message) {
-		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
-			loggerName, key -> new ConcurrentHashMap<>());
-
-		int occurrences = messages.computeIfAbsent(message, key -> 0);
-
-		occurrences++;
-
-		messages.put(message, occurrences);
-	}
-
-	public void addUpgradeProcessMessage(String loggerName, String message) {
-		List<String> messages = _upgradeProcessMessages.computeIfAbsent(
-			loggerName, key -> new ArrayList<>());
-
-		messages.add(message);
-	}
-
-	public void addWarningMessage(String loggerName, String message) {
-		Map<String, Integer> messages = _warningMessages.computeIfAbsent(
-			loggerName, key -> new ConcurrentHashMap<>());
-
-		int occurrences = messages.computeIfAbsent(message, key -> 0);
-
-		occurrences++;
-
-		messages.put(message, occurrences);
-	}
-
-	public void finish() {
-		_state = _calculateState();
-		_type = _calculateType();
-
-		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			ThreadContext.put("upgrade.type", _type);
-			ThreadContext.put("upgrade.result", _state);
-		}
-
-		if (_log.isInfoEnabled()) {
-			if (_type.equals("no upgrade")) {
-				if (_state.equals("success")) {
-					_log.info("No pending upgrades to run");
-				}
-				else {
-					_log.info(
-						"Upgrade process failed or upgrade dependencies are " +
-							"not resolved");
-				}
-			}
-			else {
-				_log.info(
-					StringBundler.concat(
-						StringUtil.toUpperCase(_type.substring(0, 1)),
-						_type.substring(1), " upgrade finished with state ",
-						_state));
-			}
-		}
-
-		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-			ThreadContext.clearMap();
-		}
-	}
+@Component(service = UpgradeRecorder.class)
+public class UpgradeRecorder {
 
 	public Map<String, Map<String, Integer>> getErrorMessages() {
 		return _filter(_errorMessages);
@@ -140,8 +77,8 @@ public class UpgradeStatus {
 		return schemaVersions._getInitial();
 	}
 
-	public String getState() {
-		return _state;
+	public String getResult() {
+		return _result;
 	}
 
 	public String getType() {
@@ -156,15 +93,83 @@ public class UpgradeStatus {
 		return _filter(_warningMessages);
 	}
 
+	public void recordErrorMessage(String loggerName, String message) {
+		Map<String, Integer> messages = _errorMessages.computeIfAbsent(
+			loggerName, key -> new ConcurrentHashMap<>());
+
+		int occurrences = messages.computeIfAbsent(message, key -> 0);
+
+		occurrences++;
+
+		messages.put(message, occurrences);
+	}
+
+	public void recordUpgradeProcessMessage(String loggerName, String message) {
+		List<String> messages = _upgradeProcessMessages.computeIfAbsent(
+			loggerName, key -> new ArrayList<>());
+
+		messages.add(message);
+	}
+
+	public void recordWarningMessage(String loggerName, String message) {
+		Map<String, Integer> messages = _warningMessages.computeIfAbsent(
+			loggerName, key -> new ConcurrentHashMap<>());
+
+		int occurrences = messages.computeIfAbsent(message, key -> 0);
+
+		occurrences++;
+
+		messages.put(message, occurrences);
+	}
+
 	public void start() {
-		_state = "running";
+		_errorMessages.clear();
+		_result = "running";
+		_schemaVersionsMap.clear();
+		_type = "pending";
+		_upgradeProcessMessages.clear();
+		_warningMessages.clear();
 
 		_processRelease(
 			(moduleSchemaVersions, schemaVersion) ->
 				moduleSchemaVersions._setInitial(schemaVersion));
 	}
 
-	private String _calculateState() {
+	public void stop() {
+		_result = _calculateResult();
+		_type = _calculateType();
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.put("upgrade.type", _type);
+			ThreadContext.put("upgrade.result", _result);
+		}
+
+		if (_log.isInfoEnabled()) {
+			if (_type.equals("no upgrade")) {
+				if (_result.equals("success")) {
+					_log.info("No pending upgrades to run");
+				}
+				else {
+					_log.info(
+						"Upgrade process failed or upgrade dependencies are " +
+							"not resolved");
+				}
+			}
+			else {
+				_log.info(
+					StringBundler.concat(
+						StringUtil.toUpperCase(_type.substring(0, 1)),
+						_type.substring(1), " upgrade finished with result ",
+						_result));
+			}
+		}
+
+		if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+			ThreadContext.clearMap();
+		}
+	}
+
+	private String _calculateResult() {
 		if (!_errorMessages.isEmpty()) {
 			return "failure";
 		}
@@ -177,7 +182,7 @@ public class UpgradeStatus {
 		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to check the upgrade state due to ",
+					"Unable to check the upgrade result due to ",
 					exception.getMessage(), ". Please check manually."));
 
 			return "unresolved";
@@ -291,7 +296,8 @@ public class UpgradeStatus {
 			"SidecarManager"
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeStatus.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeRecorder.class);
 
 	private final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
@@ -303,11 +309,11 @@ public class UpgradeStatus {
 	)
 	private volatile ReleaseManager _releaseManager;
 
-	private final Map<String, SchemaVersions> _schemaVersionsMap =
-		new ConcurrentHashMap<>();
-	private String _state =
+	private String _result =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
 			"pending" : "not enabled";
+	private final Map<String, SchemaVersions> _schemaVersionsMap =
+		new ConcurrentHashMap<>();
 	private String _type =
 		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
 			"pending" : "not enabled";

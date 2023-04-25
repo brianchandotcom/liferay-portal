@@ -25,10 +25,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(service = {})
-public class MBWebComponentProvider {
+public class MBDisplayContextUtil {
 
-	public static MBWebComponentProvider getMBWebComponentProvider() {
-		return _mbWebComponentProvider;
+	public static MBDisplayContextUtil getMBWebComponentProvider() {
+		return _mbDisplayContextUtil;
 	}
 
 	public MBDisplayContextProvider getMBDisplayContextProvider() {
@@ -37,15 +37,15 @@ public class MBWebComponentProvider {
 
 	@Activate
 	protected void activate() {
-		_mbWebComponentProvider = this;
+		_mbDisplayContextUtil = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_mbWebComponentProvider = null;
+		_mbDisplayContextUtil = null;
 	}
 
-	private static MBWebComponentProvider _mbWebComponentProvider;
+	private static MBDisplayContextUtil _mbDisplayContextUtil;
 
 	@Reference
 	private MBDisplayContextProvider _mbDisplayContextProvider;

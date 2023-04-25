@@ -174,7 +174,7 @@ definition {
 				value1 = "\TAB");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Container'][@aria-selected]",
+				locator1 = "//div[contains(@data-title,'Container') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 
@@ -198,7 +198,7 @@ definition {
 				value1 = "\DOWN");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Grid'][@aria-selected]",
+				locator1 = "//div[contains(@data-title,'Grid') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 
@@ -222,7 +222,7 @@ definition {
 				value1 = "\DOWN");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Module'][@aria-selected]",
+				locator1 = "//div[contains(@data-title,'Module') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 
@@ -236,7 +236,7 @@ definition {
 				value1 = "\DOWN");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Heading'][@aria-selected]",
+				locator1 = "//div[contains(@data-title,'Heading') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 

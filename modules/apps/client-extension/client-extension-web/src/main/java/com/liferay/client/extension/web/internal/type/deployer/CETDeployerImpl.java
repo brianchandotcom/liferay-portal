@@ -62,18 +62,18 @@ public class CETDeployerImpl implements CETDeployer {
 				cet.getType(),
 				ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT)) {
 
-			return _deployCustomElementCET((CustomElementCET)cet);
+			return _deploy((CustomElementCET)cet);
 		}
 		else if (Objects.equals(
 					cet.getType(), ClientExtensionEntryConstants.TYPE_IFRAME)) {
 
-			return _deployIFrameCET((IFrameCET)cet);
+			return _deploy((IFrameCET)cet);
 		}
 		else if (Objects.equals(
 					cet.getType(),
 					ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY)) {
 
-			return _deployJsImportMapsEntryCET((JSImportMapsEntryCET)cet);
+			return _deploy((JSImportMapsEntryCET)cet);
 		}
 
 		return Collections.emptyList();
@@ -84,7 +84,7 @@ public class CETDeployerImpl implements CETDeployer {
 		_bundleContext = bundleContext;
 	}
 
-	private List<ServiceRegistration<?>> _deployCustomElementCET(
+	private List<ServiceRegistration<?>> _deploy(
 		CustomElementCET customElementCET) {
 
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
@@ -118,7 +118,7 @@ public class CETDeployerImpl implements CETDeployer {
 		return serviceRegistrations;
 	}
 
-	private List<ServiceRegistration<?>> _deployIFrameCET(IFrameCET iFrameCET) {
+	private List<ServiceRegistration<?>> _deploy(IFrameCET iFrameCET) {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		String portletId = _getPortletId(iFrameCET);
@@ -149,7 +149,7 @@ public class CETDeployerImpl implements CETDeployer {
 		return serviceRegistrations;
 	}
 
-	private List<ServiceRegistration<?>> _deployJsImportMapsEntryCET(
+	private List<ServiceRegistration<?>> _deploy(
 		JSImportMapsEntryCET jsImportMapsEntryCET) {
 
 		ServiceRegistration<?> serviceRegistration = _register(

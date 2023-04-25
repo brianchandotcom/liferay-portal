@@ -106,6 +106,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -147,6 +148,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -154,6 +156,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -179,6 +183,8 @@ import java.math.BigDecimal;
 
 import java.nio.charset.StandardCharsets;
 
+import java.security.Key;
+
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
@@ -196,6 +202,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.io.IOUtils;
 
@@ -1906,6 +1914,17 @@ public class ObjectEntryLocalServiceImpl
 		throw new IllegalArgumentException("Invalid function " + function);
 	}
 
+	private Key _getKeyObj() {
+		byte[] bytes = Base64.decode(
+			GetterUtil.getString(
+				PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET)));
+
+		return new SecretKeySpec(
+			bytes,
+			GetterUtil.getString(
+				PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM)));
+	}
+
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, boolean reverse, FromStep fromStep)
@@ -2943,9 +2962,15 @@ public class ObjectEntryLocalServiceImpl
 
 		Object value = values.get(objectField.getName());
 
-		if (StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			_setColumn(
+				preparedStatement, index, column.getSQLType(),
+				_encryptor.encrypt(_getKeyObj(), (String)value));
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			String valueString = String.valueOf(value);
 
@@ -3732,6 +3757,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private Encryptor _encryptor;
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;

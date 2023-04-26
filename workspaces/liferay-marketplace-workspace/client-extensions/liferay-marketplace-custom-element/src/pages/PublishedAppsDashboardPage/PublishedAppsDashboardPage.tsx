@@ -12,6 +12,7 @@ import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/Pu
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
 	getAccountInfoFromCommerce,
+	getAccounts,
 	getMyUserAccount,
 	getProductSpecifications,
 	getProducts,
@@ -220,32 +221,10 @@ export function PublishedAppsDashboardPage() {
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const userAccountsResponse = await getUserAccounts();
+			const accountsResponse = await getAccounts();
 
-			const userAccount = userAccountsResponse.items.map(
-				(accountBrief: AccountBriefProps) => {
-					return {
-						externalReferenceCode: accountBrief.externalReferenceCode,
-						id: accountBrief.id,
-						name: accountBrief.name,
-					} as Account;
-				}
-			);
-
-			const businessAccounts = userAccountsResponse.items[0].accountBriefs.map(
-				(accountBrief: AccountBriefProps) => {
-					return {
-						externalReferenceCode: accountBrief.externalReferenceCode,
-						id: accountBrief.id,
-						name: accountBrief.name,
-					} as Account;
-				}
-			);
-
-			const accounts = [...userAccount, ...businessAccounts]
-
-			setAccounts(accounts);
-			setSelectedAccount(accounts[0]);
+			setAccounts(accountsResponse.items);
+			setSelectedAccount(accountsResponse.items[0]);
 		};
 
 		makeFetch();

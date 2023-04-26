@@ -82,15 +82,18 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 				</ul>
 			</aui:form>
 
-			<aui:script use="liferay-portlet-segments-simulation">
-				new Liferay.Portlet.SegmentsSimulation({
-					deactivateSimulationUrl:
-						'<%= segmentsSimulationDisplayContext.getDeactivateSimulationURL() %>',
-					form: document.<portlet:namespace />segmentsSimulationFm,
-					simulateSegmentsEntriesUrl:
-						'<%= segmentsSimulationDisplayContext.getSimulateSegmentsEntriesURL() %>',
-				});
-			</aui:script>
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"deactivateSimulationURL", segmentsSimulationDisplayContext.getDeactivateSimulationURL()
+					).put(
+						"portletNamespace", liferayPortletResponse.getNamespace()
+					).put(
+						"simulateSegmentsEntriesURL", segmentsSimulationDisplayContext.getSimulateSegmentsEntriesURL()
+					).build()
+				%>'
+				module="js/main"
+			/>
 		</c:otherwise>
 	</c:choose>
 </clay:container-fluid>

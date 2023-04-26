@@ -62,7 +62,7 @@ else {
 }
 %>
 
-<div class="<%= (selLayout.getMasterLayoutPlid() <= 0) ? "" : "hide" %>" id="<portlet:namespace />themeContainer">
+<div id="<portlet:namespace />themeContainer">
 	<clay:radio
 		checked="<%= selLayout.isInheritLookAndFeel() %>"
 		id='<%= liferayPortletResponse.getNamespace() + "regularInheritLookAndFeel" %>'
@@ -111,6 +111,21 @@ else {
 	const themeOptions = document.getElementById(
 		'<portlet:namespace />themeOptions'
 	);
+
+	const themeContainer = document.getElementById(
+		'<portlet:namespace />themeContainer'
+	);
+
+	const sheetSection = themeContainer.closest('.sheet-section');
+	const separator = sheetSection.nextElementSibling;
+
+	if ('<%= selLayout.getMasterLayoutPlid() > 0 %>') {
+		sheetSection.classList.add('hide');
+		sheetSection.setAttribute('aria-hidden', 'true');
+
+		separator.classList.add('hide');
+		separator.setAttribute('aria-hidden', 'true');
+	}
 
 	if (regularInheritLookAndFeel) {
 		regularInheritLookAndFeel.addEventListener('change', (event) => {

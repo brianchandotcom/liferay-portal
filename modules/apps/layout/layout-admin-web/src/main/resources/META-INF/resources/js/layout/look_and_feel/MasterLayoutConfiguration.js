@@ -61,13 +61,22 @@ export default function MasterLayoutConfiguration({
 			return;
 		}
 
+		const sheetSection = themeContainer.closest('.sheet-section');
+		const separator = sheetSection.nextElementSibling;
+
 		if (masterLayout.plid === DEFAULT_MASTER_LAYOUT_PLID) {
-			themeContainer.classList.remove('hide');
-			themeContainer.removeAttribute('aria-hidden');
+			sheetSection.classList.remove('hide');
+			separator.classList.remove('hide');
+
+			sheetSection.removeAttribute('aria-hidden');
+			separator.removeAttribute('aria-hidden');
 		}
 		else {
-			themeContainer.classList.add('hide');
-			themeContainer.setAttribute('aria-hidden', 'true');
+			sheetSection.classList.add('hide');
+			separator.classList.add('hide');
+
+			sheetSection.setAttribute('aria-hidden', 'true');
+			separator.setAttribute('aria-hidden', 'true');
 		}
 	}, [masterLayout.plid, portletNamespace]);
 

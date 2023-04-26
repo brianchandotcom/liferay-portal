@@ -22,7 +22,6 @@ import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -156,8 +155,5 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 
 	@Reference
 	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

@@ -143,7 +143,7 @@
 </tr>
 <tr>
 	<td>TRANSLATION_STATUS_TITLE</td>
-	<td>//div[contains(@id,'JournalPortlet')]//span[contains(text(),'${key_localizedLanguage}')]//span</td>
+	<td>//div[contains(@id,'${key_portlet}')]//span[contains(text(),'${key_localizedLanguage}')]//span</td>
 	<td></td>
 </tr>
 <tr>

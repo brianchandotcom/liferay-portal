@@ -1098,6 +1098,10 @@ definition {
 			key_currentLocale = StringUtil.lowerCase("en-US"),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
 
+		if (!(isSet(portletName))) {
+			var portletName = "JournalPortlet";
+		}
+
 		if (isSet(page)) {
 			AssertTextEquals(
 				key_localizedLanguage = ${locale},
@@ -1107,6 +1111,7 @@ definition {
 		else {
 			AssertTextEquals(
 				key_localizedLanguage = ${locale},
+				key_portlet = ${portletName},
 				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 				value1 = "Not Translated");
 		}

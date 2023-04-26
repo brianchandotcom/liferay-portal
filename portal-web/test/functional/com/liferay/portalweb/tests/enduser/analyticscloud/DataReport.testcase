@@ -1,0 +1,61 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigation to custom events tab") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToApis();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToApis();
+
+		ACUtils.clickAnyButton(button = "Revoke");
+
+		ACUtils.clickAnyButton(button = "Continue");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Feature ID: LRAC-8103 | Automation ID: LRAC-11502 | Test Summary: Assert the user is able to query data using Analytics Cloud API"
+	@priority = 3
+	test CreateQueryDataWithAnalyticsCloudAPI {
+		var typeList = "blogs,documents-and-media,forms,individuals,pages,segments,web-contents";
+
+		task ("Get the token value") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Create a query data using analytics cloud API") {
+			ACApi.createDataReport(token = ${token});
+		}
+
+		task ("Check the list of endpoints that are available for querying in the API") {
+			ACApi.viewApiResponseForRootEndpoint(typeList = ${typeList});
+		}
+	}
+
+
+}

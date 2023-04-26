@@ -78,24 +78,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-8103 | Automation ID: LRAC-11502 | Test Summary: Assert the user is able to query data using Analytics Cloud API"
-	@priority = 3
-	test CreateQueryDataWithAnalyticsCloudAPI {
-		var typeList = "blogs,documents-and-media,forms,individuals,pages,segments,web-contents";
-
-		task ("Get the token value") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Create a query data using analytics cloud API") {
-			ACApi.createQueryData(token = ${token});
-		}
-
-		task ("Check the list of endpoints that are available for querying in the API") {
-			ACApi.viewApiResponseForQueryData(typeList = ${typeList});
-		}
-	}
-
 	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11104 | Test Summary: There is an export scheduled but not started"
 	@priority = 3
 	test ExportScheduledButNotStarted {

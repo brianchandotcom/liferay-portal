@@ -15,6 +15,7 @@
 import {useForm} from 'react-hook-form';
 import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import {withPagePermission} from '~/hoc/withPagePermission';
 
 import Form from '../../components/Form';
 import Container from '../../components/Layout/Container';
@@ -100,4 +101,6 @@ const ProjectForm = () => {
 	);
 };
 
-export default ProjectForm;
+export default withPagePermission(ProjectForm, {
+	restImpl: testrayProjectImpl,
+});

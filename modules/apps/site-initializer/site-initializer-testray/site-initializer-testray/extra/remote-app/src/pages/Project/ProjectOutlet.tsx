@@ -143,7 +143,13 @@ const ProjectOutlet = () => {
 
 	if (testrayProject) {
 		return (
-			<Outlet context={{mutateTestrayProject: mutate, testrayProject}} />
+			<Outlet
+				context={{
+					actions: testrayProject.actions,
+					mutateTestrayProject: mutate,
+					testrayProject,
+				}}
+			/>
 		);
 	}
 

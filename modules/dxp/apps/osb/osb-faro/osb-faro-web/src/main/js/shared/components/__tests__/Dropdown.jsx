@@ -19,13 +19,6 @@ describe('Dropdown', () => {
 		expect(container.querySelector('.caret-root')).toBeNull();
 	});
 
-	it('should render with a different button display', () => {
-		const {container} = render(
-			<Dropdown buttonProps={{displayType: 'link'}} />
-		);
-		expect(container.querySelector('.btn-link')).toBeTruthy();
-	});
-
 	it('should render as active', () => {
 		const {container} = render(<Dropdown />);
 

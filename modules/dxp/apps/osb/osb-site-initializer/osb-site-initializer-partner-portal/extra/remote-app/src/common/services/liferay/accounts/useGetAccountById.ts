@@ -17,11 +17,11 @@ import liferayFetcher from '../common/utils/fetcher';
 
 interface Account {
 	claimPercent: number;
-	country: string;
 	currency: string;
 	externalReferenceCode: string;
 	id: number;
 	name: string;
+	partnerCountry: string;
 }
 
 export default function useGetAccountById(accountId: number | undefined) {

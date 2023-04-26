@@ -10,6 +10,7 @@
  */
 
 export default interface PRMFormFieldProps {
+	children?: React.ReactNode;
 	description?: string;
 	label?: string;
 	required?: boolean;

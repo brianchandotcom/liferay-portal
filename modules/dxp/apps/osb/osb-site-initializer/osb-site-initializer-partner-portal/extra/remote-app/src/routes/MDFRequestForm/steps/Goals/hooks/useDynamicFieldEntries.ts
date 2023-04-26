@@ -21,7 +21,7 @@ export default function useDynamicFieldEntries(skipCompanies?: boolean) {
 
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
 		LiferayPicklistName.ADDITIONAL_OPTIONS,
-		LiferayPicklistName.REGIONS,
+		LiferayPicklistName.COUNTRIES,
 		LiferayPicklistName.LIFERAY_BUSINESS_SALES_GOALS,
 		LiferayPicklistName.TARGET_AUDIENCE_ROLES,
 		LiferayPicklistName.TARGET_MARKETS,

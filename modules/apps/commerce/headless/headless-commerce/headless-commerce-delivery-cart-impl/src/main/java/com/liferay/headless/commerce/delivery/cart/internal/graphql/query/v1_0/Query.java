@@ -232,7 +232,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItem(cartItemId: ___){adaptiveMediaImageHTMLTag, cartItems, customFields, errorMessages, id, name, options, parentCartItemId, price, productId, productURLs, quantity, settings, sku, skuId, subscription, thumbnail, valid}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItem(cartItemId: ___){adaptiveMediaImageHTMLTag, cartItems, customFields, errorMessages, id, name, options, parentCartItemId, price, productId, productURLs, quantity, replacedSku, replacedSkuId, settings, sku, skuId, subscription, thumbnail, valid}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrive information of the given Cart")
 	public CartItem cartItem(@GraphQLName("cartItemId") Long cartItemId)

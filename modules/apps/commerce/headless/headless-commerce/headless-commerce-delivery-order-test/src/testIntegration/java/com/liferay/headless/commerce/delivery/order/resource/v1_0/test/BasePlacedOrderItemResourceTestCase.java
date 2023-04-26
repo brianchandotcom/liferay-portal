@@ -183,6 +183,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		placedOrderItem.setAdaptiveMediaImageHTMLTag(regex);
 		placedOrderItem.setName(regex);
 		placedOrderItem.setOptions(regex);
+		placedOrderItem.setReplacedSku(regex);
 		placedOrderItem.setSku(regex);
 		placedOrderItem.setThumbnail(regex);
 
@@ -196,6 +197,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			regex, placedOrderItem.getAdaptiveMediaImageHTMLTag());
 		Assert.assertEquals(regex, placedOrderItem.getName());
 		Assert.assertEquals(regex, placedOrderItem.getOptions());
+		Assert.assertEquals(regex, placedOrderItem.getReplacedSku());
 		Assert.assertEquals(regex, placedOrderItem.getSku());
 		Assert.assertEquals(regex, placedOrderItem.getThumbnail());
 	}
@@ -602,6 +604,14 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("replacedSku", additionalAssertFieldName)) {
+				if (placedOrderItem.getReplacedSku() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("settings", additionalAssertFieldName)) {
 				if (placedOrderItem.getSettings() == null) {
 					valid = false;
@@ -921,6 +931,17 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("replacedSku", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrderItem1.getReplacedSku(),
+						placedOrderItem2.getReplacedSku())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("settings", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						placedOrderItem1.getSettings(),
@@ -1177,6 +1198,14 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("replacedSku")) {
+			sb.append("'");
+			sb.append(String.valueOf(placedOrderItem.getReplacedSku()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("settings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1270,6 +1299,8 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				parentOrderItemId = RandomTestUtil.randomLong();
 				productId = RandomTestUtil.randomLong();
 				quantity = RandomTestUtil.randomInt();
+				replacedSku = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				sku = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				skuId = RandomTestUtil.randomLong();
 				subscription = RandomTestUtil.randomBoolean();

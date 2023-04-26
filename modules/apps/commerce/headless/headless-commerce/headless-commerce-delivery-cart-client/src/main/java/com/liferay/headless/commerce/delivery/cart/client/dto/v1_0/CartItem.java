@@ -284,6 +284,48 @@ public class CartItem implements Cloneable, Serializable {
 
 	protected Integer quantity;
 
+	public String getReplacedSku() {
+		return replacedSku;
+	}
+
+	public void setReplacedSku(String replacedSku) {
+		this.replacedSku = replacedSku;
+	}
+
+	public void setReplacedSku(
+		UnsafeSupplier<String, Exception> replacedSkuUnsafeSupplier) {
+
+		try {
+			replacedSku = replacedSkuUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String replacedSku;
+
+	public Long getReplacedSkuId() {
+		return replacedSkuId;
+	}
+
+	public void setReplacedSkuId(Long replacedSkuId) {
+		this.replacedSkuId = replacedSkuId;
+	}
+
+	public void setReplacedSkuId(
+		UnsafeSupplier<Long, Exception> replacedSkuIdUnsafeSupplier) {
+
+		try {
+			replacedSkuId = replacedSkuIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long replacedSkuId;
+
 	public Settings getSettings() {
 		return settings;
 	}

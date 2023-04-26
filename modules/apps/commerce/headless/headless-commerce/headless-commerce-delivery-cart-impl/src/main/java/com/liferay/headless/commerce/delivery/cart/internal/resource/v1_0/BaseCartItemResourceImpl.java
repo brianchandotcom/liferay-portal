@@ -193,7 +193,7 @@ public abstract class BaseCartItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "replacedSkuId": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrive information of the given Cart."
@@ -244,6 +244,10 @@ public abstract class BaseCartItemResourceImpl
 			existingCartItem.setQuantity(cartItem.getQuantity());
 		}
 
+		if (cartItem.getReplacedSkuId() != null) {
+			existingCartItem.setReplacedSkuId(cartItem.getReplacedSkuId());
+		}
+
 		if (cartItem.getSkuId() != null) {
 			existingCartItem.setSkuId(cartItem.getSkuId());
 		}
@@ -256,7 +260,7 @@ public abstract class BaseCartItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "replacedSkuId": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "update the given Cart."
@@ -384,7 +388,7 @@ public abstract class BaseCartItemResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/items' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/items' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "replacedSkuId": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Add new Items to a Cart, return the whole Cart updated."

@@ -183,6 +183,7 @@ public abstract class BaseCartItemResourceTestCase {
 		cartItem.setAdaptiveMediaImageHTMLTag(regex);
 		cartItem.setName(regex);
 		cartItem.setOptions(regex);
+		cartItem.setReplacedSku(regex);
 		cartItem.setSku(regex);
 		cartItem.setThumbnail(regex);
 
@@ -195,6 +196,7 @@ public abstract class BaseCartItemResourceTestCase {
 		Assert.assertEquals(regex, cartItem.getAdaptiveMediaImageHTMLTag());
 		Assert.assertEquals(regex, cartItem.getName());
 		Assert.assertEquals(regex, cartItem.getOptions());
+		Assert.assertEquals(regex, cartItem.getReplacedSku());
 		Assert.assertEquals(regex, cartItem.getSku());
 		Assert.assertEquals(regex, cartItem.getThumbnail());
 	}
@@ -706,6 +708,22 @@ public abstract class BaseCartItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("replacedSku", additionalAssertFieldName)) {
+				if (cartItem.getReplacedSku() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("replacedSkuId", additionalAssertFieldName)) {
+				if (cartItem.getReplacedSkuId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("settings", additionalAssertFieldName)) {
 				if (cartItem.getSettings() == null) {
 					valid = false;
@@ -990,6 +1008,28 @@ public abstract class BaseCartItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("replacedSku", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cartItem1.getReplacedSku(),
+						cartItem2.getReplacedSku())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("replacedSkuId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cartItem1.getReplacedSkuId(),
+						cartItem2.getReplacedSkuId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("settings", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cartItem1.getSettings(), cartItem2.getSettings())) {
@@ -1224,6 +1264,19 @@ public abstract class BaseCartItemResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("replacedSku")) {
+			sb.append("'");
+			sb.append(String.valueOf(cartItem.getReplacedSku()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("replacedSkuId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("settings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1312,6 +1365,9 @@ public abstract class BaseCartItemResourceTestCase {
 				parentCartItemId = RandomTestUtil.randomLong();
 				productId = RandomTestUtil.randomLong();
 				quantity = RandomTestUtil.randomInt();
+				replacedSku = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				replacedSkuId = RandomTestUtil.randomLong();
 				sku = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				skuId = RandomTestUtil.randomLong();
 				subscription = RandomTestUtil.randomBoolean();

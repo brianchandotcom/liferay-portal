@@ -386,6 +386,30 @@ public class OrderItemSerDes {
 			sb.append(orderItem.getQuantity());
 		}
 
+		if (orderItem.getReplacedSku() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacedSku\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderItem.getReplacedSku()));
+
+			sb.append("\"");
+		}
+
+		if (orderItem.getReplacedSkuId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacedSkuId\": ");
+
+			sb.append(orderItem.getReplacedSkuId());
+		}
+
 		if (orderItem.getRequestedDeliveryDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -806,6 +830,21 @@ public class OrderItemSerDes {
 			map.put("quantity", String.valueOf(orderItem.getQuantity()));
 		}
 
+		if (orderItem.getReplacedSku() == null) {
+			map.put("replacedSku", null);
+		}
+		else {
+			map.put("replacedSku", String.valueOf(orderItem.getReplacedSku()));
+		}
+
+		if (orderItem.getReplacedSkuId() == null) {
+			map.put("replacedSkuId", null);
+		}
+		else {
+			map.put(
+				"replacedSkuId", String.valueOf(orderItem.getReplacedSkuId()));
+		}
+
 		if (orderItem.getRequestedDeliveryDate() == null) {
 			map.put("requestedDeliveryDate", null);
 		}
@@ -1140,6 +1179,17 @@ public class OrderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					orderItem.setQuantity(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "replacedSku")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setReplacedSku((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "replacedSkuId")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setReplacedSkuId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

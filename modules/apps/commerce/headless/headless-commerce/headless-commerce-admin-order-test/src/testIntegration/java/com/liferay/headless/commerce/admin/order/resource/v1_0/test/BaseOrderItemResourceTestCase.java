@@ -191,6 +191,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		orderItem.setOptions(regex);
 		orderItem.setOrderExternalReferenceCode(regex);
 		orderItem.setPrintedNote(regex);
+		orderItem.setReplacedSku(regex);
 		orderItem.setSku(regex);
 		orderItem.setSkuExternalReferenceCode(regex);
 		orderItem.setUnitOfMeasure(regex);
@@ -207,6 +208,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		Assert.assertEquals(regex, orderItem.getOptions());
 		Assert.assertEquals(regex, orderItem.getOrderExternalReferenceCode());
 		Assert.assertEquals(regex, orderItem.getPrintedNote());
+		Assert.assertEquals(regex, orderItem.getReplacedSku());
 		Assert.assertEquals(regex, orderItem.getSku());
 		Assert.assertEquals(regex, orderItem.getSkuExternalReferenceCode());
 		Assert.assertEquals(regex, orderItem.getUnitOfMeasure());
@@ -1519,6 +1521,22 @@ public abstract class BaseOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("replacedSku", additionalAssertFieldName)) {
+				if (orderItem.getReplacedSku() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("replacedSkuId", additionalAssertFieldName)) {
+				if (orderItem.getReplacedSkuId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"requestedDeliveryDate", additionalAssertFieldName)) {
 
@@ -2089,6 +2107,28 @@ public abstract class BaseOrderItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("replacedSku", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderItem1.getReplacedSku(),
+						orderItem2.getReplacedSku())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("replacedSkuId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						orderItem1.getReplacedSkuId(),
+						orderItem2.getReplacedSkuId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"requestedDeliveryDate", additionalAssertFieldName)) {
 
@@ -2494,6 +2534,19 @@ public abstract class BaseOrderItemResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("replacedSku")) {
+			sb.append("'");
+			sb.append(String.valueOf(orderItem.getReplacedSku()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("replacedSkuId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("requestedDeliveryDate")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -2654,6 +2707,9 @@ public abstract class BaseOrderItemResourceTestCase {
 				printedNote = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				quantity = RandomTestUtil.randomInt();
+				replacedSku = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				replacedSkuId = RandomTestUtil.randomLong();
 				requestedDeliveryDate = RandomTestUtil.nextDate();
 				shippedQuantity = RandomTestUtil.randomInt();
 				shippingAddressId = RandomTestUtil.randomLong();

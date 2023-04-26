@@ -432,6 +432,34 @@ public class PlacedOrderItem implements Serializable {
 	protected Integer quantity;
 
 	@Schema
+	public String getReplacedSku() {
+		return replacedSku;
+	}
+
+	public void setReplacedSku(String replacedSku) {
+		this.replacedSku = replacedSku;
+	}
+
+	@JsonIgnore
+	public void setReplacedSku(
+		UnsafeSupplier<String, Exception> replacedSkuUnsafeSupplier) {
+
+		try {
+			replacedSku = replacedSkuUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String replacedSku;
+
+	@Schema
 	@Valid
 	public Settings getSettings() {
 		return settings;
@@ -825,6 +853,20 @@ public class PlacedOrderItem implements Serializable {
 			sb.append("\"quantity\": ");
 
 			sb.append(quantity);
+		}
+
+		if (replacedSku != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacedSku\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(replacedSku));
+
+			sb.append("\"");
 		}
 
 		if (settings != null) {

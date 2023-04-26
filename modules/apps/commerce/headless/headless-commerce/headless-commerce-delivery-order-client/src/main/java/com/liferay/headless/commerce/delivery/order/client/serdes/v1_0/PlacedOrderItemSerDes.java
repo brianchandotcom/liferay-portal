@@ -244,6 +244,20 @@ public class PlacedOrderItemSerDes {
 			sb.append(placedOrderItem.getQuantity());
 		}
 
+		if (placedOrderItem.getReplacedSku() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"replacedSku\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderItem.getReplacedSku()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderItem.getSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -463,6 +477,15 @@ public class PlacedOrderItemSerDes {
 			map.put("quantity", String.valueOf(placedOrderItem.getQuantity()));
 		}
 
+		if (placedOrderItem.getReplacedSku() == null) {
+			map.put("replacedSku", null);
+		}
+		else {
+			map.put(
+				"replacedSku",
+				String.valueOf(placedOrderItem.getReplacedSku()));
+		}
+
 		if (placedOrderItem.getSettings() == null) {
 			map.put("settings", null);
 		}
@@ -643,6 +666,12 @@ public class PlacedOrderItemSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setQuantity(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "replacedSku")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderItem.setReplacedSku(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {

@@ -355,10 +355,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Results results = null;
 
 		if (Validator.isNotNull(locator)) {
-			results = axeBuilder.analyze(this, getWebElement(locator));
+			results = axeBuilder.analyze(_webDriver, getWebElement(locator));
 		}
 		else {
-			results = axeBuilder.analyze(this);
+			results = axeBuilder.analyze(_webDriver);
 		}
 
 		List<Rule> violations = results.getViolations();

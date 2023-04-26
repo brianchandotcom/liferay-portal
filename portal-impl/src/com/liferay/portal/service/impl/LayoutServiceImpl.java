@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutModel;
 import com.liferay.portal.kernel.model.LayoutReference;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Plugin;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PluginSettingLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -767,10 +770,31 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			boolean incomplete, int start, int end)
 		throws PortalException {
 
-		return filterLayouts(
-			layoutLocalService.getLayouts(
-				groupId, privateLayout, parentLayoutId, incomplete, start,
-				end));
+		if (incomplete) {
+			return filterLayouts(
+				layoutLocalService.getLayouts(
+					groupId, privateLayout, parentLayoutId, incomplete, start,
+					end));
+		}
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			groupId, privateLayout);
+
+		if (!MergeLayoutPrototypesThreadLocal.isInProgress() &&
+			(layoutSet.isLayoutSetPrototypeLinkActive() || group.isUser() ||
+			 (group.isUserGroup() &&
+			  (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)))) {
+
+			return filterLayouts(
+				layoutLocalService.getLayouts(
+					groupId, privateLayout, parentLayoutId, incomplete, start,
+					end));
+		}
+
+		return layoutPersistence.filterFindByG_P_P(
+			groupId, privateLayout, parentLayoutId, start, end, null);
 	}
 
 	@Override
@@ -1587,6 +1611,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@BeanReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;
+
+	@BeanReference(type = LayoutSetLocalService.class)
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@BeanReference(type = PluginSettingLocalService.class)
 	private PluginSettingLocalService _pluginSettingLocalService;

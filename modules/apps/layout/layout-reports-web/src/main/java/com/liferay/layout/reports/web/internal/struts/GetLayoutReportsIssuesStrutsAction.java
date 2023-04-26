@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.reports.web.internal.portlet.action;
+package com.liferay.layout.reports.web.internal.struts;
 
-import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
-import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -30,17 +27,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -52,9 +47,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,22 +57,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + LayoutReportsPortletKeys.LAYOUT_REPORTS,
-		"mvc.command.name=/layout_reports/get_layout_reports_issues"
-	},
-	service = MVCResourceCommand.class
+	property = "path=/layout_reports/get_layout_reports_issues",
+	service = StrutsAction.class
 )
-public class GetLayoutReportsIssuesMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class GetLayoutReportsIssuesStrutsAction implements StrutsAction {
 
 	@Override
-	protected void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	public String execute(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -91,64 +83,70 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 
 			_log.error("You do not have permissions to access this app");
 
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
+			ServletResponseUtil.write(
+				httpServletResponse,
 				JSONUtil.put(
 					"error",
-					_language.get(locale, "an-unexpected-error-occurred")));
+					_language.get(locale, "an-unexpected-error-occurred")
+				).toString());
 
-			return;
+			return null;
 		}
 
 		try {
-			long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (group == null) {
 				_log.error("No site exists with site id " + groupId);
 
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
+				ServletResponseUtil.write(
+					httpServletResponse,
 					JSONUtil.put(
 						"error",
 						_language.format(
-							locale, "no-site-exists-with-site-id-x", groupId)));
+							locale, "no-site-exists-with-site-id-x", groupId)
+					).toString());
 
-				return;
+				return null;
 			}
 
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
+			ServletResponseUtil.write(
+				httpServletResponse,
 				_getLayoutReportIssuesResponseJSONObject(
-					ParamUtil.getBoolean(resourceRequest, "refreshCache"),
+					ParamUtil.getBoolean(httpServletRequest, "refreshCache"),
 					group, resourceBundle, themeDisplay,
-					ParamUtil.getString(resourceRequest, "url")));
+					ParamUtil.getString(httpServletRequest, "url")
+				).toString());
 		}
 		catch (LayoutReportsDataProvider.LayoutReportsDataProviderException
 					layoutReportsDataProviderException) {
 
 			_log.error(layoutReportsDataProviderException);
 
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
+			ServletResponseUtil.write(
+				httpServletResponse,
 				JSONUtil.put(
 					"error", layoutReportsDataProviderException.getMessage()
 				).put(
 					"googlePageSpeedError",
 					layoutReportsDataProviderException.
 						getGooglePageSpeedErrorJSONObject()
-				));
+				).toString());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
+			ServletResponseUtil.write(
+				httpServletResponse,
 				JSONUtil.put(
 					"error",
-					_language.get(locale, "an-unexpected-error-occurred")));
+					_language.get(locale, "an-unexpected-error-occurred")
+				).toString());
 		}
+
+		return null;
 	}
 
 	private JSONObject _fetchLayoutReportIssuesJSONObject(
@@ -197,33 +195,13 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 
 				String completeURL = _getCompleteURL(themeDisplay);
 
-				return PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						themeDisplay.getRequest(),
-						LayoutAdminPortletKeys.GROUP_PAGES,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/layout_admin/edit_layout"
-				).setRedirect(
-					completeURL
-				).setBackURL(
-					completeURL
-				).setPortletResource(
-					() -> {
-						PortletDisplay portletDisplay =
-							themeDisplay.getPortletDisplay();
-
-						return portletDisplay.getId();
-					}
-				).setParameter(
-					"groupId", layout.getGroupId()
-				).setParameter(
-					"privateLayout", layout.isPrivateLayout()
-				).setParameter(
-					"screenNavigationEntryKey", "seo"
-				).setParameter(
-					"selPlid", layout.getPlid()
-				).buildString();
+				return HttpComponentsUtil.addParameters(
+					themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+						"/layout_reports/get_layout_reports_issues",
+					"redirect", completeURL, "backURL", completeURL, "groupId",
+					layout.getGroupId(), "privateLayout",
+					layout.isPrivateLayout(), "screenNavigationEntryKey", "seo",
+					"selPlid", layout.getPlid());
 			}
 		}
 		catch (PortalException portalException) {
@@ -242,20 +220,11 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 				"com.liferay.layout.seo.internal.configuration." +
 					"LayoutSEOCompanyConfiguration";
 
-			return PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					themeDisplay.getRequest(),
-					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/configuration_admin/edit_configuration"
-			).setRedirect(
-				_getCompleteURL(themeDisplay)
-			).setParameter(
-				"factoryPid", configurationPid
-			).setParameter(
-				"pid", configurationPid
-			).buildString();
+			return HttpComponentsUtil.addParameters(
+				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+					"/layout_reports/get_layout_reports_issues",
+				"redirect", _getCompleteURL(themeDisplay), "factoryPid",
+				configurationPid, "pid", configurationPid);
 		}
 
 		return null;
@@ -308,12 +277,12 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetLayoutReportsIssuesMVCResourceCommand.class);
+		GetLayoutReportsIssuesStrutsAction.class);
 
 	private static final PortalCache<String, JSONObject>
 		_layoutReportsIssuesPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM,
-			GetLayoutReportsIssuesMVCResourceCommand.class.getName());
+			GetLayoutReportsIssuesStrutsAction.class.getName());
 
 	@Reference
 	private GroupLocalService _groupLocalService;

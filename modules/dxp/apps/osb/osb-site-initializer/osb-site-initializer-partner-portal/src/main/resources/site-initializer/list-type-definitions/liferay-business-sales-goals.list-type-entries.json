@@ -22,5 +22,13 @@
 			"en-US": "Nurture existing prospects"
 		},
 		"type": "string"
+	},
+	{
+		"key": "otherPleaseDescribe",
+		"name": "Other - Please describe",
+		"name_i18n": {
+			"en-US": "Other - Please describe"
+		},
+		"type": "string"
 	}
 ]

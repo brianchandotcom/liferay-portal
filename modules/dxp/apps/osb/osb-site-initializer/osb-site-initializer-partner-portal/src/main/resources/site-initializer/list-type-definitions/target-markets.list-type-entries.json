@@ -64,6 +64,14 @@
 		"type": "string"
 	},
 	{
+		"key": "foodServices",
+		"name": "Food Services",
+		"name_i18n": {
+			"en-US": "Food Services"
+		},
+		"type": "string"
+	},
+	{
 		"key": "governmentFederal",
 		"name": "Government (Federal)",
 		"name_i18n": {
@@ -148,6 +156,54 @@
 		"name": "Professional Services (Technical/Web/IT)",
 		"name_i18n": {
 			"en-US": "Professional Services (Technical/Web/IT)"
+		},
+		"type": "string"
+	},
+	{
+		"key": "retailConsumerProducts",
+		"name": "Retail/Consumer Products",
+		"name_i18n": {
+			"en-US": "Retail/Consumer Products"
+		},
+		"type": "string"
+	},
+	{
+		"key": "technology",
+		"name": "Technology",
+		"name_i18n": {
+			"en-US": "Technology"
+		},
+		"type": "string"
+	},
+	{
+		"key": "telecommunications",
+		"name": "Telecommunications",
+		"name_i18n": {
+			"en-US": "Telecommunications"
+		},
+		"type": "string"
+	},
+	{
+		"key": "transportation",
+		"name": "Transportation",
+		"name_i18n": {
+			"en-US": "Transportation"
+		},
+		"type": "string"
+	},
+	{
+		"key": "utilities",
+		"name": "Utilities",
+		"name_i18n": {
+			"en-US": "Utilities"
+		},
+		"type": "string"
+	},
+	{
+		"key": "wholesaleDistribution",
+		"name": "Wholesale/Distribution",
+		"name_i18n": {
+			"en-US": "Wholesale/Distribution"
 		},
 		"type": "string"
 	}

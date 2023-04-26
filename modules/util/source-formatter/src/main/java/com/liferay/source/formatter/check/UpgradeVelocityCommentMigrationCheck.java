@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.constants.VelocityMigrationConstants;
@@ -29,12 +30,26 @@ public class UpgradeVelocityCommentMigrationCheck
 		String[] lines = content.split(StringPool.NEW_LINE);
 
 		for (String line : lines) {
-			if (line.contains("##") && (line.length() != 2)) {
-				String newLine = line.replace("##", "<#--") + " -->";
+			if (line.contains(
+					VelocityMigrationConstants.VELOCITY_COMMENT_LINE) &&
+				(line.length() != 2)) {
 
-				if (newLine.contains("Velocity Transform Template")) {
+				String newLineStart = line.replace(
+					VelocityMigrationConstants.VELOCITY_COMMENT_LINE,
+					VelocityMigrationConstants.FREEMARKER_COMMENT_START);
+
+				String newLine =
+					newLineStart + CharPool.SPACE +
+						VelocityMigrationConstants.FREEMARKER_COMMENT_END;
+
+				if (newLine.contains(
+						VelocityMigrationConstants.
+							VELOCITY_TEMPLATE_DECLARATION)) {
+
 					newLine = StringUtil.replace(
-						newLine, "Velocity Transform Template",
+						newLine,
+						VelocityMigrationConstants.
+							VELOCITY_TEMPLATE_DECLARATION,
 						"FreeMarker Template");
 				}
 
@@ -47,7 +62,8 @@ public class UpgradeVelocityCommentMigrationCheck
 		StringUtil.replace(
 			content, "*#", VelocityMigrationConstants.FREEMARKER_COMMENT_END);
 
-		return StringUtil.removeSubstring(content, "##");
+		return StringUtil.removeSubstring(
+			content, VelocityMigrationConstants.VELOCITY_COMMENT_LINE);
 	}
 
 }

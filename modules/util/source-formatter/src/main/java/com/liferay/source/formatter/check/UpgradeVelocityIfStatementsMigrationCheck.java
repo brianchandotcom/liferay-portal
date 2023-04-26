@@ -45,7 +45,7 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 
 				newLine = StringUtil.replace(
 					newLine, VelocityMigrationConstants.VELOCITY_IF_START,
-					"<#if");
+					VelocityMigrationConstants.FREEMARKER_IF_START);
 
 				VelocityMigrationUtil.replaceStatementEnd(
 					i, lines, VelocityMigrationConstants.VELOCITY_IF_START);

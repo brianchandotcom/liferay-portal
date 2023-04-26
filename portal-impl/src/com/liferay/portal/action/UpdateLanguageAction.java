@@ -128,6 +128,14 @@ public class UpdateLanguageAction implements Action {
 			throw new IllegalArgumentException();
 		}
 
+		String contextPath = httpServletRequest.getContextPath();
+
+		if (Validator.isNotNull(contextPath) &&
+			!contextPath.equals(StringPool.SLASH)) {
+
+			redirect = redirect.substring(contextPath.length());
+		}
+
 		String layoutURL = redirect;
 
 		String friendlyURLSeparatorPart = StringPool.BLANK;

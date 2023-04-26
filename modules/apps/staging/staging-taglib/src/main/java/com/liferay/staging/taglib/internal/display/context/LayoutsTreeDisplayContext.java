@@ -349,7 +349,7 @@ public class LayoutsTreeDisplayContext {
 				"children",
 				layoutsTree.getLayoutsJSONArray(
 					_getSelectedLayoutIdsArray(), _getSelectPagesGroupId(),
-					_httpServletRequest, false, true, false,
+					_httpServletRequest, false, false, false,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 					isSelectPagesPrivateLayout(), _treeId)
 			).put(

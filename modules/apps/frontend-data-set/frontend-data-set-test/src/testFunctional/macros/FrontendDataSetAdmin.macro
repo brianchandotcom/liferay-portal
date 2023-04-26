@@ -8,6 +8,14 @@ definition {
 		}
 	}
 
+	macro assertDataSetViewDescription {
+		for (var key_dataSetViewDescription : list ${key_dataSetViewDescriptionList}) {
+			AssertElementPresent(
+				key_description = ${key_dataSetViewDescription},
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_DESCRIPTION");
+		}
+	}
+
 	macro changePagination {
 		Click(locator1 = "FrontendDataSetAdmin#ITEMS_PER_PAGE_SELECT");
 
@@ -106,6 +114,28 @@ definition {
 			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
+	}
+
+	macro editView {
+		Click(
+			key_name = "${key_OldName}",
+			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+
+		MenuItem.click(menuItem = "View");
+
+		Type(
+			key_type = "Name",
+			locator1 = "FrontendDataSetAdmin#EDIT_DATA_SET_VIEW",
+			value1 = ${key_NewName});
+		
+		Type(
+			key_type = "Description",
+			locator1 = "FrontendDataSetAdmin#EDIT_DATA_SET_VIEW",
+			value1 = ${key_NewDescription});
+
+		PortletEntry.save();
+		
+		Navigator.gotoBack();
 	}
 
 	macro goToDatasetAdminPage {

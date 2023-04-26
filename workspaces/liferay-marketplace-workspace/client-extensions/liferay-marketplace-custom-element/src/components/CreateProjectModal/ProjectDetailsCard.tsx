@@ -55,7 +55,7 @@ export function ProjectDetailsCard({
 							Solutions in progress
 						</span>
 
-						<span className="create-project-modal-project-details-card-header-dscription">
+						<span className="create-project-modal-project-details-card-header-description">
 							Created by Gloria Davis (you)
 						</span>
 					</div>

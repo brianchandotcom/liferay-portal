@@ -21,7 +21,7 @@ export function ProjectDetails({
 	return (
 		<>
 			{showInputs && (
-				<div className="create-project-modal-inputs-contianer">
+				<div className="create-project-modal-inputs-container">
 					<Input
 						label="Project name"
 						onChange={(e) =>

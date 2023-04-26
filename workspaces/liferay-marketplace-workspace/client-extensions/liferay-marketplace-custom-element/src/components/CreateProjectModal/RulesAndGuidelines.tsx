@@ -1,5 +1,19 @@
 import ClayAlert from '@clayui/alert';
-import React from 'react';
+import ClayLink from '@clayui/link';
+
+function getClayLink(href: string, text: string) {
+	return (
+		<ClayLink
+			decoration="underline"
+			href={href}
+			style={{color: '#6F3000', cursor: 'pointer'}}
+			target="_blank"
+			weight="semi-bold"
+		>
+			{text}
+		</ClayLink>
+	);
+}
 
 export function RulesAndGuidelines() {
 	return (
@@ -18,8 +32,7 @@ export function RulesAndGuidelines() {
 					provisioned. You will be notified by email with details on
 					how to access it. <br />
 					· Each publisher account is allowed to have a maximum of two
-					projects simultaneously. <br />
-· If you need more than two,
+					projects simultaneously. <br />· If you need more than two,
 					please contact us at <a>marketplace-admin@liferay.com</a>
 				</span>
 			</div>
@@ -34,10 +47,18 @@ export function RulesAndGuidelines() {
 				If a project is shared with a customer, they must be explicitly
 				informed not to upload their data. If a customer needs to upload
 				data, they are required to sign an Order Form and agree to the
-				Liferay Cloud Appendix 4 Terms and Conditions which includes an
-				agreement to the Data Processing Addendum. Please reach out to
-				your Account Executive and request them to create and have the
-				customer sign a zero price Order Form.
+				Liferay Cloud{' '}
+				{getClayLink(
+					'https://web.liferay.com/legal/doc/app4/1301911_NA?_ga=2.203072209.1745225301.1613503864-1493387283.1612984613',
+					'Appendix 4'
+				)}{' '}
+				Terms and Conditions which includes an agreement to the{' '}
+				{getClayLink(
+					'https://web.liferay.com/legal/doc/DPA/1001810',
+					'Data Processing Addendum.'
+				)}{' '}
+				Please reach out to your Account Executive and request them to
+				create and have the customer sign a zero price Order Form.
 			</ClayAlert>
 		</>
 	);

@@ -281,7 +281,7 @@ export async function getCategories({vocabId}: {vocabId: number}) {
 	return response.json();
 }
 
-export async function getCategoiesRanked() {
+export async function getCategoriesRanked() {
 	const response = await fetch(
 		'/o/headless-admin-taxonomy/v1.0/taxonomy-categories/ranked',
 		{

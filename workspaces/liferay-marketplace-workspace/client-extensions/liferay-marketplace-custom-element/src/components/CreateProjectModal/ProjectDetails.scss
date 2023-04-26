@@ -1,5 +1,5 @@
 .create-project-modal {
-	&-inputs-contianer {
+	&-inputs-container {
 		display: grid;
 		gap: 24px;
 		grid-template-columns: 1fr 1fr;
@@ -21,7 +21,7 @@
 			gap: 24px;
 			padding-bottom: 23px;
 
-			&-descripition {
+			&-description {
 				font-size: 14px;
 				font-weight: 600;
 				line-height: 16px;

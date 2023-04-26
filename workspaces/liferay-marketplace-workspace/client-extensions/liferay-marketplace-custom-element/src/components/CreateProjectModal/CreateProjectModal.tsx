@@ -1,18 +1,14 @@
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
+import classNames from 'classnames';
 import {useState} from 'react';
 
 import checkFillIcon from '../../assets/icons/check_fill.svg';
 import circleFillIcon from '../../assets/icons/circle_fill.svg';
-
-import './CreateProjectModal.scss';
-
-import classNames from 'classnames';
-
 import {
 	createAppSKU,
 	getCatalogs,
-	getCategoiesRanked,
+	getCategoriesRanked,
 	getChannels,
 	getOrderbyERC,
 	patchOrderByERC,
@@ -24,6 +20,7 @@ import {getCustomFieldValue} from '../../utils/customFieldUtil';
 import {ProjectDetails} from './ProjectDetails';
 import {RulesAndGuidelines} from './RulesAndGuidelines';
 
+import './CreateProjectModal.scss';
 interface CreateProjectModalProps {
 	handleClose: () => void;
 	selectedAccount: Account;
@@ -34,12 +31,12 @@ interface CreateProjectModalProps {
 const multiStepItemsInitialValues = [
 	{
 		label: 'Rules & Guidelines',
-		selecetd: true,
+		selected: true,
 		completed: false,
 	},
 	{
 		label: 'Project Details',
-		selecetd: false,
+		selected: false,
 		completed: false,
 	},
 ];
@@ -72,7 +69,7 @@ export function CreateProjectModal({
 	const createNewProject = async () => {
 		const catalogs = await getCatalogs();
 		const channels = await getChannels();
-		const categories = await getCategoiesRanked();
+		const categories = await getCategoriesRanked();
 
 		const marketplaceChannel =
 			channels.find(
@@ -83,7 +80,7 @@ export function CreateProjectModal({
 			catalogs.find((catalog) => catalog.name === 'Liferay, Inc') ??
 			catalogs[0];
 
-		const requiredCatategories: Partial<Category>[] = [];
+		const requiredCategories: Partial<Category>[] = [];
 
 		categories.forEach((category) => {
 			if (
@@ -92,7 +89,7 @@ export function CreateProjectModal({
 				category.parentTaxonomyVocabulary.name ===
 					'Liferay Platform Offering'
 			) {
-				requiredCatategories.push({
+				requiredCategories.push({
 					externalReferenceCode: category.externalReferenceCode,
 					id: category.id,
 					name: category.name,
@@ -104,7 +101,7 @@ export function CreateProjectModal({
 		const newProduct = {
 			active: true,
 			catalogId: liferayIncCatalog?.id,
-			categories: requiredCatategories,
+			categories: requiredCategories,
 			description: {
 				en_US: 'A free project for publishers to create for development, testing and demo purposes.',
 			},
@@ -221,7 +218,7 @@ export function CreateProjectModal({
 									'create-project-modal-multi-step-icon',
 									{
 										'create-project-modal-multi-step-icon-selected':
-											multiStepItem.selecetd ||
+											multiStepItem.selected ||
 											multiStepItem.completed,
 									}
 								)}
@@ -237,7 +234,7 @@ export function CreateProjectModal({
 									'create-project-modal-multi-step-label',
 									{
 										'create-project-modal-multi-step-label-selected':
-											multiStepItem.selecetd ||
+											multiStepItem.selected ||
 											multiStepItem.completed,
 									}
 								)}
@@ -284,7 +281,7 @@ export function CreateProjectModal({
 										return {
 											...item,
 											completed: true,
-											selecetd: false,
+											selected: false,
 										};
 									}
 
@@ -293,7 +290,7 @@ export function CreateProjectModal({
 									return {
 										...item,
 										completed: false,
-										selecetd: true,
+										selected: true,
 									};
 								}
 							);

@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.opener.google.drive.web.internal.service;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.kernel.util.DLValidator;
@@ -61,22 +60,7 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 				fileEntry.getCompanyId()) &&
 			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
-			DLOpenerFileEntryReference dlOpenerFileEntryReference =
-				_dlOpenerFileEntryReferenceLocalService.
-					getDLOpenerFileEntryReference(
-						DLOpenerGoogleDriveConstants.
-							GOOGLE_DRIVE_REFERENCE_TYPE,
-						fileEntry);
-
 			_dlOpenerGoogleDriveManager.delete(_getUserId(), fileEntry);
-
-			if ((dlOpenerFileEntryReference.getType() ==
-					DLOpenerFileEntryReferenceConstants.TYPE_NEW) &&
-				DLFileEntryConstants.VERSION_DEFAULT.equals(
-					fileEntry.getVersion())) {
-
-				deleteFileEntry(fileEntryId);
-			}
 		}
 	}
 

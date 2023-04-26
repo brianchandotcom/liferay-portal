@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.service;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.kernel.util.DLValidator;
@@ -66,12 +65,6 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 		if (_dlOpenerOneDriveManager.isConfigured(fileEntry.getCompanyId()) &&
 			_dlOpenerOneDriveManager.isOneDriveFile(fileEntry)) {
 
-			DLOpenerFileEntryReference dlOpenerFileEntryReference =
-				_dlOpenerFileEntryReferenceLocalService.
-					getDLOpenerFileEntryReference(
-						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
-						fileEntry);
-
 			try {
 				_dlOpenerOneDriveManager.deleteFile(_getUserId(), fileEntry);
 			}
@@ -81,14 +74,6 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 				_log.error(
 					"The OneDrive file does not exist",
 					graphServicePortalException);
-			}
-
-			if ((dlOpenerFileEntryReference.getType() ==
-					DLOpenerFileEntryReferenceConstants.TYPE_NEW) &&
-				DLFileEntryConstants.VERSION_DEFAULT.equals(
-					fileEntry.getVersion())) {
-
-				deleteFileEntry(fileEntryId);
 			}
 		}
 	}

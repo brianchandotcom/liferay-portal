@@ -12,6 +12,8 @@
 export default function getInitialInvite(initialRole) {
 	return {
 		email: '',
+		familyName: '',
+		givenName: '',
 		role: initialRole || {
 			id: 0,
 			name: '',

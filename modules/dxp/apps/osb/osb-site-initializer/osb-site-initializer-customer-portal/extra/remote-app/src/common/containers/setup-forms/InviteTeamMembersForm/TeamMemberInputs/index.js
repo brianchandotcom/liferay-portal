@@ -66,31 +66,62 @@ const TeamMemberInputs = ({
 	);
 
 	return (
-		<ClayInput.Group className="m-0">
-			<ClayInput.GroupItem className="m-0">
-				<Input
-					disableError={id === 0 && disableError}
-					groupStyle="m-0"
-					label={i18n.translate('email')}
-					name={`invites[${id}].email`}
-					placeholder={placeholderEmail}
-					type="email"
-					validations={[
-						(value) => isValidEmail(value, bannedDomains),
-					]}
-				/>
-			</ClayInput.GroupItem>
+		<>
+			<ClayInput.Group className="m-0">
+				<ClayInput.GroupItem className="m-0">
+					<Input
+						disableError={id === 0 && disableError}
+						groupStyle="m-0"
+						label={i18n.translate('first-name')}
+						name={`invites[${id}].givenName`}
+						placeholder={i18n.translate('first-name')}
+						required
+						type="text"
+					/>
+				</ClayInput.GroupItem>
 
-			<ClayInput.GroupItem className="m-0">
-				<Select
-					groupStyle="m-0"
-					label={i18n.translate('role')}
-					name={`invites[${id}].role.id`}
-					onChange={(event) => selectOnChange(event.target.value)}
-					options={optionsFormated}
-				/>
-			</ClayInput.GroupItem>
-		</ClayInput.Group>
+				<ClayInput.GroupItem className="m-0">
+					<Input
+						disableError={id === 0 && disableError}
+						groupStyle="m-0"
+						label={i18n.translate('last-name')}
+						name={`invites[${id}].familyName`}
+						placeholder={i18n.translate('last-name')}
+						required
+						type="text"
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+
+			<ClayInput.Group className="m-0">
+				<ClayInput.GroupItem className="m-0">
+					<Input
+						disableError={id === 0 && disableError}
+						groupStyle="m-0"
+						label={i18n.translate('email')}
+						name={`invites[${id}].email`}
+						placeholder={placeholderEmail}
+						required
+						type="email"
+						validations={[
+							(value) => isValidEmail(value, bannedDomains),
+						]}
+					/>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem className="m-0">
+					<Select
+						groupStyle="m-0"
+						label={i18n.translate('role')}
+						name={`invites[${id}].role.id`}
+						onChange={(event) => selectOnChange(event.target.value)}
+						options={optionsFormated}
+						required
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+			<hr className="mb-3 mt-2" />
+		</>
 	);
 };
 

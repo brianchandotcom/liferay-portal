@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>COOKIES_CONSENT_PANEL_TITLE</td>
-	<td>//div[@class='modal-title' and contains(.,'${key_text}')]</td>
+	<td>//*[@class='modal-title' and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

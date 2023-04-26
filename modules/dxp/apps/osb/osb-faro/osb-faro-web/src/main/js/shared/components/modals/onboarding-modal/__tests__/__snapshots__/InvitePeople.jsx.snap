@@ -12,15 +12,15 @@ exports[`InvitePeople renders 1`] = `
         class="d-flex justify-content-end"
       >
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>

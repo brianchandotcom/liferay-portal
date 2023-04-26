@@ -19,7 +19,7 @@ exports[`Items should render 1`] = `
         Create rules to match your URLs and page metadata. If you do not define rules, the recommendation model will use all URLs from this workspace to train the recommendations model.
       </div>
       <button
-        class="button-root btn btn-secondary new-rule-button"
+        class="button-root new-rule-button btn btn-secondary"
         type="button"
       >
         New Rule
@@ -78,7 +78,7 @@ exports[`Items should render 1`] = `
                 class="count-cell table-column-text-end"
               >
                 <button
-                  class="button-root btn btn-unstyled matching-pages-modal-button"
+                  class="button-root matching-pages-modal-button btn btn-unstyled"
                   type="button"
                 >
                   0
@@ -90,7 +90,7 @@ exports[`Items should render 1`] = `
                 <span>
                   <span>
                     <button
-                      class="button-root btn btn-outline-secondary btn-outline-borderless"
+                      class="button-root btn btn-outline-borderless btn-outline-secondary"
                       type="button"
                     >
                       <svg
@@ -117,7 +117,7 @@ exports[`Items should render 1`] = `
         </div>
         <div>
           <button
-            class="button-root btn btn-unstyled matching-pages-modal-button"
+            class="button-root matching-pages-modal-button btn btn-unstyled"
             type="button"
           >
             0

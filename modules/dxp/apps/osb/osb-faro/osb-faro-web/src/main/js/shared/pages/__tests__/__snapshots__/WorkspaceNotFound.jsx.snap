@@ -40,7 +40,7 @@ exports[`WorkspaceNotFound should render 1`] = `
               Test Test
             </span>
             <svg
-              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              class="lexicon-icon lexicon-icon-caret-bottom icon-root caret"
               role="presentation"
             >
               <use
@@ -94,7 +94,7 @@ exports[`WorkspaceNotFound should render 1`] = `
               class="sheet-section title"
             >
               <svg
-                class="lexicon-icon lexicon-icon-exclamation-circle text-danger"
+                class="lexicon-icon lexicon-icon-exclamation-circle icon-root text-danger"
                 role="presentation"
               >
                 <use
@@ -113,7 +113,7 @@ exports[`WorkspaceNotFound should render 1`] = `
               class="sheet-section"
             >
               <a
-                class="button-root btn btn-primary"
+                class="button-root btn btn-secondary"
                 href="/workspaces"
               >
                 Go Back to Your Workspaces

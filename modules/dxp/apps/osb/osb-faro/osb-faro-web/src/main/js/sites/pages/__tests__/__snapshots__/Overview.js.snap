@@ -31,19 +31,19 @@ exports[`Sites Dashboard Overview render 1`] = `
                 role="group"
               >
                 <button
-                  class="interval-option text-uppercase active btn btn-sm btn-secondary"
+                  class="button-root interval-option text-uppercase active btn btn-sm btn-secondary"
                   type="button"
                 >
                   D
                 </button>
                 <button
-                  class="interval-option text-uppercase btn btn-sm btn-secondary"
+                  class="button-root interval-option text-uppercase btn btn-sm btn-secondary"
                   type="button"
                 >
                   W
                 </button>
                 <button
-                  class="interval-option text-uppercase btn btn-sm btn-secondary"
+                  class="button-root interval-option text-uppercase btn btn-sm btn-secondary"
                   type="button"
                 >
                   M
@@ -185,22 +185,18 @@ exports[`Sites Dashboard Overview render 1`] = `
             class="card-footer"
           >
             <a
-              class="button-root btn btn-link btn-sm"
+              class="button-root c-link link-secondary text-decoration-underline"
               href="/workspace/23/123123/sites/pages?rangeKey=30"
             >
               View Pages
-              <span
-                class="inline-item inline-item-after"
+              <svg
+                class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+                role="presentation"
               >
-                <svg
-                  class="icon-root lexicon-icon lexicon-icon-angle-right"
-                  viewBox=""
-                >
-                  <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                  />
-                </svg>
-              </span>
+                <use
+                  xlink:href="#angle-right"
+                />
+              </svg>
             </a>
           </div>
         </div>
@@ -443,22 +439,18 @@ exports[`Sites Dashboard Overview render 1`] = `
             class="card-footer"
           >
             <a
-              class="button-root btn btn-link btn-sm"
+              class="button-root"
               href="/workspace/23/123123/sites/interests?rangeEnd=null&rangeKey=30&rangeStart=null"
             >
               All Interests
-              <span
-                class="inline-item inline-item-after"
+              <svg
+                class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+                role="presentation"
               >
-                <svg
-                  class="icon-root lexicon-icon lexicon-icon-angle-right"
-                  viewBox=""
-                >
-                  <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                  />
-                </svg>
-              </span>
+                <use
+                  xlink:href="#angle-right"
+                />
+              </svg>
             </a>
           </div>
         </div>

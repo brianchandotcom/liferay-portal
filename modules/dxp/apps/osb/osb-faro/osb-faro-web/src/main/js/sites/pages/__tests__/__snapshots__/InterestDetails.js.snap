@@ -12,18 +12,18 @@ exports[`Sites Dashboard InterestDetails render 1`] = `
         class="col-xl-12"
       >
         <div
-          class="back-button-root"
+          class="back-button-root mb-2"
         >
           <a
-            class="button-root btn btn-outline-secondary btn-outline-borderless"
+            class="btn btn-outline-borderless btn-outline-secondary"
             href="/workspace/123/456/sites/interests?rangeKey=30"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-angle-left inline-item inline-item-before icon-size-sm"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-angle-left icon-root mr-2"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                xlink:href="#angle-left"
               />
             </svg>
             Back to Interests
@@ -85,11 +85,11 @@ exports[`Sites Dashboard InterestDetails render 1`] = `
                             type="button"
                           >
                             <svg
-                              class="icon-root lexicon-icon lexicon-icon-search"
-                              viewBox=""
+                              class="lexicon-icon lexicon-icon-search icon-root"
+                              role="presentation"
                             >
                               <use
-                                xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                                xlink:href="#search"
                               />
                             </svg>
                           </button>

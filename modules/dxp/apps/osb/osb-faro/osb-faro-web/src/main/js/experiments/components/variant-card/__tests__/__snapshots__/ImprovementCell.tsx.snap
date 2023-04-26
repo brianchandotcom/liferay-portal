@@ -7,7 +7,7 @@ exports[`Unique Visitors Cell should render 1`] = `
       class="lift"
     >
       <svg
-        class="lexicon-icon lexicon-icon-caret-top"
+        class="lexicon-icon lexicon-icon-caret-top icon-root"
         role="presentation"
       >
         <use
@@ -30,7 +30,7 @@ exports[`Unique Visitors Cell should render negative improvements 1`] = `
       class="loss"
     >
       <svg
-        class="lexicon-icon lexicon-icon-caret-bottom"
+        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
         role="presentation"
       >
         <use

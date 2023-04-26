@@ -14,7 +14,7 @@ exports[`Table should render 1`] = `
             class="table-head-title"
           >
             <a
-              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              class="button-root inline-item text-truncate-inline btn btn-unstyled"
               href="/?field=name&page=1&sortOrder=ASC"
             >
               <span
@@ -28,7 +28,7 @@ exports[`Table should render 1`] = `
             class="table-head-title"
           >
             <a
-              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              class="button-root inline-item text-truncate-inline btn btn-unstyled"
               href="/?field=properties.salary&page=1&sortOrder=ASC"
             >
               <span

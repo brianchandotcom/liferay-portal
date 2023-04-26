@@ -49,11 +49,11 @@ exports[`IndividualOverview should render 1`] = `
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-search"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-search icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                        xlink:href="#search"
                       />
                     </svg>
                   </button>
@@ -65,19 +65,19 @@ exports[`IndividualOverview should render 1`] = `
               role="group"
             >
               <button
-                class="interval-option text-uppercase active btn btn-sm btn-secondary"
+                class="button-root interval-option text-uppercase active btn btn-sm btn-secondary"
                 type="button"
               >
                 D
               </button>
               <button
-                class="interval-option text-uppercase btn btn-sm btn-secondary"
+                class="button-root interval-option text-uppercase btn btn-sm btn-secondary"
                 type="button"
               >
                 W
               </button>
               <button
-                class="interval-option text-uppercase btn btn-sm btn-secondary"
+                class="button-root interval-option text-uppercase btn btn-sm btn-secondary"
                 type="button"
               >
                 M
@@ -87,12 +87,12 @@ exports[`IndividualOverview should render 1`] = `
               class="dropdown dropdown-range-key-root"
             >
               <button
-                class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
                 type="button"
               >
                 Last 30 days
                 <svg
-                  class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                  class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
                   role="presentation"
                 >
                   <use
@@ -361,7 +361,7 @@ Chrome"
               class="dropdown dropdown-root pagination-items-per-page"
             >
               <button
-                class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
                 type="button"
               >
                 <span
@@ -395,10 +395,10 @@ Chrome"
               <li
                 class="page-item disabled"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
+                <a
+                  class="button-root page-link btn btn-unstyled"
                   disabled=""
-                  type="button"
+                  href=""
                 >
                   <svg
                     class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -408,37 +408,37 @@ Chrome"
                       xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
                     />
                   </svg>
-                </button>
+                </a>
               </li>
               <li
                 class="page-item active"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
-                  type="button"
+                <a
+                  class="button-root page-link btn btn-unstyled"
+                  href=""
                 >
                   1
-                </button>
+                </a>
               </li>
               <li
                 class="page-item"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
-                  type="button"
+                <a
+                  class="button-root page-link btn btn-unstyled"
+                  href=""
                 >
                   2
-                </button>
+                </a>
               </li>
               <li
                 class="page-item"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
-                  type="button"
+                <a
+                  class="button-root page-link btn btn-unstyled"
+                  href=""
                 >
                   3
-                </button>
+                </a>
               </li>
               <li
                 class="page-item"
@@ -448,7 +448,7 @@ Chrome"
                   class="dropdown dropdown-root"
                 >
                   <button
-                    class="button-root btn btn-link dropdown-toggle page-link"
+                    class="button-root dropdown-toggle page-link btn btn-unstyled"
                     type="button"
                   >
                     <span
@@ -463,19 +463,19 @@ Chrome"
               <li
                 class="page-item"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
-                  type="button"
+                <a
+                  class="button-root page-link btn btn-unstyled"
+                  href=""
                 >
                   287
-                </button>
+                </a>
               </li>
               <li
                 class="page-item"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
-                  type="button"
+                <a
+                  class="button-root page-link btn btn-unstyled"
+                  href=""
                 >
                   <svg
                     class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -485,7 +485,7 @@ Chrome"
                       xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
                     />
                   </svg>
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -524,22 +524,19 @@ Chrome"
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root"
             href="/workspace/23/contacts/individuals/known-individuals/0/details"
           >
             View All Details
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right"
+              classname="icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -576,16 +573,16 @@ Chrome"
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root"
             href="/workspace/23/contacts/individuals/known-individuals/0/interests"
           >
             View All Interests
             <svg
-              class="icon-root lexicon-icon lexicon-icon-angle-right"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                xlink:href="#angle-right"
               />
             </svg>
           </a>
@@ -627,11 +624,11 @@ Chrome"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -692,22 +689,18 @@ Chrome"
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root c-link link-secondary text-decoration-underline"
             href="/workspace/23/contacts/individuals/known-individuals/test/segments"
           >
             View All Segments
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>

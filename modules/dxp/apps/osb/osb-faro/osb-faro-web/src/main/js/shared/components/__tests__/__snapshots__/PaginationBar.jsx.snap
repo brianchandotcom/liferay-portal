@@ -13,7 +13,7 @@ exports[`PaginationBar should render 1`] = `
         class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span
@@ -48,7 +48,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=2"
           >
             <svg
@@ -65,7 +65,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=1"
           >
             1
@@ -75,7 +75,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=2"
           >
             2
@@ -85,7 +85,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item active"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=3"
           >
             3
@@ -95,7 +95,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=4"
           >
             4
@@ -105,7 +105,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=5"
           >
             5
@@ -119,7 +119,7 @@ exports[`PaginationBar should render 1`] = `
             class="dropdown dropdown-root"
           >
             <button
-              class="button-root btn btn-link dropdown-toggle page-link"
+              class="button-root dropdown-toggle page-link btn btn-unstyled"
               type="button"
             >
               <span
@@ -135,7 +135,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=10"
           >
             10
@@ -145,7 +145,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=4"
           >
             <svg
@@ -177,7 +177,7 @@ exports[`PaginationBar should render different deltas 1`] = `
         class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span
@@ -212,7 +212,9 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item disabled"
         >
           <a
-            class="button-root btn btn-unstyled page-link link-disabled"
+            class="button-root page-link btn btn-unstyled"
+            disabled=""
+            href="/?page=0"
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -228,7 +230,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item active"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=1"
           >
             1
@@ -238,7 +240,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=2"
           >
             2
@@ -248,7 +250,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=3"
           >
             3
@@ -262,7 +264,7 @@ exports[`PaginationBar should render different deltas 1`] = `
             class="dropdown dropdown-root"
           >
             <button
-              class="button-root btn btn-link dropdown-toggle page-link"
+              class="button-root dropdown-toggle page-link btn btn-unstyled"
               type="button"
             >
               <span
@@ -278,7 +280,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=10"
           >
             10
@@ -288,7 +290,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=2"
           >
             <svg

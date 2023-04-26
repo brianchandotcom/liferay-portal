@@ -29,7 +29,7 @@ exports[`Nav should render 1`] = `
       role="presentation"
     >
       <button
-        class="button-root btn btn-link"
+        class="button-root btn btn-secondary"
         type="button"
       >
         baz

@@ -28,7 +28,7 @@ exports[`Sidebar should render 1`] = `
           class="channels-menu-icon"
         >
           <svg
-            class="lexicon-icon lexicon-icon-sites"
+            class="lexicon-icon lexicon-icon-sites icon-root"
             role="presentation"
           >
             <use
@@ -45,7 +45,7 @@ exports[`Sidebar should render 1`] = `
           class="channels-menu-caret"
         >
           <svg
-            class="lexicon-icon lexicon-icon-caret-right"
+            class="lexicon-icon lexicon-icon-caret-right icon-root"
             role="presentation"
           >
             <use
@@ -73,7 +73,7 @@ exports[`Sidebar should render 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/123/sites"
             >
               <span
@@ -103,7 +103,7 @@ exports[`Sidebar should render 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/123/assets"
             >
               <span
@@ -133,7 +133,7 @@ exports[`Sidebar should render 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/123/event-analysis"
             >
               <span
@@ -176,7 +176,7 @@ exports[`Sidebar should render 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/123/contacts/segments"
             >
               <span
@@ -206,7 +206,7 @@ exports[`Sidebar should render 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/123/contacts/individuals"
             >
               <span
@@ -249,7 +249,7 @@ exports[`Sidebar should render 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/123/commerce"
             >
               <span
@@ -292,7 +292,7 @@ exports[`Sidebar should render 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/123/tests"
             >
               <span
@@ -357,7 +357,7 @@ exports[`Sidebar should render 1`] = `
           class="sidebar-item-root"
         >
           <a
-            class="button-root btn btn-link link"
+            class="link btn btn-unstyled"
             href="/workspace/23/settings/data-source"
           >
             <span
@@ -386,9 +386,8 @@ exports[`Sidebar should render 1`] = `
         <li
           class="sidebar-item-root"
         >
-          <button
-            class="button-root btn btn-link link"
-            type="button"
+          <a
+            class="link btn btn-unstyled"
           >
             <span
               class="link-content-wrapper"
@@ -409,7 +408,7 @@ exports[`Sidebar should render 1`] = `
                 class="item-label"
               />
             </span>
-          </button>
+          </a>
         </li>
       </ul>
     </div>

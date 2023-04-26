@@ -19,7 +19,7 @@ exports[`ExportLogModal renders 1`] = `
           Test Title
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -83,7 +83,7 @@ exports[`ExportLogModal renders 1`] = `
             </div>
           </div>
           <button
-            class="button-root btn btn-primary download"
+            class="button-root download btn btn-primary"
             disabled=""
             type="button"
           >

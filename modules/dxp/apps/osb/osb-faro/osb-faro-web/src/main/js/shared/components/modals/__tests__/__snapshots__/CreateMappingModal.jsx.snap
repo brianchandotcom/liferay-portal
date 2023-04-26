@@ -19,7 +19,7 @@ exports[`CreateMappingModal should render 1`] = `
           Create New CSV Field
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -70,7 +70,7 @@ exports[`CreateMappingModal should render 1`] = `
               name="type"
             >
               <button
-                class="button-root btn btn-secondary dropdown-toggle show-caret"
+                class="button-root dropdown-toggle show-caret btn btn-unstyled"
                 type="button"
               >
                 <span

@@ -20,15 +20,15 @@ exports[`ConnectDXPModal renders 1`] = `
             class="d-flex justify-content-end"
           >
             <button
-              class="button-root btn btn-secondary close"
+              class="button-root close btn btn-secondary"
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-times"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-times icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                  xlink:href="#times"
                 />
               </svg>
             </button>
@@ -91,7 +91,7 @@ exports[`ConnectDXPModal renders 1`] = `
               >
                 <button
                   aria-label="Click to Copy"
-                  class="button-root btn btn-light copy-button"
+                  class="copy-button btn btn-unstyled"
                   data-clipboard-text=""
                   data-tooltip-response="Copied"
                   title="Click to Copy"
@@ -176,22 +176,24 @@ exports[`ConnectDXPModal renders 1`] = `
               class="fix-pack-button"
             >
               <a
-                class="button-root btn btn-secondary more-information-link mt-4 btn-outline-borderless"
+                class="button-root more-information-link mt-4 btn btn-secondary"
                 href="https://customer.liferay.com/downloads/-/download/liferay-dxp-7-0-fix-pack-98"
+                rel="noreferrer noopener"
                 target="_blank"
               >
+                <svg
+                  class="lexicon-icon lexicon-icon-shortcut icon-root mr-2"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#shortcut"
+                  />
+                </svg>
                 Download
                 <span
-                  class="inline-item inline-item-after"
+                  class="sr-only"
                 >
-                  <svg
-                    class="icon-root lexicon-icon lexicon-icon-shortcut"
-                    viewBox=""
-                  >
-                    <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#shortcut"
-                    />
-                  </svg>
+                  (Opens a new window)
                 </span>
               </a>
             </div>
@@ -212,7 +214,7 @@ exports[`ConnectDXPModal renders 1`] = `
               disabled=""
               type="button"
             >
-              Done
+              Next
             </button>
           </div>
         </div>

@@ -24,7 +24,7 @@ exports[`WithBaseEdit should render the wrapped component 1`] = `
             class="dropdown dropdown-root breadcrumb-item"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-toggle breadcrumb-link show-caret"
+              class="button-root dropdown-toggle breadcrumb-link show-caret btn btn-unstyled"
               type="button"
             >
               <span>

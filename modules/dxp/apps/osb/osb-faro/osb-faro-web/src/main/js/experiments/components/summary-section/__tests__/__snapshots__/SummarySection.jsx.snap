@@ -29,7 +29,7 @@ exports[`SummarySection MetricType should render 1`] = `
       class="analytics-summary-section-metric-type-icon"
     >
       <svg
-        class="lexicon-icon lexicon-icon-web-content"
+        class="lexicon-icon lexicon-icon-web-content icon-root"
         role="presentation"
       >
         <use
@@ -64,7 +64,7 @@ exports[`SummarySection Variant should render 1`] = `
       class="analytics-summary-section-variant-status analytics-summary-section-variant-status-up"
     >
       <svg
-        class="lexicon-icon lexicon-icon-caret-top"
+        class="lexicon-icon lexicon-icon-caret-top icon-root"
         role="presentation"
       >
         <use

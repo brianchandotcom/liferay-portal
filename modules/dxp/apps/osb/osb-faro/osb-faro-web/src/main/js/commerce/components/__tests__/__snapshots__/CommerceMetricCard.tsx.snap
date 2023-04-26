@@ -21,12 +21,12 @@ exports[`CommerceMetricCard should render 1`] = `
           class="dropdown dropdown-range-key-root"
         >
           <button
-            class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+            class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             type="button"
           >
             Last 30 days
             <svg
-              class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+              class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
               role="presentation"
             >
               <use

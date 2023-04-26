@@ -15,7 +15,7 @@ exports[`BatchActionModal should render 1`] = `
       >
         
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -37,7 +37,7 @@ exports[`BatchActionModal should render 1`] = `
             class="dropdown dropdown-root"
           >
             <button
-              class="button-root btn btn-secondary dropdown-toggle show-caret"
+              class="button-root dropdown-toggle show-caret btn btn-unstyled"
               type="button"
             >
               <span

@@ -10,22 +10,18 @@ exports[`Filter should render 1`] = `
     >
       <button
         aria-label="Dropdown Filter"
-        class="button-root btn btn-secondary dropdown-toggle btn-outline-borderless btn-sm"
+        class="dropdown-toggle btn-outline-borderless btn btn-sm btn-secondary"
         type="button"
       >
         Filter
-        <span
-          class="inline-item inline-item-after"
+        <svg
+          class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+          role="presentation"
         >
-          <svg
-            class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-            viewBox=""
-          >
-            <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
-            />
-          </svg>
-        </span>
+          <use
+            xlink:href="#caret-bottom"
+          />
+        </svg>
       </button>
     </div>
     <div

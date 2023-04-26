@@ -59,18 +59,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/apis/tokens"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-ac-api"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-ac-api icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-api"
+                      xlink:href="#ac-api"
                     />
                   </svg>
                 </span>
@@ -81,18 +81,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/definitions"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-definitions"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-definitions icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#definitions"
+                      xlink:href="#definitions"
                     />
                   </svg>
                 </span>
@@ -103,18 +103,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/data-privacy"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-data-privacy-lock"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-data-privacy-lock icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#data-privacy-lock"
+                      xlink:href="#data-privacy-lock"
                     />
                   </svg>
                 </span>
@@ -125,18 +125,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/data-source"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-faro-data-source"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-faro-data-source icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-data-source"
+                      xlink:href="#faro-data-source"
                     />
                   </svg>
                 </span>
@@ -158,18 +158,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/users"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-user-management"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-user-management icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#user-management"
+                      xlink:href="#user-management"
                     />
                   </svg>
                 </span>
@@ -180,18 +180,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/properties"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-ac-page"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-ac-page icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-page"
+                      xlink:href="#ac-page"
                     />
                   </svg>
                 </span>
@@ -202,18 +202,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/usage"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-usage"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-usage icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#usage"
+                      xlink:href="#usage"
                     />
                   </svg>
                 </span>
@@ -224,18 +224,18 @@ exports[`Setttings should render 1`] = `
               class="item"
             >
               <a
-                class="button-root btn btn-link"
+                class="button-root"
                 href="/workspace/23/settings/workspace"
               >
                 <span
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-cog"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-cog icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#cog"
+                      xlink:href="#cog"
                     />
                   </svg>
                 </span>

@@ -3,7 +3,7 @@
 exports[`EntityRowActions should render 1`] = `
 <div>
   <button
-    class="button-root btn btn-outline-secondary btn-sm"
+    class="button-root btn btn-sm btn-outline-secondary"
     type="button"
   >
     Remove
@@ -14,7 +14,7 @@ exports[`EntityRowActions should render 1`] = `
 exports[`EntityRowActions should render with a removed label and undo link 1`] = `
 <div>
   <button
-    class="button-root btn btn-outline-primary btn-outline-borderless btn-sm"
+    class="button-root btn btn-outline-borderless btn-sm btn-outline-primary"
     type="button"
   >
     Undo
@@ -34,7 +34,7 @@ exports[`EntityRowActions should render with a removed label and undo link 1`] =
 exports[`EntityRowActions should render with an added label and undo link 1`] = `
 <div>
   <button
-    class="button-root btn btn-outline-primary btn-outline-borderless btn-sm"
+    class="button-root btn btn-outline-borderless btn-sm btn-outline-primary"
     type="button"
   >
     Undo

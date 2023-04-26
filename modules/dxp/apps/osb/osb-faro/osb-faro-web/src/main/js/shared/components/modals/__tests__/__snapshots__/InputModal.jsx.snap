@@ -19,7 +19,7 @@ exports[`InputModal should render 1`] = `
           bar
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -52,7 +52,7 @@ exports[`InputModal should render 1`] = `
           Cancel
         </button>
         <button
-          class="button-root btn btn-primary"
+          class="button-root btn btn-secondary"
           type="button"
         >
           Submit

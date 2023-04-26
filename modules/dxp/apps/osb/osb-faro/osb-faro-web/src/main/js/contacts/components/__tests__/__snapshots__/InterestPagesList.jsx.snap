@@ -23,7 +23,7 @@ exports[`InterestPagesList should render 1`] = `
               class="dropdown dropdown-root filter-and-order-root nav-item"
             >
               <button
-                class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                class="button-root dropdown-toggle nav-btn show-caret btn btn-unstyled"
                 data-testid="filter-and-order-button"
                 type="button"
               >
@@ -52,15 +52,15 @@ exports[`InterestPagesList should render 1`] = `
               role="presentation"
             >
               <a
-                class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                 href="/?field=url&page=1&sortOrder=DESC"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                    xlink:href="#order-arrow-ascending"
                   />
                 </svg>
               </a>
@@ -89,11 +89,11 @@ exports[`InterestPagesList should render 1`] = `
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-search"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-search icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                        xlink:href="#search"
                       />
                     </svg>
                   </button>
@@ -116,7 +116,7 @@ exports[`InterestPagesList should render 1`] = `
               class="table-head-title"
             >
               <a
-                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                class="button-root inline-item text-truncate-inline btn btn-unstyled"
                 href="/?field=title&page=1&sortOrder=ASC"
               >
                 <span
@@ -130,7 +130,7 @@ exports[`InterestPagesList should render 1`] = `
               class="table-head-title table-cell-expand"
             >
               <a
-                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                class="button-root inline-item text-truncate-inline btn btn-unstyled"
                 href="/?field=url&page=1&sortOrder=DESC"
               >
                 <span

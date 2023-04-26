@@ -138,15 +138,15 @@ exports[`View should render 1`] = `
                 class="total-training-urls d-flex align-items-center"
               >
                 <button
-                  class="button-root btn btn-secondary btn-outline-borderless"
+                  class="button-root btn btn-outline-borderless btn-outline-secondary"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-view"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-view icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+                      xlink:href="#view"
                     />
                   </svg>
                 </button>

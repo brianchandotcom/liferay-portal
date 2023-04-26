@@ -31,7 +31,7 @@ exports[`AssignSegments should render 1`] = `
                   class="table-head-title"
                 >
                   <button
-                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    class="inline-item text-truncate-inline btn btn-unstyled"
                     type="button"
                   >
                     <span
@@ -57,7 +57,7 @@ exports[`AssignSegments should render 1`] = `
                   class="table-head-title"
                 >
                   <button
-                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    class="inline-item text-truncate-inline btn btn-unstyled"
                     type="button"
                   >
                     <span
@@ -158,13 +158,13 @@ exports[`AssignSegments should render 1`] = `
       class="modal-footer d-flex justify-content-end"
     >
       <button
-        class="button-root btn btn-secondary"
+        class="btn btn-secondary"
         type="button"
       >
         Skip for Now
       </button>
       <button
-        class="button-root btn btn-primary"
+        class="btn btn-primary"
         data-testid="submit-button"
         disabled=""
         type="button"

@@ -12,18 +12,18 @@ exports[`AttributeFilterChip render 1`] = `
         class="chip-root d-flex align-items-center justify-content-between attribute-chip-root"
       >
         <button
-          class="button-root btn btn-unstyled edit-attribute-button d-flex"
+          class="button-root edit-attribute-button d-flex btn btn-unstyled"
           type="button"
         >
           <div
             class="sticker"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-text"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-text icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                xlink:href="#text"
               />
             </svg>
           </div>
@@ -41,15 +41,15 @@ exports[`AttributeFilterChip render 1`] = `
           </div>
         </button>
         <button
-          class="button-root btn btn-unstyled remove-button"
+          class="button-root remove-button btn btn-unstyled"
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times-circle"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times-circle icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+              xlink:href="#times-circle"
             />
           </svg>
         </button>

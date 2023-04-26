@@ -82,11 +82,11 @@ exports[`Activities should render 1`] = `
                         type="button"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-search"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-search icon-root"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                            xlink:href="#search"
                           />
                         </svg>
                       </button>
@@ -237,7 +237,7 @@ exports[`Activities should render 1`] = `
               class="dropdown dropdown-root pagination-items-per-page"
             >
               <button
-                class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
                 type="button"
               >
                 <span
@@ -271,10 +271,10 @@ exports[`Activities should render 1`] = `
               <li
                 class="page-item disabled"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
+                <a
+                  class="button-root page-link btn btn-unstyled"
                   disabled=""
-                  type="button"
+                  href=""
                 >
                   <svg
                     class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -284,25 +284,25 @@ exports[`Activities should render 1`] = `
                       xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
                     />
                   </svg>
-                </button>
+                </a>
               </li>
               <li
                 class="page-item active"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
-                  type="button"
+                <a
+                  class="button-root page-link btn btn-unstyled"
+                  href=""
                 >
                   1
-                </button>
+                </a>
               </li>
               <li
                 class="page-item disabled"
               >
-                <button
-                  class="button-root btn btn-unstyled page-link"
+                <a
+                  class="button-root page-link btn btn-unstyled"
                   disabled=""
-                  type="button"
+                  href=""
                 >
                   <svg
                     class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -312,7 +312,7 @@ exports[`Activities should render 1`] = `
                       xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
                     />
                   </svg>
-                </button>
+                </a>
               </li>
             </ul>
           </div>

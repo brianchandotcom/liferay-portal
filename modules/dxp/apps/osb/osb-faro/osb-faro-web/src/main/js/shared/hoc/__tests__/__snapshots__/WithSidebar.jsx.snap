@@ -47,7 +47,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
             class="channels-menu-icon"
           >
             <svg
-              class="lexicon-icon lexicon-icon-sites"
+              class="lexicon-icon lexicon-icon-sites icon-root"
               role="presentation"
             >
               <use
@@ -64,7 +64,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
             class="channels-menu-caret"
           >
             <svg
-              class="lexicon-icon lexicon-icon-caret-right"
+              class="lexicon-icon lexicon-icon-caret-right icon-root"
               role="presentation"
             >
               <use
@@ -92,7 +92,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               class="sidebar-item-root"
             >
               <a
-                class="button-root btn btn-link link"
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/sites"
               >
                 <span
@@ -122,7 +122,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               class="sidebar-item-root"
             >
               <a
-                class="button-root btn btn-link link"
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/assets"
               >
                 <span
@@ -152,7 +152,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               class="sidebar-item-root"
             >
               <a
-                class="button-root btn btn-link link"
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/event-analysis"
               >
                 <span
@@ -195,7 +195,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               class="sidebar-item-root"
             >
               <a
-                class="button-root btn btn-link link"
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/contacts/segments"
               >
                 <span
@@ -225,7 +225,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               class="sidebar-item-root"
             >
               <a
-                class="button-root btn btn-link link"
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/contacts/individuals"
               >
                 <span
@@ -268,7 +268,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               class="sidebar-item-root"
             >
               <a
-                class="button-root btn btn-link link"
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/commerce"
               >
                 <span
@@ -311,7 +311,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
               class="sidebar-item-root"
             >
               <a
-                class="button-root btn btn-link link"
+                class="link btn btn-unstyled"
                 href="/workspace/23/1/tests"
               >
                 <span
@@ -376,7 +376,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
             class="sidebar-item-root"
           >
             <a
-              class="button-root btn btn-link link"
+              class="link btn btn-unstyled"
               href="/workspace/23/settings/data-source"
             >
               <span
@@ -405,9 +405,8 @@ exports[`withSidebar should render with the sidebar 1`] = `
           <li
             class="sidebar-item-root"
           >
-            <button
-              class="button-root btn btn-link link"
-              type="button"
+            <a
+              class="link btn btn-unstyled"
             >
               <span
                 class="link-content-wrapper"
@@ -428,7 +427,7 @@ exports[`withSidebar should render with the sidebar 1`] = `
                   class="item-label"
                 />
               </span>
-            </button>
+            </a>
           </li>
         </ul>
       </div>

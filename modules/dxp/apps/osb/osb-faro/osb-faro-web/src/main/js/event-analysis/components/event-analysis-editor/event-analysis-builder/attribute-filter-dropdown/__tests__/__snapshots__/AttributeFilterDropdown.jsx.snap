@@ -104,7 +104,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -129,7 +129,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -154,7 +154,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -179,7 +179,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -204,7 +204,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -229,7 +229,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -254,7 +254,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -279,7 +279,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -304,7 +304,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div
@@ -329,7 +329,7 @@ exports[`AttributeFilterDropdown render 2`] = `
             class="dropdown-item d-flex justify-content-between"
           >
             <button
-              class="button-root btn btn-unstyled dropdown-item-primary-button btn-block"
+              class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
               type="button"
             >
               <div

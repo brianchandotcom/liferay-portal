@@ -146,15 +146,15 @@ exports[`InputList should render with existing items 1`] = `
         >
           <button
             aria-label="Close"
-            class="button-root btn btn-secondary close"
+            class="button-root close btn btn-secondary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-times"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-times icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                xlink:href="#times"
               />
             </svg>
           </button>
@@ -173,15 +173,15 @@ exports[`InputList should render with existing items 1`] = `
         >
           <button
             aria-label="Close"
-            class="button-root btn btn-secondary close"
+            class="button-root close btn btn-secondary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-times"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-times icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                xlink:href="#times"
               />
             </svg>
           </button>

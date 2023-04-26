@@ -8,7 +8,7 @@ exports[`EmailReports should render 1`] = `
     Email Reports: 
     Disabled
     <button
-      class="button-root btn btn-unstyled btn-outline-borderless btn-sm"
+      class="button-root btn btn-outline-borderless btn-sm btn-outline-unstyled"
       disabled=""
       type="button"
     >

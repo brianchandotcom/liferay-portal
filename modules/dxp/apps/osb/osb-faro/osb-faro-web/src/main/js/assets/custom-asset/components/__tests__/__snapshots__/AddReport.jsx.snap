@@ -145,7 +145,7 @@ exports[`AddReport should render a form AddReport 1`] = `
       class="card-footer"
     >
       <button
-        class="button-root btn btn-primary mr-4"
+        class="button-root mr-4 btn btn-primary"
         disabled=""
         type="button"
       >

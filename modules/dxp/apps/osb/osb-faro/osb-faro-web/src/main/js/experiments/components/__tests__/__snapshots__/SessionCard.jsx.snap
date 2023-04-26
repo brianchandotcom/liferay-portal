@@ -17,7 +17,7 @@ exports[`SessionCard should render 1`] = `
         role="group"
       >
         <button
-          class="active btn btn-sm btn-secondary"
+          class="button-root active btn btn-sm btn-secondary"
           type="button"
         >
           <svg
@@ -31,7 +31,7 @@ exports[`SessionCard should render 1`] = `
           Total
         </button>
         <button
-          class="btn btn-sm btn-secondary"
+          class="button-root btn btn-sm btn-secondary"
           type="button"
         >
           <svg

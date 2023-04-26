@@ -10,7 +10,7 @@ exports[`SearchableSelect should render 1`] = `
       class="dropdown dropdown-root searchable-select-root"
     >
       <button
-        class="button-root btn btn-secondary dropdown-toggle show-caret"
+        class="button-root dropdown-toggle show-caret btn btn-unstyled"
         type="button"
       >
         <span
@@ -67,11 +67,11 @@ exports[`SearchableSelect should render 1`] = `
                 type="button"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-search"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-search icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                    xlink:href="#search"
                   />
                 </svg>
               </button>
@@ -83,31 +83,31 @@ exports[`SearchableSelect should render 1`] = `
         class="dropdown-section items-wrapper"
       >
         <button
-          class="button-root btn btn-unstyled dropdown-item text-truncate"
+          class="dropdown-item text-truncate btn btn-unstyled"
           type="button"
         >
           item0
         </button>
         <button
-          class="button-root btn btn-unstyled dropdown-item text-truncate"
+          class="dropdown-item text-truncate btn btn-unstyled"
           type="button"
         >
           item1
         </button>
         <button
-          class="button-root btn btn-unstyled dropdown-item text-truncate"
+          class="dropdown-item text-truncate btn btn-unstyled"
           type="button"
         >
           item2
         </button>
         <button
-          class="button-root btn btn-unstyled dropdown-item text-truncate"
+          class="dropdown-item text-truncate btn btn-unstyled"
           type="button"
         >
           item3
         </button>
         <button
-          class="button-root btn btn-unstyled dropdown-item text-truncate"
+          class="dropdown-item text-truncate btn btn-unstyled"
           type="button"
         >
           item4

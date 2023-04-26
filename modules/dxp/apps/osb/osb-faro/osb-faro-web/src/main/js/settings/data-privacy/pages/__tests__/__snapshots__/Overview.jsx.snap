@@ -105,13 +105,13 @@ exports[`Data Privacy Overview should render 1`] = `
                     class="col-lg-auto"
                   >
                     <a
-                      class="button-root btn btn-secondary btn-block"
+                      class="button-root mb-2 btn btn-block btn-secondary"
                       href="/workspace/23/settings/data-privacy/request-log"
                     >
                       Manage
                     </a>
                     <button
-                      class="button-root btn btn-secondary btn-block"
+                      class="button-root btn btn-block btn-secondary"
                       type="button"
                     >
                       Export Log
@@ -138,14 +138,13 @@ exports[`Data Privacy Overview should render 1`] = `
                     class="col-lg-auto"
                   >
                     <a
-                      class="button-root btn btn-secondary btn-block"
-                      data-testid="manage-suppressed-user-button"
+                      class="button-root mb-2 btn btn-block btn-secondary"
                       href="/workspace/23/settings/data-privacy/suppressed-users"
                     >
                       Manage
                     </a>
                     <button
-                      class="button-root btn btn-secondary btn-block"
+                      class="button-root btn btn-block btn-secondary"
                       data-testid="export-suppressed-user-button"
                       type="button"
                     >

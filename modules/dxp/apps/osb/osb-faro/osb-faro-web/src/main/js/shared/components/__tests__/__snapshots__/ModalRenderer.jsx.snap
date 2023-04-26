@@ -27,7 +27,7 @@ exports[`ModalRenderer should pass props to modal: should render with title 'Foo
               FooBar
             </h4>
             <button
-              class="button-root btn btn-secondary close"
+              class="button-root close btn btn-secondary"
               type="button"
             >
               <svg
@@ -57,7 +57,7 @@ exports[`ModalRenderer should pass props to modal: should render with title 'Foo
               Cancel
             </button>
             <button
-              class="button-root btn btn-secondary"
+              class="button-root btn btn-primary"
               type="button"
             >
               Submit
@@ -108,7 +108,7 @@ exports[`ModalRenderer should render multiple modals 1`] = `
               Modal
             </h4>
             <button
-              class="button-root btn btn-secondary close"
+              class="button-root close btn btn-secondary"
               type="button"
             >
               <svg
@@ -138,7 +138,7 @@ exports[`ModalRenderer should render multiple modals 1`] = `
               Cancel
             </button>
             <button
-              class="button-root btn btn-secondary"
+              class="button-root btn btn-primary"
               type="button"
             >
               Submit
@@ -169,7 +169,7 @@ exports[`ModalRenderer should render multiple modals 1`] = `
               Modal
             </h4>
             <button
-              class="button-root btn btn-secondary close"
+              class="button-root close btn btn-secondary"
               type="button"
             >
               <svg
@@ -199,7 +199,7 @@ exports[`ModalRenderer should render multiple modals 1`] = `
               Cancel
             </button>
             <button
-              class="button-root btn btn-secondary"
+              class="button-root btn btn-primary"
               type="button"
             >
               Submit
@@ -242,7 +242,7 @@ exports[`ModalRenderer should render test modal 1`] = `
               Modal
             </h4>
             <button
-              class="button-root btn btn-secondary close"
+              class="button-root close btn btn-secondary"
               type="button"
             >
               <svg
@@ -272,7 +272,7 @@ exports[`ModalRenderer should render test modal 1`] = `
               Cancel
             </button>
             <button
-              class="button-root btn btn-secondary"
+              class="button-root btn btn-primary"
               type="button"
             >
               Submit

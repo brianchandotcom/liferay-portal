@@ -258,7 +258,7 @@ exports[`NewRequestModal renders 1`] = `
                           class="drop-target-container"
                         >
                           <button
-                            class="button-root btn btn-secondary btn-sm"
+                            class="button-root btn btn-sm btn-primary"
                             type="button"
                           >
                             Select File

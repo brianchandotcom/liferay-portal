@@ -63,7 +63,7 @@ exports[`UnassignedSegmentsModal renders 1`] = `
           class="modal-footer d-flex justify-content-end"
         >
           <button
-            class="wide btn btn-primary"
+            class="button-root wide btn btn-secondary"
             type="button"
           >
             Next

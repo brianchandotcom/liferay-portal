@@ -22,19 +22,19 @@ exports[`ActiveIndividualsCard should render 1`] = `
           role="group"
         >
           <button
-            class="interval-option text-uppercase active btn btn-sm btn-secondary"
+            class="button-root interval-option text-uppercase active btn btn-sm btn-secondary"
             type="button"
           >
             D
           </button>
           <button
-            class="interval-option text-uppercase btn btn-sm btn-secondary"
+            class="button-root interval-option text-uppercase btn btn-sm btn-secondary"
             type="button"
           >
             W
           </button>
           <button
-            class="interval-option text-uppercase btn btn-sm btn-secondary"
+            class="button-root interval-option text-uppercase btn btn-sm btn-secondary"
             type="button"
           >
             M

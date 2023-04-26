@@ -40,15 +40,15 @@ exports[`ChannelUserList should render 1`] = `
             role="presentation"
           >
             <a
-              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                  xlink:href="#order-arrow-ascending"
                 />
               </svg>
             </a>
@@ -77,11 +77,11 @@ exports[`ChannelUserList should render 1`] = `
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -98,7 +98,7 @@ exports[`ChannelUserList should render 1`] = `
             role="presentation"
           >
             <button
-              class="button-root btn btn-primary nav-btn px-3"
+              class="button-root nav-btn px-3 btn btn-primary"
               type="button"
             >
               Add User
@@ -172,20 +172,19 @@ exports[`ChannelUserList should render 1`] = `
                 class="quick-action-menu"
               >
                 <button
-                  alt="Delete"
                   aria-label="Delete"
-                  class="button-root btn btn-unstyled component-action quick-action-item"
+                  class="button-root component-action quick-action-item btn btn-unstyled"
                   data-testid="delete-user"
                   data-tooltip="true"
                   title="Delete"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-times"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-times icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                      xlink:href="#times"
                     />
                   </svg>
                 </button>
@@ -195,7 +194,7 @@ exports[`ChannelUserList should render 1`] = `
                 class="dropdown dropdown-root dropdown-action"
               >
                 <button
-                  class="button-root btn btn-unstyled dropdown-toggle component-action"
+                  class="button-root dropdown-toggle component-action btn btn-unstyled"
                   type="button"
                 >
                   <span>
@@ -227,7 +226,7 @@ exports[`ChannelUserList should render 1`] = `
         class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span
@@ -262,7 +261,9 @@ exports[`ChannelUserList should render 1`] = `
           class="page-item disabled"
         >
           <a
-            class="button-root btn btn-unstyled page-link link-disabled"
+            class="button-root page-link btn btn-unstyled"
+            disabled=""
+            href="/?page=0"
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -278,7 +279,7 @@ exports[`ChannelUserList should render 1`] = `
           class="page-item active"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=1"
           >
             1
@@ -288,7 +289,9 @@ exports[`ChannelUserList should render 1`] = `
           class="page-item disabled"
         >
           <a
-            class="button-root btn btn-unstyled page-link link-disabled"
+            class="button-root page-link btn btn-unstyled"
+            disabled=""
+            href="/?page=2"
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-right"

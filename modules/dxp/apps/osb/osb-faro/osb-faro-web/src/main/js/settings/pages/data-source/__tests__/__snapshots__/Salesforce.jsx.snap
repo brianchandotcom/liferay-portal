@@ -311,7 +311,7 @@ exports[`Salesforce should render 1`] = `
                 class="sheet-footer form-actions"
               >
                 <button
-                  class="button-root btn btn-secondary edit"
+                  class="button-root edit btn btn-secondary"
                   type="button"
                 >
                   Edit

@@ -20,15 +20,15 @@ exports[`SearchableTableWithAdded should render 1`] = `
             role="presentation"
           >
             <a
-              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                  xlink:href="#order-arrow-ascending"
                 />
               </svg>
             </a>
@@ -57,11 +57,11 @@ exports[`SearchableTableWithAdded should render 1`] = `
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -87,7 +87,7 @@ exports[`SearchableTableWithAdded should render 1`] = `
               class="table-head-title table-cell-expand"
             >
               <a
-                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                class="button-root inline-item text-truncate-inline btn btn-unstyled"
                 href="/?field=name&page=1&sortOrder=DESC"
               >
                 <span
@@ -113,7 +113,7 @@ exports[`SearchableTableWithAdded should render 1`] = `
               class="table-head-title"
             >
               <a
-                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                class="button-root inline-item text-truncate-inline btn btn-unstyled"
                 href="/?field=properties.email&page=1&sortOrder=ASC"
               >
                 <span
@@ -151,15 +151,15 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
             role="presentation"
           >
             <a
-              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                  xlink:href="#order-arrow-ascending"
                 />
               </svg>
             </a>
@@ -188,11 +188,11 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -233,7 +233,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
               class="tbar-section text-truncate"
             >
               <button
-                class="button-root btn btn-unstyled btn-outline-borderless"
+                class="button-root btn btn-outline-borderless btn-outline-unstyled"
                 type="button"
               >
                 View Current Members
@@ -255,7 +255,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
               class="table-head-title table-cell-expand"
             >
               <a
-                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                class="button-root inline-item text-truncate-inline btn btn-unstyled"
                 href="/?field=name&page=1&sortOrder=DESC"
               >
                 <span
@@ -281,7 +281,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
               class="table-head-title"
             >
               <a
-                class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                class="button-root inline-item text-truncate-inline btn btn-unstyled"
                 href="/?field=properties.email&page=1&sortOrder=ASC"
               >
                 <span
@@ -389,7 +389,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
         class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span
@@ -423,10 +423,10 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
         <li
           class="page-item disabled"
         >
-          <button
-            class="button-root btn btn-unstyled page-link"
+          <a
+            class="button-root page-link btn btn-unstyled"
             disabled=""
-            type="button"
+            href=""
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -436,25 +436,25 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
                 xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
               />
             </svg>
-          </button>
+          </a>
         </li>
         <li
           class="page-item active"
         >
-          <button
-            class="button-root btn btn-unstyled page-link"
-            type="button"
+          <a
+            class="button-root page-link btn btn-unstyled"
+            href=""
           >
             1
-          </button>
+          </a>
         </li>
         <li
           class="page-item disabled"
         >
-          <button
-            class="button-root btn btn-unstyled page-link"
+          <a
+            class="button-root page-link btn btn-unstyled"
             disabled=""
-            type="button"
+            href=""
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -464,7 +464,7 @@ exports[`SearchableTableWithAdded should show the staged table if showStaged is 
                 xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
               />
             </svg>
-          </button>
+          </a>
         </li>
       </ul>
     </div>

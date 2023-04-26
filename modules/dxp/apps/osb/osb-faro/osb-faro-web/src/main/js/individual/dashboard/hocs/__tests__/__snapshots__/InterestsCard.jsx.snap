@@ -358,22 +358,18 @@ exports[`InterestsCard renders 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root btn btn-link btn-sm"
+        class="button-root"
         href="/workspace/123/456/contacts/individuals/interests"
       >
         View All Interests
-        <span
-          class="inline-item inline-item-after"
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          role="presentation"
         >
-          <svg
-            class="icon-root lexicon-icon lexicon-icon-angle-right"
-            viewBox=""
-          >
-            <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-            />
-          </svg>
-        </span>
+          <use
+            xlink:href="#angle-right"
+          />
+        </svg>
       </a>
     </div>
   </div>
@@ -427,22 +423,18 @@ exports[`InterestsCard renders with empty data 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root btn btn-link btn-sm"
+        class="button-root"
         href="/workspace/123/456/contacts/individuals/interests"
       >
         View All Interests
-        <span
-          class="inline-item inline-item-after"
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          role="presentation"
         >
-          <svg
-            class="icon-root lexicon-icon lexicon-icon-angle-right"
-            viewBox=""
-          >
-            <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-            />
-          </svg>
-        </span>
+          <use
+            xlink:href="#angle-right"
+          />
+        </svg>
       </a>
     </div>
   </div>

@@ -6,7 +6,7 @@ exports[`HeaderCell should render 1`] = `
     class="table-head-title"
   >
     <button
-      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+      class="inline-item text-truncate-inline btn btn-unstyled"
       type="button"
     >
       <span

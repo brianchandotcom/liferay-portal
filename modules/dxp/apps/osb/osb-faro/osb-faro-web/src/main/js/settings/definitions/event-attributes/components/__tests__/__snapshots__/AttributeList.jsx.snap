@@ -38,11 +38,11 @@ exports[`AttributeList should render 1`] = `
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -65,7 +65,7 @@ exports[`AttributeList should render 1`] = `
             class="table-head-title table-cell-expand-small"
           >
             <a
-              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              class="button-root inline-item text-truncate-inline btn btn-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <span
@@ -91,7 +91,7 @@ exports[`AttributeList should render 1`] = `
             class="table-head-title table-cell-expand-small text-truncate"
           >
             <a
-              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              class="button-root inline-item text-truncate-inline btn btn-unstyled"
               href="/?field=displayName&page=1&sortOrder=ASC"
             >
               <span
@@ -185,7 +185,7 @@ exports[`AttributeList should render 1`] = `
         class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span
@@ -220,7 +220,9 @@ exports[`AttributeList should render 1`] = `
           class="page-item disabled"
         >
           <a
-            class="button-root btn btn-unstyled page-link link-disabled"
+            class="button-root page-link btn btn-unstyled"
+            disabled=""
+            href="/?page=0"
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -236,7 +238,7 @@ exports[`AttributeList should render 1`] = `
           class="page-item active"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=1"
           >
             1
@@ -246,7 +248,9 @@ exports[`AttributeList should render 1`] = `
           class="page-item disabled"
         >
           <a
-            class="button-root btn btn-unstyled page-link link-disabled"
+            class="button-root page-link btn btn-unstyled"
+            disabled=""
+            href="/?page=2"
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-right"

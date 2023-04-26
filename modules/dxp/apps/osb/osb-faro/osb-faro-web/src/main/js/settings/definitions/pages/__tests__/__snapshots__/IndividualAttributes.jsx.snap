@@ -105,11 +105,11 @@ exports[`IndividualAttributes should render 1`] = `
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-search"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-search icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                              xlink:href="#search"
                             />
                           </svg>
                         </button>
@@ -132,7 +132,7 @@ exports[`IndividualAttributes should render 1`] = `
                     class="table-head-title table-cell-expand"
                   >
                     <button
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="inline-item text-truncate-inline btn btn-unstyled"
                       type="button"
                     >
                       <span
@@ -158,7 +158,7 @@ exports[`IndividualAttributes should render 1`] = `
                     class="table-head-title pr-6"
                   >
                     <button
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="inline-item text-truncate-inline btn btn-unstyled"
                       type="button"
                     >
                       <span

@@ -61,16 +61,18 @@ exports[`Row should display an error state if it is a duplicate target field 1`]
     className="add-on"
     shrink={true}
   >
-    <ForwardRef
+    <ClayButton
+      className="button-root"
       data-tooltip={true}
-      display="unstyled"
+      displayType="unstyled"
       onClick={[Function]}
       title="Remove Field"
     >
-      <Icon
+      <ClayIcon
+        className="icon-root"
         symbol="times-circle"
       />
-    </ForwardRef>
+    </ClayButton>
   </FormGroupItem>
 </FormGroup>
 `;
@@ -136,16 +138,18 @@ exports[`Row should render 1`] = `
     className="add-on"
     shrink={true}
   >
-    <ForwardRef
+    <ClayButton
+      className="button-root"
       data-tooltip={true}
-      display="unstyled"
+      displayType="unstyled"
       onClick={[Function]}
       title="Remove Field"
     >
-      <Icon
+      <ClayIcon
+        className="icon-root"
         symbol="times-circle"
       />
-    </ForwardRef>
+    </ClayButton>
   </FormGroupItem>
 </FormGroup>
 `;
@@ -217,16 +221,18 @@ exports[`Row should update when receiving a new field: should contain "baz" and 
     className="add-on"
     shrink={true}
   >
-    <ForwardRef
+    <ClayButton
+      className="button-root"
       data-tooltip={true}
-      display="unstyled"
+      displayType="unstyled"
       onClick={[Function]}
       title="Remove Field"
     >
-      <Icon
+      <ClayIcon
+        className="icon-root"
         symbol="times-circle"
       />
-    </ForwardRef>
+    </ClayButton>
   </FormGroupItem>
 </FormGroup>
 `;

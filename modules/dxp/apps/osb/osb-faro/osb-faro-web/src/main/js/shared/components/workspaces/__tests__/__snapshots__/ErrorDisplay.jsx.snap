@@ -40,7 +40,7 @@ exports[`WorkspacesErrorDisplay should render 1`] = `
               Test Test
             </span>
             <svg
-              class="lexicon-icon lexicon-icon-caret-bottom caret"
+              class="lexicon-icon lexicon-icon-caret-bottom icon-root caret"
               role="presentation"
             >
               <use

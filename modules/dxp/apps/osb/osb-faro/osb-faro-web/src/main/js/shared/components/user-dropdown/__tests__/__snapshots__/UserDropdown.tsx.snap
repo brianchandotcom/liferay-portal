@@ -80,7 +80,7 @@ exports[`UserDropdown should render dropdown menu when clicked 1`] = `
                   class="dropdown-item"
                 >
                   <button
-                    class="button-root btn btn-unstyled btn-block"
+                    class="button-root btn btn-block btn-unstyled"
                     type="button"
                   >
                     Language
@@ -92,7 +92,7 @@ exports[`UserDropdown should render dropdown menu when clicked 1`] = `
                   class="dropdown-item"
                 >
                   <a
-                    class="button-root btn btn-unstyled btn-block"
+                    class="button-root link-unstyled"
                     href="/link-1"
                   >
                     Link 1
@@ -104,7 +104,7 @@ exports[`UserDropdown should render dropdown menu when clicked 1`] = `
                   class="dropdown-item"
                 >
                   <a
-                    class="button-root btn btn-unstyled btn-block"
+                    class="button-root link-unstyled"
                     href="/link-externo-2"
                   >
                     Link 2

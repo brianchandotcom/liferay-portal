@@ -16,7 +16,6 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import React, {useContext} from 'react';
 
 import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
-import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import loadIssues from '../utils/loadIssues';
 
@@ -32,7 +31,6 @@ export default function SidebarHeader() {
 
 const DefaultSidebarHeader = () => {
 	const {data, languageId, loading} = useContext(StoreStateContext);
-	const {portletNamespace} = useContext(ConstantsContext);
 	const dispatch = useContext(StoreDispatchContext);
 
 	const showRefreshButton = data?.validConnection && !data?.privateLayout;
@@ -59,7 +57,6 @@ const DefaultSidebarHeader = () => {
 							loadIssues({
 								dispatch,
 								languageId,
-								portletNamespace,
 								url,
 							});
 						}}

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTProcess addCTProcess(long userId, long ctCollectionId)
 		throws PortalException {
@@ -62,6 +65,7 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			null);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTProcess addCTProcess(
 			long userId, long fromCTCollectionId, long toCTCollectionId,
@@ -137,6 +141,7 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		return ctProcessPersistence.update(ctProcess);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CTProcess deleteCTProcess(CTProcess ctProcess) {
 		BackgroundTask backgroundTask =

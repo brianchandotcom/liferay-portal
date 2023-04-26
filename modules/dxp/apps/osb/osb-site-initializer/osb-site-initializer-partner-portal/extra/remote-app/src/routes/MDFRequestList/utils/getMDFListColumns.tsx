@@ -9,15 +9,21 @@
  * distribution rights of the Software.
  */
 
+import {KeyedMutator, mutate} from 'swr';
+
 import Dropdown from '../../../common/components/Dropdown';
 import {DropdownOption} from '../../../common/components/Dropdown/Dropdown';
 import StatusBadge from '../../../common/components/StatusBadge';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {PermissionActionType} from '../../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
+import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
+import deleteMDFRequest from '../../../common/services/liferay/object/mdf-requests/deleteMDFRequest';
 import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFListColumns(
@@ -25,7 +31,8 @@ export default function getMDFListColumns(
 		index: number
 	) => boolean | undefined,
 	siteURL: string,
-	actions?: PermissionActionType[]
+	actions?: PermissionActionType[],
+	mutated?: KeyedMutator<LiferayItems<MDFRequestDTO[]>>
 ): TableColumn<MDFRequestListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFRequestListItem, index: number) => {
 		const isUserAssociated = hasUserAccountSameAccountEntryCurrentMDFRequest(

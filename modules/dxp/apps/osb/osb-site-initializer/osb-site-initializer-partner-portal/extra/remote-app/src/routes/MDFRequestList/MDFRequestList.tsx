@@ -52,7 +52,7 @@ const MDFRequestList = () => {
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
 	const pagination = usePagination();
-	const {data, isValidating} = useGetMDFRequests(
+	const {data, isValidating, mutate} = useGetMDFRequests(
 		pagination.activePage,
 		pagination.activeDelta,
 		filtersTerm
@@ -81,7 +81,8 @@ const MDFRequestList = () => {
 					mdfRequestItems?.[index].r_accToMDFReqs_accountEntryId
 			),
 		siteURL,
-		actions
+		actions,
+		mutate?.listItems
 	);
 
 	const getTable = (

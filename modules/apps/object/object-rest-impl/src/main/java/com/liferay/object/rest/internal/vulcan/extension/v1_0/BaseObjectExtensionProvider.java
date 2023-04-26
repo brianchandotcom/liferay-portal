@@ -56,6 +56,10 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 	protected ObjectDefinition fetchObjectDefinition(
 		long companyId, String className) {
 
+		if (className == null) {
+			return null;
+		}
+
 		String internalDTOClassName = dtoMapper.toInternalDTOClassName(
 			className);
 

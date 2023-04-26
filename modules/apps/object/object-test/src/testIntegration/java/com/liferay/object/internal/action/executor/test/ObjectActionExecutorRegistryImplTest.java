@@ -22,7 +22,6 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.service.test.util.TestObjectActionExecutor;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;

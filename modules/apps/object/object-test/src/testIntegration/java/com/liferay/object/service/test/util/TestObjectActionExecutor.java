@@ -26,8 +26,7 @@ import java.util.List;
 public class TestObjectActionExecutor implements ObjectActionExecutor {
 
 	public TestObjectActionExecutor(
-		List<String> allowedObjectDefinitionNames, long companyId,
-		String key) {
+		List<String> allowedObjectDefinitionNames, long companyId, String key) {
 
 		_allowedObjectDefinitionNames = allowedObjectDefinitionNames;
 		_companyId = companyId;
@@ -36,8 +35,9 @@ public class TestObjectActionExecutor implements ObjectActionExecutor {
 
 	@Override
 	public void execute(
-		long companyId, UnicodeProperties parametersUnicodeProperties,
-		JSONObject payloadJSONObject, long userId) throws Exception {
+			long companyId, UnicodeProperties parametersUnicodeProperties,
+			JSONObject payloadJSONObject, long userId)
+		throws Exception {
 	}
 
 	@Override
@@ -66,4 +66,5 @@ public class TestObjectActionExecutor implements ObjectActionExecutor {
 	private final List<String> _allowedObjectDefinitionNames;
 	private final long _companyId;
 	private final String _key;
+
 }

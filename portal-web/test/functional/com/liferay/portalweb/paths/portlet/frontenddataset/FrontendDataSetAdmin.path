@@ -64,6 +64,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATA_SET_VIEW_DESCRIPTION</td>
+	<td>//li[contains(@class,'list-group-item')]//div[contains(@class,'justify-content-center')]//p[(@class="list-group-text") and contains (.,'${key_description}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_DATA_SET_VIEW</td>
+	<td>//div[contains(@class,"sheet-section")]//div[contains(@class,"form-group") and contains (.,'${key_type}')]//input[contains(@class,"form-control")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_OF_VIEWS</td>
 	<td>//div[contains(@class,"justify-content-center autofit-col autofit-col-expand") and contains(.,'${key_itemName}')]</td>
 	<td></td>

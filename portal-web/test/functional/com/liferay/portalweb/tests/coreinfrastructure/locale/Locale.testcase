@@ -655,6 +655,72 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-79868. Verify the default title is used for a portlet if there is no translation for a locale."
+	@priority = 3
+	test UseDefaultPortetTitleWithoutTranslation {
+		task ("Given a page with language selector widget and a portlet") {
+			User.firstLoginPG();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page",
+				widgetName = "Language Selector");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page",
+				widgetName = "Breadcrumb");
+		}
+
+		task ("And given the portlet has a custom title") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page",
+				siteName = "Test Site Name");
+
+			Portlet.configureCustomTitlePG(portletTitleName = "Breadcrumb");
+		}
+
+		task ("And given there is no Spanish translation for the title") {
+			Portlet.gotoPortletOptions(
+				portletName = "Breadcrumb",
+				portletOption = "Look and Feel Configuration");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			Type(
+				locator1 = "CalendarLookAndFeelConfiguration#CUSTOM_TITLE",
+				value1 = "");
+
+			Button.clickSave();
+
+			Translations.viewUntranslatedStatus(
+				locale = "es-ES",
+				portletName = "customTitle");
+		}
+
+		task ("When the page is viewed in Spanish") {
+			Refresh();
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "es-ES",
+				textIcon = "español-España");
+		}
+
+		task ("Then the portlet title reverts to the default custom title") {
+			AssertElementPresent(
+				key_portletTitleName = "Breadcrumb Custom",
+				locator1 = "Portlet#SPECIFIC_TITLE");
+		}
+	}
+
 	@priority = 3
 	test UserLockoutShowsTimezoneInformation {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

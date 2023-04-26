@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -91,11 +90,12 @@ public class DefaultDDMFormValuesFactory {
 		if ((defaultValue == null) ||
 			MapUtil.isEmpty(defaultValue.getValues())) {
 
-			defaultValue = Optional.ofNullable(
-				(LocalizedValue)ddmFormField.getProperty("initialValue")
-			).orElse(
-				_createDefaultLocalizedValue(StringPool.BLANK)
-			);
+			defaultValue = (LocalizedValue)ddmFormField.getProperty(
+				"initialValue");
+
+			if (defaultValue == null) {
+				defaultValue = _createDefaultLocalizedValue(StringPool.BLANK);
+			}
 		}
 
 		if (ddmFormField.isLocalizable()) {

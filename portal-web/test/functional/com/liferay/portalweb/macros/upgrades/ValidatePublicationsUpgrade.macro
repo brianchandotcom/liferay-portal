@@ -78,6 +78,28 @@ definition {
 		AssertVisible(
 			key_publicationName = "Publication 1 Name",
 			locator1 = "Publications#LIST_REVERT_DISABLED");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Upgrades",
+			configurationName = "Data Removal",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "Remove Publications Older Than 6 months");
+
+		SystemSettings.saveConfiguration();
+
+		PublicationsNavigator.openPublicationsHistory();
+
+		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.OutdatedPublishedCTCollectionUpgradeProcess");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
+			value1 = "No publication has been published yet.");
 	}
 
 	macro viewPublicationsUserRolePermissions {

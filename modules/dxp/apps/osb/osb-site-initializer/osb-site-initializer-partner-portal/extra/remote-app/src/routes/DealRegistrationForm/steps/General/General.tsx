@@ -42,9 +42,8 @@ const General = ({
 	const {data: mdfActivities} = useGetMDFActivity(values.partnerAccount.id);
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
-		companiesEntries,
 		useCallback(
-			(country, company, currency, accountExternalReferenceCode) => {
+			(_, company, currency, accountExternalReferenceCode) => {
 				setFieldValue('partnerAccount', company);
 				setFieldValue('currency', currency);
 				setFieldValue(
@@ -54,6 +53,7 @@ const General = ({
 			},
 			[setFieldValue]
 		),
+		companiesEntries,
 		fieldEntries[LiferayPicklistName.CURRENCIES]
 	);
 

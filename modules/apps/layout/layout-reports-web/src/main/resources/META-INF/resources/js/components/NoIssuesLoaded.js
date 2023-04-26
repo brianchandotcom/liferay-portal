@@ -15,13 +15,11 @@
 import ClayButton from '@clayui/button';
 import React, {useContext} from 'react';
 
-import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import loadIssues from '../utils/loadIssues';
 
 export default function NoIssuesLoaded() {
 	const {data, languageId} = useContext(StoreStateContext);
-	const {portletNamespace} = useContext(ConstantsContext);
 	const dispatch = useContext(StoreDispatchContext);
 
 	const {imagesPath} = data;
@@ -37,7 +35,6 @@ export default function NoIssuesLoaded() {
 		loadIssues({
 			dispatch,
 			languageId,
-			portletNamespace,
 			url,
 		});
 	};

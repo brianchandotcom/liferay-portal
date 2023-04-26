@@ -16,6 +16,7 @@ package com.liferay.portal.security.content.security.policy.internal.servlet.fil
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,10 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 	public boolean isFilterEnabled(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-134060")) {
+			return false;
+		}
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			_getContentSecurityPolicyConfiguration(httpServletRequest);

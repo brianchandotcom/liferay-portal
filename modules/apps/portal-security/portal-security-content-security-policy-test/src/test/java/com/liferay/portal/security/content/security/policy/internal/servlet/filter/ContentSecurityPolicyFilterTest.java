@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.security.content.security.policy.constants.ContentSecurityPolicyConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -51,6 +53,14 @@ public class ContentSecurityPolicyFilterTest {
 	@Before
 	public void setUp() throws PortalException {
 		MockitoAnnotations.initMocks(this);
+
+		PropsUtil.setProps(_props);
+
+		Mockito.when(
+			_props.get("feature.flag.LPS-134060")
+		).thenReturn(
+			"true"
+		);
 
 		Mockito.when(
 			_portal.getScopeGroupId(Mockito.any(HttpServletRequest.class))
@@ -156,5 +166,8 @@ public class ContentSecurityPolicyFilterTest {
 
 	@Mock
 	private Portal _portal;
+
+	@Mock
+	private Props _props;
 
 }

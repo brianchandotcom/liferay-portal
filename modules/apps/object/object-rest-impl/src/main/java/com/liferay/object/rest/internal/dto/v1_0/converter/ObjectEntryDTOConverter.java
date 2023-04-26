@@ -135,10 +135,10 @@ public class ObjectEntryDTOConverter
 		String manyToOneRelationshipName = StringUtil.removeLast(
 			objectFieldName, "Id");
 
-		AtomicReference<Serializable> nestedObjectEntry =
+		AtomicReference<Serializable> relatedObjectEntryReference =
 			new AtomicReference<>();
 
-		Map<String, Serializable> nestedFieldValues =
+		Map<String, Serializable> nestedFieldValuesByName =
 			NestedFieldsSupplier.supply(
 				nestedFieldName -> {
 					if (!StringUtil.equals(
@@ -152,8 +152,8 @@ public class ObjectEntryDTOConverter
 						return null;
 					}
 
-					if (nestedObjectEntry.get() != null) {
-						return nestedObjectEntry.get();
+					if (relatedObjectEntryReference.get() != null) {
+						return relatedObjectEntryReference.get();
 					}
 
 					ObjectDefinition objectDefinition =
@@ -168,7 +168,7 @@ public class ObjectEntryDTOConverter
 										getSystemObjectDefinitionManager(
 											objectDefinition.getName());
 
-							nestedObjectEntry.set(
+							relatedObjectEntryReference.set(
 								(Serializable)DTOConverterUtil.toDTO(
 									systemObjectDefinitionManager.
 										getBaseModelByExternalReferenceCode(
@@ -182,7 +182,7 @@ public class ObjectEntryDTOConverter
 									dtoConverterContext.getUser()));
 						}
 						else {
-							nestedObjectEntry.set(
+							relatedObjectEntryReference.set(
 								(Serializable)
 									_objectEntryLocalService.
 										getSystemModelAttributes(
@@ -190,7 +190,7 @@ public class ObjectEntryDTOConverter
 						}
 					}
 					else {
-						nestedObjectEntry.set(
+						relatedObjectEntryReference.set(
 							toDTO(
 								_getDTOConverterContext(
 									dtoConverterContext, primaryKey),
@@ -198,15 +198,15 @@ public class ObjectEntryDTOConverter
 									primaryKey)));
 					}
 
-					return nestedObjectEntry.get();
+					return relatedObjectEntryReference.get();
 				});
 
-		if (nestedFieldValues == null) {
+		if (nestedFieldValuesByName == null) {
 			return;
 		}
 
 		for (Map.Entry<String, Serializable> entry :
-				nestedFieldValues.entrySet()) {
+				nestedFieldValuesByName.entrySet()) {
 
 			String nestedFieldName = entry.getKey();
 

@@ -1,4 +1,4 @@
-import Button from '../Button';
+import ClayButton from '@clayui/button';
 import Nav from '../Nav';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
@@ -12,7 +12,9 @@ const items = [
 	</Nav.Item>,
 	<Nav.Item key={2}>{'bar'}</Nav.Item>,
 	<Nav.Item key={3}>
-		<Button display='link'>{'baz'}</Button>
+		<ClayButton className='button-root' displayType='secondary'>
+			{'baz'}
+		</ClayButton>
 	</Nav.Item>
 ];
 

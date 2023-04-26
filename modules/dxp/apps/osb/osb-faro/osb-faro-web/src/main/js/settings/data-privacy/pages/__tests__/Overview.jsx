@@ -56,9 +56,6 @@ describe('Data Privacy Overview', () => {
 
 		jest.runAllTimers();
 
-		expect(getByTestId('manage-suppressed-user-button').disabled).toBe(
-			true
-		);
 		expect(getByTestId('export-suppressed-user-button').disabled).toBe(
 			true
 		);

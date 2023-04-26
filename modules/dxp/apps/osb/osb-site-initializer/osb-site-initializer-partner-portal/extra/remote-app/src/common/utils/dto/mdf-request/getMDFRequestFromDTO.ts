@@ -68,6 +68,8 @@ export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals
 			?.split('; ')
 			.filter((request) => request !== ''),
+		liferayBusinessSalesGoalsOther:
+			mdfRequest.liferayBusinessSalesGoalsOther,
 		mdfRequestStatus: mdfRequest.mdfRequestStatus,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles
 			?.split('; ')

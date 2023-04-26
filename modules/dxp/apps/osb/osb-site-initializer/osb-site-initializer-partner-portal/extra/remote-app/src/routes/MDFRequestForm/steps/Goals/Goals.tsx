@@ -12,7 +12,7 @@
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useFormikContext} from 'formik';
-import {useCallback, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
@@ -47,9 +47,14 @@ const Goals = ({
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		useCallback(
-			(country, company, currency, accountExternalReferenceCode) => {
+			(
+				partnerCountry,
+				company,
+				currency,
+				accountExternalReferenceCode
+			) => {
 				setFieldValue('company', company);
-				setFieldValue('country', country);
+				setFieldValue('partnerCountry', partnerCountry);
 				setFieldValue('currency', currency);
 				setFieldValue(
 					'accountExternalReferenceCode',
@@ -61,17 +66,11 @@ const Goals = ({
 		companiesEntries,
 		fieldEntries[LiferayPicklistName.CURRENCIES],
 		!isObjectEmpty(values.currency) ? values.currency : undefined,
-		fieldEntries[LiferayPicklistName.REGIONS],
-		!isObjectEmpty(values.country) ? values.country : undefined,
+		fieldEntries[LiferayPicklistName.COUNTRIES],
+		!isObjectEmpty(values.partnerCountry)
+			? values.partnerCountry
+			: undefined,
 		!isObjectEmpty(values.company) ? values.company : undefined
-	);
-
-	const {
-		onSelected: onCountrySelected,
-		options: countryOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.REGIONS],
-		(selected) => setFieldValue('country', selected)
 	);
 
 	const {
@@ -82,26 +81,23 @@ const Goals = ({
 		(selected) => setFieldValue('additionalOption', selected)
 	);
 
-	const {
-		onSelected: onCurrencySelected,
-		options: currencyOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.CURRENCIES],
-		(selected) => setFieldValue('currency', selected)
-	);
-
-	const companyCurrencies =
-		currencyOptions &&
-		values.currency &&
-		currencyOptions.filter(
-			(currency) => currency.value === values.currency.key
-		);
-
 	const goalsErrors = useMemo(() => {
 		delete errors.activities;
 
 		return errors;
 	}, [errors]);
+
+	
+	useEffect(() => {
+		if (
+			!values.liferayBusinessSalesGoals?.includes(
+				'Other - Please describe'
+			)
+		) {
+			setFieldValue(`liferayBusinessSalesGoalsOther`, '');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.liferayBusinessSalesGoals]);
 
 	const getRequestPage = () => {
 		if (!fieldEntries) {
@@ -119,24 +115,6 @@ const Goals = ({
 							name="company"
 							onChange={onCompanySelected}
 							options={companyOptions}
-							required
-						/>
-
-						<PRMFormik.Field
-							component={PRMForm.Select}
-							label="Country"
-							name="country"
-							onChange={onCountrySelected}
-							options={countryOptions}
-							required
-						/>
-
-						<PRMFormik.Field
-							component={PRMForm.Select}
-							label="Currency"
-							name="currency"
-							onChange={onCurrencySelected}
-							options={companyCurrencies}
 							required
 						/>
 					</PRMForm.Group>
@@ -167,7 +145,17 @@ const Goals = ({
 						label="Select Liferay business/sales goals this Campaign serves (choose up to three)"
 						name="liferayBusinessSalesGoals"
 						required
-					/>
+					>
+						{values.liferayBusinessSalesGoals?.includes(
+							'Other - Please describe'
+						) && (
+							<PRMFormik.Field
+								component={PRMForm.InputText}
+								name="liferayBusinessSalesGoalsOther"
+								required
+							/>
+						)}
+					</PRMFormik.Field>
 				</PRMForm.Section>
 
 				<PRMForm.Section title="Target Market">

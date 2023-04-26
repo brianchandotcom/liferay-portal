@@ -90,6 +90,14 @@ definition {
 		}
 	}
 
+	macro expandField {
+		if (IsElementPresent(key_accordionTitle = ${accordionTitle}, locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
+			Click(
+				key_accordionTitle = ${accordionTitle},
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
+		}
+	}
+
 	macro getConvertedBase64File {
 		Variables.assertDefined(parameterList = ${file});
 

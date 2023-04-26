@@ -275,7 +275,10 @@ public class DBTest {
 		_db.runSQL(_SQL_CREATE_TABLE_2);
 
 		Assert.assertArrayEquals(
-			new String[] {"id2", "id1"},
+			new String[] {
+				_dbInspector.normalizeName("id2"),
+				_dbInspector.normalizeName("id1")
+			},
 			_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2));
 	}
 
@@ -285,7 +288,10 @@ public class DBTest {
 
 		Assert.assertFalse(
 			Arrays.equals(
-				new String[] {"id1", "id2"},
+				new String[] {
+					_dbInspector.normalizeName("id1"),
+					_dbInspector.normalizeName("id2")
+				},
 				_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2)));
 	}
 

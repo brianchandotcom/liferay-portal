@@ -87,8 +87,12 @@ public class JournalFeedLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 		feedId = StringUtil.toUpperCase(StringUtil.trim(feedId));
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			ddmStructureId);
+		DDMStructure ddmStructure = null;
+
+		if (ddmStructureId > 0) {
+			ddmStructure = _ddmStructureLocalService.fetchStructure(
+				ddmStructureId);
+		}
 
 		_validate(
 			user.getCompanyId(), groupId, feedId, autoFeedId, name,
@@ -110,9 +114,13 @@ public class JournalFeedLocalServiceImpl
 		feed.setFeedId(feedId);
 		feed.setName(name);
 		feed.setDescription(description);
-		feed.setDDMStructureId(ddmStructure.getStructureId());
-		feed.setDDMTemplateKey(ddmTemplateKey);
-		feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
+
+		if (ddmStructure != null) {
+			feed.setDDMStructureId(ddmStructure.getStructureId());
+			feed.setDDMTemplateKey(ddmTemplateKey);
+			feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
+		}
+
 		feed.setDelta(delta);
 		feed.setOrderByCol(orderByCol);
 		feed.setOrderByType(orderByType);
@@ -141,9 +149,11 @@ public class JournalFeedLocalServiceImpl
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority());
 
-		_ddmStructureLinkLocalService.addStructureLink(
-			_classNameLocalService.getClassNameId(JournalFeed.class),
-			feed.getPrimaryKey(), ddmStructure.getStructureId());
+		if (ddmStructure != null) {
+			_ddmStructureLinkLocalService.addStructureLink(
+				_classNameLocalService.getClassNameId(JournalFeed.class),
+				feed.getPrimaryKey(), ddmStructure.getStructureId());
+		}
 
 		// Resources
 
@@ -215,12 +225,17 @@ public class JournalFeedLocalServiceImpl
 
 		// DDM Structure Link
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			feed.getDDMStructureId());
+		if (feed.getDDMStructureId() > 0) {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchStructure(
+					feed.getDDMStructureId());
 
-		_ddmStructureLinkLocalService.deleteStructureLink(
-			_classNameLocalService.getClassNameId(JournalFeed.class),
-			feed.getPrimaryKey(), ddmStructure.getStructureId());
+			if (ddmStructure != null) {
+				_ddmStructureLinkLocalService.deleteStructureLink(
+					_classNameLocalService.getClassNameId(JournalFeed.class),
+					feed.getPrimaryKey(), ddmStructure.getStructureId());
+			}
+		}
 
 		// Expando
 
@@ -327,8 +342,12 @@ public class JournalFeedLocalServiceImpl
 
 		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			ddmStructureId);
+		DDMStructure ddmStructure = null;
+
+		if (ddmStructureId > 0) {
+			ddmStructure = _ddmStructureLocalService.fetchStructure(
+				ddmStructureId);
+		}
 
 		_validate(
 			feed.getCompanyId(), name, ddmStructure, targetLayoutFriendlyUrl,
@@ -336,9 +355,18 @@ public class JournalFeedLocalServiceImpl
 
 		feed.setName(name);
 		feed.setDescription(description);
-		feed.setDDMStructureId(ddmStructure.getStructureId());
-		feed.setDDMTemplateKey(ddmTemplateKey);
-		feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
+
+		if (ddmStructure != null) {
+			feed.setDDMStructureId(ddmStructure.getStructureId());
+			feed.setDDMTemplateKey(ddmTemplateKey);
+			feed.setDDMRendererTemplateKey(ddmRendererTemplateKey);
+		}
+		else {
+			feed.setDDMStructureId(0);
+			feed.setDDMTemplateKey(null);
+			feed.setDDMRendererTemplateKey(null);
+		}
+
 		feed.setDelta(delta);
 		feed.setOrderByCol(orderByCol);
 		feed.setOrderByType(orderByType);
@@ -373,21 +401,27 @@ public class JournalFeedLocalServiceImpl
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalFeed.class);
 
-		int count = _ddmStructureLinkLocalService.getStructureLinksCount(
-			classNameId, feed.getId());
-
-		if (count == 0) {
-			_ddmStructureLinkLocalService.addStructureLink(
-				classNameId, feed.getId(), ddmStructure.getStructureId());
+		if (ddmStructure == null) {
+			_ddmStructureLinkLocalService.deleteStructureLinks(
+				classNameId, feed.getId());
 		}
 		else {
-			DDMStructureLink ddmStructureLink =
-				_ddmStructureLinkLocalService.getUniqueStructureLink(
-					classNameId, feed.getId());
+			int count = _ddmStructureLinkLocalService.getStructureLinksCount(
+				classNameId, feed.getId());
 
-			_ddmStructureLinkLocalService.updateStructureLink(
-				ddmStructureLink.getStructureLinkId(), classNameId,
-				feed.getId(), ddmStructure.getStructureId());
+			if (count == 0) {
+				_ddmStructureLinkLocalService.addStructureLink(
+					classNameId, feed.getId(), ddmStructure.getStructureId());
+			}
+			else {
+				DDMStructureLink ddmStructureLink =
+					_ddmStructureLinkLocalService.getUniqueStructureLink(
+						classNameId, feed.getId());
+
+				_ddmStructureLinkLocalService.updateStructureLink(
+					ddmStructureLink.getStructureLinkId(), classNameId,
+					feed.getId(), ddmStructure.getStructureId());
+			}
 		}
 
 		return feed;
@@ -491,6 +525,11 @@ public class JournalFeedLocalServiceImpl
 			contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION)) {
 
 			return;
+		}
+
+		if (ddmStructure == null) {
+			throw new FeedContentFieldException(
+				"Invalid content field " + contentField);
 		}
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();

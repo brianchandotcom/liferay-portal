@@ -213,9 +213,9 @@ public class EditJournalFeedDisplayContext {
 		}
 
 		long ddmStructureId = ParamUtil.getLong(
-			_httpServletRequest, "ddmStructureId");
+			_httpServletRequest, "ddmStructureId", -1);
 
-		if ((ddmStructureId == 0) && (_journalFeed != null)) {
+		if ((ddmStructureId < 0) && (_journalFeed != null)) {
 			ddmStructureId = _journalFeed.getDDMStructureId();
 		}
 

@@ -21,7 +21,7 @@ import {ListViewContextProviderProps} from '../../../context/ListViewContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {testrayCaseRest} from '../../../services/rest';
+import {testrayCaseRestImpl} from '../../../services/rest';
 import {Action} from '../../../types';
 import dayjs from '../../../util/date';
 import useCaseActions from './useCaseActions';
@@ -56,7 +56,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				filterSchema: 'cases',
 				title: i18n.translate('cases'),
 			}}
-			resource={testrayCaseRest.resource}
+			resource={testrayCaseRestImpl.resource}
 			tableProps={{
 				actions,
 				columns: [
@@ -110,7 +110,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 				...tableProps,
 			}}
 			transformData={(response) =>
-				testrayCaseRest.transformDataFromList(response)
+				testrayCaseRestImpl.transformDataFromList(response)
 			}
 			variables={variables}
 			{...listViewProps}

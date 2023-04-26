@@ -135,6 +135,7 @@ export type TestrayBuild = {
 } & CaseResultAggregation;
 
 export type TestrayCase = {
+	actions: ObjectActionsItems;
 	caseResults?: TestrayCaseResult[];
 	caseToCaseResult?: TestrayCaseResult[];
 	caseType?: TestrayCaseType;

@@ -102,4 +102,6 @@ class TestrayCaseRest extends Rest<Case, TestrayCase> {
 	}
 }
 
-export const testrayCaseRest = new TestrayCaseRest();
+const testrayCaseRestImpl = new TestrayCaseRest();
+
+export {testrayCaseRestImpl};

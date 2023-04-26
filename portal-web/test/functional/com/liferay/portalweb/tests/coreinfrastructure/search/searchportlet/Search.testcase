@@ -270,6 +270,38 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-169035."
+	@priority = 4
+	test AssertCustomSearchResultsDisplayTemplate {
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
+
+		ApplicationDisplayTemplates.addCP(
+			adtFile = "custom_search_results_template.ftl",
+			adtType = "Search Results");
+
+		Search.openSearchPage();
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayTemplate = "Search Results Test ADT",
+			portletName = "Search Results");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertTextEquals(
+			locator1 = "Pagination#APPROXIMATE_RESULTS",
+			value1 = "Page 1 of approximately 7 results.");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "Custom No Response for apple");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "My results came up empty!");
+	}
+
 	@description = "This is a use case for LPS-160922."
 	@priority = 4
 	test AssertDefaultSearchResultsDisplayTemplate {

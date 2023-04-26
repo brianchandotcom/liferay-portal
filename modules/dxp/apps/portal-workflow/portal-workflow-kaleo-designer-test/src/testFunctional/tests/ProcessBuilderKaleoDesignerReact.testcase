@@ -2369,7 +2369,7 @@ definition {
 			infoOption = "Name",
 			infoValue = ${nodeNameValue});
 
-		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
+		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that name already exists. Enter a unique name.");
 
 		Workflow.saveDefinition(newKaleoDesigner = "True");
 
@@ -4632,7 +4632,7 @@ definition {
 			infoOption = "Name",
 			infoValue = ${nodeNameValue});
 
-		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
+		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that name already exists. Enter a unique name.");
 	}
 
 	@description = "LPS-139387 - Verify that the Step Label is a required field"

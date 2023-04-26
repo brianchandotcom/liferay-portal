@@ -212,6 +212,12 @@ const InviteTeamMembersPage = ({
 								accountKey: project.accountKey,
 								accountRoleId: filledEmail.role.id,
 								emailAddress: filledEmail.email,
+								userAccount: {
+									alternateName: filledEmail.givenName,
+									emailAddress: filledEmail.email,
+									familyName: filledEmail.familyName,
+									givenName: filledEmail.givenName,
+								},
 							},
 						});
 
@@ -237,8 +243,10 @@ const InviteTeamMembersPage = ({
 					},
 					variables: {
 						TeamMembersInvitation: filledEmailsDataFiltered.map(
-							({email, role}) => ({
+							({email, familyName, givenName, role}) => ({
 								email,
+								familyName,
+								givenName,
 								r_accountEntryToDXPCloudEnvironment_accountEntryId:
 									project?.id,
 								role: role.key,

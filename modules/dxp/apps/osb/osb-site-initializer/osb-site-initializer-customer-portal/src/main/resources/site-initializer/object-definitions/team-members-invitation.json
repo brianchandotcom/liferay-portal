@@ -9,6 +9,26 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en-US": "Given Name"
+			},
+			"name": "givenName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Family Name"
+			},
+			"name": "familyName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en-US": "Email"
 			},
 			"name": "email",

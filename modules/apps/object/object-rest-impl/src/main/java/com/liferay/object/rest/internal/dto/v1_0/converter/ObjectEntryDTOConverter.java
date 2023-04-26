@@ -121,7 +121,31 @@ public class ObjectEntryDTOConverter
 		return _toDTO(dtoConverterContext, objectEntry);
 	}
 
-	private void _addNestedFields(
+	private void _addManyToOneObjectRelationshipNames(
+		Map<String, Object> map, ObjectField objectField,
+		String objectFieldName, ObjectRelationship objectRelationship,
+		long primaryKey, Map<String, Serializable> values) {
+
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				objectField);
+
+		String relatedObjectEntryERC = GetterUtil.getString(
+			values.get(objectRelationshipERCObjectFieldName));
+
+		if (map.get(objectRelationship.getName()) == null) {
+			map.put(
+				objectRelationship.getName() + "ERC", relatedObjectEntryERC);
+		}
+
+		map.put(objectFieldName, primaryKey);
+
+		map.put(objectRelationshipERCObjectFieldName, relatedObjectEntryERC);
+	}
+
+	private void _addManyToOneRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext, Map<String, Object> map,
 			String objectFieldName, ObjectRelationship objectRelationship,
 			long primaryKey)
@@ -226,30 +250,6 @@ public class ObjectEntryDTOConverter
 				map.put(manyToOneRelationshipName, entry.getValue());
 			}
 		}
-	}
-
-	private void _addObjectRelationshipNames(
-		Map<String, Object> map, ObjectField objectField,
-		String objectFieldName, ObjectRelationship objectRelationship,
-		long primaryKey, Map<String, Serializable> values) {
-
-		String objectRelationshipERCObjectFieldName =
-			ObjectFieldSettingUtil.getValue(
-				ObjectFieldSettingConstants.
-					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-				objectField);
-
-		String relatedObjectEntryERC = GetterUtil.getString(
-			values.get(objectRelationshipERCObjectFieldName));
-
-		if (map.get(objectRelationship.getName()) == null) {
-			map.put(
-				objectRelationship.getName() + "ERC", relatedObjectEntryERC);
-		}
-
-		map.put(objectFieldName, primaryKey);
-
-		map.put(objectRelationshipERCObjectFieldName, relatedObjectEntryERC);
 	}
 
 	private DTOConverterContext _getDTOConverterContext(
@@ -682,12 +682,12 @@ public class ObjectEntryDTOConverter
 							objectField.getObjectFieldId());
 
 				if (primaryKey > 0) {
-					_addNestedFields(
+					_addManyToOneRelatedObjectEntries(
 						dtoConverterContext, map, objectFieldName,
 						objectRelationship, primaryKey);
 				}
 
-				_addObjectRelationshipNames(
+				_addManyToOneObjectRelationshipNames(
 					map, objectField, objectFieldName, objectRelationship,
 					primaryKey, values);
 			}

@@ -99,7 +99,7 @@ JavaMissingOverrideCheck | .java | Finds missing @Override annotations. |
 JavaMissingXMLPublicIdsCheck | .java | Finds missing public IDs for check XML files. |
 JavaModifiedServiceMethodCheck | .java | Finds missing empty lines before `removedService` or `addingService` calls. |
 JavaModuleClassGetResourceCallCheck | .java | Checks that dependencies files are located in the correct directory. |
-[JavaModuleComponentCheck](check/java_module_component_check.markdown#javamodulecomponentcheck) | .java | Checks for use of `@Component` in `-api` or `-spi` modules. |
+[JavaModuleComponentCheck](check/java_module_component_check.markdown#javamodulecomponentcheck) | .java | Performs several checks on classes with or without `@Component` annotation. |
 [JavaModuleExposureCheck](check/java_module_exposure_check.markdown#javamoduleexposurecheck) | .java | Checks for exposure of `SPI` types in `API`. |
 JavaModuleIllegalImportsCheck | .java | Finds cases of incorrect use of certain classes in modules. |
 JavaModuleInternalImportsCheck | .java | Finds cases where a module imports an `internal` class from another class. |

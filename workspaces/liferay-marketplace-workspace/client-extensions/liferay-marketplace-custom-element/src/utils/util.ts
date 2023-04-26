@@ -23,32 +23,6 @@ export async function getCatalogId() {
 	return response.items[0].id;
 }
 
-export async function publisherUserChecker() {
-	const response = await getUserAccountsById();
-
-	if (response.ok) {
-		const userAccounts = (await response.json()) as UserAccount;
-
-		const userHasPublisherGroup = await Promise.all(
-			userAccounts.accountBriefs.map(async (currentAccount) => {
-				const accountGroup = await getAccountGroup(currentAccount.id);
-
-				const accountGroupPublisher = accountGroup.some(
-					(currentAccountGroup) =>
-						currentAccountGroup.name === 'Business Publisher' ||
-						currentAccountGroup.name === 'Individual Publisher'
-				);
-
-				return accountGroupPublisher;
-			})
-		);
-
-		return userHasPublisherGroup.some((item) => item);
-	}
-
-	return false;
-}
-
 async function submitSpecification(
 	appId: string,
 	productId: number,

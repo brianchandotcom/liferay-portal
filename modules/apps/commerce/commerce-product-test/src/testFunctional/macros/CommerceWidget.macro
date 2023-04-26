@@ -386,7 +386,7 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(productSelection)) {
-			var key_Content = ${productSelection};
+			var key_content = ${productSelection};
 
 			Navigator.gotoNavTab(navTab = "Product Selection");
 
@@ -418,7 +418,7 @@ definition {
 		}
 
 		if (isSet(renderSelection)) {
-			var key_Content = ${renderSelection};
+			var key_content = ${renderSelection};
 
 			Navigator.gotoNavTab(navTab = "Render Selection");
 

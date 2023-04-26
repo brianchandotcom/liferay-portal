@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_MASTER_INDEX</td>
-	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}') and contains(@class,'page-editor__page-structure__tree-node--master-item')])[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'page-structure__clay-tree-node') and contains(.,'${key_nodeName}') and contains(@class,'page-editor__page-structure__clay-tree-node--master-item')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS</td>
-	<td>xpath=(//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//button[*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'page-structure__clay-tree-node') and contains(.,'${key_nodeName}')]//button[*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -10,6 +10,6 @@
  */
 
 export const PartnerRoles = {
-	MARKETING_USER: 'Partner Marketing User (PMU)',
-	SALES_USERS: 'Partner Sales Users (PSU)',
+	MARKETING_USER: '[Account] Partner Marketing User (PMU)',
+	SALES_USERS: '[Account] Partner Sales Users (PSU)',
 };

@@ -20,12 +20,18 @@
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
 
 String redirect = ParamUtil.getString(request, "redirect");
-String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
+
 String backURL = ParamUtil.getString(request, "backURL", redirect);
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+}
 
 int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_APPROVED);
 
 String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIST_VIEW_FLAT_USERS);
+String viewUsersRedirect = ParamUtil.getString(request, "viewUsersRedirect");
 
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse

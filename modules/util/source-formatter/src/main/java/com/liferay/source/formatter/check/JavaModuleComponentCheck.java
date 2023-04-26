@@ -76,10 +76,12 @@ public class JavaModuleComponentCheck extends BaseJavaTermCheck {
 					fileName,
 					"@Reference should not be used in a class without " +
 						"@Component");
+
+				break;
 			}
-			else if (StringUtil.startsWith(javaClass.getName(), "Base") &&
-					 childJavaTerm.isJavaVariable() &&
-					 childJavaTerm.isPrivate()) {
+
+			if (StringUtil.startsWith(javaClass.getName(), "Base") &&
+				childJavaTerm.isJavaVariable() && childJavaTerm.isPrivate()) {
 
 				addMessage(
 					fileName,

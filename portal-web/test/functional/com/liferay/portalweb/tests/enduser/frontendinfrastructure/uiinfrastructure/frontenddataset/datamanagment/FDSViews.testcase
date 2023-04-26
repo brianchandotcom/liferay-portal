@@ -67,6 +67,58 @@ definition {
 		}
 	}
 
+	@description = "LPS-181349. Confirm that description field is trunked if exceed 100 characters"
+	@priority = 4
+	test AssertNumberOfCharactersInDescriptionField {
+		task ("When go to add View with name View Test and description with 150 characters") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor accumsan luctus. Praesent feugiat nibh a lectus hendrerit lobortis. Donec blandit.",
+				key_name = "View Test");
+		}
+
+		task ("Then confirm the description value will be trunked") {
+			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor accumsan luctus. Praesent feugiat nibh a lectus hendrerit lobortis. Donec blandit.");
+		}
+	}
+
+	@description = "LPS-181347. Confirm that field is trunked if exceed 100 characters"
+	@priority = 4
+	test CanAssertNameFieldIsTrunkedIfExceedCharacters {
+		task ("When Clicking add button, and a user types a name that is more than 100 characters until 280 characters, and Filling the description field with 'Test Description', and Clicking Save button") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt ipsum. Quisque in justo a nibh sagittis auctor non at quam. Nulla facilisi. Donec feugiat, sapien at cursus orci aliquam.");
+		}
+
+		task ("Then confirm the name value will be trunked") {
+			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt ipsum. Quisque in justo a nibh sagittis auctor non at quam. Nulla facilisi. Donec feugiat, sapien at cursus orci aliquam.");
+		}
+	}
+
+	@description = "LPS-181340. Confirm that the name field is required for creating a view"
+	@priority = 5
+	test CanAssertNameIsRequired {
+		task ("When Clicking add button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Filling the description field with 'Test Description'") {
+			Type(
+				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
+				value1 = "Test Description");
+		}
+
+		task ("And When Click the Save button") {
+			PortletEntry.save();
+		}
+
+		task ("Then Confirm that 'This field is required' alert messages are present in the provider field") {
+			AssertTextPresent(
+				locator1 = "Message#ERROR",
+				value1 = "This field is required.");
+		}
+	}
+
 	@description = "LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
 	@priority = 5
 	test CanAssertPagination {
@@ -96,20 +148,6 @@ definition {
 
 		task ("Then Confirm that only one page is displayed") {
 			Pagination.viewResults(results = "Showing 1 to 4 of 4 entries.");
-		}
-	}
-	
-	@description = "LPS-181349. Confirm that description field is trunked if exceed 100 characters"
-	@priority = 4
-	test AssertNumberOfCharactersInDescriptionField {
-		task ("When go to add View with name View Test and description with 150 characters") {
-			FrontendDataSetAdmin.createDataSetView(
-				description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor accumsan luctus. Praesent feugiat nibh a lectus hendrerit lobortis. Donec blandit.",
-				key_name = "View Test");
-		}
-
-		task ("Then confirm the description value will be trunked") {
-			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor accumsan luctus. Praesent feugiat nibh a lectus hendrerit lobortis. Donec blandit.");
 		}
 	}
 
@@ -305,31 +343,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-181353. Confirm that the user can search a view by its description"
-	@priority = 4
-	test CanSearchViewByDescription {
-		task ("When Adding a new view called 'View Test' and the description field with 'Test Description', And Clicking Save button") {
-			FrontendDataSetAdmin.createDataSetView(
-				description = "Test Description",
-				key_name = "View Test");
-		}
-
-		task ("And Adding a new view called 'Bob Test' and the description field with 'Bob Description'") {
-			FrontendDataSetAdmin.createDataSetView(
-				description = "Bob Description",
-				key_name = "Bob Test");
-		}
-
-		task ("And type 'Bob Description' in the search bar and click enter.") {
-			Search.searchCP(searchTerm = "Bob Description");
-		}
-
-		task ("Then the corresponding view is displayed") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Bob Test");
-
-		}
-	}
-
 	@description = "LPS-181344. Assert that the user can edit or delet view"
 	@priority = 5
 	test CanEditOrDeleteView {
@@ -363,15 +376,39 @@ definition {
 
 		task ("When we edit the name and description of a view ") {
 			FrontendDataSetAdmin.editView(
-				key_OldName = "View Test",
-				key_NewName = "View Test edited",
-				key_NewDescription = "Test Description edited");
+				key_newDescription = "Test Description edited",
+				key_newName = "View Test edited",
+				key_oldName = "View Test");
 		}
 
 		task ("Then The dataset is present in the data set Admin page") {
 			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test edited");
 
 			FrontendDataSetAdmin.assertDataSetViewDescription(key_dataSetViewDescriptionList = "Test Description edited");
+		}
+	}
+
+	@description = "LPS-181353. Confirm that the user can search a view by its description"
+	@priority = 4
+	test CanSearchViewByDescription {
+		task ("When Adding a new view called 'View Test' and the description field with 'Test Description', And Clicking Save button") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_name = "View Test");
+		}
+
+		task ("And Adding a new view called 'Bob Test' and the description field with 'Bob Description'") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Bob Description",
+				key_name = "Bob Test");
+		}
+
+		task ("And type 'Bob Description' in the search bar and click enter.") {
+			Search.searchCP(searchTerm = "Bob Description");
+		}
+
+		task ("Then the corresponding view is displayed") {
+			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Bob Test");
 		}
 	}
 
@@ -440,44 +477,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "FrontendDataSetAdmin#NUMBER_OF_VIEWS",
 				numberOfViews = 0);
-		}
-	}
-
-	@description = "LPS-181347. Confirm that field is trunked if exceed 100 characters"
-	@priority = 4
-	test CanAssertNameFieldIsTrunkedIfExceedCharacters {
-		task ("When Clicking add button, and a user types a name that is more than 100 characters until 280 characters, and Filling the description field with 'Test Description', and Clicking Save button") {
-			FrontendDataSetAdmin.createDataSetView(
-				description = "Test Description",
-				key_name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt ipsum. Quisque in justo a nibh sagittis auctor non at quam. Nulla facilisi. Donec feugiat, sapien at cursus orci aliquam.");
-		}
-
-		task ("Then confirm the name value will be trunked") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non tincidunt ipsum. Quisque in justo a nibh sagittis auctor non at quam. Nulla facilisi. Donec feugiat, sapien at cursus orci aliquam.");
-		}
-	}
-
-	@description = "LPS-181340. Confirm that the name field is required for creating a view"
-	@priority = 5
-	test CanAssertNameIsRequired {
-		task ("When Clicking add button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And Filling the description field with 'Test Description'") {
-			Type(
-				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
-				value1 = "Test Description");
-		}
-
-		task ("And When Click the Save button") {
-			PortletEntry.save();
-		}
-
-		task ("Then Confirm that 'This field is required' alert messages are present in the provider field") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "This field is required.");
 		}
 	}
 

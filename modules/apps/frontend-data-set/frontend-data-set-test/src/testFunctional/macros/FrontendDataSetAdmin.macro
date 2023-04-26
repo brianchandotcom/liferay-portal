@@ -118,7 +118,7 @@ definition {
 
 	macro editView {
 		Click(
-			key_name = "${key_OldName}",
+			key_name = ${key_oldName},
 			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
 		MenuItem.click(menuItem = "View");
@@ -126,15 +126,15 @@ definition {
 		Type(
 			key_type = "Name",
 			locator1 = "FrontendDataSetAdmin#EDIT_DATA_SET_VIEW",
-			value1 = ${key_NewName});
-		
+			value1 = ${key_newName});
+
 		Type(
 			key_type = "Description",
 			locator1 = "FrontendDataSetAdmin#EDIT_DATA_SET_VIEW",
-			value1 = ${key_NewDescription});
+			value1 = ${key_newDescription});
 
 		PortletEntry.save();
-		
+
 		Navigator.gotoBack();
 	}
 

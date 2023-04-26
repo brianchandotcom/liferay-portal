@@ -34,26 +34,18 @@ import java.util.regex.Pattern;
 public class LoadBalancerUtil {
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, int minimumRAM,
-		int maximumSlavesPerHost, Properties properties) {
+		String masterPrefix, String blacklistString, boolean clock,
+		int minimumRAM, int maximumSlavesPerHost, Properties properties) {
 
 		return getAvailableJenkinsMasters(
-			masterPrefix, blacklistString, false, minimumRAM, maximumSlavesPerHost,
-			properties, true);
+			masterPrefix, blacklistString, clock, minimumRAM,
+			maximumSlavesPerHost, properties, true);
 	}
 
 	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, boolean clock, int minimumRAM,
-		int maximumSlavesPerHost, Properties properties) {
-
-		return getAvailableJenkinsMasters(
-			masterPrefix, blacklistString, clock, minimumRAM, maximumSlavesPerHost,
-			properties, true);
-	}
-
-	public static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, String blacklistString, boolean clock, int minimumRAM,
-		int maximumSlavesPerHost, Properties properties, boolean verbose) {
+		String masterPrefix, String blacklistString, boolean clock,
+		int minimumRAM, int maximumSlavesPerHost, Properties properties,
+		boolean verbose) {
 
 		List<JenkinsMaster> allJenkinsMasters = null;
 
@@ -84,20 +76,29 @@ public class LoadBalancerUtil {
 			allJenkinsMasters.size());
 
 		List<String> goodClockList = _getGoodClockList(properties, verbose);
-			
+
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
 			if (blacklist.contains(jenkinsMaster.getName()) ||
-			(clock && !goodClockList.contains(jenkinsMaster.getName())) ||
-			(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
-			(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
-				
+				(clock && !goodClockList.contains(jenkinsMaster.getName())) ||
+				(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
+				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
+
 				continue;
 			}
-			
+
 			availableJenkinsMasters.add(jenkinsMaster);
 		}
 
 		return availableJenkinsMasters;
+	}
+
+	public static List<JenkinsMaster> getAvailableJenkinsMasters(
+		String masterPrefix, String blacklistString, int minimumRAM,
+		int maximumSlavesPerHost, Properties properties) {
+
+		return getAvailableJenkinsMasters(
+			masterPrefix, blacklistString, false, minimumRAM,
+			maximumSlavesPerHost, properties, true);
 	}
 
 	public static String getMostAvailableMasterURL(
@@ -105,12 +106,18 @@ public class LoadBalancerUtil {
 		throws Exception {
 
 		return getMostAvailableMasterURL(
-			null, overridePropertiesArray, verbose, false);
+			null, overridePropertiesArray, verbose);
 	}
 
 	public static String getMostAvailableMasterURL(Properties properties) {
 		return getMostAvailableMasterURL(properties, true, false);
-	}	
+	}
+
+	public static String getMostAvailableMasterURL(
+		Properties properties, boolean verbose) {
+
+		return getMostAvailableMasterURL(properties, true, false);
+	}
 
 	public static String getMostAvailableMasterURL(
 		Properties properties, boolean verbose, boolean clock) {
@@ -156,7 +163,7 @@ public class LoadBalancerUtil {
 				}
 
 				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
-					masterPrefix, blacklistString, minimumRAM, clock,
+					masterPrefix, blacklistString, clock, minimumRAM,
 					maximumSlavesPerHost, properties, verbose);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
@@ -331,22 +338,23 @@ public class LoadBalancerUtil {
 
 	private static List<String> _getGoodClockList(
 		Properties properties, boolean verbose) {
-		
-			String goodClockString = properties.getProperty(
-				"jenkins.load.balancer.good.clock.list");
 
-			if (verbose) {
-				System.out.println("List of good clock masters: " + goodClockString);
-			}
+		String goodClockString = properties.getProperty(
+			"jenkins.load.balancer.good.clock.list");
 
-			List<String> goodClockList = new ArrayList<>();
-
-			for (String goodClockItem : goodClockString.split(",")) {
-				goodClockList.add(goodClockItem.trim());
-			}
-
-			return goodClockList;
+		if (verbose) {
+			System.out.println(
+				"List of good clock masters: " + goodClockString);
 		}
+
+		List<String> goodClockList = new ArrayList<>();
+
+		for (String goodClockItem : goodClockString.split(",")) {
+			goodClockList.add(goodClockItem.trim());
+		}
+
+		return goodClockList;
+	}
 
 	private static long _getNextUpdateTimestamp(String masterPrefix) {
 		if (!_nextUpdateTimestampMap.containsKey(masterPrefix)) {

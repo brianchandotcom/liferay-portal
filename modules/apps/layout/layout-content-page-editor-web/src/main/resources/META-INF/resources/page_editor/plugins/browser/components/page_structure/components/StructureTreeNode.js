@@ -280,8 +280,6 @@ function StructureTreeNodeContent({
 	};
 
 	const handleButtonsKeyDown = (event) => {
-		event.stopPropagation();
-
 		if (
 			[
 				ARROW_DOWN_KEY_CODE,
@@ -291,8 +289,11 @@ function StructureTreeNodeContent({
 			].includes(event.nativeEvent.code)
 		) {
 			document.activeElement
-				.closest('.lfr-treeview-node-list-item')
+				.closest('.page-editor__page-structure__clay-tree-node')
 				?.focus();
+		}
+		else {
+			event.stopPropagation();
 		}
 	};
 

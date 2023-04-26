@@ -192,8 +192,6 @@ export default function PageStructureSidebar() {
 	};
 
 	const handleButtonsKeyDown = (event) => {
-		event.stopPropagation();
-
 		if (
 			[
 				ARROW_DOWN_KEY_CODE,
@@ -203,8 +201,11 @@ export default function PageStructureSidebar() {
 			].includes(event.nativeEvent.code)
 		) {
 			document.activeElement
-				.closest('.lfr-treeview-node-list-item')
+				.closest('.page-editor__page-structure__clay-tree-node')
 				?.focus();
+		}
+		else {
+			event.stopPropagation();
 		}
 	};
 
@@ -258,8 +259,8 @@ export default function PageStructureSidebar() {
 		);
 	};
 
-	useEffect(() => {
-		const getAncestorsIds = (layoutDataItem, data) => {
+	const getAncestorsIds = useCallback(
+		(layoutDataItem, data) => {
 			if (!layoutDataItem.parentId) {
 				const itemInMasterLayout =
 					masterLayoutData?.items[layoutDataItem.itemId];
@@ -289,8 +290,11 @@ export default function PageStructureSidebar() {
 				...[layoutDataItem.itemId],
 				...getAncestorsIds(data.items[layoutDataItem.parentId], data),
 			];
-		};
+		},
+		[masterLayoutData]
+	);
 
+	useEffect(() => {
 		if (activeItemId) {
 			const layoutDataActiveItem = layoutData.items[activeItemId];
 
@@ -305,7 +309,7 @@ export default function PageStructureSidebar() {
 				]),
 			]);
 		}
-	}, [activeItemId, layoutData, masterLayoutData]);
+	}, [activeItemId, getAncestorsIds, layoutData, masterLayoutData]);
 
 	useEffect(() => {
 		if (dragAndDropHoveredItemId) {
@@ -320,14 +324,21 @@ export default function PageStructureSidebar() {
 
 	useEffect(() => {
 		if (keyboardMovementTargetId) {
+			const layoutDataTargetItem =
+				layoutData.items[keyboardMovementTargetId];
+
+			if (!layoutDataTargetItem) {
+				return;
+			}
+
 			setExpandedKeys((previousExpanedKeys) => [
 				...new Set([
 					...previousExpanedKeys,
-					...[keyboardMovementTargetId],
+					...getAncestorsIds(layoutDataTargetItem, layoutData),
 				]),
 			]);
 		}
-	}, [keyboardMovementTargetId]);
+	}, [getAncestorsIds, keyboardMovementTargetId, layoutData]);
 
 	return (
 		<div

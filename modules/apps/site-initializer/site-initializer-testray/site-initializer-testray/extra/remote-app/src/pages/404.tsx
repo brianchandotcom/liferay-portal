@@ -12,10 +12,20 @@
  * details.
  */
 
-import EmptyState, {EmptyStateProps, States} from './EmptyState';
+import {Link} from 'react-router-dom';
+import {States} from '~/components/EmptyState';
+import i18n from '~/i18n';
 
-export type {EmptyStateProps};
+const Page404 = () => (
+	<div className="align-items-center d-flex flex-column">
+		<img draggable={false} src={States.NOT_FOUND} width="50%" />
 
-export {States};
+		<div className="align-items-center d-flex flex-column">
+			<h1>{i18n.translate('sorry-this-page-does-not-exist')}</h1>
 
-export default EmptyState;
+			<Link to="/">{i18n.translate('go-to-homepage')}</Link>
+		</div>
+	</div>
+);
+
+export default Page404;

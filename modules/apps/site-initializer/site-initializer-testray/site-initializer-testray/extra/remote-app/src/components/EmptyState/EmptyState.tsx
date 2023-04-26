@@ -18,7 +18,7 @@ import React, {ReactNode} from 'react';
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay';
 
-const States = {
+export const States = {
 	BLANK: '',
 
 	/**
@@ -39,6 +39,9 @@ const States = {
 
 	NO_ACCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/app_builder/illustration_locker.svg`,
 
+	NOT_FOUND:
+		'https://www.liferay.com/documents/10182/501717/404-Illustration-v2.svg',
+
 	/**
 	 * The user has emptied the dataset for a good cause.
 	 * For example, all the notifications have been addressed, resulting in a clean state.
@@ -49,6 +52,7 @@ const States = {
 export type EmptyStateProps = {
 	children?: ReactNode;
 	description?: string;
+	imgSrc?: string;
 	title?: string;
 	type?: keyof typeof States;
 };
@@ -56,6 +60,7 @@ export type EmptyStateProps = {
 const EmptyState: React.FC<EmptyStateProps> = ({
 	children,
 	description,
+	imgSrc,
 	title,
 	type,
 }) => (
@@ -63,7 +68,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 		description={
 			description || i18n.translate('sorry-there-are-no-results-found')
 		}
-		imgSrc={type ? States[type] : States.EMPTY_STATE}
+		imgSrc={imgSrc ?? (type ? States[type] : States.EMPTY_STATE)}
 		title={title || i18n.translate('no-results-found')}
 	>
 		{children}

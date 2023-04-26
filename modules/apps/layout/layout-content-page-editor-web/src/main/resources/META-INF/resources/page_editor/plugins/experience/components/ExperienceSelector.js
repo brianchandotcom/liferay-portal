@@ -188,8 +188,8 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 			);
 
 			element?.scrollIntoView?.({
-				behavior: 'auto',
-				block: 'center',
+				behavior: 'smooth',
+				block: 'nearest',
 				inline: 'nearest',
 			});
 		}
@@ -202,7 +202,7 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 
 		element?.scrollIntoView?.({
 			behavior: 'smooth',
-			block: 'center',
+			block: 'nearest',
 			inline: 'nearest',
 		});
 	}, [

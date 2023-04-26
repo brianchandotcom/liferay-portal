@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
-import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,10 +29,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -42,9 +37,9 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -67,15 +62,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -161,8 +153,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			throw new IOException(jspException);
 		}
 
-		values.put("portletNamespace", _portletNamespace);
-
 		Writer writer = httpServletResponse.getWriter();
 
 		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
@@ -211,31 +201,17 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_portletNamespace = _portal.getPortletNamespace(
-			LayoutReportsPortletKeys.LAYOUT_REPORTS);
-	}
-
 	private String _getLayoutReportsDataURL(
 		HttpServletRequest httpServletRequest) {
 
-		return PortletURLBuilder.create(
-			_portletURLFactory.create(
-				httpServletRequest, LayoutReportsPortletKeys.LAYOUT_REPORTS,
-				PortletRequest.RESOURCE_PHASE)
-		).setParameter(
-			"p_p_resource_id", "/layout_reports/data"
-		).setParameter(
-			"plid",
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-				return themeDisplay.getPlid();
-			}
-		).buildString();
+		return HttpComponentsUtil.addParameters(
+			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+				"/layout_reports/get_layout_reports_data",
+			"plid", themeDisplay.getPlid());
 	}
 
 	private boolean _hasEditPermission(
@@ -303,13 +279,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			return false;
 		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				httpServletRequest);
-
-		boolean hidePanel = GetterUtil.getBoolean(
-			portalPreferences.getValue(
-				LayoutReportsPortletKeys.LAYOUT_REPORTS, "hide-panel"));
+		boolean hidePanel = ParamUtil.getBoolean(
+			httpServletRequest, "hide-panel");
 
 		if (hidePanel) {
 			return false;
@@ -330,7 +301,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 			JspWriter jspWriter = pageContext.getOut();
 
-			StringBundler sb = new StringBundler(25);
+			StringBundler sb = new StringBundler(24);
 
 			sb.append("<div aria-label=\"");
 			sb.append(_language.get(resourceBundle, "page-audit"));
@@ -344,7 +315,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			sb.append("lfr-product-menu-panel lfr-layout-reports-panel ");
 			sb.append("sidenav-fixed sidenav-menu-slider sidenav-right\" ");
 			sb.append("id=\"");
-			sb.append(_portletNamespace);
 			sb.append("layoutReportsPanelId\" tabindex=\"0\">");
 			sb.append("<div class=\"sidebar sidebar-light ");
 			sb.append("sidenav-menu sidebar-sm\">");
@@ -385,8 +355,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 				).put(
 					"layoutReportsDataURL",
 					_getLayoutReportsDataURL(httpServletRequest)
-				).put(
-					"portletNamespace", _portletNamespace
 				).build(),
 				httpServletRequest, jspWriter);
 
@@ -427,11 +395,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 	@Reference
 	private Portal _portal;
-
-	private String _portletNamespace;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

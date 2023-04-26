@@ -41,6 +41,8 @@
 [/#macro]
 
 [#if mdf_request_id?has_content]
+	[#assign permission_action = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Claim%27&pageSize=-1") /]
+	[#assign has_create_action = permission_action.items?filter(permission_action -> permission_action.action == "CREATE")?has_content /]
 	[#assign site_url = (themeDisplay.getURLCurrent()?keep_before("/l/${mdf_request_id}"))! /]
 
 	[#assign mdf_request = restClient.get("/c/mdfrequests/${mdf_request_id}?nestedFields=mdfReqToMDFClms,mdfClmToMDFClmActs,mdfClmActToMDFClmBgts&nestedFieldsDepth=3") /]
@@ -69,7 +71,7 @@
 					[/#if]
 				</div>
 
-				[#if valid_claims_size < 2]
+				[#if valid_claims_size < 2 && has_create_action]
 					<a class="btn btn-primary" href="${site_url}/marketing/mdf-claims/new/#/mdf-request/${mdf_request_id}">
 						New Claim
 					</a>

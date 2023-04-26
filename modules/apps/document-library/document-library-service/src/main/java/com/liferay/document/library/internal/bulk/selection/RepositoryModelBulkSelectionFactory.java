@@ -38,9 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.RepositoryModel",
-	service = {
-		BulkSelectionFactory.class, RepositoryModelBulkSelectionFactory.class
-	}
+	service = BulkSelectionFactory.class
 )
 public class RepositoryModelBulkSelectionFactory
 	implements BulkSelectionFactory<RepositoryModel<?>> {

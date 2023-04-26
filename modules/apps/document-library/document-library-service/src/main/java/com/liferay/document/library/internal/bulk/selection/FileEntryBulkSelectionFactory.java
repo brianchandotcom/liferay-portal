@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
-	service = {BulkSelectionFactory.class, FileEntryBulkSelectionFactory.class}
+	service = BulkSelectionFactory.class
 )
 public class FileEntryBulkSelectionFactory
 	implements BulkSelectionFactory<FileEntry> {

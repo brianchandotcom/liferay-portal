@@ -1,13 +1,17 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import Dropdown from 'shared/components/Dropdown';
 import React from 'react';
 
 interface IRowActionsProps {
 	actions?: (React.ComponentProps<typeof Dropdown> & {label: string})[];
-	quickActions?: (React.ComponentProps<typeof Button> & {
+	quickActions?: {
 		iconSymbol: string;
 		label: string;
-	})[];
+		href?: string;
+		onClick?: () => void;
+	}[];
 }
 
 const RowActions: React.FC<IRowActionsProps> = ({
@@ -17,20 +21,39 @@ const RowActions: React.FC<IRowActionsProps> = ({
 	<>
 		{!!quickActions?.length && (
 			<div className='quick-action-menu'>
-				{quickActions.map(
-					({iconAlignment = 'left', iconSymbol, label, ...props}) => (
-						<Button
-							alt={label}
+				{quickActions.map(({href, iconSymbol, label, ...props}) =>
+					href ? (
+						<ClayLink
 							aria-label={label}
-							className='component-action quick-action-item'
+							button
+							className='button-root component-action quick-action-item'
 							data-tooltip
-							display='unstyled'
-							icon={iconSymbol}
-							iconAlignment={iconAlignment}
+							displayType='unstyled'
+							href={href}
 							key={label}
 							title={label}
 							{...props}
-						/>
+						>
+							<ClayIcon
+								className='icon-root'
+								symbol={iconSymbol}
+							/>
+						</ClayLink>
+					) : (
+						<ClayButton
+							aria-label={label}
+							className='button-root component-action quick-action-item'
+							data-tooltip
+							displayType='unstyled'
+							key={label}
+							title={label}
+							{...props}
+						>
+							<ClayIcon
+								className='icon-root'
+								symbol={iconSymbol}
+							/>
+						</ClayButton>
 					)
 				)}
 			</div>
@@ -41,7 +64,7 @@ const RowActions: React.FC<IRowActionsProps> = ({
 				align='bottomRight'
 				buttonProps={{
 					className: 'component-action',
-					display: 'unstyled'
+					displayType: 'unstyled'
 				}}
 				className='dropdown-action'
 				icon='ellipsis-v'

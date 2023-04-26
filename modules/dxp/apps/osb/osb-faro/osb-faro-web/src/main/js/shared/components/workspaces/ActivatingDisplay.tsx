@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import Sheet from 'shared/components/Sheet';
 import URLConstants from 'shared/util/url-constants';
@@ -31,13 +31,15 @@ const ActivatingDisplay = () => (
 			</Sheet.Body>
 
 			<Sheet.Footer divider={false}>
-				<Button
-					display='primary'
-					externalLink
+				<ClayLink
+					button
+					className='button-root'
+					displayType='primary'
 					href={URLConstants.DocumentationAdminLink}
+					target='_blank'
 				>
 					{Liferay.Language.get('check-out-docs')}
-				</Button>
+				</ClayLink>
 			</Sheet.Footer>
 		</Sheet>
 	</WorkspacesBasePage>

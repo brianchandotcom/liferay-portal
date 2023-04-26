@@ -1,9 +1,10 @@
 import * as API from 'shared/api';
 import ActivitiesChart from '../ActivitiesChartDeprecated';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
 import ChangeLegend from 'contacts/components/ChangeLegend';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import getCN from 'classnames';
 import React from 'react';
@@ -151,19 +152,22 @@ export default class ActivitiesCard extends React.Component {
 				<Card.Body>{this.renderChart()}</Card.Body>
 
 				<Card.Footer>
-					<Button
-						display='link'
+					<ClayLink
+						className='button-root'
+						displayType='secondary'
 						href={toRoute(Routes.CONTACTS_ACCOUNT_ACTIVITIES, {
 							channelId,
 							groupId,
 							id
 						})}
-						icon='angle-right'
-						iconAlignment='right'
-						size='sm'
 					>
 						{Liferay.Language.get('view-all-activities')}
-					</Button>
+
+						<ClayIcon
+							className='icon-root ml-2'
+							symbol='angle-right'
+						/>
+					</ClayLink>
 				</Card.Footer>
 			</Card>
 		);

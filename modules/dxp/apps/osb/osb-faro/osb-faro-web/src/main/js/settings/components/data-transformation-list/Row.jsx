@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import debounce from 'shared/util/debounce-decorator';
 import FieldDropDown from './FieldDropDown';
 import Form from 'shared/components/form';
@@ -411,14 +412,18 @@ export class DataTransformationListRow extends React.Component {
 						</Form.GroupItem>
 
 						<Form.GroupItem className='add-on' shrink>
-							<Button
+							<ClayButton
+								className='button-root'
 								data-tooltip
-								display='unstyled'
+								displayType='unstyled'
 								onClick={this.handleRemove}
 								title={Liferay.Language.get('remove-field')}
 							>
-								<Icon symbol='times-circle' />
-							</Button>
+								<ClayIcon
+									className='icon-root'
+									symbol='times-circle'
+								/>
+							</ClayButton>
 						</Form.GroupItem>
 					</>
 				)}

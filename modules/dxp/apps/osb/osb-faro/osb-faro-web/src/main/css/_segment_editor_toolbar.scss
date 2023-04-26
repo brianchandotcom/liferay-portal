@@ -24,6 +24,8 @@
 		}
 
 		.btn-group {
+			align-items: center;
+			display: flex;
 			font-size: $fontSizeSmall;
 			padding: 0 16px;
 
@@ -32,6 +34,10 @@
 			}
 
 			.btn-group-item {
+				&:not(:last-child) {
+					margin-right: 1rem;
+				}
+
 				.include-anon-help-icon {
 					color: $secondary;
 				}
@@ -54,7 +60,6 @@
 				align-items: center;
 				display: flex;
 				font-weight: $fontWeightSemiBold;
-				margin-right: 8px;
 
 				.spinner-root {
 					margin-left: 4px;

@@ -1,6 +1,7 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import Icon, {Size} from 'shared/components/Icon';
 import React from 'react';
 
 interface ISelectDataSourceProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,37 +29,57 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 
 				<div className='section-items'>
 					{dataSources.map(
-						({
-							iconName,
-							iconSize,
-							name,
-							onClick,
-							subtitle,
-							url
-						}) => (
-							<Button
-								className='data-source-item'
-								display='unstyled'
-								href={url}
-								key={name}
-								onClick={onClick}
-							>
-								<div className='image'>
-									<Icon
-										size={iconSize as Size}
-										symbol={iconName}
-									/>
-								</div>
-
-								<div className='details'>
-									<div className='title'>
-										<h4>{name}</h4>
+						({iconName, iconSize, name, onClick, subtitle, url}) =>
+							url ? (
+								<ClayLink
+									button
+									className='button-root data-source-item'
+									displayType='unstyled'
+									href={url}
+									key={name}
+								>
+									<div className='image'>
+										<ClayIcon
+											className={`icon-root icon-size-${iconSize}`}
+											symbol={iconName}
+										/>
 									</div>
 
-									<div className='subtitle'>{subtitle}</div>
-								</div>
-							</Button>
-						)
+									<div className='details'>
+										<div className='title'>
+											<h4>{name}</h4>
+										</div>
+
+										<div className='subtitle'>
+											{subtitle}
+										</div>
+									</div>
+								</ClayLink>
+							) : (
+								<ClayButton
+									className='button-root data-source-item'
+									displayType='unstyled'
+									key={name}
+									onClick={onClick}
+								>
+									<div className='image'>
+										<ClayIcon
+											className={`icon-root icon-size-${iconSize}`}
+											symbol={iconName}
+										/>
+									</div>
+
+									<div className='details'>
+										<div className='title'>
+											<h4>{name}</h4>
+										</div>
+
+										<div className='subtitle'>
+											{subtitle}
+										</div>
+									</div>
+								</ClayButton>
+							)
 					)}
 				</div>
 			</section>

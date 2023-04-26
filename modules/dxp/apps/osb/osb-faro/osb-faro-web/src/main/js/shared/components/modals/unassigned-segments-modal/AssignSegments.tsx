@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Modal from 'shared/components/modal';
 import React, {useState} from 'react';
 import Table from 'shared/components/table';
@@ -194,25 +195,32 @@ const AssignSegments: React.FC<IAssignSegmentsProps> = ({groupId, onClose}) => {
 			</Modal.Body>
 
 			<Modal.Footer className='d-flex justify-content-end'>
-				<Button
+				<ClayButton
 					disabled={isSubmitting}
-					display='secondary'
+					displayType='secondary'
 					onClick={onClose}
 				>
 					{Liferay.Language.get('skip-for-now')}
-				</Button>
+				</ClayButton>
 
-				<Button
+				<ClayButton
 					data-testid='submit-button'
 					disabled={isSubmitting || !isValid()}
-					display='primary'
-					loading={isSubmitting}
+					displayType='primary'
 					onClick={handleSubmit}
 				>
+					{isSubmitting && (
+						<ClayLoadingIndicator
+							className='d-inline-block mr-2'
+							displayType='secondary'
+							size='sm'
+						/>
+					)}
+
 					{isSubmitting
 						? Liferay.Language.get('saving')
 						: Liferay.Language.get('done')}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</div>
 	);

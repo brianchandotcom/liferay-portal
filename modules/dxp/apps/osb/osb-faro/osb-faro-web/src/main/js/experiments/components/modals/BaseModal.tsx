@@ -38,7 +38,7 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 	const [submitError, setSubmitError] = useState(null);
 
 	let buttonSubmitProps: any = {
-		className: `d-flex align-items-center btn-${status}`,
+		className: `button-root d-flex align-items-center btn-${status}`,
 		disabled: disabled || submitting
 	};
 

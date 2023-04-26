@@ -171,6 +171,8 @@ export class SegmentProfileRoutes extends React.Component {
 							<BasePage.Header.PageActions
 								actions={[
 									{
+										button: true,
+										displayType: 'secondary',
 										href: toRoute(
 											Routes.CONTACTS_SEGMENT_EDIT,
 											{

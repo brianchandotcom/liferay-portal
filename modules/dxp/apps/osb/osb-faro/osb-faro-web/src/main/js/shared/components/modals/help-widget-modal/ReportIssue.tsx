@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	validateMaxLength,
 	validateRequired
@@ -98,18 +99,30 @@ const ReportIssue: React.FC<
 						</Modal.Body>
 
 						<Modal.Footer>
-							<Button display='secondary' onClick={onClose}>
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								onClick={onClose}
+							>
 								{Liferay.Language.get('cancel')}
-							</Button>
+							</ClayButton>
 
-							<Button
+							<ClayButton
+								className='button-root'
 								disabled={!isValid}
-								display='primary'
-								loading={isSubmitting}
+								displayType='primary'
 								type='submit'
 							>
+								{isSubmitting && (
+									<ClayLoadingIndicator
+										className='d-inline-block mr-2'
+										displayType='secondary'
+										size='sm'
+									/>
+								)}
+
 								{Liferay.Language.get('submit')}
-							</Button>
+							</ClayButton>
 						</Modal.Footer>
 					</Form.Form>
 				)}

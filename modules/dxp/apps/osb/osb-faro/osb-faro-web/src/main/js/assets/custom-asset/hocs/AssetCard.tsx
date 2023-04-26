@@ -1,6 +1,7 @@
 import BaseCard from 'cerebro-shared/components/base-card';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getMetricsMapper from 'cerebro-shared/hocs/mappers/metrics';
 import React, {useCallback, useState} from 'react';
 import {ASSET_METRICS} from 'shared/util/constants';
@@ -59,15 +60,16 @@ const Chart: React.FC<IChartProps> = ({
 			/>
 
 			<div className='d-flex justify-content-end'>
-				<Button
+				<ClayButton
 					aria-label={Liferay.Language.get('delete')}
 					borderless
-					display='secondary'
-					icon='trash'
-					iconAlignment='right'
+					className='button-root'
+					displayType='secondary'
 					onClick={() => onRemoveAsset(id)}
 					size='sm'
-				/>
+				>
+					<ClayIcon className='icon-root' symbol='trash' />
+				</ClayButton>
 			</div>
 		</>
 	);

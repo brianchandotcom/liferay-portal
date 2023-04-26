@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import Icon from 'shared/components/Icon';
 import React, {createRef} from 'react';
@@ -120,16 +120,17 @@ export class TitleEditor extends React.Component<
 					</span>
 
 					{editable && (
-						<Button
+						<ClayButton
 							aria-label={Liferay.Language.get('edit')}
 							borderless
-							display='unstyled'
+							className='button-root'
+							displayType='unstyled'
 							onClick={this.handleEdit}
 							outline
 							size='sm'
 						>
 							<Icon symbol='pencil' />
-						</Button>
+						</ClayButton>
 					)}
 				</div>
 			</div>

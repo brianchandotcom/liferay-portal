@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
 import AutocompleteInput from 'shared/components/AutocompleteInput';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
@@ -237,7 +237,13 @@ const ButtonInputTrigger: React.FC<IButtonInputTriggerProps> = ({
 	editing ? (
 		<AutocompleteInput focusOnInit={!value} value={value} {...otherProps} />
 	) : (
-		<Button onClick={onClick}>{label}</Button>
+		<ClayButton
+			className='button-root'
+			displayType='secondary'
+			onClick={onClick}
+		>
+			{label}
+		</ClayButton>
 	);
 
 interface IGeolocationInputProps extends ISegmentEditorCustomInputBase {

@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form, {
 	validateDateRangeRequired,
 	validateRequired
@@ -115,14 +115,15 @@ const DateFilter: React.FC<IFilterProps> = ({
 					</div>
 
 					<div className='options-footer'>
-						<Button
+						<ClayButton
 							block
+							className='button-root'
 							disabled={!isValid}
-							display='primary'
+							displayType='primary'
 							type='submit'
 						>
 							{Liferay.Language.get('done')}
-						</Button>
+						</ClayButton>
 					</div>
 				</Form.Form>
 			)}

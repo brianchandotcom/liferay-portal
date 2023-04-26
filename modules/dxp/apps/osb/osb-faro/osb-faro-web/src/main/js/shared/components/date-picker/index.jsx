@@ -1,6 +1,7 @@
 import autobind from 'autobind-decorator';
-import Button from '../Button';
 import Calendar from './Calendar';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import DatePickerSelect from './DatePickerSelect';
 import getCN from 'classnames';
 import Icon from '../Icon';
@@ -226,34 +227,39 @@ export default class DatePicker extends React.Component {
 						/>
 					</div>
 
-					<Button
+					<ClayButton
+						className='button-root'
 						disabled={this.isPrevDisabled()}
-						icon='angle-left'
-						iconAlignment='left'
+						displayType='secondary'
 						monospaced
 						onClick={this.handlePrevMonth}
 						size='sm'
-					/>
+					>
+						<ClayIcon className='icon-root' symbol='angle-left' />
+					</ClayButton>
 
-					<Button
+					<ClayButton
 						className='current-day-btn'
 						disabled={this.isCurrentDisabled()}
+						displayType='secondary'
 						monospaced
 						onClick={this.handleCurrentMonth}
 						size='sm'
 					>
 						{'•'}
-					</Button>
+					</ClayButton>
 
-					<Button
+					<ClayButton
+						className='button-root'
 						data-testid='next-month'
 						disabled={this.isNextDisabled()}
-						icon='angle-right'
-						iconAlignment='left'
+						displayType='secondary'
 						monospaced
 						onClick={this.handleNextMonth}
 						size='sm'
-					/>
+					>
+						<ClayIcon className='icon-root' symbol='angle-right' />
+					</ClayButton>
 				</div>
 
 				<div className='picker-body'>

@@ -1,5 +1,6 @@
 import BooleanFilter from './BooleanFilter';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import DateFilter from './DateFilter';
 import DurationFilter from './DurationFilter';
 import FilterInfo from '../../FilterInfo';
@@ -94,16 +95,16 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 	return (
 		<div className='attribute-options'>
 			<div className='options-header'>
-				<Button
-					className='back-to-attributes-button'
-					display='unstyled'
-					icon='angle-left'
-					iconAlignment='left'
+				<ClayButton
+					className='button-root back-to-attributes-button'
+					displayType='unstyled'
 					onClick={() => onAttributeChange(null)}
 					size='sm'
 				>
+					<ClayIcon className='icon-root mr-2' symbol='angle-left' />
+
 					{Liferay.Language.get('back-to-attributes')}
-				</Button>
+				</ClayButton>
 
 				<FilterInfo
 					dataType={dataType}

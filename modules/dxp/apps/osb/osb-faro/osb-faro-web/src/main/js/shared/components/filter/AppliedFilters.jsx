@@ -1,5 +1,6 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Label from 'cerebro-shared/components/Label';
 import React from 'react';
 import {
@@ -113,15 +114,16 @@ class AppliedFilters extends React.Component {
 				)}
 
 				{isClearFilterVisible(filters) && (
-					<Button
+					<ClayButton
 						className='ml-4'
-						display='secondary'
-						icon='trash'
+						displayType='secondary'
 						onClick={this.handleRemoveAllFilters}
 						size='sm'
 					>
+						<ClayIcon className='mr-2' symbol='trash' />
+
 						{Liferay.Language.get('clear-filter')}
-					</Button>
+					</ClayButton>
 				)}
 			</div>
 		);

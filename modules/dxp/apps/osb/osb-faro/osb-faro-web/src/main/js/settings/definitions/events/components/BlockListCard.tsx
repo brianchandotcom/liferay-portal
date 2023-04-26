@@ -7,8 +7,9 @@ import BLOCKED_CUSTOM_EVENT_DEFINITIONS_QUERY, {
 	UnhideBlockedCustomEventDefinitions,
 	UnhideBlockedCustomEventDefinitionsData
 } from '../queries/BlockedCustomEventDefinitionsQuery';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -436,33 +437,30 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 						? () => (
 								<Nav>
 									<Nav.Item>
-										<Button
+										<ClayButton
 											borderless
-											className='nav-btn'
-											display='outline-secondary'
-											icon='undo'
-											iconAlignment='left'
+											className='button-root nav-btn'
+											displayType='secondary'
 											onClick={() => {
 												handleUnblockEvents(
 													selectedItems.toArray()
 												);
 											}}
 										>
+											<ClayIcon
+												className='icon-root mr-2'
+												symbol='undo'
+											/>
+
 											{Liferay.Language.get(
 												'unblock-events'
 											)}
-										</Button>
+										</ClayButton>
 
-										<Button
+										<ClayButton
 											borderless
-											className='nav-btn'
-											display='outline-secondary'
-											icon={
-												hasUnhiddenEvent(selectedItems)
-													? 'ac-hidden'
-													: 'view'
-											}
-											iconAlignment='left'
+											className='button-root nav-btn'
+											displayType='secondary'
 											onClick={() => {
 												const hideEventFn = hasUnhiddenEvent(
 													selectedItems
@@ -475,10 +473,21 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 												);
 											}}
 										>
+											<ClayIcon
+												className='icon-root mr-2'
+												symbol={
+													hasUnhiddenEvent(
+														selectedItems
+													)
+														? 'ac-hidden'
+														: 'view'
+												}
+											/>
+
 											{hasUnhiddenEvent(selectedItems)
 												? Liferay.Language.get('hide')
 												: Liferay.Language.get('show')}
-										</Button>
+										</ClayButton>
 									</Nav.Item>
 								</Nav>
 						  )

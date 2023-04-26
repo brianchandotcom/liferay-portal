@@ -1,12 +1,12 @@
 // @ts-nocheck - Fix it at this LRAC-13388
 
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
 import ChartTooltip, {
 	Alignments,
 	Weights
 } from 'shared/components/chart-tooltip';
+import ClayButton from '@clayui/button';
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -616,13 +616,14 @@ export const SelectedPointInfo: React.FC<ISelectedPointInfoProps> = ({
 							)}
 						</h4>
 
-						<Button
-							display='link'
+						<ClayButton
+							className='button-root'
+							displayType='unstyled'
 							onClick={onClearSelection}
 							size='sm'
 						>
 							{Liferay.Language.get('clear-date-selection')}
-						</Button>
+						</ClayButton>
 					</div>
 
 					<div className='changed-values'>

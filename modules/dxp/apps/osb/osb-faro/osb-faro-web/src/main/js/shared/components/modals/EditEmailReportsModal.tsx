@@ -1,4 +1,5 @@
-import Button from '../Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form from 'shared/components/form';
 import Modal from '../modal';
 import React from 'react';
@@ -78,20 +79,30 @@ const EditEmailReportsModal: React.FC<IEditEmailReportsModalProps> = ({
 						</Form.Group>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button display='secondary' onClick={onCancel}>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							onClick={onCancel}
+						>
 							{Liferay.Language.get('cancel')}
-						</Button>
+						</ClayButton>
 
-						<Button
+						<ClayButton
+							className='button-root'
 							disabled={isSubmitting || !isValid}
-							display='primary'
-							loading={isSubmitting}
+							displayType='primary'
 							type='submit'
 						>
-							{isSubmitting
-								? Liferay.Language.get('saving')
-								: Liferay.Language.get('save')}
-						</Button>
+							{isSubmitting && (
+								<ClayLoadingIndicator
+									className='d-inline-block mr-2'
+									displayType='secondary'
+									size='sm'
+								/>
+							)}
+
+							{Liferay.Language.get('save')}
+						</ClayButton>
 					</Modal.Footer>
 				</Form.Form>
 			)}

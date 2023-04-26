@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
@@ -90,15 +91,18 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 					className: 'help-dropdown-root'
 				}}
 				trigger={
-					<Button
+					<ClayButton
 						aria-label={Liferay.Language.get('help')}
 						borderless
-						className='help-button'
-						display='defaut'
-						icon='ac-question-mark'
-						iconAlignment='right'
+						className='button-root help-button'
+						displayType='info'
 						size='sm'
-					/>
+					>
+						<ClayIcon
+							className='icon-root'
+							symbol='ac-question-mark'
+						/>
+					</ClayButton>
 				}
 			/>
 		</div>

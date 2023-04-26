@@ -1,5 +1,6 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Icon from 'shared/components/Icon';
@@ -115,10 +116,12 @@ export default class InputWithEditToggle extends React.Component<
 									contentAfter={
 										editing ? (
 											<>
-												<Button
+												<ClayButton
 													aria-label={Liferay.Language.get(
 														'cancel'
 													)}
+													className='button-root'
+													displayType='secondary'
 													onClick={() => {
 														this.handleEditToggle();
 
@@ -127,32 +130,42 @@ export default class InputWithEditToggle extends React.Component<
 													size='sm'
 												>
 													<Icon symbol='times' />
-												</Button>
+												</ClayButton>
 
-												<Button
+												<ClayButton
 													aria-label={Liferay.Language.get(
 														'submit'
 													)}
+													className='button-root'
 													disabled={!isValid}
-													display='primary'
-													loading={isSubmitting}
+													displayType='primary'
 													size='sm'
 													type='submit'
 												>
+													{isSubmitting && (
+														<ClayLoadingIndicator
+															className='d-inline-block mr-2'
+															displayType='secondary'
+															size='sm'
+														/>
+													)}
+
 													<Icon symbol='check' />
-												</Button>
+												</ClayButton>
 											</>
 										) : (
-											<Button
+											<ClayButton
 												aria-label={Liferay.Language.get(
 													'edit'
 												)}
+												className='button-root'
 												disabled={!editable}
+												displayType='secondary'
 												onClick={this.handleEditToggle}
 												size='sm'
 											>
 												<Icon symbol='pencil' />
-											</Button>
+											</ClayButton>
 										)
 									}
 									disabled={

@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import client from 'shared/apollo/client';
 import Form, {
 	toPromise,
@@ -283,20 +284,30 @@ const EditAttributeEventModal: React.FC<IEditAttributeEventModalProps> = ({
 										</Modal.Body>
 
 										<Modal.Footer>
-											<Button
+											<ClayButton
+												className='button-root'
+												displayType='secondary'
 												onClick={() => onClose(false)}
 											>
 												{Liferay.Language.get('cancel')}
-											</Button>
+											</ClayButton>
 
-											<Button
+											<ClayButton
+												className='button-root'
 												disabled={!isValid}
-												display='primary'
-												loading={isSubmitting}
+												displayType='primary'
 												type='submit'
 											>
+												{isSubmitting && (
+													<ClayLoadingIndicator
+														className='d-inline-block mr-2'
+														displayType='secondary'
+														size='sm'
+													/>
+												)}
+
 												{Liferay.Language.get('save')}
-											</Button>
+											</ClayButton>
 										</Modal.Footer>
 									</Form.Form>
 								)}

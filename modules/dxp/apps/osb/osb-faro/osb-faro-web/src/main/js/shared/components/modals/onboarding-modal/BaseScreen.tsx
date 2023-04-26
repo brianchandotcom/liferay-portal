@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -21,12 +22,13 @@ const BaseScreen: React.FC<IBaseScreenProps> = ({
 	>
 		<div className='header'>
 			<div className='d-flex justify-content-end'>
-				<Button
-					className='close'
-					icon='times'
-					iconAlignment='left'
+				<ClayButton
+					className='button-root close'
+					displayType='secondary'
 					onClick={onClose}
-				/>
+				>
+					<ClayIcon className='icon-root' symbol='times' />
+				</ClayButton>
 			</div>
 
 			{title && (

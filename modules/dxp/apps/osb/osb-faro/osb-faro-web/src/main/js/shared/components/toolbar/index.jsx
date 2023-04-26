@@ -1,11 +1,12 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
 import Checkbox from 'shared/components/Checkbox';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import Constants, {OrderByDirections} from 'shared/util/constants';
 import FilterAndOrder from 'shared/components/FilterAndOrder';
 import FilterTags from './FilterTags';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import Nav from 'shared/components/Nav';
 import NavBar from 'shared/components/NavBar';
 import PropTypes from 'prop-types';
@@ -242,13 +243,13 @@ export default class Toolbar extends React.Component {
 			return (
 				onSelectAll && (
 					<Nav.Item key='SELECT_ALL'>
-						<Button
-							className='nav-btn'
-							display='link'
+						<ClayButton
+							className='button-root nav-btn'
+							displayType='unstyled'
 							onClick={onSelectAll}
 						>
 							{Liferay.Language.get('select-all')}
-						</Button>
+						</ClayButton>
 					</Nav.Item>
 				)
 			);
@@ -281,31 +282,48 @@ export default class Toolbar extends React.Component {
 					)}
 
 					<Nav.Item>
-						<Button
-							borderless
-							className='nav-link nav-link-monospaced'
-							disabled={disabled}
-							display='unstyled'
-							href={onOrderIOMapChange ? '' : uri.toString()}
-							onClick={() => {
-								if (onOrderIOMapChange) {
+						{onOrderIOMapChange ? (
+							<ClayButton
+								borderless
+								className='btn-root nav-link nav-link-monospaced'
+								disabled={disabled}
+								displayType='unstyled'
+								onClick={() => {
 									onOrderIOMapChange(
 										orderIOMap.setIn(
 											[field, 'sortOrder'],
 											invertedSortOrder
 										)
 									);
-								}
-							}}
-						>
-							<Icon
-								symbol={
-									ascending
-										? 'order-arrow-ascending'
-										: 'order-arrow-descending'
-								}
-							/>
-						</Button>
+								}}
+							>
+								<ClayIcon
+									className='icon-root'
+									symbol={
+										ascending
+											? 'order-arrow-ascending'
+											: 'order-arrow-descending'
+									}
+								/>
+							</ClayButton>
+						) : (
+							<ClayLink
+								borderless
+								button
+								className='btn-root nav-link nav-link-monospaced'
+								displayType='unstyled'
+								href={uri.toString()}
+							>
+								<ClayIcon
+									className='icon-root'
+									symbol={
+										ascending
+											? 'order-arrow-ascending'
+											: 'order-arrow-descending'
+									}
+								/>
+							</ClayLink>
+						)}
 					</Nav.Item>
 				</>
 			);
@@ -438,14 +456,15 @@ export default class Toolbar extends React.Component {
 
 						{(query || activeFilters) && (
 							<SubnavTbar.Item>
-								<Button
-									display='link'
+								<ClayButton
+									className='button-root'
+									display='secondary'
 									key='FILTER_CLEAR'
 									onClick={this.handleClearAllFilters}
 									size='sm'
 								>
 									{Liferay.Language.get('clear')}
-								</Button>
+								</ClayButton>
 							</SubnavTbar.Item>
 						)}
 					</SubnavTbar>

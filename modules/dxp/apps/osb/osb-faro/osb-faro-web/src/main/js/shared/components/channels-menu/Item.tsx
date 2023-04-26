@@ -1,5 +1,5 @@
-import Button from '../Button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import React from 'react';
 import TextTruncate from '../TextTruncate';
@@ -13,7 +13,7 @@ interface ISitesDropdownItem
 	channel: Channel;
 	groupId: string;
 	route: string;
-	onClick: typeof noop;
+	onClick?: typeof noop;
 }
 
 const ChannelsMenuDropdownItem: React.FC<ISitesDropdownItem> = ({
@@ -30,9 +30,8 @@ const ChannelsMenuDropdownItem: React.FC<ISitesDropdownItem> = ({
 
 	return (
 		<ClayDropDown.Item className={classes}>
-			<Button
+			<ClayLink
 				className='link'
-				display='link'
 				href={toRoute(route, {channelId: id, groupId})}
 				onClick={onClick}
 			>
@@ -41,7 +40,7 @@ const ChannelsMenuDropdownItem: React.FC<ISitesDropdownItem> = ({
 					inline
 					title={name}
 				/>
-			</Button>
+			</ClayLink>
 		</ClayDropDown.Item>
 	);
 };

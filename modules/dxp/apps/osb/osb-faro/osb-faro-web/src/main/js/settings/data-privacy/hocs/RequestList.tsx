@@ -1,5 +1,6 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Constants, {OrderByDirections, Sizes} from 'shared/util/constants';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import DataControlRequest from '../queries/DataControlRequestMutation';
@@ -425,21 +426,23 @@ const RequestList: React.FC<IRequestListProps> = ({
 
 					return (
 						status === GDPRRequestStatuses.Completed && (
-							<Button
-								disabled={itemsSelected}
-								display='secondary'
-								download
-								externalLink
-								href={`/o/proxy/download/data-control-tasks/${id}?projectGroupId=${groupId}`}
+							<ClayLink
+								button
+								className='button-root'
+								{...(!itemsSelected && {
+									href: `/o/proxy/download/data-control-tasks/${id}?projectGroupId=${groupId}`
+								})}
+								aria-disabled={itemsSelected}
+								displayType='secondary'
 								onClick={() =>
 									analytics.track(
 										'Downloaded User Data Request'
 									)
 								}
-								size='sm'
+								small
 							>
 								{Liferay.Language.get('download')}
-							</Button>
+							</ClayLink>
 						)
 					);
 				}}
@@ -447,11 +450,10 @@ const RequestList: React.FC<IRequestListProps> = ({
 					<Nav>
 						<Nav.Item>
 							{selectedItems.size ? (
-								<Button
-									className='nav-btn'
-									display='primary'
-									download
-									externalLink
+								<ClayLink
+									button
+									className='button-root nav-btn'
+									displayType='primary'
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&filter=(id eq ${selectedItems
 										.map(({id}) => id)
 										.join(' or id eq ')})`}
@@ -462,15 +464,15 @@ const RequestList: React.FC<IRequestListProps> = ({
 									}
 								>
 									{Liferay.Language.get('download-all')}
-								</Button>
+								</ClayLink>
 							) : (
-								<Button
-									className='nav-btn'
-									display='primary'
+								<ClayButton
+									className='button-root nav-btn'
+									displayType='primary'
 									onClick={handleOpenNewRequestModal}
 								>
 									{Liferay.Language.get('create-request')}
-								</Button>
+								</ClayButton>
 							)}
 						</Nav.Item>
 					</Nav>

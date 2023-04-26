@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
@@ -98,14 +98,13 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 								{initialActiveMenu !== activeMenu && (
 									<ClayDropDown.Group>
 										<ClayDropDown.Item>
-											<Button
+											<ClayButton
 												aria-label={Liferay.Language.get(
 													'back'
 												)}
 												block
-												display='unstyled'
-												icon='order-arrow-left'
-												iconAlignment='left'
+												className='button-root'
+												displayType='unstyled'
 												onClick={() => {
 													setHistory(
 														history.slice(0, -1)
@@ -113,7 +112,9 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 
 													setDirection('right');
 												}}
-											/>
+											>
+												<ClayIcon symbol='order-arrow-left' />
+											</ClayButton>
 										</ClayDropDown.Item>
 									</ClayDropDown.Group>
 								)}
@@ -193,7 +194,10 @@ const Label = React.forwardRef<HTMLButtonElement, ILabelProps>(
 				<span className='user-name'>{userName}</span>
 
 				{showCaret && (
-					<ClayIcon className='caret' symbol='caret-bottom' />
+					<ClayIcon
+						className='icon-root caret'
+						symbol='caret-bottom'
+					/>
 				)}
 			</div>
 		</button>

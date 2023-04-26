@@ -1,5 +1,6 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	toPromise,
 	validateMaxLength,
@@ -207,19 +208,31 @@ const AddPropertyForm = ({
 								</div>
 
 								<div className='form-navigation'>
-									<Button
-										disabled={!isValid}
-										display='primary'
-										loading={isSubmitting}
+									<ClayButton
+										className='button-root'
+										disabled={!isValid || isSubmitting}
+										displayType='primary'
 										type='submit'
 									>
+										{isSubmitting && (
+											<ClayLoadingIndicator
+												className='d-inline-block mr-2'
+												displayType='secondary'
+												size='sm'
+											/>
+										)}
+
 										{Liferay.Language.get('save')}
-									</Button>
+									</ClayButton>
 
 									{!!tabsIList.size && (
-										<Button onClick={onCancel}>
+										<ClayButton
+											className='button-root'
+											displayType='secondary'
+											onClick={onCancel}
+										>
 											{Liferay.Language.get('cancel')}
-										</Button>
+										</ClayButton>
 									)}
 								</div>
 							</Form.Form>

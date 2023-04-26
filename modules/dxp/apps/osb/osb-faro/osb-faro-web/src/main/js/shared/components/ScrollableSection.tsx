@@ -1,5 +1,6 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React, {createRef} from 'react';
 import {hasChanges} from 'shared/util/react';
@@ -109,15 +110,19 @@ export default class ScrollableSection extends React.Component<
 			<div className='scrollable-section-root d-inline-flex'>
 				{showScroll && (
 					<div className='scroll-back-container d-flex align-items-center'>
-						<Button
+						<ClayButton
 							borderless
-							display='secondary'
-							icon='angle-left'
-							iconAlignment='left'
+							className='button-root'
+							displayType='secondary'
 							monospaced
 							onClick={this.handleScrollLeft}
 							size='sm'
-						/>
+						>
+							<ClayIcon
+								className='icon-root'
+								symbol='angle-left'
+							/>
+						</ClayButton>
 					</div>
 				)}
 
@@ -132,15 +137,19 @@ export default class ScrollableSection extends React.Component<
 
 				{showScroll && (
 					<div className='scroll-forward-container d-flex align-items-center'>
-						<Button
+						<ClayButton
 							borderless
-							display='secondary'
-							icon='angle-right'
-							iconAlignment='left'
+							className='button-root'
+							displayType='secondary'
 							monospaced
 							onClick={this.handleScrollRight}
 							size='sm'
-						/>
+						>
+							<ClayIcon
+								className='icon-root'
+								symbol='angle-right'
+							/>
+						</ClayButton>
 					</div>
 				)}
 			</div>

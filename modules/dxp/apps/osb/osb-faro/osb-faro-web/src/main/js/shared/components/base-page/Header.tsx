@@ -1,5 +1,6 @@
 import Breadcrumbs from 'shared/components/Breadcrumbs';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Dropdown from 'shared/components/Dropdown';
 import getCN from 'classnames';
 import Nav from 'shared/components/Nav';
@@ -51,8 +52,9 @@ const NavBar: React.FC<INavBarProps> = ({
 	);
 };
 
-interface Action extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Action extends React.HTMLAttributes<HTMLElement> {
 	label: string;
+	href: string;
 }
 
 interface IPageActionsProps {
@@ -77,18 +79,28 @@ const PageActions: React.FC<IPageActionsProps> = ({
 	return (
 		<>
 			{actions.length <= actionsDisplayLimit &&
-				actions.map(({label, ...props}) => (
-					<Button key={label} {...props}>
-						{label}
-					</Button>
-				))}
+				actions.map(({label, ...props}) => {
+					const Button = props.href ? ClayLink : ClayButton;
+
+					return (
+						<Button
+							button
+							className='button-root'
+							displayType='secondary'
+							key={label}
+							{...props}
+						>
+							{label}
+						</Button>
+					);
+				})}
 
 			{actions.length > actionsDisplayLimit && (
 				<Dropdown
 					{...triggerDisplayProps}
 					align='bottomRight'
 					buttonProps={{
-						display: label.length ? 'primary' : 'unstyled'
+						displayType: label.length ? 'primary' : 'unstyled'
 					}}
 					disabled={disabled}
 					showCaret={false}

@@ -1,6 +1,7 @@
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import ClaySelect from '@clayui/select';
 import fetch from 'shared/util/fetch';
 import PreferenceMutation from '../queries/PreferenceMutation';
@@ -232,24 +233,27 @@ export const Overview: React.FC<IOverviewProps> = ({
 									</div>
 
 									<div className='col-lg-auto'>
-										<Button
+										<ClayLink
 											block
-											display='secondary'
+											button
+											className='button-root mb-2'
+											displayType='secondary'
 											href={toRoute(
 												Routes.SETTINGS_DATA_PRIVACY_REQUEST_LOG,
 												{groupId}
 											)}
 										>
 											{Liferay.Language.get('manage')}
-										</Button>
+										</ClayLink>
 
-										<Button
+										<ClayButton
 											block
-											display='secondary'
+											className='button-root'
+											displayType='secondary'
 											onClick={handleOpenRequestModal}
 										>
 											{Liferay.Language.get('export-log')}
-										</Button>
+										</ClayButton>
 									</div>
 								</div>
 
@@ -271,11 +275,11 @@ export const Overview: React.FC<IOverviewProps> = ({
 									</div>
 
 									<div className='col-lg-auto'>
-										<Button
+										<ClayLink
 											block
-											data-testid='manage-suppressed-user-button'
-											disabled={!currentUser.isAdmin()}
-											display='secondary'
+											button
+											className='button-root mb-2'
+											displayType='secondary'
 											href={
 												authorized
 													? toRoute(
@@ -286,19 +290,20 @@ export const Overview: React.FC<IOverviewProps> = ({
 											}
 										>
 											{Liferay.Language.get('manage')}
-										</Button>
+										</ClayLink>
 
-										<Button
+										<ClayButton
 											block
+											className='button-root'
 											data-testid='export-suppressed-user-button'
 											disabled={!currentUser.isAdmin()}
-											display='secondary'
+											displayType='secondary'
 											onClick={handleOpenSuppressionModal}
 										>
 											{Liferay.Language.get(
 												'export-list'
 											)}
-										</Button>
+										</ClayButton>
 									</div>
 								</div>
 							</div>

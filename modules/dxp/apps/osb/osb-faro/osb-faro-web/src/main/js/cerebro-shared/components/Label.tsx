@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -30,14 +31,14 @@ const Label: React.FC<ILabelProps> = ({
 
 			{closeable && (
 				<span className='label-item label-item-after'>
-					<Button
+					<ClayButton
 						aria-label={Liferay.Language.get('close')}
-						className='close'
-						display='unstyled'
-						icon='times'
-						iconAlignment='right'
+						className='close button-root'
+						displayType='unstyled'
 						onClick={onRemove}
-					/>
+					>
+						<ClayIcon className='icon-root' symbol='times' />
+					</ClayButton>
 				</span>
 			)}
 		</span>

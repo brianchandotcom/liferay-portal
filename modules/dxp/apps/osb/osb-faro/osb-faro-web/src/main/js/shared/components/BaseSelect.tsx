@@ -1,4 +1,4 @@
-import Button from './Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import Icon from './Icon';
 import Input from './Input';
@@ -36,21 +36,24 @@ interface IItemProps extends React.HTMLAttributes<HTMLLIElement> {
 }
 
 export const Item: React.FC<IItemProps> = ({
+	active,
 	className,
+	disabled,
 	item,
 	itemRenderer,
-	onSelect,
-	...otherProps
+	onSelect
 }) => (
 	<li className={className}>
-		<Button
-			{...otherProps}
-			className='dropdown-item text-truncate'
-			display='unstyled'
+		<ClayButton
+			className={getCN('button-root dropdown-item text-truncate', {
+				active
+			})}
+			disabled={disabled}
+			displayType='unstyled'
 			onClick={() => onSelect(item)}
 		>
 			{itemRenderer(item)}
-		</Button>
+		</ClayButton>
 	</li>
 );
 

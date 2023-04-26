@@ -1,5 +1,5 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import {Routes, toRoute} from 'shared/util/router';
@@ -22,12 +22,14 @@ const AddDataSource: React.FC<IAddDataSourceProps> = ({groupId}) => (
 				primary
 				title=''
 			>
-				<Button
-					display='primary'
+				<ClayLink
+					button
+					className='button-root'
+					displayType='primary'
 					href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {groupId})}
 				>
 					{Liferay.Language.get('add-data-source')}
-				</Button>
+				</ClayLink>
 			</NoResultsDisplay>
 		</Card.Body>
 	</>

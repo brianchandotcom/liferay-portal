@@ -1,7 +1,7 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import Loading from 'shared/pages/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
@@ -109,8 +109,10 @@ export const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({
 										</a>
 
 										{authorized && (
-											<Button
-												display='primary'
+											<ClayLink
+												button
+												className='button-root'
+												displayType='primary'
 												href={toRoute(
 													Routes.SETTINGS_ADD_DATA_SOURCE,
 													{
@@ -121,7 +123,7 @@ export const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({
 												{Liferay.Language.get(
 													'connect-data-source'
 												)}
-											</Button>
+											</ClayLink>
 										)}
 									</>
 								}

@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import ActivitiesChart from './ActivitiesChartDeprecated';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -68,7 +68,7 @@ interface IActivitiesChartTimelineProps {
 	}[];
 	id: string;
 	interval: Interval;
-	onPointSelect: ({index: number}) => void;
+	onPointSelect: ({index}) => void;
 	rangeSelectors: RangeSelectors;
 	selectedPoint?: number;
 	timeZoneId: string;
@@ -156,13 +156,13 @@ const ActivitiesChartTimeline: React.FC<IActivitiesChartTimelineProps> = ({
 						<h4>{sub(activitiesLabel, [date])}</h4>
 
 						{hasSelectedPoint && (
-							<Button
-								display='link'
+							<ClayButton
+								className='button-root'
 								onClick={handleClearSelection}
 								size='sm'
 							>
 								{Liferay.Language.get('clear-date-selection')}
-							</Button>
+							</ClayButton>
 						)}
 					</div>
 

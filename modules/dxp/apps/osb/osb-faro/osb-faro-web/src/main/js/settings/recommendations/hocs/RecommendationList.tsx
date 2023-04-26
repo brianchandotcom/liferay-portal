@@ -1,5 +1,6 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Constants, {
 	JobRunDataPeriods,
 	JobRunFrequencies,
@@ -182,9 +183,10 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 				<Nav>
 					<Nav.Item>
 						{
-							<Button
+							<ClayButton
 								borderless
-								display='secondary'
+								className='button-root'
+								displayType='secondary'
 								onClick={() => {
 									open(modalTypes.CONFIRMATION_MODAL, {
 										message: (
@@ -230,7 +232,7 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 								outline
 							>
 								{Liferay.Language.get('delete')}
-							</Button>
+							</ClayButton>
 						}
 					</Nav.Item>
 				</Nav>
@@ -241,16 +243,16 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 			<Nav>
 				<Nav.Item>
 					{
-						<Button
+						<ClayLink
+							button
 							className='nav-btn'
-							display='primary'
 							href={toRoute(
 								Routes.SETTINGS_RECOMMENDATIONS_CREATE_ITEM_SIMILARITY_MODEL,
 								{groupId}
 							)}
 						>
 							{Liferay.Language.get('new-model')}
-						</Button>
+						</ClayLink>
 					}
 				</Nav.Item>
 			</Nav>

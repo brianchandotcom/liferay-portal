@@ -1,7 +1,8 @@
 import * as API from 'shared/api';
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -70,12 +71,13 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 	const FieldNameCell = ({data: {dataSources, fieldName}}) => (
 		<td className='table-cell-expand'>
 			<div className='content-container'>
-				<Button
-					display='unstyled'
+				<ClayButton
+					className='button-root'
+					displayType='unstyled'
 					onClick={openModal({dataSources, fieldName})}
 				>
 					{fieldName}
-				</Button>
+				</ClayButton>
 			</div>
 		</td>
 	);
@@ -151,8 +153,10 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 									</a>
 
 									{authorized && (
-										<Button
-											display='primary'
+										<ClayLink
+											button
+											className='button-root'
+											displayType='primary'
 											href={toRoute(
 												Routes.SETTINGS_ADD_DATA_SOURCE,
 												{
@@ -163,7 +167,7 @@ const IndividualAttributes: React.FC<IIndividualAttributesProps> = ({
 											{Liferay.Language.get(
 												'connect-data-source'
 											)}
-										</Button>
+										</ClayLink>
 									)}
 								</>
 							}

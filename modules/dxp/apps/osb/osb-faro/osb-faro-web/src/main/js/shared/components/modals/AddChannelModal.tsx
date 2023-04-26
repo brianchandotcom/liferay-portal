@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
@@ -11,7 +12,7 @@ import {sequence} from 'shared/util/promise';
 
 interface IAddChannelModalProps extends React.HTMLAttributes<HTMLElement> {
 	onCloseFn: ModalTypes.close;
-	onSubmitFn: ({name: string}) => void;
+	onSubmitFn: (value: {name: string}) => void;
 }
 
 const AddChannelModal: React.FC<IAddChannelModalProps> = ({
@@ -46,20 +47,30 @@ const AddChannelModal: React.FC<IAddChannelModalProps> = ({
 					</Modal.Body>
 
 					<Modal.Footer>
-						<Button display='secondary' onClick={onCloseFn}>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							onClick={onCloseFn}
+						>
 							{Liferay.Language.get('cancel')}
-						</Button>
+						</ClayButton>
 
-						<Button
+						<ClayButton
+							className='button-root'
 							disabled={isSubmitting || !isValid}
-							display='primary'
-							loading={isSubmitting}
+							displayType='primary'
 							type='submit'
 						>
-							{isSubmitting
-								? Liferay.Language.get('saving')
-								: Liferay.Language.get('save')}
-						</Button>
+							{isSubmitting && (
+								<ClayLoadingIndicator
+									className='d-inline-block mr-2'
+									displayType='secondary'
+									size='sm'
+								/>
+							)}
+
+							{Liferay.Language.get('save')}
+						</ClayButton>
 					</Modal.Footer>
 				</Form.Form>
 			)}

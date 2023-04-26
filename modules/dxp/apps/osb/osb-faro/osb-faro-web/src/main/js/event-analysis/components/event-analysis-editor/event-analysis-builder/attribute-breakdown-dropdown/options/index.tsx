@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import DateBreakdown from './DateBreakdown';
 import DurationBreakdown from './DurationBreakdown';
 import FilterInfo from '../../FilterInfo';
@@ -60,16 +61,16 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 	return (
 		<div className='attribute-options'>
 			<div className='options-header'>
-				<Button
-					className='back-to-attributes-button'
-					display='unstyled'
-					icon='angle-left'
-					iconAlignment='left'
+				<ClayButton
+					className='button-root back-to-attributes-button'
+					displayType='unstyled'
 					onClick={() => onAttributeChange(null)}
 					size='sm'
 				>
+					<ClayIcon className='icon-root mr-2' symbol='angle-left' />
+
 					{Liferay.Language.get('back-to-attributes')}
-				</Button>
+				</ClayButton>
 
 				<FilterInfo
 					dataType={dataType}

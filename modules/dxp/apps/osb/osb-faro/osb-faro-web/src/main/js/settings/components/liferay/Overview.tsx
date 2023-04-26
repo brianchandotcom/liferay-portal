@@ -1,6 +1,6 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form, {
 	toPromise,
 	validateMaxLength,
@@ -232,11 +232,13 @@ class LiferayOverview extends React.Component<ILiferayOverviewProps> {
 										</Form.GroupItem>
 
 										<Form.GroupItem>
-											<Button
+											<ClayButton
+												className='button-root'
 												data-testid='disconnect-button'
 												disabled={
 													!currentUser.isAdmin()
 												}
+												displayType='secondary'
 												onClick={
 													disconnected
 														? this
@@ -252,7 +254,7 @@ class LiferayOverview extends React.Component<ILiferayOverviewProps> {
 													: Liferay.Language.get(
 															'disconnect'
 													  )}
-											</Button>
+											</ClayButton>
 										</Form.GroupItem>
 									</Form.Group>
 								</Form.Form>

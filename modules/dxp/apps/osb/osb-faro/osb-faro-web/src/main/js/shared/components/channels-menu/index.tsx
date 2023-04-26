@@ -93,7 +93,10 @@ export const ChannelsMenu: React.FC<IChannelsMenuProps> = ({
 										groupId
 									})}
 								>
-									<ClayIcon symbol='cog' />
+									<ClayIcon
+										className='icon-root'
+										symbol='cog'
+									/>
 								</Link>
 							</div>
 
@@ -160,7 +163,7 @@ const ChannelsButton = React.forwardRef<
 		{...otherProps}
 	>
 		<div className='channels-menu-icon'>
-			<ClayIcon symbol='sites' />
+			<ClayIcon className='icon-root' symbol='sites' />
 		</div>
 
 		<div className='channels-menu-label'>
@@ -168,7 +171,7 @@ const ChannelsButton = React.forwardRef<
 		</div>
 
 		<div className='channels-menu-caret'>
-			<ClayIcon symbol='caret-right' />
+			<ClayIcon className='icon-root' symbol='caret-right' />
 		</div>
 	</button>
 ));

@@ -12,7 +12,7 @@ const SummarySectionMetricType: React.FC<SummarySectionMetricTypeIProps> = ({
 }) => (
 	<div className={`${CLASSNAME}-metric-type`}>
 		<span className={`${CLASSNAME}-metric-type-icon`}>
-			<ClayIcon symbol='web-content' />
+			<ClayIcon className='icon-root' symbol='web-content' />
 		</span>
 
 		{value}

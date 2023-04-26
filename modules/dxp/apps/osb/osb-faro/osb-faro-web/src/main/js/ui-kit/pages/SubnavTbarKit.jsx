@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import React from 'react';
 import SubnavTbar from 'shared/components/SubnavTbar';
 
@@ -12,32 +12,52 @@ class SubnavTbarKit extends React.Component {
 			>
 				<SubnavTbar>
 					<SubnavTbar.Item>
-						<Button borderless display='unstyled'>
+						<ClayButton
+							borderless
+							className='button-root'
+							displayType='unstyled'
+						>
 							{'8 Items Selected'}
-						</Button>
+						</ClayButton>
 					</SubnavTbar.Item>
 					<SubnavTbar.Item expand>
-						<Button borderless display='unstyled'>
+						<ClayButton
+							borderless
+							className='button-root'
+							displayType='unstyled'
+						>
 							{'SubnavTbar Action'}
-						</Button>
+						</ClayButton>
 					</SubnavTbar.Item>
 					<SubnavTbar.Item>
-						<Button borderless display='unstyled'>
+						<ClayButton
+							borderless
+							className='button-root'
+							displayType='unstyled'
+						>
 							{'Undo All'}
-						</Button>
+						</ClayButton>
 					</SubnavTbar.Item>
 				</SubnavTbar>
 
-				<SubnavTbar display='primary'>
+				<SubnavTbar>
 					<SubnavTbar.Item expand>
-						<Button borderless display='unstyled'>
+						<ClayButton
+							borderless
+							className='button-root'
+							displayType='unstyled'
+						>
 							{'SubnavTbar Action'}
-						</Button>
+						</ClayButton>
 					</SubnavTbar.Item>
 					<SubnavTbar.Item>
-						<Button borderless display='unstyled'>
+						<ClayButton
+							borderless
+							className='button-root'
+							displayType='unstyled'
+						>
 							{'Undo All'}
-						</Button>
+						</ClayButton>
 					</SubnavTbar.Item>
 				</SubnavTbar>
 			</div>

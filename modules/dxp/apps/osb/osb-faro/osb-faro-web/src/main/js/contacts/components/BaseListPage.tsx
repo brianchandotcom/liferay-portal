@@ -1,7 +1,7 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import EmbeddedAlertList, {
 	IEmbeddedAlertListProps
 } from 'shared/components/EmbeddedAlertList';
@@ -104,15 +104,17 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 	};
 
 	const ConnectDataSourceButton = () => (
-		<Button
-			display='primary'
+		<ClayLink
+			button
+			className='button-root'
+			displayType='primary'
 			href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
 				channelId,
 				groupId
 			})}
 		>
 			{Liferay.Language.get('connect-data-source')}
-		</Button>
+		</ClayLink>
 	);
 
 	const renderNoResults = (query, activeFilters) => {

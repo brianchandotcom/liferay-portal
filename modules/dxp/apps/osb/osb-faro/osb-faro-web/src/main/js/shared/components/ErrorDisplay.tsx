@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {FC} from 'react';
@@ -26,7 +26,15 @@ const ErrorDisplay: FC<IErrorDisplayProps> = ({
 		)}
 		title={message}
 	>
-		{onReload && <Button onClick={() => onReload()}>{buttonLabel}</Button>}
+		{onReload && (
+			<ClayButton
+				className='button-root'
+				displayType='secondary'
+				onClick={() => onReload()}
+			>
+				{buttonLabel}
+			</ClayButton>
+		)}
 	</NoResultsDisplay>
 );
 

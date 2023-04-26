@@ -1,6 +1,6 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import ExperimentListCard from '../hocs/ExperimentListCard';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
@@ -130,8 +130,9 @@ const ExperimentsListPage: React.FC<IExperimentsListPage> = ({
 									</a>
 
 									{authorized && (
-										<Button
-											display='primary'
+										<ClayLink
+											button
+											className='button-root'
 											href={toRoute(
 												Routes.SETTINGS_ADD_DATA_SOURCE,
 												{
@@ -142,7 +143,7 @@ const ExperimentsListPage: React.FC<IExperimentsListPage> = ({
 											{Liferay.Language.get(
 												'connect-data-source'
 											)}
-										</Button>
+										</ClayLink>
 									)}
 								</>
 							}

@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import moment from 'moment';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
@@ -7,6 +7,7 @@ import React from 'react';
 import {chunk, noop, range} from 'lodash';
 import {isDateOrRange, isInRange, isRange} from './util';
 import {PropTypes} from 'prop-types';
+
 const FIVE_ROWS = 35;
 const SIX_ROWS = 42;
 
@@ -138,22 +139,22 @@ class Day extends React.Component {
 			...otherProps
 		} = this.props;
 
-		const classes = getCN('day-root', className, {
+		const classes = getCN('button-root day-root', className, {
 			'outside-month': outsideMonth,
 			selected
 		});
 
 		return (
-			<Button
+			<ClayButton
 				className={classes}
-				display='unstyled'
+				displayType='unstyled'
 				onClick={this.handleClick}
 				onFocus={this.handleMouseOver}
 				onMouseOver={this.handleMouseOver}
 				{...omitDefinedProps(otherProps, Day.propTypes)}
 			>
 				{date.date()}
-			</Button>
+			</ClayButton>
 		);
 	}
 }

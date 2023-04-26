@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import debounce from 'shared/util/debounce-decorator';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -275,9 +275,13 @@ export default class BaseResults extends React.Component {
 						{Liferay.Language.get('an-unexpected-error-occurred')}
 					</div>
 
-					<Button onClick={this.handleFetchResults}>
+					<ClayButton
+						className='button-root'
+						displayType='secondary'
+						onClick={this.handleFetchResults}
+					>
 						{Liferay.Language.get('reload')}
-					</Button>
+					</ClayButton>
 				</div>
 			);
 		} else if (!loading && !items.length && !total) {

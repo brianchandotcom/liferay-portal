@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from './Button';
+import ClayButton from '@clayui/button';
 import DropTarget, {TYPES} from 'shared/components/DropTarget';
 import FileUploader, {ERROR_TYPES} from '../util/FileUploader';
 import getCN from 'classnames';
@@ -111,9 +111,14 @@ export const FileItem: React.FC<IFileItemProps> = ({file, onCancel}) => {
 						</div>
 					)}
 
-					<Button display='link' onClick={onCancel} size='sm'>
+					<ClayButton
+						className='button-root'
+						displayType='unstyled'
+						onClick={onCancel}
+						size='sm'
+					>
 						{Liferay.Language.get('remove')}
-					</Button>
+					</ClayButton>
 				</div>
 			</div>
 		</div>
@@ -223,9 +228,13 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 						onDrop={this.handleFileDrop}
 						targetType={[TYPES.FILE]}
 					>
-						<Button onClick={this.handleFileSelector} size='sm'>
+						<ClayButton
+							className='button-root'
+							onClick={this.handleFileSelector}
+							size='sm'
+						>
 							{Liferay.Language.get('select-file')}
-						</Button>
+						</ClayButton>
 					</DropTarget>
 				)}
 			</div>

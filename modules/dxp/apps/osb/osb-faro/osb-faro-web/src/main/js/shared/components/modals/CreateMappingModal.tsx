@@ -1,5 +1,5 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form, {
 	toPromise,
 	validatePattern,
@@ -147,17 +147,22 @@ const CreateMappingModal: React.FC<ICreateMappingModalProps> = ({
 						</Form.Group>
 
 						<Modal.Footer>
-							<Button onClick={onClose}>
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								onClick={onClose}
+							>
 								{Liferay.Language.get('cancel')}
-							</Button>
+							</ClayButton>
 
-							<Button
+							<ClayButton
+								className='button-root'
 								disabled={!isValid}
-								display='primary'
+								displayType='primary'
 								type='submit'
 							>
 								{Liferay.Language.get('create')}
-							</Button>
+							</ClayButton>
 						</Modal.Footer>
 					</Form.Form>
 				)}

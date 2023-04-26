@@ -111,6 +111,7 @@ class PaginationBar extends React.Component {
 				{showDeltaDropdown && (
 					<Dropdown
 						buttonProps={{
+							displayType: 'unstyled',
 							size: 'sm'
 						}}
 						className='pagination-items-per-page'

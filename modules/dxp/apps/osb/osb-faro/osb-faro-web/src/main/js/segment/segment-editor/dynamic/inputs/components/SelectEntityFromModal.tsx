@@ -101,7 +101,11 @@ const SelectEntityFromModal: React.FC<ISelectEntityFromModalProps> = ({
 					</Input.Group>
 				</Input.GroupItem>
 
-				<Input.Button onClick={handleModal} position='append'>
+				<Input.Button
+					displayType='secondary'
+					onClick={handleModal}
+					position='append'
+				>
 					{Liferay.Language.get('select')}
 				</Input.Button>
 			</Input.Group>

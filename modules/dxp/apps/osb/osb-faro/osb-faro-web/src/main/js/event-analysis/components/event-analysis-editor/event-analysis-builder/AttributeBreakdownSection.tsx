@@ -1,6 +1,7 @@
 import AttributeBreakdownChip from './AttributeBreakdownChip';
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import HTML5Backend from 'react-dnd-html5-backend';
 import React from 'react';
 import {
@@ -98,14 +99,17 @@ export const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps
 							eventId={eventId}
 							onAttributeSelect={onAttributeSelect}
 							trigger={
-								<Button
+								<ClayButton
 									borderless
-									className='add-attribute'
-									display='light'
-									icon='plus'
-									iconAlignment='left'
+									className='button-root add-attribute'
+									displayType='secondary'
 									size='sm'
-								/>
+								>
+									<ClayIcon
+										className='icon-root'
+										symbol='plus'
+									/>
+								</ClayButton>
 							}
 							uneditableIds={uneditableIds}
 						/>

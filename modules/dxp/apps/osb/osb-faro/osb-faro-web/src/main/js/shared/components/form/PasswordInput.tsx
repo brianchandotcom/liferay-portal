@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form from 'shared/components/form';
 import Icon from 'shared/components/Icon';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
@@ -49,13 +49,14 @@ export default class PasswordInput extends React.Component<
 				disabled={disabled}
 				inset={{
 					content: (
-						<Button
+						<ClayButton
+							className='button-root'
 							disabled={disabled}
-							display='unstyled'
+							displayType='unstyled'
 							onClick={this.handleShowPasswordToggle}
 						>
 							<Icon symbol={showPassword ? 'hidden' : 'view'} />
-						</Button>
+						</ClayButton>
 					),
 					position: 'after'
 				}}

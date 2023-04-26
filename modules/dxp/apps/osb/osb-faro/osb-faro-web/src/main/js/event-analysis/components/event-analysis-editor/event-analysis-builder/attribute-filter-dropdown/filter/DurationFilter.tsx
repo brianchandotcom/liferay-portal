@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form, {validateRequired} from 'shared/components/form';
 import React from 'react';
 import {DataTypes, IFilterProps, Operators} from 'event-analysis/utils/types';
@@ -100,14 +100,15 @@ const DurationFilter: React.FC<IFilterProps> = ({
 					</div>
 
 					<div className='options-footer'>
-						<Button
+						<ClayButton
 							block
+							className='button-root'
 							disabled={!isValid}
-							display='primary'
+							displayType='primary'
 							type='submit'
 						>
 							{Liferay.Language.get('done')}
-						</Button>
+						</ClayButton>
 					</div>
 				</Form.Form>
 			)}

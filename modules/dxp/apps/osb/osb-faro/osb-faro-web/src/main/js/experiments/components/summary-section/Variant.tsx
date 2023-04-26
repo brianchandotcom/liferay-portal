@@ -24,7 +24,7 @@ const SummarySectionVariant: React.FC<SummarySectionVariantIProps> = ({
 			<span
 				className={`${CLASSNAME}-variant-status ${CLASSNAME}-variant-status-${status}`}
 			>
-				<ClayIcon symbol={symbol} />
+				<ClayIcon className='icon-root' symbol={symbol} />
 				{` ${sub(Liferay.Language.get('x-lift'), [lift])}`}
 			</span>
 

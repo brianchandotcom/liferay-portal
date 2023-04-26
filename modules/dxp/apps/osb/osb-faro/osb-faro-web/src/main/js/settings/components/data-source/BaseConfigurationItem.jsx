@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
+import getCN from 'classnames';
 import MetricBar from 'shared/components/MetricBar';
 import React from 'react';
 import {formatUTCDateFromUnix} from 'shared/util/date';
@@ -44,6 +45,8 @@ export default class BaseConfigurationItem extends React.Component {
 		const {
 			buttonParams: {
 				label = Liferay.Language.get('configure'),
+				disabled,
+				href,
 				...otherButtonParams
 			},
 			completion,
@@ -60,9 +63,18 @@ export default class BaseConfigurationItem extends React.Component {
 				}`}
 			>
 				<div className='actions'>
-					<Button {...otherButtonParams} block>
+					<ClayLink
+						{...otherButtonParams}
+						{...(!disabled && {href})}
+						block
+						button
+						className={getCN('button-root', {
+							'link-disabled': disabled
+						})}
+						displayType='secondary'
+					>
 						{label}
-					</Button>
+					</ClayLink>
 
 					{showBar && isFinite(completion) && completion < 1 && (
 						<MetricBar

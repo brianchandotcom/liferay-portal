@@ -15,9 +15,9 @@ const ImprovementCell: React.FC<ImprovementCellIProps> = ({
 		improvement === 0 ? '' : improvement > 0 ? 'lift' : 'loss';
 	const prefix =
 		improvement > 0 ? (
-			<ClayIcon symbol='caret-top' />
+			<ClayIcon className='icon-root' symbol='caret-top' />
 		) : (
-			<ClayIcon symbol='caret-bottom' />
+			<ClayIcon className='icon-root' symbol='caret-bottom' />
 		);
 	const sufix =
 		improvement > 0

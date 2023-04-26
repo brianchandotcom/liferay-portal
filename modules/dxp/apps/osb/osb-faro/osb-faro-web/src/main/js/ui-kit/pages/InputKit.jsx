@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Input from 'shared/components/Input';
 import Item from '../components/Item';
 import React from 'react';
@@ -55,7 +55,10 @@ class InputKit extends React.Component {
 				<Row>
 					<Item>
 						<Input.Group>
-							<Input.Button position='prepend'>
+							<Input.Button
+								displayType='secondary'
+								position='prepend'
+							>
 								{'Click'}
 							</Input.Button>
 
@@ -71,7 +74,10 @@ class InputKit extends React.Component {
 								<Input placeholder='placeholder' />
 							</Input.GroupItem>
 
-							<Input.Button position='append'>
+							<Input.Button
+								displayType='secondary'
+								position='append'
+							>
 								{'Click'}
 							</Input.Button>
 						</Input.Group>
@@ -103,7 +109,12 @@ class InputKit extends React.Component {
 								/>
 
 								<Input.Inset position='after'>
-									<Button>{'Click'}</Button>
+									<ClayButton
+										className='button-root'
+										displayType='secondary'
+									>
+										{'Click'}
+									</ClayButton>
 								</Input.Inset>
 							</Input.GroupItem>
 						</Input.Group>

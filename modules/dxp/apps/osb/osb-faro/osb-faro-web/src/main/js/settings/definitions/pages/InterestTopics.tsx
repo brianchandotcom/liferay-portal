@@ -1,7 +1,9 @@
 import * as API from 'shared/api';
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay, {
@@ -206,30 +208,30 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 			return (
 				<Nav>
 					<Nav.Item>
-						<Button
-							className='nav-btn'
-							display='primary'
+						<ClayButton
+							className='button-root nav-btn'
+							displayType='primary'
 							onClick={handleInsertModal}
 						>
 							{Liferay.Language.get('add-keyword')}
-						</Button>
+						</ClayButton>
 					</Nav.Item>
 				</Nav>
 			);
 		} else {
 			return (
 				<Nav>
-					<Button
+					<ClayButton
 						borderless
-						className='nav-btn'
-						display='secondary'
-						icon='trash'
-						iconAlignment='left'
+						className='button-root nav-btn'
+						displayType='secondary'
 						onClick={handleDeleteKeyword(
 							selectedItems.keySeq().toArray()
 						)}
 						outline
-					/>
+					>
+						<ClayIcon className='icon-root' symbol='trash' />
+					</ClayButton>
 				</Nav>
 			);
 		}
@@ -264,14 +266,16 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 			/>
 		) : page > INITIAL_PAGE ? (
 			<NoResultsDisplay title={Liferay.Language.get('page-not-found')}>
-				<Button
-					display='secondary'
+				<ClayLink
+					button
+					className='button-root'
+					displayType='secondary'
 					href={toRoute(Routes.SETTINGS_DEFINITIONS_INTEREST_TOPICS, {
 						groupId
 					})}
 				>
 					{Liferay.Language.get('back-to-interest-topics')}
-				</Button>
+				</ClayLink>
 			</NoResultsDisplay>
 		) : (
 			<NoResultsDisplay
@@ -288,14 +292,16 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 	};
 
 	const renderInlineRowActions = ({data: {id}, itemsSelected}) => (
-		<Button
+		<ClayButton
 			borderless
+			className='button-root'
 			disabled={itemsSelected}
-			icon='trash'
-			iconAlignment='left'
+			displayType='secondary'
 			onClick={handleDeleteKeyword([id])}
 			size='sm'
-		/>
+		>
+			<ClayIcon className='icon-root' symbol='trash' />
+		</ClayButton>
 	);
 
 	const renderPageDescription = () => (

@@ -42,7 +42,7 @@ describe('Workspace Empty State - CardEmpty', () => {
 		const {getByText} = render(
 			<CardEmpty
 				buttonProps={{
-					display: 'secondary',
+					displayType: 'secondary',
 					label: 'CardEmpty Button Label'
 				}}
 				description='CardEmpty Description'
@@ -63,7 +63,7 @@ describe('Workspace Empty State - CardEmpty', () => {
 		const {getByText} = render(
 			<CardEmpty
 				buttonProps={{
-					display: 'secondary',
+					displayType: 'secondary',
 					label: 'CardEmpty Button Label',
 					onClick: () => {
 						foo = 'it was clicked';
@@ -84,7 +84,7 @@ describe('Workspace Empty State - CardEmpty', () => {
 			<BrowserRouter>
 				<CardEmpty
 					buttonProps={{
-						display: 'secondary',
+						displayType: 'secondary',
 						href: '/workspaces',
 						label: 'CardEmpty Button Label'
 					}}

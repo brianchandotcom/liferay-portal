@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import EmptyState from 'shared/components/workspaces/EmptyState';
 import getCN from 'classnames';
 import JoinableWorkspacesWrapper from 'shared/components/workspaces/JoinableWorkspacesWrapper';
@@ -74,9 +75,9 @@ const Workspaces = ({
 
 	const renderButtons = () => (
 		<div className='mt-4'>
-			<Button
-				className='mr-2'
-				display='primary'
+			<ClayButton
+				className='button-root mr-2'
+				displayType='primary'
 				onClick={() =>
 					open(modalTypes.CONTACT_SALES_MODAL, {
 						onClose: close
@@ -85,12 +86,18 @@ const Workspaces = ({
 				size='sm'
 			>
 				{Liferay.Language.get('buy-paid-tier')}
-			</Button>
+			</ClayButton>
 
 			{!PROD_MODE && (
-				<Button href={toRoute(Routes.WORKSPACE_ADD_TRIAL)} size='sm'>
+				<ClayLink
+					button
+					className='button-root'
+					displayType='secondary'
+					href={toRoute(Routes.WORKSPACE_ADD_TRIAL)}
+					small
+				>
 					{Liferay.Language.get('start-free-trial')}
-				</Button>
+				</ClayLink>
 			)}
 		</div>
 	);

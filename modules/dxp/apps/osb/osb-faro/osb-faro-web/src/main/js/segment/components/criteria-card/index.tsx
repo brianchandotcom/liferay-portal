@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
 import CriteriaView from './CriteriaView';
 import getCN from 'classnames';
 import Label from 'shared/components/Label';
@@ -95,13 +95,14 @@ class CriteriaCard extends React.Component<
 				{hideOverflow && (
 					<div className='fade-out-cover'>
 						<div className='view-all-button-container'>
-							<Button
-								display='unstyled'
+							<ClayButton
+								className='button-root'
+								displayType='unstyled'
 								onClick={this.handleClick}
 								size='sm'
 							>
 								{Liferay.Language.get('view-all-criteria')}
-							</Button>
+							</ClayButton>
 						</div>
 					</div>
 				)}

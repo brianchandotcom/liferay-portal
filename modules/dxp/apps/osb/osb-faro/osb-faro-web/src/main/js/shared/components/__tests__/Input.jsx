@@ -43,7 +43,9 @@ describe('Input', () => {
 	});
 
 	it('should render input button', () => {
-		const {container} = render(<Input.Button position='append' />);
+		const {container} = render(
+			<Input.Button displayType='secondary' position='append' />
+		);
 		expect(container).toMatchSnapshot();
 	});
 

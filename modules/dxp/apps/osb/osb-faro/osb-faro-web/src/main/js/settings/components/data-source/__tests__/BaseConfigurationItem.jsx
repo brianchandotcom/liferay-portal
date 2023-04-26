@@ -25,7 +25,7 @@ describe('BaseConfigurationItem', () => {
 			/>
 		);
 
-		expect(getByText('Configure')).toBeDisabled();
+		expect(getByText('Configure')).toHaveClass('link-disabled');
 	});
 
 	it('should render with a status message', () => {

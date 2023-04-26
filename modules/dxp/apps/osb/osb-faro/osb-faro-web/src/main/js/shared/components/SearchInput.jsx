@@ -1,6 +1,6 @@
 import autobind from 'autobind-decorator';
-import Button from './Button';
-import Icon from './Icon';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Input from './Input';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
@@ -8,6 +8,7 @@ import {addContext} from 'shared/util/clay';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
 import {Stack} from 'immutable';
+
 export const CONTEXT = 'search-input';
 
 export default class SearchInput extends React.Component {
@@ -104,23 +105,28 @@ export default class SearchInput extends React.Component {
 					/>
 
 					<Input.Inset position='after'>
-						{value ? (
-							<Button
-								disabled={disabled}
-								display='unstyled'
-								onClick={this.handleClearSearch}
-							>
-								<Icon symbol='times' />
-							</Button>
-						) : (
-							<Button
-								disabled={disabled}
-								display='unstyled'
-								onClick={this.handleSubmit}
-							>
-								<Icon symbol='search' />
-							</Button>
-						)}
+						<ClayButton
+							className='button-root'
+							disabled={disabled}
+							displayType='unstyled'
+							onClick={
+								value
+									? this.handleClearSearch
+									: this.handleSubmit
+							}
+						>
+							{value ? (
+								<ClayIcon
+									className='icon-root'
+									symbol='times'
+								/>
+							) : (
+								<ClayIcon
+									className='icon-root'
+									symbol='search'
+								/>
+							)}
+						</ClayButton>
 					</Input.Inset>
 				</Input.GroupItem>
 			</Input.Group>

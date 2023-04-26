@@ -1,7 +1,8 @@
 import * as API from 'shared/api';
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -159,15 +160,15 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 			return (
 				<Nav>
 					<Nav.Item key='PRIMARY_ACTION'>
-						<Button
-							className='nav-btn'
-							display='primary'
+						<ClayButton
+							className='button-root nav-btn'
+							displayType='primary'
 							onClick={handleAddIndividualsToSegmentModal(
 								selectedItems.keySeq().toArray()
 							)}
 						>
 							{Liferay.Language.get('add-to-static-segment')}
-						</Button>
+						</ClayButton>
 					</Nav.Item>
 				</Nav>
 			);
@@ -176,14 +177,16 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 
 	const renderNoResults = () => {
 		const createDataSourceButton = (
-			<Button
-				display='primary'
+			<ClayLink
+				button
+				className='button-root'
+				displayType='primary'
 				href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
 					groupId
 				})}
 			>
 				{Liferay.Language.get('connect-data-source')}
-			</Button>
+			</ClayLink>
 		);
 
 		if (dataSourceLoading || isNil(dataSourceData?.total)) {
@@ -279,8 +282,10 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 							</a>
 
 							{authorized && (
-								<Button
-									display='primary'
+								<ClayLink
+									button
+									className='button-root'
+									displayType='primary'
 									href={toRoute(
 										Routes.SETTINGS_ADD_DATA_SOURCE,
 										{
@@ -291,7 +296,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 									{Liferay.Language.get(
 										'connect-data-source'
 									)}
-								</Button>
+								</ClayLink>
 							)}
 						</>
 					}

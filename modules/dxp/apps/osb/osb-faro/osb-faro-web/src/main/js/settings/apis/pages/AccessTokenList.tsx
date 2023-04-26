@@ -1,7 +1,8 @@
 import * as API from 'shared/api';
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import CopyButton from 'shared/components/CopyButton';
 import moment from 'moment';
 import Promise from 'metal-promise';
@@ -91,10 +92,10 @@ const TokenList: React.FC<
 					</div>
 
 					{!tokens.length && (
-						<Button
+						<ClayButton
+							className='button-root'
 							data-testid='generate-token-button'
-							display='primary'
-							loading={loading}
+							displayType='primary'
 							onClick={() => {
 								setLoading(true);
 
@@ -112,8 +113,16 @@ const TokenList: React.FC<
 									.catch(handleError);
 							}}
 						>
+							{loading && (
+								<ClayLoadingIndicator
+									className='d-inline-block mr-2'
+									displayType='secondary'
+									size='sm'
+								/>
+							)}
+
 							{Liferay.Language.get('generate-token')}
-						</Button>
+						</ClayButton>
 					)}
 				</div>
 			</Card.Body>
@@ -165,8 +174,8 @@ const TokenList: React.FC<
 						const expired = isExpired(expirationDate);
 
 						return expired ? (
-							<Button
-								display='primary'
+							<ClayButton
+								className='button-root'
 								onClick={() => {
 									setLoading(true);
 
@@ -186,12 +195,17 @@ const TokenList: React.FC<
 								}}
 							>
 								{Liferay.Language.get('generate-token')}
-							</Button>
+							</ClayButton>
 						) : (
 							<>
-								<CopyButton text={token} />
+								<CopyButton
+									displayType='secondary'
+									text={token}
+								/>
 
-								<Button
+								<ClayButton
+									className='button-root'
+									displayType='secondary'
 									onClick={() => {
 										open(modalTypes.CONFIRMATION_MODAL, {
 											message: (
@@ -234,7 +248,7 @@ const TokenList: React.FC<
 									}}
 								>
 									{Liferay.Language.get('revoke')}
-								</Button>
+								</ClayButton>
 							</>
 						);
 					}}

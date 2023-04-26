@@ -1,5 +1,5 @@
 import BaseScreen from './BaseScreen';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Modal from 'shared/components/modal';
 import React from 'react';
 
@@ -37,9 +37,13 @@ const ReadyToGo: React.FC<IReadyToGoProps> = ({onClose}) => (
 		</Modal.Body>
 
 		<Modal.Footer className='d-flex justify-content-end'>
-			<Button display='primary' onClick={onClose}>
+			<ClayButton
+				className='button-root'
+				displayType='primary'
+				onClick={onClose}
+			>
 				{Liferay.Language.get('next')}
-			</Button>
+			</ClayButton>
 		</Modal.Footer>
 	</BaseScreen>
 );

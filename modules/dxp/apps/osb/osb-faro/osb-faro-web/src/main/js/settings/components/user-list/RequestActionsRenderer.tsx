@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import React from 'react';
 
 interface IRequestActionsRendererProps
@@ -15,18 +15,23 @@ const RequestActionsRenderer: React.FC<IRequestActionsRendererProps> = ({
 	onDecline
 }) => (
 	<td className={className}>
-		<Button
-			className='mr-3'
-			display='primary'
+		<ClayButton
+			className='button-root mr-3'
+			displayType='primary'
 			onClick={() => onAccept({emailAddress, id})}
 			size='sm'
 		>
 			{Liferay.Language.get('accept')}
-		</Button>
+		</ClayButton>
 
-		<Button onClick={() => onDecline({emailAddress, id})} size='sm'>
+		<ClayButton
+			className='button-root'
+			displayType='secondary'
+			onClick={() => onDecline({emailAddress, id})}
+			size='sm'
+		>
 			{Liferay.Language.get('decline')}
-		</Button>
+		</ClayButton>
 	</td>
 );
 

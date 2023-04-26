@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DateRangeInput, {DateRange} from 'shared/components/DateRangeInput';
 import Modal from 'shared/components/modal';
 import moment from 'moment';
@@ -51,11 +52,10 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 				<div className='d-flex'>
 					<DateRangeInput onChange={setDateRange} value={dateRange} />
 
-					<Button
-						className='download'
+					<ClayButton
+						className='button-root download'
 						disabled={!isValid()}
-						display='primary'
-						loading={loading}
+						displayType='primary'
 						onClick={() => {
 							setLoading(true);
 
@@ -76,8 +76,16 @@ const ExportLogModal: React.FC<IExportLogModalProps> = ({
 								});
 						}}
 					>
+						{loading && (
+							<ClayLoadingIndicator
+								className='d-inline-block mr-2'
+								displayType='secondary'
+								size='sm'
+							/>
+						)}
+
 						{Liferay.Language.get('download')}
-					</Button>
+					</ClayButton>
 				</div>
 			</Modal.Body>
 		</Modal>

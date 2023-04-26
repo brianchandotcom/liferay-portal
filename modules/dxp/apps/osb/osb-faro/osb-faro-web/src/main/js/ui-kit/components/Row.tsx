@@ -2,13 +2,13 @@ import getCN from 'classnames';
 import React from 'react';
 
 interface IRowProps extends React.HTMLAttributes<HTMLElement> {
-	flex: Boolean;
+	flex?: Boolean;
 }
 
 const Row: React.FC<IRowProps> = ({
 	children,
 	className,
-	flex,
+	flex = false,
 	...otherProps
 }) => (
 	<div

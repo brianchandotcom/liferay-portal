@@ -62,7 +62,11 @@ export default class CriteriaSidebar extends React.Component<
 				<div className='sidebar-header'>
 					{activePropertyGroup ? (
 						<Dropdown
-							buttonProps={{borderless: true, outline: true}}
+							buttonProps={{
+								borderless: true,
+								displayType: 'secondary',
+								outline: true
+							}}
 							label={activePropertyGroup.label}
 						>
 							{propertyGroupsIList.map(({label, propertyKey}) => (

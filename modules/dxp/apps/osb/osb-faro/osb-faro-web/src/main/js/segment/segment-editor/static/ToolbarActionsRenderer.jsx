@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Nav from 'shared/components/Nav';
 import React from 'react';
 import {noop} from 'lodash';
@@ -58,29 +58,32 @@ export default class ToolbarActionsRenderer extends React.Component {
 				<Nav.Item>
 					{itemsSelected ? (
 						<>
-							<Button
-								display={buttonDisplay}
+							<ClayButton
+								className='button-root'
+								displayType={buttonDisplay}
 								onClick={this.handleUndoClick}
 							>
 								{Liferay.Language.get('undo-changes')}
-							</Button>
+							</ClayButton>
 
 							{!showAdded && (
-								<Button
-									display={buttonDisplay}
+								<ClayButton
+									className='button-root'
+									displayType={buttonDisplay}
 									onClick={this.handleOnClick}
 								>
 									{Liferay.Language.get('remove-members')}
-								</Button>
+								</ClayButton>
 							)}
 						</>
 					) : (
-						<Button
-							display={buttonDisplay}
+						<ClayButton
+							className='button-root'
+							displayType={buttonDisplay}
 							onClick={this.handleOnClick}
 						>
 							{Liferay.Language.get('add-members')}
-						</Button>
+						</ClayButton>
 					)}
 				</Nav.Item>
 			</Nav>

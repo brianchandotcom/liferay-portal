@@ -327,6 +327,21 @@ public interface CommerceOrderItemModel
 	public void setCProductId(long CProductId);
 
 	/**
+	 * Returns the customer commerce order item ID of this commerce order item.
+	 *
+	 * @return the customer commerce order item ID of this commerce order item
+	 */
+	public long getCustomerCommerceOrderItemId();
+
+	/**
+	 * Sets the customer commerce order item ID of this commerce order item.
+	 *
+	 * @param customerCommerceOrderItemId the customer commerce order item ID of this commerce order item
+	 */
+	public void setCustomerCommerceOrderItemId(
+		long customerCommerceOrderItemId);
+
+	/**
 	 * Returns the parent commerce order item ID of this commerce order item.
 	 *
 	 * @return the parent commerce order item ID of this commerce order item

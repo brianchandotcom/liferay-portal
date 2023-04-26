@@ -115,13 +115,10 @@ definition {
 	}
 
 	@description = "Verify OSGI config files added to auto deploy directories other than osgi/configs are not read."
-	@ignore = "true"
 	@priority = 3
 	test ConfigFilesReadOnlyFromOSGIConfigs {
 		property database.types = "mysql";
 		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigFilesReadOnlyFromOSGIConfigs";
-
-		// TODO Un-ignore test when LPS-167572 is fixed
 
 		task ("When an OSGI config file is added to an auto deploy directory other than osgi/configs") {
 			var config = "checkInterval=I\"44\"";

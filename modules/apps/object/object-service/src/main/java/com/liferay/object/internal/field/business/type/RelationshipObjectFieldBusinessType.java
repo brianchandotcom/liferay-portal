@@ -115,7 +115,8 @@ public class RelationshipObjectFieldBusinessType
 	}
 
 	@Override
-	public Object getValue(ObjectField objectField, Map<String, Object> values)
+	public Object getValue(
+			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
 		if (!Objects.equals(

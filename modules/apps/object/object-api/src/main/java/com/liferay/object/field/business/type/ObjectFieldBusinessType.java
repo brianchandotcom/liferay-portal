@@ -81,7 +81,7 @@ public interface ObjectFieldBusinessType {
 	}
 
 	public default Object getValue(
-			ObjectField objectField, Map<String, Object> values)
+			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
 		return values.get(objectField.getName());

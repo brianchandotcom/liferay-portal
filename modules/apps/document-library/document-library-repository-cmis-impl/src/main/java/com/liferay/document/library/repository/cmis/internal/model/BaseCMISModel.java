@@ -160,6 +160,8 @@ public abstract class BaseCMISModel {
 		).put(
 			ActionKeys.DELETE_DISCUSSION, Action.CAN_DELETE_OBJECT
 		).put(
+			ActionKeys.DOWNLOAD, Action.CAN_GET_CONTENT_STREAM
+		).put(
 			ActionKeys.UPDATE, Action.CAN_UPDATE_PROPERTIES
 		).put(
 			ActionKeys.UPDATE_DISCUSSION, Action.CAN_UPDATE_PROPERTIES

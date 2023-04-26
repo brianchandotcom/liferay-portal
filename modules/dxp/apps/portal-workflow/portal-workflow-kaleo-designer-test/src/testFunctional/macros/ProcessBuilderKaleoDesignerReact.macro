@@ -392,8 +392,8 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		Type(
-			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_ID",
-			value1 = ${nodeId});
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_NAME",
+			value1 = ${nodeName});
 	}
 
 	macro editNodeInformationField {
@@ -1324,12 +1324,12 @@ definition {
 		}
 	}
 
-	macro viewConnectorID {
+	macro viewConnectorName {
 		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		AssertTextEquals(
-			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_ID",
-			value1 = ${nodeId});
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_NAME",
+			value1 = ${nodeName});
 	}
 
 	macro viewConnectorNotPresent {
@@ -1646,7 +1646,7 @@ definition {
 	macro viewNodeInfo {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = ${nodeType});
 
-		var nodeIdValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_ID_GETTER");
+		var nodeNameValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_NAME_GETTER");
 
 		if (isSet(labelValue)) {
 			AssertElementPresent(
@@ -1655,22 +1655,22 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
-		if (isSet(defaultIdValue)) {
+		if (isSet(defaultNameValue)) {
 			AssertElementPresent(
-				key_infoOption = "nodeId",
-				key_infoValue = ${nodeIdValue},
+				key_infoOption = "nodeName",
+				key_infoValue = ${nodeNameValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 
 			AssertElementNotPresent(
-				key_infoOption = "nodeId",
+				key_infoOption = "nodeName",
 				key_infoValue = "",
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
-		if (isSet(idValue)) {
+		if (isSet(nameValue)) {
 			AssertElementPresent(
-				key_infoOption = "nodeId",
-				key_infoValue = ${idValue},
+				key_infoOption = "nodeName",
+				key_infoValue = ${nameValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
@@ -1699,10 +1699,10 @@ definition {
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 
-		if (isSet(idValue)) {
+		if (isSet(nameValue)) {
 			AssertNotVisible(
-				key_infoOption = "nodeId",
-				key_infoValue = ${idValue},
+				key_infoOption = "nodeName",
+				key_infoValue = ${nameValue},
 				locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO");
 		}
 

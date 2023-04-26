@@ -75,17 +75,17 @@ describe('The Sidebar component should', () => {
 
 		expect(labels.length).toBe(3);
 		expect(labels[0]).toHaveTextContent('label*');
-		expect(labels[1]).toHaveTextContent('node id*');
+		expect(labels[1]).toHaveTextContent('node name*');
 		expect(labels[2]).toHaveTextContent('description');
 
 		const inputLabel = container.querySelector('input#nodeLabel');
-		const inputId = container.querySelector('input#nodeId');
+		const inputName = container.querySelector('input#nodeName');
 		const textareaDescription = container.querySelector(
 			'textarea#nodeDescription'
 		);
 
 		expect(inputLabel).toHaveValue('start node');
-		expect(inputId).toHaveValue('node_0');
+		expect(inputName).toHaveValue('node_0');
 		expect(textareaDescription).toHaveValue('');
 	});
 });

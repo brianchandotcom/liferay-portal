@@ -48,11 +48,11 @@ function Edge(props) {
 
 	const nodes = useStoreState((state) => state.nodes);
 
-	const sourceNode = useMemo(() => nodes.find((n) => n.id === source), [
+	const sourceNode = useMemo(() => nodes.find((node) => node.id === source), [
 		source,
 		nodes,
 	]);
-	const targetNode = useMemo(() => nodes.find((n) => n.id === target), [
+	const targetNode = useMemo(() => nodes.find((node) => node.id === target), [
 		target,
 		nodes,
 	]);

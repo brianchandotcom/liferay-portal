@@ -97,7 +97,7 @@ export default function UpperToolbar({
 	const errorTitle = () => {
 		if (blockingErrors.errorType === 'duplicated') {
 			return Liferay.Language.get(
-				'you-have-the-same-id-in-two-nodes'
+				'you-have-the-same-name-in-two-nodes'
 			).slice(0, -1);
 		}
 		else if (blockingErrors.errorType === 'emptyField') {

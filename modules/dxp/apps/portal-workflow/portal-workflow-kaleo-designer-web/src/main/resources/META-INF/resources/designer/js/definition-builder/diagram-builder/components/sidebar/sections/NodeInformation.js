@@ -86,18 +86,18 @@ export default function NodeInformation({errors, setErrors}) {
 						: ''
 				}
 			>
-				<label htmlFor="nodeId">
+				<label htmlFor="nodeName">
 					<span>
 						{`${Liferay.Language.get(
 							'node'
-						)} ${Liferay.Language.get('id')}`}
+						)} ${Liferay.Language.get('name')}`}
 					</span>
 
 					<span className="ml-1 mr-1 text-warning">*</span>
 
 					<span
 						title={Liferay.Language.get(
-							'id-is-the-node-identifier'
+							'name-is-the-node-identifier'
 						)}
 					>
 						<ClayIcon
@@ -108,7 +108,7 @@ export default function NodeInformation({errors, setErrors}) {
 				</label>
 
 				<ClayInput
-					id="nodeId"
+					id="nodeName"
 					onChange={({target}) => {
 						const filteredElements = elements.slice();
 
@@ -135,7 +135,7 @@ export default function NodeInformation({errors, setErrors}) {
 
 							{errors.id.duplicated
 								? Liferay.Language.get(
-										'a-node-with-that-id-already-exists'
+										'a-node-with-that-name-already-exists'
 								  )
 								: Liferay.Language.get(
 										'this-field-is-required'

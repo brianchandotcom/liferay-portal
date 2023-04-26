@@ -191,8 +191,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SIDEBAR_CONNECTOR_ID</td>
-	<td>//input[@id='transitionId']</td>
+	<td>SIDEBAR_CONNECTOR_NAME</td>
+	<td>//input[@id='transitionName']</td>
 	<td></td>
 </tr>
 <tr>
@@ -272,8 +272,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NODE_ID_GETTER</td>
-	<td>//input[@id='nodeId']</td>
+	<td>NODE_NAME_GETTER</td>
+	<td>//input[@id='nodeName']</td>
 	<td></td>
 </tr>
 <tr>

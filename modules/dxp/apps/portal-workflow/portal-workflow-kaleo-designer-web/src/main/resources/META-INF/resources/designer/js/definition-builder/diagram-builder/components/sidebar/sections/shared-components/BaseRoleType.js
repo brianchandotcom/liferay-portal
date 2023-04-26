@@ -89,11 +89,7 @@ const BaseRoleType = ({
 		const roles = {};
 
 		resource.items.forEach((item) => {
-			let roleType = titleCase(item.roleType);
-
-			if (roleType === 'Depot') {
-				roleType = 'Asset Library';
-			}
+			const roleType = titleCase(item.roleType);
 
 			if (!roles[roleType]) {
 				roles[roleType] = [];

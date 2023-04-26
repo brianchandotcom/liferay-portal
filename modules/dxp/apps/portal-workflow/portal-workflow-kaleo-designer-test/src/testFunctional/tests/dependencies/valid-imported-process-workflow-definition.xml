@@ -7,7 +7,7 @@
 >
 	<name>Workflow Title</name>
 	<join>
-		<id>item_3</id>
+		<name>item_3</name>
 		<description>All interactions need to be closed.</description>
 		<metadata>
 			<![CDATA[
@@ -31,14 +31,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>item_6</id>
+				<name>item_6</name>
 				<target>item_2</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</join>
 	<state>
-		<id>item_0</id>
+		<name>item_0</name>
 		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -63,14 +63,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>item_5</id>
+				<name>item_5</name>
 				<target>item_3</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<id>item_1</id>
+		<name>item_1</name>
 		<description>Conclude the workflow.</description>
 		<metadata>
 			<![CDATA[
@@ -90,7 +90,7 @@
 		</labels>
 	</state>
 	<task>
-		<id>item_2</id>
+		<name>item_2</name>
 		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
@@ -117,14 +117,14 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>item_7</id>
+				<name>item_7</name>
 				<target>item_4</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>item_4</id>
+		<name>item_4</name>
 		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
@@ -151,7 +151,7 @@
 						Transition Label
 					</label>
 				</labels>
-				<id>item_8</id>
+				<name>item_8</name>
 				<target>item_1</target>
 				<default>true</default>
 			</transition>

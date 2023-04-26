@@ -174,6 +174,7 @@ public class UpgradeVelocityVariableReferenceMigrationCheck
 		String lineBegin = line.substring(0, 2);
 
 		if ((lineBegin.equals(StringPool.LESS_THAN + StringPool.POUND) ||
+			 lineBegin.equals(StringPool.LESS_THAN + StringPool.AT) ||
 			 (line.charAt(0) == CharPool.POUND)) &&
 			!_isAttribute(line, match)) {
 

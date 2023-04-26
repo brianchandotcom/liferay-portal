@@ -15,6 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useNavigate, useParams} from 'react-router-dom';
+import {testrayRequirementsImpl} from '~/services/rest';
 
 import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
@@ -23,10 +24,6 @@ import {TableProps} from '../../../components/Table';
 import {ListViewContextProviderProps} from '../../../context/ListViewContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
-import {
-	getRequirementsTransformData,
-	requirementsResource,
-} from '../../../services/rest';
 import {Action} from '../../../types';
 import useRequirementActions from './useRequirementActions';
 
@@ -74,7 +71,7 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 				filterSchema: 'requirements',
 				title: i18n.translate('requirements'),
 			}}
-			resource={requirementsResource}
+			resource={testrayRequirementsImpl.resource}
 			tableProps={{
 				actions,
 				columns: [
@@ -128,7 +125,9 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 				navigateTo: ({id}) => id?.toString(),
 				...tableProps,
 			}}
-			transformData={getRequirementsTransformData}
+			transformData={(response) =>
+				testrayRequirementsImpl.transformDataFromList(response)
+			}
 			variables={variables}
 			{...listViewProps}
 		/>

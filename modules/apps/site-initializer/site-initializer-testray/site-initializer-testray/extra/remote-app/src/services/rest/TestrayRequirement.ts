@@ -12,73 +12,55 @@
  * details.
  */
 
+import Rest from '~/core/Rest';
+
 import yupSchema from '../../schema/yup';
-import fetcher from '../fetcher';
-import {APIResponse, TestrayRequirement} from './types';
+import {TestrayRequirement} from './types';
 
 type Requirement = typeof yupSchema.requirement.__outputType & {
 	projectId: number;
 };
+class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
+	constructor() {
+		super({
+			adapter: ({
+				componentId: r_componentToRequirements_c_componentId,
+				description,
+				descriptionType,
+				key,
+				linkTitle,
+				linkURL,
+				projectId: r_projectToRequirements_c_projectId,
+				summary,
+			}) => ({
+				description,
+				descriptionType,
+				key,
+				linkTitle,
+				linkURL,
+				r_componentToRequirements_c_componentId,
+				r_projectToRequirements_c_projectId,
+				summary,
+			}),
+			nestedFields: 'nestedFields=component,team&nestedFieldsDepth=2',
 
-const adapter = ({
-	componentId: r_componentToRequirements_c_componentId,
-	description,
-	descriptionType,
-	key,
-	linkTitle,
-	linkURL,
-	projectId: r_projectToRequirements_c_projectId,
-	summary,
-}: Requirement) => ({
-	description,
-	descriptionType,
-	key,
-	linkTitle,
-	linkURL,
-	r_componentToRequirements_c_componentId,
-	r_projectToRequirements_c_projectId,
-	summary,
-});
+			transformData: (testrayRequirement) => ({
+				...testrayRequirement,
+				component: testrayRequirement.r_componentToRequirements_c_component
+					? {
+							...testrayRequirement.r_componentToRequirements_c_component,
+							team:
+								testrayRequirement
+									.r_componentToRequirements_c_component
+									.r_teamToComponents_c_team,
+					  }
+					: undefined,
+			}),
+			uri: 'requirements',
+		});
+	}
+}
 
-const nestedFieldsParam = 'nestedFields=component,team&nestedFieldsDepth=2';
+const testrayRequirementsImpl = new TestrayRequirementsImpl();
 
-const requirementsResource = `/requirements?${nestedFieldsParam}`;
-
-const getRequirementQuery = (requirementId?: number | string) =>
-	`/requirements/${requirementId}?${nestedFieldsParam}`;
-
-const getRequirementTransformData = (
-	testrayRequirement: TestrayRequirement
-): TestrayRequirement => ({
-	...testrayRequirement,
-	component: testrayRequirement.r_componentToRequirements_c_component
-		? {
-				...testrayRequirement.r_componentToRequirements_c_component,
-				team:
-					testrayRequirement.r_componentToRequirements_c_component
-						.r_teamToComponents_c_team,
-		  }
-		: undefined,
-});
-
-const getRequirementsTransformData = (
-	response: APIResponse<TestrayRequirement>
-) => ({
-	...response,
-	items: response?.items?.map(getRequirementTransformData),
-});
-
-const createRequirement = (Requirement: Requirement) =>
-	fetcher.post('/requirements', adapter(Requirement));
-
-const updateRequirement = (id: number, requirement: Partial<Requirement>) =>
-	fetcher.patch(`/requirements/${id}`, adapter(requirement as Requirement));
-
-export {
-	requirementsResource,
-	createRequirement,
-	getRequirementQuery,
-	getRequirementTransformData,
-	getRequirementsTransformData,
-	updateRequirement,
-};
+export {testrayRequirementsImpl};

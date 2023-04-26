@@ -18,12 +18,7 @@ import {Outlet, useOutletContext, useParams} from 'react-router-dom';
 import {useHeader} from '../../../hooks';
 import {useFetch} from '../../../hooks/useFetch';
 import i18n from '../../../i18n';
-import {
-	TestrayProject,
-	TestrayRequirement,
-	getRequirementQuery,
-	getRequirementTransformData,
-} from '../../../services/rest';
+import {TestrayProject, TestrayRequirement} from '../../../services/rest';
 import useRequirementActions from './useRequirementActions';
 
 const RequirementsOutlet = () => {
@@ -34,10 +29,7 @@ const RequirementsOutlet = () => {
 	}: {testrayProject: TestrayProject} = useOutletContext();
 
 	const {data: testrayRequirement, mutate} = useFetch<TestrayRequirement>(
-		getRequirementQuery(requirementId),
-		{
-			transformData: getRequirementTransformData,
-		}
+		`/requirements/${requirementId}`
 	);
 
 	const {setHeaderActions, setHeading} = useHeader({
@@ -71,6 +63,7 @@ const RequirementsOutlet = () => {
 		return (
 			<Outlet
 				context={{
+					actions: testrayRequirement.actions,
 					mutateTestrayRequirement: mutate,
 					testrayProject,
 					testrayRequirement,

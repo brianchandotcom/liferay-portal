@@ -254,6 +254,7 @@ export type TestrayProject = {
 };
 
 export type TestrayRequirement = {
+	actions: ObjectActionsItems;
 	component?: TestrayComponent;
 	components: string;
 	description: string;

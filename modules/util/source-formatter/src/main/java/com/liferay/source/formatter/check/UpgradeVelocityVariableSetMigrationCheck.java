@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.VelocityMigrationUtil;
 
 /**
  * @author Nícolas Moura
@@ -32,8 +33,7 @@ public class UpgradeVelocityVariableSetMigrationCheck
 			if (line.contains("#set")) {
 				String newLine = line.replace("#set", "<#assign");
 
-				newLine = StringUtil.removeFirst(
-					newLine, StringPool.OPEN_PARENTHESIS);
+				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 				newLine = StringUtil.replaceLast(
 					newLine, CharPool.CLOSE_PARENTHESIS, " />");
 

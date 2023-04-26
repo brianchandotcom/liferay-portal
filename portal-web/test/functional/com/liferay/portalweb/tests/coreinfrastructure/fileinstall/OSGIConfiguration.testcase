@@ -18,6 +18,12 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		FileInstall.deleteConfigFile(configFile = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration.config");
+
+		for (var config : list "default,original,test1,test2,") {
+			FileInstall.deleteConfigFile(configFile = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~${config}.config");
+		}
 	}
 
 	@description = "This is a test for LPS-173655. Verify if virtual instances can be created via OSGI config file."
@@ -140,7 +146,6 @@ definition {
 	@priority = 3
 	test ConfigFilesReadOnlyFromOSGIConfigs {
 		property database.types = "mysql";
-		property test.name.skip.portal.instance = "OSGIConfiguration#ConfigFilesReadOnlyFromOSGIConfigs";
 
 		task ("When an OSGI config file is added to an auto deploy directory other than osgi/configs") {
 			var config = "checkInterval=I\"44\"";
@@ -167,7 +172,6 @@ definition {
 		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test1.config:com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test2.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/test1\":urlsIncludes=\"/api/liferay/test2\"";
-		property test.name.skip.portal.instance = "OSGIConfiguration#DeployFactoryConfigs";
 
 		var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration";
 
@@ -184,12 +188,11 @@ definition {
 	@priority = 3
 	test ModifyFactoryConfig {
 		property database.types = "mysql";
-		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test.config";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test1.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/original\"";
-		property test.name.skip.portal.instance = "OSGIConfiguration#ModifyFactoryConfig";
 
 		task ("Given an existing factory config") {
-			var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test";
+			var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~test1";
 
 			SQL.assertTextInMySQLStatementResult(
 				mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%${configName}%'",
@@ -270,7 +273,6 @@ definition {
 		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default.config";
 		property osgi.module.configurations = "urlsIncludes=\"/api/liferay/new\"";
-		property test.name.skip.portal.instance = "OSGIConfiguration#OverrideDefaultFactoryConfig";
 
 		var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default";
 
@@ -335,7 +337,6 @@ definition {
 		property database.types = "mysql";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~original.config";
 		property osgi.module.configurations = "enabled=\"true\"";
-		property test.name.skip.portal.instance = "OSGIConfiguration#RenameFactoryConfig";
 
 		task ("Given an existing factory config") {
 			var configName = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration";

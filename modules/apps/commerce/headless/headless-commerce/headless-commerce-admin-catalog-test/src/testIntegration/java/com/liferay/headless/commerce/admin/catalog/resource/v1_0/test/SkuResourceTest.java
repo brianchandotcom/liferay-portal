@@ -106,6 +106,14 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		super.testGraphQLDeleteSku();
 	}
 
+	@Override
+	@Test
+	public void testPatchSku() throws Exception {
+		super.testPatchSku();
+
+		_testPatchSkuExternalReferenceCode();
+	}
+
 	@Test
 	public void testPostProductIdSkuWithOptionId() throws Exception {
 		super.testPostProductIdSku();
@@ -380,6 +388,23 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			});
 
 		return sku;
+	}
+
+	private void _testPatchSkuExternalReferenceCode() throws Exception {
+		Sku sku = testPatchSku_addSku();
+
+		Sku randomSku = new Sku() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+			}
+		};
+
+		Sku patchSku = skuResource.patchSku(sku.getId(), randomSku);
+
+		Assert.assertEquals(
+			patchSku.getExternalReferenceCode(),
+			randomSku.getExternalReferenceCode());
+		assertValid(patchSku);
 	}
 
 	@DeleteAfterTestRun

@@ -87,6 +87,7 @@ const RoutineOutlet = () => {
 		return (
 			<Outlet
 				context={{
+					actions: testrayRoutine.actions,
 					mutateTestrayRoutine: mutate,
 					testrayProject,
 					testrayRoutine,

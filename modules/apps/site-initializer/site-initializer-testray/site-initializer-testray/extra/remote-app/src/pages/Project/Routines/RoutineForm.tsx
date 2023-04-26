@@ -16,6 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import {useForm} from 'react-hook-form';
 import {useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import {withPagePermission} from '~/hoc/withPagePermission';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
@@ -100,4 +101,6 @@ const RoutineForm = () => {
 	);
 };
 
-export default RoutineForm;
+export default withPagePermission(RoutineForm, {
+	restImpl: testrayRoutineImpl,
+});

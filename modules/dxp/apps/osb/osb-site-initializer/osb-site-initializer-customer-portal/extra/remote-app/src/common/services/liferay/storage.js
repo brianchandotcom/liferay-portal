@@ -9,9 +9,15 @@
  * distribution rights of the Software.
  */
 
+import {Liferay} from '../../services/liferay';
+
 export const storage = {
-	getItem: (key) => sessionStorage.getItem(key),
-	itemExist: (key) => !!sessionStorage.getItem(key),
-	removeItem: (key) => sessionStorage.removeItem(key),
-	setItem: (key, value) => sessionStorage.setItem(key, value),
+	getItem: (key, consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY) =>
+		Liferay.Util.SessionStorage.getItem(key, consentType),
+	removeItem: (key) => Liferay.Util.SessionStorage.removeItem(key),
+	setItem: (
+		key,
+		value,
+		consentType = Liferay.Util.SessionStorage.TYPES.NECESSARY
+	) => Liferay.Util.SessionStorage.setItem(key, value, consentType),
 };

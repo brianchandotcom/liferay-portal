@@ -26,7 +26,11 @@ export const Liferay = window.Liferay || {
 		getSiteGroupId: () => 0,
 		getUserId: () => '0',
 	},
+
 	Util: {
+		SessionStorage: Object.assign(sessionStorage, {
+			Types: {},
+		}),
 		isTablet: () => false,
 		navigate: (path) => window.location.assign(path),
 		openToast: (options) => alert(options),

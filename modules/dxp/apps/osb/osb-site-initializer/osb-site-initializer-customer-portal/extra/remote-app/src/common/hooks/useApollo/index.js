@@ -59,20 +59,31 @@ const raySourceErrorLink = onError(({forward, networkError, operation}) => {
 
 const getRaysourceAuthLink = (oktaSessionAPI) =>
 	setContext(async (_, {headers, sessionOperation, ...context}) => {
-		let sessionId = sessionStorage.getItem('okta-session-id');
+		let sessionId = Liferay.Util.SessionStorage.getItem(
+			'okta-session-id',
+			Liferay.Util.SessionStorage.TYPES.NECESSARY
+		);
 
 		if (sessionOperation === 'refresh') {
 			const session = await refreshCurrentSession(oktaSessionAPI);
 
 			sessionId = session.id;
-			sessionStorage.setItem('okta-session-id', session.id);
+			Liferay.Util.SessionStorage.setItem(
+				'okta-session-id',
+				session.id,
+				Liferay.Util.SessionStorage.TYPES.NECESSARY
+			);
 		}
 
 		if (!sessionId) {
 			const session = await getCurrentSession(oktaSessionAPI);
 
 			sessionId = session.id;
-			sessionStorage.setItem('okta-session-id', sessionId);
+			Liferay.Util.SessionStorage.setItem(
+				'okta-session-id',
+				sessionId,
+				Liferay.Util.SessionStorage.TYPES.NECESSARY
+			);
 		}
 
 		return {
@@ -104,7 +115,7 @@ export default function useApollo(provisioningServerAPI, oktaSessionAPI) {
 
 			await persistCache({
 				cache,
-				storage: new SessionStorageWrapper(window.sessionStorage),
+				storage: new SessionStorageWrapper(Liferay.Util.SessionStorage),
 			});
 
 			const apolloClient = new ApolloClient({

@@ -29,7 +29,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -72,6 +71,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Feliphe Marinho
  */
+@FeatureFlags("LPS-154672")
 @RunWith(Arquillian.class)
 public class ObjectEntryEntityModelTest {
 
@@ -95,7 +95,6 @@ public class ObjectEntryEntityModelTest {
 		_serviceTrackerMap.close();
 	}
 
-	@FeatureFlags("LPS-154672")
 	@Test
 	public void testGetEntityFieldsMap() throws Exception {
 		String value = "A" + RandomTestUtil.randomString();
@@ -142,6 +141,11 @@ public class ObjectEntryEntityModelTest {
 			).put(
 				"id", new IdEntityField("id", locale -> "id", String::valueOf)
 			).put(
+				"keywords",
+				new CollectionEntityField(
+					new StringEntityField(
+						"keywords", locale -> "assetTagNames.raw"))
+			).put(
 				"objectDefinitionId",
 				new IntegerEntityField(
 					"objectDefinitionId", locale -> "objectDefinitionId")
@@ -152,6 +156,11 @@ public class ObjectEntryEntityModelTest {
 				"status",
 				new CollectionEntityField(
 					new IntegerEntityField("status", locale -> Field.STATUS))
+			).put(
+				"taxonomyCategoryIds",
+				new CollectionEntityField(
+					new IntegerEntityField(
+						"taxonomyCategoryIds", locale -> "assetCategoryIds"))
 			).put(
 				"userId",
 				new IntegerEntityField("userId", locale -> Field.USER_ID)
@@ -266,12 +275,10 @@ public class ObjectEntryEntityModelTest {
 				expectedRelatedObjectDefinitionIdObjectFieldName,
 				locale -> expectedObjectFieldName, String::valueOf));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-154672")) {
-			expectedEntityFieldsMap.put(
-				objectRelationship.getName(),
-				new ComplexEntityField(
-					objectRelationship.getName(), Collections.emptyList()));
-		}
+		expectedEntityFieldsMap.put(
+			objectRelationship.getName(),
+			new ComplexEntityField(
+				objectRelationship.getName(), Collections.emptyList()));
 
 		return expectedEntityFieldsMap;
 	}

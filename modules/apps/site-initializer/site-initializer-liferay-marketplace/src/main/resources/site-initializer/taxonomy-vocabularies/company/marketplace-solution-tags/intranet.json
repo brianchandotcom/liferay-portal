@@ -1,0 +1,7 @@
+{
+	"name": "Intranet",
+	"name_i18n": {
+		"en_US": "Intranet"
+	},
+	"viewableBy": "Anyone"
+}

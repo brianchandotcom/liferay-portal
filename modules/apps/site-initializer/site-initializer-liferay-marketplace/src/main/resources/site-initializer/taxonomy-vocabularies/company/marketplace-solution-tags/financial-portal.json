@@ -1,0 +1,7 @@
+{
+	"name": "Financial Portal",
+	"name_i18n": {
+		"en_US": "Financial Portal"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,11 @@
+{
+	"description": "Solution",
+	"description_i18n": {
+		"en_US": "A Liferay solution is a reproducible tailoring and integration of Liferay DXP product features whose purpose is to solve large, complex business challenges. (customer portal, d2c, producer portal, intranet, etc.)"
+	},
+	"name": "Solution",
+	"name_i18n": {
+		"en_US": "Solution"
+	},
+	"viewableBy": "Anyone"
+}

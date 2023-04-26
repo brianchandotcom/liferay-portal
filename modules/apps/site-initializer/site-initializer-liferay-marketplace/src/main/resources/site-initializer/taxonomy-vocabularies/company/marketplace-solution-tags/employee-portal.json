@@ -1,0 +1,7 @@
+{
+	"name": "Employee Portal",
+	"name_i18n": {
+		"en_US": "Employee Portal"
+	},
+	"viewableBy": "Anyone"
+}

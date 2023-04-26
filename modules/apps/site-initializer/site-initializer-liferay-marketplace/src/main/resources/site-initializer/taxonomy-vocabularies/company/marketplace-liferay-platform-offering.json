@@ -1,0 +1,17 @@
+{
+	"assetTypes": [
+		{
+			"required": false,
+			"subtype": "AllAssetSubtypes",
+			"type": "Commerce Product"
+		}
+	],
+	"availableLanguages": [
+		"en-US"
+	],
+	"name": "Marketplace Liferay Platform Offering",
+	"name_i18n": {
+		"en_US": "Marketplace Liferay Platform Offering"
+	},
+	"viewableBy": "Anyone"
+}

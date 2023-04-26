@@ -1,0 +1,7 @@
+{
+	"name": "Banking",
+	"name_i18n": {
+		"en_US": "Banking"
+	},
+	"viewableBy": "Anyone"
+}

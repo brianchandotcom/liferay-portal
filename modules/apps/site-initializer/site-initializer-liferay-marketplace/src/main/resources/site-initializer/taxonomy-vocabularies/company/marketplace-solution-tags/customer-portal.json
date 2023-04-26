@@ -1,0 +1,7 @@
+{
+	"name": "Customer Portal",
+	"name_i18n": {
+		"en_US": "Customer Portal"
+	},
+	"viewableBy": "Anyone"
+}

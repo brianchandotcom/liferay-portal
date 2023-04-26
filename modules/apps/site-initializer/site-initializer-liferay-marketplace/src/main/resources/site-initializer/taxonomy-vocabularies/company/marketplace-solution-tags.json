@@ -1,0 +1,17 @@
+{
+	"assetTypes": [
+		{
+			"required": false,
+			"subtype": "AllAssetSubtypes",
+			"type": "Commerce Product"
+		}
+	],
+	"availableLanguages": [
+		"en-US"
+	],
+	"name": "Marketplace Solution Tags",
+	"name_i18n": {
+		"en_US": "Marketplace Solution Tags"
+	},
+	"viewableBy": "Anyone"
+}

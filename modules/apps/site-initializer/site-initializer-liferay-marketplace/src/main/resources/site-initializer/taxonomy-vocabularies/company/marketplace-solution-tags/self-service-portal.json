@@ -1,0 +1,7 @@
+{
+	"name": "Self-Service Portal",
+	"name_i18n": {
+		"en_US": "Self-Service Portal"
+	},
+	"viewableBy": "Anyone"
+}

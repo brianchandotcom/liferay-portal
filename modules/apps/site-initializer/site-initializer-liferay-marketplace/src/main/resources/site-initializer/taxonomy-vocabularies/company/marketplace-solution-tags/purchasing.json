@@ -1,0 +1,7 @@
+{
+	"name": "Purchasing",
+	"name_i18n": {
+		"en_US": "Purchasing"
+	},
+	"viewableBy": "Anyone"
+}

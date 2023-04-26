@@ -127,12 +127,12 @@ public class ObjectEntryDTOConverter
 			long primaryKey)
 		throws Exception {
 
-		String objectFieldNameNestedField = StringUtil.replaceLast(
+		String relatedObjectDefinitionName = StringUtil.replaceLast(
 			objectFieldName.substring(
 				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1),
 			"Id", "");
 
-		String objectRelationshipNameFieldName = StringUtil.removeLast(
+		String manyToOneRelationshipName = StringUtil.removeLast(
 			objectFieldName, "Id");
 
 		AtomicReference<Serializable> nestedObjectEntry =
@@ -143,11 +143,11 @@ public class ObjectEntryDTOConverter
 				nestedFieldName -> {
 					if (!StringUtil.equals(nestedFieldName, objectFieldName) &&
 						!StringUtil.equals(
-							nestedFieldName, objectFieldNameNestedField) &&
+							nestedFieldName, relatedObjectDefinitionName) &&
 						!StringUtil.equals(
 							nestedFieldName, objectRelationship.getName()) &&
 						!StringUtil.equals(
-							nestedFieldName, objectRelationshipNameFieldName)) {
+							nestedFieldName, manyToOneRelationshipName)) {
 
 						return null;
 					}
@@ -218,13 +218,12 @@ public class ObjectEntryDTOConverter
 
 			if (StringUtil.equals(nestedFieldName, objectFieldName) ||
 				StringUtil.equals(
-					nestedFieldName, objectFieldNameNestedField) ||
+					nestedFieldName, relatedObjectDefinitionName) ||
 				StringUtil.equals(
 					nestedFieldName, objectRelationship.getName()) ||
-				StringUtil.equals(
-					nestedFieldName, objectRelationshipNameFieldName)) {
+				StringUtil.equals(nestedFieldName, manyToOneRelationshipName)) {
 
-				map.put(objectRelationshipNameFieldName, entry.getValue());
+				map.put(manyToOneRelationshipName, entry.getValue());
 			}
 		}
 	}

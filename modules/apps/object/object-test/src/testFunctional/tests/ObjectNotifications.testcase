@@ -403,6 +403,7 @@ definition {
 	@description = "LPS-161918 - Verify that it's possible to edit an e-mail notification template"
 	@priority = 3
 	test CanEditEmailTemplate {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given a user creates an email notification template") {
@@ -552,7 +553,9 @@ definition {
 	@description = "LPS-161920 - Verify that it's possible to send an e-mail notification via an Action"
 	@priority = 5
 	test CanSendEmailViaActionAdd {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Go to Templates and add a new Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();
@@ -561,7 +564,7 @@ definition {
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "Liferay",
-				fromName = "Test Test",
+				fromName = "CanSendEmailViaActionAdd",
 				name = "Notification Template",
 				notificationType = "Email",
 				subject = "Subject");
@@ -605,31 +608,32 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Go to the created Object and add an Entry") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject161920");
-
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry");
+		task ("On the created Object add a Entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject161920",
+				value = "Trigger");
 		}
 
-		task ("Go to the Notifications Queue and assert the notification is present") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
-
-			AssertElementPresent(
-				key_validationInfo = "Subject",
-				locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
+		task ("Then the email is received correctly on the email server") {
+			MockMock.viewMail(
+				asset = "Subject",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Liferay",
+				subject = "Subject");
 		}
 	}
 
 	@description = "LPS-173894 - Verify that it's possible to send an e-mail notification via an Action (Delete)"
 	@priority = 5
 	test CanSendEmailViaActionDelete {
-		property custom.properties = "feature.flag.LPS-173894=true";
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionDelete";
 		property test.run.type = "single";
+		property test.smtp.server.enabled = "true";	
 
 		task ("Given an Email Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();
@@ -709,19 +713,20 @@ definition {
 			ObjectPortlet.deleteEntry(entry = "Entry Test");
 		}
 
-		task ("Then the Action is triggered and a sent email is seen in the Notification Queue") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_entryLabel = "CustomObject178781",
-				key_entryStatus = "Sent",
-				locator1 = "ObjectNotifications#VIEW_NOTIFICATION_ENTRIES");
+		task ("Then the email is received correctly on the email server") {
+			MockMock.viewMail(
+				asset = "Subject",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Liferay",
+				subject = "Subject");
 		}
 	}
 
 	@description = "LPS-173894 - Verify that it's possible to send an e-mail notification with Action (Download)"
 	@priority = 5
 	test CanSendEmailViaActionDownload {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 
@@ -809,6 +814,7 @@ definition {
 	@description = "LPS-178783 - Verify a standalone action can be triggered manually to send an email"
 	@priority = 5
 	test CanSendEmailViaActionStandalone {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -894,9 +900,11 @@ definition {
 	@description = "LPS-173894 -Verify that it's possible to send an e-mail notification with Action (Update)"
 	@priority = 5
 	test CanSendEmailViaActionUpdate {
-		property custom.properties = "feature.flag.LPS-173894=true";
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionUpdate";
+		property test.smtp.server.enabled = "true";
 		property test.run.type = "single";
 
 		task ("Given an Email Notification Template") {
@@ -953,39 +961,21 @@ definition {
 				whenAction = "On After Update");
 		}
 
-		task ("And given the Notification Queue Entry Delete Interval is set to 1 in System Settings > Notifications > Notification Queue") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Notifications",
-				configurationName = "Notification Queue",
-				configurationScope = "System Scope");
-
-			SystemSettings.editTextSetting(
-				settingName = "Notification Queue Entry Delete Interval",
-				settingValue = 1);
-
-			SystemSettings.saveConfiguration();
-		}
-
 		task ("When the object entry is updated") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject178782");
 
 			ObjectPortlet.updateEntry(
 				entry = "Entry Test",
-				updateEntry = "Entry Test Updated");
+				updateEntry = "Trigger");
 		}
 
-		task ("Then the Action is triggered and a sent email is seen in the Notification Queue") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_entryLabel = "CustomObject178782",
-				key_entryStatus = "Sent",
-				locator1 = "ObjectNotifications#VIEW_NOTIFICATION_ENTRIES");
+		task ("Then the email is received correctly on the email server") {
+			MockMock.viewMail(
+				asset = "Subject",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Liferay",
+				subject = "Subject");
 		}
 	}
 
@@ -1307,7 +1297,10 @@ definition {
 	@description = "LPS-171625 - Verify that after updating a custom object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address and From Name and Subject fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnCustomObject {
+		property custom.properties = "feature.flag.LPS-165849=true";
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given a custom object a text field and an entry are created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1389,21 +1382,22 @@ definition {
 			ObjectAdmin.editEntryName(newEntryValue = "After");
 		}
 
-		task ("Then the email is received with the terms replaced with the correct values") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertTextPresent(value1 = "userfn");
-
-			AssertTextPresent(value1 = "userea@liferay.com");
-
-			AssertTextPresent(value1 = "After");
+		task ("Then the email is received on the server email with the terms replaced with the correct values") {
+			MockMock.viewMail(
+				asset = "After",
+				content = "Email Body",
+				recipient = "userea@liferay",
+				sender = "userea@liferay.com",
+				subject = "After");
 		}
 	}
 
 	@description = "LPS-171625 - Verify that after updating a system object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address, From Name and Template Body fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnSystemObject {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given an email notification template with the applicable fields filled with the Author and Current User terms") {
 			Notifications.goToNotificationTemplateAdmin();
@@ -1461,11 +1455,12 @@ definition {
 		}
 
 		task ("Then the email is received with the terms replaced with the correct values") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertTextPresent(value1 = "edituserln");
-
-			AssertTextPresent(value1 = "userea@liferay.com");
+			MockMock.viewMail(
+				asset = "userln",
+				content = "Email Body",
+				recipient = "userea@liferay",
+				sender = "userfn",
+				subject = "userln");
 		}
 	}
 

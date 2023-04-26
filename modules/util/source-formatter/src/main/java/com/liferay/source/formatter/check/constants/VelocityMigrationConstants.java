@@ -49,6 +49,8 @@ public class VelocityMigrationConstants {
 
 	public static final String VELOCITY_MACRO_START = "#macro";
 
+	public static final String VELOCITY_PARSE = "#parse";
+
 	public static final String VELOCITY_SET = "#set";
 
 	public static final String VELOCITY_TEMPLATE_DECLARATION =

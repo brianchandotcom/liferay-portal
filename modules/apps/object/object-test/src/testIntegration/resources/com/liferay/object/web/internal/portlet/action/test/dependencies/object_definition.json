@@ -51,7 +51,7 @@
 			"objectActionExecutorKey": "notification",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
-				"notificationTemplateId": 0
+				"notificationTemplateExternalReferenceCode": "NOTIFICATION-TEMPLATE-ERC-001"
 			},
 			"status": {
 				"code": 0,

@@ -114,9 +114,9 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 			label="web-content-constraints"
 		>
 			<div class="form-group">
-				<aui:input name="ddmStructureId" required="<%= true %>" type="hidden" value="<%= editJournalFeedDisplayContext.getDDMStructureId() %>" />
+				<aui:input name="ddmStructureId" type="hidden" value="<%= editJournalFeedDisplayContext.getDDMStructureId() %>" />
 
-				<aui:input name="structure" required="<%= true %>" type="resource" value="<%= editJournalFeedDisplayContext.getDDMStructureName() %>" />
+				<aui:input name="structure" type="resource" value="<%= editJournalFeedDisplayContext.getDDMStructureName() %>" />
 
 				<aui:button name="selectDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>' value="select" />
 

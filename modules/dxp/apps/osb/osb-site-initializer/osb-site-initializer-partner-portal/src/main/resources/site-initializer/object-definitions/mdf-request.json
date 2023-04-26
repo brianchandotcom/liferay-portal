@@ -48,6 +48,20 @@
 		},
 		{
 			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "9061ccf9-e6db-4233-aa08-ee0946bd7acc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Country"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Countries$]",
+			"name": "partnerCountry",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "2892b7ec-1bbb-0a68-8724-f3cb8af12538",
 			"indexed": true,
@@ -97,6 +111,19 @@
 			"name": "liferayBusinessSalesGoals",
 			"required": false,
 			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "773761e4-a864-4a4b-ac0b-bee45c81e1d8",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Liferay Business/Sales Goals Other"
+			},
+			"name": "liferayBusinessSalesGoalsOther",
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",

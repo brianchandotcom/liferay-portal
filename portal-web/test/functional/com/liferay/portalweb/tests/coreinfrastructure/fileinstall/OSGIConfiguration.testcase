@@ -20,6 +20,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-173655. Verify if virtual instances can be created via OSGI config file."
+	@priority = 4
+	test CanCreateVirtualInstanceViaConfig {
+		property osgi.module.configuration.file.names = "com.liferay.portal.instances.internal.configuration.PortalInstancesConfiguration~www.able.com.config";
+		property osgi.module.configurations = "mx=\"www.able.com\"${line.separator}virtualHostname=\"www.able.com\"";
+		property test.name.skip.portal.instance = "OSGIConfiguration#CanCreateVirtualInstanceViaConfig";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+	}
+
 	@description = "Verify if no osgi config file exists, when a config is updated via UI, then the config is added to the database and a config file is not created."
 	@priority = 3
 	test ConfigAddedViaUIDoesNotCreateNewConfigFile {

@@ -61,80 +61,8 @@ public class SEOSettingsUtil {
 				seoKeywords_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					layout.getKeywordsMap());
-
-				setSiteMapSettings(
-					() -> {
-						UnicodeProperties unicodeProperties =
-							layout.getTypeSettingsProperties();
-
-						String siteMapChangeFreq =
-							unicodeProperties.getProperty("sitemap-changefreq");
-						String siteMapInclude = unicodeProperties.getProperty(
-							"sitemap-include");
-						String siteMapPriority = unicodeProperties.getProperty(
-							"sitemap-priority");
-
-						if ((siteMapChangeFreq == null) &&
-							(siteMapInclude == null) &&
-							(siteMapPriority == null)) {
-
-							return null;
-						}
-
-						return new SiteMapSettings() {
-							{
-								setChangeFrequency(
-									() -> {
-										if (siteMapChangeFreq == null) {
-											return null;
-										}
-
-										return ChangeFrequency.create(
-											StringUtil.upperCaseFirstLetter(
-												siteMapChangeFreq));
-									});
-
-								setInclude(
-									() -> {
-										if (siteMapInclude == null) {
-											return null;
-										}
-
-										if (siteMapInclude.equals("0")) {
-											return false;
-										}
-
-										if (siteMapInclude.equals("1")) {
-											return true;
-										}
-
-										return null;
-									});
-
-								setPagePriority(
-									() -> {
-										if (siteMapPriority == null) {
-											return null;
-										}
-
-										try {
-											return Double.parseDouble(
-												siteMapPriority);
-										}
-										catch (NumberFormatException
-													numberFormatException) {
-
-											if (_log.isWarnEnabled()) {
-												_log.warn(
-													numberFormatException);
-											}
-
-											return null;
-										}
-									});
-							}
-						};
-					});
+				siteMapSettings = _toSiteMapSettings(
+					layout.getTypeSettingsProperties());
 			}
 		};
 
@@ -152,6 +80,72 @@ public class SEOSettingsUtil {
 		}
 
 		return seoSettings;
+	}
+
+	private static SiteMapSettings _toSiteMapSettings(
+		UnicodeProperties unicodeProperties) {
+
+		String siteMapChangeFreq = unicodeProperties.getProperty(
+			"sitemap-changefreq");
+		String siteMapInclude = unicodeProperties.getProperty(
+			"sitemap-include");
+		String siteMapPriority = unicodeProperties.getProperty(
+			"sitemap-priority");
+
+		if ((siteMapChangeFreq == null) && (siteMapInclude == null) &&
+			(siteMapPriority == null)) {
+
+			return null;
+		}
+
+		return new SiteMapSettings() {
+			{
+				setChangeFrequency(
+					() -> {
+						if (siteMapChangeFreq == null) {
+							return null;
+						}
+
+						return ChangeFrequency.create(
+							StringUtil.upperCaseFirstLetter(siteMapChangeFreq));
+					});
+
+				setInclude(
+					() -> {
+						if (siteMapInclude == null) {
+							return null;
+						}
+
+						if (siteMapInclude.equals("0")) {
+							return false;
+						}
+
+						if (siteMapInclude.equals("1")) {
+							return true;
+						}
+
+						return null;
+					});
+
+				setPagePriority(
+					() -> {
+						if (siteMapPriority == null) {
+							return null;
+						}
+
+						try {
+							return Double.parseDouble(siteMapPriority);
+						}
+						catch (NumberFormatException numberFormatException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(numberFormatException);
+							}
+
+							return null;
+						}
+					});
+			}
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

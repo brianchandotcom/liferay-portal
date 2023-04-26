@@ -448,7 +448,6 @@ export function PublishedAppsDashboardPage() {
 					currentAccount={selectedAccount}
 					dashboardNavigationItems={dashboardNavigationItems}
 					onSelectAppChange={setSelectedApp}
-					selectedApp={selectedApp}
 					setDashboardNavigationItems={setDashboardNavigationItems}
 					setSelectedAccount={setSelectedAccount}
 				/>
@@ -460,6 +459,8 @@ export function PublishedAppsDashboardPage() {
 					buttonMessage="+ New App"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={appMessages}
+					selectedApp={selectedApp}
+					setSelectedApp={setSelectedApp}
 				>
 					<DashboardTable<AppProps>
 						emptyStateMessage={appMessages.emptyStateMessage}

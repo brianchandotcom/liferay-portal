@@ -49,8 +49,8 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.test.util.ObjectActionTestUtil;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.service.test.util.TestObjectActionExecutor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -227,7 +227,8 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
-				_companyId2, RandomTestUtil.randomString(), "User");
+				Arrays.asList(_userObjectDefinition.getName()), _companyId2,
+				RandomTestUtil.randomString());
 
 		try {
 			_objectActionLocalService.addObjectAction(
@@ -258,7 +259,8 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectActionExecutor objectActionExecutor2 =
 			_registerObjectActionExecutor(
-				_companyId1, RandomTestUtil.randomString(), "User");
+				Arrays.asList(_userObjectDefinition.getName()), _companyId1,
+				RandomTestUtil.randomString());
 
 		try {
 			_objectActionLocalService.addObjectAction(
@@ -1455,13 +1457,13 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	private ObjectActionExecutor _registerObjectActionExecutor(
-		long companyId, String key, String... objectDefinitionNames) {
+		List<String> allowedObjectDefinitionNames, long companyId, String key) {
 
 		ServiceRegistration<ObjectActionExecutor> serviceRegistration =
 			_bundleContext.registerService(
 				ObjectActionExecutor.class,
-				ObjectActionTestUtil.createProxyObjectActionExecutor(
-					companyId, key, Arrays.asList(objectDefinitionNames)),
+				new TestObjectActionExecutor(
+					allowedObjectDefinitionNames, companyId, key),
 				new HashMapDictionary<>());
 
 		_serviceRegistrations.add(serviceRegistration);

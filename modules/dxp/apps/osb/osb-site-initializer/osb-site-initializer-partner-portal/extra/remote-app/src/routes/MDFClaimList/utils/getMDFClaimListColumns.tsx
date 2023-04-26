@@ -59,9 +59,9 @@ export default function getMDFClaimListColumns(
 							Liferay.Util.navigate(
 								`${siteURL}/${
 									PRMPageRoute.EDIT_MDF_CLAIM
-								}/#/mdfrequest/${
+								}/#/mdf-request/${
 									row[MDFClaimColumnKey.REQUEST_ID]
-								}/mdfclaim/${row[MDFClaimColumnKey.CLAIM_ID]}`
+								}/mdf-claim/${row[MDFClaimColumnKey.CLAIM_ID]}`
 							),
 					});
 				}

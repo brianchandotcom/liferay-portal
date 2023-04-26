@@ -14,7 +14,7 @@
 	[#assign currentMDFClaimHasValidStatusToEdit = mdfClaim.mdfClaimStatus.key == 'draft' || mdfClaim.mdfClaimStatus.key == 'moreInfoRequested' /]
 
 	[#if hasUpdateAction && isUserAssociated && currentMDFClaimHasValidStatusToEdit]
-		<a class="align-items-center btn btn-primary d-flex mr-2 mt-2" href="${site_url}/marketing/mdf-claim/edit/#/mdfrequest/${mdfRequestId}/mdfclaim/${mdfClaimId}">
+		<a class="align-items-center btn btn-primary d-flex mr-2 mt-2" href="${site_url}/marketing/mdf-claims/edit/#/mdf-request/${mdfRequestId}/mdf-claim/${mdfClaimId}">
 			[@clay["icon"] symbol="pencil"/] Edit
 		</a>
 	[/#if]

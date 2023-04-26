@@ -1,0 +1,79 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral1",
+						"borderWidth": "0"
+					},
+					"indexed": true,
+					"layout": {
+						"align": "Start",
+						"borderWidth": 0,
+						"contentDisplay": "FlexRow",
+						"justify": "Center",
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"width": "680px"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "64px",
+										"marginTop": "64px"
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"properties": "route=mdf-claim-form"
+										},
+										"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "content-template"
+		}
+	},
+	"version": 1.1
+}

@@ -1,5 +1,5 @@
 {
-	"friendlyURL": "/marketing/mdf-claim/new",
+	"friendlyURL": "/marketing/mdf-claims/new",
 	"hidden": true,
 	"name_i18n": {
 		"en_US": "MDF Claim: New"
@@ -9,6 +9,26 @@
 			"actionIds": [
 			],
 			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Partner Manager (PM)",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Partner Marketing User (PMU)",
 			"scope": 4
 		}
 	],

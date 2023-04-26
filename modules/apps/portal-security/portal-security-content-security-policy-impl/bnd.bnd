@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Security Content Security Policy Implementation
+Bundle-SymbolicName: com.liferay.portal.security.content.security.policy.impl
+Bundle-Version: 1.0.0

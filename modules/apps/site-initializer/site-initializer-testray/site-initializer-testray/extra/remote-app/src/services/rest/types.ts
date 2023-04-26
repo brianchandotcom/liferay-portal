@@ -39,8 +39,7 @@ type ObjectActions = {
 	updateBatch?: ActionPermissionProperties;
 };
 
-type ObjectActionsItems = {
-	create?: ActionPermissionProperties;
+export type ObjectActionsItems = {
 	delete?: ActionPermissionProperties;
 	get?: ActionPermissionProperties;
 	replace?: ActionPermissionProperties;
@@ -243,6 +242,7 @@ export type TestrayProductVersion = {
 };
 
 export type TestrayProject = {
+	actions: ObjectActionsItems;
 	creator: {
 		name: string;
 	};
@@ -425,6 +425,7 @@ export type TestrayFactorCategory = {
 };
 
 export type TestrayRoutine = {
+	actions: ObjectActionsItems;
 	builds: TestrayBuild[];
 	dateCreated: string;
 	id: number;

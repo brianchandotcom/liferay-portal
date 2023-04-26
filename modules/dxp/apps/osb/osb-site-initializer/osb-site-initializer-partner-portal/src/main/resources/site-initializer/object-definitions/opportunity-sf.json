@@ -245,6 +245,7 @@
 	"pluralLabel": {
 		"en_US": "Opportunities SF"
 	},
+	"portlet": true,
 	"scope": "company",
 	"storageType": "salesforce"
 }

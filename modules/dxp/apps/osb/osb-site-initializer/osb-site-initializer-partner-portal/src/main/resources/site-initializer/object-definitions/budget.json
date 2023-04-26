@@ -37,5 +37,6 @@
 	"pluralLabel": {
 		"en_US": "Budgets"
 	},
+	"portlet": true,
 	"scope": "company"
 }

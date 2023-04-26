@@ -110,5 +110,6 @@
 	"pluralLabel": {
 		"en_US": "MDF Claim Activities"
 	},
+	"portlet": true,
 	"scope": "company"
 }

@@ -368,5 +368,6 @@
 	"pluralLabel": {
 		"en_US": "MDF Requests"
 	},
+	"portlet": true,
 	"scope": "company"
 }

@@ -45,5 +45,6 @@
 	"pluralLabel": {
 		"en_US": "MDF Claim Activities Documents"
 	},
+	"portlet": true,
 	"scope": "company"
 }

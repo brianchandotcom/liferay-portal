@@ -83,5 +83,6 @@
 	"pluralLabel": {
 		"en_US": "MDF Claim Budgets"
 	},
+	"portlet": true,
 	"scope": "company"
 }

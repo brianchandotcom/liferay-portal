@@ -726,5 +726,6 @@
 	"pluralLabel": {
 		"en_US": "Activities"
 	},
+	"portlet": true,
 	"scope": "company"
 }

@@ -81,7 +81,7 @@ public class TextObjectFieldBusinessType extends BaseObjectFieldBusinessType {
 	}
 
 	@Override
-	public Set<String> getUnmodifiablObjectFieldSettingsNames() {
+	public Set<String> getUnmodifiableObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
 	}

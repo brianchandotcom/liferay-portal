@@ -398,7 +398,7 @@ definition {
 				fail("upgrade.report.warnings is not present in portal log.");
 			}
 
-			if (!(contains(${fileContent}, "upgrade.report.status="))) {
+			if (!(contains(${logContent}, "upgrade.report.status="))) {
 				fail("upgrade.report.status is not present in portal log.");
 			}
 		}

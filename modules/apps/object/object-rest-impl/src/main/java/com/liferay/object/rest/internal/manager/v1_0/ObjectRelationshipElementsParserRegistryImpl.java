@@ -18,6 +18,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParserRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import org.osgi.framework.BundleContext;
@@ -35,10 +36,10 @@ public class ObjectRelationshipElementsParserRegistryImpl
 
 	@Override
 	public ObjectRelationshipElementsParser getObjectRelationshipElementsParser(
-			String className, String type)
+			String className, long companyId, String type)
 		throws Exception {
 
-		String key = _getKey(className, type);
+		String key = _getKey(className, companyId, type);
 
 		ObjectRelationshipElementsParser objectRelationshipManager =
 			_serviceTrackerMap.getService(key);
@@ -63,6 +64,7 @@ public class ObjectRelationshipElementsParserRegistryImpl
 				emitter.emit(
 					_getKey(
 						objectRelationshipElementsParser.getClassName(),
+						objectRelationshipElementsParser.getCompanyId(),
 						objectRelationshipElementsParser.
 							getObjectRelationshipType()));
 			});
@@ -73,8 +75,9 @@ public class ObjectRelationshipElementsParserRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private String _getKey(String className, String type) {
-		return className + StringPool.POUND + type;
+	private String _getKey(String className, long companyId, String type) {
+		return StringBundler.concat(
+			className, StringPool.POUND, companyId, StringPool.POUND, type);
 	}
 
 	private ServiceTrackerMap<String, ObjectRelationshipElementsParser>

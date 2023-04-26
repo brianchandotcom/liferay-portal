@@ -21,7 +21,7 @@ package com.liferay.object.rest.manager.v1_0;
 public interface ObjectRelationshipElementsParserRegistry {
 
 	public ObjectRelationshipElementsParser getObjectRelationshipElementsParser(
-			String className, String type)
+			String className, long companyId, String type)
 		throws Exception;
 
 }

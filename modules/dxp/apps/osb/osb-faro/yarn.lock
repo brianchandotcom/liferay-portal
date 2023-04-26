@@ -1241,6 +1241,15 @@
     "@clayui/icon" "^3.1.0"
     classnames "^2.2.6"
 
+"@clayui/button@^3.92.0":
+  version "3.92.0"
+  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.92.0.tgz#3506c0fc4cf085a84e17d1be37069ddcbb9ea1f7"
+  integrity sha512-2GMgDb1GKf/p7cZuAUV59pDkjY6BGBI+OWgtROjhPnLVUGMcQTlwniKpldpqfiE1z5fm4bLr/m/fHGbGyzrQYg==
+  dependencies:
+    "@clayui/icon" "^3.56.0"
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
 "@clayui/css@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.5.0.tgz#4cbc018bd5b5f24a29996cb6719719ca1f7981e4"
@@ -1357,6 +1366,14 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
+"@clayui/icon@^3.56.0":
+  version "3.56.0"
+  resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.56.0.tgz#c748c7c1641484593a4acb2b3cb43cbb7f42178c"
+  integrity sha512-9xnHkyW45h9UysMFZdjefnJhYUvSXwZsEufRv3NHUf5DLUyNYImrdZ64AXrk3i4TSyqk6qPMLIU0z0/fMQ28qw==
+  dependencies:
+    classnames "^2.2.6"
+    warning "^4.0.3"
+
 "@clayui/label@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@clayui/label/-/label-3.0.0.tgz#13433df24acfe875ae0da3b8f1c7d29eb2f67b95"
@@ -1394,6 +1411,13 @@
   dependencies:
     classnames "^2.2.6"
 
+"@clayui/link@^3.88.0":
+  version "3.88.0"
+  resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.88.0.tgz#0a3ed2b9c66a9c4d5e83557da4fac8109858aef3"
+  integrity sha512-Y0xTcs8hrdgyG00FaWq0Mo5MKWi52H2pw+nroNbFdTL6jrWwcv3DMklQ/rJHfmNFD02hvLJEW0rSkghceZUhdQ==
+  dependencies:
+    classnames "^2.2.6"
+
 "@clayui/list@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@clayui/list/-/list-3.0.0.tgz#41b301e93419e2d8af48021b08dc927adc129cb2"
@@ -1409,6 +1433,13 @@
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.0.0-alpha.1.tgz#974eafb2e2c531fd6a60213fdfafb0956423516f"
   integrity sha512-kL1Cr+53IjcbUfEo5zA7gzuijTH+slg4B+oERyG8c2UeMUPRFdhpYosSTt5Ih/35mWl06Suw/EnwHKho5LekYw==
+  dependencies:
+    classnames "^2.2.6"
+
+"@clayui/loading-indicator@^3.60.0":
+  version "3.60.0"
+  resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.60.0.tgz#d5573f0d391367599740fb23d1999a9064ba71b1"
+  integrity sha512-UpPwjJqex0tX+asB4hDRe50qJop6hvAyvDjfE6P6ivYxpuLjdTqhk7CN9QKLWSesPh8DFvmG32BYnuW9OZ59XQ==
   dependencies:
     classnames "^2.2.6"
 

@@ -896,6 +896,16 @@ public class CommerceOrderWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public java.util.List<Long> getCustomerCommerceOrderIds() {
+		return model.getCustomerCommerceOrderIds();
+	}
+
+	@Override
+	public int getCustomerCommerceOrderIdsCount() {
+		return model.getCustomerCommerceOrderIdsCount();
+	}
+
 	/**
 	 * Returns the delivery commerce term entry description of this commerce order.
 	 *
@@ -1438,6 +1448,16 @@ public class CommerceOrderWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getSubtotalWithTaxAmountMoney();
+	}
+
+	@Override
+	public java.util.List<Long> getSupplierCommerceOrderIds() {
+		return model.getSupplierCommerceOrderIds();
+	}
+
+	@Override
+	public int getSupplierCommerceOrderIdsCount() {
+		return model.getSupplierCommerceOrderIdsCount();
 	}
 
 	/**

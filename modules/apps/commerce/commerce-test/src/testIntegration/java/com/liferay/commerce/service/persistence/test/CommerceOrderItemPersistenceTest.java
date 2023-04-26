@@ -160,6 +160,9 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setCProductId(RandomTestUtil.nextLong());
 
+		newCommerceOrderItem.setCustomerCommerceOrderItemId(
+			RandomTestUtil.nextLong());
+
 		newCommerceOrderItem.setParentCommerceOrderItemId(
 			RandomTestUtil.nextLong());
 
@@ -342,6 +345,9 @@ public class CommerceOrderItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderItem.getCProductId(),
 			newCommerceOrderItem.getCProductId());
+		Assert.assertEquals(
+			existingCommerceOrderItem.getCustomerCommerceOrderItemId(),
+			newCommerceOrderItem.getCustomerCommerceOrderItemId());
 		Assert.assertEquals(
 			existingCommerceOrderItem.getParentCommerceOrderItemId(),
 			newCommerceOrderItem.getParentCommerceOrderItemId());
@@ -640,7 +646,8 @@ public class CommerceOrderItemPersistenceTest {
 			true, "createDate", true, "modifiedDate", true, "bookedQuantityId",
 			true, "commerceOrderId", true, "commercePriceListId", true,
 			"CPInstanceId", true, "CPMeasurementUnitId", true, "CProductId",
-			true, "parentCommerceOrderItemId", true, "shippingAddressId", true,
+			true, "customerCommerceOrderItemId", true,
+			"parentCommerceOrderItemId", true, "shippingAddressId", true,
 			"decimalQuantity", true, "deliveryGroup", true,
 			"deliveryMaxSubscriptionCycles", true, "deliverySubscriptionLength",
 			true, "deliverySubscriptionType", true,
@@ -1004,6 +1011,9 @@ public class CommerceOrderItemPersistenceTest {
 		commerceOrderItem.setCPMeasurementUnitId(RandomTestUtil.nextLong());
 
 		commerceOrderItem.setCProductId(RandomTestUtil.nextLong());
+
+		commerceOrderItem.setCustomerCommerceOrderItemId(
+			RandomTestUtil.nextLong());
 
 		commerceOrderItem.setParentCommerceOrderItemId(
 			RandomTestUtil.nextLong());

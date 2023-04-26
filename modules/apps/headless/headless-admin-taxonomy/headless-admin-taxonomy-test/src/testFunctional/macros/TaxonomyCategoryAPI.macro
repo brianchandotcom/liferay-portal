@@ -3,8 +3,15 @@ definition {
 	macro _createTaxonomyCategory {
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (isSet(parentTaxonomyCategoryId)) {
+			var api = "taxonomy-categories/${parentTaxonomyCategoryId}/taxonomy-categories";
+		}
+		else {
+			var api = "taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories";
+		}
+
 		var curl = '''
-			${portalURL}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories \
+			${portalURL}/o/headless-admin-taxonomy/v1.0/${api} \
 				-u test@liferay.com:test \
 				-H Content-Type: application/json \
 				-d {
@@ -50,7 +57,7 @@ definition {
 	}
 
 	macro createTaxonomyCategory {
-		Variables.assertDefined(parameterList = "${taxonomyVocabularyId},${name}");
+		Variables.assertDefined(parameterList = ${name});
 
 		if (!(isSet(externalReferenceCode))) {
 			var externalReferenceCode = "";
@@ -59,6 +66,7 @@ definition {
 		var response = TaxonomyCategoryAPI._createTaxonomyCategory(
 			externalReferenceCode = ${externalReferenceCode},
 			name = ${name},
+			parentTaxonomyCategoryId = ${parentTaxonomyCategoryId},
 			taxonomyVocabularyId = ${taxonomyVocabularyId});
 
 		return ${response};
@@ -101,6 +109,29 @@ definition {
 		static var responseOfCreated = ${response};
 
 		return ${responseOfCreated};
+	}
+
+	macro staticTaxonomyCategoryId {
+		Variables.assertDefined(parameterList = ${name});
+
+		var response = TaxonomyCategoryAPI.createTaxonomyCategory(
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			parentTaxonomyCategoryId = ${parentTaxonomyCategoryId},
+			taxonomyVocabularyId = ${taxonomyVocabularyId});
+
+		var taxonomyCategoryId = JSONPathUtil.getIdValue(response = ${response});
+
+		if (isSet(parentTaxonomyCategoryId)) {
+			static var staticChildTaxonomyCategoryId = ${taxonomyCategoryId};
+
+			return ${staticChildTaxonomyCategoryId};
+		}
+		else {
+			static var staticTaxonomyCategoryId = ${taxonomyCategoryId};
+
+			return ${staticTaxonomyCategoryId};
+		}
 	}
 
 	macro updateTaxonomyCategoryByErc {

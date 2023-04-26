@@ -78,21 +78,13 @@ export function AppDetailsPage({
 				className="app-details-page-alert-container"
 				displayType="info"
 			>
-				<div className="app-details-page-alert-items-container">
-					<img
-						alt="Circle Info "
-						className="app-details-page-alert-icon"
-						src={circleInfoIcon}
-					/>
-
-					<span className="app-details-page-alert-text">
-						This submission is currently under review by Liferay.
-						Once the process is complete, you will be able to
-						publish it to the marketplace. Meanwhile, any
-						information or data from this app submission cannot be
-						updated.
-					</span>
-				</div>
+				<span className="app-details-page-alert-text">
+					This submission is currently under review by Liferay.
+					Once the process is complete, you will be able to
+					publish it to the marketplace. Meanwhile, any
+					information or data from this app submission cannot be
+					updated.
+				</span>
 			</ClayAlert>
 
 			<div className="app-details-page-app-info-main-container">

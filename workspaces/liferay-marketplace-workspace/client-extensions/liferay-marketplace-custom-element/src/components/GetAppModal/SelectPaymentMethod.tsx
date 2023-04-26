@@ -15,6 +15,7 @@ export function SelectPaymentMethod({
 	selectedPaymentMethod,
 	setBillingAddress,
 	setEmail,
+	setEnablePurchaseButton,
 	setPurchaseOrderNumber,
 	setSelectedAddress,
 	setSelectedPaymentMethod,
@@ -24,12 +25,13 @@ export function SelectPaymentMethod({
 	addresses: BillingAddress[];
 	billingAddress: BillingAddress;
 	email: string;
-	enableTrialMethod: string;
+	enableTrialMethod: boolean;
 	purchaseOrderNumber: string;
 	selectedAddress: string;
 	selectedPaymentMethod: PaymentMethodSelector;
 	setBillingAddress: (value: BillingAddress) => void;
 	setEmail: (value: string) => void;
+	setEnablePurchaseButton: (value: boolean) => void;
 	setSelectedAddress: (value: string) => void;
 	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
 	setShowNewAddressButton: (value: boolean) => void;
@@ -81,6 +83,7 @@ export function SelectPaymentMethod({
 				billingAddress={billingAddress}
 				selectedAddress={selectedAddress}
 				setBillingAddress={setBillingAddress}
+				setEnablePurchaseButton={setEnablePurchaseButton}
 				setSelectedAddress={setSelectedAddress}
 				setShowNewAddressButton={setShowNewAddressButton}
 				showNewAddressButton={showNewAddressButton}

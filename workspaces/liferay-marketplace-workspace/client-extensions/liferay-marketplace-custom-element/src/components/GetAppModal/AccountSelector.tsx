@@ -22,17 +22,19 @@ export function AccountSelector({
 }) {
 	useEffect(() => {
 		const getAccountInfos = async () => {
-			const accountInfo = accounts?.map(async (account) => {
-				const accountInfo = await getAccountInfoFromCommerce(
-					account.id
-				);
+			const accountInfo = await Promise.all(
+				accounts?.map(async (account) => {
+					const accountInfo = await getAccountInfoFromCommerce(
+						account.id
+					);
 
-				return accountInfo;
-			});
+					return accountInfo;
+				})
+			);
 
-			const filteredAccounts: CommerceAccount[] = (
-				await Promise.all(accountInfo)
-			).filter((account) => account.active);
+			const filteredAccounts: CommerceAccount[] = accountInfo.filter(
+				(account) => account.active
+			);
 
 			if (accounts.length === 1) {
 				setSelectedAccount(filteredAccounts[0]);
@@ -50,7 +52,7 @@ export function AccountSelector({
 				Accounts available for <b>{userEmail}</b>&nbsp;(you){' '}
 			</span>
 
-			<div className="account-cards">
+			<div className="account-selector-cards">
 				{activeAccounts?.map((account) => {
 					return (
 						<RadioCard
@@ -66,7 +68,7 @@ export function AccountSelector({
 				})}
 			</div>
 
-			<span className="contact-support">
+			<span className="account-selector-contact-support">
 				Not seeing a specific Account? <a href="#">Contact Support</a>
 			</span>
 		</div>

@@ -36,17 +36,13 @@ export function RadioCard({
 	toggle = false,
 	tooltip,
 }: RadioCardProps) {
-	const [hovered, setHovered] = useState(false);
-
 	return (
 		<div
 			className={classNames('radio-card-container', {
 				'radio-card-container-disabled': disabled,
-				'radio-card-container-selected': selected || hovered,
+				'radio-card-container-selected': selected,
 				'radio-card-container-small': small,
 			})}
-			onMouseEnter={() => setHovered(true)}
-			onMouseLeave={() => setHovered(false)}
 		>
 			<div className="radio-card-main-info">
 				<div className="radio-card-title">

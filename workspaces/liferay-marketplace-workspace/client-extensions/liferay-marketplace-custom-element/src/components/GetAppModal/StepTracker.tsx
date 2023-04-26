@@ -4,11 +4,16 @@ import checkFill from '../../assets/icons/check_fill.svg';
 import circleFill from '../../assets/icons/circle_fill.svg';
 import radioSelected from '../../assets/icons/radio-button-checked-2.svg';
 
+interface Steps {
+	checked: boolean;
+	name: string;
+	selected: boolean;
+}
+
 const getIcon = ({
 	checked,
 	selected,
 }: {
-	name: string;
 	checked: boolean;
 	selected: boolean;
 }) => {
@@ -28,11 +33,7 @@ export function StepTracker({
 	steps,
 }: {
 	freeApp: boolean;
-	steps: {
-		checked: boolean;
-		name: string;
-		selected: boolean;
-	}[];
+	steps: Steps[];
 }) {
 	return (
 		<div className="steps">

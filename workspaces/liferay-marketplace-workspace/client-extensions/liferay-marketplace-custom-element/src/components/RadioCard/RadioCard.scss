@@ -12,6 +12,11 @@
 			opacity: 0.5;
 		}
 
+		&:hover {
+			background-color: #e6edfb;
+			border: 1px solid #004ad7;
+		}
+
 		&-selected {
 			background-color: #e6edfb;
 			border: 1px solid #004ad7;

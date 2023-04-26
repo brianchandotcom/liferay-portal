@@ -14,7 +14,7 @@ configurations {
 
 dependencies {
 	compileOnly group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
-	compileOnly group: "com.liferay", name: "org.springframework.orm", version: "5.2.22.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.springframework.orm", version: "5.2.24.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.persistence", name: "javax.persistence-api", version: "2.2"

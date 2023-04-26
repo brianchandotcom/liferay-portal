@@ -84,6 +84,109 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10449. As a buyer, I can handle declined cookies using product comparison"
+	@priority = 5
+	test CanHandleDeclinedCookiesUsingProductComparison {
+		property portal.acceptance = "true";
+
+		task ("Given cookie preference handling is enabled and functional cookies are declined") {
+			CookieNavigator.gotoInstanceSettings(portlet = "Preference Handling");
+
+			FormFields.enableCheckbox(fieldName = "Enabled");
+
+			CookiePreferenceHandlingAdmin.saveConfiguration();
+
+			CookieBanner.openCookieConsentPanel();
+
+			CookieConsentPanel.cookiesDeclineAll();
+
+			CookieHelper.checkAllCookieAreDeclinedAndSaved();
+		}
+
+		task ("And the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the U-Joint's product compare checkbox is checked") {
+			Check.checkToggleSwitch(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+		}
+
+		task ("Then 'Product Comparison uses Functional Cookies' panel pops up") {
+			AssertElementPresent(
+				key_text = "Product Comparison Uses Functional Cookies",
+				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_TITLE");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
+
+			CookieConsentPanel.verifyAllElementsArePresent();
+		}
+
+		task ("When functional cookies are declined") {
+			CookieConsentPanel.cookiesDeclineAll();
+
+			Alert.viewWarningSpecific(warningMessage = "Cookies Not Allowed:You can not compare products when functional cookies are not allowed.");
+		}
+
+		task ("Then the buyer navigates to the catalog page") {
+			AssertLocation.assertPartialLocation(value1 = "web/minium/catalog");
+		}
+
+		task ("When another product's 'Transmission Fluid' compare checkbox is checked") {
+			Check.checkToggleSwitch(
+				key_productName = "Transmission Fluid",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+		}
+
+		task ("Then 'Product Comparison uses Functional Cookies' panel pops up again") {
+			AssertElementPresent(
+				key_text = "Product Comparison Uses Functional Cookies",
+				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_TITLE");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
+
+			CookieConsentPanel.verifyAllElementsArePresent();
+		}
+
+		task ("When the buyer accepts functional cookies") {
+			CookieConsentPanel.cookiesAcceptAll();
+
+			Alert.viewSuccessMessageText(successMessage = "Cookies Allowed:You can compare products.");
+
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+
+		task ("Then product comparison can proceed") {
+			FrontStore.compareProducts(products = "U-Joint,Transmission Fluid");
+
+			FrontStore.assertProductComparisonTable(products = "U-Joint,Transmission Fluid");
+		}
+
+		task ("When the buyer resets all declined cookies and accepts the functional cookies") {
+			CookieHelper.deleteAllCookiesAndRefreshPage();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CookieBanner.verifyAllElementsArePresent();
+
+			CookieConsentPanel.cookiesAcceptAll();
+
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+
+		task ("Then product comparison can proceed") {
+			FrontStore.compareProducts(products = "U-Joint,Transmission Fluid");
+
+			FrontStore.assertProductComparisonTable(products = "U-Joint,Transmission Fluid");
+		}
+	}
+
 	@description = "COMMERCE-5915. Verify buyers can only see the max number of comparison items allowed in the Compare page."
 	@priority = 3
 	test EditMaxNumberOfComparisonItemsInComparePage {

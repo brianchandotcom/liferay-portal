@@ -273,6 +273,10 @@ public class SegmentsEntryLocalServiceImpl
 		long groupId, String segmentsEntryKey,
 		boolean includeAncestorSegmentsEntries) {
 
+		if (Validator.isNotNull(segmentsEntryKey)) {
+			segmentsEntryKey = StringUtil.toUpperCase(segmentsEntryKey.trim());
+		}
+
 		SegmentsEntry segmentsEntry = segmentsEntryPersistence.fetchByG_S(
 			groupId, segmentsEntryKey);
 

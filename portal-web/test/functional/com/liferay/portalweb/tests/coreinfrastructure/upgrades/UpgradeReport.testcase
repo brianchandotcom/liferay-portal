@@ -104,11 +104,11 @@ definition {
 		property custom.mysql.sql.statement = "ALTER TABLE Release_ DROP servletContextName;";
 		property test.name.skip.portal.instance = "UpgradeReport#ErrorsLogged";
 
-		task ("Look for the upgrade report") {
+		task ("Given upgrade.report is set When the portal gets upgraded and an error was captured during the upgrade") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
 		}
 
-		task ("Read the content. Check for error class name and message") {
+		task ("Then the user can read the class and error event message in the upgrade report") {
 			if (!(contains(${upgradeReportContent}, "Errors"))) {
 				echo(${upgradeReportContent});
 
@@ -125,6 +125,14 @@ definition {
 				echo(${upgradeReportContent});
 
 				fail("Upgrade report does not contain the error message.");
+			}
+		}
+
+		task ("and the user can check the upgrade result as failure") {
+			if (!(contains(${upgradeReportContent}, "Result: failure"))) {
+				echo(${upgradeReportContent});
+
+				fail("Failed upgrade result not present in upgrade report");
 			}
 		}
 	}
@@ -332,7 +340,7 @@ definition {
 
 	@description = "LPS-158743: Upgrade report is generated in the console using log context format"
 	@priority = 4
-	test ReportGeneratedWithLogContext {
+	test ReportGeneratedWithLogContext { 
 		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
 		property log.context.enabled = "true";
 		property skip.start.app.server = "false";
@@ -400,6 +408,14 @@ definition {
 
 			if (!(contains(${logContent}, "upgrade.report.status="))) {
 				fail("upgrade.report.status is not present in portal log.");
+			}
+
+			if (!(contains(${logContent}, "upgrade.report.type="))) {
+				fail("upgrade.report.type is not present in portal log.");
+			}
+
+			if (!(contains(${logContent}, "upgrade.report.result="))) {
+				fail("upgrade.report.result is not present in portal log.");
 			}
 		}
 
@@ -598,6 +614,71 @@ definition {
 		}
 	}
 
+	@description = "LPS-171387: Upgrade Report shows upgrade result"
+	@priority = 4
+	test UpgradeResultLogged {
+		property test.name.skip.portal.instance = "UpgradeReport#UpgradeResultLogged";
+
+		task ("Given upgrade.report is set When the portal gets successfully upgraded") {
+			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
+		}
+
+		task ("Then the user can check the upgrade result as success") {
+			if (!(contains(${upgradeReportContent}, "Result: success"))) {
+				echo(${upgradeReportContent});
+
+				fail("Successful upgrade result not present in upgrade report");
+			}
+		}
+	}
+
+	@description = "LPS-171387: Upgrade Report shows upgrade status"
+	@priority = 4
+	test UpgradeStatusLogged {
+		property test.name.skip.portal.instance = "UpgradeReport#UpgradeStatusLogged";
+
+		task ("Given upgrade.report When the portal gets successfully upgraded") {
+			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
+		}
+
+		task ("Then the user can verify in the upgrade report the upgrade status message") {
+			if (!(contains(${upgradeReportContent}, "Status: There are no pending upgrade"))) {
+				echo(${upgradeReportContent});
+
+				fail("Expected status not present in the upgrade report");
+			}
+		}
+
+		task ("And then the user can verify in the upgrade logs that the upgrade type is defined as 'major'") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			if (!(contains(${upgradeLogContent}, "Major upgrade finished with result success"))) {
+				fail("Expected upgrade type not present in the upgrades logs");
+			}
+		}
+	}
+
+	@description = "LPS-171387: Upgrade Report shows upgrade type"
+	@priority = 4
+	test UpgradeTypeLogged {
+		property test.name.skip.portal.instance = "UpgradeReport#UpgradeTypeLogged";
+
+		task ("Given upgrade.report is set and given a user views the upgrade log file When the portal gets successfully upgraded") {
+			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
+			var upgradeLogContent = Log.getUpgradeLogFileContent();
+		}
+
+		task ("Then the user can verify in the upgrade report that the upgrade type is defined as 'major'") {
+			if (!(contains(${upgradeReportContent}, "Type: major"))) {
+				echo(${upgradeReportContent});
+
+				fail("Expected upgrade type not present in upgrade report");
+			}
+		}
+
+		
+	}
+
 	@description = "LPS-158743: Upgrade report trace line is generated in the console"
 	@priority = 3
 	test UserNotifiedWhereToFindUpgradeReportAfterAutoUpgrade {
@@ -662,11 +743,11 @@ definition {
 				value1 = "check-passed-upgrade-log");
 		}
 
-		task ("Look for the upgrade report") {
+		task ("Given upgrade.report is set When the portal gets upgraded and an warn was captured during the upgrade") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
 		}
 
-		task ("Read the content. Check for warning class name and message") {
+		task ("Then the user can read the class and warn event message in the upgrade report") {
 			if (!(contains(${upgradeReportContent}, "Warnings"))) {
 				echo(${upgradeReportContent});
 
@@ -683,6 +764,14 @@ definition {
 				echo(${upgradeReportContent});
 
 				fail("Upgrade report does not contain the warning message.");
+			}
+		}
+
+		task ("and the user can check the upgrade result as Warning") {
+			if (!(contains(${upgradeReportContent}, "Result: warning"))) {
+				echo(${upgradeReportContent});
+
+				fail("Warning upgrade result not present in upgrade report");
 			}
 		}
 	}

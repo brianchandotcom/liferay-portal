@@ -21,6 +21,7 @@ interface IProps {
 }
 
 const CheckboxGroup = ({
+	children,
 	field,
 	items = [],
 	label,
@@ -44,6 +45,8 @@ const CheckboxGroup = ({
 					value={item.label}
 				/>
 			))}
+
+			{children}
 		</div>
 	</WrapperInput>
 );

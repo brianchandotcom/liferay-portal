@@ -39,8 +39,8 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.company?.name,
 				},
 				{
-					title: 'Region',
-					value: mdfRequest.country?.name,
+					title: 'Country',
+					value: mdfRequest.partnerCountry?.name,
 				},
 			]}
 		/>

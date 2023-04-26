@@ -20,12 +20,6 @@ const goalsSchema = object({
 	})
 		.default(undefined)
 		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
-	country: object({
-		key: string(),
-		name: string(),
-	})
-		.default(undefined)
-		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	currency: object({
 		key: string(),
 		name: string(),
@@ -35,6 +29,14 @@ const goalsSchema = object({
 	liferayBusinessSalesGoals: array()
 		.min(1, 'Required')
 		.max(3, 'You have exceed the choose limit'),
+	liferayBusinessSalesGoalsOther: string().when(
+		'liferayBusinessSalesGoals',
+		(liferayBusinessSalesGoals, schema) => {
+			return liferayBusinessSalesGoals.includes('Other - Please describe')
+				? string().required('Required')
+				: schema;
+		}
+	),
 	overallCampaignDescription: string()
 		.trim()
 		.max(255, 'You have exceeded the character limit')
@@ -43,6 +45,12 @@ const goalsSchema = object({
 		.trim()
 		.max(24, 'You have exceeded the character limit')
 		.required('Required'),
+	partnerCountry: object({
+		key: string(),
+		name: string(),
+	})
+		.default(undefined)
+		.test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 	targetAudienceRoles: array().min(1, 'Required'),
 	targetMarkets: array()
 		.min(1, 'Required')

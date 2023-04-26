@@ -19,7 +19,7 @@ import isObjectEmpty from '../utils/isObjectEmpty';
 export default function useCompanyOptions(
 	companyOptions: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	handleSelected: (
-		country: LiferayPicklist,
+		partnerCountry: LiferayPicklist,
 		company: LiferayAccountBrief,
 		currency: LiferayPicklist,
 		accountExternalReferenceCode?: string
@@ -44,7 +44,9 @@ export default function useCompanyOptions(
 	const countryPicklist =
 		account &&
 		countryOptions &&
-		countryOptions.find((options) => options.value === account.country);
+		countryOptions.find(
+			(options) => options.value === account.partnerCountry
+		);
 
 	useEffect(() => {
 		if (!isObjectEmpty(selectedAccountBrief) && selectedAccountBrief) {

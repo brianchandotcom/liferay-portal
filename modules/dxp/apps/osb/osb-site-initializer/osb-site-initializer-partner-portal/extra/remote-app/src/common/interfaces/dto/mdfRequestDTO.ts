@@ -29,6 +29,7 @@ export default interface MDFRequestDTO
 	externalReferenceCode?: string;
 	externalReferenceCodeSF?: string;
 	liferayBusinessSalesGoals?: string;
+	liferayBusinessSalesGoalsOther?: string;
 	liferaysUserIdSF?: number;
 	mdfReqToActs?: MDFRequestActivityDTO[];
 	mdfReqToMDFClms?: MDFClaimDTO[];

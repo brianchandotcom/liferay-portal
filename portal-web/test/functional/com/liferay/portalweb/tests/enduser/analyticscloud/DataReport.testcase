@@ -57,5 +57,27 @@ definition {
 		}
 	}
 
+    @description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13511 | Test Summary: Check that an error message appears when using an invalid type in the endpoint"
+	@priority = 2
+	test RequestShowErrorMessageWhenUseInvalidType {
+        var typeList = "accounts,acqa";
+        var message = "The \"type\" query parameter must be either blogs, documents-and-media, forms, individuals, pages, segments, or web-contents.";
+
+		task ("Get the token value") {
+			var token = ACApi.getTokenValue();
+		}
+
+        for (var type : list ${typeList}) {
+            task ("Create a data report using analytics cloud API with invalid type") {
+                ACApi.createDataReport(
+                    type = ${type},
+                    token = ${token});
+            }
+
+            task ("Check if the API response is correct for the error case") {
+                ACApi.viewApiResponseForError(message = ${message});
+            }
+        }
+	}
 
 }

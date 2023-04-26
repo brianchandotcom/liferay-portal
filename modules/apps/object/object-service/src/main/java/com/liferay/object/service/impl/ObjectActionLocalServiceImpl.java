@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
+import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -30,7 +31,6 @@ import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
-import com.liferay.object.internal.action.executor.ObjectActionExecutorUtil;
 import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
@@ -447,11 +447,12 @@ public class ObjectActionLocalServiceImpl
 			return;
 		}
 
-		ObjectActionExecutorUtil.validateObjectActionExecutor(
-			objectDefinition.getCompanyId(),
+		ObjectActionExecutor objectActionExecutor =
 			_objectActionExecutorRegistry.getObjectActionExecutor(
-				objectActionExecutorKey),
-			objectDefinition.getName());
+				objectActionExecutorKey);
+
+		objectActionExecutor.validate(
+			objectDefinition.getCompanyId(), objectDefinition.getName());
 	}
 
 	private void _validateObjectActionTriggerKey(

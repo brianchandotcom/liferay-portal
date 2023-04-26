@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.reports.web.internal.portlet.action;
+package com.liferay.layout.reports.web.internal.struts;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -22,7 +22,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedGroupConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
-import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
@@ -38,17 +37,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,10 +61,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,40 +73,38 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + LayoutReportsPortletKeys.LAYOUT_REPORTS,
-		"mvc.command.name=/layout_reports/data"
-	},
-	service = MVCResourceCommand.class
+	property = "path=/layout_reports/get_layout_reports_data",
+	service = StrutsAction.class
 )
-public class LayoutReportsDataMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 
 	@Override
-	protected void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+	public String execute(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		Layout layout = _layoutLocalService.fetchLayout(
-			ParamUtil.getLong(resourceRequest, "plid"));
+			ParamUtil.getLong(httpServletRequest, "plid"));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
+		ServletResponseUtil.write(
+			httpServletResponse,
 			JSONUtil.put(
 				"configureGooglePageSpeedURL",
-				_getConfigureGooglePageSpeedURL(resourceRequest)
+				_getConfigureGooglePageSpeedURL(httpServletRequest)
 			).put(
 				"defaultLanguageId",
 				LocaleUtil.toW3cLanguageId(_getDefaultLocale(layout))
 			).put(
 				"imagesPath",
-				_portal.getPathContext(resourceRequest) + "/images/"
+				_portal.getPathContext(_servletContext.getContextPath()) +
+					"/images/"
 			).put(
-				"pageURLs",
-				_getPageURLsJSONArray(resourceRequest, resourceResponse, layout)
+				"pageURLs", _getPageURLsJSONArray(httpServletRequest, layout)
 			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).put(
@@ -123,7 +119,9 @@ public class LayoutReportsDataMVCResourceCommand
 
 					return layoutReportsDataProvider.isValidConnection();
 				}
-			));
+			).toString());
+
+		return null;
 	}
 
 	private String _getCanonicalURL(
@@ -158,10 +156,10 @@ public class LayoutReportsDataMVCResourceCommand
 		return StringPool.BLANK;
 	}
 
-	private String _getCompleteURL(PortletRequest portletRequest) {
+	private String _getCompleteURL(HttpServletRequest httpServletRequest) {
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
+				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			return _portal.getLayoutURL(themeDisplay);
@@ -169,16 +167,16 @@ public class LayoutReportsDataMVCResourceCommand
 		catch (PortalException portalException) {
 			_log.error(portalException);
 
-			return _portal.getCurrentCompleteURL(
-				_portal.getHttpServletRequest(portletRequest));
+			return _portal.getCurrentCompleteURL(httpServletRequest);
 		}
 	}
 
 	private String _getConfigureGooglePageSpeedURL(
-		PortletRequest portletRequest) {
+		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!_isGroupAdmin(themeDisplay.getScopeGroupId())) {
 			return null;
@@ -186,12 +184,12 @@ public class LayoutReportsDataMVCResourceCommand
 
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				portletRequest, ConfigurationAdminPortletKeys.SITE_SETTINGS,
+				httpServletRequest, ConfigurationAdminPortletKeys.SITE_SETTINGS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/configuration_admin/edit_configuration"
 		).setRedirect(
-			_getCompleteURL(portletRequest)
+			_getCompleteURL(httpServletRequest)
 		).setParameter(
 			"factoryPid",
 			LayoutReportsGooglePageSpeedGroupConfiguration.class.getName()
@@ -210,6 +208,15 @@ public class LayoutReportsDataMVCResourceCommand
 
 			return LocaleUtil.getSiteDefault();
 		}
+	}
+
+	private String _getLayoutReportsIssuesURL(
+		long groupId, String url, ThemeDisplay themeDisplay) {
+
+		return HttpComponentsUtil.addParameters(
+			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
+				"/layout_reports/get_layout_reports_issues",
+			"groupId", String.valueOf(groupId), "url", url);
 	}
 
 	private String _getLocaleURL(
@@ -232,8 +239,7 @@ public class LayoutReportsDataMVCResourceCommand
 	}
 
 	private JSONArray _getPageURLsJSONArray(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		Layout layout) {
+		HttpServletRequest httpServletRequest, Layout layout) {
 
 		List<Locale> availableLocales = new ArrayList<>();
 
@@ -246,11 +252,12 @@ public class LayoutReportsDataMVCResourceCommand
 
 		Locale defaultLocale = _getDefaultLocale(layout);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String canonicalURL = _getCanonicalURL(
-			_getCompleteURL(portletRequest), layout, themeDisplay);
+			_getCompleteURL(httpServletRequest), layout, themeDisplay);
 
 		return JSONUtil.putAll(
 			(Object[])TransformUtil.transformToArray(
@@ -296,10 +303,10 @@ public class LayoutReportsDataMVCResourceCommand
 							StringPool.CLOSE_PARENTHESIS)
 					).put(
 						"layoutReportsIssuesURL",
-						_getResourceURL(
-							layout.getGroupId(), url, portletResponse)
+						_getLayoutReportsIssuesURL(
+							layout.getGroupId(), url, themeDisplay)
 					).put(
-						"title", _getTitle(portletRequest, layout, locale)
+						"title", _getTitle(httpServletRequest, layout, locale)
 					).put(
 						"url", url
 					).build();
@@ -307,27 +314,12 @@ public class LayoutReportsDataMVCResourceCommand
 				Object.class));
 	}
 
-	private String _getResourceURL(
-		long groupId, String url, PortletResponse portletResponse) {
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(portletResponse);
-
-		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
-
-		resourceURL.setParameter("groupId", String.valueOf(groupId));
-		resourceURL.setParameter("url", url);
-		resourceURL.setResourceID("/layout_reports/get_layout_reports_issues");
-
-		return resourceURL.toString();
-	}
-
 	private String _getTitle(
-		PortletRequest portletRequest, Layout layout, Locale locale) {
+		HttpServletRequest httpServletRequest, Layout layout, Locale locale) {
 
 		if (layout.isTypeAssetDisplay()) {
 			InfoItemDetails infoItemDetails =
-				(InfoItemDetails)portletRequest.getAttribute(
+				(InfoItemDetails)httpServletRequest.getAttribute(
 					InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
 			if (infoItemDetails != null) {
@@ -339,7 +331,7 @@ public class LayoutReportsDataMVCResourceCommand
 				if (infoItemFieldValuesProvider != null) {
 					InfoFieldValue<Object> infoFieldValue =
 						infoItemFieldValuesProvider.getInfoFieldValue(
-							portletRequest.getAttribute(
+							httpServletRequest.getAttribute(
 								InfoDisplayWebKeys.INFO_ITEM),
 							"title");
 
@@ -376,7 +368,7 @@ public class LayoutReportsDataMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutReportsDataMVCResourceCommand.class);
+		GetLayoutReportsDataStrutsAction.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -402,5 +394,10 @@ public class LayoutReportsDataMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.reports.web)"
+	)
+	private ServletContext _servletContext;
 
 }

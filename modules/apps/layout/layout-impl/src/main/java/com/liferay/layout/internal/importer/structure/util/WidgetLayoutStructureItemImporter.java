@@ -175,6 +175,13 @@ public class WidgetLayoutStructureItemImporter
 			return null;
 		}
 
+		Portlet portlet = _portletLocalService.fetchPortletById(
+			layout.getCompanyId(), widgetName);
+
+		if (portlet == null) {
+			return null;
+		}
+
 		String widgetInstanceId = (String)widgetInstance.get(
 			"widgetInstanceId");
 
@@ -187,7 +194,7 @@ public class WidgetLayoutStructureItemImporter
 		}
 
 		widgetInstanceId = _getPortletInstanceId(
-			layout, widgetInstanceId, widgetName);
+			layout, portlet, widgetInstanceId);
 
 		editableValueJSONObject.put(
 			"instanceId", widgetInstanceId
@@ -223,22 +230,16 @@ public class WidgetLayoutStructureItemImporter
 	}
 
 	private String _getPortletInstanceId(
-			Layout layout, String portletInstanceId, String portletId)
+			Layout layout, Portlet portlet, String portletInstanceId)
 		throws Exception {
-
-		Portlet portlet = _portletLocalService.fetchPortletById(
-			layout.getCompanyId(), portletId);
-
-		if (portlet == null) {
-			throw new PortletIdException();
-		}
 
 		if (portlet.isInstanceable()) {
 			return portletInstanceId;
 		}
 
 		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId);
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+			portlet.getPortletId());
 
 		if (count > 0) {
 			throw new PortletIdException(

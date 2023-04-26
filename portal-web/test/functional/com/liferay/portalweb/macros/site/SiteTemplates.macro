@@ -485,6 +485,24 @@ definition {
 		SelectWindow(locator1 = "Home - ${siteTemplateName} - ${siteName}");
 	}
 
+	macro grantUserAccessToSite {
+		JSONRole.addRegularRole(roleTitle = "Access Site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
+			roleTitle = "Access Site");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Access Site");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Access Site",
+			userEmailAddress = ${userEmailAddress});
+	}
+
 	macro grantUserAccessToSiteTemplates {
 		JSONRole.addRegularRole(roleTitle = "Access Site Templates");
 

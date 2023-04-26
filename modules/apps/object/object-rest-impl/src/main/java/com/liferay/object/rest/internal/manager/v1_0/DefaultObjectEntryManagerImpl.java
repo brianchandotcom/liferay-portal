@@ -728,6 +728,7 @@ public class DefaultObjectEntryManagerImpl
 				_objectRelationshipElementsParserRegistry.
 					getObjectRelationshipElementsParser(
 						relatedObjectDefinition.getClassName(),
+						relatedObjectDefinition.getCompanyId(),
 						objectRelationship.getType());
 
 			if (relatedObjectDefinition.isSystem()) {

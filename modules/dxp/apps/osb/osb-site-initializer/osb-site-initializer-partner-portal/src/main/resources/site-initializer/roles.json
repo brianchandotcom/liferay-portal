@@ -40,19 +40,19 @@
 		"type": 1
 	},
 	{
-		"name": "Partner Manager (PM)",
+		"name": "[Account] Partner Manager (PM)",
 		"type": 6
 	},
 	{
-		"name": "Partner Marketing User (PMU)",
+		"name": "[Account] Partner Marketing User (PMU)",
 		"type": 6
 	},
 	{
-		"name": "Partner Sales Users (PSU)",
+		"name": "[Account] Partner Sales Users (PSU)",
 		"type": 6
 	},
 	{
-		"name": "Partner Technical User (PTU)",
+		"name": "[Account] Partner Technical User (PTU)",
 		"type": 6
 	}
 ]

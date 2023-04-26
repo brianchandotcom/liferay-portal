@@ -66,7 +66,7 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 			booleanQuery, searchContext, "middleName", false);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "region", false);
 		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "screenName", false);
+			booleanQuery, searchContext, "screenName.text", false);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "street", false);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "zip", false);
 
@@ -81,7 +81,7 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 					_getTrailingWildcardQuery("emailAddressDomain", keywords),
 					BooleanClauseOccur.SHOULD);
 				booleanQuery.add(
-					_getTrailingWildcardQuery("screenName", keywords),
+					_getTrailingWildcardQuery("screenName.text", keywords),
 					BooleanClauseOccur.SHOULD);
 			}
 			catch (ParseException parseException) {

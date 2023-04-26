@@ -205,10 +205,13 @@ export async function getAccountInfoFromCommerce(accountId: number) {
 }
 
 export async function getAccounts() {
-	const response = await fetch('/o/headless-admin-user/v1.0/accounts', {
-		headers,
-		method: 'GET',
-	});
+	const response = await fetch(
+		'/o/headless-admin-user/v1.0/accounts?pageSize=-1',
+		{
+			headers,
+			method: 'GET',
+		}
+	);
 
 	return (await response.json()) as {items: Account[]};
 }

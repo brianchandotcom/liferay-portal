@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Bridge Issues");
+		HeadlessSite.addSite(siteName = "Bridge Issues");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Bridge Issues");
 	}

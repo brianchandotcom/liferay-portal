@@ -13,7 +13,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Bridge Demos");
+		HeadlessSite.addSite(siteName = "Bridge Demos");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Bridge Demos");
 	}

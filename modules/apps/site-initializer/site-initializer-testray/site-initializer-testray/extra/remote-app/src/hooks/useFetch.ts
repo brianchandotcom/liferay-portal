@@ -51,7 +51,7 @@ export function useFetch<Data = any, Error = any>(
 
 	const shouldFetch = swrConfig?.shouldFetch ?? true;
 
-	const {data, error, isValidating, mutate} = useSWR<Data, Error>(
+	const {data, error, isLoading, isValidating, mutate} = useSWR<Data, Error>(
 		() => (shouldFetch ? getBaseURL(url, params) : null),
 		swrConfig
 	);
@@ -70,7 +70,7 @@ export function useFetch<Data = any, Error = any>(
 		data: memoizedData,
 		error,
 		isValidating,
-		loading: error ? false : !data,
+		loading: isLoading,
 		mutate,
 		revalidate: () => mutate((response) => response, {revalidate: true}),
 	};

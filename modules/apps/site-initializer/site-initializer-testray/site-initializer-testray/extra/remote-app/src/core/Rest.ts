@@ -208,6 +208,14 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		return `/${this.uri}/${id}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}`;
 	}
 
+	public async getPagePermission() {
+		const response = await this.fetcher<APIResponse<ObjectModel>>(
+			`/${this.uri}?pageSize=1&fields=id`
+		);
+
+		return !!response?.actions?.create;
+	}
+
 	public async remove(id: number | string): Promise<void> {
 		await this.beforeRemove(id);
 

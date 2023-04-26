@@ -17,64 +17,53 @@ definition {
 				name = "University",
 				requiredStringFieldName = "name");
 
-				ObjectDefinitionAPI.postObjectDefinitionObjectField(
-									businessType = "Text",
+			ObjectDefinitionAPI.postObjectDefinitionObjectField(
+				businessType = "Text",
 				dBType = "String",
 				name = "country",
 				objectDefinitionName = "University");
-			
 		}
-				task ("And Given a student object with a custom fields name") {
 
-					ObjectDefinitionAPI.createAndPublishObjectDefinition(
+		task ("And Given a student object with a custom fields name") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "student",
 				en_US_plural_label = "students",
 				name = "Student",
 				requiredStringFieldName = "name");
+		}
 
-
-			
-				}
-								task ("And Given a subject object with a custom fields name") {
-
-									ObjectDefinitionAPI.createAndPublishObjectDefinition(
+		task ("And Given a subject object with a custom fields name") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
 				en_US_label = "subject",
 				en_US_plural_label = "subjects",
 				name = "Subject",
 				requiredStringFieldName = "name");
-								}
+		}
 
-
-				task ("And Given a student entry 'Tom'") {		
-
+		task ("And Given a student entry 'Tom'") {
 			ObjectDefinitionAPI.createObjectEntryWithName(
 				en_US_plural_label = "students",
 				name = "Tom");
-				}
-			task ("And Given a subject entry 'Math'") {
+		}
 
-
+		task ("And Given a subject entry 'Math'") {
 			ObjectDefinitionAPI.createObjectEntryWithName(
 				en_US_plural_label = "subjects",
 				name = "Math");
-					}
+		}
 
-						task ("And Given a university entry with name 'Liferay' and country 'Spain'") {
-
-
+		task ("And Given a university entry with name 'Liferay' and country 'Spain'") {
 			var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
 				en_US_plural_label = "universities",
 				name = "Liferay");
 
-				ObjectFieldAPI.updateFieldOfEntryById(
+			ObjectFieldAPI.updateFieldOfEntryById(
 				en_US_plural_label = "universities",
 				entryId = ${universityId},
 				fieldLabel = "country",
 				fieldValue = "Spain",
 				requiredFieldLabel = "name",
 				requiredFieldValue = "Liferay");
-
-			
 		}
 	}
 
@@ -85,6 +74,66 @@ definition {
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetCorrectSubjectsDetailsWhenFilterOverWithCorrectFieldsValueByStartswithFunctionsOnTwoManyToManyRelationships {
+		task ("And Given a manyToMany relationship subjectsStudents") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Student",
+				deletionType = "cascade",
+				name = "subjectsStudents",
+				parentObjectName = "Subject",
+				type = "manyToMany");
+		}
+
+		task ("And Given a manyToMany relationship studentsUniversities") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "University",
+				deletionType = "cascade",
+				name = "studentsUniversities",
+				parentObjectName = "Student",
+				type = "manyToMany");
+		}
+
+		task ("And Given university 'Liferay' related to the student 'Tom' through students PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "universities",
+				childEntryName = "Liferay",
+				parent_plural_label = "students",
+				parentEntryName = "Tom",
+				relationshipName = "studentsUniversities");
+		}
+
+		task ("And Given I relate student entry 'Tom' to subject entry 'Math' through subjects PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "students",
+				childEntryName = "Tom",
+				parent_plural_label = "subjects",
+				parentEntryName = "Math",
+				relationshipName = "subjectsStudents");
+		}
+
+		task ("When using get request o/c/subjects?filter=contains(subjectsStudents/studentsUniversities/country, 'ain')") {
+			var response = ObjectDefinitionAPI.getObjectEntries(
+				en_US_plural_label = "subjects",
+				parameter = "filter=contains%28subjectsStudents%2FstudentsUniversities%2Fcountry%2C%20%27ain%27%29");
+		}
+
+		task ("Then the response contains the subject entry details") {
+			var actual = JSONPathUtil.getProperty(
+				property = "$.items[0].name",
+				response = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${actual},
+				expected = "Math");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = 1,
+				responseToParse = ${response});
 		}
 	}
 
@@ -148,63 +197,4 @@ definition {
 		}
 	}
 
-	@disable-webdriver = "true"
-	@priority = 4
-	test CanGetCorrectSubjectsDetailsWhenFilterOverWithCorrectFieldsValueByStartswithFunctionsOnTwoManyToManyRelationships {
-		task ("And Given a manyToMany relationship subjectsStudents") {
-			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
-				childObjectName = "Student",
-				deletionType = "cascade",
-				name = "subjectsStudents",
-				parentObjectName = "Subject",
-				type = "manyToMany");
-		}
-
-		task ("And Given a manyToMany relationship studentsUniversities") {
-			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
-				childObjectName = "University",
-				deletionType = "cascade",
-				name = "studentsUniversities",
-				parentObjectName = "Student",
-				type = "manyToMany");
-		}
-
-		task ("And Given university 'Liferay' related to the student 'Tom' through students PUT endpoint") {
-			ObjectDefinitionAPI.relateObjectEntriesByName(
-				child_plural_label = "universities",
-				childEntryName = "Liferay",
-				parent_plural_label = "students",
-				parentEntryName = "Tom",
-				relationshipName = "studentsUniversities");
-		}
-
-		task ("And Given I relate student entry 'Tom' to subject entry 'Math' through subjects PUT endpoint") {
-			ObjectDefinitionAPI.relateObjectEntriesByName(
-				child_plural_label = "students",
-				childEntryName = "Tom",
-				parent_plural_label = "subjects",
-				parentEntryName = "Math",
-				relationshipName = "subjectsStudents");
-		}
-
-		task ("When using get request o/c/subjects?filter=contains(subjectsStudents/studentsUniversities/country, 'ain')") {
-			var response = ObjectDefinitionAPI.getObjectEntries(
-				en_US_plural_label = "subjects",
-				parameter = "filter=contains%28subjectsStudents%2FstudentsUniversities%2Fcountry%2C%20%27ain%27%29");
-		}
-
-		task ("Then the response contains the subject entry details") {
-			var actual = JSONPathUtil.getProperty(
-				property = "$.items[0].name",
-				response = ${response});
-
-			TestUtils.assertEquals(
-				actual = ${actual},
-				expected = "Math");
-
-			HeadlessWebcontentAPI.assertProperNumberOfItems(
-				expectedTotalElement = 1,
-				responseToParse = ${response});
-		}
-	}
 }

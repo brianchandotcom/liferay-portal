@@ -36,7 +36,6 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,13 +47,11 @@ public class AuditDisplayContext {
 	public AuditDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		RenderRequest renderRequest, TimeZone timeZone) {
+		LiferayPortletResponse liferayPortletResponse, TimeZone timeZone) {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_renderRequest = renderRequest;
 		_timeZone = timeZone;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -69,10 +66,10 @@ public class AuditDisplayContext {
 			return _searchContainer;
 		}
 
-		DisplayTerms displayTerms = new DisplayTerms(_renderRequest);
+		DisplayTerms displayTerms = new DisplayTerms(_liferayPortletRequest);
 
 		_searchContainer = new SearchContainer(
-			_renderRequest, displayTerms, null,
+			_liferayPortletRequest, displayTerms, null,
 			SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
 			_getPortletURL(),
 			ListUtil.fromArray(
@@ -428,7 +425,6 @@ public class AuditDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private PortletURL _portletURL;
-	private final RenderRequest _renderRequest;
 	private SearchContainer<AuditEvent> _searchContainer;
 	private String _serverName;
 	private Integer _serverPort;

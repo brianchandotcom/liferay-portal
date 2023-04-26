@@ -23,7 +23,7 @@
 >
 
 	<%
-	AuditDisplayContext auditDisplayContext = new AuditDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, timeZone);
+	AuditDisplayContext auditDisplayContext = new AuditDisplayContext(request, liferayPortletRequest, liferayPortletResponse, timeZone);
 	%>
 
 	<aui:form action="<%= searchURL %>" method="get" name="fm">

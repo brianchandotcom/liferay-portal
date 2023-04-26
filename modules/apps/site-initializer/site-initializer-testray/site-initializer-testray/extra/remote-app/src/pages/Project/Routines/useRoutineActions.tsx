@@ -28,7 +28,6 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const navigate = useNavigate();
 	const {removeItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
-	
 
 	const actionsRef = useRef([
 		{
@@ -43,11 +42,9 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 				navigate(
 					isHeaderActions ? 'templates' : `${routine.id}/templates`
 				),
-
 			icon: 'cog',
 			name: i18n.translate('manage-templates'),
 			permission: 'UPDATE',
-
 		},
 		{
 			action: (routine) =>
@@ -61,14 +58,12 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 					footer: <div id="environment-factor-modal-footer"></div>,
 					footerDefault: false,
 					size: 'full-screen',
-
 					title: i18n.translate('select-default-environment-factors'),
 				}),
 
 			icon: 'display',
 			name: i18n.translate('select-default-environment-factors'),
 			permission: 'UPDATE',
-
 		},
 		{
 			action: ({id}, mutate) =>

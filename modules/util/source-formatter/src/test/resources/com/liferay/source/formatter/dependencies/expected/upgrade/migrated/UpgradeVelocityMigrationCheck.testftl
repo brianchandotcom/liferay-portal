@@ -32,11 +32,11 @@
                 <#if nav_child.isSelected()>
                     <li class="selected">
                     <a href="${nav_child.getURL()}" ${nav_child.getTarget()}>${nav_child.getName()}</a>
-                    #navigationBar( nav_child  )
+                    <@navigationBar nav_child />
                 <#else>
                     <li>
                     <a href="${nav_child.getURL()}" ${nav_child.getTarget()}>${nav_child.getName()}</a>
-                    #navigationBar( nav_child  )
+                    <@navigationBar nav_child />
                 </#if>
                 <#if nav_child.hasChildren()>
                     <i class="icon-caret-down" onclick="toggleMobileMenu(event)"></i>
@@ -66,3 +66,5 @@
 		</a>
 	</div>
 </#if>
+
+<@navigationBar nav_item />

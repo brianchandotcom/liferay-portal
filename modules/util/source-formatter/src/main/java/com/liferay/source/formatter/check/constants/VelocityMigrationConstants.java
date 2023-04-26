@@ -25,9 +25,13 @@ public class VelocityMigrationConstants {
 
 	public static final String FREEMARKER_ENCAPSULATION_START = "${";
 
+	public static final String FREEMARKER_IF_START = "<#if";
+
 	public static final String FREEMARKER_LIST_SEPARATOR = "as";
 
 	public static final String FREEMARKER_LIST_START = "<#list";
+
+	public static final String VELOCITY_COMMENT_LINE = "##";
 
 	public static final String VELOCITY_ELSE_START = "#else";
 
@@ -40,5 +44,10 @@ public class VelocityMigrationConstants {
 	public static final String VELOCITY_IF_START = "#if";
 
 	public static final String VELOCITY_MACRO_START = "#macro";
+
+	public static final String VELOCITY_SET = "#set";
+
+	public static final String VELOCITY_TEMPLATE_DECLARATION =
+		"Velocity Transform Template";
 
 }

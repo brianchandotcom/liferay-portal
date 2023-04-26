@@ -164,6 +164,10 @@ public class EditJournalFeedDisplayContext {
 		String contentField = ParamUtil.getString(
 			_httpServletRequest, "contentField");
 
+		if (Validator.isNull(contentField) && (_journalFeed != null)) {
+			contentField = _journalFeed.getContentField();
+		}
+
 		if (Validator.isNull(contentField) ||
 			((_getDDMStructure() == null) &&
 			 !contentField.equals(

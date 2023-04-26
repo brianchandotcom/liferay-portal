@@ -76,12 +76,17 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
@@ -137,6 +142,8 @@ public class GetCollectionFieldMVCResourceCommand
 			resourceRequest, "numberOfPages");
 		String paginationType = ParamUtil.getString(
 			resourceRequest, "paginationType");
+		long segmentsExperienceId = ParamUtil.getLong(
+			resourceRequest, "segmentsExperienceId");
 		String templateKey = ParamUtil.getString(
 			resourceRequest, "templateKey");
 
@@ -148,7 +155,7 @@ public class GetCollectionFieldMVCResourceCommand
 				layoutObjectReference, listStyle, listItemStyle,
 				resourceResponse.getNamespace(), numberOfItems,
 				numberOfItemsPerPage, numberOfPages, paginationType,
-				templateKey);
+				segmentsExperienceId, templateKey);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get collection field", exception);
@@ -186,7 +193,7 @@ public class GetCollectionFieldMVCResourceCommand
 			String layoutObjectReference, String listStyle,
 			String listItemStyle, String namespace, int numberOfItems,
 			int numberOfItemsPerPage, int numberOfPages, String paginationType,
-			String templateKey)
+			long segmentsExperienceId, String templateKey)
 		throws PortalException {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
@@ -279,10 +286,7 @@ public class GetCollectionFieldMVCResourceCommand
 				numberOfItems, numberOfItemsPerPage, numberOfPages,
 				paginationType));
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_segmentsEntryRetriever.getSegmentsEntryIds(
-				_portal.getScopeGroupId(httpServletRequest),
-				_portal.getUserId(httpServletRequest),
-				_requestContextMapper.map(httpServletRequest)));
+			_getSegmentsEntryIds(httpServletRequest, segmentsExperienceId));
 
 		String itemType = _infoSearchClassMapperRegistry.getClassName(
 			originalItemType);
@@ -519,6 +523,34 @@ public class GetCollectionFieldMVCResourceCommand
 		return null;
 	}
 
+	private long[] _getSegmentsEntryIds(
+			HttpServletRequest httpServletRequest, long segmentsExperienceId)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-179502")) {
+			return _segmentsEntryRetriever.getSegmentsEntryIds(
+				_portal.getScopeGroupId(httpServletRequest),
+				_portal.getUserId(httpServletRequest),
+				_requestContextMapper.map(httpServletRequest));
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		if (Objects.equals(
+				SegmentsExperienceConstants.KEY_DEFAULT,
+				segmentsExperience.getSegmentsExperienceKey())) {
+
+			return new long[] {SegmentsEntryConstants.ID_DEFAULT};
+		}
+
+		return new long[] {
+			segmentsExperience.getSegmentsEntryId(),
+			SegmentsEntryConstants.ID_DEFAULT
+		};
+	}
+
 	private boolean _hasViewPermission(
 		HttpServletRequest httpServletRequest,
 		ListObjectReference listObjectReference) {
@@ -599,5 +631,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private SegmentsEntryRetriever _segmentsEntryRetriever;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

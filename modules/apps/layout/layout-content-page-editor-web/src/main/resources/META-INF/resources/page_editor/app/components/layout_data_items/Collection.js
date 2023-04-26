@@ -30,6 +30,7 @@ import {
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {collectionIsMapped} from '../../utils/collectionIsMapped';
@@ -319,6 +320,7 @@ const Collection = React.memo(
 		const itemClassNameId =
 			classNameId || displayPagePreviewItemData.classNameId;
 		const itemClassPK = classPK || displayPagePreviewItemData.classPK;
+		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 		useEffect(() => {
 			if (
@@ -343,6 +345,7 @@ const Collection = React.memo(
 					numberOfPages: collectionConfig.numberOfPages,
 					onNetworkStatus: dispatch,
 					paginationType: collectionConfig.paginationType,
+					segmentsExperienceId,
 					templateKey: collectionConfig.templateKey || null,
 				})
 					.then((response) => {
@@ -411,6 +414,7 @@ const Collection = React.memo(
 			itemClassNameId,
 			itemClassPK,
 			languageId,
+			segmentsExperienceId,
 		]);
 
 		const selectedViewportSize = useSelector(

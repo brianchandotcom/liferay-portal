@@ -73,6 +73,7 @@ export default {
 		numberOfPages,
 		onNetworkStatus,
 		paginationType,
+		segmentsExperienceId,
 		showAllItems,
 		templateKey,
 	}) {
@@ -93,6 +94,7 @@ export default {
 					numberOfItemsPerPage,
 					numberOfPages,
 					paginationType,
+					segmentsExperienceId,
 					showAllItems,
 					templateKey,
 				},

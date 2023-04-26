@@ -298,7 +298,8 @@ definition {
 			fieldName = "name",
 			fieldValue = ${fieldValue},
 			keywords = ${keywords},
-			objectEntryId = ${objectEntryId});
+			objectEntryId = ${objectEntryId},
+			taxonomyCategoryIds = ${taxonomyCategoryIds});
 
 		var response = JSONCurlUtil.put(${curl});
 

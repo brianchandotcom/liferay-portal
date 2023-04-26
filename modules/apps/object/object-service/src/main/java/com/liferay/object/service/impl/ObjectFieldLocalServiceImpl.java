@@ -1045,6 +1045,14 @@ public class ObjectFieldLocalServiceImpl
 				"Indexed language ID can only be applied with type \"Clob\" " +
 					"or \"String\" that is not indexed as a keyword");
 		}
+
+		if (Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) &&
+			indexed) {
+
+			throw new ObjectFieldBusinessTypeException(
+				"Encrypted business type is not indexable");
+		}
 	}
 
 	private void _validateLabel(Map<Locale, String> labelMap)

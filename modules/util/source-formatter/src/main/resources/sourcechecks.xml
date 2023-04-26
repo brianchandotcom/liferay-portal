@@ -889,7 +889,7 @@
 		</check>
 		<check name="JavaModuleComponentCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks for use of `@Component` in `-api` or `-spi` modules." />
+			<description name="Performs several checks on classes with or without `@Component` annotation." />
 		</check>
 		<check name="JavaModuleExposureCheck">
 			<category name="Bug Prevention" />

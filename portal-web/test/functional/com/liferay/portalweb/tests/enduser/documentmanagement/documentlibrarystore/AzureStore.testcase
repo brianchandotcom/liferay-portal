@@ -114,9 +114,11 @@ definition {
 		task ("When the user adds the configuration") {
 			AntCommands.runCommand("build-test.xml", "prepare-azure-store-configuration -Dazure.container.id=${containerId}");
 
-			OSGiConfig.waitForOSGiConfig();
+			while (IsElementNotPresent(locator1 = "Select#SELECT_VALUE_ID", option = "com.liferay.portal.store.azure.AzureStore", selectFieldId = "dl-store-impl")) {
+				OSGiConfig.waitForOSGiConfig();
 
-			Refresh();
+				Refresh();
+			}
 		}
 
 		task ("Then the user can now migrate data over to the Azure container") {

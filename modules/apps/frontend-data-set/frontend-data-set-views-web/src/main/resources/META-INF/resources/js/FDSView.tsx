@@ -23,6 +23,7 @@ import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
 import Details from './fds_view/Details';
 import Fields from './fds_view/Fields';
+import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
 
 const NAVIGATION_BAR_ITEMS = [
@@ -33,6 +34,10 @@ const NAVIGATION_BAR_ITEMS = [
 	{
 		Component: Fields,
 		label: Liferay.Language.get('fields'),
+	},
+	{
+		Component: Filters,
+		label: Liferay.Language.get('filters'),
 	},
 	{
 		Component: Pagination,

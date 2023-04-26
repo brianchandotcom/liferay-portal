@@ -26,6 +26,8 @@ public interface ObjectRelationshipElementsParser<T> {
 
 	public String getClassName();
 
+	public long getCompanyId();
+
 	public String getObjectRelationshipType();
 
 	public List<T> parse(ObjectRelationship objectRelationship, Object value)

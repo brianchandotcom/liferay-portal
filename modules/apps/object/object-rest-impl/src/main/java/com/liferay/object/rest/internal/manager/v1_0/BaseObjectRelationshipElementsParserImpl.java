@@ -43,6 +43,11 @@ public abstract class BaseObjectRelationshipElementsParserImpl<T>
 		return objectDefinition.getClassName();
 	}
 
+	@Override
+	public long getCompanyId() {
+		return objectDefinition.getCompanyId();
+	}
+
 	protected List<T> parseMany(Object object) {
 		List<T> objects = null;
 

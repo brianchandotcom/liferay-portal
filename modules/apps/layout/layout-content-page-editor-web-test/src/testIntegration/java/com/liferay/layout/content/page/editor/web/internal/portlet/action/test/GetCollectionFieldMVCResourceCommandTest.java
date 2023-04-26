@@ -62,6 +62,7 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Locale;
@@ -156,7 +157,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
 				boolean.class, boolean.class, String.class, String.class,
 				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, String.class
+				int.class, String.class, long.class, String.class
 			},
 			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
 			false, LocaleUtil.toLanguageId(LocaleUtil.US),
@@ -168,7 +169,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			).toString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20, 0,
-			"regular", StringPool.BLANK);
+			"regular",
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			StringPool.BLANK);
 
 		Assert.assertEquals(1, jsonObject.getInt("length"));
 
@@ -196,7 +200,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
 				boolean.class, boolean.class, String.class, String.class,
 				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, String.class
+				int.class, String.class, long.class, String.class
 			},
 			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
 			false, LocaleUtil.toLanguageId(LocaleUtil.US),
@@ -208,7 +212,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				"type", InfoListProviderItemSelectorReturnType.class.getName()
 			).toString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20, 0,
-			"regular", StringPool.BLANK);
+			"regular",
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			StringPool.BLANK);
 
 		Assert.assertEquals(1, jsonObject.getInt("length"));
 
@@ -239,7 +246,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
 				boolean.class, boolean.class, String.class, String.class,
 				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, String.class
+				int.class, String.class, long.class, String.class
 			},
 			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
 			false, LocaleUtil.toLanguageId(LocaleUtil.US),
@@ -255,7 +262,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				"type", InfoListItemSelectorReturnType.class.getName()
 			).toString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 2, 20, 0,
-			"regular", StringPool.BLANK);
+			"regular",
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 
@@ -293,7 +303,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				HttpServletRequest.class, HttpServletResponse.class, int.class,
 				boolean.class, boolean.class, String.class, String.class,
 				String.class, String.class, String.class, int.class, int.class,
-				int.class, String.class, String.class
+				int.class, String.class, long.class, String.class
 			},
 			_getHttpServletRequest(), new MockHttpServletResponse(), 0, false,
 			false, LocaleUtil.toLanguageId(LocaleUtil.US),
@@ -309,7 +319,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				"type", InfoListItemSelectorReturnType.class.getName()
 			).toString(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 1, 1,
-			"regular", StringPool.BLANK);
+			"regular",
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));
 
@@ -410,6 +423,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 	private User _user;

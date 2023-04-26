@@ -17,8 +17,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.Stack;
+import com.liferay.source.formatter.check.util.VelocityMigrationUtil;
 
 /**
  * @author Nícolas Moura
@@ -38,17 +37,20 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 			boolean parenthesis = false;
 
 			if (line.contains(_VELOCITY_IF_START) &&
-				_isVelocityStatement(line, _VELOCITY_IF_START)) {
+				VelocityMigrationUtil.isVelocityStatement(
+					line, _VELOCITY_IF_START)) {
 
 				parenthesis = true;
 
 				newLine = StringUtil.replace(
 					newLine, _VELOCITY_IF_START, "<#if");
 
-				_replaceIfStatementEnd(lines, i);
+				VelocityMigrationUtil.replaceStatementEnd(
+					i, lines, _VELOCITY_IF_START);
 			}
 			else if (line.contains(_VELOCITY_ELSEIF_START) &&
-					 _isVelocityStatement(line, _VELOCITY_ELSEIF_START)) {
+					 VelocityMigrationUtil.isVelocityStatement(
+						 line, _VELOCITY_ELSEIF_START)) {
 
 				parenthesis = true;
 
@@ -57,7 +59,8 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 			}
 			else if (line.contains(_VELOCITY_ELSE_START) &&
 					 !line.contains(_VELOCITY_ELSEIF_START) &&
-					 _isVelocityStatement(line, _VELOCITY_ELSE_START)) {
+					 VelocityMigrationUtil.isVelocityStatement(
+						 line, _VELOCITY_ELSE_START)) {
 
 				newLine = StringUtil.replace(
 					newLine, _VELOCITY_ELSE_START, "<#else>");
@@ -77,8 +80,7 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 						CharPool.GREATER_THAN);
 				}
 
-				newLine = StringUtil.removeFirst(
-					newLine, StringPool.OPEN_PARENTHESIS);
+				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 			}
 
 			lines[i] = newLine;
@@ -86,58 +88,6 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 
 		return com.liferay.petra.string.StringUtil.merge(
 			lines, StringPool.NEW_LINE);
-	}
-
-	private static boolean _isVelocityStatement(String line, String statement) {
-		int previousCharIndex = line.indexOf(statement) - 1;
-
-		if ((line.indexOf(statement) == 0) ||
-			((line.charAt(previousCharIndex) != CharPool.LESS_THAN) &&
-			 (line.charAt(previousCharIndex) != CharPool.SLASH))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static void _replaceIfStatementEnd(String[] lines, int lineIndex) {
-		Stack<String> stack = new Stack<>();
-
-		stack.push(_VELOCITY_IF_START);
-
-		int nextLineIndex = lineIndex;
-
-		while (!stack.empty()) {
-			nextLineIndex += 1;
-
-			String nextLine = lines[nextLineIndex];
-
-			if (nextLine.contains(_VELOCITY_IF_START) &&
-				_isVelocityStatement(nextLine, _VELOCITY_IF_START)) {
-
-				stack.push(_VELOCITY_IF_START);
-			}
-
-			if (nextLine.contains(_VELOCITY_FOREACH_START)) {
-				stack.push(_VELOCITY_FOREACH_START);
-			}
-
-			if (nextLine.contains(_VELOCITY_MACRO_START) &&
-				_isVelocityStatement(nextLine, _VELOCITY_MACRO_START)) {
-
-				stack.push(_VELOCITY_MACRO_START);
-			}
-
-			if (nextLine.contains(_VELOCITY_END)) {
-				stack.pop();
-			}
-
-			if (stack.empty()) {
-				lines[nextLineIndex] = StringUtil.replace(
-					nextLine, _VELOCITY_END, "</#if>");
-			}
-		}
 	}
 
 	private boolean _hasBreakLine(String line) {
@@ -154,12 +104,6 @@ public class UpgradeVelocityIfStatementsMigrationCheck
 
 	private static final String _VELOCITY_ELSEIF_START = "#elseif";
 
-	private static final String _VELOCITY_END = "#end";
-
-	private static final String _VELOCITY_FOREACH_START = "#foreach";
-
 	private static final String _VELOCITY_IF_START = "#if";
-
-	private static final String _VELOCITY_MACRO_START = "#macro";
 
 }

@@ -32,6 +32,19 @@
 			"type": "String"
 		},
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "AccountId",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Account Name"
+			},
+			"name": "accountName",
+			"required": false,
+			"type": "String"
+		},
+		{
 			"DBType": "Date",
 			"businessType": "Date",
 			"externalReferenceCode": "Project_Subscription_Start_Date__c",

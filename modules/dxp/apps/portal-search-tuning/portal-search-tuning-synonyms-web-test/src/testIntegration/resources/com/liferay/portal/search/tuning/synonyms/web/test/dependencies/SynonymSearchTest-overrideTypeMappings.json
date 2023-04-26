@@ -816,6 +816,11 @@
 				"type": "keyword"
 			},
 			"screenName": {
+				"fields": {
+					"text": {
+						"type": "text"
+					}
+				},
 				"store": true,
 				"type": "keyword"
 			},

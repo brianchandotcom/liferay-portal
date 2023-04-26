@@ -322,13 +322,16 @@ export const addTeamMembersInvitation = gql`
 export const associateUserAccountWithAccountAndAccountRole = gql`
 	mutation associateUserAccountWithAccountAndAccountRole(
 		$emailAddress: String!
+		$userAccount: InputUserAccount!
 		$accountKey: String!
 		$accountRoleId: Long!
 	) {
-		createAccountUserAccountByExternalReferenceCodeByEmailAddress(
-			emailAddress: $emailAddress
+		createAccountUserAccountByExternalReferenceCode(
+			userAccount: $userAccount
 			externalReferenceCode: $accountKey
-		)
+		) {
+			id
+		}
 		createAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 			accountRoleId: $accountRoleId
 			emailAddress: $emailAddress

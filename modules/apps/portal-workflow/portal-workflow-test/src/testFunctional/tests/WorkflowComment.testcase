@@ -108,6 +108,8 @@ definition {
 	@description = "This is a use case for LPS-54707."
 	@priority = 4
 	test DeleteComment {
+		property test.name.skip.portal.instance = "WorkflowComment#DeleteComment";
+
 		Navigator.gotoPage(pageName = "Page Comments Page");
 
 		PageComment.addWithWorkflowPG(

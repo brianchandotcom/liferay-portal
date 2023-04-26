@@ -542,6 +542,8 @@ public class ContentDashboardAdminDisplayContext {
 				);
 			}
 		).put(
+			"tabsState", getTabsState()
+		).put(
 			"vocabularies", _assetVocabularyMetric.toJSONArray()
 		).build();
 	}

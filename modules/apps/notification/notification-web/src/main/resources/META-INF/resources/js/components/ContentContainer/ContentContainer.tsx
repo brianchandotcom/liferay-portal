@@ -156,9 +156,7 @@ export default function ContentContainer({
 						objectDefinitions={objectDefinitions}
 					/>
 
-					{Liferay.FeatureFlags['LPS-171625'] && (
-						<GeneralTerms baseResourceURL={baseResourceURL} />
-					)}
+					<GeneralTerms baseResourceURL={baseResourceURL} />
 				</>
 			)}
 

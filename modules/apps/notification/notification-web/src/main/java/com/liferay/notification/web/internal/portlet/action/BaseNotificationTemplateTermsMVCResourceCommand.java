@@ -16,7 +16,6 @@ package com.liferay.notification.web.internal.portlet.action;
 
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.model.ObjectField;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -47,9 +46,7 @@ public abstract class BaseNotificationTemplateTermsMVCResourceCommand
 		Map<String, String> termNames = new LinkedHashMap<>();
 
 		for (ObjectField objectField : objectFields) {
-			if (StringUtil.equals(objectField.getName(), "creator") &&
-				FeatureFlagManagerUtil.isEnabled("LPS-171625")) {
-
+			if (StringUtil.equals(objectField.getName(), "creator")) {
 				authorObjectFieldNames.forEach(
 					(termLabel, objectFieldName) -> termNames.put(
 						termLabel,

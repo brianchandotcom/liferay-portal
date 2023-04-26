@@ -39,9 +39,7 @@ export default function DefinitionOfTermsContainer({
 				)}
 			</Text>
 
-			{Liferay.FeatureFlags['LPS-171625'] && (
-				<GeneralTerms baseResourceURL={baseResourceURL} />
-			)}
+			<GeneralTerms baseResourceURL={baseResourceURL} />
 
 			<DefinitionOfTerms
 				baseResourceURL={baseResourceURL}

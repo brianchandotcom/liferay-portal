@@ -20,15 +20,18 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.test.util.ObjectActionTestUtil;
+import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.service.test.util.TestObjectActionExecutor;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -76,12 +79,24 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		_companyId1 = CompanyThreadLocal.getCompanyId();
 
+		String objectDefinitionName1 = "A" + RandomTestUtil.randomString();
+
+		_objectDefinition1 = _addObjectDefinition(
+			objectDefinitionName1, TestPropsValues.getUser());
+
+		String objectDefinitionName2 = "A" + RandomTestUtil.randomString();
+
+		_objectDefinition2 = _addObjectDefinition(
+			objectDefinitionName2, TestPropsValues.getUser());
+
 		Company company = CompanyTestUtil.addCompany();
 
 		_companyId2 = company.getCompanyId();
 
-		_addCustomObjectDefinition("ObjectDefinition1");
-		_addCustomObjectDefinition("ObjectDefinition2");
+		_objectDefinition3 = _addObjectDefinition(
+			objectDefinitionName1, UserTestUtil.addCompanyAdminUser(company));
+		_objectDefinition4 = _addObjectDefinition(
+			objectDefinitionName2, UserTestUtil.addCompanyAdminUser(company));
 	}
 
 	@AfterClass
@@ -98,14 +113,15 @@ public class ObjectActionExecutorRegistryImplTest {
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition1"),
+					_companyId1, _objectDefinition1.getName()),
 				_objectActionExecutorKeyAccessor));
 
 		// Available for all companies' restricted object definitions
 
 		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
-				Arrays.asList("ObjectDefinition1"), 0, StringUtil.randomId());
+				Arrays.asList(_objectDefinition1.getName()), 0,
+				StringUtil.randomId());
 
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(
@@ -114,14 +130,14 @@ public class ObjectActionExecutorRegistryImplTest {
 					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition1"),
+					_companyId1, _objectDefinition1.getName()),
 				_objectActionExecutorKeyAccessor));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition2"),
+					_companyId1, _objectDefinition2.getName()),
 				_objectActionExecutorKeyAccessor));
 
 		_unregisterObjectActionExecutors();
@@ -139,14 +155,14 @@ public class ObjectActionExecutorRegistryImplTest {
 					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition1"),
+					_companyId1, _objectDefinition1.getName()),
 				_objectActionExecutorKeyAccessor));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId2, "ObjectDefinition1"),
+					_companyId2, _objectDefinition3.getName()),
 				_objectActionExecutorKeyAccessor));
 
 		_unregisterObjectActionExecutors();
@@ -155,7 +171,7 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		ObjectActionExecutor objectActionExecutor3 =
 			_registerObjectActionExecutor(
-				Arrays.asList("ObjectDefinition1"), _companyId1,
+				Arrays.asList(_objectDefinition1.getName()), _companyId1,
 				StringUtil.randomId());
 
 		Assert.assertArrayEquals(
@@ -165,34 +181,34 @@ public class ObjectActionExecutorRegistryImplTest {
 					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition1"),
+					_companyId1, _objectDefinition1.getName()),
 				_objectActionExecutorKeyAccessor));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition2"),
+					_companyId1, _objectDefinition2.getName()),
 				_objectActionExecutorKeyAccessor));
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId2, "ObjectDefinition1"),
+					_companyId2, _objectDefinition3.getName()),
 				_objectActionExecutorKeyAccessor));
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId2, "ObjectDefinition2"),
+					_companyId2, _objectDefinition4.getName()),
 				_objectActionExecutorKeyAccessor));
 	}
 
-	private static void _addCustomObjectDefinition(String name)
+	private static ObjectDefinition _addObjectDefinition(String name, User user)
 		throws Exception {
 
-		_objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), false, false,
+		return _objectDefinitionLocalService.addCustomObjectDefinition(
+			user.getUserId(), false, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -266,6 +282,11 @@ public class ObjectActionExecutorRegistryImplTest {
 
 	@Inject
 	private static ObjectActionExecutorRegistry _objectActionExecutorRegistry;
+
+	private static ObjectDefinition _objectDefinition1;
+	private static ObjectDefinition _objectDefinition2;
+	private static ObjectDefinition _objectDefinition3;
+	private static ObjectDefinition _objectDefinition4;
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;

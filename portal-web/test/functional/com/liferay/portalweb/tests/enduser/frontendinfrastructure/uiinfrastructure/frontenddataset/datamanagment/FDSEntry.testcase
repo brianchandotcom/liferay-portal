@@ -37,7 +37,7 @@ definition {
 	test CanChangePaginationInAdminPage {
 		task ("Given create 6 data sets") {
 			FrontendDataSetAdmin.createDataSet(
-				key_dataSetNameList = "Test Dataset 1,Test Dataset 2,Test Dataset 3,Test Dataset 4,Test Dataset 5,Test Dataset 6",
+				key_datasetNameList = "Test Dataset 1,Test Dataset 2,Test Dataset 3,Test Dataset 4,Test Dataset 5,Test Dataset 6",
 				key_type = "/c/fdsentries");
 		}
 

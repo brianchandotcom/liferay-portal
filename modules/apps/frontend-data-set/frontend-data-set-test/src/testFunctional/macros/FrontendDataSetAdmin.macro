@@ -31,25 +31,16 @@ definition {
 	}
 
 	macro createDataSet {
-		if (isSet(key_dataSetNameList)) {
-			for (var key_dataSetName : list ${key_dataSetNameList}) {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "TextInput#NAME",
-					value1 = ${key_dataSetName});
-
-				FrontendDataSetAdmin.selectProvider(key_type = ${key_type});
-
-				PortletEntry.save();
-			}
+		if (isSet(key_name)) {
+			var key_datasetNameList = ${key_name};
 		}
-		else {
+
+		for (var key_datasetName : list ${key_datasetNameList}) {
 			LexiconEntry.gotoAdd();
 
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = ${key_name});
+				value1 = ${key_datasetName});
 
 			FrontendDataSetAdmin.selectProvider(key_type = ${key_type});
 
@@ -71,27 +62,16 @@ definition {
 	}
 
 	macro createDataSetView {
-		if (isSet(key_dataSetViewNameList)) {
-			for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
-				LexiconEntry.gotoAdd();
-
-				Type(
-					locator1 = "TextInput#NAME",
-					value1 = ${key_dataSetViewName});
-
-				Type(
-					locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",
-					value1 = ${description});
-
-				PortletEntry.save();
-			}
+		if (isSet(key_name)) {
+			var key_dataSetViewNameList = ${key_name};
 		}
-		else {
+
+		for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
 			LexiconEntry.gotoAdd();
 
 			Type(
 				locator1 = "TextInput#NAME",
-				value1 = ${key_name});
+				value1 = ${key_dataSetViewName});
 
 			Type(
 				locator1 = "FrontendDataSetAdmin#NEW_DATA_SET_VIEW_DESCRIPTION",

@@ -141,13 +141,13 @@ public class ObjectEntryDTOConverter
 		Map<String, Serializable> nestedFieldValues =
 			NestedFieldsSupplier.supply(
 				nestedFieldName -> {
-					if (!StringUtil.equals(nestedFieldName, objectFieldName) &&
-						!StringUtil.equals(
-							nestedFieldName, relatedObjectDefinitionName) &&
+					if (!StringUtil.equals(
+							nestedFieldName, manyToOneRelationshipName) &&
+						!StringUtil.equals(nestedFieldName, objectFieldName) &&
 						!StringUtil.equals(
 							nestedFieldName, objectRelationship.getName()) &&
 						!StringUtil.equals(
-							nestedFieldName, manyToOneRelationshipName)) {
+							nestedFieldName, relatedObjectDefinitionName)) {
 
 						return null;
 					}
@@ -216,12 +216,12 @@ public class ObjectEntryDTOConverter
 				map.put(nestedFieldName, entry.getValue());
 			}
 
-			if (StringUtil.equals(nestedFieldName, objectFieldName) ||
-				StringUtil.equals(
-					nestedFieldName, relatedObjectDefinitionName) ||
+			if (StringUtil.equals(nestedFieldName, manyToOneRelationshipName) ||
+				StringUtil.equals(nestedFieldName, objectFieldName) ||
 				StringUtil.equals(
 					nestedFieldName, objectRelationship.getName()) ||
-				StringUtil.equals(nestedFieldName, manyToOneRelationshipName)) {
+				StringUtil.equals(
+					nestedFieldName, relatedObjectDefinitionName)) {
 
 				map.put(manyToOneRelationshipName, entry.getValue());
 			}

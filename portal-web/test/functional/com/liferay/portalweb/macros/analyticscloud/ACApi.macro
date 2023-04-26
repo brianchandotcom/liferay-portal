@@ -221,12 +221,13 @@ definition {
 		}
 	}
 
-	macro viewApiResponseForQueryData {
+	macro viewApiResponseForRootEndpoint {
 		for (var type : list ${typeList}) {
 			if (contains(${apiResponse}, "${type}={href=http://osbasahbackend:8080/api/reports/${type}")) {
 				echo("${type} - PASSED");
 			}
 			else {
+				echo("${type} - Invalid type");
 				fail(${apiResponse});
 			}
 		}

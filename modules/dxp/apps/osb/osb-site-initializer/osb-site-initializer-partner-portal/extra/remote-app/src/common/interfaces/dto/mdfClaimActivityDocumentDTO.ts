@@ -13,5 +13,6 @@ import MDFClaimActivityDocument from '../mdfClaimActivityDocument';
 
 export default interface MDFClaimActivityDocumentDTO
 	extends MDFClaimActivityDocument {
+	r_accToMDFClmActDocs_accountEntryId?: number;
 	r_mdfClmActToMDFActDocs_c_mdfClaimActivityId?: number;
 }

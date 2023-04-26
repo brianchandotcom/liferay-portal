@@ -17,5 +17,6 @@ import MDFClaimDTO from './mdfClaimDTO';
 export default interface MDFClaimActivityDTO extends MDFClaimActivity {
 	mdfClmActToMDFActDocs?: MDFClaimActivityDocumentDTO[];
 	mdfClmActToMDFClmBgts?: MDFClaimBudgetDTO[];
+	r_accTomdfClmActs_accountEntryId?: number;
 	r_mdfClmToMDFClmActs_c_mdfClaim?: MDFClaimDTO;
 }

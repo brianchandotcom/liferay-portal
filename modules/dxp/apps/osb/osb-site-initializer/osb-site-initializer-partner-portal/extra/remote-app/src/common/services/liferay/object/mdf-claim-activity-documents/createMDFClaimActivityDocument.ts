@@ -17,11 +17,16 @@ import liferayFetcher from '../../common/utils/fetcher';
 
 export default async function createMDFClaimActivityDocument(
 	allContentId: LiferayFile & number,
-	mdfClaimActivityId?: number
+	mdfClaimActivityId?: number,
+	companyId?: number
 ) {
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/mdfclaimactivitydocuments`,
 		Liferay.authToken,
-		getDTOFromMDFClaimActivityDocument(allContentId, mdfClaimActivityId)
+		getDTOFromMDFClaimActivityDocument(
+			allContentId,
+			mdfClaimActivityId,
+			companyId
+		)
 	);
 }

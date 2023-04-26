@@ -14,10 +14,12 @@ import LiferayFile from '../../../interfaces/liferayFile';
 
 export function getDTOFromMDFClaimActivityDocument(
 	allContentId: LiferayFile & number,
-	mdfClaimActivityId?: number
+	mdfClaimActivityId?: number,
+	companyId?: number
 ): MDFClaimActivityDocumentDTO {
 	return {
 		allContents: allContentId,
+		r_accToMDFClmActDocs_accountEntryId: companyId,
 		r_mdfClmActToMDFActDocs_c_mdfClaimActivityId: mdfClaimActivityId,
 	};
 }

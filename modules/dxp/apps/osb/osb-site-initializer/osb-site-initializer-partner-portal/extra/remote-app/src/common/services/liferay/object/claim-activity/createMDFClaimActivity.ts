@@ -19,6 +19,7 @@ import liferayFetcher from '../../common/utils/fetcher';
 export default async function createMDFClaimActivity(
 	mdfClaimActivity: MDFClaimActivity,
 	mdfClaimId?: number,
+	companyId?: number,
 	listOfQualifiedLeadsDocumentId?: LiferayFile & number
 ) {
 	return await liferayFetcher.post(
@@ -27,7 +28,8 @@ export default async function createMDFClaimActivity(
 		getDTOFromMDFClaimActivity(
 			mdfClaimActivity,
 			mdfClaimId,
-			listOfQualifiedLeadsDocumentId
+			listOfQualifiedLeadsDocumentId,
+			companyId
 		)
 	);
 }

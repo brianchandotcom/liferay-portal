@@ -16,13 +16,15 @@ import MDFClaimActivity from '../../../interfaces/mdfClaimActivity';
 export default function getDTOFromMDFClaimActivity(
 	mdfClaimActivity: MDFClaimActivity,
 	mdfClaimId?: number,
-	listOfQualifiedLeadsDocumentId?: LiferayFile & number
+	listOfQualifiedLeadsDocumentId?: LiferayFile & number,
+	companyId?: number
 ): MDFClaimActivityDTO {
 	return {
 		currency: mdfClaimActivity.currency,
 		listOfQualifiedLeads: listOfQualifiedLeadsDocumentId,
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,
+		r_accTomdfClmActs_accountEntryId: companyId,
 		r_actToMDFClmActs_c_activityId:
 			mdfClaimActivity.r_actToMDFClmActs_c_activityId,
 		r_mdfClmToMDFClmActs_c_mdfClaimId: mdfClaimId,

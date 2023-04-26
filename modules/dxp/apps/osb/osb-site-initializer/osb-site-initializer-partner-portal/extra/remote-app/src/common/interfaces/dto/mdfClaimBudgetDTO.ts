@@ -12,6 +12,7 @@
 import MDFClaimBudget from '../mdfClaimBudget';
 
 export default interface MDFClaimBudgetDTO extends MDFClaimBudget {
+	r_accToMDFClmBgts_accountEntryId?: number;
 	r_bgtToMDFClmBgts_c_budgetId?: number;
 	r_mdfClmActToMDFClmBgts_c_mdfClaimActivityId?: number;
 }

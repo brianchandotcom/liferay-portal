@@ -20,6 +20,7 @@ export default async function updateMDFClaimActivity(
 	mdfClaimActivity: MDFClaimActivity,
 	mdfClaimId?: number,
 	mdfClaimActivityId?: number,
+	companyId?: number,
 	listOfQualifiedLeadsDocumentId?: LiferayFile & number
 ) {
 	return await liferayFetcher.put(
@@ -28,7 +29,8 @@ export default async function updateMDFClaimActivity(
 		getDTOFromMDFClaimActivity(
 			mdfClaimActivity,
 			mdfClaimId,
-			listOfQualifiedLeadsDocumentId
+			listOfQualifiedLeadsDocumentId,
+			companyId
 		)
 	);
 }

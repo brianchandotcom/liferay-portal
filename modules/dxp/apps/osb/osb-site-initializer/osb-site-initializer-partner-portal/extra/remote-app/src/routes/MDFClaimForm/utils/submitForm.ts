@@ -58,16 +58,14 @@ export default async function submitForm(
 
 	if (values.mdfClaimStatus.key !== Status.DRAFT.key) {
 		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
-	}
-	else if (values.id) {
+	} else if (values.id) {
 		dtoMDFClaim = await updateMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,
 			mdfRequest,
 			values.id
 		);
-	}
-	else {
+	} else {
 		dtoMDFClaim = await createMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,
@@ -111,9 +109,14 @@ export default async function submitForm(
 					? await updateMDFClaimActivity(
 							activity,
 							dtoMDFClaim?.id,
-							activity.id
+							activity.id,
+							mdfRequest.r_accToMDFReqs_accountEntry?.id
 					  )
-					: await createMDFClaimActivity(activity, dtoMDFClaim?.id);
+					: await createMDFClaimActivity(
+							activity,
+							dtoMDFClaim?.id,
+							mdfRequest.r_accToMDFReqs_accountEntry?.id
+					  );
 
 				if (
 					activity.listOfQualifiedLeads &&
@@ -136,6 +139,7 @@ export default async function submitForm(
 								activity,
 								dtoMDFClaim?.id,
 								dtoMDFClaimActivity.id,
+								mdfRequest.r_accToMDFReqs_accountEntry?.id,
 								dtoListOfQualifiedLeads.id as LiferayFile &
 									number
 							);
@@ -162,7 +166,9 @@ export default async function submitForm(
 										createMDFClaimActivityDocument(
 											dtoAllContentDocument.id as LiferayFile &
 												number,
-											dtoMDFClaimActivity.id
+											dtoMDFClaimActivity.id,
+											mdfRequest
+												.r_accToMDFReqs_accountEntry?.id
 										);
 									}
 								}
@@ -178,11 +184,15 @@ export default async function submitForm(
 								? await updateMDFClaimActivityBudget(
 										budget,
 										dtoMDFClaimActivity.id,
-										budget.id
+										budget.id,
+										mdfRequest.r_accToMDFReqs_accountEntry
+											?.id
 								  )
 								: await createMDFClaimActivityBudget(
 										budget,
-										dtoMDFClaimActivity.id
+										dtoMDFClaimActivity.id,
+										mdfRequest.r_accToMDFReqs_accountEntry
+											?.id
 								  );
 
 							if (
@@ -206,6 +216,9 @@ export default async function submitForm(
 											budget,
 											dtoMDFClaimActivity.id,
 											dtoMDFClaimBudget.id,
+											mdfRequest
+												.r_accToMDFReqs_accountEntry
+												?.id,
 											dtoBudgetInvoice.id as LiferayFile &
 												number
 										);

@@ -24,14 +24,14 @@ import SidebarHeader from './components/SidebarHeader';
 import {ConstantsContextProvider} from './context/ConstantsContext';
 
 export default function App(props) {
-	const {isPanelStateOpen, portletNamespace} = props;
+	const {isPanelStateOpen} = props;
 
 	const layoutReportsPanelToggle = document.getElementById(
-		`${portletNamespace}layoutReportsPanelToggleId`
+		`layoutReportsPanelToggleId`
 	);
 
 	const layoutReportsPanelId = document.getElementById(
-		`${portletNamespace}layoutReportsPanelId`
+		`layoutReportsPanelId`
 	);
 
 	const sidenavInstance = Liferay.SideNavigation.instance(
@@ -72,12 +72,7 @@ export default function App(props) {
 		Liferay.once('screenLoad', () => {
 			Liferay.SideNavigation.destroy(layoutReportsPanelToggle);
 		});
-	}, [
-		layoutReportsPanelToggle,
-		portletNamespace,
-		layoutReportsPanelId,
-		sidenavInstance,
-	]);
+	}, [layoutReportsPanelToggle, layoutReportsPanelId, sidenavInstance]);
 
 	const [eventTriggered, setEventTriggered] = useState(false);
 

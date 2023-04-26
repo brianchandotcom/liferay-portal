@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {SET_LANGUAGE_ID} from '../constants/actionTypes';
-import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import loadIssues from '../utils/loadIssues';
 
@@ -34,7 +33,6 @@ export default function Translation({
 	const [active, setActive] = useState(false);
 
 	const dispatch = useContext(StoreDispatchContext);
-	const {portletNamespace} = useContext(ConstantsContext);
 
 	const {loading} = useContext(StoreStateContext);
 
@@ -50,7 +48,6 @@ export default function Translation({
 		loadIssues({
 			dispatch,
 			languageId,
-			portletNamespace,
 			refreshCache: false,
 			url,
 		});

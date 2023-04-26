@@ -766,6 +766,82 @@ definition {
 		}
 	}
 
+	@description = "LPS-171625 - Verify that after updating a system object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address, From Name and Template Body fields"
+	@priority = 5
+	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnSystemObject {
+		property custom.properties = "feature.flag.LPS-171625=true";
+		property portal.acceptance = "true";
+
+		task ("Given an email notification template with the applicable fields filled with the Author and Current User terms") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+				fromAddress = "[%USER_AUTHOR_FIRST_NAME%]",
+				fromName = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+				name = "Notification Template",
+				notificationType = "Email",
+				subject = "[%USER_AUTHOR_LAST_NAME%]");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an action to send an email notification after updating a system object entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				active = "true",
+				notificationName = "Notification Template",
+				objectLabel = "User",
+				thenAction = "Notification",
+				whenAction = "On After Update");
+		}
+
+		task ("And given a second admin user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("When the second admin user updates the System Object entry") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			User.editUserInformation(userLastNameEdit = "edituserln");
+		}
+
+		task ("Then the email is received with the terms replaced with the correct values") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Queue");
+
+			AssertTextPresent(value1 = "edituserln");
+
+			AssertTextPresent(value1 = "userea@liferay.com");
+		}
+	}
+
 	@description = "LPS-171625 - Verify that after updating a custom object entry, triggered user notifications using Object Author and Current User terms are filled correctly for the To and Subject fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInUserNotificationOnCustomObject {

@@ -58,14 +58,16 @@ export default async function submitForm(
 
 	if (values.mdfClaimStatus.key !== Status.DRAFT.key) {
 		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
-	} else if (values.id) {
+	}
+	else if (values.id) {
 		dtoMDFClaim = await updateMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,
 			mdfRequest,
 			values.id
 		);
-	} else {
+	}
+	else {
 		dtoMDFClaim = await createMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
 			values,

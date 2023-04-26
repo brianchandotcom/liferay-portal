@@ -171,6 +171,36 @@ definition {
 		Refresh();
 	}
 
+	macro deleteFilterEntry {
+		Portlet.gotoPortletOptions(
+			portletName = ${portletName},
+			portletOption = "Configuration");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
+
+		Navigator.gotoNavTab(navTab = "Product Selection");
+
+		AssertChecked(
+			locator1 = "Radio#ANY",
+			radioLabel = "Dynamic");
+
+		CommerceUtilities.expandField(accordionTitle = "filter");
+
+		Click.mouseOverClick(
+			key_button = "delete",
+			locator1 = "CommerceWidget#PRODUCT_PUBLISHER_ADD_REMOVE_FILTER_BUTTON");
+
+		Button.click(button = "Save");
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro gotoSVGNode {
 		Click(locator1 = "Button#EXPAND");
 
@@ -193,6 +223,52 @@ definition {
 		Click(locator1 = "Button#EXPAND");
 	}
 
+	macro productPublisherAddFilter {
+		CommerceUtilities.expandField(accordionTitle = "filter");
+
+		Click(
+			key_button = "add",
+			locator1 = "CommerceWidget#PRODUCT_PUBLISHER_ADD_REMOVE_FILTER_BUTTON");
+
+		if (isSet(optionQuery)) {
+			Select(
+				key_title = "Query Contains",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_BORDER_WIDTH_COLUMN",
+				value1 = ${optionQuery});
+		}
+
+		if (isSet(optionAndOperator)) {
+			Select(
+				key_title = "And Operator",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_BORDER_WIDTH_COLUMN",
+				value1 = ${optionAndOperator});
+		}
+
+		if (isSet(filterType)) {
+			Select(
+				key_fieldName = "queryName0",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${filterType});
+
+			Click(
+				key_button = "Select",
+				locator1 = "CommerceWidget#PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON");
+
+			SelectFrameTop();
+
+			CommerceWidget.setFilterItems(
+				categories = ${categories},
+				filterTitle = ${filterType},
+				tags = ${filterEntries});
+		}
+
+		Button.click(button = "Save");
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro removeChildOrganization {
 		Click(locator1 = "Button#EXPAND");
 
@@ -213,6 +289,40 @@ definition {
 		Refresh();
 
 		Click(locator1 = "Button#EXPAND");
+	}
+
+	macro setFilterItems {
+		SelectFrame.selectFrameNoLoading(
+			key_title = ${filterTitle},
+			locator1 = "IFrame#MODAL_ANY");
+
+		if (${filterTitle} == "Tags") {
+			for (var tag : list ${tags}) {
+				Click(
+					key_columnName = "name",
+					key_tableEntry = ${tag},
+					locator1 = "LexiconTable#TABLE_ENTRY_INFO_CHECKBOX");
+			}
+
+			SelectFrameTop();
+
+			Button.click(button = "Done");
+		}
+		else if (${filterTitle} == "Categories") {
+			for (var category : list ${categories}) {
+				Click(
+					key_nodeName = ${key_card},
+					locator1 = "Treeview#NODE_ITEM");
+			}
+
+			SelectFrameTop();
+
+			Button.click(button = "Add");
+		}
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	macro updateFacetConfiguration {

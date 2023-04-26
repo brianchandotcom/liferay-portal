@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "sap.scope.finder=true",
+	property = {"osgi.jaxrs.name=Liferay.Commerce", "sap.scope.finder=true"},
 	service = {
 		PortalInstanceLifecycleListener.class, ScopeFinder.class,
 		ScopeMapper.class

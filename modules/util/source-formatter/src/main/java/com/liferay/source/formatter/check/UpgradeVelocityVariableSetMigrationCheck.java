@@ -36,7 +36,9 @@ public class UpgradeVelocityVariableSetMigrationCheck
 
 				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 				newLine = StringUtil.replaceLast(
-					newLine, CharPool.CLOSE_PARENTHESIS, " />");
+					newLine, CharPool.CLOSE_PARENTHESIS,
+					CharPool.SPACE +
+						VelocityMigrationConstants.FREEMARKER_TAG_END);
 
 				content = StringUtil.replace(content, line, newLine);
 			}

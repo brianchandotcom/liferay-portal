@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.constants.VelocityMigrationConstants;
 import com.liferay.source.formatter.check.util.VelocityMigrationUtil;
 
 /**
@@ -34,7 +35,9 @@ public class UpgradeVelocityFileImportMigrationCheck
 
 				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 				newLine = StringUtil.replaceLast(
-					newLine, CharPool.CLOSE_PARENTHESIS, " />");
+					newLine, CharPool.CLOSE_PARENTHESIS,
+					CharPool.SPACE +
+						VelocityMigrationConstants.FREEMARKER_TAG_END);
 
 				content = StringUtil.replace(content, line, newLine);
 			}

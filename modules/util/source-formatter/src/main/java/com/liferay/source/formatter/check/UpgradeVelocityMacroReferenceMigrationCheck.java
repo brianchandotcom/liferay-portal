@@ -57,7 +57,8 @@ public class UpgradeVelocityMacroReferenceMigrationCheck
 			}
 
 			newLine = StringUtil.replaceLast(
-				newLine, CharPool.CLOSE_PARENTHESIS, " />");
+				newLine, CharPool.CLOSE_PARENTHESIS,
+				CharPool.SPACE + VelocityMigrationConstants.FREEMARKER_TAG_END);
 
 			String newMatch = VelocityMigrationUtil.removeFirstParenthesis(
 				match);

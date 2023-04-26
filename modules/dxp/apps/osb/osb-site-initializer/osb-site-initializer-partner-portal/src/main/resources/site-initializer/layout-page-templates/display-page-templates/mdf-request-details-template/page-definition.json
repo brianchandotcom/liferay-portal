@@ -1215,19 +1215,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": "Region",
-																				"ca_ES": "Region",
-																				"de_DE": "Region",
-																				"en_US": "Region",
-																				"es_ES": "Region",
-																				"fi_FI": "Region",
-																				"fr_FR": "Region",
-																				"hu_HU": "Region",
-																				"ja_JP": "Region",
-																				"nl_NL": "Region",
-																				"pt_BR": "Region",
-																				"sv_SE": "Region",
-																				"zh_CN": "Region"
+																				"ar_SA": "Country",
+																				"ca_ES": "Country",
+																				"de_DE": "Country",
+																				"en_US": "Country",
+																				"es_ES": "Country",
+																				"fi_FI": "Country",
+																				"fr_FR": "Country",
+																				"hu_HU": "Country",
+																				"ja_JP": "Country",
+																				"nl_NL": "Country",
+																				"pt_BR": "Country",
+																				"sv_SE": "Country",
+																				"zh_CN": "Country"
 																			}
 																		}
 																	}
@@ -1294,7 +1294,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "ObjectField_country",
+																				"fieldKey": "ObjectField_partnerCountry",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}
@@ -1335,7 +1335,7 @@
 																"key": "detail-view-table"
 															},
 															"fragmentConfig": {
-																"numberOfRows": 3
+																"numberOfRows": 4
 															},
 															"fragmentFields": [
 																{
@@ -1426,6 +1426,30 @@
 																	}
 																},
 																{
+																	"id": "rowTitle-4",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Liferay business/sales goals Other",
+																				"ca_ES": "Liferay business/sales goals Other",
+																				"de_DE": "Liferay business/sales goals Other",
+																				"en_US": "Liferay business/sales goals Other",
+																				"es_ES": "Liferay business/sales goals Other",
+																				"fi_FI": "Liferay business/sales goals Other",
+																				"fr_FR": "Liferay business/sales goals Other",
+																				"hu_HU": "Liferay business/sales goals Other",
+																				"ja_JP": "Liferay business/sales goals Other",
+																				"nl_NL": "Liferay business/sales goals Other",
+																				"pt_BR": "Liferay business/sales goals Other",
+																				"sv_SE": "Liferay business/sales goals Other",
+																				"zh_CN": "Liferay business/sales goals Other"
+																			}
+																		}
+																	}
+																},
+																{
 																	"id": "tableTitle",
 																	"value": {
 																		"fragmentLink": {
@@ -1472,6 +1496,21 @@
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "ObjectField_liferayBusinessSalesGoals",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "rowValue-4",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ObjectField_liferayBusinessSalesGoalsOther",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}

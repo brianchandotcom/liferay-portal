@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
-import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -27,11 +26,11 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.DuplicateObjectActionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
-import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
+import com.liferay.object.internal.action.executor.ObjectActionExecutorUtil;
 import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.model.ObjectAction;
@@ -448,29 +447,11 @@ public class ObjectActionLocalServiceImpl
 			return;
 		}
 
-		ObjectActionExecutor objectActionExecutor =
+		ObjectActionExecutorUtil.validateObjectActionExecutor(
+			objectDefinition.getCompanyId(),
 			_objectActionExecutorRegistry.getObjectActionExecutor(
-				objectActionExecutorKey);
-
-		if (!objectActionExecutor.isAllowedCompany(
-				objectDefinition.getCompanyId())) {
-
-			throw new ObjectActionExecutorKeyException(
-				StringBundler.concat(
-					"The object action executor key ", objectActionExecutorKey,
-					" is not allowed for company ",
-					objectDefinition.getCompanyId()));
-		}
-
-		if (!objectActionExecutor.isAllowedObjectDefinition(
-				objectDefinition.getName())) {
-
-			throw new ObjectActionExecutorKeyException(
-				StringBundler.concat(
-					"The object action executor key ", objectActionExecutorKey,
-					" is not allowed for object definition ",
-					objectDefinition.getName()));
-		}
+				objectActionExecutorKey),
+			objectDefinition.getName());
 	}
 
 	private void _validateObjectActionTriggerKey(

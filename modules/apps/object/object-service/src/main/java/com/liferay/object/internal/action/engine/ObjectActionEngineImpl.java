@@ -23,6 +23,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
+import com.liferay.object.internal.action.executor.ObjectActionExecutorUtil;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
@@ -226,6 +227,10 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			ObjectActionExecutor objectActionExecutor =
 				_objectActionExecutorRegistry.getObjectActionExecutor(
 					objectAction.getObjectActionExecutorKey());
+
+			ObjectActionExecutorUtil.validateObjectActionExecutor(
+				objectDefinition.getCompanyId(), objectActionExecutor,
+				objectDefinition.getName());
 
 			objectActionExecutor.execute(
 				objectDefinition.getCompanyId(),

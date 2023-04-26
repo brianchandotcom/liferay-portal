@@ -499,6 +499,37 @@ public class PageTemplatesImporterTest {
 	}
 
 	@Test
+	public void testImportEmptyLayoutPageTemplateEntryWithInvalidWidget()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getImportLayoutPageTemplateEntry(
+				"widget",
+				HashMapBuilder.put(
+					"WIDGET_NAME", RandomTestUtil.randomString()
+				).build());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getMainLayoutStructureItem();
+
+		List<String> childrenItemIds =
+			mainLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 0, childrenItemIds.size());
+	}
+
+	@Test
 	public void testImportLayoutPageTemplateEntryDropZoneFragment()
 		throws Exception {
 

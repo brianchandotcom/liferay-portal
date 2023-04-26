@@ -46,6 +46,7 @@ const initialBillingAddress = {
 	countryISOCode: 'US',
 	name: '',
 	phoneNumber: '',
+	regionISOCode: '',
 	street1: '',
 	street2: '',
 	zip: '',
@@ -102,6 +103,8 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 	const [showNewAddressButton, setShowNewAddressButton] = useState(false);
 
+	const [skus, setSkus] = useState<SKU[]>([]);
+
 	const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
 
 	const [enablePurchaseButton, setEnablePurchaseButton] = useState(false);
@@ -141,6 +144,26 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	}, [selectedAccount]);
 
 	useEffect(() => {
+		if (!freeApp && skus.length) {
+			let selectedSku;
+
+			if (selectedPaymentMethod === 'trial') {
+				selectedSku = skus.filter((sku) =>
+					sku.skuOptions.find((option) => option.value === 'yes')
+				)[0];
+			}
+			else if (selectedPaymentMethod === 'pay') {
+				selectedSku = skus.find((sku) => sku.price !== 0);
+			}
+			else {
+				selectedSku = skus[0];
+			}
+
+			setSku(selectedSku as SKU);
+		}
+	}, [selectedPaymentMethod]);
+
+	useEffect(() => {
 		const getModalInfo = async () => {
 			const channels = await getChannels();
 
@@ -170,18 +193,17 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			setAccounts(userAccounts.accountBriefs);
 			const app = await getDeliveryProduct({
 				accountId,
-
 				appId: Liferay.MarketplaceCustomerFlow.appId,
-
 				channelId: channel.id,
 			});
 
 			setApp(app);
 
 			const skuResponse = await getProductSKU({
-
 				appProductId: Liferay.MarketplaceCustomerFlow.appId,
 			});
+
+			setSkus(skuResponse.items);
 
 			let newSku;
 
@@ -326,7 +348,8 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			await postCheckoutCart({cartId: cartResponse.id});
 		}
 
-		const appName = typeof app?.name === 'string' ? app?.name : app?.name.en_US;
+		const appName =
+			typeof app?.name === 'string' ? app?.name : app?.name.en_US;
 
 		const appNameURL = appName.trim().toLowerCase().replace(' ', '-');
 
@@ -345,7 +368,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		);
 
 		window.location.href =
-			selectedPaymentMethod === 'pay' ? paymentMethodURL : nextStepsCallbackURL;
+			selectedPaymentMethod === 'pay'
+				? paymentMethodURL
+				: nextStepsCallbackURL;
 
 		onClose();
 	}
@@ -379,6 +404,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 		return;
 	}, [
+		billingAddress,
 		enablePurchaseButton,
 		freeApp,
 		selectedAccount,

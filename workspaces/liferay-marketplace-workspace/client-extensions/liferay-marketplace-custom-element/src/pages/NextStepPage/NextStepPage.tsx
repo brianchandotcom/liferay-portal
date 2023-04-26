@@ -119,7 +119,7 @@ export function NextStepPage({
 							title={header?.title ?? 'Next steps'}
 						/>
 
-						{showOrderId ?? (
+						{showOrderId && (
 							<span>
 								Your Order ID is: <strong>{orderId}</strong>
 							</span>

@@ -2,14 +2,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
 import {
 	getAccountAddressesFromCommerce,
-	getAccountInfo,
-	getAccountInfoFromCommerce,
 	getAccounts,
 	getChannels,
 	getDeliveryProduct,
@@ -104,7 +102,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 	const [showNewAddressButton, setShowNewAddressButton] = useState(false);
 
-	const [enableTrialMethod, setEnableTrialMethod] = useState<string>('no');
+	const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
 
 	const [enablePurchaseButton, setEnablePurchaseButton] = useState(false);
 
@@ -143,25 +141,6 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	}, [selectedAccount]);
 
 	useEffect(() => {
-		const handlePurchaseButton = async () => {
-			const emptyValues = Object.values(billingAddress).filter(
-				(x) => x === ''
-			).length;
-			if (
-				emptyValues === 0 ||
-				(emptyValues === 1 && billingAddress.street2 === '')
-			) {
-				setEnablePurchaseButton(true);
-			}
-			else {
-				setEnablePurchaseButton(false);
-			}
-		};
-
-		handlePurchaseButton();
-	}, [billingAddress]);
-
-	useEffect(() => {
 		const getModalInfo = async () => {
 			const channels = await getChannels();
 
@@ -191,33 +170,36 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			setAccounts(userAccounts.accountBriefs);
 			const app = await getDeliveryProduct({
 				accountId,
+
 				appId: Liferay.MarketplaceCustomerFlow.appId,
+
 				channelId: channel.id,
 			});
 
 			setApp(app);
 
 			const skuResponse = await getProductSKU({
+
 				appProductId: Liferay.MarketplaceCustomerFlow.appId,
 			});
 
-			let sku;
+			let newSku;
 
 			if (skuResponse.items.length > 1) {
-				const isTrial = skuResponse.items
-					.map((sku) =>
-						sku.skuOptions.find((option) => option.value === 'yes')
-					)
-					.filter((sku) => sku)[0]?.value;
-				setEnableTrialMethod(isTrial as string);
-				sku = skuResponse.items.find((sku) => sku.price !== 0);
+				const {items} = skuResponse;
+				const isTrial = !!items.find(
+					({sku, skuOptions: [skuOption]}) =>
+						sku.endsWith('ts') && skuOption.value === 'yes'
+				);
+				setEnableTrialMethod(isTrial);
+				newSku = skuResponse.items.find((sku) => sku.price !== 0);
 			}
 			else {
-				sku = skuResponse.items[0];
+				newSku = skuResponse.items[0];
 			}
-			setSku(sku as SKU);
+			setSku(newSku as SKU);
 
-			if (sku?.price === 0 && sku.skuOptions[0].value === 'no') {
+			if (newSku?.price === 0 && newSku.skuOptions[0].value === 'no') {
 				setFreeApp(true);
 				setSelectedPaymentMethod(null);
 			}
@@ -225,7 +207,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			const versionResponse = await getSKUCustomFieldExpandoValue({
 				companyId: Number(getCompanyId()),
 				customFieldName: 'version',
-				skuId: sku?.id as number,
+				skuId: newSku?.id as number,
 			});
 
 			if (typeof versionResponse === 'string') {
@@ -384,7 +366,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		]);
 	};
 
-	const handleClick = () => {
+	const handleClick = useCallback(() => {
 		if (!freeApp && showSelectAccount && selectedAccount) {
 			return handleChangeStep();
 		}
@@ -396,7 +378,12 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		}
 
 		return;
-	};
+	}, [
+		enablePurchaseButton,
+		freeApp,
+		selectedAccount,
+		showSelectAccount,
+	]);
 
 	const getButtonText = () => {
 		if (!freeApp) {
@@ -554,6 +541,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 								selectedPaymentMethod={selectedPaymentMethod}
 								setBillingAddress={setBillingAddress}
 								setEmail={setEmail}
+								setEnablePurchaseButton={
+									setEnablePurchaseButton
+								}
 								setPurchaseOrderNumber={setPurchaseOrderNumber}
 								setSelectedAddress={setSelectedAddress}
 								setSelectedPaymentMethod={

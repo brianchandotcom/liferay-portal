@@ -1,4 +1,5 @@
 import ClayIcon from '@clayui/icon';
+import {useEffect} from 'react';
 
 import {Input} from '../../components/Input/Input';
 import {Section} from '../../components/Section/Section';
@@ -9,6 +10,7 @@ export function BillingAddress({
 	billingAddress,
 	selectedAddress,
 	setBillingAddress,
+	setEnablePurchaseButton,
 	setSelectedAddress,
 	setShowNewAddressButton,
 	showNewAddressButton,
@@ -17,6 +19,7 @@ export function BillingAddress({
 	billingAddress: BillingAddress;
 	selectedAddress: string;
 	setBillingAddress: (value: BillingAddress) => void;
+	setEnablePurchaseButton: (value: boolean) => void;
 	setSelectedAddress: (value: string) => void;
 	setShowNewAddressButton: (value: boolean) => void;
 	showNewAddressButton: boolean;
@@ -33,6 +36,21 @@ export function BillingAddress({
 			title: address.name,
 		};
 	}
+
+	useEffect(() => {
+		const emptyValues = Object.values(billingAddress).filter(
+			(x) => x === ''
+		).length;
+		if (
+			emptyValues === 0 ||
+			(emptyValues === 1 && billingAddress.street2 === '')
+		) {
+			setEnablePurchaseButton(true);
+		}
+		else {
+			setEnablePurchaseButton(false);
+		}
+	}, [billingAddress]);
 
 	return (
 		<Section className="get-app-modal-section" label="Billing Address">

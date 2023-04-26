@@ -7,7 +7,7 @@ export function PaymentMethodSelector({
 	selectedPaymentMethod,
 	setSelectedPaymentMethod,
 }: {
-	enableTrial: string;
+	enableTrial: boolean;
 	selectedPaymentMethod: string;
 	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
 }) {
@@ -23,7 +23,7 @@ export function PaymentMethodSelector({
 				}
 				else if (method === 'trial') {
 					description = 'Try now. Pay later.';
-					disabled = enableTrial === 'no';
+					disabled = !enableTrial;
 					title = '30-day Trial';
 				}
 				else {

@@ -43,7 +43,7 @@ public class DuplicateChannelRelExceptionMapper
 			duplicateCommerceChannelRelException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "The channel relation already exists");
+			Response.Status.CONFLICT, "The channel relation already exists.");
 	}
 
 }

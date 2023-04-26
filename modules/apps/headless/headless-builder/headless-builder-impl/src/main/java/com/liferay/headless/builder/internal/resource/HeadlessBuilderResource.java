@@ -73,7 +73,7 @@ public class HeadlessBuilderResource extends BaseHeadlessBuilderResource {
 			).entity(
 				new Problem(
 					Response.Status.NOT_FOUND,
-					"The operation could not be found")
+					"The operation could not be found.")
 			).build();
 		}
 

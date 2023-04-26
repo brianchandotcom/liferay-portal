@@ -45,7 +45,7 @@ public class DuplicateDiscountAccountGroupRelExceptionMapper
 
 		return new Problem(
 			Response.Status.CONFLICT,
-			"The account group relation already exists");
+			"The account group relation already exists.");
 	}
 
 }

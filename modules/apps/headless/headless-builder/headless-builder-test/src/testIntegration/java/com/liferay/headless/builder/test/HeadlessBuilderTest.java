@@ -144,7 +144,7 @@ public class HeadlessBuilderTest {
 					JSONUtil.put(
 						"status", "NOT_FOUND"
 					).put(
-						"title", "The operation could not be found"
+						"title", "The operation could not be found."
 					).toString(),
 					jsonObject.toString(), true);
 			});
@@ -173,7 +173,7 @@ public class HeadlessBuilderTest {
 			JSONUtil.put(
 				"status", "NOT_FOUND"
 			).put(
-				"title", "The operation could not be found"
+				"title", "The operation could not be found."
 			).toString(),
 			jsonObject.toString(), true);
 	}

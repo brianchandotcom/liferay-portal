@@ -45,7 +45,7 @@ public class DuplicateFriendlyURLEntryExceptionMapper
 		DuplicateFriendlyURLEntryException duplicateFriendlyURLEntryException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "The friendly URL already exists");
+			Response.Status.CONFLICT, "The friendly URL already exists.");
 	}
 
 }

@@ -43,7 +43,7 @@ public class KeywordNameExceptionMapper
 	protected Problem getProblem(AssetTagException assetTagException) {
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"The keyword name is too long or contains invalid characters");
+			"The keyword name is too long or contains invalid characters.");
 	}
 
 }

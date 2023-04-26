@@ -43,7 +43,7 @@ public class DuplicateDiscountAccountRelExceptionMapper
 			duplicateCommerceDiscountAccountRelException) {
 
 		return new Problem(
-			Response.Status.CONFLICT, "The account relation already exists");
+			Response.Status.CONFLICT, "The account relation already exists.");
 	}
 
 }

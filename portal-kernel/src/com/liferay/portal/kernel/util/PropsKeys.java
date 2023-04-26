@@ -1095,6 +1095,9 @@ public interface PropsKeys {
 	public static final String IMAGE_TOOL_IMAGE_MAX_WIDTH =
 		"image.tool.image.max.width";
 
+	public static final String IMAGEMAGICK_ADAPTIVE_MEDIA_SUPPORTED_MIME_TYPES =
+		"imagemagick.adaptive.media.supported.mime.types";
+
 	public static final String IMAGEMAGICK_ENABLED = "imagemagick.enabled";
 
 	public static final String IMAGEMAGICK_GLOBAL_SEARCH_PATH =

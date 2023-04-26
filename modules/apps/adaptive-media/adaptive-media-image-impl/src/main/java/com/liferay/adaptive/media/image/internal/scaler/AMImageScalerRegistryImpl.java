@@ -54,7 +54,9 @@ public class AMImageScalerRegistryImpl implements AMImageScalerRegistry {
 
 		if (ListUtil.isNotEmpty(amImageScalers)) {
 			for (AMImageScaler amImageScaler : amImageScalers) {
-				if (amImageScaler.isEnabled()) {
+				if (amImageScaler.isEnabled() &&
+					amImageScaler.isSupportedMimeType(mimeType)) {
+
 					return amImageScaler;
 				}
 			}

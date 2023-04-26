@@ -917,6 +917,10 @@ public class PropsValues {
 	public static final long IMAGE_TOOL_IMAGE_MAX_WIDTH = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.IMAGE_TOOL_IMAGE_MAX_WIDTH));
 
+	public static final String[]
+		IMAGEMAGICK_ADAPTIVE_MEDIA_SUPPORTED_MIME_TYPES = PropsUtil.getArray(
+			PropsKeys.IMAGEMAGICK_ADAPTIVE_MEDIA_SUPPORTED_MIME_TYPES);
+
 	public static final boolean IMAGEMAGICK_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.IMAGEMAGICK_ENABLED));
 

@@ -19,13 +19,17 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.scaler.AMImageScaledImage;
 import com.liferay.adaptive.media.image.scaler.AMImageScaler;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.awt.image.RenderedImage;
 
@@ -43,12 +47,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eric Yan
+ * @author Roberto Díaz
  */
 @Component(
-	property = {
-		"mime.type=image/gif", "mime.type=image/heic", "mime.type=image/tiff",
-		"mime.type=image/webp"
-	},
+	property = {"mime.type=*", "service.ranking:Integer=101"},
 	service = AMImageScaler.class
 )
 public class AMImageMagickImageScaler implements AMImageScaler {
@@ -60,6 +62,15 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isSupportedMimeType(String mimeType) {
+		return ArrayUtil.contains(
+			_prefsProps.getStringArray(
+				PropsKeys.IMAGEMAGICK_ADAPTIVE_MEDIA_SUPPORTED_MIME_TYPES,
+				StringPool.COMMA),
+			mimeType);
 	}
 
 	@Override
@@ -167,5 +178,8 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 
 	@Reference
 	private ImageTool _imageTool;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 }

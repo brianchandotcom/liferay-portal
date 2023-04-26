@@ -53,6 +53,17 @@ public interface AMImageScaler {
 	}
 
 	/**
+	 * Returns <code>true</code> if the image type is supported by the  image
+	 * scaler.
+	 *
+	 * @return <code>true</code> if the image type is supported by the  image
+	 * scaler.
+	 */
+	public default boolean isSupportedMimeType(String mimeType) {
+		return true;
+	}
+
+	/**
 	 * Generates a scaled image for the file version that fits the
 	 * characteristics specified by the image configuration entry.
 	 *

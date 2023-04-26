@@ -142,8 +142,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Panel.expandPanel(panel = "Look and Feel");
-
 			Theme.changeCurrentTheme(themeName = "Dialect");
 
 			PortletEntry.save();

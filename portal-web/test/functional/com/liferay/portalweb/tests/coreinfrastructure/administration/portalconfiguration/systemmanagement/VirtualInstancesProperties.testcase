@@ -34,8 +34,6 @@ definition {
 
 			DropdownMenuItem.click(menuItem = "Configuration");
 
-			Panel.expandPanel(panel = "Look and Feel");
-
 			AssertElementPresent(
 				key_card = "Classic",
 				locator1 = "Card#CARD");
@@ -59,8 +57,6 @@ definition {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Configuration");
-
-			Panel.expandPanel(panel = "Look and Feel");
 
 			AssertElementPresent(
 				key_card = "Minium",

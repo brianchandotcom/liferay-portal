@@ -229,7 +229,7 @@ export function UserNotificationSettings({
 							Liferay.Language.get(
 								'use-terms-to-configure-recipients-for-this-notification-x'
 							),
-							'[%ENTRY_CREATOR%]',
+							'[%OBJECT_AUTHOR_ID%]',
 							'.'
 						)}
 						type="text"

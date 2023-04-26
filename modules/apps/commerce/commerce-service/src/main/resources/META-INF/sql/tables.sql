@@ -175,6 +175,7 @@ create table CommerceOrderItem (
 	CPInstanceId LONG,
 	CPMeasurementUnitId LONG,
 	CProductId LONG,
+	customerCommerceOrderItemId LONG,
 	parentCommerceOrderItemId LONG,
 	shippingAddressId LONG,
 	decimalQuantity DECIMAL(30, 16) null,

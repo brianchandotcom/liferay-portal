@@ -414,6 +414,12 @@ public interface CommerceOrderItemLocalService
 	public int getCommerceOrderItemsQuantity(long commerceOrderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getCustomerCommerceOrderIds(long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCustomerCommerceOrderIdsCount(long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -438,6 +444,12 @@ public interface CommerceOrderItemLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderItem> getSubscriptionCommerceOrderItems(
 		long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getSupplierCommerceOrderIds(long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSupplierCommerceOrderIdsCount(long commerceOrderId);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem importCommerceOrderItem(

@@ -34,7 +34,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -119,13 +118,14 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 			_getDDMFormFieldValueAccessor(
 				ddmFormEvaluatorFieldContextKey.getName());
 
+		Locale locale = _locale;
+
+		if (_locale == null) {
+			locale = ddmFormFieldValueValue.getDefaultLocale();
+		}
+
 		return ddmFormFieldValueAccessor.getValueForEvaluation(
-			ddmFormFieldValue,
-			Optional.ofNullable(
-				_locale
-			).orElse(
-				ddmFormFieldValueValue.getDefaultLocale()
-			));
+			ddmFormFieldValue, locale);
 	}
 
 	@Override

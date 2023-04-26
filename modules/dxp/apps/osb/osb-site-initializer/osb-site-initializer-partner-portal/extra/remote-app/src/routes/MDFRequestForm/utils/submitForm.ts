@@ -125,7 +125,8 @@ export default async function submitForm(
 						if (budget?.id) {
 							await updateMDFRequestActivityBudget(
 								dtoActivity.id as number,
-								budget
+								budget,
+								values.company
 							);
 							if (budget.removed) {
 								await deleteMDFRequestActivityBudgets(
@@ -136,7 +137,8 @@ export default async function submitForm(
 						} else {
 							await createMDFRequestActivityBudget(
 								dtoActivity.id as number,
-								budget
+								budget,
+								values.company
 							);
 						}
 					});

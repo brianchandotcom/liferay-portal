@@ -90,7 +90,7 @@ const ActivityPanel = ({
 							MDF Requested:
 						</div>
 
-						<h5 className="mr-4">
+						<h5 className="mr-2">
 							{getIntlNumberFormat(values.currency).format(
 								activity.mdfRequestAmount
 							)}

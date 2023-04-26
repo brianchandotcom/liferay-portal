@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Account to Budgets"
+	},
+	"name": "accToBgts",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Budget$]",
+	"objectDefinitionName2": "Budget",
+	"type": "oneToMany"
+}

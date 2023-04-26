@@ -174,7 +174,7 @@ definition {
 				value1 = "\TAB");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@data-title,'Container') and contains(@role,'treeitem')]",
+				locator1 = "//div[contains(@data-qa-id,'Container') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 
@@ -194,11 +194,11 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				locator1 = "//div[contains(@role,'treeitem') and contains(.,'Container')]//button[contains(@class,'treeview-node-list') and @aria-expanded='true']",
+				locator1 = "//div[contains(@data-qa-id,'Container') and contains(@role,'treeitem') and @aria-expanded='true']",
 				value1 = "\DOWN");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@data-title,'Grid') and contains(@role,'treeitem')]",
+				locator1 = "//div[contains(@data-qa-id,'Grid') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 
@@ -222,7 +222,7 @@ definition {
 				value1 = "\DOWN");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@data-title,'Module') and contains(@role,'treeitem')]",
+				locator1 = "//div[contains(@data-qa-id,'Module') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 
@@ -236,7 +236,7 @@ definition {
 				value1 = "\DOWN");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@data-title,'Heading') and contains(@role,'treeitem')]",
+				locator1 = "//div[contains(@data-qa-id,'Heading') and contains(@role,'treeitem')]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 

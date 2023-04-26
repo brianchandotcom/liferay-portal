@@ -30,7 +30,7 @@ definition {
 			layoutName = "Calendar Page",
 			widgetName = "Calendar");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/calendar-page");
+		Navigator.gotoPage(pageName = "Calendar Page");
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -40,7 +40,7 @@ definition {
 			site = ${siteName},
 			user = "Test Test");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "calendar-page/");
+		Navigator.gotoPage(pageName = "Calendar Page");
 	}
 
 	tearDown {

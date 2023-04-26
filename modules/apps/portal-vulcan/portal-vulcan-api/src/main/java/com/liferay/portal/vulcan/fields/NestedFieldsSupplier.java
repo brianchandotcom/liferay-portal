@@ -65,21 +65,21 @@ public class NestedFieldsSupplier<T> {
 			return null;
 		}
 
-		Map<String, T> nestedFields = new HashMap<>();
+		Map<String, T> nestedFieldValuesByName = new HashMap<>();
 
 		nestedFieldsContext.incrementCurrentDepth();
 
-		for (String nestedFieldName : nestedFieldsContext.getFieldNames()) {
-			T value = unsafeFunction.apply(nestedFieldName);
+		for (String fieldName : nestedFieldsContext.getFieldNames()) {
+			T value = unsafeFunction.apply(fieldName);
 
 			if (value != null) {
-				nestedFields.put(nestedFieldName, value);
+				nestedFieldValuesByName.put(fieldName, value);
 			}
 		}
 
 		nestedFieldsContext.decrementCurrentDepth();
 
-		return nestedFields;
+		return nestedFieldValuesByName;
 	}
 
 	private static boolean _mustProcessNestedFields(

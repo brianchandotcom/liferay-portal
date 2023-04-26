@@ -61,6 +61,8 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -505,10 +507,46 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public List<Long> getCustomerCommerceOrderIds(long commerceOrderId) {
+		return dslQuery(
+			_getCustomerCommerceOrdersGroupByStep(
+				commerceOrderId,
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceOrderItemTable.INSTANCE.commerceOrderId)));
+	}
+
+	@Override
+	public int getCustomerCommerceOrderIdsCount(long commerceOrderId) {
+		return dslQueryCount(
+			_getCustomerCommerceOrdersGroupByStep(
+				commerceOrderId,
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceOrderItemTable.INSTANCE.commerceOrderItemId)));
+	}
+
+	@Override
 	public List<CommerceOrderItem> getSubscriptionCommerceOrderItems(
 		long commerceOrderId) {
 
 		return commerceOrderItemPersistence.findByC_S(commerceOrderId, true);
+	}
+
+	@Override
+	public List<Long> getSupplierCommerceOrderIds(long commerceOrderId) {
+		return dslQuery(
+			_getSupplierCommerceOrdersGroupByStep(
+				commerceOrderId,
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceOrderItemTable.INSTANCE.commerceOrderId)));
+	}
+
+	@Override
+	public int getSupplierCommerceOrderIdsCount(long commerceOrderId) {
+		return dslQueryCount(
+			_getSupplierCommerceOrdersGroupByStep(
+				commerceOrderId,
+				DSLQueryFactoryUtil.countDistinct(
+					CommerceOrderItemTable.INSTANCE.commerceOrderItemId)));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1449,6 +1487,24 @@ public class CommerceOrderItemLocalServiceImpl
 		return jsonArray.toString();
 	}
 
+	private GroupByStep _getCustomerCommerceOrdersGroupByStep(
+		long commerceOrderId, FromStep fromStep) {
+
+		return fromStep.from(
+			CommerceOrderItemTable.INSTANCE
+		).where(
+			CommerceOrderItemTable.INSTANCE.commerceOrderItemId.in(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceOrderItemTable.INSTANCE.customerCommerceOrderItemId
+				).from(
+					CommerceOrderItemTable.INSTANCE
+				).where(
+					CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
+						commerceOrderId)
+				))
+		);
+	}
+
 	private Predicate _getPredicate(
 		long commerceOrderId, Long[] commerceOrderItemIds,
 		String[] externalReferenceCodes) {
@@ -1541,6 +1597,24 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOptionValue ->
 				_isStaticPriceType(commerceOptionValue.getPriceType()) &&
 				(commerceOptionValue.getCPInstanceId() == 0));
+	}
+
+	private GroupByStep _getSupplierCommerceOrdersGroupByStep(
+		long commerceOrderId, FromStep fromStep) {
+
+		return fromStep.from(
+			CommerceOrderItemTable.INSTANCE
+		).where(
+			CommerceOrderItemTable.INSTANCE.customerCommerceOrderItemId.in(
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceOrderItemTable.INSTANCE.commerceOrderItemId
+				).from(
+					CommerceOrderItemTable.INSTANCE
+				).where(
+					CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
+						commerceOrderId)
+				))
+		);
 	}
 
 	private boolean _isDiscountChanged(

@@ -337,6 +337,7 @@ export type TestraySubTaskIssue = {
 };
 
 export type TestraySuite = {
+	actions: ObjectActionsItems;
 	caseParameters: string;
 	creator: {
 		name: string;

@@ -22,6 +22,7 @@ import {KeyedMutator} from 'swr';
 import Form from '~/components/Form';
 import Container from '~/components/Layout/Container';
 import SearchBuilder from '~/core/SearchBuilder';
+import {withPagePermission} from '~/hoc/withPagePermission';
 import {useHeader} from '~/hooks';
 import useFormActions from '~/hooks/useFormActions';
 import useFormModal from '~/hooks/useFormModal';
@@ -31,7 +32,7 @@ import {
 	TestrayCase,
 	TestraySuite,
 	createSuiteCaseBatch,
-	testraySuiteRest,
+	testraySuiteImpl,
 } from '~/services/rest';
 import {getUniqueList} from '~/util';
 
@@ -81,8 +82,8 @@ const SuiteForm = () => {
 		onSubmit<TestraySuite>(
 			{...form, projectId},
 			{
-				create: (data) => testraySuiteRest.create(data),
-				update: (id, data) => testraySuiteRest.update(id, data),
+				create: (data) => testraySuiteImpl.create(data),
+				update: (id, data) => testraySuiteImpl.update(id, data),
 			}
 		)
 			.then((response) => {
@@ -213,4 +214,6 @@ const SuiteForm = () => {
 	);
 };
 
-export default SuiteForm;
+export default withPagePermission(SuiteForm, {
+	restImpl: testraySuiteImpl,
+});

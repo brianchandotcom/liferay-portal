@@ -61,6 +61,7 @@ const SuiteOutlet = () => {
 		return (
 			<Outlet
 				context={{
+					actions: testraySuite.actions,
 					mutateTestraySuite: mutate,
 					testrayProject,
 					testraySuite,

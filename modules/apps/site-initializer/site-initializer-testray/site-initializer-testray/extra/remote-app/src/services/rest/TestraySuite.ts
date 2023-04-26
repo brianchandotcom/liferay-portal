@@ -76,4 +76,6 @@ class TestraySuiteRest extends Rest<Suite, TestraySuite> {
 	}
 }
 
-export const testraySuiteRest = new TestraySuiteRest();
+const testraySuiteImpl = new TestraySuiteRest();
+
+export {testraySuiteImpl};

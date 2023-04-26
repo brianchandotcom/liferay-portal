@@ -111,7 +111,7 @@ const CaseForm = () => {
 					...testrayCase,
 					caseTypeId: testrayCase.caseType?.id,
 					componentId: testrayCase.component?.id,
-					priority: priorities[0].value,
+					priority: testrayCase.priority,
 			  }
 			: {
 					addAnother: false,

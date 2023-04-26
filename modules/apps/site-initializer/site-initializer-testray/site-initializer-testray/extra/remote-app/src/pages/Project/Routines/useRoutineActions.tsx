@@ -14,7 +14,6 @@
 
 import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useObjectPermission} from '~/hooks/data/useObjectPermission';
 
 import useFormActions from '../../../hooks/useFormActions';
 import useModalContext from '../../../hooks/useModalContext';
@@ -29,9 +28,7 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const navigate = useNavigate();
 	const {removeItemFromList} = useMutate();
 	const {onOpenModal, state} = useModalContext();
-
-	const buildPermission = useObjectPermission('/builds');
-	const factorPermission = useObjectPermission('/factors');
+	
 
 	const actionsRef = useRef([
 		{
@@ -46,9 +43,11 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 				navigate(
 					isHeaderActions ? 'templates' : `${routine.id}/templates`
 				),
-			hidden: !buildPermission.canCreate,
+
 			icon: 'cog',
 			name: i18n.translate('manage-templates'),
+			permission: 'UPDATE',
+
 		},
 		{
 			action: (routine) =>
@@ -65,9 +64,11 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 
 					title: i18n.translate('select-default-environment-factors'),
 				}),
-			hidden: !factorPermission.canCreate,
+
 			icon: 'display',
 			name: i18n.translate('select-default-environment-factors'),
+			permission: 'UPDATE',
+
 		},
 		{
 			action: ({id}, mutate) =>

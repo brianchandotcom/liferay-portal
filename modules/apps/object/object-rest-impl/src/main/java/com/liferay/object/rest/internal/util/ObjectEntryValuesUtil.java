@@ -45,7 +45,8 @@ public class ObjectEntryValuesUtil {
 				objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
 					objectField.getBusinessType());
 
-			return objectFieldBusinessType.getValue(objectField, values);
+			return objectFieldBusinessType.getValue(
+				objectField, userId, values);
 		}
 		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
 			if (_log.isDebugEnabled()) {

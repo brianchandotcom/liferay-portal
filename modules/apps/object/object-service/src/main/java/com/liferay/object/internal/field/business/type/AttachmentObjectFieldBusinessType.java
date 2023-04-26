@@ -125,7 +125,8 @@ public class AttachmentObjectFieldBusinessType
 	}
 
 	@Override
-	public Object getValue(ObjectField objectField, Map<String, Object> values)
+	public Object getValue(
+			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
 		Object value = values.get(objectField.getName());

@@ -779,8 +779,8 @@ public class ObjectFieldLocalServiceImpl
 		objectFieldBusinessType.validateObjectFieldSettings(
 			newObjectField, objectFieldSettings);
 
-		Set<String> unmodifiablObjectFieldSettingsNames =
-			objectFieldBusinessType.getUnmodifiablObjectFieldSettingsNames();
+		Set<String> unmodifiableObjectFieldSettingsNames =
+			objectFieldBusinessType.getUnmodifiableObjectFieldSettingsNames();
 
 		for (ObjectFieldSetting oldObjectFieldSetting :
 				_objectFieldSettingPersistence.findByObjectFieldId(
@@ -803,7 +803,7 @@ public class ObjectFieldLocalServiceImpl
 
 			if (objectFieldSetting == null) {
 				if (objectDefinition.isApproved() &&
-					unmodifiablObjectFieldSettingsNames.contains(
+					unmodifiableObjectFieldSettingsNames.contains(
 						oldObjectFieldSetting.getName())) {
 
 					throw new ObjectFieldSettingValueException.
@@ -825,7 +825,7 @@ public class ObjectFieldLocalServiceImpl
 					newObjectFieldSetting.getName());
 
 			if (objectDefinition.isApproved() && (oldObjectField != null) &&
-				unmodifiablObjectFieldSettingsNames.contains(
+				unmodifiableObjectFieldSettingsNames.contains(
 					newObjectFieldSetting.getName()) &&
 				((oldObjectFieldSetting == null) ||
 				 !StringUtil.equalsIgnoreCase(

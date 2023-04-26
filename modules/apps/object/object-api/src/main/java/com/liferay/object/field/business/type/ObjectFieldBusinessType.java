@@ -76,7 +76,7 @@ public interface ObjectFieldBusinessType {
 		return Collections.emptySet();
 	}
 
-	public default Set<String> getUnmodifiablObjectFieldSettingsNames() {
+	public default Set<String> getUnmodifiableObjectFieldSettingsNames() {
 		return Collections.emptySet();
 	}
 

@@ -4492,6 +4492,35 @@ components:
                     description:
                         A list of localized target keywords of the page to be used by search engines.
                     type: object
+                siteMapSettings:
+                    # @review
+                    description:
+                        Represents settings related with the site map.
+                    properties:
+                        changeFrequency:
+                            description:
+                                Indicates how often a page is updated.
+                            enum:
+                                - Always
+                                - Hourly
+                                - Daily
+                                - Weekly
+                                - Monthly
+                                - Yearly
+                                - Never
+                            type: string
+                        include:
+                            description:
+                                Whether search engines should crawl and index the page.
+                            type: boolean
+                        pagePriority:
+                            description:
+                                How the page should be prioritized relative to other pages.
+                            format: double
+                            maximum: 1
+                            minimum: 0
+                            type: number
+                    type: object
             type: object
         Settings:
             # @review

@@ -62,6 +62,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testBaseReferenceVariableWithoutComponent() throws Exception {
+		test(
+			"BaseReferenceVariableWithoutComponent.testjava",
+			"@Reference variable '_testField' should be protected instead of " +
+				"private in a class without @Component",
+			28);
+	}
+
+	@Test
 	public void testBuilder() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
@@ -645,15 +654,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"RedundantLog.testjava",
 			"Redundant log between line '26' and line '31'.", 26);
-	}
-
-	@Test
-	public void testReferenceFieldAuthority() throws Exception {
-		test(
-			"BaseReferenceFieldAuthority.testjava",
-			"@Reference annotation should be on protected fields rather than " +
-				"private fields",
-			28);
 	}
 
 	@Test

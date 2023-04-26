@@ -105,15 +105,15 @@ public class LoadBalancerUtil {
 		throws Exception {
 
 		return getMostAvailableMasterURL(
-			null, overridePropertiesArray, verbose);
+			null, overridePropertiesArray, verbose, false);
 	}
 
 	public static String getMostAvailableMasterURL(Properties properties) {
-		return getMostAvailableMasterURL(properties, true);
-	}
+		return getMostAvailableMasterURL(properties, true, false);
+	}	
 
 	public static String getMostAvailableMasterURL(
-		Properties properties, boolean verbose) {
+		Properties properties, boolean verbose, boolean clock) {
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -156,7 +156,7 @@ public class LoadBalancerUtil {
 				}
 
 				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
-					masterPrefix, blacklistString, minimumRAM,
+					masterPrefix, blacklistString, minimumRAM, clock,
 					maximumSlavesPerHost, properties, verbose);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(

@@ -333,11 +333,13 @@ name = HtmlUtil.escapeJS(name);
 		if (ckEditor) {
 			var iframe = ckEditor.one('iframe');
 
-			iframe.attr(
-				'aria-labelledby',
-				'<%= namespace %>Aria ' +
-					iframe._node.attributes['aria-describedby'].value
-			);
+			if (iframe) {
+				iframe.attr(
+					'aria-labelledby',
+					'<%= namespace %>Aria ' +
+						iframe._node.attributes['aria-describedby'].value
+				);
+			}
 
 			addAUIClass(iframe);
 

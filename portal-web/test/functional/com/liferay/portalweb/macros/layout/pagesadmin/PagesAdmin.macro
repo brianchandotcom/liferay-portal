@@ -511,6 +511,36 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro addPageWithConfirm {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			PagesAdmin.gotoAddFirstPage(pageType = "Page");
+		}
+		else {
+			AssertClick(
+				key_breadcrumbName = "Pages",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
+				value1 = "Pages");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+		}
+
+		LexiconCard.clickCard(card = "Widget Page");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = ${pageName});
+
+		ClickNoError(
+			key_text = "Add",
+			locator1 = "Button#ANY");
+	}
+
 	macro addPrivateChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

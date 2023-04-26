@@ -38,21 +38,5 @@
 	{
 		"name": "Partner Technical User (PTU)",
 		"type": 1
-	},
-	{
-		"name": "[Account] Partner Manager (PM)",
-		"type": 6
-	},
-	{
-		"name": "[Account] Partner Marketing User (PMU)",
-		"type": 6
-	},
-	{
-		"name": "[Account] Partner Sales Users (PSU)",
-		"type": 6
-	},
-	{
-		"name": "[Account] Partner Technical User (PTU)",
-		"type": 6
 	}
 ]

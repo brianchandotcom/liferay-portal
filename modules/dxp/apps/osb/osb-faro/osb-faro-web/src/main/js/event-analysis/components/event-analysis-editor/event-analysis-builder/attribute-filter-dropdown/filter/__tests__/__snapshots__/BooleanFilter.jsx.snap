@@ -51,7 +51,7 @@ exports[`BooleanFilter should render 1`] = `
       class="options-footer"
     >
       <button
-        class="button-root btn btn-primary btn-block"
+        class="button-root btn btn-block btn-primary"
         type="submit"
       >
         Done

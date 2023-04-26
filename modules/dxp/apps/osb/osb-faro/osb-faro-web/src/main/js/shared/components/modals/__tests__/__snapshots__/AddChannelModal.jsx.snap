@@ -22,7 +22,7 @@ exports[`AddChannelModal renders 1`] = `
             New Property
           </h4>
           <button
-            class="button-root btn btn-secondary close"
+            class="button-root close btn btn-secondary"
             type="button"
           >
             <svg

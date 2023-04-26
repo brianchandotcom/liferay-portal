@@ -28,7 +28,7 @@ exports[`SummaryCard should render a running SummaryCard 1`] = `
           role="group"
         >
           <button
-            class="btn btn-sm btn-secondary"
+            class="button-root btn btn-sm btn-secondary"
             type="button"
           >
             Terminate Test
@@ -121,7 +121,7 @@ exports[`SummaryCard should render a running SummaryCard 1`] = `
                 class="analytics-summary-section-metric-type-icon"
               >
                 <svg
-                  class="lexicon-icon lexicon-icon-web-content"
+                  class="lexicon-icon lexicon-icon-web-content icon-root"
                   role="presentation"
                 >
                   <use

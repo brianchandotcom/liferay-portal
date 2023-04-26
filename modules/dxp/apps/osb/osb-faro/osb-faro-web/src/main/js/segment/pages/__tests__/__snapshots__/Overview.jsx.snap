@@ -45,22 +45,18 @@ exports[`SegmentOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root c-link link-secondary text-decoration-underline"
             href="/workspace/23/contacts/segments/test/membership"
           >
             View Members
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -100,22 +96,18 @@ exports[`SegmentOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root link-unstyled"
             href="/workspace/23/contacts/segments/test/interests"
           >
             View All Interests
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -146,15 +138,15 @@ exports[`SegmentOverview should render 1`] = `
                     >
                       Tab 1
                       <button
-                        class="button-root btn btn-unstyled remove-tab btn-sm"
+                        class="button-root remove-tab btn btn-sm btn-unstyled"
                         type="button"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-times icon-monospaced icon-size-sm"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-times icon-size-sm"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                            xlink:href="#times"
                           />
                         </svg>
                       </button>
@@ -164,15 +156,15 @@ exports[`SegmentOverview should render 1`] = `
               </div>
             </div>
             <button
-              class="button-root btn btn-secondary add-tab btn-monospaced btn-outline-borderless btn-sm"
+              class="button-root add-tab btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-plus"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-plus icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                  xlink:href="#plus"
                 />
               </svg>
             </button>
@@ -213,22 +205,18 @@ exports[`SegmentOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root link-unstyled"
             href="/workspace/23/contacts/segments/test/distribution"
           >
             Explore Breakdown
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>

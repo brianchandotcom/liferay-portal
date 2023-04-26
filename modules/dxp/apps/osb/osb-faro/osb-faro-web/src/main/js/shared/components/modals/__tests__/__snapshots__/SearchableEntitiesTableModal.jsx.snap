@@ -19,7 +19,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
           entities
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -53,15 +53,15 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                   role="presentation"
                 >
                   <button
-                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                        xlink:href="#order-arrow-ascending"
                       />
                     </svg>
                   </button>
@@ -90,11 +90,11 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                         type="button"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-search"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-search icon-root"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                            xlink:href="#search"
                           />
                         </svg>
                       </button>
@@ -117,7 +117,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                   class="table-head-title table-cell-expand"
                 >
                   <button
-                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    class="inline-item text-truncate-inline btn btn-unstyled"
                     type="button"
                   >
                     <span
@@ -143,7 +143,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                   class="table-head-title"
                 >
                   <button
-                    class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                    class="inline-item text-truncate-inline btn btn-unstyled"
                     type="button"
                   >
                     <span

@@ -34,7 +34,7 @@ exports[`InputWithEditToggle should render 1`] = `
             >
               <button
                 aria-label="Edit"
-                class="button-root btn btn-secondary btn-sm"
+                class="button-root btn btn-sm btn-secondary"
                 type="button"
               >
                 <svg

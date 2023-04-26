@@ -43,7 +43,7 @@ exports[`SelectWorkspaceAccount should render 1`] = `
                 Test Test
               </span>
               <svg
-                class="lexicon-icon lexicon-icon-caret-bottom caret"
+                class="lexicon-icon lexicon-icon-caret-bottom icon-root caret"
                 role="presentation"
               >
                 <use
@@ -107,7 +107,7 @@ exports[`SelectWorkspaceAccount should render 1`] = `
                 class="list-group-item list-group-item-action list-group-item-flex"
               >
                 <a
-                  class="button-root btn btn-unstyled workspace-link border-button"
+                  class="button-root workspace-link border-button btn btn-unstyled"
                   href="/workspace/126"
                 >
                   <div
@@ -157,7 +157,7 @@ exports[`SelectWorkspaceAccount should render 1`] = `
                 class="list-group-item list-group-item-action list-group-item-flex"
               >
                 <a
-                  class="button-root btn btn-unstyled workspace-link border-button"
+                  class="button-root workspace-link border-button btn btn-unstyled"
                   href="/workspace/corpProjectUuid123/add"
                 >
                   <div

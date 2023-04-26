@@ -5,12 +5,12 @@ exports[`FormNavigation should render 1`] = `
   <div
     class="form-navigation-root"
   >
-    <button
-      class="button-root btn btn-secondary cancel"
-      type="button"
+    <a
+      class="button-root cancel btn btn-secondary"
+      href=""
     >
       Cancel
-    </button>
+    </a>
     <button
       class="button-root btn btn-primary"
       disabled=""

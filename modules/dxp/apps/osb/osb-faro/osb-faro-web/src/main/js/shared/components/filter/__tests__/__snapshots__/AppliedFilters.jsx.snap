@@ -24,15 +24,15 @@ exports[`AppliedFilters should render 1`] = `
         >
           <button
             aria-label="Close"
-            class="button-root btn btn-unstyled close"
+            class="close button-root btn btn-unstyled"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-times"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-times icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                xlink:href="#times"
               />
             </svg>
           </button>
@@ -58,15 +58,15 @@ exports[`AppliedFilters should render 1`] = `
         >
           <button
             aria-label="Close"
-            class="button-root btn btn-unstyled close"
+            class="close button-root btn btn-unstyled"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-times"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-times icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                xlink:href="#times"
               />
             </svg>
           </button>
@@ -74,9 +74,17 @@ exports[`AppliedFilters should render 1`] = `
       </span>
     </div>
     <button
-      class="button-root btn btn-secondary ml-4 btn-sm"
+      class="ml-4 btn btn-sm btn-secondary"
       type="button"
     >
+      <svg
+        class="lexicon-icon lexicon-icon-trash mr-2"
+        role="presentation"
+      >
+        <use
+          xlink:href="#trash"
+        />
+      </svg>
       Clear Filter
     </button>
   </div>

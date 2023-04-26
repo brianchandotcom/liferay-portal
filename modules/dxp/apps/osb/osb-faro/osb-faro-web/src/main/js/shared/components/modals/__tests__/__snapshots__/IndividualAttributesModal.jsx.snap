@@ -19,7 +19,7 @@ exports[`IndividualAttributesModal should render 1`] = `
           testFildName0
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg

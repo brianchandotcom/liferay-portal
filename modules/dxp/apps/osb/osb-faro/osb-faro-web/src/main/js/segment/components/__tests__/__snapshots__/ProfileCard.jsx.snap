@@ -39,22 +39,18 @@ exports[`SegmentProfileCard should render 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root btn btn-link btn-sm"
+        class="button-root c-link link-secondary text-decoration-underline"
         href="/workspace/23/123/contacts/segments/3/membership"
       >
         View Members
-        <span
-          class="inline-item inline-item-after"
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          role="presentation"
         >
-          <svg
-            class="icon-root lexicon-icon lexicon-icon-angle-right"
-            viewBox=""
-          >
-            <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-            />
-          </svg>
-        </span>
+          <use
+            xlink:href="#angle-right"
+          />
+        </svg>
       </a>
     </div>
   </div>

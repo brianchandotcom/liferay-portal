@@ -115,15 +115,15 @@ exports[`BlockList should render 1`] = `
                   role="presentation"
                 >
                   <a
-                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                     href="/?field=name&page=1&sortOrder=DESC"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                        xlink:href="#order-arrow-ascending"
                       />
                     </svg>
                   </a>
@@ -152,11 +152,11 @@ exports[`BlockList should render 1`] = `
                         type="button"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-search"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-search icon-root"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                            xlink:href="#search"
                           />
                         </svg>
                       </button>

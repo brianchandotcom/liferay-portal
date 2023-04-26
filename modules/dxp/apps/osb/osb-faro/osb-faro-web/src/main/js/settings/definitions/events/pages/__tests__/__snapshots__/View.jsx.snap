@@ -121,7 +121,7 @@ exports[`Event View page should render 1`] = `
           >
             <button
               aria-label="Click to Copy"
-              class="button-root btn btn-secondary copy-button"
+              class="copy-button btn btn-secondary"
               data-clipboard-text="Analytics.track('name-0', {
 	'name-1': 'samplevalue-1',
 });"

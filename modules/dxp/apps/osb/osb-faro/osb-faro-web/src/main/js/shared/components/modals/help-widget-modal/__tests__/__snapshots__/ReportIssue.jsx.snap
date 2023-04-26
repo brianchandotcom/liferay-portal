@@ -11,7 +11,7 @@ exports[`ReportIssue should render 1`] = `
       Report an Issue
     </h4>
     <button
-      class="button-root btn btn-secondary close"
+      class="button-root close btn btn-secondary"
       type="button"
     >
       <svg

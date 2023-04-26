@@ -39,7 +39,7 @@ exports[`SelectItemsModal should render 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -70,15 +70,15 @@ exports[`SelectItemsModal should render 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -107,11 +107,11 @@ exports[`SelectItemsModal should render 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -178,7 +178,7 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -209,15 +209,15 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -246,11 +246,11 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -317,7 +317,7 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -348,15 +348,15 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -385,11 +385,11 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -431,20 +431,12 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
           </button>
           <button
             class="button-root btn btn-primary"
-            disabled=""
             type="button"
           >
             <span
-              class="inline-item inline-item-before"
-            >
-              <div
-                class="spinner-root"
-              >
-                <span
-                  class="loading-animation loading-animation-dotted"
-                />
-              </div>
-            </span>
+              aria-hidden="true"
+              class="d-inline-block mr-2 loading-animation loading-animation-secondary loading-animation-sm"
+            />
             message
           </button>
         </div>
@@ -473,7 +465,7 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -504,15 +496,15 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -541,11 +533,11 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -612,7 +604,7 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
           Custom Title
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -643,15 +635,15 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -680,11 +672,11 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -751,7 +743,7 @@ exports[`SelectItemsModal should render with a successful submit 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -782,15 +774,15 @@ exports[`SelectItemsModal should render with a successful submit 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -819,11 +811,11 @@ exports[`SelectItemsModal should render with a successful submit 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -895,7 +887,7 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -926,15 +918,15 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -963,11 +955,11 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -1009,20 +1001,12 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
           </button>
           <button
             class="button-root btn btn-primary"
-            disabled=""
             type="button"
           >
             <span
-              class="inline-item inline-item-before"
-            >
-              <div
-                class="spinner-root"
-              >
-                <span
-                  class="loading-animation loading-animation-dotted"
-                />
-              </div>
-            </span>
+              aria-hidden="true"
+              class="d-inline-block mr-2 loading-animation loading-animation-secondary loading-animation-sm"
+            />
             message
           </button>
         </div>
@@ -1051,7 +1035,7 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -1082,15 +1066,15 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -1119,11 +1103,11 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -1190,7 +1174,7 @@ exports[`SelectItemsModal should render with selectedItems with the disable sele
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -1221,15 +1205,15 @@ exports[`SelectItemsModal should render with selectedItems with the disable sele
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -1258,11 +1242,11 @@ exports[`SelectItemsModal should render with selectedItems with the disable sele
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>
@@ -1335,7 +1319,7 @@ exports[`SelectItemsModal should render without a toolbar 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -1404,7 +1388,7 @@ exports[`SelectItemsModal should render without the sort button 1`] = `
           Select Fields
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -1453,11 +1437,11 @@ exports[`SelectItemsModal should render without the sort button 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-times"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-times icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                          xlink:href="#times"
                         />
                       </svg>
                     </button>

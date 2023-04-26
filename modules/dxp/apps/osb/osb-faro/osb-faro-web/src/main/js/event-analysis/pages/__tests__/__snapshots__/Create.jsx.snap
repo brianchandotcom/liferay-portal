@@ -91,7 +91,7 @@ exports[`Event Analysis Create should render 1`] = `
                   </span>
                   <button
                     aria-label="Edit"
-                    class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+                    class="button-root btn btn-outline-borderless btn-sm btn-outline-unstyled"
                     type="button"
                   >
                     <svg
@@ -109,32 +109,19 @@ exports[`Event Analysis Create should render 1`] = `
             <div
               class="event-analysis-toolbar-right-content"
             >
-              <div
-                class="btn-group"
-                role="group"
+              <button
+                class="button-root mr-2 btn btn-sm btn-primary"
+                disabled=""
+                type="submit"
               >
-                <div
-                  class="btn-group-item"
-                >
-                  <button
-                    class="button-root btn btn-primary btn-sm"
-                    disabled=""
-                    type="submit"
-                  >
-                    Save Analysis
-                  </button>
-                </div>
-                <div
-                  class="btn-group-item"
-                >
-                  <a
-                    class="button-root btn btn-secondary btn-sm"
-                    href="/workspace/123/456/event-analysis"
-                  >
-                    Cancel
-                  </a>
-                </div>
-              </div>
+                Save Analysis
+              </button>
+              <a
+                class="button-root btn btn-sm btn-secondary"
+                href="/workspace/123/456/event-analysis"
+              >
+                Cancel
+              </a>
             </div>
           </div>
         </div>
@@ -170,15 +157,15 @@ exports[`Event Analysis Create should render 1`] = `
                   class="dropdown"
                 >
                   <button
-                    class="button-root btn btn-primary dropdown-toggle add-event-button btn-sm"
+                    class="dropdown-toggle button-root add-event-button btn btn-sm btn-primary"
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-plus"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-plus icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                        xlink:href="#plus"
                       />
                     </svg>
                   </button>
@@ -286,12 +273,12 @@ exports[`Event Analysis Create should render 1`] = `
                 class="dropdown dropdown-range-key-root"
               >
                 <button
-                  class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                  class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
                   type="button"
                 >
                   Last 30 days
                   <svg
-                    class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                    class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
                     role="presentation"
                   >
                     <use

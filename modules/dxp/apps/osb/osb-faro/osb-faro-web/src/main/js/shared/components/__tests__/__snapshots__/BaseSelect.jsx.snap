@@ -9,7 +9,7 @@ exports[`BaseSelect should fetch items with focus 1`] = `
   >
     <li>
       <button
-        class="button-root btn btn-unstyled dropdown-item text-truncate active"
+        class="button-root dropdown-item text-truncate active btn btn-unstyled"
         type="button"
       >
         test
@@ -123,7 +123,7 @@ exports[`Item should render 1`] = `
 <div>
   <li>
     <button
-      class="button-root btn btn-unstyled dropdown-item text-truncate"
+      class="button-root dropdown-item text-truncate btn btn-unstyled"
       type="button"
     >
       test
@@ -136,7 +136,7 @@ exports[`Item should select an item 1`] = `
 <div>
   <li>
     <button
-      class="button-root btn btn-unstyled dropdown-item text-truncate"
+      class="button-root dropdown-item text-truncate btn btn-unstyled"
       type="button"
     >
       test

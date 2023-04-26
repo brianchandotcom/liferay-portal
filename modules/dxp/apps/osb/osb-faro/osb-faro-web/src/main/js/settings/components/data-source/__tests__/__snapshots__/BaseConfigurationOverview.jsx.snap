@@ -16,12 +16,11 @@ exports[`BaseConfigurationOverview should render 1`] = `
       <div
         class="actions"
       >
-        <button
-          class="button-root btn btn-secondary btn-block"
-          type="button"
+        <a
+          class="button-root btn btn-block btn-secondary"
         >
           Configure
-        </button>
+        </a>
       </div>
       <div
         class="info"

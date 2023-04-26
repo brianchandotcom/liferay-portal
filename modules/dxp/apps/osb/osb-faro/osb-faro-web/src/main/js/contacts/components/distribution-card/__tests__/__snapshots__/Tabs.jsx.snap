@@ -22,15 +22,15 @@ exports[`DistributionCard Tabs renders 1`] = `
             >
               Tab 1
               <button
-                class="button-root btn btn-unstyled remove-tab btn-sm"
+                class="button-root remove-tab btn btn-sm btn-unstyled"
                 type="button"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-times icon-monospaced icon-size-sm"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-times icon-size-sm"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                    xlink:href="#times"
                   />
                 </svg>
               </button>
@@ -40,15 +40,15 @@ exports[`DistributionCard Tabs renders 1`] = `
       </div>
     </div>
     <button
-      class="button-root btn btn-secondary add-tab btn-monospaced btn-outline-borderless btn-sm"
+      class="button-root add-tab btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
       type="button"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-plus"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-plus icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+          xlink:href="#plus"
         />
       </svg>
     </button>

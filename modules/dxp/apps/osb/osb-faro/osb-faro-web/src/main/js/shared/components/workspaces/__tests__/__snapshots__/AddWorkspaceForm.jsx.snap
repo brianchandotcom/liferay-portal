@@ -415,7 +415,7 @@ exports[`AddWorkspaceForm should render 1`] = `
             </p>
           </div>
           <button
-            class="button-root btn btn-primary btn-block"
+            class="button-root btn btn-block btn-primary"
             disabled=""
             type="submit"
           >

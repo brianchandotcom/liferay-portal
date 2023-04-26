@@ -135,7 +135,7 @@ exports[`Edit should render 1`] = `
                         </span>
                         <button
                           aria-label="Edit"
-                          class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+                          class="button-root btn btn-outline-borderless btn-sm btn-outline-unstyled"
                           type="button"
                         >
                           <svg
@@ -155,7 +155,6 @@ exports[`Edit should render 1`] = `
                   >
                     <div
                       class="btn-group"
-                      role="group"
                     >
                       <div
                         class="btn-group-item"
@@ -203,7 +202,6 @@ exports[`Edit should render 1`] = `
                     </div>
                     <div
                       class="btn-group"
-                      role="group"
                     >
                       <div
                         class="btn-group-item"
@@ -224,8 +222,12 @@ exports[`Edit should render 1`] = `
                             </div>
                           </div>
                         </div>
+                      </div>
+                      <div
+                        class="btn-group-item"
+                      >
                         <button
-                          class="button-root btn btn-secondary preview-criteria btn-outline-borderless btn-sm"
+                          class="button-root preview-criteria btn btn-outline-borderless btn-sm btn-outline-secondary"
                           data-testid="preview-criteria-button"
                           data-tooltip="true"
                           disabled=""
@@ -238,11 +240,11 @@ exports[`Edit should render 1`] = `
                             title="Some of your criteria are incomplete or invalid."
                           >
                             <svg
-                              class="icon-root lexicon-icon lexicon-icon-view"
-                              viewBox=""
+                              class="lexicon-icon lexicon-icon-view icon-root"
+                              role="presentation"
                             >
                               <use
-                                xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+                                xlink:href="#view"
                               />
                             </svg>
                           </span>
@@ -251,13 +253,12 @@ exports[`Edit should render 1`] = `
                     </div>
                     <div
                       class="btn-group"
-                      role="group"
                     >
                       <div
                         class="btn-group-item save"
                       >
                         <button
-                          class="button-root btn btn-primary btn-sm"
+                          class="button-root btn btn-sm btn-primary"
                           disabled=""
                           type="submit"
                         >
@@ -268,7 +269,7 @@ exports[`Edit should render 1`] = `
                         class="btn-group-item cancel"
                       >
                         <a
-                          class="button-root btn btn-secondary btn-sm"
+                          class="button-root btn btn-secondary"
                           href="/workspace/23/contacts/segments"
                         >
                           Cancel
@@ -296,7 +297,7 @@ exports[`Edit should render 1`] = `
                       class="dropdown dropdown-root"
                     >
                       <button
-                        class="button-root btn btn-outline-secondary dropdown-toggle show-caret btn-outline-borderless"
+                        class="button-root dropdown-toggle show-caret btn btn-outline-borderless btn-outline-unstyled"
                         type="button"
                       >
                         <span
@@ -349,11 +350,11 @@ exports[`Edit should render 1`] = `
                                 type="button"
                               >
                                 <svg
-                                  class="icon-root lexicon-icon lexicon-icon-search"
-                                  viewBox=""
+                                  class="lexicon-icon lexicon-icon-search icon-root"
+                                  role="presentation"
                                 >
                                   <use
-                                    xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                                    xlink:href="#search"
                                   />
                                 </svg>
                               </button>

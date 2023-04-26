@@ -40,15 +40,15 @@ exports[`CrossPageSelect should render the selected list when the user presses t
             role="presentation"
           >
             <a
-              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                  xlink:href="#order-arrow-ascending"
                 />
               </svg>
             </a>
@@ -77,11 +77,11 @@ exports[`CrossPageSelect should render the selected list when the user presses t
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -107,7 +107,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
               class="tbar-section text-truncate"
             >
               <button
-                class="btn btn-sm btn-link"
+                class="button-root btn btn-sm btn-unstyled"
                 data-testid="view-selected"
                 type="button"
               >
@@ -134,7 +134,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
             class="table-head-title"
           >
             <a
-              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              class="button-root inline-item text-truncate-inline btn btn-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <span
@@ -196,7 +196,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
         class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span
@@ -230,10 +230,10 @@ exports[`CrossPageSelect should render the selected list when the user presses t
         <li
           class="page-item disabled"
         >
-          <button
-            class="button-root btn btn-unstyled page-link"
+          <a
+            class="button-root page-link btn btn-unstyled"
             disabled=""
-            type="button"
+            href=""
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -243,25 +243,25 @@ exports[`CrossPageSelect should render the selected list when the user presses t
                 xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
               />
             </svg>
-          </button>
+          </a>
         </li>
         <li
           class="page-item active"
         >
-          <button
-            class="button-root btn btn-unstyled page-link"
-            type="button"
+          <a
+            class="button-root page-link btn btn-unstyled"
+            href=""
           >
             1
-          </button>
+          </a>
         </li>
         <li
           class="page-item disabled"
         >
-          <button
-            class="button-root btn btn-unstyled page-link"
+          <a
+            class="button-root page-link btn btn-unstyled"
             disabled=""
-            type="button"
+            href=""
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -271,7 +271,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
                 xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
               />
             </svg>
-          </button>
+          </a>
         </li>
       </ul>
     </div>
@@ -319,15 +319,15 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
             role="presentation"
           >
             <a
-              class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+              class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                  xlink:href="#order-arrow-ascending"
                 />
               </svg>
             </a>
@@ -356,11 +356,11 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -384,7 +384,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
             class="table-head-title"
           >
             <a
-              class="button-root btn btn-unstyled inline-item text-truncate-inline"
+              class="button-root inline-item text-truncate-inline btn btn-unstyled"
               href="/?field=name&page=1&sortOrder=DESC"
             >
               <span
@@ -561,7 +561,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
         class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span
@@ -596,7 +596,9 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
           class="page-item disabled"
         >
           <a
-            class="button-root btn btn-unstyled page-link link-disabled"
+            class="button-root page-link btn btn-unstyled"
+            disabled=""
+            href="/?page=0"
           >
             <svg
               class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -612,7 +614,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
           class="page-item active"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=1"
           >
             1
@@ -622,7 +624,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=2"
           >
             2
@@ -632,7 +634,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=3"
           >
             3
@@ -642,7 +644,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
           class="page-item"
         >
           <a
-            class="button-root btn btn-unstyled page-link"
+            class="button-root page-link btn btn-unstyled"
             href="/?page=2"
           >
             <svg
@@ -664,7 +666,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
 exports[`ViewSelectedToggle should render with the "return to list" message 1`] = `
 <div>
   <button
-    class="btn btn-sm btn-link"
+    class="button-root btn btn-sm btn-unstyled"
     data-testid="view-selected"
     type="button"
   >
@@ -678,7 +680,7 @@ exports[`ViewSelectedToggle should render with the "return to list" message 1`] 
 exports[`ViewSelectedToggle should render with the "view selected" message 1`] = `
 <div>
   <button
-    class="btn btn-sm btn-link"
+    class="button-root btn btn-sm btn-unstyled"
     data-testid="view-selected"
     type="button"
   >

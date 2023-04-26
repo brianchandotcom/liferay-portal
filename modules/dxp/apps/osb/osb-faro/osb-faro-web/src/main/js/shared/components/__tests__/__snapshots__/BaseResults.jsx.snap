@@ -41,11 +41,11 @@ exports[`BaseResults should render 1`] = `
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-search"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-search icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                        xlink:href="#search"
                       />
                     </svg>
                   </button>

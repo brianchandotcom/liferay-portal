@@ -9,7 +9,7 @@ exports[`SummarySection MetricType should render component 1`] = `
       class="analytics-summary-section-metric-type-icon"
     >
       <svg
-        class="lexicon-icon lexicon-icon-web-content"
+        class="lexicon-icon lexicon-icon-web-content icon-root"
         role="presentation"
       >
         <use

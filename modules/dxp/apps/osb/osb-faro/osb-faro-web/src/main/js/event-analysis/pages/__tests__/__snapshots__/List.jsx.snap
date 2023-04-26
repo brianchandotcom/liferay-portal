@@ -114,7 +114,7 @@ exports[`Event Analysis List should render 1`] = `
                     class="dropdown dropdown-root filter-and-order-root nav-item"
                   >
                     <button
-                      class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                      class="button-root dropdown-toggle nav-btn show-caret btn btn-unstyled"
                       data-testid="filter-and-order-button"
                       type="button"
                     >
@@ -143,15 +143,15 @@ exports[`Event Analysis List should render 1`] = `
                     role="presentation"
                   >
                     <a
-                      class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                      class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                       href="/?field=name&page=1&sortOrder=DESC"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                          xlink:href="#order-arrow-ascending"
                         />
                       </svg>
                     </a>
@@ -180,11 +180,11 @@ exports[`Event Analysis List should render 1`] = `
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-search"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-search icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                              xlink:href="#search"
                             />
                           </svg>
                         </button>
@@ -208,7 +208,7 @@ exports[`Event Analysis List should render 1`] = `
                     class="table-head-title table-cell-expand"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=name&page=1&sortOrder=DESC"
                     >
                       <span
@@ -234,7 +234,7 @@ exports[`Event Analysis List should render 1`] = `
                     class="table-head-title"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=createdByUserName&page=1&sortOrder=ASC"
                     >
                       <span
@@ -309,19 +309,18 @@ exports[`Event Analysis List should render 1`] = `
                         class="quick-action-menu"
                       >
                         <button
-                          alt="Delete"
                           aria-label="Delete"
-                          class="button-root btn btn-unstyled component-action quick-action-item"
+                          class="button-root component-action quick-action-item btn btn-unstyled"
                           data-tooltip="true"
                           title="Delete"
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-trash"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-trash icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#trash"
+                              xlink:href="#trash"
                             />
                           </svg>
                         </button>
@@ -390,19 +389,18 @@ exports[`Event Analysis List should render 1`] = `
                         class="quick-action-menu"
                       >
                         <button
-                          alt="Delete"
                           aria-label="Delete"
-                          class="button-root btn btn-unstyled component-action quick-action-item"
+                          class="button-root component-action quick-action-item btn btn-unstyled"
                           data-tooltip="true"
                           title="Delete"
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-trash"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-trash icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#trash"
+                              xlink:href="#trash"
                             />
                           </svg>
                         </button>
@@ -424,7 +422,7 @@ exports[`Event Analysis List should render 1`] = `
                 class="dropdown dropdown-root pagination-items-per-page"
               >
                 <button
-                  class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                  class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
                   type="button"
                 >
                   <span
@@ -459,7 +457,9 @@ exports[`Event Analysis List should render 1`] = `
                   class="page-item disabled"
                 >
                   <a
-                    class="button-root btn btn-unstyled page-link link-disabled"
+                    class="button-root page-link btn btn-unstyled"
+                    disabled=""
+                    href="/?page=0"
                   >
                     <svg
                       class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -475,7 +475,7 @@ exports[`Event Analysis List should render 1`] = `
                   class="page-item active"
                 >
                   <a
-                    class="button-root btn btn-unstyled page-link"
+                    class="button-root page-link btn btn-unstyled"
                     href="/?page=1"
                   >
                     1
@@ -485,7 +485,9 @@ exports[`Event Analysis List should render 1`] = `
                   class="page-item disabled"
                 >
                   <a
-                    class="button-root btn btn-unstyled page-link link-disabled"
+                    class="button-root page-link btn btn-unstyled"
+                    disabled=""
+                    href="/?page=2"
                   >
                     <svg
                       class="icon-root lexicon-icon lexicon-icon-angle-right"

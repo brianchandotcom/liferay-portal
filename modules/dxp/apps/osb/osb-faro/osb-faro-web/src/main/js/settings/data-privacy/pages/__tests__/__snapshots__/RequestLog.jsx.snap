@@ -74,7 +74,7 @@ exports[`RequestLog should render 1`] = `
                   class="dropdown dropdown-root filter-and-order-root nav-item"
                 >
                   <button
-                    class="button-root btn btn-unstyled dropdown-toggle nav-btn show-caret"
+                    class="button-root dropdown-toggle nav-btn show-caret btn btn-unstyled"
                     data-testid="filter-and-order-button"
                     type="button"
                   >
@@ -103,15 +103,15 @@ exports[`RequestLog should render 1`] = `
                   role="presentation"
                 >
                   <a
-                    class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                    class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                     href="/?field=createDate&page=1&sortOrder=ASC"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-order-arrow-descending"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-order-arrow-descending icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-descending"
+                        xlink:href="#order-arrow-descending"
                       />
                     </svg>
                   </a>
@@ -140,11 +140,11 @@ exports[`RequestLog should render 1`] = `
                         type="button"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-search"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-search icon-root"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                            xlink:href="#search"
                           />
                         </svg>
                       </button>
@@ -161,7 +161,7 @@ exports[`RequestLog should render 1`] = `
                   role="presentation"
                 >
                   <button
-                    class="button-root btn btn-primary nav-btn"
+                    class="button-root nav-btn btn btn-primary"
                     type="button"
                   >
                     Create Request

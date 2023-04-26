@@ -19,7 +19,7 @@ exports[`SearchableTableModal should render 1`] = `
           Select Items
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg
@@ -78,15 +78,15 @@ exports[`SearchableTableModal should render 1`] = `
                 role="presentation"
               >
                 <button
-                  class="button-root btn btn-unstyled nav-link nav-link-monospaced btn-outline-borderless"
+                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-order-arrow-ascending"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-order-arrow-ascending icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-ascending"
+                      xlink:href="#order-arrow-ascending"
                     />
                   </svg>
                 </button>
@@ -115,11 +115,11 @@ exports[`SearchableTableModal should render 1`] = `
                       type="button"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-search"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-search icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                          xlink:href="#search"
                         />
                       </svg>
                     </button>

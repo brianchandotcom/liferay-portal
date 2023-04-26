@@ -9,7 +9,9 @@ exports[`Pagination should render 1`] = `
       class="page-item disabled"
     >
       <a
-        class="button-root btn btn-unstyled page-link link-disabled"
+        class="button-root page-link btn btn-unstyled"
+        disabled=""
+        href="/?page=0"
       >
         <svg
           class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -25,7 +27,7 @@ exports[`Pagination should render 1`] = `
       class="page-item active"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=1"
       >
         1
@@ -35,7 +37,9 @@ exports[`Pagination should render 1`] = `
       class="page-item disabled"
     >
       <a
-        class="button-root btn btn-unstyled page-link link-disabled"
+        class="button-root page-link btn btn-unstyled"
+        disabled=""
+        href="/?page=2"
       >
         <svg
           class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -60,7 +64,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=49"
       >
         <svg
@@ -77,7 +81,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=1"
       >
         1
@@ -91,7 +95,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-link dropdown-toggle page-link"
+          class="button-root dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
           <span
@@ -107,7 +111,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=48"
       >
         48
@@ -117,7 +121,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=49"
       >
         49
@@ -127,7 +131,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item active"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=50"
       >
         50
@@ -137,7 +141,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=51"
       >
         51
@@ -147,7 +151,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=52"
       >
         52
@@ -161,7 +165,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-link dropdown-toggle page-link"
+          class="button-root dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
           <span
@@ -177,7 +181,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=100"
       >
         100
@@ -187,7 +191,7 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=51"
       >
         <svg
@@ -213,7 +217,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=99"
       >
         <svg
@@ -230,7 +234,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=1"
       >
         1
@@ -244,7 +248,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-link dropdown-toggle page-link"
+          class="button-root dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
           <span
@@ -260,7 +264,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=98"
       >
         98
@@ -270,7 +274,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=99"
       >
         99
@@ -280,7 +284,7 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
       class="page-item active"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=100"
       >
         100
@@ -290,7 +294,9 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
       class="page-item disabled"
     >
       <a
-        class="button-root btn btn-unstyled page-link link-disabled"
+        class="button-root page-link btn btn-unstyled"
+        disabled=""
+        href="/?page=101"
       >
         <svg
           class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -315,7 +321,9 @@ exports[`Pagination should render with a lot of pages 1`] = `
       class="page-item disabled"
     >
       <a
-        class="button-root btn btn-unstyled page-link link-disabled"
+        class="button-root page-link btn btn-unstyled"
+        disabled=""
+        href="/?page=0"
       >
         <svg
           class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -331,7 +339,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
       class="page-item active"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=1"
       >
         1
@@ -341,7 +349,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=2"
       >
         2
@@ -351,7 +359,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=3"
       >
         3
@@ -365,7 +373,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-link dropdown-toggle page-link"
+          class="button-root dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
           <span
@@ -381,7 +389,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=100"
       >
         100
@@ -391,7 +399,7 @@ exports[`Pagination should render with a lot of pages 1`] = `
       class="page-item"
     >
       <a
-        class="button-root btn btn-unstyled page-link"
+        class="button-root page-link btn btn-unstyled"
         href="/?page=2"
       >
         <svg
@@ -416,10 +424,10 @@ exports[`Pagination should render with buttons if passed an onChange handler 1`]
     <li
       class="page-item disabled"
     >
-      <button
-        class="button-root btn btn-unstyled page-link"
+      <a
+        class="button-root page-link btn btn-unstyled"
         disabled=""
-        type="button"
+        href=""
       >
         <svg
           class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -429,25 +437,25 @@ exports[`Pagination should render with buttons if passed an onChange handler 1`]
             xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
           />
         </svg>
-      </button>
+      </a>
     </li>
     <li
       class="page-item active"
     >
-      <button
-        class="button-root btn btn-unstyled page-link"
-        type="button"
+      <a
+        class="button-root page-link btn btn-unstyled"
+        href=""
       >
         1
-      </button>
+      </a>
     </li>
     <li
       class="page-item disabled"
     >
-      <button
-        class="button-root btn btn-unstyled page-link"
+      <a
+        class="button-root page-link btn btn-unstyled"
         disabled=""
-        type="button"
+        href=""
       >
         <svg
           class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -457,7 +465,7 @@ exports[`Pagination should render with buttons if passed an onChange handler 1`]
             xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
           />
         </svg>
-      </button>
+      </a>
     </li>
   </ul>
 </div>

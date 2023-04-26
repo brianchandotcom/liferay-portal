@@ -10,7 +10,7 @@ exports[`FilterAndOrder should render 1`] = `
       class="dropdown dropdown-root filter-and-order-root"
     >
       <button
-        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        class="button-root dropdown-toggle show-caret btn btn-unstyled"
         data-testid="filter-and-order-button"
         type="button"
       >
@@ -48,7 +48,7 @@ exports[`FilterAndOrder should render filters as a flat list 1`] = `
       class="dropdown dropdown-root filter-and-order-root"
     >
       <button
-        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        class="button-root dropdown-toggle show-caret btn btn-unstyled"
         data-testid="filter-and-order-button"
         type="button"
       >
@@ -151,7 +151,7 @@ exports[`FilterAndOrder should render with filter by options 1`] = `
       class="dropdown dropdown-root filter-and-order-root"
     >
       <button
-        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        class="button-root dropdown-toggle show-caret btn btn-unstyled"
         data-testid="filter-and-order-button"
         type="button"
       >
@@ -196,7 +196,7 @@ exports[`FilterAndOrder should render with filter by options 1`] = `
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-unstyled dropdown-item text-truncate dropdown-toggle show-caret"
+          class="dropdown-item text-truncate button-root dropdown-toggle show-caret btn btn-unstyled"
           type="button"
         >
           <span
@@ -234,7 +234,7 @@ exports[`FilterAndOrder should render with order by options 1`] = `
       class="dropdown dropdown-root filter-and-order-root"
     >
       <button
-        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        class="button-root dropdown-toggle show-caret btn btn-unstyled"
         data-testid="filter-and-order-button"
         type="button"
       >
@@ -313,7 +313,7 @@ exports[`FilterAndOrder should render with order by options and filter by option
       class="dropdown dropdown-root filter-and-order-root"
     >
       <button
-        class="button-root btn btn-unstyled dropdown-toggle show-caret"
+        class="button-root dropdown-toggle show-caret btn btn-unstyled"
         data-testid="filter-and-order-button"
         type="button"
       >
@@ -358,7 +358,7 @@ exports[`FilterAndOrder should render with order by options and filter by option
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-unstyled dropdown-item text-truncate dropdown-toggle show-caret"
+          class="dropdown-item text-truncate button-root dropdown-toggle show-caret btn btn-unstyled"
           type="button"
         >
           <span

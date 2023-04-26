@@ -9,7 +9,7 @@ exports[`ChannelsMenu should render the first item as label 1`] = `
       class="channels-menu-icon"
     >
       <svg
-        class="lexicon-icon lexicon-icon-sites"
+        class="lexicon-icon lexicon-icon-sites icon-root"
         role="presentation"
       >
         <use
@@ -26,7 +26,7 @@ exports[`ChannelsMenu should render the first item as label 1`] = `
       class="channels-menu-caret"
     >
       <svg
-        class="lexicon-icon lexicon-icon-caret-right"
+        class="lexicon-icon lexicon-icon-caret-right icon-root"
         role="presentation"
       >
         <use

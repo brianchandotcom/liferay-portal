@@ -232,7 +232,7 @@ exports[`Recommendations should render 1`] = `
                   class="form-navigation-root"
                 >
                   <a
-                    class="button-root btn btn-secondary cancel"
+                    class="button-root cancel btn btn-secondary"
                     href="/workspace/23/settings/recommendations"
                   >
                     Cancel

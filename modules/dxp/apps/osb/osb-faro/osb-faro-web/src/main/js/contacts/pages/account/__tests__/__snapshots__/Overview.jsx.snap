@@ -79,22 +79,18 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root c-link link-secondary text-decoration-underline"
             href="/workspace/23/contacts/accounts/1/activities"
           >
             View All Activities
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -149,22 +145,18 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root link-unstyled"
             href="/workspace/23/contacts/accounts/test/interests"
           >
             View All Interests
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -204,11 +196,11 @@ exports[`AccountOverview should render 1`] = `
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>
@@ -269,22 +261,18 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root c-link link-secondary text-decoration-underline"
             href="/workspace/23/contacts/accounts/test/segments"
           >
             View All Segments
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>
@@ -540,22 +528,18 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root btn btn-link btn-sm"
+            class="button-root c-link link-secondary text-decoration-underline"
             href="/workspace/23/contacts/accounts/test/individuals"
           >
             View All Individuals
-            <span
-              class="inline-item inline-item-after"
+            <svg
+              class="lexicon-icon lexicon-icon-angle-right ml-2"
+              role="presentation"
             >
-              <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
-              >
-                <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-                />
-              </svg>
-            </span>
+              <use
+                xlink:href="#angle-right"
+              />
+            </svg>
           </a>
         </div>
       </div>

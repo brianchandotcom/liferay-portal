@@ -19,7 +19,7 @@ exports[`RoleRenderer should render as being edited 1`] = `
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
           type="button"
         >
           <span

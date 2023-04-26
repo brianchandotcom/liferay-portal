@@ -9,18 +9,18 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
       class="children-wrapper"
     >
       <div
-        class="back-button-root"
+        class="back-button-root mb-2"
       >
         <a
-          class="button-root btn btn-outline-secondary btn-outline-borderless"
+          class="btn btn-outline-borderless btn-outline-secondary"
           href="/workspace/23/321321/contacts/individuals/interests?rangeKey=30"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-angle-left inline-item inline-item-before icon-size-sm"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-angle-left icon-root mr-2"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+              xlink:href="#angle-left"
             />
           </svg>
           Back to Interests
@@ -82,11 +82,11 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-search"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-search icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                              xlink:href="#search"
                             />
                           </svg>
                         </button>
@@ -98,12 +98,12 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                   class="dropdown dropdown-range-key-root"
                 >
                   <button
-                    class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                    class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
                     type="button"
                   >
                     Last 30 days
                     <svg
-                      class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                      class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
                       role="presentation"
                     >
                       <use
@@ -132,7 +132,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                     class="table-head-title table-column-text-end"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=visitorsMetric&page=1&sortOrder=ASC"
                     >
                       <span
@@ -158,7 +158,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                     class="table-head-title table-column-text-end"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=viewsMetric&page=1&sortOrder=DESC"
                     >
                       <span
@@ -172,7 +172,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                     class="table-head-title table-column-text-end"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=avgTimeOnPageMetric&page=1&sortOrder=DESC"
                     >
                       <span
@@ -186,7 +186,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                     class="table-head-title table-column-text-end"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=bounceRateMetric&page=1&sortOrder=DESC"
                     >
                       <span
@@ -200,7 +200,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                     class="table-head-title table-column-text-end"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=entrancesMetric&page=1&sortOrder=DESC"
                     >
                       <span
@@ -214,7 +214,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                     class="table-head-title table-column-text-end"
                   >
                     <a
-                      class="button-root btn btn-unstyled inline-item text-truncate-inline"
+                      class="button-root inline-item text-truncate-inline btn btn-unstyled"
                       href="/?field=exitRateMetric&page=1&sortOrder=DESC"
                     >
                       <span
@@ -308,7 +308,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                 class="dropdown dropdown-root pagination-items-per-page"
               >
                 <button
-                  class="button-root btn btn-secondary dropdown-toggle show-caret btn-sm"
+                  class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
                   type="button"
                 >
                   <span
@@ -343,7 +343,9 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                   class="page-item disabled"
                 >
                   <a
-                    class="button-root btn btn-unstyled page-link link-disabled"
+                    class="button-root page-link btn btn-unstyled"
+                    disabled=""
+                    href="/?page=0"
                   >
                     <svg
                       class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -359,7 +361,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                   class="page-item active"
                 >
                   <a
-                    class="button-root btn btn-unstyled page-link"
+                    class="button-root page-link btn btn-unstyled"
                     href="/?page=1"
                   >
                     1
@@ -369,7 +371,9 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                   class="page-item disabled"
                 >
                   <a
-                    class="button-root btn btn-unstyled page-link link-disabled"
+                    class="button-root page-link btn btn-unstyled"
+                    disabled=""
+                    href="/?page=2"
                   >
                     <svg
                       class="icon-root lexicon-icon lexicon-icon-angle-right"

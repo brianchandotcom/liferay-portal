@@ -10,7 +10,7 @@ exports[`DeleteDataSource should render 1`] = `
         class="entity-item"
       >
         <button
-          class="button-root btn btn-unstyled title"
+          class="button-root title btn btn-unstyled"
           type="button"
         >
           <h5>
@@ -27,7 +27,7 @@ exports[`DeleteDataSource should render 1`] = `
         class="entity-item"
       >
         <button
-          class="button-root btn btn-unstyled title"
+          class="button-root title btn btn-unstyled"
           type="button"
         >
           <h5>
@@ -80,7 +80,7 @@ exports[`DeleteDataSource should render 1`] = `
         class="sheet-footer"
       >
         <button
-          class="button-root btn btn-warning delete-button"
+          class="button-root delete-button btn btn-warning"
           disabled=""
           type="submit"
         >

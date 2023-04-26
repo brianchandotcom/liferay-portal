@@ -76,18 +76,18 @@ exports[`AddDataSource should render 1`] = `
             class="section-items"
           >
             <button
-              class="button-root btn btn-unstyled data-source-item"
+              class="button-root data-source-item btn btn-unstyled"
               type="button"
             >
               <div
                 class="image"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-liferay-logo icon-size-xxxl"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-liferay-logo icon-root icon-size-xxxl"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+                    xlink:href="#liferay-logo"
                   />
                 </svg>
               </div>

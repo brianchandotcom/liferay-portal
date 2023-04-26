@@ -13,7 +13,7 @@ exports[`DataTransformationList should hide mapped fields if hide mapped fields 
         class="dropdown dropdown-root searchable-select-root"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret"
+          class="button-root dropdown-toggle show-caret btn btn-unstyled"
           type="button"
         >
           <span
@@ -64,7 +64,7 @@ exports[`DataTransformationList should hide mapped fields if hide mapped fields 
         name="undefined.1"
       >
         <button
-          class="button-root btn btn-secondary dropdown-toggle show-caret"
+          class="button-root dropdown-toggle show-caret btn btn-unstyled"
           type="button"
         >
           <span
@@ -118,11 +118,11 @@ exports[`DataTransformationList should hide mapped fields if hide mapped fields 
       type="button"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-times-circle"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-times-circle icon-root"
+        role="presentation"
       >
         <use
-          href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+          href="#times-circle"
         />
       </svg>
     </button>

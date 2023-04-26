@@ -26,15 +26,15 @@ exports[`Event Analysis Editor render 1`] = `
             class="dropdown"
           >
             <button
-              class="button-root btn btn-primary dropdown-toggle add-event-button btn-sm"
+              class="dropdown-toggle button-root add-event-button btn btn-sm btn-primary"
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-plus"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-plus icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                  xlink:href="#plus"
                 />
               </svg>
             </button>

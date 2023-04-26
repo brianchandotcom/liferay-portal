@@ -13,7 +13,7 @@ exports[`CriteriaSidebar should render 1`] = `
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root btn btn-outline-secondary dropdown-toggle show-caret btn-outline-borderless"
+          class="button-root dropdown-toggle show-caret btn btn-outline-borderless btn-outline-unstyled"
           type="button"
         >
           <span
@@ -66,11 +66,11 @@ exports[`CriteriaSidebar should render 1`] = `
                   type="button"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-search"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-search icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                      xlink:href="#search"
                     />
                   </svg>
                 </button>

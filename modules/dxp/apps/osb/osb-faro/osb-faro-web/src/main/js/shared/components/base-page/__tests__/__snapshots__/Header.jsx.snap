@@ -180,7 +180,7 @@ exports[`BasePage.Header renders Header w/ Breadcrumbs 1`] = `
             class="breadcrumb-item"
           >
             <button
-              class="button-root btn btn-unstyled breadcrumb-text-truncate"
+              class="breadcrumb-text-truncate btn btn-unstyled"
               type="button"
             >
               Foo

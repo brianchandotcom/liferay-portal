@@ -9,21 +9,17 @@ exports[`FilterOptions should render 1`] = `
       class="options-header"
     >
       <button
-        class="button-root btn btn-unstyled back-to-attributes-button btn-sm"
+        class="button-root back-to-attributes-button btn btn-sm btn-unstyled"
         type="button"
       >
-        <span
-          class="inline-item inline-item-before"
+        <svg
+          class="lexicon-icon lexicon-icon-angle-left icon-root mr-2"
+          role="presentation"
         >
-          <svg
-            class="icon-root lexicon-icon lexicon-icon-angle-left"
-            viewBox=""
-          >
-            <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
-            />
-          </svg>
-        </span>
+          <use
+            xlink:href="#angle-left"
+          />
+        </svg>
         Back To Attributes
       </button>
       <div
@@ -34,15 +30,15 @@ exports[`FilterOptions should render 1`] = `
         >
           Filed Ticket
           <button
-            class="button-root btn btn-secondary btn-outline-borderless btn-sm"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-pencil"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-pencil icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                xlink:href="#pencil"
               />
             </svg>
           </button>
@@ -113,7 +109,7 @@ exports[`FilterOptions should render 1`] = `
         class="options-footer"
       >
         <button
-          class="button-root btn btn-primary btn-block"
+          class="button-root btn btn-block btn-primary"
           type="submit"
         >
           Done

@@ -215,10 +215,10 @@ exports[`OutputVersionsCard should render 1`] = `
             <li
               class="page-item disabled"
             >
-              <button
-                class="button-root btn btn-unstyled page-link"
+              <a
+                class="button-root page-link btn btn-unstyled"
                 disabled=""
-                type="button"
+                href=""
               >
                 <svg
                   class="icon-root lexicon-icon lexicon-icon-angle-left"
@@ -228,25 +228,25 @@ exports[`OutputVersionsCard should render 1`] = `
                     xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
                   />
                 </svg>
-              </button>
+              </a>
             </li>
             <li
               class="page-item active"
             >
-              <button
-                class="button-root btn btn-unstyled page-link"
-                type="button"
+              <a
+                class="button-root page-link btn btn-unstyled"
+                href=""
               >
                 1
-              </button>
+              </a>
             </li>
             <li
               class="page-item disabled"
             >
-              <button
-                class="button-root btn btn-unstyled page-link"
+              <a
+                class="button-root page-link btn btn-unstyled"
                 disabled=""
-                type="button"
+                href=""
               >
                 <svg
                   class="icon-root lexicon-icon lexicon-icon-angle-right"
@@ -256,7 +256,7 @@ exports[`OutputVersionsCard should render 1`] = `
                     xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
                   />
                 </svg>
-              </button>
+              </a>
             </li>
           </ul>
         </div>

@@ -91,7 +91,7 @@ exports[`Event Analysis Edit should render 1`] = `
                   </span>
                   <button
                     aria-label="Edit"
-                    class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+                    class="button-root btn btn-outline-borderless btn-sm btn-outline-unstyled"
                     type="button"
                   >
                     <svg
@@ -109,32 +109,19 @@ exports[`Event Analysis Edit should render 1`] = `
             <div
               class="event-analysis-toolbar-right-content"
             >
-              <div
-                class="btn-group"
-                role="group"
+              <button
+                class="button-root mr-2 btn btn-sm btn-primary"
+                disabled=""
+                type="submit"
               >
-                <div
-                  class="btn-group-item"
-                >
-                  <button
-                    class="button-root btn btn-primary btn-sm"
-                    disabled=""
-                    type="submit"
-                  >
-                    Save Analysis
-                  </button>
-                </div>
-                <div
-                  class="btn-group-item"
-                >
-                  <a
-                    class="button-root btn btn-secondary btn-sm"
-                    href="/workspace/456/123/event-analysis"
-                  >
-                    Cancel
-                  </a>
-                </div>
-              </div>
+                Save Analysis
+              </button>
+              <a
+                class="button-root btn btn-sm btn-secondary"
+                href="/workspace/456/123/event-analysis"
+              >
+                Cancel
+              </a>
             </div>
           </div>
         </div>
@@ -173,21 +160,21 @@ exports[`Event Analysis Edit should render 1`] = `
                       class="chip-root d-flex align-items-center justify-content-between event-chip-root"
                     >
                       <button
-                        class="button-root btn btn-unstyled event-name"
+                        class="button-root event-name btn btn-unstyled"
                         type="button"
                       >
                         assetClicked
                       </button>
                       <button
-                        class="button-root btn btn-unstyled remove-button"
+                        class="button-root remove-button btn btn-unstyled"
                         type="button"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-times-circle"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-times-circle icon-root"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                            xlink:href="#times-circle"
                           />
                         </svg>
                       </button>
@@ -233,18 +220,18 @@ exports[`Event Analysis Edit should render 1`] = `
                           </svg>
                         </div>
                         <button
-                          class="button-root btn btn-unstyled edit-attribute-button d-flex"
+                          class="button-root edit-attribute-button d-flex btn btn-unstyled"
                           type="button"
                         >
                           <div
                             class="sticker"
                           >
                             <svg
-                              class="icon-root lexicon-icon lexicon-icon-text"
-                              viewBox=""
+                              class="lexicon-icon lexicon-icon-text icon-root"
+                              role="presentation"
                             >
                               <use
-                                xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                                xlink:href="#text"
                               />
                             </svg>
                           </div>
@@ -262,15 +249,15 @@ exports[`Event Analysis Edit should render 1`] = `
                           </div>
                         </button>
                         <button
-                          class="button-root btn btn-unstyled remove-button"
+                          class="button-root remove-button btn btn-unstyled"
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-times-circle"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-times-circle icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                              xlink:href="#times-circle"
                             />
                           </svg>
                         </button>
@@ -300,18 +287,18 @@ exports[`Event Analysis Edit should render 1`] = `
                           </svg>
                         </div>
                         <button
-                          class="button-root btn btn-unstyled edit-attribute-button d-flex"
+                          class="button-root edit-attribute-button d-flex btn btn-unstyled"
                           type="button"
                         >
                           <div
                             class="sticker"
                           >
                             <svg
-                              class="icon-root lexicon-icon lexicon-icon-text"
-                              viewBox=""
+                              class="lexicon-icon lexicon-icon-text icon-root"
+                              role="presentation"
                             >
                               <use
-                                xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                                xlink:href="#text"
                               />
                             </svg>
                           </div>
@@ -329,15 +316,15 @@ exports[`Event Analysis Edit should render 1`] = `
                           </div>
                         </button>
                         <button
-                          class="button-root btn btn-unstyled remove-button"
+                          class="button-root remove-button btn btn-unstyled"
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-times-circle"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-times-circle icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                              xlink:href="#times-circle"
                             />
                           </svg>
                         </button>
@@ -349,15 +336,15 @@ exports[`Event Analysis Edit should render 1`] = `
                   class="dropdown"
                 >
                   <button
-                    class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+                    class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-plus"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-plus icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                        xlink:href="#plus"
                       />
                     </svg>
                   </button>
@@ -388,18 +375,18 @@ exports[`Event Analysis Edit should render 1`] = `
                         class="chip-root d-flex align-items-center justify-content-between attribute-chip-root"
                       >
                         <button
-                          class="button-root btn btn-unstyled edit-attribute-button d-flex"
+                          class="button-root edit-attribute-button d-flex btn btn-unstyled"
                           type="button"
                         >
                           <div
                             class="sticker"
                           >
                             <svg
-                              class="icon-root lexicon-icon lexicon-icon-text"
-                              viewBox=""
+                              class="lexicon-icon lexicon-icon-text icon-root"
+                              role="presentation"
                             >
                               <use
-                                xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                                xlink:href="#text"
                               />
                             </svg>
                           </div>
@@ -417,15 +404,15 @@ exports[`Event Analysis Edit should render 1`] = `
                           </div>
                         </button>
                         <button
-                          class="button-root btn btn-unstyled remove-button"
+                          class="button-root remove-button btn btn-unstyled"
                           type="button"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-times-circle"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-times-circle icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                              xlink:href="#times-circle"
                             />
                           </svg>
                         </button>
@@ -437,15 +424,15 @@ exports[`Event Analysis Edit should render 1`] = `
                   class="dropdown"
                 >
                   <button
-                    class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+                    class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-plus"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-plus icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                        xlink:href="#plus"
                       />
                     </svg>
                   </button>
@@ -536,12 +523,12 @@ exports[`Event Analysis Edit should render 1`] = `
                 class="dropdown dropdown-range-key-root"
               >
                 <button
-                  class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                  class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
                   type="button"
                 >
                   Last 90 days
                   <svg
-                    class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                    class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
                     role="presentation"
                   >
                     <use

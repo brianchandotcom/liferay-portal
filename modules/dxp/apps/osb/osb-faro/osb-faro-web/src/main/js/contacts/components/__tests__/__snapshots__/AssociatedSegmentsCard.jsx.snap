@@ -38,11 +38,11 @@ exports[`AssociatedSegmentsCard should render 1`] = `
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-search"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-search icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                  xlink:href="#search"
                 />
               </svg>
             </button>
@@ -144,22 +144,18 @@ exports[`AssociatedSegmentsCard should render 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root btn btn-link btn-sm"
+        class="button-root c-link link-secondary text-decoration-underline"
         href="/foo"
       >
         View All Segments
-        <span
-          class="inline-item inline-item-after"
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          role="presentation"
         >
-          <svg
-            class="icon-root lexicon-icon lexicon-icon-angle-right"
-            viewBox=""
-          >
-            <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-            />
-          </svg>
-        </span>
+          <use
+            xlink:href="#angle-right"
+          />
+        </svg>
       </a>
     </div>
   </div>
@@ -204,11 +200,11 @@ exports[`AssociatedSegmentsCard should render with an no results display 1`] = `
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-search"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-search icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#search"
+                  xlink:href="#search"
                 />
               </svg>
             </button>
@@ -233,22 +229,18 @@ exports[`AssociatedSegmentsCard should render with an no results display 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root btn btn-link btn-sm"
+        class="button-root c-link link-secondary text-decoration-underline"
         href="/foo"
       >
         View All Segments
-        <span
-          class="inline-item inline-item-after"
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          role="presentation"
         >
-          <svg
-            class="icon-root lexicon-icon lexicon-icon-angle-right"
-            viewBox=""
-          >
-            <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
-            />
-          </svg>
-        </span>
+          <use
+            xlink:href="#angle-right"
+          />
+        </svg>
       </a>
     </div>
   </div>

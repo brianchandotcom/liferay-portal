@@ -9,7 +9,7 @@ exports[`SummarySection Variant should render component 1`] = `
       class="analytics-summary-section-variant-status analytics-summary-section-variant-status-up"
     >
       <svg
-        class="lexicon-icon lexicon-icon-caret-top"
+        class="lexicon-icon lexicon-icon-caret-top icon-root"
         role="presentation"
       >
         <use

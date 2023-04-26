@@ -16,7 +16,7 @@ exports[`Input should render input button 1`] = `
     class="input-group-item input-group-item-shrink input-group-append"
   >
     <button
-      class="button-root btn btn-secondary"
+      class="btn btn-secondary"
       type="button"
     />
   </div>

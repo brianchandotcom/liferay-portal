@@ -35,16 +35,16 @@ exports[`InterestsCard should render 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root btn btn-link btn-sm"
+        class="button-root"
         href="/workspace/23/contacts/individuals/known-individuals/15/interests"
       >
         View All Interests
         <svg
-          class="icon-root lexicon-icon lexicon-icon-angle-right"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+            xlink:href="#angle-right"
           />
         </svg>
       </a>

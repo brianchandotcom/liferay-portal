@@ -23,15 +23,15 @@ exports[`Event Analysis Builder render 1`] = `
           class="dropdown"
         >
           <button
-            class="button-root btn btn-primary dropdown-toggle add-event-button btn-sm"
+            class="dropdown-toggle button-root add-event-button btn btn-sm btn-primary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-plus"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-plus icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                xlink:href="#plus"
               />
             </svg>
           </button>
@@ -86,21 +86,21 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
               class="chip-root d-flex align-items-center justify-content-between event-chip-root"
             >
               <button
-                class="button-root btn btn-unstyled event-name"
+                class="button-root event-name btn btn-unstyled"
                 type="button"
               >
                 Article Views
               </button>
               <button
-                class="button-root btn btn-unstyled remove-button"
+                class="button-root remove-button btn btn-unstyled"
                 type="button"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-times-circle"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-times-circle icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                    xlink:href="#times-circle"
                   />
                 </svg>
               </button>
@@ -127,15 +127,15 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
           class="dropdown"
         >
           <button
-            class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+            class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-plus"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-plus icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                xlink:href="#plus"
               />
             </svg>
           </button>
@@ -160,15 +160,15 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
           class="dropdown"
         >
           <button
-            class="button-root btn btn-light dropdown-toggle add-attribute btn-outline-borderless btn-sm"
+            class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-plus"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-plus icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                xlink:href="#plus"
               />
             </svg>
           </button>

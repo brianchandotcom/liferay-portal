@@ -19,7 +19,7 @@ exports[`CSVPreviewModal should render 1`] = `
           Data Preview ""
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg

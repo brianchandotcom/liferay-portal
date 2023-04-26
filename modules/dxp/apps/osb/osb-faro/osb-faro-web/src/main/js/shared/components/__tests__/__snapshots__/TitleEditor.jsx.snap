@@ -21,7 +21,7 @@ exports[`TitleEditor should render 1`] = `
       />
       <button
         aria-label="Edit"
-        class="button-root btn btn-outline-unstyled btn-outline-borderless btn-sm"
+        class="button-root btn btn-outline-borderless btn-sm btn-outline-unstyled"
         type="button"
       >
         <svg

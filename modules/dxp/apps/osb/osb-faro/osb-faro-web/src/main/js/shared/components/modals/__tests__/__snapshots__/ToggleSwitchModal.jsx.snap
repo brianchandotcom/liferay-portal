@@ -19,7 +19,7 @@ exports[`ToggleSwitchModal should render 1`] = `
           Toggle some options!
         </h4>
         <button
-          class="button-root btn btn-secondary close"
+          class="button-root close btn btn-secondary"
           type="button"
         >
           <svg

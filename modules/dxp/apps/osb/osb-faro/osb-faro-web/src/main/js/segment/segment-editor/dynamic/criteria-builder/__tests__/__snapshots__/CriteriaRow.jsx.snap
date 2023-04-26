@@ -209,7 +209,7 @@ exports[`CriteriaRow should render 1`] = `
           class="dropdown dropdown-root dropdown-action"
         >
           <button
-            class="button-root btn btn-unstyled dropdown-toggle component-action"
+            class="button-root dropdown-toggle component-action btn btn-unstyled"
             type="button"
           >
             <span>

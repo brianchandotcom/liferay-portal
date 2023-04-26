@@ -10,15 +10,15 @@ exports[`HelpWidget should render 1`] = `
     >
       <button
         aria-label="Help"
-        class="button-root btn btn-defaut dropdown-toggle help-button btn-outline-borderless btn-sm"
+        class="dropdown-toggle button-root help-button btn btn-outline-borderless btn-sm btn-outline-info"
         type="button"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-ac-question-mark"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-ac-question-mark icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-question-mark"
+            xlink:href="#ac-question-mark"
           />
         </svg>
       </button>

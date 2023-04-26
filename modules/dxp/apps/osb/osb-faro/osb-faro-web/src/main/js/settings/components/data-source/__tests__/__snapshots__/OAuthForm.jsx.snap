@@ -173,7 +173,7 @@ exports[`OAuthForm should render 1`] = `
       class="sheet-footer form-actions divider"
     >
       <button
-        class="button-root btn btn-primary submit"
+        class="button-root submit btn btn-primary"
         disabled=""
         type="submit"
       >

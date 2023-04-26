@@ -59,7 +59,7 @@ exports[`CSV should render 1`] = `
                   </span>
                   <button
                     aria-label="Edit"
-                    class="button-root btn btn-secondary btn-sm"
+                    class="button-root btn btn-sm btn-secondary"
                     type="button"
                   >
                     <svg
@@ -84,7 +84,7 @@ exports[`CSV should render 1`] = `
                 Edit CSV
               </a>
               <a
-                class="button-root btn btn-secondary"
+                class="button-root btn btn-primary"
                 href="/workspace/23/settings/data-source/test/delete"
               >
                 Delete Data Source
@@ -104,7 +104,8 @@ exports[`CSV should render 1`] = `
               </div>
             </div>
             <button
-              class="button-root btn btn-secondary toggle-preview btn-sm"
+              class="button-root toggle-preview btn btn-sm btn-primary"
+              display="secondary"
               type="button"
             >
               View File Preview

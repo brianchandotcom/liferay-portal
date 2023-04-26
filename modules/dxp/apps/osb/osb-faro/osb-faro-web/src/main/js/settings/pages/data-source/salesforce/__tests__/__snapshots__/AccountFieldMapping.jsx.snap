@@ -127,7 +127,7 @@ exports[`AccountFieldMapping should render 1`] = `
                       class="dropdown dropdown-root searchable-select-root read-only"
                     >
                       <button
-                        class="button-root btn btn-secondary dropdown-toggle show-caret"
+                        class="button-root dropdown-toggle show-caret btn btn-unstyled"
                         type="button"
                       >
                         <span
@@ -169,7 +169,7 @@ exports[`AccountFieldMapping should render 1`] = `
                       name="undefined.0"
                     >
                       <button
-                        class="button-root btn btn-secondary dropdown-toggle show-caret"
+                        class="button-root dropdown-toggle show-caret btn btn-unstyled"
                         type="button"
                       >
                         <span

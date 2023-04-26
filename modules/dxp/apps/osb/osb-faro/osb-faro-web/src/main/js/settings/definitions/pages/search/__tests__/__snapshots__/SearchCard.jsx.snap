@@ -51,28 +51,28 @@ exports[`SearchCard should render 1`] = `
             />
           </div>
           <button
-            class="button-root btn btn-secondary ml-1 btn-outline-borderless"
+            class="button-root ml-1 btn btn-outline-borderless btn-outline-secondary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-trash"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-trash icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#trash"
+                xlink:href="#trash"
               />
             </svg>
           </button>
           <button
-            class="button-root btn btn-secondary ml-1 btn-outline-borderless"
+            class="button-root ml-1 btn btn-outline-borderless btn-outline-secondary"
             type="button"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-plus"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-plus icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#plus"
+                xlink:href="#plus"
               />
             </svg>
           </button>
@@ -88,7 +88,7 @@ exports[`SearchCard should render 1`] = `
             Save
           </button>
           <button
-            class="button-root btn btn-secondary ml-4"
+            class="button-root ml-4 btn btn-secondary"
             type="button"
           >
             Cancel

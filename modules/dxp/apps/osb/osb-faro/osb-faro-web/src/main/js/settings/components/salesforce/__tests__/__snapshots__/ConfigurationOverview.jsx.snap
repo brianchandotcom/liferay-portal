@@ -17,7 +17,8 @@ exports[`SalesforceConfigurationOverview should render 1`] = `
         class="actions"
       >
         <a
-          class="button-root btn btn-secondary btn-block"
+          class="button-root btn btn-block btn-secondary"
+          display="secondary"
           href="/workspace/23/settings/data-source/test/salesforce/field-mapping/accounts"
         >
           View
@@ -52,7 +53,8 @@ exports[`SalesforceConfigurationOverview should render 1`] = `
         class="actions"
       >
         <a
-          class="button-root btn btn-secondary btn-block"
+          class="button-root btn btn-block btn-secondary"
+          display="secondary"
           href="/workspace/23/settings/data-source/test/salesforce/field-mapping/individuals"
         >
           View

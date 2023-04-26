@@ -97,7 +97,7 @@ exports[`DataTransformation should render 1`] = `
                 class="dropdown dropdown-root searchable-select-root"
               >
                 <button
-                  class="button-root btn btn-secondary dropdown-toggle show-caret"
+                  class="button-root dropdown-toggle show-caret btn btn-unstyled"
                   type="button"
                 >
                   <span
@@ -149,7 +149,7 @@ exports[`DataTransformation should render 1`] = `
                 name="undefined.0"
               >
                 <button
-                  class="button-root btn btn-secondary dropdown-toggle show-caret"
+                  class="button-root dropdown-toggle show-caret btn btn-unstyled"
                   type="button"
                 >
                   <span
@@ -204,11 +204,11 @@ exports[`DataTransformation should render 1`] = `
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-times-circle"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-times-circle icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+                  xlink:href="#times-circle"
                 />
               </svg>
             </button>
@@ -236,7 +236,7 @@ exports[`DataTransformation should render 1`] = `
         class="form-navigation-root"
       >
         <a
-          class="button-root btn btn-secondary cancel"
+          class="button-root cancel btn btn-secondary"
           href="/workspace/23/settings/data-source"
         >
           Cancel

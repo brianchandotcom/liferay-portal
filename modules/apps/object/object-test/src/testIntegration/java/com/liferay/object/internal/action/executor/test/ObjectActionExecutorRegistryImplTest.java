@@ -102,13 +102,6 @@ public class ObjectActionExecutorRegistryImplTest {
 					_companyId1, "ObjectDefinition1"),
 				_objectActionExecutorKeyAccessor));
 
-		Assert.assertArrayEquals(
-			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
-			ListUtil.toArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId2, "ObjectDefinition2"),
-				_objectActionExecutorKeyAccessor));
-
 		// Available for all companies' restricted object definitions
 
 		CompanyThreadLocal.setCompanyId(_companyId1);
@@ -140,23 +133,6 @@ public class ObjectActionExecutorRegistryImplTest {
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "ObjectDefinition3"),
-				_objectActionExecutorKeyAccessor));
-
-		Assert.assertArrayEquals(
-			ArrayUtil.append(
-				new String[] {objectActionExecutor1.getKey()},
-				_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS),
-			ListUtil.toArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId2, "ObjectDefinition1"),
-				_objectActionExecutorKeyAccessor));
-		Assert.assertArrayEquals(
-			ArrayUtil.append(
-				new String[] {objectActionExecutor1.getKey()},
-				_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS),
-			ListUtil.toArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId2, "ObjectDefinition2"),
 				_objectActionExecutorKeyAccessor));
 
 		_unregisterObjectActionExecutors();

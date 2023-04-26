@@ -16,6 +16,7 @@ import {fetch, getOpener, openToast} from 'frontend-js-web';
 
 export default function ({namespace}) {
 	const loading = document.querySelector('.add-group-loading');
+	const container = document.querySelector('.add-group-container');
 	const content = document.querySelector(
 		'.add-group-form .add-group-content'
 	);
@@ -43,6 +44,8 @@ export default function ({namespace}) {
 		loading.classList.add('d-flex');
 		loading.classList.remove('d-none');
 		footer.classList.toggle('d-none');
+
+		container.classList.add('align-items-center', 'd-flex', 'h-100');
 
 		const formData = new FormData(form);
 
@@ -85,6 +88,12 @@ export default function ({namespace}) {
 					loading.classList.remove('d-flex');
 					loading.classList.add('d-none');
 					footer.classList.toggle('d-none');
+
+					container.classList.remove(
+						'align-items-center',
+						'd-flex',
+						'h-100'
+					);
 				}
 			});
 	});

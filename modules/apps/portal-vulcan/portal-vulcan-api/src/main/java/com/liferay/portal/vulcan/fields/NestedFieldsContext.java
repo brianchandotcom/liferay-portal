@@ -39,7 +39,7 @@ public class NestedFieldsContext {
 	}
 
 	public void decrementCurrentDepth() {
-		--_currentDepth;
+		_currentDepth--;
 	}
 
 	public int getCurrentDepth() {
@@ -71,7 +71,7 @@ public class NestedFieldsContext {
 	}
 
 	public void incrementCurrentDepth() {
-		++_currentDepth;
+		_currentDepth++;
 	}
 
 	private int _currentDepth;

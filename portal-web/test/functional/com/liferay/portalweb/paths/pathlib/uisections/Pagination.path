@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>APPROXIMATE_RESULTS</td>
+	<td>//div[@class='clearfix lfr-pagination']/small</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON</td>
 	<td>//a[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-${type}')]]</td>
 	<td></td>

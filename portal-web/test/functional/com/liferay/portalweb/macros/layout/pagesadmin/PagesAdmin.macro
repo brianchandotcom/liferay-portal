@@ -714,8 +714,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Panel.expandPanel(panel = "Look and Feel");
-
 		Theme.changeCurrentTheme(themeName = ${themeName});
 
 		PortletEntry.save();

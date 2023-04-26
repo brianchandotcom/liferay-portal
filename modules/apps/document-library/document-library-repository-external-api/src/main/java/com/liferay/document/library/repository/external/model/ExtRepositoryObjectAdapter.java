@@ -47,6 +47,10 @@ public abstract class ExtRepositoryObjectAdapter<T>
 		}
 
 		try {
+			if (actionId.equals(ActionKeys.DOWNLOAD)) {
+				actionId = ActionKeys.VIEW;
+			}
+
 			ExtRepositoryPermission extRepositoryPermission =
 				ExtRepositoryPermission.valueOf(actionId);
 

@@ -90,6 +90,9 @@ public class CTSchemaVersionLocalServiceImpl
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (releases.size() != schemaContext.size()) {
+			ctSchemaVersionLocalService.addLatestCTSchemaVersion(
+				ctSchemaVersion.getCompanyId());
+
 			return false;
 		}
 

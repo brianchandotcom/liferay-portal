@@ -22,7 +22,6 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.test.util.ObjectActionTestUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -109,7 +108,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
 				0, "_objectActionExecutor1",
-				Arrays.asList("ObjectDefinition1", "ObjectDefinition2"));
+				Arrays.asList("ObjectDefinition1"));
 
 		Assert.assertArrayEquals(
 			ArrayUtil.append(
@@ -119,20 +118,12 @@ public class ObjectActionExecutorRegistryImplTest {
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "ObjectDefinition1"),
 				_objectActionExecutorKeyAccessor));
-		Assert.assertArrayEquals(
-			ArrayUtil.append(
-				new String[] {objectActionExecutor1.getKey()},
-				_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS),
-			ListUtil.toArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition2"),
-				_objectActionExecutorKeyAccessor));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition3"),
+					_companyId1, "ObjectDefinition2"),
 				_objectActionExecutorKeyAccessor));
 
 		_unregisterObjectActionExecutors();
@@ -166,7 +157,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		ObjectActionExecutor objectActionExecutor3 =
 			_registerObjectActionExecutor(
 				_companyId1, "_objectActionExecutor3",
-				Arrays.asList("ObjectDefinition1", "ObjectDefinition2"));
+				Arrays.asList("ObjectDefinition1"));
 
 		Assert.assertArrayEquals(
 			ArrayUtil.append(
@@ -176,22 +167,13 @@ public class ObjectActionExecutorRegistryImplTest {
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "ObjectDefinition1"),
 				_objectActionExecutorKeyAccessor));
-		Assert.assertArrayEquals(
-			ArrayUtil.append(
-				new String[] {objectActionExecutor3.getKey()},
-				_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS),
-			ListUtil.toArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition2"),
-				_objectActionExecutorKeyAccessor));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, "ObjectDefinition3"),
+					_companyId1, "ObjectDefinition2"),
 				_objectActionExecutorKeyAccessor));
-
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			ListUtil.toArray(

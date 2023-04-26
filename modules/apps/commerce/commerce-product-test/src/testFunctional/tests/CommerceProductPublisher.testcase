@@ -31,12 +31,24 @@ definition {
 
 		task ("Then the admin is able to add and remove new rules to the filter") {
 			CommerceWidget.updateProductPublisherConfiguration(
-				addFilter = "true",
-				addFilterResultsList = "Brake Rotors,Premium Brake Pads,Brake Pads,Premium Brake Fluid,Brake Fluid",
-				deleteFilter = "true",
-				deleteFilterResultsList = "U-Joint,Transmission Cooler Line Assembly,Torque Converters,Wheel Seal - Front,Mount",
+				filterEntries = "featured",
+				filterType = "Tags",
 				portletName = "Product Publisher",
-				tag = "featured");
+				productSelection = "Dynamic");
+
+			for (var productName : list "Brake Rotors,Premium Brake Pads,Brake Pads,Premium Brake Fluid,Brake Fluid") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			CommerceWidget.deleteFilterEntry(portletName = "Product Publisher");
+
+			for (var productName : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters,Wheel Seal - Front,Mount") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
 		}
 	}
 

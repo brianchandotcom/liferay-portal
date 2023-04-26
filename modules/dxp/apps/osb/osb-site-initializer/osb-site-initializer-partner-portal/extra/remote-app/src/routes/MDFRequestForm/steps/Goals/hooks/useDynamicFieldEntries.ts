@@ -16,8 +16,8 @@ import useGetListTypeDefinitions from '../../../../../common/services/liferay/li
 import useGetMyUserAccount from '../../../../../common/services/liferay/user-account/useGetMyUserAccount';
 import getEntriesByListTypeDefinitions from '../../../../../common/utils/getEntriesByListTypeDefinitions';
 
-export default function useDynamicFieldEntries() {
-	const {data: userAccount} = useGetMyUserAccount();
+export default function useDynamicFieldEntries(skipCompanies?: boolean) {
+	const {data: userAccount} = useGetMyUserAccount(skipCompanies);
 
 	const {data: listTypeDefinitions} = useGetListTypeDefinitions([
 		LiferayPicklistName.ADDITIONAL_OPTIONS,
@@ -33,7 +33,7 @@ export default function useDynamicFieldEntries() {
 			userAccount?.accountBriefs.map((accountBrief) => ({
 				label: accountBrief.name,
 				value: accountBrief.id,
-			})) as React.OptionHTMLAttributes<HTMLOptionElement>[],
+			})) as React.OptionHTMLAttributes<HTMLOptionElement>[] | undefined,
 		[userAccount?.accountBriefs]
 	);
 

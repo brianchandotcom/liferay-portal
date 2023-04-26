@@ -8,10 +8,11 @@
 	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Request%27&pageSize=-1") /]
 
 	[#assign hasUpdateAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "UPDATE")?has_content /]
+	[#assign hasUpdateWithoutChangeStatusAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "UPDATE-WO-CHANGE-STATUS")?has_content /]
 	[#assign isUserAssociated = myUserAccount.accountBriefs?filter(accountBrief -> accountBrief.id == accountEntryId)?has_content /]
 	[#assign currentMDFRequestHasValidStatusToEdit = mdfRequest.mdfRequestStatus.key == 'draft' || mdfRequest.mdfRequestStatus.key == 'moreInfoRequested' /]
 
-	[#if hasUpdateAction && isUserAssociated && currentMDFRequestHasValidStatusToEdit]
+	[#if (hasUpdateAction && isUserAssociated && currentMDFRequestHasValidStatusToEdit) || hasUpdateWithoutChangeStatusAction]
 		<a class="align-items-center btn btn-primary d-flex mr-2 mt-2" href="${siteURL + '/marketing/mdf-requests/edit/#/' + mdfRequestId}">
 			[@clay["icon"] symbol="pencil"/] Edit
 		</a>

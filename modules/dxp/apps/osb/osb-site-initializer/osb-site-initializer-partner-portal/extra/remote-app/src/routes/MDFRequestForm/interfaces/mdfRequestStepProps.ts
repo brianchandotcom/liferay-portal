@@ -15,6 +15,7 @@ import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {StepType} from '../enums/stepType';
 
 export default interface MDFRequestStepProps {
+	disableCompany?: boolean;
 	onCancel: () => void;
 	onContinue?: (
 		formikHelpers: Omit<FormikHelpers<MDFRequest>, 'setFieldValue'>,

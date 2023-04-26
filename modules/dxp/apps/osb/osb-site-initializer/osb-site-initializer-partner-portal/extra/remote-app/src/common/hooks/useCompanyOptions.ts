@@ -17,13 +17,13 @@ import useGetAccountById from '../services/liferay/accounts/useGetAccountById';
 import isObjectEmpty from '../utils/isObjectEmpty';
 
 export default function useCompanyOptions(
-	companyOptions: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	handleSelected: (
 		country: LiferayPicklist,
 		company: LiferayAccountBrief,
 		currency: LiferayPicklist,
 		accountExternalReferenceCode?: string
 	) => void,
+	companyOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	currencyOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	currentCurrency?: LiferayPicklist,
 	countryOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
@@ -45,6 +45,15 @@ export default function useCompanyOptions(
 		account &&
 		countryOptions &&
 		countryOptions.find((options) => options.value === account.country);
+
+	if (!companyOptions && account) {
+		companyOptions = [
+			{
+				label: account.name,
+				value: account.id,
+			},
+		];
+	}
 
 	useEffect(() => {
 		if (!isObjectEmpty(selectedAccountBrief) && selectedAccountBrief) {
@@ -78,7 +87,7 @@ export default function useCompanyOptions(
 	]);
 
 	const onCompanySelected = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const optionSelected = companyOptions.find(
+		const optionSelected = companyOptions?.find(
 			(options) => options.value === +event.target.value
 		);
 

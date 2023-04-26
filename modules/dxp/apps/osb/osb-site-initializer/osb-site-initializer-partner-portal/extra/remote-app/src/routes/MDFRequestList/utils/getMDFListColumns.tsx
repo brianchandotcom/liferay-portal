@@ -51,11 +51,11 @@ export default function getMDFListColumns(
 				}
 
 				if (
-					(currentValue === PermissionActionType.UPDATE ||
-						currentValue ===
-							PermissionActionType.UPDATE_WO_CHANGE_STATUS) &&
-					isUserAssociated &&
-					currentMDFRequestHasValidStatusToEdit
+					(currentValue === PermissionActionType.UPDATE &&
+						isUserAssociated &&
+						currentMDFRequestHasValidStatusToEdit) ||
+					currentValue ===
+						PermissionActionType.UPDATE_WO_CHANGE_STATUS
 				) {
 					previousValue.push({
 						icon: 'pencil',

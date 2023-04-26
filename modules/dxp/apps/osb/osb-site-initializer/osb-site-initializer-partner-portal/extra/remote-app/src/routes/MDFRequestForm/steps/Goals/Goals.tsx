@@ -28,6 +28,7 @@ import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
 
 const Goals = ({
+	disableCompany,
 	onCancel,
 	onContinue,
 	onSaveAsDraft,
@@ -40,10 +41,11 @@ const Goals = ({
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
-	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries(
+		disableCompany
+	);
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
-		companiesEntries,
 		useCallback(
 			(country, company, currency, accountExternalReferenceCode) => {
 				setFieldValue('company', company);
@@ -56,6 +58,7 @@ const Goals = ({
 			},
 			[setFieldValue]
 		),
+		companiesEntries,
 		fieldEntries[LiferayPicklistName.CURRENCIES],
 		!isObjectEmpty(values.currency) ? values.currency : undefined,
 		fieldEntries[LiferayPicklistName.REGIONS],
@@ -101,7 +104,7 @@ const Goals = ({
 	}, [errors]);
 
 	const getRequestPage = () => {
-		if (!fieldEntries || !companiesEntries) {
+		if (!fieldEntries) {
 			return <ClayLoadingIndicator />;
 		}
 
@@ -111,6 +114,7 @@ const Goals = ({
 					<PRMForm.Group>
 						<PRMFormik.Field
 							component={PRMForm.Select}
+							disabled={disableCompany}
 							label="Company Name"
 							name="company"
 							onChange={onCompanySelected}

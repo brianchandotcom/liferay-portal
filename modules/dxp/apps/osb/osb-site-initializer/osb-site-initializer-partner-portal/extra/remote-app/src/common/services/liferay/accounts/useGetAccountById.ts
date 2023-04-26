@@ -21,7 +21,7 @@ interface Account {
 	currency: string;
 	externalReferenceCode: string;
 	id: number;
-	name: number;
+	name: string;
 }
 
 export default function useGetAccountById(accountId: number | undefined) {

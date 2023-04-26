@@ -36,12 +36,14 @@ interface UserAccount {
 	userAccountContactInformation: UserAccountContactInformation;
 }
 
-export default function useGetMyUserAccount() {
+export default function useGetMyUserAccount(skip?: boolean) {
 	return useSWR(
-		[
-			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`,
-			Liferay.authToken,
-		],
+		skip
+			? null
+			: [
+					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`,
+					Liferay.authToken,
+			  ],
 		(url, token) => liferayFetcher<UserAccount>(url, token)
 	);
 }

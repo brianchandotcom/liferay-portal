@@ -78,7 +78,15 @@ const MDFRequestForm = () => {
 			actions?.some(
 				(action) =>
 					action === PermissionActionType.CREATE ||
-					action === PermissionActionType.UPDATE ||
+					action === PermissionActionType.UPDATE
+			),
+		[actions]
+	);
+
+	const hasPermissionToByPass = useMemo(
+		() =>
+			actions?.some(
+				(action) =>
 					action === PermissionActionType.UPDATE_WO_CHANGE_STATUS
 			),
 		[actions]
@@ -89,7 +97,8 @@ const MDFRequestForm = () => {
 		data?.mdfRequestStatus.key === Status.REQUEST_MORE_INFO.key;
 
 	const hasPermissionShowForm = mdfRequestId
-		? hasPermissionToAccess && currentMDFRequestHasValidStatus
+		? (hasPermissionToAccess && currentMDFRequestHasValidStatus) ||
+		  hasPermissionToByPass
 		: hasPermissionToAccess;
 
 	const onCancel = () =>
@@ -117,6 +126,7 @@ const MDFRequestForm = () => {
 	const StepFormComponent: StepComponent = {
 		[StepType.GOALS]: (
 			<Goals
+				disableCompany={hasPermissionToByPass}
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onSaveAsDraft={(

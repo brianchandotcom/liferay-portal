@@ -45,12 +45,24 @@ definition {
 		return ${apiResponse};
 	}
 
-	macro createQueryData {
+	macro createDataReport {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		var curl = '''
-			${analyticsCloudURL}/api/reports -H "Authorization: Bearer ${token}"
-		''';
+		if (isSet(type)) {
+			var curl = '''
+				${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
+			''';
+		}
+		else if (isSet(filter)) {
+			var curl = '''
+				${analyticsCloudURL}/api/reports/${type}\?${filter}=${filterValue} -H "Authorization: Bearer ${token}"
+			''';
+		}
+		else {
+			var curl = '''
+				${analyticsCloudURL}/api/reports -H "Authorization: Bearer ${token}"
+			''';
+		}
 
 		static var apiResponse = JSONCurlUtil.get(${curl}, "$");
 

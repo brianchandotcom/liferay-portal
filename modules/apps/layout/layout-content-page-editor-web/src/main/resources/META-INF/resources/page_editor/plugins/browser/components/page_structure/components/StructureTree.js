@@ -377,6 +377,7 @@ export default function PageStructureSidebar() {
 											item.isMasterItem,
 									}
 								)}
+								data-qa-id={item.tooltipTitle}
 								data-title={
 									item.isMasterItem || !item.activable
 										? ''

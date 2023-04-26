@@ -62,6 +62,8 @@ public class CommerceOrderItemWrapper
 		attributes.put("CPMeasurementUnitId", getCPMeasurementUnitId());
 		attributes.put("CProductId", getCProductId());
 		attributes.put(
+			"customerCommerceOrderItemId", getCustomerCommerceOrderItemId());
+		attributes.put(
 			"parentCommerceOrderItemId", getParentCommerceOrderItemId());
 		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("decimalQuantity", getDecimalQuantity());
@@ -233,6 +235,13 @@ public class CommerceOrderItemWrapper
 
 		if (CProductId != null) {
 			setCProductId(CProductId);
+		}
+
+		Long customerCommerceOrderItemId = (Long)attributes.get(
+			"customerCommerceOrderItemId");
+
+		if (customerCommerceOrderItemId != null) {
+			setCustomerCommerceOrderItemId(customerCommerceOrderItemId);
 		}
 
 		Long parentCommerceOrderItemId = (Long)attributes.get(
@@ -730,6 +739,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the customer commerce order item ID of this commerce order item.
+	 *
+	 * @return the customer commerce order item ID of this commerce order item
+	 */
+	@Override
+	public long getCustomerCommerceOrderItemId() {
+		return model.getCustomerCommerceOrderItemId();
 	}
 
 	/**
@@ -1654,6 +1673,18 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the customer commerce order item ID of this commerce order item.
+	 *
+	 * @param customerCommerceOrderItemId the customer commerce order item ID of this commerce order item
+	 */
+	@Override
+	public void setCustomerCommerceOrderItemId(
+		long customerCommerceOrderItemId) {
+
+		model.setCustomerCommerceOrderItemId(customerCommerceOrderItemId);
 	}
 
 	/**

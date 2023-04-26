@@ -80,7 +80,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(133);
+		StringBundler sb = new StringBundler(135);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -114,6 +114,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(CPMeasurementUnitId);
 		sb.append(", CProductId=");
 		sb.append(CProductId);
+		sb.append(", customerCommerceOrderItemId=");
+		sb.append(customerCommerceOrderItemId);
 		sb.append(", parentCommerceOrderItemId=");
 		sb.append(parentCommerceOrderItemId);
 		sb.append(", shippingAddressId=");
@@ -273,6 +275,8 @@ public class CommerceOrderItemCacheModel
 		commerceOrderItemImpl.setCPInstanceId(CPInstanceId);
 		commerceOrderItemImpl.setCPMeasurementUnitId(CPMeasurementUnitId);
 		commerceOrderItemImpl.setCProductId(CProductId);
+		commerceOrderItemImpl.setCustomerCommerceOrderItemId(
+			customerCommerceOrderItemId);
 		commerceOrderItemImpl.setParentCommerceOrderItemId(
 			parentCommerceOrderItemId);
 		commerceOrderItemImpl.setShippingAddressId(shippingAddressId);
@@ -452,6 +456,8 @@ public class CommerceOrderItemCacheModel
 
 		CProductId = objectInput.readLong();
 
+		customerCommerceOrderItemId = objectInput.readLong();
+
 		parentCommerceOrderItemId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
@@ -576,6 +582,8 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeLong(CPMeasurementUnitId);
 
 		objectOutput.writeLong(CProductId);
+
+		objectOutput.writeLong(customerCommerceOrderItemId);
 
 		objectOutput.writeLong(parentCommerceOrderItemId);
 
@@ -729,6 +737,7 @@ public class CommerceOrderItemCacheModel
 	public long CPInstanceId;
 	public long CPMeasurementUnitId;
 	public long CProductId;
+	public long customerCommerceOrderItemId;
 	public long parentCommerceOrderItemId;
 	public long shippingAddressId;
 	public BigDecimal decimalQuantity;

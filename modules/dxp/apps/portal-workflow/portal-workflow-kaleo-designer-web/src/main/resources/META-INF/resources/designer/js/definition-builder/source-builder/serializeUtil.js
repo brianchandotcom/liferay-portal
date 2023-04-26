@@ -433,17 +433,30 @@ function appendXMLNotifications(buffer, notifications, nodeName, exporting) {
 				});
 			}
 
-			if (Array.isArray(recipients) && Array.isArray(recipients[index])) {
-				for (const recipientsIndex in recipients[index]) {
+			let currentRecipients = recipients;
+
+			if (Array.isArray(recipients) && recipients.length === 1) {
+				currentRecipients = recipients[0];
+			}
+
+			if (
+				Array.isArray(currentRecipients) &&
+				Array.isArray(currentRecipients[index])
+			) {
+				for (const recipientsIndex in currentRecipients[index]) {
 					appendXMLRecipients(
 						buffer,
 						exporting,
-						recipients[index][recipientsIndex]
+						currentRecipients[index][recipientsIndex]
 					);
 				}
 			}
 			else {
-				appendXMLRecipients(buffer, exporting, recipients[index]);
+				appendXMLRecipients(
+					buffer,
+					exporting,
+					currentRecipients[index]
+				);
 			}
 
 			if (executionType) {

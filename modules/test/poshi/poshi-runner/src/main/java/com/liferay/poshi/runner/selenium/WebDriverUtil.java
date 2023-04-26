@@ -198,6 +198,8 @@ public class WebDriverUtil extends PropsValues {
 				PropsValues.BROWSER_CHROME_BIN_ARGS.split("\\s+"));
 		}
 
+		chromeOptions.addArguments("--remote-allow-origins=*");
+
 		return chromeOptions;
 	}
 

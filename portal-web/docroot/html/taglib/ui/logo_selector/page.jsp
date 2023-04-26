@@ -67,10 +67,14 @@ else {
 				</c:if>
 
 				<div class="mb-4 mt-3 portrait-icons">
-					<div class="btn-group button-holder">
-						<aui:button aria-label='<%= LanguageUtil.get(request, "change-image") %>' cssClass="edit-logo modify-link mr-3" value="change" />
+					<div class="btn-group">
+						<div class="btn-group-item">
+							<aui:button aria-label='<%= LanguageUtil.get(request, "change-image") %>' cssClass="edit-logo modify-link" value="change" />
+						</div>
 
-						<aui:button aria-label='<%= LanguageUtil.get(request, "delete-image") %>' cssClass="delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
+						<div class="btn-group-item">
+							<aui:button aria-label='<%= LanguageUtil.get(request, "delete-image") %>' cssClass="delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
+						</div>
 					</div>
 
 					<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />

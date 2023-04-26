@@ -870,6 +870,24 @@ definition {
 			for (var tagName : list "global tag 1,global tag 2,local tag") {
 				AssetCategorization.viewTag(tagName = ${tagName});
 			}
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			FormViewBuilder.editText(
+				fieldName = "Name",
+				fieldValue = "Test Name No Tag");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "MyObject");
+
+			ObjectPortlet.viewEntry(entry = "Test Name No Tag");
 		}
 	}
 
@@ -1068,6 +1086,24 @@ definition {
 			for (var i : list "1,2") {
 				AssetCategorization.viewTag(tagName = "global tag ${i}");
 			}
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			FormViewBuilder.editText(
+				fieldName = "Name",
+				fieldValue = "Test Name No Tag");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "MyObject");
+
+			ObjectPortlet.viewEntry(entry = "Test Name No Tag");
 		}
 	}
 

@@ -194,8 +194,8 @@ export const List: React.FC<IListProps> = ({
 				),
 				[
 					<ClayButton
-						className='p-0'
-						displayType='link'
+						className='button-root p-0'
+						displayType='unstyled'
 						key='UNASSIGNED_SEGMENTS'
 						onClick={openModal}
 						small

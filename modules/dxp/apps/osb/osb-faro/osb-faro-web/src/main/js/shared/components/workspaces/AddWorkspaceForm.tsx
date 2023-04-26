@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Constants from 'shared/util/constants';
 import Form, {
 	validateMaxLength,
@@ -489,49 +490,63 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 											</p>
 										</div>
 
-										<Button
+										<ClayButton
 											block
+											className='button-root'
 											disabled={
 												disabled ||
 												isSubmitting ||
 												!isValid
 											}
-											display='primary'
-											loading={isSubmitting}
+											displayType='primary'
 											type='submit'
 										>
+											{isSubmitting && (
+												<ClayLoadingIndicator
+													className='d-inline-block mr-2'
+													displayType='secondary'
+													size='sm'
+												/>
+											)}
+
 											{Liferay.Language.get(
 												'finish-setup'
 											)}
-										</Button>
+										</ClayButton>
 									</>
 								) : (
 									<>
-										<Button
-											className='mr-3'
+										<ClayButton
+											className='button-root mr-3'
 											disabled={
 												disabled ||
 												isSubmitting ||
 												!isValid
 											}
-											display='primary'
-											loading={isSubmitting}
+											displayType='primary'
 											type='submit'
 										>
-											{isSubmitting
-												? Liferay.Language.get('saving')
-												: Liferay.Language.get('save')}
-										</Button>
+											{isSubmitting && (
+												<ClayLoadingIndicator
+													className='d-inline-block mr-2'
+													displayType='secondary'
+													size='sm'
+												/>
+											)}
 
-										<Button
+											{Liferay.Language.get('save')}
+										</ClayButton>
+
+										<ClayButton
+											className='button-root'
 											disabled={disabled || !dirty}
-											display='secondary'
+											displayType='secondary'
 											onClick={() =>
 												resetForm(initialValues)
 											}
 										>
 											{Liferay.Language.get('cancel')}
-										</Button>
+										</ClayButton>
 									</>
 								)}
 							</Sheet.Footer>

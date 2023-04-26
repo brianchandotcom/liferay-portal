@@ -1,8 +1,8 @@
 import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
 import Constants from 'shared/util/constants';
 import EmailReports from '../components/EmailReports';
 import Form, {
@@ -233,8 +233,9 @@ const View: React.FC<IViewProps> = ({
 
 					{authorized && (
 						<span className='header-action-buttons pl-3'>
-							<Button
-								className='mr-3'
+							<ClayButton
+								className='button-root mr-3'
+								displayType='secondary'
 								onClick={() =>
 									open(modalTypes.DELETE_CONFIRMATION_MODAL, {
 										children: (
@@ -314,9 +315,11 @@ const View: React.FC<IViewProps> = ({
 								}
 							>
 								{Liferay.Language.get('clear-data')}
-							</Button>
+							</ClayButton>
 
-							<Button
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
 								onClick={() =>
 									open(modalTypes.DELETE_CHANNEL_MODAL, {
 										channelIds: [id],
@@ -394,7 +397,7 @@ const View: React.FC<IViewProps> = ({
 								}
 							>
 								{Liferay.Language.get('delete')}
-							</Button>
+							</ClayButton>
 						</span>
 					)}
 				</div>

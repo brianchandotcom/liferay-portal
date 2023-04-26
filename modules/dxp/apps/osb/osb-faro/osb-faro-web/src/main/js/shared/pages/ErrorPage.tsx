@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import React from 'react';
 import {Routes, toRoute} from 'shared/util/router';
@@ -29,7 +29,14 @@ const ErrorPage: React.FC<IErrorPageProps> = ({
 
 		<p>{message}</p>
 
-		<Button href={href}>{linkLabel}</Button>
+		<ClayLink
+			button
+			className='button-root'
+			displayType='secondary'
+			href={href}
+		>
+			{linkLabel}
+		</ClayLink>
 	</div>
 );
 

@@ -21,7 +21,7 @@ describe('Dropdown', () => {
 
 	it('should render with a different button display', () => {
 		const {container} = render(
-			<Dropdown buttonProps={{display: 'link'}} />
+			<Dropdown buttonProps={{displayType: 'link'}} />
 		);
 		expect(container.querySelector('.btn-link')).toBeTruthy();
 	});

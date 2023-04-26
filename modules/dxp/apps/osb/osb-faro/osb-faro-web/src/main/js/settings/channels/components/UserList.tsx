@@ -1,5 +1,5 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Icon from 'shared/components/Icon';
@@ -41,8 +41,9 @@ const UserListNav: React.FC<{
 	<Nav>
 		<Nav.Item>
 			{selectedItems.size ? (
-				<Button
-					className='nav-btn'
+				<ClayButton
+					className='button-root nav-btn'
+					displayType='secondary'
 					onClick={() => onRemoveUser(selectedItems)}
 				>
 					{
@@ -54,15 +55,15 @@ const UserListNav: React.FC<{
 							{Liferay.Language.get('remove')}
 						</>
 					}
-				</Button>
+				</ClayButton>
 			) : (
-				<Button
-					className='nav-btn px-3'
-					display='primary'
+				<ClayButton
+					className='button-root nav-btn px-3'
+					displayType='primary'
 					onClick={onAddUser}
 				>
 					{Liferay.Language.get('add-user')}
-				</Button>
+				</ClayButton>
 			)}
 		</Nav.Item>
 	</Nav>

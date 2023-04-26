@@ -69,7 +69,7 @@ const SessionCard: React.FC<ISessionCardProps> = ({label}) => {
 
 				<ClayButton.Group>
 					<ClayButton
-						className={getCN({
+						className={getCN('button-root', {
 							active: sessionViewTriggered === TOTAL
 						})}
 						displayType='secondary'
@@ -87,7 +87,7 @@ const SessionCard: React.FC<ISessionCardProps> = ({label}) => {
 					</ClayButton>
 
 					<ClayButton
-						className={getCN({
+						className={getCN('button-root', {
 							active: sessionViewTriggered === PER_VARIANT
 						})}
 						displayType='secondary'

@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Label from 'shared/components/Label';
 import React from 'react';
 import SubnavTbar from 'shared/components/SubnavTbar';
@@ -59,20 +59,26 @@ class StagedSubnav extends React.Component {
 				</SubnavTbar.Item>
 
 				<SubnavTbar.Item expand>
-					<Button borderless display='unstyled' onClick={onToggle}>
+					<ClayButton
+						borderless
+						className='button-root'
+						displayType='unstyled'
+						onClick={onToggle}
+					>
 						{showStaged ? viewCurrentLinkText : viewStagedLinkText}
-					</Button>
+					</ClayButton>
 				</SubnavTbar.Item>
 
 				{showStaged && onUndoChanges && (
 					<SubnavTbar.Item>
-						<Button
+						<ClayButton
 							borderless
-							display='unstyled'
+							className='button-root'
+							displayType='unstyled'
 							onClick={this.handleUndoChanges}
 						>
 							{Liferay.Language.get('undo-all')}
-						</Button>
+						</ClayButton>
 					</SubnavTbar.Item>
 				)}
 			</SubnavTbar>

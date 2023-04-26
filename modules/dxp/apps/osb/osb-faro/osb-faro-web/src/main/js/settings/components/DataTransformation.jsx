@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
 import Checkbox from 'shared/components/Checkbox';
+import ClayButton from '@clayui/button';
 import DataTransformationList from './data-transformation-list';
 import FormNavigation from './FormNavigation';
 import getCN from 'classnames';
@@ -462,9 +462,13 @@ export class DataTransformation extends React.Component {
 								)}
 							</div>
 
-							<Button onClick={this.handleAddField}>
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								onClick={this.handleAddField}
+							>
 								{Liferay.Language.get('add-field')}
-							</Button>
+							</ClayButton>
 						</div>
 					</Sheet.Section>
 				</Fragment>

@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {validateInputMessage} from 'shared/components/form';
 import getCN from 'classnames';
 import Modal from 'shared/components/modal';
@@ -72,18 +73,30 @@ const DeleteConfirmationModal: React.FC<IDeleteConfirmationModalProps> = ({
 					</Modal.Body>
 
 					<Modal.Footer>
-						<Button onClick={onClose}>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							onClick={onClose}
+						>
 							{Liferay.Language.get('cancel')}
-						</Button>
+						</ClayButton>
 
-						<Button
+						<ClayButton
+							className='button-root'
 							disabled={disabled || !isValid || isSubmitting}
-							display='warning'
-							loading={isSubmitting}
+							displayType='warning'
 							type='submit'
 						>
+							{isSubmitting && (
+								<ClayLoadingIndicator
+									className='d-inline-block mr-2'
+									displayType='secondary'
+									size='sm'
+								/>
+							)}
+
 							{deleteButtonLabel}
-						</Button>
+						</ClayButton>
 					</Modal.Footer>
 				</Form.Form>
 			)}

@@ -1,6 +1,7 @@
 import BundleRouter from 'route-middleware/BundleRouter';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import Loading from 'shared/pages/Loading';
 import Nav from 'shared/components/Nav';
 import React, {lazy, Suspense} from 'react';
@@ -57,18 +58,24 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 
 				{customEventTab && (
 					<div className='d-flex align-items-center mx-4'>
-						<Button
+						<ClayLink
 							borderless
+							button
+							className='button-root'
+							displayType='secondary'
 							href={toRoute(
 								Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST,
 								{groupId}
 							)}
-							icon='ac-block'
-							iconAlignment='left'
-							size='sm'
+							small
 						>
+							<ClayIcon
+								className='icon-root mr-2'
+								symbol='ac-block'
+							/>
+
 							{Liferay.Language.get('block-list')}
-						</Button>
+						</ClayLink>
 					</div>
 				)}
 			</div>

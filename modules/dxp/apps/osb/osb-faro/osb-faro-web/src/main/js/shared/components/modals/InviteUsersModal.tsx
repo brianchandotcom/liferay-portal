@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
 import InputList from 'shared/components/InputList';
@@ -76,20 +76,25 @@ const InviteUsersModal: React.FC<IInviteUsersModalProps> = ({
 			</Modal.Body>
 
 			<Modal.Footer>
-				<Button onClick={onClose}>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={onClose}
+				>
 					{Liferay.Language.get('cancel')}
-				</Button>
+				</ClayButton>
 
-				<Button
+				<ClayButton
+					className='button-root'
 					disabled={
 						(!inputValue && !emails.length) ||
 						(!!inputValue && !validateEmail(inputValue))
 					}
-					display='primary'
+					displayType='primary'
 					onClick={handleSubmit}
 				>
 					{Liferay.Language.get('send')}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</Modal>
 	);

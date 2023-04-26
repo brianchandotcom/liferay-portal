@@ -1,5 +1,5 @@
-import Button from './Button';
 import Card from './Card';
+import ClayButton from '@clayui/button';
 import DatePicker from './date-picker';
 import getCN from 'classnames';
 import Icon from './Icon';
@@ -7,7 +7,7 @@ import Input from './Input';
 import MaskedInput from './MaskedInput';
 import moment from 'moment';
 import Overlay from './Overlay';
-import React, {useState} from 'react';
+import React, {MouseEventHandler, useState} from 'react';
 import {
 	applyTimeZone,
 	DATE_MASK,
@@ -49,7 +49,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 }) => {
 	const [active, setActive] = useState(false);
 
-	const handleClick = (event: PointerEvent): void => {
+	const handleClick: MouseEventHandler<HTMLElement> = event => {
 		event.preventDefault();
 
 		setActive(!active);
@@ -127,9 +127,13 @@ const DateInput: React.FC<IDateInputProps> = ({
 					/>
 
 					<Input.Inset position='after'>
-						<Button display='unstyled' onClick={handleClick}>
+						<ClayButton
+							className='button-root'
+							displayType='unstyled'
+							onClick={handleClick}
+						>
 							<Icon symbol='calendar' />
-						</Button>
+						</ClayButton>
 					</Input.Inset>
 				</Input.GroupItem>
 			</Input.Group>

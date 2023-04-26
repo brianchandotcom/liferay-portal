@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import {mapGrowthHistory} from 'shared/hoc/mappers/segment';
 import {Routes, toRoute} from 'shared/util/router';
@@ -55,19 +56,19 @@ const SegmentProfileCard: React.FC<ISegmentProfileCardProps> = ({
 		</Card.Body>
 
 		<Card.Footer>
-			<Button
-				display='link'
+			<ClayLink
+				className='button-root'
+				displayType='secondary'
 				href={toRoute(Routes.CONTACTS_SEGMENT_MEMBERSHIP, {
 					channelId,
 					groupId,
 					id
 				})}
-				icon='angle-right'
-				iconAlignment='right'
-				size='sm'
 			>
 				{Liferay.Language.get('view-members')}
-			</Button>
+
+				<ClayIcon className='icon-root ml-2' symbol='angle-right' />
+			</ClayLink>
 		</Card.Footer>
 	</Card>
 );

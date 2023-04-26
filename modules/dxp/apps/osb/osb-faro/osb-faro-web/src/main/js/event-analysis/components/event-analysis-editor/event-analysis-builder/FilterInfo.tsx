@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Label from 'shared/components/Label';
 import React from 'react';
 import {DATA_TYPE_LABELS_MAP} from 'event-analysis/utils/utils';
@@ -8,7 +9,7 @@ interface IFilterInfoProps {
 	dataType: DataTypes;
 	description?: string;
 	name: string;
-	onEditClick?: (id: string) => void;
+	onEditClick: (id: string) => void;
 	showDescription?: boolean;
 }
 
@@ -23,15 +24,15 @@ const FilterInfo: React.FC<IFilterInfoProps> = ({
 		<div className='filter-name d-flex align-items-center justify-content-between'>
 			{name}
 
-			{onEditClick && (
-				<Button
-					borderless
-					icon='pencil'
-					iconAlignment='left'
-					onClick={onEditClick}
-					size='sm'
-				/>
-			)}
+			<ClayButton
+				borderless
+				className='button-root'
+				displayType='secondary'
+				onClick={() => onEditClick(name)}
+				size='sm'
+			>
+				<ClayIcon className='icon-root' symbol='pencil' />
+			</ClayButton>
 		</div>
 
 		{showDescription && (

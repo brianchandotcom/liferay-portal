@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import BaseScreen from './BaseScreen';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import InfoPopover from 'shared/components/InfoPopover';
 import Input from 'shared/components/Input';
 import InputList, {Display} from 'shared/components/InputList';
@@ -144,20 +145,22 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 			</Modal.Body>
 
 			<Modal.Footer className='d-flex justify-content-end'>
-				<Button
+				<ClayButton
+					className='button-root'
 					disabled={sent}
+					displayType='secondary'
 					onClick={dxpConnected ? () => onNext() : onClose}
 				>
 					{Liferay.Language.get('skip')}
-				</Button>
+				</ClayButton>
 
-				<Button
+				<ClayButton
+					className='button-root'
 					disabled={
 						(!inputValue && !emails.length) ||
 						(!!inputValue && !validateEmail(inputValue))
 					}
-					display='primary'
-					loading={loading}
+					displayType='primary'
 					onClick={
 						sent
 							? dxpConnected
@@ -166,12 +169,20 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 							: handleSubmit
 					}
 				>
+					{loading && (
+						<ClayLoadingIndicator
+							className='d-inline-block mr-2'
+							displayType='secondary'
+							size='sm'
+						/>
+					)}
+
 					{sent
 						? dxpConnected
 							? Liferay.Language.get('next')
 							: Liferay.Language.get('done')
 						: Liferay.Language.get('send-invitations')}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</BaseScreen>
 	);

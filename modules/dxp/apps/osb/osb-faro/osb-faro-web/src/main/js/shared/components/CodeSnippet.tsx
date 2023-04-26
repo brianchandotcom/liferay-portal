@@ -19,6 +19,7 @@ const CodeSnippet: React.FC<ICodeSnippet> = ({codeLines}) => {
 			<CopyButton
 				buttonText={Liferay.Language.get('copy')}
 				className='copy-button'
+				displayType='secondary'
 				text={displayedCode}
 			/>
 

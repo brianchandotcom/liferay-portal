@@ -134,6 +134,7 @@ const BaseDataSourcePage: React.FC<IBaseDataSourcePageProps> = ({
 				id && showDelete && currentUser.isAdmin()
 					? [
 							{
+								displayType: 'secondary',
 								label: Liferay.Language.get(
 									'delete-data-source'
 								),

@@ -1,5 +1,5 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
 import Thumbs from './Thumbs';
@@ -198,10 +198,9 @@ const AddReport: React.FC<IAddReportProps> = ({
 						/>
 					</Card.Body>
 					<Card.Footer>
-						<Button
-							className='mr-4'
+						<ClayButton
+							className='button-root mr-4'
 							disabled={!isEnableToSave}
-							display='primary'
 							onClick={
 								isEnableToSave
 									? handleClickSaveReport
@@ -209,18 +208,26 @@ const AddReport: React.FC<IAddReportProps> = ({
 							}
 						>
 							{Liferay.Language.get('save')}
-						</Button>
+						</ClayButton>
 
-						<Button onClick={handleClickCancelReport}>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							onClick={handleClickCancelReport}
+						>
 							{Liferay.Language.get('cancel')}
-						</Button>
+						</ClayButton>
 					</Card.Footer>
 				</>
 			) : (
 				<div className='analytics-add-report-button'>
-					<Button onClick={handleClickAddReport}>
+					<ClayButton
+						className='button-root'
+						displayType='secondary'
+						onClick={handleClickAddReport}
+					>
 						{Liferay.Language.get('add-report')}
-					</Button>
+					</ClayButton>
 				</div>
 			)}
 		</Card>

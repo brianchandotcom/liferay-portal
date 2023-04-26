@@ -62,7 +62,7 @@ const withQueryOptions = Component => ({
 			}) =>
 				dataControlTaskStatus !== GDPRRequestStatuses.Pending && (
 					<ClayButton
-						className='unsuppress'
+						className='button-root unsuppress'
 						displayType='secondary'
 						onClick={() => {
 							unsuppressUser({

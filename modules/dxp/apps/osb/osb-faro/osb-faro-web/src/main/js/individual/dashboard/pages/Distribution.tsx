@@ -1,5 +1,5 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import Distribution, {CONTEXT_OPTIONS} from 'contacts/components/Distribution';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -59,14 +59,16 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 						</a>
 
 						{authorized && (
-							<Button
-								display='primary'
+							<ClayLink
+								button
+								className='button-root'
+								displayType='primary'
 								href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
 									groupId
 								})}
 							>
 								{Liferay.Language.get('connect-data-source')}
-							</Button>
+							</ClayLink>
 						)}
 					</>
 				}

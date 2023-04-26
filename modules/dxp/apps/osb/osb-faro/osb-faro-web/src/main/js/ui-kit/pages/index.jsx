@@ -8,12 +8,12 @@ import {find} from 'lodash';
 import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
 
-const req = require.context('.', false, /\w+Kit.jsx$/);
+const req = require.context('.', false, /\w+Kit.(jsx|tsx)$/);
 
 const kits = req.keys().map((kit, id) => ({
 	component: req(kit, id).default,
 	id,
-	name: kit.replace('./', '').replace('Kit.jsx', '')
+	name: kit.replace('./', '').replace(/Kit\.(jsx|tsx)/, '')
 }));
 
 export default class UIKit extends React.Component {
@@ -56,7 +56,9 @@ export default class UIKit extends React.Component {
 		const selectedItem = find(kits, ['name', componentName]) || kits[0];
 
 		if (!componentName) {
-			history.push(toRoute(Routes.UI_KIT, {name: selectedItem.name}));
+			history.push(
+				toRoute(Routes.UI_KIT, {name: selectedItem.name.toLowerCase()})
+			);
 		}
 
 		const kitList = this.filterKits(query);

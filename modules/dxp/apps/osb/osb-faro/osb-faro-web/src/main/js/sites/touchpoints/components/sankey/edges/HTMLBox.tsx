@@ -1,5 +1,5 @@
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import React, {useContext, useState} from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
 import {AssetNode, SankeyNode} from '../utils/types';
@@ -68,26 +68,26 @@ const HTMLBox: React.FC<IHTMLBoxProps> = ({color, items = [], node}) => {
 						})}
 
 						<li>
-							<Button
-								className='icon icon-minor action-link'
-								display='link'
+							<ClayButton
+								className='button-root icon icon-minor action-link'
+								displayType='unstyled'
 								onClick={handleToggleShowAssets}
 							>
 								{Liferay.Language.get('close-list')}
-							</Button>
+							</ClayButton>
 						</li>
 					</>
 				) : (
 					<li>
-						<Button
-							className='action-link icon icon-plus'
-							display='link'
+						<ClayButton
+							className='action-link button-root icon icon-plus'
+							displayType='unstyled'
 							onClick={handleToggleShowAssets}
 						>
 							{sub(Liferay.Language.get('show-top-x-assets'), [
 								assets.length
 							])}
-						</Button>
+						</ClayButton>
 					</li>
 				)}
 			</ul>

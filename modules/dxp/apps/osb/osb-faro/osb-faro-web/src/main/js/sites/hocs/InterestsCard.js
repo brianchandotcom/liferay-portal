@@ -1,6 +1,7 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
 import CardWithRangeKey from 'shared/hoc/CardWithRangeKey';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import InterestsQuery from 'shared/queries/InterestsQuery';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -77,8 +78,8 @@ const InterestsCard = () => {
 					/>
 
 					<Card.Footer>
-						<Button
-							display='link'
+						<ClayLink
+							className='button-root'
 							href={setUriQueryValues(
 								rangeSelectors,
 								toRoute(Routes.SITES_INTERESTS, {
@@ -86,12 +87,14 @@ const InterestsCard = () => {
 									groupId
 								})
 							)}
-							icon='angle-right'
-							iconAlignment='right'
-							size='sm'
 						>
 							{Liferay.Language.get('all-interests')}
-						</Button>
+
+							<ClayIcon
+								className='icon-root ml-2'
+								symbol='angle-right'
+							/>
+						</ClayLink>
 					</Card.Footer>
 				</>
 			)}

@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import ActiveIndividualsCard from '../hocs/ActiveIndividualsCard';
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import Constants from 'shared/util/constants';
 import DistributionCard from '../hocs/DistributionCard';
 import EnrichedProfilesCard from '../hocs/EnrichedProfilesCard';
@@ -69,8 +69,10 @@ const Overview: React.FC<IOverviewProps> = ({currentUser}) => {
 							</a>
 
 							{authorized && (
-								<Button
-									display='primary'
+								<ClayLink
+									button
+									className='button-root'
+									displayType='primary'
 									href={toRoute(
 										Routes.SETTINGS_ADD_DATA_SOURCE,
 										{
@@ -81,7 +83,7 @@ const Overview: React.FC<IOverviewProps> = ({currentUser}) => {
 									{Liferay.Language.get(
 										'connect-data-source'
 									)}
-								</Button>
+								</ClayLink>
 							)}
 						</>
 					}

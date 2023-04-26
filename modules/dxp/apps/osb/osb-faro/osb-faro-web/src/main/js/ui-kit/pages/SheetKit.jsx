@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import React from 'react';
 import Sheet from 'shared/components/Sheet';
 
@@ -52,9 +52,16 @@ class SheetKit extends React.Component {
 					</Sheet.Body>
 
 					<Sheet.Footer>
-						<Button display='primary'>{'Primary'}</Button>
+						<ClayButton displayType='primary'>
+							{'Primary'}
+						</ClayButton>
 
-						<Button display='secondary'>{'Secondary'}</Button>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+						>
+							{'Secondary'}
+						</ClayButton>
 					</Sheet.Footer>
 				</Sheet>
 			</div>

@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Modal from 'shared/components/modal';
@@ -93,13 +93,21 @@ const ToggleSwitchModal: React.FC<IToggleSwitchModalProps> = ({
 						))}
 
 						<Modal.Footer>
-							<Button onClick={onClose}>
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								onClick={onClose}
+							>
 								{Liferay.Language.get('cancel')}
-							</Button>
+							</ClayButton>
 
-							<Button display='primary' type='submit'>
+							<ClayButton
+								className='button-root'
+								displayType='primary'
+								type='submit'
+							>
 								{Liferay.Language.get('done')}
-							</Button>
+							</ClayButton>
 						</Modal.Footer>
 					</Form.Form>
 				)}

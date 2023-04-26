@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Constants from 'shared/util/constants';
 import Modal from 'shared/components/modal';
 import RadioGroup from 'shared/components/RadioGroup';
@@ -144,12 +144,14 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 							/>
 
 							<div className='find-matches-button-container d-flex flex-column justify-content-center'>
-								<Button
+								<ClayButton
+									className='button-root'
 									disabled={!stringMatch || !metadata}
+									displayType='secondary'
 									onClick={handleFindMatches}
 								>
 									{Liferay.Language.get('find-matches')}
-								</Button>
+								</ClayButton>
 							</div>
 						</div>
 					</div>
@@ -228,13 +230,17 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 			</Modal.Body>
 
 			<Modal.Footer>
-				<Button onClick={onClose}>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={onClose}
+				>
 					{Liferay.Language.get('cancel')}
-				</Button>
+				</ClayButton>
 
-				<Button
+				<ClayButton
+					className='button-root'
 					disabled={!stringMatch || !metadata}
-					display='primary'
 					onClick={() =>
 						onSubmit({
 							id: `${includeExclude} - ${filter}`,
@@ -244,7 +250,7 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 					}
 				>
 					{Liferay.Language.get('add-rule')}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</Modal>
 	);

@@ -1,6 +1,7 @@
 import Alert from 'shared/components/Alert';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {validateRequired} from 'shared/components/form';
 import React from 'react';
 import {DataSourceTypes} from 'shared/util/constants';
@@ -104,14 +105,22 @@ export default class OAuthKit extends React.Component {
 							</Form.Group>
 
 							<Form.Group>
-								<Button
+								<ClayButton
+									className='button-root'
 									disabled={!isValid}
-									display='primary'
-									loading={isSubmitting}
+									displayType='primary'
 									type='submit'
 								>
+									{isSubmitting && (
+										<ClayLoadingIndicator
+											className='d-inline-block mr-2'
+											displayType='secondary'
+											size='sm'
+										/>
+									)}
+
 									{'Get Token'}
-								</Button>
+								</ClayButton>
 							</Form.Group>
 						</Form.Form>
 					)}

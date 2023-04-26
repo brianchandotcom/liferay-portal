@@ -1,5 +1,6 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form from 'shared/components/form';
 import Icon from 'shared/components/Icon';
 import React from 'react';
@@ -92,28 +93,38 @@ export default class DefinitionItem extends React.Component {
 										width={inputWidth}
 									/>
 
-									<Button
+									<ClayButton
 										aria-label={Liferay.Language.get(
 											'cancel'
 										)}
+										className='button-root'
+										displayType='secondary'
 										onClick={this.handleEditToggle}
 										size='sm'
 									>
 										<Icon symbol='times' />
-									</Button>
+									</ClayButton>
 
-									<Button
+									<ClayButton
 										aria-label={Liferay.Language.get(
 											'submit'
 										)}
+										className='button-root'
 										disabled={!isValid}
-										display='primary'
-										loading={isSubmitting}
+										displayType='primary'
 										size='sm'
 										type='submit'
 									>
-										<Icon symbol='check' />
-									</Button>
+										{isSubmitting && (
+											<ClayLoadingIndicator
+												className='d-inline-block mr-2'
+												displayType='secondary'
+												size='sm'
+											/>
+										)}
+
+										<Icon className='ml-2' symbol='check' />
+									</ClayButton>
 								</Form.Group>
 							</Form.Form>
 						)}
@@ -126,13 +137,15 @@ export default class DefinitionItem extends React.Component {
 						{value ? <TextTruncate title={value} /> : '-'}
 
 						{editable && (
-							<Button
+							<ClayButton
 								aria-label={Liferay.Language.get('edit')}
+								className='button-root'
+								displayType='secondary'
 								onClick={this.handleEditToggle}
 								size='sm'
 							>
 								<Icon symbol='pencil' />
-							</Button>
+							</ClayButton>
 						)}
 					</div>
 				)}

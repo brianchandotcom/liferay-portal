@@ -1,5 +1,6 @@
 import AppliedFilters from 'shared/components/filter/AppliedFilters';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import dom from 'metal-dom';
 import DropdownMenu from 'cerebro-shared/components/DropdownMenu';
 import React, {useEffect, useRef, useState} from 'react';
@@ -133,17 +134,20 @@ const Filter: React.FC<IFilterProps> = ({
 	return (
 		<div className='analytics-filter' ref={_elementRef}>
 			<div className='analytics-dropdown dropdown btn-group border-0'>
-				<Button
+				<ClayButton
 					aria-label='Dropdown Filter'
 					className='dropdown-toggle btn-outline-borderless'
-					display='secondary'
-					icon='caret-bottom'
-					iconAlignment='right'
+					displayType='secondary'
 					onClick={handleClickToggleDropdown}
 					size='sm'
 				>
 					{Liferay.Language.get('filter')}
-				</Button>
+
+					<ClayIcon
+						className='icon-root ml-2'
+						symbol='caret-bottom'
+					/>
+				</ClayButton>
 			</div>
 
 			<DropdownMenu

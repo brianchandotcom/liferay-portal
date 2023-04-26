@@ -2,7 +2,8 @@ import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import autobind from 'autobind-decorator';
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import DataTransformationList from 'settings/components/data-transformation-list';
 import DefinitionItem from 'shared/components/DefinitionItem';
 import getCN from 'classnames';
@@ -230,8 +231,10 @@ export class CSV extends React.Component {
 
 							{authorized && (
 								<div className='button-row'>
-									<Button
-										display='primary'
+									<ClayLink
+										button
+										className='button-root'
+										displayType='primary'
 										href={toRoute(
 											Routes.SETTINGS_DATA_SOURCE_EDIT,
 											{
@@ -241,9 +244,12 @@ export class CSV extends React.Component {
 										)}
 									>
 										{Liferay.Language.get('edit-csv')}
-									</Button>
+									</ClayLink>
 
-									<Button
+									<ClayLink
+										button
+										className='button-root'
+										displayType='primary'
 										href={toRoute(
 											Routes.SETTINGS_DATA_SOURCE_DELETE,
 											{
@@ -255,7 +261,7 @@ export class CSV extends React.Component {
 										{Liferay.Language.get(
 											'delete-data-source'
 										)}
-									</Button>
+									</ClayLink>
 								</div>
 							)}
 						</div>
@@ -263,14 +269,14 @@ export class CSV extends React.Component {
 						<div className='file-info'>
 							<DefinitionItem value={fileName} />
 
-							<Button
-								className='toggle-preview'
+							<ClayButton
+								className='button-root toggle-preview'
 								display='secondary'
 								onClick={this.handleCSVPreviewModal}
 								size='sm'
 							>
 								{Liferay.Language.get('view-file-preview')}
-							</Button>
+							</ClayButton>
 						</div>
 					</Sheet.Header>
 

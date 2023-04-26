@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Label from 'shared/components/Label';
 import React from 'react';
 import {Map, Set} from 'immutable';
@@ -79,15 +79,16 @@ export default class EntityRowActions extends React.Component {
 			return (
 				<>
 					{!itemsSelected && (
-						<Button
+						<ClayButton
 							borderless
-							display='primary'
+							className='button-root'
+							displayType='primary'
 							onClick={this.handleUndoChanges}
 							outline
 							size='sm'
 						>
 							{Liferay.Language.get('undo')}
-						</Button>
+						</ClayButton>
 					)}
 
 					<Label
@@ -103,9 +104,15 @@ export default class EntityRowActions extends React.Component {
 			);
 		} else if (!itemsSelected) {
 			return (
-				<Button onClick={this.handleEntityRemoval} outline size='sm'>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={this.handleEntityRemoval}
+					outline
+					size='sm'
+				>
 					{Liferay.Language.get('remove')}
-				</Button>
+				</ClayButton>
 			);
 		}
 

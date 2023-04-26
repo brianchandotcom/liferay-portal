@@ -1,4 +1,6 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import React from 'react';
 import {PropTypes} from 'prop-types';
@@ -33,28 +35,42 @@ class FormNavigation extends React.Component {
 		return (
 			<div className={getCN('form-navigation-root', className)}>
 				{onPreviousStep && (
-					<Button
-						display='secondary'
+					<ClayButton
+						className='button-root'
+						displayType='secondary'
 						key='previousStep'
 						onClick={onPreviousStep}
 					>
 						{Liferay.Language.get('previous')}
-					</Button>
+					</ClayButton>
 				)}
 
-				<Button className='cancel' href={cancelHref}>
+				<ClayLink
+					button
+					className='button-root cancel'
+					displayType='secondary'
+					href={cancelHref}
+				>
 					{Liferay.Language.get('cancel')}
-				</Button>
+				</ClayLink>
 
-				<Button
+				<ClayButton
+					className='button-root'
 					disabled={!enableNext}
-					display='primary'
-					loading={submitting}
+					displayType='primary'
 					onClick={onNextStep}
 					type={onNextStep ? 'button' : 'submit'}
 				>
+					{submitting && (
+						<ClayLoadingIndicator
+							className='d-inline-block mr-2'
+							displayType='secondary'
+							size='sm'
+						/>
+					)}
+
 					{submitMessage}
-				</Button>
+				</ClayButton>
 			</div>
 		);
 	}

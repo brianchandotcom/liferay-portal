@@ -1,5 +1,6 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -161,16 +162,17 @@ const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
 
 			return (
 				<Nav>
-					<Button
+					<ClayButton
 						borderless
-						display='secondary'
-						icon='trash'
-						iconAlignment='left'
+						className='button-root'
+						displayType='secondary'
 						onClick={() =>
 							handleDeleteEventAnalysis(eventAnalysisIds)
 						}
 						outline
-					/>
+					>
+						<ClayIcon className='icon-root' symbol='trash' />
+					</ClayButton>
 				</Nav>
 			);
 		}

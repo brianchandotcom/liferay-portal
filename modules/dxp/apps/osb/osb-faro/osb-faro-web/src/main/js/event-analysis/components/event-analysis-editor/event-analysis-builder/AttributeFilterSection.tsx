@@ -1,6 +1,7 @@
 import AttributeFilterChip from './AttributeFilterChip';
 import AttributeFilterDropdown from './attribute-filter-dropdown';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import HTML5Backend from 'react-dnd-html5-backend';
 import React from 'react';
 import {Align} from '@clayui/drop-down';
@@ -64,14 +65,14 @@ export const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 						alignmentPosition={Align.LeftTop}
 						eventId={eventId}
 						trigger={
-							<Button
+							<ClayButton
 								borderless
-								className='add-attribute'
-								display='light'
-								icon='plus'
-								iconAlignment='left'
+								className='button-root add-attribute'
+								displayType='secondary'
 								size='sm'
-							/>
+							>
+								<ClayIcon className='icon-root' symbol='plus' />
+							</ClayButton>
 						}
 						uneditableIds={uneditableIds}
 					/>

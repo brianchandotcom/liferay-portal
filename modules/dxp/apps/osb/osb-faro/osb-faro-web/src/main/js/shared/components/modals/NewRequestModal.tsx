@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import FileDropTarget from 'shared/components/FileDropTarget';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
@@ -337,18 +338,30 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 						</Modal.Body>
 
 						<Modal.Footer>
-							<Button display='secondary' onClick={onClose}>
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								onClick={onClose}
+							>
 								{Liferay.Language.get('cancel')}
-							</Button>
+							</ClayButton>
 
-							<Button
+							<ClayButton
+								className='button-root'
 								disabled={!isValid(values)}
-								display='primary'
-								loading={isSubmitting}
+								displayType='primary'
 								type='submit'
 							>
+								{isSubmitting && (
+									<ClayLoadingIndicator
+										className='d-inline-block mr-2'
+										displayType='secondary'
+										size='sm'
+									/>
+								)}
+
 								{Liferay.Language.get('save')}
-							</Button>
+							</ClayButton>
 						</Modal.Footer>
 					</Form.Form>
 				)}

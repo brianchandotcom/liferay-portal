@@ -1,8 +1,8 @@
 import ActivitiesChart, {
 	ChartPayload
 } from 'contacts/components/ActivitiesChart';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
 import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
 import EventMetricQuery, {
 	EventMetricsData,
@@ -309,15 +309,16 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 							</h4>
 
 							{selected && (
-								<Button
-									display='link'
+								<ClayButton
+									className='button-root'
+									displayType='unstyled'
 									onClick={handleClearSelection}
 									size='sm'
 								>
 									{Liferay.Language.get(
 										'clear-date-selection'
 									)}
-								</Button>
+								</ClayButton>
 							)}
 						</div>
 

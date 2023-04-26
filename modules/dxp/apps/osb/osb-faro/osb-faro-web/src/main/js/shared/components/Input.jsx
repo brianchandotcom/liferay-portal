@@ -1,4 +1,4 @@
-import Button from './Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
@@ -35,11 +35,11 @@ class InputButton extends React.Component {
 
 		return (
 			<InputGroupItem className={className} position={position} shrink>
-				<Button
+				<ClayButton
 					{...omitDefinedProps(otherProps, InputButton.propTypes)}
 				>
 					{this.props.children}
-				</Button>
+				</ClayButton>
 			</InputGroupItem>
 		);
 	}

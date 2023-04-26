@@ -1,5 +1,7 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	toPromise,
 	validateProtocol,
@@ -315,28 +317,20 @@ export class OAuthForm extends React.Component {
 
 		if (!editing) {
 			return (
-				<Button
-					className='edit'
-					display='secondary'
+				<ClayButton
+					className='button-root edit'
+					displayType='secondary'
 					key='EDIT'
 					onClick={this.handleToggleEditing}
 				>
 					{Liferay.Language.get('edit')}
-				</Button>
+				</ClayButton>
 			);
 		} else {
-			const cancelButtonParams = id
-				? {onClick: this.handleCancel}
-				: {
-						href: toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-							groupId
-						})
-				  };
-
 			return (
 				<>
-					<Button
-						className='submit'
+					<ClayButton
+						className='button-root submit'
 						disabled={
 							submitting ||
 							!valid ||
@@ -344,21 +338,41 @@ export class OAuthForm extends React.Component {
 								!nameModified &&
 								!ownerRemoved)
 						}
-						display='primary'
 						key='SUBMIT'
-						loading={submitting}
 						type='submit'
 					>
-						{Liferay.Language.get('authorize-&-save')}
-					</Button>
+						{submitting && (
+							<ClayLoadingIndicator
+								className='d-inline-block mr-2'
+								displayType='secondary'
+								size='sm'
+							/>
+						)}
 
-					<Button
-						{...cancelButtonParams}
-						disabled={submitting}
-						display='secondary'
-					>
-						{Liferay.Language.get('cancel')}
-					</Button>
+						{Liferay.Language.get('authorize-&-save')}
+					</ClayButton>
+
+					{id ? (
+						<ClayButton
+							className='button-root'
+							disabled={submitting}
+							displayType='secondary'
+							onClick={this.handleCancel}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					) : (
+						<ClayLink
+							button
+							className='button-root'
+							displayType='secondary'
+							href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
+								groupId
+							})}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayLink>
+					)}
 				</>
 			);
 		}
@@ -514,10 +528,10 @@ export class OAuthForm extends React.Component {
 														)}
 													</em>
 												) : (
-													/* eslint-disable */
-													<Button
+													<ClayButton
+														className='button-root'
 														disabled={isSubmitting}
-														display='link'
+														displayType='secondary'
 														onClick={
 															this
 																.handleRemoveOwner
@@ -527,8 +541,7 @@ export class OAuthForm extends React.Component {
 														{Liferay.Language.get(
 															'remove'
 														)}
-													</Button>
-													/* eslint-enable */
+													</ClayButton>
 												))}
 										</>
 									) : (

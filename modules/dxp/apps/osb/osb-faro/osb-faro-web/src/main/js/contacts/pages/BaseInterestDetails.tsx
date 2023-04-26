@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
-import BackButton from 'contacts/components/BackButton';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import InterestPagesList from 'contacts/components/InterestPagesList';
 import Nav from 'shared/components/Nav';
 import React from 'react';
@@ -173,15 +174,26 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 
 	return (
 		<div className='interest-details-root'>
-			<BackButton
-				href={toRoute(Routes.CONTACTS_INTERESTS, {
-					channelId,
-					groupId,
-					id,
-					type
-				})}
-				label={Liferay.Language.get('back-to-interests')}
-			/>
+			<div className='back-button-root mb-2'>
+				<ClayLink
+					borderless
+					button
+					displayType='secondary'
+					href={toRoute(Routes.CONTACTS_INTERESTS, {
+						channelId,
+						groupId,
+						id,
+						type
+					})}
+				>
+					<ClayIcon
+						className='icon-root icon-size-sm mr-2'
+						symbol='angle-left'
+					/>
+
+					{Liferay.Language.get('back-to-interests')}
+				</ClayLink>
+			</div>
 
 			<Card pageDisplay>
 				<Card.Header>

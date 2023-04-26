@@ -291,6 +291,9 @@ export default WrappedComponent => {
 										editing
 											? [
 													{
+														button: true,
+														displayType:
+															'secondary',
 														label: Liferay.Language.get(
 															'delete-segment'
 														),

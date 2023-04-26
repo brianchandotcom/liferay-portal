@@ -1,8 +1,10 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import Modal from 'shared/components/modal';
 import Promise from 'metal-promise';
 import React, {useState} from 'react';
+import {DisplayType} from '@clayui/button/lib/Button';
 import {noop} from 'lodash';
 
 interface IConfirmationModalProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -12,7 +14,7 @@ interface IConfirmationModalProps extends React.HTMLAttributes<HTMLDivElement> {
 	modalVariant?: string;
 	onClose: () => void;
 	onSubmit: () => any;
-	submitButtonDisplay?: string;
+	submitButtonDisplay?: DisplayType;
 	submitMessage?: string;
 	title?: string;
 	titleIcon?: string;
@@ -50,11 +52,17 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
 			<Modal.Body>{message}</Modal.Body>
 
 			<Modal.Footer>
-				<Button onClick={onClose}>{cancelMessage}</Button>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={onClose}
+				>
+					{cancelMessage}
+				</ClayButton>
 
-				<Button
-					display={submitButtonDisplay}
-					loading={submitting}
+				<ClayButton
+					className='button-root'
+					displayType={submitButtonDisplay}
 					onClick={() => {
 						setSubmitting(true);
 
@@ -77,8 +85,16 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
 						}
 					}}
 				>
+					{submitting && (
+						<ClayLoadingIndicator
+							className='d-inline-block mr-2'
+							displayType='secondary'
+							size='sm'
+						/>
+					)}
+
 					{submitMessage}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</Modal>
 	);

@@ -1,6 +1,7 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -134,19 +135,19 @@ export default class KnownIndividualsCard extends React.Component {
 				{this.renderTable()}
 
 				<Card.Footer>
-					<Button
-						display='link'
+					<ClayLink
+						className='button-root'
+						displayType='secondary'
 						href={toRoute(Routes.CONTACTS_ACCOUNT_INDIVIDUALS, {
 							channelId,
 							groupId,
 							id
 						})}
-						icon='angle-right'
-						iconAlignment='right'
-						size='sm'
 					>
 						{Liferay.Language.get('view-all-individuals')}
-					</Button>
+
+						<ClayIcon className='ml-2' symbol='angle-right' />
+					</ClayLink>
 				</Card.Footer>
 			</Card>
 		);

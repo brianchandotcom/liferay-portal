@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
 import Icon from 'shared/components/Icon';
 import Label from 'shared/components/Label';
@@ -243,9 +243,10 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 	const renderNav = () => (
 		<Nav>
 			<Nav.Item>
-				<Button
-					className='nav-btn'
-					display='primary'
+				<ClayLink
+					button
+					className='button-root nav-btn'
+					displayType='primary'
 					href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
 						groupId
 					})}
@@ -258,7 +259,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 					}}
 				>
 					{Liferay.Language.get('add-data-source')}
-				</Button>
+				</ClayLink>
 			</Nav.Item>
 		</Nav>
 	);

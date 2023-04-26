@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Item from '../components/Item';
 import React from 'react';
 import Row from '../components/Row';
@@ -111,12 +111,14 @@ export default class TooltipKit extends React.Component {
 
 				<Row>
 					<Item>
-						<Button
+						<ClayButton
+							className='button-root'
 							data-tooltip-response='Clicked!'
+							displayType='secondary'
 							title='show tooltip'
 						>
 							{'Click to see response!'}
-						</Button>
+						</ClayButton>
 					</Item>
 				</Row>
 			</div>

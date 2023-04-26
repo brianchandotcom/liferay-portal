@@ -1,5 +1,5 @@
-import Button from 'shared/components/Button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import React from 'react';
 import Sheet from 'shared/components/Sheet';
@@ -16,7 +16,7 @@ const WorkspaceNotFound: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 			<Sheet.Header>
 				<Sheet.Section className='title'>
 					<ClayIcon
-						className='text-danger'
+						className='icon-root text-danger'
 						symbol='exclamation-circle'
 					/>{' '}
 					{Liferay.Language.get('workspace-error')}
@@ -29,9 +29,14 @@ const WorkspaceNotFound: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 					)}`}
 				</Sheet.Section>
 				<Sheet.Section>
-					<Button display='primary' href={Routes.WORKSPACES}>
+					<ClayLink
+						button
+						className='button-root'
+						displayType='secondary'
+						href={Routes.WORKSPACES}
+					>
 						{Liferay.Language.get('go-back-to-your-workspaces')}
-					</Button>
+					</ClayLink>
 				</Sheet.Section>
 			</Sheet.Header>
 		</Sheet>

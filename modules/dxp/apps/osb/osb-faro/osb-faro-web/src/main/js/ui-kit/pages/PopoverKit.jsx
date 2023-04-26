@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Popover from 'shared/components/Popover';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -37,7 +37,9 @@ export default class PopoverKit extends React.Component {
 					<h3>{'Popover'}</h3>
 
 					<div>
-						<Button
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
 							onBlur={this.handleMouseOver}
 							onFocus={this.handleMouseOut}
 							onMouseOut={this.handleMouseOut}
@@ -45,7 +47,7 @@ export default class PopoverKit extends React.Component {
 							ref={this._triggerRef}
 						>
 							{'Mouse over me!'}
-						</Button>
+						</ClayButton>
 
 						{ReactDOM.createPortal(
 							<Popover

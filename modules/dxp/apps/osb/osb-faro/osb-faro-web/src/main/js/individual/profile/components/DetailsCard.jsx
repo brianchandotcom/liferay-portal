@@ -1,6 +1,7 @@
 import Avatar from 'shared/components/Avatar';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import React from 'react';
 import {formatDateToTimeZone} from 'shared/util/date';
@@ -58,19 +59,22 @@ export default class DetailsCard extends React.PureComponent {
 				</Card.Body>
 
 				<Card.Footer>
-					<Button
-						display='link'
+					<ClayLink
+						className='button-root'
 						href={toRoute(Routes.CONTACTS_INDIVIDUAL_DETAILS, {
 							channelId,
 							groupId,
 							id
 						})}
-						icon='angle-right'
-						iconAlignment='right'
-						size='sm'
+						small
 					>
 						{Liferay.Language.get('view-all-details')}
-					</Button>
+
+						<ClayIcon
+							classname='icon-root ml-2'
+							symbol='angle-right'
+						/>
+					</ClayLink>
 				</Card.Footer>
 			</Card>
 		);

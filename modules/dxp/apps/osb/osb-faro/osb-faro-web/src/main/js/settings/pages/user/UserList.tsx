@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Nav from 'shared/components/Nav';
 import React from 'react';
@@ -260,13 +261,13 @@ const UserList: React.FC<IUserListProps> = ({
 			return (
 				<Nav>
 					<Nav.Item>
-						<Button
-							className='nav-btn'
-							display='primary'
+						<ClayButton
+							className='button-root nav-btn'
+							displayType='primary'
 							onClick={handleInviteModal}
 						>
 							{Liferay.Language.get('invite-users')}
-						</Button>
+						</ClayButton>
 					</Nav.Item>
 				</Nav>
 			);
@@ -274,25 +275,27 @@ const UserList: React.FC<IUserListProps> = ({
 
 		return (
 			<Nav>
-				<Button
+				<ClayButton
 					borderless
-					display='secondary'
+					className='button-root'
+					displayType='secondary'
 					onClick={handleActions}
 					outline
 				>
 					{Liferay.Language.get('change-permissions')}
-				</Button>
+				</ClayButton>
 
-				<Button
+				<ClayButton
 					borderless
-					display='secondary'
-					icon='trash'
-					iconAlignment='left'
+					className='button-root'
+					displayType='secondary'
 					onClick={() =>
 						handleUserDelete(selectedItems.keySeq().toArray())
 					}
 					outline
-				/>
+				>
+					<ClayIcon className='icon-root' symbol='trash' />
+				</ClayButton>
 			</Nav>
 		);
 	};

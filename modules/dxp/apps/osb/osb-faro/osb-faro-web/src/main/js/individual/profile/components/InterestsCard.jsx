@@ -1,8 +1,8 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import ListGroup from 'shared/components/list-group';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -117,19 +117,21 @@ export default class InterestsCard extends React.PureComponent {
 				/>
 
 				<Card.Footer>
-					<Button
-						display='link'
+					<ClayLink
+						className='button-root'
 						href={toRoute(Routes.CONTACTS_INDIVIDUAL_INTERESTS, {
 							channelId,
 							groupId,
 							id
 						})}
-						size='sm'
 					>
 						{Liferay.Language.get('view-all-interests')}
 
-						<Icon symbol='angle-right' />
-					</Button>
+						<ClayIcon
+							className='icon-root ml-2'
+							symbol='angle-right'
+						/>
+					</ClayLink>
 				</Card.Footer>
 			</Card>
 		);

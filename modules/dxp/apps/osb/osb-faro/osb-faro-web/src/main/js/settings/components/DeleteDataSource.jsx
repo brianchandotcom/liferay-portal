@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Form, {validateInputMessage} from 'shared/components/form';
 import getCN from 'classnames';
 import React from 'react';
@@ -132,13 +133,13 @@ class DataSourceItem extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}`}
 			>
-				<Button
-					className='title'
-					display='unstyled'
+				<ClayButton
+					className='button-root title'
+					displayType='unstyled'
 					onClick={this.handleClick}
 				>
 					<h5>{title}</h5>
-				</Button>
+				</ClayButton>
 
 				<div className='secondary-info'>{secondaryInfo}</div>
 			</div>
@@ -318,23 +319,26 @@ export class DeleteDataSource extends React.Component {
 							</Sheet.Body>
 
 							<Sheet.Footer divider={false}>
-								<Button
-									className='delete-button'
+								<ClayButton
+									className='button-root delete-button'
 									disabled={!isValid || isSubmitting}
-									display='warning'
+									displayType='warning'
 									type='submit'
 								>
 									{pageActionText}
-								</Button>
+								</ClayButton>
 
-								<Button
+								<ClayLink
+									button
+									className='button-root'
+									displayType='secondary'
 									href={toRoute(Routes.SETTINGS_DATA_SOURCE, {
 										groupId,
 										id
 									})}
 								>
 									{Liferay.Language.get('cancel')}
-								</Button>
+								</ClayLink>
 							</Sheet.Footer>
 						</Form.Form>
 					)}

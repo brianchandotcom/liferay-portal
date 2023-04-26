@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import React from 'react';
 import Row from '../components/Row';
 import {addAlert, updateAlert} from 'shared/actions/alerts';
@@ -77,33 +77,53 @@ export default class AlertFeedKit extends React.Component {
 				}
 			>
 				<Row>
-					<Button display='primary' onClick={this.handleInfo}>
+					<ClayButton
+						className='button-root'
+						displayType='primary'
+						onClick={this.handleInfo}
+					>
 						{'Create Info'}
-					</Button>
+					</ClayButton>
 				</Row>
 
 				<Row>
-					<Button display='primary' onClick={this.handleError}>
+					<ClayButton
+						className='button-root'
+						displayType='primary'
+						onClick={this.handleError}
+					>
 						{'Create Error'}
-					</Button>
+					</ClayButton>
 				</Row>
 
 				<Row>
-					<Button display='primary' onClick={this.handlePending}>
+					<ClayButton
+						className='button-root'
+						displayType='primary'
+						onClick={this.handlePending}
+					>
 						{'Create Pending'}
-					</Button>
+					</ClayButton>
 				</Row>
 
 				<Row>
-					<Button display='primary' onClick={this.handleSuccess}>
+					<ClayButton
+						className='button-root'
+						displayType='primary'
+						onClick={this.handleSuccess}
+					>
 						{'Create Success'}
-					</Button>
+					</ClayButton>
 				</Row>
 
 				<Row>
-					<Button display='primary' onClick={this.handleWarning}>
+					<ClayButton
+						className='button-root'
+						displayType='primary'
+						onClick={this.handleWarning}
+					>
 						{'Create Warning'}
-					</Button>
+					</ClayButton>
 				</Row>
 			</div>
 		);

@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import Modal from 'shared/components/modal';
 import React, {useEffect} from 'react';
@@ -120,17 +120,22 @@ const SearchableTableModalGraphql: React.FC<ISearchableTableModalGraphQLProps> =
 			/>
 
 			<Modal.Footer>
-				<Button onClick={onClose}>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={onClose}
+				>
 					{Liferay.Language.get('cancel')}
-				</Button>
+				</ClayButton>
 
-				<Button
+				<ClayButton
+					className='button-root'
 					disabled={requireSelection && !contextSelectedItems.size}
-					display='primary'
+					displayType='primary'
 					onClick={handleSubmit}
 				>
 					{submitMessage}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</Modal>
 	);

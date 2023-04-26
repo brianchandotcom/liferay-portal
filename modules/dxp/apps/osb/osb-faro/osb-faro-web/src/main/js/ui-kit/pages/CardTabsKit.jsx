@@ -15,13 +15,11 @@ export default class CardTabsKit extends React.Component {
 						{
 							secondaryInfo: 'Foo secondary info',
 							tabId: 'foo',
-							tabUrl: 'https://www.liferay.com/foo',
 							title: 'Foo Tab'
 						},
 						{
 							secondaryInfo: 'Bar secondary info',
 							tabId: 'bar',
-							tabUrl: 'https://www.liferay.com/bar',
 							title: 'Bar Tab'
 						}
 					]}

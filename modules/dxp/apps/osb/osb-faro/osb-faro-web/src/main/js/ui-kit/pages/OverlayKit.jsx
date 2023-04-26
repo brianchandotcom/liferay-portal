@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import DatePicker from 'shared/components/date-picker';
 import Overlay from 'shared/components/Overlay';
 import React from 'react';
@@ -14,7 +14,12 @@ class OverlayKit extends React.Component {
 			>
 				<Row>
 					<Overlay>
-						<Button>{'Hover Me'}</Button>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+						>
+							{'Hover Me'}
+						</ClayButton>
 
 						<DatePicker />
 					</Overlay>
@@ -22,13 +27,28 @@ class OverlayKit extends React.Component {
 
 				<Row>
 					<Overlay>
-						<Button>{'Nested'}</Button>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+						>
+							{'Nested'}
+						</ClayButton>
 
 						<Overlay>
-							<Button>{'Nested 2'}</Button>
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+							>
+								{'Nested 2'}
+							</ClayButton>
 
 							<Overlay>
-								<Button>{'Hover Me'}</Button>
+								<ClayButton
+									className='button-root'
+									displayType='secondary'
+								>
+									{'Hover Me'}
+								</ClayButton>
 
 								<DatePicker />
 							</Overlay>

@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -24,13 +25,14 @@ const CollapsibleOverlay: React.FC<ICollapsibleOverlayProps> = ({
 			<div className='header'>
 				<h3>{title}</h3>
 
-				<Button
+				<ClayButton
 					aria-label={Liferay.Language.get('close')}
-					display='unstyled'
-					icon='times'
-					iconAlignment='left'
+					className='button-root'
+					displayType='unstyled'
 					onClick={onClose}
-				></Button>
+				>
+					<ClayIcon className='icon-root' symbol='times' />
+				</ClayButton>
 			</div>
 
 			{children}

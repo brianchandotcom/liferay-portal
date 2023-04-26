@@ -1,6 +1,7 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import debounce from 'shared/util/debounce-decorator';
 import EntityList from 'shared/components/EntityList';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
@@ -147,15 +148,18 @@ export default class AssociatedSegmentsCard extends React.Component {
 				</Card.Body>
 
 				<Card.Footer>
-					<Button
-						display='link'
+					<ClayLink
+						className='button-root'
+						displayType='secondary'
 						href={pageUrl}
-						icon='angle-right'
-						iconAlignment='right'
-						size='sm'
 					>
 						{Liferay.Language.get('view-all-segments')}
-					</Button>
+
+						<ClayIcon
+							className='icon-root ml-2'
+							symbol='angle-right'
+						/>
+					</ClayLink>
 				</Card.Footer>
 			</Card>
 		);

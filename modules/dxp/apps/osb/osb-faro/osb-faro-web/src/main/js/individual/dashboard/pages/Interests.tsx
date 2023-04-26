@@ -1,5 +1,5 @@
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import Interests from '../hocs/Interests';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
@@ -42,8 +42,10 @@ const InterestsPage: React.FC<IInterestsPageProps> = ({currentUser}) => {
 							</a>
 
 							{authorized && (
-								<Button
-									display='primary'
+								<ClayLink
+									button
+									className='button-root'
+									displayType='primary'
 									href={toRoute(
 										Routes.SETTINGS_ADD_DATA_SOURCE,
 										{
@@ -54,7 +56,7 @@ const InterestsPage: React.FC<IInterestsPageProps> = ({currentUser}) => {
 									{Liferay.Language.get(
 										'connect-data-source'
 									)}
-								</Button>
+								</ClayLink>
 							)}
 						</>
 					}

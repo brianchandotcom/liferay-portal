@@ -1,4 +1,4 @@
-import Button from '../Button';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import Icon from '../Icon';
 import React from 'react';
@@ -27,7 +27,13 @@ const SidebarItem: React.FC<ISidebarItemProps> = ({
 			active
 		})}
 	>
-		<Button className='link' display='link' href={href} onClick={onClick}>
+		<ClayLink
+			button
+			className='link'
+			displayType='unstyled'
+			href={href}
+			onClick={onClick}
+		>
 			<span className='link-content-wrapper'>
 				<span className='icon-wrapper'>
 					<Icon monospaced={false} symbol={icon} />
@@ -35,7 +41,7 @@ const SidebarItem: React.FC<ISidebarItemProps> = ({
 
 				<span className='item-label'>{label}</span>
 			</span>
-		</Button>
+		</ClayLink>
 	</li>
 );
 

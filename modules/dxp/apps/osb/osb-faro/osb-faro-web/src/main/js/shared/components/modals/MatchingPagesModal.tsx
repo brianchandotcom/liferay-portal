@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import MetadataTag from 'settings/recommendations/components/MetadataTag';
 import Modal from 'shared/components/modal';
 import React from 'react';
@@ -143,9 +143,13 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 			/>
 
 			<Modal.Footer>
-				<Button display='primary' onClick={onClose}>
+				<ClayButton
+					className='button-root'
+					displayType='primary'
+					onClick={onClose}
+				>
 					{Liferay.Language.get('done')}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</Modal>
 	);

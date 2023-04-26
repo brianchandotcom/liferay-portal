@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import Form, {validateRequired} from 'shared/components/form';
 import NavigationWarning from 'shared/components/NavigationWarning';
 import Promise from 'metal-promise';
@@ -76,8 +77,10 @@ export class StaticSegmentEdit extends React.Component {
 
 		return (
 			<div className='form-actions'>
-				<Button
-					className='cancel'
+				<ClayLink
+					button
+					className='button-root cancel'
+					displayType='secondary'
 					href={
 						editing
 							? toRoute(Routes.CONTACTS_ENTITY, {
@@ -94,18 +97,18 @@ export class StaticSegmentEdit extends React.Component {
 					}
 				>
 					{Liferay.Language.get('cancel')}
-				</Button>
+				</ClayLink>
 
-				<Button
-					className='submit'
+				<ClayButton
+					className='button-root submit'
 					disabled={!this.isValidStaticSegment()}
-					display='primary'
+					displayType='primary'
 					type='submit'
 				>
 					{editing
 						? Liferay.Language.get('save')
 						: Liferay.Language.get('create')}
-				</Button>
+				</ClayButton>
 			</div>
 		);
 	}

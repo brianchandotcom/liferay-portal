@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import HistogramChart from 'shared/components/HistogramChart';
 import React from 'react';
 import Row from '../components/Row';
@@ -72,11 +72,21 @@ export default class HistogramChartKit extends React.Component {
 	render() {
 		return (
 			<div>
-				<Button onClick={this.handleAdd} style={{marginRight: '10px'}}>
+				<ClayButton
+					className='button-root mr-2'
+					displayType='secondary'
+					onClick={this.handleAdd}
+				>
 					{'Add Item'}
-				</Button>
+				</ClayButton>
 
-				<Button onClick={this.handleRemove}>{'Remove Item'}</Button>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={this.handleRemove}
+				>
+					{'Remove Item'}
+				</ClayButton>
 
 				<p>{`Total Items: ${this.state.data.length}`}</p>
 

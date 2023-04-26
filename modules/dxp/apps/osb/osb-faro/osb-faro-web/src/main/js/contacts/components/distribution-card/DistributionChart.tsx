@@ -1,6 +1,7 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Promise from 'metal-promise';
 import React from 'react';
@@ -283,15 +284,19 @@ class DistributionChart extends React.Component<
 				</Card.Body>
 
 				<Card.Footer>
-					<Button
-						display='link'
+					<ClayLink
+						className='button-root'
+						displayType='unstyled'
 						href={viewAllLink}
-						icon='angle-right'
-						iconAlignment='right'
-						size='sm'
+						small
 					>
 						{Liferay.Language.get('explore-breakdown')}
-					</Button>
+
+						<ClayIcon
+							className='icon-root ml-2'
+							symbol='angle-right'
+						/>
+					</ClayLink>
 				</Card.Footer>
 			</>
 		);

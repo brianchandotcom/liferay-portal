@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Input from 'shared/components/Input';
 import Modal from 'shared/components/modal';
 import React, {useRef} from 'react';
@@ -30,12 +30,17 @@ const InputModal: React.FC<IInputModalProps> = ({
 			</Modal.Body>
 
 			<Modal.Footer>
-				<Button onClick={onClose}>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={onClose}
+				>
 					{Liferay.Language.get('cancel')}
-				</Button>
+				</ClayButton>
 
-				<Button
-					display='primary'
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
 					onClick={() =>
 						onSubmit(
 							_inputRef?.current?._elementRef?.current?.value
@@ -43,7 +48,7 @@ const InputModal: React.FC<IInputModalProps> = ({
 					}
 				>
 					{Liferay.Language.get('submit')}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</Modal>
 	);

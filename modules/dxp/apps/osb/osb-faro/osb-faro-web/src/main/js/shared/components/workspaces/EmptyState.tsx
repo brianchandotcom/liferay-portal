@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import Icon from 'shared/components/Icon';
 import React from 'react';
@@ -23,6 +23,7 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 		<div className={PROD_MODE ? 'col-xl-12' : 'col-xl-6'}>
 			<CardEmpty
 				buttonProps={{
+					displayType: 'secondary',
 					label: Liferay.Language.get('contact-sales'),
 					onClick: () =>
 						open(modalTypes.CONTACT_SALES_MODAL, {
@@ -40,7 +41,7 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 			<div className='col-xl-6'>
 				<CardEmpty
 					buttonProps={{
-						display: 'secondary',
+						displayType: 'secondary',
 						href: toRoute(Routes.WORKSPACE_ADD_TRIAL),
 						label: Liferay.Language.get('start-free-trial')
 					}}
@@ -56,7 +57,7 @@ const EmptyState: React.FC<IEmptyStateProps> = ({
 
 interface ICardItemProps extends React.HTMLAttributes<HTMLElement> {
 	buttonProps: {
-		display?: DisplayType;
+		displayType?: DisplayType;
 		href?: string;
 		label: string;
 		onClick?: () => void;
@@ -70,15 +71,13 @@ export const CardEmpty: React.FC<ICardItemProps> = ({
 	description,
 	icon
 }) => {
-	const {display = 'primary', label, ...otherButtonProps} = buttonProps;
+	const {label, ...otherButtonProps} = buttonProps;
 
 	return (
 		<div className='empty-card'>
 			<Icon symbol={icon} />
 			<p>{description}</p>
-			<Button display={display} {...otherButtonProps}>
-				{label}
-			</Button>
+			<ClayButton {...otherButtonProps}>{label}</ClayButton>
 		</div>
 	);
 };

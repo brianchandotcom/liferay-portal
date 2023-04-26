@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form from 'shared/components/form';
 import React from 'react';
 import {BOOLEAN_LABELS_MAP, BOOLEAN_OPTIONS} from 'event-analysis/utils/utils';
@@ -61,9 +61,14 @@ const BooleanFilter: React.FC<IFilterProps> = ({
 					</div>
 
 					<div className='options-footer'>
-						<Button block display='primary' type='submit'>
+						<ClayButton
+							block
+							className='button-root'
+							displayType='primary'
+							type='submit'
+						>
 							{Liferay.Language.get('done')}
-						</Button>
+						</ClayButton>
 					</div>
 				</Form.Form>
 			)}

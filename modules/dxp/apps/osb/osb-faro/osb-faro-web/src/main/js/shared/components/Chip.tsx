@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -18,13 +19,13 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>(
 		>
 			{children}
 
-			<Button
-				className='remove-button'
-				display='unstyled'
-				icon='times-circle'
-				iconAlignment='left'
+			<ClayButton
+				className='button-root remove-button'
+				displayType='unstyled'
 				onClick={() => onCloseClick()}
-			/>
+			>
+				<ClayIcon className='icon-root' symbol='times-circle' />
+			</ClayButton>
 		</div>
 	)
 );

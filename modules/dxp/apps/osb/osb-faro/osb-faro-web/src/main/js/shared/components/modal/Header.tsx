@@ -1,4 +1,4 @@
-import Button from '../Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import Icon from '../Icon';
 import React from 'react';
@@ -33,9 +33,13 @@ const Header: React.FC<IHeaderProps> = ({
 		)}
 
 		{!!onClose && (
-			<Button className='close' onClick={onClose}>
+			<ClayButton
+				className='button-root close'
+				displayType='secondary'
+				onClick={onClose}
+			>
 				<Icon symbol='times' />
-			</Button>
+			</ClayButton>
 		)}
 	</div>
 );

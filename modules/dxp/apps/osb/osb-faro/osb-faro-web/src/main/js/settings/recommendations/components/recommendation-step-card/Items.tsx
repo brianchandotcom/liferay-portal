@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Constants from 'shared/util/constants';
 import Icon from 'shared/components/Icon';
 import React, {useEffect} from 'react';
@@ -51,9 +51,9 @@ const CountCell: React.FC<{
 
 	return (
 		<td className={className}>
-			<Button
-				className='matching-pages-modal-button'
-				display='unstyled'
+			<ClayButton
+				className='button-root matching-pages-modal-button'
+				displayType='unstyled'
 				onClick={() => {
 					open(modalTypes.MATCHING_PAGES_MODAL, {
 						itemFilters: [{name, value}],
@@ -62,7 +62,7 @@ const CountCell: React.FC<{
 				}}
 			>
 				{get(data, ['pageAssets', 'total'], 0).toLocaleString()}
-			</Button>
+			</ClayButton>
 		</td>
 	);
 };
@@ -114,9 +114,9 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 
 		return (
 			<div>
-				<Button
-					className='matching-pages-modal-button'
-					display='unstyled'
+				<ClayButton
+					className='button-root matching-pages-modal-button'
+					displayType='unstyled'
 					onClick={() => {
 						open(modalTypes.MATCHING_PAGES_MODAL, {
 							itemFilters,
@@ -126,7 +126,7 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 					}}
 				>
 					{get(data, ['pageAssets', 'total'], 0).toLocaleString()}
-				</Button>
+				</ClayButton>
 			</div>
 		);
 	};
@@ -144,8 +144,9 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 			<FieldArray name='itemFilters'>
 				{arrayHelpers => (
 					<>
-						<Button
-							className='new-rule-button'
+						<ClayButton
+							className='button-root new-rule-button'
+							displayType='secondary'
 							onClick={() => {
 								// Maybe add a toast alert to inform the user that this already exists therefore it was not added
 
@@ -167,7 +168,7 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 							}}
 						>
 							{Liferay.Language.get('new-rule')}
-						</Button>
+						</ClayButton>
 
 						{!!itemFilters.length && (
 							<>
@@ -196,9 +197,10 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 									items={itemFilters}
 									renderInlineRowActions={({data, items}) => (
 										<span>
-											<Button
+											<ClayButton
 												borderless
-												display='secondary'
+												className='button-root'
+												displayType='secondary'
 												onClick={() => {
 													arrayHelpers.remove(
 														items.findIndex(
@@ -215,7 +217,7 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 												outline
 											>
 												<Icon symbol='times' />
-											</Button>
+											</ClayButton>
 										</span>
 									)}
 									rowIdentifier={['name', 'value']}

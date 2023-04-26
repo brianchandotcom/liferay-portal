@@ -1,5 +1,5 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
 import React from 'react';
 import TimeZoneAlert from './TimeZoneAlert';
@@ -77,17 +77,16 @@ const notificationStrategies = new Map<string, Function>([
 						)}
 					</span>
 
-					<Button
-						className='py-0'
-						display='link'
+					<ClayLink
+						className='button-root py-0'
 						href={toRoute(
 							Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST,
 							{groupId}
 						)}
-						size='sm'
+						small
 					>
 						{Liferay.Language.get('view-block-list')}
-					</Button>
+					</ClayLink>
 				</>
 			),
 			onClose,

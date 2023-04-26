@@ -151,13 +151,17 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 			trigger={
 				<ClayButton
 					borderless
+					className='button-root'
 					disabled={disabled}
 					displayType='secondary'
 					small
 				>
 					{selectedItem.label}
 
-					<ClayIcon className='ml-2' symbol='caret-bottom' />
+					<ClayIcon
+						className='icon-root ml-2'
+						symbol='caret-bottom'
+					/>
 				</ClayButton>
 			}
 		>

@@ -1,6 +1,7 @@
 import BundleRouter from 'route-middleware/BundleRouter';
-import Button from 'shared/components/Button';
 import checkProjectState from 'shared/hoc/CheckProjectState';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import Icon from 'shared/components/Icon';
 import Loading from 'shared/pages/Loading';
@@ -277,12 +278,13 @@ export class Settings extends React.Component {
 													})}
 													key={url}
 												>
-													<Button
-														display='link'
+													<ClayLink
+														className='button-root'
 														href={url}
 													>
 														<span className='icon-wrapper'>
-															<Icon
+															<ClayIcon
+																className='icon-root'
 																monospaced={
 																	false
 																}
@@ -291,7 +293,7 @@ export class Settings extends React.Component {
 														</span>
 
 														{label}
-													</Button>
+													</ClayLink>
 												</li>
 											)
 										)}

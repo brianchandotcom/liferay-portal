@@ -1,5 +1,6 @@
-import BackButton from 'contacts/components/BackButton.tsx';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import InterestPagesList from 'contacts/components/InterestPagesList';
 import Nav from 'shared/components/Nav';
 import React from 'react';
@@ -70,14 +71,25 @@ export default class InterestDetails extends React.Component {
 
 		return (
 			<>
-				<BackButton
-					href={toRoute(Routes.CONTACTS_INDIVIDUAL_INTERESTS, {
-						channelId,
-						groupId,
-						id
-					})}
-					label={Liferay.Language.get('back-to-interests')}
-				/>
+				<div className='back-button-root mb-2'>
+					<ClayLink
+						borderless
+						button
+						displayType='secondary'
+						href={toRoute(Routes.CONTACTS_INDIVIDUAL_INTERESTS, {
+							channelId,
+							groupId,
+							id
+						})}
+					>
+						<ClayIcon
+							className='icon-root mr-2'
+							symbol='angle-left'
+						/>
+
+						{Liferay.Language.get('back-to-interests')}
+					</ClayLink>
+				</div>
 
 				<Card pageDisplay>
 					<Card.Header>

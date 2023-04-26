@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import BasePage from 'settings/components/BasePage';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import ListComponent from 'shared/hoc/ListComponent';
 import Nav from 'shared/components/Nav';
@@ -309,37 +309,39 @@ const ChannelList: React.FC<IChannelListProps> = ({
 			return (
 				<Nav>
 					<Nav.Item>
-						<Button
-							className='nav-btn'
+						<ClayButton
+							className='button-root nav-btn'
 							data-testid='addproperty-button'
-							display='primary'
+							displayType='primary'
 							onClick={handleAddChannel}
 						>
 							{Liferay.Language.get('new-property')}
-						</Button>
+						</ClayButton>
 					</Nav.Item>
 				</Nav>
 			);
 		} else {
 			return (
 				<Nav>
-					<Button
+					<ClayButton
 						borderless
-						display='secondary'
+						className='button-root'
+						displayType='secondary'
 						onClick={handleClearData}
 						outline
 					>
 						{Liferay.Language.get('clear-data')}
-					</Button>
+					</ClayButton>
 
-					<Button
+					<ClayButton
 						borderless
-						display='secondary'
+						className='button-root'
+						displayType='secondary'
 						onClick={handleDeleteChannel}
 						outline
 					>
 						{Liferay.Language.get('delete')}
-					</Button>
+					</ClayButton>
 				</Nav>
 			);
 		}

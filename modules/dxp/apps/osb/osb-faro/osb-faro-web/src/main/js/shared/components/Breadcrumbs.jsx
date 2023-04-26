@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from './Button';
+import ClayButton from '@clayui/button';
 import Dropdown from 'shared/components/Dropdown';
 import getCN from 'classnames';
 import React from 'react';
@@ -7,6 +7,7 @@ import {addContext} from 'shared/util/clay';
 import {Link} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
 import {Stack} from 'immutable';
+
 export const CONTEXT = 'breadcrumb';
 
 class BreadcrumbsDropdownItem extends React.Component {
@@ -56,7 +57,7 @@ class BreadcrumbsDropdown extends React.Component {
 				align='bottomCenter'
 				buttonProps={{
 					className: 'breadcrumb-link',
-					display: 'unstyled'
+					displayType: 'unstyled'
 				}}
 				className={className}
 				icon='ellipsis-h'
@@ -128,13 +129,13 @@ class BreadcrumbsItem extends React.Component {
 			);
 		} else {
 			return (
-				<Button
+				<ClayButton
 					className={contentClasses}
-					display='unstyled'
+					displayType='unstyled'
 					onClick={this.handleClick}
 				>
 					{children}
-				</Button>
+				</ClayButton>
 			);
 		}
 	}

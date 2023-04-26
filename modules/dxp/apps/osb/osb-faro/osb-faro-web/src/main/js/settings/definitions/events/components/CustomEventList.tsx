@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import EventDefinitionsQuery, {
 	EventDefinitionsData,
@@ -437,33 +438,30 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 						? () => (
 								<Nav>
 									<Nav.Item>
-										<Button
+										<ClayButton
 											borderless
-											className='nav-btn'
-											display='outline-secondary'
-											icon='ac-block'
-											iconAlignment='left'
+											className='button-root nav-btn'
+											displayType='secondary'
 											onClick={() => {
 												handleBlockEvents(
 													selectedItems.toArray()
 												);
 											}}
 										>
+											<ClayIcon
+												className='icon-root mr-2'
+												symbol='ac-block'
+											/>
+
 											{Liferay.Language.get(
 												'block-events'
 											)}
-										</Button>
+										</ClayButton>
 
-										<Button
+										<ClayButton
 											borderless
-											className='nav-btn'
-											display='outline-secondary'
-											icon={
-												hasUnhiddenEvent(selectedItems)
-													? 'ac-hidden'
-													: 'view'
-											}
-											iconAlignment='left'
+											className='button-root nav-btn'
+											displayType='secondary'
 											onClick={() => {
 												const hideEventFn = hasUnhiddenEvent(
 													selectedItems
@@ -476,10 +474,21 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 												);
 											}}
 										>
+											<ClayIcon
+												className='icon-root mr-2'
+												symbol={
+													hasUnhiddenEvent(
+														selectedItems
+													)
+														? 'ac-hidden'
+														: 'view'
+												}
+											/>
+
 											{hasUnhiddenEvent(selectedItems)
 												? Liferay.Language.get('hide')
 												: Liferay.Language.get('show')}
-										</Button>
+										</ClayButton>
 									</Nav.Item>
 								</Nav>
 						  )

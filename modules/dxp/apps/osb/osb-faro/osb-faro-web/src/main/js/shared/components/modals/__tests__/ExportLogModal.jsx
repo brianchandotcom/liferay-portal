@@ -25,11 +25,15 @@ const assertLoadingStatesForDownload = container => {
 
 	fireEvent.click(getByText(container, 'Download'));
 
-	expect(container.querySelector('.button-root .spinner-root')).toBeTruthy();
+	expect(
+		container.querySelector('.button-root .loading-animation')
+	).toBeTruthy();
 
 	jest.runAllTimers();
 
-	expect(container.querySelector('.button-root .spinner-root')).toBeNull();
+	expect(
+		container.querySelector('.button-root .loading-animation')
+	).toBeNull();
 };
 
 describe('ExportLogModal', () => {

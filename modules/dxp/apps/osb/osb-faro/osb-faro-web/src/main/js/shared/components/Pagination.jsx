@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import Dropdown from './Dropdown';
 import FaroConstants from 'shared/util/constants';
 import getCN from 'classnames';
@@ -51,7 +51,7 @@ class PaginationEllipsis extends React.Component {
 			<Dropdown
 				align='topCenter'
 				buttonProps={{
-					display: 'link'
+					displayType: 'link'
 				}}
 				className={className}
 				label='...'
@@ -118,15 +118,16 @@ class PaginationItem extends React.Component {
 		return (
 			<li className={classes}>
 				{page >= 0 ? (
-					<Button
-						className='page-link'
+					<ClayLink
+						button
+						className='button-root page-link'
 						disabled={disabled}
-						display='unstyled'
+						displayType='unstyled'
 						href={!onChange ? href : ''}
 						onClick={this.handleChange}
 					>
 						{children}
-					</Button>
+					</ClayLink>
 				) : (
 					children
 				)}

@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React, {FC} from 'react';
@@ -54,13 +55,14 @@ const Label: FC<{
 
 			{onRemove && (
 				<span className='label-item label-item-after'>
-					<Button
+					<ClayButton
 						aria-label={Liferay.Language.get('close')}
-						className='close'
-						icon='times'
-						iconAlignment='right'
+						className='button-root close'
+						displayType='secondary'
 						onClick={handleRemove}
-					/>
+					>
+						<ClayIcon className='icon-root' symbol='times' />
+					</ClayButton>
 				</span>
 			)}
 		</div>

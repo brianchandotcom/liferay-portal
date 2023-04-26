@@ -1,5 +1,6 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import EntityList from 'shared/components/EntityList';
 import ListGroup from 'shared/components/list-group';
 import ListView from 'shared/components/ListView';
@@ -178,21 +179,33 @@ export default class SelectItemsModal extends React.Component {
 				fitContent={fitContent}
 				footer={
 					<Modal.Footer>
-						<Button onClick={onClose}>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							onClick={onClose}
+						>
 							{Liferay.Language.get('cancel')}
-						</Button>
+						</ClayButton>
 
-						<Button
+						<ClayButton
+							className='button-root'
 							disabled={
 								requireSelection &&
 								!this.getSelectedItems().length
 							}
-							display='primary'
-							loading={submitting}
+							displayType='primary'
 							onClick={this.handleSubmit}
 						>
+							{submitting && (
+								<ClayLoadingIndicator
+									className='d-inline-block mr-2'
+									displayType='secondary'
+									size='sm'
+								/>
+							)}
+
 							{submitMessage}
-						</Button>
+						</ClayButton>
 					</Modal.Footer>
 				}
 				items={items}

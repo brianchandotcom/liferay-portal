@@ -1,5 +1,6 @@
-import BackButton from 'contacts/components/BackButton';
 import BasePage from 'shared/components/base-page';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import InterestDetails from 'shared/components/InterestDetails';
 import React from 'react';
 import {isNil, pickBy} from 'lodash';
@@ -21,17 +22,25 @@ const InterestDetailsPage: React.FC<IInterestDetailsProps> = ({router}) => {
 			className='individuals-dashboard-interest-details-root'
 			pageContainer
 		>
-			<BackButton
-				href={setUriQueryValues(
-					pickBy({rangeKey}, param => !isNil(param)),
+			<div className='back-button-root mb-2'>
+				<ClayLink
+					borderless
+					button
+					displayType='secondary'
+					href={setUriQueryValues(
+						pickBy({rangeKey}, param => !isNil(param)),
 
-					toRoute(Routes.CONTACTS_INDIVIDUALS_INTERESTS, {
-						channelId,
-						groupId
-					})
-				)}
-				label={Liferay.Language.get('back-to-interests')}
-			/>
+						toRoute(Routes.CONTACTS_INDIVIDUALS_INTERESTS, {
+							channelId,
+							groupId
+						})
+					)}
+				>
+					<ClayIcon className='icon-root mr-2' symbol='angle-left' />
+
+					{Liferay.Language.get('back-to-interests')}
+				</ClayLink>
+			</div>
 
 			<InterestDetails router={router} />
 		</BasePage.Body>

@@ -38,7 +38,9 @@ class NoResultsDisplayKit extends React.Component {
 					primary
 					title='No Results Title'
 				>
-					<ClayButton>{'Action Button'}</ClayButton>
+					<ClayButton className='button-root' displayType='secondary'>
+						{'Action Button'}
+					</ClayButton>
 				</NoResultsDisplay>
 
 				<hr />
@@ -49,7 +51,11 @@ class NoResultsDisplayKit extends React.Component {
 						icon={{border: false, size: 'sm', symbol: 'home'}}
 						title='No Resuls Title'
 					>
-						<ClayButton displayType='secondary' small>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							size='sm'
+						>
 							{'click'}
 						</ClayButton>
 					</NoResultsDisplay>
@@ -58,7 +64,11 @@ class NoResultsDisplayKit extends React.Component {
 						icon={{border: false, size: 'md', symbol: 'home'}}
 						title='No Resuls Title'
 					>
-						<ClayButton displayType='secondary' small>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							size='sm'
+						>
 							{'click'}
 						</ClayButton>
 					</NoResultsDisplay>
@@ -67,7 +77,11 @@ class NoResultsDisplayKit extends React.Component {
 						icon={{border: false, size: 'lg', symbol: 'home'}}
 						title='No Resuls Title'
 					>
-						<ClayButton displayType='secondary' small>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							size='sm'
+						>
 							{'click'}
 						</ClayButton>
 					</NoResultsDisplay>
@@ -78,7 +92,11 @@ class NoResultsDisplayKit extends React.Component {
 						icon={{border: false, size: 'xl', symbol: 'home'}}
 						title='No Resuls Title'
 					>
-						<ClayButton displayType='secondary' small>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							size='sm'
+						>
 							{'click'}
 						</ClayButton>
 					</NoResultsDisplay>
@@ -87,7 +105,11 @@ class NoResultsDisplayKit extends React.Component {
 						icon={{border: false, size: 'xxl', symbol: 'home'}}
 						title='No Resuls Title'
 					>
-						<ClayButton displayType='secondary' small>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							size='sm'
+						>
 							{'click'}
 						</ClayButton>
 					</NoResultsDisplay>
@@ -96,7 +118,11 @@ class NoResultsDisplayKit extends React.Component {
 						icon={{border: false, size: 'xxxl', symbol: 'home'}}
 						title='No Resuls Title'
 					>
-						<ClayButton displayType='secondary' small>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							size='sm'
+						>
 							{'click'}
 						</ClayButton>
 					</NoResultsDisplay>

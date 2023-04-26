@@ -1,7 +1,7 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import Loading from 'shared/pages/Loading';
 import React, {lazy, Suspense} from 'react';
@@ -137,8 +137,10 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 										</a>
 
 										{authorized && (
-											<Button
-												display='primary'
+											<ClayLink
+												button
+												className='button-root'
+												displayType='primary'
 												href={toRoute(
 													Routes.SETTINGS_ADD_DATA_SOURCE,
 													{
@@ -149,7 +151,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 												{Liferay.Language.get(
 													'connect-data-source'
 												)}
-											</Button>
+											</ClayLink>
 										)}
 									</>
 								}

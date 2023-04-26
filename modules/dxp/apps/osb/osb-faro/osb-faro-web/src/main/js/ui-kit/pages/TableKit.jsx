@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import React from 'react';
 import RowActions from 'shared/components/RowActions';
 import Sticker from 'shared/components/Sticker';
@@ -108,7 +108,13 @@ class CustomButtonCell extends React.Component {
 					this.props.className ? ` ${this.props.className}` : ''
 				}
 			>
-				<Button onClick={this.handleClick}>{'Save as Segment'}</Button>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={this.handleClick}
+				>
+					{'Save as Segment'}
+				</ClayButton>
 			</td>
 		);
 	}

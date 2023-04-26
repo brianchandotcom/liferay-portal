@@ -54,6 +54,7 @@ const Header: React.FC<SummaryBaseCardHeaderIProps> = ({
 					{modals && !!modals.length && (
 						<ClayButton.Group>
 							<ClayButton
+								className='button-root'
 								displayType='secondary'
 								onClick={
 									modals[0].Component &&
@@ -73,6 +74,7 @@ const Header: React.FC<SummaryBaseCardHeaderIProps> = ({
 							{modals.length > 1 && (
 								<>
 									<ClayButton
+										className='button-root'
 										displayType='secondary'
 										onClick={() =>
 											setActionActive(!actionActive)
@@ -80,7 +82,10 @@ const Header: React.FC<SummaryBaseCardHeaderIProps> = ({
 										ref={triggerElementRef}
 										small
 									>
-										<ClayIcon symbol='caret-bottom' />
+										<ClayIcon
+											className='icon-root'
+											symbol='caret-bottom'
+										/>
 									</ClayButton>
 									<ClayDropDown.Menu
 										active={actionActive}
@@ -134,10 +139,13 @@ const Header: React.FC<SummaryBaseCardHeaderIProps> = ({
 							onActiveChange={setCardActionActive}
 							trigger={
 								<ClayButton
-									className='text-white'
+									className='button-root text-white'
 									displayType='unstyled'
 								>
-									<ClayIcon symbol='ellipsis-v' />
+									<ClayIcon
+										className='icon-root'
+										symbol='ellipsis-v'
+									/>
 								</ClayButton>
 							}
 						>

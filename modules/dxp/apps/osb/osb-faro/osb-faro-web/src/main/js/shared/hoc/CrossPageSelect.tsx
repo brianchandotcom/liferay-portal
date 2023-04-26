@@ -192,8 +192,9 @@ export const ViewSelectedToggle = ({
 	showSelected
 }) => (
 	<ClayButton
+		className='button-root'
 		data-testid='view-selected'
-		displayType='link'
+		displayType='unstyled'
 		onClick={onClick}
 		small
 	>

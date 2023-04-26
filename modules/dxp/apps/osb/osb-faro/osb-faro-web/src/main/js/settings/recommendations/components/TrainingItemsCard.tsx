@@ -1,7 +1,7 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Constants from 'shared/util/constants';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import RecommendationPageAssetsQuery from '../queries/RecommendationPageAssetsQuery';
 import RuleItem from './RuleItem';
@@ -32,9 +32,10 @@ const TrainingItem: React.FC<ITrainingItemProps> = ({
 	value
 }) => (
 	<div className='training-item-root d-flex align-items-baseline'>
-		<Button
+		<ClayButton
 			borderless
-			display='secondary'
+			className='button-root'
+			displayType='secondary'
 			onClick={() => {
 				open(modalTypes.MATCHING_PAGES_MODAL, {
 					itemFilters: [{name, value}],
@@ -42,8 +43,8 @@ const TrainingItem: React.FC<ITrainingItemProps> = ({
 				});
 			}}
 		>
-			<Icon symbol='view' />
-		</Button>
+			<ClayIcon className='icon-root' symbol='view' />
+		</ClayButton>
 
 		<RuleItem name={name} value={value} />
 	</div>
@@ -103,9 +104,10 @@ const TrainingItemsCard: React.FC<ITrainingItemsCardProps> = ({
 				))}
 
 				<div className='total-training-urls d-flex align-items-center'>
-					<Button
+					<ClayButton
 						borderless
-						display='secondary'
+						className='button-root'
+						displayType='secondary'
 						onClick={() => {
 							open(modalTypes.MATCHING_PAGES_MODAL, {
 								itemFilters,
@@ -113,8 +115,8 @@ const TrainingItemsCard: React.FC<ITrainingItemsCardProps> = ({
 							});
 						}}
 					>
-						<Icon symbol='view' />
-					</Button>
+						<ClayIcon className='icon-root' symbol='view' />
+					</ClayButton>
 
 					{sub(
 						Liferay.Language.get('total-training-urls-x'),

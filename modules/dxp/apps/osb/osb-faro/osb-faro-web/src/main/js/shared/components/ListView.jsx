@@ -1,8 +1,8 @@
 import autobind from 'autobind-decorator';
-import Button from './Button';
 import Checkbox from './Checkbox';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from './Icon';
 import ListGroup from './list-group';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import RadioGroup from './RadioGroup';
@@ -32,14 +32,14 @@ class QuickAction extends React.Component {
 		const {className, symbol, ...otherProps} = this.props;
 
 		return (
-			<Button
+			<ClayButton
 				{...omitDefinedProps(otherProps, QuickAction.propTypes)}
-				className={getCN('quick-action-item', className)}
-				display='unstyled'
+				className={getCN('button-root quick-action-item', className)}
+				displayType='unstyled'
 				onClick={this.handleClick}
 			>
-				<Icon symbol={symbol} />
-			</Button>
+				<ClayIcon className='icon-root' symbol={symbol} />
+			</ClayButton>
 		);
 	}
 }

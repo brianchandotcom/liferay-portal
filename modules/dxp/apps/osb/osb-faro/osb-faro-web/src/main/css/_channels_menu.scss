@@ -40,14 +40,16 @@ $c: '.channels-menu';
 		display: -webkit-box;
 		margin: 6px 8px;
 		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;  
+		-webkit-box-orient: vertical;
 		min-width: 148px;
 		overflow: hidden;
 		white-space: normal;
 		width: 148px;
 	}
 
-	&:hover, &:active, &:focus {
+	&:hover,
+	&:active,
+	&:focus {
 		background: $main;
 		color: $white;
 	}
@@ -62,13 +64,14 @@ $c: '.channels-menu';
 	position: fixed;
 	z-index: $menuZIndex;
 
-	.dropdown-item:hover, .dropdown-item:focus {
+	.dropdown-item:hover,
+	.dropdown-item:focus {
 		background-color: transparent;
 	}
 
 	#{$c}-dropdown-header {
 		padding: 8px 16px;
-		
+
 		.title {
 			align-items: center;
 			display: flex;
@@ -94,7 +97,7 @@ $c: '.channels-menu';
 			border-color: $main;
 			border-left: none;
 		}
-		
+
 		.input-group-inset-item-after {
 			color: $mainLighten52;
 		}
@@ -109,14 +112,16 @@ $c: '.channels-menu';
 
 		.sites-dropdown-item {
 			padding: 0;
-			
+
 			.link {
 				border-bottom: 1px solid $mainLighten8;
 				border-radius: 0;
 				color: $mainLighten74;
+				display: inline-block;
 				font-size: $fontSizeSmall;
 				padding: 10px 32px;
-				transition: background-color 0.15s ease-out, color 0.15s ease-out;
+				transition: background-color 0.15s ease-out,
+					color 0.15s ease-out;
 				width: 100%;
 
 				&:active,

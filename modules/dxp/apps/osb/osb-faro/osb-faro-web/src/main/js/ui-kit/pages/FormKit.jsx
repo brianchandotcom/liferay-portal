@@ -1,5 +1,5 @@
 import * as data from 'test/data';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
@@ -29,10 +29,20 @@ const FormWrapper = ({children, initialValues = {}, title}) => (
 					{React.Children.map(children, child => (
 						<Item>{child}</Item>
 					))}
-					<Button display='primary' type='submit'>
+					<ClayButton
+						className='button-root'
+						displayType='primary'
+						type='submit'
+					>
 						{'Submit'}
-					</Button>
-					<Button onClick={handleReset}>{'Reset'}</Button>
+					</ClayButton>
+					<ClayButton
+						className='button-root econdary'
+						displayType='secondary'
+						onClick={handleReset}
+					>
+						{'Reset'}
+					</ClayButton>
 				</Form.Form>
 			)}
 		</Form>

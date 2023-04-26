@@ -1,5 +1,5 @@
 import * as API from 'shared/api';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import DocumentTitle from 'shared/components/DocumentTitle';
 import getCN from 'classnames';
 import Icon from 'shared/components/Icon';
@@ -120,11 +120,15 @@ export class WorkspacesBasePage extends React.Component {
 						<div className='content-container'>
 							{backURL && (
 								<div className='back-container'>
-									<Button display='unstyled' href={backURL}>
+									<ClayButton
+										className='button-root'
+										displayType='unstyled'
+										href={backURL}
+									>
 										<Icon symbol='angle-left' />
 
 										{backLabel}
-									</Button>
+									</ClayButton>
 								</div>
 							)}
 

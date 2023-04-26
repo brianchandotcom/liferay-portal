@@ -1,6 +1,7 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import Icon from 'shared/components/Icon';
 import React from 'react';
@@ -132,9 +133,14 @@ export default class WorkspaceListItem extends React.Component {
 			return this.renderProjectJoin();
 		} else if (deactivated) {
 			return (
-				<Button onClick={this.handleActivate} size='sm'>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={this.handleActivate}
+					size='sm'
+				>
 					{Liferay.Language.get('activate')}
-				</Button>
+				</ClayButton>
 			);
 		}
 
@@ -233,9 +239,14 @@ export default class WorkspaceListItem extends React.Component {
 			);
 		} else {
 			return (
-				<Button onClick={this.handleSendRequestAccess} size='sm'>
+				<ClayButton
+					className='button-root'
+					displayType='secondary'
+					onClick={this.handleSendRequestAccess}
+					size='sm'
+				>
 					{Liferay.Language.get('request-access')}
-				</Button>
+				</ClayButton>
 			);
 		}
 	}
@@ -259,7 +270,7 @@ export default class WorkspaceListItem extends React.Component {
 			}
 		);
 
-		const contentClasses = getCN('workspace-link', {
+		const contentClasses = getCN('button-root', 'workspace-link', {
 			'border-button': !isJoinableProjects,
 			'request-workspace': isJoinableProjects,
 			'workspace-unavailable': !available || deactivated
@@ -269,15 +280,18 @@ export default class WorkspaceListItem extends React.Component {
 			? {href}
 			: {onClick: this.handleGetProjectState};
 
+		const Button = href ? ClayLink : ClayButton;
+
 		return (
 			<li className={classes} key={name}>
 				{isJoinableProjects || deactivated ? (
 					<div className={contentClasses}>{this.renderContent()}</div>
 				) : (
 					<Button
+						button
 						className={contentClasses}
 						disabled={disabled || loading}
-						display='unstyled'
+						displayType='unstyled'
 						{...buttonAction}
 					>
 						{this.renderContent()}

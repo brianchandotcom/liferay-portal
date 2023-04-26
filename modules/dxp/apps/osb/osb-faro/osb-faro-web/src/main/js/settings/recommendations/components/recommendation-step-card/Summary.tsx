@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Constants from 'shared/util/constants';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
@@ -140,8 +140,9 @@ const Summary: React.FC<ISummaryProps> = ({
 	const render2StepsBackButton = (
 		children: React.ReactNode
 	): React.ReactNode => (
-		<Button
-			display='unstyled'
+		<ClayButton
+			className='button-root'
+			displayType='unstyled'
 			onClick={
 				notEnoughActivitiesWithPrevious
 					? () => setStep(currentStep - 2)
@@ -149,7 +150,7 @@ const Summary: React.FC<ISummaryProps> = ({
 			}
 		>
 			{children}
-		</Button>
+		</ClayButton>
 	);
 
 	return (

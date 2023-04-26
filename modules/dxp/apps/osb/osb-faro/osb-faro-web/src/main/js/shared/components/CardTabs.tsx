@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import React from 'react';
 
@@ -41,7 +41,7 @@ const CardTabs: React.FC<ICardTabsProps> = ({
 				size
 			)}
 		>
-			{tabs.map(({onClick, secondaryInfo, tabId, tabUrl, title}) => (
+			{tabs.map(({onClick, secondaryInfo, tabId, title}) => (
 				<li
 					className={getCN('card-tab', {
 						active: activeTabId === tabId
@@ -49,15 +49,15 @@ const CardTabs: React.FC<ICardTabsProps> = ({
 					data-testid={tabId}
 					key={tabId}
 				>
-					<Button
-						display='unstyled'
-						href={tabUrl}
+					<ClayButton
+						className='button-root'
+						displayType='unstyled'
 						onClick={() => handleEmitOnChange(onClick, tabId)}
 					>
 						<span className='title'>{title}</span>
 
 						<div>{secondaryInfo}</div>
-					</Button>
+					</ClayButton>
 				</li>
 			))}
 		</ul>

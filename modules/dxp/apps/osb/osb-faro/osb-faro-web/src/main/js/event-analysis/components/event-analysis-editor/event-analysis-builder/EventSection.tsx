@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import EventChip from './EventChip';
 import EventDropdown from './EventDropdown';
 import React from 'react';
@@ -47,13 +48,12 @@ const EventSection: React.FC<IEventSectionProps> = ({
 						alignmentPosition={Align.LeftTop}
 						onEventChange={handleEventChange}
 						trigger={
-							<Button
-								className='add-event-button'
-								display='primary'
-								icon='plus'
-								iconAlignment='left'
+							<ClayButton
+								className='button-root add-event-button'
 								size='sm'
-							/>
+							>
+								<ClayIcon className='icon-root' symbol='plus' />
+							</ClayButton>
 						}
 					/>
 				)}

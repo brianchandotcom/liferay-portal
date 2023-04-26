@@ -1,6 +1,6 @@
 import * as API from 'shared/api';
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import Constants, {Sizes} from 'shared/util/constants';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -72,8 +72,10 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 							</p>
 
 							{admin && (
-								<Button
-									display='primary'
+								<ClayLink
+									button
+									className='button-root'
+									displayType='primary'
 									href={
 										dataSources
 											? toRoute(
@@ -110,7 +112,7 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 												'create-property'
 										  )
 										: Liferay.Language.get('start')}
-								</Button>
+								</ClayLink>
 							)}
 						</>
 					}

@@ -27,7 +27,12 @@ const Welcome: React.FC<IWelcomeProps> = ({onClose, onNext}) => (
 		</Modal.Body>
 
 		<Modal.Footer className='d-flex justify-content-center'>
-			<ClayButton autoFocus onClick={() => onNext()}>
+			<ClayButton
+				autoFocus
+				className='button-root'
+				displayType='secondary'
+				onClick={() => onNext()}
+			>
 				{Liferay.Language.get('next')}
 			</ClayButton>
 		</Modal.Footer>

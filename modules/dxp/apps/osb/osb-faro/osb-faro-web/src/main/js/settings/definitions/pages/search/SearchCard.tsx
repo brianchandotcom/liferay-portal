@@ -1,10 +1,11 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Form, {
 	validateMaxLength,
 	validateRequired
 } from 'shared/components/form';
-import Icon from 'shared/components/Icon';
 import PreferenceMutation from 'settings/data-privacy/queries/PreferenceMutation';
 import PreferenceQuery from 'settings/data-privacy/queries/PreferenceQuery';
 import React, {useRef} from 'react';
@@ -45,9 +46,14 @@ const renderAddButton = (
 		(index === currentLength - 1 && currentLength <= 4 && authorized)
 	) {
 		return (
-			<Button borderless className='ml-1' display='secondary' {...props}>
-				<Icon symbol='plus' />
-			</Button>
+			<ClayButton
+				borderless
+				className='button-root ml-1'
+				displayType='secondary'
+				{...props}
+			>
+				<ClayIcon className='icon-root' symbol='plus' />
+			</ClayButton>
 		);
 	}
 
@@ -239,21 +245,24 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 															])}
 														/>
 														{authorized && (
-															<Button
+															<ClayButton
 																borderless
-																className='ml-1'
+																className='button-root ml-1'
 																disabled={
 																	isSubmitting
 																}
-																display='secondary'
+																displayType='secondary'
 																onClick={() =>
 																	arrayHelpers.remove(
 																		index
 																	)
 																}
 															>
-																<Icon symbol='trash' />
-															</Button>
+																<ClayIcon
+																	className='icon-root'
+																	symbol='trash'
+																/>
+															</ClayButton>
 														)}
 
 														{renderAddButton(
@@ -279,24 +288,32 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 
 								{authorized && (
 									<div className='mt-4'>
-										<Button
+										<ClayButton
+											className='button-root'
 											disabled={!isValid}
-											display='primary'
-											loading={isSubmitting}
+											displayType='primary'
 											type='submit'
 										>
-											{Liferay.Language.get('save')}
-										</Button>
+											{isSubmitting && (
+												<ClayLoadingIndicator
+													className='d-inline-block mr-2'
+													displayType='secondary'
+													size='sm'
+												/>
+											)}
 
-										<Button
-											className='ml-4'
-											display='secondary'
+											{Liferay.Language.get('save')}
+										</ClayButton>
+
+										<ClayButton
+											className='button-root ml-4'
+											displayType='secondary'
 											onClick={() =>
 												handleCancel(touched)
 											}
 										>
 											{Liferay.Language.get('cancel')}
-										</Button>
+										</ClayButton>
 									</div>
 								)}
 							</Form.Form>

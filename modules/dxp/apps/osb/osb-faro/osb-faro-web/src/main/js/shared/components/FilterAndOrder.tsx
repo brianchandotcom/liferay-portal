@@ -212,7 +212,7 @@ class FilterAndOrder extends React.Component<IFilterAndOrderProps> {
 			<Dropdown
 				buttonProps={{
 					['data-testid']: 'filter-and-order-button',
-					display: 'unstyled'
+					displayType: 'unstyled'
 				}}
 				className={getCN('filter-and-order-root', className)}
 				disabled={disabled}

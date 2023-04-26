@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLink from '@clayui/link';
 import React from 'react';
 import TitleEditor from 'shared/components/TitleEditor';
 import {Routes, toRoute} from 'shared/util/router';
@@ -23,30 +24,28 @@ const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
 			</div>
 
 			<div className='event-analysis-toolbar-right-content'>
-				<Button.Group>
-					<Button.GroupItem>
-						<Button
-							disabled={!isValid}
-							display='primary'
-							size='sm'
-							type='submit'
-						>
-							{Liferay.Language.get('save-analysis')}
-						</Button>
-					</Button.GroupItem>
+				<ClayButton
+					className='button-root mr-2'
+					disabled={!isValid}
+					displayType='primary'
+					size='sm'
+					type='submit'
+				>
+					{Liferay.Language.get('save-analysis')}
+				</ClayButton>
 
-					<Button.GroupItem>
-						<Button
-							href={toRoute(Routes.EVENT_ANALYSIS, {
-								channelId,
-								groupId
-							})}
-							size='sm'
-						>
-							{Liferay.Language.get('cancel')}
-						</Button>
-					</Button.GroupItem>
-				</Button.Group>
+				<ClayLink
+					button
+					className='button-root'
+					displayType='secondary'
+					href={toRoute(Routes.EVENT_ANALYSIS, {
+						channelId,
+						groupId
+					})}
+					small
+				>
+					{Liferay.Language.get('cancel')}
+				</ClayLink>
 			</div>
 		</div>
 	);

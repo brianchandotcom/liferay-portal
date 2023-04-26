@@ -1,6 +1,6 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React, {createRef} from 'react';
 import ScrollableSection from 'shared/components/ScrollableSection';
 import {DistributionTab} from 'shared/util/records';
@@ -34,28 +34,28 @@ const TabItem: React.FC<ITabItemProps> = ({
 }) => (
 	<li className={getCN('tab-item d-flex align-items-baseline', {active})}>
 		{!active && (
-			<Button
-				className='tab-title'
+			<ClayButton
+				className='button-root tab-title'
 				disabled={disabled}
-				display='unstyled'
+				displayType='unstyled'
 				onClick={() => onSelect(id)}
 			>
 				{title}
-			</Button>
+			</ClayButton>
 		)}
 
 		{active && (
 			<div className='tab-title active'>
 				{title}
 
-				<Button
-					className='remove-tab'
-					display='unstyled'
+				<ClayButton
+					className='button-root remove-tab'
+					displayType='unstyled'
 					onClick={() => onDelete(id)}
 					size='sm'
 				>
-					<Icon monospaced size='sm' symbol='times' />
-				</Button>
+					<ClayIcon className='icon-size-sm' symbol='times' />
+				</ClayButton>
 			</div>
 		)}
 	</li>
@@ -127,17 +127,18 @@ export default class Tabs extends React.Component<ITabsProps> {
 					</ul>
 				</ScrollableSection>
 
-				<Button
-					active={showAddProperty}
+				<ClayButton
 					borderless
-					className='add-tab'
-					display='secondary'
+					className={getCN('button-root add-tab', {
+						active: showAddProperty
+					})}
+					displayType='secondary'
 					monospaced
 					onClick={onAdd}
 					size='sm'
 				>
-					<Icon symbol='plus' />
-				</Button>
+					<ClayIcon className='icon-root' symbol='plus' />
+				</ClayButton>
 			</div>
 		);
 	}

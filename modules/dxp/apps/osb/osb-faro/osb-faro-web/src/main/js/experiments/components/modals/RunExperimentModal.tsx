@@ -130,6 +130,7 @@ const RunExperimentModal = ({dxpVariants, experimentId, observer, onClose}) => {
 
 				{trafficSplitTotal !== 100 && (
 					<ClayButton
+						className='button-root'
 						displayType='unstyled'
 						onClick={() => {
 							setVariants(initialStateVariants(variants));
@@ -137,7 +138,10 @@ const RunExperimentModal = ({dxpVariants, experimentId, observer, onClose}) => {
 						small
 					>
 						<strong>
-							<ClayIcon className='mr-2' symbol='undo' />{' '}
+							<ClayIcon
+								className='icon-root mr-2'
+								symbol='undo'
+							/>{' '}
 							{Liferay.Language.get('reset')}
 						</strong>
 					</ClayButton>

@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import Modal from 'shared/components/modal';
 import ModalInfoBar from 'shared/components/ModalInfoBar';
@@ -98,12 +99,21 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 					{children}
 
 					<div className='load-more-container'>
-						<Button
-							loading={loading}
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
 							onClick={() => onPageChange(page + 1)}
 						>
+							{loading && (
+								<ClayLoadingIndicator
+									className='d-inline-block mr-2'
+									displayType='secondary'
+									size='sm'
+								/>
+							)}
+
 							{Liferay.Language.get('load-more')}
-						</Button>
+						</ClayButton>
 					</div>
 				</div>
 			);

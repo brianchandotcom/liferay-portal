@@ -98,6 +98,7 @@ export default class RoleRenderer extends React.Component {
 					{editing && options.length > 0 ? (
 						<Dropdown
 							buttonProps={{
+								displayType: 'secondary',
 								size: 'sm'
 							}}
 							label={getDisplayRole(selectedKey)}

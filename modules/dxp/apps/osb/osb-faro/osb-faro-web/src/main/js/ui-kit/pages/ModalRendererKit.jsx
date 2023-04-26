@@ -1,6 +1,6 @@
 import * as modalActions from 'shared/actions/modals';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import mockStore from 'test/mock-store';
 import ModalRenderer from 'shared/components/ModalRenderer';
 import React from 'react';
@@ -48,18 +48,23 @@ class ModalRendererKit extends React.Component {
 					<ModalRenderer />
 
 					<Row>
-						<Button display='primary' onClick={this.handleOpen}>
+						<ClayButton
+							className='button-root'
+							displayType='primary'
+							onClick={this.handleOpen}
+						>
 							{'Open Modal'}
-						</Button>
+						</ClayButton>
 					</Row>
 
 					<Row>
-						<Button
-							display='primary'
+						<ClayButton
+							className='button-root'
+							displayType='primary'
 							onClick={this.handleOpenThree}
 						>
 							{'Open Three Modals'}
-						</Button>
+						</ClayButton>
 					</Row>
 				</Provider>
 			</div>

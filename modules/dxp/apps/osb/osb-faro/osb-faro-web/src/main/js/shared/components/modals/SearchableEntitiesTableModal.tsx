@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Modal, {Size} from 'shared/components/modal';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -59,9 +59,13 @@ const SearchableEntitiesTableModal: React.FC<ISearchableEntitiesTableModalProps>
 			/>
 
 			<Modal.Footer>
-				<Button display='primary' onClick={onClose}>
+				<ClayButton
+					className='button-root'
+					displayType='primary'
+					onClick={onClose}
+				>
 					{Liferay.Language.get('done')}
-				</Button>
+				</ClayButton>
 			</Modal.Footer>
 		</Modal>
 	);

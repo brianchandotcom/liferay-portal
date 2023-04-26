@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import CollapsibleOverlay from 'shared/components/CollapsibleOverlay';
 import React, {useState} from 'react';
 
@@ -7,9 +7,13 @@ export default () => {
 
 	return (
 		<div style={{height: '500px', position: 'relative'}}>
-			<Button onClick={() => setVisible(true)}>
+			<ClayButton
+				className='button-root'
+				displayType='secondary'
+				onClick={() => setVisible(true)}
+			>
 				{'toggle collapsible'}
-			</Button>
+			</ClayButton>
 
 			<CollapsibleOverlay
 				onClose={() => setVisible(false)}

@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import Modal from 'shared/components/modal';
 import React from 'react';
 import {noop} from 'lodash';
@@ -15,9 +15,17 @@ const TestModal: React.FC<{onClose: () => void; title: string}> = ({
 		</Modal.Body>
 
 		<Modal.Footer>
-			<Button onClick={() => onClose}>{'Cancel'}</Button>
+			<ClayButton
+				className='button-root'
+				displayType='secondary'
+				onClick={() => onClose}
+			>
+				{'Cancel'}
+			</ClayButton>
 
-			<Button>{'Submit'}</Button>
+			<ClayButton className='button-root' displayType='primary'>
+				{'Submit'}
+			</ClayButton>
 		</Modal.Footer>
 	</Modal>
 );

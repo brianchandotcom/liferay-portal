@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import client from 'shared/apollo/client';
 import Form from 'shared/components/form';
 import Modal from 'shared/components/modal';
@@ -171,17 +171,22 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 						</Modal.Body>
 
 						<Modal.Footer>
-							<Button onClick={() => onClose()}>
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								onClick={() => onClose()}
+							>
 								{Liferay.Language.get('cancel')}
-							</Button>
+							</ClayButton>
 
-							<Button
+							<ClayButton
+								className='button-root'
 								disabled={availableJobRuns <= 0}
-								display='primary'
+								displayType='primary'
 								onClick={() => handleSubmit()}
 							>
 								{Liferay.Language.get('retrain')}
-							</Button>
+							</ClayButton>
 						</Modal.Footer>
 					</Form.Form>
 				)}

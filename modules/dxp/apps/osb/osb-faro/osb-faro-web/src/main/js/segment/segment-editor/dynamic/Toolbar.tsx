@@ -1,9 +1,10 @@
 import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import debounce from 'shared/util/debounce-decorator';
 import Form, {validateRequired} from 'shared/components/form';
-import Icon from 'shared/components/Icon';
 import InfoPopover from 'shared/components/InfoPopover';
 import React from 'react';
 import Spinner from 'shared/components/Spinner';
@@ -172,8 +173,8 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 						</div>
 
 						<div className='form-header-section-right'>
-							<Button.Group>
-								<Button.GroupItem>
+							<div className='btn-group'>
+								<div className='btn-group-item'>
 									<Form.ToggleSwitch
 										className='include-anonymous'
 										label={Liferay.Language.get(
@@ -181,20 +182,20 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 										)}
 										name='includeAnonymousUsers'
 									/>
-								</Button.GroupItem>
+								</div>
 
-								<Button.GroupItem>
+								<div className='btn-group-item'>
 									<InfoPopover
 										className='include-anon-help-icon'
 										content={Liferay.Language.get(
 											'criteria-containing-individual-or-account-attributes-excludes-anonymous-individuals'
 										)}
 									/>
-								</Button.GroupItem>
-							</Button.Group>
+								</div>
+							</div>
 
-							<Button.Group>
-								<Button.GroupItem>
+							<div className='btn-group'>
+								<div className='btn-group-item'>
 									<div className='total-members'>
 										{sub(
 											Liferay.Language.get(
@@ -211,16 +212,19 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 											false
 										)}
 									</div>
+								</div>
 
-									<Button
+								<div className='btn-group-item'>
+									<ClayButton
 										borderless
-										className='preview-criteria'
+										className='button-root preview-criteria'
 										data-testid='preview-criteria-button'
 										data-tooltip
 										disabled={
 											!criteriaValid ||
 											(criteriaValid && !membersCount)
 										}
+										displayType='secondary'
 										onClick={this.handlePreviewClick}
 										size='sm'
 										title={Liferay.Language.get(
@@ -230,32 +234,42 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 										<span
 											{...this.getPreviewCriteriaTooltipProps()}
 										>
-											<Icon symbol='view' />
+											<ClayIcon
+												className='icon-root'
+												symbol='view'
+											/>
 										</span>
-									</Button>
-								</Button.GroupItem>
-							</Button.Group>
+									</ClayButton>
+								</div>
+							</div>
 
-							<Button.Group>
-								<Button.GroupItem className='save'>
-									<Button
+							<div className='btn-group'>
+								<div className='btn-group-item save'>
+									<ClayButton
+										className='button-root'
 										disabled={!valid}
-										display='primary'
+										displayType='primary'
 										size='sm'
 										type='submit'
 									>
 										{Liferay.Language.get('save-segment')}
-									</Button>
-								</Button.GroupItem>
+									</ClayButton>
+								</div>
 
-								<Button.GroupItem className='cancel'>
-									<Button
-										display='secondary'
+								<div className='btn-group-item cancel'>
+									<ClayLink
+										button
+										className='button-root'
+										displayType='secondary'
 										href={
 											id
 												? toRoute(
 														Routes.CONTACTS_SEGMENT,
-														{channelId, groupId, id}
+														{
+															channelId,
+															groupId,
+															id
+														}
 												  )
 												: toRoute(
 														Routes.CONTACTS_LIST_SEGMENT,
@@ -266,12 +280,11 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 														}
 												  )
 										}
-										size='sm'
 									>
 										{Liferay.Language.get('cancel')}
-									</Button>
-								</Button.GroupItem>
-							</Button.Group>
+									</ClayLink>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -1,8 +1,9 @@
 import BasePage from 'shared/components/base-page';
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
 import CardTabs from 'shared/components/CardTabs';
 import CardWithRangeKey from 'shared/hoc/CardWithRangeKey';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import React, {useContext, useState} from 'react';
 import SitesTopPagesQuery, {
@@ -176,18 +177,22 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 
 			{!!Object.keys(footer).length && (
 				<Card.Footer>
-					<Button
-						display='link'
+					<ClayLink
+						className='button-root'
+						displayType='secondary'
 						href={setUriQueryValues(
 							pickBy({...rangeSelectors}),
 							footer.href
 						)}
-						icon='angle-right'
-						iconAlignment='right'
-						size='sm'
+						small
 					>
 						{footer.label}
-					</Button>
+
+						<ClayIcon
+							className='icon-root ml-2'
+							symbol='angle-right'
+						/>
+					</ClayLink>
 				</Card.Footer>
 			)}
 		</>

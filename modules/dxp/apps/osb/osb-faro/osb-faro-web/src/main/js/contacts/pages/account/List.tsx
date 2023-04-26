@@ -1,6 +1,6 @@
 import * as API from 'shared/api';
 import BaseListPage from 'contacts/components/BaseListPage';
-import Button from 'shared/components/Button';
+import ClayLink from '@clayui/link';
 import React, {FC} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {
@@ -92,14 +92,16 @@ const List: React.FC<IListProps> = ({
 						</a>
 
 						{authorized && (
-							<Button
-								display='primary'
+							<ClayLink
+								button
+								className='button-root'
+								displayType='primary'
 								href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
 									groupId
 								})}
 							>
 								{Liferay.Language.get('connect-data-source')}
-							</Button>
+							</ClayLink>
 						)}
 					</>
 				),

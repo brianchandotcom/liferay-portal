@@ -1,4 +1,4 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
 import getCN from 'classnames';
 import React from 'react';
 import {SUPPORTED_CONJUNCTION_OPTIONS} from '../utils/constants';
@@ -20,16 +20,22 @@ class Conjunction extends React.Component<IConjunctionProps> {
 		const {className, conjunctionName, onClick} = this.props;
 
 		const classnames = getCN(
-			'btn-sm conjunction-button',
+			'button-root',
+			'conjunction-button',
 			'conjunction-label',
 			className
 		);
 
 		return (
 			<div className='conjunction-container'>
-				<Button className={classnames} onClick={onClick}>
+				<ClayButton
+					className={classnames}
+					displayType='secondary'
+					onClick={onClick}
+					size='sm'
+				>
 					{this.getConjunctionLabel(conjunctionName)}
-				</Button>
+				</ClayButton>
 
 				<div className='separator' />
 			</div>

@@ -1,5 +1,6 @@
-import Button from 'shared/components/Button';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import getInterestsQuery from 'contacts/queries/InterestsQuery';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -81,19 +82,19 @@ const InterestsCard = ({channelId, groupId, id}) => (
 		/>
 
 		<Card.Footer>
-			<Button
-				display='link'
+			<ClayLink
+				className='button-root'
+				displayType='unstyled'
 				href={toRoute(Routes.CONTACTS_ACCOUNT_INTERESTS, {
 					channelId,
 					groupId,
 					id
 				})}
-				icon='angle-right'
-				iconAlignment='right'
-				size='sm'
 			>
 				{Liferay.Language.get('view-all-interests')}
-			</Button>
+
+				<ClayIcon className='icon-root ml-2' symbol='angle-right' />
+			</ClayLink>
 		</Card.Footer>
 	</Card>
 );

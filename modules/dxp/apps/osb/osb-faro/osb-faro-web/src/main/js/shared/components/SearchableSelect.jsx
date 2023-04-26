@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Button from './Button';
+import ClayButton from '@clayui/button';
 import Dropdown from './Dropdown';
 import getCN from 'classnames';
 import NoResultsDisplay, {
@@ -158,9 +158,14 @@ class SearchableSelect extends React.Component {
 
 				{footerOnClick && (
 					<Dropdown.Footer className='footer-action' hideOnClick>
-						<Button block display='primary' onClick={footerOnClick}>
+						<ClayButton
+							block
+							className='button-root'
+							displayType='primary'
+							onClick={footerOnClick}
+						>
 							{footerButtonMessage}
-						</Button>
+						</ClayButton>
 					</Dropdown.Footer>
 				)}
 			</Dropdown>

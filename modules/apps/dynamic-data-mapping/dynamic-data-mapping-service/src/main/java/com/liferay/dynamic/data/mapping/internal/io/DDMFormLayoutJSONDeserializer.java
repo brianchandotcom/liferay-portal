@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,14 +64,15 @@ public class DDMFormLayoutJSONDeserializer
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				ddmFormLayoutDeserializerDeserializeRequest.getContent());
 
+			JSONArray jsonArray = jsonObject.getJSONArray("fields");
+
+			if (jsonArray == null) {
+				jsonArray = _jsonFactory.createJSONArray();
+			}
+
 			ddmFormLayout.setDDMFormFields(
 				DDMFormFieldDeserializerUtil.deserialize(
-					_ddmFormFieldTypeServicesRegistry,
-					Optional.ofNullable(
-						jsonObject.getJSONArray("fields")
-					).orElse(
-						_jsonFactory.createJSONArray()
-					),
+					_ddmFormFieldTypeServicesRegistry, jsonArray,
 					_jsonFactory));
 
 			if (Validator.isNotNull(

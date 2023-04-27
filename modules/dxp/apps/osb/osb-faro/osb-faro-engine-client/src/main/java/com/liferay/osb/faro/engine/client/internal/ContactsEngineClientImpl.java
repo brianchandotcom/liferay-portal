@@ -2184,21 +2184,14 @@ public class ContactsEngineClientImpl
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields);
 
+		if (Validator.isNotNull(channelId)) {
+			uriVariables.put("channelId", Long.valueOf(channelId));
+		}
+
 		uriVariables.put("expand", expand);
-
-		FilterBuilder filterBuilder = new FilterBuilder();
-
-		filterBuilder.addFilter(
-			"name", FilterConstants.COMPARISON_OPERATOR_EQUALS, name);
-		filterBuilder.addFilter(
-			"name", FilterConstants.STRING_FUNCTION_CONTAINS, query);
-		filterBuilder.addFilter(
-			"individualId", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-			ownerId);
-		filterBuilder.addFilter(
-			"ownerType", FilterConstants.COMPARISON_OPERATOR_EQUALS, ownerType);
-
-		uriVariables.put("filter", filterBuilder.build());
+		uriVariables.put("name", name);
+		uriVariables.put("ownerId", ownerId);
+		uriVariables.put("query", query);
 
 		PagedModel<?, Interest> pagedModel = get(
 			faroProject, Rels.INTERESTS,

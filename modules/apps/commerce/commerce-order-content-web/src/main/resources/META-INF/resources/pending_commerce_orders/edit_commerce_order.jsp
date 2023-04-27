@@ -546,6 +546,10 @@ if (backURL != null) {
 
 <%@ include file="/pending_commerce_orders/transition.jspf" %>
 
+<liferay-frontend:component
+	module="js/view"
+/>
+
 <aui:script use="aui-base">
 	var orderTransition = A.one('#<portlet:namespace />orderTransition');
 

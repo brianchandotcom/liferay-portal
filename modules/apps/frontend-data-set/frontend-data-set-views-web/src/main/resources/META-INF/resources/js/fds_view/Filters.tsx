@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
@@ -108,18 +109,34 @@ function AddFDSFilterModalContent({
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
-					<label htmlFor={namespace + 'label'}>
-						{Liferay.Language.get('label')}
-					</label>
+				{selectedField && (
+					<ClayForm.Group>
+						<label htmlFor={namespace + 'label'}>
+							{Liferay.Language.get('label')}
 
-					<ClayInput
-						aria-label={Liferay.Language.get('label')}
-						name={namespace + 'label'}
-						onChange={(event) => setLabel(event.target.value)}
-						value={label}
-					/>
-				</ClayForm.Group>
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get(
+									'if-this-value-is-not-provided-the-label-will-default-to-the-field-name'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							aria-label={Liferay.Language.get('label')}
+							name={namespace + 'label'}
+							onChange={(event) => setLabel(event.target.value)}
+							placeholder={
+								fields.find(
+									(item: any) => item.name === selectedField
+								).label
+							}
+							value={label}
+						/>
+					</ClayForm.Group>
+				)}
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -145,17 +162,14 @@ function AddFDSFilterModalContent({
 function Filters({fdsView, fdsViewsURL, namespace}: any) {
 	const [fields, setFields] = React.useState<any[]>([]);
 	const [filters, setFilters] = React.useState<any[]>([]);
-
-	const newFdsFiltersOrderRef = React.useRef('');
+	const [newFiltersOrder, setNewFiltersOrder] = React.useState<string>('');
 
 	const updateFDSFiltersOrder = async () => {
-		const newFdsFiltersOrder = newFdsFiltersOrderRef.current;
-
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsFiltersOrder: newFdsFiltersOrder,
+					fdsFiltersOrder: newFiltersOrder,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -180,13 +194,15 @@ function Filters({fdsView, fdsViewsURL, namespace}: any) {
 
 		const fdsFiltersOrder = responseJSON?.fdsFiltersOrder;
 
-		if (fdsFiltersOrder && fdsFiltersOrder === newFdsFiltersOrder) {
+		if (fdsFiltersOrder && fdsFiltersOrder === newFiltersOrder) {
 			openToast({
 				message: Liferay.Language.get(
 					'your-request-completed-successfully'
 				),
 				type: 'success',
 			});
+
+			setNewFiltersOrder('');
 		}
 		else {
 			openToast({
@@ -253,6 +269,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: any) {
 	return (
 		<ClayLayout.ContainerFluid>
 			<OrderableTable
+				disableSave={!newFiltersOrder.length}
 				fields={[
 					{
 						label: Liferay.Language.get('label'),
@@ -278,9 +295,9 @@ function Filters({fdsView, fdsViewsURL, namespace}: any) {
 				onCancelButtonClick={() => navigate(fdsViewsURL)}
 				onCreationButtonClick={onCreationButtonClick}
 				onOrderChange={({orderedItems}) => {
-					newFdsFiltersOrderRef.current = orderedItems
-						.map((filter: any) => filter.id)
-						.join(',');
+					setNewFiltersOrder(
+						orderedItems.map((filter: any) => filter.id).join(',')
+					);
 				}}
 				onSaveButtonClick={updateFDSFiltersOrder}
 				title={Liferay.Language.get('filters')}

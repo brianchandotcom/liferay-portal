@@ -23,6 +23,7 @@ import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -280,16 +282,32 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public Class<?> getResourceClass() {
-		return ObjectEntryResourceImpl.class;
+	public Class<?> getResourceClass(Operation operation) {
+		ObjectValuePair<Class<?>, String> objectValuePair =
+			_resourceMethods.get(operation);
+
+		if (objectValuePair == null) {
+			return null;
+		}
+
+		return objectValuePair.getKey();
 	}
 
 	@Override
 	public Method getResourceMethod(Operation operation) {
-		for (Method method : ObjectEntryResourceImpl.class.getMethods()) {
-			if (Objects.equals(
-					method.getName(), _resourceMethods.get(operation))) {
+		ObjectValuePair<Class<?>, String> objectValuePair =
+			_resourceMethods.get(operation);
 
+		if (objectValuePair == null) {
+			return null;
+		}
+
+		Class<?> clazz = objectValuePair.getKey();
+
+		String methodName = objectValuePair.getValue();
+
+		for (Method method : clazz.getMethods()) {
+			if (Objects.equals(method.getName(), methodName)) {
 				return method;
 			}
 		}
@@ -413,21 +431,34 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private static final Pattern _relationshipIdNamePattern = Pattern.compile(
 		"r_.+_c_.+Id");
-	private static final Map<Operation, String> _resourceMethods =
-		HashMapBuilder.<Operation, String>put(
-			Operation.CREATE, "postObjectEntry"
-		).put(
-			Operation.DELETE, "deleteObjectEntry"
-		).put(
-			Operation.GET, "getObjectEntry"
-		).put(
-			Operation.GET_RELATIONSHIP,
-			"getCurrentObjectEntriesObjectRelationshipNamePage"
-		).put(
-			Operation.LIST, "getObjectEntriesPage"
-		).put(
-			Operation.UPDATE, "putObjectEntry"
-		).build();
+	private static final Map<Operation, ObjectValuePair<Class<?>, String>>
+		_resourceMethods =
+			HashMapBuilder.<Operation, ObjectValuePair<Class<?>, String>>put(
+				Operation.CREATE,
+				new ObjectValuePair<>(
+					ObjectEntryResourceImpl.class, "postObjectEntry")
+			).put(
+				Operation.DELETE,
+				new ObjectValuePair<>(
+					ObjectEntryResourceImpl.class, "deleteObjectEntry")
+			).put(
+				Operation.GET,
+				new ObjectValuePair<>(
+					ObjectEntryResourceImpl.class, "getObjectEntry")
+			).put(
+				Operation.GET_RELATIONSHIP,
+				new ObjectValuePair<>(
+					ObjectEntryRelatedObjectsResourceImpl.class,
+					"getCurrentObjectEntriesObjectRelationshipNamePage")
+			).put(
+				Operation.LIST,
+				new ObjectValuePair<>(
+					ObjectEntryResourceImpl.class, "getObjectEntriesPage")
+			).put(
+				Operation.UPDATE,
+				new ObjectValuePair<>(
+					ObjectEntryResourceImpl.class, "putObjectEntry")
+			).build();
 	private static final Map<String, Class<?>> _typedClasses =
 		HashMapBuilder.<String, Class<?>>put(
 			"BigDecimal", BigDecimal.class

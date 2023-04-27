@@ -817,11 +817,9 @@ definition {
 	}
 
 	@summary = "Assert the Total Cost value of the budget, inside the activities page of the MDF Request"
-	macro viewValueBudget {
-		var key_totalCost = ${totalCost};
-
+	macro viewBudgetValue {
 		AssertTextEquals(
-			locator1 = "PRMMDFRequest#VALUE_BUDGET",
+			locator1 = "PRMMDFRequest#ACTIVITY_TOTAL_COST",
 			value1 = ${totalCost});
 	}
 

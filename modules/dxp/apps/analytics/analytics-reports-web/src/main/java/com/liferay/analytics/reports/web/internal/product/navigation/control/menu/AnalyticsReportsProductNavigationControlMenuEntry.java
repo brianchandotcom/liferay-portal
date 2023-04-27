@@ -56,7 +56,6 @@ import com.liferay.taglib.util.BodyBottomTag;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -389,9 +388,12 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 						"/js/AnalyticsReportsApp"),
 				HashMapBuilder.<String, Object>put(
 					"context",
-					Collections.singletonMap(
+					HashMapBuilder.<String, Object>put(
 						"analyticsReportsDataURL",
-						_getAnalyticsReportsURL(httpServletRequest))
+						_getAnalyticsReportsURL(httpServletRequest)
+					).put(
+						"isPanelStateOpen", isPanelStateOpen(httpServletRequest)
+					).build()
 				).put(
 					"portletNamespace", _portletNamespace
 				).build(),

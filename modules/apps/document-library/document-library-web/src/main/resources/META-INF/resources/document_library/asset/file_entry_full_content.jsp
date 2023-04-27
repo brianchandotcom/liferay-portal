@@ -37,7 +37,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 	<c:otherwise>
 
 		<%
-		DLAdminDisplayContextProvider dlAdminDisplayContextProvider = dlWebComponentProvider.getDlAdminDisplayContextProvider();
+		DLAdminDisplayContextProvider dlAdminDisplayContextProvider = DLWebComponentProvider.getDlAdminDisplayContextProvider();
 
 		renderRequest.setAttribute(DLViewFileEntryDisplayContext.class.getName(), new DLViewFileEntryDisplayContext(dlAdminDisplayContextProvider.getDLAdminDisplayContext(request, response), dlDisplayContextProvider, HtmlUtil.getHtml(), request, LanguageUtil.getLanguage(), PortalUtil.getPortal(), renderRequest, renderResponse));
 		%>

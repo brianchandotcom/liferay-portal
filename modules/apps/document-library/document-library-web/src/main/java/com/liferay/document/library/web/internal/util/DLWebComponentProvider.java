@@ -24,19 +24,17 @@ import com.liferay.osgi.util.service.Snapshot;
  */
 public class DLWebComponentProvider {
 
-	public static DLWebComponentProvider getDLWebComponentProvider() {
-		return _dlWebComponentProvider;
-	}
+	public static DLAdminDisplayContextProvider
+		getDlAdminDisplayContextProvider() {
 
-	public DLAdminDisplayContextProvider getDlAdminDisplayContextProvider() {
 		return _dlAdminDisplayContextProviderSnapshot.get();
 	}
 
-	public DLDisplayContextProvider getDLDisplayContextProvider() {
+	public static DLDisplayContextProvider getDLDisplayContextProvider() {
 		return _dlDisplayContextProviderSnapshot.get();
 	}
 
-	public IGDisplayContextProvider getIGDisplayContextProvider() {
+	public static IGDisplayContextProvider getIGDisplayContextProvider() {
 		return _igDisplayContextProviderSnapshot.get();
 	}
 
@@ -46,7 +44,6 @@ public class DLWebComponentProvider {
 	private static final Snapshot<DLDisplayContextProvider>
 		_dlDisplayContextProviderSnapshot = new Snapshot<>(
 			DLWebComponentProvider.class, DLDisplayContextProvider.class);
-	private static DLWebComponentProvider _dlWebComponentProvider;
 	private static final Snapshot<IGDisplayContextProvider>
 		_igDisplayContextProviderSnapshot = new Snapshot<>(
 			DLWebComponentProvider.class, IGDisplayContextProvider.class);

@@ -233,10 +233,8 @@ page import="java.util.Objects" %>
 <%
 DLTrashHelper dlTrashHelper = (DLTrashHelper)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER);
 
-DLWebComponentProvider dlWebComponentProvider = DLWebComponentProvider.getDLWebComponentProvider();
-
-DLDisplayContextProvider dlDisplayContextProvider = dlWebComponentProvider.getDLDisplayContextProvider();
-IGDisplayContextProvider igDisplayContextProvider = dlWebComponentProvider.getIGDisplayContextProvider();
+DLDisplayContextProvider dlDisplayContextProvider = DLWebComponentProvider.getDLDisplayContextProvider();
+IGDisplayContextProvider igDisplayContextProvider = DLWebComponentProvider.getIGDisplayContextProvider();
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

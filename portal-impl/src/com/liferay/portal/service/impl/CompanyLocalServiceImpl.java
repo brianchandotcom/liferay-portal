@@ -985,18 +985,18 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * Updates the names of the company's current and next search indexes.
 	 *
 	 * @param  companyId the primary key of the company
-	 * @param  indexNameCur the name of the company's current search index
+	 * @param  indexNameCurrent the name of the company's current search index
 	 * @param  indexNameNext the name of the company's next search index
 	 * @return the company with the primary key
 	 */
 	@Override
 	public Company updateIndexNames(
-			long companyId, String indexNameCur, String indexNameNext)
+			long companyId, String indexNameCurrent, String indexNameNext)
 		throws PortalException {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		company.setIndexNameCur(indexNameCur);
+		company.setIndexNameCurrent(indexNameCurrent);
 		company.setIndexNameNext(indexNameNext);
 
 		return companyPersistence.update(company);

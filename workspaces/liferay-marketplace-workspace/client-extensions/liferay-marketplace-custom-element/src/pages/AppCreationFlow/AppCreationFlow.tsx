@@ -17,6 +17,7 @@ import {initialFLowListItems} from './AppCreationFlowUtil';
 import './AppCreationFlow.scss';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {DefineAppProfilePage} from '../DefineAppProfilePage/DefineAppProfilePage';
+import {Liferay} from '../../liferay/liferay';
 
 type SetAppFlowListStateProps = {
 	checkedItems?: string[];
@@ -386,7 +387,10 @@ export function AppCreationFlow() {
 								selectedItem: '',
 							});
 
-							location.href = '/';
+							location.href = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
+								'/create-new-app',
+								'/publisher-dashboard'
+							)}`;
 						}}
 					/>
 				)}

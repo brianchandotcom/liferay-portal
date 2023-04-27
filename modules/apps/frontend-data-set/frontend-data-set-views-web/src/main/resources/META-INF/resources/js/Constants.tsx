@@ -15,6 +15,7 @@
 const API_URL = {
 	FDS_ENTRIES: '/o/c/fdsentries',
 	FDS_FIELDS: '/o/c/fdsfields',
+	FDS_FILTERS: '/o/c/fdsfilters',
 	FDS_VIEWS: '/o/c/fdsviews',
 };
 
@@ -23,6 +24,8 @@ const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
 	FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship',
 	FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId',
+	FDS_VIEW_FDS_FILTER: 'fdsViewFDSFilterRelationship',
+	FDS_VIEW_FDS_FILTER_ID: 'r_fdsViewFDSFilterRelationship_c_fdsViewId',
 } as const;
 
 const PAGINATION_PROPS = {

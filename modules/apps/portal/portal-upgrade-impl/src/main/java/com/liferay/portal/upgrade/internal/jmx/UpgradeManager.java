@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false,
 	property = {
-		"jmx.objectname=com.liferay.portal.monitoring:classification=upgrade_manager,name=UpgradeManager",
+		"jmx.objectname=com.liferay.portal.upgrade:classification=upgrade,name=UpgradeManager",
 		"jmx.objectname.cache.key=UpgradeManager"
 	},
 	service = DynamicMBean.class

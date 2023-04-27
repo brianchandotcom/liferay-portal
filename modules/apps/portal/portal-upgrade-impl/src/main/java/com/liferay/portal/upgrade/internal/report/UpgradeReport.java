@@ -233,6 +233,23 @@ public class UpgradeReport {
 		).put(
 			"result", upgradeRecorder.getResult()
 		).put(
+			"status",
+			() -> {
+				ReleaseManager releaseManager = _releaseManagerSnapshot.get();
+
+				if (releaseManager == null) {
+					return "Unable to determine. Release manager not available";
+				}
+
+				String statusMessage = releaseManager.getStatusMessage(false);
+
+				if (statusMessage.isEmpty()) {
+					return "There are no pending upgrades";
+				}
+
+				return statusMessage;
+			}
+		).put(
 			"database.version",
 			() -> {
 				DB db = DBManagerUtil.getDB();
@@ -448,23 +465,6 @@ public class UpgradeReport {
 		).put(
 			"warnings",
 			_getMessagesPrinters(upgradeRecorder.getWarningMessages())
-		).put(
-			"status",
-			() -> {
-				ReleaseManager releaseManager = _releaseManagerSnapshot.get();
-
-				if (releaseManager == null) {
-					return "Unable to determine. Release manager not available";
-				}
-
-				String statusMessage = releaseManager.getStatusMessage(false);
-
-				if (statusMessage.isEmpty()) {
-					return "There are no pending upgrades";
-				}
-
-				return statusMessage;
-			}
 		).build();
 	}
 

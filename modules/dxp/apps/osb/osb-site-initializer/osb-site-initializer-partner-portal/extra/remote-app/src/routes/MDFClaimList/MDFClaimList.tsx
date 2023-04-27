@@ -47,7 +47,7 @@ const MDFClaimList = () => {
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters();
 
 	const pagination = usePagination();
-	const {data, isValidating} = useGetListItemsFromMDFClaims(
+	const {data, isValidating, mutate} = useGetListItemsFromMDFClaims(
 		pagination.activePage,
 		pagination.activeDelta,
 		filtersTerm
@@ -57,7 +57,7 @@ const MDFClaimList = () => {
 
 	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);
 
-	const columns = getMDFClaimListColumns(siteURL, actions);
+	const columns = getMDFClaimListColumns(siteURL, actions, mutate);
 
 	const getTable = (
 		totalCount: number,

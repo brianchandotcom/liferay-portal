@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {KeyedMutator, mutate} from 'swr';
+
 import Dropdown from '../../../common/components/Dropdown';
 import {DropdownOption} from '../../../common/components/Dropdown/Dropdown';
 import StatusBadge from '../../../common/components/StatusBadge';
@@ -16,14 +18,19 @@ import {MDFClaimColumnKey} from '../../../common/enums/mdfClaimColumnKey';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {PermissionActionType} from '../../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
+import MDFClaimDTO from '../../../common/interfaces/dto/mdfClaimDTO';
 import {MDFClaimListItem} from '../../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
+import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
+import deleteMDFClaim from '../../../common/services/liferay/object/mdf-claim/deleteMDFRequest';
 import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFClaimListColumns(
 	siteURL?: string,
-	actions?: PermissionActionType[]
+	actions?: PermissionActionType[],
+	mutated?: KeyedMutator<LiferayItems<MDFClaimDTO[]>>
 ): TableColumn<MDFClaimListItem>[] | undefined {
 	const getDropdownOptions = (row: MDFClaimListItem) => {
 		const options = actions?.reduce<DropdownOption[]>(

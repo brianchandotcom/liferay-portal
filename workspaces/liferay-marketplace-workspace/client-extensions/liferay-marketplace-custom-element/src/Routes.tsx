@@ -10,7 +10,7 @@ interface AppRoutesProps {
 }
 
 export default function AppRoutes({route}: AppRoutesProps) {
-	if(Liferay.ThemeDisplay.isSignedIn()){
+	if (Liferay.ThemeDisplay.isSignedIn()) {
 		if (route === 'create-app') {
 			return <AppCreationFlow />;
 		}

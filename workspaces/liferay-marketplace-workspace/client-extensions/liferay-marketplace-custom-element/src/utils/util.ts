@@ -1,3 +1,4 @@
+import {ProductSpecificationProps} from '../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 import {
 	createProductSpecification,
 	getAccountGroup,
@@ -46,6 +47,20 @@ export async function userAccountChecker(verifiedAccounts: string[]) {
 	}
 
 	return false;
+}
+
+export function getProductVersionFromSpecifications(
+	specifications: ProductSpecificationProps
+) {
+	let productVersion = '0';
+
+	specifications.items.forEach((specification: Specification) => {
+		if (specification.specificationKey === 'latest-version') {
+			productVersion = specification.value.en_US;
+		}
+	});
+
+	return productVersion;
 }
 
 async function submitSpecification(

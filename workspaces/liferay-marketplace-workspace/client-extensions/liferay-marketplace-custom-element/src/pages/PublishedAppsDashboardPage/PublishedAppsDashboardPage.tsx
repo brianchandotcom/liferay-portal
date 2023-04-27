@@ -37,6 +37,7 @@ import {
 import './PublishedAppsDashboardPage.scss';
 import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 import {Liferay} from '../../liferay/liferay';
+import {getProductVersionFromSpecifications} from '../../utils/util';
 
 const appTableHeaders = [
 	{
@@ -195,20 +196,6 @@ export function PublishedAppsDashboardPage() {
 		return productType;
 	}
 
-	function getProductVersionFromSpecifications(
-		specifications: ProductSpecificationProps
-	) {
-		let productVersion = '0';
-
-		specifications.items.forEach((specification: Specification) => {
-			if (specification.specificationKey === 'version') {
-				productVersion = specification.value.en_US;
-			}
-		});
-
-		return productVersion;
-	}
-
 	function getRolesList(accountBriefs: AccountBrief[]) {
 		const rolesList: string[] = [];
 
@@ -258,34 +245,29 @@ export function PublishedAppsDashboardPage() {
 
 					const newAppList: AppProps[] = [];
 
-					appList.items.forEach(
-						(product, index: number) => {
-							if (product.catalogId === accountCatalogId) {
-								newAppList.push({
-									catalogId: product.catalogId,
-									externalReferenceCode:
-										product.externalReferenceCode,
-									name: product.name.en_US,
-									productId: product.productId,
-									status: product.workflowStatusInfo.label.replace(
-										/(^\w|\s\w)/g,
-										(m: string) => m.toUpperCase()
-									),
-									thumbnail: product.thumbnail,
-									type: getProductTypeFromSpecifications(
-										appListProductSpecifications[index]
-									),
-									updatedDate: formatDate(
-										product.modifiedDate
-									),
-									version:
-										getProductVersionFromSpecifications(
-											appListProductSpecifications[index]
-										),
-								});
-							}
+					appList.items.forEach((product, index: number) => {
+						if (product.catalogId === accountCatalogId) {
+							newAppList.push({
+								catalogId: product.catalogId,
+								externalReferenceCode:
+									product.externalReferenceCode,
+								name: product.name.en_US,
+								productId: product.productId,
+								status: product.workflowStatusInfo.label.replace(
+									/(^\w|\s\w)/g,
+									(m: string) => m.toUpperCase()
+								),
+								thumbnail: product.thumbnail,
+								type: getProductTypeFromSpecifications(
+									appListProductSpecifications[index]
+								),
+								updatedDate: formatDate(product.modifiedDate),
+								version: getProductVersionFromSpecifications(
+									appListProductSpecifications[index]
+								),
+							});
 						}
-					);
+					});
 
 					const commerceAccountResponse =
 						await getAccountInfoFromCommerce(selectedAccount.id);

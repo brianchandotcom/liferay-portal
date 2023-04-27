@@ -14,6 +14,8 @@ import {TYPES} from '../../manage-app-state/actionTypes';
 import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 
 import './AppDetailsPage.scss';
+import {getProductSpecifications} from '../../utils/api';
+import {getProductVersionFromSpecifications} from '../../utils/util';
 
 interface AppDetailsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
@@ -26,6 +28,7 @@ export function AppDetailsPage({
 	selectedApp,
 	setSelectedApp,
 }: AppDetailsPageProps) {
+	const [appVersion, setAppVersion] = useState('0');
 	const [navigationBarActive, setNavigationBarActive] =
 		useState('App Details');
 
@@ -41,6 +44,20 @@ export function AppDetailsPage({
 			},
 			type: TYPES.SUBMIT_APP_PROFILE,
 		});
+
+		const fetchProductSpecifications = async () => {
+			const productSpecifications = await getProductSpecifications({
+				appProductId: selectedApp.productId,
+			});
+
+			const appVersion = getProductVersionFromSpecifications(
+				productSpecifications
+			);
+
+			setAppVersion(appVersion);
+		};
+
+		fetchProductSpecifications();
 	}, [dispatch, selectedApp]);
 
 	return (
@@ -78,11 +95,10 @@ export function AppDetailsPage({
 				displayType="info"
 			>
 				<span className="app-details-page-alert-text">
-					This submission is currently under review by Liferay.
-					Once the process is complete, you will be able to
-					publish it to the marketplace. Meanwhile, any
-					information or data from this app submission cannot be
-					updated.
+					This submission is currently under review by Liferay. Once
+					the process is complete, you will be able to publish it to
+					the marketplace. Meanwhile, any information or data from
+					this app submission cannot be updated.
 				</span>
 			</ClayAlert>
 
@@ -103,7 +119,7 @@ export function AppDetailsPage({
 
 						<div className="app-details-page-app-info-subtitle-container">
 							<span className="app-details-page-app-info-subtitle-text">
-								v{selectedApp.version}
+								{appVersion}
 							</span>
 
 							<img

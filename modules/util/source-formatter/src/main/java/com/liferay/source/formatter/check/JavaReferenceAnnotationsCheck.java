@@ -15,14 +15,14 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.poshi.core.util.FileUtil;
-import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
@@ -109,8 +109,7 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		if (componentName.contains("+")) {
-			componentName = StringUtil.regexReplaceAll(
-				componentName, "[^\\w\\.]", "");
+			componentName = componentName.replaceAll("[^\\w\\.]", "");
 		}
 
 		if (componentName.contains("*")) {

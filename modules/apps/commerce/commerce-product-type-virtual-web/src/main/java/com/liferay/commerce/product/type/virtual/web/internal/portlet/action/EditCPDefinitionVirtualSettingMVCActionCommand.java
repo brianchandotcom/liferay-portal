@@ -15,6 +15,8 @@
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException;
@@ -27,8 +29,12 @@ import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSe
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -97,15 +103,40 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 				hideDefaultSuccessMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, exception.getClass());
-
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw exception;
 			}
+		}
+
+		String className = ParamUtil.getString(actionRequest, "className");
+
+		if (className.equals(CPInstance.class.getName())) {
+			sendRedirect(
+				actionRequest, actionResponse,
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						actionRequest, CPDefinition.class.getName(),
+						PortletProvider.Action.EDIT)
+				).setMVCRenderCommandName(
+					"/cp_definitions/edit_cp_instance"
+				).setParameter(
+					"cpDefinitionId",
+					ParamUtil.getLong(actionRequest, "cpDefinitionId")
+				).setParameter(
+					"cpInstanceId", ParamUtil.getLong(actionRequest, "classPK")
+				).setParameter(
+					"override", ParamUtil.getBoolean(actionRequest, "override")
+				).setParameter(
+					"screenNavigationCategoryKey", "virtual-settings"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
+		}
+		else {
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
 

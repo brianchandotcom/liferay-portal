@@ -387,6 +387,38 @@ public class SEOSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> seoKeywords_i18n;
 
+	@Schema(description = "Represents settings related with the site map.")
+	@Valid
+	public SiteMapSettings getSiteMapSettings() {
+		return siteMapSettings;
+	}
+
+	public void setSiteMapSettings(SiteMapSettings siteMapSettings) {
+		this.siteMapSettings = siteMapSettings;
+	}
+
+	@JsonIgnore
+	public void setSiteMapSettings(
+		UnsafeSupplier<SiteMapSettings, Exception>
+			siteMapSettingsUnsafeSupplier) {
+
+		try {
+			siteMapSettings = siteMapSettingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Represents settings related with the site map."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SiteMapSettings siteMapSettings;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -532,6 +564,16 @@ public class SEOSettings implements Serializable {
 			sb.append("\"seoKeywords_i18n\": ");
 
 			sb.append(_toJSON(seoKeywords_i18n));
+		}
+
+		if (siteMapSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteMapSettings\": ");
+
+			sb.append(String.valueOf(siteMapSettings));
 		}
 
 		sb.append("}");

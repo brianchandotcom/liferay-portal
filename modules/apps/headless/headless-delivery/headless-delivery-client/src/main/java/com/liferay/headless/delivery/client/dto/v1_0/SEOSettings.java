@@ -253,6 +253,28 @@ public class SEOSettings implements Cloneable, Serializable {
 
 	protected Map<String, String> seoKeywords_i18n;
 
+	public SiteMapSettings getSiteMapSettings() {
+		return siteMapSettings;
+	}
+
+	public void setSiteMapSettings(SiteMapSettings siteMapSettings) {
+		this.siteMapSettings = siteMapSettings;
+	}
+
+	public void setSiteMapSettings(
+		UnsafeSupplier<SiteMapSettings, Exception>
+			siteMapSettingsUnsafeSupplier) {
+
+		try {
+			siteMapSettings = siteMapSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SiteMapSettings siteMapSettings;
+
 	@Override
 	public SEOSettings clone() throws CloneNotSupportedException {
 		return (SEOSettings)super.clone();

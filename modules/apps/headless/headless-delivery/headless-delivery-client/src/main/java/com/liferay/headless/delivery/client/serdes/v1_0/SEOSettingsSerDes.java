@@ -175,6 +175,16 @@ public class SEOSettingsSerDes {
 			sb.append(_toJSON(seoSettings.getSeoKeywords_i18n()));
 		}
 
+		if (seoSettings.getSiteMapSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteMapSettings\": ");
+
+			sb.append(String.valueOf(seoSettings.getSiteMapSettings()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -277,6 +287,15 @@ public class SEOSettingsSerDes {
 				String.valueOf(seoSettings.getSeoKeywords_i18n()));
 		}
 
+		if (seoSettings.getSiteMapSettings() == null) {
+			map.put("siteMapSettings", null);
+		}
+		else {
+			map.put(
+				"siteMapSettings",
+				String.valueOf(seoSettings.getSiteMapSettings()));
+		}
+
 		return map;
 	}
 
@@ -358,6 +377,13 @@ public class SEOSettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					seoSettings.setSeoKeywords_i18n(
 						(Map)SEOSettingsSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteMapSettings")) {
+				if (jsonParserFieldValue != null) {
+					seoSettings.setSiteMapSettings(
+						SiteMapSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -144,19 +144,24 @@ const Table: React.FC<TableProps> = ({
 
 						{columns.map((column, index) => (
 							<ClayTable.Cell headingTitle key={index}>
-								<>
-									{column.value}
+								<div className="d-flex justify-content-between">
+									<span
+										className={classNames({"cursor-pointer":column.sorteable})}
+										onClick={() => changeSort(column.key)}
+									>
+										{column.value}
+									</span>
 
 									{column.sorteable && (
 										<ClayIcon
-											className="cursor-pointer ml-1"
+											className="cursor-pointer"
 											onClick={() =>
 												changeSort(column.key)
 											}
 											symbol={getSortSymbol(column.key)}
 										/>
 									)}
-								</>
+								</div>
 							</ClayTable.Cell>
 						))}
 					</ClayTable.Row>

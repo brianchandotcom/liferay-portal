@@ -53,11 +53,13 @@ const Projects: React.FC<ProjectsProps> = ({PageContainer = Container}) => {
 						{
 							clickable: true,
 							key: 'name',
+							size: 'lg',
 							sorteable: true,
 							value: i18n.translate('project'),
 						},
 						{
 							key: 'description',
+							size: 'lg',
 							value: i18n.translate('description'),
 						},
 					],

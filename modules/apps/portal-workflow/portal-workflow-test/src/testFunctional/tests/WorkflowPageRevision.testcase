@@ -251,6 +251,7 @@ definition {
 	@priority = 5
 	test StatusIsPendingAfterSubmitForWorkflow {
 		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "WorkflowPageRevision#StatusIsPendingAfterSubmitForWorkflow";
 
 		Navigator.gotoStagedSitePage(
 			pageName = ${pageName},

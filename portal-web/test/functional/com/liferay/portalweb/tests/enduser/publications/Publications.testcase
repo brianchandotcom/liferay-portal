@@ -640,6 +640,74 @@ definition {
 			contentValueInPublication = "网页内容");
 	}
 
+	@description = "This is the use case for LPS-181668."
+	@priority = 3
+	test CanPublishPublicationAfterPageHasBeenDeleted {
+		task ("Create and use a publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Create a copy of home page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Copy",
+				pageName = "Home");
+
+			MenuItem.click(menuItem = "Page");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Home Page Copy");
+
+			Button.clickAdd();
+		}
+
+		task ("Change to es_ES via language selector and edit fragment") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Home Page Copy");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Welcome to Liferay");
+
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Bienvenido a liferay");
+
+			PageEditor.publish();
+		}
+
+		task ("Delete copied page and try to publish the publication") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.deletePage(pageName = "Home");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			Button.clickPublish();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "No unresolved conflicts, ready to publish.");
+
+			Publications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+	}
+
 	@description = "Login after resetting password when last in Publication."
 	@priority = 4
 	test CanResetPasswordWhenLastInPublication {

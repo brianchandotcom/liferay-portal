@@ -36,7 +36,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalServi
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
-import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -143,21 +142,21 @@ public class DDMFormInstanceRecordExporterImpl
 			ddmFormFieldTypeServicesRegistry.getDDMFormFieldValueRenderer(
 				ddmFormField.getType());
 
-		return _html.unescape(
-			StringUtil.merge(
-				TransformUtil.transform(
-					ddmFormFieldValues,
-					ddmForFieldValue -> {
-						String value = ddmFormFieldValueRenderer.render(
-							ddmForFieldValue, locale);
+		StringBundler sb = new StringBundler(2 * ddmFormFieldValues.size());
 
-						if (Validator.isNotNull(value)) {
-							return value;
-						}
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			String value = ddmFormFieldValueRenderer.render(
+				ddmFormFieldValue, locale);
 
-						return null;
-					}),
-				StringPool.COMMA_AND_SPACE));
+			if (Validator.isNotNull(value)) {
+				sb.append(value);
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return _html.unescape(sb.toString());
 	}
 
 	protected List<Map<String, String>> getDDMFormFieldValues(
@@ -223,12 +222,11 @@ public class DDMFormInstanceRecordExporterImpl
 			long ddmFormInstanceId)
 		throws Exception {
 
-		List<DDMStructureVersion> ddmStructureVersions = getStructureVersions(
-			ddmFormInstanceId);
-
 		Map<String, DDMFormField> ddmFormFields = new LinkedHashMap<>();
 
-		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
+		for (DDMStructureVersion ddmStructureVersion :
+				getStructureVersions(ddmFormInstanceId)) {
+
 			Map<String, DDMFormField> map =
 				getNontransientDDMFormFieldsReferencesMap(ddmStructureVersion);
 

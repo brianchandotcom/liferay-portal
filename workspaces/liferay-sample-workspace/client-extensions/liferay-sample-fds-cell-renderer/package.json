@@ -11,7 +11,7 @@
 	"name": "liferay-sample-fds-cell-renderer",
 	"scripts": {
 		"build": "tsc",
-		"start": "PORT=5002 serve --cors",
+		"start": "PORT=3000 serve --cors",
 		"watch": "tsc --watch"
 	},
 	"type": "module",

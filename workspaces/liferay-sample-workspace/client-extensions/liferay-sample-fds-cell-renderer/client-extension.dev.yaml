@@ -1,2 +1,2 @@
 liferay-sample-fds-cell-renderer:
-    baseURL: http://localhost:5002/build
+    baseURL: http://localhost:3000/build

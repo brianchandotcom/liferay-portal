@@ -19,6 +19,7 @@ import {
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../../utils/constants';
+import PopoverIcon from '../../DXPCloud/components/PopoverIcon';
 
 export default function getActivationStatusCardLayout(
 	lxcEnvironment,
@@ -37,6 +38,11 @@ export default function getActivationStatusCardLayout(
 						rel="noopener noreferrer"
 						target="_blank"
 					>
+						<PopoverIcon
+							symbol="question-circle-full"
+							title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+						/>
+
 						{i18n.translate('go-to-liferay-experience-cloud')}
 
 						<ClayIcon className="ml-1" symbol="order-arrow-right" />
@@ -48,6 +54,11 @@ export default function getActivationStatusCardLayout(
 						rel="noopener noreferrer"
 						target="_blank"
 					>
+						<PopoverIcon
+							symbol="question-circle-full"
+							title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+						/>
+
 						{i18n.translate('go-to-uat')}
 
 						<ClayIcon className="ml-1" symbol="order-arrow-right" />
@@ -59,6 +70,11 @@ export default function getActivationStatusCardLayout(
 						rel="noopener noreferrer"
 						target="_blank"
 					>
+						<PopoverIcon
+							symbol="question-circle-full"
+							title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+						/>
+
 						{i18n.translate('go-to-analytics-cloud-workspace')}
 
 						<ClayIcon className="ml-1" symbol="order-arrow-right" />

@@ -14,7 +14,7 @@ import PopoverIcon from '../../../../../../../components/ActivationStatus/DXPClo
 
 const ManageUsersButton = ({href, title}) => (
 	<a
-		className="align-items-center border border-secondary btn cp-manage-users-button d-flex mr-3 p-2 text-neutral-10"
+		className="align-items-center border border-secondary btn cp-manage-users-button d-flex mr-3 p-2 text-neutral-10 text-nowrap"
 		href={href}
 		rel="noopener noreferrer"
 		target="_blank"

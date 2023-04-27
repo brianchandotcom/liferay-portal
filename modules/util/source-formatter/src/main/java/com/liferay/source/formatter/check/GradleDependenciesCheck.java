@@ -17,20 +17,18 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.GradleSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -188,8 +186,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			return StringUtil.replace(content, dependencies, newDependencies);
 		}
 
-		Set<String> uniqueDependencies = new TreeSet<>(
-			new GradleDependencyComparator());
+		List<String> uniqueDependencies = new ArrayList<>();
 
 		for (String dependency : StringUtil.splitLines(dependencies)) {
 			dependency = dependency.trim();
@@ -230,6 +227,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 			uniqueDependencies.add(_sortDependencyAttributes(dependency));
 		}
+
+		ListUtil.distinct(uniqueDependencies, new GradleDependencyComparator());
 
 		StringBundler sb = new StringBundler();
 
@@ -336,8 +335,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	private static final Pattern _restClientPattern = Pattern.compile(
 		"(?<!testIntegrationCompile) project\\(\".*-rest-client\"\\)");
 
-	private class GradleDependencyComparator
-		implements Comparator<String>, Serializable {
+	private class GradleDependencyComparator implements Comparator<String> {
 
 		@Override
 		public int compare(String dependency1, String dependency2) {
@@ -348,6 +346,10 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 			if (!configuration1.equals(configuration2)) {
 				return dependency1.compareTo(dependency2);
+			}
+
+			if (configuration1.equals("classpath")) {
+				return 0;
 			}
 
 			String group1 = _getPropertyValue(dependency1, "group");

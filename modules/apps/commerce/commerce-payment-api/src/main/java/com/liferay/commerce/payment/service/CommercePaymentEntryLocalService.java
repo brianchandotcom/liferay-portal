@@ -306,4 +306,9 @@ public interface CommercePaymentEntryLocalService
 	public CommercePaymentEntry updateCommercePaymentEntry(
 		CommercePaymentEntry commercePaymentEntry);
 
+	public CommercePaymentEntry updateCommercePaymentEntry(
+			long commercePaymentEntryId, int paymentStatus,
+			String transactionCode)
+		throws PortalException;
+
 }

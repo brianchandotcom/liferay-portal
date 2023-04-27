@@ -408,6 +408,17 @@ public class CommercePaymentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.payment.model.CommercePaymentEntry
+			updateCommercePaymentEntry(
+				long commercePaymentEntryId, int paymentStatus,
+				String transactionCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentEntryLocalService.updateCommercePaymentEntry(
+			commercePaymentEntryId, paymentStatus, transactionCode);
+	}
+
+	@Override
 	public CommercePaymentEntryLocalService getWrappedService() {
 		return _commercePaymentEntryLocalService;
 	}

@@ -8206,10 +8206,10 @@ ${output.content}</echo>
 		<antcall target="unit-jdk8" />
 	</target>
 
-	<target name="workspace-compile-jdk8">
+	<target name="workspaces-compile-jdk8">
 		<run-batch-test>
 			<test-action>
-				<for list="${workspace.names[workspace-compile-jdk8]}" param="workspace.name">
+				<for list="${workspaces.names[workspaces-compile-jdk8]}" param="workspace.name">
 					<sequential>
 						<local name="workspace.dir" />
 

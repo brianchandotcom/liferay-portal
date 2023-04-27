@@ -37,14 +37,6 @@ public class BlogsEntryPermission {
 			permissionChecker, entry, actionId);
 	}
 
-	public static boolean contains(
-			PermissionChecker permissionChecker, long entryId, String actionId)
-		throws PortalException {
-
-		return _blogsEntryModelResourcePermission.contains(
-			permissionChecker, entryId, actionId);
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)",
 		unbind = "-"

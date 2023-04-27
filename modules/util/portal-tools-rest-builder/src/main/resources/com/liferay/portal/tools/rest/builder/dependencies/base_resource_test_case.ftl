@@ -47,6 +47,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 	import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 </#if>
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -268,95 +269,54 @@ public abstract class Base${schemaName}ResourceTestCase {
 					@SuppressWarnings("PMD.UnusedLocalVariable")
 					${schemaName} ${schemaVarName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-					assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+					UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+						() ->
+							${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 
-					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if !javaMethodParameter?is_first>
-							,
-						</#if>
-
-						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								${schemaVarName}.getId()
-							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
-								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+								<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+										${schemaVarName}.getId()
+									<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
+										<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+											${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+										<#else>
+											<#assign
+												addGetterMethod = true
+												defaultImplementationGetterMethod = true
+											/>
+										</#if>
+									<#else>
+										<#assign
+											addGetterMethod = true
+											defaultImplementationGetterMethod = false
+										/>
+									</#if>
 								<#else>
+									null
+								</#if>
+
+								<#if addGetterMethod>
+									<#if defaultImplementationGetterMethod>
+										test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName})
+									<#else>
+										test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+									</#if>
+
 									<#assign
-										addGetterMethod = true
-										defaultImplementationGetterMethod = true
+										addGetterMethod = false
+										getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
 									/>
 								</#if>
-							<#else>
-								<#assign
-									addGetterMethod = true
-									defaultImplementationGetterMethod = false
-								/>
-							</#if>
-						<#else>
-							null
-						</#if>
 
-						<#if addGetterMethod>
-							<#if defaultImplementationGetterMethod>
-								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName})
-							<#else>
-								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-							</#if>
+								<#sep>, </#sep>
 
-							<#assign
-								addGetterMethod = false
-								getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-							/>
-						</#if>
-					</#list>
+							</#list>
+					);
 
-					));
+					assertHttpResponseStatusCode(204, unsafeSupplier.get());
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
-
-					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if !javaMethodParameter?is_first>
-							,
-						</#if>
-
-						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								${schemaVarName}.getId()
-							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
-								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-								<#else>
-									<#assign
-										addGetterMethod = true
-										defaultImplementationGetterMethod = true
-									/>
-								</#if>
-							<#else>
-								<#assign
-									addGetterMethod = true
-									defaultImplementationGetterMethod = false
-								/>
-							</#if>
-						<#else>
-							null
-						</#if>
-
-						<#if addGetterMethod>
-							<#if defaultImplementationGetterMethod>
-								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName})
-							<#else>
-								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-							</#if>
-
-							<#assign
-								addGetterMethod = false
-								getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-							/>
-						</#if>
-					</#list>
-
-					));
+					assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(

@@ -46,6 +46,7 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	enctype="multipart/form-data"
 	method="post"
 	name="editLayoutFm"
+	wrappedFormContent="<%= false %>"
 >
 	<aui:input name="redirect" type="hidden" value="<%= themeDisplay.getURLCurrent() %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

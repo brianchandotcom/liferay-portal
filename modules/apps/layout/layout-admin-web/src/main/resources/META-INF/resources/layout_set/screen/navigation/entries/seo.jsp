@@ -49,6 +49,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	enctype="multipart/form-data"
 	method="post"
 	name="fm"
+	wrappedFormContent="<%= false %>"
 >
 	<aui:input name="redirect" type="hidden" value="<%= themeDisplay.getURLCurrent() %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

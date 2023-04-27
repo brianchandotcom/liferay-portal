@@ -47,6 +47,7 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	method="post"
 	name="editLayoutFm"
 	onSubmit="event.preventDefault();"
+	wrappedFormContent="<%= false %>"
 >
 	<aui:input name="redirect" type="hidden" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL()) %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

@@ -1,0 +1,43 @@
+#f-modal .modal-dialog {
+  align-items: center;
+  display: flex;
+  margin: auto;
+  min-height: calc(100% - 1rem); }
+  #f-modal .modal-dialog .modal-content {
+    border-radius: 8px;
+    margin: 0 auto;
+    max-height: 80vh;
+    max-width: 90vw;
+    overflow: visible; }
+    #f-modal .modal-dialog .modal-content .modal-header {
+      border: none;
+      height: 0;
+      visibility: hidden; }
+      #f-modal .modal-dialog .modal-content .modal-header .close {
+        background: white;
+        border-radius: 50%;
+        position: relative;
+        right: -50px;
+        top: -15px;
+        visibility: visible; }
+      @media (max-width: 599px) {
+        #f-modal .modal-dialog .modal-content .modal-header .close {
+          bottom: 1rem;
+          left: calc(50% - 1em);
+          position: fixed;
+          right: 0;
+          top: auto; } }
+    #f-modal .modal-dialog .modal-content .modal-body {
+      padding: 0; }
+  @media (min-width: 600px) {
+    #f-modal .modal-dialog {
+      min-height: calc(100% - 3.5rem); } }
+
+.modal-overlay-primary .modal-backdrop {
+  background-color: var(--primary); }
+
+.modal-overlay-transparent .modal-backdrop {
+  background-color: transparent; }
+
+.modal-overlay-white .modal-backdrop {
+  background-color: var(--white); }

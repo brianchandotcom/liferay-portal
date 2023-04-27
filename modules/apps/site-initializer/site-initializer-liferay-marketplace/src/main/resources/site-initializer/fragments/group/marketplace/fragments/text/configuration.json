@@ -1,0 +1,89 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "font-size-paragraph-base",
+					"description": "font-size",
+					"label": "font-size",
+					"name": "fontSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Tiny",
+								"value": "font-size-paragraph-tiny"
+							},
+							{
+								"label": "X-Small",
+								"value": "font-size-paragraph-xsmall"
+							},
+							{
+								"label": "Small",
+								"value": "font-size-paragraph-small"
+							},
+							{
+								"label": "Base",
+								"value": "font-size-paragraph-base"
+							},
+							{
+								"label": "Large",
+								"value": "font-size-paragraph-large"
+							},
+							{
+								"label": "Display Large",
+								"value": "font-size-display-large"
+							},
+							{
+								"label": "Display Small",
+								"value": "font-size-display-small"
+							},
+							{
+								"label": "F1",
+								"value": "font-size-heading-f1"
+							},
+							{
+								"label": "F2",
+								"value": "font-size-heading-f2"
+							},
+							{
+								"label": "F3",
+								"value": "font-size-heading-f3"
+							},
+							{
+								"label": "F4",
+								"value": "font-size-heading-f4"
+							},
+							{
+								"label": "F5",
+								"value": "font-size-heading-f5"
+							},
+							{
+								"label": "F6",
+								"value": "font-size-heading-f6"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Small Caps",
+					"label": "Small Caps",
+					"name": "smallCaps",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Center On Screens 600px and Up",
+					"label": "Center On Screens 600px and Up",
+					"name": "tabletScreenCenter",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

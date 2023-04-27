@@ -1,0 +1,112 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Lazy Loading Image",
+					"label": "Lazy Loading Image",
+					"name": "lazyLoadingImage",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "color-scheme",
+					"label": "color-scheme",
+					"name": "colorScheme",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "inherit",
+								"value": ""
+							},
+							{
+								"label": "dark",
+								"value": "dark"
+							},
+							{
+								"label": "light",
+								"value": "light"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "3",
+					"description": "number-of-images",
+					"label": "number-of-images",
+					"name": "numberOfImages",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "2",
+								"value": "2"
+							},
+							{
+								"label": "3",
+								"value": "3"
+							},
+							{
+								"label": "4",
+								"value": "4"
+							},
+							{
+								"label": "5",
+								"value": "5"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "aspect-ratio-16-to-9",
+					"description": "image-aspect-ratio",
+					"label": "image-aspect-ratio",
+					"name": "imageAspectRatio",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "16:9",
+								"value": "aspect-ratio-16-to-9"
+							},
+							{
+								"label": "8:5",
+								"value": "aspect-ratio-8-to-5"
+							},
+							{
+								"label": "4:3",
+								"value": "aspect-ratio-4-to-3"
+							},
+							{
+								"label": "3:2",
+								"value": "aspect-ratio-3-to-2"
+							},
+							{
+								"label": "1:1",
+								"value": "aspect-ratio"
+							},
+							{
+								"value": "auto"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "517px",
+					"description": "image-carousel-max-width",
+					"label": "image-carousel-max-width",
+					"name": "imageCarouselMaxWidth",
+					"type": "text"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

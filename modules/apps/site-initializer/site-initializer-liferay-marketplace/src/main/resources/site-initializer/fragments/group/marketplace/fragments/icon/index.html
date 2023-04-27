@@ -1,0 +1,24 @@
+[#assign iconTypeClass = "icon-type-" + configuration.iconType]
+
+<div
+	class="
+		f-icon
+		font-size-heading-f1
+		${configuration.alignment}
+		${iconTypeClass}
+	"
+>
+	[#if configuration.iconType != "accent"]
+		[#if configuration.useHtml]
+			<lfr-editable class="icon-img" id="iconHtml" type="html">
+				<svg fill="none" height="64" viewBox="0 0 64 64" width="64" xmlns="http://www.w3.org/2000/svg">
+					<rect fill="#EBEEF2" height="64" width="64" />
+				</svg>
+			</lfr-editable>
+		[#else]
+			<lfr-editable class="icon-img" id="iconImage" type="image">
+				<img alt="icon" loading="${configuration.lazyLoadingImage?then('lazy', 'eager')}" src="https://www.liferay.com/documents/10182/0/default-icon.svg/1bb7e43c-c1dd-24fb-9d99-7d227fb00b01?t=1571952101803" />
+			</lfr-editable>
+		[/#if]
+	[/#if]
+</div>

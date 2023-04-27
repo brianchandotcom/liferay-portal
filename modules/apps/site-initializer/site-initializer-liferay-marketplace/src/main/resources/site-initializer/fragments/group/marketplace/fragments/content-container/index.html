@@ -1,0 +1,48 @@
+[#assign backgroundCss = ""]
+
+[#if configuration.background?has_content]
+	[#assign backgroundCss = "background: " + configuration.background + ";"]
+[/#if]
+
+[#assign backgroundImageCss = ""]
+
+[#if configuration.backgroundImageUrl?has_content]
+	[#assign backgroundImageCss = "background-image: url(" + configuration.backgroundImageUrl + ");" /]
+[/#if]
+
+[#assign iconBoxShadowCssClass = ""]
+
+[#if configuration.showIconBoxShadow]
+	[#assign iconBoxShadowCssClass = configuration.boxShadow]
+[/#if]
+
+<div
+	class="${configuration.backgroundDarkOrLight} ${configuration.borderRadius} ${configuration.boxShadow} ${configuration.blockAlignment} ${configuration.containerWidth} p-0"
+	style="
+		${backgroundCss}
+		${backgroundImageCss}
+		background-position: ${configuration.backgroundPosition};
+		background-repeat: no-repeat;
+		background-size: ${configuration.backgroundSize};
+	"
+>
+	[#if configuration.showIcon]
+		<div class="text-center">
+			<img
+				class="${configuration.borderRadius} ${iconBoxShadowCssClass}"
+				data-lfr-editable-id="contentContainerIcon"
+				data-lfr-editable-type="image"
+				loading="${configuration.lazyLoadingImage?then('lazy', 'eager')}"
+				src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII="
+				style="
+					height: 150px;
+					margin: ${configuration.moveIcon};
+					object-fit: cover;
+					width: 200px;
+				"
+			>
+		</div>
+	[/#if]
+
+	<lfr-drop-zone></lfr-drop-zone>
+</div>

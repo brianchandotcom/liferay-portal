@@ -1,0 +1,128 @@
+{
+	"fieldSets": [
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"label": "Items",
+					"name": "items",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Flex Direction",
+					"name": "flexDirection",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "flex-row",
+								"value": "flex-row"
+							},
+							{
+								"label": "flex-row-reverse",
+								"value": "flex-row-reverse"
+							},
+							{
+								"label": "flex-column",
+								"value": "flex-column"
+							},
+							{
+								"label": "flex-column-reverse",
+								"value": "flex-column-reverse"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "align-items-start",
+					"label": "Align Items",
+					"name": "alignItems",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "start",
+								"value": "align-items-start"
+							},
+							{
+								"label": "end",
+								"value": "align-items-end"
+							},
+							{
+								"label": "center",
+								"value": "align-items-center"
+							},
+							{
+								"label": "baseline",
+								"value": "align-items-baseline"
+							},
+							{
+								"label": "stretch",
+								"value": "align-items-stretch"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "justify-content-start",
+					"label": "Justify Content",
+					"name": "justifyContent",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "start",
+								"value": "justify-content-start"
+							},
+							{
+								"label": "end",
+								"value": "justify-content-end"
+							},
+							{
+								"label": "center",
+								"value": "justify-content-center"
+							},
+							{
+								"label": "between",
+								"value": "justify-content-between"
+							},
+							{
+								"label": "around",
+								"value": "justify-content-around"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Flex Wrap",
+					"name": "flexWrap",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "flex-nowrap",
+								"value": "flex-nowrap"
+							},
+							{
+								"label": "flex-wrap",
+								"value": "flex-wrap"
+							},
+							{
+								"label": "flex-wrap-reverse",
+								"value": "flex-wrap-reverse"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

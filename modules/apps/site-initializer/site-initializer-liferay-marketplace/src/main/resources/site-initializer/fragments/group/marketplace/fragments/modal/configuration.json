@@ -1,0 +1,83 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"description": "modal-overlay-color",
+					"label": "modal-overlay-color",
+					"name": "modalOverlayColor",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "primary",
+								"value": "primary"
+							},
+							{
+								"label": "white",
+								"value": "white"
+							},
+							{
+								"label": "none",
+								"value": "transparent"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "md",
+					"description": "modal-size",
+					"label": "modal-size",
+					"name": "modalSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "full-screen",
+								"value": "full-screen"
+							},
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "medium",
+								"value": "md"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "modal-id",
+					"label": "modal-id",
+					"name": "modalId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "modal-edit-mode",
+					"name": "modalEditMode",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Content Init Event",
+					"name": "contentInitEvent",
+					"type": "text"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

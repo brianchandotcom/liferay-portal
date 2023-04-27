@@ -1,0 +1,72 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Lazy Loading Image",
+					"label": "Lazy Loading Image",
+					"name": "lazyLoadingImage",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": " ",
+					"description": "alignment",
+					"label": "alignment",
+					"name": "alignment",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "left",
+								"value": "flex justify-start"
+							},
+							{
+								"label": "center",
+								"value": "flex justify-center"
+							},
+							{
+								"label": "right",
+								"value": "flex justify-end"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "large",
+					"description": "icon-type",
+					"label": "icon-type",
+					"name": "iconType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "accent",
+								"value": "accent"
+							},
+							{
+								"label": "small",
+								"value": "small"
+							},
+							{
+								"label": "large",
+								"value": "large"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"description": "use-html",
+					"label": "use-html",
+					"name": "useHtml",
+					"type": "checkbox"
+				}
+			],
+			"label": "configuration"
+		}
+	]
+}

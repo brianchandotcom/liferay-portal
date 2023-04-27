@@ -1,0 +1,25 @@
+[#assign fontSizeTagMap = {
+  "font-size-heading-f1": "h1",
+  "font-size-heading-f2": "h2",
+  "font-size-heading-f3": "h3",
+  "font-size-heading-f4": "h4",
+  "font-size-heading-f5": "h5",
+  "font-size-heading-f6": "h6",
+  "font-size-display-large": "h1",
+  "font-size-display-small": "h1"
+}]
+
+[#assign htmlTag = fontSizeTagMap[configuration.fontSize]!"div"]
+
+<${htmlTag}
+  data-lfr-editable-id="text"
+  data-lfr-editable-type="rich-text"
+  class="
+    f-text
+    ${configuration.fontSize}
+    ${configuration.smallCaps?then('font-size-small-caps','')}
+    ${configuration.tabletScreenCenter?then('text-center-tablet-portrait-up', '')}
+  "
+>
+  Enter content here.
+</${htmlTag}>

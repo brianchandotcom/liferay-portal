@@ -1,0 +1,232 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Container Width",
+					"label": "Container Width",
+					"name": "containerWidth",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Fluid",
+								"value": ""
+							},
+							{
+								"label": "Max Width Full (1366px)",
+								"value": "container"
+							},
+							{
+								"label": "Max Width Large (900px)",
+								"value": "max-width-large"
+							},
+							{
+								"label": "Max Width Form (500px)",
+								"value": "max-width-form"
+							},
+							{
+								"label": "Max Width Form small (400px)",
+								"value": "max-width-form-small"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "dark",
+					"description": "Background Dark or Light?",
+					"label": "Background Dark or Light?",
+					"name": "backgroundDarkOrLight",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "dark",
+								"value": "dark"
+							},
+							{
+								"label": "light",
+								"value": "light"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "background",
+					"label": "Background (i.e. #FFF)",
+					"name": "background",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "background-image-url",
+					"label": "Background Image URL",
+					"name": "backgroundImageUrl",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "center",
+					"description": "background-position",
+					"label": "Background Position",
+					"name": "backgroundPosition",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "cover",
+					"description": "background-size",
+					"label": "Background Size",
+					"name": "backgroundSize",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Block Alignment",
+					"label": "Block Alignment",
+					"name": "blockAlignment",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Left",
+								"value": ""
+							},
+							{
+								"label": "Center",
+								"value": "mx-10"
+							},
+							{
+								"label": "Right",
+								"value": "ml-10"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "Box Shadow",
+					"label": "Box Shadow",
+					"name": "boxShadow",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "None",
+								"value": ""
+							},
+							{
+								"label": "Elevation 1",
+								"value": "elevation-1"
+							},
+							{
+								"label": "Elevation 2",
+								"value": "elevation-2"
+							},
+							{
+								"label": "Elevation 3",
+								"value": "elevation-3"
+							},
+							{
+								"label": "Elevation 4",
+								"value": "elevation-4"
+							},
+							{
+								"label": "Elevation 5",
+								"value": "elevation-5"
+							},
+							{
+								"label": "Elevation 6",
+								"value": "elevation-6"
+							},
+							{
+								"label": "Elevation 7",
+								"value": "elevation-7"
+							},
+							{
+								"label": "Elevation 8",
+								"value": "elevation-8"
+							},
+							{
+								"label": "Elevation 9",
+								"value": "elevation-9"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "border-radius-none",
+					"description": "Border Radius",
+					"label": "Border Radius",
+					"name": "borderRadius",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "None",
+								"value": "border-radius-none"
+							},
+							{
+								"label": "Small",
+								"value": "border-radius-small"
+							},
+							{
+								"label": "Medium",
+								"value": "border-radius-medium"
+							},
+							{
+								"label": "Large",
+								"value": "border-radius-large"
+							},
+							{
+								"label": "X-Large",
+								"value": "border-radius-xlarge"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "false",
+					"description": "Show Icon",
+					"label": "Show Icon",
+					"name": "showIcon",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "false",
+					"description": "Show Icon Box Shadow",
+					"label": "Show Icon Box Shadow",
+					"name": "showIconBoxShadow",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "-75px 0 0 0",
+					"description": "Move Icon",
+					"label": "Move Icon (T R B L)",
+					"name": "moveIcon",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Lazy Loading Image",
+					"label": "Lazy Loading Image",
+					"name": "lazyLoadingImage",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

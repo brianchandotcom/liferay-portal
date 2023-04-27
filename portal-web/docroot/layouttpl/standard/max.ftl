@@ -1,4 +1,4 @@
-<div class="columns-max" id="main-content" role="main">
+<div class="columns-max" <#if !layout.isTypeControlPanel()>id="main-content" role="main"</#if>>
 	<div class="portlet-layout row">
 		<div class="col-md-12 portlet-column portlet-column-only" id="column-1">
 			${processor.processMax()}

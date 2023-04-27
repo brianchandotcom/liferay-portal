@@ -107,6 +107,9 @@ public class ObjectRelationshipExtensionProviderTest {
 				_objectRelationship.getObjectRelationshipId(),
 				_objectEntry.getPrimaryKey(), _user.getUserId(),
 				ServiceContextTestUtil.getServiceContext());
+
+		_originalNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 	}
 
 	@After
@@ -121,6 +124,9 @@ public class ObjectRelationshipExtensionProviderTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			_originalNestedFieldsContext);
 	}
 
 	@Test
@@ -130,6 +136,8 @@ public class ObjectRelationshipExtensionProviderTest {
 				id = _user.getUserId();
 			}
 		};
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(null);
 
 		Map<String, Serializable> extendedProperties =
 			_extensionProvider.getExtendedProperties(
@@ -249,6 +257,7 @@ public class ObjectRelationshipExtensionProviderTest {
 	private ObjectDefinition _objectDefinition;
 	private ObjectEntry _objectEntry;
 	private ObjectRelationship _objectRelationship;
+	private NestedFieldsContext _originalNestedFieldsContext;
 
 	@Inject
 	private SystemObjectDefinitionManagerRegistry

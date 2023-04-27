@@ -135,6 +135,7 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 
 				<Outlet
 					context={{
+						actions: testrayBuild.actions,
 						mutateBuild,
 						testrayBuild,
 						testrayProject,

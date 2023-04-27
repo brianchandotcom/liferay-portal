@@ -17,6 +17,7 @@ import ClayForm from '@clayui/form';
 import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
+import {withPagePermission} from '~/hoc/withPagePermission';
 import {BuildStatuses} from '~/util/statuses';
 
 import Form from '../../../../../components/Form';
@@ -286,4 +287,6 @@ const BuildForm = () => {
 	);
 };
 
-export default BuildForm;
+export default withPagePermission(BuildForm, {
+	restImpl: testrayBuildImpl,
+});

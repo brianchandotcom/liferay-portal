@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.reports.web.internal.portlet.action.test;
+package com.liferay.layout.reports.web.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
@@ -24,10 +24,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -41,7 +39,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 import org.junit.Assert;
@@ -50,11 +47,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
 /**
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class GetLayoutReportsIssuesMVCResourceCommandTest {
+public class GetLayoutReportsIssuesStrutsActionTest {
 
 	@ClassRule
 	@Rule
@@ -74,7 +74,7 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM,
 							ClassUtil.getClassName(
-								_getLayoutReportsIssuesMVCResourceCommand));
+								_getLayoutReportsIssuesStrutsAction));
 
 					String url = "http://localhost:8080/test";
 
@@ -110,7 +110,7 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 					try (LogCapture logCapture =
 							LoggerTestUtil.configureLog4JLogger(
 								ClassUtil.getClassName(
-									_getLayoutReportsIssuesMVCResourceCommand),
+									_getLayoutReportsIssuesStrutsAction),
 								LoggerTestUtil.ERROR)) {
 
 						JSONObject jsonObject = _serveResource(
@@ -145,14 +145,14 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 			Layout layout, boolean refreshCache, String url)
 		throws Exception {
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		mockLiferayResourceRequest.setParameter(
+		mockHttpServletRequest.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()));
-		mockLiferayResourceRequest.setParameter(
+		mockHttpServletRequest.setParameter(
 			"refreshCache", String.valueOf(refreshCache));
-		mockLiferayResourceRequest.setParameter("url", url);
+		mockHttpServletRequest.setParameter("url", url);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -161,26 +161,22 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 
-		mockLiferayResourceRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
-		_getLayoutReportsIssuesMVCResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
+		_getLayoutReportsIssuesStrutsAction.execute(
+			mockHttpServletRequest, mockHttpServletResponse);
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
+		mockHttpServletResponse.getContentAsString();
 
 		return JSONFactoryUtil.createJSONObject(
-			new String(byteArrayOutputStream.toByteArray()));
+			mockHttpServletResponse.getContentAsString());
 	}
 
-	@Inject(
-		filter = "mvc.command.name=/layout_reports/get_layout_reports_issues"
-	)
-	private MVCResourceCommand _getLayoutReportsIssuesMVCResourceCommand;
+	@Inject(filter = "component.name=*.GetLayoutReportsIssuesStrutsAction")
+	private StrutsAction _getLayoutReportsIssuesStrutsAction;
 
 }

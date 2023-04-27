@@ -104,16 +104,10 @@ public class SiteNavigationMenuConfigurationAction
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplate(
-		PortletDisplayTemplate portletDisplayTemplate) {
-
-		_portletDisplayTemplate = portletDisplayTemplate;
-	}
-
 	@Reference
 	private ItemSelector _itemSelector;
 
+	@Reference
 	private PortletDisplayTemplate _portletDisplayTemplate;
 
 	@Reference

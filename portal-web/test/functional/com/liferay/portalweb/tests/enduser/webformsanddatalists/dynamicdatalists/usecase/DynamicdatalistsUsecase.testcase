@@ -2413,14 +2413,13 @@ definition {
 			ddlListName = "List Name");
 
 		DDLRecord.populateFieldLinkToPage(
-			ddlRecordFieldData = "P10",
-			fieldName = "LinkToPage",
-			pagePrivacy = "Public");
+			ddlRecordFieldData = "Test Page 10",
+			fieldName = "LinkToPage");
 
 		PortletEntry.publish();
 
 		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "P10",
+			ddlRecordFieldData = "Test Page 10",
 			fieldFieldLabel = "Link to Page");
 	}
 

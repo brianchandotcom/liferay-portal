@@ -315,20 +315,13 @@ definition {
 	macro populateFieldLinkToPage {
 		DDLRecord.gotoLinkToPageSelect(fieldName = ${fieldName});
 
-		DDLRecord.gotoLinkToPageNavItem(pagePrivacy = ${pagePrivacy});
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		DDLRecord.selectLinkToPageRadio(
-			ddlRecordFieldData = ${ddlRecordFieldData},
-			parentPage = ${parentPage});
+		Portlet.expandTree();
 
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-
-		var key_fieldName = ${fieldName};
-
-		AssertTextEquals(
-			locator1 = "TextInput#DDM",
+		AssertClick.assertPartialTextClickAt(
+			key_nodeName = ${ddlRecordFieldData},
+			locator1 = "Treeview#NODE_UNSELECTED",
 			value1 = ${ddlRecordFieldData});
 	}
 

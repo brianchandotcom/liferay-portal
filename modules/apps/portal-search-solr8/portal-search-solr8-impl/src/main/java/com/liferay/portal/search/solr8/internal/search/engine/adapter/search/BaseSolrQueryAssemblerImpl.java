@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.solr8.internal.AggregationFilteringFacetProcessorContext;
@@ -77,9 +78,16 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<FacetProcessor<SolrQuery>>)(Class<?>)FacetProcessor.class,
-			"class.name");
+			bundleContext, FacetProcessor.class,
+			"(&(class.name=*)(!(class.name=DEFAULT)))",
+			(serviceReference, emitter) -> {
+				List<String> classNames = StringUtil.asList(
+					serviceReference.getProperty("class.name"));
+
+				for (String className : classNames) {
+					emitter.emit(className);
+				}
+			});
 	}
 
 	protected void addFilterQuery(
@@ -374,8 +382,9 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 	@Reference(target = "(search.engine.impl=Solr)")
 	private QueryTranslator<String> _queryTranslator;
 
-	private ServiceTrackerMap<String, FacetProcessor<SolrQuery>>
-		_serviceTrackerMap;
+	@SuppressWarnings("rawtypes")
+	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;
+
 	private final SolrQueryTranslator _solrQueryTranslator =
 		new SolrQueryTranslator();
 

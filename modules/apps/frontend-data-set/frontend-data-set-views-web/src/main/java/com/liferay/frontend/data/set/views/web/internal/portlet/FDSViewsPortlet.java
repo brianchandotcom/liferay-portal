@@ -184,6 +184,11 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						_language.get(locale, "fields-order"), "fdsFieldsOrder",
+						false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "filters-order"), "fdsFiltersOrder",
 						false)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -235,6 +240,47 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap("FDSView FDSField Relationship"),
 			"fdsViewFDSFieldRelationship",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectDefinition fdsFilterObjectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				userId, false, false,
+				LocalizedMapUtil.getLocalizedMap("FDS Filter"), "FDSFilter",
+				"300", null, LocalizedMapUtil.getLocalizedMap("FDS Filters"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "entity-field-name"), "entityFieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "type"), "type", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "filter-properties"), "filterProperties", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "preloaded-data"), "preloadedData", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "label"), "label", true)
+				));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			userId, fdsFilterObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsFilterObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSFilter Relationship"),
+			"fdsViewFDSFilterRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 

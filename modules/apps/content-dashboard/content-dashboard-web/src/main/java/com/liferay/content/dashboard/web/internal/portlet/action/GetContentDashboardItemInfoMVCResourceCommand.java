@@ -233,9 +233,11 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					}
 				).put(
 					"tabsState",
-					SessionClicks.get(
-						httpServletRequest,
-						"com.liferay.content.dashboard.web_panelTabsState", "0")
+					GetterUtil.getInteger(
+						SessionClicks.get(
+							httpServletRequest,
+							"com.liferay.content.dashboard.web_panelTabsState",
+							"0"))
 				).put(
 					"tags", _getAssetTagsJSONArray(contentDashboardItem)
 				).put(

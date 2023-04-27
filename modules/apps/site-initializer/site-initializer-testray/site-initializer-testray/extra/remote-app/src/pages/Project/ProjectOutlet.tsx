@@ -14,8 +14,8 @@
 
 import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
+import PageRenderer from '~/components/PageRenderer';
 
-import EmptyState from '../../components/EmptyState';
 import {useFetch} from '../../hooks/useFetch';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
@@ -32,9 +32,9 @@ const ProjectOutlet = () => {
 
 	const {actions} = useProjectActions({isHeaderActions: true});
 
-	const {data: testrayProject, error, mutate} = useFetch<TestrayProject>(
-		`/projects/${projectId}`
-	);
+	const {data: testrayProject, error, loading, mutate} = useFetch<
+		TestrayProject
+	>(`/projects/${projectId}`);
 
 	const {data: dataTestrayProjects} = useFetch<APIResponse<TestrayProject>>(
 		'/projects',
@@ -131,29 +131,17 @@ const ProjectOutlet = () => {
 		}
 	}, [getPath, setTabs, hasOtherParams]);
 
-	if (error) {
-		return (
-			<EmptyState
-				description={error.message}
-				title={i18n.translate('error')}
-				type="EMPTY_SEARCH"
-			/>
-		);
-	}
-
-	if (testrayProject) {
-		return (
+	return (
+		<PageRenderer error={error} loading={loading}>
 			<Outlet
 				context={{
-					actions: testrayProject.actions,
+					actions: testrayProject?.actions,
 					mutateTestrayProject: mutate,
 					testrayProject,
 				}}
 			/>
-		);
-	}
-
-	return null;
+		</PageRenderer>
+	);
 };
 
 export default ProjectOutlet;

@@ -19,6 +19,7 @@ import {
 	useOutletContext,
 	useParams,
 } from 'react-router-dom';
+import PageRenderer from '~/components/PageRenderer';
 
 import {useFetch} from '../../../../../../hooks/useFetch';
 import useHeader from '../../../../../../hooks/useHeader';
@@ -49,12 +50,18 @@ const CaseResultOutlet = () => {
 		testrayRoutine,
 	}: OutletContext = useOutletContext();
 
-	const {data: testrayCaseResult, mutate: mutateCaseResult} = useFetch<
-		TestrayCaseResult
-	>(testrayCaseResultImpl.getResource(caseResultId as string), {
-		transformData: (response) =>
-			testrayCaseResultImpl.transformData(response),
-	});
+	const {
+		data: testrayCaseResult,
+		error,
+		loading,
+		mutate: mutateCaseResult,
+	} = useFetch<TestrayCaseResult>(
+		testrayCaseResultImpl.getResource(caseResultId as string),
+		{
+			transformData: (response) =>
+				testrayCaseResultImpl.transformData(response),
+		}
+	);
 
 	const {data: mbMessage} = useFetch(
 		testrayCaseResult?.mbMessageId
@@ -125,8 +132,8 @@ const CaseResultOutlet = () => {
 		]);
 	}, [basePath, pathname, setTabs]);
 
-	if (testrayCaseResult) {
-		return (
+	return (
+		<PageRenderer error={error} loading={loading}>
 			<Outlet
 				context={{
 					actions: testrayCaseResult.actions,
@@ -136,10 +143,8 @@ const CaseResultOutlet = () => {
 					projectId,
 				}}
 			/>
-		);
-	}
-
-	return null;
+		</PageRenderer>
+	);
 };
 
 export default CaseResultOutlet;

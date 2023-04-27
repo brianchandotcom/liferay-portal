@@ -19,6 +19,7 @@ import {
 	useOutletContext,
 	useParams,
 } from 'react-router-dom';
+import PageRenderer from '~/components/PageRenderer';
 
 import {useFetch} from '../../../../hooks/useFetch';
 import useHeader from '../../../../hooks/useHeader';
@@ -47,13 +48,11 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {pathname} = useLocation();
 	const {testrayProject, testrayRoutine}: OutletContext = useOutletContext();
 
-	const {data: testrayBuild, mutate: mutateBuild} = useFetch<TestrayBuild>(
-		testrayBuildImpl.getResource(buildId as string),
-		{
-			transformData: (response) =>
-				testrayBuildImpl.transformData(response),
-		}
-	);
+	const {data: testrayBuild, error, loading, mutate: mutateBuild} = useFetch<
+		TestrayBuild
+	>(testrayBuildImpl.getResource(buildId as string), {
+		transformData: (response) => testrayBuildImpl.transformData(response),
+	});
 
 	const hasOtherParams = !!Object.values(otherParams).length;
 
@@ -126,13 +125,13 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 		}
 	}, [basePath, isCurrentPathIgnored, pathname, setTabs]);
 
-	if (testrayBuild) {
-		return (
-			<>
-				{!isCurrentPathIgnored && (
-					<BuildOverview testrayBuild={testrayBuild} />
-				)}
+	return (
+		<>
+			{!isCurrentPathIgnored && testrayBuild && (
+				<BuildOverview testrayBuild={testrayBuild} />
+			)}
 
+			<PageRenderer error={error} loading={loading}>
 				<Outlet
 					context={{
 						actions: testrayBuild.actions,
@@ -142,11 +141,9 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 						testrayRoutine,
 					}}
 				/>
-			</>
-		);
-	}
-
-	return null;
+			</PageRenderer>
+		</>
+	);
 };
 
 export default BuildOutlet;

@@ -14,6 +14,7 @@
 
 import {useEffect} from 'react';
 import {Outlet, useOutletContext, useParams} from 'react-router-dom';
+import PageRenderer from '~/components/PageRenderer';
 
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
@@ -28,7 +29,7 @@ const SuiteOutlet = () => {
 		testrayProject,
 	}: {testrayProject: TestrayProject} = useOutletContext();
 
-	const {data: testraySuite, mutate} = useFetch<TestraySuite>(
+	const {data: testraySuite, error, loading, mutate} = useFetch<TestraySuite>(
 		`/suites/${suiteId}`
 	);
 
@@ -57,8 +58,8 @@ const SuiteOutlet = () => {
 		}
 	}, [setHeading, testrayProject, testraySuite]);
 
-	if (testrayProject && testraySuite) {
-		return (
+	return (
+		<PageRenderer error={error} loading={loading}>
 			<Outlet
 				context={{
 					actions: testraySuite.actions,
@@ -67,10 +68,8 @@ const SuiteOutlet = () => {
 					testraySuite,
 				}}
 			/>
-		);
-	}
-
-	return null;
+		</PageRenderer>
+	);
 };
 
 export default SuiteOutlet;

@@ -19,6 +19,7 @@ import {
 	useOutletContext,
 	useParams,
 } from 'react-router-dom';
+import PageRenderer from '~/components/PageRenderer';
 
 import {useFetch} from '../../../hooks/useFetch';
 import useHeader from '../../../hooks/useHeader';
@@ -34,9 +35,9 @@ const RoutineOutlet = () => {
 		testrayProject,
 	}: {testrayProject: TestrayProject} = useOutletContext();
 
-	const {data: testrayRoutine, mutate} = useFetch<TestrayRoutine>(
-		`/routines/${routineId}`
-	);
+	const {data: testrayRoutine, error, loading, mutate} = useFetch<
+		TestrayRoutine
+	>(`/routines/${routineId}`);
 
 	const hasOtherParams = !!Object.values(otherParams).length;
 
@@ -83,20 +84,18 @@ const RoutineOutlet = () => {
 		}
 	}, [setHeading, testrayProject, testrayRoutine]);
 
-	if (testrayProject && testrayRoutine) {
-		return (
+	return (
+		<PageRenderer error={error} loading={loading}>
 			<Outlet
 				context={{
-					actions: testrayRoutine.actions,
+					actions: testrayRoutine?.actions,
 					mutateTestrayRoutine: mutate,
 					testrayProject,
 					testrayRoutine,
 				}}
 			/>
-		);
-	}
-
-	return null;
+		</PageRenderer>
+	);
 };
 
 export default RoutineOutlet;

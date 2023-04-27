@@ -14,6 +14,7 @@
 
 import {useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
+import PageRenderer from '~/components/PageRenderer';
 
 import SearchBuilder from '../../core/SearchBuilder';
 import {useFetch} from '../../hooks/useFetch';
@@ -77,10 +78,11 @@ const TestflowOutlet = () => {
 
 	const taskId = params.taskId as string;
 
-	const {data: testrayTask, mutate: mutateTask} = useFetch<TestrayTask>(
-		testrayTaskImpl.getResource(taskId),
-		{transformData: (response) => testrayTaskImpl.transformData(response)}
-	);
+	const {data: testrayTask, error, loading, mutate: mutateTask} = useFetch<
+		TestrayTask
+	>(testrayTaskImpl.getResource(taskId), {
+		transformData: (response) => testrayTaskImpl.transformData(response),
+	});
 
 	const {data: testrayTaskCaseTypes} = useFetch<
 		APIResponse<TestrayTaskCaseTypes>
@@ -124,42 +126,37 @@ const TestflowOutlet = () => {
 		},
 	});
 
-	if (!testrayTask) {
-		return null;
-	}
-
-	if (
-		[TaskStatuses.PROCESSING, TaskStatuses.OPEN].includes(
-			testrayTask.dueStatus.key as TaskStatuses
-		)
-	) {
-		return (
-			<TestflowLoading
-				mutateTask={mutateTask}
-				testrayTask={testrayTask}
-			/>
-		);
-	}
-
 	return (
-		<Outlet
-			context={{
-				actions: testrayTask.actions,
-				data: {
-					testraySubtasks,
-					testrayTask,
-					testrayTaskCaseTypes: testrayTaskCaseTypes?.items ?? [],
-					testrayTaskUser: testrayTaskUser?.items ?? [],
-				},
-				mutate: {
-					mutateTask,
-				},
-				revalidate: {
-					revalidateSubtask,
-					revalidateTaskUser,
-				},
-			}}
-		/>
+		<PageRenderer error={error} loading={loading}>
+			{[TaskStatuses.PROCESSING, TaskStatuses.OPEN].includes(
+				(testrayTask as TestrayTask)?.dueStatus.key as TaskStatuses
+			) ? (
+				<TestflowLoading
+					mutateTask={mutateTask}
+					testrayTask={testrayTask as TestrayTask}
+				/>
+			) : (
+				<Outlet
+					context={{
+						actions: testrayTask?.actions,
+						data: {
+							testraySubtasks,
+							testrayTask,
+							testrayTaskCaseTypes:
+								testrayTaskCaseTypes?.items ?? [],
+							testrayTaskUser: testrayTaskUser?.items ?? [],
+						},
+						mutate: {
+							mutateTask,
+						},
+						revalidate: {
+							revalidateSubtask,
+							revalidateTaskUser,
+						},
+					}}
+				/>
+			)}
+		</PageRenderer>
 	);
 };
 

@@ -202,6 +202,26 @@ public class CommercePaymentEntryLocalServiceImpl
 			commercePaymentEntries, searchResponse.getTotalHits());
 	}
 
+	@Override
+	public CommercePaymentEntry updateCommercePaymentEntry(
+			long commercePaymentEntryId, int paymentStatus,
+			String transactionCode)
+		throws PortalException {
+
+		CommercePaymentEntry commercePaymentEntry =
+			commercePaymentEntryLocalService.getCommercePaymentEntry(
+				commercePaymentEntryId);
+
+		commercePaymentEntry.setPaymentStatus(paymentStatus);
+
+		if (Validator.isNotNull(transactionCode)) {
+			commercePaymentEntry.setTransactionCode(transactionCode);
+		}
+
+		return commercePaymentEntryLocalService.updateCommercePaymentEntry(
+			commercePaymentEntry);
+	}
+
 	private SearchRequest _getSearchRequest(
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
 		int start, int end, String orderByField, boolean reverse) {

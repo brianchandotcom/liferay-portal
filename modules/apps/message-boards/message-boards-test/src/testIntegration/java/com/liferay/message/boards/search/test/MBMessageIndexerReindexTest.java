@@ -61,9 +61,13 @@ public class MBMessageIndexerReindexTest {
 
 	@Before
 	public void setUp() throws Exception {
+
+		// Order is important. See LPS-182480.
+
+		setUpUserSearchFixture();
+
 		setUpMBFixture();
 		setUpMBMessageIndexerFixture();
-		setUpUserSearchFixture();
 	}
 
 	@After

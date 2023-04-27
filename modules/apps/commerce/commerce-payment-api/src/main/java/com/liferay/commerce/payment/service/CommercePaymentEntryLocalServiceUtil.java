@@ -348,6 +348,15 @@ public class CommercePaymentEntryLocalServiceUtil {
 		return getService().updateCommercePaymentEntry(commercePaymentEntry);
 	}
 
+	public static CommercePaymentEntry updateCommercePaymentEntry(
+			long commercePaymentEntryId, int paymentStatus,
+			String transactionCode)
+		throws PortalException {
+
+		return getService().updateCommercePaymentEntry(
+			commercePaymentEntryId, paymentStatus, transactionCode);
+	}
+
 	public static CommercePaymentEntryLocalService getService() {
 		return _service;
 	}

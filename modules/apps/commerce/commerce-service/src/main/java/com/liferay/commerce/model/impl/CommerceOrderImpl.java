@@ -118,6 +118,18 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public List<Long> getCustomerCommerceOrderIds() {
+		return CommerceOrderItemLocalServiceUtil.getCustomerCommerceOrderIds(
+			getCommerceOrderId());
+	}
+
+	@Override
+	public int getCustomerCommerceOrderIdsCount() {
+		return CommerceOrderItemLocalServiceUtil.
+			getCustomerCommerceOrderIdsCount(getCommerceOrderId());
+	}
+
+	@Override
 	public long getScopeGroupId() throws PortalException {
 		AccountEntry accountEntry = getAccountEntry();
 
@@ -166,6 +178,18 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 
 		return CommerceMoneyFactoryUtil.create(
 			getCommerceCurrencyId(), getSubtotalWithTaxAmount());
+	}
+
+	@Override
+	public List<Long> getSupplierCommerceOrderIds() {
+		return CommerceOrderItemLocalServiceUtil.getSupplierCommerceOrderIds(
+			getCommerceOrderId());
+	}
+
+	@Override
+	public int getSupplierCommerceOrderIdsCount() {
+		return CommerceOrderItemLocalServiceUtil.
+			getSupplierCommerceOrderIdsCount(getCommerceOrderId());
 	}
 
 	@Override

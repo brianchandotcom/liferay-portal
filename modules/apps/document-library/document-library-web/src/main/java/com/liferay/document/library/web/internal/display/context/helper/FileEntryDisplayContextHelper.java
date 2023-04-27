@@ -184,7 +184,11 @@ public class FileEntryDisplayContextHelper {
 	}
 
 	public boolean isDownloadActionAvailable() throws PortalException {
-		return hasDownloadPermission();
+		if ((_fileEntry.getSize() > 0) && hasDownloadPermission()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isEditActionAvailable() throws PortalException {

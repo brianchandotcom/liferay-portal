@@ -133,7 +133,8 @@ public class DLViewEntriesDisplayContext {
 			}
 		}
 
-		if (DLFileEntryPermission.contains(
+		if ((fileEntry.getSize() > 0) &&
+			DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.DOWNLOAD)) {
 
 			availableActions.add("download");

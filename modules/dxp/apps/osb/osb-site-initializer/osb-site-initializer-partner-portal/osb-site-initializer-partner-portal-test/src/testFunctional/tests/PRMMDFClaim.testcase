@@ -476,7 +476,7 @@ definition {
 		property test.name.skip.portal.instance = "PRMMDFClaim#TotalClaimAmountReflectsBudgetValue";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-		
+
 		task ("Given that the manager goes to the created MDF and approve it") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
@@ -499,11 +499,11 @@ definition {
 
 		task ("Then the Total Claim Amount will be equals to 50% of the value claimed per budget") {
 			task ("Get the budget amount value") {
-				var InvoiceAmount = PRMMDFRequest.getValueByFieldName(fieldName = "activities[0].budgets[0].invoiceAmount");
+				var invoiceAmount = PRMMDFRequest.getValueByFieldName(fieldName = "activities[0].budgets[0].invoiceAmount");
 			}
 
 			task ("Make a quotient of the Budget Amount Value Cost by 50% (2), which will result in the value that can be claimed") {
-				var expectedTotalClaimAmountValue = ${InvoiceAmount} / 2;
+				var expectedTotalClaimAmountValue = ${invoiceAmount} / 2;
 			}
 
 			task ("Get the Total Claim Amount Value") {

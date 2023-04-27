@@ -24,10 +24,10 @@
 			"accountEntryRestricted": false,
 			"externalReferenceCode": "MSOD_BOOKMARKS_ENTRY",
 			"label": {
-				"en_US": "Bookmarks"
+				"en_US": "Bookmarks Entry"
 			},
 			"modifiable": true,
-			"name": "bookmarksEntry",
+			"name": "BookmarksEntry",
 			"objectFields": [
 				{
 					"DBType": "Clob",

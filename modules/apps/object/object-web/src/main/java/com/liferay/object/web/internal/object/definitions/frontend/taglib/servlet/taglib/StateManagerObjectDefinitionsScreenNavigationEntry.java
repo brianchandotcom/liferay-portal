@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class StatesObjectDefinitionsScreenNavigationEntry
+public class StateManagerObjectDefinitionsScreenNavigationEntry
 	extends BaseObjectDefinitionsScreenNavigationEntry {
 
 	@Override
@@ -50,7 +50,7 @@ public class StatesObjectDefinitionsScreenNavigationEntry
 
 	@Override
 	public String getJspPath() {
-		return "/object_definitions/object_definition/states.jsp";
+		return "/object_definitions/object_definition/state_manager.jsp";
 	}
 
 	@Override

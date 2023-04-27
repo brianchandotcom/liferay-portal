@@ -186,7 +186,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			return StringUtil.replace(content, dependencies, newDependencies);
 		}
 
-		List<String> uniqueDependencies = new ArrayList<>();
+		List<String> sortedDependencies = new ArrayList<>();
 
 		for (String dependency : StringUtil.splitLines(dependencies)) {
 			dependency = dependency.trim();
@@ -198,7 +198,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			if (dependency.startsWith("compileOnly ") &&
 				Validator.isNotNull(releasePortalAPIVersion)) {
 
-				uniqueDependencies.add(
+				sortedDependencies.add(
 					StringBundler.concat(
 						"compileOnly group: \"com.liferay.portal\", name: ",
 						"\"release.portal.api\", version: \"",
@@ -225,16 +225,16 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				dependency = sb.toString();
 			}
 
-			uniqueDependencies.add(_sortDependencyAttributes(dependency));
+			sortedDependencies.add(_sortDependencyAttributes(dependency));
 		}
 
-		ListUtil.distinct(uniqueDependencies, new GradleDependencyComparator());
+		ListUtil.distinct(sortedDependencies, new GradleDependencyComparator());
 
 		StringBundler sb = new StringBundler();
 
 		String previousConfiguration = null;
 
-		for (String dependency : uniqueDependencies) {
+		for (String dependency : sortedDependencies) {
 			String configuration = GradleSourceUtil.getConfiguration(
 				dependency);
 

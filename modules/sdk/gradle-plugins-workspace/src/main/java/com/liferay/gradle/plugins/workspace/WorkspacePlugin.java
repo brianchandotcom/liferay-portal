@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.gradle.StartParameter;
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
@@ -68,64 +69,69 @@ public class WorkspacePlugin implements Plugin<Settings> {
 		File currentDir = startParameter.getCurrentDir();
 
 		gradle.settingsEvaluated(
-			settings1 -> {
-				for (ProjectConfigurator projectConfigurator :
-						workspaceExtension.getProjectConfigurators()) {
+			new Action<Settings>() {
 
-					for (File defaultRootDir :
-							projectConfigurator.getDefaultRootDirs()) {
+				@Override
+				public void execute(Settings settings) {
+					for (ProjectConfigurator projectConfigurator :
+							workspaceExtension.getProjectConfigurators()) {
 
-						Iterable<File> projectDirs =
-							projectConfigurator.getProjectDirs(defaultRootDir);
+						for (File defaultRootDir :
+								projectConfigurator.getDefaultRootDirs()) {
 
-						Iterator<File> iterator = projectDirs.iterator();
+							Iterable<File> projectDirs =
+								projectConfigurator.getProjectDirs(defaultRootDir);
 
-						while (iterator.hasNext()) {
-							File projectDir = iterator.next();
+							Iterator<File> iterator = projectDirs.iterator();
 
-							if (Objects.equals(currentDir, projectDir)) {
-								continue;
-							}
+							while (iterator.hasNext()) {
+								File projectDir = iterator.next();
 
-							for (String glob :
-									workspaceExtension.getDirExcludesGlobs()) {
+								if (Objects.equals(currentDir, projectDir)) {
+									continue;
+								}
 
-								Path relativeProjectPath =
-									rootDirPath.relativize(projectDir.toPath());
+								for (String glob :
+										workspaceExtension.getDirExcludesGlobs()) {
 
-								PathMatcher pathMatcher =
-									fileSystem.getPathMatcher("glob:" + glob);
+									Path relativeProjectPath =
+										rootDirPath.relativize(projectDir.toPath());
 
-								if (pathMatcher.matches(relativeProjectPath)) {
-									Project rootProject =
-										gradle.getRootProject();
+									PathMatcher pathMatcher =
+										fileSystem.getPathMatcher("glob:" + glob);
 
-									Logger logger = rootProject.getLogger();
+									if (pathMatcher.matches(relativeProjectPath)) {
+										Project rootProject =
+											gradle.getRootProject();
 
-									if (logger.isInfoEnabled()) {
-										logger.info(
-											"Skipping project evaluation for " +
-												"{} because it matches the " +
-													"exclude pattern {}.",
-											relativeProjectPath, glob);
+										Logger logger = rootProject.getLogger();
+
+										if (logger.isInfoEnabled()) {
+											logger.info(
+												"Skipping project evaluation for " +
+													"{} because it matches the " +
+														"exclude pattern {}.",
+												relativeProjectPath, glob);
+										}
+
+										iterator.remove();
 									}
-
-									iterator.remove();
 								}
 							}
-						}
 
-						for (File projectDir : projectDirs) {
-							String projectPath = GradleUtil.getProjectPath(
-								projectDir, rootDir);
+							for (File projectDir : projectDirs) {
+								String projectPath = GradleUtil.getProjectPath(
+									projectDir, rootDir);
 
-							settings1.include(new String[] {projectPath});
+								settings.include(new String[] {projectPath});
 
-							_projectConfiguratorsMap.put(
-								projectPath, projectConfigurator);
+								_projectConfiguratorsMap.put(
+									projectPath, projectConfigurator);
+							}
 						}
 					}
 				}
+
 			});
 
 		gradle.beforeProject(

@@ -45,7 +45,7 @@ export default function ({
 		}).then(() => {
 			const iframe = document.querySelector('iframe');
 
-			if (iframe) {
+			if (iframe?.contentWindow) {
 				iframe.contentWindow.location.reload();
 			}
 		});

@@ -160,8 +160,6 @@ definition {
 	@description = "Verify that the user is able to click on the Current Node link and the node will be in evidence"
 	@priority = 3
 	test CanClickCurrentNodeLink {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -189,8 +187,6 @@ definition {
 	@description = "Verify that the users are able to identify the current node of the instance in the workflow"
 	@priority = 4
 	test CanIdentifyCurrentNode {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -1023,8 +1019,6 @@ definition {
 	@description = "Verify that the component displays the entire workflow that the instance is in"
 	@priority = 5
 	test DisplaysEntireWorkflow {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");

@@ -16,7 +16,6 @@ package com.liferay.headless.commerce.admin.pricing.internal.graphql.servlet.v2_
 
 import com.liferay.headless.commerce.admin.pricing.internal.graphql.mutation.v2_0.Mutation;
 import com.liferay.headless.commerce.admin.pricing.internal.graphql.query.v2_0.Query;
-import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.AccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.AccountResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.CategoryResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.ChannelResourceImpl;
@@ -42,11 +41,11 @@ import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.PriceM
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.PriceModifierProductGroupResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.PriceModifierProductResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.PriceModifierResourceImpl;
+import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.PricingAccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.ProductGroupResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.ProductResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.SkuResourceImpl;
 import com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.TierPriceResourceImpl;
-import com.liferay.headless.commerce.admin.pricing.resource.v2_0.AccountGroupResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.AccountResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.CategoryResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.ChannelResource;
@@ -72,6 +71,7 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierCa
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierProductGroupResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierProductResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierResource;
+import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PricingAccountGroupResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.ProductGroupResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.ProductResource;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.SkuResource;
@@ -148,8 +148,6 @@ public class ServletDataImpl implements ServletData {
 
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
-		Query.setAccountGroupResourceComponentServiceObjects(
-			_accountGroupResourceComponentServiceObjects);
 		Query.setCategoryResourceComponentServiceObjects(
 			_categoryResourceComponentServiceObjects);
 		Query.setChannelResourceComponentServiceObjects(
@@ -198,6 +196,8 @@ public class ServletDataImpl implements ServletData {
 			_priceModifierProductResourceComponentServiceObjects);
 		Query.setPriceModifierProductGroupResourceComponentServiceObjects(
 			_priceModifierProductGroupResourceComponentServiceObjects);
+		Query.setPricingAccountGroupResourceComponentServiceObjects(
+			_pricingAccountGroupResourceComponentServiceObjects);
 		Query.setProductResourceComponentServiceObjects(
 			_productResourceComponentServiceObjects);
 		Query.setProductGroupResourceComponentServiceObjects(
@@ -871,16 +871,6 @@ public class ServletDataImpl implements ServletData {
 							AccountResourceImpl.class,
 							"getPriceListAccountAccount"));
 					put(
-						"query#discountAccountGroupAccountGroup",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"getDiscountAccountGroupAccountGroup"));
-					put(
-						"query#priceListAccountGroupAccountGroup",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"getPriceListAccountGroupAccountGroup"));
-					put(
 						"query#discountCategoryCategory",
 						new ObjectValuePair<>(
 							CategoryResourceImpl.class,
@@ -1149,6 +1139,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PriceModifierProductGroupResourceImpl.class,
 							"getPriceModifierIdPriceModifierProductGroupsPage"));
+					put(
+						"query#discountAccountGroupAccountGroup",
+						new ObjectValuePair<>(
+							PricingAccountGroupResourceImpl.class,
+							"getDiscountAccountGroupAccountGroup"));
+					put(
+						"query#priceListAccountGroupAccountGroup",
+						new ObjectValuePair<>(
+							PricingAccountGroupResourceImpl.class,
+							"getPriceListAccountGroupAccountGroup"));
 					put(
 						"query#discountProductProduct",
 						new ObjectValuePair<>(
@@ -1441,10 +1441,6 @@ public class ServletDataImpl implements ServletData {
 		_accountResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AccountGroupResource>
-		_accountGroupResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<CategoryResource>
 		_categoryResourceComponentServiceObjects;
 
@@ -1455,6 +1451,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<OrderTypeResource>
 		_orderTypeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<PricingAccountGroupResource>
+		_pricingAccountGroupResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductResource>

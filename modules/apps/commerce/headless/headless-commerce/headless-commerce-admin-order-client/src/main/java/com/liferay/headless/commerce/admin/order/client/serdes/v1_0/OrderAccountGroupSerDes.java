@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0;
+package com.liferay.headless.commerce.admin.order.client.serdes.v1_0;
 
-import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.AccountGroup;
-import com.liferay.headless.commerce.admin.pricing.client.json.BaseJSONParser;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderAccountGroup;
+import com.liferay.headless.commerce.admin.order.client.json.BaseJSONParser;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -26,28 +26,28 @@ import java.util.TreeMap;
 import javax.annotation.Generated;
 
 /**
- * @author Zoltán Takács
+ * @author Alessio Antonio Rendina
  * @generated
  */
 @Generated("")
-public class AccountGroupSerDes {
+public class OrderAccountGroupSerDes {
 
-	public static AccountGroup toDTO(String json) {
-		AccountGroupJSONParser accountGroupJSONParser =
-			new AccountGroupJSONParser();
+	public static OrderAccountGroup toDTO(String json) {
+		OrderAccountGroupJSONParser orderAccountGroupJSONParser =
+			new OrderAccountGroupJSONParser();
 
-		return accountGroupJSONParser.parseToDTO(json);
+		return orderAccountGroupJSONParser.parseToDTO(json);
 	}
 
-	public static AccountGroup[] toDTOs(String json) {
-		AccountGroupJSONParser accountGroupJSONParser =
-			new AccountGroupJSONParser();
+	public static OrderAccountGroup[] toDTOs(String json) {
+		OrderAccountGroupJSONParser orderAccountGroupJSONParser =
+			new OrderAccountGroupJSONParser();
 
-		return accountGroupJSONParser.parseToDTOs(json);
+		return orderAccountGroupJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(AccountGroup accountGroup) {
-		if (accountGroup == null) {
+	public static String toJSON(OrderAccountGroup orderAccountGroup) {
+		if (orderAccountGroup == null) {
 			return "null";
 		}
 
@@ -55,17 +55,17 @@ public class AccountGroupSerDes {
 
 		sb.append("{");
 
-		if (accountGroup.getId() != null) {
+		if (orderAccountGroup.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(accountGroup.getId());
+			sb.append(orderAccountGroup.getId());
 		}
 
-		if (accountGroup.getName() != null) {
+		if (orderAccountGroup.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -74,7 +74,7 @@ public class AccountGroupSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(accountGroup.getName()));
+			sb.append(_escape(orderAccountGroup.getName()));
 
 			sb.append("\"");
 		}
@@ -85,63 +85,65 @@ public class AccountGroupSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AccountGroupJSONParser accountGroupJSONParser =
-			new AccountGroupJSONParser();
+		OrderAccountGroupJSONParser orderAccountGroupJSONParser =
+			new OrderAccountGroupJSONParser();
 
-		return accountGroupJSONParser.parseToMap(json);
+		return orderAccountGroupJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(AccountGroup accountGroup) {
-		if (accountGroup == null) {
+	public static Map<String, String> toMap(
+		OrderAccountGroup orderAccountGroup) {
+
+		if (orderAccountGroup == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (accountGroup.getId() == null) {
+		if (orderAccountGroup.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(accountGroup.getId()));
+			map.put("id", String.valueOf(orderAccountGroup.getId()));
 		}
 
-		if (accountGroup.getName() == null) {
+		if (orderAccountGroup.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(accountGroup.getName()));
+			map.put("name", String.valueOf(orderAccountGroup.getName()));
 		}
 
 		return map;
 	}
 
-	public static class AccountGroupJSONParser
-		extends BaseJSONParser<AccountGroup> {
+	public static class OrderAccountGroupJSONParser
+		extends BaseJSONParser<OrderAccountGroup> {
 
 		@Override
-		protected AccountGroup createDTO() {
-			return new AccountGroup();
+		protected OrderAccountGroup createDTO() {
+			return new OrderAccountGroup();
 		}
 
 		@Override
-		protected AccountGroup[] createDTOArray(int size) {
-			return new AccountGroup[size];
+		protected OrderAccountGroup[] createDTOArray(int size) {
+			return new OrderAccountGroup[size];
 		}
 
 		@Override
 		protected void setField(
-			AccountGroup accountGroup, String jsonParserFieldName,
+			OrderAccountGroup orderAccountGroup, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					accountGroup.setId(
+					orderAccountGroup.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					accountGroup.setName((String)jsonParserFieldValue);
+					orderAccountGroup.setName((String)jsonParserFieldValue);
 				}
 			}
 		}

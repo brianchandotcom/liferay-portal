@@ -96,8 +96,6 @@ public class OpenAPIResourceImpl {
 		{
 			add(AccountResourceImpl.class);
 
-			add(AccountGroupResourceImpl.class);
-
 			add(CategoryResourceImpl.class);
 
 			add(ChannelResourceImpl.class);
@@ -145,6 +143,8 @@ public class OpenAPIResourceImpl {
 			add(PriceModifierProductResourceImpl.class);
 
 			add(PriceModifierProductGroupResourceImpl.class);
+
+			add(PricingAccountGroupResourceImpl.class);
 
 			add(ProductResourceImpl.class);
 

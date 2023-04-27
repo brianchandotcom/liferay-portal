@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.client.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.order.client.dto.v1_0.AccountGroup;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderAccountGroup;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.problem.Problem;
 
@@ -32,13 +32,13 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface AccountGroupResource {
+public interface OrderAccountGroupResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public AccountGroup getOrderRuleAccountGroupAccountGroup(
+	public OrderAccountGroup getOrderRuleAccountGroupAccountGroup(
 			Long orderRuleAccountGroupId)
 		throws Exception;
 
@@ -60,8 +60,8 @@ public interface AccountGroupResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public AccountGroupResource build() {
-			return new AccountGroupResourceImpl(this);
+		public OrderAccountGroupResource build() {
+			return new OrderAccountGroupResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -149,10 +149,10 @@ public interface AccountGroupResource {
 
 	}
 
-	public static class AccountGroupResourceImpl
-		implements AccountGroupResource {
+	public static class OrderAccountGroupResourceImpl
+		implements OrderAccountGroupResource {
 
-		public AccountGroup getOrderRuleAccountGroupAccountGroup(
+		public OrderAccountGroup getOrderRuleAccountGroupAccountGroup(
 				Long orderRuleAccountGroupId)
 			throws Exception {
 
@@ -209,7 +209,7 @@ public interface AccountGroupResource {
 
 			try {
 				return com.liferay.headless.commerce.admin.order.client.serdes.
-					v1_0.AccountGroupSerDes.toDTO(content);
+					v1_0.OrderAccountGroupSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -260,12 +260,12 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		private AccountGroupResourceImpl(Builder builder) {
+		private OrderAccountGroupResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			AccountGroupResource.class.getName());
+			OrderAccountGroupResource.class.getName());
 
 		private Builder _builder;
 

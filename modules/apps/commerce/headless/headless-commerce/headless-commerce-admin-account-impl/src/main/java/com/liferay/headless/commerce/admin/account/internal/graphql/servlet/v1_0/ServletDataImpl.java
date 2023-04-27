@@ -19,18 +19,18 @@ import com.liferay.headless.commerce.admin.account.internal.graphql.query.v1_0.Q
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountAddressResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountChannelEntryResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountChannelShippingOptionResourceImpl;
-import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountMemberResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountOrganizationResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AccountResourceImpl;
+import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.AdminAccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.account.internal.resource.v1_0.UserResourceImpl;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountAddressResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelEntryResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountChannelShippingOptionResource;
-import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountMemberResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountOrganizationResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountResource;
+import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.UserResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -65,12 +65,12 @@ public class ServletDataImpl implements ServletData {
 			_accountChannelEntryResourceComponentServiceObjects);
 		Mutation.setAccountChannelShippingOptionResourceComponentServiceObjects(
 			_accountChannelShippingOptionResourceComponentServiceObjects);
-		Mutation.setAccountGroupResourceComponentServiceObjects(
-			_accountGroupResourceComponentServiceObjects);
 		Mutation.setAccountMemberResourceComponentServiceObjects(
 			_accountMemberResourceComponentServiceObjects);
 		Mutation.setAccountOrganizationResourceComponentServiceObjects(
 			_accountOrganizationResourceComponentServiceObjects);
+		Mutation.setAdminAccountGroupResourceComponentServiceObjects(
+			_adminAccountGroupResourceComponentServiceObjects);
 		Mutation.setUserResourceComponentServiceObjects(
 			_userResourceComponentServiceObjects);
 
@@ -82,12 +82,12 @@ public class ServletDataImpl implements ServletData {
 			_accountChannelEntryResourceComponentServiceObjects);
 		Query.setAccountChannelShippingOptionResourceComponentServiceObjects(
 			_accountChannelShippingOptionResourceComponentServiceObjects);
-		Query.setAccountGroupResourceComponentServiceObjects(
-			_accountGroupResourceComponentServiceObjects);
 		Query.setAccountMemberResourceComponentServiceObjects(
 			_accountMemberResourceComponentServiceObjects);
 		Query.setAccountOrganizationResourceComponentServiceObjects(
 			_accountOrganizationResourceComponentServiceObjects);
+		Query.setAdminAccountGroupResourceComponentServiceObjects(
+			_adminAccountGroupResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -439,46 +439,6 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelShippingOptionResourceImpl.class,
 							"postAccountIdAccountChannelShippingOptionBatch"));
 					put(
-						"mutation#createAccountGroupsPageExportBatch",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"postAccountGroupsPageExportBatch"));
-					put(
-						"mutation#createAccountGroup",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"postAccountGroup"));
-					put(
-						"mutation#createAccountGroupBatch",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"postAccountGroupBatch"));
-					put(
-						"mutation#deleteAccountGroupByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"deleteAccountGroupByExternalReferenceCode"));
-					put(
-						"mutation#patchAccountGroupByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"patchAccountGroupByExternalReferenceCode"));
-					put(
-						"mutation#deleteAccountGroup",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"deleteAccountGroup"));
-					put(
-						"mutation#deleteAccountGroupBatch",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"deleteAccountGroupBatch"));
-					put(
-						"mutation#patchAccountGroup",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"patchAccountGroup"));
-					put(
 						"mutation#createAccountByExternalReferenceCodeAccountMember",
 						new ObjectValuePair<>(
 							AccountMemberResourceImpl.class,
@@ -538,6 +498,31 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountOrganizationResourceImpl.class,
 							"deleteAccountIdAccountOrganization"));
+					put(
+						"mutation#createAccountGroup",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"postAccountGroup"));
+					put(
+						"mutation#deleteAccountGroupByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"deleteAccountGroupByExternalReferenceCode"));
+					put(
+						"mutation#patchAccountGroupByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"patchAccountGroupByExternalReferenceCode"));
+					put(
+						"mutation#deleteAccountGroup",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"deleteAccountGroup"));
+					put(
+						"mutation#patchAccountGroup",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"patchAccountGroup"));
 					put(
 						"mutation#createAccountByExternalReferenceCodeAccountMemberCreateUser",
 						new ObjectValuePair<>(
@@ -728,30 +713,6 @@ public class ServletDataImpl implements ServletData {
 							AccountChannelShippingOptionResourceImpl.class,
 							"getAccountIdAccountChannelShippingOptionPage"));
 					put(
-						"query#accountGroups",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"getAccountGroupsPage"));
-					put(
-						"query#accountGroupByExternalReferenceCode",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"getAccountGroupByExternalReferenceCode"));
-					put(
-						"query#accountGroup",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class, "getAccountGroup"));
-					put(
-						"query#accountByExternalReferenceCodeAccountGroups",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"getAccountByExternalReferenceCodeAccountGroupsPage"));
-					put(
-						"query#accountIdAccountGroups",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"getAccountIdAccountGroupsPage"));
-					put(
 						"query#accountByExternalReferenceCodeAccountMembers",
 						new ObjectValuePair<>(
 							AccountMemberResourceImpl.class,
@@ -791,6 +752,31 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountOrganizationResourceImpl.class,
 							"getAccountIdAccountOrganization"));
+					put(
+						"query#accountGroups",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"getAccountGroupsPage"));
+					put(
+						"query#accountGroupByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"getAccountGroupByExternalReferenceCode"));
+					put(
+						"query#accountGroup",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"getAccountGroup"));
+					put(
+						"query#accountByExternalReferenceCodeAccountGroups",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"getAccountByExternalReferenceCodeAccountGroupsPage"));
+					put(
+						"query#accountIdAccountGroups",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"getAccountIdAccountGroupsPage"));
 
 					put(
 						"query#Account.byExternalReferenceCodeAccountChannelShippingOption",
@@ -825,7 +811,7 @@ public class ServletDataImpl implements ServletData {
 					put(
 						"query#Account.groupByExternalReferenceCode",
 						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
+							AdminAccountGroupResourceImpl.class,
 							"getAccountGroupByExternalReferenceCode"));
 					put(
 						"query#Account.byExternalReferenceCodeAccountChannelBillingAddresses",
@@ -860,7 +846,7 @@ public class ServletDataImpl implements ServletData {
 					put(
 						"query#Account.byExternalReferenceCodeAccountGroups",
 						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
+							AdminAccountGroupResourceImpl.class,
 							"getAccountByExternalReferenceCodeAccountGroupsPage"));
 					put(
 						"query#Account.byExternalReferenceCodeAccountChannelPaymentMethods",
@@ -907,16 +893,16 @@ public class ServletDataImpl implements ServletData {
 		_accountChannelShippingOptionResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AccountGroupResource>
-		_accountGroupResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountMemberResource>
 		_accountMemberResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AccountOrganizationResource>
 		_accountOrganizationResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AdminAccountGroupResource>
+		_adminAccountGroupResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<UserResource>

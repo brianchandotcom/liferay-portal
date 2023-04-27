@@ -35,16 +35,17 @@ public class PriceListAccountGroup implements Cloneable, Serializable {
 		return PriceListAccountGroupSerDes.toDTO(json);
 	}
 
-	public AccountGroup getAccountGroup() {
+	public PricingAccountGroup getAccountGroup() {
 		return accountGroup;
 	}
 
-	public void setAccountGroup(AccountGroup accountGroup) {
+	public void setAccountGroup(PricingAccountGroup accountGroup) {
 		this.accountGroup = accountGroup;
 	}
 
 	public void setAccountGroup(
-		UnsafeSupplier<AccountGroup, Exception> accountGroupUnsafeSupplier) {
+		UnsafeSupplier<PricingAccountGroup, Exception>
+			accountGroupUnsafeSupplier) {
 
 		try {
 			accountGroup = accountGroupUnsafeSupplier.get();
@@ -54,7 +55,7 @@ public class PriceListAccountGroup implements Cloneable, Serializable {
 		}
 	}
 
-	protected AccountGroup accountGroup;
+	protected PricingAccountGroup accountGroup;
 
 	public String getAccountGroupExternalReferenceCode() {
 		return accountGroupExternalReferenceCode;

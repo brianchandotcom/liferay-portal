@@ -253,7 +253,8 @@ public class OrderRuleAccountGroupSerDes {
 			if (Objects.equals(jsonParserFieldName, "accountGroup")) {
 				if (jsonParserFieldValue != null) {
 					orderRuleAccountGroup.setAccountGroup(
-						AccountGroupSerDes.toDTO((String)jsonParserFieldValue));
+						OrderAccountGroupSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

@@ -96,13 +96,13 @@ public class OpenAPIResourceImpl {
 		{
 			add(AccountResourceImpl.class);
 
-			add(AccountGroupResourceImpl.class);
-
 			add(BillingAddressResourceImpl.class);
 
 			add(ChannelResourceImpl.class);
 
 			add(OrderResourceImpl.class);
+
+			add(OrderAccountGroupResourceImpl.class);
 
 			add(OrderItemResourceImpl.class);
 

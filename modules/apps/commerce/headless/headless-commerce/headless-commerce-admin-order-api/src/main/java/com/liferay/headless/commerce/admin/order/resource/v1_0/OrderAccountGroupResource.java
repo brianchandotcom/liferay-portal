@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.account.resource.v1_0;
+package com.liferay.headless.commerce.admin.order.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
-import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderAccountGroup;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -26,10 +25,6 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +36,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -49,59 +43,17 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-commerce-admin-account/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-commerce-admin-order/v1.0
  *
  * @author Alessio Antonio Rendina
  * @generated
  */
 @Generated("")
 @ProviderType
-public interface AccountGroupResource {
+public interface OrderAccountGroupResource {
 
-	public Page<AccountGroup> getAccountGroupsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Response postAccountGroupsPageExportBatch(
-			Filter filter, Sort[] sorts, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public AccountGroup postAccountGroup(AccountGroup accountGroup)
-		throws Exception;
-
-	public Response postAccountGroupBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Response deleteAccountGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public AccountGroup getAccountGroupByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Response patchAccountGroupByExternalReferenceCode(
-			String externalReferenceCode, AccountGroup accountGroup)
-		throws Exception;
-
-	public Response deleteAccountGroup(Long id) throws Exception;
-
-	public Response deleteAccountGroupBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public AccountGroup getAccountGroup(Long id) throws Exception;
-
-	public Response patchAccountGroup(Long id, AccountGroup accountGroup)
-		throws Exception;
-
-	public Page<AccountGroup>
-			getAccountByExternalReferenceCodeAccountGroupsPage(
-				String externalReferenceCode, Pagination pagination)
-		throws Exception;
-
-	public Page<AccountGroup> getAccountIdAccountGroupsPage(
-			Long id, Pagination pagination)
+	public OrderAccountGroup getOrderRuleAccountGroupAccountGroup(
+			Long orderRuleAccountGroupId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -143,14 +95,6 @@ public interface AccountGroupResource {
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider);
 
-	public void setVulcanBatchEngineExportTaskResource(
-		VulcanBatchEngineExportTaskResource
-			vulcanBatchEngineExportTaskResource);
-
-	public void setVulcanBatchEngineImportTaskResource(
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource);
-
 	public default Filter toFilter(String filterString) {
 		return toFilter(
 			filterString, Collections.<String, List<String>>emptyMap());
@@ -169,7 +113,7 @@ public interface AccountGroupResource {
 	@ProviderType
 	public interface Builder {
 
-		public AccountGroupResource build();
+		public OrderAccountGroupResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

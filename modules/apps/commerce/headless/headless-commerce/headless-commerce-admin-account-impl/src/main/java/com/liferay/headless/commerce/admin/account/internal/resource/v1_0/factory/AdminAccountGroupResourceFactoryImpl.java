@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0.factory;
+package com.liferay.headless.commerce.admin.account.internal.resource.v1_0.factory;
 
-import com.liferay.headless.commerce.admin.pricing.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.headless.commerce.admin.pricing.resource.v2_0.AccountGroupResource;
+import com.liferay.headless.commerce.admin.account.internal.security.permission.LiberalPermissionChecker;
+import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -58,28 +58,28 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
- * @author Zoltán Takács
+ * @author Alessio Antonio Rendina
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/headless-commerce-admin-pricing/v2.0/AccountGroup",
-	service = AccountGroupResource.Factory.class
+	property = "resource.locator.key=/headless-commerce-admin-account/v1.0/AdminAccountGroup",
+	service = AdminAccountGroupResource.Factory.class
 )
 @Generated("")
-public class AccountGroupResourceFactoryImpl
-	implements AccountGroupResource.Factory {
+public class AdminAccountGroupResourceFactoryImpl
+	implements AdminAccountGroupResource.Factory {
 
 	@Override
-	public AccountGroupResource.Builder create() {
-		return new AccountGroupResource.Builder() {
+	public AdminAccountGroupResource.Builder create() {
+		return new AdminAccountGroupResource.Builder() {
 
 			@Override
-			public AccountGroupResource build() {
+			public AdminAccountGroupResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _accountGroupResourceProxyProviderFunction.apply(
+				return _adminAccountGroupResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -87,7 +87,7 @@ public class AccountGroupResourceFactoryImpl
 			}
 
 			@Override
-			public AccountGroupResource.Builder checkPermissions(
+			public AdminAccountGroupResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -96,7 +96,7 @@ public class AccountGroupResourceFactoryImpl
 			}
 
 			@Override
-			public AccountGroupResource.Builder httpServletRequest(
+			public AdminAccountGroupResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -105,7 +105,7 @@ public class AccountGroupResourceFactoryImpl
 			}
 
 			@Override
-			public AccountGroupResource.Builder httpServletResponse(
+			public AdminAccountGroupResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -114,7 +114,7 @@ public class AccountGroupResourceFactoryImpl
 			}
 
 			@Override
-			public AccountGroupResource.Builder preferredLocale(
+			public AdminAccountGroupResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -123,7 +123,7 @@ public class AccountGroupResourceFactoryImpl
 			}
 
 			@Override
-			public AccountGroupResource.Builder user(User user) {
+			public AdminAccountGroupResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -138,17 +138,17 @@ public class AccountGroupResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, AccountGroupResource>
+	private static Function<InvocationHandler, AdminAccountGroupResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			AccountGroupResource.class.getClassLoader(),
-			AccountGroupResource.class);
+			AdminAccountGroupResource.class.getClassLoader(),
+			AdminAccountGroupResource.class);
 
 		try {
-			Constructor<AccountGroupResource> constructor =
-				(Constructor<AccountGroupResource>)proxyClass.getConstructor(
-					InvocationHandler.class);
+			Constructor<AdminAccountGroupResource> constructor =
+				(Constructor<AdminAccountGroupResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
 				try {
@@ -189,37 +189,40 @@ public class AccountGroupResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		AccountGroupResource accountGroupResource =
+		AdminAccountGroupResource adminAccountGroupResource =
 			_componentServiceObjects.getService();
 
-		accountGroupResource.setContextAcceptLanguage(
+		adminAccountGroupResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		accountGroupResource.setContextCompany(company);
+		adminAccountGroupResource.setContextCompany(company);
 
-		accountGroupResource.setContextHttpServletRequest(httpServletRequest);
-		accountGroupResource.setContextHttpServletResponse(httpServletResponse);
-		accountGroupResource.setContextUser(user);
-		accountGroupResource.setExpressionConvert(_expressionConvert);
-		accountGroupResource.setFilterParserProvider(_filterParserProvider);
-		accountGroupResource.setGroupLocalService(_groupLocalService);
-		accountGroupResource.setResourceActionLocalService(
+		adminAccountGroupResource.setContextHttpServletRequest(
+			httpServletRequest);
+		adminAccountGroupResource.setContextHttpServletResponse(
+			httpServletResponse);
+		adminAccountGroupResource.setContextUser(user);
+		adminAccountGroupResource.setExpressionConvert(_expressionConvert);
+		adminAccountGroupResource.setFilterParserProvider(
+			_filterParserProvider);
+		adminAccountGroupResource.setGroupLocalService(_groupLocalService);
+		adminAccountGroupResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		accountGroupResource.setResourcePermissionLocalService(
+		adminAccountGroupResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		accountGroupResource.setRoleLocalService(_roleLocalService);
-		accountGroupResource.setSortParserProvider(_sortParserProvider);
+		adminAccountGroupResource.setRoleLocalService(_roleLocalService);
+		adminAccountGroupResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(accountGroupResource, arguments);
+			return method.invoke(adminAccountGroupResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(accountGroupResource);
+			_componentServiceObjects.ungetService(adminAccountGroupResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -227,15 +230,15 @@ public class AccountGroupResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, AccountGroupResource>
-		_accountGroupResourceProxyProviderFunction =
+	private static final Function<InvocationHandler, AdminAccountGroupResource>
+		_adminAccountGroupResourceProxyProviderFunction =
 			_getProxyProviderFunction();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AccountGroupResource>
+	private ComponentServiceObjects<AdminAccountGroupResource>
 		_componentServiceObjects;
 
 	@Reference

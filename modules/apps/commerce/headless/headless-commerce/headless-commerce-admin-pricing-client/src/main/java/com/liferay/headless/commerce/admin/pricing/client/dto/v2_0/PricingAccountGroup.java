@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.order.client.dto.v1_0;
+package com.liferay.headless.commerce.admin.pricing.client.dto.v2_0;
 
-import com.liferay.headless.commerce.admin.order.client.function.UnsafeSupplier;
-import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.AccountGroupSerDes;
+import com.liferay.headless.commerce.admin.pricing.client.function.UnsafeSupplier;
+import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.PricingAccountGroupSerDes;
 
 import java.io.Serializable;
 
@@ -24,14 +24,14 @@ import java.util.Objects;
 import javax.annotation.Generated;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  * @generated
  */
 @Generated("")
-public class AccountGroup implements Cloneable, Serializable {
+public class PricingAccountGroup implements Cloneable, Serializable {
 
-	public static AccountGroup toDTO(String json) {
-		return AccountGroupSerDes.toDTO(json);
+	public static PricingAccountGroup toDTO(String json) {
+		return PricingAccountGroupSerDes.toDTO(json);
 	}
 
 	public Long getId() {
@@ -73,8 +73,8 @@ public class AccountGroup implements Cloneable, Serializable {
 	protected String name;
 
 	@Override
-	public AccountGroup clone() throws CloneNotSupportedException {
-		return (AccountGroup)super.clone();
+	public PricingAccountGroup clone() throws CloneNotSupportedException {
+		return (PricingAccountGroup)super.clone();
 	}
 
 	@Override
@@ -83,13 +83,13 @@ public class AccountGroup implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AccountGroup)) {
+		if (!(object instanceof PricingAccountGroup)) {
 			return false;
 		}
 
-		AccountGroup accountGroup = (AccountGroup)object;
+		PricingAccountGroup pricingAccountGroup = (PricingAccountGroup)object;
 
-		return Objects.equals(toString(), accountGroup.toString());
+		return Objects.equals(toString(), pricingAccountGroup.toString());
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class AccountGroup implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return AccountGroupSerDes.toJSON(this);
+		return PricingAccountGroupSerDes.toJSON(this);
 	}
 
 }

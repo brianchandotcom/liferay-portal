@@ -15,7 +15,7 @@
 package com.liferay.headless.commerce.admin.account.client.dto.v1_0;
 
 import com.liferay.headless.commerce.admin.account.client.function.UnsafeSupplier;
-import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountGroupSerDes;
+import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AdminAccountGroupSerDes;
 
 import java.io.Serializable;
 
@@ -29,10 +29,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AccountGroup implements Cloneable, Serializable {
+public class AdminAccountGroup implements Cloneable, Serializable {
 
-	public static AccountGroup toDTO(String json) {
-		return AccountGroupSerDes.toDTO(json);
+	public static AdminAccountGroup toDTO(String json) {
+		return AdminAccountGroupSerDes.toDTO(json);
 	}
 
 	public Map<String, ?> getCustomFields() {
@@ -55,6 +55,27 @@ public class AccountGroup implements Cloneable, Serializable {
 	}
 
 	protected Map<String, ?> customFields;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String description;
 
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
@@ -116,8 +137,8 @@ public class AccountGroup implements Cloneable, Serializable {
 	protected String name;
 
 	@Override
-	public AccountGroup clone() throws CloneNotSupportedException {
-		return (AccountGroup)super.clone();
+	public AdminAccountGroup clone() throws CloneNotSupportedException {
+		return (AdminAccountGroup)super.clone();
 	}
 
 	@Override
@@ -126,13 +147,13 @@ public class AccountGroup implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AccountGroup)) {
+		if (!(object instanceof AdminAccountGroup)) {
 			return false;
 		}
 
-		AccountGroup accountGroup = (AccountGroup)object;
+		AdminAccountGroup adminAccountGroup = (AdminAccountGroup)object;
 
-		return Objects.equals(toString(), accountGroup.toString());
+		return Objects.equals(toString(), adminAccountGroup.toString());
 	}
 
 	@Override
@@ -143,7 +164,7 @@ public class AccountGroup implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return AccountGroupSerDes.toJSON(this);
+		return AdminAccountGroupSerDes.toJSON(this);
 	}
 
 }

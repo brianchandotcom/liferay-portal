@@ -44,7 +44,7 @@ export const UPDATE_STRATEGIES = [
 	{
 		default: false,
 		label: Liferay.Language.get('update-changed-record-fields'),
-		name: 'INSERT',
+		name: 'PARTIAL_UPDATE',
 	},
 	{
 		default: true,
@@ -64,6 +64,7 @@ export const PROCESS_FAILED = 'FAILED';
 export const PROCESS_STARTED = 'STARTED';
 
 export const SCHEMA_SELECTED_EVENT = 'ie-schema-selected';
+export const IMPORT_STRATEGY_SELECTED_EVENT = 'ie-import-strategy-selected';
 export const TEMPLATE_CREATED_EVENT = 'ie-template-created';
 export const TEMPLATE_SELECTED_EVENT = 'ie-template-selected';
 export const TEMPLATE_SOILED_EVENT = 'ie-template-soiled';

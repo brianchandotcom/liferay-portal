@@ -87,14 +87,17 @@ public class PortletConfigurationExtender
 			String[] resourceActionsConfigurations = StringUtil.split(
 				portletConfiguration.get(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
 
-			if (!_isUpToDate(classLoader, resourceActionsConfigurations)) {
-				_resourceActions.populateModelResources(
-					classLoader, resourceActionsConfigurations);
+			boolean checkResourceActions = !_isUpToDate(
+				classLoader, resourceActionsConfigurations);
 
-				if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) {
-					_resourceActions.populatePortletResources(
-						classLoader, resourceActionsConfigurations);
-				}
+			_resourceActions.populateModelResources(
+				classLoader, resourceActionsConfigurations,
+				checkResourceActions);
+
+			if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) {
+				_resourceActions.populatePortletResources(
+					classLoader, resourceActionsConfigurations,
+					checkResourceActions);
 			}
 		}
 		catch (Exception exception) {

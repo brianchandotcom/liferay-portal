@@ -191,6 +191,15 @@ public class ResourceActionsUtil {
 		_resourceActions.populateModelResources(classLoader, sources);
 	}
 
+	public static void populateModelResources(
+			ClassLoader classLoader, String[] sources,
+			boolean checkResourceActions)
+		throws ResourceActionsException {
+
+		_resourceActions.populateModelResources(
+			classLoader, sources, checkResourceActions);
+	}
+
 	public static void populateModelResources(Document document)
 		throws ResourceActionsException {
 
@@ -209,6 +218,15 @@ public class ResourceActionsUtil {
 		throws ResourceActionsException {
 
 		_resourceActions.populatePortletResources(classLoader, sources);
+	}
+
+	public static void populatePortletResources(
+			ClassLoader classLoader, String[] sources,
+			boolean checkResourceActions)
+		throws ResourceActionsException {
+
+		_resourceActions.populatePortletResources(
+			classLoader, sources, checkResourceActions);
 	}
 
 	public void setResourceActions(ResourceActions resourceActions) {

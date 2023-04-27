@@ -440,6 +440,15 @@ public class ResourceActionsImpl implements ResourceActions {
 			ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
 
+		populateModelResources(classLoader, sources, true);
+	}
+
+	@Override
+	public void populateModelResources(
+			ClassLoader classLoader, String[] sources,
+			boolean checkResourceActions)
+		throws ResourceActionsException {
+
 		if (ArrayUtil.isEmpty(sources)) {
 			return;
 		}
@@ -453,9 +462,12 @@ public class ResourceActionsImpl implements ResourceActions {
 					rootElement, modelResourceNames));
 		}
 
-		for (String modelResourceName : modelResourceNames) {
-			resourceActionLocalService.checkResourceActions(
-				modelResourceName, getModelResourceActions(modelResourceName));
+		if (checkResourceActions) {
+			for (String modelResourceName : modelResourceNames) {
+				resourceActionLocalService.checkResourceActions(
+					modelResourceName,
+					getModelResourceActions(modelResourceName));
+			}
 		}
 	}
 
@@ -536,6 +548,15 @@ public class ResourceActionsImpl implements ResourceActions {
 			ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
 
+		populatePortletResources(classLoader, sources, true);
+	}
+
+	@Override
+	public void populatePortletResources(
+			ClassLoader classLoader, String[] sources,
+			boolean checkResourceActions)
+		throws ResourceActionsException {
+
 		if (ArrayUtil.isEmpty(sources) ||
 			!PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
 
@@ -551,10 +572,12 @@ public class ResourceActionsImpl implements ResourceActions {
 					rootElement, portletResourceNames));
 		}
 
-		for (String portletResourceName : portletResourceNames) {
-			resourceActionLocalService.checkResourceActions(
-				portletResourceName,
-				getPortletResourceActions(portletResourceName));
+		if (checkResourceActions) {
+			for (String portletResourceName : portletResourceNames) {
+				resourceActionLocalService.checkResourceActions(
+					portletResourceName,
+					getPortletResourceActions(portletResourceName));
+			}
 		}
 	}
 

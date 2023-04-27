@@ -17,7 +17,7 @@ definition {
 
 		task ("Create a new Partner Portal Site and connect with Salesforce") {
 			PRMUtils.addSite();
-			
+
 			PRMUtils.connectWithSalesforce();
 		}
 
@@ -1133,13 +1133,13 @@ definition {
 		task ("Then I can see that the status will be 'Marketing Director Review'") {
 			PRMMDFRequest.viewMDFStatus(key_status = "Marketing Director Review");
 		}
-
 	}
 
 	@description = "This is a test for LPS-177320. Verify that when a MDF is created with the Total MDF Requested Amount less than 15k, after submitted, the MDF status will be ‘Pending Marketing Review’."
 	@priority = 5
 	test ViewMDFStatusWithRequestValueLessThan15K {
 		property test.name.skip.portal.instance = "PRMMDFRequest#ViewMDFStatusWithRequestValueLessThan15K";
+
 		task ("Given that I submit an MDF with the Total MDF Requested Amount value less than 15k") {
 			PRMMarketing.gotoAddNewMDF();
 

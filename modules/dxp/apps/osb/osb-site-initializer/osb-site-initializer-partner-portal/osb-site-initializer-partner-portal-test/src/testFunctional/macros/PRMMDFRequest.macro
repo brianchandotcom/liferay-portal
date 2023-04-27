@@ -467,10 +467,10 @@ definition {
 	}
 
 	@summary = "Click on the '-' button, inside the activities page of the MDF Request, to remove a budget value"
-	macro removeValueBudget {
+	macro removeBudgetValue {
 		Click(
-			key_text = "hr",
-			locator1 = "Icon#ANY");
+			key_index = ${index},
+			locator1 = "PRMMDFRequest#REMOVE_ICON_INDEX");
 	}
 
 	@summary = "Search for an MDF Request"

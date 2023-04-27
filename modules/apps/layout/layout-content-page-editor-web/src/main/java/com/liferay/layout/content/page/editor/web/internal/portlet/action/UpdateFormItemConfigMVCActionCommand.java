@@ -25,7 +25,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -269,13 +267,6 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 	private String _getFragmentEntryKey(InfoField infoField, long groupId) {
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-		if ((infoFieldType instanceof TextInfoFieldType) &&
-			GetterUtil.getBoolean(
-				infoField.getAttribute(TextInfoFieldType.MULTILINE))) {
-
-			return "INPUTS-textarea";
-		}
 
 		Map<String, String> defaultInputFragmentEntryKeys =
 			_defaultInputFragmentEntryHelper.getDefaultInputFragmentEntryKeys(

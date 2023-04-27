@@ -20,6 +20,7 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
+import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
@@ -120,6 +121,8 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			FileInfoFieldType.INSTANCE.getName(), "INPUTS-file-upload"
 		).put(
 			HTMLInfoFieldType.INSTANCE.getName(), "INPUTS-rich-text-input"
+		).put(
+			LongTextInfoFieldType.INSTANCE.getName(), "INPUTS-textarea"
 		).put(
 			MultiselectInfoFieldType.INSTANCE.getName(),
 			"INPUTS-multiselect-list"

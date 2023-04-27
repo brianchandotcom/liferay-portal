@@ -19,6 +19,9 @@ package com.liferay.info.field.type;
  */
 public class LongTextInfoFieldType implements InfoFieldType {
 
+	public static final LongTextInfoFieldType INSTANCE =
+		new LongTextInfoFieldType();
+
 	@Override
 	public String getName() {
 		return "long-text";

@@ -199,18 +199,16 @@ definition {
 		task ("And creates 2 SKU Contributor options with respective type Select from List and Single Selection and 2 values for each option") {
 			CommerceJSONOptionsAPI._addCommerceOption(
 				fieldType = "select",
-				key_value1 = "value1x",
-				key_value2 = "value2x",
 				optionKey = "option-select-from-list",
 				optionName = "Option Select from List",
+				optionValues = "value1:value1:1,value2:value2:2",
 				skuContributor = "true");
 
 			CommerceJSONOptionsAPI._addCommerceOption(
 				fieldType = "radio",
-				key_value1 = "value1y",
-				key_value2 = "value2y",
 				optionKey = "option-single-selection",
 				optionName = "Option Single Selection",
+				optionValues = "value1:value1:1,value2:value2:2",
 				skuContributor = "true");
 		}
 

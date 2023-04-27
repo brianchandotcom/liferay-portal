@@ -175,14 +175,12 @@ public class DDMFormFieldInfoFieldConverterImpl
 			return SelectInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-					ddmFormFieldType, DDMFormFieldTypeConstants.DATE) ||
-				 Objects.equals(ddmFormFieldType, "date")) {
+					ddmFormFieldType, DDMFormFieldTypeConstants.DATE)) {
 
 			return DateInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-					ddmFormFieldType, DDMFormFieldTypeConstants.DATE_TIME) ||
-				 Objects.equals(ddmFormFieldType, "date_time")) {
+					ddmFormFieldType, DDMFormFieldTypeConstants.DATE_TIME)) {
 
 			return DateInfoFieldType.INSTANCE;
 		}

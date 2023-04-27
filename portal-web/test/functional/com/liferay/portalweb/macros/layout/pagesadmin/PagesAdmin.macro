@@ -61,6 +61,8 @@ definition {
 					key_fieldLabel = "Target type",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${targetType});
+
+				Button.click(button = "Save");
 			}
 
 			if (isSet(target)) {
@@ -72,6 +74,8 @@ definition {
 					key_text = "Target",
 					locator1 = "TextInput#ANY",
 					value1 = ${target});
+
+				Button.click(button = "Save");
 			}
 
 			Navigator.gotoNavTab(navTab = "General");

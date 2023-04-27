@@ -2046,6 +2046,37 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	private String _getMessageBody(
+		boolean htmlFormat, MBMessage mbMessage, String messageBody,
+		ServiceContext serviceContext) {
+
+		if (htmlFormat && mbMessage.isFormatBBCode()) {
+			try {
+				messageBody = BBCodeTranslatorUtil.getHTML(messageBody);
+
+				HttpServletRequest httpServletRequest =
+					serviceContext.getRequest();
+
+				if (httpServletRequest != null) {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					messageBody = MBUtil.replaceMessageBodyPaths(
+						themeDisplay, messageBody);
+				}
+			}
+			catch (Exception exception) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to parse mbMessage ", mbMessage.getMessageId(),
+						": ", exception.getMessage()));
+			}
+		}
+
+		return messageBody;
+	}
+
 	private String _getMessageURL(
 			MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
@@ -2459,31 +2490,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		boolean htmlFormat = mbGroupServiceSettings.isEmailHtmlFormat();
 
-		String messageBody = message.getBody();
-
-		if (htmlFormat && message.isFormatBBCode()) {
-			try {
-				messageBody = BBCodeTranslatorUtil.getHTML(messageBody);
-
-				HttpServletRequest httpServletRequest =
-					serviceContext.getRequest();
-
-				if (httpServletRequest != null) {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					messageBody = MBUtil.replaceMessageBodyPaths(
-						themeDisplay, messageBody);
-				}
-			}
-			catch (Exception exception) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to parse message ", message.getMessageId(),
-						": ", exception.getMessage()));
-			}
-		}
+		String messageBody = _getMessageBody(
+			htmlFormat, message, message.getBody(), serviceContext);
 
 		String inReplyTo = null;
 		String messageSubject = message.getSubject();

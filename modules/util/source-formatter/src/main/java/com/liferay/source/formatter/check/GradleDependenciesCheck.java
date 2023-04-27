@@ -344,12 +344,14 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			String configuration2 = GradleSourceUtil.getConfiguration(
 				dependency2);
 
-			if (!configuration1.equals(configuration2)) {
-				return dependency1.compareTo(dependency2);
+			if (configuration1.equals("classpath") &&
+				configuration2.equals("classpath")) {
+
+				return 0;
 			}
 
-			if (configuration1.equals("classpath")) {
-				return 0;
+			if (!configuration1.equals(configuration2)) {
+				return dependency1.compareTo(dependency2);
 			}
 
 			String group1 = _getPropertyValue(dependency1, "group");

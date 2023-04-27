@@ -57,11 +57,6 @@ public class WikiNavigationPageMenuConfigurationAction
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
-		_wikiNodeService = wikiNodeService;
-	}
-
 	protected void validateNode(ActionRequest actionRequest) throws Exception {
 		long selNodeId = GetterUtil.getLong(
 			getParameter(actionRequest, "selNodeId"));
@@ -74,6 +69,7 @@ public class WikiNavigationPageMenuConfigurationAction
 		}
 	}
 
+	@Reference
 	private WikiNodeService _wikiNodeService;
 
 }

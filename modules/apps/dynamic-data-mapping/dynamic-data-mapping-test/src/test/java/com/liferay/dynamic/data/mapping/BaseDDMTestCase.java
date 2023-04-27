@@ -58,7 +58,6 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
@@ -94,7 +93,9 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -112,6 +113,7 @@ import org.mockito.stubbing.Answer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Pablo Carvalho
@@ -128,11 +130,19 @@ public abstract class BaseDDMTestCase {
 		).thenReturn(
 			bundleContext.getBundle()
 		);
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("ddm.form.deserializer.type", "json");
+
+		_ddmFormDeserializerServiceRegistration = bundleContext.registerService(
+			DDMFormDeserializer.class, _ddmFormDeserializer, properties);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_frameworkUtilMockedStatic.close();
+		_ddmFormDeserializerServiceRegistration.unregister();
 	}
 
 	@Before
@@ -346,29 +356,13 @@ public abstract class BaseDDMTestCase {
 	}
 
 	protected DDMStructure createStructure(String name, String definition) {
-		DDMFormJSONDeserializer ddmFormDeserializer =
-			new DDMFormJSONDeserializer();
-
 		ReflectionTestUtil.setFieldValue(
-			ddmFormDeserializer, "_ddmFormFieldTypeServicesRegistry",
+			_ddmFormDeserializer, "_ddmFormFieldTypeServicesRegistry",
 			getMockedDDMFormFieldTypeServicesRegistry());
 		ReflectionTestUtil.setFieldValue(
-			ddmFormDeserializer, "_jsonFactory", jsonFactory);
+			_ddmFormDeserializer, "_jsonFactory", jsonFactory);
 
 		DDMStructure structure = new DDMStructureImpl();
-
-		Snapshot<DDMFormDeserializer> ddmFormDeserializerSnapshot =
-			Mockito.mock(Snapshot.class);
-
-		ReflectionTestUtil.setFieldValue(
-			structure, "_ddmFormDeserializerSnapshot",
-			ddmFormDeserializerSnapshot);
-
-		Mockito.when(
-			ddmFormDeserializerSnapshot.get()
-		).thenReturn(
-			ddmFormDeserializer
-		);
 
 		structure.setStructureId(RandomTestUtil.randomLong());
 		structure.setName(name);
@@ -889,6 +883,10 @@ public abstract class BaseDDMTestCase {
 
 	}
 
+	private static final DDMFormDeserializer _ddmFormDeserializer =
+		new DDMFormJSONDeserializer();
+	private static ServiceRegistration<DDMFormDeserializer>
+		_ddmFormDeserializerServiceRegistration;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 

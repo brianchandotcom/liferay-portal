@@ -24,12 +24,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -37,6 +35,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +81,13 @@ public class DDMFormGuestUploadFieldUtilTest {
 			bundleContext.registerService(
 				DDMFormInstanceRecordLocalService.class,
 				_ddmFormInstanceRecordLocalService, null);
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("ddm.form.deserializer.type", "json");
+
+		_ddmFormDeserializerServiceRegistration = bundleContext.registerService(
+			DDMFormDeserializer.class, _ddmFormDeserializer, properties);
 	}
 
 	@AfterClass
@@ -88,6 +95,8 @@ public class DDMFormGuestUploadFieldUtilTest {
 		_frameworkUtilMockedStatic.close();
 
 		_ddmFormInstanceRecordLocalServiceServiceRegistration.unregister();
+
+		_ddmFormDeserializerServiceRegistration.unregister();
 	}
 
 	@Test
@@ -183,19 +192,6 @@ public class DDMFormGuestUploadFieldUtilTest {
 	private DDMStructure _createDDMStructure() {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
-		Snapshot<DDMFormDeserializer> ddmFormDeserializerSnapshot =
-			Mockito.mock(Snapshot.class);
-
-		ReflectionTestUtil.setFieldValue(
-			ddmStructure, "_ddmFormDeserializerSnapshot",
-			ddmFormDeserializerSnapshot);
-
-		Mockito.when(
-			ddmFormDeserializerSnapshot.get()
-		).thenReturn(
-			new DDMFormJSONDeserializer()
-		);
-
 		ddmStructure.setDDMForm(_ddmForm);
 
 		return ddmStructure;
@@ -289,6 +285,10 @@ public class DDMFormGuestUploadFieldUtilTest {
 	private static final int _MAXIMUM_SUBMISSIONS = 5;
 
 	private static DDMForm _ddmForm;
+	private static final DDMFormDeserializer _ddmFormDeserializer =
+		new DDMFormJSONDeserializer();
+	private static ServiceRegistration<DDMFormDeserializer>
+		_ddmFormDeserializerServiceRegistration;
 	private static final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService = Mockito.mock(
 			DDMFormInstanceRecordLocalService.class);

@@ -32,7 +32,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -54,7 +53,9 @@ import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -74,6 +75,7 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Lino Alves
@@ -95,11 +97,20 @@ public class DDMIndexerImplTest {
 		).thenReturn(
 			bundleContext.getBundle()
 		);
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("ddm.form.deserializer.type", "json");
+
+		_ddmFormDeserializerServiceRegistration = bundleContext.registerService(
+			DDMFormDeserializer.class, _ddmFormDeserializer, properties);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_frameworkUtilMockedStatic.close();
+
+		_ddmFormDeserializerServiceRegistration.unregister();
 	}
 
 	@Before
@@ -290,19 +301,6 @@ public class DDMIndexerImplTest {
 	private DDMStructure _createDDMStructure(DDMForm ddmForm) {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
-		Snapshot<DDMFormDeserializer> ddmFormDeserializerSnapshot =
-			Mockito.mock(Snapshot.class);
-
-		ReflectionTestUtil.setFieldValue(
-			ddmStructure, "_ddmFormDeserializerSnapshot",
-			ddmFormDeserializerSnapshot);
-
-		Mockito.when(
-			ddmFormDeserializerSnapshot.get()
-		).thenReturn(
-			new DDMFormJSONDeserializer()
-		);
-
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
@@ -386,6 +384,10 @@ public class DDMIndexerImplTest {
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();
 
+	private static final DDMFormDeserializer _ddmFormDeserializer =
+		new DDMFormJSONDeserializer();
+	private static ServiceRegistration<DDMFormDeserializer>
+		_ddmFormDeserializerServiceRegistration;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 

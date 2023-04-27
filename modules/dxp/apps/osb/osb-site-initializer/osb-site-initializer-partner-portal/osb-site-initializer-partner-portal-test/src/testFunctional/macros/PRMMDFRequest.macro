@@ -822,6 +822,13 @@ definition {
 			locator1 = "PRMMDFRequest#STATUS_INFO");
 	}
 
+	@summary = "Verify that the error message is not displayed"
+	macro viewNoErrorMessage {
+		AssertElementNotPresent(
+			key_errorMessage = ${errorMessage},
+			locator1 = "PRMMDFRequest#ERROR_MESSAGE");
+	}
+
 	@summary = "Verify that the state manager is present on MDF Request detail page"
 	macro viewStateManager {
 		AssertElementPresent(

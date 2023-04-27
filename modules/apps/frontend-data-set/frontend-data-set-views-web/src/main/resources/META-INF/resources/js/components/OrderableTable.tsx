@@ -152,6 +152,7 @@ const OrderableTableRow = ({
 };
 
 interface OrderableTableInterface {
+	disableSave?: boolean;
 	fields: Array<{
 		label: string;
 		name: string;
@@ -168,6 +169,7 @@ interface OrderableTableInterface {
 }
 
 const OrderableTable = ({
+	disableSave,
 	fields,
 	items: initialItems,
 	noItemsButtonLabel,
@@ -298,7 +300,10 @@ const OrderableTable = ({
 			{!!items.length && (
 				<ClayLayout.SheetFooter>
 					<ClayButton.Group spaced>
-						<ClayButton onClick={() => onSaveButtonClick()}>
+						<ClayButton
+							disabled={disableSave}
+							onClick={() => onSaveButtonClick()}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 

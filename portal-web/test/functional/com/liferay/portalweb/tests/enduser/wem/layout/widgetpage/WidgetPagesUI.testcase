@@ -141,7 +141,7 @@ definition {
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
-			MenuItem.viewOrder(menuItemList = "View,Convert to content page...,Copy page,Configure,Permissions,Delete");
+			MenuItem.viewOrder(menuItemList = "View,Convert to content page...,Copy,Configure,Permissions,Delete");
 		}
 	}
 

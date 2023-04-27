@@ -1031,7 +1031,7 @@ definition {
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Translate,View,Preview Draft,Discard Draft,Orphan Widgets,Copy Page,Export for Translation,Import Translation,Configure,Permissions,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Translate,View,Preview Draft,Discard Draft,Orphan Widgets,Copy,Export for Translation,Import Translation,Configure,Permissions,Delete");
 		}
 	}
 

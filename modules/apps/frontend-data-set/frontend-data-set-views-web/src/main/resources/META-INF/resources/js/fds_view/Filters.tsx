@@ -21,7 +21,29 @@ import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
+import {FDSViewType} from '../FDSViews';
 import OrderableTable from '../components/OrderableTable';
+
+interface Field {
+	label: string;
+	name: string;
+	type: string;
+}
+
+interface Filter {
+	id: number;
+	label: string;
+	name: string;
+	type: string;
+}
+
+interface IPropsAddFDSFilterModalContent {
+	closeModal: Function;
+	fdsView: FDSViewType;
+	fields: Field[];
+	namespace: string;
+	onSave: (newFilter: Filter) => void;
+}
 
 function AddFDSFilterModalContent({
 	closeModal,
@@ -29,12 +51,23 @@ function AddFDSFilterModalContent({
 	fields,
 	namespace,
 	onSave,
-}: any) {
+}: IPropsAddFDSFilterModalContent) {
 	const [selectedField, setSelectedField] = React.useState<string>();
 	const [label, setLabel] = React.useState<string>();
 
 	const handleFilterSave = async () => {
-		const field = fields.find((item: any) => item.name === selectedField);
+		const field = fields.find((item: Field) => item.name === selectedField);
+
+		if (!field) {
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-failed-to-complete'
+				),
+				type: 'danger',
+			});
+
+			return null;
+		}
 
 		const body = {
 			entityFieldName: field.name,
@@ -99,8 +132,8 @@ function AddFDSFilterModalContent({
 						}}
 						options={[
 							{},
-							...fields.map((item: any) => ({
-								...item,
+							...fields.map((item) => ({
+								label: item.label,
 								value: item.name,
 							})),
 						]}
@@ -130,8 +163,8 @@ function AddFDSFilterModalContent({
 							onChange={(event) => setLabel(event.target.value)}
 							placeholder={
 								fields.find(
-									(item: any) => item.name === selectedField
-								).label
+									(item) => item.name === selectedField
+								)?.label
 							}
 							value={label}
 						/>
@@ -159,9 +192,15 @@ function AddFDSFilterModalContent({
 	);
 }
 
-function Filters({fdsView, fdsViewsURL, namespace}: any) {
-	const [fields, setFields] = React.useState<any[]>([]);
-	const [filters, setFilters] = React.useState<any[]>([]);
+interface IProps {
+	fdsView: FDSViewType;
+	fdsViewsURL: string;
+	namespace: string;
+}
+
+function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
+	const [fields, setFields] = React.useState<Field[]>([]);
+	const [filters, setFilters] = React.useState<Filter[]>([]);
 	const [newFiltersOrder, setNewFiltersOrder] = React.useState<string>('');
 
 	const updateFDSFiltersOrder = async () => {
@@ -222,9 +261,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: any) {
 					fdsView={fdsView}
 					fields={fields}
 					namespace={namespace}
-					onSave={(newfilter: any) =>
-						setFilters([...filters, newfilter])
-					}
+					onSave={(newfilter) => setFilters([...filters, newfilter])}
 				/>
 			),
 		});
@@ -247,16 +284,17 @@ function Filters({fdsView, fdsViewsURL, namespace}: any) {
 
 			const responseJSON = await response.json();
 
-			let filtersOrderer = responseJSON.items;
+			let filtersOrderer = responseJSON.items as Filter[];
 
 			if (fdsView.fdsFiltersOrder) {
 				filtersOrderer = fdsView.fdsFiltersOrder
 					.split(',')
-					.map((fdsFilterId: string) => {
-						return filtersOrderer.find(
-							(filter: any) => filter.id === Number(fdsFilterId)
-						);
-					});
+					.map((fdsFilterId) =>
+						filtersOrderer.find(
+							(filter) => filter.id === Number(fdsFilterId)
+						)
+					)
+					.filter(Boolean) as Filter[];
 			}
 
 			setFilters(filtersOrderer);
@@ -294,9 +332,9 @@ function Filters({fdsView, fdsViewsURL, namespace}: any) {
 				)}
 				onCancelButtonClick={() => navigate(fdsViewsURL)}
 				onCreationButtonClick={onCreationButtonClick}
-				onOrderChange={({orderedItems}) => {
+				onOrderChange={({orderedItems}: {orderedItems: Filter[]}) => {
 					setNewFiltersOrder(
-						orderedItems.map((filter: any) => filter.id).join(',')
+						orderedItems.map((filter) => filter.id).join(',')
 					);
 				}}
 				onSaveButtonClick={updateFDSFiltersOrder}

@@ -29,16 +29,9 @@ definition {
 			menuItem = "Configure",
 			pageName = ${pageName});
 
-		Navigator.gotoNavTab(navTab = "Design");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		Panel.expandPanel(panel = "Customization Settings");
-
 		Check.checkToggleSwitch(
-			key_fieldLabel = "customizable",
-			key_fieldsetLabel = "Customization Settings",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_IN_FIELDSET");
+			key_toggleSwitchLabel = "customizable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		if (isSet(columnIdList)) {
 			for (var columnId : list ${columnIdList}) {

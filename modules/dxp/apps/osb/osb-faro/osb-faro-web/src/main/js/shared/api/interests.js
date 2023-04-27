@@ -36,6 +36,7 @@ export function fetch(params) {
 
 export function search(params) {
 	const {
+		channelId,
 		contactsEntityId,
 		delta = DEFAULT_DELTA,
 		groupId,
@@ -53,6 +54,7 @@ export function search(params) {
 
 	return sendRequest({
 		data: {
+			channelId,
 			contactsEntityId,
 			cur: page,
 			delta,

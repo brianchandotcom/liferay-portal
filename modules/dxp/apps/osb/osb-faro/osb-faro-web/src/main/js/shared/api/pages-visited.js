@@ -21,7 +21,7 @@ export const INTERVALS_MAP = {
 export function search(params) {
 	const {
 		active = true,
-		channelId = '',
+		channelId,
 		contactsEntityId,
 		contactsEntityType,
 		delta = DEFAULT_DELTA,

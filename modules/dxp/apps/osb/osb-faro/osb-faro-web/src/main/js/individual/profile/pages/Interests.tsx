@@ -81,6 +81,7 @@ const Interests: React.FC<IInterestsProps> = ({channelId, groupId, id}) => {
 				]}
 				dataSourceFn={API.interests.search}
 				dataSourceParams={{
+					channelId,
 					contactsEntityId: id,
 					groupId,
 					interestMax: TOTAL_DAYS

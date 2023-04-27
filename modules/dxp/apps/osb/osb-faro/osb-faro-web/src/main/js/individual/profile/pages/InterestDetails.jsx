@@ -134,6 +134,7 @@ export default class InterestDetails extends React.Component {
 						className='interest-history-table'
 						dataSourceParams={{
 							active: this.props.active === 'true',
+							channelId,
 							contactsEntityId: id,
 							contactsEntityType: EntityTypes.Individual,
 							groupId,

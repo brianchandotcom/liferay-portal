@@ -16,7 +16,7 @@ definition {
 		}
 
 		task ("Create a new Partner Portal Site and connect with Salesforce") {
-			// PRMUtils.addSite();
+			PRMUtils.addSite();
 			
 			PRMUtils.connectWithSalesforce();
 		}
@@ -69,16 +69,16 @@ definition {
 		}
 	}
 
-	// tearDown {
-	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	// 	if (${testPortalInstance} == "true") {
-	// 		PortalInstances.tearDownCP();
-	// 	}
-	// 	else {
-	// 		PRMUtils.tearDown();
-	// 	}
-	// }
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
 
 	@description = "This is a test for LPS-172917. Verify that If there are multiple activities, the review page will display them as dropdown items that can be expandable"
 	@priority = 5
@@ -1099,6 +1099,8 @@ definition {
 	@description = "This is a test for LPS-177320. Verify that when a MDF is created with the Total MDF Requested Amount higher than 15k, after submitted, the MDF status will be ‘Marketing Director’s Review’."
 	@priority = 5
 	test ViewMDFStatusWithRequestValueHigherThan15K {
+		property test.name.skip.portal.instance = "PRMMDFRequest#ViewMDFStatusWithRequestValueHigherThan15K";
+
 		task ("Given that I submit an MDF with the Total MDF Requested Amount value higher than 15k") {
 			PRMMarketing.gotoAddNewMDF();
 
@@ -1133,9 +1135,11 @@ definition {
 		}
 
 	}
+
 	@description = "This is a test for LPS-177320. Verify that when a MDF is created with the Total MDF Requested Amount less than 15k, after submitted, the MDF status will be ‘Pending Marketing Review’."
 	@priority = 5
 	test ViewMDFStatusWithRequestValueLessThan15K {
+		property test.name.skip.portal.instance = "PRMMDFRequest#ViewMDFStatusWithRequestValueLessThan15K";
 		task ("Given that I submit an MDF with the Total MDF Requested Amount value less than 15k") {
 			PRMMarketing.gotoAddNewMDF();
 

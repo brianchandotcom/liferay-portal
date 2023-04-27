@@ -132,8 +132,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals("reorder")) {
 				_reorderCommerceOrder(actionRequest);
 			}
-			else if (cmd.equals("requestedQuote")) {
-				_updateRequestedQuoteCommerceOrder(actionRequest);
+			else if (cmd.equals("requestQuote")) {
+				_requestQuote(actionRequest);
 			}
 			else if (cmd.equals("selectBillingAddress")) {
 				_selectBillingAddress(actionRequest);
@@ -549,6 +549,27 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_checkoutOrSubmitCommerceOrder(actionRequest, commerceOrder);
 	}
 
+	private void _requestQuote(ActionRequest actionRequest) throws Exception {
+		_updateCommerceOrderNote(actionRequest);
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		_commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED,
+			_portal.getUserId(actionRequest));
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT,
+			PortletURLBuilder.create(
+				_commerceOrderHttpHelper.getCommerceCartPortletURL(
+					_portal.getHttpServletRequest(actionRequest), commerceOrder)
+			).buildString());
+	}
+
 	private void _selectBillingAddress(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -692,29 +713,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
 			requestedDeliveryDateYear, requestedDeliveryDateHour,
 			requestedDeliveryDateMinute, serviceContext);
-	}
-
-	private void _updateRequestedQuoteCommerceOrder(ActionRequest actionRequest)
-		throws Exception {
-
-		_updateCommerceOrderNote(actionRequest);
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		_commerceOrderEngine.transitionCommerceOrder(
-			commerceOrder, CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED,
-			_portal.getUserId(actionRequest));
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT,
-			PortletURLBuilder.create(
-				_commerceOrderHttpHelper.getCommerceCartPortletURL(
-					_portal.getHttpServletRequest(actionRequest), commerceOrder)
-			).buildString());
 	}
 
 	private void _updateShippingAddress(ActionRequest actionRequest)

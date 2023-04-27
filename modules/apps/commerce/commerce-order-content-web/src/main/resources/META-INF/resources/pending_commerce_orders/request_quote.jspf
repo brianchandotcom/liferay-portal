@@ -21,17 +21,17 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editRequestQuoteURL" />
 
-<aui:form action="<%= editRequestQuoteURL %>" method="post" name="requestedQuoteFm">
+<aui:form action="<%= editRequestQuoteURL %>" method="post" name="requestQuoteFm">
 	<liferay-ui:error exception="<%= CommerceOrderNoteContentException.class %>" message="please-enter-valid-content" />
 
 	<aui:model-context model="<%= CommerceOrderNote.class %>" />
 
-	<div class="hide" id="<portlet:namespace />requestedQuoteNote">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="requestedQuote" />
+	<div class="hide" id="<portlet:namespace />requestQuoteNote">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="requestQuote" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 		<c:if test="<%= manageNotesPermission || manageRestrictedNotesPermission %>">
-			<aui:input label="" name="content" placeholder="type-your-note-here" />
+			<aui:input label="" name="content" placeholder="type-your-note-here" type="textarea" />
 
 			<div class="order-notes-submit-actions">
 				<c:if test="<%= manageRestrictedNotesPermission %>">
@@ -43,5 +43,5 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 </aui:form>
 
 <liferay-frontend:component
-	module="js/updateRequestedQuote"
+	module="js/requestQuote"
 />

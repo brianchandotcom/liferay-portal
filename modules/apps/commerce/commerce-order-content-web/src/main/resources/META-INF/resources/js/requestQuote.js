@@ -15,21 +15,19 @@
 export default function ({namespace}) {
 	Liferay.provide(
 		window,
-		`${namespace}requestedQuote`,
+		`${namespace}requestQuote`,
 		(event) => {
 			event.preventDefault();
 
-			const requestedQuoteNote = document.getElementById(
-				`${namespace}requestedQuoteNote`
+			const requestQuoteNote = document.getElementById(
+				`${namespace}requestQuoteNote`
 			);
 
-			const form = document.getElementById(
-				`${namespace}requestedQuoteFm`
-			);
+			const form = document.getElementById(`${namespace}requestQuoteFm`);
 
-			requestedQuoteNote.classList.remove('hide');
+			requestQuoteNote.classList.remove('hide');
 
-			requestedQuoteNote.style.display = 'block';
+			requestQuoteNote.style.display = 'block';
 
 			const dialog = Liferay.Util.Window.getWindow({
 				dialog: {

@@ -14,16 +14,7 @@
 
 package com.liferay.osb.faro.web.internal.model.display.contacts;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
 import com.liferay.osb.faro.engine.client.model.Interest;
-import com.liferay.osb.faro.engine.client.model.PageVisited;
-import com.liferay.osb.faro.engine.client.model.Rels;
-import com.liferay.osb.faro.web.internal.util.JSONUtil;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Shinn Lok
@@ -38,32 +29,8 @@ public class InterestDisplay {
 	public InterestDisplay(Interest interest) {
 		_name = interest.getName();
 		_pagesViewCount = interest.getViews();
-
-		List<PageVisited> pagesVisited = getPagesVisited(interest);
-
-		_relatedPagesCount = pagesVisited.size();
-
+		_relatedPagesCount = interest.getRelatedPagesCount();
 		_score = interest.getScore();
-	}
-
-	protected List<PageVisited> getPagesVisited(Interest interest) {
-		Map<String, Object> embeddedResources = interest.getEmbeddedResources();
-
-		if (embeddedResources.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		Object pagesVisited = embeddedResources.get(
-			Rels.Interests.PAGES_VISITED);
-
-		if (pagesVisited == null) {
-			return Collections.emptyList();
-		}
-
-		return JSONUtil.convertValue(
-			pagesVisited,
-			new TypeReference<List<PageVisited>>() {
-			});
 	}
 
 	private String _name;

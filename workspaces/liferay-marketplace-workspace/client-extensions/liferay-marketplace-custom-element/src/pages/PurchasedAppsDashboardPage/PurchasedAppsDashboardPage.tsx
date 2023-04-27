@@ -31,6 +31,7 @@ import {
 import './PurchasedAppsDashboardPage.scss';
 import {
 	initialAccountState,
+	initialAppState,
 	initialDashboardNavigationItems,
 } from './PurchasedDashboardPageUtil';
 
@@ -104,7 +105,7 @@ export function PurchasedAppsDashboardPage() {
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
 	const [selectedNavigationItem, setSelectedNavigationItem] =
 		useState('My Apps');
-	const [selectedApp, setSelectedApp] = useState<AppProps>();
+	const [selectedApp, setSelectedApp] = useState<AppProps>(initialAppState);
 
 	const messages = {
 		description: 'Manage apps purchase from the Marketplace',
@@ -350,7 +351,6 @@ export function PurchasedAppsDashboardPage() {
 				currentAccount={selectedAccount}
 				dashboardNavigationItems={dashboardNavigationItems}
 				onSelectAppChange={setSelectedApp}
-				selectedApp={selectedApp}
 				setDashboardNavigationItems={setDashboardNavigationItems}
 				setSelectedAccount={setSelectedAccount}
 			/>
@@ -360,6 +360,7 @@ export function PurchasedAppsDashboardPage() {
 					buttonMessage="Add Apps"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={messages}
+					selectedApp={selectedApp}
 				>
 					<DashboardTable<PurchasedAppProps>
 						emptyStateMessage={messages.emptyStateMessage}

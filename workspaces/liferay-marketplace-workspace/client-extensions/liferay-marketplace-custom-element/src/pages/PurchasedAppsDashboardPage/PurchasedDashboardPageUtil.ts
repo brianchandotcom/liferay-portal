@@ -16,6 +16,20 @@ export const initialAccountState: Account[] = [
 	},
 ];
 
+export const initialAppState: AppProps = {
+	catalogId: 0,
+	externalReferenceCode: '',
+	lastUpdatedBy: '',
+	name: '',
+	productId: 0,
+	selected: false,
+	status: '',
+	thumbnail: '',
+	type: '',
+	updatedDate: '',
+	version: '',
+};
+
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: appsIcon,

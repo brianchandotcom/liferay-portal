@@ -118,7 +118,7 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		ObjectActionExecutor objectActionExecutor =
 			_registerObjectActionExecutor(
-				Arrays.asList(_objectDefinition1.getName()), 0,
+				Collections.singletonList(_objectDefinition1.getName()), 0,
 				StringUtil.randomId());
 
 		Assert.assertArrayEquals(
@@ -169,7 +169,7 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		objectActionExecutor =
 			_registerObjectActionExecutor(
-				Arrays.asList(_objectDefinition1.getName()), _companyId1,
+				Collections.singletonList(_objectDefinition1.getName()), _companyId1,
 				StringUtil.randomId());
 
 		Assert.assertArrayEquals(

@@ -100,6 +100,7 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
 		DDMFormFieldTypeConstants.CHECKBOX,
 		DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
+		DDMFormFieldTypeConstants.DATE_TIME,
 		DDMFormFieldTypeConstants.DATE, DDMFormFieldTypeConstants.NUMERIC,
 		DDMFormFieldTypeConstants.IMAGE, DDMFormFieldTypeConstants.TEXT,
 		DDMFormFieldTypeConstants.RADIO, DDMFormFieldTypeConstants.RICH_TEXT,

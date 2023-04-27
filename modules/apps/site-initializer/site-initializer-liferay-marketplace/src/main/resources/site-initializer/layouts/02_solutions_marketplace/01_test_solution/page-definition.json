@@ -22,8 +22,8 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "modal-(copy)",
-								"siteKey": "Guest"
+								"key": "modal",
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"modalOverlayColor": "transparent",
@@ -109,8 +109,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -160,7 +160,7 @@
 																	"showLayout": "true",
 																	"showPortletBreadcrumb": "true",
 																	"showParentGroups": "true",
-																	"displayStyleGroupId": "3192485",
+																	"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
 																	"showGuestGroup": "false"
 																},
 																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
@@ -243,8 +243,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "flex-(copy)-0",
-																				"siteKey": "Guest"
+																				"key": "flex",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"alignItems": "align-items-start",
@@ -263,8 +263,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "icon-(copy)",
-																								"siteKey": "Guest"
+																								"key": "icon",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"lazyLoadingImage": true,
@@ -311,8 +311,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "text-(copy)",
-																								"siteKey": "Guest"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"fontSize": "font-size-paragraph-base",
@@ -346,8 +346,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "flex-(copy)-0",
-																								"siteKey": "Guest"
+																								"key": "flex",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"alignItems": "align-items-start",
@@ -369,8 +369,8 @@
 																									{
 																										"definition": {
 																											"fragment": {
-																												"key": "icon-(copy)",
-																												"siteKey": "Guest"
+																												"key": "icon",
+																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
 																												"lazyLoadingImage": true,
@@ -411,8 +411,8 @@
 																									{
 																										"definition": {
 																											"fragment": {
-																												"key": "text-(copy)",
-																												"siteKey": "Guest"
+																												"key": "text",
+																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
 																												"fontSize": "font-size-paragraph-base",
@@ -452,8 +452,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "text-(copy)",
-																								"siteKey": "Guest"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"fontSize": "font-size-paragraph-base",
@@ -517,8 +517,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "flex-(copy)-0",
-																				"siteKey": "Guest"
+																				"key": "flex",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"alignItems": "align-items-start",
@@ -637,8 +637,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -729,8 +729,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "text-(copy)",
-																				"siteKey": "Guest"
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-heading-f1",
@@ -777,8 +777,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "text-(copy)",
-																				"siteKey": "Guest"
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-paragraph-large",
@@ -849,8 +849,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "image-carousel-(copy)",
-																				"siteKey": "Guest"
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"numberOfImages": "2",
@@ -905,8 +905,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -1111,8 +1111,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "image-carousel-(copy)",
-																				"siteKey": "Guest"
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"numberOfImages": "3",
@@ -1208,8 +1208,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -1253,8 +1253,8 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "text-(copy)",
-																"siteKey": "Guest"
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"fontSize": "font-size-heading-f4",
@@ -1298,8 +1298,8 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "text-(copy)",
-																"siteKey": "Guest"
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"fontSize": "font-size-paragraph-base",
@@ -1415,8 +1415,8 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "icon-(copy)",
-																						"siteKey": "Guest"
+																						"key": "icon",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"lazyLoadingImage": true,
@@ -1468,8 +1468,8 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "text-(copy)",
-																						"siteKey": "Guest"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-heading-f4",
@@ -1577,8 +1577,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -1669,8 +1669,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "text-(copy)",
-																				"siteKey": "Guest"
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-heading-f2",
@@ -1717,8 +1717,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "text-(copy)",
-																				"siteKey": "Guest"
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-paragraph-large",
@@ -1853,8 +1853,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -2059,8 +2059,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "image-carousel-(copy)",
-																				"siteKey": "Guest"
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"numberOfImages": "3",
@@ -2174,8 +2174,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "text-(copy)",
-												"siteKey": "Guest"
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"fontSize": "font-size-heading-f2",
@@ -2202,8 +2202,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -2323,8 +2323,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "icon-(copy)",
-																								"siteKey": "Guest"
+																								"key": "icon",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"lazyLoadingImage": true,
@@ -2369,8 +2369,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "text-(copy)",
-																								"siteKey": "Guest"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"fontSize": "font-size-heading-f4",
@@ -2420,8 +2420,8 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "text-(copy)",
-																						"siteKey": "Guest"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-paragraph-base",
@@ -2493,8 +2493,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "icon-(copy)",
-																								"siteKey": "Guest"
+																								"key": "icon",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"lazyLoadingImage": true,
@@ -2542,8 +2542,8 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "text-(copy)",
-																						"siteKey": "Guest"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-heading-f4",
@@ -2587,8 +2587,8 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "text-(copy)",
-																						"siteKey": "Guest"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-paragraph-base",
@@ -2660,8 +2660,8 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "icon-(copy)",
-																								"siteKey": "Guest"
+																								"key": "icon",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
 																								"lazyLoadingImage": true,
@@ -2709,8 +2709,8 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "text-(copy)",
-																						"siteKey": "Guest"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-heading-f4",
@@ -2754,8 +2754,8 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "text-(copy)",
-																						"siteKey": "Guest"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-paragraph-base",
@@ -2817,8 +2817,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "text-(copy)",
-												"siteKey": "Guest"
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"fontSize": "font-size-heading-f2",
@@ -2862,8 +2862,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "text-(copy)",
-												"siteKey": "Guest"
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"fontSize": "font-size-paragraph-base",
@@ -2890,8 +2890,8 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "content-container-(copy)",
-												"siteKey": "Guest"
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"boxShadow": "",
@@ -3096,8 +3096,8 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "image-carousel-(copy)",
-																				"siteKey": "Guest"
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"numberOfImages": "3",

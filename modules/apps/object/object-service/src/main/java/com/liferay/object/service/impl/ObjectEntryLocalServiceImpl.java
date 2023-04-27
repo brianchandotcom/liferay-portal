@@ -3708,9 +3708,11 @@ public class ObjectEntryLocalServiceImpl
 				}
 			}
 		}
-		else if (StringUtil.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_STRING)) {
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) ||
+				 StringUtil.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			_validateTextMaxLength(
 				280, GetterUtil.getString(entry.getValue()),

@@ -42,6 +42,72 @@ definition {
 		}
 	}
 
+	@description = "LPS-161338 - Check if the application has been set to a 'Bound' Status."
+	@priority = 3
+	test AssertNewApplicationBoundStatus {
+		property test.name.skip.portal.instance = "RaylifeAPReview#AssertNewApplicationBoundStatus";
+
+		task ("Given that an user go to Raylife AP and start a new application") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+		}
+
+		task ("When the user fulfill all the creation forms and generate a quote") {
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields(
+				apt = 0000,
+				city = "New York",
+				emailAddress = "test@liferay.com",
+				firstName = "Testing",
+				lastName = "Model",
+				phoneNumber = 0123456789,
+				state = "NY",
+				streetAddress = "Address",
+				zipCode = 12345);
+
+			RaylifeApplicationModal.typeAllNewApplicationVehicleInfoFields(
+				annualMileage = 50000,
+				make = "Volvo",
+				model = "v90 cross country",
+				ownership = "Own",
+				primaryUse = "Business",
+				year = 2019);
+
+			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields(
+				ageFirstLicenced = 18,
+				firstName = "Testing",
+				gender = "Female",
+				highestEducation = "Masters",
+				lastName = "Model",
+				maritalStatus = "Single",
+				millitaryAffiliation = "None",
+				occupation = "Engineer",
+				relationToContact = "Spouse");
+
+			RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields(
+				bodilyInjury = "$30,000 / $60,000",
+				collisionAmount = "$2,000",
+				comprehensiveAmount = "$750",
+				medicalAmount = "$1,000",
+				propertyDamage = "$25,000",
+				uninsuredOrUnderinsuredMBI = "$30,000 / $60,000",
+				uninsuredOrUnderinsuredMPD = "$150,000");
+
+			Button.click(button = "Generate Quote");
+		}
+
+		task ("Then assert if the new application status is set as Bound") {
+			RaylifeAP.search(searchTerm = "Testing");
+
+			RaylifeAP.assertTableElement(
+				column = 6,
+				line = 1,
+				text = "Bound");
+		}
+	}
+
 	@description = "LPS-146337 - Verify if user can see the application listed in the Applications section after a complete flow in new applications."
 	@priority = 5
 	test CanCreateNewApplication {

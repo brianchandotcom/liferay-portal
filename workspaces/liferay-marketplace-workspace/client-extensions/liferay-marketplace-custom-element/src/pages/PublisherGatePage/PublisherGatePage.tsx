@@ -45,7 +45,7 @@ export function PublisherGatePage() {
 						<ClayButton
 							onClick={() => {
 								window.location.href =
-									'http://marketplace.liferay.com/';
+									'https://marketplace.liferay.com/';
 							}}
 						>
 							Go Back to Marketplace

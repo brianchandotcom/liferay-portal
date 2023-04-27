@@ -36,11 +36,7 @@ import {
 
 import './PublishedAppsDashboardPage.scss';
 import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
-
-declare let Liferay: {
-	ThemeDisplay: {getLanguageId: () => string};
-	authToken: string;
-};
+import {Liferay} from '../../liferay/liferay';
 
 const appTableHeaders = [
 	{
@@ -121,6 +117,11 @@ export function PublishedAppsDashboardPage() {
 		},
 		title: 'Apps',
 	};
+
+	const buttonRedirectURL = Liferay.ThemeDisplay.getCanonicalURL().replaceAll(
+		'/publisher-dashboard',
+		'/create-new-app'
+	);
 
 	const memberMessages = {
 		description:
@@ -455,7 +456,7 @@ export function PublishedAppsDashboardPage() {
 
 			{selectedNavigationItem === 'Apps' && (
 				<DashboardPage
-					buttonHref="/create-new-app"
+					buttonHref={buttonRedirectURL}
 					buttonMessage="+ New App"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={appMessages}

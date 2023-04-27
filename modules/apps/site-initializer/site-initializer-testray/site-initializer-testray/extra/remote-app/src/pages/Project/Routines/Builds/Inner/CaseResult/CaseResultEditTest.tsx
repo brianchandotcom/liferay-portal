@@ -22,6 +22,7 @@ import Form from '~/components/Form';
 import Footer from '~/components/Form/Footer';
 import {splitIssueName} from '~/components/JiraLink';
 import Container from '~/components/Layout/Container';
+import {withPagePermission} from '~/hoc/withPagePermission';
 import useFormActions from '~/hooks/useFormActions';
 import i18n from '~/i18n';
 import yupSchema from '~/schema/yup';
@@ -119,8 +120,7 @@ const CaseResultEditTest = () => {
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -189,4 +189,6 @@ const CaseResultEditTest = () => {
 	);
 };
 
-export default CaseResultEditTest;
+export default withPagePermission(CaseResultEditTest, {
+	restImpl: testrayCaseResultImpl,
+});

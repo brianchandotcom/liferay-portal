@@ -129,6 +129,7 @@ const CaseResultOutlet = () => {
 		return (
 			<Outlet
 				context={{
+					actions: testrayCaseResult.actions,
 					caseResult: testrayCaseResult,
 					mbMessage,
 					mutateCaseResult,

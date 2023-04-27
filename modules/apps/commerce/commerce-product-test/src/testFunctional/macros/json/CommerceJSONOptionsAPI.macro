@@ -1,8 +1,14 @@
 definition {
 
 	macro _addCommerceOption {
+		Variables.assertDefined(parameterList = "${fieldType},${optionKey},${optionName}");
+
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(description))) {
+			var description = "";
 		}
 
 		if (!(isSet(facetable))) {
@@ -17,30 +23,49 @@ definition {
 			var skuContributor = "false";
 		}
 
-		var optionValues = '''
-		{
-			"key": "${key_value1}",
-			"name": {
-				"en_US": "value1"
-			}
-		},
-		{
-			"key": "${key_value2}",
-			"name": {
-				"en_US": "value2"
+		var optionValuesPayload = "";
+
+		if (isSet(optionValues)) {
+			for (var optionValue : list ${optionValues}) {
+				var optionValueKey = StringUtil.extractFirst(${optionValue}, ":");
+
+				var optionValue = StringUtil.replaceFirst(${optionValue}, "${optionValueKey}:", "");
+
+				var optionValueName = StringUtil.extractFirst(${optionValue}, ":");
+				var optionValuePriority = StringUtil.extractLast(${optionValue}, ":");
+
+				if (${optionValuesPayload} != "") {
+					var comma = ",";
+				}
+				else {
+					var comma = "";
+				}
+
+				var optionValuesPayload = '''
+					${optionValuesPayload}${comma}
+					{
+						"key": "${optionValueKey}",
+						"name": {
+							"en_US": "${optionValueName}"
+						},
+						"priority": ${optionValuePriority}
+					}
+				''';
 			}
 		}
-		''';
 
 		var payload = '''	
 		{
+			"description": {
+       	    "en_US": "${description}"
+            },
 			"facetable": "${facetable}",   
 			"fieldType": "${fieldType}", 
 			"key": "${optionKey}",                          
 			"name": {
 			"en_US": "${optionName}"
 			},
-			"optionValues": [${optionValues}],
+			"optionValues": [${optionValuesPayload}],
 			"required": "${required}",
     		"skuContributor": "${skuContributor}"
 		}

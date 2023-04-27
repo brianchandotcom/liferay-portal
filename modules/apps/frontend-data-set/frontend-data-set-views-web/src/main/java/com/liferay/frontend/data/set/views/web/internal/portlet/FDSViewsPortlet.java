@@ -188,8 +188,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "filters-order"), "fdsFiltersOrder",
-						false)));
+						_language.get(locale, "filters-order"),
+						"fdsFiltersOrder", false)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId());
@@ -253,7 +253,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "entity-field-name"), "entityFieldName", true),
+						_language.get(locale, "entity-field-name"),
+						"entityFieldName", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
@@ -261,16 +262,17 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "filter-properties"), "filterProperties", true),
+						_language.get(locale, "filter-properties"),
+						"filterProperties", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "preloaded-data"), "preloadedData", true),
+						_language.get(locale, "preloaded-data"),
+						"preloadedData", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "label"), "label", true)
-				));
+						_language.get(locale, "label"), "label", true)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsFilterObjectDefinition.getObjectDefinitionId());

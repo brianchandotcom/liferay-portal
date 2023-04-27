@@ -12,7 +12,7 @@
  * details.
  */
 
-/// <reference types="react" />
+// / <reference types="react" />
 
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSEntryType} from './FDSEntries';
@@ -21,6 +21,7 @@ declare type FDSViewType = {
 	defaultItemsPerPage: number;
 	description: string;
 	externalReferenceCode: string;
+	fdsFiltersOrder: string;
 	id: string;
 	label: string;
 	listOfItemsPerPage: string;

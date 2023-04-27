@@ -20,7 +20,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(
-	property = "class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
+	property = {
+		"class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
+		"class.name=com.liferay.portal.search.internal.facet.DateRangeFacetImpl"
+	},
 	service = FacetProcessor.class
 )
 public class DateRangeFacetProcessor extends RangeFacetProcessor {

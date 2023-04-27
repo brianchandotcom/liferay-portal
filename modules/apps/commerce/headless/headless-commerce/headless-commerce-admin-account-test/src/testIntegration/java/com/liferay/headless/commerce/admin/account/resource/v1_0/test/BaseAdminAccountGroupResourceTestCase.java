@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AdminAccountGroupSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -552,11 +553,15 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 		AdminAccountGroup adminAccountGroup =
 			testDeleteAccountGroupByExternalReferenceCode_addAdminAccountGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			adminAccountGroupResource.
-				deleteAccountGroupByExternalReferenceCodeHttpResponse(
-					adminAccountGroup.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				adminAccountGroupResource.
+					deleteAccountGroupByExternalReferenceCodeHttpResponse(
+						adminAccountGroup.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -675,10 +680,13 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 		AdminAccountGroup adminAccountGroup =
 			testDeleteAccountGroup_addAdminAccountGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			adminAccountGroupResource.deleteAccountGroupHttpResponse(
-				adminAccountGroup.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> adminAccountGroupResource.deleteAccountGroupHttpResponse(
+				adminAccountGroup.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

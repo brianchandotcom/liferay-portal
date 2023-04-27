@@ -28,6 +28,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserGroupSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -638,11 +639,15 @@ public abstract class BaseUserGroupResourceTestCase {
 		UserGroup userGroup =
 			testDeleteUserGroupByExternalReferenceCode_addUserGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			userGroupResource.
-				deleteUserGroupByExternalReferenceCodeHttpResponse(
-					userGroup.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				userGroupResource.
+					deleteUserGroupByExternalReferenceCodeHttpResponse(
+						userGroup.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -836,9 +841,13 @@ public abstract class BaseUserGroupResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup = testDeleteUserGroup_addUserGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			userGroupResource.deleteUserGroupHttpResponse(userGroup.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> userGroupResource.deleteUserGroupHttpResponse(
+				userGroup.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, userGroupResource.getUserGroupHttpResponse(userGroup.getId()));
@@ -1007,10 +1016,13 @@ public abstract class BaseUserGroupResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup = testDeleteUserGroupUsers_addUserGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			userGroupResource.deleteUserGroupUsersHttpResponse(
-				userGroup.getId(), null));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> userGroupResource.deleteUserGroupUsersHttpResponse(
+				userGroup.getId(), null);
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected UserGroup testDeleteUserGroupUsers_addUserGroup()

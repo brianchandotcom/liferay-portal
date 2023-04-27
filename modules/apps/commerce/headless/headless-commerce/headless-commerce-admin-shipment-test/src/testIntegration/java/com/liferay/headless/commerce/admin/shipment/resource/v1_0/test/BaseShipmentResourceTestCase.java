@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.shipment.client.pagination.Page;
 import com.liferay.headless.commerce.admin.shipment.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.shipment.client.resource.v1_0.ShipmentResource;
 import com.liferay.headless.commerce.admin.shipment.client.serdes.v1_0.ShipmentSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -553,10 +554,15 @@ public abstract class BaseShipmentResourceTestCase {
 		Shipment shipment =
 			testDeleteShipmentByExternalReferenceCode_addShipment();
 
-		assertHttpResponseStatusCode(
-			204,
-			shipmentResource.deleteShipmentByExternalReferenceCodeHttpResponse(
-				shipment.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				shipmentResource.
+					deleteShipmentByExternalReferenceCodeHttpResponse(
+						shipment.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -816,8 +822,12 @@ public abstract class BaseShipmentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Shipment shipment = testDeleteShipment_addShipment();
 
-		assertHttpResponseStatusCode(
-			204, shipmentResource.deleteShipmentHttpResponse(shipment.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> shipmentResource.deleteShipmentHttpResponse(shipment.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, shipmentResource.getShipmentHttpResponse(shipment.getId()));

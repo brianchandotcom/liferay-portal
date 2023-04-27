@@ -28,6 +28,7 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectValidationRuleSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -596,10 +597,15 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		ObjectValidationRule objectValidationRule =
 			testDeleteObjectValidationRule_addObjectValidationRule();
 
-		assertHttpResponseStatusCode(
-			204,
-			objectValidationRuleResource.deleteObjectValidationRuleHttpResponse(
-				objectValidationRule.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				objectValidationRuleResource.
+					deleteObjectValidationRuleHttpResponse(
+						objectValidationRule.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

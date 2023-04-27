@@ -28,6 +28,7 @@ import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.resource.v1_0.CountryResource;
 import com.liferay.headless.admin.address.client.serdes.v1_0.CountrySerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -723,8 +724,12 @@ public abstract class BaseCountryResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Country country = testDeleteCountry_addCountry();
 
-		assertHttpResponseStatusCode(
-			204, countryResource.deleteCountryHttpResponse(country.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> countryResource.deleteCountryHttpResponse(country.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, countryResource.getCountryHttpResponse(country.getId()));

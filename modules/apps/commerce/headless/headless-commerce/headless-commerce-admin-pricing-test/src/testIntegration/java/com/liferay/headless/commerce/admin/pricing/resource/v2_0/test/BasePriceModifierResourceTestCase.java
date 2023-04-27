@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.PriceModifierResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.PriceModifierSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -788,11 +789,15 @@ public abstract class BasePriceModifierResourceTestCase {
 		PriceModifier priceModifier =
 			testDeletePriceModifierByExternalReferenceCode_addPriceModifier();
 
-		assertHttpResponseStatusCode(
-			204,
-			priceModifierResource.
-				deletePriceModifierByExternalReferenceCodeHttpResponse(
-					priceModifier.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				priceModifierResource.
+					deletePriceModifierByExternalReferenceCodeHttpResponse(
+						priceModifier.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -911,10 +916,13 @@ public abstract class BasePriceModifierResourceTestCase {
 		PriceModifier priceModifier =
 			testDeletePriceModifier_addPriceModifier();
 
-		assertHttpResponseStatusCode(
-			204,
-			priceModifierResource.deletePriceModifierHttpResponse(
-				priceModifier.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> priceModifierResource.deletePriceModifierHttpResponse(
+				priceModifier.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

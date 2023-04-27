@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.resource.v1_0.AccountAddressResource;
 import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountAddressSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -220,11 +221,15 @@ public abstract class BaseAccountAddressResourceTestCase {
 		AccountAddress accountAddress =
 			testDeleteAccountAddressByExternalReferenceCode_addAccountAddress();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountAddressResource.
-				deleteAccountAddressByExternalReferenceCodeHttpResponse(
-					accountAddress.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountAddressResource.
+					deleteAccountAddressByExternalReferenceCodeHttpResponse(
+						accountAddress.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -345,10 +350,13 @@ public abstract class BaseAccountAddressResourceTestCase {
 		AccountAddress accountAddress =
 			testDeleteAccountAddress_addAccountAddress();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountAddressResource.deleteAccountAddressHttpResponse(
-				accountAddress.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> accountAddressResource.deleteAccountAddressHttpResponse(
+				accountAddress.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -217,12 +218,16 @@ public abstract class BaseAccountResourceTestCase {
 		Account account =
 			testDeleteAccountGroupByExternalReferenceCodeAccount_addAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountResource.
-				deleteAccountGroupByExternalReferenceCodeAccountHttpResponse(
-					testDeleteAccountGroupByExternalReferenceCodeAccount_getAccountExternalReferenceCode(),
-					account.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountResource.
+					deleteAccountGroupByExternalReferenceCodeAccountHttpResponse(
+						testDeleteAccountGroupByExternalReferenceCodeAccount_getAccountExternalReferenceCode(),
+						account.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected String
@@ -583,10 +588,15 @@ public abstract class BaseAccountResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account account = testDeleteAccountByExternalReferenceCode_addAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountResource.deleteAccountByExternalReferenceCodeHttpResponse(
-				account.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountResource.
+					deleteAccountByExternalReferenceCodeHttpResponse(
+						account.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -701,8 +711,12 @@ public abstract class BaseAccountResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account account = testDeleteAccount_addAccount();
 
-		assertHttpResponseStatusCode(
-			204, accountResource.deleteAccountHttpResponse(account.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> accountResource.deleteAccountHttpResponse(account.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, accountResource.getAccountHttpResponse(account.getId()));

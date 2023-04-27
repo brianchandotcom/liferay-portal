@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.site.setting.client.pagination.Page;
 import com.liferay.headless.commerce.admin.site.setting.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.site.setting.client.resource.v1_0.WarehouseResource;
 import com.liferay.headless.commerce.admin.site.setting.client.serdes.v1_0.WarehouseSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -368,9 +369,13 @@ public abstract class BaseWarehouseResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse = testDeleteWarehouse_addWarehouse();
 
-		assertHttpResponseStatusCode(
-			204,
-			warehouseResource.deleteWarehouseHttpResponse(warehouse.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> warehouseResource.deleteWarehouseHttpResponse(
+				warehouse.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, warehouseResource.getWarehouseHttpResponse(warehouse.getId()));

@@ -28,6 +28,7 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataListViewResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataListViewSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -200,11 +201,16 @@ public abstract class BaseDataListViewResourceTestCase {
 		DataListView dataListView =
 			testDeleteDataDefinitionDataListView_addDataListView();
 
-		assertHttpResponseStatusCode(
-			204,
-			dataListViewResource.deleteDataDefinitionDataListViewHttpResponse(
-				testDeleteDataDefinitionDataListView_getDataDefinitionId(
-					dataListView)));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				dataListViewResource.
+					deleteDataDefinitionDataListViewHttpResponse(
+						testDeleteDataDefinitionDataListView_getDataDefinitionId(
+							dataListView));
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteDataDefinitionDataListView_getDataDefinitionId(
@@ -544,10 +550,13 @@ public abstract class BaseDataListViewResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataListView dataListView = testDeleteDataListView_addDataListView();
 
-		assertHttpResponseStatusCode(
-			204,
-			dataListViewResource.deleteDataListViewHttpResponse(
-				dataListView.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> dataListViewResource.deleteDataListViewHttpResponse(
+				dataListView.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

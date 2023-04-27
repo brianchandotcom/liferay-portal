@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.CatalogSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -207,10 +208,15 @@ public abstract class BaseCatalogResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Catalog catalog = testDeleteCatalogByExternalReferenceCode_addCatalog();
 
-		assertHttpResponseStatusCode(
-			204,
-			catalogResource.deleteCatalogByExternalReferenceCodeHttpResponse(
-				catalog.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				catalogResource.
+					deleteCatalogByExternalReferenceCodeHttpResponse(
+						catalog.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -320,8 +326,12 @@ public abstract class BaseCatalogResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Catalog catalog = testDeleteCatalog_addCatalog();
 
-		assertHttpResponseStatusCode(
-			204, catalogResource.deleteCatalogHttpResponse(catalog.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> catalogResource.deleteCatalogHttpResponse(catalog.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, catalogResource.getCatalogHttpResponse(catalog.getId()));

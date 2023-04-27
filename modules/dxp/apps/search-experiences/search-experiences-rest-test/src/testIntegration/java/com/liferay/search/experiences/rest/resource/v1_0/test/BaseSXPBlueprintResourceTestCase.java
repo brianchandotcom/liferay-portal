@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -553,10 +554,13 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPBlueprint sxpBlueprint = testDeleteSXPBlueprint_addSXPBlueprint();
 
-		assertHttpResponseStatusCode(
-			204,
-			sxpBlueprintResource.deleteSXPBlueprintHttpResponse(
-				sxpBlueprint.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> sxpBlueprintResource.deleteSXPBlueprintHttpResponse(
+				sxpBlueprint.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

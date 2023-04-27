@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.NavigationMenuSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -205,10 +206,13 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu =
 			testDeleteNavigationMenu_addNavigationMenu();
 
-		assertHttpResponseStatusCode(
-			204,
-			navigationMenuResource.deleteNavigationMenuHttpResponse(
-				navigationMenu.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> navigationMenuResource.deleteNavigationMenuHttpResponse(
+				navigationMenu.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

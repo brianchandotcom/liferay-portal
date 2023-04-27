@@ -28,6 +28,7 @@ import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.resource.v1_0.RegionResource;
 import com.liferay.headless.admin.address.client.serdes.v1_0.RegionSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -806,8 +807,12 @@ public abstract class BaseRegionResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Region region = testDeleteRegion_addRegion();
 
-		assertHttpResponseStatusCode(
-			204, regionResource.deleteRegionHttpResponse(region.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> regionResource.deleteRegionHttpResponse(region.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, regionResource.getRegionHttpResponse(region.getId()));

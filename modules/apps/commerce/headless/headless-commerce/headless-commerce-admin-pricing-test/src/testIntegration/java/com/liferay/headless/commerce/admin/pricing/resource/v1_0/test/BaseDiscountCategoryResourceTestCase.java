@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v1_0.DiscountCategoryResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v1_0.DiscountCategorySerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -201,10 +202,13 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		DiscountCategory discountCategory =
 			testDeleteDiscountCategory_addDiscountCategory();
 
-		assertHttpResponseStatusCode(
-			204,
-			discountCategoryResource.deleteDiscountCategoryHttpResponse(
-				discountCategory.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> discountCategoryResource.deleteDiscountCategoryHttpResponse(
+				discountCategory.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected DiscountCategory testDeleteDiscountCategory_addDiscountCategory()

@@ -28,6 +28,7 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectLayoutSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -551,10 +552,13 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectLayout objectLayout = testDeleteObjectLayout_addObjectLayout();
 
-		assertHttpResponseStatusCode(
-			204,
-			objectLayoutResource.deleteObjectLayoutHttpResponse(
-				objectLayout.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> objectLayoutResource.deleteObjectLayoutHttpResponse(
+				objectLayout.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

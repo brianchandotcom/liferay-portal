@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.DiscountRuleResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.DiscountRuleSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -204,10 +205,13 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountRule discountRule = testDeleteDiscountRule_addDiscountRule();
 
-		assertHttpResponseStatusCode(
-			204,
-			discountRuleResource.deleteDiscountRuleHttpResponse(
-				discountRule.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> discountRuleResource.deleteDiscountRuleHttpResponse(
+				discountRule.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

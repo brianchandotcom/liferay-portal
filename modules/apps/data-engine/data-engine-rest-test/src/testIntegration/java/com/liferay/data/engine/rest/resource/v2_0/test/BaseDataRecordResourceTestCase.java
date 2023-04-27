@@ -28,6 +28,7 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRecordSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -823,10 +824,13 @@ public abstract class BaseDataRecordResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecord dataRecord = testDeleteDataRecord_addDataRecord();
 
-		assertHttpResponseStatusCode(
-			204,
-			dataRecordResource.deleteDataRecordHttpResponse(
-				dataRecord.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> dataRecordResource.deleteDataRecordHttpResponse(
+				dataRecord.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

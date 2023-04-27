@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -548,10 +549,15 @@ public abstract class BaseProductResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product = testDeleteProductByExternalReferenceCode_addProduct();
 
-		assertHttpResponseStatusCode(
-			204,
-			productResource.deleteProductByExternalReferenceCodeHttpResponse(
-				product.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				productResource.
+					deleteProductByExternalReferenceCodeHttpResponse(
+						product.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -664,11 +670,16 @@ public abstract class BaseProductResourceTestCase {
 		Product product =
 			testDeleteProductByExternalReferenceCodeByVersion_addProduct();
 
-		assertHttpResponseStatusCode(
-			204,
-			productResource.
-				deleteProductByExternalReferenceCodeByVersionHttpResponse(
-					product.getExternalReferenceCode(), product.getVersion()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				productResource.
+					deleteProductByExternalReferenceCodeByVersionHttpResponse(
+						product.getExternalReferenceCode(),
+						product.getVersion());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -806,8 +817,12 @@ public abstract class BaseProductResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product = testDeleteProduct_addProduct();
 
-		assertHttpResponseStatusCode(
-			204, productResource.deleteProductHttpResponse(product.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> productResource.deleteProductHttpResponse(product.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, productResource.getProductHttpResponse(product.getId()));
@@ -925,10 +940,13 @@ public abstract class BaseProductResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product = testDeleteProductByVersion_addProduct();
 
-		assertHttpResponseStatusCode(
-			204,
-			productResource.deleteProductByVersionHttpResponse(
-				product.getId(), product.getVersion()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> productResource.deleteProductByVersionHttpResponse(
+				product.getId(), product.getVersion());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

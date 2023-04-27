@@ -28,6 +28,7 @@ import com.liferay.headless.admin.content.client.pagination.Page;
 import com.liferay.headless.admin.content.client.pagination.Pagination;
 import com.liferay.headless.admin.content.client.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.admin.content.client.serdes.v1_0.StructuredContentSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -665,12 +666,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testDeleteStructuredContentByVersion_addStructuredContent();
 
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.
-				deleteStructuredContentByVersionHttpResponse(
-					structuredContent.getId(),
-					testDeleteStructuredContentByVersion_getVersion()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				structuredContentResource.
+					deleteStructuredContentByVersionHttpResponse(
+						structuredContent.getId(),
+						testDeleteStructuredContentByVersion_getVersion());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

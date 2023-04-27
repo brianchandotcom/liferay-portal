@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -203,10 +204,13 @@ public abstract class BaseExperimentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Experiment experiment = testDeleteExperiment_addExperiment();
 
-		assertHttpResponseStatusCode(
-			204,
-			experimentResource.deleteExperimentHttpResponse(
-				experiment.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> experimentResource.deleteExperimentHttpResponse(
+				experiment.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

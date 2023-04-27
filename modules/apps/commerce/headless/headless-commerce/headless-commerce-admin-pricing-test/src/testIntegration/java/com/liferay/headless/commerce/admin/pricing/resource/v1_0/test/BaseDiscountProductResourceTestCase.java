@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v1_0.DiscountProductResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v1_0.DiscountProductSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -201,10 +202,13 @@ public abstract class BaseDiscountProductResourceTestCase {
 		DiscountProduct discountProduct =
 			testDeleteDiscountProduct_addDiscountProduct();
 
-		assertHttpResponseStatusCode(
-			204,
-			discountProductResource.deleteDiscountProductHttpResponse(
-				discountProduct.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> discountProductResource.deleteDiscountProductHttpResponse(
+				discountProduct.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected DiscountProduct testDeleteDiscountProduct_addDiscountProduct()

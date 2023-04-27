@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.resource.v1_0.AccountChannelShippingOptionResource;
 import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountChannelShippingOptionSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -221,11 +222,15 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		AccountChannelShippingOption accountChannelShippingOption =
 			testDeleteAccountChannelShippingOption_addAccountChannelShippingOption();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelShippingOptionResource.
-				deleteAccountChannelShippingOptionHttpResponse(
-					accountChannelShippingOption.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelShippingOptionResource.
+					deleteAccountChannelShippingOptionHttpResponse(
+						accountChannelShippingOption.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

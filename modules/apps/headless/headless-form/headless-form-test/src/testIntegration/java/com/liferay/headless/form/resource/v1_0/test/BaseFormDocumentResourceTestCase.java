@@ -27,6 +27,7 @@ import com.liferay.headless.form.client.http.HttpInvoker;
 import com.liferay.headless.form.client.pagination.Page;
 import com.liferay.headless.form.client.resource.v1_0.FormDocumentResource;
 import com.liferay.headless.form.client.serdes.v1_0.FormDocumentSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -203,10 +204,13 @@ public abstract class BaseFormDocumentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		FormDocument formDocument = testDeleteFormDocument_addFormDocument();
 
-		assertHttpResponseStatusCode(
-			204,
-			formDocumentResource.deleteFormDocumentHttpResponse(
-				formDocument.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> formDocumentResource.deleteFormDocumentHttpResponse(
+				formDocument.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

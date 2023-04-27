@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v1_0.DiscountAccountGroupResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v1_0.DiscountAccountGroupSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -205,10 +206,15 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		DiscountAccountGroup discountAccountGroup =
 			testDeleteDiscountAccountGroup_addDiscountAccountGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			discountAccountGroupResource.deleteDiscountAccountGroupHttpResponse(
-				discountAccountGroup.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				discountAccountGroupResource.
+					deleteDiscountAccountGroupHttpResponse(
+						discountAccountGroup.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected DiscountAccountGroup

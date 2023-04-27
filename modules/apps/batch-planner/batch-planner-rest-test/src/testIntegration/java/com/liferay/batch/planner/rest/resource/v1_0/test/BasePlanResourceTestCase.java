@@ -29,6 +29,7 @@ import com.liferay.batch.planner.rest.client.pagination.Page;
 import com.liferay.batch.planner.rest.client.pagination.Pagination;
 import com.liferay.batch.planner.rest.client.resource.v1_0.PlanResource;
 import com.liferay.batch.planner.rest.client.serdes.v1_0.PlanSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -298,8 +299,12 @@ public abstract class BasePlanResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Plan plan = testDeletePlan_addPlan();
 
-		assertHttpResponseStatusCode(
-			204, planResource.deletePlanHttpResponse(plan.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> planResource.deletePlanHttpResponse(plan.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, planResource.getPlanHttpResponse(plan.getId()));

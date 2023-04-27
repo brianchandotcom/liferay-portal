@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.site.setting.client.pagination.Page;
 import com.liferay.headless.commerce.admin.site.setting.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.site.setting.client.resource.v1_0.MeasurementUnitResource;
 import com.liferay.headless.commerce.admin.site.setting.client.serdes.v1_0.MeasurementUnitSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -605,11 +606,15 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit =
 			testDeleteMeasurementUnitByExternalReferenceCode_addMeasurementUnit();
 
-		assertHttpResponseStatusCode(
-			204,
-			measurementUnitResource.
-				deleteMeasurementUnitByExternalReferenceCodeHttpResponse(
-					measurementUnit.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				measurementUnitResource.
+					deleteMeasurementUnitByExternalReferenceCodeHttpResponse(
+						measurementUnit.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -730,10 +735,14 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit =
 			testDeleteMeasurementUnitByKey_addMeasurementUnit();
 
-		assertHttpResponseStatusCode(
-			204,
-			measurementUnitResource.deleteMeasurementUnitByKeyHttpResponse(
-				measurementUnit.getKey()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				measurementUnitResource.deleteMeasurementUnitByKeyHttpResponse(
+					measurementUnit.getKey());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1117,10 +1126,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnit measurementUnit =
 			testDeleteMeasurementUnit_addMeasurementUnit();
 
-		assertHttpResponseStatusCode(
-			204,
-			measurementUnitResource.deleteMeasurementUnitHttpResponse(
-				measurementUnit.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> measurementUnitResource.deleteMeasurementUnitHttpResponse(
+				measurementUnit.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

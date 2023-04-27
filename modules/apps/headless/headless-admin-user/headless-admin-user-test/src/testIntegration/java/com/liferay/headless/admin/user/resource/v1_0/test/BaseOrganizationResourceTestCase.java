@@ -29,6 +29,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.OrganizationSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -629,13 +630,17 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization =
 			testDeleteAccountByExternalReferenceCodeOrganization_addOrganization();
 
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.
-				deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-						organization),
-					organization.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				organizationResource.
+					deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
+						testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+							organization),
+						organization.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected String
@@ -1069,11 +1074,14 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization =
 			testDeleteAccountOrganization_addOrganization();
 
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteAccountOrganizationHttpResponse(
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> organizationResource.deleteAccountOrganizationHttpResponse(
 				testDeleteAccountOrganization_getAccountId(),
-				organization.getId()));
+				organization.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteAccountOrganization_getAccountId()
@@ -1495,11 +1503,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization =
 			testDeleteOrganizationByExternalReferenceCode_addOrganization();
 
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.
-				deleteOrganizationByExternalReferenceCodeHttpResponse(
-					organization.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				organizationResource.
+					deleteOrganizationByExternalReferenceCodeHttpResponse(
+						organization.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1704,10 +1716,13 @@ public abstract class BaseOrganizationResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization = testDeleteOrganization_addOrganization();
 
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteOrganizationHttpResponse(
-				organization.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> organizationResource.deleteOrganizationHttpResponse(
+				organization.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -2290,10 +2305,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization =
 			testDeleteUserAccountsByEmailAddress_addOrganization();
 
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteUserAccountsByEmailAddressHttpResponse(
-				organization.getId(), null));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				organizationResource.
+					deleteUserAccountsByEmailAddressHttpResponse(
+						organization.getId(), null);
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Organization
@@ -2315,11 +2335,16 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization =
 			testDeleteUserAccountByEmailAddress_addOrganization();
 
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteUserAccountByEmailAddressHttpResponse(
-				organization.getId(),
-				testDeleteUserAccountByEmailAddress_getEmailAddress()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				organizationResource.
+					deleteUserAccountByEmailAddressHttpResponse(
+						organization.getId(),
+						testDeleteUserAccountByEmailAddress_getEmailAddress());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected String testDeleteUserAccountByEmailAddress_getEmailAddress()

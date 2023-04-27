@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.channel.client.pagination.Page;
 import com.liferay.headless.commerce.admin.channel.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.channel.client.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.channel.client.serdes.v1_0.ChannelSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -544,10 +545,15 @@ public abstract class BaseChannelResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel channel = testDeleteChannelByExternalReferenceCode_addChannel();
 
-		assertHttpResponseStatusCode(
-			204,
-			channelResource.deleteChannelByExternalReferenceCodeHttpResponse(
-				channel.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				channelResource.
+					deleteChannelByExternalReferenceCodeHttpResponse(
+						channel.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -733,8 +739,12 @@ public abstract class BaseChannelResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel channel = testDeleteChannel_addChannel();
 
-		assertHttpResponseStatusCode(
-			204, channelResource.deleteChannelHttpResponse(channel.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> channelResource.deleteChannelHttpResponse(channel.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, channelResource.getChannelHttpResponse(channel.getId()));

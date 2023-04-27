@@ -28,6 +28,7 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowDefinitionSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -657,10 +658,14 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		WorkflowDefinition workflowDefinition =
 			testDeleteWorkflowDefinitionUndeploy_addWorkflowDefinition();
 
-		assertHttpResponseStatusCode(
-			204,
-			workflowDefinitionResource.
-				deleteWorkflowDefinitionUndeployHttpResponse(null, null));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				workflowDefinitionResource.
+					deleteWorkflowDefinitionUndeployHttpResponse(null, null);
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected WorkflowDefinition
@@ -699,10 +704,14 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		WorkflowDefinition workflowDefinition =
 			testDeleteWorkflowDefinition_addWorkflowDefinition();
 
-		assertHttpResponseStatusCode(
-			204,
-			workflowDefinitionResource.deleteWorkflowDefinitionHttpResponse(
-				workflowDefinition.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				workflowDefinitionResource.deleteWorkflowDefinitionHttpResponse(
+					workflowDefinition.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

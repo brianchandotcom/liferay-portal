@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.inventory.client.resource.v1_0.WarehouseItemResource;
 import com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0.WarehouseItemSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -207,11 +208,15 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		WarehouseItem warehouseItem =
 			testDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem();
 
-		assertHttpResponseStatusCode(
-			204,
-			warehouseItemResource.
-				deleteWarehouseItemByExternalReferenceCodeHttpResponse(
-					warehouseItem.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				warehouseItemResource.
+					deleteWarehouseItemByExternalReferenceCodeHttpResponse(
+						warehouseItem.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -455,10 +460,13 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		WarehouseItem warehouseItem =
 			testDeleteWarehouseItem_addWarehouseItem();
 
-		assertHttpResponseStatusCode(
-			204,
-			warehouseItemResource.deleteWarehouseItemHttpResponse(
-				warehouseItem.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> warehouseItemResource.deleteWarehouseItemHttpResponse(
+				warehouseItem.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

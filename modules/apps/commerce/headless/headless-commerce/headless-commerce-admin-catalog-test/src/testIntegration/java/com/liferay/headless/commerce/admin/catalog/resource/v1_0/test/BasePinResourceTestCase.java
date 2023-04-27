@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.PinSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -198,8 +199,12 @@ public abstract class BasePinResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Pin pin = testDeletePin_addPin();
 
-		assertHttpResponseStatusCode(
-			204, pinResource.deletePinHttpResponse(pin.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> pinResource.deletePinHttpResponse(pin.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Pin testDeletePin_addPin() throws Exception {

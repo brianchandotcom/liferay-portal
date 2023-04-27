@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -292,10 +293,13 @@ public abstract class BaseNodeResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Node node = testDeleteProcessNode_addNode();
 
-		assertHttpResponseStatusCode(
-			204,
-			nodeResource.deleteProcessNodeHttpResponse(
-				testDeleteProcessNode_getProcessId(node), node.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> nodeResource.deleteProcessNodeHttpResponse(
+				testDeleteProcessNode_getProcessId(node), node.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteProcessNode_getProcessId(Node node)

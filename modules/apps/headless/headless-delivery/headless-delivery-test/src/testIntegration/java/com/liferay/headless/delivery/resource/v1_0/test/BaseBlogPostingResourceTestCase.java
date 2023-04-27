@@ -31,6 +31,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -218,10 +219,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting = testDeleteBlogPosting_addBlogPosting();
 
-		assertHttpResponseStatusCode(
-			204,
-			blogPostingResource.deleteBlogPostingHttpResponse(
-				blogPosting.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> blogPostingResource.deleteBlogPostingHttpResponse(
+				blogPosting.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -399,10 +403,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting =
 			testDeleteBlogPostingMyRating_addBlogPosting();
 
-		assertHttpResponseStatusCode(
-			204,
-			blogPostingResource.deleteBlogPostingMyRatingHttpResponse(
-				blogPosting.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> blogPostingResource.deleteBlogPostingMyRatingHttpResponse(
+				blogPosting.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -928,13 +935,17 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting =
 			testDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
 
-		assertHttpResponseStatusCode(
-			204,
-			blogPostingResource.
-				deleteSiteBlogPostingByExternalReferenceCodeHttpResponse(
-					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-						blogPosting),
-					blogPosting.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				blogPostingResource.
+					deleteSiteBlogPostingByExternalReferenceCodeHttpResponse(
+						testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
+							blogPosting),
+						blogPosting.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

@@ -31,6 +31,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardMessageSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -219,10 +220,15 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage =
 			testDeleteMessageBoardMessage_addMessageBoardMessage();
 
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.deleteMessageBoardMessageHttpResponse(
-				messageBoardMessage.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				messageBoardMessageResource.
+					deleteMessageBoardMessageHttpResponse(
+						messageBoardMessage.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -431,11 +437,15 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage =
 			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
 
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				deleteMessageBoardMessageMyRatingHttpResponse(
-					messageBoardMessage.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				messageBoardMessageResource.
+					deleteMessageBoardMessageMyRatingHttpResponse(
+						messageBoardMessage.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1937,13 +1947,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage =
 			testDeleteSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage();
 
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				deleteSiteMessageBoardMessageByExternalReferenceCodeHttpResponse(
-					testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
-						messageBoardMessage),
-					messageBoardMessage.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				messageBoardMessageResource.
+					deleteSiteMessageBoardMessageByExternalReferenceCodeHttpResponse(
+						testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
+							messageBoardMessage),
+						messageBoardMessage.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

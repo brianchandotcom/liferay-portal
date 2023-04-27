@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -638,12 +639,16 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document =
 			testDeleteAssetLibraryDocumentByExternalReferenceCode_addDocument();
 
-		assertHttpResponseStatusCode(
-			204,
-			documentResource.
-				deleteAssetLibraryDocumentByExternalReferenceCodeHttpResponse(
-					testDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId(),
-					document.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				documentResource.
+					deleteAssetLibraryDocumentByExternalReferenceCodeHttpResponse(
+						testDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId(),
+						document.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1473,8 +1478,12 @@ public abstract class BaseDocumentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testDeleteDocument_addDocument();
 
-		assertHttpResponseStatusCode(
-			204, documentResource.deleteDocumentHttpResponse(document.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> documentResource.deleteDocumentHttpResponse(document.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(document.getId()));
@@ -1648,10 +1657,13 @@ public abstract class BaseDocumentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testDeleteDocumentMyRating_addDocument();
 
-		assertHttpResponseStatusCode(
-			204,
-			documentResource.deleteDocumentMyRatingHttpResponse(
-				document.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> documentResource.deleteDocumentMyRatingHttpResponse(
+				document.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -2151,13 +2163,17 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document =
 			testDeleteSiteDocumentByExternalReferenceCode_addDocument();
 
-		assertHttpResponseStatusCode(
-			204,
-			documentResource.
-				deleteSiteDocumentByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDocumentByExternalReferenceCode_getSiteId(
-						document),
-					document.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				documentResource.
+					deleteSiteDocumentByExternalReferenceCodeHttpResponse(
+						testDeleteSiteDocumentByExternalReferenceCode_getSiteId(
+							document),
+						document.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

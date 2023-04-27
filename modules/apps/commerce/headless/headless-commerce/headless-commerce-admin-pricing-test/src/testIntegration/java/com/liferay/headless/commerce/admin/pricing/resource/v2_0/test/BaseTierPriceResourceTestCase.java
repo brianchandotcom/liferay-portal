@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.TierPriceResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.TierPriceSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -527,11 +528,15 @@ public abstract class BaseTierPriceResourceTestCase {
 		TierPrice tierPrice =
 			testDeleteTierPriceByExternalReferenceCode_addTierPrice();
 
-		assertHttpResponseStatusCode(
-			204,
-			tierPriceResource.
-				deleteTierPriceByExternalReferenceCodeHttpResponse(
-					tierPrice.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				tierPriceResource.
+					deleteTierPriceByExternalReferenceCodeHttpResponse(
+						tierPrice.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -644,9 +649,13 @@ public abstract class BaseTierPriceResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TierPrice tierPrice = testDeleteTierPrice_addTierPrice();
 
-		assertHttpResponseStatusCode(
-			204,
-			tierPriceResource.deleteTierPriceHttpResponse(tierPrice.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> tierPriceResource.deleteTierPriceHttpResponse(
+				tierPrice.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, tierPriceResource.getTierPriceHttpResponse(tierPrice.getId()));

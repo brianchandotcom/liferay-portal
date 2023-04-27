@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.site.setting.client.pagination.Page;
 import com.liferay.headless.commerce.admin.site.setting.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.site.setting.client.resource.v1_0.TaxCategoryResource;
 import com.liferay.headless.commerce.admin.site.setting.client.serdes.v1_0.TaxCategorySerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -360,10 +361,13 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxCategory taxCategory = testDeleteTaxCategory_addTaxCategory();
 
-		assertHttpResponseStatusCode(
-			204,
-			taxCategoryResource.deleteTaxCategoryHttpResponse(
-				taxCategory.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> taxCategoryResource.deleteTaxCategoryHttpResponse(
+				taxCategory.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

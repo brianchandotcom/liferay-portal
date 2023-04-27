@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.resource.v1_0.AccountChannelEntryResource;
 import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountChannelEntrySerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -205,11 +206,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelBillingAddressId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelBillingAddressIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelBillingAddressIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -349,11 +354,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelCurrencyId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelCurrencyIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelCurrencyIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -489,11 +498,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelDeliveryTermId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelDeliveryTermIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelDeliveryTermIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -631,11 +644,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelDiscountId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelDiscountIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelDiscountIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -771,11 +788,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelPaymentMethodId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelPaymentMethodIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelPaymentMethodIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -913,11 +934,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelPaymentTermId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelPaymentTermIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelPaymentTermIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1055,11 +1080,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelPriceListId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelPriceListIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelPriceListIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1197,11 +1226,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelShippingAddressId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.
-				deleteAccountChannelShippingAddressIdHttpResponse(
-					accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelShippingAddressIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1341,10 +1374,15 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntry accountChannelEntry =
 			testDeleteAccountChannelUserId_addAccountChannelEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			accountChannelEntryResource.deleteAccountChannelUserIdHttpResponse(
-				accountChannelEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				accountChannelEntryResource.
+					deleteAccountChannelUserIdHttpResponse(
+						accountChannelEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

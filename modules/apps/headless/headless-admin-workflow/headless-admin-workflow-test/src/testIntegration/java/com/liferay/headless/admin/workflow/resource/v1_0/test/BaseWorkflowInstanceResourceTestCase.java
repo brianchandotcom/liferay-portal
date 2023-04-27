@@ -28,6 +28,7 @@ import com.liferay.headless.admin.workflow.client.pagination.Page;
 import com.liferay.headless.admin.workflow.client.pagination.Pagination;
 import com.liferay.headless.admin.workflow.client.resource.v1_0.WorkflowInstanceResource;
 import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowInstanceSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -383,10 +384,13 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		WorkflowInstance workflowInstance =
 			testDeleteWorkflowInstance_addWorkflowInstance();
 
-		assertHttpResponseStatusCode(
-			204,
-			workflowInstanceResource.deleteWorkflowInstanceHttpResponse(
-				workflowInstance.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> workflowInstanceResource.deleteWorkflowInstanceHttpResponse(
+				workflowInstance.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

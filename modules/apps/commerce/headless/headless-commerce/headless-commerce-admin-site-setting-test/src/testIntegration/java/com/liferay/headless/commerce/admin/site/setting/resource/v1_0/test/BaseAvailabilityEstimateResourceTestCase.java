@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.site.setting.client.pagination.Page;
 import com.liferay.headless.commerce.admin.site.setting.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.site.setting.client.resource.v1_0.AvailabilityEstimateResource;
 import com.liferay.headless.commerce.admin.site.setting.client.serdes.v1_0.AvailabilityEstimateSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -198,10 +199,15 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		AvailabilityEstimate availabilityEstimate =
 			testDeleteAvailabilityEstimate_addAvailabilityEstimate();
 
-		assertHttpResponseStatusCode(
-			204,
-			availabilityEstimateResource.deleteAvailabilityEstimateHttpResponse(
-				availabilityEstimate.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				availabilityEstimateResource.
+					deleteAvailabilityEstimateHttpResponse(
+						availabilityEstimate.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

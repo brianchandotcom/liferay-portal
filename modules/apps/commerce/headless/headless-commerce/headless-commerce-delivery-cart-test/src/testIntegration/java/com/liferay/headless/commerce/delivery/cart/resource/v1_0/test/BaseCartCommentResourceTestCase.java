@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Pagination;
 import com.liferay.headless.commerce.delivery.cart.client.resource.v1_0.CartCommentResource;
 import com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0.CartCommentSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -198,10 +199,13 @@ public abstract class BaseCartCommentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartComment cartComment = testDeleteCartComment_addCartComment();
 
-		assertHttpResponseStatusCode(
-			204,
-			cartCommentResource.deleteCartCommentHttpResponse(
-				cartComment.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> cartCommentResource.deleteCartCommentHttpResponse(
+				cartComment.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

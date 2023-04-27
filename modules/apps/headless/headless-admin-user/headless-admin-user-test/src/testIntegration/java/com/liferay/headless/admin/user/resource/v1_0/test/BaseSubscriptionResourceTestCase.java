@@ -28,6 +28,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.SubscriptionSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -298,10 +299,15 @@ public abstract class BaseSubscriptionResourceTestCase {
 		Subscription subscription =
 			testDeleteMyUserAccountSubscription_addSubscription();
 
-		assertHttpResponseStatusCode(
-			204,
-			subscriptionResource.deleteMyUserAccountSubscriptionHttpResponse(
-				subscription.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				subscriptionResource.
+					deleteMyUserAccountSubscriptionHttpResponse(
+						subscription.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

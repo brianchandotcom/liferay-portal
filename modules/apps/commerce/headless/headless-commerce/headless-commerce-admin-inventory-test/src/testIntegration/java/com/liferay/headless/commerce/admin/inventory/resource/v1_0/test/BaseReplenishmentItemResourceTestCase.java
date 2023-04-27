@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.inventory.client.resource.v1_0.ReplenishmentItemResource;
 import com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0.ReplenishmentItemSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -206,11 +207,15 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		ReplenishmentItem replenishmentItem =
 			testDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
 
-		assertHttpResponseStatusCode(
-			204,
-			replenishmentItemResource.
-				deleteReplenishmentItemByExternalReferenceCodeHttpResponse(
-					replenishmentItem.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				replenishmentItemResource.
+					deleteReplenishmentItemByExternalReferenceCodeHttpResponse(
+						replenishmentItem.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -365,10 +370,13 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		ReplenishmentItem replenishmentItem =
 			testDeleteReplenishmentItem_addReplenishmentItem();
 
-		assertHttpResponseStatusCode(
-			204,
-			replenishmentItemResource.deleteReplenishmentItemHttpResponse(
-				replenishmentItem.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> replenishmentItemResource.deleteReplenishmentItemHttpResponse(
+				replenishmentItem.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

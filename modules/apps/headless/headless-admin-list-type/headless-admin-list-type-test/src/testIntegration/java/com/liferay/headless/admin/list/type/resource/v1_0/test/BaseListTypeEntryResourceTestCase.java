@@ -28,6 +28,7 @@ import com.liferay.headless.admin.list.type.client.pagination.Page;
 import com.liferay.headless.admin.list.type.client.pagination.Pagination;
 import com.liferay.headless.admin.list.type.client.resource.v1_0.ListTypeEntryResource;
 import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeEntrySerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -1083,10 +1084,13 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		ListTypeEntry listTypeEntry =
 			testDeleteListTypeEntry_addListTypeEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			listTypeEntryResource.deleteListTypeEntryHttpResponse(
-				listTypeEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> listTypeEntryResource.deleteListTypeEntryHttpResponse(
+				listTypeEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

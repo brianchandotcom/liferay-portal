@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.delivery.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.delivery.catalog.client.resource.v1_0.WishListItemResource;
 import com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0.WishListItemSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -202,10 +203,13 @@ public abstract class BaseWishListItemResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WishListItem wishListItem = testDeleteWishListItem_addWishListItem();
 
-		assertHttpResponseStatusCode(
-			204,
-			wishListItemResource.deleteWishListItemHttpResponse(
-				wishListItem.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> wishListItemResource.deleteWishListItemHttpResponse(
+				wishListItem.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

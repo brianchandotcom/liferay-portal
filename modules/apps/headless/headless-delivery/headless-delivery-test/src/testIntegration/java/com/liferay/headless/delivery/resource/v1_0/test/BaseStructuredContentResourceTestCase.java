@@ -33,6 +33,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -672,12 +673,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
 
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.
-				deleteAssetLibraryStructuredContentByExternalReferenceCodeHttpResponse(
-					testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
-					structuredContent.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				structuredContentResource.
+					deleteAssetLibraryStructuredContentByExternalReferenceCodeHttpResponse(
+						testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
+						structuredContent.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -1869,13 +1874,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
 
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.
-				deleteSiteStructuredContentByExternalReferenceCodeHttpResponse(
-					testDeleteSiteStructuredContentByExternalReferenceCode_getSiteId(
-						structuredContent),
-					structuredContent.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				structuredContentResource.
+					deleteSiteStructuredContentByExternalReferenceCodeHttpResponse(
+						testDeleteSiteStructuredContentByExternalReferenceCode_getSiteId(
+							structuredContent),
+						structuredContent.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -2832,10 +2841,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testDeleteStructuredContent_addStructuredContent();
 
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.deleteStructuredContentHttpResponse(
-				structuredContent.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> structuredContentResource.deleteStructuredContentHttpResponse(
+				structuredContent.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -3040,11 +3052,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testDeleteStructuredContentMyRating_addStructuredContent();
 
-		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.
-				deleteStructuredContentMyRatingHttpResponse(
-					structuredContent.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				structuredContentResource.
+					deleteStructuredContentMyRatingHttpResponse(
+						structuredContent.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

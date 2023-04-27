@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderRuleResource;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderRuleSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -567,11 +568,15 @@ public abstract class BaseOrderRuleResourceTestCase {
 		OrderRule orderRule =
 			testDeleteOrderRuleByExternalReferenceCode_addOrderRule();
 
-		assertHttpResponseStatusCode(
-			204,
-			orderRuleResource.
-				deleteOrderRuleByExternalReferenceCodeHttpResponse(
-					orderRule.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				orderRuleResource.
+					deleteOrderRuleByExternalReferenceCodeHttpResponse(
+						orderRule.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -711,9 +716,13 @@ public abstract class BaseOrderRuleResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRule orderRule = testDeleteOrderRule_addOrderRule();
 
-		assertHttpResponseStatusCode(
-			204,
-			orderRuleResource.deleteOrderRuleHttpResponse(orderRule.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> orderRuleResource.deleteOrderRuleHttpResponse(
+				orderRule.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, orderRuleResource.getOrderRuleHttpResponse(orderRule.getId()));

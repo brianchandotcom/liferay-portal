@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v1_0.PriceEntryResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v1_0.PriceEntrySerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -204,11 +205,15 @@ public abstract class BasePriceEntryResourceTestCase {
 		PriceEntry priceEntry =
 			testDeletePriceEntryByExternalReferenceCode_addPriceEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			priceEntryResource.
-				deletePriceEntryByExternalReferenceCodeHttpResponse(
-					priceEntry.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				priceEntryResource.
+					deletePriceEntryByExternalReferenceCodeHttpResponse(
+						priceEntry.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -322,10 +327,13 @@ public abstract class BasePriceEntryResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceEntry priceEntry = testDeletePriceEntry_addPriceEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			priceEntryResource.deletePriceEntryHttpResponse(
-				priceEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> priceEntryResource.deletePriceEntryHttpResponse(
+				priceEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

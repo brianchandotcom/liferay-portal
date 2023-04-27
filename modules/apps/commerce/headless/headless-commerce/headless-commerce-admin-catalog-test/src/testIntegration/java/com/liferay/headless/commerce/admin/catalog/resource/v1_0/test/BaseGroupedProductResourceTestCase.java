@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.GroupedProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.GroupedProductSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -201,10 +202,13 @@ public abstract class BaseGroupedProductResourceTestCase {
 		GroupedProduct groupedProduct =
 			testDeleteGroupedProduct_addGroupedProduct();
 
-		assertHttpResponseStatusCode(
-			204,
-			groupedProductResource.deleteGroupedProductHttpResponse(
-				groupedProduct.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> groupedProductResource.deleteGroupedProductHttpResponse(
+				groupedProduct.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected GroupedProduct testDeleteGroupedProduct_addGroupedProduct()

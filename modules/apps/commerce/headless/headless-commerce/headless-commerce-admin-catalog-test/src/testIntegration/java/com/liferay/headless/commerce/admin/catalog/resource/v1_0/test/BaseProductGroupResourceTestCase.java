@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductGroupResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductGroupSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -575,11 +576,15 @@ public abstract class BaseProductGroupResourceTestCase {
 		ProductGroup productGroup =
 			testDeleteProductGroupByExternalReferenceCode_addProductGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			productGroupResource.
-				deleteProductGroupByExternalReferenceCodeHttpResponse(
-					productGroup.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				productGroupResource.
+					deleteProductGroupByExternalReferenceCodeHttpResponse(
+						productGroup.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -697,10 +702,13 @@ public abstract class BaseProductGroupResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductGroup productGroup = testDeleteProductGroup_addProductGroup();
 
-		assertHttpResponseStatusCode(
-			204,
-			productGroupResource.deleteProductGroupHttpResponse(
-				productGroup.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> productGroupResource.deleteProductGroupHttpResponse(
+				productGroup.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

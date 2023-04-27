@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductChannelResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductChannelSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -204,10 +205,13 @@ public abstract class BaseProductChannelResourceTestCase {
 		ProductChannel productChannel =
 			testDeleteProductChannel_addProductChannel();
 
-		assertHttpResponseStatusCode(
-			204,
-			productChannelResource.deleteProductChannelHttpResponse(
-				productChannel.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> productChannelResource.deleteProductChannelHttpResponse(
+				productChannel.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

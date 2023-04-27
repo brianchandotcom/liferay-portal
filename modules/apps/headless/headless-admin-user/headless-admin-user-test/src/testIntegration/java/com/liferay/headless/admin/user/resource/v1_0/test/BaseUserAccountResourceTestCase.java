@@ -28,6 +28,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -232,12 +233,16 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount =
 			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
-					userAccount.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				userAccountResource.
+					deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+						testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+						userAccount.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected String
@@ -728,13 +733,17 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount =
 			testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-						userAccount),
-					null));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				userAccountResource.
+					deleteAccountUserAccountsByExternalReferenceCodeByEmailAddressHttpResponse(
+						testDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+							userAccount),
+						null);
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected String
@@ -790,13 +799,17 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount =
 			testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
-						userAccount),
-					userAccount.getEmailAddress()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				userAccountResource.
+					deleteAccountUserAccountByExternalReferenceCodeByEmailAddressHttpResponse(
+						testDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_getExternalReferenceCode(
+							userAccount),
+						userAccount.getEmailAddress());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected String
@@ -1252,12 +1265,16 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount =
 			testDeleteAccountUserAccountsByEmailAddress_addUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountsByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountsByEmailAddress_getAccountId(),
-					null));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				userAccountResource.
+					deleteAccountUserAccountsByEmailAddressHttpResponse(
+						testDeleteAccountUserAccountsByEmailAddress_getAccountId(),
+						null);
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteAccountUserAccountsByEmailAddress_getAccountId()
@@ -1286,12 +1303,16 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount =
 			testDeleteAccountUserAccountByEmailAddress_addUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteAccountUserAccountByEmailAddressHttpResponse(
-					testDeleteAccountUserAccountByEmailAddress_getAccountId(),
-					userAccount.getEmailAddress()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				userAccountResource.
+					deleteAccountUserAccountByEmailAddressHttpResponse(
+						testDeleteAccountUserAccountByEmailAddress_getAccountId(),
+						userAccount.getEmailAddress());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteAccountUserAccountByEmailAddress_getAccountId()
@@ -2483,11 +2504,15 @@ public abstract class BaseUserAccountResourceTestCase {
 		UserAccount userAccount =
 			testDeleteUserAccountByExternalReferenceCode_addUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.
-				deleteUserAccountByExternalReferenceCodeHttpResponse(
-					userAccount.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				userAccountResource.
+					deleteUserAccountByExternalReferenceCodeHttpResponse(
+						userAccount.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -2655,10 +2680,13 @@ public abstract class BaseUserAccountResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount = testDeleteUserAccount_addUserAccount();
 
-		assertHttpResponseStatusCode(
-			204,
-			userAccountResource.deleteUserAccountHttpResponse(
-				userAccount.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> userAccountResource.deleteUserAccountHttpResponse(
+				userAccount.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

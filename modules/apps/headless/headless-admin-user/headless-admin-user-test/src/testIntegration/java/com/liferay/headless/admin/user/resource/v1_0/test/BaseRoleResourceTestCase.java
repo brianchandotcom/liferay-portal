@@ -28,6 +28,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.RoleSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -377,11 +378,14 @@ public abstract class BaseRoleResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role = testDeleteRoleUserAccountAssociation_addRole();
 
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.deleteRoleUserAccountAssociationHttpResponse(
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> roleResource.deleteRoleUserAccountAssociationHttpResponse(
 				role.getId(),
-				testDeleteRoleUserAccountAssociation_getUserAccountId()));
+				testDeleteRoleUserAccountAssociation_getUserAccountId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteRoleUserAccountAssociation_getUserAccountId()
@@ -427,13 +431,17 @@ public abstract class BaseRoleResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role = testDeleteOrganizationRoleUserAccountAssociation_addRole();
 
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.
-				deleteOrganizationRoleUserAccountAssociationHttpResponse(
-					role.getId(),
-					testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId(),
-					testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				roleResource.
+					deleteOrganizationRoleUserAccountAssociationHttpResponse(
+						role.getId(),
+						testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId(),
+						testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long
@@ -489,12 +497,15 @@ public abstract class BaseRoleResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role = testDeleteSiteRoleUserAccountAssociation_addRole();
 
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.deleteSiteRoleUserAccountAssociationHttpResponse(
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> roleResource.deleteSiteRoleUserAccountAssociationHttpResponse(
 				role.getId(),
 				testDeleteSiteRoleUserAccountAssociation_getUserAccountId(),
-				testDeleteSiteRoleUserAccountAssociation_getSiteId()));
+				testDeleteSiteRoleUserAccountAssociation_getSiteId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteSiteRoleUserAccountAssociation_getUserAccountId()

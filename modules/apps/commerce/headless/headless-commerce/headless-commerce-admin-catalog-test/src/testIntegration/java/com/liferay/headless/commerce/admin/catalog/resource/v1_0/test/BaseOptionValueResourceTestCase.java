@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.OptionValueSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -204,11 +205,15 @@ public abstract class BaseOptionValueResourceTestCase {
 		OptionValue optionValue =
 			testDeleteOptionValueByExternalReferenceCode_addOptionValue();
 
-		assertHttpResponseStatusCode(
-			204,
-			optionValueResource.
-				deleteOptionValueByExternalReferenceCodeHttpResponse(
-					optionValue.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				optionValueResource.
+					deleteOptionValueByExternalReferenceCodeHttpResponse(
+						optionValue.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -324,10 +329,13 @@ public abstract class BaseOptionValueResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionValue optionValue = testDeleteOptionValue_addOptionValue();
 
-		assertHttpResponseStatusCode(
-			204,
-			optionValueResource.deleteOptionValueHttpResponse(
-				optionValue.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> optionValueResource.deleteOptionValueHttpResponse(
+				optionValue.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

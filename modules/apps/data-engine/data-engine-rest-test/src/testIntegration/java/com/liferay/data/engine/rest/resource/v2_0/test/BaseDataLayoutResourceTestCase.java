@@ -28,6 +28,7 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataLayoutSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -204,11 +205,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 		DataLayout dataLayout =
 			testDeleteDataDefinitionDataLayout_addDataLayout();
 
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.deleteDataDefinitionDataLayoutHttpResponse(
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> dataLayoutResource.deleteDataDefinitionDataLayoutHttpResponse(
 				testDeleteDataDefinitionDataLayout_getDataDefinitionId(
-					dataLayout)));
+					dataLayout));
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 	}
 
 	protected Long testDeleteDataDefinitionDataLayout_getDataDefinitionId(
@@ -538,10 +542,13 @@ public abstract class BaseDataLayoutResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataLayout dataLayout = testDeleteDataLayout_addDataLayout();
 
-		assertHttpResponseStatusCode(
-			204,
-			dataLayoutResource.deleteDataLayoutHttpResponse(
-				dataLayout.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> dataLayoutResource.deleteDataLayoutHttpResponse(
+				dataLayout.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

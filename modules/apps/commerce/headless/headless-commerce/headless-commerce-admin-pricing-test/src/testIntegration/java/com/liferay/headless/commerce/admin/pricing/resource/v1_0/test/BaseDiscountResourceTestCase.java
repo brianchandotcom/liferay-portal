@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.pricing.client.resource.v1_0.DiscountResource;
 import com.liferay.headless.commerce.admin.pricing.client.serdes.v1_0.DiscountSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -347,10 +348,15 @@ public abstract class BaseDiscountResourceTestCase {
 		Discount discount =
 			testDeleteDiscountByExternalReferenceCode_addDiscount();
 
-		assertHttpResponseStatusCode(
-			204,
-			discountResource.deleteDiscountByExternalReferenceCodeHttpResponse(
-				discount.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				discountResource.
+					deleteDiscountByExternalReferenceCodeHttpResponse(
+						discount.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -462,8 +468,12 @@ public abstract class BaseDiscountResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Discount discount = testDeleteDiscount_addDiscount();
 
-		assertHttpResponseStatusCode(
-			204, discountResource.deleteDiscountHttpResponse(discount.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> discountResource.deleteDiscountHttpResponse(discount.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, discountResource.getDiscountHttpResponse(discount.getId()));

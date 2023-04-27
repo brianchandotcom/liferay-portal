@@ -28,6 +28,7 @@ import com.liferay.notification.rest.client.pagination.Page;
 import com.liferay.notification.rest.client.pagination.Pagination;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.client.serdes.v1_0.NotificationQueueEntrySerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -636,11 +637,15 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		NotificationQueueEntry notificationQueueEntry =
 			testDeleteNotificationQueueEntry_addNotificationQueueEntry();
 
-		assertHttpResponseStatusCode(
-			204,
-			notificationQueueEntryResource.
-				deleteNotificationQueueEntryHttpResponse(
-					notificationQueueEntry.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				notificationQueueEntryResource.
+					deleteNotificationQueueEntryHttpResponse(
+						notificationQueueEntry.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

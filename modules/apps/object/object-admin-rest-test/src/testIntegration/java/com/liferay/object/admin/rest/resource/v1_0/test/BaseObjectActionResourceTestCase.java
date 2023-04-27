@@ -28,6 +28,7 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectActionSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -208,10 +209,13 @@ public abstract class BaseObjectActionResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectAction objectAction = testDeleteObjectAction_addObjectAction();
 
-		assertHttpResponseStatusCode(
-			204,
-			objectActionResource.deleteObjectActionHttpResponse(
-				objectAction.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> objectActionResource.deleteObjectActionHttpResponse(
+				objectAction.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -330,8 +331,12 @@ public abstract class BaseSLAResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SLA sla = testDeleteSLA_addSLA();
 
-		assertHttpResponseStatusCode(
-			204, slaResource.deleteSLAHttpResponse(sla.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> slaResource.deleteSLAHttpResponse(sla.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, slaResource.getSLAHttpResponse(sla.getId()));

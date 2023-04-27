@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.SkuSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -781,10 +782,13 @@ public abstract class BaseSkuResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku = testDeleteSkuByExternalReferenceCode_addSku();
 
-		assertHttpResponseStatusCode(
-			204,
-			skuResource.deleteSkuByExternalReferenceCodeHttpResponse(
-				sku.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> skuResource.deleteSkuByExternalReferenceCodeHttpResponse(
+				sku.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -910,8 +914,12 @@ public abstract class BaseSkuResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku = testDeleteSku_addSku();
 
-		assertHttpResponseStatusCode(
-			204, skuResource.deleteSkuHttpResponse(sku.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> skuResource.deleteSkuHttpResponse(sku.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, skuResource.getSkuHttpResponse(sku.getId()));

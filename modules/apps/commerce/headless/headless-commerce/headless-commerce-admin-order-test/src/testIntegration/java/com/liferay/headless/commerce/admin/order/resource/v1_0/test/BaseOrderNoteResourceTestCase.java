@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderNoteResource;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderNoteSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -203,11 +204,15 @@ public abstract class BaseOrderNoteResourceTestCase {
 		OrderNote orderNote =
 			testDeleteOrderNoteByExternalReferenceCode_addOrderNote();
 
-		assertHttpResponseStatusCode(
-			204,
-			orderNoteResource.
-				deleteOrderNoteByExternalReferenceCodeHttpResponse(
-					orderNote.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				orderNoteResource.
+					deleteOrderNoteByExternalReferenceCodeHttpResponse(
+						orderNote.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -320,9 +325,13 @@ public abstract class BaseOrderNoteResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderNote orderNote = testDeleteOrderNote_addOrderNote();
 
-		assertHttpResponseStatusCode(
-			204,
-			orderNoteResource.deleteOrderNoteHttpResponse(orderNote.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> orderNoteResource.deleteOrderNoteHttpResponse(
+				orderNote.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, orderNoteResource.getOrderNoteHttpResponse(orderNote.getId()));

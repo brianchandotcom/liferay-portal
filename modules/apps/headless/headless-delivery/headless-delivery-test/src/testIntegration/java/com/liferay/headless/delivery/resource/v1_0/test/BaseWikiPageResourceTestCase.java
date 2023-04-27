@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.WikiPageResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.WikiPageSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -215,13 +216,17 @@ public abstract class BaseWikiPageResourceTestCase {
 		WikiPage wikiPage =
 			testDeleteSiteWikiPageByExternalReferenceCode_addWikiPage();
 
-		assertHttpResponseStatusCode(
-			204,
-			wikiPageResource.
-				deleteSiteWikiPageByExternalReferenceCodeHttpResponse(
-					testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
-						wikiPage),
-					wikiPage.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() ->
+				wikiPageResource.
+					deleteSiteWikiPageByExternalReferenceCodeHttpResponse(
+						testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
+							wikiPage),
+						wikiPage.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -904,8 +909,12 @@ public abstract class BaseWikiPageResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage = testDeleteWikiPage_addWikiPage();
 
-		assertHttpResponseStatusCode(
-			204, wikiPageResource.deleteWikiPageHttpResponse(wikiPage.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> wikiPageResource.deleteWikiPageHttpResponse(wikiPage.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(wikiPage.getId()));

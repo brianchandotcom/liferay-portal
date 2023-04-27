@@ -28,6 +28,7 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.TermResource;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.TermSerDes;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -536,10 +537,13 @@ public abstract class BaseTermResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Term term = testDeleteTermByExternalReferenceCode_addTerm();
 
-		assertHttpResponseStatusCode(
-			204,
-			termResource.deleteTermByExternalReferenceCodeHttpResponse(
-				term.getExternalReferenceCode()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> termResource.deleteTermByExternalReferenceCodeHttpResponse(
+				term.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -668,8 +672,12 @@ public abstract class BaseTermResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Term term = testDeleteTerm_addTerm();
 
-		assertHttpResponseStatusCode(
-			204, termResource.deleteTermHttpResponse(term.getId()));
+		UnsafeSupplier<HttpInvoker.HttpResponse, Exception> unsafeSupplier =
+			() -> termResource.deleteTermHttpResponse(term.getId());
+
+		assertHttpResponseStatusCode(204, unsafeSupplier.get());
+
+		assertHttpResponseStatusCode(404, unsafeSupplier.get());
 
 		assertHttpResponseStatusCode(
 			404, termResource.getTermHttpResponse(term.getId()));

@@ -15,7 +15,6 @@
 package com.liferay.exportimport.internal.scheduler;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
-import com.liferay.exportimport.configuration.ExportImportSystemConfiguration;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -49,10 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ha Tang
  */
 @Component(
-	configurationPid = {
-		"com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
-		"com.liferay.exportimport.configuration.ExportImportSystemConfiguration"
-	},
+	configurationPid = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
 	service = SchedulerJobConfiguration.class
 )
 public class DeleteExpiredBackgroundTasksSchedulerJobConfiguration
@@ -67,16 +63,13 @@ public class DeleteExpiredBackgroundTasksSchedulerJobConfiguration
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
 		return TriggerConfiguration.createTriggerConfiguration(
-			_exportImportSystemConfiguration.cleanupJobInterval(),
-			TimeUnit.MINUTE);
+			_CHECK_INTERVAL, TimeUnit.MINUTE);
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
 			ExportImportServiceConfiguration.class, properties);
-		_exportImportSystemConfiguration = ConfigurableUtil.createConfigurable(
-			ExportImportSystemConfiguration.class, properties);
 	}
 
 	private void _deleteExpiredBackGroundTasks(long companyId)
@@ -175,6 +168,8 @@ public class DeleteExpiredBackgroundTasksSchedulerJobConfiguration
 		BackgroundTaskExecutorNames.PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR
 	};
 
+	private static final int _CHECK_INTERVAL = 30;
+
 	private static final int[] _STATUSES = {
 		BackgroundTaskConstants.STATUS_CANCELLED,
 		BackgroundTaskConstants.STATUS_SUCCESSFUL
@@ -194,7 +189,5 @@ public class DeleteExpiredBackgroundTasksSchedulerJobConfiguration
 
 	private volatile ExportImportServiceConfiguration
 		_exportImportServiceConfiguration;
-	private volatile ExportImportSystemConfiguration
-		_exportImportSystemConfiguration;
 
 }

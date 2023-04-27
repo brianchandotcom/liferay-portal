@@ -132,9 +132,9 @@ public class CompanyIndexFactory
 			Company company = _companyLocalService.fetchCompany(companyId);
 
 			if ((company != null) &&
-				!Validator.isBlank(company.getIndexNameCur())) {
+				!Validator.isBlank(company.getIndexNameCurrent())) {
 
-				indexName = company.getIndexNameCur();
+				indexName = company.getIndexNameCurrent();
 			}
 		}
 
@@ -218,8 +218,8 @@ public class CompanyIndexFactory
 
 		String removeIndex = baseIndexName;
 
-		if (!Validator.isBlank(company.getIndexNameCur())) {
-			removeIndex = company.getIndexNameCur();
+		if (!Validator.isBlank(company.getIndexNameCurrent())) {
+			removeIndex = company.getIndexNameCurrent();
 		}
 
 		IndicesAliasesRequest.AliasActions removeIndexAliasActions =

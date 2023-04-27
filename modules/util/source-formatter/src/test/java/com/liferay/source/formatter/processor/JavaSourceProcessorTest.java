@@ -651,9 +651,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testReferenceMethods() throws Exception {
 		test(
 			"ReferenceMethods.testjava",
-			"Do not use @Reference on method testMethod, use @Reference on field " +
-				"or ServiceTracker/ServiceTrackerList/ServiceTrackerMap " +
-					"instead");
+			"Do not use @Reference on method testMethod, use @Reference on " +
+				"field or ServiceTracker/ServiceTrackerList" +
+					"/ServiceTrackerMap instead");
 	}
 
 	@Test

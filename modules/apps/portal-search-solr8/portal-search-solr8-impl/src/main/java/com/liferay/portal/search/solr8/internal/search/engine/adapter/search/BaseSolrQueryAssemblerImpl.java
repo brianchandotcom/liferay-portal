@@ -18,8 +18,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
@@ -320,57 +320,56 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 			}
 
 			private JSONObject _getFacetParametersJSONObject(Facet facet) {
-				JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-				jsonObject.put(
-					"field", facet.getFieldName()
-				).put(
-					"type", "terms"
-				);
-
 				FacetConfiguration facetConfiguration =
 					facet.getFacetConfiguration();
 
 				JSONObject dataJSONObject = facetConfiguration.getData();
 
-				int minCount = dataJSONObject.getInt("frequencyThreshold");
+				return JSONUtil.put(
+					"field", facet.getFieldName()
+				).put(
+					"limit",
+					() -> {
+						int limit = dataJSONObject.getInt("maxTerms");
 
-				if (minCount > 0) {
-					jsonObject.put("mincount", minCount);
-				}
+						if (limit > 0) {
+							return limit;
+						}
 
-				int limit = dataJSONObject.getInt("maxTerms");
+						return null;
+					}
+				).put(
+					"mincount",
+					() -> {
+						int minCount = dataJSONObject.getInt(
+							"frequencyThreshold");
 
-				if (limit > 0) {
-					jsonObject.put("limit", limit);
-				}
+						if (minCount > 0) {
+							return minCount;
+						}
 
-				String sortParam = "count";
-				String sortValue = "desc";
+						return null;
+					}
+				).put(
+					"sort",
+					() -> {
+						String order = facetConfiguration.getOrder();
 
-				String order = facetConfiguration.getOrder();
+						if (order.equals("OrderValueAsc")) {
+							return JSONUtil.put("index", "asc");
+						}
 
-				if (order.equals("OrderValueAsc")) {
-					sortParam = "index";
-					sortValue = "asc";
-				}
-
-				JSONObject sortJSONObject = _jsonFactory.createJSONObject();
-
-				sortJSONObject.put(sortParam, sortValue);
-
-				jsonObject.put("sort", sortJSONObject);
-
-				return jsonObject;
+						return JSONUtil.put("count", "desc");
+					}
+				).put(
+					"type", "terms"
+				);
 			}
 
 		};
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private FilterTranslator<String> _filterTranslator;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private QueryTranslator<String> _queryTranslator;

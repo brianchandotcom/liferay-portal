@@ -26,8 +26,10 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,11 +38,15 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -77,6 +83,29 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 		}
 
 		return _defaultInputFragmentEntryKeys;
+	}
+
+	@Override
+	public void updateDefaultInputFragmentEntryKeys(
+			Map<String, String> defaultInputFragmentEntryKeys)
+		throws Exception {
+
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			DefaultInputFragmentEntryConfiguration.class.getName(),
+			StringPool.QUESTION);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			defaultInputFragmentEntryKeys);
+
+		properties.put("defaultInputFragmentEntryKeys", jsonObject.toString());
+
+		configuration.update(properties);
 	}
 
 	private Map<String, String> _getDefaultInputFragmentEntryKeys(Group group) {
@@ -136,6 +165,9 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 		).put(
 			TextInfoFieldType.INSTANCE.getName(), "INPUTS-text-input"
 		).build();
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

@@ -23,4 +23,8 @@ public interface DefaultInputFragmentEntryConfigurationProvider {
 
 	public Map<String, String> getDefaultInputFragmentEntryKeys(long groupId);
 
+	public void updateDefaultInputFragmentEntryKeys(
+			Map<String, String> defaultInputFragmentEntryKeys)
+		throws Exception;
+
 }

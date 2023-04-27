@@ -755,15 +755,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "[$OBJECT_DEFINITION_ID:MDFClaimActivityDocument$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition",
-		"roleName": "Channel Finance Manager (CFM)",
-		"scope": "4"
-	},
-	{
-		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
@@ -860,15 +851,6 @@
 		"actionIds": [
 			"VIEW",
 			"UPDATE"
-		],
-		"primKey": "[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition",
-		"roleName": "Channel Finance Manager (CFM)",
-		"scope": "4"
-	},
-	{
-		"actionIds": [
-			"VIEW"
 		],
 		"primKey": "[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition",

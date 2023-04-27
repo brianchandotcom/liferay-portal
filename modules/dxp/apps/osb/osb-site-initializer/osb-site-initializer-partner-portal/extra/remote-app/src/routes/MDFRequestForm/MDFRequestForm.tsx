@@ -126,7 +126,7 @@ const MDFRequestForm = () => {
 	const StepFormComponent: StepComponent = {
 		[StepType.GOALS]: (
 			<Goals
-				disableCompany={hasPermissionToByPass}
+				disableCompany={Boolean(mdfRequestId) && hasPermissionToByPass}
 				onCancel={onCancel}
 				onContinue={onContinue}
 				onSaveAsDraft={(

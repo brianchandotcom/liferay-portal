@@ -801,7 +801,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			Refund refund = refundHttpResponse.result();
 
 			success = true;
-			status = CommerceOrderConstants.ORDER_STATUS_REFUNDED;
+			status = CommerceOrderPaymentConstants.STATUS_REFUNDED;
 
 			refundId = refund.id();
 		}

@@ -648,6 +648,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testReferenceMethods() throws Exception {
+		test(
+			"ReferenceMethods.testjava",
+			"Do not use @Reference on method testMethod, use @Reference on field " +
+				"or ServiceTracker/ServiceTrackerList/ServiceTrackerMap " +
+					"instead");
+	}
+
+	@Test
 	public void testResultCountSet() throws Exception {
 		test(
 			"ResultSetCount.testjava", "Use resultSet.getInt(1) for count", 35);

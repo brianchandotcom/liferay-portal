@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.util;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -134,6 +135,24 @@ public class MBMailUtil {
 				LanguageUtil.get(
 					themeDisplay.getLocale(),
 					"the-name-of-the-email-recipient"));
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-182020")) {
+			definitionTerms.put(
+				"[$MESSAGE_SIBLINGS$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-message-thread-of-messages-at-the-same-level"));
+			definitionTerms.put(
+				"[$MESSAGE_PARENT$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-message-body-of-the-parent-message"));
+			definitionTerms.put(
+				"[$ROOT_MESSAGE_BODY$]",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"the-message-body-of-the-original-message"));
 		}
 
 		return definitionTerms;

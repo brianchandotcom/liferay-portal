@@ -68,6 +68,38 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 		File currentDir = startParameter.getCurrentDir();
 
+		gradle.beforeProject(
+			new Closure<Void>(settings) {
+
+				@SuppressWarnings("unused")
+				public void doCall(Project project) {
+					_setPortalVersion(project, workspaceExtension);
+
+					Plugin<Project> plugin = null;
+
+					if (project.getParent() == null) {
+						for (ProjectConfigurator projectConfigurator :
+								workspaceExtension.getProjectConfigurators()) {
+
+							projectConfigurator.configureRootProject(
+								project, workspaceExtension);
+						}
+
+						plugin =
+							workspaceExtension.getRootProjectConfigurator();
+					}
+					else {
+						plugin = _projectConfiguratorsMap.get(
+							project.getPath());
+					}
+
+					if (plugin != null) {
+						plugin.apply(project);
+					}
+				}
+
+			});
+
 		gradle.settingsEvaluated(
 			new Action<Settings>() {
 
@@ -136,38 +168,6 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 						_projectConfiguratorsMap.put(
 							projectPath, projectConfigurator);
-					}
-				}
-
-			});
-
-		gradle.beforeProject(
-			new Closure<Void>(settings) {
-
-				@SuppressWarnings("unused")
-				public void doCall(Project project) {
-					_setPortalVersion(project, workspaceExtension);
-
-					Plugin<Project> plugin = null;
-
-					if (project.getParent() == null) {
-						for (ProjectConfigurator projectConfigurator :
-								workspaceExtension.getProjectConfigurators()) {
-
-							projectConfigurator.configureRootProject(
-								project, workspaceExtension);
-						}
-
-						plugin =
-							workspaceExtension.getRootProjectConfigurator();
-					}
-					else {
-						plugin = _projectConfiguratorsMap.get(
-							project.getPath());
-					}
-
-					if (plugin != null) {
-						plugin.apply(project);
 					}
 				}
 

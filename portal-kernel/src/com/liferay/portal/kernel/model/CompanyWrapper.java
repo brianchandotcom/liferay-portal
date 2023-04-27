@@ -62,7 +62,7 @@ public class CompanyWrapper
 		attributes.put("industry", getIndustry());
 		attributes.put("type", getType());
 		attributes.put("size", getSize());
-		attributes.put("indexNameCur", getIndexNameCur());
+		attributes.put("indexNameCurrent", getIndexNameCurrent());
 		attributes.put("indexNameNext", getIndexNameNext());
 
 		return attributes;
@@ -196,10 +196,10 @@ public class CompanyWrapper
 			setSize(size);
 		}
 
-		String indexNameCur = (String)attributes.get("indexNameCur");
+		String indexNameCurrent = (String)attributes.get("indexNameCurrent");
 
-		if (indexNameCur != null) {
-			setIndexNameCur(indexNameCur);
+		if (indexNameCurrent != null) {
+			setIndexNameCurrent(indexNameCurrent);
 		}
 
 		String indexNameNext = (String)attributes.get("indexNameNext");
@@ -317,13 +317,13 @@ public class CompanyWrapper
 	}
 
 	/**
-	 * Returns the index name cur of this company.
+	 * Returns the index name current of this company.
 	 *
-	 * @return the index name cur of this company
+	 * @return the index name current of this company
 	 */
 	@Override
-	public String getIndexNameCur() {
-		return model.getIndexNameCur();
+	public String getIndexNameCurrent() {
+		return model.getIndexNameCurrent();
 	}
 
 	/**
@@ -672,13 +672,13 @@ public class CompanyWrapper
 	}
 
 	/**
-	 * Sets the index name cur of this company.
+	 * Sets the index name current of this company.
 	 *
-	 * @param indexNameCur the index name cur of this company
+	 * @param indexNameCurrent the index name current of this company
 	 */
 	@Override
-	public void setIndexNameCur(String indexNameCur) {
-		model.setIndexNameCur(indexNameCur);
+	public void setIndexNameCurrent(String indexNameCurrent) {
+		model.setIndexNameCurrent(indexNameCurrent);
 	}
 
 	/**

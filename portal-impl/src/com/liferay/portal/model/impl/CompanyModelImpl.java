@@ -81,7 +81,7 @@ public class CompanyModelImpl
 		{"legalId", Types.VARCHAR}, {"legalType", Types.VARCHAR},
 		{"sicCode", Types.VARCHAR}, {"tickerSymbol", Types.VARCHAR},
 		{"industry", Types.VARCHAR}, {"type_", Types.VARCHAR},
-		{"size_", Types.VARCHAR}, {"indexNameCur", Types.VARCHAR},
+		{"size_", Types.VARCHAR}, {"indexNameCurrent", Types.VARCHAR},
 		{"indexNameNext", Types.VARCHAR}
 	};
 
@@ -110,12 +110,12 @@ public class CompanyModelImpl
 		TABLE_COLUMNS_MAP.put("industry", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("size_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("indexNameCur", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("indexNameCurrent", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("indexNameNext", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Company (mvccVersion LONG default 0 not null,companyId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,webId VARCHAR(75) null,mx VARCHAR(200) null,homeURL STRING null,logoId LONG,maxUsers INTEGER,active_ BOOLEAN,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null,indexNameCur VARCHAR(75) null,indexNameNext VARCHAR(75) null)";
+		"create table Company (mvccVersion LONG default 0 not null,companyId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,webId VARCHAR(75) null,mx VARCHAR(200) null,homeURL STRING null,logoId LONG,maxUsers INTEGER,active_ BOOLEAN,name VARCHAR(75) null,legalName VARCHAR(75) null,legalId VARCHAR(75) null,legalType VARCHAR(75) null,sicCode VARCHAR(75) null,tickerSymbol VARCHAR(75) null,industry VARCHAR(75) null,type_ VARCHAR(75) null,size_ VARCHAR(75) null,indexNameCurrent VARCHAR(75) null,indexNameNext VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Company";
 
@@ -295,7 +295,7 @@ public class CompanyModelImpl
 			attributeGetterFunctions.put("type", Company::getType);
 			attributeGetterFunctions.put("size", Company::getSize);
 			attributeGetterFunctions.put(
-				"indexNameCur", Company::getIndexNameCur);
+				"indexNameCurrent", Company::getIndexNameCurrent);
 			attributeGetterFunctions.put(
 				"indexNameNext", Company::getIndexNameNext);
 
@@ -363,8 +363,8 @@ public class CompanyModelImpl
 			attributeSetterBiConsumers.put(
 				"size", (BiConsumer<Company, String>)Company::setSize);
 			attributeSetterBiConsumers.put(
-				"indexNameCur",
-				(BiConsumer<Company, String>)Company::setIndexNameCur);
+				"indexNameCurrent",
+				(BiConsumer<Company, String>)Company::setIndexNameCurrent);
 			attributeSetterBiConsumers.put(
 				"indexNameNext",
 				(BiConsumer<Company, String>)Company::setIndexNameNext);
@@ -812,22 +812,22 @@ public class CompanyModelImpl
 
 	@JSON
 	@Override
-	public String getIndexNameCur() {
-		if (_indexNameCur == null) {
+	public String getIndexNameCurrent() {
+		if (_indexNameCurrent == null) {
 			return "";
 		}
 		else {
-			return _indexNameCur;
+			return _indexNameCurrent;
 		}
 	}
 
 	@Override
-	public void setIndexNameCur(String indexNameCur) {
+	public void setIndexNameCurrent(String indexNameCurrent) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_indexNameCur = indexNameCur;
+		_indexNameCurrent = indexNameCurrent;
 	}
 
 	@JSON
@@ -942,7 +942,7 @@ public class CompanyModelImpl
 		companyImpl.setIndustry(getIndustry());
 		companyImpl.setType(getType());
 		companyImpl.setSize(getSize());
-		companyImpl.setIndexNameCur(getIndexNameCur());
+		companyImpl.setIndexNameCurrent(getIndexNameCurrent());
 		companyImpl.setIndexNameNext(getIndexNameNext());
 
 		companyImpl.resetOriginalValues();
@@ -985,8 +985,8 @@ public class CompanyModelImpl
 			this.<String>getColumnOriginalValue("industry"));
 		companyImpl.setType(this.<String>getColumnOriginalValue("type_"));
 		companyImpl.setSize(this.<String>getColumnOriginalValue("size_"));
-		companyImpl.setIndexNameCur(
-			this.<String>getColumnOriginalValue("indexNameCur"));
+		companyImpl.setIndexNameCurrent(
+			this.<String>getColumnOriginalValue("indexNameCurrent"));
 		companyImpl.setIndexNameNext(
 			this.<String>getColumnOriginalValue("indexNameNext"));
 
@@ -1204,12 +1204,12 @@ public class CompanyModelImpl
 			companyCacheModel.size = null;
 		}
 
-		companyCacheModel.indexNameCur = getIndexNameCur();
+		companyCacheModel.indexNameCurrent = getIndexNameCurrent();
 
-		String indexNameCur = companyCacheModel.indexNameCur;
+		String indexNameCurrent = companyCacheModel.indexNameCurrent;
 
-		if ((indexNameCur != null) && (indexNameCur.length() == 0)) {
-			companyCacheModel.indexNameCur = null;
+		if ((indexNameCurrent != null) && (indexNameCurrent.length() == 0)) {
+			companyCacheModel.indexNameCurrent = null;
 		}
 
 		companyCacheModel.indexNameNext = getIndexNameNext();
@@ -1311,7 +1311,7 @@ public class CompanyModelImpl
 	private String _industry;
 	private String _type;
 	private String _size;
-	private String _indexNameCur;
+	private String _indexNameCurrent;
 	private String _indexNameNext;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1365,7 +1365,7 @@ public class CompanyModelImpl
 		_columnOriginalValues.put("industry", _industry);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("size_", _size);
-		_columnOriginalValues.put("indexNameCur", _indexNameCur);
+		_columnOriginalValues.put("indexNameCurrent", _indexNameCurrent);
 		_columnOriginalValues.put("indexNameNext", _indexNameNext);
 	}
 
@@ -1434,7 +1434,7 @@ public class CompanyModelImpl
 
 		columnBitmasks.put("size_", 1048576L);
 
-		columnBitmasks.put("indexNameCur", 2097152L);
+		columnBitmasks.put("indexNameCurrent", 2097152L);
 
 		columnBitmasks.put("indexNameNext", 4194304L);
 

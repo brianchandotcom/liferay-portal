@@ -120,8 +120,8 @@ public class CompanyCacheModel
 		sb.append(type);
 		sb.append(", size=");
 		sb.append(size);
-		sb.append(", indexNameCur=");
-		sb.append(indexNameCur);
+		sb.append(", indexNameCurrent=");
+		sb.append(indexNameCurrent);
 		sb.append(", indexNameNext=");
 		sb.append(indexNameNext);
 		sb.append("}");
@@ -246,11 +246,11 @@ public class CompanyCacheModel
 			companyImpl.setSize(size);
 		}
 
-		if (indexNameCur == null) {
-			companyImpl.setIndexNameCur("");
+		if (indexNameCurrent == null) {
+			companyImpl.setIndexNameCurrent("");
 		}
 		else {
-			companyImpl.setIndexNameCur(indexNameCur);
+			companyImpl.setIndexNameCurrent(indexNameCurrent);
 		}
 
 		if (indexNameNext == null) {
@@ -299,7 +299,7 @@ public class CompanyCacheModel
 		industry = objectInput.readUTF();
 		type = objectInput.readUTF();
 		size = objectInput.readUTF();
-		indexNameCur = objectInput.readUTF();
+		indexNameCurrent = objectInput.readUTF();
 		indexNameNext = objectInput.readUTF();
 
 		_companySecurityBag =
@@ -415,11 +415,11 @@ public class CompanyCacheModel
 			objectOutput.writeUTF(size);
 		}
 
-		if (indexNameCur == null) {
+		if (indexNameCurrent == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(indexNameCur);
+			objectOutput.writeUTF(indexNameCurrent);
 		}
 
 		if (indexNameNext == null) {
@@ -454,7 +454,7 @@ public class CompanyCacheModel
 	public String industry;
 	public String type;
 	public String size;
-	public String indexNameCur;
+	public String indexNameCurrent;
 	public String indexNameNext;
 	public CompanyImpl.CompanySecurityBag _companySecurityBag;
 	public String _virtualHostname;

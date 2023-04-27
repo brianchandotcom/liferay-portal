@@ -163,7 +163,7 @@ public class CompanyPersistenceTest {
 
 		newCompany.setSize(RandomTestUtil.randomString());
 
-		newCompany.setIndexNameCur(RandomTestUtil.randomString());
+		newCompany.setIndexNameCurrent(RandomTestUtil.randomString());
 
 		newCompany.setIndexNameNext(RandomTestUtil.randomString());
 
@@ -211,7 +211,8 @@ public class CompanyPersistenceTest {
 		Assert.assertEquals(existingCompany.getType(), newCompany.getType());
 		Assert.assertEquals(existingCompany.getSize(), newCompany.getSize());
 		Assert.assertEquals(
-			existingCompany.getIndexNameCur(), newCompany.getIndexNameCur());
+			existingCompany.getIndexNameCurrent(),
+			newCompany.getIndexNameCurrent());
 		Assert.assertEquals(
 			existingCompany.getIndexNameNext(), newCompany.getIndexNameNext());
 	}
@@ -271,8 +272,8 @@ public class CompanyPersistenceTest {
 			true, "mx", true, "homeURL", true, "logoId", true, "maxUsers", true,
 			"active", true, "name", true, "legalName", true, "legalId", true,
 			"legalType", true, "sicCode", true, "tickerSymbol", true,
-			"industry", true, "type", true, "size", true, "indexNameCur", true,
-			"indexNameNext", true);
+			"industry", true, "type", true, "size", true, "indexNameCurrent",
+			true, "indexNameNext", true);
 	}
 
 	@Test
@@ -591,7 +592,7 @@ public class CompanyPersistenceTest {
 
 		company.setSize(RandomTestUtil.randomString());
 
-		company.setIndexNameCur(RandomTestUtil.randomString());
+		company.setIndexNameCurrent(RandomTestUtil.randomString());
 
 		company.setIndexNameNext(RandomTestUtil.randomString());
 

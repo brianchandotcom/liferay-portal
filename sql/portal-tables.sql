@@ -222,7 +222,7 @@ create table Company (
 	industry VARCHAR(75) null,
 	type_ VARCHAR(75) null,
 	size_ VARCHAR(75) null,
-	indexNameCur VARCHAR(75) null,
+	indexNameCurrent VARCHAR(75) null,
 	indexNameNext VARCHAR(75) null
 );
 

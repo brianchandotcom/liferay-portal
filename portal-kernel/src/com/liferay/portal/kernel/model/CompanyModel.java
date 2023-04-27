@@ -398,19 +398,19 @@ public interface CompanyModel
 	public void setSize(String size);
 
 	/**
-	 * Returns the index name cur of this company.
+	 * Returns the index name current of this company.
 	 *
-	 * @return the index name cur of this company
+	 * @return the index name current of this company
 	 */
 	@AutoEscape
-	public String getIndexNameCur();
+	public String getIndexNameCurrent();
 
 	/**
-	 * Sets the index name cur of this company.
+	 * Sets the index name current of this company.
 	 *
-	 * @param indexNameCur the index name cur of this company
+	 * @param indexNameCurrent the index name current of this company
 	 */
-	public void setIndexNameCur(String indexNameCur);
+	public void setIndexNameCurrent(String indexNameCurrent);
 
 	/**
 	 * Returns the index name next of this company.

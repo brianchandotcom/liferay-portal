@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
+import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
 import java.util.Optional;
 
@@ -25,70 +25,67 @@ import javax.portlet.PortletPreferences;
  * @author Wade Cao
  */
 public class CustomFacetPortletPreferencesImpl
-	implements CustomFacetPortletPreferences {
+	extends BasePortletPreferences implements CustomFacetPortletPreferences {
 
 	public CustomFacetPortletPreferencesImpl(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
-		_portletPreferencesHelper = new PortletPreferencesHelper(
-			portletPreferencesOptional);
+		super(portletPreferencesOptional.orElse(null));
 	}
 
 	@Override
 	public String getAggregationField() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getCustomHeading() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getFederatedSearchKey() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public int getFrequencyThreshold() {
-		return _portletPreferencesHelper.getInteger(
+		return getInteger(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCY_THRESHOLD,
 			1);
 	}
 
 	@Override
 	public int getMaxTerms() {
-		return _portletPreferencesHelper.getInteger(
+		return getInteger(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_MAX_TERMS, 10);
 	}
 
 	@Override
 	public String getOrder() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFacetPortletPreferencesImpl.PREFERENCE_KEY_ORDER,
 			"count:desc");
 	}
 
 	@Override
 	public String getParameterName() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public boolean isFrequenciesVisible() {
-		return _portletPreferencesHelper.getBoolean(
+		return getBoolean(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE,
 			true);
 	}
-
-	private final PortletPreferencesHelper _portletPreferencesHelper;
 
 }

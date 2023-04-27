@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
+import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
 import java.util.Optional;
 
@@ -26,102 +26,99 @@ import javax.portlet.PortletPreferences;
  * @author Luan Maoski
  */
 public class CustomFilterPortletPreferencesImpl
-	implements CustomFilterPortletPreferences {
+	extends BasePortletPreferences implements CustomFilterPortletPreferences {
 
 	public CustomFilterPortletPreferencesImpl(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
-		_portletPreferencesHelper = new PortletPreferencesHelper(
-			portletPreferencesOptional);
+		super(portletPreferencesOptional.orElse(null));
 	}
 
 	@Override
 	public String getBoost() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_BOOST,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getCustomHeading() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getFederatedSearchKey() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getFilterField() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_FIELD,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getFilterQueryType() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_QUERY_TYPE,
 			"match");
 	}
 
 	@Override
 	public String getFilterValue() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_FILTER_VALUE,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getOccur() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_OCCUR, "filter");
 	}
 
 	@Override
 	public String getParameterName() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getParentQueryName() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_PARENT_QUERY_NAME,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getQueryName() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_QUERY_NAME,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public boolean isDisabled() {
-		return _portletPreferencesHelper.getBoolean(
+		return getBoolean(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_DISABLED, false);
 	}
 
 	@Override
 	public boolean isImmutable() {
-		return _portletPreferencesHelper.getBoolean(
+		return getBoolean(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_IMMUTABLE, false);
 	}
 
 	@Override
 	public boolean isInvisible() {
-		return _portletPreferencesHelper.getBoolean(
+		return getBoolean(
 			CustomFilterPortletPreferences.PREFERENCE_KEY_INVISIBLE, false);
 	}
-
-	private final PortletPreferencesHelper _portletPreferencesHelper;
 
 }

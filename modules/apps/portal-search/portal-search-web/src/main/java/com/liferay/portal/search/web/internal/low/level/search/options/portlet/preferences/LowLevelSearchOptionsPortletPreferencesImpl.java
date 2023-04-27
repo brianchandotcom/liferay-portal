@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
+import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
 
 import java.util.Optional;
@@ -33,13 +33,13 @@ import javax.portlet.PortletPreferences;
  * @author Wade Cao
  */
 public class LowLevelSearchOptionsPortletPreferencesImpl
+	extends BasePortletPreferences
 	implements LowLevelSearchOptionsPortletPreferences {
 
 	public LowLevelSearchOptionsPortletPreferencesImpl(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
-		_portletPreferencesHelper = new PortletPreferencesHelper(
-			portletPreferencesOptional);
+		super(portletPreferencesOptional.orElse(null));
 	}
 
 	@Override
@@ -64,14 +64,14 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	@Override
 	public String getAttributesString() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			LowLevelSearchOptionsPortletPreferences.PREFERENCE_ATTRIBUTES,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getConnectionId() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONNECTION_ID,
 			StringPool.BLANK);
@@ -79,7 +79,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	@Override
 	public String getContributorsToExclude() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE,
 			StringPool.BLANK);
@@ -87,7 +87,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	@Override
 	public String getContributorsToInclude() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE,
 			StringPool.BLANK);
@@ -95,14 +95,14 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	@Override
 	public String getFederatedSearchKey() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			SearchOptionsPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public String getFieldsToReturn() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			LowLevelSearchOptionsPortletPreferences.
 				PREFERENCE_KEY_FIELDS_TO_RETURN,
 			StringPool.BLANK);
@@ -110,7 +110,7 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	@Override
 	public String getIndexes() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES,
 			StringPool.BLANK);
 	}
@@ -126,7 +126,5 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LowLevelSearchOptionsPortletPreferencesImpl.class);
-
-	private final PortletPreferencesHelper _portletPreferencesHelper;
 
 }

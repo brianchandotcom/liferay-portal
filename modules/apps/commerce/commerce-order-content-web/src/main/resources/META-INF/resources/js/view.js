@@ -25,7 +25,7 @@ export default function ({namespace}) {
 			'click',
 			'.request-quote',
 			(event) => {
-				window[`${namespace}requestedQuote`](event);
+				window[`${namespace}requestQuote`](event);
 			}
 		);
 	}

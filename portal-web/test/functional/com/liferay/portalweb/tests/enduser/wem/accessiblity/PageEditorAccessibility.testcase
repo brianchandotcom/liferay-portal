@@ -323,7 +323,7 @@ definition {
 				value1 = "\TAB");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'page-structure__tree-node')][normalize-space()='Button'][@aria-selected]",
+				locator1 = "//div[contains(@data-qa-id,'Button')][@aria-expanded]",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}

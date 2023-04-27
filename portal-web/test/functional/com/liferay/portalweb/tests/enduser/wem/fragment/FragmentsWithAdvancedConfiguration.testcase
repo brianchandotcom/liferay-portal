@@ -282,8 +282,10 @@ definition {
 				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 				PagesAdmin.gotoPageEllipsisMenuItem(
-					menuItem = "Copy Page",
+					menuItem = "Copy",
 					pageName = "Test Page Name");
+
+				MenuItem.click(menuItem = "Page");
 
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -777,7 +777,7 @@ definition {
 
 		task ("Then the 'Total MDF Requested Amount' value is equals to 50% of the budget value") {
 			var requestedAmound = ${budgetValue} / 2;
-			var actualValue = PRMMDFRequest.getRequestedAmoundValue();
+			var actualValue = PRMMDFRequest.getValueByFieldName(fieldName = "activities[0].mdfRequestAmount");
 
 			TestUtils.assertPartialEquals(
 				actual = ${actualValue},

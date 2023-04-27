@@ -41,3 +41,7 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 		</c:if>
 	</div>
 </aui:form>
+
+<liferay-frontend:component
+	module="js/updateRequestedQuote"
+/>

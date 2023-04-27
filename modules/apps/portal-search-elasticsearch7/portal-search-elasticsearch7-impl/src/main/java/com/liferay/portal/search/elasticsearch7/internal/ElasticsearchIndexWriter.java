@@ -435,10 +435,10 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	private Set<String> _getIndexNames(SearchContext searchContext) {
 		Set<String> indexNames = new HashSet<>();
 
-		String indexNameCur = _indexNameBuilder.getIndexName(
+		String indexNameCurrent = _indexNameBuilder.getIndexName(
 			searchContext.getCompanyId());
 
-		indexNames.add(indexNameCur);
+		indexNames.add(indexNameCurrent);
 
 		String indexNameNext = _getIndexNameNext(searchContext.getCompanyId());
 

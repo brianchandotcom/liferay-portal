@@ -79,6 +79,13 @@ public class KBArticleServiceUtil {
 			mimeType);
 	}
 
+	public static int countKBArticlesByKeywords(
+		long groupId, String keywords, int status) {
+
+		return getService().countKBArticlesByKeywords(
+			groupId, keywords, status);
+	}
+
 	public static KBArticle deleteKBArticle(long resourcePrimKey)
 		throws PortalException {
 
@@ -233,6 +240,13 @@ public class KBArticleServiceUtil {
 
 		return getService().getKBArticles(
 			groupId, resourcePrimKeys, status, orderByComparator);
+	}
+
+	public static List<KBArticle> getKBArticlesByKeywords(
+		long groupId, String keywords, int status, int start, int end) {
+
+		return getService().getKBArticlesByKeywords(
+			groupId, keywords, status, start, end);
 	}
 
 	public static int getKBArticlesCount(

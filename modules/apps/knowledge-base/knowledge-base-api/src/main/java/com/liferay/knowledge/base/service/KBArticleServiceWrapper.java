@@ -78,6 +78,14 @@ public class KBArticleServiceWrapper
 	}
 
 	@Override
+	public int countKBArticlesByKeywords(
+		long groupId, String keywords, int status) {
+
+		return _kbArticleService.countKBArticlesByKeywords(
+			groupId, keywords, status);
+	}
+
+	@Override
 	public KBArticle deleteKBArticle(long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -258,6 +266,14 @@ public class KBArticleServiceWrapper
 
 		return _kbArticleService.getKBArticles(
 			groupId, resourcePrimKeys, status, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<KBArticle> getKBArticlesByKeywords(
+		long groupId, String keywords, int status, int start, int end) {
+
+		return _kbArticleService.getKBArticlesByKeywords(
+			groupId, keywords, status, start, end);
 	}
 
 	@Override

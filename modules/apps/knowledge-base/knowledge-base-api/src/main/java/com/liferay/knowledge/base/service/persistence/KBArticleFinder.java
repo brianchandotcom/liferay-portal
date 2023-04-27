@@ -27,6 +27,12 @@ public interface KBArticleFinder {
 		long groupId, String kbFolderUrlTitle, String kbArticleUrlTitle,
 		int[] status);
 
+	public int filterCountByKeywords(long groupId, String keywords, int status);
+
+	public java.util.List<com.liferay.knowledge.base.model.KBArticle>
+		filterFindByKeywords(
+			long groupId, String keywords, int status, int start, int end);
+
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle>
 		findByUrlTitle(
 			long groupId, String kbFolderUrlTitle, String kbArticleUrlTitle,

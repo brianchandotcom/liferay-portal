@@ -132,6 +132,13 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	@Override
+	public int countKBArticlesByKeywords(
+		long groupId, String keywords, int status) {
+
+		return kbArticleFinder.filterCountByKeywords(groupId, keywords, status);
+	}
+
+	@Override
 	public KBArticle deleteKBArticle(long resourcePrimKey)
 		throws PortalException {
 
@@ -460,6 +467,14 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return getKBArticles(
 			groupId, resourcePrimKeys, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, orderByComparator);
+	}
+
+	@Override
+	public List<KBArticle> getKBArticlesByKeywords(
+		long groupId, String keywords, int status, int start, int end) {
+
+		return kbArticleFinder.filterFindByKeywords(
+			groupId, keywords, status, start, end);
 	}
 
 	@Override

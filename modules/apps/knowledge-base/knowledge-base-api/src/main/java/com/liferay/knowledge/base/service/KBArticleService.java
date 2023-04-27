@@ -81,6 +81,9 @@ public interface KBArticleService extends BaseService {
 			String tempFolderName, InputStream inputStream, String mimeType)
 		throws PortalException;
 
+	public int countKBArticlesByKeywords(
+		long groupId, String keywords, int status);
+
 	public KBArticle deleteKBArticle(long resourcePrimKey)
 		throws PortalException;
 
@@ -173,6 +176,10 @@ public interface KBArticleService extends BaseService {
 	public List<KBArticle> getKBArticles(
 		long groupId, long[] resourcePrimKeys, int status,
 		OrderByComparator<KBArticle> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBArticle> getKBArticlesByKeywords(
+		long groupId, String keywords, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBArticlesCount(

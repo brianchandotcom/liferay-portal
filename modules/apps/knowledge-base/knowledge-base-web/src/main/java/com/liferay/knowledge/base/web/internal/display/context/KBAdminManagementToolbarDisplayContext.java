@@ -24,7 +24,6 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.model.KBArticleSearchDisplay;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
@@ -469,16 +468,16 @@ public class KBAdminManagementToolbarDisplayContext {
 			_searchContainer.setOrderByComparator(
 				new KBOrderByComparatorAdapter<>(kbArticleOrderByComparator));
 
-			KBArticleSearchDisplay kbArticleSearchDisplay =
-				KBArticleServiceUtil.getKBArticleSearchDisplay(
-					_themeDisplay.getScopeGroupId(), keywords, keywords,
-					WorkflowConstants.STATUS_ANY, null, null, false, new int[0],
-					_searchContainer.getCur(), _searchContainer.getDelta(),
-					kbArticleOrderByComparator);
-
 			_searchContainer.setResultsAndTotal(
-				() -> new ArrayList<>(kbArticleSearchDisplay.getResults()),
-				kbArticleSearchDisplay.getTotal());
+				() -> new ArrayList<>(
+					KBArticleServiceUtil.getKBArticlesByKeywords(
+						_themeDisplay.getScopeGroupId(), keywords,
+						WorkflowConstants.STATUS_ANY,
+						_searchContainer.getStart(),
+						_searchContainer.getEnd())),
+				KBArticleServiceUtil.countKBArticlesByKeywords(
+					_themeDisplay.getScopeGroupId(), keywords,
+					WorkflowConstants.STATUS_ANY));
 		}
 		else if (kbFolderView) {
 			_searchContainer.setResultsAndTotal(

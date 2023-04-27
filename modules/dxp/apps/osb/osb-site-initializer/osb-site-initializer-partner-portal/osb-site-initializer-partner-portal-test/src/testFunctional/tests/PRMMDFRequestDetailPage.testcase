@@ -160,3 +160,28 @@ definition {
                 statusValue = "Approved");
         }
     }
+
+    @description = "This is a test for LPS-181774. Verify that when an MDF is submitted, the activity status is Submitted and Unclaimed"
+    @priority = 4
+    test ViewActivityStatusWhenMDFIsSubmitted {
+        task ("When the partner go to the created MDF") {
+            PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+            PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+        }
+
+        task ("Then the activity status will be 'Submitted' and 'Unclaimed") {
+            PRMMDFRequest.viewActivityStatus(
+                activityName = "Activity Name",
+                statusType = "Claim",
+                statusValue = "Unclaimed");
+
+            PRMMDFRequest.viewActivityStatus(
+                activityName = "Activity Name",
+                statusType = "Request",
+                statusValue = "Submitted");
+        }
+    }
+
+
+}

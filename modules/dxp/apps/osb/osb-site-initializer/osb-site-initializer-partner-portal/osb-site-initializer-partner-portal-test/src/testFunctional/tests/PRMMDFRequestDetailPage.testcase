@@ -120,3 +120,43 @@ definition {
                 statusValue = "Claimed");
         }
     }
+
+    @description = "This is a test for LPS-181999. Verify that when an MDf is approved, the activity status is Approved and Unclaimed"
+    @priority = 4
+    test ViewActivityStatusWhenMDFIsApproved {
+        task ("Given the Manager user is logged in and goes to MDF listing page") {
+            User.logoutAndLoginPG(
+                userLoginEmailAddress = "manager@liferay.com",
+                userLoginFullName = "manager");
+
+            PRMNavigator.openSitePage(pageName = "MDF Requests");
+        }
+
+        task ("And the manager approves the created MDF") {
+            PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+
+            PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+        }
+
+        task ("When the partner logs in and go to created MDF") {
+            User.logoutAndLoginPG(
+                userLoginEmailAddress = "partner@liferay.com",
+                userLoginFullName = "partner");
+
+            PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+            PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+        }
+
+        task ("Then the activity status will be 'Approved' and 'Unclaimed'") {
+            PRMMDFRequest.viewActivityStatus(
+                activityName = "Activity Name",
+                statusType = "Claim",
+                statusValue = "Unclaimed");
+
+            PRMMDFRequest.viewActivityStatus(
+                activityName = "Activity Name",
+                statusType = "Request",
+                statusValue = "Approved");
+        }
+    }

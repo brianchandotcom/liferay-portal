@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -257,27 +256,6 @@ public class ObjectActionExecutorRegistryImplTest {
 	private static BundleContext _bundleContext;
 	private static long _companyId1;
 	private static long _companyId2;
-
-	private static final Accessor<ObjectActionExecutor, String>
-		_objectActionExecutorKeyAccessor =
-			new Accessor<ObjectActionExecutor, String>() {
-
-				@Override
-				public String get(ObjectActionExecutor objectActionExecutor) {
-					return objectActionExecutor.getKey();
-				}
-
-				@Override
-				public Class<String> getAttributeClass() {
-					return String.class;
-				}
-
-				@Override
-				public Class<ObjectActionExecutor> getTypeClass() {
-					return ObjectActionExecutor.class;
-				}
-
-			};
 
 	@Inject
 	private static ObjectActionExecutorRegistry _objectActionExecutorRegistry;

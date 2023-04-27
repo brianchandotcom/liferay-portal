@@ -20,7 +20,7 @@ import getOpportunityDates from '../utils/getOpportunityDates';
 
 export default function useGetListItemsFromPartnerOpportunities(
 	getDates: (
-		item: DealRegistrationDTO ,
+		item: DealRegistrationDTO
 	) =>
 		| {
 				[key in PartnerOpportunitiesColumnKey]?: string;
@@ -41,13 +41,33 @@ export default function useGetListItemsFromPartnerOpportunities(
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
-				[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.partnerAccountName ? item.partnerAccountName : ' - ',
-				...(item.projectSubscriptionStartDate ? getOpportunityDates(item.projectSubscriptionStartDate, item.projectSubscriptionEndDate) : { [PartnerOpportunitiesColumnKey.START_DATE]: ' - ', [PartnerOpportunitiesColumnKey.END_DATE]: ' - ' }),
-				...(item.amount ? getOpportunityAmount(item.amount) : { [PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: ' - ' }),
-				[PartnerOpportunitiesColumnKey.STAGE]: item.stage ? item.stage : '- ',
-				[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${item.partnerFirstName ? item.partnerFirstName : ' - '}${item.partnerLastName ? ' ' + item.partnerLastName : ' '}`,
-				[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.partnerEmail ? item.partnerEmail : ' - ',
-				[PartnerOpportunitiesColumnKey.LIFERAY_REP]: item.ownerName ? item.ownerName : ' - ',
+				[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.partnerAccountName
+					? item.partnerAccountName
+					: ' - ',
+				...(item.projectSubscriptionStartDate
+					? getOpportunityDates(
+							item.projectSubscriptionStartDate,
+							item.projectSubscriptionEndDate
+					  )
+					: {
+							[PartnerOpportunitiesColumnKey.START_DATE]: ' - ',
+							[PartnerOpportunitiesColumnKey.END_DATE]: ' - ',
+					  }),
+				...(item.amount
+					? getOpportunityAmount(item.amount)
+					: {[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: ' - '}),
+				[PartnerOpportunitiesColumnKey.STAGE]: item.stage
+					? item.stage
+					: '- ',
+				[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
+					item.partnerFirstName ? item.partnerFirstName : ' - '
+				}${item.partnerLastName ? ' ' + item.partnerLastName : ' '}`,
+				[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.partnerEmail
+					? item.partnerEmail
+					: ' - ',
+				[PartnerOpportunitiesColumnKey.LIFERAY_REP]: item.ownerName
+					? item.ownerName
+					: ' - ',
 			})),
 		[swrResponse.data?.items]
 	);

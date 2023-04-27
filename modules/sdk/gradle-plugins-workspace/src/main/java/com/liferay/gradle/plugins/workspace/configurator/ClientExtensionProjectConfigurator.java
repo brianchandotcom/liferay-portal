@@ -135,7 +135,8 @@ public class ClientExtensionProjectConfigurator
 			createClientExtensionConfigTaskProvider);
 
 		Map<String, JsonNode> profileJsonNodes =
-			_configureClientExtensionJsonNodes(project);
+			_configureClientExtensionJsonNodes(
+				project, createClientExtensionConfigTaskProvider);
 
 		for (Map.Entry<String, JsonNode> profileJsonNodeEntry :
 				profileJsonNodes.entrySet()) {
@@ -467,7 +468,9 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private Map<String, JsonNode> _configureClientExtensionJsonNodes(
-		Project project) {
+		Project project,
+		TaskProvider<CreateClientExtensionConfigTask>
+			createClientExtensionConfigTaskProvider) {
 
 		Map<String, JsonNode> profileJsonNodes = new HashMap<>();
 
@@ -497,6 +500,13 @@ public class ClientExtensionProjectConfigurator
 			_overrideJsonNodeValues(jsonNode, _getJsonNode(file));
 
 			profileJsonNodes.put(profileName, jsonNode);
+
+			createClientExtensionConfigTaskProvider.configure(
+				task -> {
+					TaskInputs inputs = task.getInputs();
+
+					inputs.file(file);
+				});
 		}
 
 		return profileJsonNodes;

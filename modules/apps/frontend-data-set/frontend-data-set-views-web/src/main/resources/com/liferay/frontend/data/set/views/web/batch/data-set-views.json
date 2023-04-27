@@ -275,34 +275,31 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Creation Menu Primary Actions"
+						"en_US": "Creation Menu Primary FDS Actions"
 					},
-					"name": "creationMenuPrimaryActions",
+					"name": "creationMenuPrimaryFDSActions",
 					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
 					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
-					"objectDefinitionName2": "FDSAction",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Creation Menu Secondary Actions"
+						"en_US": "Creation Menu Secondary FDS Actions"
 					},
-					"name": "creationMenuSecondaryActions",
+					"name": "creationMenuSecondaryFDSActions",
 					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
 					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
-					"objectDefinitionName2": "FDSAction",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Entry Views"
+						"en_US": "FDS Entry Views"
 					},
-					"name": "entryViews",
+					"name": "fdsEntryViews",
 					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
 					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
-					"objectDefinitionName2": "FDSView",
 					"type": "manyToMany"
 				}
 			],
@@ -556,12 +553,11 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Filters"
+						"en_US": "FDS Filters"
 					},
-					"name": "filters",
+					"name": "fdsFilters",
 					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_FILTER",
 					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
-					"objectDefinitionName2": "FDSView",
 					"type": "manyToMany"
 				}
 			],
@@ -668,7 +664,8 @@
 					"objectFieldSettings": [
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "Clob",
@@ -687,7 +684,8 @@
 						}
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "Clob",
@@ -706,7 +704,8 @@
 						}
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "Integer",
@@ -721,7 +720,8 @@
 					"objectFieldSettings": [
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "Clob",
@@ -740,7 +740,8 @@
 						}
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "String",
@@ -755,7 +756,8 @@
 					"objectFieldSettings": [
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "Boolean",
@@ -770,7 +772,8 @@
 					"objectFieldSettings": [
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "Boolean",
@@ -785,7 +788,8 @@
 					"objectFieldSettings": [
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				},
 				{
 					"DBType": "Boolean",
@@ -800,30 +804,29 @@
 					"objectFieldSettings": [
 					],
 					"required": false,
-					"state": false
+					"state": false,
+					"system": false
 				}
 			],
 			"objectRelationships": [
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Sorts"
+						"en_US": "FDS Sorts"
 					},
-					"name": "sorts",
+					"name": "fdsSorts",
 					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_VIEW",
 					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_SORT",
-					"objectDefinitionName2": "FDSSort",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "View Modes"
+						"en_US": "FDS View Modes"
 					},
-					"name": "viewModes",
+					"name": "fdsViewModes",
 					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_VIEW",
 					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW_MODE",
-					"objectDefinitionName2": "FDSViewMode",
 					"type": "oneToMany"
 				}
 			],
@@ -980,12 +983,11 @@
 				{
 					"deletionType": "prevent",
 					"label": {
-						"en_US": "Field Mappings"
+						"en_US": "FDS Field Mappings"
 					},
-					"name": "fieldMappings",
+					"name": "fdsFieldMappings",
 					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_VIEW_MODE",
 					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_FIELD_MAPPING",
-					"objectDefinitionName2": "FDSFieldMapping",
 					"type": "oneToMany"
 				}
 			],

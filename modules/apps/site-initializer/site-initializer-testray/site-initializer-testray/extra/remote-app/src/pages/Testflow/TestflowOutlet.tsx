@@ -144,6 +144,7 @@ const TestflowOutlet = () => {
 	return (
 		<Outlet
 			context={{
+				actions: testrayTask.actions,
 				data: {
 					testraySubtasks,
 					testrayTask,

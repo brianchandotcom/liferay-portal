@@ -112,6 +112,7 @@ export type UserRole = {
 };
 
 export type TestrayBuild = {
+	actions: ObjectActionsItems;
 	buildToTasks: TestrayTask[];
 	creator: {
 		name: string;

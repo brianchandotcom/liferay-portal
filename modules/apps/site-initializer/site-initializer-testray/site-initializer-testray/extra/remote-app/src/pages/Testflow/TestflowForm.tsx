@@ -19,6 +19,7 @@ import {useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import {withPagePermission} from '~/hoc/withPagePermission';
 
 import Form from '../../components/Form';
 import Container from '../../components/Layout/Container';
@@ -176,8 +177,7 @@ const TestflowForm = () => {
 			onSuccess();
 
 			navigate(`/testflow/${response.id}`);
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -307,4 +307,6 @@ const TestflowForm = () => {
 	);
 };
 
-export default TestflowForm;
+export default withPagePermission(TestflowForm, {
+	restImpl: testrayTaskImpl,
+});

@@ -51,6 +51,7 @@ export function ProjectsPage({
 			{!showNextStepsPage ? (
 				<>
 					<DashboardPage
+						buttonHref="#"
 						buttonMessage="+ New Project"
 						dashboardNavigationItems={dashboardNavigationItems}
 						messages={{
@@ -94,7 +95,7 @@ export function ProjectsPage({
 							'Solutions in progress project has been created and is now being processed. You will get an email notification when the trial is ready.',
 						title: 'Next steps',
 					}}
-					linkText="Learn more about  Projects"
+					linkText="Learn more about Projects"
 					onClickContinue={() => {
 						setShowDashboardNavigation(true);
 						setShowNextStepsPage(false);

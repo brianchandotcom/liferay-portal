@@ -6,15 +6,12 @@ import {useState} from 'react';
 import checkFillIcon from '../../assets/icons/check_fill.svg';
 import circleFillIcon from '../../assets/icons/circle_fill.svg';
 import {
-	createAppSKU,
-	getCatalogs,
-	getCategoriesRanked,
 	getChannels,
-	getOrderbyERC,
+	getOrderTypes,
+	getProductSKU,
+	getProducts,
 	patchOrderByERC,
-	postCartByChannelId,
-	postCheckoutCart,
-	postProduct,
+	postOrder,
 } from '../../utils/api';
 import {getCustomFieldValue} from '../../utils/customFieldUtil';
 import {ProjectDetails} from './ProjectDetails';
@@ -67,139 +64,71 @@ export function CreateProjectModal({
 	});
 
 	const createNewProject = async () => {
-		const catalogs = await getCatalogs();
 		const channels = await getChannels();
-		const categories = await getCategoriesRanked();
+		const {items} = await getProducts();
 
 		const marketplaceChannel =
 			channels.find(
 				(channel) => channel.name === 'Marketplace Channel'
 			) ?? channels[0];
 
-		const liferayIncCatalog =
-			catalogs.find((catalog) => catalog.name === 'Liferay, Inc') ??
-			catalogs[0];
-
-		const requiredCategories: Partial<Category>[] = [];
-
-		categories.forEach((category) => {
-			if (
-				category.parentTaxonomyVocabulary.name ===
-					'Marketplace Product Type' ||
-				category.parentTaxonomyVocabulary.name ===
-					'Liferay Platform Offering'
-			) {
-				requiredCategories.push({
-					externalReferenceCode: category.externalReferenceCode,
-					id: category.id,
-					name: category.name,
-					siteId: category.siteId,
-				});
-			}
+		const projectProduct = items.find(({categories}) => {
+			return !!categories.find(({name}) => name === 'Project');
 		});
 
-		const newProduct = {
-			active: true,
-			catalogId: liferayIncCatalog?.id,
-			categories: requiredCategories,
-			description: {
-				en_US: 'A free project for publishers to create for development, testing and demo purposes.',
-			},
-			name: {
-				en_US:
-					projectName === ''
-						? 'Liferay Experience Cloud Project - 60 days'
-						: projectName,
-			},
-			productConfiguration: {
-				allowBackOrder: true,
-				maxOrderQuantity: 1,
-				minOrderQuantity: 1,
-			},
-			productType: 'virtual',
-		};
+		if (projectProduct) {
+			const {
+				items: [projectSKU],
+			} = await getProductSKU({appProductId: projectProduct.productId});
+			const orderTypes = await getOrderTypes();
 
-		const productResponse = await postProduct(newProduct);
+			const projectOrderType = orderTypes.find(
+				({name}) => name['en_US'] === 'Project - 60 days'
+			);
 
-		const newProductSKU = {
-			customFields: [
-				{
-					customValue: {
-						data: '1.0',
-					},
-					name: 'version',
+			const newOrder: Order = {
+				account: {
+					id: selectedAccount.id,
+					type: selectedAccount.type,
 				},
-				{
-					customValue: {
-						data: 'Default 60-day LXC ',
-					},
-					name: 'version description',
+				accountId: selectedAccount.id,
+				channel: {
+					currencyCode: marketplaceChannel.currencyCode,
+					id: marketplaceChannel.id,
+					type: marketplaceChannel.type,
 				},
-			],
-			neverExpire: false,
-			price: 0,
-			published: true,
-			purchasable: true,
-			sku: `${productResponse.id}v${productResponse.version}s`,
-			skuSubscriptionConfiguration: {
-				enable: true,
-				length: 60,
-				numberOfLength: 1,
-				overrideSubscriptionInfo: true,
-				subscriptionType: 'daily',
-			},
-		};
-
-		const SKUResponse = await createAppSKU({
-			appProductId: productResponse.id + 1,
-			body: newProductSKU,
-		});
-
-		const newCart: Partial<Cart> = {
-			accountId: selectedAccount.id,
-			cartItems: [
-				{
-					price: {
-						currency: marketplaceChannel.currencyCode,
-						discount: 0,
-						finalPrice: 0,
-						price: 0,
+				channelId: marketplaceChannel.id,
+				currencyCode: marketplaceChannel.currencyCode,
+				orderItems: [
+					{
+						skuId: projectSKU.id,
+						unitPriceWithTaxAmount: 0,
 					},
-					productId: productResponse.id,
-					quantity: 1,
-					settings: {
-						maxQuantity: 1,
-					},
-					skuId: SKUResponse.id,
+				],
+				orderTypeId: projectOrderType?.id as number,
+				orderStatus: 1,
+				marketplaceOrderType: 'Project',
+			};
+
+			const orderResponse = await postOrder(newOrder);
+
+			const orderCustomFields = {
+				customFields: {
+					'Project Name': projectName,
+					'Github username': githubUsername,
 				},
-			],
-			currencyCode: marketplaceChannel.currencyCode,
-		};
+			};
 
-		const cartResponse = await postCartByChannelId({
-			cartBody: newCart,
-			channelId: marketplaceChannel.id,
-		});
+			await patchOrderByERC(
+				orderResponse.externalReferenceCode as string,
+				orderCustomFields
+			);
 
-		await postCheckoutCart({cartId: cartResponse.id});
+			handleClose();
 
-		const order = await getOrderbyERC(cartResponse.orderUUID);
-
-		const orderCustomFields = {
-			...order,
-			customFields: {
-				'Project Name': projectName,
-				'Github username': githubUsername,
-			},
-			orderStatus: 1,
-		};
-
-		await patchOrderByERC(cartResponse.orderUUID, orderCustomFields);
-
-		handleClose();
-
-		setShowDashboardNavigation(false);
-		setShowNextStepsPage(true);
+			setShowDashboardNavigation(false);
+			setShowNextStepsPage(true);
+		}
 	};
 
 	return (

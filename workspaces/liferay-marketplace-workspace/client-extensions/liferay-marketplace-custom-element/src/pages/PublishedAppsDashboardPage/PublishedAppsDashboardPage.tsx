@@ -163,10 +163,10 @@ export function PublishedAppsDashboardPage() {
 		return Promise.all(appListProductSpecifications);
 	}
 
-	function getAppListProductIds(products: {items: AppProps[]}) {
+	function getAppListProductIds(products: {items: Product[]}) {
 		const productIds: number[] = [];
 
-		products.items.map((product: AppProps) => {
+		products.items.map((product) => {
 			productIds.push(product.productId);
 		});
 
@@ -258,13 +258,12 @@ export function PublishedAppsDashboardPage() {
 					const newAppList: AppProps[] = [];
 
 					appList.items.forEach(
-						(product: ProductResponseProps, index: number) => {
+						(product, index: number) => {
 							if (product.catalogId === accountCatalogId) {
 								newAppList.push({
 									catalogId: product.catalogId,
 									externalReferenceCode:
 										product.externalReferenceCode,
-									lastUpdatedBy: product.lastUpdatedBy,
 									name: product.name.en_US,
 									productId: product.productId,
 									status: product.workflowStatusInfo.label.replace(

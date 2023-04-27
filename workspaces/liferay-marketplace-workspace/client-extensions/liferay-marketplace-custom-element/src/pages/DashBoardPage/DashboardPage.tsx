@@ -1,4 +1,4 @@
-import {Dispatch, ReactNode} from 'react';
+import {ReactNode} from 'react';
 
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {Footer} from '../../components/Footer/Footer';
@@ -6,7 +6,7 @@ import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
 
 import './DashboardPage.scss';
-import { Liferay } from '../../liferay/liferay';
+import {Liferay} from '../../liferay/liferay';
 
 export interface DashboardListItems {
 	itemIcon: string;

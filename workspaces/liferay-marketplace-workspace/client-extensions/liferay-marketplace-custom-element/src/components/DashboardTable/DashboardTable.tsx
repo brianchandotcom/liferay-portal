@@ -10,7 +10,7 @@ import {DashboardEmptyTable} from './DashboardEmptyTable';
 export type AppProps = {
 	catalogId: number;
 	externalReferenceCode: string;
-	lastUpdatedBy: string;
+	lastUpdatedBy?: string;
 	name: string;
 	productId: number;
 	selected?: boolean;

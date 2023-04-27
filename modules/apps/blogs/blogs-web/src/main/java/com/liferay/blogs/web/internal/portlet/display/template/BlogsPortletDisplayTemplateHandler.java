@@ -66,7 +66,7 @@ public class BlogsPortletDisplayTemplateHandler
 		return HashMapBuilder.<String, Object>put(
 			"blogsEntryAssetEntryUtil", new BlogsEntryAssetEntryUtil()
 		).put(
-			"blogsEntryPermission", _blogsEntryPermission
+			"blogsEntryPermission", new BlogsEntryPermission()
 		).put(
 			"blogsEntryUtil", _blogsEntryUtil
 		).put(
@@ -152,9 +152,6 @@ public class BlogsPortletDisplayTemplateHandler
 	}
 
 	private volatile BlogsConfiguration _blogsConfiguration;
-
-	@Reference
-	private BlogsEntryPermission _blogsEntryPermission;
 
 	@Reference
 	private BlogsEntryUtil _blogsEntryUtil;

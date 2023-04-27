@@ -2,8 +2,11 @@ Bundle-Name: Liferay Commerce Payment Api
 Bundle-SymbolicName: com.liferay.commerce.payment.api
 Bundle-Version: 11.0.1
 Export-Package:\
+	com.liferay.commerce.payment.audit,\
+	com.liferay.commerce.payment.configuration,\
 	com.liferay.commerce.payment.constants,\
 	com.liferay.commerce.payment.exception,\
+	com.liferay.commerce.payment.gateway,\
 	com.liferay.commerce.payment.model,\
 	com.liferay.commerce.payment.service,\
 	com.liferay.commerce.payment.service.persistence,\

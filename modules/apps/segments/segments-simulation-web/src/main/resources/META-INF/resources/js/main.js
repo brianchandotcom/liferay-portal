@@ -53,6 +53,8 @@ export default function ({
 
 	document.addEventListener('beforeunload', fetchDeactivateSimulation);
 
+	form.addEventListener('change', simulateSegmentsEntries);
+
 	Liferay.on(
 		'SimulationMenu:closeSimulationPanel',
 		fetchDeactivateSimulation
@@ -66,6 +68,8 @@ export default function ({
 				'beforeunload',
 				fetchDeactivateSimulation
 			);
+
+			form.removeEventListener('change', simulateSegmentsEntries);
 
 			Liferay.detach(
 				'SimulationMenu:closeSimulationPanel',

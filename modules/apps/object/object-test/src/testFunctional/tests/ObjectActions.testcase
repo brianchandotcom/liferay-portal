@@ -2948,6 +2948,92 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 	}
 
+	@description = "Verify an action with an oldValue function sends an email when the order payment status is updated"
+	@priority = 4
+	test CanSendEmailWhenPaymentStatusIsUpdated {
+		property test.smtp.server.enabled = "true";
+
+		task ("Given an email notification template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Notification Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an action that uses the oldValue function and sends an email when the order payment status is updated") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Name",
+				active = "true",
+				inputExpression = '''oldValue("orderStatus") == 1''',
+				notificationName = "Notification Template",
+				thenAction = "Notification",
+				whenAction = "On Payment Status Update");
+		}
+
+		task ("And given an account, Minium site, and a commerce order") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name",
+				accountEntryType = "Business");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("When the payment status is updated and the oldValue of the order status is Pending") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			CommercePaymentStatus.editPaymentStatus(statusValue = "Authorized");
+		}
+
+		task ("Then the action is triggered and an email is sent") {
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
 	@description = "LPS-156343 - Verify that Action can be triggered after disabling the expression"
 	@priority = 4
 	test CanTriggerActionAfterDisablingExpression {

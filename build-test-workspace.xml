@@ -5,7 +5,7 @@
 
 	<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
 
-	<propertycopy from="workspace.client.extension.names[${workspace.name}]" name="workspace.client.extension.names" />
+	<propertycopy from="workspaces.client.extension.names[${workspace.name}]" name="workspaces.client.extension.names" />
 
 	<macrodef name="deploy-workspace-client-extension">
 		<attribute name="workspace.client.extension.name" />
@@ -33,7 +33,7 @@
 
 	<macrodef name="deploy-workspace-client-extensions">
 		<sequential>
-			<for list="${workspace.client.extension.names}" param="workspace.client.extension.name">
+			<for list="${workspaces.client.extension.names}" param="workspace.client.extension.name">
 				<sequential>
 					<deploy-workspace-client-extension workspace.client.extension.name="@{workspace.client.extension.name}" />
 				</sequential>

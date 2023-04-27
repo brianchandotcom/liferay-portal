@@ -47,7 +47,7 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 		String requestPath = _getRequestPath(httpServletRequest);
 
 		if (!requestPath.equals("/c/portal/logout") &&
-			_isPasswordModified(httpServletRequest)) {
+			_isPasswordModifiedInAnotherSession(httpServletRequest)) {
 
 			httpServletResponse.sendRedirect(
 				PortalUtil.getPathMain() + "/portal/logout");
@@ -71,7 +71,9 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 		return HttpComponentsUtil.removePathParameters(requestURI);
 	}
 
-	private boolean _isPasswordModified(HttpServletRequest httpServletRequest) {
+	private boolean _isPasswordModifiedInAnotherSession(
+		HttpServletRequest httpServletRequest) {
+
 		HttpSession httpSession = httpServletRequest.getSession(false);
 
 		if ((httpSession == null) ||

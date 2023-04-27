@@ -64,9 +64,35 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 			return annotation;
 		}
 
+		List<String> ignoreHaveReferenceMethods = getAttributeValues(
+				_IGNORE_HAVE_REFERENCE_METHODS_KEY, absolutePath);
+
+		if (isAttributeValue(_CHECK_REFERENCE_METHOD_KEY, absolutePath)) {
+
+			boolean ignoreFile = false;
+
+			for (String ignoreHaveReferenceMethod : ignoreHaveReferenceMethods) {
+				if (absolutePath.endsWith(ignoreHaveReferenceMethod)) {
+					ignoreFile = true;
+
+					break;
+				}
+			}
+
+			if (!ignoreFile) {
+				_checkReferenceMethods(fileName, javaClass);
+			}
+		}
+
+		_checkTargetAttribute(fileName, absolutePath, javaClass, annotation);
+
+		return annotation;
+	}
+
+	private void _checkReferenceMethods(String fileName, JavaClass javaClass) {
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (javaTerm.isJavaMethod() &&
-				javaTerm.hasAnnotation("Reference")) {
+					javaTerm.hasAnnotation("Reference")) {
 
 				addMessage(
 					fileName,
@@ -78,10 +104,6 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 				break;
 			}
 		}
-
-		_checkTargetAttribute(fileName, absolutePath, javaClass, annotation);
-
-		return annotation;
 	}
 
 	private void _checkTargetAttribute(
@@ -263,6 +285,12 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _IGNORE_TARGET_ATTRIBUTE_VALUES_KEY =
 		"ignoreTargetAttributeValues";
+
+	private static final String _IGNORE_HAVE_REFERENCE_METHODS_KEY =
+			"ignoreHaveReferenceMethods";
+
+	private static final String _CHECK_REFERENCE_METHOD_KEY =
+			"checkReferenceMethod";
 
 	private static final Pattern _classConstantPattern = Pattern.compile(
 		"^([A-Z]\\w+)\\.?([A-Z]\\w+)$");

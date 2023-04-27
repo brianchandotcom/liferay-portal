@@ -12,7 +12,6 @@
 		<suppress checks="ComponentExposureCheck" files="comment/comment-taglib/src/main/java/com/liferay/comment/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="commerce/commerce-cart-taglib/src/main/java/com/liferay/commerce/cart/taglib/servlet/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="commerce/commerce-frontend-taglib/src/main/java/com/liferay/commerce/frontend/taglib/internal/servlet/ServletContextUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="commerce/commerce-product-content-web/src/main/java/com/liferay/commerce/product/content/web/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="commerce/commerce-product-taglib/src/main/java/com/liferay/commerce/product/taglib/servlet/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="commerce/commerce-taglib/src/main/java/com/liferay/commerce/taglib/servlet/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="configuration-admin/configuration-admin-web/src/main/java/com/liferay/configuration/admin/web/internal/util/ConfigurationFieldOptionsProviderUtil\.java" />

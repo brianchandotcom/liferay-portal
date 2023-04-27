@@ -473,39 +473,47 @@ definition {
 	@description = "This is a test for LPS-179371. Verify that the Total Claim Amount reflects the value claimed per budget"
 	@priority = 5
 	test TotalClaimAmountReflectsBudgetValue {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "manager@liferay.com",
-			userLoginFullName = "manager");
+		property test.name.skip.portal.instance = "PRMMDFClaim#TotalClaimAmountReflectsBudgetValue";
 
-		JSONPRM.createMDFRequest(
-			accountEntryName = "Company Name 1",
-			campaignName = "Campaign Name 1",
-			secondBudgetValueList = 1000);
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+		
+		task ("Given that the manager goes to the created MDF and approve it") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
 
-		PRMUtils.gotoPRM();
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-		PRMHomePage.gotoQuickLinksOption(
-			buttonLink = "mdf",
-			buttonText = "MDF");
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
-		Click(
-			key_index = 1,
-			locator1 = "PRMMDFClaim#CLAIM_ID_INDEX");
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		}
 
-		PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		task ("When the manager goes to create a new Claim") {
+			Button.click(button = "New Claim");
 
-		PRMMDFClaim.partialNewClaim(
-			activityIndex = 0,
-			budgetIndex = 0);
+			PRMMDFClaim.fillActivityFields(
+				listLeads = "Document_1.xls",
+				thirdInvoice = "Document_1.pdf");
+		}
 
-		var actualValue = PRMMDFRequest.getRequestedAmoundValue(nametest = "activities[0].budgets[0].invoiceAmount");
+		task ("Then the Total Claim Amount will be equals to 50% of the value claimed per budget") {
+			task ("Get the budget amount value") {
+				var InvoiceAmount = PRMMDFRequest.getValueByFieldName(fieldName = "activities[0].budgets[0].invoiceAmount");
+			}
 
-		var expectedValue = ${actualValue} / 2;
-		var test = PRMMDFRequest.getRequestedAmoundValue(nametest = "totalClaimAmount");
+			task ("Make a quotient of the Budget Amount Value Cost by 50% (2), which will result in the value that can be claimed") {
+				var expectedTotalClaimAmountValue = ${InvoiceAmount} / 2;
+			}
 
-		TestUtils.assertPartialEquals(
-			actual = ${test},
-			expected = ${expectedValue});
+			task ("Get the Total Claim Amount Value") {
+				var currentTotalClaimAmountValue = PRMMDFRequest.getValueByFieldName(fieldName = "totalClaimAmount");
+			}
+
+			TestUtils.assertPartialEquals(
+				actual = ${currentTotalClaimAmountValue},
+				expected = ${expectedTotalClaimAmountValue});
+		}
 	}
 
 }

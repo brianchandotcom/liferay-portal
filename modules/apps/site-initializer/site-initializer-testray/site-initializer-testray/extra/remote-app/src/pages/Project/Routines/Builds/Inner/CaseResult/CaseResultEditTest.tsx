@@ -141,6 +141,7 @@ const CaseResultEditTest = () => {
 			</ClayAlert>
 
 			<Form.Select
+				{...inputProps}
 				className="container-fluid-max-md"
 				defaultOption={false}
 				label={i18n.translate('status')}

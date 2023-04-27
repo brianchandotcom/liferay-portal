@@ -32,6 +32,7 @@ import {
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../utils/constants';
+import PopoverIcon from '../DXPCloud/components/PopoverIcon';
 import ActivationStatusLayout from '../Layout';
 import AnalyticsCloudStatusModal from './AnalyticsCloudStatusModal';
 
@@ -96,16 +97,23 @@ const ActivationStatusAnalyticsCloud = ({
 	const currentActivationStatus = {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: project?.acWorkspaceGroupId && (
-				<a
-					className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-					href={`https://analytics.liferay.com/workspace/${project?.acWorkspaceGroupId}/sites`}
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					{i18n.translate('go-to-workspace')}
+				<>
+					<PopoverIcon
+						symbol="question-circle-full"
+						title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+					/>
 
-					<ClayIcon className="ml-1" symbol="order-arrow-right" />
-				</a>
+					<a
+						className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
+						href={`https://analytics.liferay.com/workspace/${project?.acWorkspaceGroupId}/sites`}
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						{i18n.translate('go-to-workspace')}
+
+						<ClayIcon className="ml-1" symbol="order-arrow-right" />
+					</a>
+				</>
 			),
 			id: STATUS_TAG_TYPES.active,
 			subtitle: i18n.translate(

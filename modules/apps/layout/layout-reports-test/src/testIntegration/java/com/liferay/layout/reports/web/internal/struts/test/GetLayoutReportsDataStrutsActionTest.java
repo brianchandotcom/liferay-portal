@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.reports.web.internal.portlet.action.test;
+package com.liferay.layout.reports.web.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -33,13 +33,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -58,8 +56,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.io.ByteArrayOutputStream;
-
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -75,12 +71,15 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
 /**
  * @author Cristina González
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class LayoutReportsDataMVCResourceCommandTest {
+public class GetLayoutReportsDataStrutsActionTest {
 
 	@ClassRule
 	@Rule
@@ -180,7 +179,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 				RandomTestUtil.randomString(), true, _group.getGroupId(),
 				() -> {
 					Bundle bundle = FrameworkUtil.getBundle(
-						LayoutReportsDataMVCResourceCommandTest.class);
+						GetLayoutReportsDataStrutsActionTest.class);
 
 					BundleContext bundleContext = bundle.getBundleContext();
 
@@ -381,8 +380,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 				});
 	}
 
-	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
-			Layout layout)
+	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -390,13 +388,12 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		MockLiferayResourceRequest mockLiferayPortletRenderRequest =
-			new MockLiferayResourceRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		serviceContext.setRequest(
-			mockLiferayPortletRenderRequest.getHttpServletRequest());
+		serviceContext.setRequest(mockHttpServletRequest);
 
-		mockLiferayPortletRenderRequest.setParameter(
+		mockHttpServletRequest.setParameter(
 			"plid", String.valueOf(layout.getPlid()));
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -405,34 +402,33 @@ public class LayoutReportsDataMVCResourceCommandTest {
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setLocale(LocaleUtil.getDefault());
-		themeDisplay.setRequest(
-			mockLiferayPortletRenderRequest.getHttpServletRequest());
+		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setScopeGroupId(layout.getGroupId());
 		themeDisplay.setSiteGroupId(layout.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
-		mockLiferayPortletRenderRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return mockLiferayPortletRenderRequest;
+		return mockHttpServletRequest;
 	}
 
 	private JSONObject _serveResource(
 			Layout layout, ObjectValuePair<String, Object>... objectValuePairs)
 		throws Exception {
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayResourceRequest(layout);
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
 
 		for (ObjectValuePair<String, Object> objectValuePair :
 				objectValuePairs) {
 
-			mockLiferayResourceRequest.setAttribute(
+			mockHttpServletRequest.setAttribute(
 				objectValuePair.getKey(), objectValuePair.getValue());
 		}
 
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
 		Locale originalSiteDefaultLocale =
 			LocaleThreadLocal.getSiteDefaultLocale();
@@ -441,32 +437,28 @@ public class LayoutReportsDataMVCResourceCommandTest {
 			LocaleThreadLocal.setSiteDefaultLocale(
 				_portal.getSiteDefaultLocale(_group.getGroupId()));
 
-			_layoutReportsDataMVCResourceCommand.serveResource(
-				mockLiferayResourceRequest, mockLiferayResourceResponse);
+			_getLayoutReportsDataStrutsAction.execute(
+				mockHttpServletRequest, mockHttpServletResponse);
 		}
 		finally {
 			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
 		}
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
 		return JSONFactoryUtil.createJSONObject(
-			new String(byteArrayOutputStream.toByteArray()));
+			mockHttpServletResponse.getContentAsString());
 	}
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject(filter = "component.name=*GetLayoutReportsDataStrutsAction")
+	private StrutsAction _getLayoutReportsDataStrutsAction;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject(filter = "mvc.command.name=/layout_reports/data")
-	private MVCResourceCommand _layoutReportsDataMVCResourceCommand;
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

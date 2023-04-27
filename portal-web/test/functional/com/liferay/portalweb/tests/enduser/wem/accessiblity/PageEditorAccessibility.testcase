@@ -323,15 +323,16 @@ definition {
 				value1 = "\TAB");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@data-qa-id,'Button')][@aria-expanded]",
+				data_qa_id = "Button",
+				locator1 = "Treeview#NODE_ITEM_BY_DATA_QA_ID",
 				locator2 = "background-color",
 				value1 = "rgba(240, 245, 255, 1)");
 		}
 
 		task ("Then the page creator could go back to the times icon vis shift + tab shortcuts") {
 			Type.sendKeys(
-				key_nodeName = "Button",
-				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED",
+				data_qa_id = "Button",
+				locator1 = "Treeview#NODE_ITEM_BY_DATA_QA_ID",
 				value1 = "keys=SHIFT,TAB");
 
 			TestUtils.assertElementFocused(element = "//*[*[name()='svg'][contains(@class,'lexicon-icon-times')]]");

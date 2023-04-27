@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_ITEM_BY_DATA_QA_ID</td>
+	<td>//div[contains(@data-qa-id,'${data_qa_id}')][@aria-expanded]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_ITEM_SPAN</td>
 	<td>//div[contains(@class,'card-horizontal')]//div[contains(@class,'card-body')][contains(.,'${key_nodeName}')] | //li[contains(@class,'treeview-item')]//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']</td>
 	<td></td>

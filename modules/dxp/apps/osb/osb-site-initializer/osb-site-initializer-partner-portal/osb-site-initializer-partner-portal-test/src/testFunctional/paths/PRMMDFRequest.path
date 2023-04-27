@@ -115,8 +115,9 @@
 	<td>//*[@route='mdf-request-form']//div[contains(@class,'text-paragraph') and contains(text(),'Total cost')]//following-sibling::div</td>
 	<td></td>
 </tr>
-	<td>VALUE_BUDGET</td>
-	<td>//*[@route='mdf-request-form']//div[contains(@class,'text-paragraph') and contains(text(),'Total cost')]//following-sibling::div[contains(@class,'text-paragraph') and contains(text(),'${key_totalCost}')]</td>
+<tr>
+	<td>REMOVE_ICON_INDEX</td>
+	<td>xpath=(//*[*[name()='svg'][contains(@class,'lexicon-icon-hr')]]/*)[${key_index}]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -130,6 +130,11 @@
 	<td>xpath=(//*[*[name()='svg'][contains(@class,'lexicon-icon-hr')]]/*)[${key_index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACTIVITY_STATUS</td>
+	<td>//button[contains(@*,'mdfRequestActivitiesPanel')]/div/*[contains(text(),'${key_activityName} (')]//following::*[contains(text(),'${key_statusType} Status: ')]/span[contains(text(),'${key_statusValue}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

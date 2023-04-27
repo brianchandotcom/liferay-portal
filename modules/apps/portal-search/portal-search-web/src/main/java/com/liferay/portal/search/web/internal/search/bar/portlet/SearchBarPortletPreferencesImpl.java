@@ -37,10 +37,9 @@ public class SearchBarPortletPreferencesImpl
 
 	@Override
 	public String getDestination() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
-			SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION);
-
-		return optional.orElse(StringPool.BLANK);
+		return _portletPreferencesHelper.getString(
+			SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION,
+			StringPool.BLANK);
 	}
 
 	@Override
@@ -66,14 +65,10 @@ public class SearchBarPortletPreferencesImpl
 
 	@Override
 	public SearchScopePreference getSearchScopePreference() {
-		Optional<String> valueOptional = _portletPreferencesHelper.getString(
-			SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE);
-
-		Optional<SearchScopePreference> searchScopePreferenceOptional =
-			valueOptional.map(SearchScopePreference::getSearchScopePreference);
-
-		return searchScopePreferenceOptional.orElse(
-			SearchScopePreference.THIS_SITE);
+		return SearchScopePreference.getSearchScopePreference(
+			_portletPreferencesHelper.getString(
+				SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE,
+				StringPool.BLANK));
 	}
 
 	@Override

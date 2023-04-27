@@ -36,18 +36,16 @@ public class CustomFacetPortletPreferencesImpl
 
 	@Override
 	public String getAggregationField() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
-			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD);
-
-		return optional.orElse(StringPool.BLANK);
+		return _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferences.PREFERENCE_KEY_AGGREGATION_FIELD,
+			StringPool.BLANK);
 	}
 
 	@Override
 	public String getCustomHeading() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
-			CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING);
-
-		return optional.orElse(StringPool.BLANK);
+		return _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferences.PREFERENCE_KEY_CUSTOM_HEADING,
+			StringPool.BLANK);
 	}
 
 	@Override
@@ -79,10 +77,9 @@ public class CustomFacetPortletPreferencesImpl
 
 	@Override
 	public String getParameterName() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
-			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME);
-
-		return optional.orElse(StringPool.BLANK);
+		return _portletPreferencesHelper.getString(
+			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
+			StringPool.BLANK);
 	}
 
 	@Override

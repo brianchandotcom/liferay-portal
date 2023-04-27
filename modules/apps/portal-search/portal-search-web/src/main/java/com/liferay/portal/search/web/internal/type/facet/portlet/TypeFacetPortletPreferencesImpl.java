@@ -84,12 +84,11 @@ public class TypeFacetPortletPreferencesImpl
 
 	@Override
 	public String[] getCurrentAssetTypesArray(long companyId) {
-		Optional<String> assetTypesOptional =
-			_portletPreferencesHelper.getString(
-				TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES);
+		String assetTypes = _portletPreferencesHelper.getString(
+			TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES, null);
 
-		if (assetTypesOptional.isPresent()) {
-			return StringUtil.split(assetTypesOptional.get());
+		if (assetTypes != null) {
+			return StringUtil.split(assetTypes);
 		}
 
 		return getAllAssetTypes(companyId);

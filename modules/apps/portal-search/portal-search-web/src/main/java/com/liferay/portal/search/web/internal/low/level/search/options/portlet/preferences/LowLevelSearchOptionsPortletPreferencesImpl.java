@@ -71,29 +71,26 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	@Override
 	public String getConnectionId() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
+		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_CONNECTION_ID);
-
-		return optional.orElse(StringPool.BLANK);
+				PREFERENCE_KEY_CONNECTION_ID,
+			StringPool.BLANK);
 	}
 
 	@Override
 	public String getContributorsToExclude() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
+		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE);
-
-		return optional.orElse(StringPool.BLANK);
+				PREFERENCE_KEY_CONTRIBUTORS_TO_EXCLUDE,
+			StringPool.BLANK);
 	}
 
 	@Override
 	public String getContributorsToInclude() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
+		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE);
-
-		return optional.orElse(StringPool.BLANK);
+				PREFERENCE_KEY_CONTRIBUTORS_TO_INCLUDE,
+			StringPool.BLANK);
 	}
 
 	@Override
@@ -105,19 +102,17 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 
 	@Override
 	public String getFieldsToReturn() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
+		return _portletPreferencesHelper.getString(
 			LowLevelSearchOptionsPortletPreferences.
-				PREFERENCE_KEY_FIELDS_TO_RETURN);
-
-		return optional.orElse(StringPool.BLANK);
+				PREFERENCE_KEY_FIELDS_TO_RETURN,
+			StringPool.BLANK);
 	}
 
 	@Override
 	public String getIndexes() {
-		Optional<String> optional = _portletPreferencesHelper.getString(
-			LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES);
-
-		return optional.orElse(StringPool.BLANK);
+		return _portletPreferencesHelper.getString(
+			LowLevelSearchOptionsPortletPreferences.PREFERENCE_KEY_INDEXES,
+			StringPool.BLANK);
 	}
 
 	private JSONArray _getDefaultAttributesJSONArray() {

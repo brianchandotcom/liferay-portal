@@ -29,20 +29,22 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
 %>
 
-<clay:tabs
-	tabsItems="<%= tabsItems %>"
->
+<div class="sheet-row">
+	<clay:tabs
+		tabsItems="<%= tabsItems %>"
+	>
 
-	<%
-	for (TabsItem tabsItem : tabsItems) {
-	%>
+		<%
+		for (TabsItem tabsItem : tabsItems) {
+		%>
 
-		<div>
-			<liferay-util:include page='<%= "/layout/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
-		</div>
+			<div>
+				<liferay-util:include page='<%= "/layout/" + tabsItem.get("panelId") + ".jsp" %>' servletContext="<%= application %>" />
+			</div>
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
-</clay:tabs>
+	</clay:tabs>
+</div>

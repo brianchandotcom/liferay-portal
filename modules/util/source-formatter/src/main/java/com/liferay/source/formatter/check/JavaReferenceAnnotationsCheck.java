@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
@@ -61,6 +62,21 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 				"org.osgi.service.component.annotations.Reference")) {
 
 			return annotation;
+		}
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (javaTerm.isJavaMethod() &&
+				javaTerm.hasAnnotation("Reference")) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Do not use @Reference on method ", javaTerm.getName(),
+						", use @Reference on field or ServiceTracker",
+						"/ServiceTrackerList/ServiceTrackerMap instead"));
+
+				break;
+			}
 		}
 
 		_checkTargetAttribute(fileName, absolutePath, javaClass, annotation);

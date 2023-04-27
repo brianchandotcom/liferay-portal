@@ -501,6 +501,18 @@ public class ClientExtensionProjectConfigurator
 
 			String profileName = matcher.group(1);
 
+			if (Objects.equals(profileName, "default")) {
+				Logger logger = project.getLogger();
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(
+						"Ignoring file client-extension.default.yaml since " +
+							"\"default\" is a reserved profile name.");
+				}
+
+				continue;
+			}
+
 			_configureDeployProfileTask(
 				project, clientExtensionYamlFile, file, profileName);
 

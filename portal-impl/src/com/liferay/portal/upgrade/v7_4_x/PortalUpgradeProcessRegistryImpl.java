@@ -297,7 +297,7 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(26, 1, 0),
 			UpgradeProcessFactory.addColumns(
-				"Company", "indexNameCur VARCHAR(75)",
+				"Company", "indexNameCurrent VARCHAR(75)",
 				"indexNameNext VARCHAR(75)"));
 	}
 

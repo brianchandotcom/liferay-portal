@@ -1,0 +1,61 @@
+{
+	"brandColor1": {"cssVariableMapping": "brand-color-1", "value": "#0B5FFF"},
+	"blackColor": {"cssVariableMapping": "black", "value": "#1D1C22"},
+	"gray900Color": {"cssVariableMapping": "gray-900", "value": "#332B4A"},
+	"gray800Color": {"cssVariableMapping": "gray-800", "value": "#3F3851"},
+	"gray700Color": {"cssVariableMapping": "gray-700", "value": "#545D69"},
+	"gray600Color": {"cssVariableMapping": "gray-600", "value": "#6D7580"},
+	"gray500Color": {"cssVariableMapping": "gray-500", "value": "#858C94"},
+	"whiteColor": {"cssVariableMapping": "white", "value": "#FFFFFF"},
+	"gray100Color": {"cssVariableMapping": "gray-100", "value": "#F4F6F9"},
+	"gray200Color": {"cssVariableMapping": "gray-200", "value": "#EBEEF2"},
+	"gray300Color": {"cssVariableMapping": "gray-300", "value": "#DADEE3"},
+	"gray400Color": {"cssVariableMapping": "gray-400", "value": "#A5ABB3"},
+	"infoColor": {"cssVariableMapping": "info", "value": "#2E5AAC"},
+	"successColor": {"cssVariableMapping": "success", "value": "#4AAB3B"},
+	"warningColor": {"cssVariableMapping": "warning", "value": "#E06C00"},
+	"dangerColor": {"cssVariableMapping": "danger", "value": "#DA1414"},
+	"primaryColor": {"cssVariableMapping": "primary", "value": "#0B63CE"},
+	"secondaryColor": {"cssVariableMapping": "secondary", "value": "#134194"},
+	"lightColor": {"cssVariableMapping": "light", "value": "#F4F6F9"},
+	"grayDarkColor": {"cssVariableMapping": "gray-dark", "value": "#545D69"},
+	"darkColor": {"cssVariableMapping": "dark", "value": "#272833"},
+	"lighterColor": {"cssVariableMapping": "lighter", "value": "#F7F8F9"},
+	"spacer3": {"cssVariableMapping": "spacer-3", "value": "0.75rem"},
+	"spacer4": {"cssVariableMapping": "spacer-4", "value": "1rem"},
+	"spacer5": {"cssVariableMapping": "spacer-5", "value": "1.5rem"},
+	"spacer6": {"cssVariableMapping": "spacer-6", "value": "2rem"},
+	"spacer7": {"cssVariableMapping": "spacer-7", "value": "3rem"},
+	"spacer8": {"cssVariableMapping": "spacer-8", "value": "3.5rem"},
+	"spacer9": {"cssVariableMapping": "spacer-9", "value": "4.5rem"},
+	"spacer10": {"cssVariableMapping": "spacer-10", "value": "auto"},
+	"containerMaxXl": {
+		"cssVariableMapping": "container-max-xl",
+		"value": "1366px"
+	},
+	"containerMaxLg": {
+		"cssVariableMapping": "container-max-lg",
+		"value": "1200px"
+	},
+	"containerMaxMd": {
+		"cssVariableMapping": "container-max-md",
+		"value": "900px"
+	},
+	"containerMaxSm": {
+		"cssVariableMapping": "container-max-sm",
+		"value": "720px"
+	},
+	"fontFamilySansSerif": {
+		"cssVariableMapping": "font-family-sans-serif",
+		"value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"fontFamilyMonospace": {
+		"cssVariableMapping": "font-family-monospace",
+		"value": "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+	},
+	"fontFamilyBase": {
+		"cssVariableMapping": "font-family-base",
+		"value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"fontSizeBase": {"cssVariableMapping": "font-size-base", "value": "1rem"}
+}

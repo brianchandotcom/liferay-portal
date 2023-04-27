@@ -49,7 +49,7 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-159528 LPS-156982 | Test Summary: Verify if as an Administrator I am able to add Components"
+	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I am able to add Components"
 	@priority = 5
 	test AdminCanAddComponent {
 		task ("Given that I create a new 'Component' via API") {
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an administrator I can change the team assigned to the Component"
-	@priority = 4
+	@priority = 3
 	test AdminCanChangeTeamToComponent {
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to delete a component that does not have a team"
-	@priority = 4
+	@priority = 3
 	test AdminCanDeleteComponentWithoutTeam {
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -287,7 +287,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate component"
-	@priority = 5
+	@priority = 3
 	test AdminCanNotAddDuplicatedComponent {
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
@@ -413,7 +413,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
-	@priority = 4
+	@priority = 2
 	test CannotAddComponentWithoutAName {
 		task ("Given I go to the Manage Component page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

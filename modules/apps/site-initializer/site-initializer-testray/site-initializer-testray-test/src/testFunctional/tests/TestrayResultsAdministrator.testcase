@@ -115,7 +115,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Assign Tests directly to me through the context menu"
-	@priority = 4
+	@priority = 3
 	test AdminCanAssignTestsDirectlyThroughTheContextMenu {
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to execute Tests and mark them as Failed"
-	@priority = 5
+	@priority = 4
 	test AdminCanExecuteTestsAndMarkThemAsFailed {
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Reopen Tests"
-	@priority = 4
+	@priority = 3
 	test AdminCanReopenTests {
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -308,8 +308,8 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-170820 | Test Summary: Verify if as an Administrator, I should be able to see that the Issues List displays properly"
-	@priority = 5
+	@description = "Story ID: LPS-170820 | Test Summary: Verify that, as an Administrator, I should be able to see all the Problem Lists in the tables"
+	@priority = 4
 	test AdminCanSeeIssuesInAllTables {
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -381,7 +381,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests"
-	@priority = 4
+	@priority = 3
 	test AdminCanUnassignTests {
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -411,7 +411,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests through the context menu"
-	@priority = 3
+	@priority = 2
 	test AdminCanUnassignTestsThroughTheContextMenu {
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -439,7 +439,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
-	@priority = 5
+	@priority = 4
 	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});

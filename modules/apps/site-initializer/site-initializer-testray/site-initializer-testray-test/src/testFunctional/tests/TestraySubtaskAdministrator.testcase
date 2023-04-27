@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as the Administrator, should be able to assign me a subtask that has been assigned to an offline user from the context menu"
-	@priority = 5
+	@priority = 3
 	test AdminCanAssignToMeSubtaskAssignedToTheOfflineUser {
 		task ("Given that the user different assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if, as an Administrator, can cancel merge subtasks"
-	@priority = 3
+	@priority = 2
 	test AdminCanCancelMergeSubtask {
 		task ("Given that the user trying merge subtasks") {
 			TestrayTestflow.assertStatus(
@@ -216,7 +216,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able to complete a subtask as Blocked"
-	@priority = 5
+	@priority = 3
 	test AdminCanCompleteSubtaskAsBlocked {
 		task ("Given the user edit a Subtask as Blocked") {
 			TestrayTestflow.assertStatus(
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able to complete a subtask as failing"
-	@priority = 5
+	@priority = 3
 	test AdminCanCompleteSubtaskAsFailing {
 		task ("Given the user edit a Subtask as Failed") {
 			TestrayTestflow.assertStatus(
@@ -322,7 +322,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able to complete a subtask as Test Fix"
-	@priority = 5
+	@priority = 3
 	test AdminCanCompleteSubtaskAsTestFix {
 		task ("Given the user edit a Subtask as Test Fix") {
 			TestrayTestflow.assertStatus(
@@ -387,7 +387,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if as  an Administrator I should be able to merge an Complete subtask with a Open subtask"
-	@priority = 5
+	@priority = 3
 	test AdminCanMergeCompleteSubtaskWithOpenSubtask {
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if as  an Administrator I should be able to merge an in analysis subtask with a completed subtask"
-	@priority = 5
+	@priority = 4
 	test AdminCanMergeInAnalysisSubtaskWithCompletedSubtask {
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -486,7 +486,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as Administrator, should not be able to edit subtask with user logged off"
-	@priority = 5
+	@priority = 3
 	test AdminCanNotEditSubtaskWithUserOffline {
 		task ("Given that the user different assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -506,7 +506,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge only one subtask"
-	@priority = 5
+	@priority = 3
 	test AdminCanNotMergeOnlyOneSubtask {
 		task ("When the user trying merging a single subtask") {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1");
@@ -520,7 +520,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge subtasks with different users"
-	@priority = 5
+	@priority = 4
 	test AdminCanNotMergeSubtasksWithDifferentUsers {
 		task ("Given that the user different assign a subtask") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -550,7 +550,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that can reanalyze a subtask"
-	@priority = 5
+	@priority = 4
 	test AdminCanReanalyzeSubtask {
 		task ("Given that the user assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -584,7 +584,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able a subtask return to open"
-	@priority = 5
+	@priority = 3
 	test AdminCanReturnToOpenSubtask {
 		task ("When that the user Assign and Begin Analysis of the subtask") {
 			TestrayTestflow.assertStatus(
@@ -612,7 +612,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if as an Administrator I should be able to merge multiple unassigned subtasks"
-	@priority = 5
+	@priority = 3
 	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
 		task ("When the user merged a subtask with status open") {
 			TestrayTestflow.assertStatus(

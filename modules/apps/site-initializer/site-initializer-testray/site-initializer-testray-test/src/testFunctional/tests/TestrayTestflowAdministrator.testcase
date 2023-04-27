@@ -246,7 +246,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to edit a task"
-	@priority = 5
+	@priority = 4
 	test AdminCanEditTask {
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -388,7 +388,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an complete task"
-	@priority = 5
+	@priority = 3
 	test AdminCanReanalyzeCompleteTask {
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -433,7 +433,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to update a task's status to complete"
-	@priority = 5
+	@priority = 4
 	test AdminCanUpdateTaskStatusToComplete {
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an Administrator I should see the build that is associated with the task"
-	@priority = 4
+	@priority = 2
 	test AdminCanViewAssociatedBuildInTask {
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -528,7 +528,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user cannot create a task without Case Type"
-	@priority = 4
+	@priority = 2
 	test AdminCanViewRequiredCaseType {
 		task ("When the user try to add a Task without case type") {
 			TestrayTestflow.goToTestflow();
@@ -591,7 +591,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that As an administrator can remove users from the context menu"
-	@priority = 4
+	@priority = 3
 	test CanRemoveUser {
 		task ("Given the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user can not create a task without name"
-	@priority = 3
+	@priority = 2
 	test CanViewFieldNameRequired {
 		task ("When the user try to add a Task without name") {
 			TestrayTestflow.goToTestflow();

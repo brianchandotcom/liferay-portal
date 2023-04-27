@@ -32,7 +32,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-150436 - Verify when filling the field, the field label is green."
+	@description = "Story ID: LPS-146930 | Test Summary: Verify when filling the field, the field label is green."
 	@priority = 2
 	test CanFieldLabelBeGreen {
 		task ("Go to Testray and exit Testray") {
@@ -56,7 +56,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-150437 - Verify when deleting the field, the field label is red."
+	@description = "Story ID: LPS-146930 | Test Summary: Verify when deleting the field, the field label is red."
 	@priority = 2
 	test CanFieldLabelBeRed {
 		task ("Go to Testray and exit Testray") {
@@ -82,7 +82,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-150438 - Verify the user can enter with an valid email."
+	@description = "Story ID: LPS-146930 | Test Summary: Verify the user can enter with an valid email."
 	@priority = 5
 	test CanSignIn {
 		task ("Go to Testray and exit Testray") {
@@ -108,7 +108,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-150439 - Verify the user can enter with an valid email after getting the password wrong."
+	@description = "Story ID: LPS-146930 | Test Summary: Verify the user can enter with an valid email after getting the password wrong."
 	@priority = 4
 	test CanSignInAfterPasswordWrong {
 		task ("Go to Testray and exit Testray") {

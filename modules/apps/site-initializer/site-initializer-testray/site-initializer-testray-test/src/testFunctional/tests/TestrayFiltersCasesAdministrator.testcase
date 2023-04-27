@@ -90,7 +90,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case name"
-	@priority = 5
+	@priority = 4
 	test AdminCanFilterCaseByCaseName {
 		task ("When the user filter a case by name") {
 			TestrayFilter.clickFilter();
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by case type"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterCaseByCaseType {
 		task ("When the user filter a case by case type") {
 			TestrayFilter.clickColumn();
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by component"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterCaseByComponent {
 		task ("When the user filter a case by component") {
 			TestrayFilter.clickFilter();
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by description"
-	@priority = 4
+	@priority = 2
 	test AdminCanFilterCaseByDescription {
 		task ("Given the user selects the description column") {
 			TestrayFilter.clickColumn();
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by priority"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterCaseByPriority {
 		task ("When the user filter a case by priority") {
 			TestrayFilter.clickFilter();
@@ -221,7 +221,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by steps"
-	@priority = 4
+	@priority = 2
 	test AdminCanFilterCaseBySteps {
 		task ("When the user filter a case by steps") {
 			TestrayFilter.clickFilter();
@@ -244,7 +244,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the case by team"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterCaseByTeam {
 		task ("When the user filter a case by team") {
 			TestrayFilter.clickColumn();
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter case using multiple filtering options"
-	@priority = 5
+	@priority = 4
 	test AdminCanFilterCasesWithMultipleOptions {
 		task ("Given that the user selects the columns") {
 			TestrayFilter.clickColumn();
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterForNonexistantCase {
 		task ("When the user filters a case by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173517 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
-	@priority = 5
+	@priority = 2
 	test AdminCanFilterOptionsToFilter {
 		task ("When the user search filter called priority") {
 			TestrayFilter.clickFilter();
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-176898 | Test Summary: Verify that can clean the filter results"
-	@priority = 3
+	@priority = 2
 	test CanClearFilterResults {
 		task ("When the user filters a case by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-176898 | Test Summary: Verify that can clear the filter results with the close button"
-	@priority = 3
+	@priority = 2
 	test CanClearFilterWithCloseButton {
 		task ("When the user filters a filter by its non-existent name") {
 			TestrayFilter.clickFilter();

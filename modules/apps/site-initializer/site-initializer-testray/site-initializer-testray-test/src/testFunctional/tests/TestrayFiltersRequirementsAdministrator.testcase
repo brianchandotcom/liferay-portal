@@ -79,8 +79,8 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should not see requirement that don't exist when I try filtering for them"
-	@priority = 4
+	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should not see requirements that don't exist when I try filtering for them"
+	@priority = 3
 	test AdminCanFilterForNonexistantRequirements {
 		task ("When the user filters a requirement by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by component"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterRequirementsByComponent {
 		task ("When the user filter a requirement by component") {
 			TestrayFilter.clickFilter();
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by link"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterRequirementsByLink {
 		task ("When the user filter a requirement by link") {
 			TestrayFilter.clickFilter();
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by summary"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterRequirementsBySummary {
 		task ("When the user filter a requirement by summary") {
 			TestrayFilter.clickFilter();
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements by team"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterRequirementsByTeam {
 		task ("When the user filter a requirement by team") {
 			TestrayFilter.clickFilter();
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173519 | Test Summary: Verify if as an Administrator I should be able to filter requirements using multiple filtering options"
-	@priority = 5
+	@priority = 3
 	test AdminCanFilterRequirementsWithMultipleOptions {
 		task ("When the user filter a requirement with multiple options") {
 			TestrayFilter.clickFilter();
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173519 | Test Summary: Verify that can search for a field"
-	@priority = 5
+	@priority = 2
 	test AdminCanSearchForField {
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();

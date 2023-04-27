@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Teams"
-	@priority = 5
+	@priority = 3
 	test AdminCanNotAddDuplicateTeams {
 		task ("Given that a Testray team are created via API") {
 			JSONTestray.addTeam(
@@ -253,7 +253,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
-	@priority = 4
+	@priority = 2
 	test AssertThatTheFieldIsRequired {
 		task ("Given I go to the manage teams") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

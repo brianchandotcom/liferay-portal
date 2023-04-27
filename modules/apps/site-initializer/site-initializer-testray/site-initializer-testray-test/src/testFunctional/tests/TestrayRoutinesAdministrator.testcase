@@ -46,8 +46,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160583 | Test Summary: Verify if as an Administrator I should be able to add and delete a Routine with Default Environment Factors"
-	@priority = 5
+	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I should be able to add and delete a Routine with Default Environment Factors"
+	@priority = 3
 	test AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors";
 
@@ -88,7 +88,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160582 | Test Summary: Verify if as an Administrator I am able to add a Routine"
+	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to add a Routine"
 	@priority = 5
 	test AdminCanAddRoutine {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanAddRoutine";
@@ -106,7 +106,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160581 | Test Summary: Verify if as an Administrator I am able to delete a Routine"
+	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to delete a Routine"
 	@priority = 5
 	test AdminCanDeleteRoutine {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanDeleteRoutine";
@@ -142,8 +142,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160586 | Test Summary: Verify if as an Administrator I should be able to delete a routine that contains builds"
-	@priority = 5
+	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I should be able to delete a routine that contains builds"
+	@priority = 4
 	test AdminCanDeleteRoutineWithBuilds {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanDeleteRoutineWithBuilds";
 
@@ -217,7 +217,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160580 - Verify if as an Administrator I am able to edit a Routine"
+	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to edit a Routine"
 	@priority = 5
 	test AdminCanEditRoutine {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanEditRoutine";
@@ -243,8 +243,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-160585 - Verify if as an Administrator I should not be able to add a duplicate routine"
-	@priority = 5
+	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate routine"
+	@priority = 3
 	test AdminCanNotAddDuplicateRoutine {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanNotAddDuplicateRoutine";
 
@@ -263,8 +263,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164145 - Verify that the user can not create a routine if all the required fields are not filled in"
-	@priority = 3
+	@description = "Story ID: LPS-146913 | Test Summary: Verify that the user can not create a routine if all the required fields are not filled in"
+	@priority = 2
 	test AdminCanViewRequiredField {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanViewRequiredField";
 
@@ -281,8 +281,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-164144 - Verify the user can access a project on Project Directory"
-	@priority = 3
+	@description = "Story ID: LPS-146908 | Test Summary: Verify the user can access a project on Project Directory"
+	@priority = 2
 	test CanGoToProjectDirectory {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#CanGoToProjectDirectory";
 

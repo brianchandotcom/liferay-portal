@@ -57,7 +57,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-165584 | Test Summary: Verify as an administrator I can add another Cases in the Add Another button"
-	@priority = 3
+	@priority = 2
 	test AdminCanAddAnotherCase {
 		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-146923 | Test Summary: Verify if as an Administrator I am able to add Cases without Subcomponents"
-	@priority = 5
+	@priority = 4
 	test AdminCanAddCase {
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to delete Cases without Subcomponents"
-	@priority = 5
+	@priority = 4
 	test AdminCanDeleteCase {
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-165583 | Test Summary: Verify that an administrator can delete cases in the 'Select Cases to Export' modal"
-	@priority = 3
+	@priority = 2
 	test AdminCanDeleteCasesInModalExportCases {
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-146923 | Test Summary: Verify if as an Administrator I am able to edit Cases without Subcomponents"
-	@priority = 5
+	@priority = 4
 	test AdminCanEditCase {
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -259,7 +259,7 @@ definition {
 
 	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to Export Cases from another Project"
 	@ignore = "true"
-	@priority = 3
+	@priority = 4
 	test AdminCanExportCase {
 
 		// TODO LPS-156916 AdminCanExportCase pending implementation
@@ -319,7 +319,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-146923 | Test Summary: Verify that cases be added with an estimated duration less than zero"
-	@priority = 4
+	@priority = 2
 	test AdminCanNotAddCasesWithEstimatedDurationLessThanZero {
 		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -352,7 +352,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate case"
-	@priority = 5
+	@priority = 3
 	test AdminCannotAddDuplicatedCase {
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -391,7 +391,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-165583 | Test Summary: Verify that as administrator cases cannot be exported without linked Cases"
-	@priority = 3
+	@priority = 2
 	test AdminCannotExportCasesWithoutCasesLinked {
 		task ("Given that I create a new Case via API") {
 			JSONTestray.addCases(
@@ -422,7 +422,7 @@ definition {
 
 	@description = "Story ID: LPS-156220 | Test Summary: Verify if as an Administrator I should be able to Sort by Errors"
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test AdminCanSortErrors {
 
 		// TODO LPS-156950 AdminCanSortErrors pending implementation
@@ -431,7 +431,7 @@ definition {
 
 	@description = "Story ID: LPS-156220 | Test Summary: Verify if as an Administrator I should be able to Sort by Product Version"
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test AdminCanSortProductVersion {
 
 		// TODO LPS-156947 AdminCanSortProductVersion pending implementation
@@ -440,7 +440,7 @@ definition {
 
 	@description = "Story ID: LPS-156220 | Test Summary: Verify if as an Administrator I should be able to Sort by Status"
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test AdminCanSortStatus {
 
 		// TODO LPS-156949 AdminCanSortStatus pending implementation
@@ -448,7 +448,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-146923 | Test Summary: Verify that the user can not create a case if all the required fields are not filled in"
-	@priority = 3
+	@priority = 2
 	test AdminCanViewRequiredField {
 		task ("Given I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

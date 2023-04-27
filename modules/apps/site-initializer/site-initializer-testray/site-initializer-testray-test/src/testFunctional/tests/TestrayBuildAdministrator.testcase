@@ -95,7 +95,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156438 | Test Summary: Verify if as an Administrator can Add a Build"
+	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator can Add a Build"
 	@priority = 5
 	test AdminCanAddBuild {
 		task ("Given that the user add a new build") {
@@ -115,8 +115,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-163712 | Test Summary: Verify if as an administrator can add a build with multiple options(Suite, Case, Option and Select Stacks)"
-	@priority = 5
+	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an administrator can add a build with multiple options(Suite, Case, Option and Select Stacks)"
+	@priority = 4
 	test AdminCanAddBuildWithMultipleOptions {
 		task ("Given that the user add a new build") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
@@ -162,7 +162,7 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-156513 | Test Summary: Verify if as an Administrator I can delete Builds"
+	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I can delete Builds"
 	@priority = 5
 	test AdminCanDeleteBuild {
 		task ("Then I create a build") {
@@ -200,7 +200,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156575 | Test Summary: Verify if as an Administrator I should be able to delete a build that contains runs"
+	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I should be able to delete a build that contains runs"
 	@priority = 4
 	test AdminCanDeleteBuildContainsRuns {
 		task ("Given that the user add a new build with Environments Factors") {
@@ -243,7 +243,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156543 | Test Summary: Verify if as an Administrator I am able to edit Builds"
+	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I am able to edit Builds"
 	@priority = 5
 	test AdminCanEditBuild {
 		task ("Given that the user add a new build") {
@@ -277,8 +277,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-156546 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate build"
-	@priority = 5
+	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate build"
+	@priority = 3
 	test AdminCanNotAddDuplicateBuild {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -325,8 +325,8 @@ definition {
 
 	}
 
-	@description = "Automation ID: LPS-156583 | Test Summary: Verify if as an Administrator I should be able to promote a build"
-	@priority = 5
+	@description = "Story ID: LPS-158466 | Test Summary: Verify if as an Administrator I should be able to promote a build"
+	@priority = 3
 	test AdminCanPromoteBuild {
 		task ("Given that the user add a new build") {
 			Testray.goToProjectPage(projectName = ${projectName});

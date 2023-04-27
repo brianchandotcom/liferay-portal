@@ -630,7 +630,7 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should not see case that don't exist when I try filtering for them"
+	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should not see case results that don't exist when I try filtering for them"
 	@priority = 3
 	test CanNotFilterForNonexistant {
 		task ("Given that the user filter a case result existent") {

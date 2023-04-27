@@ -161,7 +161,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by assignee"
-	@priority = 3
+	@priority = 4
 	test AdminCanFilterSubtasksByAssignee {
 		task ("Given that subtask 1 is assigned to user userfn userln") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtask using multiple filtering options"
-	@priority = 5
+	@priority = 4
 	test AdminCanFilterSubtaskWithMultipleOptions {
 		task ("Given that subtask 1 is assigned to user userfn userln") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -389,7 +389,7 @@ definition {
 	}
 
 	@description = "Story ID: LPS-173522 | Test Summary: Verify that can search for a field"
-	@priority = 3
+	@priority = 2
 	test AdminCanSearchForField {
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();

@@ -44,7 +44,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160531 | Test Summary: Verify if As an Administrator I am able to add Product Versions"
+	@description = "Story ID: LPS-159530 | Test Summary: Verify if As an Administrator I am able to add Product Versions"
 	@priority = 5
 	test AdminCanAddProductVersion {
 		task ("Given that I create a new 'Product Version' via API") {
@@ -70,7 +70,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160533 | Test Summary: Verify if as an Administrator I am able to delete Product Versions"
+	@description = "Story ID: LPS-159530 | Test Summary: Verify if as an Administrator I am able to delete Product Versions"
 	@priority = 5
 	test AdminCanDeleteProductVersion {
 		task ("Given that I create a new 'Product Version' via API") {
@@ -100,7 +100,7 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160532 | Test Summary: Verify if as an Administrator I am able to Edit Product Versions"
+	@description = "Story ID: LPS-159530 | Test Summary: Verify if as an Administrator I am able to Edit Product Versions"
 	@priority = 5
 	test AdminCanEditProductVersion {
 		task ("Given that I create a new 'Product Version' via API") {
@@ -131,8 +131,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-160534 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Product Versions"
-	@priority = 5
+	@description = "Story ID: LPS-159530 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Product Versions"
+	@priority = 3
 	test AdminCanNotAddDuplicateProductVersion {
 		task ("Given that I create a new 'Product Version' via API") {
 			JSONTestray.addProductVersion(
@@ -158,8 +158,8 @@ definition {
 		}
 	}
 
-	@description = "Automation ID: LPS-161334 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
-	@priority = 3
+	@description = "Story ID: LPS-159530 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
+	@priority = 2
 	test AdminCanViewWarningMessage {
 		task ("Given I go to the Manage Product Versions page and try to create a version without filling in the 'Name' field") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

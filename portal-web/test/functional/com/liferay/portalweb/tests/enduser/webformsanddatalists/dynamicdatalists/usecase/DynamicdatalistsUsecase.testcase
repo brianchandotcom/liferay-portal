@@ -2369,13 +2369,13 @@ definition {
 	@ignore = "true"
 	@priority = 2
 	test SelectLinkToPagePage {
-		property portal.upstream = "quarantine";
+		for (var pageNumber : list "1,2,3,4,5,6,7,8,9,10,11,12") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page ${pageNumber}");
+		}
 
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
-
-		for (var pageName : list "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12") {
-			PagesAdmin.addPage(pageName = ${pageName});
-		}
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

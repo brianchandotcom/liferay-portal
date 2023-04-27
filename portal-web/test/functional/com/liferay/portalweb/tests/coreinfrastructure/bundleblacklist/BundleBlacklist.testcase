@@ -20,48 +20,63 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
+
+		FileInstall.deleteConfigFile(configFile = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+
+		FileInstall.deleteJarOffline(jarFile = "com.liferay.frontend.taglib.clay.sample.web.jar");
+
+		FileInstall.deleteWarOffline(warFile = "test-theme.war");
 	}
 
 	@priority = 5
 	test BlacklistModuleBundleSymbolicName {
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		task ("Given a test portlet on a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
 
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = "com.liferay.gogo.shell.web");
+			Portlet.viewPG(portletName = "Clay Sample");
+		}
 
-		BundleBlacklist.viewProductMenuBlacklistedModule(
-			category = "System",
-			consoleText = "STOPPED com.liferay.gogo.shell.web",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		task ("When the portlet jar is blacklisted") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+				osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.frontend.taglib.clay.sample.web\" ]");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
+			OSGiConfig.waitForOSGiConfig();
 
-		AssertConsoleTextPresent(value1 = "Reinstalling bundle com.liferay.gogo.shell.web");
+			WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.frontend.taglib.clay.sample.web");
+		}
 
-		Navigator.openURL();
+		task ("Then the portlet is no longer available") {
+			Refresh();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
+		}
+
+		task ("When the module jar is removed from the blacklist") {
+			OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+		}
+
+		task ("Then the portlet becomes available again") {
+			WaitForConsoleTextPresent(value1 = "Reinstalling bundle com.liferay.frontend.taglib.clay.sample.web");
+
+			Refresh();
+
+			Portlet.viewPG(portletName = "Clay Sample");
+		}
 	}
 
 	@priority = 5
@@ -129,76 +144,68 @@ definition {
 
 	@priority = 4
 	test BlacklistModuleWar {
-		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleWar";
+		FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 
-		PagesAdmin.viewWidgetPageCurrentTheme(
-			pageName = "Search",
-			themeName = "Classic");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
-
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = "classic-theme");
-
-		AssertConsoleTextPresent(value1 = "STOPPED classic-theme");
+		WaitForConsoleTextPresent(value1 = "STARTED test-theme");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Search");
+		PagesAdmin.changeSiteCurrentTheme(themeName = "test-theme-7-4");
 
-		Navigator.gotoNavTab(navTab = "Design");
+		AssertTextPresent(value1 = "test-theme-7-4");
 
-		AssertTextNotPresent(value1 = "Classic");
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"test-theme\" ]");
+
+		OSGiConfig.waitForOSGiConfig();
+
+		WaitForConsoleTextPresent(value1 = "STOPPED test-theme");
+
+		Refresh();
+
+		AssertTextNotPresent(value1 = "test-theme-7-4");
 	}
 
 	@priority = 3
 	test CanEnableBlacklistedModuleJarAfterRestart {
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\"]";
-		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleJarAfterRestart";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.frontend.taglib.clay.sample.web\"]";
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 
-		BundleBlacklist.viewProductMenuBlacklistedModule(
-			category = "System",
-			consoleText = "Stopping blacklisted bundle com.liferay.gogo.shell.web",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		task ("Given a portlet's jar is blacklisted") {
+			AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle com.liferay.frontend.taglib.clay.sample.web");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		task ("When the portlet jar is removed from the blacklist") {
+			FileInstall.deleteConfigFile(configFile = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
+			WaitForConsoleTextPresent(value1 = "STARTED com.liferay.frontend.taglib.clay.sample.web");
+		}
 
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = " ");
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
 
-		Portlet.shutdownServer();
+			Portlet.startServer(keepOsGiState = "true");
+		}
 
-		Portlet.startServer(keepOsGiState = "true");
+		task ("Then the portlet is enabled on startup") {
+			AssertConsoleTextPresent(value1 = "STARTED com.liferay.frontend.taglib.clay.sample.web");
+		}
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
+		task ("And the portlet becomes available again") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
 
-		Navigator.openURL();
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+
+			Portlet.viewPG(portletName = "Clay Sample");
+		}
 	}
 
 	@priority = 3
@@ -270,51 +277,43 @@ definition {
 
 	@priority = 3
 	test CanEnableBlacklistedModuleWarAfterRestart {
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
-		property test.name.skip.portal.instance = "BundleBlacklist#CanEnableBlacklistedModuleWarAfterRestart";
+		task ("Given a war module") {
+			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 
-		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
+			WaitForConsoleTextPresent(value1 = "STARTED test-theme");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
+		task ("And given the war module is blacklisted") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+				osgiConfigs = "blacklistBundleSymbolicNames=[\"test-theme\" ]");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Module Container",
-			configurationName = "Bundle Blacklist",
-			configurationScope = "System Scope");
+			OSGiConfig.waitForOSGiConfig();
 
-		BundleBlacklist.blacklistModuleAndComponentConfiguration(
-			label = "Blacklist Bundle Symbolic Names",
-			symbolicName = " ");
+			WaitForConsoleTextPresent(value1 = "STOPPED test-theme");
+		}
 
-		Portlet.shutdownServer();
+		task ("When the portlet jar is removed from the blacklist") {
+			FileInstall.deleteConfigFile(configFile = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
 
-		Portlet.startServer(keepOsGiState = "true");
+			WaitForConsoleTextPresent(value1 = "STARTED test-theme");
+		}
 
-		AssertConsoleTextPresent(value1 = "STARTED minium-theme");
+		task ("And the portal is restarted") {
+			Portlet.shutdownServer();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+			Portlet.startServer(keepOsGiState = "true");
+		}
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Search");
+		task ("Then the portlet is enabled on startup") {
+			AssertConsoleTextPresent(value1 = "STARTED test-theme");
+		}
 
-		Navigator.gotoNavTab(navTab = "Design");
+		task ("And the war module becomes available again") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
-		Theme.configureLookAndFeelSpecificLook();
-
-		Click(
-			key_text = "Change Current Theme",
-			locator1 = "Button#ANY");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementPresent(
-			key_card = "Minium",
-			locator1 = "Card#CARD_TITLE",
-			value1 = "Minium");
+			PagesAdmin.changeSiteCurrentTheme(themeName = "test-theme-7-4");
+		}
 	}
 
 	@priority = 3
@@ -390,6 +389,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(
@@ -429,6 +430,8 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
+		Navigator.gotoNavTab(navTab = "Look and Feel");
+
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(
@@ -445,31 +448,46 @@ definition {
 
 	@priority = 3
 	test EnableBlacklistedModuleAfterShutdown {
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\"]";
-		property test.name.skip.portal.instance = "BundleBlacklist#EnableBlacklistedModuleAfterShutdown";
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 
-		BundleBlacklist.viewProductMenuBlacklistedModule(
-			category = "System",
-			consoleText = "Stopping blacklisted bundle com.liferay.gogo.shell.web",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		task ("Given a blacklisted module") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+				osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.frontend.taglib.clay.sample.web\" ]");
 
-		Portlet.shutdownServer();
+			OSGiConfig.waitForOSGiConfig();
 
-		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+			WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.frontend.taglib.clay.sample.web");
+		}
 
-		Portlet.startServer(
-			deleteLiferayHome = "false",
-			keepOsGiState = "true");
+		task ("When the module is removed from the blacklist after shutdown") {
+			Portlet.shutdownServer();
 
-		AssertConsoleTextPresent(value1 = "STARTED com.liferay.gogo.shell.web");
+			OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config");
+		}
 
-		Navigator.openURL();
+		task ("And the portal is restarted") {
+			Portlet.startServer(
+				deleteLiferayHome = "false",
+				keepOsGiState = "true");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		task ("Then the module is enabled on startup") {
+			WaitForConsoleTextPresent(value1 = "Reinstalling bundle com.liferay.frontend.taglib.clay.sample.web");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+
+			Portlet.viewPG(portletName = "Clay Sample");
+		}
 	}
 
 	@priority = 5
@@ -631,6 +649,8 @@ definition {
 			pageName = "Search");
 
 		Navigator.gotoNavTab(navTab = "Design");
+
+		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		Theme.configureLookAndFeelSpecificLook();
 

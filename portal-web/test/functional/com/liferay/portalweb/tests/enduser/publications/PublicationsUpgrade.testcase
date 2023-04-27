@@ -210,7 +210,6 @@ definition {
 
 	@priority = 4
 	test ViewTemplateAndCreatePublicationWithItArchive7413u63 {
-		property custom.properties = "feature.flag.LPS-161313=true";
 		property data.archive.type = "data-archive-publications-with-template";
 		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";

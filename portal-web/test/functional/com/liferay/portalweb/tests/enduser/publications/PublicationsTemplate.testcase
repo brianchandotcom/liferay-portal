@@ -1,7 +1,7 @@
 @component-name = "portal-publications"
 definition {
 
-	property custom.properties = "feature.flag.LPS-161313=true${line.separator}jsonws.web.service.paths.excludes=";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";

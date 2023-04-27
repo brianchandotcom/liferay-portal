@@ -51,10 +51,6 @@ else {
 	renderResponse.setTitle(LanguageUtil.get(request, "create-new-publication"));
 }
 
-if (!FeatureFlagManagerUtil.isEnabled("LPS-161313")) {
-	showTemplates = false;
-}
-
 portletDisplay.setURLBack(redirect);
 portletDisplay.setShowBackIcon(true);
 %>

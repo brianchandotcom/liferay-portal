@@ -79,56 +79,63 @@ public class WorkspacePlugin implements Plugin<Settings> {
 						for (File defaultRootDir :
 								projectConfigurator.getDefaultRootDirs()) {
 
-							Iterable<File> projectDirs =
-								projectConfigurator.getProjectDirs(defaultRootDir);
+							_includeProjects(
+								projectConfigurator, defaultRootDir);
+						}
+					}
+				}
 
-							Iterator<File> iterator = projectDirs.iterator();
+				private void _includeProjects(
+					ProjectConfigurator projectConfigurator,
+					File defaultRootDir) {
 
-							while (iterator.hasNext()) {
-								File projectDir = iterator.next();
+					Iterable<File> projectDirs =
+						projectConfigurator.getProjectDirs(defaultRootDir);
 
-								if (Objects.equals(currentDir, projectDir)) {
-									continue;
+					Iterator<File> iterator = projectDirs.iterator();
+
+					while (iterator.hasNext()) {
+						File projectDir = iterator.next();
+
+						if (Objects.equals(currentDir, projectDir)) {
+							continue;
+						}
+
+						for (String glob :
+								workspaceExtension.getDirExcludesGlobs()) {
+
+							Path relativeProjectPath = rootDirPath.relativize(
+								projectDir.toPath());
+
+							PathMatcher pathMatcher = fileSystem.getPathMatcher(
+								"glob:" + glob);
+
+							if (pathMatcher.matches(relativeProjectPath)) {
+								Project rootProject = gradle.getRootProject();
+
+								Logger logger = rootProject.getLogger();
+
+								if (logger.isInfoEnabled()) {
+									logger.info(
+										"Skipping project evaluation for {} " +
+											"because it matches the exclude " +
+												"pattern {}.",
+										relativeProjectPath, glob);
 								}
 
-								for (String glob :
-										workspaceExtension.getDirExcludesGlobs()) {
-
-									Path relativeProjectPath =
-										rootDirPath.relativize(projectDir.toPath());
-
-									PathMatcher pathMatcher =
-										fileSystem.getPathMatcher("glob:" + glob);
-
-									if (pathMatcher.matches(relativeProjectPath)) {
-										Project rootProject =
-											gradle.getRootProject();
-
-										Logger logger = rootProject.getLogger();
-
-										if (logger.isInfoEnabled()) {
-											logger.info(
-												"Skipping project evaluation for " +
-													"{} because it matches the " +
-														"exclude pattern {}.",
-												relativeProjectPath, glob);
-										}
-
-										iterator.remove();
-									}
-								}
-							}
-
-							for (File projectDir : projectDirs) {
-								String projectPath = GradleUtil.getProjectPath(
-									projectDir, rootDir);
-
-								settings.include(new String[] {projectPath});
-
-								_projectConfiguratorsMap.put(
-									projectPath, projectConfigurator);
+								iterator.remove();
 							}
 						}
+					}
+
+					for (File projectDir : projectDirs) {
+						String projectPath = GradleUtil.getProjectPath(
+							projectDir, rootDir);
+
+						settings.include(new String[] {projectPath});
+
+						_projectConfiguratorsMap.put(
+							projectPath, projectConfigurator);
 					}
 				}
 

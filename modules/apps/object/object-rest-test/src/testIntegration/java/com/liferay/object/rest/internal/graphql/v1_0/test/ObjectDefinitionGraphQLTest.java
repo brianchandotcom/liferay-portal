@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.graphql.test;
+package com.liferay.object.rest.internal.graphql.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.model.ListTypeDefinition;

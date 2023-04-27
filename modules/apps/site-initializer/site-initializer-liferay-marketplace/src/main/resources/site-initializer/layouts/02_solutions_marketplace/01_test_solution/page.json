@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/test-solution",
+	"hidden": false,
+	"name": "Test Solution",
+	"name_i18n": {
+		"en_US": "Test Solution"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

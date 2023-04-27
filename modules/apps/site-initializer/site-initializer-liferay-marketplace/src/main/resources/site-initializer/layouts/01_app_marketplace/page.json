@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/home",
+	"hidden": false,
+	"name": "App Marketplace",
+	"name_i18n": {
+		"en_US": "App Marketplace"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

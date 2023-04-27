@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.internal.apache.logging.log4j.core;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
@@ -25,7 +24,6 @@ import java.io.Serializable;
 
 import java.util.Objects;
 
-import org.apache.felix.cm.PersistenceManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
@@ -37,9 +35,6 @@ import org.apache.logging.log4j.message.Message;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Sam Ziemer
@@ -142,8 +137,7 @@ public class UpgradeLogAppender implements Appender {
 			_upgradeRecorder.stop();
 
 			if (_upgradeReport != null) {
-				_upgradeReport.generateReport(
-					_persistenceManager, _releaseManager, _upgradeRecorder);
+				_upgradeReport.generateReport(_upgradeRecorder);
 
 				_upgradeReport = null;
 			}
@@ -156,16 +150,6 @@ public class UpgradeLogAppender implements Appender {
 
 	private static final Logger _rootLogger =
 		(Logger)LogManager.getRootLogger();
-
-	@Reference
-	private PersistenceManager _persistenceManager;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ReleaseManager _releaseManager;
 
 	private volatile boolean _started;
 

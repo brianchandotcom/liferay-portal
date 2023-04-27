@@ -588,12 +588,12 @@ public interface CompanyLocalService
 	 * Updates the names of the company's current and next search indexes.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param indexNameCur the name of the company's current search index
+	 * @param indexNameCurrent the name of the company's current search index
 	 * @param indexNameNext the name of the company's next search index
 	 * @return the company with the primary key
 	 */
 	public Company updateIndexNames(
-			long companyId, String indexNameCur, String indexNameNext)
+			long companyId, String indexNameCurrent, String indexNameNext)
 		throws PortalException;
 
 	/**

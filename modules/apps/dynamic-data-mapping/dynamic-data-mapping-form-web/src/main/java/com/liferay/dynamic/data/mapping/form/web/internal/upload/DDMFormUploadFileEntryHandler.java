@@ -21,10 +21,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -123,13 +121,10 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 	private long _getDDMFormDefaultUserId(long companyId)
 		throws PortalException {
 
-		Company company = _companyLocalService.getCompany(companyId);
+		User user = _userLocalService.getUserByScreenName(
+			companyId, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
 
-		return _userLocalService.getUserIdByEmailAddress(
-			companyId,
-			StringBundler.concat(
-				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME,
-				StringPool.AT, company.getMx()));
+		return user.getUserId();
 	}
 
 	private void _validateAttachmentObjectField(

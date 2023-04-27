@@ -51,7 +51,7 @@ public class GraphQLDTOContributorRequestContext
 
 	@Override
 	public Class<?> getResourceClass() {
-		return _graphQLDTOContributor.getResourceClass();
+		return _graphQLDTOContributor.getResourceClass(_operation);
 	}
 
 	@Override

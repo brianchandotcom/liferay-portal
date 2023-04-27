@@ -72,7 +72,7 @@ public interface GraphQLDTOContributor<D, R> {
 		return null;
 	}
 
-	public Class<?> getResourceClass();
+	public Class<?> getResourceClass(Operation operation);
 
 	public Method getResourceMethod(Operation operation);
 

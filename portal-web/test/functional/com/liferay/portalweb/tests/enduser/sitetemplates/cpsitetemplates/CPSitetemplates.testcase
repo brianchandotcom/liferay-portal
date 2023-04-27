@@ -480,9 +480,6 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-1: Verify that site template propagation works well after the conflicting layout friendly URL is modified."
 	@priority = 4
 	test AssertSiteTemplatePropagationAfterConflictingFriendlyURLIsModified {
-		property custom.properties = "feature.flag.LPS-166286=true";
-		property portal.release = "false";
-
 		task ("Given: Add new site template and a new site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
@@ -526,9 +523,6 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-3: Verify that site template propagation works well on child page."
 	@priority = 4
 	test AssertSiteTemplatePropagationOnChildPage {
-		property custom.properties = "feature.flag.LPS-166286=true";
-		property portal.release = "false";
-
 		task ("Given: Add new site template and a new site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
@@ -548,6 +542,18 @@ definition {
 				siteTemplateName = "Site Template Name");
 
 			PageEditor.publish();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			if (IsElementPresent(index = 1, key_itemName = "Page A", locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS", value1 = "Draft")) {
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Edit",
+					pageName = "Page A");
+
+				PageEditor.publish();
+			}
 
 			SiteTemplates.addSitePageViaSiteTemplateCP(
 				pageName = "Page B",
@@ -589,8 +595,6 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-2: Verify that site template propagation works well on private page."
 	@priority = 4
 	test AssertSiteTemplatePropagationOnPrivatePage {
-		property custom.properties = "feature.flag.LPS-166286=true";
-		property portal.release = "false";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "CPSitetemplates#AssertSiteTemplatePropagationOnPrivatePage";
 
@@ -613,6 +617,18 @@ definition {
 				siteTemplateName = "Site Template Name");
 
 			PageEditor.publish();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			if (IsElementPresent(index = 1, key_itemName = "Page A", locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS", value1 = "Draft")) {
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Edit",
+					pageName = "Page A");
+
+				PageEditor.publish();
+			}
 
 			takeScreenshot();
 
@@ -1303,8 +1319,6 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-5: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for content page."
 	@priority = 4
 	test SiteCanReuseCachedSiteTemplateLarFileForContentPage {
-		property custom.properties = "feature.flag.LPS-166286=true";
-		property portal.release = "false";
 		property test.name.skip.portal.instance = "CPSitetemplates#SiteCanReuseCachedSiteTemplateLarFileForContentPage";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -1374,8 +1388,6 @@ definition {
 	@description = "This is a use case for LPS-166286. TC-4: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for widget page."
 	@priority = 4
 	test SiteCanReuseCachedSiteTemplateLarFileForWidgetPage {
-		property custom.properties = "feature.flag.LPS-166286=true";
-		property portal.release = "false";
 		property test.name.skip.portal.instance = "CPSitetemplates#SiteCanReuseCachedSiteTemplateLarFileForWidgetPage";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});

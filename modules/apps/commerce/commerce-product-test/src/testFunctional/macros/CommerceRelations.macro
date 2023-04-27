@@ -109,10 +109,21 @@ definition {
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
 			value1 = ${searchTerm});
 
-		if (IsElementNotPresent(key_entryName = ${entryName}, key_title = ${title}, locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT")) {
+		while ((IsElementNotPresent(key_entryName = ${entryName}, key_title = ${title}, locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT")) && (maxIterations = "5")) {
 			echo("The element is not present, retrying...");
 
 			Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+
+			Type(
+				key_title = ${title},
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+				value1 = ${searchTerm});
+		}
+
+		if (IsElementPresent(key_eventDescription = "No items were found.", locator1 = "CalendarViewEventDetails#EVENT_DESCRIPTION")) {
+			echo("The element is not present, refreshing the page and retrying...");
+
+			Refresh();
 
 			Type(
 				key_title = ${title},

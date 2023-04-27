@@ -52,7 +52,7 @@ export function PublisherGatePage() {
 						className="publisher-gate-page-button"
 						onClick={() => {
 							window.location.href =
-								'http://marketplace.liferay.com/';
+								'https://marketplace.liferay.com/';
 						}}
 					>
 						Go Back to Marketplace

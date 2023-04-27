@@ -35,6 +35,7 @@ import {
 } from './PurchasedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
+import {Liferay} from '../../liferay/liferay';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -355,6 +356,7 @@ export function PurchasedAppsDashboardPage() {
 			{selectedNavigationItem === 'My Apps' && (
 				<DashboardPage
 					buttonMessage="Add Apps"
+					buttonHref="https://marketplace.liferay.com/"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={messages}
 				>

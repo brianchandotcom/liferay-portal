@@ -351,7 +351,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		const appName =
 			typeof app?.name === 'string' ? app?.name : app?.name.en_US;
 
-		const appNameURL = appName.trim().toLowerCase().replace(' ', '-');
+		const appNameURL = appName.trim().toLowerCase().replaceAll(' ', '-');
 
 		const nextStepsCallbackURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
 			`/p/${appNameURL}`,

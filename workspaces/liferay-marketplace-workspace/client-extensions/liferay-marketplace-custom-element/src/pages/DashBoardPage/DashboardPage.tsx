@@ -45,12 +45,6 @@ export function DashboardPage({
 	selectedApp,
 	setSelectedApp,
 }: DashBoardPageProps) {
-
-	const baseURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
-		`/customer-dashboard` || `/publisher-dashboard`,
-		''
-	)}`;
-	
 	return (
 		<div className="dashboard-page-container">
 			<div>
@@ -70,7 +64,11 @@ export function DashboardPage({
 								/>
 
 								{buttonMessage && (
-									<a href={buttonHref ?? `${baseURL}/create-new-app`}>
+									<a
+										href={
+											buttonHref ? `${buttonHref}` : '#'
+										}
+									>
 										<button
 											className="dashboard-page-body-header-button"
 											onClick={() =>

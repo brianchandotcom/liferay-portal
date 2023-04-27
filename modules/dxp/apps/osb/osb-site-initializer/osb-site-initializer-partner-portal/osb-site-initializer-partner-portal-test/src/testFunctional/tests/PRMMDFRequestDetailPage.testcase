@@ -1,187 +1,186 @@
 @component-name = "OSB Site Initializer Partner Portal"
 definition {
 
-    property custom.properties = "feature.flag.LPS-135430=true";
-    property osgi.modules.includes = "osb-site-initializer-partner-portal";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-    property testray.main.component.name = "OSB Site Initializer Partner Portal";
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
 
-    setUp {
-        task ("Set up instance and sign in") {
-            TestCase.setUpPortalInstance();
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-            User.firstLoginPG();
-        }
+			User.firstLoginPG();
+		}
 
-        task ("Create a new Partner Portal Site and connect with Salesforce") {
-            PRMUtils.addSite();
+		task ("Create a new Partner Portal Site and connect with Salesforce") {
+			PRMUtils.addSite();
 
-            PRMUtils.connectWithSalesforce();
-        }
+			PRMUtils.connectWithSalesforce();
+		}
 
-        task ("Add a partner user") {
-            JSONUser.addUser(
-                userEmailAddress = "partner@liferay.com",
-                userFirstName = "partner",
-                userLastName = "partner",
-                userScreenName = "partner");
+		task ("Add a partner user") {
+			JSONUser.addUser(
+				userEmailAddress = "partner@liferay.com",
+				userFirstName = "partner",
+				userLastName = "partner",
+				userScreenName = "partner");
 
-            JSONUser.setFirstPassword(
-                agreeToTermsAndAnswerReminderQuery = "true",
-                requireReset = "false",
-                userEmailAddress = "partner@liferay.com");
-        }
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "partner@liferay.com");
+		}
 
-        task ("Add a manager user with a Manager role") {
-            JSONUser.addUserWithRole(
-                roleTitle = "Channel General Manager",
-                userEmailAddress = "manager@liferay.com",
-                userFirstName = "manager",
-                userLastName = "manager",
-                userScreenName = "manager");
+		task ("Add a manager user with a Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Channel General Manager",
+				userEmailAddress = "manager@liferay.com",
+				userFirstName = "manager",
+				userLastName = "manager",
+				userScreenName = "manager");
 
-            JSONUser.setFirstPassword(
-                agreeToTermsAndAnswerReminderQuery = "true",
-                requireReset = "false",
-                userEmailAddress = "manager@liferay.com");
-        }
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "manager@liferay.com");
+		}
 
-        task ("Add a new account and assign the created user to the account") {
-            JSONPRM.addAccount();
+		task ("Add a new account and assign the created user to the account") {
+			JSONPRM.addAccount();
 
-            JSONAccountEntryUser.addExistUsertoAccount(
-                accountEntryName = "Company Name 1",
-                userEmailAddress = "partner@liferay.com");
-        }
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "partner@liferay.com");
+		}
 
-        task ("Go to Partner Portal and login with the created user") {
-            User.logoutAndLoginPG(
-                userLoginEmailAddress = "partner@liferay.com",
-                userLoginFullName = "partner");
+		task ("Go to Partner Portal and login with the created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
 
-            PRMUtils.gotoPRM();
-        }
+			PRMUtils.gotoPRM();
+		}
 
-        task ("Create a new MDF Request") {
-            JSONPRM.createMDFRequest(
-                accountEntryName = "Company Name 1",
-                budgetValueList = "3000,2000",
-                campaignName = "Campaign Name 1");
-        }
-    }
+		task ("Create a new MDF Request") {
+			JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				budgetValueList = "3000,2000",
+				campaignName = "Campaign Name 1");
+		}
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        if (${testPortalInstance} == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            PRMUtils.tearDown();
-        }
-    }
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
 
-    @description = "This is a test for LPS-182000. Verify that when an activity is claimed, the activity status changes to Claimed"
-    @priority = 4
-    test ViewActivityStatusWhenActivityIsClaimed {
-        task ("Given that a Manager user is logged in and approves the created MDF") {
-            User.logoutAndLoginPG(
-                userLoginEmailAddress = "manager@liferay.com",
-                userLoginFullName = "manager");
+	@description = "This is a test for LPS-182000. Verify that when an activity is claimed, the activity status changes to Claimed"
+	@priority = 4
+	test ViewActivityStatusWhenActivityIsClaimed {
+		task ("Given that a Manager user is logged in and approves the created MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
 
-            JSONPRM.changeMDFStatus(
-                mdfStatus = "Approved",
-                requestId = ${staticRequestId});
-        }
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "Approved",
+				requestId = ${staticRequestId});
+		}
 
-        task ("When the partner logs in and go to created MDF") {
-            User.logoutAndLoginPG(
-                userLoginEmailAddress = "partner@liferay.com",
-                userLoginFullName = "partner");
+		task ("When the partner logs in and go to created MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
 
-            PRMNavigator.openSitePage(pageName = "MDF Requests");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-            PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
-        }
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+		}
 
-        task ("And the Partner creates a new claim") {
-            PRMMDFClaim.createNewClaim(
-                listLeads = "Document_1.xlsx",
-                reimbursementInvoice = "Document_1.png",
-                thirdInvoice = "Document_1.png");
-        }
+		task ("And the Partner creates a new claim") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+		}
 
-        task ("Then the activity status will be updated to 'Claimed'") {
-            PRMMDFRequest.viewActivityStatus(
-                activityName = "Activity Name",
-                statusType = "Claim",
-                statusValue = "Claimed");
-        }
-    }
+		task ("Then the activity status will be updated to 'Claimed'") {
+			PRMMDFRequest.viewActivityStatus(
+				activityName = "Activity Name",
+				statusType = "Claim",
+				statusValue = "Claimed");
+		}
+	}
 
-    @description = "This is a test for LPS-181999. Verify that when an MDf is approved, the activity status is Approved and Unclaimed"
-    @priority = 4
-    test ViewActivityStatusWhenMDFIsApproved {
-        task ("Given the Manager user is logged in and goes to MDF listing page") {
-            User.logoutAndLoginPG(
-                userLoginEmailAddress = "manager@liferay.com",
-                userLoginFullName = "manager");
+	@description = "This is a test for LPS-181999. Verify that when an MDf is approved, the activity status is Approved and Unclaimed"
+	@priority = 4
+	test ViewActivityStatusWhenMDFIsApproved {
+		task ("Given the Manager user is logged in and goes to MDF listing page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "manager");
 
-            PRMNavigator.openSitePage(pageName = "MDF Requests");
-        }
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
 
-        task ("And the manager approves the created MDF") {
-            PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+		task ("And the manager approves the created MDF") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
 
-            PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
-        }
+			PRMMDFRequest.changeMDFStatus(statusButton = "Approve");
+		}
 
-        task ("When the partner logs in and go to created MDF") {
-            User.logoutAndLoginPG(
-                userLoginEmailAddress = "partner@liferay.com",
-                userLoginFullName = "partner");
+		task ("When the partner logs in and go to created MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "partner@liferay.com",
+				userLoginFullName = "partner");
 
-            PRMNavigator.openSitePage(pageName = "MDF Requests");
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-            PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
-        }
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+		}
 
-        task ("Then the activity status will be 'Approved' and 'Unclaimed'") {
-            PRMMDFRequest.viewActivityStatus(
-                activityName = "Activity Name",
-                statusType = "Claim",
-                statusValue = "Unclaimed");
+		task ("Then the activity status will be 'Approved' and 'Unclaimed'") {
+			PRMMDFRequest.viewActivityStatus(
+				activityName = "Activity Name",
+				statusType = "Claim",
+				statusValue = "Unclaimed");
 
-            PRMMDFRequest.viewActivityStatus(
-                activityName = "Activity Name",
-                statusType = "Request",
-                statusValue = "Approved");
-        }
-    }
+			PRMMDFRequest.viewActivityStatus(
+				activityName = "Activity Name",
+				statusType = "Request",
+				statusValue = "Approved");
+		}
+	}
 
-    @description = "This is a test for LPS-181774. Verify that when an MDF is submitted, the activity status is Submitted and Unclaimed"
-    @priority = 4
-    test ViewActivityStatusWhenMDFIsSubmitted {
-        task ("When the partner go to the created MDF") {
-            PRMNavigator.openSitePage(pageName = "MDF Requests");
+	@description = "This is a test for LPS-181774. Verify that when an MDF is submitted, the activity status is Submitted and Unclaimed"
+	@priority = 4
+	test ViewActivityStatusWhenMDFIsSubmitted {
+		task ("When the partner go to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
-            PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
-        }
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+		}
 
-        task ("Then the activity status will be 'Submitted' and 'Unclaimed") {
-            PRMMDFRequest.viewActivityStatus(
-                activityName = "Activity Name",
-                statusType = "Claim",
-                statusValue = "Unclaimed");
+		task ("Then the activity status will be 'Submitted' and 'Unclaimed") {
+			PRMMDFRequest.viewActivityStatus(
+				activityName = "Activity Name",
+				statusType = "Claim",
+				statusValue = "Unclaimed");
 
-            PRMMDFRequest.viewActivityStatus(
-                activityName = "Activity Name",
-                statusType = "Request",
-                statusValue = "Submitted");
-        }
-    }
-
+			PRMMDFRequest.viewActivityStatus(
+				activityName = "Activity Name",
+				statusType = "Request",
+				statusValue = "Submitted");
+		}
+	}
 
 }

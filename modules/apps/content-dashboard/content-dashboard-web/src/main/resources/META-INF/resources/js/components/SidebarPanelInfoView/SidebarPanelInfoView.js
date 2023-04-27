@@ -19,40 +19,15 @@ import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classnames from 'classnames';
-import {getSessionValue} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useLayoutEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
-import {
-	DEFAULT_ACTIVE_PANEL_TAB,
-	TABS_STATE_SESSION_KEY,
-} from '../../utils/constants';
+import {TABS_STATE_SESSION_KEY} from '../../utils/constants';
 import Sidebar from '../Sidebar';
 import DetailsContent from './DetailsContent';
 import ManageCollaborators from './ManageCollaborators';
 import Subscribe from './Subscribe';
 import VersionsContent from './VersionsContent';
-
-const useInitialActiveTabState = (singlePageApplicationEnabled) => {
-	const [activeTab, setActiveTab] = useState(
-		singlePageApplicationEnabled ? null : DEFAULT_ACTIVE_PANEL_TAB
-	);
-
-	useLayoutEffect(() => {
-		if (singlePageApplicationEnabled) {
-			getSessionValue(TABS_STATE_SESSION_KEY).then((value) => {
-				const parsedValue = parseInt(value, 10);
-				const safeValue = isNaN(parsedValue)
-					? DEFAULT_ACTIVE_PANEL_TAB
-					: parsedValue;
-
-				setActiveTab(safeValue);
-			});
-		}
-	}, [singlePageApplicationEnabled]);
-
-	return [activeTab, setActiveTab];
-};
 
 const SidebarPanelInfoView = ({
 	classPK,
@@ -66,6 +41,7 @@ const SidebarPanelInfoView = ({
 	specificFields = {},
 	subscribe,
 	subType,
+	tabsState,
 	tags = [],
 	title,
 	type,
@@ -77,9 +53,7 @@ const SidebarPanelInfoView = ({
 	viewURLs = [],
 	vocabularies = {},
 }) => {
-	const [activeTabKeyValue, setActiveTabKeyValue] = useInitialActiveTabState(
-		singlePageApplicationEnabled
-	);
+	const [activeTabKeyValue, setActiveTabKeyValue] = useState(tabsState);
 
 	const showTabs = !!getItemVersionsURL;
 
@@ -273,6 +247,7 @@ SidebarPanelInfoView.propTypes = {
 	singlePageApplicationEnabled: PropTypes.bool.isRequired,
 	specificFields: PropTypes.object.isRequired,
 	subType: PropTypes.string.isRequired,
+	tabsState: PropTypes.number.isRequired,
 	tags: PropTypes.array,
 	title: PropTypes.string.isRequired,
 	user: PropTypes.object.isRequired,

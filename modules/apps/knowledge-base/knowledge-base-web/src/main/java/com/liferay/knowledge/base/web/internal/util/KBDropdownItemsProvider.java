@@ -813,6 +813,13 @@ public class KBDropdownItemsProvider {
 					"itemId", String.valueOf(kbFolder.getKbFolderId()));
 				dropdownItem.putData("itemType", "folder");
 				dropdownItem.putData(
+					"moveKBItemActionURL",
+					PortletURLBuilder.createActionURL(
+						_liferayPortletResponse
+					).setActionName(
+						"/knowledge_base/move_kb_object"
+					).buildString());
+				dropdownItem.putData(
 					"moveKBItemModalURL",
 					PortletURLBuilder.createRenderURL(
 						_liferayPortletResponse
@@ -822,13 +829,6 @@ public class KBDropdownItemsProvider {
 						"itemToMoveId", kbFolder.getKbFolderId()
 					).setWindowState(
 						LiferayWindowState.POP_UP
-					).buildString());
-				dropdownItem.putData(
-					"moveKBItemActionURL",
-					PortletURLBuilder.createActionURL(
-						_liferayPortletResponse
-					).setActionName(
-						"/knowledge_base/move_kb_object"
 					).buildString());
 
 				dropdownItem.setIcon("move-folder");

@@ -216,7 +216,7 @@ definition {
 				highestEducation = "Masters",
 				lastName = "Model",
 				maritalStatus = "Single",
-				militaryAffiliation = "None",
+				millitaryAffiliation = "None",
 				occupation = "Engineer",
 				relationToContact = "Spouse");
 

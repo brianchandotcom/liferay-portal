@@ -213,12 +213,14 @@ public class ObjectDefinitionResourceTest
 
 		Status status = new Status() {
 			{
-				code = 0;
-				label = WorkflowConstants.getStatusLabel(0);
+				code = WorkflowConstants.STATUS_APPROVED;
+				label = WorkflowConstants.getStatusLabel(
+					WorkflowConstants.STATUS_APPROVED);
 				label_i18n = _language.get(
 					LanguageResources.getResourceBundle(
 						LocaleUtil.getDefault()),
-					WorkflowConstants.getStatusLabel(0));
+					WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_APPROVED));
 			}
 		};
 

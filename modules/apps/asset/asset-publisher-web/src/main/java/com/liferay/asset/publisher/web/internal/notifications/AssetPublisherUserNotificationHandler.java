@@ -37,10 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER,
 	service = UserNotificationHandler.class
 )
-public class AssetPublisherNotificationHandler
+public class AssetPublisherUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
-	public AssetPublisherNotificationHandler() {
+	public AssetPublisherUserNotificationHandler() {
 		setPortletId(AssetPublisherPortletKeys.ASSET_PUBLISHER);
 	}
 

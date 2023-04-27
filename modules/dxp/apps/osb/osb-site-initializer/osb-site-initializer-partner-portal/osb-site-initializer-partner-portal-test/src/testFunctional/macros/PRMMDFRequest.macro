@@ -575,6 +575,13 @@ definition {
 			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
 	}
 
+	@summary = "Assert the Total Cost value of the budget, inside the activities page of the MDF Request"
+	macro viewBudgetValue {
+		AssertTextEquals(
+			locator1 = "PRMMDFRequest#ACTIVITY_TOTAL_COST",
+			value1 = ${totalCost});
+	}
+
 	@summary = "Assert button is not clickable"
 	macro viewDisabledButton {
 		AssertElementPresent(
@@ -814,13 +821,6 @@ definition {
 		AssertElementPresent(
 			key_statusButton = "Approve",
 			locator1 = "PRMMDFRequest#STATUS_BUTTON");
-	}
-
-	@summary = "Assert the Total Cost value of the budget, inside the activities page of the MDF Request"
-	macro viewBudgetValue {
-		AssertTextEquals(
-			locator1 = "PRMMDFRequest#ACTIVITY_TOTAL_COST",
-			value1 = ${totalCost});
 	}
 
 }

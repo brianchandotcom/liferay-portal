@@ -102,11 +102,11 @@ public class OpenAPIResourceImpl {
 
 			add(AccountChannelShippingOptionResourceImpl.class);
 
-			add(AccountGroupResourceImpl.class);
-
 			add(AccountMemberResourceImpl.class);
 
 			add(AccountOrganizationResourceImpl.class);
+
+			add(AdminAccountGroupResourceImpl.class);
 
 			add(UserResourceImpl.class);
 

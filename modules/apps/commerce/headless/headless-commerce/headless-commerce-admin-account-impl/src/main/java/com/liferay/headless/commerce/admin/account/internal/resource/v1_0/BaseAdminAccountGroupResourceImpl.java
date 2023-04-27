@@ -14,9 +14,9 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AdminAccountGroup;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
-import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
+import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -63,7 +63,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -75,9 +74,9 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseAccountGroupResourceImpl
-	implements AccountGroupResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<AccountGroup> {
+public abstract class BaseAdminAccountGroupResourceImpl
+	implements AdminAccountGroupResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<AdminAccountGroup> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -105,13 +104,15 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path("/accountGroups")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<AccountGroup> getAccountGroupsPage(
+	public Page<AdminAccountGroup> getAccountGroupsPage(
 			@javax.ws.rs.core.Context Filter filter,
 			@javax.ws.rs.core.Context Pagination pagination,
 			@javax.ws.rs.core.Context Sort[] sorts)
@@ -123,135 +124,23 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Parameters(
+	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "contentType"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fieldNames"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
 		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accountGroups/export-batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postAccountGroupsPageExportBatch(
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Sort[] sorts,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.DefaultValue("JSON")
-			@javax.ws.rs.QueryParam("contentType")
-			String contentType,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("fieldNames")
-			String fieldNames)
-		throws Exception {
-
-		vulcanBatchEngineExportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineExportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineExportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineExportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineExportTaskResource.setContextUser(contextUser);
-		vulcanBatchEngineExportTaskResource.setGroupLocalService(
-			groupLocalService);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineExportTaskResource.postExportTask(
-				AccountGroup.class.getName(), callbackURL, contentType,
-				fieldNames)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups' -d $'{"customFields": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/accountGroups")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public AccountGroup postAccountGroup(AccountGroup accountGroup)
+	public AdminAccountGroup postAccountGroup(
+			AdminAccountGroup adminAccountGroup)
 		throws Exception {
 
-		return new AccountGroup();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accountGroups/batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response postAccountGroupBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				AccountGroup.class.getName(), callbackURL, null, object)
-		).build();
+		return new AdminAccountGroup();
 	}
 
 	/**
@@ -268,7 +157,9 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
@@ -302,7 +193,9 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
@@ -310,20 +203,20 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public AccountGroup getAccountGroupByExternalReferenceCode(
+	public AdminAccountGroup getAccountGroupByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode)
 		throws Exception {
 
-		return new AccountGroup();
+		return new AdminAccountGroup();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/by-externalReferenceCode/{externalReferenceCode}' -d $'{"customFields": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/by-externalReferenceCode/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -334,7 +227,9 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
@@ -348,7 +243,7 @@ public abstract class BaseAccountGroupResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			AccountGroup accountGroup)
+			AdminAccountGroup adminAccountGroup)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -370,7 +265,9 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path("/accountGroups/{id}")
@@ -390,50 +287,6 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/accountGroups/batch")
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response deleteAccountGroupBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				AccountGroup.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/{id}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -445,25 +298,27 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path("/accountGroups/{id}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public AccountGroup getAccountGroup(
+	public AdminAccountGroup getAccountGroup(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id)
 		throws Exception {
 
-		return new AccountGroup();
+		return new AdminAccountGroup();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/{id}' -d $'{"customFields": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-account/v1.0/accountGroups/{id}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -474,7 +329,9 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
@@ -485,7 +342,7 @@ public abstract class BaseAccountGroupResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id,
-			AccountGroup accountGroup)
+			AdminAccountGroup adminAccountGroup)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -515,7 +372,9 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
@@ -523,7 +382,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<AccountGroup>
+	public Page<AdminAccountGroup>
 			getAccountByExternalReferenceCodeAccountGroupsPage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
@@ -557,13 +416,15 @@ public abstract class BaseAccountGroupResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AdminAccountGroup")
+		}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path("/accounts/{id}/accountGroups")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<AccountGroup> getAccountIdAccountGroupsPage(
+	public Page<AdminAccountGroup> getAccountIdAccountGroupsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			Long id,
@@ -576,55 +437,30 @@ public abstract class BaseAccountGroupResourceImpl
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<AccountGroup> accountGroups,
+			Collection<AdminAccountGroup> adminAccountGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
-			null;
-
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
-
-		if ("INSERT".equalsIgnoreCase(createStrategy)) {
-			accountGroupUnsafeConsumer = accountGroup -> postAccountGroup(
-				accountGroup);
-		}
-
-		if (accountGroupUnsafeConsumer == null) {
-			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy +
-					"\" is not supported for AccountGroup");
-		}
-
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				accountGroups, accountGroupUnsafeConsumer);
-		}
-		else {
-			for (AccountGroup accountGroup : accountGroups) {
-				accountGroupUnsafeConsumer.accept(accountGroup);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
 	public void delete(
-			Collection<AccountGroup> accountGroups,
+			Collection<AdminAccountGroup> adminAccountGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AccountGroup accountGroup : accountGroups) {
-			deleteAccountGroup(accountGroup.getId());
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray();
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("PARTIAL_UPDATE");
+		return SetUtil.fromArray();
 	}
 
 	@Override
@@ -647,12 +483,13 @@ public abstract class BaseAccountGroupResourceImpl
 	}
 
 	@Override
-	public Page<AccountGroup> read(
+	public Page<AdminAccountGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getAccountGroupsPage(filter, pagination, sorts);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -679,46 +516,12 @@ public abstract class BaseAccountGroupResourceImpl
 
 	@Override
 	public void update(
-			Collection<AccountGroup> accountGroups,
+			Collection<AdminAccountGroup> adminAccountGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
-			null;
-
-		String updateStrategy = (String)parameters.getOrDefault(
-			"updateStrategy", "UPDATE");
-
-		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
-			accountGroupUnsafeConsumer = accountGroup -> patchAccountGroup(
-				accountGroup.getId() != null ? accountGroup.getId() :
-					_parseLong((String)parameters.get("accountGroupId")),
-				accountGroup);
-		}
-
-		if (accountGroupUnsafeConsumer == null) {
-			throw new NotSupportedException(
-				"Update strategy \"" + updateStrategy +
-					"\" is not supported for AccountGroup");
-		}
-
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				accountGroups, accountGroupUnsafeConsumer);
-		}
-		else {
-			for (AccountGroup accountGroup : accountGroups) {
-				accountGroupUnsafeConsumer.accept(accountGroup);
-			}
-		}
-	}
-
-	private Long _parseLong(String value) {
-		if (value != null) {
-			return Long.parseLong(value);
-		}
-
-		return null;
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -727,8 +530,9 @@ public abstract class BaseAccountGroupResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<AccountGroup>, UnsafeConsumer<AccountGroup, Exception>,
-			 Exception> contextBatchUnsafeConsumer) {
+			<Collection<AdminAccountGroup>,
+			 UnsafeConsumer<AdminAccountGroup, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
@@ -984,8 +788,9 @@ public abstract class BaseAccountGroupResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<AccountGroup>, UnsafeConsumer<AccountGroup, Exception>,
-		 Exception> contextBatchUnsafeConsumer;
+		<Collection<AdminAccountGroup>,
+		 UnsafeConsumer<AdminAccountGroup, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -1005,6 +810,6 @@ public abstract class BaseAccountGroupResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseAccountGroupResourceImpl.class);
+		LogFactoryUtil.getLog(BaseAdminAccountGroupResourceImpl.class);
 
 }

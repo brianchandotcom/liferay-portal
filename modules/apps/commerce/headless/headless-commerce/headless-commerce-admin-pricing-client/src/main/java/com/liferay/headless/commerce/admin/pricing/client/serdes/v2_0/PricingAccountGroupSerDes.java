@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.account.client.serdes.v1_0;
+package com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0;
 
-import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AccountGroup;
-import com.liferay.headless.commerce.admin.account.client.json.BaseJSONParser;
+import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PricingAccountGroup;
+import com.liferay.headless.commerce.admin.pricing.client.json.BaseJSONParser;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -26,28 +26,28 @@ import java.util.TreeMap;
 import javax.annotation.Generated;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  * @generated
  */
 @Generated("")
-public class AccountGroupSerDes {
+public class PricingAccountGroupSerDes {
 
-	public static AccountGroup toDTO(String json) {
-		AccountGroupJSONParser accountGroupJSONParser =
-			new AccountGroupJSONParser();
+	public static PricingAccountGroup toDTO(String json) {
+		PricingAccountGroupJSONParser pricingAccountGroupJSONParser =
+			new PricingAccountGroupJSONParser();
 
-		return accountGroupJSONParser.parseToDTO(json);
+		return pricingAccountGroupJSONParser.parseToDTO(json);
 	}
 
-	public static AccountGroup[] toDTOs(String json) {
-		AccountGroupJSONParser accountGroupJSONParser =
-			new AccountGroupJSONParser();
+	public static PricingAccountGroup[] toDTOs(String json) {
+		PricingAccountGroupJSONParser pricingAccountGroupJSONParser =
+			new PricingAccountGroupJSONParser();
 
-		return accountGroupJSONParser.parseToDTOs(json);
+		return pricingAccountGroupJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(AccountGroup accountGroup) {
-		if (accountGroup == null) {
+	public static String toJSON(PricingAccountGroup pricingAccountGroup) {
+		if (pricingAccountGroup == null) {
 			return "null";
 		}
 
@@ -55,41 +55,17 @@ public class AccountGroupSerDes {
 
 		sb.append("{");
 
-		if (accountGroup.getCustomFields() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customFields\": ");
-
-			sb.append(_toJSON(accountGroup.getCustomFields()));
-		}
-
-		if (accountGroup.getExternalReferenceCode() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"externalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(accountGroup.getExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
-		if (accountGroup.getId() != null) {
+		if (pricingAccountGroup.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(accountGroup.getId());
+			sb.append(pricingAccountGroup.getId());
 		}
 
-		if (accountGroup.getName() != null) {
+		if (pricingAccountGroup.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -98,7 +74,7 @@ public class AccountGroupSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(accountGroup.getName()));
+			sb.append(_escape(pricingAccountGroup.getName()));
 
 			sb.append("\"");
 		}
@@ -109,95 +85,65 @@ public class AccountGroupSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AccountGroupJSONParser accountGroupJSONParser =
-			new AccountGroupJSONParser();
+		PricingAccountGroupJSONParser pricingAccountGroupJSONParser =
+			new PricingAccountGroupJSONParser();
 
-		return accountGroupJSONParser.parseToMap(json);
+		return pricingAccountGroupJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(AccountGroup accountGroup) {
-		if (accountGroup == null) {
+	public static Map<String, String> toMap(
+		PricingAccountGroup pricingAccountGroup) {
+
+		if (pricingAccountGroup == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (accountGroup.getCustomFields() == null) {
-			map.put("customFields", null);
-		}
-		else {
-			map.put(
-				"customFields", String.valueOf(accountGroup.getCustomFields()));
-		}
-
-		if (accountGroup.getExternalReferenceCode() == null) {
-			map.put("externalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"externalReferenceCode",
-				String.valueOf(accountGroup.getExternalReferenceCode()));
-		}
-
-		if (accountGroup.getId() == null) {
+		if (pricingAccountGroup.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(accountGroup.getId()));
+			map.put("id", String.valueOf(pricingAccountGroup.getId()));
 		}
 
-		if (accountGroup.getName() == null) {
+		if (pricingAccountGroup.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(accountGroup.getName()));
+			map.put("name", String.valueOf(pricingAccountGroup.getName()));
 		}
 
 		return map;
 	}
 
-	public static class AccountGroupJSONParser
-		extends BaseJSONParser<AccountGroup> {
+	public static class PricingAccountGroupJSONParser
+		extends BaseJSONParser<PricingAccountGroup> {
 
 		@Override
-		protected AccountGroup createDTO() {
-			return new AccountGroup();
+		protected PricingAccountGroup createDTO() {
+			return new PricingAccountGroup();
 		}
 
 		@Override
-		protected AccountGroup[] createDTOArray(int size) {
-			return new AccountGroup[size];
+		protected PricingAccountGroup[] createDTOArray(int size) {
+			return new PricingAccountGroup[size];
 		}
 
 		@Override
 		protected void setField(
-			AccountGroup accountGroup, String jsonParserFieldName,
+			PricingAccountGroup pricingAccountGroup, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "customFields")) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					accountGroup.setCustomFields(
-						(Map)AccountGroupSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "externalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					accountGroup.setExternalReferenceCode(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					accountGroup.setId(
+					pricingAccountGroup.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					accountGroup.setName((String)jsonParserFieldValue);
+					pricingAccountGroup.setName((String)jsonParserFieldValue);
 				}
 			}
 		}

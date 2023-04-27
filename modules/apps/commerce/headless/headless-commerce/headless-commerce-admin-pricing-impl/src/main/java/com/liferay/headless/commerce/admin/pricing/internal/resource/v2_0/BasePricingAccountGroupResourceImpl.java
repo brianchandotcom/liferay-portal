@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
+package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
-import com.liferay.headless.commerce.admin.order.dto.v1_0.AccountGroup;
-import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountGroupResource;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PricingAccountGroup;
+import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PricingAccountGroupResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,44 +44,84 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  * @generated
  */
 @Generated("")
-@javax.ws.rs.Path("/v1.0")
-public abstract class BaseAccountGroupResourceImpl
-	implements AccountGroupResource {
+@javax.ws.rs.Path("/v2.0")
+public abstract class BasePricingAccountGroupResourceImpl
+	implements PricingAccountGroupResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/order-rule-account-groups/{orderRuleAccountGroupId}/account-group'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/discount-account-groups/{discountAccountGroupId}/account-group'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "orderRuleAccountGroupId"
+				name = "discountAccountGroupId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "PricingAccountGroup"
+			)
+		}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/order-rule-account-groups/{orderRuleAccountGroupId}/account-group"
+		"/discount-account-groups/{discountAccountGroupId}/account-group"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public AccountGroup getOrderRuleAccountGroupAccountGroup(
+	public PricingAccountGroup getDiscountAccountGroupAccountGroup(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("orderRuleAccountGroupId")
-			Long orderRuleAccountGroupId)
+			@javax.ws.rs.PathParam("discountAccountGroupId")
+			Long discountAccountGroupId)
 		throws Exception {
 
-		return new AccountGroup();
+		return new PricingAccountGroup();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-pricing/v2.0/price-list-account-groups/{priceListAccountGroupId}/account-group'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "priceListAccountGroupId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "PricingAccountGroup"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/price-list-account-groups/{priceListAccountGroupId}/account-group"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public PricingAccountGroup getPriceListAccountGroupAccountGroup(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("priceListAccountGroupId")
+			Long priceListAccountGroupId)
+		throws Exception {
+
+		return new PricingAccountGroup();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -272,6 +312,6 @@ public abstract class BaseAccountGroupResourceImpl
 	protected SortParserProvider sortParserProvider;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseAccountGroupResourceImpl.class);
+		LogFactoryUtil.getLog(BasePricingAccountGroupResourceImpl.class);
 
 }

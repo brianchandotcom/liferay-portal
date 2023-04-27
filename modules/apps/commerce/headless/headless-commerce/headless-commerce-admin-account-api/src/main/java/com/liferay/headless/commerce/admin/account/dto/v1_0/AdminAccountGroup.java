@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.order.dto.v1_0;
+package com.liferay.headless.commerce.admin.account.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +36,9 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -45,18 +47,104 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountGroup")
+@GraphQLName("AdminAccountGroup")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AccountGroup")
-public class AccountGroup implements Serializable {
+@Schema(requiredProperties = {"name"})
+@XmlRootElement(name = "AdminAccountGroup")
+public class AdminAccountGroup implements Serializable {
 
-	public static AccountGroup toDTO(String json) {
-		return ObjectMapperUtil.readValue(AccountGroup.class, json);
+	public static AdminAccountGroup toDTO(String json) {
+		return ObjectMapperUtil.readValue(AdminAccountGroup.class, json);
 	}
 
-	public static AccountGroup unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(AccountGroup.class, json);
+	public static AdminAccountGroup unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(AdminAccountGroup.class, json);
 	}
+
+	@Schema
+	@Valid
+	public Map<String, ?> getCustomFields() {
+		return customFields;
+	}
+
+	public void setCustomFields(Map<String, ?> customFields) {
+		this.customFields = customFields;
+	}
+
+	@JsonIgnore
+	public void setCustomFields(
+		UnsafeSupplier<Map<String, ?>, Exception> customFieldsUnsafeSupplier) {
+
+		try {
+			customFields = customFieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, ?> customFields;
+
+	@Schema(example = "AdminAccountGroup Description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@JsonIgnore
+	public void setDescription(
+		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+
+		try {
+			description = descriptionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String description;
+
+	@Schema(example = "AB-34098-789-N")
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
 
 	@DecimalMin("0")
 	@Schema(example = "30130")
@@ -85,7 +173,7 @@ public class AccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(example = "AccountGroup Name")
+	@Schema(example = "AdminAccountGroup Name")
 	public String getName() {
 		return name;
 	}
@@ -109,6 +197,7 @@ public class AccountGroup implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String name;
 
 	@Override
@@ -117,13 +206,13 @@ public class AccountGroup implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AccountGroup)) {
+		if (!(object instanceof AdminAccountGroup)) {
 			return false;
 		}
 
-		AccountGroup accountGroup = (AccountGroup)object;
+		AdminAccountGroup adminAccountGroup = (AdminAccountGroup)object;
 
-		return Objects.equals(toString(), accountGroup.toString());
+		return Objects.equals(toString(), adminAccountGroup.toString());
 	}
 
 	@Override
@@ -137,6 +226,44 @@ public class AccountGroup implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (customFields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append(_toJSON(customFields));
+		}
+
+		if (description != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(description));
+
+			sb.append("\"");
+		}
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -169,7 +296,7 @@ public class AccountGroup implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.AccountGroup",
+		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.AdminAccountGroup",
 		name = "x-class-name"
 	)
 	public String xClassName;

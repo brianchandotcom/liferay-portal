@@ -14,12 +14,12 @@
 
 package com.liferay.headless.commerce.admin.account.client.resource.v1_0;
 
-import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AccountGroup;
+import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AdminAccountGroup;
 import com.liferay.headless.commerce.admin.account.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.problem.Problem;
-import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountGroupSerDes;
+import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AdminAccountGroupSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -35,13 +35,13 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface AccountGroupResource {
+public interface AdminAccountGroupResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<AccountGroup> getAccountGroupsPage(
+	public Page<AdminAccountGroup> getAccountGroupsPage(
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -49,29 +49,12 @@ public interface AccountGroupResource {
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
-	public void postAccountGroupsPageExportBatch(
-			String filterString, String sortString, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postAccountGroupsPageExportBatchHttpResponse(
-				String filterString, String sortString, String callbackURL,
-				String contentType, String fieldNames)
-		throws Exception;
-
-	public AccountGroup postAccountGroup(AccountGroup accountGroup)
+	public AdminAccountGroup postAccountGroup(
+			AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postAccountGroupHttpResponse(
-			AccountGroup accountGroup)
-		throws Exception;
-
-	public void postAccountGroupBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse postAccountGroupBatchHttpResponse(
-			String callbackURL, Object object)
+			AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
 	public void deleteAccountGroupByExternalReferenceCode(
@@ -83,7 +66,7 @@ public interface AccountGroupResource {
 				String externalReferenceCode)
 		throws Exception;
 
-	public AccountGroup getAccountGroupByExternalReferenceCode(
+	public AdminAccountGroup getAccountGroupByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
@@ -93,12 +76,13 @@ public interface AccountGroupResource {
 		throws Exception;
 
 	public void patchAccountGroupByExternalReferenceCode(
-			String externalReferenceCode, AccountGroup accountGroup)
+			String externalReferenceCode, AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			patchAccountGroupByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode, AccountGroup accountGroup)
+				String externalReferenceCode,
+				AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
 	public void deleteAccountGroup(Long id) throws Exception;
@@ -106,26 +90,19 @@ public interface AccountGroupResource {
 	public HttpInvoker.HttpResponse deleteAccountGroupHttpResponse(Long id)
 		throws Exception;
 
-	public void deleteAccountGroupBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse deleteAccountGroupBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public AccountGroup getAccountGroup(Long id) throws Exception;
+	public AdminAccountGroup getAccountGroup(Long id) throws Exception;
 
 	public HttpInvoker.HttpResponse getAccountGroupHttpResponse(Long id)
 		throws Exception;
 
-	public void patchAccountGroup(Long id, AccountGroup accountGroup)
+	public void patchAccountGroup(Long id, AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchAccountGroupHttpResponse(
-			Long id, AccountGroup accountGroup)
+			Long id, AdminAccountGroup adminAccountGroup)
 		throws Exception;
 
-	public Page<AccountGroup>
+	public Page<AdminAccountGroup>
 			getAccountByExternalReferenceCodeAccountGroupsPage(
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
@@ -135,7 +112,7 @@ public interface AccountGroupResource {
 				String externalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public Page<AccountGroup> getAccountIdAccountGroupsPage(
+	public Page<AdminAccountGroup> getAccountIdAccountGroupsPage(
 			Long id, Pagination pagination)
 		throws Exception;
 
@@ -156,8 +133,8 @@ public interface AccountGroupResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public AccountGroupResource build() {
-			return new AccountGroupResourceImpl(this);
+		public AdminAccountGroupResource build() {
+			return new AdminAccountGroupResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -245,10 +222,10 @@ public interface AccountGroupResource {
 
 	}
 
-	public static class AccountGroupResourceImpl
-		implements AccountGroupResource {
+	public static class AdminAccountGroupResourceImpl
+		implements AdminAccountGroupResource {
 
-		public Page<AccountGroup> getAccountGroupsPage(
+		public Page<AdminAccountGroup> getAccountGroupsPage(
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -304,7 +281,7 @@ public interface AccountGroupResource {
 			}
 
 			try {
-				return Page.of(content, AccountGroupSerDes::toDTO);
+				return Page.of(content, AdminAccountGroupSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -366,129 +343,12 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAccountGroupsPageExportBatch(
-				String filterString, String sortString, String callbackURL,
-				String contentType, String fieldNames)
+		public AdminAccountGroup postAccountGroup(
+				AdminAccountGroup adminAccountGroup)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAccountGroupsPageExportBatchHttpResponse(
-					filterString, sortString, callbackURL, contentType,
-					fieldNames);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				postAccountGroupsPageExportBatchHttpResponse(
-					String filterString, String sortString, String callbackURL,
-					String contentType, String fieldNames)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			if (contentType != null) {
-				httpInvoker.parameter(
-					"contentType", String.valueOf(contentType));
-			}
-
-			if (fieldNames != null) {
-				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-account/v1.0/accountGroups/export-batch");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public AccountGroup postAccountGroup(AccountGroup accountGroup)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postAccountGroupHttpResponse(accountGroup);
+				postAccountGroupHttpResponse(adminAccountGroup);
 
 			String content = httpResponse.getContent();
 
@@ -538,7 +398,7 @@ public interface AccountGroupResource {
 			}
 
 			try {
-				return AccountGroupSerDes.toDTO(content);
+				return AdminAccountGroupSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -550,12 +410,12 @@ public interface AccountGroupResource {
 		}
 
 		public HttpInvoker.HttpResponse postAccountGroupHttpResponse(
-				AccountGroup accountGroup)
+				AdminAccountGroup adminAccountGroup)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(accountGroup.toString(), "application/json");
+			httpInvoker.body(adminAccountGroup.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -580,103 +440,6 @@ public interface AccountGroupResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
 						"/o/headless-commerce-admin-account/v1.0/accountGroups");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void postAccountGroupBatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postAccountGroupBatchHttpResponse(callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse postAccountGroupBatchHttpResponse(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-account/v1.0/accountGroups/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -779,7 +542,7 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public AccountGroup getAccountGroupByExternalReferenceCode(
+		public AdminAccountGroup getAccountGroupByExternalReferenceCode(
 				String externalReferenceCode)
 			throws Exception {
 
@@ -835,7 +598,7 @@ public interface AccountGroupResource {
 			}
 
 			try {
-				return AccountGroupSerDes.toDTO(content);
+				return AdminAccountGroupSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -886,12 +649,13 @@ public interface AccountGroupResource {
 		}
 
 		public void patchAccountGroupByExternalReferenceCode(
-				String externalReferenceCode, AccountGroup accountGroup)
+				String externalReferenceCode,
+				AdminAccountGroup adminAccountGroup)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				patchAccountGroupByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, accountGroup);
+					externalReferenceCode, adminAccountGroup);
 
 			String content = httpResponse.getContent();
 
@@ -943,12 +707,13 @@ public interface AccountGroupResource {
 
 		public HttpInvoker.HttpResponse
 				patchAccountGroupByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode, AccountGroup accountGroup)
+					String externalReferenceCode,
+					AdminAccountGroup adminAccountGroup)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(accountGroup.toString(), "application/json");
+			httpInvoker.body(adminAccountGroup.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1071,104 +836,7 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteAccountGroupBatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteAccountGroupBatchHttpResponse(callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteAccountGroupBatchHttpResponse(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-commerce-admin-account/v1.0/accountGroups/batch");
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public AccountGroup getAccountGroup(Long id) throws Exception {
+		public AdminAccountGroup getAccountGroup(Long id) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getAccountGroupHttpResponse(
 				id);
 
@@ -1220,7 +888,7 @@ public interface AccountGroupResource {
 			}
 
 			try {
-				return AccountGroupSerDes.toDTO(content);
+				return AdminAccountGroupSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1268,11 +936,12 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public void patchAccountGroup(Long id, AccountGroup accountGroup)
+		public void patchAccountGroup(
+				Long id, AdminAccountGroup adminAccountGroup)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchAccountGroupHttpResponse(id, accountGroup);
+				patchAccountGroupHttpResponse(id, adminAccountGroup);
 
 			String content = httpResponse.getContent();
 
@@ -1323,12 +992,12 @@ public interface AccountGroupResource {
 		}
 
 		public HttpInvoker.HttpResponse patchAccountGroupHttpResponse(
-				Long id, AccountGroup accountGroup)
+				Long id, AdminAccountGroup adminAccountGroup)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(accountGroup.toString(), "application/json");
+			httpInvoker.body(adminAccountGroup.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1362,7 +1031,7 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AccountGroup>
+		public Page<AdminAccountGroup>
 				getAccountByExternalReferenceCodeAccountGroupsPage(
 					String externalReferenceCode, Pagination pagination)
 			throws Exception {
@@ -1419,7 +1088,7 @@ public interface AccountGroupResource {
 			}
 
 			try {
-				return Page.of(content, AccountGroupSerDes::toDTO);
+				return Page.of(content, AdminAccountGroupSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1476,7 +1145,7 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AccountGroup> getAccountIdAccountGroupsPage(
+		public Page<AdminAccountGroup> getAccountIdAccountGroupsPage(
 				Long id, Pagination pagination)
 			throws Exception {
 
@@ -1531,7 +1200,7 @@ public interface AccountGroupResource {
 			}
 
 			try {
-				return Page.of(content, AccountGroupSerDes::toDTO);
+				return Page.of(content, AdminAccountGroupSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1588,12 +1257,12 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		private AccountGroupResourceImpl(Builder builder) {
+		private AdminAccountGroupResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			AccountGroupResource.class.getName());
+			AdminAccountGroupResource.class.getName());
 
 		private Builder _builder;
 

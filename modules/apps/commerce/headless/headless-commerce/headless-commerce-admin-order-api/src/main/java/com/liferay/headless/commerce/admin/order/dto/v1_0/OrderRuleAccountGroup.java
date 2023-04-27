@@ -64,17 +64,18 @@ public class OrderRuleAccountGroup implements Serializable {
 
 	@Schema
 	@Valid
-	public AccountGroup getAccountGroup() {
+	public OrderAccountGroup getAccountGroup() {
 		return accountGroup;
 	}
 
-	public void setAccountGroup(AccountGroup accountGroup) {
+	public void setAccountGroup(OrderAccountGroup accountGroup) {
 		this.accountGroup = accountGroup;
 	}
 
 	@JsonIgnore
 	public void setAccountGroup(
-		UnsafeSupplier<AccountGroup, Exception> accountGroupUnsafeSupplier) {
+		UnsafeSupplier<OrderAccountGroup, Exception>
+			accountGroupUnsafeSupplier) {
 
 		try {
 			accountGroup = accountGroupUnsafeSupplier.get();
@@ -89,7 +90,7 @@ public class OrderRuleAccountGroup implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected AccountGroup accountGroup;
+	protected OrderAccountGroup accountGroup;
 
 	@Schema(example = "DAB-34098-789-N")
 	public String getAccountGroupExternalReferenceCode() {

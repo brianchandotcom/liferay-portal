@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.pricing.resource.v2_0.test;
+package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,11 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.AccountGroup;
-import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
-import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
-import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.AccountGroupResource;
-import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.AccountGroupSerDes;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderAccountGroup;
+import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
+import com.liferay.headless.commerce.admin.order.client.pagination.Page;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderAccountGroupResource;
+import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderAccountGroupSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -77,11 +77,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Zoltán Takács
+ * @author Alessio Antonio Rendina
  * @generated
  */
 @Generated("")
-public abstract class BaseAccountGroupResourceTestCase {
+public abstract class BaseOrderAccountGroupResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -102,11 +102,12 @@ public abstract class BaseAccountGroupResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_accountGroupResource.setContextCompany(testCompany);
+		_orderAccountGroupResource.setContextCompany(testCompany);
 
-		AccountGroupResource.Builder builder = AccountGroupResource.builder();
+		OrderAccountGroupResource.Builder builder =
+			OrderAccountGroupResource.builder();
 
-		accountGroupResource = builder.authentication(
+		orderAccountGroupResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -137,13 +138,14 @@ public abstract class BaseAccountGroupResourceTestCase {
 			}
 		};
 
-		AccountGroup accountGroup1 = randomAccountGroup();
+		OrderAccountGroup orderAccountGroup1 = randomOrderAccountGroup();
 
-		String json = objectMapper.writeValueAsString(accountGroup1);
+		String json = objectMapper.writeValueAsString(orderAccountGroup1);
 
-		AccountGroup accountGroup2 = AccountGroupSerDes.toDTO(json);
+		OrderAccountGroup orderAccountGroup2 = OrderAccountGroupSerDes.toDTO(
+			json);
 
-		Assert.assertTrue(equals(accountGroup1, accountGroup2));
+		Assert.assertTrue(equals(orderAccountGroup1, orderAccountGroup2));
 	}
 
 	@Test
@@ -163,10 +165,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 			}
 		};
 
-		AccountGroup accountGroup = randomAccountGroup();
+		OrderAccountGroup orderAccountGroup = randomOrderAccountGroup();
 
-		String json1 = objectMapper.writeValueAsString(accountGroup);
-		String json2 = AccountGroupSerDes.toJSON(accountGroup);
+		String json1 = objectMapper.writeValueAsString(orderAccountGroup);
+		String json2 = OrderAccountGroupSerDes.toJSON(orderAccountGroup);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -176,42 +178,42 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		AccountGroup accountGroup = randomAccountGroup();
+		OrderAccountGroup orderAccountGroup = randomOrderAccountGroup();
 
-		accountGroup.setName(regex);
+		orderAccountGroup.setName(regex);
 
-		String json = AccountGroupSerDes.toJSON(accountGroup);
+		String json = OrderAccountGroupSerDes.toJSON(orderAccountGroup);
 
 		Assert.assertFalse(json.contains(regex));
 
-		accountGroup = AccountGroupSerDes.toDTO(json);
+		orderAccountGroup = OrderAccountGroupSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, accountGroup.getName());
+		Assert.assertEquals(regex, orderAccountGroup.getName());
 	}
 
 	@Test
-	public void testGetDiscountAccountGroupAccountGroup() throws Exception {
-		AccountGroup postAccountGroup =
-			testGetDiscountAccountGroupAccountGroup_addAccountGroup();
+	public void testGetOrderRuleAccountGroupAccountGroup() throws Exception {
+		OrderAccountGroup postOrderAccountGroup =
+			testGetOrderRuleAccountGroupAccountGroup_addOrderAccountGroup();
 
-		AccountGroup getAccountGroup =
-			accountGroupResource.getDiscountAccountGroupAccountGroup(
-				testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId());
+		OrderAccountGroup getOrderAccountGroup =
+			orderAccountGroupResource.getOrderRuleAccountGroupAccountGroup(
+				testGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId());
 
-		assertEquals(postAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
+		assertEquals(postOrderAccountGroup, getOrderAccountGroup);
+		assertValid(getOrderAccountGroup);
 	}
 
 	protected Long
-			testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
+			testGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected AccountGroup
-			testGetDiscountAccountGroupAccountGroup_addAccountGroup()
+	protected OrderAccountGroup
+			testGetOrderRuleAccountGroupAccountGroup_addOrderAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -219,34 +221,34 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDiscountAccountGroupAccountGroup()
+	public void testGraphQLGetOrderRuleAccountGroupAccountGroup()
 		throws Exception {
 
-		AccountGroup accountGroup =
-			testGraphQLGetDiscountAccountGroupAccountGroup_addAccountGroup();
+		OrderAccountGroup orderAccountGroup =
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_addOrderAccountGroup();
 
 		Assert.assertTrue(
 			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
+				orderAccountGroup,
+				OrderAccountGroupSerDes.toDTO(
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"discountAccountGroupAccountGroup",
+								"orderRuleAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
 										put(
-											"discountAccountGroupId",
-											testGraphQLGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId());
+											"orderRuleAccountGroupId",
+											testGraphQLGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
-						"Object/discountAccountGroupAccountGroup"))));
+						"Object/orderRuleAccountGroupAccountGroup"))));
 	}
 
 	protected Long
-			testGraphQLGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -254,22 +256,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDiscountAccountGroupAccountGroupNotFound()
+	public void testGraphQLGetOrderRuleAccountGroupAccountGroupNotFound()
 		throws Exception {
 
-		Long irrelevantDiscountAccountGroupId = RandomTestUtil.randomLong();
+		Long irrelevantOrderRuleAccountGroupId = RandomTestUtil.randomLong();
 
 		Assert.assertEquals(
 			"Not Found",
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"discountAccountGroupAccountGroup",
+						"orderRuleAccountGroupAccountGroup",
 						new HashMap<String, Object>() {
 							{
 								put(
-									"discountAccountGroupId",
-									irrelevantDiscountAccountGroupId);
+									"orderRuleAccountGroupId",
+									irrelevantOrderRuleAccountGroupId);
 							}
 						},
 						getGraphQLFields())),
@@ -277,109 +279,15 @@ public abstract class BaseAccountGroupResourceTestCase {
 				"Object/code"));
 	}
 
-	protected AccountGroup
-			testGraphQLGetDiscountAccountGroupAccountGroup_addAccountGroup()
+	protected OrderAccountGroup
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_addOrderAccountGroup()
 		throws Exception {
 
-		return testGraphQLAccountGroup_addAccountGroup();
+		return testGraphQLOrderAccountGroup_addOrderAccountGroup();
 	}
 
-	@Test
-	public void testGetPriceListAccountGroupAccountGroup() throws Exception {
-		AccountGroup postAccountGroup =
-			testGetPriceListAccountGroupAccountGroup_addAccountGroup();
-
-		AccountGroup getAccountGroup =
-			accountGroupResource.getPriceListAccountGroupAccountGroup(
-				testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId());
-
-		assertEquals(postAccountGroup, getAccountGroup);
-		assertValid(getAccountGroup);
-	}
-
-	protected Long
-			testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected AccountGroup
-			testGetPriceListAccountGroupAccountGroup_addAccountGroup()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPriceListAccountGroupAccountGroup()
-		throws Exception {
-
-		AccountGroup accountGroup =
-			testGraphQLGetPriceListAccountGroupAccountGroup_addAccountGroup();
-
-		Assert.assertTrue(
-			equals(
-				accountGroup,
-				AccountGroupSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"priceListAccountGroupAccountGroup",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"priceListAccountGroupId",
-											testGraphQLGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/priceListAccountGroupAccountGroup"))));
-	}
-
-	protected Long
-			testGraphQLGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetPriceListAccountGroupAccountGroupNotFound()
-		throws Exception {
-
-		Long irrelevantPriceListAccountGroupId = RandomTestUtil.randomLong();
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"priceListAccountGroupAccountGroup",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"priceListAccountGroupId",
-									irrelevantPriceListAccountGroupId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected AccountGroup
-			testGraphQLGetPriceListAccountGroupAccountGroup_addAccountGroup()
-		throws Exception {
-
-		return testGraphQLAccountGroup_addAccountGroup();
-	}
-
-	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()
+	protected OrderAccountGroup
+			testGraphQLOrderAccountGroup_addOrderAccountGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -387,12 +295,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	protected void assertContains(
-		AccountGroup accountGroup, List<AccountGroup> accountGroups) {
+		OrderAccountGroup orderAccountGroup,
+		List<OrderAccountGroup> orderAccountGroups) {
 
 		boolean contains = false;
 
-		for (AccountGroup item : accountGroups) {
-			if (equals(accountGroup, item)) {
+		for (OrderAccountGroup item : orderAccountGroups) {
+			if (equals(orderAccountGroup, item)) {
 				contains = true;
 
 				break;
@@ -400,7 +309,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			accountGroups + " does not contain " + accountGroup, contains);
+			orderAccountGroups + " does not contain " + orderAccountGroup,
+			contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -412,36 +322,41 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	protected void assertEquals(
-		AccountGroup accountGroup1, AccountGroup accountGroup2) {
+		OrderAccountGroup orderAccountGroup1,
+		OrderAccountGroup orderAccountGroup2) {
 
 		Assert.assertTrue(
-			accountGroup1 + " does not equal " + accountGroup2,
-			equals(accountGroup1, accountGroup2));
+			orderAccountGroup1 + " does not equal " + orderAccountGroup2,
+			equals(orderAccountGroup1, orderAccountGroup2));
 	}
 
 	protected void assertEquals(
-		List<AccountGroup> accountGroups1, List<AccountGroup> accountGroups2) {
+		List<OrderAccountGroup> orderAccountGroups1,
+		List<OrderAccountGroup> orderAccountGroups2) {
 
-		Assert.assertEquals(accountGroups1.size(), accountGroups2.size());
+		Assert.assertEquals(
+			orderAccountGroups1.size(), orderAccountGroups2.size());
 
-		for (int i = 0; i < accountGroups1.size(); i++) {
-			AccountGroup accountGroup1 = accountGroups1.get(i);
-			AccountGroup accountGroup2 = accountGroups2.get(i);
+		for (int i = 0; i < orderAccountGroups1.size(); i++) {
+			OrderAccountGroup orderAccountGroup1 = orderAccountGroups1.get(i);
+			OrderAccountGroup orderAccountGroup2 = orderAccountGroups2.get(i);
 
-			assertEquals(accountGroup1, accountGroup2);
+			assertEquals(orderAccountGroup1, orderAccountGroup2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<AccountGroup> accountGroups1, List<AccountGroup> accountGroups2) {
+		List<OrderAccountGroup> orderAccountGroups1,
+		List<OrderAccountGroup> orderAccountGroups2) {
 
-		Assert.assertEquals(accountGroups1.size(), accountGroups2.size());
+		Assert.assertEquals(
+			orderAccountGroups1.size(), orderAccountGroups2.size());
 
-		for (AccountGroup accountGroup1 : accountGroups1) {
+		for (OrderAccountGroup orderAccountGroup1 : orderAccountGroups1) {
 			boolean contains = false;
 
-			for (AccountGroup accountGroup2 : accountGroups2) {
-				if (equals(accountGroup1, accountGroup2)) {
+			for (OrderAccountGroup orderAccountGroup2 : orderAccountGroups2) {
+				if (equals(orderAccountGroup1, orderAccountGroup2)) {
 					contains = true;
 
 					break;
@@ -449,15 +364,17 @@ public abstract class BaseAccountGroupResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				accountGroups2 + " does not contain " + accountGroup1,
+				orderAccountGroups2 + " does not contain " + orderAccountGroup1,
 				contains);
 		}
 	}
 
-	protected void assertValid(AccountGroup accountGroup) throws Exception {
+	protected void assertValid(OrderAccountGroup orderAccountGroup)
+		throws Exception {
+
 		boolean valid = true;
 
-		if (accountGroup.getId() == null) {
+		if (orderAccountGroup.getId() == null) {
 			valid = false;
 		}
 
@@ -465,7 +382,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (accountGroup.getName() == null) {
+				if (orderAccountGroup.getName() == null) {
 					valid = false;
 				}
 
@@ -480,19 +397,20 @@ public abstract class BaseAccountGroupResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AccountGroup> page) {
+	protected void assertValid(Page<OrderAccountGroup> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<AccountGroup> page,
+		Page<OrderAccountGroup> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<AccountGroup> accountGroups = page.getItems();
+		java.util.Collection<OrderAccountGroup> orderAccountGroups =
+			page.getItems();
 
-		int size = accountGroups.size();
+		int size = orderAccountGroups.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -527,8 +445,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.headless.commerce.admin.pricing.dto.v2_0.
-						AccountGroup.class)) {
+					com.liferay.headless.commerce.admin.order.dto.v1_0.
+						OrderAccountGroup.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -577,9 +495,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	protected boolean equals(
-		AccountGroup accountGroup1, AccountGroup accountGroup2) {
+		OrderAccountGroup orderAccountGroup1,
+		OrderAccountGroup orderAccountGroup2) {
 
-		if (accountGroup1 == accountGroup2) {
+		if (orderAccountGroup1 == orderAccountGroup2) {
 			return true;
 		}
 
@@ -588,7 +507,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						accountGroup1.getId(), accountGroup2.getId())) {
+						orderAccountGroup1.getId(),
+						orderAccountGroup2.getId())) {
 
 					return false;
 				}
@@ -598,7 +518,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						accountGroup1.getName(), accountGroup2.getName())) {
+						orderAccountGroup1.getName(),
+						orderAccountGroup2.getName())) {
 
 					return false;
 				}
@@ -658,13 +579,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_accountGroupResource instanceof EntityModelResource)) {
+		if (!(_orderAccountGroupResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_accountGroupResource;
+			(EntityModelResource)_orderAccountGroupResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -697,7 +618,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, AccountGroup accountGroup) {
+		EntityField entityField, String operator,
+		OrderAccountGroup orderAccountGroup) {
 
 		StringBundler sb = new StringBundler();
 
@@ -716,7 +638,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
-			sb.append(String.valueOf(accountGroup.getName()));
+			sb.append(String.valueOf(orderAccountGroup.getName()));
 			sb.append("'");
 
 			return sb.toString();
@@ -763,8 +685,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected AccountGroup randomAccountGroup() throws Exception {
-		return new AccountGroup() {
+	protected OrderAccountGroup randomOrderAccountGroup() throws Exception {
+		return new OrderAccountGroup() {
 			{
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -772,17 +694,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 		};
 	}
 
-	protected AccountGroup randomIrrelevantAccountGroup() throws Exception {
-		AccountGroup randomIrrelevantAccountGroup = randomAccountGroup();
+	protected OrderAccountGroup randomIrrelevantOrderAccountGroup()
+		throws Exception {
 
-		return randomIrrelevantAccountGroup;
+		OrderAccountGroup randomIrrelevantOrderAccountGroup =
+			randomOrderAccountGroup();
+
+		return randomIrrelevantOrderAccountGroup;
 	}
 
-	protected AccountGroup randomPatchAccountGroup() throws Exception {
-		return randomAccountGroup();
+	protected OrderAccountGroup randomPatchOrderAccountGroup()
+		throws Exception {
+
+		return randomOrderAccountGroup();
 	}
 
-	protected AccountGroupResource accountGroupResource;
+	protected OrderAccountGroupResource orderAccountGroupResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -968,12 +895,12 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseAccountGroupResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseOrderAccountGroupResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.headless.commerce.admin.pricing.resource.v2_0.
-		AccountGroupResource _accountGroupResource;
+	private com.liferay.headless.commerce.admin.order.resource.v1_0.
+		OrderAccountGroupResource _orderAccountGroupResource;
 
 }

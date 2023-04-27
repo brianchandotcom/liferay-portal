@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.order.resource.v1_0;
+package com.liferay.headless.commerce.admin.pricing.resource.v2_0;
 
-import com.liferay.headless.commerce.admin.order.dto.v1_0.AccountGroup;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PricingAccountGroup;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -43,17 +43,21 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-commerce-admin-order/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-commerce-admin-pricing/v2.0
  *
- * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  * @generated
  */
 @Generated("")
 @ProviderType
-public interface AccountGroupResource {
+public interface PricingAccountGroupResource {
 
-	public AccountGroup getOrderRuleAccountGroupAccountGroup(
-			Long orderRuleAccountGroupId)
+	public PricingAccountGroup getDiscountAccountGroupAccountGroup(
+			Long discountAccountGroupId)
+		throws Exception;
+
+	public PricingAccountGroup getPriceListAccountGroupAccountGroup(
+			Long priceListAccountGroupId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -113,7 +117,7 @@ public interface AccountGroupResource {
 	@ProviderType
 	public interface Builder {
 
-		public AccountGroupResource build();
+		public PricingAccountGroupResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

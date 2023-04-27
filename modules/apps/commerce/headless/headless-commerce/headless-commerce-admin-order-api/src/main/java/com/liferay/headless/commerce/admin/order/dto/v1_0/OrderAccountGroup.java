@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.pricing.dto.v2_0;
+package com.liferay.headless.commerce.admin.order.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,21 +41,21 @@ import javax.validation.constraints.DecimalMin;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Zoltán Takács
+ * @author Alessio Antonio Rendina
  * @generated
  */
 @Generated("")
-@GraphQLName("AccountGroup")
+@GraphQLName("OrderAccountGroup")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AccountGroup")
-public class AccountGroup implements Serializable {
+@XmlRootElement(name = "OrderAccountGroup")
+public class OrderAccountGroup implements Serializable {
 
-	public static AccountGroup toDTO(String json) {
-		return ObjectMapperUtil.readValue(AccountGroup.class, json);
+	public static OrderAccountGroup toDTO(String json) {
+		return ObjectMapperUtil.readValue(OrderAccountGroup.class, json);
 	}
 
-	public static AccountGroup unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(AccountGroup.class, json);
+	public static OrderAccountGroup unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(OrderAccountGroup.class, json);
 	}
 
 	@DecimalMin("0")
@@ -85,7 +85,7 @@ public class AccountGroup implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
-	@Schema(example = "AccountGroup Name")
+	@Schema(example = "OrderAccountGroup Name")
 	public String getName() {
 		return name;
 	}
@@ -117,13 +117,13 @@ public class AccountGroup implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AccountGroup)) {
+		if (!(object instanceof OrderAccountGroup)) {
 			return false;
 		}
 
-		AccountGroup accountGroup = (AccountGroup)object;
+		OrderAccountGroup orderAccountGroup = (OrderAccountGroup)object;
 
-		return Objects.equals(toString(), accountGroup.toString());
+		return Objects.equals(toString(), orderAccountGroup.toString());
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public class AccountGroup implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.AccountGroup",
+		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.OrderAccountGroup",
 		name = "x-class-name"
 	)
 	public String xClassName;

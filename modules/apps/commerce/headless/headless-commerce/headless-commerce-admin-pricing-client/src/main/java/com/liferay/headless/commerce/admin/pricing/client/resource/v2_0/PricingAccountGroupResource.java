@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.pricing.client.resource.v2_0;
 
-import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.AccountGroup;
+import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PricingAccountGroup;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.problem.Problem;
 
@@ -32,13 +32,13 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface AccountGroupResource {
+public interface PricingAccountGroupResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public AccountGroup getDiscountAccountGroupAccountGroup(
+	public PricingAccountGroup getDiscountAccountGroupAccountGroup(
 			Long discountAccountGroupId)
 		throws Exception;
 
@@ -47,7 +47,7 @@ public interface AccountGroupResource {
 				Long discountAccountGroupId)
 		throws Exception;
 
-	public AccountGroup getPriceListAccountGroupAccountGroup(
+	public PricingAccountGroup getPriceListAccountGroupAccountGroup(
 			Long priceListAccountGroupId)
 		throws Exception;
 
@@ -69,8 +69,8 @@ public interface AccountGroupResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public AccountGroupResource build() {
-			return new AccountGroupResourceImpl(this);
+		public PricingAccountGroupResource build() {
+			return new PricingAccountGroupResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -158,10 +158,10 @@ public interface AccountGroupResource {
 
 	}
 
-	public static class AccountGroupResourceImpl
-		implements AccountGroupResource {
+	public static class PricingAccountGroupResourceImpl
+		implements PricingAccountGroupResource {
 
-		public AccountGroup getDiscountAccountGroupAccountGroup(
+		public PricingAccountGroup getDiscountAccountGroupAccountGroup(
 				Long discountAccountGroupId)
 			throws Exception {
 
@@ -218,7 +218,7 @@ public interface AccountGroupResource {
 
 			try {
 				return com.liferay.headless.commerce.admin.pricing.client.
-					serdes.v2_0.AccountGroupSerDes.toDTO(content);
+					serdes.v2_0.PricingAccountGroupSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -268,7 +268,7 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public AccountGroup getPriceListAccountGroupAccountGroup(
+		public PricingAccountGroup getPriceListAccountGroupAccountGroup(
 				Long priceListAccountGroupId)
 			throws Exception {
 
@@ -325,7 +325,7 @@ public interface AccountGroupResource {
 
 			try {
 				return com.liferay.headless.commerce.admin.pricing.client.
-					serdes.v2_0.AccountGroupSerDes.toDTO(content);
+					serdes.v2_0.PricingAccountGroupSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -376,12 +376,12 @@ public interface AccountGroupResource {
 			return httpInvoker.invoke();
 		}
 
-		private AccountGroupResourceImpl(Builder builder) {
+		private PricingAccountGroupResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			AccountGroupResource.class.getName());
+			PricingAccountGroupResource.class.getName());
 
 		private Builder _builder;
 

@@ -16,10 +16,10 @@ package com.liferay.headless.commerce.admin.order.internal.graphql.servlet.v1_0;
 
 import com.liferay.headless.commerce.admin.order.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.admin.order.internal.graphql.query.v1_0.Query;
-import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.AccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.AccountResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.BillingAddressResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.ChannelResourceImpl;
+import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.OrderAccountGroupResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.OrderItemResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.OrderNoteResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.OrderResourceImpl;
@@ -33,10 +33,10 @@ import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.OrderTyp
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.ShippingAddressResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.TermOrderTypeResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.TermResourceImpl;
-import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ChannelResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderAccountGroupResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
@@ -106,14 +106,14 @@ public class ServletDataImpl implements ServletData {
 
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
-		Query.setAccountGroupResourceComponentServiceObjects(
-			_accountGroupResourceComponentServiceObjects);
 		Query.setBillingAddressResourceComponentServiceObjects(
 			_billingAddressResourceComponentServiceObjects);
 		Query.setChannelResourceComponentServiceObjects(
 			_channelResourceComponentServiceObjects);
 		Query.setOrderResourceComponentServiceObjects(
 			_orderResourceComponentServiceObjects);
+		Query.setOrderAccountGroupResourceComponentServiceObjects(
+			_orderAccountGroupResourceComponentServiceObjects);
 		Query.setOrderItemResourceComponentServiceObjects(
 			_orderItemResourceComponentServiceObjects);
 		Query.setOrderNoteResourceComponentServiceObjects(
@@ -596,11 +596,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AccountResourceImpl.class, "getOrderIdAccount"));
 					put(
-						"query#orderRuleAccountGroupAccountGroup",
-						new ObjectValuePair<>(
-							AccountGroupResourceImpl.class,
-							"getOrderRuleAccountGroupAccountGroup"));
-					put(
 						"query#orderByExternalReferenceCodeBillingAddress",
 						new ObjectValuePair<>(
 							BillingAddressResourceImpl.class,
@@ -642,6 +637,11 @@ public class ServletDataImpl implements ServletData {
 						"query#order",
 						new ObjectValuePair<>(
 							OrderResourceImpl.class, "getOrder"));
+					put(
+						"query#orderRuleAccountGroupAccountGroup",
+						new ObjectValuePair<>(
+							OrderAccountGroupResourceImpl.class,
+							"getOrderRuleAccountGroupAccountGroup"));
 					put(
 						"query#orderItems",
 						new ObjectValuePair<>(
@@ -963,11 +963,11 @@ public class ServletDataImpl implements ServletData {
 		_accountResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AccountGroupResource>
-		_accountGroupResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ChannelResource>
 		_channelResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<OrderAccountGroupResource>
+		_orderAccountGroupResourceComponentServiceObjects;
 
 }

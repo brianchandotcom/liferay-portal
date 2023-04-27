@@ -53,7 +53,7 @@ public class ModifiedFacetTest extends BaseModifiedFacetTestCase {
 		SolrIndexingFixture solrIndexingFixture = new SolrIndexingFixture();
 
 		solrIndexingFixture.setFacetProcessor(
-			new ModifiedFacetProcessor() {
+			new RangeFacetProcessor() {
 				{
 					jsonFactory = new JSONFactoryImpl();
 				}

@@ -38,7 +38,7 @@ public class ClassicModifiedFacetTest extends BaseClassicModifiedFacetTestCase {
 		SolrIndexingFixture solrIndexingFixture = new SolrIndexingFixture();
 
 		solrIndexingFixture.setFacetProcessor(
-			new ModifiedFacetProcessor() {
+			new RangeFacetProcessor() {
 				{
 					jsonFactory = new JSONFactoryImpl();
 				}

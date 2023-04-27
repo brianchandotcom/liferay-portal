@@ -49,7 +49,7 @@ public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 
 		_serviceRegistration = _bundleContext.registerService(
 			(Class<FacetProcessor<SolrQuery>>)(Class<?>)FacetProcessor.class,
-			new ModifiedFacetProcessor() {
+			new RangeFacetProcessor() {
 				{
 					jsonFactory = _jsonFactory;
 				}

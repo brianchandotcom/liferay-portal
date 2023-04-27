@@ -111,6 +111,10 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVITY_TOTAL_COST</td>
+	<td>//*[@route='mdf-request-form']//div[contains(@class,'text-paragraph') and contains(text(),'Total cost')]//following-sibling::div</td>
+	<td></td>
+</tr>
 	<td>VALUE_BUDGET</td>
 	<td>//*[@route='mdf-request-form']//div[contains(@class,'text-paragraph') and contains(text(),'Total cost')]//following-sibling::div[contains(@class,'text-paragraph') and contains(text(),'${key_totalCost}')]</td>
 	<td></td>

@@ -26,18 +26,20 @@
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
-								"modalOverlayColor": "transparent",
 								"contentInitEvent": "",
 								"modalEditMode": true,
 								"modalId": "solutions-details-video",
+								"modalOverlayColor": "transparent",
 								"modalSize": "lg"
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -45,12 +47,13 @@
 												"key": "BASIC_COMPONENT-external-video"
 											},
 											"fragmentConfig": {
-												"videoWidth": "",
-												"video": "{\"html\":\"<iframe allow=\\\"autoplay; encrypted-media\\\" allowfullscreen height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"https://www.youtube.com/embed/P1hl_xjHTYc?rel=0\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"Crosswired Features\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
 												"align": "flex-start",
-												"videoHeight": ""
+												"video": "{\"html\":\"<iframe allow=\\\"autoplay; encrypted-media\\\" allowfullscreen height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"https://www.youtube.com/embed/P1hl_xjHTYc?rel=0\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"Crosswired Features\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
+												"videoHeight": "",
+												"videoWidth": ""
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -113,26 +116,28 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -142,7 +147,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "1",
 																"paddingTop": "1"
@@ -155,13 +161,13 @@
 														"definition": {
 															"widgetInstance": {
 																"widgetConfig": {
-																	"showCurrentGroup": "true",
 																	"displayStyle": "ddmTemplate_BREADCRUMB-HORIZONTAL-FTL",
-																	"showLayout": "true",
-																	"showPortletBreadcrumb": "true",
-																	"showParentGroups": "true",
 																	"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
-																	"showGuestGroup": "false"
+																	"showCurrentGroup": "true",
+																	"showGuestGroup": "false",
+																	"showLayout": "true",
+																	"showParentGroups": "true",
+																	"showPortletBreadcrumb": "true"
 																},
 																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 															}
@@ -187,11 +193,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -207,11 +215,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -229,11 +239,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -248,17 +260,19 @@
 																			},
 																			"fragmentConfig": {
 																				"alignItems": "align-items-start",
-																				"flexWrap": "",
 																				"flexDirection": "",
+																				"flexWrap": "",
 																				"items": 2,
 																				"justifyContent": "justify-content-start"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"pageElements": [
 																			{
-																				"definition": {},
+																				"definition": {
+																				},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -267,10 +281,10 @@
 																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"lazyLoadingImage": true,
+																								"alignment": "flex justify-center",
 																								"iconType": "large",
-																								"useHtml": false,
-																								"alignment": "flex justify-center"
+																								"lazyLoadingImage": true,
+																								"useHtml": false
 																							},
 																							"fragmentFields": [
 																								{
@@ -291,7 +305,8 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								}
 																							],
@@ -306,7 +321,8 @@
 																				"type": "FragmentDropZone"
 																			},
 																			{
-																				"definition": {},
+																				"definition": {
+																				},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -323,7 +339,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"defaultFragmentInlineValue": {
 																												"value": "Test Solution"
@@ -351,20 +368,23 @@
 																							},
 																							"fragmentConfig": {
 																								"alignItems": "align-items-start",
-																								"flexWrap": "",
 																								"flexDirection": "",
+																								"flexWrap": "",
 																								"items": 2,
 																								"justifyContent": "justify-content-start"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
-																								"backgroundFragmentImage": {}
+																								"backgroundFragmentImage": {
+																								}
 																							},
 																							"indexed": true
 																						},
 																						"pageElements": [
 																							{
-																								"definition": {},
+																								"definition": {
+																								},
 																								"pageElements": [
 																									{
 																										"definition": {
@@ -373,10 +393,10 @@
 																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
-																												"lazyLoadingImage": true,
+																												"alignment": "",
 																												"iconType": "small",
-																												"useHtml": false,
-																												"alignment": ""
+																												"lazyLoadingImage": true,
+																												"useHtml": false
 																											},
 																											"fragmentFields": [
 																												{
@@ -394,7 +414,8 @@
 																																}
 																															}
 																														},
-																														"fragmentLink": {}
+																														"fragmentLink": {
+																														}
 																													}
 																												}
 																											],
@@ -406,7 +427,8 @@
 																								"type": "FragmentDropZone"
 																							},
 																							{
-																								"definition": {},
+																								"definition": {
+																								},
 																								"pageElements": [
 																									{
 																										"definition": {
@@ -423,7 +445,8 @@
 																												{
 																													"id": "text",
 																													"value": {
-																														"fragmentLink": {},
+																														"fragmentLink": {
+																														},
 																														"text": {
 																															"defaultFragmentInlineValue": {
 																																"value": "Matt Hartel"
@@ -464,7 +487,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"defaultFragmentInlineValue": {
 																												"value": "<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\tCollaboration & Knowledge Sharing\n\t\t\t</div>\n\t</div>"
@@ -503,11 +527,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -522,21 +548,24 @@
 																			},
 																			"fragmentConfig": {
 																				"alignItems": "align-items-start",
-																				"flexWrap": "",
 																				"flexDirection": "",
+																				"flexWrap": "",
 																				"items": 1,
 																				"justifyContent": "justify-content-start"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
-																				"backgroundFragmentImage": {},
+																				"backgroundFragmentImage": {
+																				},
 																				"textAlign": "center"
 																			},
 																			"indexed": true
 																		},
 																		"pageElements": [
 																			{
-																				"definition": {},
+																				"definition": {
+																				},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -544,14 +573,15 @@
 																								"key": "BASIC_COMPONENT-button"
 																							},
 																							"fragmentConfig": {
-																								"buttonType": "primary",
-																								"buttonSize": "nm"
+																								"buttonSize": "nm",
+																								"buttonType": "primary"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "link",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Contact Publisher"
@@ -594,7 +624,9 @@
 								"backgroundColor": "brandColor1",
 								"borderWidth": "0"
 							},
-							"htmlProperties": {"htmlTag": "Div"},
+							"htmlProperties": {
+								"htmlTag": "Div"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -617,7 +649,9 @@
 										"backgroundColor": "brandColor1",
 										"borderWidth": "0"
 									},
-									"htmlProperties": {"htmlTag": "Div"},
+									"htmlProperties": {
+										"htmlTag": "Div"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -641,26 +675,28 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -678,11 +714,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -698,11 +736,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -717,7 +757,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -741,7 +782,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "EPAM’s Content Hub Advantage allows customers to quickly stand-up, configure, and launch Content Hub"
@@ -765,7 +807,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -789,7 +832,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Content Hub Advantage –&nbsp;<br />\nContent Planning,&nbsp;<br />\nand Launch in 10 Weeks"
@@ -818,11 +862,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -837,7 +883,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -853,17 +900,18 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "2",
+																				"colorScheme": "",
 																				"imageAspectRatio": "aspect-ratio-4-to-3",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "517px",
-																				"colorScheme": ""
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "2"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "{\"fileEntryId\":\"8811680\",\"url\":\"/documents/3192483/0/solutions-details-hero-carousel-graphic.png/7cfbf879-720c-6ab3-5cc7-8bd14b0b15a5?t=1655762069348&download=true\"}"
@@ -874,7 +922,8 @@
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "{\"classPK\":\"8811706\",\"classNameId\":39438,\"title\":\"solution-details-thank-you-graphic\",\"fileEntryId\":\"8811706\",\"url\":\"/documents/3192483/0/solution-details-thank-you-graphic.png/678b7f2f-8481-57d4-9f48-7c3bf010fa7f?t=1656019115092&download=true\"}"
@@ -909,27 +958,31 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
-											"fragmentStyle": {"hidden": true},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"hidden": true
+											},
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -947,11 +1000,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -967,11 +1022,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -986,7 +1043,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1000,12 +1058,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "EPAM’s Content Hub Advantage allows customers to quickly stand-up, configure, and launch Content Hub."
@@ -1031,7 +1091,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1045,12 +1106,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Content Hub Advantage –&nbsp;<br />\nContent Planning,&nbsp;<br />\nand Launch in 10 Weeks"
@@ -1080,11 +1143,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1099,7 +1164,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1115,29 +1181,32 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "3",
+																				"colorScheme": "",
 																				"imageAspectRatio": "aspect-ratio-16-to-9",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "517px",
-																				"colorScheme": ""
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "3"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "imageCarousel2",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1187,8 +1256,12 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
-									"htmlProperties": {"htmlTag": "Div"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"htmlProperties": {
+										"htmlTag": "Div"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1212,26 +1285,28 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1241,7 +1316,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "1",
 																"paddingTop": "1"
@@ -1265,7 +1341,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Description"
@@ -1286,7 +1363,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "1",
 																"paddingTop": "1"
@@ -1310,7 +1388,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "&nbsp;<br />\nAs expectations for the consumer experience continues to rise, organizations need to produce the high-quality content needed to win and retain business while generating the quantity of content required to build personalized omnichannel experiences.<br />\n<br />\nTo solve this challenge, <strong>Liferay</strong> has revolutionized the way brands deliver innovative customer experiences at scale with Liferay Marketplace™. This single, integrated solution unifies content planning, production, collaboration, and management.<br />\n<br />\nAre you interested in implementing <strong>Liferay Marketplace™</strong> but need the solution up and running in a fraction of the time? As a Platinum Liferay Marketplace™ Partner with Content Hub specializations in North America and EMEA, we developed Liferay Marketplace™ Advantage by EPAM."
@@ -1331,7 +1410,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "1",
 																"paddingTop": "1"
@@ -1381,11 +1461,13 @@
 																		},
 																		{
 																			"id": "portraitMobile",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		},
 																		{
 																			"id": "tablet",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		}
 																	],
 																	"verticalAlignment": "top"
@@ -1401,11 +1483,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -1419,17 +1503,18 @@
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"lazyLoadingImage": true,
+																						"alignment": "flex justify-center",
 																						"iconType": "large",
-																						"useHtml": true,
-																						"alignment": "flex justify-center"
+																						"lazyLoadingImage": true,
+																						"useHtml": true
 																					},
 																					"fragmentFields": [
 																						{
 																							"id": "iconHtml",
 																							"value": {
 																								"html": {
-																									"value_i18n": {}
+																									"value_i18n": {
+																									}
 																								}
 																							}
 																						}
@@ -1454,11 +1539,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -1480,10 +1567,11 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Documentation.pdf<br />\n "
+																										"en_US": "Documentation.pdf<br />\n "
 																									}
 																								}
 																							}
@@ -1510,7 +1598,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "1",
 																"paddingTop": "1"
@@ -1537,7 +1626,9 @@
 								"backgroundColor": "gray200Color",
 								"borderWidth": "0"
 							},
-							"htmlProperties": {"htmlTag": "Div"},
+							"htmlProperties": {
+								"htmlTag": "Div"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -1556,8 +1647,12 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
-									"htmlProperties": {"htmlTag": "Div"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"htmlProperties": {
+										"htmlTag": "Div"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1581,26 +1676,28 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1618,11 +1715,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -1638,11 +1737,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1657,7 +1758,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1681,7 +1783,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Eliminate digital asset&nbsp;<br />\nmanagement challenges"
@@ -1705,7 +1808,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1729,7 +1833,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Organizations are under significant pressure to meet rising consumer expectations, which requires creating new content frequently. This challenge is accompanied by high costs in content production, inefficiencies around collaboration, poor visibility into workflows and tracking, limited analytics of digital asset performance, and most importantly, a slow time to market."
@@ -1758,11 +1863,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1777,7 +1884,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1813,7 +1921,8 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1835,7 +1944,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "1",
 																"paddingTop": "1"
@@ -1857,27 +1967,31 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
-											"fragmentStyle": {"hidden": true},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"hidden": true
+											},
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1895,11 +2009,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -1915,11 +2031,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1934,7 +2052,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1948,12 +2067,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "EPAM’s Content Hub Advantage allows customers to quickly stand-up, configure, and launch Content Hub."
@@ -1979,7 +2100,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -1993,12 +2115,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Content Hub Advantage –&nbsp;<br />\nContent Planning,&nbsp;<br />\nand Launch in 10 Weeks"
@@ -2028,11 +2152,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2047,7 +2173,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -2063,29 +2190,32 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "3",
+																				"colorScheme": "",
 																				"imageAspectRatio": "aspect-ratio-16-to-9",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "517px",
-																				"colorScheme": ""
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "3"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "imageCarousel2",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -2117,7 +2247,9 @@
 								"backgroundColor": "#F7F8F9",
 								"borderWidth": "0"
 							},
-							"htmlProperties": {"htmlTag": "Div"},
+							"htmlProperties": {
+								"htmlTag": "Div"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -2136,8 +2268,12 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
-									"htmlProperties": {"htmlTag": "Div"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"htmlProperties": {
+										"htmlTag": "Div"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -2162,7 +2298,8 @@
 											"fragmentConfig": {
 												"height": "py-4"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"paddingBottom": "1",
 												"paddingTop": "1"
@@ -2186,7 +2323,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Experienced with proven results across industries"
@@ -2206,26 +2344,28 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -2271,11 +2411,13 @@
 																		},
 																		{
 																			"id": "portraitMobile",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		},
 																		{
 																			"id": "tablet",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		}
 																	],
 																	"verticalAlignment": "top"
@@ -2291,11 +2433,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -2327,17 +2471,18 @@
 																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"lazyLoadingImage": true,
+																								"alignment": "",
 																								"iconType": "large",
-																								"useHtml": true,
-																								"alignment": ""
+																								"lazyLoadingImage": true,
+																								"useHtml": true
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "iconHtml",
 																									"value": {
 																										"html": {
-																											"value_i18n": {}
+																											"value_i18n": {
+																											}
 																										}
 																									}
 																								}
@@ -2357,7 +2502,8 @@
 																							"fragmentConfig": {
 																								"height": "py-2"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"paddingBottom": "1",
 																								"paddingTop": "1"
@@ -2381,7 +2527,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Fortune 100 manuacturer"
@@ -2405,7 +2552,8 @@
 																							"fragmentConfig": {
 																								"height": "py-1"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"paddingBottom": "1",
 																								"paddingTop": "1"
@@ -2432,7 +2580,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Reduced asset time to market from 6 hours to minutes."
@@ -2461,11 +2610,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -2497,17 +2648,18 @@
 																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"lazyLoadingImage": true,
+																								"alignment": "",
 																								"iconType": "large",
-																								"useHtml": true,
-																								"alignment": ""
+																								"lazyLoadingImage": true,
+																								"useHtml": true
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "iconHtml",
 																									"value": {
 																										"html": {
-																											"value_i18n": {}
+																											"value_i18n": {
+																											}
 																										}
 																									}
 																								}
@@ -2530,7 +2682,8 @@
 																					"fragmentConfig": {
 																						"height": "py-2"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"paddingBottom": "1",
 																						"paddingTop": "1"
@@ -2554,7 +2707,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Leading hospitality group"
@@ -2575,7 +2729,8 @@
 																					"fragmentConfig": {
 																						"height": "py-1"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"paddingBottom": "1",
 																						"paddingTop": "1"
@@ -2599,7 +2754,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Delivered centralized content to 70 channels."
@@ -2628,11 +2784,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -2664,17 +2822,18 @@
 																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"lazyLoadingImage": true,
+																								"alignment": "",
 																								"iconType": "large",
-																								"useHtml": true,
-																								"alignment": ""
+																								"lazyLoadingImage": true,
+																								"useHtml": true
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "iconHtml",
 																									"value": {
 																										"html": {
-																											"value_i18n": {}
+																											"value_i18n": {
+																											}
 																										}
 																									}
 																								}
@@ -2697,7 +2856,8 @@
 																					"fragmentConfig": {
 																						"height": "py-2"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"paddingBottom": "1",
 																						"paddingTop": "1"
@@ -2721,7 +2881,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Top retailer"
@@ -2742,7 +2903,8 @@
 																					"fragmentConfig": {
 																						"height": "py-1"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"paddingBottom": "1",
 																						"paddingTop": "1"
@@ -2766,7 +2928,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Developed auto-tagging for a $1.3 billion retailer."
@@ -2805,7 +2968,8 @@
 											"fragmentConfig": {
 												"height": "py-5"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"paddingBottom": "1",
 												"paddingTop": "1"
@@ -2829,7 +2993,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Realize business benefits with Liferay Content Hub Advantage by EPAM:"
@@ -2850,7 +3015,8 @@
 											"fragmentConfig": {
 												"height": "py-5"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"paddingBottom": "1",
 												"paddingTop": "1"
@@ -2874,7 +3040,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "<ul>\n\t<li>Accelerated time-to-market</li>\n\t<li>Increased reuse of your multichannel assets</li>\n\t<li>Increased findability of assets</li>\n\t<li>Reduced number of misused assets</li>\n\t<li>Reduced digital content production time</li>\n\t<li>Improved compliance with privacy and security</li>\n</ul>\n"
@@ -2894,27 +3061,31 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
-											"fragmentStyle": {"hidden": true},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"hidden": true
+											},
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -2932,11 +3103,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -2952,11 +3125,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -2971,7 +3146,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -2985,12 +3161,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "EPAM’s Content Hub Advantage allows customers to quickly stand-up, configure, and launch Content Hub."
@@ -3016,7 +3194,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -3030,12 +3209,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Content Hub Advantage –&nbsp;<br />\nContent Planning,&nbsp;<br />\nand Launch in 10 Weeks"
@@ -3065,11 +3246,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -3084,7 +3267,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "1",
 																				"paddingTop": "1"
@@ -3100,29 +3284,32 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "3",
+																				"colorScheme": "",
 																				"imageAspectRatio": "aspect-ratio-16-to-9",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "517px",
-																				"colorScheme": ""
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "3"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				},
 																				{
 																					"id": "imageCarousel2",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -3150,8 +3337,11 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-spacer"
 									},
-									"fragmentConfig": {"height": "py-3"},
-									"fragmentFields": [],
+									"fragmentConfig": {
+										"height": "py-3"
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"paddingBottom": "1",
 										"paddingTop": "1"
@@ -3169,7 +3359,9 @@
 								"backgroundColor": "#F4F6F9",
 								"borderWidth": "0"
 							},
-							"htmlProperties": {"htmlTag": "Div"},
+							"htmlProperties": {
+								"htmlTag": "Div"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -3193,7 +3385,9 @@
 								"backgroundColor": "#F4F6F9",
 								"borderWidth": "0"
 							},
-							"htmlProperties": {"htmlTag": "Div"},
+							"htmlProperties": {
+								"htmlTag": "Div"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -3216,7 +3410,9 @@
 										"backgroundColor": "#F4F6F9",
 										"borderWidth": "0"
 									},
-									"htmlProperties": {"htmlTag": "Div"},
+									"htmlProperties": {
+										"htmlTag": "Div"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,

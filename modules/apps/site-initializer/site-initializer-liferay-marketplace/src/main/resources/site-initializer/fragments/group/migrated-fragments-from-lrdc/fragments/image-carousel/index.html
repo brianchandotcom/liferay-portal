@@ -1,31 +1,17 @@
 [#assign imageCount = configuration.numberOfImages?number - 1]
 
 <div
-	class="
-		f-image-carousel
+	class="f-image-carousel
 		f-image-carousel-slide-down
 		glide
-		${configuration.colorScheme}
-	"
+		${configuration.colorScheme}"
 	style="max-width:${configuration.imageCarouselMaxWidth};"
 >
 	<div class="glide__track" data-glide-el="track">
-		<ul
-			class="
-				glide__slides
-				${configuration.imageAspectRatio}
-			"
-		>
+	<ul class="glide__slides ${configuration.imageAspectRatio}">
 
 		[#macro imageCarousel index active]
-			<li
-				class="
-					${active?then('glide__slide--active','')}
-					${configuration.imageAspectRatio}
-					glide__slide
-				"
-				data-step="${index}"
-			>
+		<li class="${active?then('glide__slide--active','')} ${configuration.imageAspectRatio} glide__slide" data-step="${index}">
 				<div class="f-image-carousel-img">
 					<img data-lfr-editable-id="imageCarousel${index}" data-lfr-editable-type="image" loading="${configuration.lazyLoadingImage?then('lazy', 'eager')}" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=" />
 				</div>

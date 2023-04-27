@@ -52,13 +52,13 @@
 									},
 									"widgetInstance": {
 										"widgetConfig": {
-											"showCurrentGroup": "true",
 											"displayStyle": "ddmTemplate_449486070",
-											"showLayout": "true",
-											"showPortletBreadcrumb": "true",
-											"showParentGroups": "true",
 											"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
-											"showGuestGroup": "false"
+											"showCurrentGroup": "true",
+											"showGuestGroup": "false",
+											"showLayout": "true",
+											"showParentGroups": "true",
+											"showPortletBreadcrumb": "true"
 										},
 										"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 									}
@@ -125,7 +125,8 @@
 														{
 															"id": "icon",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "__CUSTOM_FIELD_App_Icon",
@@ -159,13 +160,16 @@
 															"value": {
 																"fragmentImage": {
 																	"description": {
-																		"value_i18n": {}
+																		"value_i18n": {
+																		}
 																	},
 																	"url": {
-																		"value_i18n": {}
+																		"value_i18n": {
+																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -213,7 +217,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "CPDefinition_name",
@@ -264,7 +269,8 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-html"
 																	},
-																	"fragmentConfig": {},
+																	"fragmentConfig": {
+																	},
 																	"fragmentFields": [
 																		{
 																			"id": "element-html",
@@ -298,7 +304,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -376,7 +383,8 @@
 											"rowViewports": [
 												{
 													"id": "landscapeMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "portraitMobile",
@@ -386,7 +394,8 @@
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -396,7 +405,8 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
@@ -406,7 +416,8 @@
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -418,8 +429,10 @@
 															"fragment": {
 																"key": "com.liferay.commerce.product.content.web.internal.fragment.renderer.ImageGalleryFragmentRenderer"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -430,14 +443,15 @@
 																"key": "BASIC_COMPONENT-tabs"
 															},
 															"fragmentConfig": {
-																"persistSelectedTab": true,
-																"numberOfTabs": 4
+																"numberOfTabs": 4,
+																"persistSelectedTab": true
 															},
 															"fragmentFields": [
 																{
 																	"id": "title1",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Description"
@@ -448,7 +462,8 @@
 																{
 																	"id": "title2",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "ddmTemplate__ddmTemplate_8811584",
@@ -462,7 +477,8 @@
 																{
 																	"id": "title3",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "ddmTemplate__ddmTemplate_8811588",
@@ -476,7 +492,8 @@
 																{
 																	"id": "title4",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "ddmTemplate__ddmTemplate_8811580",
@@ -505,7 +522,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -538,7 +556,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -571,7 +590,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -604,7 +624,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -637,7 +658,8 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
@@ -647,7 +669,8 @@
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -727,12 +750,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "DEVELOPER"
@@ -756,12 +781,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinition_userName",
@@ -819,12 +846,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Published Date"
@@ -848,12 +877,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinition_displayDate",
@@ -916,7 +947,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Version"
@@ -934,12 +966,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinition_sku",
@@ -992,12 +1026,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Supported Versions"
@@ -1021,12 +1057,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "AssetVocabulary_8823954",
@@ -1082,12 +1120,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Edition"
@@ -1111,12 +1151,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "AssetVocabulary_8823940",
@@ -1172,12 +1214,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Price"
@@ -1201,12 +1245,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinition_finalPrice",
@@ -1244,11 +1290,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"collectionViewportDefinition": {},
+																			"collectionViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"collectionViewportDefinition": {},
+																			"collectionViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1270,7 +1318,8 @@
 																"pageElements": [
 																	{
 																		"definition": {
-																			"collectionItemConfig": {}
+																			"collectionItemConfig": {
+																			}
 																		},
 																		"pageElements": [
 																			{
@@ -1312,7 +1361,8 @@
 																								{
 																									"id": "element-text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"mapping": {
 																												"fieldKey": "CPDefinitionSpecificationOptionValue_name",
@@ -1337,12 +1387,14 @@
 																							"fragment": {
 																								"key": "BASIC_COMPONENT-paragraph"
 																							},
-																							"fragmentConfig": {},
+																							"fragmentConfig": {
+																							},
 																							"fragmentFields": [
 																								{
 																									"id": "element-text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"mapping": {
 																												"fieldKey": "CPDefinitionSpecificationOptionValue_value",
@@ -1406,7 +1458,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Help &amp; Support"
@@ -1424,12 +1477,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "ddmTemplate__ddmTemplate_8811568",
@@ -1487,7 +1542,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Share Link"
@@ -1505,12 +1561,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "ddmTemplate__ddmTemplate_8811560",
@@ -1557,10 +1615,10 @@
 		},
 		"themeName": "Classic",
 		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-footer": "false"
+			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},
 	"version": 1.1

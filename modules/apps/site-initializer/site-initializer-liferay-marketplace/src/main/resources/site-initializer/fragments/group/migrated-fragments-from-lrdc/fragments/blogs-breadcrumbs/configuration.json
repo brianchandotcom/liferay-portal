@@ -1,7 +1,8 @@
 {
 	"fieldSets": [
 		{
-			"fields": [],
+			"fields": [
+			],
 			"label": "configuration"
 		}
 	]

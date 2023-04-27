@@ -23,18 +23,17 @@ import org.osgi.service.component.annotations.Reference;
 public class ${className}PanelApp extends BasePanelApp {
 
 	@Override
-	public Portlet getPortlet() {
-		return _portlet;
-	}
-
-	@Override
 	public String getPortletId() {
 		return ${className}PortletKeys.${className.toUpperCase()};
 	}
 
+	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ${className}PortletKeys.${className.toUpperCase()} + ")"
+		target = "(javax.portlet.name=" + ${className}PortletKeys.${className.toUpperCase()} + ")",
+		unbind = "-"
 	)
-	private Portlet _portlet;
+	public void setPortlet(Portlet portlet) {
+		super.setPortlet(portlet);
+	}
 
 }

@@ -74,10 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + JournalContentPortletKeys.JOURNAL_CONTENT,
 		"mvc.path=-", "mvc.path=/view.jsp"
 	},
-	service = {
-		JournalContentPortletToolbarContributor.class,
-		PortletToolbarContributor.class
-	}
+	service = PortletToolbarContributor.class
 )
 public class JournalContentPortletToolbarContributor
 	extends BasePortletToolbarContributor {

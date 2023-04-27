@@ -54,10 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
 		"mvc.path=-", "mvc.path=/view.jsp"
 	},
-	service = {
-		PortletToolbarContributor.class,
-		SiteNavigationMenuEditPortletToolbarContributor.class
-	}
+	service = PortletToolbarContributor.class
 )
 public class SiteNavigationMenuEditPortletToolbarContributor
 	implements PortletToolbarContributor {

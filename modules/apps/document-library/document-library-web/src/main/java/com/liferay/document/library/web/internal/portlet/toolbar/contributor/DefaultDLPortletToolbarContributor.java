@@ -54,9 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 		"mvc.render.command.name=/document_library/view",
 		"mvc.render.command.name=/document_library/view_folder"
 	},
-	service = {
-		DLPortletToolbarContributor.class, PortletToolbarContributor.class
-	}
+	service = PortletToolbarContributor.class
 )
 public class DefaultDLPortletToolbarContributor
 	extends BasePortletToolbarContributor

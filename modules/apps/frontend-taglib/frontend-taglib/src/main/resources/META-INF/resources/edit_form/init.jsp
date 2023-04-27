@@ -34,4 +34,5 @@ String name = GetterUtil.getString((java.lang.String)request.getAttribute("lifer
 String onSubmit = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-frontend:edit-form:onSubmit"));
 boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:validateOnBlur")));
 Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("LIFERAY_SHARED_aui:form:validatorTagsMap");
+boolean wrappedFormContent = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:wrappedFormContent")));
 %>

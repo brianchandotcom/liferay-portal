@@ -88,6 +88,10 @@ public class EditFormTag extends IncludeTag {
 		return _validateOnBlur;
 	}
 
+	public boolean isWrappedFormContent() {
+		return _wrappedFormContent;
+	}
+
 	public void setAction(PortletURL portletURL) {
 		if (portletURL != null) {
 			setAction(portletURL.toString());
@@ -145,6 +149,10 @@ public class EditFormTag extends IncludeTag {
 		_validateOnBlur = validateOnBlur;
 	}
 
+	public void setWrappedFormContent(boolean wrappedFormContent) {
+		_wrappedFormContent = wrappedFormContent;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -161,6 +169,7 @@ public class EditFormTag extends IncludeTag {
 		_portletNamespace = null;
 		_useNamespace = true;
 		_validateOnBlur = true;
+		_wrappedFormContent = true;
 
 		if (_validatorTagsMap != null) {
 			for (List<ValidatorTag> validatorTags :
@@ -219,6 +228,9 @@ public class EditFormTag extends IncludeTag {
 			"liferay-frontend:edit-form:validateOnBlur",
 			String.valueOf(_validateOnBlur));
 		httpServletRequest.setAttribute(
+			"liferay-frontend:edit-form:wrappedFormContent",
+			String.valueOf(_isWrappedFormContent(httpServletRequest)));
+		httpServletRequest.setAttribute(
 			"LIFERAY_SHARED_aui:form:checkboxNames", _checkboxNames);
 		httpServletRequest.setAttribute(
 			"LIFERAY_SHARED_aui:form:validatorTagsMap", _validatorTagsMap);
@@ -235,6 +247,20 @@ public class EditFormTag extends IncludeTag {
 		}
 
 		return _action;
+	}
+
+	private boolean _isWrappedFormContent(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isStatePopUp()) {
+			return false;
+		}
+
+		return _wrappedFormContent;
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
@@ -260,5 +286,6 @@ public class EditFormTag extends IncludeTag {
 	private boolean _validateOnBlur = true;
 	private final Map<String, List<ValidatorTag>> _validatorTagsMap =
 		new HashMap<>();
+	private boolean _wrappedFormContent = true;
 
 }

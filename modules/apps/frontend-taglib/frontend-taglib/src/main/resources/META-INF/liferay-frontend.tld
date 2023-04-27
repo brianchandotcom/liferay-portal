@@ -197,6 +197,13 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
+		<attribute>
+			<description>Whether to wrap the form content in a <![CDATA[<code>sheet</code>]]>. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>wrappedFormContent</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>

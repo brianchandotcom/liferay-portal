@@ -116,7 +116,7 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		// Available for all companies' restricted object definitions
 
-		ObjectActionExecutor objectActionExecutor1 =
+		ObjectActionExecutor objectActionExecutor =
 			_registerObjectActionExecutor(
 				Arrays.asList(_objectDefinition1.getName()), 0,
 				StringUtil.randomId());
@@ -124,7 +124,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(
 				ArrayUtil.append(
-					new String[] {objectActionExecutor1.getKey()},
+					new String[] {objectActionExecutor.getKey()},
 					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
@@ -142,14 +142,14 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		// Available for a restricted company's object definitions
 
-		ObjectActionExecutor objectActionExecutor2 =
+		objectActionExecutor =
 			_registerObjectActionExecutor(
 				Collections.emptyList(), _companyId1, StringUtil.randomId());
 
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(
 				ArrayUtil.append(
-					new String[] {objectActionExecutor2.getKey()},
+					new String[] {objectActionExecutor.getKey()},
 					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
@@ -167,7 +167,7 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		// Available for a restricted company's restricted object definitions
 
-		ObjectActionExecutor objectActionExecutor3 =
+		objectActionExecutor =
 			_registerObjectActionExecutor(
 				Arrays.asList(_objectDefinition1.getName()), _companyId1,
 				StringUtil.randomId());
@@ -175,7 +175,7 @@ public class ObjectActionExecutorRegistryImplTest {
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(
 				ArrayUtil.append(
-					new String[] {objectActionExecutor3.getKey()},
+					new String[] {objectActionExecutor.getKey()},
 					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(

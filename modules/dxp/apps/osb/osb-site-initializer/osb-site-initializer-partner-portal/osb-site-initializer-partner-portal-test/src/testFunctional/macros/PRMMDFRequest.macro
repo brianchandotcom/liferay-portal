@@ -314,22 +314,22 @@ definition {
 	}
 
 	@summary = "Get the hidden value of 'Total MDF Requested Amount' field using JS script"
-	macro getRequestedAmoundValue {
-		if (!(isSet(activityIndex))) {
-			var activityIndex = 0;
-		}
+	macro getValueByFieldName {
+		Click.pauseClickAt(
+			locator1 = "PRMMDFRequest#TEXT_FIELD",
+			key_fieldName = ${fieldName});
 
 		var javaScriptCountElement = '''
         
-        return document.querySelector("input[name='${nametest}']").value;
+        return document.querySelector("input[name='${fieldName}']").value;
 
         ''';
 
-		var value = selenium.getEval(${javaScriptCountElement});
+		var fieldValue = selenium.getEval(${javaScriptCountElement});
 
-		var value = StringUtil.extractDigits(${value});
+		var fieldDigits = StringUtil.extractDigits(${fieldValue});
 
-		return ${value};
+		return ${fieldDigits};
 	}
 
 	@summary = "Go to MDF"

@@ -90,7 +90,9 @@ definition {
 				category = "Design",
 				portlet = "Page Templates");
 
-			Navigator.gotoNavTab(navTab = "Page Templates");
+			Click(
+				key_tab = "Page Templates",
+				locator1 = "NavTab#TAB_LINK");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 

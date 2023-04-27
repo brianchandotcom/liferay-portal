@@ -828,7 +828,7 @@ public class ClientExtensionProjectConfigurator
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
 	private static final Pattern _overrideClientExtensionYamlPattern =
-		Pattern.compile("client-extension\\.([a-z]+)\\.yaml");
+		Pattern.compile("^client-extension\\.([a-z]+)\\.yaml$");
 
 	private Properties _clientExtensionProperties;
 	private final boolean _defaultRepositoryEnabled;

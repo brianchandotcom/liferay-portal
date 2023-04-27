@@ -51,14 +51,14 @@ export default function ({
 		});
 	};
 
+	document.addEventListener('beforeunload', fetchDeactivateSimulation);
+
 	Liferay.on(
 		'SimulationMenu:closeSimulationPanel',
 		fetchDeactivateSimulation
 	);
 
 	Liferay.on('SimulationMenu:openSimulationPanel', simulateSegmentsEntries);
-
-	document.addEventListener('beforeunload', fetchDeactivateSimulation);
 
 	return {
 		dispose() {
@@ -68,13 +68,13 @@ export default function ({
 			);
 
 			Liferay.detach(
-				'SimulationMenu:openSimulationPanel',
-				simulateSegmentsEntries
+				'SimulationMenu:closeSimulationPanel',
+				fetchDeactivateSimulation
 			);
 
 			Liferay.detach(
-				'SimulationMenu:closeSimulationPanel',
-				fetchDeactivateSimulation
+				'SimulationMenu:openSimulationPanel',
+				simulateSegmentsEntries
 			);
 		},
 	};

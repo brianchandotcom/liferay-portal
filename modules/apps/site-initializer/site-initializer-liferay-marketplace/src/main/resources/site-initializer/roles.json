@@ -1,0 +1,69 @@
+[
+	{
+		"actions": [
+			{
+				"actionId": "MANAGE_ADDRESSES",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 3
+			},
+			{
+				"actionId": "VIEW_ADDRESSES",
+				"resource": "com.liferay.account.model.AccountEntry",
+				"scope": 3
+			},
+			{
+				"actionId": "CHECKOUT_OPEN_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "MANAGE_COMMERCE_ORDER_DELIVERY_TERMS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "VIEW_OPEN_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "VIEW_BILLING_ADDRESS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "MANAGE_COMMERCE_ORDER_PAYMENT_TERMS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "VIEW_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			},
+			{
+				"actionId": "ADD_COMMERCE_ORDER",
+				"resource": "com.liferay.commerce.order",
+				"scope": 3
+			}
+		],
+		"name": "Account Buyer",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"name": "App Editor",
+		"type": 6
+	}
+]

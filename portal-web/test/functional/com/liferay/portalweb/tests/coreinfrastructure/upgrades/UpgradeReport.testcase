@@ -104,7 +104,7 @@ definition {
 		property custom.mysql.sql.statement = "ALTER TABLE Release_ DROP servletContextName;";
 		property test.name.skip.portal.instance = "UpgradeReport#ErrorsLogged";
 
-		task ("Given upgrade.report is set When the portal gets upgraded and an error was captured during the upgrade") {
+		task ("Given upgrade.report is enabled When the portal gets upgraded and an error was captured during the upgrade") {
 			var upgradeReportContent = UpgradeReport.getUpgradeReportFileContent();
 		}
 
@@ -128,7 +128,7 @@ definition {
 			}
 		}
 
-		task ("and the user can check the upgrade result as failure") {
+		task ("And the user can check the upgrade result as failure") {
 			if (!(contains(${upgradeReportContent}, "Result: failure"))) {
 				echo(${upgradeReportContent});
 

@@ -71,8 +71,7 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				_userLocalService.validateMaxUsers(
-					themeDisplay.getCompanyId());
+				_userLocalService.validateMaxUsers(themeDisplay.getCompanyId());
 
 				_updateUsers(
 					actionRequest, accountUserIds,

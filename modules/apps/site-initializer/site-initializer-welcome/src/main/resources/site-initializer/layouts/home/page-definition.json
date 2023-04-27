@@ -3,36 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"backgroundColor": "",
-					"backgroundFragmentImage": {
-					},
 					"fragmentStyle": {
-						"backgroundColor": "",
-						"backgroundFragmentImage": {
-						},
-						"borderRadius": "",
-						"borderWidth": "0",
-						"fontFamily": "",
-						"fontSize": "",
-						"fontWeight": "",
-						"height": "",
-						"marginBottom": "",
-						"marginLeft": "",
-						"marginRight": "",
-						"marginTop": "0",
-						"maxHeight": "",
-						"maxWidth": "",
-						"minHeight": "",
-						"minWidth": "",
-						"opacity": "100",
-						"overflow": "",
 						"paddingBottom": "6",
-						"paddingLeft": "0",
-						"paddingRight": "0",
-						"paddingTop": "6",
-						"shadow": "",
-						"textAlign": "",
-						"width": ""
+						"paddingTop": "6"
 					},
 					"fragmentViewports": [
 						{
@@ -44,7 +17,6 @@
 						},
 						{
 							"fragmentViewportStyle": {
-								"marginTop": "0",
 								"paddingBottom": "5",
 								"paddingTop": "5"
 							},
@@ -52,7 +24,6 @@
 						},
 						{
 							"fragmentViewportStyle": {
-								"marginTop": "0",
 								"paddingBottom": "6",
 								"paddingTop": "6"
 							},
@@ -60,15 +31,8 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"opacity": 100,
 						"paddingBottom": 6,
-						"paddingLeft": 0,
-						"paddingRight": 0,
 						"paddingTop": 6,
 						"widthType": "Fluid"
 					}
@@ -76,36 +40,9 @@
 				"pageElements": [
 					{
 						"definition": {
-							"backgroundColor": "",
-							"backgroundFragmentImage": {
-							},
 							"fragmentStyle": {
-								"backgroundColor": "",
-								"backgroundFragmentImage": {
-								},
-								"borderRadius": "",
-								"borderWidth": "0",
-								"fontFamily": "",
-								"fontSize": "",
-								"fontWeight": "",
-								"height": "",
-								"marginBottom": "",
-								"marginLeft": "",
-								"marginRight": "",
-								"marginTop": "",
-								"maxHeight": "",
-								"maxWidth": "",
-								"minHeight": "",
-								"minWidth": "",
-								"opacity": "100",
-								"overflow": "",
-								"paddingBottom": "",
 								"paddingLeft": "2",
-								"paddingRight": "2",
-								"paddingTop": "",
-								"shadow": "",
-								"textAlign": "",
-								"width": ""
+								"paddingRight": "2"
 							},
 							"fragmentViewports": [
 								{
@@ -123,8 +60,6 @@
 								},
 								{
 									"fragmentViewportStyle": {
-										"marginLeft": "0",
-										"marginRight": "0",
 										"paddingLeft": "3",
 										"paddingRight": "3"
 									},
@@ -132,53 +67,14 @@
 								}
 							],
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {
-										"backgroundFragmentImage": {
-										},
-										"borderRadius": "",
-										"borderWidth": "0",
-										"fontFamily": "",
-										"fontSize": "",
-										"fontWeight": "",
-										"height": "",
-										"marginBottom": "",
-										"marginLeft": "",
-										"marginRight": "",
-										"marginTop": "",
-										"maxHeight": "",
-										"maxWidth": "",
-										"minHeight": "",
-										"minWidth": "",
-										"opacity": "100",
-										"overflow": "",
-										"paddingBottom": "",
-										"paddingLeft": "0",
-										"paddingRight": "",
-										"paddingTop": "",
-										"shadow": "",
-										"textAlign": "",
-										"width": ""
-									},
 									"fragmentViewports": [
 										{
-											"fragmentViewportStyle": {
-												"paddingLeft": "0",
-												"paddingRight": "0"
-											},
 											"id": "tablet"
 										}
 									],
@@ -271,31 +167,8 @@
 														}
 													],
 													"fragmentStyle": {
-														"backgroundFragmentImage": {
-														},
-														"borderRadius": "",
-														"borderWidth": "0",
-														"fontFamily": "",
-														"fontSize": "",
-														"fontWeight": "",
-														"height": "",
 														"marginBottom": "3",
-														"marginLeft": "",
-														"marginRight": "",
-														"marginTop": "0",
-														"maxHeight": "",
-														"maxWidth": "",
-														"minHeight": "",
-														"minWidth": "",
-														"opacity": "100",
-														"overflow": "",
-														"paddingBottom": "",
-														"paddingLeft": "",
-														"paddingRight": "",
-														"paddingTop": "",
-														"shadow": "",
-														"textAlign": "left",
-														"width": ""
+														"opacity": "100"
 													},
 													"fragmentViewports": [
 														{
@@ -338,32 +211,9 @@
 														}
 													],
 													"fragmentStyle": {
-														"backgroundFragmentImage": {
-														},
-														"borderRadius": "",
-														"borderWidth": "0",
-														"fontFamily": "",
 														"fontSize": "fontSizeBase",
-														"fontWeight": "",
-														"height": "",
-														"marginBottom": "0",
-														"marginLeft": "0",
-														"marginRight": "0",
-														"marginTop": "",
-														"maxHeight": "",
-														"maxWidth": "",
-														"minHeight": "",
-														"minWidth": "",
 														"opacity": "100",
-														"overflow": "",
-														"paddingBottom": "",
-														"paddingLeft": "",
-														"paddingRight": "",
-														"paddingTop": "",
-														"shadow": "",
-														"textAlign": "left",
-														"textColor": "gray600Color",
-														"width": ""
+														"textColor": "gray600Color"
 													},
 													"fragmentViewports": [
 														{
@@ -380,8 +230,7 @@
 														},
 														{
 															"fragmentViewportStyle": {
-																"marginBottom": "4",
-																"marginLeft": "0"
+																"marginBottom": "4"
 															},
 															"id": "tablet"
 														}
@@ -448,29 +297,7 @@
 													"fragmentStyle": {
 														"backgroundFragmentImage": {
 														},
-														"borderRadius": "",
-														"borderWidth": "0",
-														"fontFamily": "",
-														"fontSize": "",
-														"fontWeight": "",
-														"height": "",
-														"marginBottom": "",
-														"marginLeft": "0",
-														"marginRight": "",
-														"marginTop": "",
-														"maxHeight": "",
-														"maxWidth": "",
-														"minHeight": "",
-														"minWidth": "",
-														"opacity": "100",
-														"overflow": "",
-														"paddingBottom": "",
-														"paddingLeft": "",
-														"paddingRight": "",
-														"paddingTop": "",
-														"shadow": "",
-														"textAlign": "",
-														"width": ""
+														"opacity": "100"
 													},
 													"fragmentViewports": [
 														{
@@ -487,9 +314,7 @@
 														},
 														{
 															"fragmentViewportStyle": {
-																"marginBottom": "5",
-																"marginLeft": "0",
-																"marginRight": "0"
+																"marginBottom": "5"
 															},
 															"id": "tablet"
 														}

@@ -14,26 +14,12 @@
 								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/stars.png$]"
 							}
 						},
-						"borderRadius": "",
-						"borderWidth": "0",
-						"height": "100vh",
-						"shadow": "",
-						"textAlign": ""
+						"height": "100vh"
 					},
 					"indexed": true,
 					"layout": {
-						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
 						"justify": "Center",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fluid"
 					}
 				},
@@ -49,11 +35,7 @@
 										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/earth.png$]"
 									}
 								},
-								"borderRadius": "",
-								"borderWidth": "0",
-								"height": "100vh",
-								"shadow": "",
-								"textAlign": ""
+								"height": "100vh"
 							},
 							"fragmentViewports": [
 								{
@@ -77,18 +59,8 @@
 							],
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"contentDisplay": "FlexColumn",
 								"justify": "End",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							}
 						},
@@ -96,11 +68,7 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"borderRadius": "",
-										"borderWidth": "0",
-										"height": "100vh",
-										"shadow": "",
-										"textAlign": ""
+										"height": "100vh"
 									},
 									"fragmentViewports": [
 										{
@@ -124,18 +92,8 @@
 									],
 									"indexed": true,
 									"layout": {
-										"borderWidth": 0,
 										"contentDisplay": "FlexColumn",
 										"justify": "Center",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
 										"widthType": "Fixed"
 									}
 								},
@@ -218,13 +176,9 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderRadius": "",
-																"borderWidth": "0",
 																"height": "700px",
 																"marginLeft": "16px",
-																"marginRight": "16px",
-																"shadow": "",
-																"textAlign": ""
+																"marginRight": "16px"
 															},
 															"fragmentViewports": [
 																{
@@ -236,19 +190,9 @@
 															],
 															"indexed": true,
 															"layout": {
-																"borderWidth": 0,
 																"contentDisplay": "FlexColumn",
 																"flexWrap": "Wrap",
 																"justify": "Center",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -287,8 +231,6 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"borderRadius": "",
-																		"shadow": "",
 																		"textAlign": "center",
 																		"textColor": "#fff"
 																	},
@@ -318,12 +260,10 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"borderRadius": "",
 																		"fontFamily": "fontFamilyMonospace",
 																		"fontSize": "20px",
 																		"fontWeight": "700",
 																		"marginTop": "-16px",
-																		"shadow": "",
 																		"textAlign": "center",
 																		"textColor": "whiteColor"
 																	},
@@ -389,9 +329,7 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"borderRadius": "",
 																		"marginTop": "8px",
-																		"shadow": "",
 																		"textAlign": "center"
 																	},
 																	"indexed": true
@@ -431,11 +369,7 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderRadius": "",
-																"borderWidth": "0",
-																"height": "700px",
-																"shadow": "",
-																"textAlign": ""
+																"height": "700px"
 															},
 															"fragmentViewports": [
 																{
@@ -448,18 +382,8 @@
 															"indexed": true,
 															"layout": {
 																"align": "Center",
-																"borderWidth": 0,
 																"contentDisplay": "FlexColumn",
 																"justify": "Center",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -475,10 +399,7 @@
 																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/satellite.png$]"
 																			}
 																		},
-																		"borderRadius": "",
-																		"borderWidth": "0",
 																		"height": "300px",
-																		"shadow": "",
 																		"textAlign": "center",
 																		"width": "300px"
 																	},
@@ -492,16 +413,6 @@
 																	],
 																	"indexed": true,
 																	"layout": {
-																		"borderWidth": 0,
-																		"marginBottom": 0,
-																		"marginLeft": 0,
-																		"marginRight": 0,
-																		"marginTop": 0,
-																		"opacity": 100,
-																		"paddingBottom": 0,
-																		"paddingLeft": 0,
-																		"paddingRight": 0,
-																		"paddingTop": 0,
 																		"widthType": "Fluid"
 																	}
 																},
@@ -539,12 +450,6 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragmentStyle": {
-																"borderRadius": "",
-																"borderWidth": "0",
-																"shadow": "",
-																"textAlign": ""
-															},
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
@@ -555,18 +460,8 @@
 															],
 															"indexed": true,
 															"layout": {
-																"borderWidth": 0,
 																"contentDisplay": "FlexColumn",
 																"justify": "Center",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -582,12 +477,9 @@
 																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/moon.png$]"
 																			}
 																		},
-																		"borderRadius": "",
-																		"borderWidth": "0",
 																		"height": "160px",
 																		"marginRight": "16px",
 																		"marginTop": "16px",
-																		"shadow": "",
 																		"textAlign": "right",
 																		"width": "160px"
 																	},
@@ -601,16 +493,6 @@
 																	],
 																	"indexed": true,
 																	"layout": {
-																		"borderWidth": 0,
-																		"marginBottom": 0,
-																		"marginLeft": 0,
-																		"marginRight": 0,
-																		"marginTop": 0,
-																		"opacity": 100,
-																		"paddingBottom": 0,
-																		"paddingLeft": 0,
-																		"paddingRight": 0,
-																		"paddingTop": 0,
 																		"widthType": "Fluid"
 																	}
 																},

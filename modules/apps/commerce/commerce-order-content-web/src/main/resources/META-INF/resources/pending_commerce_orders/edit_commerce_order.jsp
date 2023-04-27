@@ -452,12 +452,7 @@ if (backURL != null) {
 		/>
 
 		<c:if test="<%= commerceOrderContentDisplayContext.isRequestQuoteEnabled() %>">
-			<clay:button
-				cssClass="btn-fixed btn-secondary ml-3 request-quote"
-				displayType="secondary"
-				label='<%= LanguageUtil.get(request, "request-a-quote") %>'
-				small="<%= false %>"
-			/>
+			<aui:button cssClass="btn-fixed btn-secondary ml-3 request-quote" displayType="secondary" id="requestQuote" small="<%= false %>" value='<%= LanguageUtil.get(request, "request-a-quote") %>' />
 		</c:if>
 	</div>
 </aui:form>
@@ -546,6 +541,8 @@ if (backURL != null) {
 </div>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderURL" />
+
+<%@ include file="/pending_commerce_orders/quote_requested.jspf" %>
 
 <%@ include file="/pending_commerce_orders/transition.jspf" %>
 

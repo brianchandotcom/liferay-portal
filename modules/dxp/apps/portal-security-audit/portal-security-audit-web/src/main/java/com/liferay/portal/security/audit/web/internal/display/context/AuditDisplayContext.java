@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.audit.web.internal.display.context;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -77,6 +78,13 @@ public class AuditDisplayContext {
 				"resource-action", "client-ip", "create-date"),
 			"there-are-no-events");
 
+		int[] range = {QueryUtil.ALL_POS, QueryUtil.ALL_POS};
+
+		if (_paging) {
+			range[0] = _searchContainer.getStart();
+			range[1] = _searchContainer.getEnd();
+		}
+
 		if (displayTerms.isAdvancedSearch()) {
 			Date endDate = PortalUtil.getDate(
 				_getEndDateMonth(), _getEndDateDay(), _getEndDateYear(),
@@ -96,8 +104,7 @@ public class AuditDisplayContext {
 					startDate, endDate, _getEventType(), _getClassName(),
 					_getClassPK(), _getClientHost(), _getClientIP(),
 					_getServerName(), _getServerPort(), null,
-					displayTerms.isAndOperator(), _searchContainer.getStart(),
-					_searchContainer.getEnd(),
+					displayTerms.isAndOperator(), range[0], range[1],
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
 					_themeDisplay.getCompanyId(), _getUserId(), _getUserName(),
@@ -117,8 +124,7 @@ public class AuditDisplayContext {
 					_themeDisplay.getCompanyId(), Long.valueOf(number),
 					keywords, null, null, keywords, keywords, keywords,
 					keywords, keywords, keywords, Integer.valueOf(number), null,
-					false, _searchContainer.getStart(),
-					_searchContainer.getEnd(),
+					false, range[0], range[1],
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
 					_themeDisplay.getCompanyId(), Long.valueOf(number),
@@ -128,6 +134,10 @@ public class AuditDisplayContext {
 		}
 
 		return _searchContainer;
+	}
+
+	public void setPaging(boolean paging) {
+		_paging = paging;
 	}
 
 	private String _getClassName() {
@@ -424,6 +434,7 @@ public class AuditDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private boolean _paging = true;
 	private PortletURL _portletURL;
 	private SearchContainer<AuditEvent> _searchContainer;
 	private String _serverName;

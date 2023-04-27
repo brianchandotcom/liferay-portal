@@ -142,6 +142,8 @@ public class ExportAuditEventsMVCResourceCommand
 			_portal.getLiferayPortletRequest(resourceRequest),
 			liferayResourceResponse, timeZone);
 
+		auditDisplayContext.setPaging(false);
+
 		SearchContainer<AuditEvent> searchContainer =
 			auditDisplayContext.getSearchContainer();
 

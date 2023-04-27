@@ -313,6 +313,51 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					));
 
+					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if !javaMethodParameter?is_first>
+							,
+						</#if>
+
+						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+								${schemaVarName}.getId()
+							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
+								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+								<#else>
+									<#assign
+										addGetterMethod = true
+										defaultImplementationGetterMethod = true
+									/>
+								</#if>
+							<#else>
+								<#assign
+									addGetterMethod = true
+									defaultImplementationGetterMethod = false
+								/>
+							</#if>
+						<#else>
+							null
+						</#if>
+
+						<#if addGetterMethod>
+							<#if defaultImplementationGetterMethod>
+								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName})
+							<#else>
+								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+							</#if>
+
+							<#assign
+								addGetterMethod = false
+								getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
+							/>
+						</#if>
+					</#list>
+
+					));
+
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
 

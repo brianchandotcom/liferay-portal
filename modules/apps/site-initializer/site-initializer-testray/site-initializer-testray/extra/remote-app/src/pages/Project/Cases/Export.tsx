@@ -31,8 +31,8 @@ import {
 	TestrayCase,
 	TestrayRequirement,
 	TestrayRequirementCase,
+	testrayCaseImpl,
 	testrayCaseRequirementsImpl,
-	testrayCaseRestImpl,
 } from '../../../services/rest';
 import dayjs from '../../../util/date';
 
@@ -259,7 +259,7 @@ const Export = () => {
 			},
 			swrConfig: {shouldFetch: caseIds.length},
 			transformData: (response) =>
-				testrayCaseRestImpl.transformDataFromList(response),
+				testrayCaseImpl.transformDataFromList(response),
 		}
 	);
 
@@ -295,7 +295,8 @@ const Export = () => {
 
 			if (requirement && casesWithRequirement[caseId]) {
 				casesWithRequirement[caseId].push(requirement);
-			} else {
+			}
+			else {
 				casesWithRequirement[caseId] = [requirement];
 			}
 		});

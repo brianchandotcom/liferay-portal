@@ -20,6 +20,7 @@ import {TestrayRequirement} from './types';
 type Requirement = typeof yupSchema.requirement.__outputType & {
 	projectId: number;
 };
+
 class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
 	constructor() {
 		super({
@@ -42,7 +43,7 @@ class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
 				r_projectToRequirements_c_projectId,
 				summary,
 			}),
-			nestedFields: 'nestedFields=component,team&nestedFieldsDepth=2',
+			nestedFields: 'component, team',
 
 			transformData: (testrayRequirement) => ({
 				...testrayRequirement,

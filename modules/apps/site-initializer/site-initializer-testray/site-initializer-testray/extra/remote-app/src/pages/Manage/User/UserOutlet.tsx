@@ -34,6 +34,7 @@ const UserOutlet = () => {
 	);
 
 	const context = {
+		actions: myUserAccount?.actions,
 		mutateUser: userId
 			? userId === Liferay.ThemeDisplay.getUserId()
 				? (response: KeyedMutator<UserAccount>) => {

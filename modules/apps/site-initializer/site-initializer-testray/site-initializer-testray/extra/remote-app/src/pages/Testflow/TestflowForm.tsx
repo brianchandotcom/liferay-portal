@@ -177,7 +177,8 @@ const TestflowForm = () => {
 			onSuccess();
 
 			navigate(`/testflow/${response.id}`);
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

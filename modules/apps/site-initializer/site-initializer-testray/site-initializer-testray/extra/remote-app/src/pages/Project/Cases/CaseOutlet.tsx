@@ -26,7 +26,7 @@ import i18n from '../../../i18n';
 import {
 	TestrayCase,
 	TestrayProject,
-	testrayCaseRestImpl,
+	testrayCaseImpl,
 } from '../../../services/rest';
 import {isIncludingFormPage} from '../../../util';
 import useCaseActions from './useCaseActions';
@@ -43,10 +43,10 @@ const CaseOutlet = () => {
 	}: {testrayProject: TestrayProject} = useOutletContext();
 
 	const {data: testrayCase, mutate} = useFetch<TestrayCase>(
-		testrayCaseRestImpl.getResource(caseId as string),
+		testrayCaseImpl.getResource(caseId as string),
 		{
 			transformData: (response) =>
-				testrayCaseRestImpl.transformData(response),
+				testrayCaseImpl.transformData(response),
 		}
 	);
 

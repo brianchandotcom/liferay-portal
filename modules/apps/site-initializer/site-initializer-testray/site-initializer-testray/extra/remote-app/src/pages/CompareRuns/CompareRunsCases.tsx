@@ -21,7 +21,7 @@ import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
 import useSearchBuilder from '~/hooks/useSearchBuilder';
 import i18n from '~/i18n';
 import {TestrayCase, TestrayCaseResult, TestrayRun} from '~/services/rest';
-import {testrayCaseRestImpl} from '~/services/rest/TestrayCase';
+import {testrayCaseImpl} from '~/services/rest/TestrayCase';
 import {CaseResultStatuses} from '~/util/statuses';
 
 type RunStatusProps = {
@@ -135,7 +135,8 @@ const CompareRunsCases = () => {
 			.and()
 			.eq('caseToCaseResult/dueStatus', dueStatusB)
 			.group('CLOSE');
-	} else {
+	}
+	else {
 		caseResultFilter = caseResultFilter.in(
 			'caseToCaseResult/r_runToCaseResult_c_runId',
 			[runA.id, runB.id]
@@ -167,7 +168,7 @@ const CompareRunsCases = () => {
 						filterSchema: 'compareRunsCases',
 					}}
 					resource={`/${
-						testrayCaseRestImpl.uri
+						testrayCaseImpl.uri
 					}?${searchParams.toString()}`}
 					tableProps={{
 						columns: [
@@ -228,7 +229,7 @@ const CompareRunsCases = () => {
 						rowWrap: true,
 					}}
 					transformData={(response) =>
-						testrayCaseRestImpl.transformDataFromList(response)
+						testrayCaseImpl.transformDataFromList(response)
 					}
 					variables={{
 						filter,

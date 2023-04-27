@@ -32,7 +32,7 @@ import {
 	TestrayCaseType,
 	TestrayComponent,
 	TestrayProject,
-	testrayCaseRestImpl,
+	testrayCaseImpl,
 } from '../../../services/rest';
 import {DescriptionType} from '../../../types';
 
@@ -127,8 +127,8 @@ const CaseForm = () => {
 		onSubmit(
 			{...form, projectId},
 			{
-				create: (data) => testrayCaseRestImpl.create(data),
-				update: (id, data) => testrayCaseRestImpl.update(id, data),
+				create: (data) => testrayCaseImpl.create(data),
+				update: (id, data) => testrayCaseImpl.update(id, data),
 			}
 		)
 			.then(mutateTestrayCase)
@@ -281,5 +281,5 @@ const CaseForm = () => {
 };
 
 export default withPagePermission(CaseForm, {
-	restImpl: testrayCaseRestImpl,
+	restImpl: testrayCaseImpl,
 });

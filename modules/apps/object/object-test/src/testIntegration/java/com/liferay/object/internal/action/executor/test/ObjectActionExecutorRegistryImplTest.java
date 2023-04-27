@@ -78,6 +78,10 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		_companyId1 = CompanyThreadLocal.getCompanyId();
 
+		Company company = CompanyTestUtil.addCompany();
+
+		_companyId2 = company.getCompanyId();
+
 		String objectDefinitionName1 = "A" + RandomTestUtil.randomString();
 
 		_objectDefinition1 = _addObjectDefinition(
@@ -87,10 +91,6 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		_objectDefinition2 = _addObjectDefinition(
 			objectDefinitionName2, TestPropsValues.getUser());
-
-		Company company = CompanyTestUtil.addCompany();
-
-		_companyId2 = company.getCompanyId();
 
 		_objectDefinition3 = _addObjectDefinition(
 			objectDefinitionName1, UserTestUtil.addCompanyAdminUser(company));

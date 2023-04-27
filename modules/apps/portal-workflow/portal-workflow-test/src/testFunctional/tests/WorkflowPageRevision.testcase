@@ -250,7 +250,6 @@ definition {
 	@description = "Verify that a Staging Area Page is Pending after it is submitted for publication"
 	@priority = 5
 	test StatusIsPendingAfterSubmitForWorkflow {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowPageRevision#StatusIsPendingAfterSubmitForWorkflow";
 
 		Navigator.gotoStagedSitePage(

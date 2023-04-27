@@ -87,8 +87,6 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 					HashMapBuilder.<String, Object>put(
 						"deactivateSimulationURL", segmentsSimulationDisplayContext.getDeactivateSimulationURL()
 					).put(
-						"portletNamespace", liferayPortletResponse.getNamespace()
-					).put(
 						"simulateSegmentsEntriesURL", segmentsSimulationDisplayContext.getSimulateSegmentsEntriesURL()
 					).build()
 				%>'

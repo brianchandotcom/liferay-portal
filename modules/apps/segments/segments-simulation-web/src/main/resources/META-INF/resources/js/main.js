@@ -16,7 +16,7 @@ import {fetch} from 'frontend-js-web';
 
 export default function ({
 	deactivateSimulationURL,
-	portletNamespace,
+	namespace: portletNamespace,
 	simulateSegmentsEntriesURL,
 }) {
 	const form = document.getElementById(

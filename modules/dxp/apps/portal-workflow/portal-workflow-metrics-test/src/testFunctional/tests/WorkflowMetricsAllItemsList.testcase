@@ -1754,7 +1754,7 @@ definition {
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: On Time"
 	@priority = 3
 	test ItemModalPlacesIconReferringToSlaStatusOnTime {
-		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#ItemModalPlacesIconReferringToSlaStatusOnTime";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

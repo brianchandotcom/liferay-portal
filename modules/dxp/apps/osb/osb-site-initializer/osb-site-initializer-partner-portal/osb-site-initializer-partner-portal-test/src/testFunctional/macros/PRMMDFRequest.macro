@@ -588,6 +588,15 @@ definition {
 			value1 = ${totalCost});
 	}
 
+	@summary = "View activity status on the MDF request detail page"
+	macro viewActivityStatus {
+		AssertElementPresent(
+			key_activityName = ${activityName},
+			key_statusType = ${statusType},
+			key_statusValue = ${statusValue},
+			locator1 = "PRMMDFRequest#ACTIVITY_STATUS");
+	}
+
 	@summary = "Assert button is not clickable"
 	macro viewDisabledButton {
 		AssertElementPresent(

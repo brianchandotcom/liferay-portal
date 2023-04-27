@@ -16,7 +16,6 @@ package com.liferay.commerce.product.content.web.internal.fragment.renderer;
 
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.product.content.web.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -223,11 +222,8 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 			String field)
 		throws PortalException {
 
-		CPInstanceHelper cpInstanceHelper =
-			ServletContextUtil.getCPInstanceHelper();
-
 		try {
-			CPInstance cpInstance = cpInstanceHelper.getDefaultCPInstance(
+			CPInstance cpInstance = _cpInstanceHelper.getDefaultCPInstance(
 				cpDefinition.getCPDefinitionId());
 
 			if (field.equals("availability.stockQuantity")) {
@@ -335,6 +331,9 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

@@ -801,8 +801,9 @@ definition {
 
 			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
 				portlet = "MyObject");
 
 			ObjectPortlet.viewEntry(entry = "Test Name No Tag");

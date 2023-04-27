@@ -26,9 +26,19 @@ import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -36,6 +46,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -222,6 +233,51 @@ public class DLFileEntryServiceTest {
 	}
 
 	@Test
+	public void testGetFileAsStream() throws Exception {
+		UserTestUtil.setUser(
+			UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
+
+		DLFileEntry dlFileEntry = addDLFileEntry(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
+
+		_assertNotThrows(
+			"Failed to get file stream with owner DOWNLOAD permission",
+			() -> StreamUtil.cleanUp(
+				DLFileEntryServiceUtil.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		_removeResourcePermission(
+			dlFileEntry.getFileEntryId(), RoleConstants.OWNER,
+			ActionKeys.DOWNLOAD);
+
+		_assertNotThrows(
+			"Failed to get file stream with site member DOWNLOAD permission",
+			() -> StreamUtil.cleanUp(
+				DLFileEntryServiceUtil.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		_removeResourcePermission(
+			dlFileEntry.getFileEntryId(), RoleConstants.SITE_MEMBER,
+			ActionKeys.DOWNLOAD);
+
+		_assertNotThrows(
+			"Failed to get file stream with guest DOWNLOAD permission",
+			() -> StreamUtil.cleanUp(
+				DLFileEntryServiceUtil.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		_removeResourcePermission(
+			dlFileEntry.getFileEntryId(), RoleConstants.GUEST,
+			ActionKeys.DOWNLOAD);
+
+		_assertThrows(
+			PrincipalException.class,
+			() -> StreamUtil.cleanUp(
+				DLFileEntryServiceUtil.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+	}
+
+	@Test
 	public void testGetFileEntriesByRating() throws Exception {
 		DLFileEntry dlFileEntry1 = addDLFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false);
@@ -402,6 +458,58 @@ public class DLFileEntryServiceTest {
 			dlFileVersion.getUserId(), dlFileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext,
 			new HashMap<String, Serializable>());
+	}
+
+	private void _assertNotThrows(
+			String message, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			return;
+		}
+		catch (Exception exception) {
+		}
+
+		Assert.fail(message);
+	}
+
+	private void _assertThrows(
+			Class<? extends Exception> clazz,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+		}
+		catch (Exception exception) {
+			Class<? extends Exception> exceptionClass = exception.getClass();
+
+			Assert.assertTrue(
+				StringBundler.concat(
+					"Unexpected exception ", exceptionClass.getName(),
+					"; expected ", clazz.getName()),
+				clazz.isAssignableFrom(exception.getClass()));
+
+			return;
+		}
+
+		Assert.fail(
+			"Unexpected success; expected exception " + clazz.getName());
+	}
+
+	private void _removeResourcePermission(
+			long fileEntryId, String roleName, String actionId)
+		throws Exception {
+
+		Role guestRole = RoleLocalServiceUtil.getRole(
+			_group.getCompanyId(), roleName);
+
+		ResourcePermissionLocalServiceUtil.removeResourcePermission(
+			_group.getCompanyId(), DLFileEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(fileEntryId),
+			guestRole.getRoleId(), actionId);
 	}
 
 	private static final String _CONTENT =

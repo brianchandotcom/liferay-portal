@@ -473,7 +473,7 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given a new MDF request and budget value is added") {
+		task ("Given a new MDF request and two new budget values are added") {
 			PRMMarketing.gotoAddNewMDF();
 
 			PRMMDFRequest.fillGoalsPage(
@@ -489,17 +489,17 @@ definition {
 
 			PRMMDFRequest.addNewActivity();
 
-			PRMMDFRequest.fillExpenseFields(budgetList = "Sponsorship Fee-2000");
+			PRMMDFRequest.fillExpenseFields(budgetList = "Sponsorship Fee-2000,Sponsorship Fee-1000");
 
-			PRMMDFRequest.viewValueBudget(totalCost = "R$2,000.00");
+			PRMMDFRequest.viewBudgetValue(totalCost = "R$3,000.00");
 		}
 
-		task ("When I click on '-' button") {
-			PRMMDFRequest.removeValueBudget();
+		task ("When I click on '-' button, to remove one of the budgets") {
+			PRMMDFRequest.removeBudgetValue(index = 1);
 		}
 
-		task ("Then the budget value will be cleaned") {
-			PRMMDFRequest.viewValueBudget(totalCost = "R$0.00");
+		task ("Then the MDF Total Cost value will be updated") {
+			PRMMDFRequest.viewBudgetValue(totalCost = "R$1,000.00");
 		}
 	}
 

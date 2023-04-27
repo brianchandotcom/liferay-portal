@@ -250,7 +250,7 @@ definition {
 		}
 
 		task ("Then an error message is shown") {
-			Alert.viewErrorMessage(errorMessage = "Duplicate order type relation");
+			Alert.viewErrorMessage(errorMessage = "The order type relation already exists.");
 		}
 	}
 

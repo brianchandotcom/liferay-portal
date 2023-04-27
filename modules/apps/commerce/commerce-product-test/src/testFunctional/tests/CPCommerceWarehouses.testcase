@@ -430,7 +430,7 @@ definition {
 		}
 
 		task ("Then an error message shows up") {
-			Alert.viewErrorMessage(errorMessage = "Duplicate channel relation");
+			Alert.viewErrorMessage(errorMessage = "The channel relation already exists.");
 		}
 	}
 

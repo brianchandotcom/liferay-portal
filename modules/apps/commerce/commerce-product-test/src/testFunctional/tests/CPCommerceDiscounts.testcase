@@ -595,7 +595,7 @@ definition {
 		}
 
 		task ("Then an error message shows up") {
-			Alert.viewErrorMessage(errorMessage = "Duplicate channel relation");
+			Alert.viewErrorMessage(errorMessage = "The channel relation already exists.");
 		}
 
 		task ("When the admin sets again the same eligibility for account") {
@@ -605,7 +605,7 @@ definition {
 		}
 
 		task ("Then an error message shows up") {
-			Alert.viewErrorMessage(errorMessage = "Duplicate account relation");
+			Alert.viewErrorMessage(errorMessage = "The account relation already exists.");
 		}
 
 		task ("When the admin sets again the same eligibility for order type") {
@@ -615,7 +615,7 @@ definition {
 		}
 
 		task ("Then an error message shows up") {
-			Alert.viewErrorMessage(errorMessage = "Duplicate order type relation");
+			Alert.viewErrorMessage(errorMessage = "The order type relation already exists.");
 		}
 	}
 

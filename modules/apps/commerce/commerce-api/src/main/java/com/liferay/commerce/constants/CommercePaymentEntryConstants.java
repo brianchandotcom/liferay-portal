@@ -34,4 +34,7 @@ public class CommercePaymentEntryConstants {
 	public static final int STATUS_PENDING =
 		CommerceOrderPaymentConstants.STATUS_PENDING;
 
+	public static final int STATUS_REFUND =
+		CommerceOrderPaymentConstants.STATUS_REFUNDED;
+
 }

@@ -18,11 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -47,12 +44,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-
 /**
  * @author Cristina González
  */
@@ -73,70 +64,68 @@ public class DLFileEntryLockListenerTest {
 
 	@Test
 	public void testOnAfterExpireWithCancelCheckOutPolicy() throws Exception {
-		_testWithOneDriveConfigurationDisabled(
-			() -> _testWithCancelCheckOutAsPolicy(
-				() -> {
-					FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-						null, TestPropsValues.getUserId(), _group.getGroupId(),
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-						RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-						TestDataConstants.TEST_BYTE_ARRAY, null, null,
-						ServiceContextTestUtil.getServiceContext(
-							_group, TestPropsValues.getUserId()));
+		_testWithCancelCheckOutAsPolicy(
+			() -> {
+				FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+					TestDataConstants.TEST_BYTE_ARRAY, null, null,
+					ServiceContextTestUtil.getServiceContext(
+						_group, TestPropsValues.getUserId()));
 
-					_dlFileEntryLocalService.checkOutFileEntry(
-						TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
-						ServiceContextTestUtil.getServiceContext());
+				_dlFileEntryLocalService.checkOutFileEntry(
+					TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+					ServiceContextTestUtil.getServiceContext());
 
-					_lockListener.onAfterExpire(
-						String.valueOf(fileEntry.getFileEntryId()));
+				_lockListener.onAfterExpire(
+					String.valueOf(fileEntry.getFileEntryId()));
 
-					FileEntry finalFileEntry = _dlAppLocalService.getFileEntry(
-						fileEntry.getFileEntryId());
+				FileEntry finalFileEntry = _dlAppLocalService.getFileEntry(
+					fileEntry.getFileEntryId());
 
-					Assert.assertFalse(finalFileEntry.isCheckedOut());
+				Assert.assertFalse(finalFileEntry.isCheckedOut());
 
-					FileVersion latestFileVersion =
-						finalFileEntry.getLatestFileVersion();
+				FileVersion latestFileVersion =
+					finalFileEntry.getLatestFileVersion();
 
-					Assert.assertEquals(
-						fileEntry.getVersion(), latestFileVersion.getVersion());
-				}));
+				Assert.assertEquals(
+					fileEntry.getVersion(), latestFileVersion.getVersion());
+			});
 	}
 
 	@Test
 	public void testOnAfterExpireWithCheckInPolicy() throws Exception {
-		_testWithOneDriveConfigurationDisabled(
-			() -> _testWithCheckInAsPolicy(
-				() -> {
-					FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-						null, TestPropsValues.getUserId(), _group.getGroupId(),
-						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-						RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-						TestDataConstants.TEST_BYTE_ARRAY, null, null,
-						ServiceContextTestUtil.getServiceContext(
-							_group, TestPropsValues.getUserId()));
+		_testWithCheckInAsPolicy(
+			() -> {
+				FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+					TestDataConstants.TEST_BYTE_ARRAY, null, null,
+					ServiceContextTestUtil.getServiceContext(
+						_group, TestPropsValues.getUserId()));
 
-					fileEntry.getVersion();
+				fileEntry.getVersion();
 
-					_dlFileEntryLocalService.checkOutFileEntry(
-						TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
-						ServiceContextTestUtil.getServiceContext());
+				_dlFileEntryLocalService.checkOutFileEntry(
+					TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+					ServiceContextTestUtil.getServiceContext());
 
-					_lockListener.onAfterExpire(
-						String.valueOf(fileEntry.getFileEntryId()));
+				_lockListener.onAfterExpire(
+					String.valueOf(fileEntry.getFileEntryId()));
 
-					FileEntry finalFileEntry = _dlAppLocalService.getFileEntry(
-						fileEntry.getFileEntryId());
+				FileEntry finalFileEntry = _dlAppLocalService.getFileEntry(
+					fileEntry.getFileEntryId());
 
-					Assert.assertFalse(finalFileEntry.isCheckedOut());
+				Assert.assertFalse(finalFileEntry.isCheckedOut());
 
-					FileVersion latestFileVersion =
-						finalFileEntry.getLatestFileVersion();
+				FileVersion latestFileVersion =
+					finalFileEntry.getLatestFileVersion();
 
-					Assert.assertNotEquals(
-						fileEntry.getVersion(), latestFileVersion.getVersion());
-				}));
+				Assert.assertNotEquals(
+					fileEntry.getVersion(), latestFileVersion.getVersion());
+			});
 	}
 
 	private void _testWithCancelCheckOutAsPolicy(
@@ -163,37 +152,6 @@ public class DLFileEntryLockListenerTest {
 		}
 	}
 
-	private void _testWithOneDriveConfigurationDisabled(
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			ConfigurationTemporarySwapper.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		String pid =
-			"com.liferay.document.library.opener.onedrive.web.internal." +
-				"configuration.DLOneDriveCompanyConfiguration";
-
-		Configuration configuration = OSGiServiceUtil.callService(
-			bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(
-				pid, StringPool.QUESTION));
-
-		if (configuration.getProperties() == null) {
-			unsafeRunnable.run();
-
-			return;
-		}
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(pid, null)) {
-
-			unsafeRunnable.run();
-		}
-	}
-
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
@@ -204,7 +162,7 @@ public class DLFileEntryLockListenerTest {
 	private Group _group;
 
 	@Inject(
-		filter = "component.name=com.liferay.document.library.opener.onedrive.web.internal.lock.DLFileEntryLockListener"
+		filter = "component.name=com.liferay.document.library.internal.lock.DLFileEntryLockListener"
 	)
 	private LockListener _lockListener;
 

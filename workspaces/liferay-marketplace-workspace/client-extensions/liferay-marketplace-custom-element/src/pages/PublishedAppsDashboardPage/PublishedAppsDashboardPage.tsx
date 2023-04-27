@@ -213,7 +213,7 @@ export function PublishedAppsDashboardPage() {
 		const rolesList: string[] = [];
 
 		const accountBrief = accountBriefs.find(
-			(accountBrief) => accountBrief.name === selectedAccount.name
+			(accountBrief) => accountBrief.id === selectedAccount.id
 		);
 
 		accountBrief?.roleBriefs.forEach((role) => {
@@ -336,6 +336,10 @@ export function PublishedAppsDashboardPage() {
 					dashboardNavigationItem.itemSelected
 			) || dashboardNavigationItems[0];
 
+		if (clickedNavigationItem.itemTitle !== 'Members') {
+			setSelectedMember(undefined);
+		}
+
 		setSelectedNavigationItem(clickedNavigationItem?.itemTitle as string);
 	}, [dashboardNavigationItems]);
 
@@ -352,8 +356,8 @@ export function PublishedAppsDashboardPage() {
 
 				const currentUserAccountBriefs =
 					currentUserAccount.accountBriefs.find(
-						(accountBrief: {name: string}) =>
-							accountBrief.name === selectedAccount.name
+						(accountBrief: {id: number}) =>
+							accountBrief.id === selectedAccount.id
 					);
 
 				if (currentUserAccountBriefs) {
@@ -437,7 +441,7 @@ export function PublishedAppsDashboardPage() {
 				setMembers(filteredMembersList);
 			}
 		})();
-	}, [selectedAccount]);
+	}, [selectedAccount, selectedNavigationItem]);
 
 	return (
 		<div className="published-apps-dashboard-page-container">

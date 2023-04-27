@@ -30,11 +30,13 @@ import com.liferay.headless.delivery.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.headless.delivery.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.StyleBook;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -320,6 +322,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		Map<Locale, String> descriptionMap = new HashMap<>();
 		Map<Locale, String> keywordsMap = new HashMap<>();
 		Map<Locale, String> robotsMap = new HashMap<>();
+		String typeSettings = null;
 		boolean hidden = false;
 
 		PageSettings pageSettings = sitePage.getPageSettings();
@@ -343,6 +346,49 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				robotsMap = LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					seoSettings.getRobots(), seoSettings.getRobots_i18n());
+
+				SiteMapSettings siteMapSettings =
+					seoSettings.getSiteMapSettings();
+
+				if (siteMapSettings != null) {
+					UnicodeProperties unicodeProperties =
+						new UnicodeProperties();
+
+					SiteMapSettings.ChangeFrequency changeFrequency =
+						siteMapSettings.getChangeFrequency();
+
+					if (changeFrequency != null) {
+						unicodeProperties.setProperty(
+							LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
+							StringUtil.toLowerCase(changeFrequency.getValue()));
+					}
+
+					Boolean include = siteMapSettings.getInclude();
+
+					if (include != null) {
+						String siteMapInclude = "0";
+
+						if (include) {
+							siteMapInclude = "1";
+						}
+
+						unicodeProperties.setProperty(
+							LayoutTypePortletConstants.SITEMAP_INCLUDE,
+							siteMapInclude);
+					}
+
+					Double pagePriority = siteMapSettings.getPagePriority();
+
+					if (pagePriority != null) {
+						unicodeProperties.setProperty(
+							LayoutTypePortletConstants.SITEMAP_PRIORITY,
+							String.valueOf(pagePriority));
+					}
+
+					if (!unicodeProperties.isEmpty()) {
+						typeSettings = unicodeProperties.toString();
+					}
+				}
 			}
 
 			hidden = GetterUtil.getBoolean(
@@ -351,8 +397,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Layout layout = _layoutService.addLayout(
 			siteId, false, parentLayoutId, nameMap, titleMap, descriptionMap,
-			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT, null, hidden,
-			friendlyUrlMap, 0, _createServiceContext(siteId, sitePage));
+			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT, typeSettings,
+			hidden, friendlyUrlMap, 0, _createServiceContext(siteId, sitePage));
 
 		layout = _updateLayoutSettings(layout, sitePage.getPageDefinition());
 

@@ -175,7 +175,7 @@
 </tr>
 <tr>
 	<td>SECTION_TITLE</td>
-	<td>//div[@class='sheet-section']//h3[normalize-space(text())='${key_sectionTitle}']</td>
+	<td>//div[contains(@class,'sheet-section')]//h3[normalize-space(text())='${key_sectionTitle}']</td>
 	<td></td>
 </tr>
 <tr>

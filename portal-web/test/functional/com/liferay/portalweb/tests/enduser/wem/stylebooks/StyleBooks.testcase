@@ -415,8 +415,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",
 				value1 = "Styles from Theme");
@@ -452,8 +450,6 @@ definition {
 			Click(locator1 = "ControlMenu#EDIT_COG");
 
 			Navigator.gotoNavTab(navTab = "Design");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#STYLE_BOOK_NAME",

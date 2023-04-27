@@ -74,8 +74,6 @@ definition {
 		task ("Change Master to custom master page") {
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
 			Click(
 				ariaLabel = "Change Master",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");

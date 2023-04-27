@@ -306,8 +306,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		Navigator.gotoNavTab(navTab = "JavaScript");
 
 		AssertElementPresent(
@@ -783,8 +781,6 @@ definition {
 			pageName = ${pageName});
 
 		Navigator.gotoNavTab(navTab = "Design");
-
-		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		Theme.configureLookAndFeelSpecificLook();
 
@@ -1715,8 +1711,6 @@ definition {
 			pageName = ${pageName});
 
 		Navigator.gotoNavTab(navTab = "Design");
-
-		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		if (isSet(themeName)) {
 			AssertTextPresent(value1 = ${themeName});

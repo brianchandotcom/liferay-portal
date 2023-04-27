@@ -74,8 +74,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
@@ -124,6 +122,8 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
@@ -155,6 +155,8 @@ definition {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Configuration");
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
@@ -211,6 +213,8 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 
@@ -276,6 +280,8 @@ definition {
 
 			WaitForPageLoad();
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 
 			PortletEntry.save();
@@ -299,6 +305,8 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
@@ -348,6 +356,8 @@ definition {
 
 			WaitForPageLoad();
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 
 			PortletEntry.save();
@@ -375,6 +385,8 @@ definition {
 		}
 
 		task ("Then the site designer could apply a new favicon extension") {
+			Navigator.gotoNavTab(navTab = "Design");
+
 			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
 
 			AssertTextEquals(
@@ -416,6 +428,8 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 

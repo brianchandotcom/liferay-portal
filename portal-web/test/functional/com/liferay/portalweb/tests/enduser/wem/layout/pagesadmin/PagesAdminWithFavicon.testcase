@@ -60,8 +60,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
@@ -110,6 +108,8 @@ definition {
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
@@ -141,6 +141,8 @@ definition {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Configuration");
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",

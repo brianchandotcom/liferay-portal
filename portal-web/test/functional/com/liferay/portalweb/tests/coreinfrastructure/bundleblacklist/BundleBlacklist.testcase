@@ -159,8 +159,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		AssertTextNotPresent(value1 = "Classic");
 	}
 
@@ -305,8 +303,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(
@@ -394,8 +390,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		Theme.configureLookAndFeelSpecificLook();
 
 		Click(
@@ -434,8 +428,6 @@ definition {
 			pageName = "Search");
 
 		Navigator.gotoNavTab(navTab = "Design");
-
-		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		Theme.configureLookAndFeelSpecificLook();
 
@@ -639,8 +631,6 @@ definition {
 			pageName = "Search");
 
 		Navigator.gotoNavTab(navTab = "Design");
-
-		Navigator.gotoNavTab(navTab = "Look and Feel");
 
 		Theme.configureLookAndFeelSpecificLook();
 

@@ -76,7 +76,7 @@ definition {
 				layoutName = "Test Page Name");
 		}
 
-		task ("When the site designer accesses to Look and Feel settings of widget page") {
+		task ("When the site designer accesses to Basic Settings of widget page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
@@ -84,8 +84,6 @@ definition {
 				pageName = "Test Page Name");
 
 			Navigator.gotoNavTab(navTab = "Design");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
@@ -130,14 +128,14 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 		}
 
-		task ("When the site designer accesses to Look and Feel settings of content page template") {
+		task ("When the site designer accesses to Basic Settings of content page template") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
@@ -166,7 +164,7 @@ definition {
 				value1 = "\"Times New Roman\"");
 		}
 
-		task ("When the site designer accesses to Look and Feel settings of Pages") {
+		task ("When the site designer accesses to Basic Settings of Pages") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			WaitForPageLoad();
@@ -257,7 +255,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
@@ -286,7 +284,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "BackgroundColor");
 
@@ -327,6 +325,8 @@ definition {
 
 			WaitForPageLoad();
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
 			PortletEntry.save();
@@ -353,7 +353,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
@@ -411,8 +411,6 @@ definition {
 
 		task ("Then the site designer could change the theme CSS extension of widget page") {
 			Navigator.gotoNavTab(navTab = "Design");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertAttributeValue(
 				attribute1 = "placeholder",
@@ -474,7 +472,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
@@ -561,7 +559,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
 
@@ -577,7 +575,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 		}
 
-		task ("When the site designer accesses to the Look and Feel settings") {
+		task ("When the site designer accesses to the Basic Settings") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
@@ -586,7 +584,7 @@ definition {
 		}
 
 		task ("Then the site designer could clear the theme CSS extension selection") {
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Click(
 				key_fieldLabel = "Theme CSS",

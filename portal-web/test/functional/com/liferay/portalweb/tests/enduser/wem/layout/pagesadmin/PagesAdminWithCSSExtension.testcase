@@ -76,7 +76,7 @@ definition {
 				layoutName = "Test Page Name");
 		}
 
-		task ("When the site designer accesses to Look and Feel settings of widget page") {
+		task ("When the site designer accesses to Basic Settings of widget page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
@@ -84,8 +84,6 @@ definition {
 				pageName = "Test Page Name");
 
 			Navigator.gotoNavTab(navTab = "Design");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			AssertTextEquals(
 				key_sectionTitle = "CSS Client Extensions",
@@ -128,14 +126,14 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 		}
 
-		task ("When the site designer accesses to Look and Feel settings of content page template") {
+		task ("When the site designer accesses to Basic Settings of content page template") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				key_sectionTitle = "CSS Client Extensions",
@@ -162,7 +160,7 @@ definition {
 				value1 = "\"Times New Roman\"");
 		}
 
-		task ("When the site designer accesses to Look and Feel settings of Pages") {
+		task ("When the site designer accesses to Basic Settings of Pages") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			WaitForPageLoad();
@@ -251,7 +249,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
 
@@ -285,7 +283,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
 
@@ -315,7 +313,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			for (var extensionName : list "BackgroundColor,FontFamily") {
 				Click(
@@ -367,7 +365,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
 
@@ -382,7 +380,7 @@ definition {
 			PageEditor.assertFragmentSidebarLoaded();
 		}
 
-		task ("When the site designer accesses to the Look and Feel settings") {
+		task ("When the site designer accesses to the Basic Settings") {
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			Click(locator1 = "PageEditor#MORE_LINK");
@@ -391,7 +389,7 @@ definition {
 		}
 
 		task ("Then the site designer could clear the CSS extension selection") {
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			Click(
 				key_tableEntry = "FontFamily",
@@ -435,6 +433,8 @@ definition {
 
 			WaitForPageLoad();
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
 
 			PortletEntry.save();
@@ -466,7 +466,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			LexiconTable.viewTableEntryInfo(
 				index = 3,
@@ -511,8 +511,6 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
 			LexiconTable.viewTableEntryInfo(
 				index = 3,
 				tableEntry = "BackgroundColor",
@@ -555,7 +553,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
 
@@ -589,7 +587,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertVisible(
 				key_tableEntry = "FontFamily",
@@ -616,7 +614,7 @@ definition {
 
 			WaitForPageLoad();
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
+			Navigator.gotoNavTab(navTab = "Design");
 
 			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily,BackgroundColor");
 

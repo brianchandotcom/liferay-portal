@@ -194,8 +194,6 @@ definition {
 		if (isSet(pageSet)) {
 			Navigator.gotoNavTab(navTab = "Design");
 
-			Navigator.gotoNavTab(navTab = "Look and Feel");
-
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			AssertElementPresent(
@@ -687,8 +685,6 @@ definition {
 
 		if (isSet(pageSet)) {
 			Navigator.gotoNavTab(navTab = "Design");
-
-			Navigator.gotoNavTab(navTab = "Look and Feel");
 
 			Navigator.gotoNavTab(navTab = "JavaScript");
 

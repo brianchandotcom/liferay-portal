@@ -49,8 +49,6 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Design");
 
-		Navigator.gotoNavTab(navTab = "Look and Feel");
-
 		Theme.configureLookAndFeelSpecificLook();
 
 		Theme.configureLookAndFeelShowHeaderSearch(showHeaderSearch = "false");

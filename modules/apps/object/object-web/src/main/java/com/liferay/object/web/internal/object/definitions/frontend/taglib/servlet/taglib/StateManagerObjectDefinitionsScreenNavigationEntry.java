@@ -50,7 +50,7 @@ public class StateManagerObjectDefinitionsScreenNavigationEntry
 
 	@Override
 	public String getJspPath() {
-		return "/object_definitions/object_definition/states.jsp";
+		return "/object_definitions/object_definition/state_manager.jsp";
 	}
 
 	@Override

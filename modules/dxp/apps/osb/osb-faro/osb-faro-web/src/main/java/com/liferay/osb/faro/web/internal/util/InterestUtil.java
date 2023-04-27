@@ -33,12 +33,12 @@ public class InterestUtil {
 
 	@SuppressWarnings("unchecked")
 	public static FaroResultsDisplay getInterests(
-		FaroProject faroProject, String contactsEntityId, String query, int cur,
-		int delta, List<OrderByField> orderByFields,
+		FaroProject faroProject, String channelId, String contactsEntityId,
+		String query, int cur, int delta, List<OrderByField> orderByFields,
 		ContactsEngineClient contactsEngineClient) {
 
 		Results<Interest> results = contactsEngineClient.getInterests(
-			faroProject, contactsEntityId, null, null, query,
+			faroProject, channelId, contactsEntityId, null, null, query,
 			Rels.Interests.PAGES_VISITED, cur, delta, orderByFields);
 
 		Function<Interest, InterestDisplay> function = InterestDisplay::new;

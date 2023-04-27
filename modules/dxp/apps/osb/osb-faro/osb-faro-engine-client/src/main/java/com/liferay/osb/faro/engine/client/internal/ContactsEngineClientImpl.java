@@ -2177,9 +2177,9 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<Interest> getInterests(
-		FaroProject faroProject, String ownerId, String ownerType, String name,
-		String query, String expand, int cur, int delta,
-		List<OrderByField> orderByFields) {
+		FaroProject faroProject, String channelId, String ownerId,
+		String ownerType, String name, String query, String expand, int cur,
+		int delta, List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields);

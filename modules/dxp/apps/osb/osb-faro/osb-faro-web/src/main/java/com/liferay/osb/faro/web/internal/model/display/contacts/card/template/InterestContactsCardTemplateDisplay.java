@@ -59,7 +59,7 @@ public class InterestContactsCardTemplateDisplay
 		ContactsEngineClient contactsEngineClient) {
 
 		FaroResultsDisplay results = InterestUtil.getInterests(
-			faroProject, faroEntityDisplay.getId(), null, 1, _max,
+			faroProject, null, faroEntityDisplay.getId(), null, 1, _max,
 			Collections.singletonList(new OrderByField("score", "desc", true)),
 			contactsEngineClient);
 

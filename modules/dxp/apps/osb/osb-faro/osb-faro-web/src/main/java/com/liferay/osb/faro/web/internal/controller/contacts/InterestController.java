@@ -51,6 +51,7 @@ public class InterestController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay search(
 			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") String channelId,
 			@QueryParam("contactsEntityId") String contactsEntityId,
 			@QueryParam("query") String query,
 			@QueryParam("interval") String interval, @QueryParam("max") int max,
@@ -60,7 +61,7 @@ public class InterestController extends BaseFaroController {
 		throws Exception {
 
 		return InterestUtil.getInterests(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), channelId,
 			contactsEntityId, query, cur, delta,
 			orderByFieldsFaroParam.getValue(), contactsEngineClient);
 	}
@@ -70,6 +71,7 @@ public class InterestController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay searchByForm(
 			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") String channelId,
 			@FormParam("contactsEntityId") String contactsEntityId,
 			@FormParam("query") String query,
 			@FormParam("interval") String interval, @FormParam("max") int max,
@@ -79,8 +81,8 @@ public class InterestController extends BaseFaroController {
 		throws Exception {
 
 		return search(
-			groupId, contactsEntityId, query, interval, max, cur, delta,
-			orderByFieldsFaroParam);
+			groupId, channelId, contactsEntityId, query, interval, max, cur,
+			delta, orderByFieldsFaroParam);
 	}
 
 	@GET

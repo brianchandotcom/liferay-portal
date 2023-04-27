@@ -254,6 +254,92 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10604. Can patch a SKU's ERC via API"
+	@priority = 3
+	test CanPatchSKUERCViaAPI {
+		property portal.acceptance = "false";
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "MIN93015");
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a default ERC 'MIN93015minium-initializer' for 'MIN93015' product is already set") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_ERC_FIELD",
+				value1 = "MIN93015minium-initializer");
+		}
+
+		task ("When a null values is patched and passed via API") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				externalReferenceCode = "",
+				productSku = "MIN93015");
+		}
+
+		task ("Then the ERC of the product is not updated but the default value") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_ERC_FIELD",
+				value1 = "MIN93015minium-initializer");
+		}
+
+		task ("When an empty string value is patched and passed via API") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				externalReferenceCode = " ",
+				productSku = "MIN93015");
+		}
+
+		task ("Then the ERC of the product is not updated but the default value") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_ERC_FIELD",
+				value1 = "MIN93015minium-initializer");
+		}
+
+		task ("When a non-empty string value is patched and passed via API") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				externalReferenceCode = "test",
+				productSku = "MIN93015");
+		}
+
+		task ("Then the ERC of the product is updated") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				locator1 = "CommerceEntry#SKU_ERC_FIELD",
+				value1 = "test");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6022. EditASKU"
 	@priority = 3
 	test EditASKU {

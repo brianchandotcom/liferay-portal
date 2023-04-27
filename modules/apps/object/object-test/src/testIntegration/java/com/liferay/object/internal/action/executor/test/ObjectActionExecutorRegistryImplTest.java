@@ -40,7 +40,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -103,74 +102,11 @@ public class ObjectActionExecutorRegistryImplTest {
 	}
 
 	@Test
-	public void testGetObjectActionExecutors() {
-
-		// Available for all companies' object definitions
-
-		Assert.assertArrayEquals(
-			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
-			TransformUtil.transformToArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, _objectDefinition1.getName()),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
-
-		// Available for all companies' restricted object definitions
-
+	public void testGetObjectActionExecutorsWithCompanyAndObjectDefinitionScopes() {
 		ObjectActionExecutor objectActionExecutor =
 			_registerObjectActionExecutor(
-				Collections.singletonList(_objectDefinition1.getName()), 0,
-				StringUtil.randomId());
-
-		Assert.assertArrayEquals(
-			ArrayUtil.sortedUnique(
-				ArrayUtil.append(
-					new String[] {objectActionExecutor.getKey()},
-					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
-			TransformUtil.transformToArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, _objectDefinition1.getName()),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
-
-		Assert.assertArrayEquals(
-			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
-			TransformUtil.transformToArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, _objectDefinition2.getName()),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
-
-		_unregisterObjectActionExecutors();
-
-		// Available for a restricted company's object definitions
-
-		objectActionExecutor =
-			_registerObjectActionExecutor(
-				Collections.emptyList(), _companyId1, StringUtil.randomId());
-
-		Assert.assertArrayEquals(
-			ArrayUtil.sortedUnique(
-				ArrayUtil.append(
-					new String[] {objectActionExecutor.getKey()},
-					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
-			TransformUtil.transformToArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId1, _objectDefinition1.getName()),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
-
-		Assert.assertArrayEquals(
-			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
-			TransformUtil.transformToArray(
-				_objectActionExecutorRegistry.getObjectActionExecutors(
-					_companyId2, _objectDefinition3.getName()),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
-
-		_unregisterObjectActionExecutors();
-
-		// Available for a restricted company's restricted object definitions
-
-		objectActionExecutor =
-			_registerObjectActionExecutor(
-				Collections.singletonList(_objectDefinition1.getName()), _companyId1,
-				StringUtil.randomId());
+				Collections.singletonList(_objectDefinition1.getName()),
+				_companyId1, StringUtil.randomId());
 
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(
@@ -200,6 +136,59 @@ public class ObjectActionExecutorRegistryImplTest {
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId2, _objectDefinition4.getName()),
 				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+	}
+
+	@Test
+	public void testGetObjectActionExecutorsWithCompanyScope() {
+		ObjectActionExecutor objectActionExecutor =
+			_registerObjectActionExecutor(
+				Collections.emptyList(), _companyId1, StringUtil.randomId());
+
+		Assert.assertArrayEquals(
+			ArrayUtil.sortedUnique(
+				ArrayUtil.append(
+					new String[] {objectActionExecutor.getKey()},
+					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
+			TransformUtil.transformToArray(
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					_companyId1, _objectDefinition1.getName()),
+				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+
+		Assert.assertArrayEquals(
+			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
+			TransformUtil.transformToArray(
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					_companyId2, _objectDefinition3.getName()),
+				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+
+		_unregisterObjectActionExecutors();
+	}
+
+	@Test
+	public void testGetObjectActionExecutorsWithObjectDefinitionScope() {
+		ObjectActionExecutor objectActionExecutor =
+			_registerObjectActionExecutor(
+				Collections.singletonList(_objectDefinition1.getName()), 0,
+				StringUtil.randomId());
+
+		Assert.assertArrayEquals(
+			ArrayUtil.sortedUnique(
+				ArrayUtil.append(
+					new String[] {objectActionExecutor.getKey()},
+					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
+			TransformUtil.transformToArray(
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					_companyId1, _objectDefinition1.getName()),
+				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+
+		Assert.assertArrayEquals(
+			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
+			TransformUtil.transformToArray(
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					_companyId1, _objectDefinition2.getName()),
+				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+
+		_unregisterObjectActionExecutors();
 	}
 
 	private static ObjectDefinition _addObjectDefinition(String name, User user)

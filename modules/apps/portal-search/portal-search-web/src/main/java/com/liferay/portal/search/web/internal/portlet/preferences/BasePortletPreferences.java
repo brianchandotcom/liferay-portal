@@ -12,26 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.helper;
+package com.liferay.portal.search.web.internal.portlet.preferences;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
  * @author André de Oliveira
  */
-public class PortletPreferencesHelper {
+public abstract class BasePortletPreferences {
 
-	public PortletPreferencesHelper(
-		Optional<PortletPreferences> portletPreferencesOptional) {
-
-		_portletPreferences = portletPreferencesOptional.get();
+	public BasePortletPreferences(PortletPreferences portletPreferences) {
+		_portletPreferences = portletPreferences;
 	}
 
 	public boolean getBoolean(String key, boolean defaultValue) {

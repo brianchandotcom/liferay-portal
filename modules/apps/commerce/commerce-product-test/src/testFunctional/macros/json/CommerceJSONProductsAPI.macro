@@ -1095,6 +1095,10 @@ definition {
 			ListUtil.add(${fieldsList}, ${replacementSkuId});
 		}
 
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
 		var sku = '''"sku": "${productSku}"''';
 
 		ListUtil.add(${fieldsList}, ${sku});
@@ -1109,7 +1113,10 @@ definition {
 				-u test@liferay.com:test \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
-				-d '{${payload}}'
+				-d '{
+					${payload},
+					"externalReferenceCode": "${externalReferenceCode}"
+				}'
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.patch(${curl});

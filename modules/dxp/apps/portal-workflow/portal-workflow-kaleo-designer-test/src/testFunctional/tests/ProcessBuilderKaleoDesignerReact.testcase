@@ -2164,6 +2164,8 @@ definition {
 	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."
 	@priority = 4
 	test CanLocalizeStepLabelWhenTranslated {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanLocalizeStepLabelWhenTranslated";
+
 		task ("Given adding a new workflow definition") {
 			Workflow.openWorkflowListView();
 

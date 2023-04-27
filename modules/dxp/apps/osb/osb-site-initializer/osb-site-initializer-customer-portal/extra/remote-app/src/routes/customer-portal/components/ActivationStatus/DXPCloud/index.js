@@ -142,16 +142,23 @@ const ActivationStatusDXPCloud = ({
 	const currentActivationStatus = {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
-				<a
-					className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-					href="https://console.liferay.cloud"
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					{i18n.translate('go-to-product-console')}
+				<>
+					<PopoverIcon
+						symbol="question-circle-full"
+						title="link-only-accessible-to-current-product-users-permissions-and-roles-are-managed-separately-within-each-product"
+					/>
 
-					<ClayIcon className="ml-1" symbol="order-arrow-right" />
-				</a>
+					<a
+						className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
+						href="https://console.liferay.cloud"
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						{i18n.translate('go-to-product-console')}
+
+						<ClayIcon className="ml-1" symbol="order-arrow-right" />
+					</a>
+				</>
 			),
 			id: STATUS_TAG_TYPES.active,
 			subtitle: (

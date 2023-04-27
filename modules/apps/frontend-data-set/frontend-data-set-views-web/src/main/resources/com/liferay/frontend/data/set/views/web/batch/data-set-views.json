@@ -22,6 +22,632 @@
 	"items": [
 		{
 			"accountEntryRestricted": false,
+			"externalReferenceCode": "MSOD_FDS_ACTION",
+			"label": {
+				"en_US": "FDS Action"
+			},
+			"modifiable": true,
+			"name": "FDSAction",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "CONFIRMATION_MESSAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Confirmation Message"
+					},
+					"name": "confirmationMessage",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "HREF",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Href"
+					},
+					"name": "href",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ICON",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Icon"
+					},
+					"name": "icon",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Label"
+					},
+					"name": "label",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "METHOD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Method"
+					},
+					"name": "method",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PERMISSION_KEY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Permission Key"
+					},
+					"name": "permissionKey",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "PRIORITY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TARGET",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Target"
+					},
+					"name": "target",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "FDS Actions"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"externalReferenceCode": "MSOD_FDS_ENTRY",
+			"label": {
+				"en_US": "FDS Entry"
+			},
+			"modifiable": true,
+			"name": "FDSEntry",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "ENDPOINT_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Endpoint URL"
+					},
+					"name": "endpointURL",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "OPEN_API_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "OpenAPI URL"
+					},
+					"name": "openAPIURL",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "SCHEMA_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Schema Name"
+					},
+					"name": "schemaName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Creation Menu Primary Actions"
+					},
+					"name": "creationMenuPrimaryActions",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
+					"objectDefinitionName2": "FDSAction",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Creation Menu Secondary Actions"
+					},
+					"name": "creationMenuSecondaryActions",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
+					"objectDefinitionName2": "FDSAction",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Entry Views"
+					},
+					"name": "entryViews",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
+					"objectDefinitionName2": "FDSView",
+					"type": "manyToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "FDS Entries"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"externalReferenceCode": "MSOD_FDS_FIELD_MAPPING",
+			"label": {
+				"en_US": "FDS Field Mapping"
+			},
+			"modifiable": true,
+			"name": "FDSFieldMapping",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "CONTENT_RENDERER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Content Renderer"
+					},
+					"name": "contentRenderer",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "CONTENT_RENDERER_CONFIG",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Content Renderer Config"
+					},
+					"name": "contentRendererConfig",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "FIELD_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Field Name"
+					},
+					"name": "fieldName",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Label"
+					},
+					"name": "label",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "LOCALIZE_LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Localize Label"
+					},
+					"name": "localizeLabel",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "SORTABLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Sortable"
+					},
+					"name": "sortable",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "FDS Field Mappings"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"externalReferenceCode": "MSOD_FDS_FILTER",
+			"label": {
+				"en_US": "FDS Filter"
+			},
+			"modifiable": true,
+			"name": "FDSFilter",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "ENTITY_FIELD_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Entity Field Type"
+					},
+					"name": "entityFieldType",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "FILTER_PROPERTIES",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Filter Properties"
+					},
+					"name": "filterProperties",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "LABEL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Label"
+					},
+					"name": "label",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "PRELOADED_DATA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Preloaded Data"
+					},
+					"name": "preloadedData",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Type"
+					},
+					"name": "type",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Filters"
+					},
+					"name": "filters",
+					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_FILTER",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
+					"objectDefinitionName2": "FDSView",
+					"type": "manyToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "FDS Filters"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
+			"externalReferenceCode": "MSOD_FDS_SORT",
+			"label": {
+				"en_US": "FDS Sort"
+			},
+			"modifiable": true,
+			"name": "FDSSort",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "FIELD_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Field Name"
+					},
+					"name": "fieldName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Order"
+					},
+					"listTypeDefinitionExternalReferenceCode": "ORDER_PICKLIST",
+					"name": "order",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "PRIORITY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Priority"
+					},
+					"name": "priority",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "FDS Sorts"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"accountEntryRestricted": false,
 			"externalReferenceCode": "MSOD_FDS_VIEW",
 			"label": {
 				"en_US": "FDS View"
@@ -366,632 +992,6 @@
 			"panelCategoryKey": "",
 			"pluralLabel": {
 				"en_US": "FDS View Modes"
-			},
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true,
-			"titleObjectFieldName": "id"
-		},
-		{
-			"accountEntryRestricted": false,
-			"externalReferenceCode": "MSOD_FDS_SORT",
-			"label": {
-				"en_US": "FDS Sort"
-			},
-			"modifiable": true,
-			"name": "FDSSort",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "FIELD_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Field Name"
-					},
-					"name": "fieldName",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Order"
-					},
-					"listTypeDefinitionExternalReferenceCode": "ORDER_PICKLIST",
-					"name": "order",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "PRIORITY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Priority"
-					},
-					"name": "priority",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				}
-			],
-			"panelCategoryKey": "",
-			"pluralLabel": {
-				"en_US": "FDS Sorts"
-			},
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true,
-			"titleObjectFieldName": "id"
-		},
-		{
-			"accountEntryRestricted": false,
-			"externalReferenceCode": "MSOD_FDS_FIELD_MAPPING",
-			"label": {
-				"en_US": "FDS Field Mapping"
-			},
-			"modifiable": true,
-			"name": "FDSFieldMapping",
-			"objectFields": [
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "CONTENT_RENDERER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Content Renderer"
-					},
-					"name": "contentRenderer",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "CONTENT_RENDERER_CONFIG",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Content Renderer Config"
-					},
-					"name": "contentRendererConfig",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "FIELD_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Field Name"
-					},
-					"name": "fieldName",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"name": "label",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"externalReferenceCode": "LOCALIZE_LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Localize Label"
-					},
-					"name": "localizeLabel",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"externalReferenceCode": "SORTABLE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Sortable"
-					},
-					"name": "sortable",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				}
-			],
-			"panelCategoryKey": "",
-			"pluralLabel": {
-				"en_US": "FDS Field Mappings"
-			},
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true,
-			"titleObjectFieldName": "id"
-		},
-		{
-			"accountEntryRestricted": false,
-			"externalReferenceCode": "MSOD_FDS_ACTION",
-			"label": {
-				"en_US": "FDS Action"
-			},
-			"modifiable": true,
-			"name": "FDSAction",
-			"objectFields": [
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "CONFIRMATION_MESSAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Confirmation Message"
-					},
-					"name": "confirmationMessage",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "HREF",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Href"
-					},
-					"name": "href",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "ICON",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Icon"
-					},
-					"name": "icon",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"name": "label",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "METHOD",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Method"
-					},
-					"name": "method",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "PERMISSION_KEY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Permission Key"
-					},
-					"name": "permissionKey",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "PRIORITY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Priority"
-					},
-					"name": "priority",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TARGET",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Target"
-					},
-					"name": "target",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				}
-			],
-			"panelCategoryKey": "",
-			"pluralLabel": {
-				"en_US": "FDS Actions"
-			},
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true,
-			"titleObjectFieldName": "id"
-		},
-		{
-			"accountEntryRestricted": false,
-			"externalReferenceCode": "MSOD_FDS_FILTER",
-			"label": {
-				"en_US": "FDS Filter"
-			},
-			"modifiable": true,
-			"name": "FDSFilter",
-			"objectFields": [
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "ENTITY_FIELD_TYPE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Entity Field Type"
-					},
-					"name": "entityFieldType",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "FILTER_PROPERTIES",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Filter Properties"
-					},
-					"name": "filterProperties",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "LABEL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Label"
-					},
-					"name": "label",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "PRELOADED_DATA",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Preloaded Data"
-					},
-					"name": "preloadedData",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TYPE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Type"
-					},
-					"name": "type",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				}
-			],
-			"objectRelationships": [
-				{
-					"deletionType": "prevent",
-					"label": {
-						"en_US": "Filters"
-					},
-					"name": "filters",
-					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_FILTER",
-					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
-					"objectDefinitionName2": "FDSView",
-					"type": "manyToMany"
-				}
-			],
-			"panelCategoryKey": "",
-			"pluralLabel": {
-				"en_US": "FDS Filters"
-			},
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true,
-			"titleObjectFieldName": "id"
-		},
-		{
-			"accountEntryRestricted": false,
-			"externalReferenceCode": "MSOD_FDS_ENTRY",
-			"label": {
-				"en_US": "FDS Entry"
-			},
-			"modifiable": true,
-			"name": "FDSEntry",
-			"objectFields": [
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "ENDPOINT_URL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Endpoint URL"
-					},
-					"name": "endpointURL",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Name"
-					},
-					"name": "name",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "OPEN_API_URL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "OpenAPI URL"
-					},
-					"name": "openAPIURL",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "SCHEMA_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Schema Name"
-					},
-					"name": "schemaName",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false
-				}
-			],
-			"objectRelationships": [
-				{
-					"deletionType": "prevent",
-					"label": {
-						"en_US": "Creation Menu Primary Actions"
-					},
-					"name": "creationMenuPrimaryActions",
-					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
-					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
-					"objectDefinitionName2": "FDSAction",
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "prevent",
-					"label": {
-						"en_US": "Creation Menu Secondary Actions"
-					},
-					"name": "creationMenuSecondaryActions",
-					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
-					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_ACTION",
-					"objectDefinitionName2": "FDSAction",
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "prevent",
-					"label": {
-						"en_US": "Entry Views"
-					},
-					"name": "entryViews",
-					"objectDefinitionExternalReferenceCode1": "MSOD_FDS_ENTRY",
-					"objectDefinitionExternalReferenceCode2": "MSOD_FDS_VIEW",
-					"objectDefinitionName2": "FDSView",
-					"type": "manyToMany"
-				}
-			],
-			"panelCategoryKey": "",
-			"pluralLabel": {
-				"en_US": "FDS Entries"
 			},
 			"scope": "company",
 			"status": {

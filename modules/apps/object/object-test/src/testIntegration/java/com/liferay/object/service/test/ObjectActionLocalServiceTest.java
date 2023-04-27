@@ -170,7 +170,7 @@ public class ObjectActionLocalServiceTest {
 	public void setUp() throws Exception {
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
-			Arrays.asList(
+			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
@@ -227,8 +227,8 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
-				Arrays.asList(_userObjectDefinition.getName()), _companyId2,
-				RandomTestUtil.randomString());
+				Collections.singletonList(_userObjectDefinition.getName()),
+				_companyId2, RandomTestUtil.randomString());
 
 		try {
 			_objectActionLocalService.addObjectAction(
@@ -259,8 +259,8 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectActionExecutor objectActionExecutor2 =
 			_registerObjectActionExecutor(
-				Arrays.asList(_userObjectDefinition.getName()), _companyId1,
-				RandomTestUtil.randomString());
+				Collections.singletonList(_userObjectDefinition.getName()),
+				_companyId1, RandomTestUtil.randomString());
 
 		try {
 			_objectActionLocalService.addObjectAction(

@@ -897,6 +897,21 @@ definition {
 		return ${getObjectsWithNestedFieldJSON};
 	}
 
+	macro graphQL {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/graphql \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {"query":"{ c { students { items { id universityStudents } } } }","variables":null}
+		''';
+
+		var request = JSONCurlUtil.post(${curl});
+
+		return ${request};
+	}
+
 	macro modifyRelationship {
 		var objectDefinitionId = JSONObject.getObjectId(objectName = ${objectName});
 

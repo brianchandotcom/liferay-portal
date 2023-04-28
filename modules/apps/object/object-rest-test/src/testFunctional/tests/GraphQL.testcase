@@ -1,0 +1,75 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetRelationshipDetails {
+		property portal.acceptance = "true";
+
+		task ("Given oneToMany relationship universityStudents created") {
+			var universityObjectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "university",
+				en_US_plural_label = "universities",
+				name = "University",
+				requiredStringFieldName = "name");
+			var studentObjectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "universityStudents",
+				name = "universityStudents",
+				objectDefinitionId1 = ${universityObjectId},
+				objectDefinitionId2 = ${studentObjectId},
+				type = "oneToMany");
+		}
+
+		task ("When object entries created and related") {
+			var studentId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Liferay Student");
+			var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay University");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = ${universityId},
+				objectEntry2 = ${studentId},
+				relationshipName = "universityStudents");
+		}
+
+		task ("Then I'm able to get universityStudents details with graphQL") {
+			var responseToParse = ObjectDefinitionAPI.graphQL();
+
+			var value = JSONUtil.getWithJSONPath(${responseToParse}, "$..universityStudents.name");
+
+			TestUtils.assertEquals(
+				actual = ${value},
+				expected = "Liferay University");
+		}
+	}
+
+}

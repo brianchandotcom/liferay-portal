@@ -15,10 +15,15 @@
 package com.liferay.portal.security.audit.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.audit.AuditEventManager;
 import com.liferay.portal.security.audit.web.internal.constants.AuditPortletKeys;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +49,22 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AuditPortlet extends MVCPortlet {
+
+	@Override
+	protected void checkPermissions(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin()) {
+			throw new PrincipalException.MustBeCompanyAdmin(
+				themeDisplay.getUserId());
+		}
+	}
 
 	@Reference
 	private AuditEventManager _auditEventManager;

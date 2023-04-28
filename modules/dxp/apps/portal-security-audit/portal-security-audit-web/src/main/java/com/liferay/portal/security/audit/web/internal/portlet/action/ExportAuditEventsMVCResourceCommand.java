@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.permission.PortalPermission;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,13 +38,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.audit.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalService;
-import com.liferay.portal.security.audit.web.internal.constants.AuditActionKeys;
 import com.liferay.portal.security.audit.web.internal.constants.AuditPortletKeys;
 import com.liferay.portal.security.audit.web.internal.display.context.AuditDisplayContext;
 
 import java.sql.Timestamp;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -122,13 +119,6 @@ public class ExportAuditEventsMVCResourceCommand
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		if (!PortletPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), AuditPortletKeys.AUDIT,
-				AuditActionKeys.EXPORT_AUDIT_EVENT)) {
-
-			return Collections.emptyList();
-		}
 
 		TimeZone timeZone = themeDisplay.getTimeZone();
 

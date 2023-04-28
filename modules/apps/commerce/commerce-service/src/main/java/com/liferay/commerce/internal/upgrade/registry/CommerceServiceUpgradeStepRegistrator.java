@@ -575,6 +575,11 @@ public class CommerceServiceUpgradeStepRegistrator
 			new com.liferay.commerce.internal.upgrade.v9_5_0.
 				CommerceOrderItemUpgradeProcess());
 
+		registry.register(
+			"9.5.0", "9.6.0",
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "customerCommerceOrderItemId LONG"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

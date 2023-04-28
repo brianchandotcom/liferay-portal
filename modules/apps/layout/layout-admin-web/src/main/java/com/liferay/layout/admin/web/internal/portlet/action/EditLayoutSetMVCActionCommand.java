@@ -280,12 +280,14 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		String deviceCss = ParamUtil.getString(actionRequest, "regularCss");
 
 		if (Validator.isNotNull(deviceThemeId)) {
+			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+
 			deviceColorSchemeId = ActionUtil.getColorSchemeId(
 				companyId, deviceThemeId, deviceColorSchemeId);
 
 			ActionUtil.updateThemeSettingsProperties(
-				actionRequest, companyId, typeSettingsUnicodeProperties,
-				deviceThemeId, false);
+				actionRequest, companyId, groupId, layoutId, privateLayout,
+				typeSettingsUnicodeProperties, deviceThemeId, false);
 		}
 
 		_layoutSetService.updateLookAndFeel(

@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {FDSViewSectionInterface} from '../FDSView';
 declare const Fields: ({
 	fdsView,

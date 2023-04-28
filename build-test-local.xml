@@ -450,7 +450,7 @@ database.type=mariadb
 				<isset property="database.version" />
 			</not>
 			<then>
-				<var name="database.version" value="8.0" />
+				<var name="database.version" value="5.7" />
 			</then>
 		</if>
 

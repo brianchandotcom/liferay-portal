@@ -1,5 +1,9 @@
 @import 'atlas-variables';
 
+.fds-side-panel-nav-cover {
+	visibility: hidden;
+}
+
 .lfr-objects__side-panel-content {
 	background: $gray-100;
 	min-height: 100vh;

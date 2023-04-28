@@ -34,7 +34,7 @@ import {
 	testraySuiteCaseImpl,
 	testraySuiteImpl,
 } from '~/services/rest';
-import {getUniqueList} from '~/util';
+import {getUniqueList, safeJSONParse} from '~/util';
 
 import {CaseListView} from '../Cases';
 import SuitesCasesTable from './SuiteCasesTable';
@@ -83,49 +83,49 @@ const SuiteForm = () => {
 	const caseParametersWatch = watch('caseParameters');
 
 	const getCaseFilter = useMemo(() => {
-		if (caseParametersWatch) {
-			const caseParameters = JSON.parse(caseParametersWatch as string);
-
-			const searchBuilder = new SearchBuilder();
-
-			if (caseParameters?.testrayCaseTypes) {
-				searchBuilder
-					.in(
-						'caseTypeId',
-						getCaseValues(caseParameters.testrayCaseTypes)
-					)
-					.or();
-			}
-
-			if (caseParameters?.testrayComponents) {
-				searchBuilder
-					.in(
-						'componentId',
-						getCaseValues(caseParameters.testrayComponents)
-					)
-					.or();
-			}
-
-			if (caseParameters?.testrayPriorities) {
-				searchBuilder
-					.in(
-						'priority',
-						getCaseValues(caseParameters.testrayComponents)
-					)
-					.or();
-			}
-
-			if (caseParameters?.testrayRequirements) {
-				searchBuilder.in(
-					'requerimentsId',
-					getCaseValues(caseParameters.testrayRequirements)
-				);
-			}
-
-			return searchBuilder.build();
+		if (!caseParametersWatch) {
+			return SearchBuilder.in('id', cases);
 		}
 
-		return SearchBuilder.in('id', cases);
+		const caseParameters = safeJSONParse(caseParametersWatch, {});
+
+		const searchBuilder = new SearchBuilder();
+
+		if (caseParameters?.testrayCaseTypes) {
+			searchBuilder
+				.in(
+					'caseTypeId',
+					getCaseValues(caseParameters.testrayCaseTypes)
+				)
+				.or();
+		}
+
+		if (caseParameters?.testrayComponents) {
+			searchBuilder
+				.in(
+					'componentId',
+					getCaseValues(caseParameters.testrayComponents)
+				)
+				.or();
+		}
+
+		if (caseParameters?.testrayPriorities) {
+			searchBuilder
+				.inEqualNumbers(
+					'priority',
+					getCaseValues(caseParameters.testrayPriorities)
+				)
+				.or();
+		}
+
+		if (caseParameters?.testrayRequirements) {
+			searchBuilder.in(
+				'requerimentsId',
+				getCaseValues(caseParameters.testrayRequirements)
+			);
+		}
+
+		return searchBuilder.build();
 	}, [caseParametersWatch, cases]);
 
 	const caseFilter = getCaseFilter;

@@ -161,8 +161,7 @@ export default class SearchBuilder {
 					key.replace('$', ''),
 					value
 				);
-			}
-			else {
+			} else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,
@@ -211,6 +210,26 @@ export default class SearchBuilder {
 
 	public in(key: Key, values: Value[]) {
 		return this.setContext(SearchBuilder.in(key, values));
+	}
+
+	public inEqualNumbers(key: Key, values: Value[]) {
+		if (!values.length) {
+			return this;
+		}
+
+		this.setContext(SearchBuilder.group('OPEN'));
+
+		const lastIndex = values.length - 1;
+
+		values.map((value, index) => {
+			this.setContext(SearchBuilder.eq(key, value).replaceAll("'", ''));
+
+			if (lastIndex !== index) {
+				this.or();
+			}
+		});
+
+		return this.group('CLOSE');
 	}
 
 	public ne(key: Key, value: Value) {

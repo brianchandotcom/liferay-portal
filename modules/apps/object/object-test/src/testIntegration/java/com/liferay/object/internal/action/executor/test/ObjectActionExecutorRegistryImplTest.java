@@ -87,26 +87,26 @@ public class ObjectActionExecutorRegistryImplTest {
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "objectDefinitionName1"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "objectDefinitionName2"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId2, "objectDefinitionName1"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId2, "objectDefinitionName2"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 	}
 
 	@Test
@@ -123,7 +123,7 @@ public class ObjectActionExecutorRegistryImplTest {
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "objectDefinitionName1"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(
@@ -133,14 +133,14 @@ public class ObjectActionExecutorRegistryImplTest {
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "objectDefinitionName2"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId2, "objectDefinitionName1"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 
 		_unregisterObjectActionExecutors();
 	}
@@ -160,14 +160,14 @@ public class ObjectActionExecutorRegistryImplTest {
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "objectDefinitionName1"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 
 		Assert.assertArrayEquals(
 			_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS,
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "objectDefinitionName2"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(
@@ -177,7 +177,7 @@ public class ObjectActionExecutorRegistryImplTest {
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId2, "objectDefinitionName1"),
-				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+				ObjectActionExecutor::getKey, String.class));
 
 		_unregisterObjectActionExecutors();
 	}

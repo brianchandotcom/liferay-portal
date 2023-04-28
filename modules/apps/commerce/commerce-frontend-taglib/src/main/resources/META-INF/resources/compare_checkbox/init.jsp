@@ -24,11 +24,13 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-theme:defineObjects />
 
 <%
+Long commerceChannelGroupId = (Long)request.getAttribute("liferay-commerce:compare-checkbox:commerceChannelGroupId");
 CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("liferay-commerce:compare-checkbox:cpCatalogEntry");
 Boolean disabled = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:disabled");
 Boolean inCompare = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:inCompare");
 String label = (String)request.getAttribute("liferay-commerce:compare-checkbox:label");
 String pictureUrl = (String)request.getAttribute("liferay-commerce:compare-checkbox:pictureUrl");
+Boolean refreshOnRemove = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:refreshOnRemove");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_compare-checkbox") + StringPool.UNDERLINE;
 

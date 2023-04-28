@@ -1,4 +1,5 @@
 {
+	"concurrencyPolicy": "Forbid",
 	"cpu": 1,
 	"environments": {
 		"infra": {

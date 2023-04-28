@@ -97,6 +97,11 @@ export default function Favicon({
 				type="hidden"
 				value={values.faviconFileEntryId}
 			/>
+
+			<p className="h3 sheet-subtitle">
+				{Liferay.Language.get('favicon')}
+			</p>
+
 			{values.imgURL && (
 				<img
 					alt={values.title}

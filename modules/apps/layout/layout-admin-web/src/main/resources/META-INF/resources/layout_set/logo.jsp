@@ -56,6 +56,8 @@ else {
 }
 %>
 
+<p class="h3 sheet-subtitle"><liferay-ui:message key="logo" /></p>
+
 <liferay-frontend:logo-selector
 	currentLogoURL='<%= (selLayoutSet.getLogoId() == 0) ? companyLogoURL : themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + selLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>'
 	defaultLogoURL="<%= companyLogoURL %>"

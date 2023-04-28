@@ -177,7 +177,7 @@ export async function getNotificationTemplateById(
 
 export async function getNotificationTemplates() {
 	return await getList<NotificationTemplate>(
-		'/o/notification/v1.0/notification-templates'
+		'/o/notification/v1.0/notification-templates?pageSize=-1'
 	);
 }
 

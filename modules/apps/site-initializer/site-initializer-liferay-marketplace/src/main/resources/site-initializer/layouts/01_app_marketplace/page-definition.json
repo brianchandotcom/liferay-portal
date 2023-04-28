@@ -28,7 +28,13 @@
 										"value": "Apps Banner"
 									},
 									"url": {
-										"value": "/documents/3192483/8811639/Apps_Banner.jpg/1c4c5f79-851d-8cc2-b530-2b31aef340d6?t=1657124058329&download=true"
+										"mapping": {
+											"fieldKey": "FileEntry_previewImage",
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Hero Images/Apps_Banner.jpg#]"
+											}
+										}
 									}
 								},
 								"borderRadius": "",
@@ -462,7 +468,7 @@
 																"widgetConfig": {
 																	"destination": "",
 																	"displayStyle": "default",
-																	"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
+																	"displayStyleGroupId": "3192483",
 																	"federatedSearchKey": "",
 																	"invisible": "false",
 																	"keywordsParameterName": "q",
@@ -678,7 +684,7 @@
 																	"cpContentListRendererKey": "list-default",
 																	"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
 																	"displayStyle": "ddmTemplate_APPS_SEARCH_RESULTS",
-																	"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
+																	"displayStyleGroupId": "3192483",
 																	"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 																	"lfrAppShowShareWithFriendsLink": "false",
 																	"lfrFacebookApiKey": "",

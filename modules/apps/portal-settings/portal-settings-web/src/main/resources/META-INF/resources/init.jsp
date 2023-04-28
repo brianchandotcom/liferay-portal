@@ -70,7 +70,6 @@ page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor" %><%@
 page import="com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys" %><%@

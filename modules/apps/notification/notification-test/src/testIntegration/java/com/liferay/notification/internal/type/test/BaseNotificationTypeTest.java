@@ -68,6 +68,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.text.SimpleDateFormat;
+
 import java.time.Month;
 
 import java.util.Arrays;
@@ -103,7 +105,13 @@ public class BaseNotificationTypeTest {
 		randomObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
 			"booleanObjectField", RandomTestUtil.randomBoolean()
 		).put(
-			"dateObjectField", "2022-04-28 00:00:00.0"
+			"dateObjectField",
+			() -> {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd 00:00:00.0");
+
+				return simpleDateFormat.format(RandomTestUtil.nextDate());
+			}
 		).put(
 			"integerObjectField", RandomTestUtil.nextInt()
 		).put(

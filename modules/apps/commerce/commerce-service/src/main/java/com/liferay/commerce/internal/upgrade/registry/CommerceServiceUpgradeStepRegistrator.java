@@ -570,6 +570,11 @@ public class CommerceServiceUpgradeStepRegistrator
 				_companyLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService));
 
+		registry.register(
+			"9.4.0", "9.5.0",
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "customerCommerceOrderItemId LONG"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

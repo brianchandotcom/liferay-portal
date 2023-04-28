@@ -22,9 +22,11 @@ import React from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewType} from '../FDSViews';
+import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 
 interface Field {
+	format: string;
 	label: string;
 	name: string;
 	type: string;
@@ -45,6 +47,20 @@ interface IPropsAddFDSFilterModalContent {
 	onSave: (newFilter: Filter) => void;
 }
 
+function alertFailed() {
+	openToast({
+		message: Liferay.Language.get('your-request-failed-to-complete'),
+		type: 'danger',
+	});
+}
+
+function alertSuccess() {
+	openToast({
+		message: Liferay.Language.get('your-request-completed-successfully'),
+		type: 'success',
+	});
+}
+
 function AddFDSFilterModalContent({
 	closeModal,
 	fdsView,
@@ -59,23 +75,16 @@ function AddFDSFilterModalContent({
 		const field = fields.find((item: Field) => item.name === selectedField);
 
 		if (!field) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			alertFailed();
 
 			return null;
 		}
 
-		const body = {
-			entityFieldName: field.name,
-			filterProperties: {},
+		const body: any = {
+			fieldName: field.name,
 			label: label || field.label,
-			preloadedData: {},
-			r_fdsViewFDSFilterRelationship_c_fdsViewId: fdsView.id,
-			type: field.type,
+			type: field.format,
+			[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FILTER_ID]: fdsView.id,
 		};
 
 		const response = await fetch(API_URL.FDS_FILTERS, {
@@ -88,24 +97,14 @@ function AddFDSFilterModalContent({
 		});
 
 		if (!response.ok) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			alertFailed();
 
 			return null;
 		}
 
 		const responseJSON = await response.json();
 
-		openToast({
-			message: Liferay.Language.get(
-				'your-request-completed-successfully'
-			),
-			type: 'success',
-		});
+		alertSuccess();
 
 		onSave(responseJSON);
 
@@ -219,12 +218,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		);
 
 		if (!response.ok) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			alertFailed();
 
 			return null;
 		}
@@ -234,22 +228,12 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		const fdsFiltersOrder = responseJSON?.fdsFiltersOrder;
 
 		if (fdsFiltersOrder && fdsFiltersOrder === newFiltersOrder) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-completed-successfully'
-				),
-				type: 'success',
-			});
+			alertSuccess();
 
 			setNewFiltersOrder('');
 		}
 		else {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			alertFailed();
 		}
 	};
 
@@ -267,16 +251,6 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		});
 
 	React.useEffect(() => {
-		const getFields = async () => {
-			const response = await fetch(
-				`${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}`
-			);
-
-			const responseJSON = await response.json();
-
-			setFields(responseJSON.items);
-		};
-
 		const getFilters = async () => {
 			const response = await fetch(
 				`${API_URL.FDS_FILTERS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FILTER_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FILTER}`
@@ -300,7 +274,12 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			setFilters(filtersOrderer);
 		};
 
-		getFields();
+		getFields(fdsView).then((newFields) => {
+			if (newFields) {
+				setFields(newFields);
+			}
+		});
+
 		getFilters();
 	}, [fdsView]);
 
@@ -315,7 +294,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 					},
 					{
 						label: Liferay.Language.get('Field Name'),
-						name: 'entityFieldName',
+						name: 'fieldName',
 					},
 					{
 						label: Liferay.Language.get('type'),

@@ -24,6 +24,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
+import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 
 type FDSFieldType = {
@@ -74,75 +75,18 @@ const AddFDSFieldsModalContent = ({
 	};
 
 	useEffect(() => {
-		const getFields = async () => {
-			const {restApplication, restSchema} = fdsView[
-				OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW
-			];
-
-			const response = await fetch(`/o${restApplication}/openapi.json`);
-
-			if (!response.ok) {
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-failed-to-complete'
-					),
-					type: 'danger',
-				});
-
-				return null;
+		getFields(fdsView).then((newFields) => {
+			if (newFields) {
+				setFields(
+					newFields.map((field) => ({
+						name: field.name,
+						selected: false,
+						type: field.type,
+						visible: true,
+					}))
+				);
 			}
-
-			const responseJSON = await response.json();
-
-			const properties =
-				responseJSON?.components?.schemas[restSchema]?.properties;
-
-			if (!properties) {
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-failed-to-complete'
-					),
-					type: 'danger',
-				});
-
-				return null;
-			}
-
-			const fieldsArray: Array<FieldType> = [];
-
-			const isObjectSchema =
-				responseJSON.components.schemas[restSchema].xml.name ===
-				'ObjectEntry';
-
-			Object.keys(properties).forEach((propertyKey) => {
-				const propertyValue = properties[propertyKey];
-
-				if (isObjectSchema && !propertyValue.extensions) {
-					return;
-				}
-
-				if (propertyKey === 'x-class-name') {
-					return;
-				}
-
-				const type = propertyValue.type;
-
-				if (type === 'object' || type === 'array') {
-					return;
-				}
-
-				fieldsArray.push({
-					name: propertyKey,
-					selected: false,
-					type,
-					visible: true,
-				});
-			});
-
-			setFields(fieldsArray);
-		};
-
-		getFields();
+		});
 	}, [fdsView]);
 
 	const isSelectAllChecked = () => {

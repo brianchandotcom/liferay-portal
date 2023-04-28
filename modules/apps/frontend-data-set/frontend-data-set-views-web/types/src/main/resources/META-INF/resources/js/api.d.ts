@@ -12,32 +12,14 @@
  * details.
  */
 
-import '../css/FDSEntries.scss';
-import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
-declare type FDSEntryType = {
-	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
-	actions: {
-		delete: {
-			href: string;
-			method: string;
-		};
-	};
-	id: string;
+interface Field {
+	format: string;
 	label: string;
-	restApplication: string;
-	restEndpoint: string;
-	restSchema: string;
-};
-interface FDSEntriesInterface {
-	fdsViewsURL: string;
-	namespace: string;
-	restApplications: Array<string>;
+	name: string;
+	type: string;
 }
-declare const FDSEntries: ({
-	fdsViewsURL,
-	namespace,
-	restApplications,
-}: FDSEntriesInterface) => JSX.Element;
-export {FDSEntryType};
-export default FDSEntries;
+export declare function getFields(
+	fdsView: FDSViewType
+): Promise<Field[] | undefined>;
+export {};

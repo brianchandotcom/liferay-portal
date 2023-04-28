@@ -200,17 +200,7 @@ public class ObjectActionExecutorRegistryImplTest {
 			name, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionConstants.SCOPE_COMPANY,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			Collections.singletonList(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					StringUtil.randomId()
-				).objectFieldSettings(
-					Collections.emptyList()
-				).build()));
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,null);
 	}
 
 	private static void _unregisterObjectActionExecutors() {

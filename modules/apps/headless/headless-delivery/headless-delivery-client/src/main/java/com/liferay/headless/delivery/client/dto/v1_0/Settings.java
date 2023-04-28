@@ -74,6 +74,49 @@ public class Settings implements Cloneable, Serializable {
 
 	protected String css;
 
+	public ClientExtension[] getCssClientExtensions() {
+		return cssClientExtensions;
+	}
+
+	public void setCssClientExtensions(ClientExtension[] cssClientExtensions) {
+		this.cssClientExtensions = cssClientExtensions;
+	}
+
+	public void setCssClientExtensions(
+		UnsafeSupplier<ClientExtension[], Exception>
+			cssClientExtensionsUnsafeSupplier) {
+
+		try {
+			cssClientExtensions = cssClientExtensionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ClientExtension[] cssClientExtensions;
+
+	public Object getFavIcon() {
+		return favIcon;
+	}
+
+	public void setFavIcon(Object favIcon) {
+		this.favIcon = favIcon;
+	}
+
+	public void setFavIcon(
+		UnsafeSupplier<Object, Exception> favIconUnsafeSupplier) {
+
+		try {
+			favIcon = favIconUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object favIcon;
+
 	public String getJavascript() {
 		return javascript;
 	}
@@ -94,6 +137,31 @@ public class Settings implements Cloneable, Serializable {
 	}
 
 	protected String javascript;
+
+	public ClientExtension[] getJavascriptClientExtensions() {
+		return javascriptClientExtensions;
+	}
+
+	public void setJavascriptClientExtensions(
+		ClientExtension[] javascriptClientExtensions) {
+
+		this.javascriptClientExtensions = javascriptClientExtensions;
+	}
+
+	public void setJavascriptClientExtensions(
+		UnsafeSupplier<ClientExtension[], Exception>
+			javascriptClientExtensionsUnsafeSupplier) {
+
+		try {
+			javascriptClientExtensions =
+				javascriptClientExtensionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ClientExtension[] javascriptClientExtensions;
 
 	public MasterPage getMasterPage() {
 		return masterPage;
@@ -136,6 +204,31 @@ public class Settings implements Cloneable, Serializable {
 	}
 
 	protected StyleBook styleBook;
+
+	public ClientExtension getThemeCssClientExtension() {
+		return themeCssClientExtension;
+	}
+
+	public void setThemeCssClientExtension(
+		ClientExtension themeCssClientExtension) {
+
+		this.themeCssClientExtension = themeCssClientExtension;
+	}
+
+	public void setThemeCssClientExtension(
+		UnsafeSupplier<ClientExtension, Exception>
+			themeCssClientExtensionUnsafeSupplier) {
+
+		try {
+			themeCssClientExtension =
+				themeCssClientExtensionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ClientExtension themeCssClientExtension;
 
 	public String getThemeName() {
 		return themeName;

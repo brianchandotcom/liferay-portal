@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.ClientExtension;
 import com.liferay.headless.delivery.client.dto.v1_0.Settings;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -81,6 +82,43 @@ public class SettingsSerDes {
 			sb.append("\"");
 		}
 
+		if (settings.getCssClientExtensions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cssClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < settings.getCssClientExtensions().length; i++) {
+				sb.append(String.valueOf(settings.getCssClientExtensions()[i]));
+
+				if ((i + 1) < settings.getCssClientExtensions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (settings.getFavIcon() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"favIcon\": ");
+
+			if (settings.getFavIcon() instanceof String) {
+				sb.append("\"");
+				sb.append((String)settings.getFavIcon());
+				sb.append("\"");
+			}
+			else {
+				sb.append(settings.getFavIcon());
+			}
+		}
+
 		if (settings.getJavascript() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -93,6 +131,30 @@ public class SettingsSerDes {
 			sb.append(_escape(settings.getJavascript()));
 
 			sb.append("\"");
+		}
+
+		if (settings.getJavascriptClientExtensions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"javascriptClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < settings.getJavascriptClientExtensions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						settings.getJavascriptClientExtensions()[i]));
+
+				if ((i + 1) < settings.getJavascriptClientExtensions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (settings.getMasterPage() != null) {
@@ -113,6 +175,16 @@ public class SettingsSerDes {
 			sb.append("\"styleBook\": ");
 
 			sb.append(String.valueOf(settings.getStyleBook()));
+		}
+
+		if (settings.getThemeCssClientExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeCssClientExtension\": ");
+
+			sb.append(String.valueOf(settings.getThemeCssClientExtension()));
 		}
 
 		if (settings.getThemeName() != null) {
@@ -180,11 +252,36 @@ public class SettingsSerDes {
 			map.put("css", String.valueOf(settings.getCss()));
 		}
 
+		if (settings.getCssClientExtensions() == null) {
+			map.put("cssClientExtensions", null);
+		}
+		else {
+			map.put(
+				"cssClientExtensions",
+				String.valueOf(settings.getCssClientExtensions()));
+		}
+
+		if (settings.getFavIcon() == null) {
+			map.put("favIcon", null);
+		}
+		else {
+			map.put("favIcon", String.valueOf(settings.getFavIcon()));
+		}
+
 		if (settings.getJavascript() == null) {
 			map.put("javascript", null);
 		}
 		else {
 			map.put("javascript", String.valueOf(settings.getJavascript()));
+		}
+
+		if (settings.getJavascriptClientExtensions() == null) {
+			map.put("javascriptClientExtensions", null);
+		}
+		else {
+			map.put(
+				"javascriptClientExtensions",
+				String.valueOf(settings.getJavascriptClientExtensions()));
 		}
 
 		if (settings.getMasterPage() == null) {
@@ -199,6 +296,15 @@ public class SettingsSerDes {
 		}
 		else {
 			map.put("styleBook", String.valueOf(settings.getStyleBook()));
+		}
+
+		if (settings.getThemeCssClientExtension() == null) {
+			map.put("themeCssClientExtension", null);
+		}
+		else {
+			map.put(
+				"themeCssClientExtension",
+				String.valueOf(settings.getThemeCssClientExtension()));
 		}
 
 		if (settings.getThemeName() == null) {
@@ -246,9 +352,55 @@ public class SettingsSerDes {
 					settings.setCss((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "cssClientExtensions")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ClientExtension[] cssClientExtensionsArray =
+						new ClientExtension[jsonParserFieldValues.length];
+
+					for (int i = 0; i < cssClientExtensionsArray.length; i++) {
+						cssClientExtensionsArray[i] =
+							ClientExtensionSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					settings.setCssClientExtensions(cssClientExtensionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "favIcon")) {
+				if (jsonParserFieldValue != null) {
+					settings.setFavIcon((Object)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "javascript")) {
 				if (jsonParserFieldValue != null) {
 					settings.setJavascript((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "javascriptClientExtensions")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ClientExtension[] javascriptClientExtensionsArray =
+						new ClientExtension[jsonParserFieldValues.length];
+
+					for (int i = 0; i < javascriptClientExtensionsArray.length;
+						 i++) {
+
+						javascriptClientExtensionsArray[i] =
+							ClientExtensionSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					settings.setJavascriptClientExtensions(
+						javascriptClientExtensionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "masterPage")) {
@@ -261,6 +413,15 @@ public class SettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					settings.setStyleBook(
 						StyleBookSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "themeCssClientExtension")) {
+
+				if (jsonParserFieldValue != null) {
+					settings.setThemeCssClientExtension(
+						ClientExtensionSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "themeName")) {

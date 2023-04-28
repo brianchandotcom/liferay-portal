@@ -201,7 +201,7 @@ definition {
 
 	@description = "LPS-161917 - Verify that it's possible to create an e-mail notification template"
 	@priority = 5
-	test CanCreateEmailTemplate {
+	test CanCreateEmailNotificationTemplate {
 		property portal.acceptance = "true";
 
 		task ("Given the user navigates to Notifications - Templates in the Control Panel") {
@@ -213,8 +213,11 @@ definition {
 
 		task ("When the user creates a new Notification Template") {
 			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+				bcc = "test3@liferay.com",
+				cc = "test2@liferay.com",
+				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+				emailBody = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.",
+				entryTo = "test@liferay.com, test4@liferay.com",
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
@@ -230,12 +233,26 @@ definition {
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
 			ObjectNotifications.viewNotificationTemplateDetails(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+				bcc = "test3@liferay.com",
+				cc = "test2@liferay.com",
+				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+				emailBody = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.",
+				entryTo = "test@liferay.com, test4@liferay.com",
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
+				notificationType = "Email",
 				subject = "Subject");
+
+			ObjectNotifications.selectEntity(entityName = "User");
+
+			var listOfTerms = "Middle Name,Screen Name,Create Date,First Name,Last Login Date,UUID";
+
+			for (var entityTerms : list ${listOfTerms}) {
+				AssertElementPresent(
+					key_termName = ${entityTerms},
+					locator1 = "ObjectNotifications#ENTITY_TERMS");
+			}
 		}
 	}
 
@@ -633,7 +650,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionDelete";
 		property test.run.type = "single";
-		property test.smtp.server.enabled = "true";	
+		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();
@@ -904,8 +921,8 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionUpdate";
-		property test.smtp.server.enabled = "true";
 		property test.run.type = "single";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();

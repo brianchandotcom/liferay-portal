@@ -18,10 +18,13 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.AddressTable;
-import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ContactTable;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.model.RegionTable;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.AddressPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -54,8 +57,24 @@ public class AddressTableReferenceDefinition
 		ParentTableReferenceInfoBuilder<AddressTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.singleColumnReference(
-			AddressTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
+		parentTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				ContactTable.INSTANCE
+			).innerJoinON(
+				AddressTable.INSTANCE,
+				AddressTable.INSTANCE.classPK.eq(
+					ContactTable.INSTANCE.contactId)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					AddressTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(Contact.class.getName())
+				)
+			)
+		).singleColumnReference(
+			AddressTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
+		);
 	}
 
 	@Override

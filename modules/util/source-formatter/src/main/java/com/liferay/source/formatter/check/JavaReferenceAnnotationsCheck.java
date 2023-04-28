@@ -73,29 +73,29 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 	private void _checkReferenceMethods(
 		String fileName, String absolutePath, JavaClass javaClass) {
 
-		if (isAttributeValue(_CHECK_REFERENCE_METHOD_KEY, absolutePath)) {
-			for (String allowedReferenceMethodFileName :
-					getAttributeValues(
-						_ALLOWED_REFERENCE_METHOD_FILE_NAMES_KEY,
-						absolutePath)) {
+		if (!isAttributeValue(_CHECK_REFERENCE_METHOD_KEY, absolutePath)) {
+			return;
+		}
 
-				if (absolutePath.endsWith(allowedReferenceMethodFileName)) {
-					return;
-				}
+		for (String allowedReferenceMethodFileName :
+				getAttributeValues(
+					_ALLOWED_REFERENCE_METHOD_FILE_NAMES_KEY, absolutePath)) {
+
+			if (absolutePath.endsWith(allowedReferenceMethodFileName)) {
+				return;
 			}
+		}
 
-			for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-				if (javaTerm.isJavaMethod() &&
-					javaTerm.hasAnnotation("Reference")) {
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (javaTerm.isJavaMethod() &&
+				javaTerm.hasAnnotation("Reference")) {
 
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Do not use @Reference on method ",
-							javaTerm.getName(),
-							", use @Reference on field or ServiceTracker",
-							"/ServiceTrackerList/ServiceTrackerMap instead"));
-				}
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Do not use @Reference on method ", javaTerm.getName(),
+						", use @Reference on field or ServiceTracker",
+						"/ServiceTrackerList/ServiceTrackerMap instead"));
 			}
 		}
 	}

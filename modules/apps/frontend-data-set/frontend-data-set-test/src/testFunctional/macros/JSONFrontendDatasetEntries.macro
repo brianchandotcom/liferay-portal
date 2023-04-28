@@ -165,4 +165,32 @@ definition {
 		}
 	}
 
+	macro _getDatasetViewsIds {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/fdsviews \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var siteId = JSONCurlUtil.get(${curl}, "$..items[0].creator.id");
+
+		var datasetViewsIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
+
+		if (${datasetViewsIds} == "") {
+			fail("FAIL. No dataset views were found");
+		}
+		else {
+			return ${datasetViewsIds};
+		}
+	}
+
 }

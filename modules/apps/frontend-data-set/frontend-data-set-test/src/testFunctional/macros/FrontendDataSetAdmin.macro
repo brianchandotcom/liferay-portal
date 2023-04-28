@@ -130,6 +130,10 @@ definition {
 			value1 = "No Results Found");
 	}
 
+	macro deleteAllDatasetViews {
+		JSONFrontendDatasetEntries._deleteFDSViews();
+	}
+
 	macro deleteDataSet {
 		Click(
 			key_entry = ${entry},

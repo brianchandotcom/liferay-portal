@@ -37,7 +37,6 @@ import com.liferay.dynamic.data.mapping.web.internal.search.TemplateSearch;
 import com.liferay.dynamic.data.mapping.web.internal.search.TemplateSearchTerms;
 import com.liferay.dynamic.data.mapping.web.internal.security.permission.resource.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.web.internal.security.permission.resource.DDMTemplatePermission;
-import com.liferay.dynamic.data.mapping.web.internal.util.PortletDisplayTemplateUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -45,6 +44,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -986,8 +986,11 @@ public class DDMDisplayContext {
 			}
 		}
 		else {
+			PortletDisplayTemplate portletDisplayTemplate =
+				_portletDisplayTemplateSnapshot.get();
+
 			templateHandlers =
-				PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+				portletDisplayTemplate.getPortletDisplayTemplateHandlers();
 
 			Iterator<TemplateHandler> iterator = templateHandlers.iterator();
 
@@ -1048,6 +1051,10 @@ public class DDMDisplayContext {
 	private boolean _showAncestorScopes() {
 		return ParamUtil.getBoolean(_renderRequest, "showAncestorScopes");
 	}
+
+	private static final Snapshot<PortletDisplayTemplate>
+		_portletDisplayTemplateSnapshot = new Snapshot<>(
+			DDMDisplayContext.class, PortletDisplayTemplate.class);
 
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;

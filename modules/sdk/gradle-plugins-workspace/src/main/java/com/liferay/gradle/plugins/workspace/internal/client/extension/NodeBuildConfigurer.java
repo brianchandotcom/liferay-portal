@@ -26,7 +26,9 @@ import java.util.Map;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
 
 import org.osgi.framework.Version;
@@ -41,7 +43,7 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 		Project project,
 		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
 
-		if (!_hasFrontendBuildScript(project)) {
+		if (!_hasFrontendScript(project)) {
 			return;
 		}
 
@@ -53,9 +55,16 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 		_configureExtensionNode(nodeExtension);
 
 		assembleClientExtensionTaskProvider.configure(
-			assembleClientExtensionTask ->
-				assembleClientExtensionTask.dependsOn(
-					NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME));
+			assembleClientExtensionTask -> {
+				TaskContainer tasks = project.getTasks();
+
+				Task task = tasks.findByName(
+					NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
+
+				if (task != null) {
+					assembleClientExtensionTask.dependsOn(task);
+				}
+			});
 	}
 
 	private void _configureExtensionNode(NodeExtension nodeExtension) {
@@ -92,7 +101,7 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean _hasFrontendBuildScript(Project project) {
+	private boolean _hasFrontendScript(Project project) {
 		File packageJsonFile = project.file("package.json");
 
 		if (!packageJsonFile.exists()) {
@@ -109,9 +118,7 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 		Map<String, Object> scriptsMap =
 			(Map<String, Object>)packageJsonMap.get("scripts");
 
-		if ((liferayThemeMap == null) && (scriptsMap != null) &&
-			(scriptsMap.get("build") != null)) {
-
+		if ((liferayThemeMap == null) && (scriptsMap != null)) {
 			return true;
 		}
 

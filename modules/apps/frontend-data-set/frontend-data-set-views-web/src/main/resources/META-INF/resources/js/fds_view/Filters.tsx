@@ -276,7 +276,12 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 		getFields(fdsView).then((newFields) => {
 			if (newFields) {
-				setFields(newFields);
+
+				// This is temporary since we are only adding date filters for now
+
+				setFields(
+					newFields.filter((field) => field.format === 'date-time')
+				);
 			}
 		});
 

@@ -95,8 +95,6 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 							javaTerm.getName(),
 							", use @Reference on field or ServiceTracker",
 							"/ServiceTrackerList/ServiceTrackerMap instead"));
-
-					break;
 				}
 			}
 		}

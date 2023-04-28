@@ -76,8 +76,8 @@ public class ObjectActionExecutorRegistryImplTest {
 	public void testGetObjectActionExecutorsWithCompanyAndObjectDefinitionRestriction() {
 		ObjectActionExecutor objectActionExecutor =
 			_registerObjectActionExecutor(
-				Collections.singletonList("objectDefinitionName1"),
-				_companyId1, StringUtil.randomId());
+				Collections.singletonList("objectDefinitionName1"), _companyId1,
+				StringUtil.randomId());
 
 		Assert.assertArrayEquals(
 			ArrayUtil.sortedUnique(

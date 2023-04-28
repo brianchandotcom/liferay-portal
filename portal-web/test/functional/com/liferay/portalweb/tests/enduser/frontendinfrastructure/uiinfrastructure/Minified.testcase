@@ -45,7 +45,7 @@ definition {
 
 	@description = "Check for errors in the browser console on the jQuery page"
 	@priority = 3
-	test VerifyErroWhenJQueryEnabled {
+	test VerifyErrorWhenJQueryEnabled {
 		property test.name.skip.portal.instance = "Minified#VerifyErroWhenJQueryEnabled";
 
 		task ("Given Navigate through the menus and select System Settings") {

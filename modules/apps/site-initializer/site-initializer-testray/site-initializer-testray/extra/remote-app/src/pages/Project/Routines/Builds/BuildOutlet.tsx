@@ -126,12 +126,12 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	}, [basePath, isCurrentPathIgnored, pathname, setTabs]);
 
 	return (
-		<>
-			{!isCurrentPathIgnored && testrayBuild && (
-				<BuildOverview testrayBuild={testrayBuild} />
-			)}
+		<PageRenderer error={error} loading={loading}>
+			<>
+				{!isCurrentPathIgnored && testrayBuild && (
+					<BuildOverview testrayBuild={testrayBuild} />
+				)}
 
-			<PageRenderer error={error} loading={loading}>
 				<Outlet
 					context={{
 						actions: testrayBuild.actions,
@@ -141,8 +141,8 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 						testrayRoutine,
 					}}
 				/>
-			</PageRenderer>
-		</>
+			</>
+		</PageRenderer>
 	);
 };
 

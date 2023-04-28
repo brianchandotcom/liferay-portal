@@ -93,7 +93,7 @@ public class BaseNotificationTypeTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ListTypeEntry listTypeEntry = ListTypeEntryUtil.createListTypeEntry(
-			"listTypeEntry",
+			RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
@@ -148,17 +148,6 @@ public class BaseNotificationTypeTest {
 
 	@Before
 	public void setUp() throws Exception {
-		ListTypeDefinition listTypeDefinition =
-			listTypeDefinitionLocalService.addListTypeDefinition(
-				null, TestPropsValues.getUserId(),
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				Collections.singletonList(
-					ListTypeEntryUtil.createListTypeEntry(
-						listTypeEntryKey,
-						Collections.singletonMap(
-							LocaleUtil.US, listTypeEntryValue))));
-
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), false, false,
@@ -202,7 +191,7 @@ public class BaseNotificationTypeTest {
 					).name(
 						"picklistObjectField"
 					).listTypeDefinitionId(
-						listTypeDefinition.getListTypeDefinitionId()
+						_listTypeDefinition.getListTypeDefinitionId()
 					).objectFieldSettings(
 						Collections.emptyList()
 					).build(),
@@ -321,19 +310,7 @@ public class BaseNotificationTypeTest {
 		return ListUtil.concat(
 			ListUtil.fromMapValues(_authorTermValues),
 			ListUtil.fromMapValues(_currentUserTermValues),
-			ListUtil.fromMapValues(termValues));
-	}
-
-	protected void sendNotification(
-			NotificationContext notificationContext, String type)
-		throws Exception {
-
-		NotificationType notificationType =
-			_notificationTypeServiceTracker.getNotificationType(type);
-
-		Assert.assertNotNull(notificationType);
-
-		notificationType.sendNotification(notificationContext);
+			ListUtil.fromMapValues(randomObjectEntryValues));
 	}
 
 	protected static DTOConverterContext dtoConverterContext =
@@ -341,20 +318,14 @@ public class BaseNotificationTypeTest {
 			false, Collections.emptyMap(),
 			BaseNotificationTypeTest._dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, BaseNotificationTypeTest.user1);
-	protected static String listTypeEntryKey;
-	protected static String listTypeEntryValue;
 
 	@DeleteAfterTestRun
 	protected static ObjectDefinition objectDefinition;
 
 	protected static LinkedHashMap<String, Object> randomObjectEntryValues;
 	protected static Role role;
-	protected static LinkedHashMap<String, Serializable> termValues;
 	protected static User user1;
 	protected static User user2;
-
-	@Inject
-	protected ListTypeDefinitionLocalService listTypeDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	protected NotificationQueueEntry notificationQueueEntry;

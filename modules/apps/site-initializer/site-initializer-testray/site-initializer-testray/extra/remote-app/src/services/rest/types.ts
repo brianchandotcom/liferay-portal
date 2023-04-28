@@ -353,6 +353,7 @@ export type TestraySuite = {
 
 export type TestraySuiteCase = {
 	case: TestrayCase;
+	caseId: Number;
 	id: number;
 	r_caseToSuitesCases_c_case: TestrayCase;
 	r_caseToSuitesCases_c_caseId: number;

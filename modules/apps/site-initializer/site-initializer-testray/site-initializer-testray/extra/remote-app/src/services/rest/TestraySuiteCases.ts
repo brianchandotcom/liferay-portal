@@ -12,44 +12,39 @@
  * details.
  */
 
-import fetcher from '../fetcher';
+import Rest from '~/core/Rest';
+import yupSchema from '~/schema/yup';
 
-const nestedFieldsParam =
-	'nestedFields=case.component,suite&nestedFieldsDepth=2';
+import {TestraySuiteCase} from './types';
 
-const suitesCasesResource = `/suitescaseses?${nestedFieldsParam}`;
+type SuiteCase = typeof yupSchema.suiteCase.__outputType;
 
-const createSuiteCaseBatch = (suites: {caseId: number; suiteId: number}[]) => {
-	if (suites.length <= 20) {
-		return Promise.allSettled(
-			suites.map(
-				({
-					caseId: r_caseToSuitesCases_c_caseId,
-					suiteId: r_suiteToSuitesCases_c_suiteId,
-				}) =>
-					fetcher.post('/suitescaseses', {
-						name:
-							new Date().getTime() + r_caseToSuitesCases_c_caseId,
-						r_caseToSuitesCases_c_caseId,
-						r_suiteToSuitesCases_c_suiteId,
-					})
-			)
-		);
-	}
-
-	fetcher.post(
-		'/suitescaseses/batch',
-		suites.map(
-			({
+class TestraySuiteImpl extends Rest<SuiteCase, TestraySuiteCase> {
+	constructor() {
+		super({
+			adapter: ({
 				caseId: r_caseToSuitesCases_c_caseId,
+				name,
 				suiteId: r_suiteToSuitesCases_c_suiteId,
-			}: any) => ({
-				name: new Date().getTime() + r_caseToSuitesCases_c_caseId,
+			}) => ({
+				name,
 				r_caseToSuitesCases_c_caseId,
 				r_suiteToSuitesCases_c_suiteId,
-			})
-		)
-	);
-};
+			}),
+			nestedFields: 'case.component,suite',
+			uri: 'suitescaseses',
+		});
+	}
 
-export {createSuiteCaseBatch, suitesCasesResource};
+	public async createSuiteCase(casesId: number[], suiteId: number) {
+		for (const caseId of casesId) {
+			await super.create({
+				caseId,
+				name: new Date().getTime() + String(caseId),
+				suiteId,
+			});
+		}
+	}
+}
+
+export const testraySuiteCaseImpl = new TestraySuiteImpl();

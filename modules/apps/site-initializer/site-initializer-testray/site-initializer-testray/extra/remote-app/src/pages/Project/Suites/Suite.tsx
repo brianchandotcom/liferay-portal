@@ -16,68 +16,18 @@ import {useOutletContext} from 'react-router-dom';
 
 import {BoxItem} from '../../../components/Form/DualListBox';
 import Container from '../../../components/Layout/Container';
-import ListView from '../../../components/ListView';
 import QATable from '../../../components/Table/QATable';
 import i18n from '../../../i18n';
-import {
-	APIResponse,
-	TestrayCase,
-	TestraySuite,
-	TestraySuiteCase,
-	suitesCasesResource,
-	testrayCaseImpl,
-} from '../../../services/rest';
+import {TestraySuite} from '../../../services/rest';
 import dayjs from '../../../util/date';
-import useSuiteCaseFilter, {getCaseParameters} from './useSuiteCaseFilter';
-import useSuiteCasesActions from './useSuiteCasesActions';
-
-const transformData = (isSmartSuite: boolean) => (
-	response: APIResponse<TestrayCase> | APIResponse<TestraySuiteCase>
-): APIResponse<TestraySuiteCase> => {
-	let items: TestraySuiteCase[] = (response?.items as any) || [];
-
-	if (isSmartSuite) {
-		items = (items as any[]).map((testrayCase) => ({
-			...testrayCase,
-			case: {
-				...testrayCase,
-				component: testrayCase.r_componentToCases_c_component,
-			},
-			id: testrayCase.id,
-		}));
-	}
-	else {
-		items = (items as any[]).map((suiteCase) => ({
-			...suiteCase,
-			case: suiteCase.r_caseToSuitesCases_c_case
-				? {
-						...suiteCase.r_caseToSuitesCases_c_case,
-						component:
-							suiteCase.r_caseToSuitesCases_c_case
-								.r_componentToCases_c_component,
-				  }
-				: undefined,
-			id: suiteCase.id,
-			suite: suiteCase.r_suiteToSuitesCases_c_suite,
-		}));
-	}
-
-	return {
-		...response,
-		items,
-	};
-};
+import SuitesCasesTable from './SuiteCasesTable';
+import {getCaseParameters} from './useSuiteCaseFilter';
 
 const Suite = () => {
-	const {
-		projectId,
-		testraySuite,
-	}: {projectId: number; testraySuite: TestraySuite} = useOutletContext();
+	const {testraySuite}: {testraySuite: TestraySuite} = useOutletContext();
 
 	const isSmartSuite = !!testraySuite.caseParameters;
 
-	const suiteCaseFilter = useSuiteCaseFilter(testraySuite);
-	const suiteCaseActions = useSuiteCasesActions({isSmartSuite});
 	const caseParameters = getCaseParameters(testraySuite);
 
 	const getCaseParameterKey = (caseParameter: BoxItem[]) =>
@@ -156,45 +106,9 @@ const Suite = () => {
 			)}
 
 			<Container className="mt-4">
-				<ListView
-					forceRefetch={suiteCaseActions.formModal.forceRefetch}
-					managementToolbarProps={{visible: false}}
-					resource={
-						isSmartSuite
-							? testrayCaseImpl.resource
-							: suitesCasesResource
-					}
-					tableProps={{
-						actions: suiteCaseActions.actions,
-						columns: [
-							{
-								key: 'priority',
-								render: (_, suiteCase: TestraySuiteCase) =>
-									suiteCase?.case?.priority,
-								value: i18n.translate('priority'),
-							},
-							{
-								key: 'component',
-								render: (_, suiteCase: TestraySuiteCase) =>
-									suiteCase?.case?.component?.name,
-								value: i18n.translate('component'),
-							},
-							{
-								clickable: true,
-								key: 'name',
-								render: (_, suiteCase: TestraySuiteCase) =>
-									suiteCase.case?.name,
-								size: 'lg',
-								value: i18n.translate('case'),
-							},
-						],
-						navigateTo: (suiteCase: TestraySuiteCase) =>
-							`/project/${projectId}/cases/${suiteCase?.case?.id}`,
-					}}
-					transformData={transformData(isSmartSuite)}
-					variables={{
-						filter: suiteCaseFilter,
-					}}
+				<SuitesCasesTable
+					isSmartSuite={isSmartSuite}
+					testraySuite={testraySuite}
 				/>
 			</Container>
 		</>

@@ -240,6 +240,11 @@ const yupSchema = {
 		name: yup.string().required(),
 		smartSuite: yup.string(),
 	}),
+	suiteCase: yup.object({
+		caseId: yup.number(),
+		name: yup.string(),
+		suiteId: yup.number(),
+	}),
 	task: yup.object({
 		buildId: yup.number(),
 		caseTypes: yup.array(yup.number()).required(),

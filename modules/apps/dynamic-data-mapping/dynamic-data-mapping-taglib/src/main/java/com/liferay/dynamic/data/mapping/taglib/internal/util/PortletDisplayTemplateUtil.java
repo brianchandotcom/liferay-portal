@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.taglib.internal.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.List;
@@ -23,29 +24,33 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Lance Ji
  */
-@Component(service = {})
 public class PortletDisplayTemplateUtil {
 
 	public static long getDDMTemplateGroupId(long groupId) {
-		return _portletDisplayTemplate.getDDMTemplateGroupId(groupId);
+		PortletDisplayTemplate portletDisplayTemplate =
+			_portletDisplayTemplateSnapshot.get();
+
+		return portletDisplayTemplate.getDDMTemplateGroupId(groupId);
 	}
 
 	public static String getDisplayStyle(String ddmTemplateKey) {
-		return _portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
+		PortletDisplayTemplate portletDisplayTemplate =
+			_portletDisplayTemplateSnapshot.get();
+
+		return portletDisplayTemplate.getDisplayStyle(ddmTemplateKey);
 	}
 
 	public static DDMTemplate getPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId, String displayStyle,
 		boolean useDefault) {
 
-		return _portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
+		PortletDisplayTemplate portletDisplayTemplate =
+			_portletDisplayTemplateSnapshot.get();
+
+		return portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 			groupId, classNameId, displayStyle, useDefault);
 	}
 
@@ -55,23 +60,16 @@ public class PortletDisplayTemplateUtil {
 			List<?> entries, Map<String, Object> contextObjects)
 		throws Exception {
 
-		return _portletDisplayTemplate.renderDDMTemplate(
+		PortletDisplayTemplate portletDisplayTemplate =
+			_portletDisplayTemplateSnapshot.get();
+
+		return portletDisplayTemplate.renderDDMTemplate(
 			httpServletRequest, httpServletResponse, ddmTemplateId, entries,
 			contextObjects);
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_portletDisplayTemplate = null;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplate(
-		PortletDisplayTemplate portletDisplayTemplate) {
-
-		_portletDisplayTemplate = portletDisplayTemplate;
-	}
-
-	private static PortletDisplayTemplate _portletDisplayTemplate;
+	private static final Snapshot<PortletDisplayTemplate>
+		_portletDisplayTemplateSnapshot = new Snapshot<>(
+			PortletDisplayTemplateUtil.class, PortletDisplayTemplate.class);
 
 }

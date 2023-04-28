@@ -300,6 +300,53 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	macro _addCommerceAccount {
+		Variables.assertDefined(parameterList = ${accountType});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(accountName)) {
+			var accountName = ${accountName};
+		}
+
+		if (${accountType} == "Guest") {
+			var accountType = 0;
+		}
+		else if (${accountType} == "Person") {
+			var accountType = 1;
+		}
+		else if (${accountType} == "Business") {
+			var accountType = 2;
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		if (!(isSet(root))) {
+			var root = "true";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-account/v1.0/accounts \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"externalReferenceCode": "${externalReferenceCode}",
+					"name": "${accountName}",
+					"root": ${root},
+					"type": ${accountType}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro _addCommerceAccountAddress {
 		Variables.assertDefined(parameterList = "${accountEntryName},${countryISOCode},${name},${street1},${city},${zip}");
 

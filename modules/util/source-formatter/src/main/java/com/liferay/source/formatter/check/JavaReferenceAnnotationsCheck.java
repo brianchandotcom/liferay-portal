@@ -64,16 +64,16 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 			return annotation;
 		}
 
-		List<String> ignoreHaveReferenceMethods = getAttributeValues(
-			_IGNORE_HAVE_REFERENCE_METHODS_KEY, absolutePath);
+		List<String> allowedReferenceMethodFileNames = getAttributeValues(
+			_ALLOWED_REFERENCE_METHOD_FILE_NAMES_KEY, absolutePath);
 
 		if (isAttributeValue(_CHECK_REFERENCE_METHOD_KEY, absolutePath)) {
 			boolean ignoreFile = false;
 
-			for (String ignoreHaveReferenceMethod :
-					ignoreHaveReferenceMethods) {
+			for (String allowedReferenceMethodFileName :
+					allowedReferenceMethodFileNames) {
 
-				if (absolutePath.endsWith(ignoreHaveReferenceMethod)) {
+				if (absolutePath.endsWith(allowedReferenceMethodFileName)) {
 					ignoreFile = true;
 
 					break;
@@ -284,11 +284,11 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		return rootDirName;
 	}
 
+	private static final String _ALLOWED_REFERENCE_METHOD_FILE_NAMES_KEY =
+		"allowedReferenceMethodFileNames";
+
 	private static final String _CHECK_REFERENCE_METHOD_KEY =
 		"checkReferenceMethod";
-
-	private static final String _IGNORE_HAVE_REFERENCE_METHODS_KEY =
-		"ignoreHaveReferenceMethods";
 
 	private static final String _IGNORE_TARGET_ATTRIBUTE_VALUES_KEY =
 		"ignoreTargetAttributeValues";

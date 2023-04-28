@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from './Icon';
 import React from 'react';
 
 export enum AlertTypes {
@@ -61,7 +61,7 @@ const Alert: React.FC<IAlertProps> = ({
 		<>
 			{iconSymbol && (
 				<span className='alert-indicator'>
-					<Icon symbol={iconSymbol} />
+					<ClayIcon className='icon-root' symbol={iconSymbol} />
 				</span>
 			)}
 
@@ -71,7 +71,7 @@ const Alert: React.FC<IAlertProps> = ({
 
 			{onClose && (
 				<button className='close' onClick={() => onClose(id)}>
-					<Icon symbol='times' />
+					<ClayIcon className='icon-root' symbol='times' />
 				</button>
 			)}
 		</>

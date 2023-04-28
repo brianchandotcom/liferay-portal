@@ -1,4 +1,4 @@
-import Icon from 'shared/components/Icon';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {
 	getPropIcon,
@@ -33,7 +33,10 @@ class PlanBreakdown extends React.Component {
 					<ul>
 						{limits.map(limit => (
 							<li key={limit.entityLabel}>
-								<Icon symbol={getPropIcon(limit.entityLabel)} />
+								<ClayIcon
+									className='icon-root'
+									symbol={getPropIcon(limit.entityLabel)}
+								/>
 
 								<span className='limit-amount semibold'>
 									{limit.value.toLocaleString()}
@@ -46,7 +49,7 @@ class PlanBreakdown extends React.Component {
 						))}
 
 						<li>
-							<Icon symbol='ac-users' />
+							<ClayIcon className='icon-root' symbol='ac-users' />
 
 							<span className='limit-amount semibold'>
 								{Liferay.Language.get('unlimited')}

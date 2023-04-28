@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Icon from './Icon';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 import {onEnter} from 'shared/util/key-constants';
 import {PropTypes} from 'prop-types';
@@ -70,7 +70,8 @@ class Panel extends React.Component {
 					>
 						{expandable && (
 							<div className='trigger'>
-								<Icon
+								<ClayIcon
+									className='icon-root'
 									symbol={
 										expanded ? 'angle-up' : 'angle-down'
 									}

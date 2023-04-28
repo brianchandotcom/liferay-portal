@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 
 interface ITrendProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,7 +10,7 @@ interface ITrendProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Trend: React.FC<ITrendProps> = ({className, color, icon, label}) => (
 	<div className={getCN('analytics-trend', className)} style={{color}}>
-		{icon && <Icon symbol={icon} />}
+		{icon && <ClayIcon className='icon-root' symbol={icon} />}
 		<span className='analytics-trend-percent mb-0'>{label}</span>
 	</div>
 );

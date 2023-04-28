@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import Popover from 'shared/components/Popover';
 import React, {useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
@@ -30,7 +30,7 @@ const InfoPopover: React.FC<IInfoPopoverProps> = ({
 				onMouseOver={() => setShowPopover(true)}
 				ref={_iconSpanRef}
 			>
-				<Icon symbol='question-circle-full' />
+				<ClayIcon className='icon-root' symbol='question-circle-full' />
 			</span>
 
 			{ReactDOM.createPortal(

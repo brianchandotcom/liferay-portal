@@ -1,6 +1,6 @@
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Constants from 'shared/util/constants';
-import Icon from 'shared/components/Icon';
 import React, {useEffect} from 'react';
 import RecommendationPageAssetsQuery from '../../queries/RecommendationPageAssetsQuery';
 import RuleItem from '../RuleItem';
@@ -216,7 +216,10 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 												}}
 												outline
 											>
-												<Icon symbol='times' />
+												<ClayIcon
+													className='icon-root'
+													symbol='times'
+												/>
 											</ClayButton>
 										</span>
 									)}

@@ -1,8 +1,8 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
-import Icon from 'shared/components/Icon';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
@@ -48,8 +48,8 @@ const UserListNav: React.FC<{
 				>
 					{
 						<>
-							<Icon
-								className='mr-2 remove-users'
+							<ClayIcon
+								className='icon-root mr-2 remove-users'
 								symbol='times'
 							/>
 							{Liferay.Language.get('remove')}

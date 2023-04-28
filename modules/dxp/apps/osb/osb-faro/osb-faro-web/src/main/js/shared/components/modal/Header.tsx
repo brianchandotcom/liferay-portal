@@ -1,6 +1,6 @@
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from '../Icon';
 import React from 'react';
 
 interface IHeaderProps {
@@ -22,8 +22,8 @@ const Header: React.FC<IHeaderProps> = ({
 		{title && (
 			<h4 className='modal-title'>
 				{iconSymbol && (
-					<Icon
-						className='modal-title-indicator'
+					<ClayIcon
+						className='icon-root modal-title-indicator'
 						symbol={iconSymbol}
 					/>
 				)}
@@ -38,7 +38,7 @@ const Header: React.FC<IHeaderProps> = ({
 				displayType='secondary'
 				onClick={onClose}
 			>
-				<Icon symbol='times' />
+				<ClayIcon className='icon-root' symbol='times' />
 			</ClayButton>
 		)}
 	</div>

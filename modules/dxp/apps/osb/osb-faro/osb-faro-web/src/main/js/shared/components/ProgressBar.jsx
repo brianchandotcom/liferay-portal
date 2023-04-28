@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from './Icon';
 import React from 'react';
 import {PropTypes} from 'prop-types';
 
@@ -22,13 +22,13 @@ class ProgressBar extends React.Component {
 		if (complete && !error) {
 			return (
 				<div className='progress-group-feedback'>
-					<Icon symbol='check-circle' />
+					<ClayIcon className='icon-root' symbol='check-circle' />
 				</div>
 			);
 		} else if (error) {
 			return (
 				<div className='progress-group-feedback'>
-					<Icon symbol='times-circle' />
+					<ClayIcon className='icon-root' symbol='times-circle' />
 				</div>
 			);
 		} else {

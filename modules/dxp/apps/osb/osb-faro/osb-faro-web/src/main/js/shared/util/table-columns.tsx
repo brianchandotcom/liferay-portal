@@ -1,6 +1,6 @@
 import Checkbox from 'shared/components/Checkbox';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon, {Colors} from 'shared/components/Icon';
 import InfoPopover from 'shared/components/InfoPopover';
 import Label from 'shared/components/Label';
 import moment from 'moment';
@@ -19,6 +19,7 @@ import {
 	WillBeRemovedCell
 } from 'shared/components/table/cell-components';
 import {applyTimeZone, formatDateToTimeZone} from './date';
+import {Colors} from './colors-size';
 import {formatTime} from './time';
 import {get, isNil, noop, pickBy} from 'lodash';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
@@ -415,7 +416,12 @@ export const eventListColumns = {
 		accessor: 'hidden',
 		cellRenderer: ({data: {hidden}}) => (
 			<td>
-				{hidden && <Icon color={Colors.Secondary} symbol='ac-hidden' />}
+				{hidden && (
+					<ClayIcon
+						className={getCN('icon-root', Colors.Secondary)}
+						symbol='ac-hidden'
+					/>
+				)}
 			</td>
 		)
 	},

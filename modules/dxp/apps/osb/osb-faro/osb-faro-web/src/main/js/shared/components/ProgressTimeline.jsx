@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from './Icon';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
@@ -43,7 +43,12 @@ class ProgressTimeline extends React.Component {
 							<div className='circle'>
 								{!previousStep && step}
 
-								{previousStep && <Icon symbol='check' />}
+								{previousStep && (
+									<ClayIcon
+										className='icon-root'
+										symbol='check'
+									/>
+								)}
 							</div>
 						</div>
 					);

@@ -3,10 +3,10 @@ import AddReport from '../components/AddReport';
 import AssetCard from '../hocs/AssetCard';
 import autobind from 'autobind-decorator';
 import BasePage from 'shared/components/base-page';
+import ClayIcon from '@clayui/icon';
 import CustomAssetsDashboardQuery from 'shared/queries/CustomAssetsDashboardQuery';
 import CustomAssetsReportMutation from 'shared/queries/CustomAssetsReportMutation';
 import getQuery from 'shared/queries/custom-asset-query';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import TimeRangeQuery from 'shared/queries/TimeRangeQuery';
 import withCurrentUser from 'shared/hoc/WithCurrentUser';
@@ -254,7 +254,7 @@ class CustomAssetsDashboardPage extends React.Component {
 			<div className='row'>
 				<div className='col-sm-12'>
 					<div className='mt-3 mb-3 text-secondary text-center'>
-						<Icon className='mr-2' symbol='warning' />
+						<ClayIcon className='icon-root mr-2' symbol='warning' />
 
 						{Liferay.Language.get(
 							'this-dashboard-has-reached-the-limit-of-10-reports'

@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import Panel from 'shared/components/Panel';
 import React from 'react';
 import SubscriptionTitle from './SubscriptionTitle';
@@ -63,7 +63,10 @@ export default class AddOnsList extends React.Component {
 								}
 								name={
 									<span>
-										<Icon symbol={icon} />
+										<ClayIcon
+											className='icon-root'
+											symbol={icon}
+										/>
 
 										<span className='limit-amount semibold'>
 											<b className='text-secondary'>

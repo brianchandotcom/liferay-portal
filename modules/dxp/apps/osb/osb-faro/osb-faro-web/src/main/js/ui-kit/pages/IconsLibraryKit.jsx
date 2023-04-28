@@ -1,4 +1,4 @@
-import Icon from 'shared/components/Icon';
+import ClayIcon from '@clayui/icon';
 import Input from 'shared/components/Input';
 import Item from 'ui-kit/components/Item';
 import Label from 'shared/components/Label';
@@ -36,7 +36,10 @@ const IconLibraryKit = () => {
 					>
 						<div className='text-center'>
 							<div className='mb-3'>
-								<Icon size={Sizes.XLarge} symbol={name} />
+								<ClayIcon
+									className={`icon-root icon-size-${Sizes.XLarge}`}
+									symbol={name}
+								/>
 							</div>
 
 							<Label

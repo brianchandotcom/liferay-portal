@@ -1,10 +1,10 @@
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import getSessionMapper from 'experiments/hocs/mappers/experiment-session-mapper';
 import getSessionVariantsMapper from 'experiments/hocs/mappers/experiment-session-variants-mapper';
-import Icon from 'shared/components/Icon';
 import LineChart from 'experiments/components/LineChart';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useContext} from 'react';
@@ -81,7 +81,10 @@ const SessionCard: React.FC<ISessionCardProps> = ({label}) => {
 						}
 						small
 					>
-						<Icon className='mr-2' symbol='session-single-chart' />
+						<ClayIcon
+							className='icon-root mr-2'
+							symbol='session-single-chart'
+						/>
 
 						{Liferay.Language.get('total')}
 					</ClayButton>
@@ -99,8 +102,8 @@ const SessionCard: React.FC<ISessionCardProps> = ({label}) => {
 						}
 						small
 					>
-						<Icon
-							className='mr-2'
+						<ClayIcon
+							className='icon-root mr-2'
 							symbol='session-multiple-chart'
 						/>
 

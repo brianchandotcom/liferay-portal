@@ -2,6 +2,7 @@ import AccountInput from '../inputs/AccountInput';
 import autobind from 'autobind-decorator';
 import BehaviorInput from '../inputs/BehaviorInput';
 import BooleanInput from '../inputs/BooleanInput';
+import ClayIcon from '@clayui/icon';
 import CustomBooleanInput from '../inputs/CustomBooleanInput';
 import CustomDateInput from '../inputs/CustomDateInput';
 import CustomDateTimeInput from '../inputs/CustomDateTimeInput';
@@ -13,7 +14,6 @@ import EventInput from '../inputs/EventInput';
 import Form from 'shared/components/form';
 import GeolocationInput from '../inputs/GeolocationInput';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import IndividualSelectInput from '../inputs/IndividualSelectInput';
 import InterestBooleanInput from '../inputs/InterestBooleanInput';
 import NumberInput from '../inputs/NumberInput';
@@ -470,7 +470,7 @@ class CriteriaRow extends React.Component<
 					<div className='edit-container'>
 						{connectDragSource(
 							<div className='drag-icon'>
-								<Icon symbol='drag' />
+								<ClayIcon className='icon-root' symbol='drag' />
 							</div>
 						)}
 

@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import {ConnectDragSource, DragSource as dragSource} from 'react-dnd';
 import {Criterion} from '../utils/types';
@@ -134,12 +134,15 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 		return connectDragSource(
 			<li className={classes}>
 				<span className='inline-item'>
-					<Icon symbol='drag' />
+					<ClayIcon className='icon-root' symbol='drag' />
 				</span>
 
 				<span className='criteria-sidebar-item-type sticker'>
 					<span className='inline-item'>
-						<Icon symbol={TYPE_ICON_MAP[type] || 'text'} />
+						<ClayIcon
+							className='icon-root'
+							symbol={TYPE_ICON_MAP[type] || 'text'}
+						/>
 					</span>
 				</span>
 

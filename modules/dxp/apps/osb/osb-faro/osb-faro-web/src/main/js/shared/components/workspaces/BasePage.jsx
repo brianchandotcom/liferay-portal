@@ -1,8 +1,8 @@
 import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import DocumentTitle from 'shared/components/DocumentTitle';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React, {createContext} from 'react';
 import UserDropdown from 'shared/components/user-dropdown';
 import withCurrentUser from 'shared/hoc/WithCurrentUser';
@@ -101,8 +101,8 @@ export class WorkspacesBasePage extends React.Component {
 
 					<div className='header-container'>
 						<a href='https://liferay.com' target='_blank'>
-							<Icon
-								className='liferay-logo'
+							<ClayIcon
+								className='icon-root liferay-logo'
 								symbol='liferay-logo'
 							/>
 						</a>
@@ -125,7 +125,10 @@ export class WorkspacesBasePage extends React.Component {
 										displayType='unstyled'
 										href={backURL}
 									>
-										<Icon symbol='angle-left' />
+										<ClayIcon
+											className='icon-root'
+											symbol='angle-left'
+										/>
 
 										{backLabel}
 									</ClayButton>
@@ -134,8 +137,8 @@ export class WorkspacesBasePage extends React.Component {
 
 							<div className='title-container'>
 								<div className='logo-container'>
-									<Icon
-										className='logo-icon'
+									<ClayIcon
+										className='icon-root logo-icon'
 										symbol='ac-logo'
 									/>
 

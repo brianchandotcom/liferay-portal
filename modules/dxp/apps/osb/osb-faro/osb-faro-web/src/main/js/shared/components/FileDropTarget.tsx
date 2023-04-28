@@ -1,9 +1,9 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import DropTarget, {TYPES} from 'shared/components/DropTarget';
 import FileUploader, {ERROR_TYPES} from '../util/FileUploader';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import Spinner from 'shared/components/Spinner';
 import TextTruncate from 'shared/components/TextTruncate';
@@ -59,11 +59,19 @@ const getFileStatusIcon = (file: File) => {
 	if (file && file.completed) {
 		if (error) {
 			return (
-				<Icon className='failure-invert' symbol='exclamation-full' />
+				<ClayIcon
+					className='failure-invert icon-root'
+					symbol='exclamation-full'
+				/>
 			);
 		}
 
-		return <Icon className='success-invert' symbol='check-circle-full' />;
+		return (
+			<ClayIcon
+				className='icon-root success-invert'
+				symbol='check-circle-full'
+			/>
+		);
 	}
 
 	return <Spinner size='sm' />;

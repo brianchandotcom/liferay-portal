@@ -1,7 +1,7 @@
 import ChartTooltip from 'shared/components/chart-tooltip';
 import Circle from 'shared/components/Circle';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React, {useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 import {getAxisMeasuresFromData} from 'shared/util/charts';
@@ -317,7 +317,10 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 					data-index={index}
 					onClick={handleClickToggleList}
 				>
-					<Icon className='icon' symbol={expanded ? 'hr' : 'plus'} />
+					<ClayIcon
+						className='icon icon-root'
+						symbol={expanded ? 'hr' : 'plus'}
+					/>
 				</button>
 			)}
 		</div>
@@ -327,12 +330,14 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 		if (color) {
 			return (
 				<Circle color={color} size={32}>
-					<Icon symbol={icon} />
+					<ClayIcon className='icon-root' symbol={icon} />
 				</Circle>
 			);
 		}
 
-		return <Icon className={`${CLASSNAME}-icon`} symbol={icon} />;
+		return (
+			<ClayIcon className={`${CLASSNAME}-icon icon-root`} symbol={icon} />
+		);
 	};
 
 	const renderItems = items => (
@@ -425,7 +430,10 @@ const HTMLBarChart: React.FC<IHTMLBarChartProps> = ({
 			</div>
 
 			{showArrowDownIcon && (
-				<Icon className='icon text-l-secondary ' symbol='angle-down' />
+				<ClayIcon
+					className='icon icon-root text-l-secondary '
+					symbol='angle-down'
+				/>
 			)}
 
 			{tooltip.show && renderTooltip(tooltip)}

@@ -1,8 +1,8 @@
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Constants from 'shared/util/constants';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import InfoPopover from 'shared/components/InfoPopover';
 import React, {useEffect, useState} from 'react';
 import RecommendationActivitiesQuery from '../../queries/RecommendationActivitiesQuery';
@@ -204,7 +204,10 @@ const Summary: React.FC<ISummaryProps> = ({
 					>
 						<td className='summary-name table-cell-expand'>
 							{notEnoughActivities && (
-								<Icon symbol='warning-full' />
+								<ClayIcon
+									className='icon-root'
+									symbol='warning-full'
+								/>
 							)}
 
 							{render2StepsBackButton(
@@ -229,7 +232,10 @@ const Summary: React.FC<ISummaryProps> = ({
 						>
 							<td className='summary-name table-cell-expand including-previous-period'>
 								{notEnoughActivitiesWithPrevious && (
-									<Icon symbol='warning-full' />
+									<ClayIcon
+										className='icon-root'
+										symbol='warning-full'
+									/>
 								)}
 
 								{render2StepsBackButton(

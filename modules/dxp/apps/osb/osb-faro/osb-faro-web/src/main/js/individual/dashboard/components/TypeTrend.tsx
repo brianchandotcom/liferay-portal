@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import InfoPopover from 'shared/components/InfoPopover';
 import React from 'react';
 import {formatChange} from 'shared/util/change';
@@ -48,7 +48,8 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 								key='CHANGE'
 							>
 								{finiteChange && !!change && (
-									<Icon
+									<ClayIcon
+										className='icon-root'
 										symbol={
 											change > 0
 												? 'caret-top'

@@ -1,8 +1,8 @@
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import Constants, {OrderByDirections} from 'shared/util/constants';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import {getDefaultSortOrder, invertSortOrder} from 'shared/util/pagination';
 import {isNull, noop} from 'lodash';
@@ -38,7 +38,8 @@ const HeaderCell: React.FC<IHeaderCellProps> = ({
 
 			{!isNull(sortOrder) && (
 				<span className='inline-item inline-item-after'>
-					<Icon
+					<ClayIcon
+						className='icon-root'
 						symbol={
 							sortOrder === OrderByDirections.Descending
 								? 'order-arrow-down'

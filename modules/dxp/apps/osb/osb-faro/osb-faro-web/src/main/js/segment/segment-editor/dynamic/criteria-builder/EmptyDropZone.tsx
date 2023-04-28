@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React, {Component} from 'react';
 import {
 	AddProperty,
@@ -84,7 +84,10 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 						<div className='empty-drop-zone-indicator' />
 
 						<div className='criteria-message'>
-							<Icon size='md' symbol='ac-rule' />
+							<ClayIcon
+								className='icon-root icon-size-md'
+								symbol='ac-rule'
+							/>
 
 							{Liferay.Language.get(
 								'drag-and-drop-criterion-from-the-right-to-add-rules'
@@ -92,7 +95,10 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 						</div>
 
 						<div className='groups-message'>
-							<Icon size='md' symbol='ac-group' />
+							<ClayIcon
+								className='icon-root icon-size-md'
+								symbol='ac-group'
+							/>
 
 							{Liferay.Language.get(
 								'drag-and-drop-over-an-existing-criteria-to-form-groups'

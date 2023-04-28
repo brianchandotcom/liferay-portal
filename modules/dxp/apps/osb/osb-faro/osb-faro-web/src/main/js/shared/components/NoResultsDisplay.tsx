@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
@@ -27,7 +27,6 @@ interface INoResultsDisplayIcon
 
 const NoResultsDisplayIcon: React.FC<INoResultsDisplayIcon> = ({
 	border = true,
-	size = Sizes.XXLarge,
 	symbol
 }) => {
 	const classes = getCN('no-results-icon', {
@@ -36,7 +35,7 @@ const NoResultsDisplayIcon: React.FC<INoResultsDisplayIcon> = ({
 
 	return (
 		<div className={classes}>
-			<Icon size={size} symbol={symbol} />
+			<ClayIcon className='icon-root icon-size-xxxl' symbol={symbol} />
 		</div>
 	);
 };

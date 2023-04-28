@@ -1,10 +1,10 @@
 import autobind from 'autobind-decorator';
+import ClayIcon from '@clayui/icon';
 import Conjunction from './Conjunction';
 import CriteriaRow from './CriteriaRow';
 import DropZone from './DropZone';
 import EmptyDropZone from './EmptyDropZone';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React, {Fragment} from 'react';
 import {Conjunctions, SUPPORTED_CONJUNCTION_OPTIONS} from '../utils/constants';
 import {
@@ -332,7 +332,10 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 							!root &&
 							connectDragSource(
 								<div className='criteria-group-drag-icon drag-icon'>
-									<Icon symbol='drag' />
+									<ClayIcon
+										className='icon-root'
+										symbol='drag'
+									/>
 								</div>
 							)}
 

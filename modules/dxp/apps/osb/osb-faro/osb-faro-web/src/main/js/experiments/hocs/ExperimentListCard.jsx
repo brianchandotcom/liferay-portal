@@ -1,6 +1,6 @@
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
 import getColumns from './columns';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {Sizes} from 'shared/util/constants';
@@ -22,7 +22,13 @@ const ExperimentListCard = props => {
 						Liferay.Language.get(
 							'create-a-new-test-from-liferay-dxp-by-clicking-on-the-x-icon-in-the-toolbar-when-viewing-a-page-in-DXP'
 						),
-						[<Icon key='ICON' symbol='ac-test' />],
+						[
+							<ClayIcon
+								className='icon-root'
+								key='ICON'
+								symbol='ac-test'
+							/>
+						],
 						false
 					)}
 				</span>

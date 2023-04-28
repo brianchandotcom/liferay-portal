@@ -1,6 +1,6 @@
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Clipboard from 'clipboard';
-import Icon from 'shared/components/Icon';
 import React, {useEffect} from 'react';
 import type {DisplayType} from '@clayui/button/lib/Button';
 
@@ -37,7 +37,7 @@ const CopyButton: React.FC<ICopyButtonProps> = ({
 			title={Liferay.Language.get('click-to-copy')}
 			{...otherProps}
 		>
-			{buttonText || <Icon symbol='paste' />}
+			{buttonText || <ClayIcon className='icon-root' symbol='paste' />}
 		</ClayButton>
 	);
 };

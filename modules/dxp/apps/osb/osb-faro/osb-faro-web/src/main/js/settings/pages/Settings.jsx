@@ -3,7 +3,6 @@ import checkProjectState from 'shared/hoc/CheckProjectState';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import Loading from 'shared/pages/Loading';
 import React, {Fragment, lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
@@ -241,7 +240,10 @@ export class Settings extends React.Component {
 							}
 						>
 							<span className='icon-wrapper'>
-								<Icon symbol='angle-left' />
+								<ClayIcon
+									className='icon-root'
+									symbol='angle-left'
+								/>
 							</span>
 
 							{Liferay.Language.get('exit-settings')}
@@ -285,9 +287,6 @@ export class Settings extends React.Component {
 														<span className='icon-wrapper'>
 															<ClayIcon
 																className='icon-root'
-																monospaced={
-																	false
-																}
 																symbol={icon}
 															/>
 														</span>

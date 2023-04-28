@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from './Icon';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
 import {EntityTypes} from '../util/constants';
@@ -74,7 +74,7 @@ class Sticker extends React.Component {
 				{...omitDefinedProps(otherProps, Sticker.propTypes)}
 				className={classes}
 			>
-				{symbol && <Icon symbol={symbol} />}
+				{symbol && <ClayIcon className='icon-root' symbol={symbol} />}
 
 				{children}
 			</div>

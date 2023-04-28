@@ -1,7 +1,7 @@
 import Cell from './Cell';
+import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React, {useEffect, useRef, useState} from 'react';
 import {DropTargetMonitor, useDrag, useDrop} from 'react-dnd';
 
@@ -130,7 +130,7 @@ const Row: React.FC<IRowProps> = ({
 			<ClayTable.Cell>
 				{draggable && (
 					<div className='drag-handle' ref={drag}>
-						<Icon symbol='drag' />
+						<ClayIcon className='icon-root' symbol='drag' />
 					</div>
 				)}
 			</ClayTable.Cell>

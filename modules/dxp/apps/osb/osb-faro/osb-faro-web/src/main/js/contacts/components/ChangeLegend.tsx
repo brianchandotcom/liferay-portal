@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import {CHART_COLORS} from 'shared/components/Chart';
 
@@ -51,7 +51,8 @@ export default class ChangeLegend extends React.Component<IChangeLegendProps> {
 									})}
 								>
 									{!!change && !isNaN(change) && (
-										<Icon
+										<ClayIcon
+											className='icon-root'
 											symbol={
 												decrease
 													? 'caret-bottom'

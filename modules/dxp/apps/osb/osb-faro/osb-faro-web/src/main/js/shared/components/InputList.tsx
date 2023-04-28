@@ -1,9 +1,10 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon, {Size} from './Icon';
 import Label from 'shared/components/Label';
 import React, {FC, useState} from 'react';
 import {BACKSPACE, COMMA, ENTER, SPACE} from 'shared/util/key-constants';
 import {noop, partition} from 'lodash';
+import {Size} from 'shared/util/colors-size';
 
 const KEYS = [COMMA, ENTER, SPACE];
 
@@ -200,7 +201,10 @@ const InputList: FC<IInputListProps> = ({
 				<div className='form-feedback-group'>
 					<div className='form-feedback-item'>
 						<span className='form-feedback-indicator'>
-							<Icon size={size} symbol={display} />
+							<ClayIcon
+								className={`icon-root icon-size-${size}`}
+								symbol={display}
+							/>
 						</span>
 
 						{errorMessage}

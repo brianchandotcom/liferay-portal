@@ -54,7 +54,10 @@ const TabItem: React.FC<ITabItemProps> = ({
 					onClick={() => onDelete(id)}
 					size='sm'
 				>
-					<ClayIcon className='icon-size-sm' symbol='times' />
+					<ClayIcon
+						className='icon-root icon-size-sm'
+						symbol='times'
+					/>
 				</ClayButton>
 			</div>
 		)}
@@ -137,7 +140,10 @@ export default class Tabs extends React.Component<ITabsProps> {
 					onClick={onAdd}
 					size='sm'
 				>
-					<ClayIcon className='icon-root' symbol='plus' />
+					<ClayIcon
+						className='icon-root icon-size-sm'
+						symbol='plus'
+					/>
 				</ClayButton>
 			</div>
 		);

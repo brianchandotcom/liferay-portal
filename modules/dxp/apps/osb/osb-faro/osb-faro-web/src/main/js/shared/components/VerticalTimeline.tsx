@@ -1,9 +1,10 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon, {Colors} from './Icon';
 import React, {FC, useState} from 'react';
 import Spinner from './Spinner';
 import Sticker from './Sticker';
 import TextTruncate from './TextTruncate';
+import {Colors} from 'shared/util/colors-size';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {Link} from 'react-router-dom';
 import {UserSessionAttributes} from 'shared/util/activities';
@@ -124,7 +125,8 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 						)}
 
 						{!header && (
-							<Icon
+							<ClayIcon
+								className='icon-root'
 								symbol={expanded ? 'caret-top' : 'caret-bottom'}
 							/>
 						)}
@@ -189,7 +191,10 @@ const TimelinePanelBodyContentDetails: FC<{
 	return (
 		<div className='timeline-panel-body-content-details'>
 			<div className='icon-group'>
-				<Icon className='event-icon' symbol='ac-event-icon' />
+				<ClayIcon
+					className='event-icon icon-root'
+					symbol='ac-event-icon'
+				/>
 
 				<span className='item-count'>{itemCount}</span>
 
@@ -199,8 +204,8 @@ const TimelinePanelBodyContentDetails: FC<{
 					data-tooltip-align='bottom'
 					title={`${deviceIconTitle}\n${browserName}`}
 				>
-					<Icon
-						color={Colors.MainLighten28}
+					<ClayIcon
+						className={getCN('icon-root', Colors.MainLighten28)}
 						{...otherIconAttributes}
 					/>
 				</span>
@@ -235,7 +240,10 @@ const TimelinePanelBodyContentText: FC<{
 
 			{header && (
 				<>
-					<Icon className='event-icon' symbol='ac-event-icon' />
+					<ClayIcon
+						className='event-icon icon-root'
+						symbol='ac-event-icon'
+					/>
 
 					<span className='item-count'>{totalEvents}</span>
 				</>

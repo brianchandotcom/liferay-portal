@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import Form from 'shared/components/form';
-import Icon from 'shared/components/Icon';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -55,7 +55,10 @@ export default class PasswordInput extends React.Component<
 							displayType='unstyled'
 							onClick={this.handleShowPasswordToggle}
 						>
-							<Icon symbol={showPassword ? 'hidden' : 'view'} />
+							<ClayIcon
+								className='icon-root'
+								symbol={showPassword ? 'hidden' : 'view'}
+							/>
 						</ClayButton>
 					),
 					position: 'after'

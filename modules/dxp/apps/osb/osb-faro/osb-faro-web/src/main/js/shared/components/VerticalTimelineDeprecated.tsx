@@ -1,5 +1,5 @@
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from './Icon';
 import NoResultsDisplay from './NoResultsDisplay';
 import React, {FC, useState} from 'react';
 import Spinner from './Spinner';
@@ -146,7 +146,8 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 									{nestedItems.length}
 								</span>
 
-								<Icon
+								<ClayIcon
+									className='icon-root'
 									symbol={
 										expanded ? 'caret-bottom' : 'caret-top'
 									}

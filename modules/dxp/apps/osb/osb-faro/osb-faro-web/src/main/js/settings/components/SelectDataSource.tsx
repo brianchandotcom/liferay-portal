@@ -40,7 +40,7 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 								>
 									<div className='image'>
 										<ClayIcon
-											className={`icon-root icon-size-${iconSize}`}
+											className='icon-root icon-size-xxxl'
 											symbol={iconName}
 										/>
 									</div>

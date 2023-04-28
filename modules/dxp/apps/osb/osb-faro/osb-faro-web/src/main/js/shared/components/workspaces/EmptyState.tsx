@@ -1,6 +1,6 @@
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
@@ -75,7 +75,7 @@ export const CardEmpty: React.FC<ICardItemProps> = ({
 
 	return (
 		<div className='empty-card'>
-			<Icon symbol={icon} />
+			<ClayIcon className='icon-root' symbol={icon} />
 			<p>{description}</p>
 			<ClayButton {...otherButtonProps}>{label}</ClayButton>
 		</div>

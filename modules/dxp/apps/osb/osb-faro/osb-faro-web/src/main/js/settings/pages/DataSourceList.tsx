@@ -1,9 +1,9 @@
 import * as API from 'shared/api';
 import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
-import Icon from 'shared/components/Icon';
 import Label from 'shared/components/Label';
 import ListComponent from 'shared/hoc/ListComponent';
 import Nav from 'shared/components/Nav';
@@ -48,7 +48,7 @@ interface ICellProps {
 const AnalyticsCell: React.FC<ICellProps> = ({data}) => (
 	<td>
 		{validAnalyticsConfig(new DataSource(fromJS(data))) && (
-			<Icon symbol='check' />
+			<ClayIcon className='icon-root' symbol='check' />
 		)}
 	</td>
 );
@@ -57,7 +57,7 @@ const ContactsCell: React.FC<ICellProps> = ({data}) => (
 	<td>
 		{validContactsConfig(new DataSource(fromJS(data))) &&
 			data.status === DataSourceStatuses.Active && (
-				<Icon symbol='check' />
+				<ClayIcon className='icon-root' symbol='check' />
 			)}
 	</td>
 );

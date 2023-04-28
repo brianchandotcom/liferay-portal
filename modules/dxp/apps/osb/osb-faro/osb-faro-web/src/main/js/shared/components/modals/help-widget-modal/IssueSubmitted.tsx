@@ -1,4 +1,4 @@
-import Icon from 'shared/components/Icon';
+import ClayIcon from '@clayui/icon';
 import Modal from 'shared/components/modal';
 import React from 'react';
 import {IHelpWidgetScreenProps} from './types';
@@ -11,7 +11,10 @@ const IssueSubmitted: React.FC<IHelpWidgetScreenProps> = ({onClose}) => (
 		/>
 
 		<Modal.Body className='d-flex flex-column align-items-center'>
-			<Icon className='my-5' size='xxxl' symbol='ac-no-sites' />
+			<ClayIcon
+				className='icon-root icon-size-xxxl my-5'
+				symbol='ac-no-sites'
+			/>
 
 			<h3>{Liferay.Language.get('message-received')}</h3>
 

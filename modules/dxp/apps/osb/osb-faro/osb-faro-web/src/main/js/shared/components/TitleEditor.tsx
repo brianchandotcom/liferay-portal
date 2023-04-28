@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React, {createRef} from 'react';
 import {ENTER} from 'shared/util/key-constants';
 import {withField} from 'shared/components/form';
@@ -129,7 +129,7 @@ export class TitleEditor extends React.Component<
 							outline
 							size='sm'
 						>
-							<Icon symbol='pencil' />
+							<ClayIcon className='icon-root' symbol='pencil' />
 						</ClayButton>
 					)}
 				</div>

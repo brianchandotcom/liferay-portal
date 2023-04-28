@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import {noop} from 'lodash';
 import {PropTypes} from 'prop-types';
@@ -124,7 +124,10 @@ export default class UserActionsRenderer extends React.Component {
 								onClick={this.handleDelete}
 								size='sm'
 							>
-								<Icon symbol='trash' />
+								<ClayIcon
+									className='icon-root'
+									symbol='trash'
+								/>
 							</ClayButton>
 						</>
 					))}

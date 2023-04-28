@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Icon from 'shared/components/Icon';
+import ClayIcon from '@clayui/icon';
 import Input from 'shared/components/Input';
 import moment from 'moment-timezone';
 import PropTypes from 'prop-types';
@@ -32,7 +32,7 @@ export default class TimeSelector extends React.Component {
 
 		return (
 			<div className='time-selector-root'>
-				<Icon symbol='time' />
+				<ClayIcon className='icon-root' symbol='time' />
 
 				<Input
 					onChange={this.handleChange}

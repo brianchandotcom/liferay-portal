@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
 import ClayBadge from '@clayui/badge';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TextTruncate from 'shared/components/TextTruncate';
@@ -160,7 +160,10 @@ export class OptionItem extends React.Component {
 							<ClayBadge displayType='secondary' label={value} />
 
 							{items && !!items.length && (
-								<Icon className='ml-1' symbol='angle-right' />
+								<ClayIcon
+									className='icon-root ml-1'
+									symbol='angle-right'
+								/>
 							)}
 						</div>
 					)}
@@ -500,13 +503,13 @@ class DropdownMenu extends React.Component {
 							className='btn btn-unstyled d-md-none'
 							type='button'
 						>
-							<Icon symbol='times' />
+							<ClayIcon className='icon-root' symbol='times' />
 						</button>
 						<button
 							className='btn btn-unstyled d-none d-md-inline-block'
 							type='button'
 						>
-							<Icon symbol='search' />
+							<ClayIcon className='icon-root' symbol='search' />
 						</button>
 					</div>
 				</div>

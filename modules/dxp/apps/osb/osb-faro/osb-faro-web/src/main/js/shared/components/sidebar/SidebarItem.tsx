@@ -1,6 +1,6 @@
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
-import Icon from '../Icon';
 import React from 'react';
 
 interface ISidebarItemProps {
@@ -36,7 +36,7 @@ const SidebarItem: React.FC<ISidebarItemProps> = ({
 		>
 			<span className='link-content-wrapper'>
 				<span className='icon-wrapper'>
-					<Icon monospaced={false} symbol={icon} />
+					<ClayIcon className='icon-root' symbol={icon} />
 				</span>
 
 				<span className='item-label'>{label}</span>

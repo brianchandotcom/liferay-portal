@@ -4,7 +4,6 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import DatePickerSelect from './DatePickerSelect';
 import getCN from 'classnames';
-import Icon from '../Icon';
 import moment from 'moment';
 import React from 'react';
 import TimeSelector from './TimeSelector';
@@ -284,7 +283,7 @@ export default class DatePicker extends React.Component {
 
 				{maxRangeError && (
 					<div className='range-warning'>
-						<Icon symbol='warning' />
+						<ClayIcon className='icon-root' symbol='warning' />
 
 						{sub(
 							Liferay.Language.get(

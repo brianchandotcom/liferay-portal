@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import ChannelsMenu, {Channel} from '../channels-menu';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Icon from '../Icon';
 import React from 'react';
 import SidebarItem from './SidebarItem';
 import UserDropdown, {Menus} from 'shared/components/user-dropdown';
@@ -177,10 +177,8 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					className='sidebar-header-logo'
 					to={toRoute(Routes.SITES, {channelId, groupId})}
 				>
-					<Icon
-						className='logo'
-						monospaced={false}
-						size='md'
+					<ClayIcon
+						className='icon-root icon-size-md logo'
 						symbol='ac-logo'
 					/>
 				</Link>

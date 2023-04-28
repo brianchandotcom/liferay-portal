@@ -2,10 +2,10 @@ import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
 import Checkbox from 'shared/components/Checkbox';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import DataTransformationList from './data-transformation-list';
 import FormNavigation from './FormNavigation';
 import getCN from 'classnames';
-import Icon from 'shared/components/Icon';
 import NavigationWarning from 'shared/components/NavigationWarning';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {Fragment} from 'react';
@@ -408,13 +408,19 @@ export class DataTransformation extends React.Component {
 
 					<Sheet.Body className='summary-section'>
 						<p className='summary'>
-							<Icon symbol='faro-connection-success-ovals' />
+							<ClayIcon
+								className='icon-root'
+								symbol='faro-connection-success-ovals'
+							/>
 
 							{sub(Liferay.Language.get('x-fields-mapped'), [
 								mappedFields
 							])}
 
-							<Icon symbol='faro-connection-error-ovals' />
+							<ClayIcon
+								className='icon-root'
+								symbol='faro-connection-error-ovals'
+							/>
 
 							{sub(Liferay.Language.get('x-fields-not-mapped'), [
 								unmappedFields

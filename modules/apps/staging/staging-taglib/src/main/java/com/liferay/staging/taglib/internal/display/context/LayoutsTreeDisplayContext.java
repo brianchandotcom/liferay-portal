@@ -116,7 +116,7 @@ public class LayoutsTreeDisplayContext {
 
 	public String getLayoutsCountMessageKey() throws PortalException {
 		int messageKeyLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-			_selectPagesGroup, isSelectPagesPrivateLayout(),
+			getSelectPagesGroup(), isSelectPagesPrivateLayout(),
 			ArrayUtil.toLongArray(_getSelectedLayoutIdsArray()));
 
 		int totalLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
@@ -195,7 +195,7 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"selectedLayoutIds", _getSelectedLayoutIdsArray()
 		).put(
-			"treeId", _treeId
+			"treeId", _getTreeId()
 		).build();
 	}
 
@@ -351,7 +351,7 @@ public class LayoutsTreeDisplayContext {
 					_getSelectedLayoutIdsArray(), _getSelectPagesGroupId(),
 					_httpServletRequest, false, false, false,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-					isSelectPagesPrivateLayout(), _treeId)
+					isSelectPagesPrivateLayout(), _getTreeId())
 			).put(
 				"hasChildren", true
 			).put(

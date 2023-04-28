@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.taglib.internal.servlet.taglib.util;
+package com.liferay.dynamic.data.mapping.form.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.internal.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -22,16 +22,16 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.osgi.util.service.Snapshot;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.lang.reflect.Field;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -46,11 +46,12 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
- * @author Pedro Queiroz
+ * @author Lily Chi
  */
-public class DDMFormTaglibUtilTest {
+public class DDMFormBuilderTagTest {
 
 	@ClassRule
 	@Rule
@@ -58,7 +59,7 @@ public class DDMFormTaglibUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		Mockito.when(
@@ -71,6 +72,9 @@ public class DDMFormTaglibUtilTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_frameworkUtilMockedStatic.close();
+		_ddmStructureLocalServiceUtilMockedStatic.close();
+		_ddmStructureVersionLocalServiceUtilMockedStatic.close();
+		_ddmFormDeserializerServiceRegistration.unregister();
 	}
 
 	@Before
@@ -85,7 +89,7 @@ public class DDMFormTaglibUtilTest {
 
 		Assert.assertTrue(
 			ddmForm.equals(
-				_ddmFormTaglibUtil.getDDMForm(
+				_ddmFormBuilderTag.getDDMForm(
 					_ddmStructure.getStructureId(), 0)));
 	}
 
@@ -95,7 +99,7 @@ public class DDMFormTaglibUtilTest {
 
 		Assert.assertTrue(
 			ddmForm.equals(
-				_ddmFormTaglibUtil.getDDMForm(
+				_ddmFormBuilderTag.getDDMForm(
 					0, _ddmStructureVersion.getStructureId())));
 	}
 
@@ -105,31 +109,28 @@ public class DDMFormTaglibUtilTest {
 
 		Assert.assertTrue(
 			ddmForm.equals(
-				_ddmFormTaglibUtil.getDDMForm(
+				_ddmFormBuilderTag.getDDMForm(
 					_ddmStructure.getStructureId(),
 					_ddmStructureVersion.getStructureId())));
 	}
 
 	@Test
 	public void testGetEmptyDDMFormTest() {
-		Assert.assertEquals(new DDMForm(), _ddmFormTaglibUtil.getDDMForm(0, 0));
+		Assert.assertEquals(new DDMForm(), _ddmFormBuilderTag.getDDMForm(0, 0));
 	}
 
 	private DDMStructure _createDDMStructure(DDMForm ddmForm) {
 		DDMStructure ddmStructure = new DDMStructureImpl();
 
-		Snapshot<DDMFormDeserializer> ddmFormDeserializerSnapshot =
-			Mockito.mock(Snapshot.class);
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		ReflectionTestUtil.setFieldValue(
-			ddmStructure, "_ddmFormDeserializerSnapshot",
-			ddmFormDeserializerSnapshot);
+		Dictionary<String, Object> properties = new Hashtable<>();
 
-		Mockito.when(
-			ddmFormDeserializerSnapshot.get()
-		).thenReturn(
-			new DDMFormJSONDeserializer()
-		);
+		properties.put("ddm.form.deserializer.type", "json");
+
+		_ddmFormDeserializerServiceRegistration = bundleContext.registerService(
+			DDMFormDeserializer.class, new DDMFormJSONDeserializer(),
+			properties);
 
 		ddmStructure.setDDMForm(ddmForm);
 		ddmStructure.setStructureId(RandomTestUtil.randomLong());
@@ -152,46 +153,51 @@ public class DDMFormTaglibUtilTest {
 		_ddmStructure = _createDDMStructure(
 			DDMFormTestUtil.createDDMForm("Text"));
 
-		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormTaglibUtil.class, "_ddmStructureLocalService");
+		Mockito.when(
+			DDMStructureLocalServiceUtil.getService()
+		).thenReturn(
+			Mockito.mock(DDMStructureLocalService.class)
+		);
 
 		Mockito.when(
-			_ddmStructureLocalService.fetchDDMStructure(Mockito.anyLong())
+			DDMStructureLocalServiceUtil.fetchDDMStructure(Mockito.anyLong())
 		).thenReturn(
 			_ddmStructure
 		);
-
-		field.set(_ddmFormTaglibUtil, _ddmStructureLocalService);
 	}
 
 	private void _setUpDDMStructureVersionLocalService() throws Exception {
 		_ddmStructureVersion = _createDDMStructureVersion(
 			DDMFormTestUtil.createDDMForm("Text1", "Text2"));
 
-		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormTaglibUtil.class, "_ddmStructureVersionLocalService");
+		Mockito.when(
+			DDMStructureVersionLocalServiceUtil.getService()
+		).thenReturn(
+			Mockito.mock(DDMStructureVersionLocalService.class)
+		);
 
 		Mockito.when(
-			_ddmStructureVersionLocalService.fetchDDMStructureVersion(
+			DDMStructureVersionLocalServiceUtil.fetchDDMStructureVersion(
 				Mockito.anyLong())
 		).thenReturn(
 			_ddmStructureVersion
 		);
-
-		field.set(_ddmFormTaglibUtil, _ddmStructureVersionLocalService);
 	}
 
+	private static ServiceRegistration<DDMFormDeserializer>
+		_ddmFormDeserializerServiceRegistration;
+	private static final MockedStatic<DDMStructureLocalServiceUtil>
+		_ddmStructureLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			DDMStructureLocalServiceUtil.class);
+	private static final MockedStatic<DDMStructureVersionLocalServiceUtil>
+		_ddmStructureVersionLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			DDMStructureVersionLocalServiceUtil.class);
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
-	private final DDMFormTaglibUtil _ddmFormTaglibUtil =
-		new DDMFormTaglibUtil();
+	private final DDMFormBuilderTag _ddmFormBuilderTag =
+		new DDMFormBuilderTag();
 	private DDMStructure _ddmStructure;
-	private final DDMStructureLocalService _ddmStructureLocalService =
-		Mockito.mock(DDMStructureLocalService.class);
 	private DDMStructureVersion _ddmStructureVersion;
-	private final DDMStructureVersionLocalService
-		_ddmStructureVersionLocalService = Mockito.mock(
-			DDMStructureVersionLocalService.class);
 
 }

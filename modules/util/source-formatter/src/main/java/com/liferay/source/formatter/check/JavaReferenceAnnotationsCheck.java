@@ -83,20 +83,21 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 					return;
 				}
 			}
-		}
 
-		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if (javaTerm.isJavaMethod() &&
-				javaTerm.hasAnnotation("Reference")) {
+			for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+				if (javaTerm.isJavaMethod() &&
+					javaTerm.hasAnnotation("Reference")) {
 
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Do not use @Reference on method ", javaTerm.getName(),
-						", use @Reference on field or ServiceTracker",
-						"/ServiceTrackerList/ServiceTrackerMap instead"));
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Do not use @Reference on method ",
+							javaTerm.getName(),
+							", use @Reference on field or ServiceTracker",
+							"/ServiceTrackerList/ServiceTrackerMap instead"));
 
-				break;
+					break;
+				}
 			}
 		}
 	}

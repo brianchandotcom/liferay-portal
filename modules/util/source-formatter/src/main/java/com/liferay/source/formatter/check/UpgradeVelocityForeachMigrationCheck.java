@@ -36,18 +36,15 @@ public class UpgradeVelocityForeachMigrationCheck
 			if (newLine.contains(
 					VelocityMigrationConstants.VELOCITY_FOREACH_START)) {
 
+				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 				newLine = StringUtil.replace(
 					newLine, VelocityMigrationConstants.VELOCITY_FOREACH_START,
 					VelocityMigrationConstants.FREEMARKER_LIST_START);
-
 				newLine = StringUtil.replace(
 					newLine, "in",
 					VelocityMigrationConstants.FREEMARKER_LIST_SEPARATOR);
-
 				newLine = StringUtil.replaceLast(
 					newLine, CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN);
-
-				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 
 				newLine = _changeForeachDeclarationOrder(newLine);
 

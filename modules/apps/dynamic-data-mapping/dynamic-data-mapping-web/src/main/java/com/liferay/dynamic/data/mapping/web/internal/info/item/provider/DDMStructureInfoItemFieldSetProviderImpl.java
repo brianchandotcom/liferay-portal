@@ -101,6 +101,7 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 		DDMFormFieldTypeConstants.CHECKBOX,
 		DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
 		DDMFormFieldTypeConstants.DATE, DDMFormFieldTypeConstants.DATE_TIME,
+		DDMFormFieldTypeConstants.LINK_TO_LAYOUT,
 		DDMFormFieldTypeConstants.NUMERIC, DDMFormFieldTypeConstants.IMAGE,
 		DDMFormFieldTypeConstants.TEXT, DDMFormFieldTypeConstants.RADIO,
 		DDMFormFieldTypeConstants.RICH_TEXT, DDMFormFieldTypeConstants.SELECT

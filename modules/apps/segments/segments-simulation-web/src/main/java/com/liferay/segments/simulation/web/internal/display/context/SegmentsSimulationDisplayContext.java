@@ -34,7 +34,6 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,12 +61,12 @@ public class SegmentsSimulationDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public PortletURL getDeactivateSimulationURL() {
+	public String getDeactivateSimulationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse, SegmentsPortletKeys.SEGMENTS_SIMULATION
 		).setActionName(
 			"/segments_simulation/deactivate_simulation"
-		).buildPortletURL();
+		).buildString();
 	}
 
 	public String getPortletNamespace() {
@@ -98,12 +97,12 @@ public class SegmentsSimulationDisplayContext {
 		return _segmentsEntries;
 	}
 
-	public PortletURL getSimulateSegmentsEntriesURL() {
+	public String getSimulateSegmentsEntriesURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse, SegmentsPortletKeys.SEGMENTS_SIMULATION
 		).setActionName(
 			"/segments_simulation/simulate_segments_entries"
-		).buildPortletURL();
+		).buildString();
 	}
 
 	public boolean isSegmentationEnabled() {

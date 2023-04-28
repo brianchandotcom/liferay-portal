@@ -125,7 +125,7 @@ public class ActionUtil {
 			deviceColorSchemeId, deviceCss);
 	}
 
-	public static UnicodeProperties updateThemeSettingsProperties(
+	public static void updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId, long groupId,
 			long layoutId, boolean privateLayout,
 			UnicodeProperties typeSettingsUnicodeProperties,
@@ -140,14 +140,12 @@ public class ActionUtil {
 			theme.getConfigurableSettings();
 
 		if (themeSettings.isEmpty()) {
-			return typeSettingsUnicodeProperties;
+			return;
 		}
 
 		_setThemeSettingProperties(
 			actionRequest, groupId, layoutId, privateLayout,
 			typeSettingsUnicodeProperties, themeSettings, layout);
-
-		return typeSettingsUnicodeProperties;
 	}
 
 	private static void _setThemeSettingProperties(

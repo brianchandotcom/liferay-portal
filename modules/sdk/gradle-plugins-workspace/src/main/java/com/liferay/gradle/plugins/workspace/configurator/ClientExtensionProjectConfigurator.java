@@ -202,9 +202,20 @@ public class ClientExtensionProjectConfigurator
 
 						if (clientExtension.type.equals("configuration")) {
 							assembleClientExtensionTaskProvider.configure(
-								copy -> copy.from(
-									"src",
-									copySpec -> copySpec.include("**/*")));
+								copy -> {
+									if (!Objects.equals(
+											profileName,
+											GradleUtil.getProperty(
+												project, "profileName",
+												"default"))) {
+
+										return;
+									}
+
+									copy.from(
+										"src",
+										copySpec -> copySpec.include("**/*"));
+								});
 						}
 						else if (clientExtension.type.equals("themeCSS")) {
 							_themeCSSTypeConfigurer.apply(

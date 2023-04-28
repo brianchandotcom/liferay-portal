@@ -47,7 +47,7 @@ public class TestObjectActionExecutor implements ObjectActionExecutor {
 
 	@Override
 	public boolean isAllowedCompany(long companyId) {
-		if (_companyId == companyId) {
+		if ((_companyId == 0) || (_companyId == companyId)) {
 			return true;
 		}
 

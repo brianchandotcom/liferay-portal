@@ -270,7 +270,9 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 			if (Objects.equals(
 					ddmFormFieldValue.getType(), DDMFormFieldType.DATE) ||
-				Objects.equals(ddmFormFieldValue.getType(), "date")) {
+				Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.DATE)) {
 
 				if (Validator.isNull(valueString)) {
 					return null;
@@ -316,7 +318,9 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 			if (Objects.equals(
 					ddmFormFieldValue.getType(), DDMFormFieldType.IMAGE) ||
-				Objects.equals(ddmFormFieldValue.getType(), "image")) {
+				Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.IMAGE)) {
 
 				return _getWebImage(_jsonFactory.createJSONObject(valueString));
 			}

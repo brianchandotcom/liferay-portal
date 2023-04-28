@@ -613,6 +613,8 @@ definition {
 	@description = "Verify it is possible to add an Object Entry Title Field when changing the localization on Instance Settings"
 	@priority = 4
 	test CanViewTitleFieldWhenChangeLocalization {
+		property ci.retries.disabled = "true";
+
 		task ("Given: An Account and a Custom Object with a Relationship 1toM of Account to Custom Object") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Accounts Name",

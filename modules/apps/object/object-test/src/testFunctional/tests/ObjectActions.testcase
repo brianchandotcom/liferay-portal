@@ -218,6 +218,8 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to create an Action"
 	@priority = 5
 	test CanCreateAction {
+		property ci.retries.disabled = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 183",
 			objectName = "CustomObject183",
@@ -1903,6 +1905,7 @@ definition {
 	@description = "LPS-175201 - Verify if is possible create a validation using the oldValue function with the Text Field using a system object"
 	@priority = 5
 	test CanCreateValidationUsingOldValueFunctionInSystemObject {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Given: an account is created with a custom validation using the oldValue function") {
@@ -3445,6 +3448,8 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to update an Action"
 	@priority = 4
 	test CanUpdateAction {
+		property ci.retries.disabled = "true";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 192",
 			objectName = "CustomObject192",

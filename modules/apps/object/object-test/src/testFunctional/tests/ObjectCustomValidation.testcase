@@ -2139,6 +2139,7 @@ definition {
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user is able to define if that validation is active or not"
 	@priority = 4
 	test CanUserDefineValidationActiveOrInactive {
+		property ci.retries.disabled = "true";
 		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserDefineValidationActiveOrInactive";
 
 		ObjectAdmin.addObjectViaAPI(

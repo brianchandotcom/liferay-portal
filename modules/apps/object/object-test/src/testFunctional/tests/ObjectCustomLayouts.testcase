@@ -121,6 +121,7 @@ definition {
 	@description = "LPS-165850 - Verify it's possible to add a new entry in the related object without leaving the current context (ManyToMany)"
 	@priority = 5
 	test CanAddEntryOnRelationshipTabForMtoM {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Given a related object with Custom Layout and Relationship tab (Many to Many)") {
@@ -515,6 +516,8 @@ definition {
 	@description = "LPS-165850 - Verify when a new entry is created, it is possible to delete this entry"
 	@priority = 4
 	test CanDeleteNewEntryAddedOnRelationshipTab {
+		property ci.retries.disabled = "true";
+
 		task ("Given a related object with Custom Layout and Relationship tab") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 171632",
@@ -1016,6 +1019,7 @@ definition {
 	@description = "LPS-165850 - Verify if you can 'select existing one' and add existing entries"
 	@priority = 5
 	test CanSelectExistingEntriesOnRelationshipTab {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Given a related object with Custom Layout and Relationship tab") {

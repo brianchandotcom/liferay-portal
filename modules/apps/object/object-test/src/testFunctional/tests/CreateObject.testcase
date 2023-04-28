@@ -2925,6 +2925,8 @@ definition {
 	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"
 	@priority = 5
 	test CanRelateManyOtherEntriesBothObjects {
+		property test.name.skip.portal.instance = "CreateObject#CanRelateManyOtherEntriesBothObjects";
+
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${nameObject} 74",

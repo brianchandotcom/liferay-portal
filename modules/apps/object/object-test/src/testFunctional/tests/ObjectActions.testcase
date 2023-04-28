@@ -250,6 +250,8 @@ definition {
 	@description = "LPS-178405 - Verify if actions works with oldValue function when trigger is On After Delete (Add an Object Entry)"
 	@priority = 4
 	test CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterDeleteTrigger {
+		property test.name.skip.portal.instance = "ObjectActions#CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterDeleteTrigger";
+
 		task ("Given: Two custom objects with a text field") {
 			for (var letters : list "A,B") {
 				ObjectAdmin.addObjectViaAPI(

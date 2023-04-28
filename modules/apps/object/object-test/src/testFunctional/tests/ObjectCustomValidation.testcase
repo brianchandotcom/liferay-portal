@@ -340,9 +340,9 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with condiotinal logic (equals) to integer, boolean, and text fields"
 	@priority = 4
 	test CanDefineExpressionConditionalLogic {
-		task ("Create Custom Object and Custom Fields Text") {
-			property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionConditionalLogic";
+		property test.name.skip.portal.instance = "ObjectCustomValidation#CanDefineExpressionConditionalLogic";
 
+		task ("Create Custom Object and Custom Fields Text") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156703A",
 				objectName = "CustomObject156703A",

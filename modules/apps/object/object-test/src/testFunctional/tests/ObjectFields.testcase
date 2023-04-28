@@ -575,6 +575,7 @@ definition {
 	@priority = 5
 	test CanCreateObjectEntryWithEveryField {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectFields#CanCreateObjectEntryWithEveryField";
 
 		task ("Go to Picklist and create new Picklist and item") {
 			ApplicationsMenu.gotoPortlet(

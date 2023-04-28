@@ -186,10 +186,19 @@ public class ClientExtensionProjectConfigurator
 						_validateClientExtension(clientExtension);
 
 						createClientExtensionConfigTaskProvider.configure(
-							createClientExtensionConfigTask ->
+							createClientExtensionConfigTask -> {
+								if (!Objects.equals(
+										profileName,
+										GradleUtil.getProperty(
+											project, "profileName",
+											"default"))) {
+
+									return;
+								}
+
 								createClientExtensionConfigTask.
-									addClientExtensionProfile(
-										profileName, clientExtension));
+									addClientExtension(clientExtension);
+							});
 
 						if (clientExtension.type.equals("configuration")) {
 							assembleClientExtensionTaskProvider.configure(

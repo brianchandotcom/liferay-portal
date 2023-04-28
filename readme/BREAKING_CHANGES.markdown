@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `77571f7e7b385a1b497136da53c8be0cee284c63`.*
+*This document has been reviewed through the breaking change entry at commit `525b211de2d94caa9c0131a15080cf76908c9209`.*
 
 Each change must have a brief descriptive title and contain the following information:
 
@@ -1292,22 +1292,22 @@ These configuration changes were made because the Tika library was extracted to 
 
 ### What changed?
 
-The `CTSQLModeThreadLocal` class was moved from the `portal-impl` module into the `portal-kernel` module. Additionally, its package was changed from `com.liferay.portal.change.tracking.sql` to `com.liferay.portal.kernel.change.tracking.sql` to be consistent with the `portal-kernel` module's package naming scheme for the CT-related classes.
+The `CTSQLModeThreadLocal` class was moved from the `portal-impl` module into the `portal-kernel` module. Consequently, its package was changed from `com.liferay.portal.change.tracking.sql` to `com.liferay.portal.kernel.change.tracking.sql` to be consistent with the `portal-kernel` module's package naming scheme for the change tracking classes.
 
 ### Who is affected?
 
-Anyone who calls the `CTSQLModeThreadLocal` class from their code.
+This affects anyone calling the `CTSQLModeThreadLocal` class from their code.
 
 ### How should I update my code?
 
-Modify `import` statements for the `CTSQLModeThreadLocal` class to use the new package, e.g.:
+1. Declare a dependency on the `portal-kernel` module.
 
-```
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
-```
+1. Modify `import` statements for the `CTSQLModeThreadLocal` class to use the new package:
 
-Additionally, ensure that the code has declared a dependency on the `portal-kernel` module.
+	```
+	import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
+	```
 
 ### Why was this change made?
 
-To resolve the bug reported at [LPS-181233](https://issues.liferay.com/browse/LPS-181233), it was necessary to set the value of the `CTSQLModeThreadLocal` from the `portal-kernel` module. Therefore, it needed to be moved into the `portal-kernel` module so that it could be referenced from there.
+To resolve [LPS-181233](https://issues.liferay.com/browse/LPS-181233), the value of the `CTSQLModeThreadLocal` must be set from the `portal-kernel` module. Moving the class into the `portal-kernel` module allows it to be referenced as required.

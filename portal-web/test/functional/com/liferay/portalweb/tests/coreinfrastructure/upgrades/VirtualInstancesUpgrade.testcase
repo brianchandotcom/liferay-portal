@@ -1,0 +1,25 @@
+@component-name = "portal-database-upgrade-framework"
+definition {
+
+	property portal.release = "true";
+	property portal.upgrades = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Database Upgrade Framework";
+
+	setUp {
+		SignIn.signIn();
+
+		SearchAdministration.executeReindex();
+	}
+
+	@priority = 4
+	test ViewVirtualInstancesArchive621021 {
+		property data.archive.type = "data-archive-virtual-instances";
+		property database.types = "db2,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "6.2.10.21";
+
+		ValidateVirtualInstancesUpgrade.viewVirtualInstancesUpgrade();
+	}
+
+}

@@ -101,9 +101,8 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private NotificationContext _createNotificationContext(
-			List<NotificationRecipientSetting> notificationRecipientSettings,
-			String recipientType)
-		throws Exception {
+		List<NotificationRecipientSetting> notificationRecipientSettings,
+		String recipientType) {
 
 		NotificationContext notificationContext = new NotificationContext();
 

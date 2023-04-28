@@ -288,7 +288,7 @@ public class BaseNotificationTypeTest {
 			StringUtil.upperCase(objectFieldName), "%]");
 	}
 
-	protected List<String> getTermNames() throws Exception {
+	protected List<String> getTermNames() {
 		return ListUtil.concat(
 			ListUtil.fromMapKeys(_authorTermValues),
 			ListUtil.fromMapKeys(_currentUserTermValues),
@@ -298,7 +298,7 @@ public class BaseNotificationTypeTest {
 				getTerm("textObjectField")));
 	}
 
-	protected List<Object> getTermValues() throws Exception {
+	protected List<Object> getTermValues() {
 		return ListUtil.concat(
 			ListUtil.fromMapValues(_authorTermValues),
 			ListUtil.fromMapValues(_currentUserTermValues),

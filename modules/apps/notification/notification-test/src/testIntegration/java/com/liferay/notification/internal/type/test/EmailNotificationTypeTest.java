@@ -137,7 +137,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntry);
 	}
 
-	private NotificationContext _createNotificationContext() throws Exception {
+	private NotificationContext _createNotificationContext() {
 		NotificationContext notificationContext = new NotificationContext();
 
 		notificationContext.setNotificationRecipient(

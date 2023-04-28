@@ -292,6 +292,22 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 			}
 
 			if (Objects.equals(
+					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.DATE_TIME)) {
+
+				if (Validator.isNull(valueString)) {
+					return null;
+				}
+
+				if (locale.equals(LocaleUtil.ROOT)) {
+					locale = LocaleUtil.getSiteDefault();
+				}
+
+				return DateUtil.parseDate(
+					"yyyy-MM-dd hh:mm", valueString, locale);
+			}
+
+			if (Objects.equals(
 					ddmFormFieldValue.getType(), DDMFormFieldType.DECIMAL) ||
 				Objects.equals(
 					ddmFormFieldValue.getType(), DDMFormFieldType.NUMERIC)) {

@@ -837,6 +837,114 @@ definition {
 		}
 	}
 
+	@description = "LPS-165849 - Verify terms from 1:M related custom objects are replaced with the correct values in an email notification"
+	@priority = 5
+	test CanSendEmailWithTermsFromRelatedCustomObjects {
+		property custom.properties = "feature.flag.LPS-165849=true";
+		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given Custom Object A and Custom Object B with text fields") {
+			for (var letters : list "A,B") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Custom Object ${letters} ",
+					objectName = "CustomObject${letters}",
+					pluralLabelName = "Custom Objects ${letters}");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Text Field ${letters}",
+					fieldName = "customField",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "CustomObject${letters}");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject${letters}");
+			}
+		}
+
+		task ("And given a 1:M relationship between Custom Object A and Custom Object B") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObjectA",
+				objectName_2 = "CustomObjectB",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("And given an email notification template using terms from both object definitions") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "[%RELATIONSHIP_CUSTOMOBJECTA_CUSTOMFIELD%] | [%CUSTOMOBJECTB_CUSTOMFIELD%]",
+				entryTo = "[%CUSTOMOBJECTB_AUTHOR_EMAIL_ADDRESS%]",
+				fromAddress = "[%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_EMAIL_ADDRESS%]",
+				fromName = "[%CUSTOMOBJECTB_AUTHOR_FIRST_NAME%]",
+				name = "Notification Template",
+				notificationType = "Email",
+				subject = "[%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_EMAIL_ADDRESS%] | [%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_FIRST_NAME%] [%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_LAST_NAME%]");
+
+			PortletEntry.save();
+		}
+
+		task ("And given the title field of Custom Object A is set to the text field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object A");
+
+			CreateObject.selectTitleField(fieldLabel = "Text Field A");
+
+			CreateObject.saveObject();
+		}
+
+		task ("And given an action in Custom Object B to send an email notification after an entry is updated") {
+			Navigator.gotoBack();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object B");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Send email after updating entry",
+				active = "true",
+				notificationName = "Notification Template",
+				objectLabel = "Custom Object B",
+				thenAction = "Notification",
+				whenAction = "On After Update");
+		}
+
+		task ("And given an object entry for both object definitions") {
+			for (var letters : list "A,B") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customField",
+					objectName = "CustomObject${letters}",
+					value = "Entry Test ${letters}");
+			}
+		}
+
+		task ("When an entry in Custom Object B is updated") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test B");
+
+			ObjectPortlet.searchEntryRelationshipField(entryValue = "Entry Test A");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the action is triggered and an email is received with the terms replaced with the correct values") {
+			MockMock.viewMail(
+				asset = "test@liferay.com | Test Test",
+				content = "Entry Test A | Entry Test B",
+				recipient = "test@liferay",
+				sender = "Test",
+				subject = "test@liferay.com | Test Test");
+		}
+	}
+
 	@description = "LPS-171625 - Verify that after updating a custom object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address and From Name and Subject fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnCustomObject {

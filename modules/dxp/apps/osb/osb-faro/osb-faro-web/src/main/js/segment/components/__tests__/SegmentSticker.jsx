@@ -20,7 +20,7 @@ describe('SegmentSticker', () => {
 
 		expect(container.querySelector('use')).toHaveAttribute(
 			'xlink:href',
-			'/o/osb-faro-web/dist/sprite.svg#individual-dynamic-segment'
+			'#individual-dynamic-segment'
 		);
 	});
 
@@ -31,7 +31,7 @@ describe('SegmentSticker', () => {
 
 		expect(container.querySelector('use')).toHaveAttribute(
 			'xlink:href',
-			'/o/osb-faro-web/dist/sprite.svg#warning'
+			'#warning'
 		);
 	});
 });

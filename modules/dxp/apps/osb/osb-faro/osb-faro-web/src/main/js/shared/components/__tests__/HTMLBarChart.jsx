@@ -327,10 +327,7 @@ describe('HTMLBarChart', () => {
 
 		expect(
 			container.querySelector('.icon.text-l-secondary').firstChild
-		).toHaveAttribute(
-			'xlink:href',
-			'/o/osb-faro-web/dist/sprite.svg#angle-down'
-		);
+		).toHaveAttribute('xlink:href', '#angle-down');
 	});
 
 	it('should render an arrow down icon when the scroll is at the end of content', () => {
@@ -413,7 +410,7 @@ describe('HTMLBarChart', () => {
 
 		expect(container.querySelector('use')).toHaveAttribute(
 			'xlink:href',
-			'/o/osb-faro-web/dist/sprite.svg#home'
+			'#home'
 		);
 
 		expect(container.querySelector(`${CLASSNAME}-column`)).toBeTruthy();

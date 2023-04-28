@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -67,9 +67,11 @@ public class ObjectActionExecutorRegistryImplTest {
 		_companyId2 = RandomTestUtil.nextLong();
 	}
 
-	@AfterClass
-	public static void tearDownClass() {
-		_unregisterObjectActionExecutors();
+	@After
+	public void tearDown() throws Exception {
+		_serviceRegistrations.forEach(ServiceRegistration::unregister);
+
+		_serviceRegistrations.clear();
 	}
 
 	@Test
@@ -141,8 +143,6 @@ public class ObjectActionExecutorRegistryImplTest {
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId2, "objectDefinitionName1"),
 				ObjectActionExecutor::getKey, String.class));
-
-		_unregisterObjectActionExecutors();
 	}
 
 	@Test
@@ -178,14 +178,6 @@ public class ObjectActionExecutorRegistryImplTest {
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId2, "objectDefinitionName1"),
 				ObjectActionExecutor::getKey, String.class));
-
-		_unregisterObjectActionExecutors();
-	}
-
-	private static void _unregisterObjectActionExecutors() {
-		_serviceRegistrations.forEach(ServiceRegistration::unregister);
-
-		_serviceRegistrations.clear();
 	}
 
 	private ObjectActionExecutor _registerObjectActionExecutor(

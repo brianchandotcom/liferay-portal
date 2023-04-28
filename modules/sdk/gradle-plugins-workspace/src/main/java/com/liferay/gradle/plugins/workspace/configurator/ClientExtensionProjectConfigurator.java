@@ -72,7 +72,6 @@ import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
-import org.gradle.api.internal.TaskInputsInternal;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
@@ -400,12 +399,13 @@ public class ClientExtensionProjectConfigurator
 
 		copyTaskProvider.configure(
 			copy -> {
-				TaskInputsInternal inputs = copy.getInputs();
+				TaskInputs taskInputs = copy.getInputs();
 
-				inputs.file(_CLIENT_EXTENSION_YAML);
+				taskInputs.file(_CLIENT_EXTENSION_YAML);
 
 				if (!Objects.equals(profileName, "default")) {
-					inputs.file("client-extension." + profileName + ".yaml");
+					taskInputs.file(
+						"client-extension." + profileName + ".yaml");
 				}
 
 				copy.into(
@@ -524,9 +524,9 @@ public class ClientExtensionProjectConfigurator
 
 			createClientExtensionConfigTaskProvider.configure(
 				task -> {
-					TaskInputs inputs = task.getInputs();
+					TaskInputs taskInputs = task.getInputs();
 
-					inputs.file(file);
+					taskInputs.file(file);
 				});
 		}
 

@@ -194,7 +194,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 		notificationQueueEntry = notificationQueueEntries.get(0);
 
-		assertTerms(
+		assertTermValues(
 			getTermValues(),
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.COMMA));

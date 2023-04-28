@@ -124,11 +124,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			user2.getEmailAddress(),
 			notificationRecipientSettingsMap.get("to"));
 
-		assertTerms(
+		assertTermValues(
 			getTermValues(),
 			ListUtil.fromString(
 				notificationQueueEntry.getBody(), StringPool.COMMA));
-		assertTerms(
+		assertTermValues(
 			getTermValues(),
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.COMMA));

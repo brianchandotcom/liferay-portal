@@ -253,7 +253,7 @@ public class BaseNotificationTypeTest {
 		).build();
 	}
 
-	protected void assertTerms(
+	protected void assertTermValues(
 		List<Object> expectedTermValues, List<String> termValues) {
 
 		for (int i = 0; i < termValues.size(); i++) {

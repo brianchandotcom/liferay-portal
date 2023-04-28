@@ -14,11 +14,11 @@ exports[`AlertFeed should render 1`] = `
           class="alert-indicator"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-info-circle"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-info-circle icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#info-circle"
+              xlink:href="#info-circle"
             />
           </svg>
         </span>
@@ -32,11 +32,11 @@ exports[`AlertFeed should render 1`] = `
           class="close"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -60,11 +60,11 @@ exports[`AlertFeed should render with a message comprised of language keys with 
           class="alert-indicator"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-info-circle"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-info-circle icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#info-circle"
+              xlink:href="#info-circle"
             />
           </svg>
         </span>
@@ -81,11 +81,11 @@ exports[`AlertFeed should render with a message comprised of language keys with 
           class="close"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -109,11 +109,11 @@ exports[`AlertFeed should render with modal open 1`] = `
           class="alert-indicator"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-info-circle"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-info-circle icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#info-circle"
+              xlink:href="#info-circle"
             />
           </svg>
         </span>
@@ -127,11 +127,11 @@ exports[`AlertFeed should render with modal open 1`] = `
           class="close"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>

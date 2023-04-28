@@ -212,11 +212,11 @@ exports[`Activities should render 1`] = `
                         3
                       </span>
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-top"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-top icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+                          xlink:href="#caret-top"
                         />
                       </svg>
                     </div>
@@ -250,11 +250,11 @@ exports[`Activities should render 1`] = `
                   class="caret-root"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                      xlink:href="#caret-bottom"
                     />
                   </svg>
                 </span>
@@ -277,11 +277,11 @@ exports[`Activities should render 1`] = `
                   href=""
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-angle-left"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-angle-left icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                      xlink:href="#angle-left"
                     />
                   </svg>
                 </a>
@@ -305,11 +305,11 @@ exports[`Activities should render 1`] = `
                   href=""
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-angle-right"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-angle-right icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                      xlink:href="#angle-right"
                     />
                   </svg>
                 </a>

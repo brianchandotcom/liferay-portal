@@ -67,11 +67,11 @@ exports[`View Channel should render 1`] = `
                 type="button"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-pencil"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-pencil icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                    xlink:href="#pencil"
                   />
                 </svg>
               </button>
@@ -103,11 +103,11 @@ exports[`View Channel should render 1`] = `
                 title="Configure Email Reports"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-cog"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-cog icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#cog"
+                    xlink:href="#cog"
                   />
                 </svg>
               </span>
@@ -223,11 +223,11 @@ exports[`View Channel should render 1`] = `
                 class="no-results-icon"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-ac-no-sites icon-size-xxxl"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-ac-no-sites icon-root icon-size-xxxl"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-no-sites"
+                    xlink:href="#ac-no-sites"
                   />
                 </svg>
               </div>

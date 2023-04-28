@@ -65,11 +65,11 @@ exports[`AssociatedSegmentsCard should render 1`] = `
                 class="sticker sticker-root sticker-static sticker-rounded sticker-light"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-individual-dynamic-segment"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-individual-dynamic-segment icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#individual-dynamic-segment"
+                    xlink:href="#individual-dynamic-segment"
                   />
                 </svg>
               </div>
@@ -106,11 +106,11 @@ exports[`AssociatedSegmentsCard should render 1`] = `
                 class="sticker sticker-root sticker-static sticker-rounded sticker-light"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-individual-dynamic-segment"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-individual-dynamic-segment icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#individual-dynamic-segment"
+                    xlink:href="#individual-dynamic-segment"
                   />
                 </svg>
               </div>

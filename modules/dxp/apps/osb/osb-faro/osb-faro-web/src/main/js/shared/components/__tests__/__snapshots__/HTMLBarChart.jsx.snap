@@ -68,11 +68,11 @@ exports[`HTMLBarChart should render Progress item based on grid 1`] = `
                   style="background-color: red; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>
@@ -92,11 +92,11 @@ exports[`HTMLBarChart should render Progress item based on grid 1`] = `
                   style="background-color: green; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>
@@ -185,11 +185,11 @@ exports[`HTMLBarChart should render Progress item based on grid and type of grid
                   style="background-color: red; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>
@@ -209,11 +209,11 @@ exports[`HTMLBarChart should render Progress item based on grid and type of grid
                   style="background-color: green; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>
@@ -312,11 +312,11 @@ exports[`HTMLBarChart should render Progress with Interval item based on grid an
                   style="background-color: red; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>
@@ -336,11 +336,11 @@ exports[`HTMLBarChart should render Progress with Interval item based on grid an
                   style="background-color: green; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>
@@ -397,11 +397,11 @@ exports[`HTMLBarChart should render component without crashing 1`] = `
                   style="background-color: red; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>
@@ -421,11 +421,11 @@ exports[`HTMLBarChart should render component without crashing 1`] = `
                   style="background-color: green; height: 32px; width: 32px;"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-home"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-home icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+                      xlink:href="#home"
                     />
                   </svg>
                 </span>

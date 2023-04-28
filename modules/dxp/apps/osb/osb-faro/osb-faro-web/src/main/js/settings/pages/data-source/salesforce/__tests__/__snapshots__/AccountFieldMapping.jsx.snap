@@ -149,11 +149,11 @@ exports[`AccountFieldMapping should render 1`] = `
                   class="form-group-item add-on form-group-item-shrink"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-faro-connection-success-ovals"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-faro-connection-success-ovals icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-success-ovals"
+                      xlink:href="#faro-connection-success-ovals"
                     />
                   </svg>
                 </div>

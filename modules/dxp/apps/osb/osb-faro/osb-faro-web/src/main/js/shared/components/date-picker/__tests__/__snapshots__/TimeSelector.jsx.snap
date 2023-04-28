@@ -6,11 +6,11 @@ exports[`TimeSelector should render 1`] = `
     class="time-selector-root"
   >
     <svg
-      class="icon-root lexicon-icon lexicon-icon-time"
-      viewBox=""
+      class="lexicon-icon lexicon-icon-time icon-root"
+      role="presentation"
     >
       <use
-        xlink:href="/o/osb-faro-web/dist/sprite.svg#time"
+        xlink:href="#time"
       />
     </svg>
     <input

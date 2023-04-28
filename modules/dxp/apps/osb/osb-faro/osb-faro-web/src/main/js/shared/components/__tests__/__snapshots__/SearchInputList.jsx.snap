@@ -26,11 +26,11 @@ exports[`SearchInputList should render 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                xlink:href="#caret-bottom"
               />
             </svg>
           </div>

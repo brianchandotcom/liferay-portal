@@ -16,11 +16,11 @@ exports[`AddWorkspace should render 1`] = `
           target="_blank"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-liferay-logo icon-root liferay-logo"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+              xlink:href="#liferay-logo"
             />
           </svg>
         </a>
@@ -67,11 +67,11 @@ exports[`AddWorkspace should render 1`] = `
               class="logo-container"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-ac-logo icon-root logo-icon"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                  xlink:href="#ac-logo"
                 />
               </svg>
               <span
@@ -415,11 +415,11 @@ exports[`AddWorkspace should render 1`] = `
                           class="info-popover-root"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-question-circle-full"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-question-circle-full icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+                              xlink:href="#question-circle-full"
                             />
                           </svg>
                         </span>

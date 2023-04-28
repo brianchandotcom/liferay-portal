@@ -221,11 +221,11 @@ exports[`OutputVersionsCard should render 1`] = `
                 href=""
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-angle-left"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-angle-left icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                    xlink:href="#angle-left"
                   />
                 </svg>
               </a>
@@ -249,11 +249,11 @@ exports[`OutputVersionsCard should render 1`] = `
                 href=""
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-angle-right"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-angle-right icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                    xlink:href="#angle-right"
                   />
                 </svg>
               </a>

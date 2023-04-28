@@ -13,11 +13,11 @@ exports[`NotificationAlertList should render 1`] = `
         class="alert-indicator"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-exclamation-full"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-exclamation-full icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#exclamation-full"
+            xlink:href="#exclamation-full"
           />
         </svg>
       </span>
@@ -31,11 +31,11 @@ exports[`NotificationAlertList should render 1`] = `
         class="close"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-times"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-times icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            xlink:href="#times"
           />
         </svg>
       </button>

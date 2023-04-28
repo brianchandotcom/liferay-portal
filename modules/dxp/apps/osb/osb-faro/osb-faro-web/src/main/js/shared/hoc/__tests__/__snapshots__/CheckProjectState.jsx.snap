@@ -13,11 +13,11 @@ exports[`SuccessDisplayIf should render a scheduled maintenance error page if th
         target="_blank"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-liferay-logo icon-root liferay-logo"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            xlink:href="#liferay-logo"
           />
         </svg>
       </a>
@@ -64,11 +64,11 @@ exports[`SuccessDisplayIf should render a scheduled maintenance error page if th
             class="logo-container"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-ac-logo icon-root logo-icon"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                xlink:href="#ac-logo"
               />
             </svg>
             <span
@@ -107,11 +107,11 @@ exports[`SuccessDisplayIf should render activating display if project state is "
         target="_blank"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-liferay-logo icon-root liferay-logo"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            xlink:href="#liferay-logo"
           />
         </svg>
       </a>
@@ -158,11 +158,11 @@ exports[`SuccessDisplayIf should render activating display if project state is "
             class="logo-container"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-ac-logo icon-root logo-icon"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                xlink:href="#ac-logo"
               />
             </svg>
             <span
@@ -243,11 +243,11 @@ exports[`SuccessDisplayIf should render activating display if project state is "
         target="_blank"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-liferay-logo icon-root liferay-logo"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            xlink:href="#liferay-logo"
           />
         </svg>
       </a>
@@ -294,11 +294,11 @@ exports[`SuccessDisplayIf should render activating display if project state is "
             class="logo-container"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-ac-logo icon-root logo-icon"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                xlink:href="#ac-logo"
               />
             </svg>
             <span
@@ -345,11 +345,11 @@ exports[`SuccessDisplayIf should render an error page if there was an error fetc
         target="_blank"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-liferay-logo icon-root liferay-logo"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            xlink:href="#liferay-logo"
           />
         </svg>
       </a>
@@ -396,11 +396,11 @@ exports[`SuccessDisplayIf should render an error page if there was an error fetc
             class="logo-container"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-ac-logo icon-root logo-icon"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                xlink:href="#ac-logo"
               />
             </svg>
             <span
@@ -480,11 +480,11 @@ exports[`SuccessDisplayIf should render an unavailable error page if the project
         target="_blank"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-liferay-logo icon-root liferay-logo"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            xlink:href="#liferay-logo"
           />
         </svg>
       </a>
@@ -531,11 +531,11 @@ exports[`SuccessDisplayIf should render an unavailable error page if the project
             class="logo-container"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-ac-logo icon-root logo-icon"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                xlink:href="#ac-logo"
               />
             </svg>
             <span

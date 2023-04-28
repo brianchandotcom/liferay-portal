@@ -58,11 +58,11 @@ exports[`NoPropertiesAvailable should render 1`] = `
               class="no-results-icon"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-ac-satellite icon-root icon-size-xxxl"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+                  xlink:href="#ac-satellite"
                 />
               </svg>
             </div>

@@ -8,11 +8,11 @@ exports[`Unique Visitors Tooltip should render 1`] = `
       style="color: rgb(40, 125, 60);"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-caret-top"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-caret-top icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+          xlink:href="#caret-top"
         />
       </svg>
       <span

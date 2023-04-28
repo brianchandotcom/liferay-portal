@@ -393,11 +393,11 @@ exports[`Workspace Settting should render 1`] = `
                       class="info-popover-root"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-question-circle-full"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-question-circle-full icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+                          xlink:href="#question-circle-full"
                         />
                       </svg>
                     </span>

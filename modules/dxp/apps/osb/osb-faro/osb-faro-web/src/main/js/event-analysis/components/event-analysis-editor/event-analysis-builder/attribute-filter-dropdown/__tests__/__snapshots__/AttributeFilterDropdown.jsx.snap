@@ -111,11 +111,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -136,11 +136,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -161,11 +161,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -186,11 +186,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -211,11 +211,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -236,11 +236,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -261,11 +261,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -286,11 +286,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -311,11 +311,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>
@@ -336,11 +336,11 @@ exports[`AttributeFilterDropdown render 2`] = `
                 class="sticker"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-text"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-text icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#text"
+                    xlink:href="#text"
                   />
                 </svg>
               </div>

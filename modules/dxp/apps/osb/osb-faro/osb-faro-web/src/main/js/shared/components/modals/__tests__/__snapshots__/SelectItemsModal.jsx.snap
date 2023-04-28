@@ -43,11 +43,11 @@ exports[`SelectItemsModal should render 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -182,11 +182,11 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -321,11 +321,11 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -469,11 +469,11 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -608,11 +608,11 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -747,11 +747,11 @@ exports[`SelectItemsModal should render with a successful submit 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -891,11 +891,11 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -1039,11 +1039,11 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -1178,11 +1178,11 @@ exports[`SelectItemsModal should render with selectedItems with the disable sele
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -1323,11 +1323,11 @@ exports[`SelectItemsModal should render without a toolbar 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -1392,11 +1392,11 @@ exports[`SelectItemsModal should render without the sort button 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>

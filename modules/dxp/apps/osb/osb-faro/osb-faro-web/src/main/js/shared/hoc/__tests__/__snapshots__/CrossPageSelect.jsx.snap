@@ -146,11 +146,11 @@ exports[`CrossPageSelect should render the selected list when the user presses t
                 class="inline-item inline-item-after"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                    xlink:href="#order-arrow-up"
                   />
                 </svg>
               </span>
@@ -209,11 +209,11 @@ exports[`CrossPageSelect should render the selected list when the user presses t
             class="caret-root"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                xlink:href="#caret-bottom"
               />
             </svg>
           </span>
@@ -236,11 +236,11 @@ exports[`CrossPageSelect should render the selected list when the user presses t
             href=""
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-angle-left"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-angle-left icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                xlink:href="#angle-left"
               />
             </svg>
           </a>
@@ -264,11 +264,11 @@ exports[`CrossPageSelect should render the selected list when the user presses t
             href=""
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-angle-right"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-angle-right icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                xlink:href="#angle-right"
               />
             </svg>
           </a>
@@ -396,11 +396,11 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
                 class="inline-item inline-item-after"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                    xlink:href="#order-arrow-up"
                   />
                 </svg>
               </span>
@@ -574,11 +574,11 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
             class="caret-root"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                xlink:href="#caret-bottom"
               />
             </svg>
           </span>
@@ -601,11 +601,11 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
             href="/?page=0"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-angle-left"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-angle-left icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                xlink:href="#angle-left"
               />
             </svg>
           </a>
@@ -648,11 +648,11 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
             href="/?page=2"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-angle-right"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-angle-right icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                xlink:href="#angle-right"
               />
             </svg>
           </a>

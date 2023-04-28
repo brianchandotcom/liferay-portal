@@ -29,11 +29,11 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                   Yesterday
                 </span>
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-ac-event-icon event-icon"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-ac-event-icon event-icon icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-icon"
+                    xlink:href="#ac-event-icon"
                   />
                 </svg>
                 <span
@@ -123,11 +123,11 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                   class="icon-group"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-ac-event-icon event-icon"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-ac-event-icon event-icon icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-icon"
+                      xlink:href="#ac-event-icon"
                     />
                   </svg>
                   <span
@@ -143,23 +143,24 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
 Firefox"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-devices mainLighten65-color"
+                      class="lexicon-icon lexicon-icon-devices icon-root mainLighten28"
+                      color="mainLighten65"
                       id="anyIcon"
-                      viewBox=""
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#devices"
+                        xlink:href="#devices"
                       />
                     </svg>
                   </span>
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-caret-top"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-caret-top icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+                  xlink:href="#caret-top"
                 />
               </svg>
             </div>
@@ -319,11 +320,11 @@ Firefox"
                         </span>
                       </div>
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -380,11 +381,11 @@ Firefox"
                         </span>
                       </div>
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -416,11 +417,11 @@ Firefox"
                   Today
                 </span>
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-ac-event-icon event-icon"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-ac-event-icon event-icon icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-icon"
+                    xlink:href="#ac-event-icon"
                   />
                 </svg>
                 <span
@@ -510,11 +511,11 @@ Firefox"
                   class="icon-group"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-ac-event-icon event-icon"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-ac-event-icon event-icon icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-icon"
+                      xlink:href="#ac-event-icon"
                     />
                   </svg>
                   <span
@@ -530,22 +531,22 @@ Firefox"
 Firefox"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-mobile-portrait mainLighten28-color"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-mobile-portrait icon-root mainLighten28"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#mobile-portrait"
+                        xlink:href="#mobile-portrait"
                       />
                     </svg>
                   </span>
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-caret-top"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-caret-top icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+                  xlink:href="#caret-top"
                 />
               </svg>
             </div>
@@ -689,11 +690,11 @@ Firefox"
                         </span>
                       </div>
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -750,11 +751,11 @@ Firefox"
                         </span>
                       </div>
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -834,11 +835,11 @@ Firefox"
                   class="icon-group"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-ac-event-icon event-icon"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-ac-event-icon event-icon icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-icon"
+                      xlink:href="#ac-event-icon"
                     />
                   </svg>
                   <span
@@ -854,22 +855,22 @@ Firefox"
 Firefox"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-display mainLighten28-color"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-display icon-root mainLighten28"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-display"
+                        xlink:href="#ac-display"
                       />
                     </svg>
                   </span>
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-caret-top"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-caret-top icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+                  xlink:href="#caret-top"
                 />
               </svg>
             </div>
@@ -1018,11 +1019,11 @@ Firefox"
                         </span>
                       </div>
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </div>
@@ -1081,11 +1082,11 @@ Firefox"
                         </span>
                       </div>
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </div>

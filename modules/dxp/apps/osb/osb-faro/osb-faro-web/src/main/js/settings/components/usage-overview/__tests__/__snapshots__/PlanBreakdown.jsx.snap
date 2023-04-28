@@ -11,11 +11,11 @@ exports[`PlanBreakdown should render 1`] = `
       <ul>
         <li>
           <svg
-            class="icon-root lexicon-icon lexicon-icon-ac-users"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-ac-users icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-users"
+              xlink:href="#ac-users"
             />
           </svg>
           <span

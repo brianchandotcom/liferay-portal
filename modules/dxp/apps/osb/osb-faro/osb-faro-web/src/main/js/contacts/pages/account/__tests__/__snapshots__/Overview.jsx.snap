@@ -50,11 +50,11 @@ exports[`AccountOverview should render 1`] = `
                   class="change increase"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-caret-top"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-caret-top icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-top"
+                      xlink:href="#caret-top"
                     />
                   </svg>
                   128.0%
@@ -223,11 +223,11 @@ exports[`AccountOverview should render 1`] = `
                     class="sticker sticker-root sticker-static sticker-rounded sticker-light"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-individual-dynamic-segment"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-individual-dynamic-segment icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#individual-dynamic-segment"
+                        xlink:href="#individual-dynamic-segment"
                       />
                     </svg>
                   </div>

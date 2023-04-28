@@ -72,11 +72,11 @@ exports[`Summary should render 1`] = `
               class="summary-name table-cell-expand"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-warning-full"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-warning-full icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+                  xlink:href="#warning-full"
                 />
               </svg>
               <button
@@ -144,11 +144,11 @@ exports[`Summary should render 1`] = `
             class="info-popover-root auto-start-training-help-icon"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-question-circle-full"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-question-circle-full icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+                xlink:href="#question-circle-full"
               />
             </svg>
           </span>

@@ -44,11 +44,11 @@ exports[`ProgressBar should render a complete progress bar without error 1`] = `
         class="progress-group-feedback"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-check-circle"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-check-circle icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#check-circle"
+            xlink:href="#check-circle"
           />
         </svg>
       </div>
@@ -78,11 +78,11 @@ exports[`ProgressBar should render a progress bar with error 1`] = `
         class="progress-group-feedback"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-times-circle"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-times-circle icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#times-circle"
+            xlink:href="#times-circle"
           />
         </svg>
       </div>

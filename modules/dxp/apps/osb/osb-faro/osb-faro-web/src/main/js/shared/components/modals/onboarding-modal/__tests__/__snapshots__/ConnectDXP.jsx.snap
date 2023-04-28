@@ -33,27 +33,27 @@ exports[`ConnectDXP renders 1`] = `
         class="analytics-to-dxp-container"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-dxp-icon icon-size-xl"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-dxp-icon icon-root icon-size-xl"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#dxp-icon"
+            xlink:href="#dxp-icon"
           />
         </svg>
         <svg
-          class="icon-root lexicon-icon lexicon-icon-ac-horizontal-arrows arrows icon-size-lg"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-ac-horizontal-arrows arrows icon-root icon-size-lg"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-horizontal-arrows"
+            xlink:href="#ac-horizontal-arrows"
           />
         </svg>
         <svg
-          class="icon-root lexicon-icon lexicon-icon-ac-logo-grayscale icon-size-xl"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-ac-logo-grayscale icon-root icon-size-xl"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo-grayscale"
+            xlink:href="#ac-logo-grayscale"
           />
         </svg>
       </div>
@@ -90,11 +90,11 @@ exports[`ConnectDXP renders 1`] = `
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-paste"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-paste icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#paste"
+                  xlink:href="#paste"
                 />
               </svg>
             </button>
@@ -129,11 +129,11 @@ exports[`ConnectDXP renders 1`] = `
                 class="info-popover-root ml-2"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-question-circle-full"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-question-circle-full icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+                    xlink:href="#question-circle-full"
                   />
                 </svg>
               </span>

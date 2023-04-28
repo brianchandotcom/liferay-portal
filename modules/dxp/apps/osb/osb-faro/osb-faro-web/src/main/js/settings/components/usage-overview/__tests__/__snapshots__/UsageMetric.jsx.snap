@@ -17,11 +17,11 @@ exports[`UsageMetric should render 1`] = `
         class="sticker sticker-root sticker-static sticker-rounded sticker-light"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-faro-page-views"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-faro-page-views icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+            xlink:href="#faro-page-views"
           />
         </svg>
       </div>

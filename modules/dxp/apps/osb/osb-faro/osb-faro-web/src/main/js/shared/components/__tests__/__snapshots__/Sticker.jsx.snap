@@ -6,11 +6,11 @@ exports[`Sticker should render 1`] = `
     class="sticker sticker-root sticker-static sticker-rounded"
   >
     <svg
-      class="icon-root lexicon-icon lexicon-icon-file"
-      viewBox=""
+      class="lexicon-icon lexicon-icon-file icon-root"
+      role="presentation"
     >
       <use
-        xlink:href="/o/osb-faro-web/dist/sprite.svg#file"
+        xlink:href="#file"
       />
     </svg>
   </div>

@@ -32,11 +32,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
           href="/workspace/23/1/sites"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-ac-logo logo icon-size-md"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-ac-logo icon-root icon-size-md logo"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+              xlink:href="#ac-logo"
             />
           </svg>
         </a>
@@ -102,11 +102,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     class="icon-wrapper"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-page"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-page icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-page"
+                        xlink:href="#ac-page"
                       />
                     </svg>
                   </span>
@@ -132,11 +132,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     class="icon-wrapper"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-assets"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-assets icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-assets"
+                        xlink:href="#ac-assets"
                       />
                     </svg>
                   </span>
@@ -162,11 +162,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     class="icon-wrapper"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-event-analysis"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-event-analysis icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-event-analysis"
+                        xlink:href="#ac-event-analysis"
                       />
                     </svg>
                   </span>
@@ -205,11 +205,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     class="icon-wrapper"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-segment"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-segment icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-segment"
+                        xlink:href="#ac-segment"
                       />
                     </svg>
                   </span>
@@ -235,11 +235,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     class="icon-wrapper"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-individual"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-individual icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                        xlink:href="#ac-individual"
                       />
                     </svg>
                   </span>
@@ -278,11 +278,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     class="icon-wrapper"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-commerce"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-commerce icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-commerce"
+                        xlink:href="#ac-commerce"
                       />
                     </svg>
                   </span>
@@ -321,11 +321,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                     class="icon-wrapper"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-ac-test"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-ac-test icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-test"
+                        xlink:href="#ac-test"
                       />
                     </svg>
                   </span>
@@ -386,11 +386,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-cog"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-cog icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#cog"
+                      xlink:href="#cog"
                     />
                   </svg>
                 </span>
@@ -415,11 +415,11 @@ exports[`withSidebar should render with the sidebar 1`] = `
                   class="icon-wrapper"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-angle-left"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-angle-left icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                      xlink:href="#angle-left"
                     />
                   </svg>
                 </span>

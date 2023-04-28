@@ -41,11 +41,11 @@ exports[`Toolbar should render 1`] = `
                 type="button"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-pencil"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-pencil icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                    xlink:href="#pencil"
                   />
                 </svg>
               </button>
@@ -92,11 +92,11 @@ exports[`Toolbar should render 1`] = `
                 class="info-popover-root include-anon-help-icon"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-question-circle-full"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-question-circle-full icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#question-circle-full"
+                    xlink:href="#question-circle-full"
                   />
                 </svg>
               </span>

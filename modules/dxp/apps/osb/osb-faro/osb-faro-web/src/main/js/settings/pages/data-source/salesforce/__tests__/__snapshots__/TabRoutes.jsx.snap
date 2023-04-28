@@ -279,11 +279,11 @@ exports[`SalesforceTabRoutes should render 1`] = `
                             type="button"
                           >
                             <svg
-                              class="icon-root lexicon-icon lexicon-icon-view"
-                              viewBox=""
+                              class="lexicon-icon lexicon-icon-view icon-root"
+                              role="presentation"
                             >
                               <use
-                                xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+                                xlink:href="#view"
                               />
                             </svg>
                           </button>

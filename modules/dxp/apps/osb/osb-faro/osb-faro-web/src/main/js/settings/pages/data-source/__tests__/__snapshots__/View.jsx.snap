@@ -63,11 +63,11 @@ exports[`View should render a CSV data-source page 1`] = `
                     type="button"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-pencil"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-pencil icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                        xlink:href="#pencil"
                       />
                     </svg>
                   </button>
@@ -172,11 +172,11 @@ exports[`View should render a CSV data-source page 1`] = `
               class="form-group-item add-on form-group-item-shrink"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-faro-connection-success-ovals"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-faro-connection-success-ovals icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-success-ovals"
+                  xlink:href="#faro-connection-success-ovals"
                 />
               </svg>
             </div>
@@ -444,11 +444,11 @@ exports[`View should render a Liferay data-source page 1`] = `
                               type="button"
                             >
                               <svg
-                                class="icon-root lexicon-icon lexicon-icon-pencil"
-                                viewBox=""
+                                class="lexicon-icon lexicon-icon-pencil icon-root"
+                                role="presentation"
                               >
                                 <use
-                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#pencil"
+                                  xlink:href="#pencil"
                                 />
                               </svg>
                             </button>
@@ -890,11 +890,11 @@ exports[`View should render a Salesforce data-source page 1`] = `
                             type="button"
                           >
                             <svg
-                              class="icon-root lexicon-icon lexicon-icon-view"
-                              viewBox=""
+                              class="lexicon-icon lexicon-icon-view icon-root"
+                              role="presentation"
                             >
                               <use
-                                xlink:href="/o/osb-faro-web/dist/sprite.svg#view"
+                                xlink:href="#view"
                               />
                             </svg>
                           </button>

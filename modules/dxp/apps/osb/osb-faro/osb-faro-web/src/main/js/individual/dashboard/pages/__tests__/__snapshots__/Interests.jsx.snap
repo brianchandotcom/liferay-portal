@@ -115,11 +115,11 @@ exports[`Individuals Dashboard Individuals Interests renders 1`] = `
                           class="inline-item inline-item-after"
                         >
                           <svg
-                            class="icon-root lexicon-icon lexicon-icon-order-arrow-down"
-                            viewBox=""
+                            class="lexicon-icon lexicon-icon-order-arrow-down icon-root"
+                            role="presentation"
                           >
                             <use
-                              xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-down"
+                              xlink:href="#order-arrow-down"
                             />
                           </svg>
                         </span>
@@ -470,11 +470,11 @@ exports[`Individuals Dashboard Individuals Interests renders 1`] = `
                       class="caret-root"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </span>
@@ -497,11 +497,11 @@ exports[`Individuals Dashboard Individuals Interests renders 1`] = `
                       href="/?page=0"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-angle-left"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-angle-left icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                          xlink:href="#angle-left"
                         />
                       </svg>
                     </a>
@@ -544,11 +544,11 @@ exports[`Individuals Dashboard Individuals Interests renders 1`] = `
                       href="/?page=2"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-angle-right"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                          xlink:href="#angle-right"
                         />
                       </svg>
                     </a>
@@ -582,11 +582,11 @@ exports[`Individuals Dashboard Individuals Interests renders with data source em
             class="no-results-icon"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-ac-satellite icon-root icon-size-xxxl"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+                xlink:href="#ac-satellite"
               />
             </svg>
           </div>

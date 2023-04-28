@@ -13,11 +13,11 @@ exports[`ActivatingDisplay should render 1`] = `
         target="_blank"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-liferay-logo liferay-logo"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-liferay-logo icon-root liferay-logo"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#liferay-logo"
+            xlink:href="#liferay-logo"
           />
         </svg>
       </a>
@@ -64,11 +64,11 @@ exports[`ActivatingDisplay should render 1`] = `
             class="logo-container"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-ac-logo logo-icon"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-ac-logo icon-root logo-icon"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-logo"
+                xlink:href="#ac-logo"
               />
             </svg>
             <span

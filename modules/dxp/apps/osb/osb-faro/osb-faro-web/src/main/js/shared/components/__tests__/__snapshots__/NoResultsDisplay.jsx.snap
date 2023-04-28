@@ -30,11 +30,11 @@ exports[`NoResultsDisplay should render component with icon 1`] = `
         class="no-results-icon no-results-icon-border"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-home icon-size-xxl"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-home icon-root icon-size-xxxl"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+            xlink:href="#home"
           />
         </svg>
       </div>

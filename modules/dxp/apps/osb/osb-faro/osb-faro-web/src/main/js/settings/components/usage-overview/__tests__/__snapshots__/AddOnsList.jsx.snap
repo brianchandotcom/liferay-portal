@@ -19,11 +19,11 @@ exports[`AddOnsList should render 1`] = `
           >
             <span>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-ac-individual"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-ac-individual icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-individual"
+                  xlink:href="#ac-individual"
                 />
               </svg>
               <span
@@ -87,11 +87,11 @@ exports[`AddOnsList should render 1`] = `
           >
             <span>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-faro-page-views"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-faro-page-views icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-page-views"
+                  xlink:href="#faro-page-views"
                 />
               </svg>
               <span

@@ -6,11 +6,11 @@ exports[`SegmentSticker should render 1`] = `
     class="sticker sticker-root sticker-static segment-sticker-root sticker-rounded sticker-light"
   >
     <svg
-      class="icon-root lexicon-icon lexicon-icon-individual-static-segment"
-      viewBox=""
+      class="lexicon-icon lexicon-icon-individual-static-segment icon-root"
+      role="presentation"
     >
       <use
-        xlink:href="/o/osb-faro-web/dist/sprite.svg#individual-static-segment"
+        xlink:href="#individual-static-segment"
       />
     </svg>
   </div>

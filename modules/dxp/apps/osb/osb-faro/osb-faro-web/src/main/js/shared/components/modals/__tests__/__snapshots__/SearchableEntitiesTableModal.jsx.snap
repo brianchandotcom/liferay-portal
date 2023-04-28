@@ -23,11 +23,11 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-times"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-times icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+              xlink:href="#times"
             />
           </svg>
         </button>
@@ -129,11 +129,11 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                       class="inline-item inline-item-after"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                          xlink:href="#order-arrow-up"
                         />
                       </svg>
                     </span>

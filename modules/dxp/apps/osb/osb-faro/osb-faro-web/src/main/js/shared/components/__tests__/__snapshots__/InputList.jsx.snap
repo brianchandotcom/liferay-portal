@@ -25,11 +25,11 @@ exports[`InputList should paste a text in inputList 1`] = `
           class="form-feedback-indicator"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-info-circle icon-size-sm"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-info-circle icon-root icon-size-sm"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#info-circle"
+              xlink:href="#info-circle"
             />
           </svg>
         </span>

@@ -29,11 +29,11 @@ exports[`WithBaseEdit should render the wrapped component 1`] = `
             >
               <span>
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-ellipsis-h"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-ellipsis-h icon-root"
+                  role="presentation"
                 >
                   <use
-                    href="/o/osb-faro-web/dist/sprite.svg#ellipsis-h"
+                    href="#ellipsis-h"
                   />
                 </svg>
               </span>

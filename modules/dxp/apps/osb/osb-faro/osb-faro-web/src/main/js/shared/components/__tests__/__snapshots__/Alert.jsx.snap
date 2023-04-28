@@ -10,11 +10,11 @@ exports[`Alert should render 1`] = `
       class="alert-indicator"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-info-circle"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-info-circle icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#info-circle"
+          xlink:href="#info-circle"
         />
       </svg>
     </span>

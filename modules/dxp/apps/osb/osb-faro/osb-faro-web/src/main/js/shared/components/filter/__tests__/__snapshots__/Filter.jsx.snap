@@ -55,11 +55,11 @@ exports[`Filter should render 1`] = `
                 </span>
               </span>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right ml-1"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-angle-right icon-root ml-1"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  xlink:href="#angle-right"
                 />
               </svg>
             </div>

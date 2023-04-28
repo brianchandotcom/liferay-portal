@@ -31,11 +31,11 @@ exports[`ModalRenderer should pass props to modal: should render with title 'Foo
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-times"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-times icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                  xlink:href="#times"
                 />
               </svg>
             </button>
@@ -112,11 +112,11 @@ exports[`ModalRenderer should render multiple modals 1`] = `
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-times"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-times icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                  xlink:href="#times"
                 />
               </svg>
             </button>
@@ -173,11 +173,11 @@ exports[`ModalRenderer should render multiple modals 1`] = `
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-times"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-times icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                  xlink:href="#times"
                 />
               </svg>
             </button>
@@ -246,11 +246,11 @@ exports[`ModalRenderer should render test modal 1`] = `
               type="button"
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-times"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-times icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+                  xlink:href="#times"
                 />
               </svg>
             </button>

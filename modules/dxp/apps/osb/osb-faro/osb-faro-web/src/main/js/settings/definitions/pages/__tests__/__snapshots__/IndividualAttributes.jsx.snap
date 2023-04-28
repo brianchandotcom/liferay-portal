@@ -144,11 +144,11 @@ exports[`IndividualAttributes should render 1`] = `
                         class="inline-item inline-item-after"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                            xlink:href="#order-arrow-up"
                           />
                         </svg>
                       </span>

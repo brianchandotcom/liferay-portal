@@ -21,11 +21,11 @@ exports[`SessionCard should render 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-session-single-chart mr-2"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-session-single-chart icon-root mr-2"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#session-single-chart"
+              xlink:href="#session-single-chart"
             />
           </svg>
           Total
@@ -35,11 +35,11 @@ exports[`SessionCard should render 1`] = `
           type="button"
         >
           <svg
-            class="icon-root lexicon-icon lexicon-icon-session-multiple-chart mr-2"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-session-multiple-chart icon-root mr-2"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#session-multiple-chart"
+              xlink:href="#session-multiple-chart"
             />
           </svg>
           Per Variant

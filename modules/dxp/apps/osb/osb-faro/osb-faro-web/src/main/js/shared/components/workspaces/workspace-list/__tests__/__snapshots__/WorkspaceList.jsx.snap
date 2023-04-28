@@ -47,11 +47,11 @@ exports[`WorkspaceList should render 1`] = `
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-angle-right icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  xlink:href="#angle-right"
                 />
               </svg>
             </div>
@@ -97,11 +97,11 @@ exports[`WorkspaceList should render 1`] = `
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-angle-right icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  xlink:href="#angle-right"
                 />
               </svg>
             </div>
@@ -147,11 +147,11 @@ exports[`WorkspaceList should render 1`] = `
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-angle-right icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  xlink:href="#angle-right"
                 />
               </svg>
             </div>
@@ -210,11 +210,11 @@ exports[`WorkspaceList should render WorkspaceList with friendlyURL 1`] = `
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-angle-right icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  xlink:href="#angle-right"
                 />
               </svg>
             </div>
@@ -260,11 +260,11 @@ exports[`WorkspaceList should render WorkspaceList with friendlyURL 1`] = `
                 </div>
               </div>
               <svg
-                class="icon-root lexicon-icon lexicon-icon-angle-right"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-angle-right icon-root"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                  xlink:href="#angle-right"
                 />
               </svg>
             </div>

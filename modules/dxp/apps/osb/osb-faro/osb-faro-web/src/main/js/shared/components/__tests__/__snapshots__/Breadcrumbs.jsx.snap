@@ -15,11 +15,11 @@ exports[`Breadcrumbs should render 1`] = `
       >
         <span>
           <svg
-            class="icon-root lexicon-icon lexicon-icon-ellipsis-h"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-ellipsis-h icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#ellipsis-h"
+              xlink:href="#ellipsis-h"
             />
           </svg>
         </span>

@@ -6,11 +6,11 @@ exports[`Workspace Empty State - CardEmpty should render CardEmpty 1`] = `
     class="empty-card"
   >
     <svg
-      class="icon-root lexicon-icon lexicon-icon-home"
-      viewBox=""
+      class="lexicon-icon lexicon-icon-home icon-root"
+      role="presentation"
     >
       <use
-        xlink:href="/o/osb-faro-web/dist/sprite.svg#home"
+        xlink:href="#home"
       />
     </svg>
     <p>
@@ -38,11 +38,11 @@ exports[`Workspace Empty State should render 1`] = `
         class="empty-card"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-ac-integration"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-ac-integration icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-integration"
+            xlink:href="#ac-integration"
           />
         </svg>
         <p>
@@ -63,11 +63,11 @@ exports[`Workspace Empty State should render 1`] = `
         class="empty-card"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-ac-page-analytics"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-ac-page-analytics icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-page-analytics"
+            xlink:href="#ac-page-analytics"
           />
         </svg>
         <p>

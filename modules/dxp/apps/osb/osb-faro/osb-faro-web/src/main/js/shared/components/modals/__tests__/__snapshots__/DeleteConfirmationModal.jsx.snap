@@ -20,11 +20,11 @@ exports[`DeleteConfirmationModal renders 1`] = `
             class="modal-title"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-warning-full modal-title-indicator"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-warning-full icon-root modal-title-indicator"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+                xlink:href="#warning-full"
               />
             </svg>
             Test title

@@ -77,11 +77,11 @@ exports[`Individuals Dashboard Distribution renders 1`] = `
                               class="input-group-inset-item input-group-inset-item-after"
                             >
                               <svg
-                                class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                                viewBox=""
+                                class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                                role="presentation"
                               >
                                 <use
-                                  xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                                  xlink:href="#caret-bottom"
                                 />
                               </svg>
                             </div>
@@ -104,11 +104,11 @@ exports[`Individuals Dashboard Distribution renders 1`] = `
                         class="no-results-icon"
                       >
                         <svg
-                          class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
-                          viewBox=""
+                          class="lexicon-icon lexicon-icon-ac-satellite icon-root icon-size-xxxl"
+                          role="presentation"
                         >
                           <use
-                            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+                            xlink:href="#ac-satellite"
                           />
                         </svg>
                       </div>
@@ -154,11 +154,11 @@ exports[`Individuals Dashboard Distribution renders with data source empty state
         class="no-results-icon"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-ac-satellite icon-root icon-size-xxxl"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+            xlink:href="#ac-satellite"
           />
         </svg>
       </div>

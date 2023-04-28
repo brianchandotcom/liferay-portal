@@ -22,7 +22,7 @@ exports[`SelectDataSource should render 1`] = `
             class="image"
           >
             <svg
-              class="lexicon-icon lexicon-icon-csv-logo icon-root icon-size-xl"
+              class="lexicon-icon lexicon-icon-csv-logo icon-root icon-size-xxxl"
               role="presentation"
             >
               <use
@@ -53,7 +53,7 @@ exports[`SelectDataSource should render 1`] = `
             class="image"
           >
             <svg
-              class="lexicon-icon lexicon-icon-liferay-logo icon-root icon-size-xxl"
+              class="lexicon-icon lexicon-icon-liferay-logo icon-root icon-size-xxxl"
               role="presentation"
             >
               <use

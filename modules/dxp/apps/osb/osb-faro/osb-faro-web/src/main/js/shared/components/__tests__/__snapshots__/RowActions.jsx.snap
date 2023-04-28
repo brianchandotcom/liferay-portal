@@ -15,11 +15,11 @@ exports[`RowActions should render 1`] = `
       >
         <span>
           <svg
-            class="icon-root lexicon-icon lexicon-icon-ellipsis-v"
-            viewBox=""
+            class="lexicon-icon lexicon-icon-ellipsis-v icon-root"
+            role="presentation"
           >
             <use
-              xlink:href="/o/osb-faro-web/dist/sprite.svg#ellipsis-v"
+              xlink:href="#ellipsis-v"
             />
           </svg>
         </span>

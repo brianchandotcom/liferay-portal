@@ -19,7 +19,8 @@ exports[`Row should display an error state if it is a duplicate target field 1`]
     className="add-on"
     shrink={true}
   >
-    <Icon
+    <ClayIcon
+      className="icon-root"
       symbol="faro-connection-error-ovals"
     />
   </FormGroupItem>
@@ -51,8 +52,8 @@ exports[`Row should display an error state if it is a duplicate target field 1`]
       data-tooltip={true}
       title="Only one field per source can be mapped to the same Analytics Cloud field."
     >
-      <Icon
-        className="help"
+      <ClayIcon
+        className="icon-root help"
         symbol="exclamation-full"
       />
     </span>
@@ -96,7 +97,8 @@ exports[`Row should render 1`] = `
     className="add-on"
     shrink={true}
   >
-    <Icon
+    <ClayIcon
+      className="icon-root"
       symbol="faro-connection-error-ovals"
     />
   </FormGroupItem>
@@ -128,8 +130,8 @@ exports[`Row should render 1`] = `
       data-tooltip={true}
       title="No fields matched. Please select a field from the dropdown or create a new one."
     >
-      <Icon
-        className="help"
+      <ClayIcon
+        className="icon-root help"
         symbol="exclamation-full"
       />
     </span>
@@ -177,7 +179,8 @@ exports[`Row should update when receiving a new field: should contain "baz" and 
     className="add-on"
     shrink={true}
   >
-    <Icon
+    <ClayIcon
+      className="icon-root"
       symbol="faro-connection-success-ovals"
     />
   </FormGroupItem>
@@ -211,8 +214,8 @@ exports[`Row should update when receiving a new field: should contain "baz" and 
       data-tooltip={true}
       title="Best match selected. There are  other possible matches."
     >
-      <Icon
-        className="help"
+      <ClayIcon
+        className="icon-root help"
         symbol="info-circle"
       />
     </span>

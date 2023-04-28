@@ -43,11 +43,11 @@ exports[`DndTable renders 1`] = `
                 draggable="true"
               >
                 <svg
-                  class="icon-root lexicon-icon lexicon-icon-drag"
-                  viewBox=""
+                  class="lexicon-icon lexicon-icon-drag icon-root"
+                  role="presentation"
                 >
                   <use
-                    xlink:href="/o/osb-faro-web/dist/sprite.svg#drag"
+                    xlink:href="#drag"
                   />
                 </svg>
               </div>

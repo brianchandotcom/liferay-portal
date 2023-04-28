@@ -26,20 +26,20 @@ exports[`DataTransformation should render 1`] = `
         class="summary"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-faro-connection-success-ovals"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-faro-connection-success-ovals icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-success-ovals"
+            xlink:href="#faro-connection-success-ovals"
           />
         </svg>
         0 fields mapped.
         <svg
-          class="icon-root lexicon-icon lexicon-icon-faro-connection-error-ovals"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-faro-connection-error-ovals icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-error-ovals"
+            xlink:href="#faro-connection-error-ovals"
           />
         </svg>
         1 fields not mapped.
@@ -110,11 +110,11 @@ exports[`DataTransformation should render 1`] = `
                     class="caret-root"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-caret-double"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-caret-double icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+                        xlink:href="#caret-double"
                       />
                     </svg>
                   </span>
@@ -129,11 +129,11 @@ exports[`DataTransformation should render 1`] = `
             class="form-group-item add-on form-group-item-shrink"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-faro-connection-error-ovals"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-faro-connection-error-ovals icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#faro-connection-error-ovals"
+                xlink:href="#faro-connection-error-ovals"
               />
             </svg>
           </div>
@@ -162,11 +162,11 @@ exports[`DataTransformation should render 1`] = `
                     class="caret-root"
                   >
                     <svg
-                      class="icon-root lexicon-icon lexicon-icon-caret-double"
-                      viewBox=""
+                      class="lexicon-icon lexicon-icon-caret-double icon-root"
+                      role="presentation"
                     >
                       <use
-                        xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-double"
+                        xlink:href="#caret-double"
                       />
                     </svg>
                   </span>
@@ -185,11 +185,11 @@ exports[`DataTransformation should render 1`] = `
               title="No fields matched. Please select a field from the dropdown or create a new one."
             >
               <svg
-                class="icon-root lexicon-icon lexicon-icon-exclamation-full help"
-                viewBox=""
+                class="lexicon-icon lexicon-icon-exclamation-full icon-root help"
+                role="presentation"
               >
                 <use
-                  xlink:href="/o/osb-faro-web/dist/sprite.svg#exclamation-full"
+                  xlink:href="#exclamation-full"
                 />
               </svg>
             </span>

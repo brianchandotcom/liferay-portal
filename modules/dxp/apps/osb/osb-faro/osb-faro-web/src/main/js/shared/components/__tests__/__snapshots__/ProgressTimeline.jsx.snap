@@ -17,11 +17,11 @@ exports[`ProgressTimeline should render 1`] = `
         class="circle"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-check"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-check icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#check"
+            xlink:href="#check"
           />
         </svg>
       </div>

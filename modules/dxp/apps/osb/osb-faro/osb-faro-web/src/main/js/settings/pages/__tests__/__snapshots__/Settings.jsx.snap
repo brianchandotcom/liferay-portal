@@ -19,11 +19,11 @@ exports[`Setttings should render 1`] = `
             class="icon-wrapper"
           >
             <svg
-              class="icon-root lexicon-icon lexicon-icon-angle-left"
-              viewBox=""
+              class="lexicon-icon lexicon-icon-angle-left icon-root"
+              role="presentation"
             >
               <use
-                xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                xlink:href="#angle-left"
               />
             </svg>
           </span>

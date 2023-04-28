@@ -21,11 +21,11 @@ exports[`MaintenanceAlert should render w/ maintenance alert 1`] = `
         class="alert-indicator"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-warning-full"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-warning-full icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+            xlink:href="#warning-full"
           />
         </svg>
       </span>
@@ -39,11 +39,11 @@ exports[`MaintenanceAlert should render w/ maintenance alert 1`] = `
         class="close"
       >
         <svg
-          class="icon-root lexicon-icon lexicon-icon-times"
-          viewBox=""
+          class="lexicon-icon lexicon-icon-times icon-root"
+          role="presentation"
         >
           <use
-            xlink:href="/o/osb-faro-web/dist/sprite.svg#times"
+            xlink:href="#times"
           />
         </svg>
       </button>

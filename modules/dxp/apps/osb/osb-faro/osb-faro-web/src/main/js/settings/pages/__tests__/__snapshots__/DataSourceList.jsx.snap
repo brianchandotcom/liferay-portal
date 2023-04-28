@@ -81,11 +81,11 @@ exports[`DataSourceList should render 1`] = `
                       class="caret-root"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                          xlink:href="#caret-bottom"
                         />
                       </svg>
                     </span>
@@ -188,11 +188,11 @@ exports[`DataSourceList should render 1`] = `
                       class="inline-item inline-item-after"
                     >
                       <svg
-                        class="icon-root lexicon-icon lexicon-icon-order-arrow-up"
-                        viewBox=""
+                        class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
+                        role="presentation"
                       >
                         <use
-                          xlink:href="/o/osb-faro-web/dist/sprite.svg#order-arrow-up"
+                          xlink:href="#order-arrow-up"
                         />
                       </svg>
                     </span>
@@ -266,11 +266,11 @@ exports[`DataSourceList should render 1`] = `
                 </td>
                 <td>
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-check"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-check icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#check"
+                      xlink:href="#check"
                     />
                   </svg>
                 </td>
@@ -317,11 +317,11 @@ exports[`DataSourceList should render 1`] = `
                   class="caret-root"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-caret-bottom"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#caret-bottom"
+                      xlink:href="#caret-bottom"
                     />
                   </svg>
                 </span>
@@ -344,11 +344,11 @@ exports[`DataSourceList should render 1`] = `
                   href="/?page=0"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-angle-left"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-angle-left icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-left"
+                      xlink:href="#angle-left"
                     />
                   </svg>
                 </a>
@@ -372,11 +372,11 @@ exports[`DataSourceList should render 1`] = `
                   href="/?page=2"
                 >
                   <svg
-                    class="icon-root lexicon-icon lexicon-icon-angle-right"
-                    viewBox=""
+                    class="lexicon-icon lexicon-icon-angle-right icon-root"
+                    role="presentation"
                   >
                     <use
-                      xlink:href="/o/osb-faro-web/dist/sprite.svg#angle-right"
+                      xlink:href="#angle-right"
                     />
                   </svg>
                 </a>
@@ -402,11 +402,11 @@ exports[`DataSourceList should render toast for multiple data sources with inval
       class="alert-indicator"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-warning-full"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-warning-full icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+          xlink:href="#warning-full"
         />
       </svg>
     </span>
@@ -432,11 +432,11 @@ exports[`DataSourceList should render toast for multiple data sources with inval
       class="alert-indicator"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-warning-full"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-warning-full icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+          xlink:href="#warning-full"
         />
       </svg>
     </span>
@@ -462,11 +462,11 @@ exports[`DataSourceList should render toast for one data source with invalid cre
       class="alert-indicator"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-warning-full"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-warning-full icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+          xlink:href="#warning-full"
         />
       </svg>
     </span>
@@ -502,11 +502,11 @@ exports[`DataSourceList should render toast for one data source with invalid cre
       class="alert-indicator"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-warning-full"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-warning-full icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#warning-full"
+          xlink:href="#warning-full"
         />
       </svg>
     </span>
@@ -537,11 +537,11 @@ exports[`DataSourceList should render with a member-specific message to connect 
       class="no-results-icon"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-ac-satellite icon-root icon-size-xxxl"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+          xlink:href="#ac-satellite"
         />
       </svg>
     </div>
@@ -570,11 +570,11 @@ exports[`DataSourceList should render with a message to connect datasources if t
       class="no-results-icon"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-ac-satellite icon-size-xxxl"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-ac-satellite icon-root icon-size-xxxl"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-satellite"
+          xlink:href="#ac-satellite"
         />
       </svg>
     </div>
@@ -610,11 +610,11 @@ exports[`DataSourceList should render with an empty state 1`] = `
       class="no-results-icon"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-ac-no-results-found icon-size-xxxl"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-ac-no-results-found icon-root icon-size-xxxl"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#ac-no-results-found"
+          xlink:href="#ac-no-results-found"
         />
       </svg>
     </div>

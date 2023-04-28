@@ -16,11 +16,11 @@ exports[`UserActionsRenderer should render 1`] = `
       type="button"
     >
       <svg
-        class="icon-root lexicon-icon lexicon-icon-trash"
-        viewBox=""
+        class="lexicon-icon lexicon-icon-trash icon-root"
+        role="presentation"
       >
         <use
-          xlink:href="/o/osb-faro-web/dist/sprite.svg#trash"
+          xlink:href="#trash"
         />
       </svg>
     </button>

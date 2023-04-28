@@ -93,11 +93,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 			long stagingGroupId = ParamUtil.getLong(
 				actionRequest, "stagingGroupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				actionRequest, "privateLayout");
-			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
 			Map<Locale, String> nameMap = _localization.getLocalizationMap(
 				actionRequest, "nameMapAsXML");
+			long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 			String type = ParamUtil.getString(uploadPortletRequest, "type");
 			boolean hidden = ParamUtil.getBoolean(
 				uploadPortletRequest, "hidden");
@@ -118,8 +116,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				iconBytes = FileUtil.getBytes(fileEntry.getContentStream());
 			}
 
-			Layout layout = _layoutLocalService.getLayout(
-				groupId, privateLayout, layoutId);
+			Layout layout = _layoutLocalService.getLayout(selPlid);
 
 			long styleBookEntryId = ParamUtil.getLong(
 				uploadPortletRequest, "styleBookEntryId",
@@ -169,11 +166,12 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			layout = _layoutService.updateLayout(
-				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
-				nameMap, layout.getTitleMap(), layout.getDescriptionMap(),
-				layout.getKeywordsMap(), layout.getRobotsMap(), type, hidden,
-				friendlyURLMap, !deleteLogo, iconBytes, styleBookEntryId,
-				faviconFileEntryId, masterLayoutPlid, serviceContext);
+				groupId, layout.isPrivateLayout(), layout.getLayoutId(),
+				layout.getParentLayoutId(), nameMap, layout.getTitleMap(),
+				layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), type, hidden, friendlyURLMap,
+				!deleteLogo, iconBytes, styleBookEntryId, faviconFileEntryId,
+				masterLayoutPlid, serviceContext);
 
 			_updateClientExtensions(
 				actionRequest, layout, themeDisplay.getUserId());
@@ -191,9 +189,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 						Sites.LAYOUT_UPDATEABLE));
 
 				_layoutService.updateLayout(
-					groupId, privateLayout, draftLayout.getLayoutId(),
-					draftLayout.getParentLayoutId(), nameMap,
-					draftLayout.getTitleMap(), draftLayout.getDescriptionMap(),
+					groupId, layout.isPrivateLayout(),
+					draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
+					nameMap, draftLayout.getTitleMap(),
+					draftLayout.getDescriptionMap(),
 					draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
 					type, draftLayout.isHidden(),
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
@@ -214,7 +213,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			if (Validator.isNotNull(linkToLayoutUuid)) {
 				Layout linkToLayout = _layoutService.getLayoutByUuidAndGroupId(
-					linkToLayoutUuid, groupId, privateLayout);
+					linkToLayoutUuid, groupId, layout.isPrivateLayout());
 
 				formTypeSettingsUnicodeProperties.put(
 					"linkToLayoutId",
@@ -255,7 +254,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			layout = _layoutService.updateLayout(
-				groupId, privateLayout, layoutId,
+				groupId, layout.isPrivateLayout(), layout.getLayoutId(),
 				layoutTypeSettingsUnicodeProperties.toString());
 
 			EventsProcessorUtil.process(
@@ -266,7 +265,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			ActionUtil.updateLookAndFeel(
 				actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-				stagingGroupId, privateLayout, layout.getLayoutId(),
+				stagingGroupId, layout.isPrivateLayout(), layout.getLayoutId(),
 				layout.getTypeSettingsProperties());
 
 			if (layout.isDraftLayout()) {

@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -25,10 +28,16 @@
 								"backgroundColor": "",
 								"backgroundFragmentImage": {
 									"title": {
-										"value": "Solutions Banner"
+										"value": "Solutions_Banner.jpg"
 									},
 									"url": {
-										"value": "/documents/3192483/8811639/Solutions_Banner.jpg/3c5e52d1-8786-dd78-b7a7-d9fd187ec1a6?t=1657124144067&download=true"
+										"mapping": {
+											"fieldKey": "FileEntry_previewImage",
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Hero Images/Solutions_Banner.jpg#]"
+											}
+										}
 									}
 								},
 								"borderRadius": "",
@@ -339,6 +348,9 @@
 					},
 					{
 						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,

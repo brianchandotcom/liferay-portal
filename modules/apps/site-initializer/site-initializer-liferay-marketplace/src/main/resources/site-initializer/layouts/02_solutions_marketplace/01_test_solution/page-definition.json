@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -68,7 +71,8 @@
 						"definition": {
 							"fragmentStyle": {
 								"backgroundColor": "gray100Color",
-								"borderColor": "whiteColor"
+								"borderColor": "whiteColor",
+								"borderWidth": "0"
 							},
 							"indexed": true,
 							"layout": {
@@ -90,7 +94,8 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"borderColor": "whiteColor"
+										"borderColor": "whiteColor",
+										"borderWidth": "0"
 									},
 									"indexed": true,
 									"layout": {
@@ -291,17 +296,13 @@
 																									"id": "iconImage",
 																									"value": {
 																										"fragmentImage": {
-																											"description": {
-																												"value_i18n": {
-																													"en_US": ""
-																												}
-																											},
-																											"title": {
-																												"value": "solutions-details-app-icon.png"
-																											},
 																											"url": {
-																												"value_i18n": {
-																													"en_US": "/documents/3192483/0/solutions-details-app-icon.png/a6be9765-bbdb-0dbf-34a5-2e3d2acb42c6?t=1655908257436&download=true"
+																												"mapping": {
+																													"fieldKey": "FileEntry_previewImage",
+																													"itemReference": {
+																														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-app-icon.png#]"
+																													}
 																												}
 																											}
 																										},
@@ -342,9 +343,6 @@
 																										"fragmentLink": {
 																										},
 																										"text": {
-																											"defaultFragmentInlineValue": {
-																												"value": "Test Solution"
-																											},
 																											"mapping": {
 																												"fieldKey": "CPDefinition_name",
 																												"itemReference": {
@@ -375,10 +373,6 @@
 																							},
 																							"fragmentFields": [
 																							],
-																							"fragmentStyle": {
-																								"backgroundFragmentImage": {
-																								}
-																							},
 																							"indexed": true
 																						},
 																						"pageElements": [
@@ -403,14 +397,13 @@
 																													"id": "iconImage",
 																													"value": {
 																														"fragmentImage": {
-																															"description": {
-																																"value_i18n": {
-																																	"en_US": ""
-																																}
-																															},
 																															"url": {
-																																"value_i18n": {
-																																	"en_US": "/documents/3192483/0/insurance_logo.jpg/f989a4d0-5a27-18fb-4d13-505cb82e988d?t=1656348832530&download=true"
+																																"mapping": {
+																																	"fieldKey": "FileEntry_previewImage",
+																																	"itemReference": {
+																																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/insurance_logo.jpg#]"
+																																	}
 																																}
 																															}
 																														},
@@ -448,9 +441,6 @@
 																														"fragmentLink": {
 																														},
 																														"text": {
-																															"defaultFragmentInlineValue": {
-																																"value": "Matt Hartel"
-																															},
 																															"mapping": {
 																																"fieldKey": "CPDefinition_userName",
 																																"itemReference": {
@@ -490,9 +480,6 @@
 																										"fragmentLink": {
 																										},
 																										"text": {
-																											"defaultFragmentInlineValue": {
-																												"value": "<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\tCollaboration & Knowledge Sharing\n\t\t\t</div>\n\t</div>"
-																											},
 																											"mapping": {
 																												"fieldKey": "ddmTemplate__ddmTemplate_8811544",
 																												"itemReference": {
@@ -556,8 +543,6 @@
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
-																				"backgroundFragmentImage": {
-																				},
 																				"textAlign": "center"
 																			},
 																			"indexed": true
@@ -913,8 +898,12 @@
 																						"fragmentLink": {
 																						},
 																						"text": {
-																							"value_i18n": {
-																								"en_US": "{\"fileEntryId\":\"8811680\",\"url\":\"/documents/3192483/0/solutions-details-hero-carousel-graphic.png/7cfbf879-720c-6ab3-5cc7-8bd14b0b15a5?t=1655762069348&download=true\"}"
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-hero-carousel-graphic.png#]"
+																								}
 																							}
 																						}
 																					}
@@ -925,9 +914,20 @@
 																						"fragmentLink": {
 																						},
 																						"text": {
-																							"value_i18n": {
-																								"en_US": "{\"classPK\":\"8811706\",\"classNameId\":39438,\"title\":\"solution-details-thank-you-graphic\",\"fileEntryId\":\"8811706\",\"url\":\"/documents/3192483/0/solution-details-thank-you-graphic.png/678b7f2f-8481-57d4-9f48-7c3bf010fa7f?t=1656019115092&download=true\"}"
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solution-details-thank-you-graphic.png#]"
+																								}
 																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel2",
+																					"value": {
+																						"fragmentLink": {
 																						}
 																					}
 																				}
@@ -1510,6 +1510,19 @@
 																					},
 																					"fragmentFields": [
 																						{
+																							"id": "iconImage",
+																							"value": {
+																								"fragmentImage": {
+																									"url": {
+																										"value_i18n": {
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						},
+																						{
 																							"id": "iconHtml",
 																							"value": {
 																								"html": {
@@ -1907,17 +1920,13 @@
 																					"id": "image-square",
 																					"value": {
 																						"fragmentImage": {
-																							"description": {
-																								"value_i18n": {
-																									"en_US": ""
-																								}
-																							},
-																							"title": {
-																								"value": "solutions-details-video (1).png"
-																							},
 																							"url": {
-																								"value_i18n": {
-																									"en_US": "/documents/3192483/0/solutions-details-video%20%281%29.png/a648a131-bea6-1251-2558-0c59596c1a0a?t=1656408268187&download=true"
+																								"mapping": {
+																									"fieldKey": "FileEntry_previewImage",
+																									"itemReference": {
+																										"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																										"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-video.png#]"
+																									}
 																								}
 																							}
 																						},
@@ -2448,6 +2457,9 @@
 																		"pageElements": [
 																			{
 																				"definition": {
+																					"fragmentStyle": {
+																						"borderWidth": "0"
+																					},
 																					"indexed": true,
 																					"layout": {
 																						"borderWidth": 0,
@@ -2477,6 +2489,19 @@
 																								"useHtml": true
 																							},
 																							"fragmentFields": [
+																								{
+																									"id": "iconImage",
+																									"value": {
+																										"fragmentImage": {
+																											"url": {
+																												"value_i18n": {
+																												}
+																											}
+																										},
+																										"fragmentLink": {
+																										}
+																									}
+																								},
 																								{
 																									"id": "iconHtml",
 																									"value": {
@@ -2625,6 +2650,9 @@
 																		"pageElements": [
 																			{
 																				"definition": {
+																					"fragmentStyle": {
+																						"borderWidth": "0"
+																					},
 																					"indexed": true,
 																					"layout": {
 																						"borderWidth": 0,
@@ -2654,6 +2682,19 @@
 																								"useHtml": true
 																							},
 																							"fragmentFields": [
+																								{
+																									"id": "iconImage",
+																									"value": {
+																										"fragmentImage": {
+																											"url": {
+																												"value_i18n": {
+																												}
+																											}
+																										},
+																										"fragmentLink": {
+																										}
+																									}
+																								},
 																								{
 																									"id": "iconHtml",
 																									"value": {
@@ -2799,6 +2840,9 @@
 																		"pageElements": [
 																			{
 																				"definition": {
+																					"fragmentStyle": {
+																						"borderWidth": "0"
+																					},
 																					"indexed": true,
 																					"layout": {
 																						"borderWidth": 0,
@@ -2828,6 +2872,19 @@
 																								"useHtml": true
 																							},
 																							"fragmentFields": [
+																								{
+																									"id": "iconImage",
+																									"value": {
+																										"fragmentImage": {
+																											"url": {
+																												"value_i18n": {
+																												}
+																											}
+																										},
+																										"fragmentLink": {
+																										}
+																									}
+																								},
 																								{
 																									"id": "iconHtml",
 																									"value": {

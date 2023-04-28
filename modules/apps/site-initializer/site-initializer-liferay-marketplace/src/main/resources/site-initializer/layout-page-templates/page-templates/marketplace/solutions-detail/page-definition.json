@@ -5,7 +5,7 @@
 				"definition": {
 					"fragment": {
 						"key": "modal",
-						"siteKey": "M03"
+						"siteKey": "[$GROUP_KEY$]"
 					},
 					"fragmentConfig": {
 						"contentInitEvent": "",
@@ -100,7 +100,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -219,7 +219,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "flex",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"alignItems": "align-items-start",
@@ -241,7 +241,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "icon",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"alignment": "flex justify-center",
@@ -287,7 +287,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "text",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-paragraph-base",
@@ -320,7 +320,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "flex",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"alignItems": "align-items-start",
@@ -342,7 +342,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "icon",
-																										"siteKey": "M03"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"alignment": "",
@@ -385,7 +385,7 @@
 																								"definition": {
 																									"fragment": {
 																										"key": "text",
-																										"siteKey": "M03"
+																										"siteKey": "[$GROUP_KEY$]"
 																									},
 																									"fragmentConfig": {
 																										"fontSize": "font-size-paragraph-base",
@@ -424,7 +424,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "text",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-paragraph-base",
@@ -489,7 +489,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "flex",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"alignItems": "align-items-start",
@@ -615,7 +615,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -714,7 +714,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-heading-f1",
@@ -764,7 +764,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-paragraph-large",
@@ -840,7 +840,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "image-carousel",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"colorScheme": "",
@@ -913,7 +913,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -1136,7 +1136,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "image-carousel",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"colorScheme": "",
@@ -1240,7 +1240,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -1288,7 +1288,7 @@
 												"definition": {
 													"fragment": {
 														"key": "text",
-														"siteKey": "M03"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"fontSize": "font-size-heading-f4",
@@ -1335,7 +1335,7 @@
 												"definition": {
 													"fragment": {
 														"key": "text",
-														"siteKey": "M03"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"fontSize": "font-size-paragraph-base",
@@ -1458,7 +1458,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "icon",
-																				"siteKey": "M03"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"alignment": "flex justify-center",
@@ -1527,7 +1527,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "text",
-																				"siteKey": "M03"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-heading-f4",
@@ -1644,7 +1644,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -1743,7 +1743,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-heading-f2",
@@ -1793,7 +1793,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "text",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"fontSize": "font-size-paragraph-large",
@@ -1883,7 +1883,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-video (1).png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details-video.png#]"
 																							}
 																						}
 																					}
@@ -1931,7 +1931,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -2154,7 +2154,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "image-carousel",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"colorScheme": "",
@@ -2279,7 +2279,7 @@
 								"definition": {
 									"fragment": {
 										"key": "text",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"fontSize": "font-size-heading-f2",
@@ -2308,7 +2308,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -2438,7 +2438,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "icon",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"alignment": "",
@@ -2499,7 +2499,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "text",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"fontSize": "font-size-heading-f4",
@@ -2552,7 +2552,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "text",
-																				"siteKey": "M03"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-paragraph-base",
@@ -2631,7 +2631,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "icon",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"alignment": "",
@@ -2695,7 +2695,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "text",
-																				"siteKey": "M03"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-heading-f4",
@@ -2742,7 +2742,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "text",
-																				"siteKey": "M03"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-paragraph-base",
@@ -2821,7 +2821,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "icon",
-																						"siteKey": "M03"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																						"alignment": "",
@@ -2885,7 +2885,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "text",
-																				"siteKey": "M03"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-heading-f4",
@@ -2932,7 +2932,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "text",
-																				"siteKey": "M03"
+																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
 																				"fontSize": "font-size-paragraph-base",
@@ -2997,7 +2997,7 @@
 								"definition": {
 									"fragment": {
 										"key": "text",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"fontSize": "font-size-heading-f2",
@@ -3044,7 +3044,7 @@
 								"definition": {
 									"fragment": {
 										"key": "text",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"fontSize": "font-size-paragraph-base",
@@ -3073,7 +3073,7 @@
 								"definition": {
 									"fragment": {
 										"key": "content-container",
-										"siteKey": "M03"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"background": "",
@@ -3296,7 +3296,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "image-carousel",
-																		"siteKey": "M03"
+																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
 																		"colorScheme": "",

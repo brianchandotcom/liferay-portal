@@ -125,6 +125,14 @@ public class ObjectActionExecutorRegistryImplTest {
 					_companyId1, "objectDefinitionName1"),
 				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
 
+		Assert.assertArrayEquals(
+			ArrayUtil.sortedUnique(
+				ArrayUtil.append(
+					new String[] {objectActionExecutor.getKey()},
+					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
+			TransformUtil.transformToArray(
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					_companyId1, "objectDefinitionName2"),
 				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
 
 		Assert.assertArrayEquals(
@@ -159,6 +167,16 @@ public class ObjectActionExecutorRegistryImplTest {
 			TransformUtil.transformToArray(
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					_companyId1, "objectDefinitionName2"),
+				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
+
+		Assert.assertArrayEquals(
+			ArrayUtil.sortedUnique(
+				ArrayUtil.append(
+					new String[] {objectActionExecutor.getKey()},
+					_DEFAULT_OBJECT_ACTION_EXECUTOR_KEYS)),
+			TransformUtil.transformToArray(
+				_objectActionExecutorRegistry.getObjectActionExecutors(
+					_companyId2, "objectDefinitionName1"),
 				ObjectActionExecutor::getKey, ObjectActionExecutor.class));
 
 		_unregisterObjectActionExecutors();

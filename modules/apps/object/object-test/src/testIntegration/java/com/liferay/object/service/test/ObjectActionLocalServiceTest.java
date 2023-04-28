@@ -218,66 +218,6 @@ public class ObjectActionLocalServiceTest {
 				objectActionErrorMessageException.getMessage());
 		}
 
-		ObjectActionExecutor objectActionExecutor =
-			_registerObjectActionExecutor(
-				Collections.singletonList(_userObjectDefinition.getName()),
-				_companyId2, RandomTestUtil.randomString());
-
-		try {
-			_objectActionLocalService.addObjectAction(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), true,
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-				new UnicodeProperties());
-
-			Assert.fail();
-		}
-		catch (ObjectActionExecutorKeyException
-					objectActionExecutorKeyException) {
-
-			Assert.assertEquals(
-				objectActionExecutorKeyException.getMessage(),
-				StringBundler.concat(
-					"The object action executor key ",
-					objectActionExecutor.getKey(),
-					" is not allowed for company ",
-					String.valueOf(_companyId1)));
-		}
-
-		objectActionExecutor =
-			_registerObjectActionExecutor(
-				Collections.singletonList(_userObjectDefinition.getName()),
-				_companyId1, RandomTestUtil.randomString());
-
-		try {
-			_objectActionLocalService.addObjectAction(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), true,
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-				new UnicodeProperties());
-
-			Assert.fail();
-		}
-		catch (ObjectActionExecutorKeyException
-					objectActionExecutorKeyException) {
-
-			Assert.assertEquals(
-				objectActionExecutorKeyException.getMessage(),
-				StringBundler.concat(
-					"The object action executor key ",
-					objectActionExecutor.getKey(),
-					" is not allowed for object definition ",
-					_objectDefinition.getName()));
-		}
-
 		try {
 			_addObjectAction(
 				StringPool.BLANK, RandomTestUtil.randomString(),
@@ -345,6 +285,65 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(
 				"Name must only contain letters and digits",
 				objectActionNameException.getMessage());
+		}
+
+		ObjectActionExecutor objectActionExecutor =
+			_registerObjectActionExecutor(
+				Collections.singletonList(_userObjectDefinition.getName()),
+				_companyId2, RandomTestUtil.randomString());
+
+		try {
+			_objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				new UnicodeProperties());
+
+			Assert.fail();
+		}
+		catch (ObjectActionExecutorKeyException
+					objectActionExecutorKeyException) {
+
+			Assert.assertEquals(
+				objectActionExecutorKeyException.getMessage(),
+				StringBundler.concat(
+					"The object action executor key ",
+					objectActionExecutor.getKey(),
+					" is not allowed for company ",
+					String.valueOf(_companyId1)));
+		}
+
+		objectActionExecutor = _registerObjectActionExecutor(
+			Collections.singletonList(_userObjectDefinition.getName()),
+			_companyId1, RandomTestUtil.randomString());
+
+		try {
+			_objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+				new UnicodeProperties());
+
+			Assert.fail();
+		}
+		catch (ObjectActionExecutorKeyException
+					objectActionExecutorKeyException) {
+
+			Assert.assertEquals(
+				objectActionExecutorKeyException.getMessage(),
+				StringBundler.concat(
+					"The object action executor key ",
+					objectActionExecutor.getKey(),
+					" is not allowed for object definition ",
+					_objectDefinition.getName()));
 		}
 
 		String name = RandomTestUtil.randomString();

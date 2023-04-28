@@ -506,7 +506,7 @@ public class ClientExtensionProjectConfigurator
 
 				if (logger.isWarnEnabled()) {
 					logger.warn(
-						"Ignoring file client-extension.default.yaml since " +
+						"Ignoring client-extension.default.yaml because " +
 							"\"default\" is a reserved profile name.");
 				}
 

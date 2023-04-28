@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"mime.type=*", "service.ranking:Integer=101"},
+	property = {"mime.type=*", "service.ranking:Integer=100"},
 	service = AMImageScaler.class
 )
 public class AMImageMagickImageScaler implements AMImageScaler {

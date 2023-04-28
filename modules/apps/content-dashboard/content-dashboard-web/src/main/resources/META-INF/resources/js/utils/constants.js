@@ -43,9 +43,4 @@ export const COLORS = [
 	'#7785FF',
 ];
 
-export const DEFAULT_ACTIVE_PANEL_TAB = 0;
-
 export const DEFAULT_COLOR = '#CDCED9';
-
-export const TABS_STATE_SESSION_KEY =
-	'com.liferay.content.dashboard.web_panelTabsState';

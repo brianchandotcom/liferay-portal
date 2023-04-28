@@ -22,7 +22,6 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
-import {TABS_STATE_SESSION_KEY} from '../../utils/constants';
 import Sidebar from '../Sidebar';
 import DetailsContent from './DetailsContent';
 import ManageCollaborators from './ManageCollaborators';
@@ -41,19 +40,17 @@ const SidebarPanelInfoView = ({
 	specificFields = {},
 	subscribe,
 	subType,
-	tabsState,
 	tags = [],
 	title,
 	type,
 	preview,
 	fetchSharingButtonURL,
 	fetchSharingCollaboratorsURL,
-	singlePageApplicationEnabled,
 	user,
 	viewURLs = [],
 	vocabularies = {},
 }) => {
-	const [activeTabKeyValue, setActiveTabKeyValue] = useState(tabsState);
+	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 
 	const showTabs = !!getItemVersionsURL;
 
@@ -64,14 +61,6 @@ const SidebarPanelInfoView = ({
 	const handleError = useCallback(() => {
 		setError(true);
 	}, []);
-
-	const handleTabClick = (tab) => {
-		setActiveTabKeyValue(tab);
-
-		if (singlePageApplicationEnabled) {
-			Liferay.Util.Session.set(TABS_STATE_SESSION_KEY, tab);
-		}
-	};
 
 	return (
 		<>
@@ -168,7 +157,7 @@ const SidebarPanelInfoView = ({
 										innerProps={{
 											'aria-controls': 'details',
 										}}
-										onClick={() => handleTabClick(0)}
+										onClick={() => setActiveTabKeyValue(0)}
 									>
 										{Liferay.Language.get('details')}
 									</ClayTabs.Item>
@@ -178,7 +167,7 @@ const SidebarPanelInfoView = ({
 										innerProps={{
 											'aria-controls': 'versions',
 										}}
-										onClick={() => handleTabClick(1)}
+										onClick={() => setActiveTabKeyValue(1)}
 									>
 										{Liferay.Language.get('versions')}
 									</ClayTabs.Item>
@@ -244,10 +233,8 @@ SidebarPanelInfoView.propTypes = {
 	latestVersions: PropTypes.array.isRequired,
 	modifiedDate: PropTypes.string.isRequired,
 	preview: PropTypes.object,
-	singlePageApplicationEnabled: PropTypes.bool.isRequired,
 	specificFields: PropTypes.object.isRequired,
 	subType: PropTypes.string.isRequired,
-	tabsState: PropTypes.number.isRequired,
 	tags: PropTypes.array,
 	title: PropTypes.string.isRequired,
 	user: PropTypes.object.isRequired,

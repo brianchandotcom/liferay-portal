@@ -18,10 +18,6 @@ import SidebarPanel from '../components/SidebarPanel';
 import SidebarPanelInfoView from '../components/SidebarPanelInfoView/SidebarPanelInfoView';
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 import {
-	DEFAULT_ACTIVE_PANEL_TAB,
-	TABS_STATE_SESSION_KEY,
-} from '../utils/constants';
-import {
 	handlePanelStateFromSession,
 	handleSessionOnSidebarOpen,
 } from './panelStateHandler';
@@ -109,11 +105,6 @@ const actions = {
 				rowId,
 				selectedItemRowId,
 			});
-
-			Liferay.Util.Session.set(
-				TABS_STATE_SESSION_KEY,
-				DEFAULT_ACTIVE_PANEL_TAB
-			);
 		}
 
 		showSidebar({

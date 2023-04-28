@@ -317,8 +317,6 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 									"selectedItemRowId", contentDashboardAdminDisplayContext.getSelectedItemRowId()
 								).put(
 									"singlePageApplicationEnabled", contentDashboardAdminDisplayContext.getSinglePageApplicationEnabled()
-								).put(
-									"tabsState", contentDashboardAdminDisplayContext.getTabsState()
 								).build()
 							%>'
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'

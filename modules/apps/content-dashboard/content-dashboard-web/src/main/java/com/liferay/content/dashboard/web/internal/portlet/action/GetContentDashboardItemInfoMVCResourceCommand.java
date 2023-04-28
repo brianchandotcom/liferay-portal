@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.time.Instant;
@@ -231,13 +230,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 						return contentDashboardItemSubtype.getLabel(locale);
 					}
-				).put(
-					"tabsState",
-					GetterUtil.getInteger(
-						SessionClicks.get(
-							httpServletRequest,
-							"com.liferay.content.dashboard.web_panelTabsState",
-							"0"))
 				).put(
 					"tags", _getAssetTagsJSONArray(contentDashboardItem)
 				).put(

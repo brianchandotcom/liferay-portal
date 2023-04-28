@@ -457,13 +457,6 @@ public class ContentDashboardAdminDisplayContext {
 		).buildActionURL();
 	}
 
-	public int getTabsState() {
-		return GetterUtil.getInteger(
-			SessionClicks.get(
-				_portal.getHttpServletRequest(_liferayPortletRequest),
-				"com.liferay.content.dashboard.web_panelTabsState", "0"));
-	}
-
 	public long getUserId() {
 		if (_userId > 0) {
 			return _userId;

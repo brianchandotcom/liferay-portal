@@ -146,7 +146,9 @@ const Table: React.FC<TableProps> = ({
 							<ClayTable.Cell headingTitle key={index}>
 								<div className="d-flex justify-content-between">
 									<span
-										className={classNames({"cursor-pointer":column.sorteable})}
+										className={classNames({
+											'cursor-pointer': column.sorteable,
+										})}
 										onClick={() => changeSort(column.key)}
 									>
 										{column.value}

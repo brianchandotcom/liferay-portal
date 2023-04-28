@@ -458,6 +458,11 @@ public class CommerceServiceUpgradeStepRegistrator
 				"CommerceOrderItem", "replacedCPInstanceId LONG",
 				"replacedSku VARCHAR(75) null"));
 
+		registry.register(
+			"9.2.0", "9.3.0",
+			UpgradeProcessFactory.addColumns(
+				"CommerceOrderItem", "customerCommerceOrderItemId LONG"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

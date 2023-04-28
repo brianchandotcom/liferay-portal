@@ -193,7 +193,7 @@ const LevelChart = () => {
 			return <ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
 		}
 
-		if (!data || !loading) {
+		if (!data) {
 			return (
 				<ClayAlert
 					className="mb-8 mt-8 mx-auto text-center w-50"

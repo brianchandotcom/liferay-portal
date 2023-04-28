@@ -81,6 +81,8 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 			<liferay-ui:message key="<%= usne.screenNameValidator.getDescription(locale) %>" />
 		</liferay-ui:error>
 
+		<aui:input name="password" type="hidden" />
+
 		<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || (selUser != null) %>">
 			<c:choose>
 				<c:when test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) || !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "screenName") || ((selUser != null) && (selUser.getType() == UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT)) %>'>
@@ -214,6 +216,12 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 								name:
 									'<%= liferayPortletResponse.getNamespace() + "verifyPassword" %>',
 								onEvent: function (event) {
+									var passwordInput = document.getElementById(
+										'<portlet:namespace />password'
+									);
+
+									passwordInput.value = event.data;
+
 									submitForm(form.form);
 								},
 							},

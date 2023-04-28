@@ -407,14 +407,15 @@ definition {
 			dmDocumentTitle = "Cancel Checkout Excel Sheet Title ${num}",
 			dmDocumentTypeName = "Excel");
 
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Cancel Checkout Excel Sheet Title ${num}");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.cancelCheckoutCP(dmDocumentTitle = "Cancel Checkout Excel Sheet Title ${num}");
 
 		AssertElementNotPresent(
-			key_rowEntry = "Cancel Checkout Excel Sheet Title ${num}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			value1 = "Cancel Checkout Excel Sheet Title ${num}");
+			key_dmDocumentTitle = "Cancel Checkout Excel Sheet Title ${num}",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 	}
 
 	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout on a Word document during creation."
@@ -436,13 +437,15 @@ definition {
 			dmDocumentTitle = "Cancel Checkout Word Doc Title ${num}",
 			dmDocumentTypeName = "Word");
 
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Cancel Checkout Word Doc Title ${num}");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.cancelCheckoutPG(dmDocumentTitle = "Cancel Checkout Word Doc Title ${num}");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Cancel Checkout Word Doc Title ${num}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 	}
 
 	@description = "This test covers LPS-130200. It ensures that users can edit the entry through Office 365 after checkin the entry from the document editor."
@@ -589,9 +592,16 @@ definition {
 
 		Refresh();
 
-		AssertElementNotPresent(
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		AssertTextEquals(
 			key_dmDocumentTitle = "Auto Checkin Word Doc Title ${num}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
+			value1 = "DRAFT");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Cancel Checkout Word Doc Title ${num}",
+			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 	}
 
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."

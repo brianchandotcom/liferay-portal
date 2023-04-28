@@ -18,14 +18,12 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
-import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
-import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -69,8 +67,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.io.Serializable;
 
 import java.time.Month;
 
@@ -210,19 +206,19 @@ public class BaseNotificationTypeTest {
 				user1.getUserId(), objectDefinition.getObjectDefinitionId());
 
 		_authorTermValues = HashMapBuilder.<String, Object>put(
-			getTerm("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
+			getTermName("AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
 		).put(
-			getTerm("AUTHOR_FIRST_NAME"), user2.getFirstName()
+			getTermName("AUTHOR_FIRST_NAME"), user2.getFirstName()
 		).put(
-			getTerm("AUTHOR_ID"), user2.getUserId()
+			getTermName("AUTHOR_ID"), user2.getUserId()
 		).put(
-			getTerm("AUTHOR_LAST_NAME"), user2.getLastName()
+			getTermName("AUTHOR_LAST_NAME"), user2.getLastName()
 		).put(
-			getTerm("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
+			getTermName("AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
 		).put(
-			getTerm("AUTHOR_PREFIX"), _getListType("PREFIX", user2)
+			getTermName("AUTHOR_PREFIX"), _getListType("PREFIX", user2)
 		).put(
-			getTerm("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
+			getTermName("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
 		).build();
 		_currentUserTermValues = HashMapBuilder.<String, Object>put(
 			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
@@ -290,7 +286,7 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
-	protected String getTerm(String objectFieldName) {
+	protected String getTermName(String objectFieldName) {
 		return StringBundler.concat(
 			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
 			StringUtil.upperCase(objectFieldName), "%]");
@@ -301,9 +297,11 @@ public class BaseNotificationTypeTest {
 			ListUtil.fromMapKeys(_authorTermValues),
 			ListUtil.fromMapKeys(_currentUserTermValues),
 			Arrays.asList(
-				getTerm("booleanObjectField"), getTerm("dateObjectField"),
-				getTerm("integerObjectField"), getTerm("picklistObjectField"),
-				getTerm("textObjectField")));
+				getTermName("booleanObjectField"),
+				getTermName("dateObjectField"),
+				getTermName("integerObjectField"),
+				getTermName("picklistObjectField"),
+				getTermName("textObjectField")));
 	}
 
 	protected List<Object> getTermValues() {

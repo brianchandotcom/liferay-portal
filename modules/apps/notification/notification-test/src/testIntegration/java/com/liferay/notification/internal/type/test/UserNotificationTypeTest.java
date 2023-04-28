@@ -74,7 +74,8 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	public void testSendNotificationRecipientTypeTerm() throws Exception {
 		_testSendNotification(
 			Arrays.asList(
-				createNotificationRecipientSetting("term", getTerm("creator")),
+				createNotificationRecipientSetting(
+					"term", getTermName("creator")),
 				createNotificationRecipientSetting(
 					"term", user1.getScreenName())),
 			NotificationRecipientConstants.TYPE_TERM);

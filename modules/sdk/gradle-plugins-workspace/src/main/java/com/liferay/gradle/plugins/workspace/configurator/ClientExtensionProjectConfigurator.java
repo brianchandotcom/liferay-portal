@@ -604,22 +604,31 @@ public class ClientExtensionProjectConfigurator
 
 		String taskName = "deploy" + StringUtil.capitalize(profileName);
 
-		Task deployProfileTask = GradleUtil.addTask(
+		TaskProvider<Task> taskTaskProvider = GradleUtil.addTaskProvider(
 			project, taskName, Task.class);
 
-		deployProfileTask.doFirst(
-			task -> GradleUtil.setProperty(
-				project, "profileName", profileName));
-		deployProfileTask.finalizedBy("deploy");
-		deployProfileTask.setDescription(
-			"Assembles the project and deploys it to Liferay with the \"" +
-				profileName + "\" client extension profile.");
-		deployProfileTask.setGroup(BasePlugin.BUILD_GROUP);
+		taskTaskProvider.configure(
+			new Action<Task>() {
 
-		TaskInputs taskInputs = deployProfileTask.getInputs();
+				@Override
+				public void execute(Task task) {
+					GradleUtil.setProperty(project, "profileName", profileName);
 
-		taskInputs.files(
-			clientExtensionYamlFile, overrideClientExtensionYamlFile);
+					task.finalizedBy("deploy");
+					task.setDescription(
+						"Assembles the project and deploys it to Liferay " +
+							"with the \"" + profileName + "\" client " +
+								"extension profile.");
+					task.setGroup(BasePlugin.BUILD_GROUP);
+
+					TaskInputs taskInputs = task.getInputs();
+
+					taskInputs.files(
+						clientExtensionYamlFile,
+						overrideClientExtensionYamlFile);
+				}
+
+			});
 	}
 
 	private void _configureLiferayExtension(

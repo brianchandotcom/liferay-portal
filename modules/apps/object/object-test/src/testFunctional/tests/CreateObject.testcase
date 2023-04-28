@@ -5714,9 +5714,7 @@ definition {
 				labelName = "Custom Object ${letter} 125",
 				objectName = "CustomObject${letter}125",
 				pluralLabelName = "Custom Objects ${letter} 125");
-		}
 
-		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
 				fieldLabelName = "Custom Field ${letter}",
@@ -5728,6 +5726,8 @@ definition {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout Name",
 				objectName = "CustomObject${letter}125");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject${letter}125");
 		}
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
@@ -5744,7 +5744,7 @@ definition {
 
 			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
 
-			PortletEntry.publish();
+			CreateObject.saveObject();
 
 			ObjectAdmin.goToLayoutsTab();
 

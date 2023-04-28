@@ -70,11 +70,12 @@ const CaseResultEditTest = () => {
 		defaultValues: caseResult?.dueStatus
 			? ({
 					comment: mbMessage?.articleBody,
-					dueStatus:
-						caseResult?.dueStatus.key ===
-						CaseResultStatuses.IN_PROGRESS
-							? CaseResultStatuses.PASSED
-							: caseResult?.dueStatus.key,
+					dueStatus: [
+						CaseResultStatuses.IN_PROGRESS,
+						CaseResultStatuses.UNTESTED,
+					].includes(caseResult?.dueStatus.key as CaseResultStatuses)
+						? CaseResultStatuses.PASSED
+						: caseResult?.dueStatus.key,
 					issues,
 			  } as any)
 			: {},

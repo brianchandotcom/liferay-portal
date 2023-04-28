@@ -67,6 +67,28 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							label="Status"
 						/>
 					)}
+
+					{content[DealRegistrationColumnKey.STATUS_DETAIL] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content[DealRegistrationColumnKey.STATUS_DETAIL]
+							}
+							label="Status Detail"
+						/>
+					)}
+
+					{content[DealRegistrationColumnKey.PROSPECT_ADDRESS] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content[
+									DealRegistrationColumnKey.PROSPECT_ADDRESS
+								]
+							}
+							label="Prospect Address"
+						/>
+					)}
 				</div>
 
 				<div className="col">
@@ -112,6 +134,55 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 								]
 							}
 							label="Primary Prospect Phone"
+						/>
+					)}
+
+					{content[DealRegistrationColumnKey.PROSPECT_ADDRESS] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content[
+									DealRegistrationColumnKey.PROSPECT_ADDRESS
+								]
+							}
+							label="Prospect Address"
+						/>
+					)}
+
+					{content[DealRegistrationColumnKey.PROSPECT_CITY] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content[DealRegistrationColumnKey.PROSPECT_CITY]
+							}
+							label="Prospect City"
+						/>
+					)}
+
+					{content[DealRegistrationColumnKey.PROSPECT_INDUSTRY] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content[
+									DealRegistrationColumnKey.PROSPECT_INDUSTRY
+								]
+							}
+							label="Prospect Industry"
+						/>
+					)}
+
+					{content[
+						DealRegistrationColumnKey.PROSPECT_POSTAL_CODE
+					] && (
+						<ModalFormatedInformation
+							className="col mb-3"
+							information={
+								content[
+									DealRegistrationColumnKey
+										.PROSPECT_POSTAL_CODE
+								]
+							}
+							label="Prospect Postal Code"
 						/>
 					)}
 				</div>

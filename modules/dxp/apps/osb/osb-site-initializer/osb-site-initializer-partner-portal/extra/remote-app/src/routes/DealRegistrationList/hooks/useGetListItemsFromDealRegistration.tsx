@@ -49,6 +49,15 @@ export default function useGetListItemsFromDealRegistration(
 					item.primaryProspectEmailAddress,
 				[DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE]:
 					item.primaryProspectPhone,
+				[DealRegistrationColumnKey.PROSPECT_ADDRESS]:
+					item.prospectAddress,
+				[DealRegistrationColumnKey.PROSPECT_CITY]: item.prospectCity,
+				[DealRegistrationColumnKey.PROSPECT_INDUSTRY]:
+					item.prospectIndustry,
+				[DealRegistrationColumnKey.PROSPECT_POSTAL_CODE]:
+					item.prospectPostalCode,
+				[DealRegistrationColumnKey.STATUS_DETAIL]:
+					item.leadStatusDetail,
 			})),
 		[swrResponse.data?.items]
 	);

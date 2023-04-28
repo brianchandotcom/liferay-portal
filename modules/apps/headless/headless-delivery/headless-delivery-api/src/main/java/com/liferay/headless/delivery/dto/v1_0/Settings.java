@@ -115,6 +115,69 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String css;
 
+	@Schema(
+		description = "The client extensions for css associated to the page."
+	)
+	@Valid
+	public ClientExtension[] getCssClientExtensions() {
+		return cssClientExtensions;
+	}
+
+	public void setCssClientExtensions(ClientExtension[] cssClientExtensions) {
+		this.cssClientExtensions = cssClientExtensions;
+	}
+
+	@JsonIgnore
+	public void setCssClientExtensions(
+		UnsafeSupplier<ClientExtension[], Exception>
+			cssClientExtensionsUnsafeSupplier) {
+
+		try {
+			cssClientExtensions = cssClientExtensionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The client extensions for css associated to the page."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ClientExtension[] cssClientExtensions;
+
+	@Schema(description = "The FavIcon of the page")
+	@Valid
+	public Object getFavIcon() {
+		return favIcon;
+	}
+
+	public void setFavIcon(Object favIcon) {
+		this.favIcon = favIcon;
+	}
+
+	@JsonIgnore
+	public void setFavIcon(
+		UnsafeSupplier<Object, Exception> favIconUnsafeSupplier) {
+
+		try {
+			favIcon = favIconUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The FavIcon of the page")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Object favIcon;
+
 	@Schema(description = "The page's JavaScript.")
 	public String getJavascript() {
 		return javascript;
@@ -142,6 +205,43 @@ public class Settings implements Serializable {
 	@GraphQLField(description = "The page's JavaScript.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String javascript;
+
+	@Schema(
+		description = "The client extensions for js associated to the page."
+	)
+	@Valid
+	public ClientExtension[] getJavascriptClientExtensions() {
+		return javascriptClientExtensions;
+	}
+
+	public void setJavascriptClientExtensions(
+		ClientExtension[] javascriptClientExtensions) {
+
+		this.javascriptClientExtensions = javascriptClientExtensions;
+	}
+
+	@JsonIgnore
+	public void setJavascriptClientExtensions(
+		UnsafeSupplier<ClientExtension[], Exception>
+			javascriptClientExtensionsUnsafeSupplier) {
+
+		try {
+			javascriptClientExtensions =
+				javascriptClientExtensionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The client extensions for js associated to the page."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ClientExtension[] javascriptClientExtensions;
 
 	@Schema(description = "The page's master page.")
 	@Valid
@@ -200,6 +300,39 @@ public class Settings implements Serializable {
 	@GraphQLField(description = "The StyleBook that is applied to the page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StyleBook styleBook;
+
+	@Schema(description = "The Client Extension for the theme of a page")
+	@Valid
+	public ClientExtension getThemeCssClientExtension() {
+		return themeCssClientExtension;
+	}
+
+	public void setThemeCssClientExtension(
+		ClientExtension themeCssClientExtension) {
+
+		this.themeCssClientExtension = themeCssClientExtension;
+	}
+
+	@JsonIgnore
+	public void setThemeCssClientExtension(
+		UnsafeSupplier<ClientExtension, Exception>
+			themeCssClientExtensionUnsafeSupplier) {
+
+		try {
+			themeCssClientExtension =
+				themeCssClientExtensionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The Client Extension for the theme of a page")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ClientExtension themeCssClientExtension;
 
 	@Schema(description = "The page's theme name.")
 	public String getThemeName() {
@@ -313,6 +446,46 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
+		if (cssClientExtensions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cssClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < cssClientExtensions.length; i++) {
+				sb.append(String.valueOf(cssClientExtensions[i]));
+
+				if ((i + 1) < cssClientExtensions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (favIcon != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"favIcon\": ");
+
+			if (favIcon instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)favIcon));
+			}
+			else if (favIcon instanceof String) {
+				sb.append("\"");
+				sb.append(_escape((String)favIcon));
+				sb.append("\"");
+			}
+			else {
+				sb.append(favIcon);
+			}
+		}
+
 		if (javascript != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -325,6 +498,26 @@ public class Settings implements Serializable {
 			sb.append(_escape(javascript));
 
 			sb.append("\"");
+		}
+
+		if (javascriptClientExtensions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"javascriptClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < javascriptClientExtensions.length; i++) {
+				sb.append(String.valueOf(javascriptClientExtensions[i]));
+
+				if ((i + 1) < javascriptClientExtensions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (masterPage != null) {
@@ -345,6 +538,16 @@ public class Settings implements Serializable {
 			sb.append("\"styleBook\": ");
 
 			sb.append(String.valueOf(styleBook));
+		}
+
+		if (themeCssClientExtension != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"themeCssClientExtension\": ");
+
+			sb.append(String.valueOf(themeCssClientExtension));
 		}
 
 		if (themeName != null) {

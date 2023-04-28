@@ -120,6 +120,31 @@ public class PageSettings implements Cloneable, Serializable {
 
 	protected SEOSettings seoSettings;
 
+	public SitePageNavigationMenuSettings getSitePageNavigationMenuSettings() {
+		return sitePageNavigationMenuSettings;
+	}
+
+	public void setSitePageNavigationMenuSettings(
+		SitePageNavigationMenuSettings sitePageNavigationMenuSettings) {
+
+		this.sitePageNavigationMenuSettings = sitePageNavigationMenuSettings;
+	}
+
+	public void setSitePageNavigationMenuSettings(
+		UnsafeSupplier<SitePageNavigationMenuSettings, Exception>
+			sitePageNavigationMenuSettingsUnsafeSupplier) {
+
+		try {
+			sitePageNavigationMenuSettings =
+				sitePageNavigationMenuSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SitePageNavigationMenuSettings sitePageNavigationMenuSettings;
+
 	@Override
 	public PageSettings clone() throws CloneNotSupportedException {
 		return (PageSettings)super.clone();

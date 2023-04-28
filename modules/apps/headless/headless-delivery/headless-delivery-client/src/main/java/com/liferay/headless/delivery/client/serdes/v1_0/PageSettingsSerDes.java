@@ -106,6 +106,18 @@ public class PageSettingsSerDes {
 			sb.append(String.valueOf(pageSettings.getSeoSettings()));
 		}
 
+		if (pageSettings.getSitePageNavigationMenuSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sitePageNavigationMenuSettings\": ");
+
+			sb.append(
+				String.valueOf(
+					pageSettings.getSitePageNavigationMenuSettings()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -158,6 +170,16 @@ public class PageSettingsSerDes {
 		else {
 			map.put(
 				"seoSettings", String.valueOf(pageSettings.getSeoSettings()));
+		}
+
+		if (pageSettings.getSitePageNavigationMenuSettings() == null) {
+			map.put("sitePageNavigationMenuSettings", null);
+		}
+		else {
+			map.put(
+				"sitePageNavigationMenuSettings",
+				String.valueOf(
+					pageSettings.getSitePageNavigationMenuSettings()));
 		}
 
 		return map;
@@ -216,6 +238,16 @@ public class PageSettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					pageSettings.setSeoSettings(
 						SEOSettingsSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"sitePageNavigationMenuSettings")) {
+
+				if (jsonParserFieldValue != null) {
+					pageSettings.setSitePageNavigationMenuSettings(
+						SitePageNavigationMenuSettingsSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

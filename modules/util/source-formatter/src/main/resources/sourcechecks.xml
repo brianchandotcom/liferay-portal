@@ -1585,6 +1585,11 @@
 			<category name="Upgrade" />
 			<description name="Run code migration of references to If statements from a Velocity file to a Freemarker file with the syntax replacements" />
 		</check>
+		<check name="UpgradeVelocityLiferayTaglibReferenceMigrationCheck">
+			<category name="Upgrade" />
+			<description name="Run code migration of references to specific Liferay taglib from a Velocity file to a Freemarker file with the syntax replacements" />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeVelocityMacroDeclarationMigrationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of references to Macro statement from a Velocity file to a Freemarker file with the syntax replacements" />

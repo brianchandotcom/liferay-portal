@@ -33,7 +33,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 	<liferay-util:param name="tabs1" value="sharing" />
 </liferay-util:include>
 
-<div class="portlet-configuration-edit-sharing">
+<div class="cadmin portlet-configuration-edit-sharing">
 	<liferay-frontend:edit-form
 		action="<%= editSharingURL %>"
 		method="post"

@@ -32,7 +32,7 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 	<liferay-util:param name="tabs1" value="communication" />
 </liferay-util:include>
 
-<div class="portlet-configuration-edit-communications">
+<div class="cadmin portlet-configuration-edit-communications">
 	<liferay-frontend:edit-form
 		action="<%= editPublicRenderParametersURL %>"
 		cssClass="form"

@@ -31,7 +31,7 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 	<liferay-util:param name="tabs1" value="supported-clients" />
 </liferay-util:include>
 
-<div class="portlet-configuration-edit-supported-clients">
+<div class="cadmin portlet-configuration-edit-supported-clients">
 	<liferay-frontend:edit-form
 		action="<%= editSupportedClientsURL %>"
 		cssClass="form"

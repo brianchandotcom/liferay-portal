@@ -22,7 +22,7 @@
 	</liferay-util:include>
 </c:if>
 
-<div class="portlet-configuration-setup">
+<div class="cadmin portlet-configuration-setup">
 
 	<%
 	ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);

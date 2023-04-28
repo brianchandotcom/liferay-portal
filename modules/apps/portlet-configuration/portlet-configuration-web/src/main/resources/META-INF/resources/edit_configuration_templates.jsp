@@ -20,7 +20,7 @@
 PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplayContext = new PortletConfigurationTemplatesDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<div class="portlet-configuration-edit-templates">
+<div class="cadmin portlet-configuration-edit-templates">
 	<portlet:actionURL name="deleteArchivedSetups" var="deleteArchivedSetupsURL">
 		<portlet:param name="mvcPath" value="/edit_configuration_templates.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

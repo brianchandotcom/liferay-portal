@@ -64,7 +64,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 	<liferay-util:param name="tabs1" value="scope" />
 </liferay-util:include>
 
-<div class="portlet-configuration-edit-scope">
+<div class="cadmin portlet-configuration-edit-scope">
 	<liferay-frontend:edit-form
 		action="<%= setScopeURL %>"
 		cssClass="form"

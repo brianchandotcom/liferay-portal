@@ -25,7 +25,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<div class="portlet-configuration-add-template">
+<div class="cadmin portlet-configuration-add-template">
 	<aui:form action="<%= updateArchivedSetupURL %>" cssClass="form" id="fm" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.delivery.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePageNavigationMenuSettings;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -131,8 +132,9 @@ public class PageSettingsUtil {
 		_toSitePageNavigationMenuSettings(UnicodeProperties unicodeProperties) {
 
 		String queryStringProperty = unicodeProperties.getProperty(
-			"query-string");
-		String targetProperty = unicodeProperties.getProperty("target");
+			LayoutTypePortletConstants.QUERY_STRING);
+		String targetProperty = unicodeProperties.getProperty(
+			LayoutTypePortletConstants.TARGET);
 		String targetTypeProperty = unicodeProperties.getProperty("targetType");
 
 		if ((queryStringProperty == null) && (targetProperty == null) &&

@@ -350,7 +350,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		Map<Locale, String> descriptionMap = new HashMap<>();
 		Map<Locale, String> keywordsMap = new HashMap<>();
 		Map<Locale, String> robotsMap = new HashMap<>();
-		String typeSettings = null;
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
 		boolean hidden = false;
 
 		PageSettings pageSettings = sitePage.getPageSettings();
@@ -379,14 +380,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					seoSettings.getSiteMapSettings();
 
 				if (siteMapSettings != null) {
-					UnicodeProperties unicodeProperties =
-						new UnicodeProperties();
-
 					SiteMapSettings.ChangeFrequency changeFrequency =
 						siteMapSettings.getChangeFrequency();
 
 					if (changeFrequency != null) {
-						unicodeProperties.setProperty(
+						typeSettingsUnicodeProperties.setProperty(
 							LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
 							StringUtil.toLowerCase(changeFrequency.getValue()));
 					}
@@ -400,7 +398,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 							siteMapInclude = "1";
 						}
 
-						unicodeProperties.setProperty(
+						typeSettingsUnicodeProperties.setProperty(
 							LayoutTypePortletConstants.SITEMAP_INCLUDE,
 							siteMapInclude);
 					}
@@ -408,13 +406,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					Double pagePriority = siteMapSettings.getPagePriority();
 
 					if (pagePriority != null) {
-						unicodeProperties.setProperty(
+						typeSettingsUnicodeProperties.setProperty(
 							LayoutTypePortletConstants.SITEMAP_PRIORITY,
 							String.valueOf(pagePriority));
-					}
-
-					if (!unicodeProperties.isEmpty()) {
-						typeSettings = unicodeProperties.toString();
 					}
 				}
 			}
@@ -425,8 +419,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Layout layout = _layoutService.addLayout(
 			siteId, false, parentLayoutId, nameMap, titleMap, descriptionMap,
-			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT, typeSettings,
-			hidden, friendlyUrlMap, 0, _createServiceContext(siteId, sitePage));
+			keywordsMap, robotsMap, LayoutConstants.TYPE_CONTENT,
+			typeSettingsUnicodeProperties.toString(), hidden, friendlyUrlMap, 0,
+			_createServiceContext(siteId, sitePage));
 
 		layout = _updateLayoutSettings(layout, sitePage.getPageDefinition());
 

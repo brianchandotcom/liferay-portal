@@ -227,6 +227,12 @@ public class BatchEngineImportTaskExecutorImpl
 
 			throw exception;
 		}
+		else if (batchEngineImportTask.getImportStrategy() ==
+					BatchEngineImportTaskConstants.
+						IMPORT_STRATEGY_ON_ERROR_CONTINUE) {
+
+			_log.error(exception);
+		}
 	}
 
 	private void _importItems(BatchEngineImportTask batchEngineImportTask)

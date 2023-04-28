@@ -26,6 +26,7 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -659,6 +660,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			return "INPUTS-file-upload";
 		}
 
+		if (infoFieldType instanceof LongTextInfoFieldType) {
+			return "INPUTS-textarea";
+		}
+
 		if (infoFieldType instanceof NumberInfoFieldType) {
 			return "INPUTS-numeric-input";
 		}
@@ -670,12 +675,6 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 
 		if (infoFieldType instanceof TextInfoFieldType) {
-			if (GetterUtil.getBoolean(
-					infoField.getAttribute(TextInfoFieldType.MULTILINE))) {
-
-				return "INPUTS-textarea";
-			}
-
 			return "INPUTS-text-input";
 		}
 

@@ -225,15 +225,15 @@ public class OAuth2Controller extends BaseFaroController {
 
 		return _oAuth2ApplicationLocalService.addOAuth2Application(
 			user.getCompanyId(), user.getUserId(), user.getFullName(),
-			Arrays.asList(GrantType.CLIENT_CREDENTIALS), user.getEmailAddress(),
-			clientProfile.id(), _generateClientSecret(), StringPool.BLANK,
-			Collections.emptyList(), StringPool.BLANK, 0,
-			_generateApplicationName(), StringPool.BLANK,
-			Collections.emptyList(),
+			Arrays.asList(GrantType.CLIENT_CREDENTIALS), StringPool.BLANK, 0,
+			user.getEmailAddress(), clientProfile.id(), _generateClientSecret(),
+			StringPool.BLANK, Collections.emptyList(), StringPool.BLANK, 0,
+			StringPool.BLANK, _generateApplicationName(), StringPool.BLANK,
+			Collections.emptyList(), false,
 			Arrays.asList(
 				ApiApplication.OAuth2ScopeAliases.RECOMMENDATIONS_EVERYTHING,
 				ApiApplication.OAuth2ScopeAliases.REPORTS_EVERYTHING),
-			serviceContext);
+			false, serviceContext);
 	}
 
 	private List<OAuth2Authorization> _getUserOAuth2AuthorizationsByGroupId(

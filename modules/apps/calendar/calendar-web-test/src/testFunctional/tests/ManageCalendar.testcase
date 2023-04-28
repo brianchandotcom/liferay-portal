@@ -585,6 +585,10 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
+		Navigator.gotoSitePage(
+			pageName = "Calendar Site Page",
+			siteName = "Site Name");
+
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoAddEvent();

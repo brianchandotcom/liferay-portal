@@ -8,8 +8,12 @@ runGradleTest {
 
 		File clientExtensionBuildDir = new File(clientExtensionProject.buildDir, "liferay-client-extension-build")
 
-		File file = new File(clientExtensionBuildDir, "bar.txt")
+		File fooFile = new File(clientExtensionBuildDir, "foo.txt")
 
-		assert file.exists()
+		assert fooFile.exists()
+
+		File barFile = new File(clientExtensionProject.buildDir, "bar.txt")
+
+		assert !barFile.exists()
 	}
 }

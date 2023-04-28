@@ -1,7 +1,14 @@
+task barTask(type: Copy)
 task fooTask(type: Copy)
+
+barTask {
+	from "bar"
+	include "*.txt"
+	into buildDir
+}
 
 fooTask {
 	from "foo"
 	include "*.txt"
-	into "tmp"
+	into buildDir
 }

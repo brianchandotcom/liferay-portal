@@ -107,8 +107,8 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
+		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -158,7 +158,6 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 
 		document.addLocalizedKeyword(
 			Field.NAME, commerceOrderItem.getNameMap());
-		document.addKeyword(FIELD_SKU, commerceOrderItem.getSku());
 		document.addNumber(
 			FIELD_COMMERCE_ORDER_ID, commerceOrderItem.getCommerceOrderId());
 		document.addKeyword(
@@ -169,6 +168,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 			FIELD_PARENT_COMMERCE_ORDER_ITEM_ID,
 			commerceOrderItem.getParentCommerceOrderItemId());
 		document.addNumber(FIELD_QUANTITY, commerceOrderItem.getQuantity());
+		document.addKeyword(FIELD_SKU, commerceOrderItem.getSku());
 		document.addNumber(FIELD_UNIT_PRICE, commerceOrderItem.getUnitPrice());
 
 		_expandoBridgeIndexer.addAttributes(

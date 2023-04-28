@@ -114,11 +114,11 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, commerceCatalog);
 
-		document.addKeyword(Field.GROUP_ID, commerceCatalog.getGroupId());
-		document.addKeyword(Field.NAME, commerceCatalog.getName());
 		document.addKeyword(
 			CPField.CATALOG_DEFAULT_LANGUAGE_ID,
 			commerceCatalog.getCatalogDefaultLanguageId());
+		document.addKeyword(Field.GROUP_ID, commerceCatalog.getGroupId());
+		document.addKeyword(Field.NAME, commerceCatalog.getName());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + commerceCatalog + " indexed successfully");

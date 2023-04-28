@@ -70,14 +70,14 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, false);
-		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, CPField.KEY, false);
 		addSearchTerm(
 			searchQuery, searchContext, CPField.OPTION_VALUE_NAME, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, CPField.OPTION_VALUE_NAME, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
@@ -124,17 +124,15 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 			}
 
 			document.addText(
-				_localization.getLocalizedName(Field.NAME, languageId), name);
+				CPField.DDM_FORM_FIELD_TYPE_NAME,
+				cpOption.getDDMFormFieldTypeName());
+			document.addText(CPField.KEY, cpOption.getKey());
+			document.addText(Field.CONTENT, name);
 			document.addText(
 				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
 				description);
-
-			document.addText(CPField.KEY, cpOption.getKey());
-			document.addText(Field.CONTENT, name);
-
 			document.addText(
-				CPField.DDM_FORM_FIELD_TYPE_NAME,
-				cpOption.getDDMFormFieldTypeName());
+				_localization.getLocalizedName(Field.NAME, languageId), name);
 		}
 
 		if (_log.isDebugEnabled()) {

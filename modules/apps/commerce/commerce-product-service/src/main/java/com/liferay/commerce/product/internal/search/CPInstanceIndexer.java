@@ -159,14 +159,14 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.CONTENT, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
-		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
-		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 		addSearchTerm(
 			searchQuery, searchContext, CPField.EXTERNAL_REFERENCE_CODE, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.CONTENT, false);
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -228,6 +228,29 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpInstance);
 
+		document.addKeyword(
+			CPField.CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
+		document.addKeyword(
+			CPField.CP_DEFINITION_STATUS, cpDefinition.getStatus());
+		document.addDateSortable(
+			CPField.DISPLAY_DATE, cpInstance.getDisplayDate());
+		document.addKeyword(
+			CPField.EXTERNAL_REFERENCE_CODE,
+			cpInstance.getExternalReferenceCode());
+		document.addText(
+			CPField.EXTERNAL_REFERENCE_CODE,
+			cpInstance.getExternalReferenceCode());
+		document.addKeyword(
+			CPField.HAS_CHILD_CP_DEFINITIONS,
+			_cpDefinitionLocalService.hasChildCPDefinitions(
+				cpDefinition.getCPDefinitionId()));
+		document.addKeyword(CPField.PUBLISHED, cpInstance.isPublished());
+		document.addKeyword(CPField.PURCHASABLE, cpInstance.isPurchasable());
+		document.addTextSortable(CPField.SKU, cpInstance.getSku());
+		document.addKeyword(CPField.UNSPSC, cpInstance.getUnspsc());
+		document.addText(Field.CONTENT, cpInstance.getSku());
+		document.addText(Field.NAME, cpDefinition.getName());
+
 		List<String> languageIds =
 			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
 				cpInstance.getCPDefinitionId());
@@ -246,31 +269,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			document.addText(
 				_localization.getLocalizedName(Field.NAME, languageId), name);
 		}
-
-		document.addText(Field.NAME, cpDefinition.getName());
-
-		document.addText(
-			CPField.EXTERNAL_REFERENCE_CODE,
-			cpInstance.getExternalReferenceCode());
-
-		document.addText(Field.CONTENT, cpInstance.getSku());
-		document.addDateSortable(
-			CPField.DISPLAY_DATE, cpInstance.getDisplayDate());
-		document.addTextSortable(CPField.SKU, cpInstance.getSku());
-		document.addKeyword(
-			CPField.CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
-		document.addKeyword(
-			CPField.CP_DEFINITION_STATUS, cpDefinition.getStatus());
-		document.addKeyword(CPField.PUBLISHED, cpInstance.isPublished());
-		document.addKeyword(CPField.PURCHASABLE, cpInstance.isPurchasable());
-		document.addKeyword(
-			CPField.EXTERNAL_REFERENCE_CODE,
-			cpInstance.getExternalReferenceCode());
-		document.addKeyword(
-			CPField.HAS_CHILD_CP_DEFINITIONS,
-			_cpDefinitionLocalService.hasChildCPDefinitions(
-				cpDefinition.getCPDefinitionId()));
-		document.addKeyword(CPField.UNSPSC, cpInstance.getUnspsc());
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
 

@@ -100,10 +100,10 @@ public class CPSpecificationOptionIndexer
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, CPField.CP_OPTION_CATEGORY_TITLE,
 			false);
+		addSearchTerm(searchQuery, searchContext, CPField.KEY, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(searchQuery, searchContext, CPField.KEY, false);
 		addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
@@ -150,10 +150,23 @@ public class CPSpecificationOptionIndexer
 			cpSpecificationOption.getTitle());
 
 		for (String languageId : languageIds) {
+			if (cpOptionCategory != null) {
+				document.addKeyword(
+					CPField.CP_OPTION_CATEGORY_ID,
+					cpOptionCategory.getCPOptionCategoryId());
+				document.addText(
+					_localization.getLocalizedName(
+						CPField.CP_OPTION_CATEGORY_TITLE, languageId),
+					cpOptionCategory.getTitle(languageId));
+			}
+
+			document.addKeyword(
+				CPField.FACETABLE, cpSpecificationOption.isFacetable());
+			document.addText(CPField.KEY, cpSpecificationOption.getKey());
+
 			String title = cpSpecificationOption.getTitle(languageId);
 
-			document.addText(
-				_localization.getLocalizedName(Field.TITLE, languageId), title);
+			document.addText(Field.CONTENT, title);
 
 			String description = cpSpecificationOption.getDescription(
 				languageId);
@@ -162,21 +175,8 @@ public class CPSpecificationOptionIndexer
 				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
 				description);
 
-			if (cpOptionCategory != null) {
-				document.addText(
-					_localization.getLocalizedName(
-						CPField.CP_OPTION_CATEGORY_TITLE, languageId),
-					cpOptionCategory.getTitle(languageId));
-
-				document.addKeyword(
-					CPField.CP_OPTION_CATEGORY_ID,
-					cpOptionCategory.getCPOptionCategoryId());
-			}
-
-			document.addKeyword(
-				CPField.FACETABLE, cpSpecificationOption.isFacetable());
-			document.addText(CPField.KEY, cpSpecificationOption.getKey());
-			document.addText(Field.CONTENT, title);
+			document.addText(
+				_localization.getLocalizedName(Field.TITLE, languageId), title);
 		}
 
 		if (_log.isDebugEnabled()) {

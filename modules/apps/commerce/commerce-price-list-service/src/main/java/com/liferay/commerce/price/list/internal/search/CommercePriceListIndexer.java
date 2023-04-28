@@ -224,33 +224,18 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, commercePriceList);
 
-		document.addKeyword(
-			FIELD_EXTERNAL_REFERENCE_CODE,
-			commercePriceList.getExternalReferenceCode());
 		document.addNumber(
 			Field.ENTRY_CLASS_PK, commercePriceList.getCommercePriceListId());
 		document.addText(Field.NAME, commercePriceList.getName());
-		document.addText(Field.USER_NAME, commercePriceList.getUserName());
 		document.addNumberSortable(
 			Field.PRIORITY, commercePriceList.getPriority());
-		document.addNumber("catalogId", _getCatalogId(commercePriceList));
+		document.addText(Field.USER_NAME, commercePriceList.getUserName());
+		document.addKeyword(
+			FIELD_EXTERNAL_REFERENCE_CODE,
+			commercePriceList.getExternalReferenceCode());
 		document.addKeyword(
 			"catalogBasePriceList", commercePriceList.isCatalogBasePriceList());
-		document.addText("type", commercePriceList.getType());
-		document.addNumber(
-			"commerceAccountId",
-			TransformUtil.transformToLongArray(
-				_commercePriceListAccountRelLocalService.
-					getCommercePriceListAccountRels(
-						commercePriceList.getCommercePriceListId()),
-				CommercePriceListAccountRel::getCommerceAccountId));
-		document.addNumber(
-			"commerceChannelId",
-			TransformUtil.transformToLongArray(
-				_commercePriceListChannelRelLocalService.
-					getCommercePriceListChannelRels(
-						commercePriceList.getCommercePriceListId()),
-				CommercePriceListChannelRel::getCommerceChannelId));
+		document.addNumber("catalogId", _getCatalogId(commercePriceList));
 
 		long[] commerceAccountGroupIds = TransformUtil.transformToLongArray(
 			_commercePriceListCommerceAccountGroupRelLocalService.
@@ -265,12 +250,27 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			commerceAccountGroupIds.length);
 
 		document.addNumber(
+			"commerceAccountId",
+			TransformUtil.transformToLongArray(
+				_commercePriceListAccountRelLocalService.
+					getCommercePriceListAccountRels(
+						commercePriceList.getCommercePriceListId()),
+				CommercePriceListAccountRel::getCommerceAccountId));
+		document.addNumber(
+			"commerceChannelId",
+			TransformUtil.transformToLongArray(
+				_commercePriceListChannelRelLocalService.
+					getCommercePriceListChannelRels(
+						commercePriceList.getCommercePriceListId()),
+				CommercePriceListChannelRel::getCommerceChannelId));
+		document.addNumber(
 			"commerceOrderTypeId",
 			TransformUtil.transformToLongArray(
 				_commercePriceListOrderTypeRelLocalService.
 					getCommercePriceListOrderTypeRels(
 						commercePriceList.getCommercePriceListId()),
 				CommercePriceListOrderTypeRel::getCommerceOrderTypeId));
+		document.addText("type", commercePriceList.getType());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

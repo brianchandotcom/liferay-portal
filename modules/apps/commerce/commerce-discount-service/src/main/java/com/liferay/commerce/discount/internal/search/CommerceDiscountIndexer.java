@@ -330,13 +330,12 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		Document document = getBaseModelDocument(CLASS_NAME, commerceDiscount);
 
 		document.addText(Field.TITLE, commerceDiscount.getTitle());
-
-		document.addText(
-			FIELD_TARGET_TYPE, commerceDiscountTargetType.toString());
 		document.addText(Field.USER_NAME, commerceDiscount.getUserName());
 		document.addKeyword(FIELD_ACTIVE, commerceDiscount.isActive());
 		document.addKeyword(
 			FIELD_COUPON_CODE, commerceDiscount.getCouponCode());
+		document.addText(
+			FIELD_TARGET_TYPE, commerceDiscountTargetType.toString());
 		document.addKeyword(
 			FIELD_USE_COUPON_CODE, commerceDiscount.isUseCouponCode());
 

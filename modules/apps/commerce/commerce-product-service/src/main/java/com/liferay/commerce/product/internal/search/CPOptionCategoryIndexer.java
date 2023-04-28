@@ -72,10 +72,10 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(searchQuery, searchContext, FIELD_KEY, false);
 		addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		addSearchTerm(searchQuery, searchContext, FIELD_KEY, false);
 	}
 
 	@Override
@@ -105,22 +105,23 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 
 		for (String languageId : languageIds) {
 			String description = cpOptionCategory.getDescription(languageId);
+
 			String title = cpOptionCategory.getTitle(languageId);
+
+			document.addText(Field.CONTENT, title);
+
+			document.addText(
+				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
+				description);
+			document.addText(
+				_localization.getLocalizedName(Field.TITLE, languageId), title);
+			document.addText(FIELD_KEY, cpOptionCategory.getKey());
 
 			if (languageId.equals(cpOptionCategoryDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
 				document.addText(Field.TITLE, title);
 				document.addText("defaultLanguageId", languageId);
 			}
-
-			document.addText(
-				_localization.getLocalizedName(Field.TITLE, languageId), title);
-			document.addText(
-				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
-				description);
-
-			document.addText(FIELD_KEY, cpOptionCategory.getKey());
-			document.addText(Field.CONTENT, title);
 		}
 
 		if (_log.isDebugEnabled()) {

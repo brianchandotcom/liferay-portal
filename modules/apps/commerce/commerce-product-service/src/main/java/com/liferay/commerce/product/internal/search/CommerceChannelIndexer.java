@@ -115,13 +115,13 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, commerceChannel);
 
-		document.addKeyword(Field.NAME, commerceChannel.getName());
-
 		Group group = _commerceChannelLocalService.getCommerceChannelGroup(
 			commerceChannel.getCommerceChannelId());
 
 		document.addKeyword(
 			CPField.COMMERCE_CHANNEL_GROUP_ID, group.getGroupId());
+
+		document.addKeyword(Field.NAME, commerceChannel.getName());
 
 		document.addKeyword(
 			Field.SCOPE_GROUP_ID, commerceChannel.getSiteGroupId());

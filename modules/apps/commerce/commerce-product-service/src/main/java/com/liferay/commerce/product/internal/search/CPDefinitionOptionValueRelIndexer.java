@@ -87,8 +87,8 @@ public class CPDefinitionOptionValueRelIndexer
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, CPField.KEY, false);
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 		addSearchTerm(searchQuery, searchContext, "sku", false);
@@ -128,6 +128,12 @@ public class CPDefinitionOptionValueRelIndexer
 		Document document = getBaseModelDocument(
 			CLASS_NAME, cpDefinitionOptionValueRel);
 
+		document.addKeyword(
+			CPField.CP_DEFINITION_OPTION_REL_ID,
+			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
+		document.addNumber(
+			Field.PRIORITY, cpDefinitionOptionValueRel.getPriority());
+
 		String cpDefinitionOptionValueRelDefaultLanguageId =
 			_localization.getDefaultLanguageId(
 				cpDefinitionOptionValueRel.getName());
@@ -144,12 +150,6 @@ public class CPDefinitionOptionValueRelIndexer
 		if (cpInstance != null) {
 			document.addKeyword("sku", cpInstance.getSku());
 		}
-
-		document.addNumber(
-			Field.PRIORITY, cpDefinitionOptionValueRel.getPriority());
-		document.addKeyword(
-			CPField.CP_DEFINITION_OPTION_REL_ID,
-			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

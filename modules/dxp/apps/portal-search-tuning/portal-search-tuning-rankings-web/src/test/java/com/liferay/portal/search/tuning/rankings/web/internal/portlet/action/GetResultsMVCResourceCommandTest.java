@@ -84,7 +84,6 @@ public class GetResultsMVCResourceCommandTest
 		setUpPortletRequestParamValue(
 			resourceRequest, "getHiddenResultsJSONObject", Constants.CMD);
 		setUpRankingIndexReader();
-		setUpRankingResultUtil();
 		setUpResourceRequest();
 		setUpResourceResponse();
 
@@ -138,7 +137,6 @@ public class GetResultsMVCResourceCommandTest
 		setUpFastDateFormatFactory();
 		setUpQuery();
 		setUpRankingIndexReader();
-		setUpRankingResultUtil();
 		setUpResourceRequest();
 		setUpResourceResponse();
 		setUpSearcher(setUpSearchResponse(setUpDocumentWithGetString()));

@@ -18,14 +18,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 import com.liferay.portal.search.web.interpreter.SearchResultInterpreter;
-import com.liferay.portal.search.web.interpreter.SearchResultInterpreterProvider;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.PortletRequest;
@@ -34,7 +31,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,17 +46,6 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_rankingResultUtil, "_documentBuilderFactory",
-			_documentBuilderFactory);
-		ReflectionTestUtil.setFieldValue(_rankingResultUtil, "_portal", portal);
-		ReflectionTestUtil.setFieldValue(
-			_rankingResultUtil, "_searchResultInterpreterProvider",
-			_searchResultInterpreterProvider);
-	}
 
 	@Test
 	public void testGetAssetRenderer() {
@@ -82,7 +67,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		Mockito.doReturn(
 			searchResultInterpreter
 		).when(
-			_searchResultInterpreterProvider
+			searchResultInterpreterProvider
 		).getSearchResultInterpreter(
 			Mockito.anyString()
 		);
@@ -203,7 +188,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		Mockito.doReturn(
 			documentBuilder
 		).when(
-			_documentBuilderFactory
+			documentBuilderFactory
 		).builder();
 	}
 
@@ -239,7 +224,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		Mockito.doReturn(
 			searchResultInterpreter
 		).when(
-			_searchResultInterpreterProvider
+			searchResultInterpreterProvider
 		).getSearchResultInterpreter(
 			Mockito.anyString()
 		);
@@ -339,13 +324,5 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 
 		return resourceResponse;
 	}
-
-	private final DocumentBuilderFactory _documentBuilderFactory = Mockito.mock(
-		DocumentBuilderFactory.class);
-	private final RankingResultUtil _rankingResultUtil =
-		new RankingResultUtil();
-	private final SearchResultInterpreterProvider
-		_searchResultInterpreterProvider = Mockito.mock(
-			SearchResultInterpreterProvider.class);
 
 }

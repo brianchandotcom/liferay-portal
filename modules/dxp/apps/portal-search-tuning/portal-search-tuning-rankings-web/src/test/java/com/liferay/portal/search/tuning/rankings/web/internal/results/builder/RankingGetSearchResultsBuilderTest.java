@@ -47,7 +47,7 @@ public class RankingGetSearchResultsBuilderTest
 		setUpComplexQueryPartBuilderFactory(setUpComplexQueryPartBuilder());
 		setUpDLAppLocalService();
 		setUpFastDateFormatFactory();
-		setUpRankingResultUtil();
+		setUpPortalUtil();
 		setUpQuery();
 		setUpResourceRequest();
 		setUpSearcher(setUpSearchResponse(setUpDocumentWithGetString()));

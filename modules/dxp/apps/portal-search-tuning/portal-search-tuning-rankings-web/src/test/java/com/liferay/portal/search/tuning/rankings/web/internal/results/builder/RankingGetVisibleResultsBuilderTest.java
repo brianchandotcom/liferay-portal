@@ -68,7 +68,7 @@ public class RankingGetVisibleResultsBuilderTest
 
 		setUpRankingIndexReader(ranking);
 
-		setUpRankingResultUtil();
+		setUpPortalUtil();
 		setUpResourceRequest();
 		setUpSearchRequestBuilderFactory(setUpSearchRequestBuilder());
 		setUpSearcher(setUpSearchResponse(setUpDocumentWithGetString()));

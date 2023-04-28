@@ -58,7 +58,7 @@ public class RankingGetHiddenResultsBuilderTest
 	public void testBuild() throws Exception {
 		setUpDLAppLocalService();
 		setUpFastDateFormatFactory();
-		setUpRankingResultUtil();
+		setUpPortalUtil();
 		setUpResourceRequest();
 
 		Ranking ranking = Mockito.mock(Ranking.class);

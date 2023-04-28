@@ -23,8 +23,7 @@ import {
 const getCaseParameters = (testraySuite: TestraySuite): CaseParameter => {
 	try {
 		return JSON.parse(testraySuite.caseParameters);
-	}
-	catch (error) {
+	} catch (error) {
 		return CaseParameterInitialState;
 	}
 };
@@ -50,6 +49,6 @@ const useSuiteCaseFilter = (testraySuite: TestraySuite) => {
 	return searchBuilder;
 };
 
-export {getCaseParameters};
+export {getCaseParameters, getCaseValues};
 
 export default useSuiteCaseFilter;

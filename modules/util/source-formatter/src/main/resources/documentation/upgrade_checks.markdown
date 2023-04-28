@@ -15,6 +15,7 @@ UpgradeVelocityCommentMigrationCheck | .bnd, .gradle, .java or .vm | Run code mi
 UpgradeVelocityFileImportMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of file import from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityForeachMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to Foreach statement from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityIfStatementsMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to If statements from a Velocity file to a Freemarker file with the syntax replacements |
+UpgradeVelocityLiferayTaglibReferenceMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to specific Liferay taglib from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityMacroDeclarationMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to Macro statement from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityMacroReferenceMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to a custom Macro statement from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityVariableReferenceMigrationCheck | .bnd, .gradle, .java or .vm | Run code migration of references to variables from a Velocity file to a Freemarker file with the syntax replacements |

@@ -2,6 +2,7 @@
 	"concurrencyPolicy": "Forbid",
 	"cpu": 4,
 	"env": {
+		"LIFERAY_JAR_RUNNER_JAVA_OPTS": "-Xmx2048m",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_BRANCH": "master",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_DEPLOY_KEY": "@liferay-learn-github-deploy-key",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_REPO": "@liferay-learn-github-repo",
@@ -11,10 +12,9 @@
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET": "@liferay-oauth-client-secret",
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH": "guest",
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "@liferay-url",
-		"LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR": "../docs",
+		"LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR": "/home/liferay/liferay-learn/docs/",
 		"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops",
-		"LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT": "@slack-endpoint",
-		"LIFERAY_JAR_RUNNER_JAVA_OPTS": "-Xmx2048m"
+		"LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT": "@slack-endpoint"
 	},
 	"environments": {
 		"extprd": {

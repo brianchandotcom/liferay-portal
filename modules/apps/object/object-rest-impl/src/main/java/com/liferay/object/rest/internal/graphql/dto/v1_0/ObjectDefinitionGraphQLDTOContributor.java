@@ -284,7 +284,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	@Override
 	public Class<?> getResourceClass(Operation operation) {
 		ObjectValuePair<Class<?>, String> objectValuePair =
-			_resourceMethods.get(operation);
+			_objectValuePairs.get(operation);
 
 		if (objectValuePair == null) {
 			return null;
@@ -296,7 +296,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	@Override
 	public Method getResourceMethod(Operation operation) {
 		ObjectValuePair<Class<?>, String> objectValuePair =
-			_resourceMethods.get(operation);
+			_objectValuePairs.get(operation);
 
 		if (objectValuePair == null) {
 			return null;
@@ -432,7 +432,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	private static final Pattern _relationshipIdNamePattern = Pattern.compile(
 		"r_.+_c_.+Id");
 	private static final Map<Operation, ObjectValuePair<Class<?>, String>>
-		_resourceMethods =
+		_objectValuePairs =
 			HashMapBuilder.<Operation, ObjectValuePair<Class<?>, String>>put(
 				Operation.CREATE,
 				new ObjectValuePair<>(

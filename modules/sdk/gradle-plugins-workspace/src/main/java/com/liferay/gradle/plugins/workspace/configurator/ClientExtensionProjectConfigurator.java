@@ -148,101 +148,10 @@ public class ClientExtensionProjectConfigurator
 			Iterator<Map.Entry<String, JsonNode>> iterator = jsonNode.fields();
 
 			iterator.forEachRemaining(
-				entry -> {
-					String id = entry.getKey();
-
-					if (Objects.equals(id, "runtime")) {
-						return;
-					}
-
-					if (Objects.equals(id, "assemble")) {
-						JsonNode assembleJsonNode = entry.getValue();
-
-						if (!assembleJsonNode.isEmpty()) {
-							assembleClientExtensionTaskProvider.configure(
-								copy -> {
-									if (!_isActiveProfile(
-											project, profileName)) {
-
-										return;
-									}
-
-									TaskInputs taskInputs = copy.getInputs();
-
-									taskInputs.file(_CLIENT_EXTENSION_YAML);
-
-									if (!Objects.equals(
-											profileName, "default")) {
-
-										taskInputs.file(
-											"client-extension." + profileName +
-												".yaml");
-									}
-
-									assembleJsonNode.forEach(
-										copyJsonNode -> _configureCopySpec(
-											copy, copyJsonNode, project));
-								});
-						}
-
-						return;
-					}
-
-					JsonNode clientExtensionJsonNode = entry.getValue();
-
-					try {
-						ClientExtension clientExtension =
-							_yamlObjectMapper.treeToValue(
-								clientExtensionJsonNode, ClientExtension.class);
-
-						clientExtension.id = id;
-
-						if (Validator.isNull(clientExtension.type)) {
-							clientExtension.type = id;
-						}
-
-						clientExtension.classification = _getClassification(
-							clientExtension.id, clientExtension.type);
-
-						clientExtension.projectName = project.getName();
-
-						_validateClientExtension(clientExtension);
-
-						createClientExtensionConfigTaskProvider.configure(
-							createClientExtensionConfigTask -> {
-								if (!_isActiveProfile(project, profileName)) {
-									return;
-								}
-
-								createClientExtensionConfigTask.
-									addClientExtension(clientExtension);
-							});
-
-						if (clientExtension.type.equals("configuration")) {
-							assembleClientExtensionTaskProvider.configure(
-								copy -> {
-									if (!_isActiveProfile(
-											project, profileName)) {
-
-										return;
-									}
-
-									copy.from(
-										"src",
-										copySpec -> copySpec.include("**/*"));
-								});
-						}
-						else if (clientExtension.type.equals("themeCSS")) {
-							_themeCSSTypeConfigurer.apply(
-								project, assembleClientExtensionTaskProvider);
-						}
-					}
-					catch (JsonProcessingException jsonProcessingException) {
-						throw new GradleException(
-							"Unable to parse client extension " + id,
-							jsonProcessingException);
-					}
-				});
+				entry -> _configureTasksFromField(
+					assembleClientExtensionTaskProvider,
+					createClientExtensionConfigTaskProvider, entry.getValue(),
+					entry.getKey(), profileName, project));
 		}
 
 		_nodeBuildConfigurer.apply(
@@ -688,6 +597,91 @@ public class ClientExtensionProjectConfigurator
 		copy.dependsOn(BasePlugin.ASSEMBLE_TASK_NAME);
 
 		copy.from(_getZipFile(project));
+	}
+
+	private void _configureTasksFromField(
+		TaskProvider<Copy> assembleClientExtensionTaskProvider,
+		TaskProvider<CreateClientExtensionConfigTask>
+			createClientExtensionConfigTaskProvider,
+		JsonNode fieldJsonNode, String fieldName, String profileName,
+		Project project) {
+
+		if (Objects.equals(fieldName, "runtime")) {
+			return;
+		}
+
+		if (Objects.equals(fieldName, "assemble")) {
+			ArrayNode assembleJsonNode = (ArrayNode)fieldJsonNode;
+
+			if (!assembleJsonNode.isEmpty()) {
+				assembleClientExtensionTaskProvider.configure(
+					copy -> {
+						if (!_isActiveProfile(project, profileName)) {
+							return;
+						}
+
+						TaskInputs taskInputs = copy.getInputs();
+
+						taskInputs.file(_CLIENT_EXTENSION_YAML);
+
+						assembleJsonNode.forEach(
+							copyJsonNode -> _configureCopySpec(
+								copy, copyJsonNode, project));
+					});
+			}
+
+			return;
+		}
+
+		ObjectNode clientExtensionJsonNode = (ObjectNode)fieldJsonNode;
+
+		try {
+			ClientExtension clientExtension = _yamlObjectMapper.treeToValue(
+				clientExtensionJsonNode, ClientExtension.class);
+
+			clientExtension.id = fieldName;
+
+			if (Validator.isNull(clientExtension.type)) {
+				clientExtension.type = fieldName;
+			}
+
+			clientExtension.classification = _getClassification(
+				clientExtension.id, clientExtension.type);
+
+			clientExtension.projectName = project.getName();
+
+			_validateClientExtension(clientExtension);
+
+			createClientExtensionConfigTaskProvider.configure(
+				createClientExtensionConfigTask -> {
+					if (!_isActiveProfile(project, profileName)) {
+						return;
+					}
+
+					createClientExtensionConfigTask.addClientExtension(
+						clientExtension);
+				});
+
+			if (clientExtension.type.equals("configuration")) {
+				assembleClientExtensionTaskProvider.configure(
+					copy -> {
+						if (!_isActiveProfile(project, profileName)) {
+							return;
+						}
+
+						copy.from("src", copySpec -> copySpec.include("**/*"));
+					});
+			}
+			else if (clientExtension.type.equals("themeCSS")) {
+				_themeCSSTypeConfigurer.apply(
+					project, assembleClientExtensionTaskProvider);
+			}
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			throw new GradleException(
+				"Unable to parse client extension " + fieldName,
+				jsonProcessingException);
+		}
 	}
 
 	private String _getClassification(String id, String type) {

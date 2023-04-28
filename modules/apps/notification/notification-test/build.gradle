@@ -1,7 +1,9 @@
 dependencies {
+	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:notification:notification-api")
 	testIntegrationCompile project(":apps:object:object-api")
+	testIntegrationCompile project(":apps:object:object-rest-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

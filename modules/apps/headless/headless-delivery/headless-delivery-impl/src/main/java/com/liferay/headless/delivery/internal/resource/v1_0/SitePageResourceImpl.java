@@ -37,6 +37,7 @@ import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
 import com.liferay.headless.delivery.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.dto.v1_0.SitePageNavigationMenuSettings;
 import com.liferay.headless.delivery.dto.v1_0.StyleBook;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
@@ -410,6 +411,36 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 							LayoutTypePortletConstants.SITEMAP_PRIORITY,
 							String.valueOf(pagePriority));
 					}
+				}
+			}
+
+			SitePageNavigationMenuSettings sitePageNavigationMenuSettings =
+				pageSettings.getSitePageNavigationMenuSettings();
+
+			if (sitePageNavigationMenuSettings != null) {
+				String queryString =
+					sitePageNavigationMenuSettings.getQueryString();
+
+				if (Validator.isNotNull(queryString)) {
+					typeSettingsUnicodeProperties.setProperty(
+						LayoutTypePortletConstants.QUERY_STRING, queryString);
+				}
+
+				String target = sitePageNavigationMenuSettings.getTarget();
+				SitePageNavigationMenuSettings.TargetType targetType =
+					sitePageNavigationMenuSettings.getTargetType();
+
+				if (Validator.isNotNull(target)) {
+					typeSettingsUnicodeProperties.setProperty(
+						LayoutTypePortletConstants.TARGET, target);
+				}
+
+				if ((targetType != null) &&
+					(targetType ==
+						SitePageNavigationMenuSettings.TargetType.NEW_TAB)) {
+
+					typeSettingsUnicodeProperties.setProperty(
+						"targetType", "useNewTab");
 				}
 			}
 

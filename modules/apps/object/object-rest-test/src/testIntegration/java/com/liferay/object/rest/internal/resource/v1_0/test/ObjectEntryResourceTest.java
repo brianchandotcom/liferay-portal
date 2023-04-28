@@ -5015,10 +5015,18 @@ public class ObjectEntryResourceTest {
 		JSONObject jsonObject, String nestedFieldName, Type type) {
 
 		if (type == Type.MANY_TO_ONE) {
+			JSONObject nestedJSONObject = jsonObject.getJSONObject(
+				nestedFieldName);
+
+			Assert.assertNotNull(
+				"Missing field " + nestedFieldName, nestedJSONObject);
+
 			return jsonObject.getJSONObject(nestedFieldName);
 		}
 
 		JSONArray jsonArray = jsonObject.getJSONArray(nestedFieldName);
+
+		Assert.assertNotNull("Missing field " + nestedFieldName, jsonArray);
 
 		Assert.assertEquals(1, jsonArray.length());
 

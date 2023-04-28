@@ -20,18 +20,17 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
-import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -154,10 +153,11 @@ public class CustomFacetDisplayContextBuilder {
 	}
 
 	public CustomFacetDisplayContextBuilder setParameterValues(
-		Optional<List<String>> parameterValuesOptional) {
+		List<String> parameterValues) {
 
-		parameterValuesOptional.ifPresent(
-			parameterValues -> _parameterValues = parameterValues);
+		if (ListUtil.isNotEmpty(parameterValues)) {
+			_parameterValues = parameterValues;
+		}
 
 		return this;
 	}
@@ -169,9 +169,13 @@ public class CustomFacetDisplayContextBuilder {
 			return customDisplayCaption;
 		}
 
-		Optional<String> optional = SearchStringUtil.maybe(_fieldToAggregate);
+		String fieldToAggregate = StringUtil.trim(_fieldToAggregate);
 
-		return optional.orElse("custom");
+		if (Validator.isNotNull(fieldToAggregate)) {
+			return fieldToAggregate;
+		}
+
+		return "custom";
 	}
 
 	protected List<TermCollector> getTermCollectors() {

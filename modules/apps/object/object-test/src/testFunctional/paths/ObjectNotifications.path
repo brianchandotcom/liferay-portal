@@ -45,6 +45,11 @@
 		<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entryLabel}')]/ancestor::div//*[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entryStatus}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ENTITY_TERMS</td>
+		<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_termName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

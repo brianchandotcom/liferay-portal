@@ -31,7 +31,6 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortle
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -174,15 +173,14 @@ public class SearchBarPortletSharedSearchContributor
 			return searchScopePreference.getSearchScope();
 		}
 
-		Optional<String> optional =
-			portletSharedSearchSettings.getParameterOptional(
-				searchBarPortletPreferences.getScopeParameterName());
+		String scopeParameterValue = portletSharedSearchSettings.getParameter(
+			searchBarPortletPreferences.getScopeParameterName());
 
-		return optional.map(
-			SearchScope::getSearchScope
-		).orElseGet(
-			this::_getDefaultSearchScope
-		);
+		if (scopeParameterValue == null) {
+			return _getDefaultSearchScope();
+		}
+
+		return SearchScope.getSearchScope(scopeParameterValue);
 	}
 
 	private boolean _isLuceneSyntax(
@@ -208,18 +206,18 @@ public class SearchBarPortletSharedSearchContributor
 
 		portletSharedSearchSettings.setKeywordsParameterName(parameterName);
 
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterOptional(
-				parameterName),
-			value -> {
-				Keywords keywords = new Keywords(value);
+		String parameterValue = portletSharedSearchSettings.getParameter(
+			parameterName);
 
-				searchRequestBuilder.queryString(keywords.getKeywords());
+		if (parameterValue != null) {
+			Keywords keywords = new Keywords(parameterValue);
 
-				if (_isLuceneSyntax(searchBarPortletPreferences, keywords)) {
-					_setLuceneSyntax(searchRequestBuilder);
-				}
-			});
+			searchRequestBuilder.queryString(keywords.getKeywords());
+
+			if (_isLuceneSyntax(searchBarPortletPreferences, keywords)) {
+				_setLuceneSyntax(searchRequestBuilder);
+			}
+		}
 	}
 
 	private void _setLuceneSyntax(SearchRequestBuilder searchRequestBuilder) {

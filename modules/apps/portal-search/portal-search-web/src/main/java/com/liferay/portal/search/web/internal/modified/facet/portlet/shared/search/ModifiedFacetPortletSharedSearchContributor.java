@@ -24,7 +24,6 @@ import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFac
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -84,15 +83,11 @@ public class ModifiedFacetPortletSharedSearchContributor
 		modifiedFacetBuilder.setSelectedRanges(
 			portletSharedSearchSettings.getParameterValues(parameterName));
 
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterOptional(
-				parameterName + "From"),
-			modifiedFacetBuilder::setCustomRangeFrom);
+		modifiedFacetBuilder.setCustomRangeFrom(
+			portletSharedSearchSettings.getParameter(parameterName + "From"));
 
-		SearchOptionalUtil.copy(
-			() -> portletSharedSearchSettings.getParameterOptional(
-				parameterName + "To"),
-			modifiedFacetBuilder::setCustomRangeTo);
+		modifiedFacetBuilder.setCustomRangeTo(
+			portletSharedSearchSettings.getParameter(parameterName + "To"));
 
 		return modifiedFacetBuilder.build();
 	}

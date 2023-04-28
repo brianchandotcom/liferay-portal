@@ -14,17 +14,15 @@
 
 package com.liferay.portal.search.web.internal.search.results.portlet.shared.search;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferences;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
-
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,34 +79,28 @@ public class SearchResultsPortletSharedSearchContributor
 		searchRequestBuilder.paginationStartParameterName(
 			paginationStartParameterName);
 
-		Optional<String> paginationStartParameterValueOptional =
-			portletSharedSearchSettings.getParameterOptional(
-				paginationStartParameterName);
+		String paginationDeltaString = portletSharedSearchSettings.getParameter(
+			searchResultsPortletPreferences.getPaginationDeltaParameterName());
 
-		SearchOptionalUtil.copy(
-			() -> paginationStartParameterValueOptional.map(Integer::valueOf),
-			portletSharedSearchSettings::setPaginationStart);
-
-		Optional<String> paginationDeltaParameterValueOptional =
-			portletSharedSearchSettings.getParameterOptional(
-				searchResultsPortletPreferences.
-					getPaginationDeltaParameterName());
-
-		Optional<Integer> paginationDeltaOptional =
-			paginationDeltaParameterValueOptional.map(Integer::valueOf);
-
-		int paginationDelta = paginationDeltaOptional.orElse(
-			searchResultsPortletPreferences.getPaginationDelta());
+		Integer paginationDelta = (paginationDeltaString != null) ?
+			Integer.valueOf(paginationDeltaString) :
+				searchResultsPortletPreferences.getPaginationDelta();
 
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 		searchRequestBuilder.size(paginationDelta);
 
-		SearchOptionalUtil.copy(
-			() -> paginationStartParameterValueOptional.map(
-				paginationStartValue ->
-					(Integer.valueOf(paginationStartValue) - 1) *
-						paginationDelta),
-			searchRequestBuilder::from);
+		String paginationStartParameterValue =
+			portletSharedSearchSettings.getParameter(
+				paginationStartParameterName);
+
+		if (paginationStartParameterValue != null) {
+			portletSharedSearchSettings.setPaginationStart(
+				GetterUtil.getInteger(paginationStartParameterValue));
+
+			searchRequestBuilder.from(
+				(Integer.valueOf(paginationStartParameterValue) - 1) *
+					paginationDelta);
+		}
 	}
 
 }

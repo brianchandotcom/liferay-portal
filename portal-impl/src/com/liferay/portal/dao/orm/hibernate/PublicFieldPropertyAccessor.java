@@ -14,7 +14,7 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.poshi.core.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Shuyang Zhou

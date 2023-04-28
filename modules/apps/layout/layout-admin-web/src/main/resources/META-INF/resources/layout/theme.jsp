@@ -117,14 +117,10 @@ else {
 	);
 
 	const sheetSection = themeContainer.closest('.sheet-section');
-	const separator = sheetSection.nextElementSibling;
 
 	if ('<%= selLayout.getMasterLayoutPlid() > 0 %>') {
 		sheetSection.classList.add('hide');
 		sheetSection.setAttribute('aria-hidden', 'true');
-
-		separator.classList.add('hide');
-		separator.setAttribute('aria-hidden', 'true');
 	}
 
 	if (regularInheritLookAndFeel) {

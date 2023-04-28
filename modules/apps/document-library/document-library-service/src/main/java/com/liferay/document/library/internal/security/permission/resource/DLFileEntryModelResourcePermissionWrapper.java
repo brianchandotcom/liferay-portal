@@ -111,15 +111,14 @@ public class DLFileEntryModelResourcePermissionWrapper
 							return null;
 						}
 
-						if (actionId.equals(ActionKeys.DOWNLOAD)) {
-							actionId = ActionKeys.VIEW;
-						}
+						String relatedModelActionId = _getRelatedModelActionId(
+							actionId);
 
 						Boolean hasResourcePermission =
 							ResourcePermissionCheckerUtil.
 								containsResourcePermission(
 									permissionChecker, className, classPK,
-									actionId);
+									relatedModelActionId);
 
 						if ((hasResourcePermission != null) &&
 							!hasResourcePermission) {
@@ -131,7 +130,7 @@ public class DLFileEntryModelResourcePermissionWrapper
 							BaseModelPermissionCheckerUtil.
 								containsBaseModelPermission(
 									permissionChecker, fileEntry.getGroupId(),
-									className, classPK, actionId);
+									className, classPK, relatedModelActionId);
 
 						if ((hasBaseModelPermission != null) &&
 							!hasBaseModelPermission) {
@@ -167,6 +166,14 @@ public class DLFileEntryModelResourcePermissionWrapper
 
 			return _dlFolderLocalService.getFolder(folderId);
 		};
+	}
+
+	private String _getRelatedModelActionId(String actionId) {
+		if (actionId.equals(ActionKeys.DOWNLOAD)) {
+			return ActionKeys.VIEW;
+		}
+
+		return actionId;
 	}
 
 	@Reference

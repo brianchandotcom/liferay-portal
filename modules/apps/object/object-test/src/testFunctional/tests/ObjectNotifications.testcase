@@ -313,8 +313,11 @@ definition {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+				bcc = "test3@liferay.com",
+				cc = "test2@liferay.com",
+				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+				emailBody = "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.",
+				entryTo = "test@liferay.com, test4@liferay.com",
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",

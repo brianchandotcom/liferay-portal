@@ -136,7 +136,7 @@ const CaseResultOutlet = () => {
 		<PageRenderer error={error} loading={loading}>
 			<Outlet
 				context={{
-					actions: testrayCaseResult.actions,
+					actions: testrayCaseResult?.actions,
 					caseResult: testrayCaseResult,
 					mbMessage,
 					mutateCaseResult,

@@ -19,7 +19,7 @@ import {
 	TestrayCase,
 	TestraySuite,
 	TestraySuiteCase,
-	testrayCaseRest,
+	testrayCaseImpl,
 	testraySuiteCaseImpl,
 } from '~/services/rest';
 
@@ -40,8 +40,7 @@ const transformData = (isSmartSuite: boolean) => (
 			},
 			id: testrayCase.id,
 		}));
-	}
-	else {
+	} else {
 		items = (items as any[]).map((suiteCase) => ({
 			...suiteCase,
 			case: suiteCase.r_caseToSuitesCases_c_case
@@ -78,7 +77,7 @@ const SuitesCasesTable: React.FC<suiteCasesTableProps> = ({
 			managementToolbarProps={{visible: false}}
 			resource={
 				isSmartSuite
-					? testrayCaseRest.resource
+					? testrayCaseImpl.resource
 					: testraySuiteCaseImpl.resource
 			}
 			tableProps={{

@@ -18,4 +18,9 @@ export enum AppRouteType {
 	DEAL_REGISTRATION_LIST = 'deal-registration-list',
 	PARTNER_OPPORTUNITIES_LIST = 'partner-opportunities-list',
 	RENEWALS_OPPORTUNITIES_LIST = 'renewal-opportunities-list',
+	DASHBOARD_DEALS_CHART = 'deals-chart',
+	DASHBOARD_LEVEL_CHART = 'level-chart',
+	DASHBOARD_MDF_REQUEST_CHART = 'mdf-requests-chart',
+	DASHBOARD_RENEWALS_CHART = 'renewals-chart',
+	DASHBOARD_REVENUE_CHART = 'revenue-chart',
 }

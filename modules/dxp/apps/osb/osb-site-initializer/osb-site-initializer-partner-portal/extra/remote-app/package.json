@@ -3,6 +3,7 @@
 		"@clayui/alert": "^3.65.1",
 		"@clayui/button": "^3.65.0",
 		"@clayui/card": "^3.67.0",
+		"@clayui/charts": "^3.65.0",
 		"@clayui/css": "^3.65.2",
 		"@clayui/date-picker": "^3.68.0",
 		"@clayui/drop-down": "^3.68.0",

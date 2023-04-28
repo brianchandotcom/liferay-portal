@@ -199,9 +199,19 @@ public class ObjectEntryVariablesUtil {
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
 
+		Object creator = payloadJSONObject.get("userId");
+
+		if (payloadJSONObject.has("originalObjectEntry")) {
+			Map<String, Object> originalObjectEntry =
+				(Map<String, Object>)payloadJSONObject.get(
+					"originalObjectEntry");
+
+			creator = originalObjectEntry.get("userId");
+		}
+
 		Map<String, Object> allowedVariables =
 			HashMapBuilder.<String, Object>put(
-				"creator", payloadJSONObject.get("userId")
+				"creator", creator
 			).put(
 				"currentUserId", payloadJSONObject.get("userId")
 			).build();

@@ -95,7 +95,7 @@ public class CustomFilterDisplayContextBuilder {
 	public CustomFilterDisplayContextBuilder parameterValueOptional(
 		Optional<String> parameterValueOptional) {
 
-		_parameterValueOptional = parameterValueOptional;
+		_parameterValue = parameterValueOptional.orElse(null);
 
 		return this;
 	}
@@ -156,8 +156,8 @@ public class CustomFilterDisplayContextBuilder {
 			return StringPool.BLANK;
 		}
 
-		if (_parameterValueOptional.isPresent()) {
-			return _parameterValueOptional.get();
+		if (Validator.isNotNull(_parameterValue)) {
+			return _parameterValue;
 		}
 
 		if (Validator.isNotNull(_filterValue)) {
@@ -201,7 +201,7 @@ public class CustomFilterDisplayContextBuilder {
 	private String _filterValue;
 	private boolean _immutable;
 	private String _parameterName;
-	private Optional<String> _parameterValueOptional = Optional.empty();
+	private String _parameterValue;
 	private String _queryName;
 	private boolean _renderNothing;
 	private ThemeDisplay _themeDisplay;

@@ -109,6 +109,37 @@ definition {
 		}
 	}
 
+	@summary = "This calls the JSON WS API to delete all data set views"
+	macro _deleteFDSViews {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(datasetViewsIdList))) {
+			var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewsIds();
+		}
+
+		if (${datasetViewsIdList} != "") {
+			for (var datasetViewsIds : list ${datasetViewsIdList}) {
+				var curl = '''
+					${portalURL}/o/c/fdsviews/${datasetViewsIds} \
+						-u ${userEmailAddress}:${userPassword}
+				''';
+
+				JSONCurlUtil.delete(${curl});
+			}
+		}
+		else {
+			echo("FAIL. No Datasets Views to be deleted");
+		}
+	}
+
 	macro _getDatasetEntryIdByName {
 		Variables.assertDefined(parameterList = ${datasetName});
 

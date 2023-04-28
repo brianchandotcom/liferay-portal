@@ -201,11 +201,6 @@ public class ObjectActionLocalServiceTest {
 
 	@Test
 	public void testAddObjectAction() throws Exception {
-
-		// Add object actions
-
-		// Error message is null
-
 		try {
 			_addObjectAction(
 				StringPool.BLANK, RandomTestUtil.randomString(),
@@ -223,9 +218,7 @@ public class ObjectActionLocalServiceTest {
 				objectActionErrorMessageException.getMessage());
 		}
 
-		// Object action executor unmet company restriction criteria
-
-		ObjectActionExecutor objectActionExecutor1 =
+		ObjectActionExecutor objectActionExecutor =
 			_registerObjectActionExecutor(
 				Collections.singletonList(_userObjectDefinition.getName()),
 				_companyId2, RandomTestUtil.randomString());
@@ -237,7 +230,7 @@ public class ObjectActionLocalServiceTest {
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(), objectActionExecutor1.getKey(),
+				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				new UnicodeProperties());
 
@@ -250,14 +243,12 @@ public class ObjectActionLocalServiceTest {
 				objectActionExecutorKeyException.getMessage(),
 				StringBundler.concat(
 					"The object action executor key ",
-					objectActionExecutor1.getKey(),
+					objectActionExecutor.getKey(),
 					" is not allowed for company ",
 					String.valueOf(_companyId1)));
 		}
 
-		// Object action executor unmet object definitions restriction criteria
-
-		ObjectActionExecutor objectActionExecutor2 =
+		objectActionExecutor =
 			_registerObjectActionExecutor(
 				Collections.singletonList(_userObjectDefinition.getName()),
 				_companyId1, RandomTestUtil.randomString());
@@ -269,7 +260,7 @@ public class ObjectActionLocalServiceTest {
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(), objectActionExecutor2.getKey(),
+				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				new UnicodeProperties());
 
@@ -282,12 +273,10 @@ public class ObjectActionLocalServiceTest {
 				objectActionExecutorKeyException.getMessage(),
 				StringBundler.concat(
 					"The object action executor key ",
-					objectActionExecutor2.getKey(),
+					objectActionExecutor.getKey(),
 					" is not allowed for object definition ",
 					_objectDefinition.getName()));
 		}
-
-		// Label is null
 
 		try {
 			_addObjectAction(
@@ -303,8 +292,6 @@ public class ObjectActionLocalServiceTest {
 				objectActionLabelException.getMessage());
 		}
 
-		// Name is null
-
 		try {
 			_addObjectAction(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -317,8 +304,6 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(
 				"Name is null", objectActionNameException.getMessage());
 		}
-
-		// Name must be less than 41 characters
 
 		try {
 			_addObjectAction(
@@ -333,8 +318,6 @@ public class ObjectActionLocalServiceTest {
 				"Name must be less than 41 characters",
 				objectActionNameException.getMessage());
 		}
-
-		// Name must only contain letters and digits
 
 		try {
 			_addObjectAction(
@@ -365,8 +348,6 @@ public class ObjectActionLocalServiceTest {
 		}
 
 		String name = RandomTestUtil.randomString();
-
-		// Duplicate name
 
 		ObjectAction objectAction1 = _addObjectAction(
 			name, ObjectActionExecutorConstants.KEY_WEBHOOK,

@@ -75,9 +75,11 @@ public interface CTProcessLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTProcess addCTProcess(CTProcess ctProcess);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CTProcess addCTProcess(long userId, long ctCollectionId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CTProcess addCTProcess(
 			long userId, long fromCTCollectionId, long toCTCollectionId,
 			long[] ctEntryIds)

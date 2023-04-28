@@ -99,8 +99,12 @@ definition {
 					"${requiredFieldLabel}": "${requiredFieldValue}",
 		''';
 
-		if (isSet(pickList)) {
+		if (isSet(picklist)) {
 			var fieldInBody = '''"${fieldLabel}": {"key":"${fieldValue}"}''';
+		}
+
+		if (isSet(multiselectPicklist)) {
+			var fieldInBody = '''"${fieldLabel}": ["${fieldValue}","${fieldValue2}"]''';
 		}
 		else {
 			var fieldInBody = '''"${fieldLabel}": "${fieldValue}"''';

@@ -114,7 +114,7 @@ definition {
 				entryId = ${universityId},
 				fieldLabel = "mode",
 				fieldValue = "distance",
-				pickList = "true",
+				picklist = "true",
 				requiredFieldLabel = "name",
 				requiredFieldValue = "Wisconsin");
 

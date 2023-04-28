@@ -1,14 +1,9 @@
 definition {
 
-	var baseUrl = "http://localhost:8080";
+	var baseUrl = PropsUtil.get("portal.url");
 
 	macro createPage {
 		var groupId = LiferayPortalAPI.fetchGroupId();
-		// var user = PropsUtil.get("test.this.lcp.test.team.user.email");
-		// var password = PropsUtil.get("test.this.lcp.test.team.user.password");
-		// var baseURL = PropsUtil.get("test.this.lcp.test.base.url.api");
-
-        // -w "Status Code:%{http_code}" \
 
 		var curl = '''
 			${baseUrl}/api/jsonws/layout/add-layout \

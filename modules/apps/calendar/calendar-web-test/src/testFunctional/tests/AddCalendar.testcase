@@ -460,13 +460,15 @@ definition {
 
 		IFrame.selectModalFrame();
 
-		Check(
-			key_roleTitle = "Site Member",
-			locator1 = "Permissions#CONTENT_PERMISSIONS_DELETE_CHECKBOX");
+		Check.checkNotVisible(
+			key_roleTitle = "site-member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX");
 
-		Check(
-			key_roleTitle = "Site Member",
-			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_CHECKBOX");
+		Check.checkNotVisible(
+			key_roleTitle = "site-member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX");
+
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
 		Button.clickSave();
 
@@ -491,13 +493,13 @@ definition {
 
 		IFrame.selectModalFrame();
 
-		AssertChecked(
-			key_roleTitle = "Site Member",
-			locator1 = "Permissions#CONTENT_PERMISSIONS_DELETE_CHECKBOX");
+		AssertChecked.assertCheckedNotVisible(
+			key_roleTitle = "site-member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX");
 
-		AssertChecked(
-			key_roleTitle = "Site Member",
-			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_CHECKBOX");
+		AssertChecked.assertCheckedNotVisible(
+			key_roleTitle = "site-member",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX");
 	}
 
 	@description = "This is a use case for LPS-56229."

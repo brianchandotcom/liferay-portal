@@ -27,6 +27,11 @@ public class GradleSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSortDependencies() throws Exception {
+		test("SortDependencies.testgradle");
+	}
+
+	@Test
 	public void testSortMapKeys() throws Exception {
 		test("SortMapKeys1.testgradle");
 		test("SortMapKeys2.testgradle");

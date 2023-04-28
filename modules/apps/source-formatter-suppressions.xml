@@ -51,7 +51,6 @@
 		<suppress checks="ComponentExposureCheck" files="layout/layout-taglib/src/main/java/com/liferay/layout/taglib/internal/frontend/js/loader/modules/extender/npm/NPMResolverProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="layout/layout-taglib/src/main/java/com/liferay/layout/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="map/map-taglib/src/main/java/com/liferay/map/taglib/internal/servlet/ServletContextUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="message-boards/message-boards-web/src/main/java/com/liferay/message/boards/web/internal/util/MBDisplayContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="object/object-web/src/main/java/com/liferay/object/web/internal/configuration/util/ObjectConfigurationUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="portal-workflow/portal-workflow-taglib/src/main/java/com/liferay/portal/workflow/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="product-navigation/product-navigation-taglib/src/main/java/com/liferay/product/navigation/taglib/internal/servlet/ServletContextUtil\.java" />

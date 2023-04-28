@@ -41,7 +41,7 @@ if (Validator.isNull(backURL)) {
 		</clay:sheet-header>
 
 		<clay:sheet-section>
-			<h3 class="mb-4 text-uppercase"><liferay-ui:message key="settings" /></h3>
+			<h3 class="mb-4"><liferay-ui:message key="settings" /></h3>
 
 			<p class="text-secondary">
 				<liferay-ui:message key="custom-meta-tags-description" />

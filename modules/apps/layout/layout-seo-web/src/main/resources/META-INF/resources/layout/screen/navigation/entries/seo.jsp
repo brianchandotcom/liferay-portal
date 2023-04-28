@@ -57,7 +57,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 				value="seo"
 			/>
 
-			<h3 class="mb-4 text-uppercase"><liferay-ui:message key="settings" /></h3>
+			<h3 class="mb-4"><liferay-ui:message key="settings" /></h3>
 
 			<clay:alert
 				cssClass="mb-4"
@@ -200,7 +200,7 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 			<hr class="mb-5 separator" />
 
 			<clay:sheet-section>
-				<h3 class="mb-4 text-uppercase"><liferay-ui:message key="sitemap" /></h3>
+				<h3 class="mb-4"><liferay-ui:message key="sitemap" /></h3>
 
 				<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
 					<liferay-ui:message arguments='<%= new String[] {"inherit-changes", "general"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" />

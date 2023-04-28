@@ -261,6 +261,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for COMMERCE-10840. The all types of accounts can be created via API"
+	@priority = 3
+	test CanCreateAllTypesOfAccountsViaAPI {
+		property portal.acceptance = "false";
+
+		task ("When a 'Guest' type of account is post and passed via API") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Guest Account",
+				accountType = "Guest",
+				externalReferenceCode = "Guest Account ERC");
+		}
+
+		task ("Then a 'Guest' type of account is created under Accounts panel") {
+			Account.openAccountsAdmin();
+
+			LexiconTable.viewTableEntryInfo(
+				index = 5,
+				tableEntry = "Guest",
+				tableEntryInfo = "Guest");
+		}
+
+		task ("When a 'Business' of account is post and passed via API") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Business Account",
+				accountType = "Business",
+				externalReferenceCode = "Business Account ERC");
+		}
+
+		task ("Then a 'Business' type of account is created under Accounts panel") {
+			Account.openAccountsAdmin();
+
+			LexiconTable.viewTableEntryInfo(
+				index = 5,
+				tableEntry = "Business",
+				tableEntryInfo = "Business");
+		}
+
+		task ("When a 'Person' type of account is post and passed via API") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Person Account",
+				accountType = "Person",
+				externalReferenceCode = "Person Account ERC");
+		}
+
+		task ("Then a 'Person' type of account is created under Accounts panel") {
+			Account.openAccountsAdmin();
+
+			LexiconTable.viewTableEntryInfo(
+				index = 5,
+				tableEntry = "Person",
+				tableEntryInfo = "Person");
+		}
+	}
+
 	@description = "COMMERCE-9427 CanSortAccountEntriesUsingReverseSortDirectionButton"
 	@priority = 3
 	test CanSortAccountEntriesUsingReverseSortDirectionButton {

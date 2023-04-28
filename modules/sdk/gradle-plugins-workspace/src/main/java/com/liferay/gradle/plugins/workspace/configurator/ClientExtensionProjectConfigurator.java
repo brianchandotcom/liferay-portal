@@ -187,12 +187,7 @@ public class ClientExtensionProjectConfigurator
 
 						createClientExtensionConfigTaskProvider.configure(
 							createClientExtensionConfigTask -> {
-								if (!Objects.equals(
-										profileName,
-										GradleUtil.getProperty(
-											project, "profileName",
-											"default"))) {
-
+								if (!_isActiveProfile(project, profileName)) {
 									return;
 								}
 
@@ -203,11 +198,8 @@ public class ClientExtensionProjectConfigurator
 						if (clientExtension.type.equals("configuration")) {
 							assembleClientExtensionTaskProvider.configure(
 								copy -> {
-									if (!Objects.equals(
-											profileName,
-											GradleUtil.getProperty(
-												project, "profileName",
-												"default"))) {
+									if (!_isActiveProfile(
+											project, profileName)) {
 
 										return;
 									}
@@ -417,11 +409,7 @@ public class ClientExtensionProjectConfigurator
 
 				@Override
 				public void execute(Copy copy) {
-					if (!Objects.equals(
-							profileName,
-							GradleUtil.getProperty(
-								project, "profileName", "default"))) {
-
+					if (!_isActiveProfile(project, profileName)) {
 						return;
 					}
 
@@ -783,6 +771,17 @@ public class ClientExtensionProjectConfigurator
 	private File _getZipFile(Project project) {
 		return project.file(
 			"dist/" + GradleUtil.getArchivesBaseName(project) + ".zip");
+	}
+
+	private boolean _isActiveProfile(Project project, String profileName) {
+		if (Objects.equals(
+				profileName,
+				GradleUtil.getProperty(project, "profileName", "default"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _overrideJsonNodeValues(

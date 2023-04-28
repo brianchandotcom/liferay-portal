@@ -203,15 +203,15 @@ public class ObjectEntryVariablesUtil {
 			HashMapBuilder.<String, Object>put(
 				"creator",
 				() -> {
-					if (payloadJSONObject.has("originalObjectEntry")) {
-						Map<String, Object> originalObjectEntry =
-							(Map<String, Object>)payloadJSONObject.get(
-								"originalObjectEntry");
-
-						return originalObjectEntry.get("userId");
+					if (objectDefinition.isUnmodifiableSystemObject()) {
+						return payloadJSONObject.get("userId");
 					}
 
-					return payloadJSONObject.get("userId");
+					Map<String, Object> objectEntry =
+						(Map<String, Object>)payloadJSONObject.get(
+							"objectEntry");
+
+					return objectEntry.get("userId");
 				}
 			).put(
 				"currentUserId", payloadJSONObject.get("userId")

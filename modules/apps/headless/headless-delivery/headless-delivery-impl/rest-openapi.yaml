@@ -4076,6 +4076,12 @@ components:
                     # @review
                     description:
                         The page's SEO settings.
+                sitePageNavigationMenuSettings:
+                    allOf:
+                        - $ref: "#/components/schemas/SitePageNavigationMenuSettings"
+                    # @review
+                    description:
+                        The page's site navigation menu settings.
             type: object
         PageTemplate:
             # @review
@@ -4830,6 +4836,28 @@ components:
                     # @review
                     description:
                         The localized submission of page type.
+            type: object
+        SitePageNavigationMenuSettings:
+            # @review
+            description:
+                Represents settings related with the site navigation menu of a page.
+            properties:
+                queryString:
+                    # @review
+                    description:
+                        The default parameter for a page.
+                    type: string
+                target:
+                    # @review
+                    description:
+                        The page's description to be used as summary for search engines.
+                    type: string
+                targetType:
+                    # @review
+                    description:
+                        The target's type (specific frame or new tab).
+                    enum: [SpecificFrame, NewTab]
+                    type: string
             type: object
         StructuredContent:
             description:

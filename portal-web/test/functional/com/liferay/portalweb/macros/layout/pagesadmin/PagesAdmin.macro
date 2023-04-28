@@ -1433,10 +1433,9 @@ definition {
 	}
 
 	macro uploadLogo {
-		AssertClick(
-			key_text = "Change",
-			locator1 = "Button#ANY",
-			value1 = "Change");
+		Click(
+			ariaLabel = "Change Logo",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

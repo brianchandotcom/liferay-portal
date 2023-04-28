@@ -533,8 +533,6 @@ definition {
 				locator1 = "Icon#COG_PAGE");
 		}
 
-		Panel.expandPanel(panel = "Logo");
-
 		PagesAdmin.uploadLogo(logoFile = ${logoFile});
 	}
 

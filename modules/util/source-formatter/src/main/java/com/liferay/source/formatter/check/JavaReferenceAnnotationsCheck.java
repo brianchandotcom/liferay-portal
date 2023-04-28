@@ -64,33 +64,28 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 			return annotation;
 		}
 
-		List<String> allowedReferenceMethodFileNames = getAttributeValues(
-			_ALLOWED_REFERENCE_METHOD_FILE_NAMES_KEY, absolutePath);
-
-		if (isAttributeValue(_CHECK_REFERENCE_METHOD_KEY, absolutePath)) {
-			boolean ignoreFile = false;
-
-			for (String allowedReferenceMethodFileName :
-					allowedReferenceMethodFileNames) {
-
-				if (absolutePath.endsWith(allowedReferenceMethodFileName)) {
-					ignoreFile = true;
-
-					break;
-				}
-			}
-
-			if (!ignoreFile) {
-				_checkReferenceMethods(fileName, javaClass);
-			}
-		}
-
+		_checkReferenceMethods(fileName, absolutePath, javaClass);
 		_checkTargetAttribute(fileName, absolutePath, javaClass, annotation);
 
 		return annotation;
 	}
 
-	private void _checkReferenceMethods(String fileName, JavaClass javaClass) {
+	private void _checkReferenceMethods(
+		String fileName, String absolutePath, JavaClass javaClass) {
+
+		List<String> allowedReferenceMethodFileNames = getAttributeValues(
+			_ALLOWED_REFERENCE_METHOD_FILE_NAMES_KEY, absolutePath);
+
+		if (isAttributeValue(_CHECK_REFERENCE_METHOD_KEY, absolutePath)) {
+			for (String allowedReferenceMethodFileName :
+					allowedReferenceMethodFileNames) {
+
+				if (absolutePath.endsWith(allowedReferenceMethodFileName)) {
+					return;
+				}
+			}
+		}
+
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (javaTerm.isJavaMethod() &&
 				javaTerm.hasAnnotation("Reference")) {

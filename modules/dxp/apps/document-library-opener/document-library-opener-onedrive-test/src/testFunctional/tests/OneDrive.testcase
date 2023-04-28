@@ -388,7 +388,7 @@ definition {
 			tagNameList = "liferay");
 	}
 
-	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout under site admin on an Excel document during creation."
+	@description = "This test ensures that the document is in draft status after canceling checkout under site admin on an Excel document during creation."
 	@priority = 4
 	test CancelCheckoutOnExcelSheet {
 		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnExcelSheet";
@@ -418,7 +418,7 @@ definition {
 			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 	}
 
-	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout on a Word document during creation."
+	@description = "This test ensures that the document is in draft status after canceling checkout on a Word document during creation."
 	@priority = 4
 	test CancelCheckoutOnWordDocument {
 		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnWordDocument";
@@ -564,11 +564,11 @@ definition {
 		DMDocument.deletePG(dmDocumentTitle = "Delete Word Doc Title ${num}");
 	}
 
-	@description = "This test covers LPS-102478. It ensures that an Office 365 document is deleted automatically after the lock is expired."
+	@description = "This test covers LPS-102478. It ensures that an Office 365 document is automatically unchecked out after the lock is expired."
 	@priority = 4
-	test DocumentIsDeletedAfterLockExpiration {
+	test DocumentCheckoutIsCanceledAfterLockExpiration {
 		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=90000";
-		property test.name.skip.portal.instance = "OneDrive#DocumentIsDeletedAfterLockExpiration";
+		property test.name.skip.portal.instance = "OneDrive#DocumentCheckoutIsCanceledAfterLockExpiration";
 
 		var num = MathUtil.randomNumber(10);
 

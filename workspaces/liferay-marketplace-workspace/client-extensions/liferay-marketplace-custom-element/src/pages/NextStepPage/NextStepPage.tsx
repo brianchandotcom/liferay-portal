@@ -109,12 +109,11 @@ export function NextStepPage({
 					<div className="next-step-page-text">
 						<Header
 							description={
-								header?.description ??
-								[
-								'Congratulations on the purchase of ',
-								<b>{appName}</b>,
-								'. You will now need to configure the app in the Cloud Console. To access the Cloud Console, click the button below and provide your Order ID when prompted.',
-							]
+								header?.description ?? [
+									'Congratulations on the purchase of ',
+									<b>{appName}</b>,
+									'. You will now need to configure the app in the Cloud Console. To access the Cloud Console, click the button below and provide your Order ID when prompted.',
+								]
 							}
 							title={header?.title ?? 'Next steps'}
 						/>
@@ -133,8 +132,15 @@ export function NextStepPage({
 						continueButtonText={
 							continueButtonText ?? 'Continue Configuration'
 						}
-						onClickBack={() => window.location.href = `${window.location.origin}/web/guest/publisher-dashboard`}
-						onClickContinue={onClickContinue ?? (() => window.location.href = 'https://console.liferay.cloud/')}
+						onClickBack={() =>
+							(window.location.href = `${window.location.origin}/web/guest/publisher-dashboard`)
+						}
+						onClickContinue={
+							onClickContinue ??
+							(() =>
+								(window.location.href =
+									'https://console.liferay.cloud/'))
+						}
 						showBackButton={showBackButton}
 					/>
 

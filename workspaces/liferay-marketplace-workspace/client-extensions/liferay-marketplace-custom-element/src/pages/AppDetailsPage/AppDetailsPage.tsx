@@ -7,7 +7,6 @@ import {useEffect, useState} from 'react';
 import arrowDown from '../../assets/icons/arrow-down.svg';
 import arrowLeft from '../../assets/icons/arrow-left.svg';
 import circleFullIcon from '../../assets/icons/circle_fill.svg';
-import circleInfoIcon from '../../assets/icons/info-circle-icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {useAppContext} from '../../manage-app-state/AppManageState';

@@ -2,21 +2,17 @@
 [#assign objectRequest = (request.getAttribute("INFO_ITEM_REFERENCE"))! /]
 [#assign organizationId = objectRequest.classPK! /]
 [#assign URL = (layoutURL?substring(0,layoutURL?lastIndexOf('/')))! /]
-[#assign approvedRoles = ["Administrator", "Finance User"]/]
-[#assign approvedRolesForOrganization =["Administrator", "EVP Manager"]/]
 [#assign userRoles = permissionChecker.getUserBag().getRoles()/]
+[#assign organizationStatusListing =["rejected","awaitingMoreInfoFromEmployee", "verified"] /]
 
 [#if organizationId?? &&organizationId?hasContent]
 
-	[#assign organizationStatus =(restClient.get("/c/evporganizations/" + organizationId).organizationStatus.key)! /]
-	[#assign organizationName = (restClient.get("/c/evporganizations/" +organizationId).organizationName)! /]
-	[#assign organizationStatusListing =["rejected","awaitingMoreInfoFromEmployee", "verified"] /]
-	[#assign creatorOrganizationId = (restClient.get("/c/evporganizations/" + organizationId).creator.id)! /]
+	[#assign organization = (restClient.get("/c/evporganizations/" + organizationId))! /]
 
 	<input class="organizationID" id="${organizationId}" type="hidden" value="${organizationId}" />
 	<input class="userRoles" type="hidden" value="${userRoles[1].name}" />
 
-	<span class="organizationName" hidden>${organizationName}</span>
+	<span class="organizationName" hidden>${organization.organizationName}</span>
 
 	<div id="evp-organization-kebab-button">
 		[@liferay_ui["icon-menu"]
@@ -32,9 +28,9 @@
 
 			[#list userRoles as role]
 				[#if role.name == "Administrator" ||
-					role.name == "EVP Manager" && organizationStatus =="verified" ||
-					role.name == "Finance User" && organizationStatus == "awaitingFinanceApproval" ||
-					role.name == "Employee" && organizationStatus == "awaitingMoreInfoFromEmployee" && user.userId == creatorOrganizationId
+					role.name == "EVP Manager" && organization.organizationStatus.key =="verified" ||
+					role.name == "Finance User" && organization.organizationStatus.key == "awaitingFinanceApproval" ||
+					role.name == "Employee" && organization.organizationStatus.key == "awaitingMoreInfoFromEmployee" && user.userId == organization.creator.id
 
 				]
 
@@ -45,8 +41,8 @@
 				[/#if]
 
 				[#if role.name == "Finance User" &&
-					organizationStatus == "awaitingFinanceApproval" &&	!organizationStatusListing?seqContains(organizationStatus) ||
-					role.name == "EVP Manager" && organizationStatus == "awaitingApprovalOnEvp" &&	!organizationStatusListing?seqContains(organizationStatus)
+					organization.organizationStatus.key == "awaitingFinanceApproval" &&	!organizationStatusListing?seqContains(organization.organizationStatus.key) ||
+					role.name == "EVP Manager" && organization.organizationStatus.key == "awaitingApprovalOnEvp" &&	!organizationStatusListing?seqContains(organization.organizationStatus.key)
 
 				]
 					<div class="btnOpenModal">

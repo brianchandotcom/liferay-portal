@@ -3,7 +3,7 @@
 [#if response?has_content]
 	[#assign organizations = response.items! /]
 [#else]
-	#assign organizations = [] /]
+	[#assign organizations = [] /]
 [/#if]
 
 <div class="token-sample">
@@ -36,24 +36,20 @@
 			</span>
 
 			<ul class="options-organizations your-organizations">
-			[#if organizations?has_content]
 				[#list organizations as	organization]
 					[#if organization.creator.id == user.userId ]
-						<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} -	${organization.taxId}</li>
+						<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} - ${organization.taxId}</li>
 					[/#if]
 				[/#list]
-			[/#if]
 				</ul>
 			<span class="all-organizations" id="all-organizations">
 				All Organizations:
 			</span>
 
 			<ul class="all-organizations options-organizations">
-			[#if organizations?has_content]
 				[#list organizations as	organization]
-					<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} -	${organization.taxId}</li>
+					<li class="" value="${organization.idNumber}">${organization.id} - ${organization.organizationName} - ${organization.taxId}</li>
 				[/#list]
-			[/#if]
 			</ul>
 		</div>
 	</div>

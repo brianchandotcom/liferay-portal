@@ -429,8 +429,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return objectEntry;
 	}
 
-	private static final Pattern _relationshipIdNamePattern = Pattern.compile(
-		"r_.+_c_.+Id");
 	private static final Map<Operation, ObjectValuePair<Class<?>, String>>
 		_objectValuePairs =
 			HashMapBuilder.<Operation, ObjectValuePair<Class<?>, String>>put(
@@ -459,6 +457,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 				new ObjectValuePair<>(
 					ObjectEntryResourceImpl.class, "putObjectEntry")
 			).build();
+	private static final Pattern _relationshipIdNamePattern = Pattern.compile(
+		"r_.+_c_.+Id");
 	private static final Map<String, Class<?>> _typedClasses =
 		HashMapBuilder.<String, Class<?>>put(
 			"BigDecimal", BigDecimal.class

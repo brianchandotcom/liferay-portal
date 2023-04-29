@@ -148,6 +148,14 @@ public class MenuAccessConfigurationDisplayContext {
 			_menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
 				_themeDisplay.getScopeGroupId());
 
+		for (String roleId : rolesCanSeeControlMenu) {
+			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
+
+			if (role != null) {
+				roles.add(role);
+			}
+		}
+
 		Role administratorRole = _roleLocalService.getRole(
 			_themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
@@ -166,14 +174,6 @@ public class MenuAccessConfigurationDisplayContext {
 				String.valueOf(siteAdministratorRole.getRoleId()))) {
 
 			roles.add(siteAdministratorRole);
-		}
-
-		for (String roleId : rolesCanSeeControlMenu) {
-			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
-
-			if (role != null) {
-				roles.add(role);
-			}
 		}
 
 		searchContainer.setResultsAndTotal(roles);

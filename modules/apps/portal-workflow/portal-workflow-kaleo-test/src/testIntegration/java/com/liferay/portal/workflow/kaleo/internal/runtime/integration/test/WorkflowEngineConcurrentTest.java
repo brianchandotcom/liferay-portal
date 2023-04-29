@@ -45,7 +45,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -55,7 +54,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class WorkflowEngineConcurrentTest extends BaseWorkflowManagerTestCase {
 
-	@Ignore
 	@Test
 	public void testConcurrentExecuteTimerWorkflowInstance() throws Exception {
 		WorkflowDefinition workflowDefinition =

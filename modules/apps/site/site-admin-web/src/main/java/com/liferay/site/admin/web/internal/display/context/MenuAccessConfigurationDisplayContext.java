@@ -111,7 +111,10 @@ public class MenuAccessConfigurationDisplayContext {
 
 		regularRoleItemSelectorCriterion.setCheckedRoleIds(checkedRoleIds);
 		regularRoleItemSelectorCriterion.setExcludedRoleNames(
-			new String[] {RoleConstants.ADMINISTRATOR});
+			new String[] {
+				RoleConstants.ADMINISTRATOR, RoleConstants.GUEST,
+				RoleConstants.OWNER
+			});
 
 		SiteRoleItemSelectorCriterion siteRoleItemSelectorCriterion =
 			new SiteRoleItemSelectorCriterion();
@@ -121,7 +124,9 @@ public class MenuAccessConfigurationDisplayContext {
 
 		siteRoleItemSelectorCriterion.setCheckedRoleIds(checkedRoleIds);
 		siteRoleItemSelectorCriterion.setExcludedRoleNames(
-			new String[] {RoleConstants.SITE_ADMINISTRATOR});
+			new String[] {
+				RoleConstants.SITE_ADMINISTRATOR, RoleConstants.SITE_OWNER
+			});
 
 		itemSelectorCriteria.add(siteRoleItemSelectorCriterion);
 

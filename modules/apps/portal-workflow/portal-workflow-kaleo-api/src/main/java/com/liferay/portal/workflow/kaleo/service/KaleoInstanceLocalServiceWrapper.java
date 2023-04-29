@@ -516,12 +516,11 @@ public class KaleoInstanceLocalServiceWrapper
 	@Override
 	public KaleoInstance updateKaleoInstance(
 			long kaleoInstanceId,
-			java.util.Map<String, java.io.Serializable> workflowContext,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			java.util.Map<String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoInstanceLocalService.updateKaleoInstance(
-			kaleoInstanceId, workflowContext, serviceContext);
+			kaleoInstanceId, workflowContext);
 	}
 
 	@Override

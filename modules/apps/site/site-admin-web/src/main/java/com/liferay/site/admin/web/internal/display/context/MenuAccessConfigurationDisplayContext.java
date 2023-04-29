@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -93,22 +94,22 @@ public class MenuAccessConfigurationDisplayContext {
 
 		itemSelectorCriteria.add(regularRoleItemSelectorCriterion);
 
-		String[] roles =
+		String[] roleIds =
 			_menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
 				_themeDisplay.getScopeGroupId());
 
-		long[] roleIds = new long[roles.length];
+		long[] checkedRoleIds = new long[roleIds.length];
 
-		for (int i = 0; i < roles.length; i++) {
+		for (int i = 0; i < roleIds.length; i++) {
 			Role role = _roleLocalService.fetchRole(
-				_themeDisplay.getCompanyId(), roles[i]);
+				GetterUtil.getLong(roleIds[i]));
 
 			if (role != null) {
-				roleIds[i] = role.getRoleId();
+				checkedRoleIds[i] = role.getRoleId();
 			}
 		}
 
-		regularRoleItemSelectorCriterion.setCheckedRoleIds(roleIds);
+		regularRoleItemSelectorCriterion.setCheckedRoleIds(checkedRoleIds);
 		regularRoleItemSelectorCriterion.setExcludedRoleNames(
 			new String[] {RoleConstants.ADMINISTRATOR});
 
@@ -118,7 +119,7 @@ public class MenuAccessConfigurationDisplayContext {
 		siteRoleItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
 
-		siteRoleItemSelectorCriterion.setCheckedRoleIds(roleIds);
+		siteRoleItemSelectorCriterion.setCheckedRoleIds(checkedRoleIds);
 		siteRoleItemSelectorCriterion.setExcludedRoleNames(
 			new String[] {RoleConstants.SITE_ADMINISTRATOR});
 
@@ -147,26 +148,28 @@ public class MenuAccessConfigurationDisplayContext {
 			_menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
 				_themeDisplay.getScopeGroupId());
 
-		if (!ArrayUtil.contains(
-				rolesCanSeeControlMenu, RoleConstants.ADMINISTRATOR)) {
-
-			roles.add(
-				_roleLocalService.fetchRole(
-					_themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR));
-		}
+		Role administratorRole = _roleLocalService.getRole(
+			_themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		if (!ArrayUtil.contains(
-				rolesCanSeeControlMenu, RoleConstants.SITE_ADMINISTRATOR)) {
+				rolesCanSeeControlMenu,
+				String.valueOf(administratorRole.getRoleId()))) {
 
-			roles.add(
-				_roleLocalService.fetchRole(
-					_themeDisplay.getCompanyId(),
-					RoleConstants.SITE_ADMINISTRATOR));
+			roles.add(administratorRole);
 		}
 
-		for (String roleName : rolesCanSeeControlMenu) {
-			Role role = _roleLocalService.fetchRole(
-				_themeDisplay.getCompanyId(), roleName);
+		Role siteAdministratorRole = _roleLocalService.getRole(
+			_themeDisplay.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
+
+		if (!ArrayUtil.contains(
+				rolesCanSeeControlMenu,
+				String.valueOf(siteAdministratorRole.getRoleId()))) {
+
+			roles.add(siteAdministratorRole);
+		}
+
+		for (String roleId : rolesCanSeeControlMenu) {
+			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
 
 			if (role != null) {
 				roles.add(role);

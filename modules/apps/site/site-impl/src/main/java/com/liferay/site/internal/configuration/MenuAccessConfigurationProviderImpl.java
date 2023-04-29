@@ -152,27 +152,25 @@ public class MenuAccessConfigurationProviderImpl
 				properties = configuration.getProperties();
 			}
 
-			String roleName = String.valueOf(role.getName());
+			String roleId = String.valueOf(role.getRoleId());
 			String[] rolesCanSeeControlMenu = (String[])properties.get(
 				"rolesCanSeeControlMenu");
 
 			if (add) {
 				if (rolesCanSeeControlMenu == null) {
-					rolesCanSeeControlMenu = new String[] {roleName};
+					rolesCanSeeControlMenu = new String[] {roleId};
 				}
-				else if (!ArrayUtil.contains(
-							rolesCanSeeControlMenu, roleName)) {
-
+				else if (!ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
 					rolesCanSeeControlMenu = ArrayUtil.append(
-						rolesCanSeeControlMenu, roleName);
+						rolesCanSeeControlMenu, roleId);
 				}
 			}
 			else {
 				if ((rolesCanSeeControlMenu != null) &&
-					ArrayUtil.contains(rolesCanSeeControlMenu, roleName)) {
+					ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
 
 					rolesCanSeeControlMenu = ArrayUtil.remove(
-						rolesCanSeeControlMenu, roleName);
+						rolesCanSeeControlMenu, roleId);
 				}
 			}
 

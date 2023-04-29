@@ -64,18 +64,18 @@ public class EditMenuAccessConfigurationMVCActionCommand
 		String[] roleSearchContainerPrimaryKeys = ParamUtil.getStringValues(
 			actionRequest, "roleSearchContainerPrimaryKeys");
 
-		List<String> roleNames = new ArrayList<>();
+		List<String> roleIds = new ArrayList<>();
 
 		for (String roleId : roleSearchContainerPrimaryKeys) {
 			Role role = _roleLocalService.fetchRole(Long.valueOf(roleId));
 
 			if (role != null) {
-				roleNames.add(role.getName());
+				roleIds.add(roleId);
 			}
 		}
 
 		_menuAccessConfigurationProvider.updateMenuAccessConfiguration(
-			themeDisplay.getScopeGroupId(), ArrayUtil.toStringArray(roleNames),
+			themeDisplay.getScopeGroupId(), ArrayUtil.toStringArray(roleIds),
 			ParamUtil.getBoolean(actionRequest, "showControlMenuByRole"));
 	}
 

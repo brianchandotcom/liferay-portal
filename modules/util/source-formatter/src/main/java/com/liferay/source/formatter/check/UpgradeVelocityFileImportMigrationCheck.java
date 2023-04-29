@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.VelocityMigrationUtil;
 
@@ -27,7 +26,7 @@ public class UpgradeVelocityFileImportMigrationCheck
 
 	@Override
 	protected String migrateContent(String content) {
-		String[] lines = content.split(StringPool.NEW_LINE);
+		String[] lines = StringUtil.splitLines(content);
 
 		for (String line : lines) {
 			if (line.contains("#parse")) {

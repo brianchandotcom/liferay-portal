@@ -30,7 +30,7 @@ public class UpgradeVelocityVariableReferenceMigrationCheck
 
 	@Override
 	protected String migrateContent(String content) {
-		String[] lines = content.split(StringPool.NEW_LINE);
+		String[] lines = StringUtil.splitLines(content);
 
 		for (String line : lines) {
 			String newLine = line;

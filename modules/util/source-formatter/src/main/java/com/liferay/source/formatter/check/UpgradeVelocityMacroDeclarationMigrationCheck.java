@@ -28,7 +28,7 @@ public class UpgradeVelocityMacroDeclarationMigrationCheck
 
 	@Override
 	protected String migrateContent(String content) {
-		String[] lines = content.split(StringPool.NEW_LINE);
+		String[] lines = StringUtil.splitLines(content);
 
 		for (int i = 0; i < lines.length; i++) {
 			String newLine = lines[i];

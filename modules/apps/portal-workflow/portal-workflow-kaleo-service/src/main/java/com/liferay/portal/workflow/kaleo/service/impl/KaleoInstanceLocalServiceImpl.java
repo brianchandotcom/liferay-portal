@@ -33,8 +33,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.spring.aop.Property;
+import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -430,6 +433,15 @@ public class KaleoInstanceLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value = "org.hibernate.StaleObjectStateException"
+			)
+		}
+	)
 	public KaleoInstance updateKaleoInstance(
 			long kaleoInstanceId, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)

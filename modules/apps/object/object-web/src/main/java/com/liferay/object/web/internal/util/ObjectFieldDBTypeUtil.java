@@ -71,6 +71,12 @@ public class ObjectFieldDBTypeUtil {
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
+
+			return LongTextInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			return MultiselectInfoFieldType.INSTANCE;
@@ -92,12 +98,6 @@ public class ObjectFieldDBTypeUtil {
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
 
 			return HTMLInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
-
-			return LongTextInfoFieldType.INSTANCE;
 		}
 
 		return TextInfoFieldType.INSTANCE;

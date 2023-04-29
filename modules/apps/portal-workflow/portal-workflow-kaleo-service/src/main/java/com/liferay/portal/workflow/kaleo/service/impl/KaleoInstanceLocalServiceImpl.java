@@ -450,6 +450,13 @@ public class KaleoInstanceLocalServiceImpl
 		KaleoInstance kaleoInstance = kaleoInstancePersistence.findByPrimaryKey(
 			kaleoInstanceId);
 
+		if (Objects.equals(
+				WorkflowContextUtil.convert(workflowContext),
+				kaleoInstance.getWorkflowContext())) {
+
+			return kaleoInstance;
+		}
+
 		kaleoInstance.setWorkflowContext(
 			WorkflowContextUtil.convert(workflowContext));
 

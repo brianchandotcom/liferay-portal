@@ -93,7 +93,9 @@ public class MenuAccessConfigurationDisplayContext {
 
 		itemSelectorCriteria.add(regularRoleItemSelectorCriterion);
 
-		String[] roles = getRolesCanSeeControlMenu();
+		String[] roles =
+			_menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
+				_themeDisplay.getScopeGroupId());
 
 		long[] roleIds = new long[roles.length];
 
@@ -130,11 +132,6 @@ public class MenuAccessConfigurationDisplayContext {
 		).buildString();
 	}
 
-	public String[] getRolesCanSeeControlMenu() throws Exception {
-		return _menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
-			_themeDisplay.getScopeGroupId());
-	}
-
 	public SearchContainer<Role> getSearchContainer() throws Exception {
 		PortletURL currentURL = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
@@ -146,7 +143,9 @@ public class MenuAccessConfigurationDisplayContext {
 
 		List<Role> roles = new ArrayList<>();
 
-		String[] rolesCanSeeControlMenu = getRolesCanSeeControlMenu();
+		String[] rolesCanSeeControlMenu =
+			_menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
+				_themeDisplay.getScopeGroupId());
 
 		if (!ArrayUtil.contains(
 				rolesCanSeeControlMenu, RoleConstants.ADMINISTRATOR)) {

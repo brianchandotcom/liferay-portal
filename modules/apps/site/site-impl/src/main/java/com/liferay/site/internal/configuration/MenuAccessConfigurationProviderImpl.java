@@ -14,22 +14,16 @@
 
 package com.liferay.site.internal.configuration;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.MenuAccessConfiguration;
 import com.liferay.site.configuration.MenuAccessConfigurationProvider;
 
-import java.util.Dictionary;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,32 +46,20 @@ public class MenuAccessConfigurationProviderImpl
 
 	@Override
 	public String[] getRolesCanSeeControlMenu(long groupId) throws Exception {
-		Configuration configuration = _getScopedConfiguration(groupId);
+		MenuAccessConfiguration menuAccessConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				MenuAccessConfiguration.class, groupId);
 
-		if (configuration != null) {
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
-
-			return GetterUtil.getStringValues(
-				properties.get("rolesCanSeeControlMenu"));
-		}
-
-		return new String[0];
+		return menuAccessConfiguration.rolesCanSeeControlMenu();
 	}
 
 	@Override
 	public boolean isShowControlMenuByRole(long groupId) throws Exception {
-		Configuration configuration = _getScopedConfiguration(groupId);
+		MenuAccessConfiguration menuAccessConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				MenuAccessConfiguration.class, groupId);
 
-		if (configuration != null) {
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
-
-			return GetterUtil.getBoolean(
-				properties.get("showControlMenuByRole"));
-		}
-
-		return false;
+		return menuAccessConfiguration.showControlMenuByRole();
 	}
 
 	@Override
@@ -86,44 +68,13 @@ public class MenuAccessConfigurationProviderImpl
 			boolean showControlMenuByRole)
 		throws Exception {
 
-		Dictionary<String, Object> properties;
-		Configuration configuration = _getScopedConfiguration(groupId);
-
-		if (configuration == null) {
-			configuration = _configurationAdmin.createFactoryConfiguration(
-				MenuAccessConfiguration.class.getName() + ".scoped",
-				StringPool.QUESTION);
-
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				groupId
-			).build();
-		}
-		else {
-			properties = configuration.getProperties();
-		}
-
-		properties.put("rolesCanSeeControlMenu", rolesCanSeeControlMenu);
-		properties.put("showControlMenuByRole", showControlMenuByRole);
-
-		configuration.update(properties);
-	}
-
-	private Configuration _getScopedConfiguration(long groupId)
-		throws Exception {
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			String.format(
-				"(&(service.factoryPid=%s)(%s=%d))",
-				MenuAccessConfiguration.class.getName() + ".scoped",
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				groupId));
-
-		if (configurations == null) {
-			return null;
-		}
-
-		return configurations[0];
+		_configurationProvider.saveGroupConfiguration(
+			MenuAccessConfiguration.class, groupId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"rolesCanSeeControlMenu", rolesCanSeeControlMenu
+			).put(
+				"showControlMenuByRole", showControlMenuByRole
+			).build());
 	}
 
 	private void _manageRoleOfMenuAccess(boolean add, Role role)
@@ -134,54 +85,38 @@ public class MenuAccessConfigurationProviderImpl
 					role.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 					true)) {
 
-			Dictionary<String, Object> properties;
-			Configuration configuration = _getScopedConfiguration(
-				group.getGroupId());
-
-			if (configuration == null) {
-				configuration = _configurationAdmin.createFactoryConfiguration(
-					MenuAccessConfiguration.class.getName() + ".scoped",
-					StringPool.QUESTION);
-
-				properties = HashMapDictionaryBuilder.<String, Object>put(
-					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-					group.getGroupId()
-				).build();
-			}
-			else {
-				properties = configuration.getProperties();
-			}
+			MenuAccessConfiguration menuAccessConfiguration =
+				_configurationProvider.getGroupConfiguration(
+					MenuAccessConfiguration.class, group.getGroupId());
 
 			String roleId = String.valueOf(role.getRoleId());
-			String[] rolesCanSeeControlMenu = (String[])properties.get(
-				"rolesCanSeeControlMenu");
+			String[] rolesCanSeeControlMenu =
+				menuAccessConfiguration.rolesCanSeeControlMenu();
 
-			if (add) {
-				if (rolesCanSeeControlMenu == null) {
-					rolesCanSeeControlMenu = new String[] {roleId};
-				}
-				else if (!ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
-					rolesCanSeeControlMenu = ArrayUtil.append(
-						rolesCanSeeControlMenu, roleId);
-				}
-			}
-			else {
-				if ((rolesCanSeeControlMenu != null) &&
-					ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
-
+			if (ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
+				if (!add) {
 					rolesCanSeeControlMenu = ArrayUtil.remove(
 						rolesCanSeeControlMenu, roleId);
 				}
 			}
+			else if (add) {
+				rolesCanSeeControlMenu = ArrayUtil.append(
+					rolesCanSeeControlMenu, roleId);
+			}
 
-			properties.put("rolesCanSeeControlMenu", rolesCanSeeControlMenu);
-
-			configuration.update(properties);
+			_configurationProvider.saveGroupConfiguration(
+				MenuAccessConfiguration.class, group.getGroupId(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"rolesCanSeeControlMenu", rolesCanSeeControlMenu
+				).put(
+					"showControlMenuByRole",
+					menuAccessConfiguration.showControlMenuByRole()
+				).build());
 		}
 	}
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

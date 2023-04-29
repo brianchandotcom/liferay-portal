@@ -89,6 +89,10 @@ public class MenuAccessConfigurationProviderImpl
 				_configurationProvider.getGroupConfiguration(
 					MenuAccessConfiguration.class, group.getGroupId());
 
+			if (add && !menuAccessConfiguration.showControlMenuByRole()) {
+				continue;
+			}
+
 			String roleId = String.valueOf(role.getRoleId());
 			String[] rolesCanSeeControlMenu =
 				menuAccessConfiguration.rolesCanSeeControlMenu();

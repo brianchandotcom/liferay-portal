@@ -76,8 +76,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 
 		_kaleoInstanceLocalService.updateKaleoInstance(
 			kaleoInstanceToken.getKaleoInstanceId(),
-			executionContext.getWorkflowContext(),
-			executionContext.getServiceContext());
+			executionContext.getWorkflowContext());
 
 		return kaleoTaskAssignments;
 	}

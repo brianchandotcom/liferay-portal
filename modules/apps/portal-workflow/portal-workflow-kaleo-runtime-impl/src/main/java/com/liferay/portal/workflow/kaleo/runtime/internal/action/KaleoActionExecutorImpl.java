@@ -66,7 +66,7 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 
 				_kaleoInstanceLocalService.updateKaleoInstance(
 					kaleoInstanceToken.getKaleoInstanceId(),
-					executionContext.getWorkflowContext(), serviceContext);
+					executionContext.getWorkflowContext());
 			}
 			catch (Exception exception) {
 				_log.error(exception);

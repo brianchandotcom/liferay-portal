@@ -443,8 +443,7 @@ public class KaleoInstanceLocalServiceImpl
 		}
 	)
 	public KaleoInstance updateKaleoInstance(
-			long kaleoInstanceId, Map<String, Serializable> workflowContext,
-			ServiceContext serviceContext)
+			long kaleoInstanceId, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
 		KaleoInstance kaleoInstance = kaleoInstancePersistence.findByPrimaryKey(

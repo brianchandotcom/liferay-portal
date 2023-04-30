@@ -41,4 +41,14 @@ declare const PAGINATION_PROPS: {
 		initialDelta: number;
 	};
 };
-export {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP, PAGINATION_PROPS};
+declare const SORTING: {
+	ASCENDING: {
+		label: string;
+		value: string;
+	};
+	DESCENDING: {
+		label: string;
+		value: string;
+	};
+};
+export {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP, PAGINATION_PROPS, SORTING};

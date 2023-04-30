@@ -25,6 +25,7 @@ import Details from './fds_view/Details';
 import Fields from './fds_view/Fields';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
+import Sorting from './fds_view/Sorting';
 
 const NAVIGATION_BAR_ITEMS = [
 	{
@@ -34,6 +35,10 @@ const NAVIGATION_BAR_ITEMS = [
 	{
 		Component: Fields,
 		label: Liferay.Language.get('fields'),
+	},
+	{
+		Component: Sorting,
+		label: Liferay.Language.get('sorting'),
 	},
 	{
 		Component: Filters,
@@ -79,8 +84,7 @@ const FDSView = ({fdsViewId, fdsViewsURL, namespace}: FDSViewInterface) => {
 				setFDSView(responseJSON);
 
 				setLoading(false);
-			}
-			else {
+			} else {
 				openToast({
 					message: Liferay.Language.get(
 						'your-request-failed-to-complete'

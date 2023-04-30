@@ -3365,7 +3365,8 @@ public class PortalImpl implements Portal {
 				String layoutSetFriendlyURL = portalURL + _pathContext;
 
 				if (themeDisplay.isI18n()) {
-					layoutSetFriendlyURL += themeDisplay.getI18nPath();
+					layoutSetFriendlyURL +=
+						themeDisplay.getI18nPath() + StringPool.SLASH;
 				}
 
 				return addPreservedParameters(

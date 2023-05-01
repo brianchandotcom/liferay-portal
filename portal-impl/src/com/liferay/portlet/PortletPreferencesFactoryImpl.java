@@ -938,19 +938,6 @@ public class PortletPreferencesFactoryImpl
 		int ownerType = 0;
 		long plid = 0;
 
-		long masterLayoutPlid = layout.getMasterLayoutPlid();
-
-		boolean hasMasterLayoutPreferences = false;
-
-		long portletPreferencesCount =
-			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, masterLayoutPlid,
-				portletId);
-
-		if ((masterLayoutPlid > 0) && (portletPreferencesCount > 0)) {
-			hasMasterLayoutPreferences = true;
-		}
-
 		if (PortletIdCodec.hasUserId(originalPortletId) &&
 			(PortletIdCodec.decodeUserId(originalPortletId) == userId)) {
 
@@ -967,6 +954,20 @@ public class PortletPreferencesFactoryImpl
 		else {
 			if (portlet.isPreferencesUniquePerLayout()) {
 				ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+
+				long masterLayoutPlid = layout.getMasterLayoutPlid();
+
+				boolean hasMasterLayoutPreferences = false;
+
+				long portletPreferencesCount =
+					PortletPreferencesLocalServiceUtil.
+						getPortletPreferencesCount(
+							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+							masterLayoutPlid, portletId);
+
+				if ((masterLayoutPlid > 0) && (portletPreferencesCount > 0)) {
+					hasMasterLayoutPreferences = true;
+				}
 
 				if (hasMasterLayoutPreferences) {
 					plid = masterLayoutPlid;

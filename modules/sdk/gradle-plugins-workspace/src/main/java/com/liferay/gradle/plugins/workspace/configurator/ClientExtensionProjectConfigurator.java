@@ -611,9 +611,9 @@ public class ClientExtensionProjectConfigurator
 		}
 
 		if (Objects.equals(fieldName, "assemble")) {
-			ArrayNode assembleJsonNode = (ArrayNode)fieldJsonNode;
+			ArrayNode assembleArrayNode = (ArrayNode)fieldJsonNode;
 
-			if (!assembleJsonNode.isEmpty()) {
+			if (!assembleArrayNode.isEmpty()) {
 				assembleClientExtensionTaskProvider.configure(
 					copy -> {
 						if (!_isActiveProfile(project, profileName)) {
@@ -624,7 +624,7 @@ public class ClientExtensionProjectConfigurator
 
 						taskInputs.file(_CLIENT_EXTENSION_YAML);
 
-						assembleJsonNode.forEach(
+						assembleArrayNode.forEach(
 							copyJsonNode -> _configureCopySpec(
 								copy, copyJsonNode, project));
 					});

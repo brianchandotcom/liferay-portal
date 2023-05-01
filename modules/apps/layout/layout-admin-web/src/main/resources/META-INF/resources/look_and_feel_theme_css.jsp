@@ -16,9 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="mb-5">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="theme-css-client-extension" /></h3>
-
+<liferay-frontend:fieldset
+	collapsed="<%= false %>"
+	collapsible="<%= true %>"
+	label="theme-css-client-extension"
+>
 	<p class="text-secondary">
 		<liferay-ui:message key="use-this-client-extension-to-fully-replace-the-default-css-contained-in-the-theme" />
 	</p>
@@ -29,4 +31,4 @@
 			props="<%= layoutsAdminDisplayContext.getThemeCSSReplacementSelectorProps() %>"
 		/>
 	</div>
-</div>
+</liferay-frontend:fieldset>

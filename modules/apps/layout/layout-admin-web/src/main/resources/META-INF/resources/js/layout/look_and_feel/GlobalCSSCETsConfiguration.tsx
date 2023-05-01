@@ -146,10 +146,6 @@ export default function GlobalCSSCETsConfiguration({
 				/>
 			))}
 
-			<h3 className="sheet-subtitle">
-				{Liferay.Language.get('css-client-extensions')}
-			</h3>
-
 			<p className="text-secondary">
 				{Liferay.Language.get(
 					'extend-this-page-css-with-client-extensions.-they-will-be-loaded-after-the-theme-css-and-after-master-extensions'

@@ -16,12 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="form-group">
+<liferay-frontend:fieldset
+	collapsed="<%= false %>"
+	collapsible="<%= true %>"
+	label="favicon"
+>
 	<react:component
 		module="js/layout/look_and_feel/Favicon"
 		props="<%= layoutsAdminDisplayContext.getFaviconButtonProps() %>"
 	/>
-</div>
+</liferay-frontend:fieldset>
 
 <c:if test="<%= company.isSiteLogo() %>">
 	<liferay-util:include page="/layout_set/logo.jsp" servletContext="<%= application %>" />

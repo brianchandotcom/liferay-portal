@@ -1,15 +1,21 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "org.htmlunit", name: "htmlunit", version: "3.1.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-spi")
+	testIntegrationCompile project(":apps:document-library:document-library-test-util")
+	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
+	testIntegrationCompile project(":apps:layout:layout-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-background-task:portal-background-task-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:segments:segments-api")
+	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:osgi-service-tracker-collections")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

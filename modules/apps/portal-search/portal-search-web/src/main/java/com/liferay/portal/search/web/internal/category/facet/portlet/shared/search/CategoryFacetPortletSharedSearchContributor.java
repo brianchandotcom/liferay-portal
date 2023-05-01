@@ -45,7 +45,7 @@ public class CategoryFacetPortletSharedSearchContributor
 
 		CategoryFacetPortletPreferences categoryFacetPortletPreferences =
 			new CategoryFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		categoryFacetSearchContributor.contribute(
 			portletSharedSearchSettings.getSearchRequestBuilder(),

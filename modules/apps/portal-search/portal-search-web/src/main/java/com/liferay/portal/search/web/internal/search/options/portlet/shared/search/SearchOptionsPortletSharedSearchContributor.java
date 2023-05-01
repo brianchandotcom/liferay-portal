@@ -39,7 +39,7 @@ public class SearchOptionsPortletSharedSearchContributor
 
 		SearchOptionsPortletPreferences searchOptionsPortletPreferences =
 			new SearchOptionsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(

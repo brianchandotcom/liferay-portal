@@ -40,7 +40,7 @@ public class TagFacetPortletSharedSearchContributor
 
 		TagFacetPortletPreferences tagFacetPortletPreferences =
 			new TagFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		tagFacetSearchContributor.contribute(
 			portletSharedSearchSettings.getSearchRequestBuilder(),

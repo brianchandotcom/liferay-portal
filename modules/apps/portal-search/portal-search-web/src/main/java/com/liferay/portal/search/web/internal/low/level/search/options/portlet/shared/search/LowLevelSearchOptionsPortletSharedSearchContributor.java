@@ -51,8 +51,7 @@ public class LowLevelSearchOptionsPortletSharedSearchContributor
 		LowLevelSearchOptionsPortletPreferences
 			lowLevelSearchOptionsPortletPreferences =
 				new LowLevelSearchOptionsPortletPreferencesImpl(
-					portletSharedSearchSettings.
-						getPortletPreferencesOptional());
+					portletSharedSearchSettings.getPortletPreferences());
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(

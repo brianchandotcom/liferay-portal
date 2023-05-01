@@ -39,7 +39,7 @@ public class SearchInsightsPortletSharedSearchContributor
 
 		SearchInsightsPortletPreferences searchInsightsPortletPreferences =
 			new SearchInsightsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(

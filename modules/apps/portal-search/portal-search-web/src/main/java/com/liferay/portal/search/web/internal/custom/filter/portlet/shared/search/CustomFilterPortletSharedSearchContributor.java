@@ -44,7 +44,7 @@ public class CustomFilterPortletSharedSearchContributor
 
 		CustomFilterPortletPreferences customFilterPortletPreferences =
 			new CustomFilterPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getFederatedSearchRequestBuilder(

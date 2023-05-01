@@ -49,7 +49,7 @@ public class CustomFacetPortletSharedSearchContributor
 
 		CustomFacetPortletPreferences customFacetPortletPreferences =
 			new CustomFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		String aggregationField =
 			customFacetPortletPreferences.getAggregationField();

@@ -45,7 +45,7 @@ public class TypeFacetPortletSharedSearchContributor
 		TypeFacetPortletPreferences typeFacetPortletPreferences =
 			new TypeFacetPortletPreferencesImpl(
 				objectDefinitionLocalService,
-				portletSharedSearchSettings.getPortletPreferencesOptional(),
+				portletSharedSearchSettings.getPortletPreferences(),
 				searchableAssetClassNamesProvider);
 
 		SearchRequestBuilder searchRequestBuilder =

@@ -45,7 +45,7 @@ public class FolderFacetPortletSharedSearchContributor
 
 		FolderFacetPortletPreferences folderFacetPortletPreferences =
 			new FolderFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		folderFacetSearchContributor.contribute(
 			portletSharedSearchSettings.getSearchRequestBuilder(),

@@ -48,7 +48,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
 
@@ -71,7 +70,7 @@ public class SortPortletSharedSearchContributor
 
 		SortPortletPreferences sortPortletPreferences =
 			new SortPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		SearchRequestBuilder searchRequestBuilder =
 			portletSharedSearchSettings.getSearchRequestBuilder();
@@ -227,7 +226,7 @@ public class SortPortletSharedSearchContributor
 					themeDisplay.getLayout(), portletId);
 
 			SortPortletPreferences sortPortletPreferences =
-				new SortPortletPreferencesImpl(Optional.of(portletPreferences));
+				new SortPortletPreferencesImpl(portletPreferences);
 
 			JSONArray fieldsJSONArray =
 				sortPortletPreferences.getFieldsJSONArray();

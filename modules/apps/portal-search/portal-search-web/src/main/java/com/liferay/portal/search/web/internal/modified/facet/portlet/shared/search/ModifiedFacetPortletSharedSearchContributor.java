@@ -49,7 +49,7 @@ public class ModifiedFacetPortletSharedSearchContributor
 
 		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences =
 			new ModifiedFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferencesOptional());
+				portletSharedSearchSettings.getPortletPreferences());
 
 		portletSharedSearchSettings.addFacet(
 			_buildFacet(

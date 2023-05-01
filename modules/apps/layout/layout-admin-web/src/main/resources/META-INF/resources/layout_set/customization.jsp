@@ -27,7 +27,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 List<TabsItem> tabsItems = layoutLookAndFeelDisplayContext.getTabsItems();
 %>
 
-<div class="mt-5 sheet-row">
+<div class="sheet-row">
 	<clay:tabs
 		tabsItems="<%= tabsItems %>"
 	>

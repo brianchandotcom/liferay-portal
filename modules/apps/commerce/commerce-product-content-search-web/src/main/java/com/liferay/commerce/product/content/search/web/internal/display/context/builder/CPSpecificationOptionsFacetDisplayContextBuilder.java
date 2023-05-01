@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -153,13 +152,10 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 
-		Optional<PortletPreferences> portletPreferencesOptional =
+		PortletPreferences portletPreferences =
 			_portletSharedSearchResponse.getPortletPreferences(_renderRequest);
 
-		if (portletPreferencesOptional.isPresent()) {
-			PortletPreferences portletPreferences =
-				portletPreferencesOptional.get();
-
+		if (portletPreferences != null) {
 			_displayStyle = portletPreferences.getValue(
 				"displayStyle", _displayStyle);
 			_frequencyThreshold = GetterUtil.getInteger(

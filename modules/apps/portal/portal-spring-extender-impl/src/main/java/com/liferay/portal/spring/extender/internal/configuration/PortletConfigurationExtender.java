@@ -213,6 +213,9 @@ public class PortletConfigurationExtender
 				}
 			}
 		}
+		else {
+			dataFile.delete();
+		}
 
 		return urlTimestamps;
 	}

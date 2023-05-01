@@ -46,7 +46,7 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 
 		String federatedSearchKey =
 			SXPBlueprintOptionsPortletPreferencesUtil.getValue(
-				portletSharedSearchSettings.getPortletPreferencesOptional(),
+				portletSharedSearchSettings.getPortletPreferences(),
 				"federatedSearchKey");
 
 		SearchRequestBuilder searchRequestBuilder =
@@ -66,8 +66,7 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 					searchContext.setAttribute(
 						"search.experiences.blueprint.id",
 						SXPBlueprintOptionsPortletPreferencesUtil.getValue(
-							portletSharedSearchSettings.
-								getPortletPreferencesOptional(),
+							portletSharedSearchSettings.getPortletPreferences(),
 							"sxpBlueprintId"));
 				}
 

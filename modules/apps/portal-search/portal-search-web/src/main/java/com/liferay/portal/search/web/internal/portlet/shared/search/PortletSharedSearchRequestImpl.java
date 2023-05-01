@@ -52,7 +52,6 @@ import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -248,9 +247,8 @@ public class PortletSharedSearchRequestImpl
 		return searchSettings -> portletSharedSearchContributor.contribute(
 			new PortletSharedSearchSettingsImpl(
 				searchSettings, portlet.getPortletId(),
-				Optional.ofNullable(
-					portletPreferencesLookup.fetchPreferences(
-						portlet, themeDisplay)),
+				portletPreferencesLookup.fetchPreferences(
+					portlet, themeDisplay),
 				portletSharedRequestHelper, renderRequest));
 	}
 

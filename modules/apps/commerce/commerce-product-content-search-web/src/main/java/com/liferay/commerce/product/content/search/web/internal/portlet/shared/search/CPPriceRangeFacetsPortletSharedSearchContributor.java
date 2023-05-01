@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
@@ -115,13 +113,10 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 			cpPriceRangeFacetsPortletInstanceConfiguration.
 				rangesJSONArrayString();
 
-		Optional<PortletPreferences> portletPreferencesOptional =
-			portletSharedSearchSettings.getPortletPreferencesOptional();
+		PortletPreferences portletPreferences =
+			portletSharedSearchSettings.getPortletPreferences();
 
-		if (portletPreferencesOptional.isPresent()) {
-			PortletPreferences portletPreferences =
-				portletPreferencesOptional.get();
-
+		if (portletPreferences != null) {
 			rangesJSONArrayString = portletPreferences.getValue(
 				"rangesJSONArrayString", rangesJSONArrayString);
 		}

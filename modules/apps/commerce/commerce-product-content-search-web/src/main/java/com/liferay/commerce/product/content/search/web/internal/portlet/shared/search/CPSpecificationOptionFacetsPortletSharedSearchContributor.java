@@ -51,7 +51,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -96,16 +95,13 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 
 			portletSharedSearchSettings.addFacet(serializableFacet);
 
-			Optional<PortletPreferences> portletPreferencesOptional =
-				portletSharedSearchSettings.getPortletPreferencesOptional();
+			PortletPreferences portletPreferences =
+				portletSharedSearchSettings.getPortletPreferences();
 
 			int frequencyThreshold = 1;
 			int maxTerms = 10;
 
-			if (portletPreferencesOptional.isPresent()) {
-				PortletPreferences portletPreferences =
-					portletPreferencesOptional.get();
-
+			if (portletPreferences != null) {
 				frequencyThreshold = GetterUtil.getInteger(
 					portletPreferences.getValue("frequencyThreshold", null), 1);
 				maxTerms = GetterUtil.getInteger(

@@ -79,15 +79,16 @@ function AddFDSFilterModalContent({
 
 			return null;
 		}
-
 		const body: any = {
+			[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER_ID]: fdsView.id,
 			fieldName: field.name,
+			from: '',
 			label: label || field.label,
+			to: '',
 			type: field.format,
-			[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FILTER_ID]: fdsView.id,
 		};
 
-		const response = await fetch(API_URL.FDS_FILTERS, {
+		const response = await fetch(API_URL.FDS_DATE_FILTERS, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
@@ -253,12 +254,14 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 	React.useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
-				`${API_URL.FDS_FILTERS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FILTER_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FILTER}`
+				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER}`
 			);
 
 			const responseJSON = await response.json();
 
-			let filtersOrderer = responseJSON.items as Filter[];
+			let filtersOrderer = responseJSON[
+				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER
+			] as Filter[];
 
 			if (fdsView.fdsFiltersOrder) {
 				filtersOrderer = fdsView.fdsFiltersOrder

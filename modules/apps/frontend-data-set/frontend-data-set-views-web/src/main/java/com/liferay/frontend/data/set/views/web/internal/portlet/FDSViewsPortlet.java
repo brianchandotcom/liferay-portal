@@ -242,14 +242,23 @@ public class FDSViewsPortlet extends MVCPortlet {
 			"fdsViewFDSFieldRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		ObjectDefinition fdsFilterObjectDefinition =
+
+		ObjectDefinition fdsDateFilterObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				userId, false, false,
-				LocalizedMapUtil.getLocalizedMap("FDS Filter"), "FDSFilter",
-				"300", null, LocalizedMapUtil.getLocalizedMap("FDS Filters"),
+				LocalizedMapUtil.getLocalizedMap("FDS Date Filter"), "FDSDateFilter",
+				"300", null, LocalizedMapUtil.getLocalizedMap("FDS Date Filters"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+						_language.get(locale, "to"), "to", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+						_language.get(locale, "from"), "from", false),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
@@ -264,14 +273,14 @@ public class FDSViewsPortlet extends MVCPortlet {
 						_language.get(locale, "type"), "type", false)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			userId, fdsFilterObjectDefinition.getObjectDefinitionId());
+			userId, fdsDateFilterObjectDefinition.getObjectDefinitionId());
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
-			fdsFilterObjectDefinition.getObjectDefinitionId(), 0,
+			fdsDateFilterObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap("FDSView FDSFilter Relationship"),
-			"fdsViewFDSFilterRelationship",
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSDateFilter Relationship"),
+			"fdsViewFDSDateFilterRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 

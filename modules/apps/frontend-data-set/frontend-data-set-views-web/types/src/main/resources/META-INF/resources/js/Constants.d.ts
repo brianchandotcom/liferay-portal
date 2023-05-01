@@ -13,18 +13,18 @@
  */
 
 declare const API_URL: {
+	FDS_DATE_FILTERS: string;
 	FDS_ENTRIES: string;
 	FDS_FIELDS: string;
-	FDS_FILTERS: string;
 	FDS_VIEWS: string;
 };
 declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
+	readonly FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship';
+	readonly FDS_VIEW_FDS_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship';
 	readonly FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId';
-	readonly FDS_VIEW_FDS_FILTER: 'fdsViewFDSFilterRelationship';
-	readonly FDS_VIEW_FDS_FILTER_ID: 'r_fdsViewFDSFilterRelationship_c_fdsViewId';
 };
 declare const PAGINATION_PROPS: {
 	pagination: {

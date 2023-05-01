@@ -407,12 +407,12 @@ public class ClientExtensionProjectConfigurator
 		}
 
 		assembleClientExtensionTaskProvider.configure(
-			copy -> {
+			assembleClientExtensionCopy -> {
 				if (!_isActiveProfile(project, profileName)) {
 					return;
 				}
 
-				TaskInputs taskInputs = copy.getInputs();
+				TaskInputs taskInputs = assembleClientExtensionCopy.getInputs();
 
 				taskInputs.file(_CLIENT_EXTENSION_YAML);
 
@@ -437,7 +437,7 @@ public class ClientExtensionProjectConfigurator
 							fromPath = fromJsonNode.asText();
 						}
 
-						copy.from(
+						assembleClientExtensionCopy.from(
 							(fromPath != null) ? fromPath : ".",
 							copySpec -> {
 								if (includeJsonNode instanceof ArrayNode) {

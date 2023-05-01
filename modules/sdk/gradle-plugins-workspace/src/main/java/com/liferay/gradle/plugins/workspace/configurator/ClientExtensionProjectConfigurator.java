@@ -633,11 +633,11 @@ public class ClientExtensionProjectConfigurator
 			return;
 		}
 
-		ObjectNode clientExtensionJsonNode = (ObjectNode)fieldJsonNode;
+		ObjectNode clientExtensionObjectNode = (ObjectNode)fieldJsonNode;
 
 		try {
 			ClientExtension clientExtension = _yamlObjectMapper.treeToValue(
-				clientExtensionJsonNode, ClientExtension.class);
+				clientExtensionObjectNode, ClientExtension.class);
 
 			clientExtension.id = fieldName;
 

@@ -66,6 +66,10 @@ public class AopServiceRegistrar {
 	}
 
 	public void register(TransactionHandler transactionHandler) {
+		if (_serviceRegistration != null) {
+			return;
+		}
+
 		Bundle bundle = _serviceReference.getBundle();
 
 		BundleContext bundleContext = bundle.getBundleContext();

@@ -165,13 +165,10 @@ public class ClientExtensionProjectConfigurator
 						return;
 					}
 
-					ObjectNode clientExtensionObjectNode =
-						(ObjectNode)fieldJsonNode;
-
 					try {
 						ClientExtension clientExtension =
 							_yamlObjectMapper.treeToValue(
-								clientExtensionObjectNode,
+								(ObjectNode)fieldJsonNode,
 								ClientExtension.class);
 
 						clientExtension.id = fieldName;
@@ -597,10 +594,8 @@ public class ClientExtensionProjectConfigurator
 		Project project, File clientExtensionYamlFile,
 		File overrideClientExtensionYamlFile, String profileName) {
 
-		String taskName = "deploy" + StringUtil.capitalize(profileName);
-
 		TaskProvider<Task> taskTaskProvider = GradleUtil.addTaskProvider(
-			project, taskName, Task.class);
+			project, "deploy" + StringUtil.capitalize(profileName), Task.class);
 
 		taskTaskProvider.configure(
 			new Action<Task>() {

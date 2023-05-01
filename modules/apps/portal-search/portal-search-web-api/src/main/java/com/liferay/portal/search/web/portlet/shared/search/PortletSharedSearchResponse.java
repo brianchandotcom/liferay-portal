@@ -46,8 +46,7 @@ public interface PortletSharedSearchResponse {
 
 	public int getPaginationStart();
 
-	public Optional<String> getParameter(
-		String name, RenderRequest renderRequest);
+	public String getParameter(String name, RenderRequest renderRequest);
 
 	public Optional<String[]> getParameterValues(
 		String name, RenderRequest renderRequest);

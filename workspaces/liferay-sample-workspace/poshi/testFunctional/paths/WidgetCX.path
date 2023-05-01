@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>WidgetCX</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WidgetCX</td></tr>
+</thead>
+
+<tbody>
+
+<!-- Liferay Sample Custom Element 1 -->
+
+<tr>
+	<td>LSCE1_PORTLET</td>
+	<td>css=vanilla-counter</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LSCE1_COUNTER</td>
+	<td>css=vanilla-counter>>>.counter</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

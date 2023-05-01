@@ -1,0 +1,106 @@
+@component-name = "samples-workspace-client-extensions"
+definition {
+
+	property testray.main.component.name = "samples-workspace-client-extensions";
+
+	static var staticLayoutName = "";
+	static var staticDeletePageList = ListUtil.newList();
+
+	setUp {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Create test page name and add to teardown delete list") {
+			var randomString = StringUtil.randomString(10);
+
+			var extractedString = StringUtil.extractChars(${randomString});
+
+			var staticLayoutName = "page${extractedString}";
+
+			ListUtil.add(${staticDeletePageList}, ${staticLayoutName});
+		}
+
+		task ("Create test page") {
+			LiferayPortalAPI.createPage(
+				friendlyURL = "",
+				layoutName = ${staticLayoutName},
+				parentLayoutId = 0,
+				privateLayout = "false",
+				type = "portlet");
+		}
+
+		task ("Update layout to 1 column") {
+			LiferayPortalAPI.updateLayout(
+				layoutName = ${staticLayoutName},
+				typeSettings = "layout-template-id=1_column");
+		}
+
+		task ("Sign in to DXP") {
+			Default.Open(locator1 = ${portalURL});
+
+			Login.signIn();
+		}
+
+		task ("Navigate to Edit page") {
+			Default.Open(locator1 = "${portalURL}/${staticLayoutName}");
+		}
+	}
+
+	tearDown {
+		for (var layoutName : list ${staticDeletePageList}) {
+			LiferayPortalAPI.deletePage(layoutName = ${layoutName});
+		}
+	}
+
+	@description = "Test Liferay Sample Custom Element 1"
+	@priority = 4
+	test LiferaySampleCustomElement1 {
+		task ("When: User adds the Liferay Sample Custom Element 1 widget") {
+			Widget.addWidget(key_widgetName = "Liferay Sample Custom Element 1");
+		}
+
+		task ("Then: User can use Liferay Sample Custom Element 1 portlet") {
+			Default.AssertTextPresent(
+				locator1 = "WidgetCX#LSCE1_PORTLET",
+				value1 = "Portlet internal route");
+
+			Default.AssertTextPresent(
+				locator1 = "WidgetCX#LSCE1_COUNTER",
+				value1 = 0);
+
+			CXJavascript.clickIncrementBtn();
+
+			CXJavascript.clickIncrementBtn();
+
+			CXJavascript.clickIncrementBtn();
+
+			Default.AssertTextPresent(
+				locator1 = "WidgetCX#LSCE1_COUNTER",
+				value1 = 3);
+
+			Default.AssertTextNotPresent(
+				locator1 = "WidgetCX#LSCE1_COUNTER",
+				value1 = 0);
+
+			CXJavascript.clickDecrementBtn();
+
+			CXJavascript.clickDecrementBtn();
+
+			CXJavascript.clickDecrementBtn();
+
+			CXJavascript.clickDecrementBtn();
+
+			Default.AssertTextPresent(
+				locator1 = "WidgetCX#LSCE1_COUNTER",
+				value1 = "-1");
+
+			Default.AssertTextNotPresent(
+				locator1 = "WidgetCX#LSCE1_COUNTER",
+				value1 = 3);
+
+			Default.AssertTextNotPresent(
+				locator1 = "WidgetCX#LSCE1_COUNTER",
+				value1 = 0);
+		}
+	}
+
+}

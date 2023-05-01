@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Widget</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Widget</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>WIDGET_NAME</td>
+	<td>//div[@title='${key_widgetName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_FIELD</td>
+	<td>//input[contains(@id,'sidebarAddPanelSearchFormInput0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONTENT_BUTTON</td>
+	<td>//button[@data-restore-title='Add Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONTENT</td>
+	<td>//button[@title='Add Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_ADD_BUTTON</td>
+	<td>//button[(@data-title='Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_MENU</td>
+	<td>//div[@class='tab-content sidebar-body__add-panel__tab-content']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

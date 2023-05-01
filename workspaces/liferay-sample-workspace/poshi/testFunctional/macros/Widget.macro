@@ -1,0 +1,22 @@
+definition {
+
+	@summary = "Add a widget using the widgetName"
+	macro addWidget {
+		if (Default.IsElementNotPresent(locator1 = "Widget#INPUT_FIELD")) {
+			Default.Click(locator1 = "Widget#MENU_ADD_BUTTON");
+		}
+
+		Default.Type(
+			locator1 = "Widget#INPUT_FIELD",
+			value1 = ${key_widgetName});
+
+		Default.MouseOver(
+			key_widgetName = ${key_widgetName},
+			locator1 = "Widget#WIDGET_NAME");
+
+		Default.MouseOver(locator1 = "Widget#ADD_CONTENT");
+
+		Default.Click(locator1 = "Widget#ADD_CONTENT_BUTTON");
+	}
+
+}

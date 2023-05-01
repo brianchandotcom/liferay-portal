@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>Login</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Login</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>CONFIRMATION_SIGN_IN_BUTTON</td>
+	<td>//button[contains(.,'Sign In')] | //input[@value='Sign In']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_FIELD</td>
+	<td>//label[normalize-space()='${key_fieldLabel}']//following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//span[text()='Sign In']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

@@ -58,7 +58,6 @@
 			this.updateRoute();
 
 			const root = document.createElement('div');
-			
 			root.setAttribute("class", "portlet-container");
 			root.appendChild(style);
 			root.appendChild(this.decrementButton);

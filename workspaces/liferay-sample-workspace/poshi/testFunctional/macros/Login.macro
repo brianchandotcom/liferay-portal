@@ -1,0 +1,25 @@
+definition {
+
+	var userEmailAddress = "test@liferay.com";
+	var userPassword = "test";
+
+	@summary = "Log into DXP"
+	macro signIn {
+		Default.Click(locator1 = "Login#SIGN_IN_BUTTON");
+
+		Default.Type(
+			key_fieldLabel = "Email Address",
+			locator1 = "Login#INPUT_FIELD",
+			value1 = ${userEmailAddress});
+
+		Default.Type(
+			key_fieldLabel = "Password",
+			locator1 = "Login#INPUT_FIELD",
+			value1 = ${userPassword});
+
+		Default.Click(locator1 = "Login#CONFIRMATION_SIGN_IN_BUTTON");
+
+		Default.WaitForElementNotPresent(locator1 = "Login#CONFIRMATION_SIGN_IN_BUTTON");
+	}
+
+}

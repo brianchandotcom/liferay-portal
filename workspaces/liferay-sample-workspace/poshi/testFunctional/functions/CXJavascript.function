@@ -1,0 +1,20 @@
+@default = "clickIncrementBtn"
+definition {
+
+	function clickDecrementBtn {
+		var javaScript = '''
+			var element = document.querySelector("vanilla-counter").shadowRoot.querySelector(".decrement").click();
+		''';
+
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
+	}
+
+	function clickIncrementBtn {
+		var javaScript = '''
+			var element = document.querySelector("vanilla-counter").shadowRoot.querySelector(".increment").click();
+		''';
+
+		selenium.executeJavaScript(${javaScript}, ${locator1}, ${locator2});
+	}
+
+}

@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 import com.liferay.portal.search.web.internal.search.options.portlet.SearchOptionsPortletPreferences;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
@@ -37,9 +35,9 @@ public class LowLevelSearchOptionsPortletPreferencesImpl
 	implements LowLevelSearchOptionsPortletPreferences {
 
 	public LowLevelSearchOptionsPortletPreferencesImpl(
-		Optional<PortletPreferences> portletPreferencesOptional) {
+		PortletPreferences portletPreferences) {
 
-		super(portletPreferencesOptional.orElse(null));
+		super(portletPreferences);
 	}
 
 	@Override

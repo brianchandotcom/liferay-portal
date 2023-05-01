@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
@@ -34,10 +32,8 @@ import javax.portlet.PortletPreferences;
 public class SortPortletPreferencesImpl
 	extends BasePortletPreferences implements SortPortletPreferences {
 
-	public SortPortletPreferencesImpl(
-		Optional<PortletPreferences> portletPreferencesOptional) {
-
-		super(portletPreferencesOptional.orElse(null));
+	public SortPortletPreferencesImpl(PortletPreferences portletPreferences) {
+		super(portletPreferences);
 	}
 
 	@Override

@@ -17,8 +17,6 @@ package com.liferay.portal.search.web.internal.custom.filter.portlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
@@ -29,9 +27,9 @@ public class CustomFilterPortletPreferencesImpl
 	extends BasePortletPreferences implements CustomFilterPortletPreferences {
 
 	public CustomFilterPortletPreferencesImpl(
-		Optional<PortletPreferences> portletPreferencesOptional) {
+		PortletPreferences portletPreferences) {
 
-		super(portletPreferencesOptional.orElse(null));
+		super(portletPreferences);
 	}
 
 	@Override

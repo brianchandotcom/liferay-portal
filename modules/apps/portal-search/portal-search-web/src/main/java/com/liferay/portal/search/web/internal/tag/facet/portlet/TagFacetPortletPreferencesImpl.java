@@ -16,8 +16,6 @@ package com.liferay.portal.search.web.internal.tag.facet.portlet;
 
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
@@ -27,9 +25,9 @@ public class TagFacetPortletPreferencesImpl
 	extends BasePortletPreferences implements TagFacetPortletPreferences {
 
 	public TagFacetPortletPreferencesImpl(
-		Optional<PortletPreferences> portletPreferencesOptional) {
+		PortletPreferences portletPreferences) {
 
-		super(portletPreferencesOptional.orElse(null));
+		super(portletPreferences);
 	}
 
 	@Override

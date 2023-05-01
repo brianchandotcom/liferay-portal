@@ -18,8 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 
 /**
@@ -29,9 +27,9 @@ public class SearchBarPortletPreferencesImpl
 	extends BasePortletPreferences implements SearchBarPortletPreferences {
 
 	public SearchBarPortletPreferencesImpl(
-		Optional<PortletPreferences> portletPreferencesOptional) {
+		PortletPreferences portletPreferences) {
 
-		super(portletPreferencesOptional.orElse(null));
+		super(portletPreferences);
 	}
 
 	@Override

@@ -27,7 +27,6 @@ import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPre
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
 
@@ -39,10 +38,10 @@ public class TypeFacetPortletPreferencesImpl
 
 	public TypeFacetPortletPreferencesImpl(
 		ObjectDefinitionLocalService objectDefinitionLocalService,
-		Optional<PortletPreferences> portletPreferencesOptional,
+		PortletPreferences portletPreferences,
 		SearchableAssetClassNamesProvider searchableAssetClassNamesProvider) {
 
-		super(portletPreferencesOptional.orElse(null));
+		super(portletPreferences);
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_searchableAssetClassNamesProvider = searchableAssetClassNamesProvider;

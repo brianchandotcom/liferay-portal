@@ -29,8 +29,6 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortle
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl;
 import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsPortletKeys;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
@@ -58,8 +56,7 @@ public class RedirectSuggestionsMVCActionCommand extends BaseMVCActionCommand {
 		hideDefaultSuccessMessage(actionRequest);
 
 		SearchBarPortletPreferences searchBarPortletPreferences =
-			new SearchBarPortletPreferencesImpl(
-				Optional.ofNullable(actionRequest.getPreferences()));
+			new SearchBarPortletPreferencesImpl(actionRequest.getPreferences());
 
 		String redirectURL = _getRedirectURL(
 			actionRequest, searchBarPortletPreferences);

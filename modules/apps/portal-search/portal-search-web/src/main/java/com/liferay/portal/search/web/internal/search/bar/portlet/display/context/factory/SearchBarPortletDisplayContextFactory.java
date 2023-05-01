@@ -52,8 +52,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
-import java.util.Optional;
-
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
@@ -139,7 +137,7 @@ public class SearchBarPortletDisplayContextFactory {
 
 		SearchBarPortletPreferences searchBarPortletPreferences =
 			new SearchBarPortletPreferencesImpl(
-				Optional.ofNullable(_renderRequest.getPreferences()));
+				_renderRequest.getPreferences());
 
 		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, searchBarPortletPreferences);

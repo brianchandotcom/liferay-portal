@@ -23,7 +23,6 @@ import com.liferay.portal.search.internal.asset.SearchableAssetClassNamesProvide
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,7 +45,7 @@ public class TypeFacetPortletPreferencesImplTest {
 	@Before
 	public void setUp() {
 		typeFacetPortletPreferencesImpl = new TypeFacetPortletPreferencesImpl(
-			_objectDefinitionLocalService, Optional.empty(),
+			_objectDefinitionLocalService, null,
 			new SearchableAssetClassNamesProviderImpl() {
 				{
 					assetRendererFactoryRegistry =

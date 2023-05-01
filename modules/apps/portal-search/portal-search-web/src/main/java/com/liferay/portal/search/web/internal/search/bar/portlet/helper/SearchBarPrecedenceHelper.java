@@ -30,7 +30,6 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortle
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -138,13 +137,11 @@ public class SearchBarPrecedenceHelper {
 		Portlet portlet, ThemeDisplay themeDisplay) {
 
 		if (portlet == null) {
-			return new SearchBarPortletPreferencesImpl(Optional.empty());
+			return new SearchBarPortletPreferencesImpl(null);
 		}
 
 		return new SearchBarPortletPreferencesImpl(
-			Optional.ofNullable(
-				_portletPreferencesLookup.fetchPreferences(
-					portlet, themeDisplay)));
+			_portletPreferencesLookup.fetchPreferences(portlet, themeDisplay));
 	}
 
 	private SearchBarPortletPreferences _getSearchBarPortletPreferences(

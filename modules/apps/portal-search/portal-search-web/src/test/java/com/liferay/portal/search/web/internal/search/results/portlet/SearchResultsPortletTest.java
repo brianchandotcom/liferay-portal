@@ -47,7 +47,6 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Optional;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -332,7 +331,7 @@ public class SearchResultsPortletTest {
 		).getKeywords();
 
 		Mockito.doReturn(
-			Optional.empty()
+			null
 		).when(
 			_portletSharedSearchResponse
 		).getPortletPreferences(

@@ -28,8 +28,6 @@ import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -75,7 +73,7 @@ public class SuggestionsPortlet extends MVCPortlet {
 
 		SuggestionsPortletPreferences suggestionsPortletPreferences =
 			new SuggestionsPortletPreferencesImpl(
-				Optional.ofNullable(renderRequest.getPreferences()));
+				renderRequest.getPreferences());
 
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(renderRequest);

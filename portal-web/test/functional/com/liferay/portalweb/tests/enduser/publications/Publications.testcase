@@ -692,9 +692,7 @@ definition {
 
 			PagesAdmin.deletePage(pageName = "Home");
 
-			PublicationsNavigator.gotoReviewChanges(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Publication Name");
+			PublicationsNavigator.gotoReviewChanges();
 
 			Button.clickPublish();
 

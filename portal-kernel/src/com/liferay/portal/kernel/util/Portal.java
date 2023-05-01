@@ -657,11 +657,6 @@ public interface Portal {
 			String displayType)
 		throws PortalException;
 
-	public Serializable getExpandoValue(
-			UploadPortletRequest uploadPortletRequest, String name, int type,
-			String displayType)
-		throws PortalException;
-
 	public String getFirstPageLayoutTypes(
 		HttpServletRequest httpServletRequest);
 

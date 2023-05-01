@@ -181,8 +181,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 						_language.get(locale, "default-items-per-page"),
 						"defaultItemsPerPage", true),
 					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "fields-order"), "fdsFieldsOrder",
 						false),
 					ObjectFieldUtil.createObjectField(

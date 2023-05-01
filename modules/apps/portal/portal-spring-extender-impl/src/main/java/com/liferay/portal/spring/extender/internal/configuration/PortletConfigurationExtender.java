@@ -186,7 +186,9 @@ public class PortletConfigurationExtender
 
 		File dataFile = bundleContext.getDataFile("urlTimestamps.data");
 
-		if (dataFile.exists() && !StartupHelperUtil.isDBNew()) {
+		if (dataFile.exists() && !StartupHelperUtil.isDBNew() &&
+			!StartupHelperUtil.isUpgrading()) {
+
 			try {
 				Deserializer deserializer = new Deserializer(
 					ByteBuffer.wrap(FileUtil.getBytes(dataFile)));

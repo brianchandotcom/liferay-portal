@@ -131,7 +131,7 @@ public class CustomFilterPortlet extends MVCPortlet {
 			customFilterPortletPreferences.getFilterValue()
 		).parameterName(
 			parameterName
-		).parameterValueOptional(
+		).parameterValue(
 			portletSharedSearchResponse.getParameter(
 				parameterName, renderRequest)
 		).queryName(

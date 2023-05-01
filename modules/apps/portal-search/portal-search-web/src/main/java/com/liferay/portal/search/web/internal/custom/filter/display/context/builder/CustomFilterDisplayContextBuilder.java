@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.custom.filter.configuration.CustomFilterPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
 
-import java.util.Optional;
-
 /**
  * @author André de Oliveira
  */
@@ -92,10 +90,10 @@ public class CustomFilterDisplayContextBuilder {
 		return this;
 	}
 
-	public CustomFilterDisplayContextBuilder parameterValueOptional(
-		Optional<String> parameterValueOptional) {
+	public CustomFilterDisplayContextBuilder parameterValue(
+		String parameterValue) {
 
-		_parameterValue = parameterValueOptional.orElse(null);
+		_parameterValue = parameterValue;
 
 		return this;
 	}

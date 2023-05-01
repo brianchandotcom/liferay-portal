@@ -43,7 +43,7 @@ CustomFacetDisplayContext customFacetDisplayContext = new CustomFacetDisplayCont
 
 CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration = customFacetDisplayContext.getCustomFacetPortletInstanceConfiguration();
 
-CustomFacetPortletPreferences customFacetPortletPreferences = new CustomFacetPortletPreferencesImpl(java.util.Optional.of(portletPreferences));
+CustomFacetPortletPreferences customFacetPortletPreferences = new CustomFacetPortletPreferencesImpl(portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

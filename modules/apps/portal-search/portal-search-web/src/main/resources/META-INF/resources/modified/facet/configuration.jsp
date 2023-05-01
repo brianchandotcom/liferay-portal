@@ -41,7 +41,7 @@ ModifiedFacetDisplayContext modifiedFacetDisplayContext = (ModifiedFacetDisplayC
 
 ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfiguration = modifiedFacetDisplayContext.getModifiedFacetPortletInstanceConfiguration();
 
-ModifiedFacetPortletPreferences modifiedFacetPortletPreferences = new ModifiedFacetPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+ModifiedFacetPortletPreferences modifiedFacetPortletPreferences = new ModifiedFacetPortletPreferencesImpl(portletPreferences);
 
 JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray();
 %>

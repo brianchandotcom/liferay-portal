@@ -36,7 +36,7 @@ SearchResultsPortletDisplayContext searchResultsPortletDisplayContext = new Sear
 
 SearchResultsPortletInstanceConfiguration searchResultsPortletInstanceConfiguration = searchResultsPortletDisplayContext.getSearchResultsPortletInstanceConfiguration();
 
-SearchResultsPortletPreferences searchResultsPortletPreferences = new SearchResultsPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+SearchResultsPortletPreferences searchResultsPortletPreferences = new SearchResultsPortletPreferencesImpl(portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

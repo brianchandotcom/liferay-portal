@@ -42,7 +42,7 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = (UserSearchFacetDi
 
 UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = userSearchFacetDisplayContext.getUserFacetPortletInstanceConfiguration();
 
-UserFacetPortletPreferences userFacetPortletPreferences = new UserFacetPortletPreferencesImpl(java.util.Optional.of(portletPreferences));
+UserFacetPortletPreferences userFacetPortletPreferences = new UserFacetPortletPreferencesImpl(portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

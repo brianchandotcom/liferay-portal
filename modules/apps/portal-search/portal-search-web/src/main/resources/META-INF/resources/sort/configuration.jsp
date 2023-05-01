@@ -41,7 +41,7 @@ SortDisplayContext sortDisplayContext = (SortDisplayContext)java.util.Objects.re
 
 SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayContext.getSortPortletInstanceConfiguration();
 
-SortPortletPreferences sortPortletPreferences = new SortPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+SortPortletPreferences sortPortletPreferences = new SortPortletPreferencesImpl(portletPreferences);
 
 JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 %>

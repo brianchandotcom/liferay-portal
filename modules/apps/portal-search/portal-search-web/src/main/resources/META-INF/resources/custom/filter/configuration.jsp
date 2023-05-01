@@ -45,7 +45,7 @@ page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUt
 <portlet:defineObjects />
 
 <%
-CustomFilterPortletPreferences customFilterPortletPreferences = new CustomFilterPortletPreferencesImpl(java.util.Optional.of(portletPreferences));
+CustomFilterPortletPreferences customFilterPortletPreferences = new CustomFilterPortletPreferencesImpl(portletPreferences);
 
 ConfigurationDisplayContext configurationDisplayContext = (ConfigurationDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(CustomFilterPortletKeys.CONFIGURATION_DISPLAY_CONTEXT));
 

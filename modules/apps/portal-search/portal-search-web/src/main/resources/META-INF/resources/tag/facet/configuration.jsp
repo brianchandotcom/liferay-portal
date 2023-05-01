@@ -37,7 +37,7 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = (AssetTa
 
 TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = assetTagsSearchFacetDisplayContext.getTagFacetPortletInstanceConfiguration();
 
-TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPreferencesImpl(portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

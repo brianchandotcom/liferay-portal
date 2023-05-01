@@ -48,7 +48,7 @@ ObjectDefinitionLocalService objectDefinitionLocalService = (ObjectDefinitionLoc
 
 SearchableAssetClassNamesProvider searchableAssetClassNamesProvider = (SearchableAssetClassNamesProvider)request.getAttribute(SearchableAssetClassNamesProvider.class.getName());
 
-TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl(objectDefinitionLocalService, java.util.Optional.of(portletPreferences), searchableAssetClassNamesProvider);
+TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl(objectDefinitionLocalService, portletPreferences, searchableAssetClassNamesProvider);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

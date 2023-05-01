@@ -48,7 +48,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 
 SearchBarPortletInstanceConfiguration searchBarPortletInstanceConfiguration = searchBarPortletDisplayContext.getSearchBarPortletInstanceConfiguration();
 
-SearchBarPortletPreferences searchBarPortletPreferences = new SearchBarPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+SearchBarPortletPreferences searchBarPortletPreferences = new SearchBarPortletPreferencesImpl(portletPreferences);
 
 String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPEN_BRACKET, StringUtil.merge(searchBarPortletInstanceConfiguration.suggestionsContributorConfigurations(), StringPool.COMMA), StringPool.CLOSE_BRACKET);
 %>

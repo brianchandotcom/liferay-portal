@@ -27,7 +27,7 @@ page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUt
 <portlet:defineObjects />
 
 <%
-SearchInsightsPortletPreferences searchInsightsPortletPreferences = new com.liferay.portal.search.web.internal.search.insights.portlet.SearchInsightsPortletPreferencesImpl(java.util.Optional.ofNullable(portletPreferences));
+SearchInsightsPortletPreferences searchInsightsPortletPreferences = new com.liferay.portal.search.web.internal.search.insights.portlet.SearchInsightsPortletPreferencesImpl(portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

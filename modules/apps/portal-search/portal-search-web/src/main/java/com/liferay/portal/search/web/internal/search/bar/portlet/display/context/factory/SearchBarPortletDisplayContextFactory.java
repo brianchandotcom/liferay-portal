@@ -167,20 +167,19 @@ public class SearchBarPortletDisplayContextFactory {
 			portletSharedSearchResponse.getSearchSettings(),
 			searchBarPortletPreferences, themeDisplay);
 
-		Optional<String> scopeParameterValueOptional =
-			portletSharedSearchResponse.getParameter(
-				scopeParameterName, _renderRequest);
+		String scopeParameterValue = portletSharedSearchResponse.getParameter(
+			scopeParameterName, _renderRequest);
 
 		searchBarPortletDisplayContext.setScopeParameterName(
 			scopeParameterName);
 
 		searchBarPortletDisplayContext.setScopeParameterValue(
-			scopeParameterValueOptional.orElse(StringPool.BLANK));
+			GetterUtil.getString(scopeParameterValue));
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
 			searchBarPortletInstanceConfiguration);
 
 		_setSelectedSearchScopePreference(
-			portletPreferencesLookup, scopeParameterValueOptional.orElse(null),
+			portletPreferencesLookup, scopeParameterValue,
 			searchBarPortletDisplayContext, searchBarPrecedenceHelper,
 			searchBarPortletPreferences,
 			portletSharedSearchResponse.getSearchSettings(), themeDisplay);

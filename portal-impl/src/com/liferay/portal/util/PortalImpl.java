@@ -2442,16 +2442,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Map<String, Serializable> getExpandoBridgeAttributes(
-			ExpandoBridge expandoBridge,
-			UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		return getExpandoBridgeAttributes(
-			expandoBridge, (HttpServletRequest)uploadPortletRequest);
-	}
-
-	@Override
 	public Serializable getExpandoValue(
 			HttpServletRequest httpServletRequest, String name, int type,
 			String displayType)

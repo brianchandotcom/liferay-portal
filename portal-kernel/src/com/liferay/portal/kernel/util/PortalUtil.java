@@ -883,15 +883,6 @@ public class PortalUtil {
 			expandoBridge, portletRequest);
 	}
 
-	public static Map<String, Serializable> getExpandoBridgeAttributes(
-			ExpandoBridge expandoBridge,
-			UploadPortletRequest uploadPortletRequest)
-		throws PortalException {
-
-		return _portal.getExpandoBridgeAttributes(
-			expandoBridge, uploadPortletRequest);
-	}
-
 	public static Serializable getExpandoValue(
 			HttpServletRequest httpServletRequest, String name, int type,
 			String displayType)

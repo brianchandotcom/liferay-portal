@@ -158,26 +158,9 @@ public class ClientExtensionProjectConfigurator
 					JsonNode fieldJsonNode = entry.getValue();
 
 					if (Objects.equals(fieldName, "assemble")) {
-						ArrayNode assembleArrayNode = (ArrayNode)fieldJsonNode;
-
-						if (!assembleArrayNode.isEmpty()) {
-							assembleClientExtensionTaskProvider.configure(
-								copy -> {
-									if (!_isActiveProfile(
-											project, profileName)) {
-
-										return;
-									}
-
-									TaskInputs taskInputs = copy.getInputs();
-
-									taskInputs.file(_CLIENT_EXTENSION_YAML);
-
-									assembleArrayNode.forEach(
-										copyJsonNode -> _configureCopySpec(
-											copy, copyJsonNode, project));
-								});
-						}
+						_configureAssembleClientExtensionTask(
+							project, assembleClientExtensionTaskProvider,
+							(ArrayNode)fieldJsonNode, profileName);
 
 						return;
 					}
@@ -415,6 +398,79 @@ public class ClientExtensionProjectConfigurator
 			buildClientExtensionZipTaskProvider);
 	}
 
+	private void _configureAssembleClientExtensionTask(
+		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
+		ArrayNode assembleArrayNode, String profileName) {
+
+		if (assembleArrayNode.isEmpty()) {
+			return;
+		}
+
+		assembleClientExtensionTaskProvider.configure(
+			copy -> {
+				if (!_isActiveProfile(project, profileName)) {
+					return;
+				}
+
+				TaskInputs taskInputs = copy.getInputs();
+
+				taskInputs.file(_CLIENT_EXTENSION_YAML);
+
+				assembleArrayNode.forEach(
+					copyJsonNode -> {
+						JsonNode fromJsonNode = copyJsonNode.get("from");
+						JsonNode fromTaskJsonNode = copyJsonNode.get(
+							"fromTask");
+						JsonNode includeJsonNode = copyJsonNode.get("include");
+						JsonNode intoJsonNode = copyJsonNode.get("into");
+
+						Object fromPath = null;
+
+						if (fromTaskJsonNode != null) {
+							TaskContainer taskContainer = project.getTasks();
+
+							fromPath = taskContainer.findByName(
+								fromTaskJsonNode.asText());
+						}
+
+						if ((fromPath == null) && (fromJsonNode != null)) {
+							fromPath = fromJsonNode.asText();
+						}
+
+						copy.from(
+							(fromPath != null) ? fromPath : ".",
+							copySpec -> {
+								if (includeJsonNode instanceof ArrayNode) {
+									ArrayNode arrayNode =
+										(ArrayNode)includeJsonNode;
+
+									arrayNode.forEach(
+										include -> copySpec.include(
+											include.asText()));
+								}
+								else {
+									if (includeJsonNode != null) {
+										copySpec.include(
+											includeJsonNode.asText());
+									}
+									else {
+										copySpec.include("**/*");
+									}
+								}
+
+								copySpec.exclude(
+									"**/" + CLIENT_EXTENSION_BUILD_DIR);
+
+								if (intoJsonNode != null) {
+									copySpec.into(intoJsonNode.asText());
+								}
+
+								copySpec.setIncludeEmptyDirs(false);
+							});
+					});
+			});
+	}
+
 	private Map<String, JsonNode> _configureClientExtensionJsonNodes(
 		Project project,
 		TaskProvider<CreateClientExtensionConfigTask>
@@ -535,54 +591,6 @@ public class ClientExtensionProjectConfigurator
 			project, Dependency.ARCHIVES_CONFIGURATION);
 
 		defaultConfiguration.extendsFrom(archivesConfiguration);
-	}
-
-	private void _configureCopySpec(
-		Copy copy, JsonNode copyJsonNode, Project project) {
-
-		JsonNode fromJsonNode = copyJsonNode.get("from");
-		JsonNode fromTaskJsonNode = copyJsonNode.get("fromTask");
-		JsonNode includeJsonNode = copyJsonNode.get("include");
-		JsonNode intoJsonNode = copyJsonNode.get("into");
-
-		Object fromPath = null;
-
-		if (fromTaskJsonNode != null) {
-			TaskContainer taskContainer = project.getTasks();
-
-			fromPath = taskContainer.findByName(fromTaskJsonNode.asText());
-		}
-
-		if ((fromPath == null) && (fromJsonNode != null)) {
-			fromPath = fromJsonNode.asText();
-		}
-
-		copy.from(
-			(fromPath != null) ? fromPath : ".",
-			copySpec -> {
-				if (includeJsonNode instanceof ArrayNode) {
-					ArrayNode arrayNode = (ArrayNode)includeJsonNode;
-
-					arrayNode.forEach(
-						include -> copySpec.include(include.asText()));
-				}
-				else {
-					if (includeJsonNode != null) {
-						copySpec.include(includeJsonNode.asText());
-					}
-					else {
-						copySpec.include("**/*");
-					}
-				}
-
-				copySpec.exclude("**/" + CLIENT_EXTENSION_BUILD_DIR);
-
-				if (intoJsonNode != null) {
-					copySpec.into(intoJsonNode.asText());
-				}
-
-				copySpec.setIncludeEmptyDirs(false);
-			});
 	}
 
 	private void _configureDeployProfileTask(

@@ -17,8 +17,8 @@ package com.liferay.portal.aop.internal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -108,8 +108,8 @@ public class AopServiceResolver {
 		}
 	}
 
-	private final Set<AopServiceRegistrar> _aopServiceRegistrars =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private final Queue<AopServiceRegistrar> _aopServiceRegistrars =
+		new ConcurrentLinkedQueue<>();
 	private final List<TransactionHandlerHolder> _transactionHandlerHolders =
 		new CopyOnWriteArrayList<>();
 

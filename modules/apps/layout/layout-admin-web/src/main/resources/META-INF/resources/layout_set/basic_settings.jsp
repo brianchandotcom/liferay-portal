@@ -28,5 +28,61 @@
 </liferay-frontend:fieldset>
 
 <c:if test="<%= company.isSiteLogo() %>">
-	<liferay-util:include page="/layout_set/logo.jsp" servletContext="<%= application %>" />
+
+	<%
+	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+	LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+	%>
+
+	<liferay-frontend:fieldset
+		collapsed="<%= false %>"
+		collapsible="<%= true %>"
+		label="logo"
+	>
+		<liferay-ui:error exception="<%= FileSizeException.class %>">
+
+			<%
+			FileSizeException fileSizeException = (FileSizeException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(fileSizeException.getMaxSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
+		<c:if test="<%= liveGroup.isLayoutSetPrototype() && !PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="modifying-the-site-template-logo-only-affects-sites-that-are-not-yet-created" />
+			</div>
+		</c:if>
+
+		<%
+		Group group = layoutsAdminDisplayContext.getGroup();
+
+		String companyLogoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId());
+
+		String description = null;
+
+		if (group.isPrivateLayoutsEnabled()) {
+			description = LanguageUtil.get(request, "upload-a-logo-for-the-" + (layoutsAdminDisplayContext.isPrivateLayout() ? "private" : "public") + "-pages-that-is-used-instead-of-the-default-enterprise-logo");
+		}
+		else {
+			description = LanguageUtil.get(request, "upload-a-logo-for-pages-that-is-used-instead-of-the-default-enterprise-logo");
+		}
+		%>
+
+		<liferay-frontend:logo-selector
+			currentLogoURL='<%= (selLayoutSet.getLogoId() == 0) ? companyLogoURL : themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + selLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(selLayoutSet.getLogoId()) %>'
+			defaultLogoURL="<%= companyLogoURL %>"
+			description="<%= description %>"
+		/>
+
+		<%
+		Theme selTheme = selLayoutSet.getTheme();
+
+		boolean showSiteNameSupported = GetterUtil.getBoolean(selTheme.getSetting("show-site-name-supported"), true);
+
+		boolean showSiteNameDefault = GetterUtil.getBoolean(selTheme.getSetting("show-site-name-default"), showSiteNameSupported);
+		%>
+
+		<aui:input disabled="<%= !showSiteNameSupported %>" helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>' inlineLabel="right" label="show-site-name" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--showSiteName--" type="toggle-switch" value='<%= GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), showSiteNameDefault) %>' />
+	</liferay-frontend:fieldset>
 </c:if>

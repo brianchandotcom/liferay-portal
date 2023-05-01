@@ -682,7 +682,7 @@ definition {
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "element-text",
-				text = "Bienvenido a liferay");
+				text = "Bienvenido a Liferay Edit");
 
 			PageEditor.publish();
 		}

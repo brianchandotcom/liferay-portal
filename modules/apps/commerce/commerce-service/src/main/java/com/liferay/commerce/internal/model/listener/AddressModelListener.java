@@ -15,6 +15,8 @@
 package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
@@ -35,7 +37,9 @@ public class AddressModelListener extends BaseModelListener<Address> {
 	public void onAfterUpdate(Address originalAddress, Address address)
 		throws ModelListenerException {
 
-		try {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
 			_commerceOrderLocalService.resetCommerceOrderShippingByAddressId(
 				address.getAddressId());
 		}
@@ -46,7 +50,9 @@ public class AddressModelListener extends BaseModelListener<Address> {
 
 	@Override
 	public void onBeforeRemove(Address address) throws ModelListenerException {
-		try {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
 			_commerceOrderLocalService.updateCommerceOrderAddresses(
 				address.getAddressId());
 		}

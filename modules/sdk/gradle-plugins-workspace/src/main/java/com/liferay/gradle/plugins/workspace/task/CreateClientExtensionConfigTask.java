@@ -85,16 +85,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		_clientExtensions.add(clientExtension);
 	}
 
-	/**
-	 * @deprecated as of 5.0.6, replaced by {@link #addClientExtension(ClientExtension)}
-	 */
-	@Deprecated
-	public void addClientExtensionProfile(
-		String ignoredProfileName, ClientExtension clientExtension) {
-
-		addClientExtension(clientExtension);
-	}
-
 	public void addClientExtensionProperties(
 		Properties clientExtensionProperties) {
 

@@ -14,6 +14,7 @@
 
 declare const API_URL: {
 	FDS_DATE_FILTERS: string;
+	FDS_DYNAMIC_FILTERS: string;
 	FDS_ENTRIES: string;
 	FDS_FIELDS: string;
 	FDS_VIEWS: string;
@@ -23,6 +24,8 @@ declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
 	readonly FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship';
 	readonly FDS_VIEW_FDS_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_DYNAMIC_FILTER: 'fdsViewFDSDynamicFilterRelationship';
+	readonly FDS_VIEW_FDS_DYNAMIC_FILTER_ID: 'r_fdsViewFDSDynamicFilterRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship';
 	readonly FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId';
 };

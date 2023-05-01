@@ -79,16 +79,32 @@ function AddFDSFilterModalContent({
 
 			return null;
 		}
-		const body: any = {
-			[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER_ID]: fdsView.id,
-			fieldName: field.name,
-			from: '',
-			label: label || field.label,
-			to: '',
-			type: field.format,
-		};
 
-		const response = await fetch(API_URL.FDS_DATE_FILTERS, {
+		let body: any = {};
+		let url: string = '';
+
+		if (field.format === 'date-time') {
+			url = API_URL.FDS_DATE_FILTERS;
+			body = {
+				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER_ID]: fdsView.id,
+				fieldName: field.name,
+				from: '',
+				label: label || field.label,
+				to: '',
+				type: field.format,
+			};
+		}
+		else {
+			url = API_URL.FDS_DYNAMIC_FILTERS;
+			body = {
+				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID]:
+					fdsView.id,
+				fieldName: field.name,
+				label: label || field.label,
+			};
+		}
+
+		const response = await fetch(url, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
@@ -254,27 +270,35 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 	React.useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
-				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER}`
+				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER},${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER}`
 			);
 
 			const responseJSON = await response.json();
 
-			let filtersOrderer = responseJSON[
+			const dateFiltersOrderer = responseJSON[
 				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER
 			] as Filter[];
+			const dynamicFiltersOrderer = responseJSON[
+				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER
+			] as Filter[];
+
+			let filtersOrdered = [
+				...dateFiltersOrderer,
+				...dynamicFiltersOrderer,
+			];
 
 			if (fdsView.fdsFiltersOrder) {
-				filtersOrderer = fdsView.fdsFiltersOrder
+				filtersOrdered = fdsView.fdsFiltersOrder
 					.split(',')
 					.map((fdsFilterId) =>
-						filtersOrderer.find(
+						filtersOrdered.find(
 							(filter) => filter.id === Number(fdsFilterId)
 						)
 					)
 					.filter(Boolean) as Filter[];
 			}
 
-			setFilters(filtersOrderer);
+			setFilters(filtersOrdered);
 		};
 
 		getFields(fdsView).then((newFields) => {
@@ -282,9 +306,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 				// This is temporary since we are only adding date filters for now
 
-				setFields(
-					newFields.filter((field) => field.format === 'date-time')
-				);
+				setFields(newFields);
 			}
 		});
 

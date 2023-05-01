@@ -242,12 +242,12 @@ public class FDSViewsPortlet extends MVCPortlet {
 			"fdsViewFDSFieldRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-
 		ObjectDefinition fdsDateFilterObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				userId, false, false,
-				LocalizedMapUtil.getLocalizedMap("FDS Date Filter"), "FDSDateFilter",
-				"300", null, LocalizedMapUtil.getLocalizedMap("FDS Date Filters"),
+				LocalizedMapUtil.getLocalizedMap("FDS Date Filter"),
+				"FDSDateFilter", "300", null,
+				LocalizedMapUtil.getLocalizedMap("FDS Date Filters"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
@@ -279,16 +279,17 @@ public class FDSViewsPortlet extends MVCPortlet {
 			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
 			fdsDateFilterObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap("FDSView FDSDateFilter Relationship"),
+			LocalizedMapUtil.getLocalizedMap(
+				"FDSView FDSDateFilter Relationship"),
 			"fdsViewFDSDateFilterRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 
 		ObjectDefinition fdsDynamicFilterObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				userId, false, false,
-				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filter"), "FDSDynamicFilter",
-				"300", null, LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filters"),
+				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filter"),
+				"FDSDynamicFilter", "300", null,
+				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filters"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
@@ -308,7 +309,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
 			fdsDynamicFilterObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap("FDSView FDSDynamicFilter Relationship"),
+			LocalizedMapUtil.getLocalizedMap(
+				"FDSView FDSDynamicFilter Relationship"),
 			"fdsViewFDSDynamicFilterRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}

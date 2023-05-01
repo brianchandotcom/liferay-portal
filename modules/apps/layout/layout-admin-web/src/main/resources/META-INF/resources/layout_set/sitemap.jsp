@@ -42,13 +42,19 @@ if (!virtualHostnames.containsKey(PortalUtil.getHost(request))) {
 </liferay-util:buffer>
 
 <div class="text-secondary">
-	<liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" translateArguments="<%= false %>" />
+	<p>
+		<liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" translateArguments="<%= false %>" />
+	</p>
 
-	<br /><br />
+	<%
+	String sitemapUrlLink = "<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">";
+	%>
 
-	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"}, false) %>
+	<p>
+		<liferay-ui:message arguments='<%= new Object[] {sitemapUrlLink, "</a>"} %>' key="send-sitemap-information-to-preview" translateArguments="<%= false %>" />
+	</p>
 
-	<ul>
+	<ul class="list-unstyled">
 		<li>
 			<clay:link
 				href='<%= "http://www.google.com/webmasters/sitemaps/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>'

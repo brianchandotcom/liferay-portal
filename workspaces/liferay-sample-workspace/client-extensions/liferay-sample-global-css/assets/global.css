@@ -1,5 +1,5 @@
 .logo::after {
 	color: #0054f0;
-	content: 'Powered by Liferay Sample Global CSS';
+	content: 'Liferay Sample Global CSS';
 	margin-left: 2rem;
 }

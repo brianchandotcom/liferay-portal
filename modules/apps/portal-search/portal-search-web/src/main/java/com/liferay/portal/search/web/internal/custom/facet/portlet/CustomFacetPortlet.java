@@ -32,7 +32,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 import javax.portlet.Portlet;
@@ -117,9 +117,9 @@ public class CustomFacetPortlet extends MVCPortlet {
 
 		String parameterName = _getParameterName(customFacetPortletPreferences);
 
-		Optional<List<String>> parameterValuesOptional =
-			_getParameterValuesOptional(
-				parameterName, portletSharedSearchResponse, renderRequest);
+		Optional<String[]> optional =
+			portletSharedSearchResponse.getParameterValues(
+				parameterName, renderRequest);
 
 		return customFacetDisplayContextBuilder.setCustomDisplayCaption(
 			customFacetPortletPreferences.getCustomHeading()
@@ -142,7 +142,11 @@ public class CustomFacetPortlet extends MVCPortlet {
 		).setParameterName(
 			parameterName
 		).setParameterValues(
-			parameterValuesOptional
+			optional.map(
+				Arrays::asList
+			).orElse(
+				Collections.emptyList()
+			)
 		).build();
 	}
 
@@ -210,18 +214,6 @@ public class CustomFacetPortlet extends MVCPortlet {
 		}
 
 		return "customfield";
-	}
-
-	private Optional<List<String>> _getParameterValuesOptional(
-		String parameterName,
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
-
-		Optional<String[]> optional =
-			portletSharedSearchResponse.getParameterValues(
-				parameterName, renderRequest);
-
-		return optional.map(Arrays::asList);
 	}
 
 	private String _getPortletId(RenderRequest renderRequest) {

@@ -23,10 +23,13 @@ import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -119,6 +122,23 @@ public class AttachmentObjectFieldBusinessType
 			ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE,
 			ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
+	}
+
+	@Override
+	public Object getValue(ObjectField objectField, Map<String, Object> values)
+		throws PortalException {
+
+		long fileEntryId = GetterUtil.getLong(
+			values.get(objectField.getName()));
+
+		if (fileEntryId > 0) {
+			return fileEntryId;
+		}
+
+		JSONObject jsonObject = jsonFactory.createJSONObject(
+			MapUtil.getString(values, objectField.getName()));
+
+		return GetterUtil.getLong(jsonObject.get("id"));
 	}
 
 	@Override

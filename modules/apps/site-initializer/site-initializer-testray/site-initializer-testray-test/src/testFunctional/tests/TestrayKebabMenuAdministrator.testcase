@@ -138,4 +138,34 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit routine in the kebab menu"
+	@priority = 3
+	test AdminCanEditRoutine {
+		task ("Given that the user go to routine") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+            TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
+
+		task ("When the user edit the routine through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Routine");
+
+            PortletEntry.inputName(name = "Routine Edited");
+
+            PortletEntry.save();
+		}
+
+		task ("Then the user is redirected to the routine page and can see the edited routine title") {
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Build History");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Routine Edited");
+		}
+
+        task ("Delete the routine edited") {
+            JSONTestrayAPI.deleteObjectViaAPI(
+                object = "routines",
+                objectName = "Routine Edited");
+		}
+	}
+
 }

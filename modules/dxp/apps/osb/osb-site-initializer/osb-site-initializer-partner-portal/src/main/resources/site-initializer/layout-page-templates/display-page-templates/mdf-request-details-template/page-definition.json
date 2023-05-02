@@ -501,6 +501,19 @@
 											{
 												"definition": {
 													"fragment": {
+														"key": "delete-button-mdf-request"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
 														"key": "edit-button-mdf-request"
 													},
 													"fragmentConfig": {

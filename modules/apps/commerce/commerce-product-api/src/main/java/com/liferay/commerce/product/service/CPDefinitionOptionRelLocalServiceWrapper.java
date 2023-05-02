@@ -383,6 +383,18 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 	@Override
 	public java.util.Map<Long, java.util.List<Long>>
 			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				long cpDefinitionId, boolean skuContributorsOnly,
+				com.liferay.portal.kernel.json.JSONArray skuOptionJSONArray)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionOptionRelLocalService.
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				cpDefinitionId, skuContributorsOnly, skuOptionJSONArray);
+	}
+
+	@Override
+	public java.util.Map<Long, java.util.List<Long>>
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 				long cpDefinitionId, boolean skuContributorsOnly, String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

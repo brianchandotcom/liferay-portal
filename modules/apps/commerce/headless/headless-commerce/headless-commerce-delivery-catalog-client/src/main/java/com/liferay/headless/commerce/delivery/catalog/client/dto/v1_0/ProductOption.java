@@ -220,6 +220,48 @@ public class ProductOption implements Cloneable, Serializable {
 
 	protected ProductOptionValue[] productOptionValues;
 
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	public void setRequired(
+		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
+
+		try {
+			required = requiredUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean required;
+
+	public Boolean getSkuContributor() {
+		return skuContributor;
+	}
+
+	public void setSkuContributor(Boolean skuContributor) {
+		this.skuContributor = skuContributor;
+	}
+
+	public void setSkuContributor(
+		UnsafeSupplier<Boolean, Exception> skuContributorUnsafeSupplier) {
+
+		try {
+			skuContributor = skuContributorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean skuContributor;
+
 	@Override
 	public ProductOption clone() throws CloneNotSupportedException {
 		return (ProductOption)super.clone();

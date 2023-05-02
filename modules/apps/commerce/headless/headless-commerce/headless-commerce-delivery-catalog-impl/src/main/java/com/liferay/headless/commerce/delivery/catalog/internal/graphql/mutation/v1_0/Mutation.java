@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.delivery.catalog.internal.graphql.mutation
 
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ChannelResource;
@@ -121,6 +122,23 @@ public class Mutation {
 				channelId, productId, accountId, quantity, ddmOptions));
 	}
 
+	@GraphQLField(
+		description = "Retrieves a SKU from selected channel and product ID."
+	)
+	public Sku createChannelProductSkuBySkuOption(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("quantity") Integer quantity,
+			@GraphQLName("skuOptions") SkuOption[] skuOptions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuResourceComponentServiceObjects, this::_populateResourceContext,
+			skuResource -> skuResource.postChannelProductSkuBySkuOption(
+				channelId, productId, accountId, quantity, skuOptions));
+	}
+
 	@GraphQLField
 	public WishList createChannelWishList(
 			@GraphQLName("channelId") Long channelId,
@@ -161,7 +179,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WishList patchChannelWishList(
+	public WishList patchWishList(
 			@GraphQLName("wishListId") Long wishListId,
 			@GraphQLName("wishList") WishList wishList)
 		throws Exception {
@@ -169,7 +187,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_wishListResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			wishListResource -> wishListResource.patchChannelWishList(
+			wishListResource -> wishListResource.patchWishList(
 				wishListId, wishList));
 	}
 
@@ -202,7 +220,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public WishListItem createChannelWishListItem(
+	public WishListItem createWishlistWishListWishListItem(
 			@GraphQLName("wishListId") Long wishListId,
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("wishListItem") WishListItem wishListItem)
@@ -212,7 +230,7 @@ public class Mutation {
 			_wishListItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wishListItemResource ->
-				wishListItemResource.postChannelWishListItem(
+				wishListItemResource.postWishlistWishListWishListItem(
 					wishListId, accountId, wishListItem));
 	}
 

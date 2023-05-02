@@ -311,6 +311,62 @@ public class ProductOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductOptionValue[] productOptionValues;
 
+	@Schema(example = "true")
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	@JsonIgnore
+	public void setRequired(
+		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
+
+		try {
+			required = requiredUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean required;
+
+	@Schema(example = "true")
+	public Boolean getSkuContributor() {
+		return skuContributor;
+	}
+
+	public void setSkuContributor(Boolean skuContributor) {
+		this.skuContributor = skuContributor;
+	}
+
+	@JsonIgnore
+	public void setSkuContributor(
+		UnsafeSupplier<Boolean, Exception> skuContributorUnsafeSupplier) {
+
+		try {
+			skuContributor = skuContributorUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean skuContributor;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -452,6 +508,26 @@ public class ProductOption implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (required != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"required\": ");
+
+			sb.append(required);
+		}
+
+		if (skuContributor != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuContributor\": ");
+
+			sb.append(skuContributor);
 		}
 
 		sb.append("}");

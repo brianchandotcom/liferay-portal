@@ -91,6 +91,27 @@ public class ProductOptionValue implements Cloneable, Serializable {
 
 	protected String name;
 
+	public Boolean getPreselected() {
+		return preselected;
+	}
+
+	public void setPreselected(Boolean preselected) {
+		this.preselected = preselected;
+	}
+
+	public void setPreselected(
+		UnsafeSupplier<Boolean, Exception> preselectedUnsafeSupplier) {
+
+		try {
+			preselected = preselectedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean preselected;
+
 	public Double getPriority() {
 		return priority;
 	}

@@ -74,10 +74,10 @@ public interface WishListResource {
 	public HttpInvoker.HttpResponse getWishListHttpResponse(Long wishListId)
 		throws Exception;
 
-	public WishList patchChannelWishList(Long wishListId, WishList wishList)
+	public WishList patchWishList(Long wishListId, WishList wishList)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse patchChannelWishListHttpResponse(
+	public HttpInvoker.HttpResponse patchWishListHttpResponse(
 			Long wishListId, WishList wishList)
 		throws Exception;
 
@@ -709,11 +709,11 @@ public interface WishListResource {
 			return httpInvoker.invoke();
 		}
 
-		public WishList patchChannelWishList(Long wishListId, WishList wishList)
+		public WishList patchWishList(Long wishListId, WishList wishList)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse =
-				patchChannelWishListHttpResponse(wishListId, wishList);
+			HttpInvoker.HttpResponse httpResponse = patchWishListHttpResponse(
+				wishListId, wishList);
 
 			String content = httpResponse.getContent();
 
@@ -774,7 +774,7 @@ public interface WishListResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse patchChannelWishListHttpResponse(
+		public HttpInvoker.HttpResponse patchWishListHttpResponse(
 				Long wishListId, WishList wishList)
 			throws Exception {
 

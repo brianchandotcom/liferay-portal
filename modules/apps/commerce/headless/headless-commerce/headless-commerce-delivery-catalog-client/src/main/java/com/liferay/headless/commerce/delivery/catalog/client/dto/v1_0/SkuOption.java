@@ -53,6 +53,90 @@ public class SkuOption implements Cloneable, Serializable {
 
 	protected Long key;
 
+	public Long getSkuOptionId() {
+		return skuOptionId;
+	}
+
+	public void setSkuOptionId(Long skuOptionId) {
+		this.skuOptionId = skuOptionId;
+	}
+
+	public void setSkuOptionId(
+		UnsafeSupplier<Long, Exception> skuOptionIdUnsafeSupplier) {
+
+		try {
+			skuOptionId = skuOptionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long skuOptionId;
+
+	public String getSkuOptionKey() {
+		return skuOptionKey;
+	}
+
+	public void setSkuOptionKey(String skuOptionKey) {
+		this.skuOptionKey = skuOptionKey;
+	}
+
+	public void setSkuOptionKey(
+		UnsafeSupplier<String, Exception> skuOptionKeyUnsafeSupplier) {
+
+		try {
+			skuOptionKey = skuOptionKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String skuOptionKey;
+
+	public Long getSkuOptionValueId() {
+		return skuOptionValueId;
+	}
+
+	public void setSkuOptionValueId(Long skuOptionValueId) {
+		this.skuOptionValueId = skuOptionValueId;
+	}
+
+	public void setSkuOptionValueId(
+		UnsafeSupplier<Long, Exception> skuOptionValueIdUnsafeSupplier) {
+
+		try {
+			skuOptionValueId = skuOptionValueIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long skuOptionValueId;
+
+	public String getSkuOptionValueKey() {
+		return skuOptionValueKey;
+	}
+
+	public void setSkuOptionValueKey(String skuOptionValueKey) {
+		this.skuOptionValueKey = skuOptionValueKey;
+	}
+
+	public void setSkuOptionValueKey(
+		UnsafeSupplier<String, Exception> skuOptionValueKeyUnsafeSupplier) {
+
+		try {
+			skuOptionValueKey = skuOptionValueKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String skuOptionValueKey;
+
 	public Long getValue() {
 		return value;
 	}

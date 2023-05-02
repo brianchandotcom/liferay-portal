@@ -444,8 +444,29 @@ public abstract class BaseWishListResourceTestCase {
 	}
 
 	@Test
-	public void testPatchChannelWishList() throws Exception {
-		Assert.assertTrue(false);
+	public void testPatchWishList() throws Exception {
+		WishList postWishList = testPatchWishList_addWishList();
+
+		WishList randomPatchWishList = randomPatchWishList();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WishList patchWishList = wishListResource.patchWishList(
+			postWishList.getId(), randomPatchWishList);
+
+		WishList expectedPatchWishList = postWishList.clone();
+
+		BeanTestUtil.copyProperties(randomPatchWishList, expectedPatchWishList);
+
+		WishList getWishList = wishListResource.getWishList(
+			patchWishList.getId());
+
+		assertEquals(expectedPatchWishList, getWishList);
+		assertValid(getWishList);
+	}
+
+	protected WishList testPatchWishList_addWishList() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected WishList testGraphQLWishList_addWishList() throws Exception {

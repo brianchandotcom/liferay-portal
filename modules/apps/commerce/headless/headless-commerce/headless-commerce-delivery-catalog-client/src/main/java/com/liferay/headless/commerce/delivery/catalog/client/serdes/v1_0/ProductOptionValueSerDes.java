@@ -93,6 +93,16 @@ public class ProductOptionValueSerDes {
 			sb.append("\"");
 		}
 
+		if (productOptionValue.getPreselected() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"preselected\": ");
+
+			sb.append(productOptionValue.getPreselected());
+		}
+
 		if (productOptionValue.getPriority() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -145,6 +155,15 @@ public class ProductOptionValueSerDes {
 			map.put("name", String.valueOf(productOptionValue.getName()));
 		}
 
+		if (productOptionValue.getPreselected() == null) {
+			map.put("preselected", null);
+		}
+		else {
+			map.put(
+				"preselected",
+				String.valueOf(productOptionValue.getPreselected()));
+		}
+
 		if (productOptionValue.getPriority() == null) {
 			map.put("priority", null);
 		}
@@ -188,6 +207,12 @@ public class ProductOptionValueSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					productOptionValue.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "preselected")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setPreselected(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {

@@ -111,7 +111,7 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 	protected WishListItem testDeleteWishListItem_addWishListItem()
 		throws Exception {
 
-		return wishListItemResource.postChannelWishListItem(
+		return wishListItemResource.postWishlistWishListWishListItem(
 			_commerceWishList.getCommerceWishListId(),
 			_accountEntry.getAccountEntryId(), randomWishListItem());
 	}
@@ -125,22 +125,25 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 	protected WishListItem testGetWishListItem_addWishListItem()
 		throws Exception {
 
-		return wishListItemResource.postChannelWishListItem(
+		return wishListItemResource.postWishlistWishListWishListItem(
 			_commerceWishList.getCommerceWishListId(),
 			_accountEntry.getAccountEntryId(), randomWishListItem());
 	}
 
 	@Override
-	protected WishListItem testGetWishListItemsPage_addWishListItem(
-			Long wishListId, WishListItem wishListItem)
+	protected WishListItem
+			testGetWishlistWishListWishListItemsPage_addWishListItem(
+				Long wishListId, WishListItem wishListItem)
 		throws Exception {
 
-		return wishListItemResource.postChannelWishListItem(
+		return wishListItemResource.postWishlistWishListWishListItem(
 			wishListId, _accountEntry.getAccountEntryId(), wishListItem);
 	}
 
 	@Override
-	protected Long testGetWishListItemsPage_getWishListId() throws Exception {
+	protected Long testGetWishlistWishListWishListItemsPage_getWishListId()
+		throws Exception {
+
 		return _commerceWishList.getCommerceWishListId();
 	}
 
@@ -148,17 +151,17 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 	protected WishListItem testGraphQLWishListItem_addWishListItem()
 		throws Exception {
 
-		return wishListItemResource.postChannelWishListItem(
+		return wishListItemResource.postWishlistWishListWishListItem(
 			_commerceWishList.getCommerceWishListId(),
 			_accountEntry.getAccountEntryId(), randomWishListItem());
 	}
 
 	@Override
-	protected WishListItem testPostChannelWishListItem_addWishListItem(
+	protected WishListItem testPostWishlistWishListWishListItem_addWishListItem(
 			WishListItem wishListItem)
 		throws Exception {
 
-		return wishListItemResource.postChannelWishListItem(
+		return wishListItemResource.postWishlistWishListWishListItem(
 			_commerceWishList.getCommerceWishListId(),
 			_accountEntry.getAccountEntryId(), wishListItem);
 	}

@@ -374,4 +374,24 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Product Versions in the kebab menu"
+	@priority = 3
+	test AdminCanAddManageProductVersions {
+		task ("Given that the user go to product version") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.kebabMenuOption(kebabOption = "Manage Product Versions");
+		}
+
+		task ("When the user create the new product version through kebab") {
+			TestrayManage.createTeam(teamName = "7.4");
+		}
+
+		task ("Then the user can see the new product version in the table") {
+            AssertElementPresent(
+				key_projectName = "7.4",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

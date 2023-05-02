@@ -2828,9 +2828,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			}
 		}
 
-		layout.setExpandoBridgeAttributes(serviceContext);
-
 		layout = layoutLocalService.updateLayout(layout);
+
+		// Expando
+
+		layout.setExpandoBridgeAttributes(serviceContext);
 
 		// Layout friendly URLs
 

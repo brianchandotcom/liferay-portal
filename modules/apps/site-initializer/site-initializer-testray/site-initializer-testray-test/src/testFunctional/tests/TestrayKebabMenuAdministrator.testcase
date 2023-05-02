@@ -302,4 +302,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Suite in the kebab menu"
+	@priority = 3
+	test AdminCanEditSuite {	
+		task ("Given that the user go to suite") {
+			JSONTestray.addSuite(suiteName = ${suiteName});
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+            PRMNavigator.goToNavItem(navItem = "Suites");
+
+            Testray.goToProjectPage(projectName = ${suiteName});
+		}
+
+		task ("When the user edit the suite through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Suite");
+
+			PortletEntry.inputName(name = "Suite Edited");
+
+            PortletEntry.save();
+		}
+
+		task ("Then the user is redirected to the suite page and can see the edited suite title") {
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Suite Edited");
+		}
+
+        task ("Delete the suite edited") {
+            JSONTestrayAPI.deleteObjectViaAPI(
+                object = "suites",
+                objectName = "Suite Edited");
+		}
+	}
+
 }

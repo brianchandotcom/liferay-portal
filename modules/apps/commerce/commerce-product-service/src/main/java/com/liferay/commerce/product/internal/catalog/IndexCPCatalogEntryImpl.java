@@ -18,8 +18,10 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -39,10 +41,12 @@ public class IndexCPCatalogEntryImpl implements CPCatalogEntry {
 
 	public IndexCPCatalogEntryImpl(
 		Document document, CPDefinitionLocalService cpDefinitionLocalService,
+		CPDefinitionOptionRelLocalService cpDefinitionOptionRelLocalService,
 		CPInstanceLocalService cpInstanceLocalService, Locale locale) {
 
 		_document = document;
 		_cpDefinitionLocalService = cpDefinitionLocalService;
+		_cpDefinitionOptionRelLocalService = cpDefinitionOptionRelLocalService;
 		_cpInstanceLocalService = cpInstanceLocalService;
 		_locale = locale;
 	}
@@ -50,6 +54,12 @@ public class IndexCPCatalogEntryImpl implements CPCatalogEntry {
 	@Override
 	public long getCPDefinitionId() {
 		return GetterUtil.getLong(_document.get(Field.ENTRY_CLASS_PK));
+	}
+
+	@Override
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
+		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
@@ -143,6 +153,8 @@ public class IndexCPCatalogEntryImpl implements CPCatalogEntry {
 	}
 
 	private final CPDefinitionLocalService _cpDefinitionLocalService;
+	private final CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 	private final CPInstanceLocalService _cpInstanceLocalService;
 	private final Document _document;
 	private final Locale _locale;

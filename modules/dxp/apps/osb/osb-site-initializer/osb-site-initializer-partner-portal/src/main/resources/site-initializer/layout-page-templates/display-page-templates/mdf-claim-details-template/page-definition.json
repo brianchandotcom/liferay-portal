@@ -461,6 +461,19 @@
 											{
 												"definition": {
 													"fragment": {
+														"key": "delete-button-mdf-claim"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
 														"key": "edit-button-mdf-claim"
 													},
 													"fragmentConfig": {

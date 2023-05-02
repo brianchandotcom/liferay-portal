@@ -1,0 +1,67 @@
+[#assign mdfClaimId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
+[#assign siteURL = (themeDisplay.getURLCurrent()?keep_before("/l"))! /]
+
+[#if mdfClaimId?has_content]
+	[#assign mdfClaim = restClient.get("/c/mdfclaims/${mdfClaimId}") /]
+	[#assign mdfRequestId = (mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId)! /]
+
+	[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Claim%27&pageSize=-1") /]
+
+	[#assign hasDeleteAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "DELETE")?has_content /]
+
+	[#if hasDeleteAction && mdfClaim.mdfClaimStatus.key == "draft"]
+		<a class="align-items-center btn btn-outline-danger d-flex mr-2 mt-2" onClick="callDeleteMDFClaimDetail()">
+			[@clay["icon"] symbol="trash"/] Delete
+		</a>
+
+		<script>
+			const callDeleteMDFClaimDetail = () => Liferay.Util.openConfirmModal({
+				message: 'Are you sure?',
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						deleteClaimMDFCLaimDetail();
+					}
+				},
+			});
+
+			const deleteClaimMDFCLaimDetail = async () => {
+				const responde = await fetch(
+					`/o/c/mdfclaims/${mdfClaimId}`,
+					{
+						headers: {
+							'x-csrf-token': Liferay.authToken,
+						},
+						method: 'DELETE',
+					}
+				);
+
+				if (responde.ok) {
+					Liferay.Util.openToast({
+						message: 'MDF Claim successfully deleted!',
+						type: 'success',
+					});
+
+					location.assign(`${siteURL}/l/${mdfRequestId}`);
+
+					return;
+				}
+
+				Liferay.Util.openToast({
+					message: 'The MDF Claim cannot be deleted.',
+					type: 'danger',
+				});
+			};
+
+		</script>
+
+[/#if]
+[#else]
+<div class="alert alert-info">
+	<p>To use this fragment either place it on a Display Page Template to see which attributes are available from
+		<em>request.getAttribute("INFO_ITEM")</em>.
+	</p>
+
+	<p class="mb-0">It's important to note that this will only display the attributes of a display page when you view
+		the published display page not when you are editing it.</p>
+</div>
+[/#if]

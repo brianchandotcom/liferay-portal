@@ -479,7 +479,7 @@ definition {
 
 			if (contains(${upgradeReportOriginal}, "Longest upgrade processes: Nothing registered")) {
 				echo(${upgradeReportOriginal});
-				
+
 				fail("Upgrade report does not contains expected upgrades.");
 			}
 		}

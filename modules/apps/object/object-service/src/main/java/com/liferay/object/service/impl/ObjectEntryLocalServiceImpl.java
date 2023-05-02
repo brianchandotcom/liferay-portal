@@ -108,6 +108,7 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
+import com.liferay.portal.kernel.exception.NoSuchPropertiesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -1916,7 +1917,18 @@ public class ObjectEntryLocalServiceImpl
 		throw new IllegalArgumentException("Invalid function " + function);
 	}
 
-	private Key _getKeyObj() {
+	private Key _getKeyObj() throws PortalException {
+		if (Validator.isNull(
+				GetterUtil.getString(
+					PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET))) ||
+			Validator.isNull(
+				GetterUtil.getString(
+					PropsUtil.get(
+						PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM)))) {
+
+			throw new NoSuchPropertiesException("Required property is missing");
+		}
+
 		byte[] bytes = Base64.decode(
 			GetterUtil.getString(
 				PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET)));

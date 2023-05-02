@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
+import com.liferay.portal.kernel.exception.NoSuchPropertiesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -74,6 +75,8 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -583,6 +586,7 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
+		_validateEncryptedBusinessType(businessType);
 		_validateExternalReferenceCode(
 			externalReferenceCode, newObjectField.getObjectFieldId(),
 			newObjectField.getCompanyId(),
@@ -716,6 +720,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		_validateEncryptedBusinessType(businessType);
 		_validateExternalReferenceCode(
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
 			objectDefinitionId);
@@ -1007,6 +1012,27 @@ public class ObjectFieldLocalServiceImpl
 			}
 
 			throw new ObjectFieldDBTypeException("Invalid DB type " + dbType);
+		}
+	}
+
+	private void _validateEncryptedBusinessType(String businessType)
+		throws PortalException {
+
+		if (!StringUtil.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			return;
+		}
+
+		if (Validator.isNull(
+				GetterUtil.getString(
+					PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET))) ||
+			Validator.isNull(
+				GetterUtil.getString(
+					PropsUtil.get(
+						PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM)))) {
+
+			throw new NoSuchPropertiesException("Required property is missing");
 		}
 	}
 

@@ -54,15 +54,22 @@ interface FDSViewSectionInterface {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
+	saveFDSFieldsURL: string;
 }
 
 interface FDSViewInterface {
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
+	saveFDSFieldsURL: string;
 }
 
-const FDSView = ({fdsViewId, fdsViewsURL, namespace}: FDSViewInterface) => {
+const FDSView = ({
+	fdsViewId,
+	fdsViewsURL,
+	namespace,
+	saveFDSFieldsURL,
+}: FDSViewInterface) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<FDSViewType>();
 	const [loading, setLoading] = useState(true);
@@ -125,6 +132,7 @@ const FDSView = ({fdsViewId, fdsViewsURL, namespace}: FDSViewInterface) => {
 						fdsView={fdsView}
 						fdsViewsURL={fdsViewsURL}
 						namespace={namespace}
+						saveFDSFieldsURL={saveFDSFieldsURL}
 					/>
 				)
 			)}

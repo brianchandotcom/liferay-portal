@@ -727,6 +727,8 @@ definition {
 			var catalogDefaultImgSrc = CommerceJSONProductsAPI._getCommerceProductImageURL(
 				channelId = ${miniumChannelId},
 				productId = ${comparisonProductId});
+
+			var catalogDefaultImgSrc = StringUtil.extractLast(${catalogDefaultImgSrc}, "://");
 		}
 
 		task ("And given a new product") {
@@ -749,6 +751,8 @@ definition {
 			var miniumCatalogDefaultImg = "//a[contains(@href,'simple-t-shirt')]//img[contains(@class,'card-picture')]";
 
 			var miniumCatalogDefaultImgSrc = selenium.getAttribute("${miniumCatalogDefaultImg}@src");
+
+			var miniumCatalogDefaultImgSrc = StringUtil.extractLast(${miniumCatalogDefaultImgSrc}, "://");
 
 			TestUtils.assertEquals(
 				actual = ${miniumCatalogDefaultImgSrc},

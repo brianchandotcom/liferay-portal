@@ -88,17 +88,6 @@ definition {
 			dataSetViewName = ${dataSetViewName});
 	}
 
-	macro dataSetVariables {
-		var datasetEntryIds = ${datasetEntryIds};
-		var dataSetName = ${dataSetName};
-		var dataSetViewDescription = ${dataSetViewDescription};
-		var dataSetViewName = ${dataSetViewName};
-		var restApplication = ${restApplication};
-		var restEndpoint = ${restEndpoint};
-		var restSchema = ${restSchema};
-		var userEmailAddress = ${userEmailAddress};
-		var userPassword = ${userPassword};
-	}
 
 	macro deleteAllDatasetEntries {
 		JSONFrontendDatasetEntries._deleteFDSEntry();
@@ -162,6 +151,12 @@ definition {
 
 	macro goToDatasetAdminPage {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet");
+	}
+
+	macro goToDatasetViewAdminPage {
+		var datasetEntryId = JSONFrontendDatasetEntries._getDatasetEntryIdByName(datasetName = ${datasetName});
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_views.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=${datasetEntryId}");
 	}
 
 	macro goToViews {

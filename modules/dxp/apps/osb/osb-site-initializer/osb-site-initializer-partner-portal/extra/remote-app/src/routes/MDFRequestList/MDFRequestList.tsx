@@ -117,6 +117,73 @@ const MDFRequestList = () => {
 			);
 		}
 	};
+	const buildFilterFields = () => {
+		const filterFields = [
+			{
+				component: (
+					<DateFilter
+						dateFilters={(dates: {
+							endDate: string;
+							startDate: string;
+						}) => {
+							onFilter({
+								activityPeriod: {
+									dates,
+								},
+							});
+						}}
+						filterDescription="Activity Date "
+					/>
+				),
+				name: 'Activity Period',
+			},
+			{
+				component: (
+					<CheckboxFilter
+						availableItems={fieldEntries[
+							LiferayPicklistName.MDF_REQUEST_STATUS
+						]?.map<string>((status) => status.label as string)}
+						clearCheckboxes={!filters.status.value?.length}
+						updateFilters={(checkedItems) =>
+							setFilters((previousFilters) => ({
+								...previousFilters,
+								status: {
+									...previousFilters.status,
+									value: checkedItems,
+								},
+							}))
+						}
+					/>
+				),
+				name: 'Status',
+			},
+		];
+
+		if (actions?.includes(PermissionActionType.SEE_RESTRICTED_FIELDS)) {
+			filterFields.push({
+				component: (
+					<CheckboxFilter
+						availableItems={companiesEntries?.map<string>(
+							(company) => company.label as string
+						)}
+						clearCheckboxes={!filters.partner.value?.length}
+						updateFilters={(checkedItems) =>
+							setFilters((previousFilters) => ({
+								...previousFilters,
+								partner: {
+									...previousFilters.status,
+									value: checkedItems,
+								},
+							}))
+						}
+					/>
+				),
+				name: 'Partner',
+			});
+		}
+
+		return filterFields;
+	};
 
 	return (
 		<div className="border-0 my-4">
@@ -171,73 +238,7 @@ const MDFRequestList = () => {
 					<DropDownWithDrillDown
 						className=""
 						initialActiveMenu="x0a0"
-						menus={getDropDownFilterMenus([
-							{
-								component: (
-									<DateFilter
-										dateFilters={(dates: {
-											endDate: string;
-											startDate: string;
-										}) => {
-											onFilter({
-												activityPeriod: {
-													dates,
-												},
-											});
-										}}
-										filterDescription="Activity Date "
-									/>
-								),
-								name: 'Activity Period',
-							},
-							{
-								component: (
-									<CheckboxFilter
-										availableItems={fieldEntries[
-											LiferayPicklistName
-												.MDF_REQUEST_STATUS
-										]?.map<string>(
-											(status) => status.label as string
-										)}
-										clearCheckboxes={
-											!filters.status.value?.length
-										}
-										updateFilters={(checkedItems) =>
-											setFilters((previousFilters) => ({
-												...previousFilters,
-												status: {
-													...previousFilters.status,
-													value: checkedItems,
-												},
-											}))
-										}
-									/>
-								),
-								name: 'Status',
-							},
-							{
-								component: (
-									<CheckboxFilter
-										availableItems={companiesEntries?.map<
-											string
-										>((company) => company.label as string)}
-										clearCheckboxes={
-											!filters.partner.value?.length
-										}
-										updateFilters={(checkedItems) =>
-											setFilters((previousFilters) => ({
-												...previousFilters,
-												partner: {
-													...previousFilters.status,
-													value: checkedItems,
-												},
-											}))
-										}
-									/>
-								),
-								name: 'Partner',
-							},
-						])}
+						menus={getDropDownFilterMenus(buildFilterFields())}
 						trigger={
 							<ClayButton borderless className="btn-secondary">
 								<span className="inline-item inline-item-before">

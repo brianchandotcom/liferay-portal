@@ -11,7 +11,14 @@
 
 import {Liferay} from '../../../services/liferay';
 
-export const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL()
-	.split('/')
-	.slice(0, 3)
-	.join('/');
+const getSiteURL = () => {
+	const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
+
+	if (layoutRelativeURL.includes('web')) {
+		return layoutRelativeURL.split('/').slice(0, 3).join('/');
+	}
+
+	return '';
+};
+
+export const siteURL = getSiteURL();

@@ -90,7 +90,7 @@ public class WishListItemResourceImpl
 
 	@NestedField(parentClass = WishList.class, value = "wishListItems")
 	@Override
-	public Page<WishListItem> getWishListItemsPage(
+	public Page<WishListItem> getWishlistWishListWishListItemsPage(
 			@NestedFieldId("id") Long wishListId, Long accountId,
 			Pagination pagination)
 		throws Exception {
@@ -124,7 +124,7 @@ public class WishListItemResourceImpl
 	}
 
 	@Override
-	public WishListItem postChannelWishListItem(
+	public WishListItem postWishlistWishListWishListItem(
 			Long wishListId, Long accountId, WishListItem wishListItem)
 		throws Exception {
 

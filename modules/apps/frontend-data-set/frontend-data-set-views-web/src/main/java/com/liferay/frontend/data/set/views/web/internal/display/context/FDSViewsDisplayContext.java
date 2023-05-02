@@ -20,11 +20,15 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceURL;
 
 /**
  * @author Marko Cikos
@@ -95,6 +99,21 @@ public class FDSViewsDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	public String getSaveFDSFieldsURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceURL resourceURL =
+			(ResourceURL)PortalUtil.getControlPanelPortletURL(
+				_portletRequest, themeDisplay.getScopeGroup(),
+				FDSViewsPortletKeys.FDS_VIEWS, 0, 0,
+				PortletRequest.RESOURCE_PHASE);
+
+		resourceURL.setResourceID("/frontend_data_set_views/save_fds_fields");
+
+		return resourceURL.toString();
 	}
 
 	private final PortletRequest _portletRequest;

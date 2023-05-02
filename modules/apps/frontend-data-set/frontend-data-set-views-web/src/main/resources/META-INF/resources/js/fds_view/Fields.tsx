@@ -27,34 +27,41 @@ import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 
-type FDSFieldType = {
+interface FDSFieldInterface {
 	id: number;
 	label: string;
 	name: string;
 	renderer: string;
 	sortable: boolean;
 	type: string;
-};
+}
 
-type FieldType = {
+interface FieldInterface {
+	id: number | null;
 	name: string;
 	selected: boolean;
 	type: string;
 	visible: boolean;
-};
-
-interface AddFDSFieldsModalContentInterface {
-	closeModal: Function;
-	fdsView: FDSViewType;
-	onSave: Function;
 }
 
-const AddFDSFieldsModalContent = ({
+interface SaveFDSFieldsModalContentInterface {
+	closeModal: Function;
+	fdsFields: Array<FDSFieldInterface>;
+	fdsView: FDSViewType;
+	namespace: string;
+	onSave: Function;
+	saveFDSFieldsURL: string;
+}
+
+const SaveFDSFieldsModalContent = ({
 	closeModal,
+	fdsFields,
 	fdsView,
+	namespace,
 	onSave,
-}: AddFDSFieldsModalContentInterface) => {
-	const [fields, setFields] = useState<Array<FieldType> | null>(null);
+	saveFDSFieldsURL,
+}: SaveFDSFieldsModalContentInterface) => {
+	const [fields, setFields] = useState<Array<FieldInterface> | null>(null);
 	const [query, setQuery] = useState('');
 
 	const onSearch = (query: string) => {
@@ -74,20 +81,89 @@ const AddFDSFieldsModalContent = ({
 		);
 	};
 
-	useEffect(() => {
-		getFields(fdsView).then((newFields) => {
-			if (newFields) {
-				setFields(
-					newFields.map((field) => ({
-						name: field.name,
-						selected: false,
-						type: field.type,
-						visible: true,
-					}))
-				);
+	const saveFDSFields = async () => {
+		const creationData: Array<{name: string; type: string}> = [];
+		const deletionIds: Array<number> = [];
+
+		fields?.forEach((field) => {
+			if (field.selected && !field.id) {
+				creationData.push({name: field.name, type: field.type});
+			}
+
+			if (!field.selected && field.id) {
+				deletionIds.push(field.id);
 			}
 		});
-	}, [fdsView]);
+
+		const formData = new FormData();
+
+		formData.append(
+			`${namespace}creationData`,
+			JSON.stringify(creationData)
+		);
+
+		deletionIds.forEach((id) => {
+			formData.append(`${namespace}deletionIds`, String(id));
+		});
+
+		formData.append(`${namespace}fdsViewId`, fdsView.id);
+
+		const response = await fetch(saveFDSFieldsURL, {
+			body: formData,
+			method: 'POST',
+		});
+
+		if (!response.ok) {
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-failed-to-complete'
+				),
+				type: 'danger',
+			});
+
+			return;
+		}
+
+		const createdFDSFields: Array<FDSFieldInterface> = await response.json();
+
+		closeModal();
+
+		openToast({
+			message: Liferay.Language.get(
+				'your-request-completed-successfully'
+			),
+			type: 'success',
+		});
+
+		onSave({
+			createdFDSFields,
+			deletedFDSFieldsIds: deletionIds,
+		});
+	};
+
+	useEffect(() => {
+		getFields(fdsView).then((newFields) => {
+			if (!newFields) {
+				return;
+			}
+
+			setFields(
+				newFields.map((field) => {
+					const fdsField = fdsFields.find(
+						(fdsField) => fdsField.name === field.name
+					);
+
+					return {
+						id: fdsField?.id || null,
+						name: field.name,
+						selected: Boolean(fdsField),
+						type: field.type,
+						visible: true,
+					};
+				})
+			);
+		});
+	}, [fdsFields, fdsView]);
 
 	const isSelectAllChecked = () => {
 		if (!fields) {
@@ -213,13 +289,7 @@ const AddFDSFieldsModalContent = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton
-							onClick={() => {
-								closeModal();
-
-								onSave();
-							}}
-						>
+						<ClayButton onClick={() => saveFDSFields()}>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 
@@ -236,8 +306,13 @@ const AddFDSFieldsModalContent = ({
 	);
 };
 
-const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
-	const [fdsFields, setFDSFields] = useState<Array<FDSFieldType> | null>(
+const Fields = ({
+	fdsView,
+	fdsViewsURL,
+	namespace,
+	saveFDSFieldsURL,
+}: FDSViewSectionInterface) => {
+	const [fdsFields, setFDSFields] = useState<Array<FDSFieldInterface> | null>(
 		null
 	);
 
@@ -283,12 +358,12 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 
 			const storedOrderedFDSFieldIds = fdsFieldsOrder.split(',');
 
-			const orderedFDSFields: Array<FDSFieldType> = [];
+			const orderedFDSFields: Array<FDSFieldInterface> = [];
 
 			const orderedFDSFieldIds: Array<number> = [];
 
 			storedOrderedFDSFieldIds.forEach((fdsFieldId: string) => {
-				storedFDSFields.forEach((storedFDSField: FDSFieldType) => {
+				storedFDSFields.forEach((storedFDSField: FDSFieldInterface) => {
 					if (fdsFieldId === String(storedFDSField.id)) {
 						orderedFDSFields.push(storedFDSField);
 
@@ -297,7 +372,7 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 				});
 			});
 
-			storedFDSFields.forEach((storedFDSField: FDSFieldType) => {
+			storedFDSFields.forEach((storedFDSField: FDSFieldInterface) => {
 				if (!orderedFDSFieldIds.includes(storedFDSField.id)) {
 					orderedFDSFields.push(storedFDSField);
 				}
@@ -309,7 +384,7 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 		}
 		else {
 			fdsFieldsOrderRef.current = storedFDSFields
-				.map((storedFDSField: FDSFieldType) => storedFDSField.id)
+				.map((storedFDSField: FDSFieldInterface) => storedFDSField.id)
 				.join(',');
 
 			setFDSFields(storedFDSFields);
@@ -375,10 +450,33 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 	const onCreationButtonClick = () =>
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFDSFieldsModalContent
+				<SaveFDSFieldsModalContent
 					closeModal={closeModal}
+					fdsFields={fdsFields || []}
 					fdsView={fdsView}
-					onSave={() => getFDSFields()}
+					namespace={namespace}
+					onSave={({
+						createdFDSFields,
+						deletedFDSFieldsIds,
+					}: {
+						createdFDSFields: Array<FDSFieldInterface>;
+						deletedFDSFieldsIds: Array<number>;
+					}) => {
+						const newFDSFields: Array<FDSFieldInterface> = [];
+
+						fdsFields?.forEach((fdsField) => {
+							if (!deletedFDSFieldsIds.includes(fdsField.id)) {
+								newFDSFields.push(fdsField);
+							}
+						});
+
+						createdFDSFields.forEach((fdsField) => {
+							newFDSFields.push(fdsField);
+						});
+
+						setFDSFields(newFDSFields);
+					}}
+					saveFDSFieldsURL={saveFDSFieldsURL}
 				/>
 			),
 		});
@@ -420,7 +518,7 @@ const Fields = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 					onOrderChange={({
 						orderedItems,
 					}: {
-						orderedItems: Array<FDSFieldType>;
+						orderedItems: Array<FDSFieldInterface>;
 					}) => {
 						fdsFieldsOrderRef.current = orderedItems
 							.map((item) => item.id)

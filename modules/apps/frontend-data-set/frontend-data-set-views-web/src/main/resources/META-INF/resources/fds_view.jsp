@@ -34,6 +34,8 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 			"fdsViewsURL", fdsViewsURL
 		).put(
 			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"saveFDSFieldsURL", fdsViewsDisplayContext.getSaveFDSFieldsURL()
 		).build()
 	%>'
 />

@@ -13,17 +13,25 @@
 ## #set ($modified_date = $indexFormat.parse($reserved-article-modified-date.getData()))
 ## #set ($mod_date = $dateTool.format("d MMMM yyyy H:m",$modified_date))
 
-<html lang="$w3c_language_id">
+<html dir="#language ("lang.dir")" lang="${w3c_language_id}">
     <p>$Headings.getData($Headings.getData())</p>
 
     <p>$Headings.getData(newTest)</p>
 
-    <p>class="$root_css_class"</p>
+    <p class="$root_css_class"></p>
 
-    <p>class="$root_css_class $root_css_sub_class $ro_cs_css $ot_ss_cass"</p>
+    <p class="$root_css_class $root_css_sub_class $ro_cs_css $ot_ss_cass"></p>
 
     <a href="$site_default_url">testLink</a>
+
+	<span class="site-name" title="#language_format ("go-to-x", [$site_name])">
+		$site_name
+	</span>
 </html>
+
+<head>
+	$theme.include($top_head_include)
+</head>
 
 #macro( navigationBar  $nav_item )
     #if ($nav_item.hasChildren())
@@ -68,3 +76,17 @@
 #end
 
 #navigationBar(nav_item)
+
+<div id="content">
+	<nav id="breadcrumbs">#breadcrumbs()</nav>
+
+	#if ($selectable)
+		$theme.include($content_include)
+	#else
+		$portletDisplay.recycle()
+
+		$portletDisplay.setTitle($the_title)
+
+		$theme.wrapPortlet("portlet.vm", $content_include)
+	#end
+</div>

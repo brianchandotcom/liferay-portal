@@ -18,5 +18,7 @@ import {FDSViewSectionInterface} from '../FDSView';
 declare const Fields: ({
 	fdsView,
 	fdsViewsURL,
+	namespace,
+	saveFDSFieldsURL,
 }: FDSViewSectionInterface) => JSX.Element;
 export default Fields;

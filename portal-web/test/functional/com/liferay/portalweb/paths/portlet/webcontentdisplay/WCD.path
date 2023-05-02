@@ -83,7 +83,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH</td>
-	<td>//div[contains(@class, 'input-localized-palette')]//li//span[contains(@id,'qfkd')]</td>
+	<td>//div[contains(@class, 'input-localized-palette')]//li//span[contains(@id,'uvlz')]/..//span[contains(text(),'en-US')]</td>
 	<td></td>
 </tr>
 <tr>

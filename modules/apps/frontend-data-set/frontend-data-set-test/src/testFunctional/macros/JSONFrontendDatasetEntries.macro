@@ -37,6 +37,8 @@ definition {
 	}
 
 	macro _createFDSViewViaAPI {
+		Variables.assertDefined(parameterList = "${datasetName},${dataSetViewName}");
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -47,12 +49,13 @@ definition {
 			var userPassword = "test";
 		}
 
-		if (!(isSet(datasetEntriesIdList))) {
-			var datasetEntriesIdList = JSONFrontendDatasetEntries._getDatasetEntryIdsByName();
+		if (!(isSet(dataSetViewDescription))) {
+			var dataSetViewDescription = "";
 		}
 
-		if (${datasetEntriesIdList} != "") {
-			for (var dataSetEntryId : list ${datasetEntriesIdList}) {
+		var datasetEntryId = JSONFrontendDatasetEntries._getDatasetEntryIdByName(datasetName = ${datasetName});
+
+		if (${datasetEntryId} != "") {
 				var curl = '''
 					${portalURL}/o/c/fdsviews \
 						-u ${userEmailAddress}:${userPassword} \
@@ -64,15 +67,14 @@ definition {
 							"defaultItemsPerPage": 0,
 							"listOfItemsPerPage": "string",
 							"label": "${dataSetViewName}",
-							"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${dataSetEntryId}
+							"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${datasetEntryId}
 						}
 				''';
 
 				JSONCurlUtil.post(${curl});
-			}
 		}
 		else {
-			echo("FAIL. No Datasets entries to be deleted");
+			echo("FAIL. No datasets was found");
 		}
 	}
 
@@ -135,7 +137,9 @@ definition {
 		}
 	}
 
-	macro _getDatasetEntryIdsByName {
+	macro _getDatasetEntryIdByName {
+		Variables.assertDefined(parameterList = "${datasetName}");
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -146,24 +150,18 @@ definition {
 			var userPassword = "test";
 		}
 
-		if (!(isSet(datasetName))) {
-			var datasetName = "Dataset Test";
-		}
-
 		var curl = '''
 			${portalURL}/o/c/fdsentries \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
-		var label = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetName}')].label");
+		var datasetEntryId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetName}')].id");
 
-		var datasetEntryIdByName = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${label}')].id");
-
-		if (${datasetEntryIdByName} == "") {
+		if (${datasetEntryId} == "") {
 			fail("FAIL. No datasets was found");
 		}
 		else {
-			return ${datasetEntryIdByName};
+			return ${datasetEntryId};
 		}
 	}
 

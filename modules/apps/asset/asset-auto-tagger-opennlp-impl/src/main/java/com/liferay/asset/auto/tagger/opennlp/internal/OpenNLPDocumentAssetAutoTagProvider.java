@@ -84,13 +84,13 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		throws ConfigurationException {
 
 		OpenNLPDocumentAssetAutoTaggerCompanyConfiguration
-			openNLPDocumentAssetAutoTagProviderCompanyConfiguration =
+			openNLPDocumentAssetAutoTaggerCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					OpenNLPDocumentAssetAutoTaggerCompanyConfiguration.class,
 					assetEntry.getCompanyId());
 
 		return ArrayUtil.contains(
-			openNLPDocumentAssetAutoTagProviderCompanyConfiguration.
+			openNLPDocumentAssetAutoTaggerCompanyConfiguration.
 				enabledClassNames(),
 			assetEntry.getClassName());
 	}

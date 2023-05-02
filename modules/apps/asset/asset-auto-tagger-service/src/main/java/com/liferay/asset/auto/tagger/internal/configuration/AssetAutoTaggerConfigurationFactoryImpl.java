@@ -188,26 +188,26 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 
 			_group = group;
 
-			_assetAutoTaggerCompanyConfiguration =
+			_assetAutoTaggerConfiguration =
 				new CompanyAssetAutoTaggerConfiguration(
 					_companyLocalService.getCompany(group.getCompanyId()));
 		}
 
 		@Override
 		public int getMaximumNumberOfTagsPerAsset() {
-			return _assetAutoTaggerCompanyConfiguration.
+			return _assetAutoTaggerConfiguration.
 				getMaximumNumberOfTagsPerAsset();
 		}
 
 		@Override
 		public boolean isAvailable() {
-			return _assetAutoTaggerCompanyConfiguration.isEnabled();
+			return _assetAutoTaggerConfiguration.isEnabled();
 		}
 
 		@Override
 		public boolean isEnabled() {
 			try {
-				if (!_assetAutoTaggerCompanyConfiguration.isEnabled()) {
+				if (!_assetAutoTaggerConfiguration.isEnabled()) {
 					return false;
 				}
 
@@ -235,17 +235,17 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 					_log.debug(configurationException);
 				}
 
-				return _assetAutoTaggerCompanyConfiguration.isEnabled();
+				return _assetAutoTaggerConfiguration.isEnabled();
 			}
 		}
 
 		@Override
 		public boolean isUpdateAutoTags() {
-			return _assetAutoTaggerCompanyConfiguration.isUpdateAutoTags();
+			return _assetAutoTaggerConfiguration.isUpdateAutoTags();
 		}
 
 		private final AssetAutoTaggerConfiguration
-			_assetAutoTaggerCompanyConfiguration;
+			_assetAutoTaggerConfiguration;
 		private final Group _group;
 
 	}

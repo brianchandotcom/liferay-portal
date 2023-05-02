@@ -127,6 +127,58 @@ definition {
 			value1 = "Non trouvé");
 	}
 
+	@description = "This is a use case for LPS-112343."
+	@priority = 4
+	test CanRemoveAvailableLanguageFromSite {
+		property test.name.skip.portal.instance = "Locale#CanRemoveAvailableLanguageFromSite";
+
+		var frenchURL = "fr/web/test-site-name/navigation-menu-page";
+		var englishURL = "en/web/test-site-name/navigation-menu-page";
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Navigation Menu Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Navigation Menu Page",
+			widgetName = "Menu Display");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States),French (France)",
+			defaultSiteLanguage = "French (France)");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = ${frenchURL});
+
+		AssertElementPresent(
+			key_portletName = "Menu Affichage",
+			locator1 = "Portlet#TITLE");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = ${englishURL});
+
+		AssertElementPresent(
+			key_portletName = "Menu Display",
+			locator1 = "Portlet#TITLE");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "French (France)",
+			defaultSiteLanguage = "French (France)");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = ${frenchURL});
+
+		Navigator.openWithAppendToBaseURL(urlAppend = ${englishURL});
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Non trouvé");
+	}
+
 	@priority = 4
 	test ChangesToInstanceTimeZoneDoNotPropagateToExistingUsers {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";

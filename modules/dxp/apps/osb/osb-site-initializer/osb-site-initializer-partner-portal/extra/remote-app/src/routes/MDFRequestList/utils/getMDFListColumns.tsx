@@ -88,29 +88,37 @@ export default function getMDFListColumns(
 						icon: 'trash',
 						key: 'delete',
 						label: ' Delete',
-						onClick: async () => {
-							try {
-								await deleteMDFRequest(
-									ResourceName.MDF_REQUEST_DXP,
-									Number(row[MDFColumnKey.ID])
-								);
+						onClick: () => {
+							Liferay.Util.openConfirmModal({
+								message: 'Are you sure?',
+								onConfirm: async (isConfirmed: boolean) => {
+									if (isConfirmed) {
+										try {
+											await deleteMDFRequest(
+												ResourceName.MDF_REQUEST_DXP,
+												Number(row[MDFColumnKey.ID])
+											);
 
-								Liferay.Util.openToast({
-									message:
-										'MDF Request successfully deleted!',
-									title: 'Success',
-									type: 'success',
-								});
+											Liferay.Util.openToast({
+												message:
+													'MDF Request successfully deleted!',
+												title: 'Success',
+												type: 'success',
+											});
 
-								mutate(mutated);
-							}
-							catch (error: unknown) {
-								Liferay.Util.openToast({
-									message: 'Fail to delete MDF Request',
-									title: 'Error',
-									type: 'danger',
-								});
-							}
+											mutate(mutated);
+										}
+										catch (error: unknown) {
+											Liferay.Util.openToast({
+												message:
+													'Fail to delete MDF Request',
+												title: 'Error',
+												type: 'danger',
+											});
+										}
+									}
+								},
+							});
 						},
 					});
 				}

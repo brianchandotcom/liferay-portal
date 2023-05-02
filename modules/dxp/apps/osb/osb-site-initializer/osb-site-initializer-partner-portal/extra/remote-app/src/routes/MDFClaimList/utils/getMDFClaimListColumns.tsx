@@ -84,28 +84,42 @@ export default function getMDFClaimListColumns(
 						icon: 'trash',
 						key: 'delete',
 						label: ' Delete',
-						onClick: async () => {
-							try {
-								await deleteMDFClaim(
-									ResourceName.MDF_CLAIM_DXP,
-									Number(row[MDFClaimColumnKey.CLAIM_ID])
-								);
+						onClick: () => {
+							Liferay.Util.openConfirmModal({
+								message: 'Are you sure?',
+								onConfirm: async (isConfirmed: boolean) => {
+									if (isConfirmed) {
+										try {
+											await deleteMDFClaim(
+												ResourceName.MDF_CLAIM_DXP,
+												Number(
+													row[
+														MDFClaimColumnKey
+															.CLAIM_ID
+													]
+												)
+											);
 
-								Liferay.Util.openToast({
-									message: 'MDF Claim successfully deleted!',
-									title: 'Success',
-									type: 'success',
-								});
+											Liferay.Util.openToast({
+												message:
+													'MDF Claim successfully deleted!',
+												title: 'Success',
+												type: 'success',
+											});
 
-								mutate(mutated);
-							}
-							catch (error: unknown) {
-								Liferay.Util.openToast({
-									message: 'Fail to delete MDF Claim.',
-									title: 'Error',
-									type: 'danger',
-								});
-							}
+											mutate(mutated);
+										}
+										catch (error: unknown) {
+											Liferay.Util.openToast({
+												message:
+													'Fail to delete MDF Claim.',
+												title: 'Error',
+												type: 'danger',
+											});
+										}
+									}
+								},
+							});
 						},
 					});
 				}

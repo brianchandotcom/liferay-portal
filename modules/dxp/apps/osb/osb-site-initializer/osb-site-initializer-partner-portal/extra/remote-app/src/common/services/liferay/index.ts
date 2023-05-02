@@ -24,6 +24,7 @@ interface IThemeDisplay {
 }
 interface IUtil {
 	navigate: (path: string) => void;
+	openConfirmModal: (options?: any) => void;
 	openToast: (options?: any) => void;
 }
 

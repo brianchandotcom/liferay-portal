@@ -78,7 +78,7 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 	}
 
 	@Override
-	public WishList patchChannelWishList(Long wishListId, WishList wishList)
+	public WishList patchWishList(Long wishListId, WishList wishList)
 		throws Exception {
 
 		CommerceWishList commerceWishList =

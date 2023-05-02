@@ -53,7 +53,7 @@ public class ProductOptionResourceImpl
 
 	@NestedField(parentClass = Product.class, value = "productOptions")
 	@Override
-	public Page<ProductOption> getChannelProductOptionsPage(
+	public Page<ProductOption> getChannelProductProductOptionsPage(
 			Long channelId, @NestedFieldId(value = "productId") Long productId,
 			Pagination pagination)
 		throws Exception {

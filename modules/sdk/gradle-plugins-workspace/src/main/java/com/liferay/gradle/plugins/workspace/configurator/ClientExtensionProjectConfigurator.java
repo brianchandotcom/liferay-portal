@@ -158,9 +158,11 @@ public class ClientExtensionProjectConfigurator
 					JsonNode fieldJsonNode = entry.getValue();
 
 					if (Objects.equals(fieldName, "assemble")) {
-						_configureAssembleClientExtensionTask(
-							project, assembleClientExtensionTaskProvider,
-							(ArrayNode)fieldJsonNode, profileName);
+						if (!fieldJsonNode.isNull()) {
+							_configureAssembleClientExtensionTask(
+								project, assembleClientExtensionTaskProvider,
+								(ArrayNode)fieldJsonNode, profileName);
+						}
 
 						return;
 					}

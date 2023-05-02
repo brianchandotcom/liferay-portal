@@ -37,6 +37,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
@@ -57,6 +59,7 @@ import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Geo;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
@@ -148,6 +151,8 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -173,6 +178,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -196,9 +202,14 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -1950,7 +1961,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
 			ExpandoBridge expandoBridge =
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(),
@@ -1965,12 +1975,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				expandoBridge.setAttributeDefault(
 					jsonObject.getString("name"),
-					_getExpandoAttributeValue(jsonObject.get("defaultValue")));
+					_getExpandoAttributeValue(jsonObject));
 			}
 			else {
 				expandoBridge.addAttribute(
-					jsonObject.getString("name"), jsonObject.getInt("dataType"),
-					_getExpandoAttributeValue(jsonObject.get("defaultValue")));
+					jsonObject.getString("name"),
+					jsonObject.getInt("dataType"),
+					_getExpandoAttributeValue(jsonObject));
+
 			}
 
 			if (jsonObject.has("properties")) {
@@ -4360,14 +4372,61 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return map;
 	}
 
-	private Serializable _getExpandoAttributeValue(Object object) {
-		if (object instanceof BigDecimal) {
-			BigDecimal bigDecimal = (BigDecimal)object;
+	private Serializable _getExpandoAttributeValue(JSONObject jsonObject) throws Exception{
 
-			return bigDecimal.doubleValue();
+		if(jsonObject.getInt("dataType") == ExpandoColumnConstants.BOOLEAN){
+			return jsonObject.getBoolean("defaultValue");
 		}
-
-		return (Serializable)object;
+		else if(jsonObject.getInt("dataType") == ExpandoColumnConstants.DATE){
+			DateFormat dateFormat = DateUtil.getISOFormat(jsonObject.getString("defaultValue"));
+			Date date = dateFormat.parse(jsonObject.getString("defaultValue"));
+			return date;
+		}
+		else 	if(jsonObject.getInt("dataType") == ExpandoColumnConstants.DOUBLE){
+			return jsonObject.getDouble("defaultValue");
+		}
+		else if(jsonObject.getInt("dataType") == ExpandoColumnConstants.DOUBLE_ARRAY){
+			return JSONUtil.toDoubleArray(jsonObject.getJSONArray("defaultValue"));
+		}
+		else if(jsonObject.getInt("dataType") == ExpandoColumnConstants.FLOAT){
+			return jsonObject.getDouble("defaultValue");
+		}
+		else if(jsonObject.getInt("dataType") == ExpandoColumnConstants.FLOAT_ARRAY){
+			return JSONUtil.toFloatArray(jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.GEOLOCATION) {
+			ExpandoValue value = new ExpandoValueImpl();
+			Geo geo = new Geo();
+			value.setGeolocationJSONObject(jsonObject.getJSONObject("defaultValue"));
+			geo.setLatitude(value.getGeolocationJSONObject().getDouble("latitude"));
+			geo.setLongitude(value.getGeolocationJSONObject().getDouble("longitude"));
+			return geo;
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.INTEGER) {
+			return jsonObject.getInt("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.INTEGER_ARRAY) {
+			return JSONUtil.toIntegerArray(jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.LONG) {
+			return jsonObject.getLong("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.LONG_ARRAY) {
+			return JSONUtil.toLongArray(jsonObject.getJSONArray("defaultValue"));
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.NUMBER) {
+			return jsonObject.getInt("defaultValue");
+		}
+		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.NUMBER_ARRAY) {
+			return JSONUtil.toIntegerArray(jsonObject.getJSONArray("defaultValue"));
+		}
+		else if(jsonObject.getInt("dataType") == ExpandoColumnConstants.STRING){
+			return jsonObject.getString("defaultValue");
+		}
+		else if(jsonObject.getInt("dataType") == ExpandoColumnConstants.STRING_ARRAY){
+			return JSONUtil.toStringArray(jsonObject.getJSONArray("defaultValue"));
+		}
+		return (Serializable)jsonObject.get("defaultValue");
 	}
 
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {

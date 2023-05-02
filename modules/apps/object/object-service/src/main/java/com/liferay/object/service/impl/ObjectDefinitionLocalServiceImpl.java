@@ -326,7 +326,7 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectDefinition(
-			userId, className, dbTableName, false, enableComments, labelMap,
+			userId, className, dbTableName, enableComments, false, labelMap,
 			modifiable, name, panelAppOrder, panelCategoryKey,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,

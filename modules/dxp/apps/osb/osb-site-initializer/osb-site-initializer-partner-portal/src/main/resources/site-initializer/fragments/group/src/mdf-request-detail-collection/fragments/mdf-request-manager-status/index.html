@@ -30,7 +30,7 @@
 				[/#list]
 			};
 
-			const updateStatus = async (status) => {
+			const updateRequestStatus = async (status) => {
 				const responde = await fetch(
 					`/o/c/mdfrequests/${mdfRequestId}`,
 					{
@@ -39,7 +39,7 @@
 							'content-type': 'application/json',
 							'x-csrf-token': Liferay.authToken,
 						},
-						method: 'PATCH',
+						method: 'PUT',
 					}
 				);
 
@@ -63,7 +63,7 @@
 				message: 'Are you sure?',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						updateStatus(status);
+						updateRequestStatus(status);
 					}
 				},
 			});

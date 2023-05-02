@@ -91,7 +91,7 @@
 [/#macro]
 
 [#macro claim_status activity_claims]
-	[#assign claim_status_content = activity_claims?filter(activity_claim -> activity_claim.r_mdfClmToMDFClmActs_c_mdfClaim.mdfClaimStatus.key != "draft")?has_content?string("claimed", "unclaimed") /]
+	[#assign claim_status_content = activity_claims?filter(activity_claim -> activity_claim.r_mdfClmToMDFClmActs_c_mdfClaim.mdfClaimStatus.key != "draft" && activity_claim.selected)?has_content?string("claimed", "unclaimed") /]
 
 	<div class="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
 		Claim Status: <span class="${claim_status_style[claim_status_content]}">${claim_status_content?capitalize}</span>

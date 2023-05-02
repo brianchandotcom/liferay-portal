@@ -1,5 +1,8 @@
 [#assign mdf_request_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
+[#assign permissionAction = restClient.get("/c/permissionactions?filter=object%20eq%20%27MDF%20Claim%27&pageSize=-1") /]
+[#assign hasDeleteAction = permissionAction.items?filter(permissionAction -> permissionAction.action == "DELETE")?has_content /]
+
 [#assign claim_status_style = {"draft": "label label-tonal-dark ml-2", "pendingMarketingReview": "label label-tonal-warning ml-2", "approved": "label label-tonal-success ml-2", "moreInfoRequested": "label label-tonal-warning ml-2", "rejected": "label label-tonal-danger ml-2", "expired": "label label-tonal-danger ml-2", "claimPaid": "label label-tonal-info ml-2", "inFinanceReview": "label label-tonal-light ml-2", "canceled": "label label-tonal-danger ml-2"}]
 
 [#function check_claim status_key]
@@ -31,13 +34,62 @@
 				</div>
 			</div>
 
-			<a class="btn btn-secondary btn-sm" href="${site_url}/l/${claim.id}">
-				View
-			</a>
+			<div>
+				[#if hasDeleteAction && claim.mdfClaimStatus.key == "draft"]
+					<a class="btn" onClick="callDeleteMDFClaimList(${claim.id})">
+						[@clay["icon"] symbol="trash"/]
+					</a>
+				[/#if]
+
+				<a class="btn btn-secondary btn-sm" href="${site_url}/l/${claim.id}">
+					View
+				</a>
+			</div>
 		</div>
 
 		<hr />
 	</div>
+[/#macro]
+
+[#macro modal_script]
+<script>
+	const callDeleteMDFClaimList = (claimId) => Liferay.Util.openConfirmModal({
+		message: 'Are you sure?',
+		onConfirm: (isConfirmed) => {
+			if (isConfirmed) {
+				deleteClaim(claimId);
+			}
+		},
+	});
+
+	const deleteClaim = async (claimId) => {
+		const responde = await fetch(
+			'/o/c/mdfclaims/' + claimId,
+			{
+				headers: {
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'DELETE',
+			}
+		);
+
+		if (responde.ok) {
+			Liferay.Util.openToast({
+				message: 'MDF Claim successfully deleted!',
+				type: 'success',
+			});
+
+			location.reload();
+
+			return;
+		}
+
+		Liferay.Util.openToast({
+			message: 'The MDF Claim cannot be deleted.',
+			type: 'danger',
+		});
+	};
+</script>
 [/#macro]
 
 [#if mdf_request_id?has_content]
@@ -52,7 +104,7 @@
 		[#list mdf_request.mdfReqToMDFClms as claim]
 			[@panel claim=claim site_url=site_url /]
 		[/#list]
-
+		[@modal_script /]
 		[#if mdf_request.mdfRequestStatus.key != "canceled" && mdf_request.mdfRequestStatus.key != "draft" ]
 			<div class="align-items-start d-flex justify-content-between">
 				<div>

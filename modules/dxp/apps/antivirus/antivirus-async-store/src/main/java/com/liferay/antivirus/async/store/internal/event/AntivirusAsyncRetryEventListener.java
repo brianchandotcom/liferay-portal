@@ -63,7 +63,7 @@ public class AntivirusAsyncRetryEventListener
 				_schedulerEngineHelper.getScheduledJob(
 					message.getString("jobName"),
 					AntivirusAsyncConstants.SCHEDULER_GROUP_NAME_ANTIVIRUS,
-					StorageType.PERSISTED);
+					StorageType.MEMORY_CLUSTERED);
 
 			if (schedulerResponse != null) {
 				_schedulerEngineHelper.delete(

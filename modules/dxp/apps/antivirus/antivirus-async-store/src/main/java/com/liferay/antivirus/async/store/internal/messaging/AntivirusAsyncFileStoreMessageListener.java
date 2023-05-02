@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -147,22 +146,10 @@ public class AntivirusAsyncFileStoreMessageListener implements MessageListener {
 			_log.debug("Initializing " + rootDir.getAbsolutePath());
 		}
 
-		SchedulerResponse schedulerResponse =
-			_schedulerEngineHelper.getScheduledJob(
-				rootDir.getAbsolutePath(),
-				AntivirusAsyncConstants.SCHEDULER_GROUP_NAME_ANTIVIRUS_BATCH,
-				StorageType.PERSISTED);
-
-		if (schedulerResponse != null) {
-			_schedulerEngineHelper.delete(
-				rootDir.getAbsolutePath(), schedulerResponse.getGroupName(),
-				schedulerResponse.getStorageType());
-		}
-
 		Trigger trigger = _createTrigger(rootDir.getAbsolutePath());
 
 		_schedulerEngineHelper.schedule(
-			trigger, StorageType.PERSISTED, null,
+			trigger, StorageType.MEMORY_CLUSTERED, null,
 			AntivirusAsyncDestinationNames.ANTIVIRUS_BATCH,
 			rootDir.getAbsolutePath());
 	}

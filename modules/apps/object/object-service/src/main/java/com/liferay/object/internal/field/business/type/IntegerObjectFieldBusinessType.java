@@ -23,13 +23,11 @@ import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,10 +48,6 @@ public class IntegerObjectFieldBusinessType
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-135398")) {
-			return Collections.emptySet();
-		}
-
 		return SetUtil.fromArray(
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
 	}
@@ -100,10 +94,6 @@ public class IntegerObjectFieldBusinessType
 
 	@Override
 	public Set<String> getUnmodifiablObjectFieldSettingsNames() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-135398")) {
-			return Collections.emptySet();
-		}
-
 		return SetUtil.fromArray(
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
 	}
@@ -115,10 +105,6 @@ public class IntegerObjectFieldBusinessType
 		throws PortalException {
 
 		super.validateObjectFieldSettings(objectField, objectFieldSettings);
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-135398")) {
-			return;
-		}
 
 		validateBooleanObjectFieldSetting(
 			objectField.getName(),

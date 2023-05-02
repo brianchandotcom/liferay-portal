@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Igor Beslic
  */
-public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
+public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 	@Override
 	protected String doProcess(
@@ -38,9 +38,7 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		String className = javaClass.getName();
 
-		if (className.endsWith("LocalServiceImpl") ||
-			!className.endsWith("ServiceImpl")) {
-
+		if (!className.endsWith("LocalServiceImpl")) {
 			return javaTerm.getContent();
 		}
 
@@ -66,28 +64,21 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		String entityReturnType = javaSignature.getReturnType();
 
-		System.out.println(
-			StringBundler.concat(
-				"Checking ", javaTermName, ", returns ", entityReturnType));
-
 		if (!javaTermName.equals("add") &&
 			!javaTermName.equals("add" + entityReturnType)) {
 
 			return javaTerm.getContent();
 		}
 
-		String javaTermContent = javaTerm.getContent();
-
-		String entityLocalServiceName =
-			StringUtil.lowerCaseFirstLetter(entityReturnType) + "LocalService.";
-
-		if (!javaTermContent.contains(entityLocalServiceName)) {
-			return javaTermContent;
-		}
-
 		List<JavaParameter> parameters = javaSignature.getParameters();
 
-		if (parameters.contains(externalReferenceCodeJavaParameter)) {
+		String javaTermContent = javaTerm.getContent();
+
+		String setExternalReferenceCodeCall = "setExternalReferenceCode";
+
+		if (parameters.contains(externalReferenceCodeJavaParameter) ||
+			javaTermContent.contains(setExternalReferenceCodeCall)) {
+
 			return javaTermContent;
 		}
 
@@ -103,9 +94,15 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			localServiceMethodJavaTerm +
 				"\n\t\tString externalReferenceCode, ");
 
-		return StringUtil.replaceLast(
-			javaTermContent, localServiceMethodJavaTerm,
-			localServiceMethodJavaTerm + "\n\t\texternalReferenceCode, ");
+		String entityVariableName = StringUtil.lowerCaseFirstLetter(
+			entityReturnType);
+
+		return StringUtil.replaceFirst(
+			javaTermContent, entityVariableName + ".set",
+			StringBundler.concat(
+				entityVariableName,
+				".setExternalReferenceCode(externalReferenceCode);\n",
+				entityVariableName, ".set"));
 	}
 
 }

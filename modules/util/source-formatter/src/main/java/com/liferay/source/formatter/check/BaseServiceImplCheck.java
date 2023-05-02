@@ -1,0 +1,100 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.check;
+
+import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.parser.JavaClassType;
+import com.liferay.source.formatter.parser.JavaParameter;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeSet;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+
+/**
+ * @author Igor Beslic
+ */
+public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
+
+	protected String getEntityName(String className) {
+		if (className.indexOf("LocalServiceImpl") > 0) {
+			return className.substring(
+				0, className.indexOf("LocalServiceImpl"));
+		}
+
+		return className.substring(0, className.indexOf("ServiceImpl"));
+	}
+
+	protected List<String> getErcEnabledEntityNodeNames(Document document) {
+		if (document == null) {
+			return Collections.emptyList();
+		}
+
+		Element serviceXMLElement = document.getRootElement();
+
+		Iterator<Element> iterator = serviceXMLElement.elementIterator(
+			"entity");
+
+		List<String> entities = new ArrayList<>();
+
+		while (iterator.hasNext()) {
+			Element element = iterator.next();
+
+			if (element.attributeValue("external-reference-code") != null) {
+				entities.add(element.attributeValue("name"));
+			}
+		}
+
+		return entities;
+	}
+
+	protected Document getServiceXmlDocument(String absolutePath) {
+		Path serviceXmlPath = Paths.get(absolutePath);
+
+		do {
+			serviceXmlPath = serviceXmlPath.getParent();
+		}
+		while (!serviceXmlPath.endsWith("src"));
+
+		serviceXmlPath = serviceXmlPath.getParent();
+
+		serviceXmlPath = serviceXmlPath.resolve("service.xml");
+
+		try {
+			return SourceUtil.readXML(FileUtil.read(serviceXmlPath.toFile()));
+		}
+		catch (Exception exception) {
+			addMessage(absolutePath, exception.getMessage());
+		}
+
+		throw new IllegalArgumentException(
+			"Service module does not contain service.xml file");
+	}
+
+	protected static final JavaParameter externalReferenceCodeJavaParameter =
+		new JavaParameter(
+			"externalReferenceCode",
+			new JavaClassType("String", "java.lang", Collections.emptyList()),
+			new TreeSet<>(), false);
+
+}

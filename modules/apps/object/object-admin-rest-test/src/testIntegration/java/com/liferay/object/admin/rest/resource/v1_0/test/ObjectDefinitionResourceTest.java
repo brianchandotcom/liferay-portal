@@ -308,6 +308,19 @@ public class ObjectDefinitionResourceTest
 					}
 				}
 			});
+		objectDefinition.setStatus(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_DRAFT;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_DRAFT);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_DRAFT));
+				}
+			});
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {

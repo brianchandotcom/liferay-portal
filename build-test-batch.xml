@@ -5558,7 +5558,7 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="wildfly" app.server.version="26.1.0" database.type="mysql" />
 	</target>
 
-	<target name="functional-workspace-bundle-mysql57-jdk8">
+	<target name="functional-workspaces-bundle-mysql57-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test

@@ -44,6 +44,16 @@ definition {
 
 		Smoke.runSmoke();
 
+		// LPS-178114 Assert Toggle Controls (eye icon) is in the correct location and can be toggled
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page2",
+			siteName = "Site Name");
+
+		WidgetPages.switchToggleControls(status = "view");
+
+		WidgetPages.viewToggleControls(status = "hidden");
+
 		// Assert all bundles installed
 
 		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted to complete the installation");

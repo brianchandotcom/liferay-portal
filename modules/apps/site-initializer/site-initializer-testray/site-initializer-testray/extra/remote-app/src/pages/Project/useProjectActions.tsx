@@ -76,6 +76,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 					.remove(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
+					.then(() => navigate('/'))
 					.catch(form.onError),
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-project' : 'delete'),

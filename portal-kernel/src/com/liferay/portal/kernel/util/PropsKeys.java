@@ -1773,6 +1773,9 @@ public interface PropsKeys {
 	public static final String OBJECT_FIELD_ENCRYPTION_ALGORITHM =
 		"object.field.encryption.algorithm";
 
+	public static final String OBJECT_FIELD_ENCRYPTION_RESTRICTED =
+		"object.field.encryption.restricted";
+
 	public static final String OBJECT_FIELD_ENCRYPTION_SECRET =
 		"object.field.encryption.secret";
 

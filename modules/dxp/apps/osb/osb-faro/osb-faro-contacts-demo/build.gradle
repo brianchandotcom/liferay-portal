@@ -3,7 +3,7 @@ dependencies {
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileInclude group: "user-agent-utils", name: "user-agent-utils", version: "1.2.3"
 
-	compileOnly ext: "zip", group: "com.liferay.osb.faro", name: "elasticsearch-snapshot", version: "1.0.0"
+	compileOnly ext: "zip", group: "com.liferay.osb.faro", name: "elasticsearch-snapshot", version: "1.2.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"

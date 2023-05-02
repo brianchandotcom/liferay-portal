@@ -112,228 +112,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit project in the kebab menu"
-	@priority = 3
-	test AdminCanEditProject {
-		task ("Given that the user go to project") {
-			Testray.goToProjectPage(projectName = ${projectName});
-		}
-
-		task ("When the user edit the project through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Edit Project");
-
-			Testray.editProjectTestray(
-				description = "Project Description Edited",
-				name = "Project Edited");
-		}
-
-		task ("Then the user is redirected to the project page and can see the edited project title") {
-            TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
-
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Project Edited");
-		}
-
-        task ("Delete the project edited") {
-            JSONTestrayAPI.deleteProject(projectName = "Project Edited");
-		}
-	}
-
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit routine in the kebab menu"
-	@priority = 3
-	test AdminCanEditRoutine {
-		task ("Given that the user go to routine") {
-			Testray.goToProjectPage(projectName = ${projectName});
-
-            TestrayRoutines.goToRoutine(routineName = ${routineName});
-		}
-
-		task ("When the user edit the routine through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Edit Routine");
-
-            PortletEntry.inputName(name = "Routine Edited");
-
-            PortletEntry.save();
-		}
-
-		task ("Then the user is redirected to the routine page and can see the edited routine title") {
-            TestrayLayout.assertTabPageTitle(pageTabTitle = "Build History");
-
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Routine Edited");
-		}
-
-        task ("Delete the routine edited") {
-            JSONTestrayAPI.deleteObjectViaAPI(
-                object = "routines",
-                objectName = "Routine Edited");
-		}
-	}
-
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit build in the kebab menu"
-	@priority = 3
-	test AdminCanEditBuild {
-		task ("Given that the user go to build") {
-			Testray.goToProjectPage(projectName = ${projectName});
-
-            TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-            TestrayBuild.goToBuild(buildName = ${buildName});
-		}
-
-		task ("When the user edit the build through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Edit Build");
-
-            TestrayBuild.editBuild(
-				description = "Description Edited",
-				fieldName = "Build Edited",
-				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routine 1");
-		}
-
-		task ("Then the user is redirected to the build page and can see the edited build title") {
-            TestrayLayout.assertTabPageTitle(pageTabTitle = "Tests");
-
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Build Edited");
-		}
-
-        task ("Delete the build edited") {
-            JSONTestrayAPI.deleteObjectViaAPI(
-                object = "builds",
-                objectName = "Build Edited");
-		}
-	}
-
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can promoted build in the kebab menu"
-	@priority = 3
-	test AdminCanPromotedBuilds {
-		task ("Given that the user go to build") {
-			Testray.goToProjectPage(projectName = ${projectName});
-
-            TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-            TestrayBuild.goToBuild(buildName = ${buildName});
-		}
-
-		task ("When the user promoted the build through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Promote");
-		}
-
-        task ("Then the promoted build should appear on the list") {
-			TR2Utils.clickBreadcrumb(text = ${routineName});
-
-			TestrayBuild.verifyPromoteBuild();
-		}
-	}
-
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit cases in the kebab menu"
-	@priority = 3
-	test AdminCanEditCases {
-		task ("Given that the user go to case") {
-			Testray.goToProjectPage(projectName = ${projectName});
-
-            PRMNavigator.goToNavItem(navItem = "Cases");
-
-            Testray.goToProjectPage(projectName = ${caseName});
-		}
-
-		task ("When the user edit the case through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Edit Case");
-
-			TestrayCases.editCases(
-				caseName = "Case Edited",
-				caseTypeId = "Case Type 1",
-				componentId = "Component 1",
-				description = "Case Description",
-				duration = 30,
-				priority = 3,
-				steps = "http://test.edit.com");
-		}
-
-		task ("Then the user is redirected to the case page and can see the edited case title") {
-            TestrayLayout.assertTabPageTitle(pageTabTitle = "Test History");
-
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Case Edited");
-		}
-
-        task ("Delete the case edited") {
-            JSONTestrayAPI.deleteObjectViaAPI(
-                object = "cases",
-                objectName = "Case Edited");
-		}
-	}
-
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Requirements in the kebab menu"
-	@priority = 3
-	test AdminCanEditRequirements {
-		task ("Given that the user go to requirement") {
-			JSONTestray.addRequirement(
-				componentName = ${componentName},
-				linkTitle = "The front page of the internet",
-				projectName = ${projectName},
-				requirementName = "Requirement Summary");
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-            PRMNavigator.goToNavItem(navItem = "Requirements");
-
-            Testray.goToProjectPage(projectName = "Requirement Summary");
-		}
-
-		task ("When the user edit the requirement through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Edit Requirement");
-
-			TestrayRequirements.editRequirement(
-				componentId = "Component 1",
-				linkTitle = "The page edited",
-				linkURL = "https://reddit.com",
-				requirementName = "Requirement Edited");
-		}
-
-		task ("Then the user is redirected to the requirement page and can see the edited requirement title") {
-            TestrayLayout.assertTabPageTitle(pageTabTitle = "Cases");
-
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Requirement Edited");
-		}
-
-        task ("Delete the requirement edited") {
-            JSONTestrayAPI.deleteObjectViaAPI(
-                object = "requirements",
-                objectName = "Requirement Edited");
-		}
-	}
-
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Suite in the kebab menu"
-	@priority = 3
-	test AdminCanEditSuite {	
-		task ("Given that the user go to suite") {
-			JSONTestray.addSuite(suiteName = ${suiteName});
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-            PRMNavigator.goToNavItem(navItem = "Suites");
-
-            Testray.goToProjectPage(projectName = ${suiteName});
-		}
-
-		task ("When the user edit the suite through kebab") {
-			Testray.kebabMenuOption(kebabOption = "Edit Suite");
-
-			PortletEntry.inputName(name = "Suite Edited");
-
-            PortletEntry.save();
-		}
-
-		task ("Then the user is redirected to the suite page and can see the edited suite title") {
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Suite Edited");
-		}
-
-        task ("Delete the suite edited") {
-            JSONTestrayAPI.deleteObjectViaAPI(
-                object = "suites",
-                objectName = "Suite Edited");
-		}
-	}
-
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Components in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageComponents {
@@ -348,28 +126,8 @@ definition {
 		}
 
 		task ("Then the user can see the new component in the table") {
-            AssertElementPresent(
+			AssertElementPresent(
 				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
-		}
-	}
-
-	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Teams in the kebab menu"
-	@priority = 3
-	test AdminCanAddManageTeams {
-		task ("Given that the user go to teams") {
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			Testray.kebabMenuOption(kebabOption = "Manage Teams");
-		}
-
-		task ("When the user create the new teams through kebab") {
-			TestrayManage.createTeam(teamName = "Team 2");
-		}
-
-		task ("Then the user can see the new teams in the table") {
-            AssertElementPresent(
-				key_projectName = "Team 2",
 				locator1 = "Testray#ITEM_NAME");
 		}
 	}
@@ -388,9 +146,251 @@ definition {
 		}
 
 		task ("Then the user can see the new product version in the table") {
-            AssertElementPresent(
+			AssertElementPresent(
 				key_projectName = "7.4",
 				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Teams in the kebab menu"
+	@priority = 3
+	test AdminCanAddManageTeams {
+		task ("Given that the user go to teams") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.kebabMenuOption(kebabOption = "Manage Teams");
+		}
+
+		task ("When the user create the new teams through kebab") {
+			TestrayManage.createTeam(teamName = "Team 2");
+		}
+
+		task ("Then the user can see the new teams in the table") {
+			AssertElementPresent(
+				key_projectName = "Team 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit build in the kebab menu"
+	@priority = 3
+	test AdminCanEditBuild {
+		task ("Given that the user go to build") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+		}
+
+		task ("When the user edit the build through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Build");
+
+			TestrayBuild.editBuild(
+				description = "Description Edited",
+				fieldName = "Build Edited",
+				gitHash = 12345,
+				productVersion = "1.2",
+				routine = "Routine 1");
+		}
+
+		task ("Then the user is redirected to the build page and can see the edited build title") {
+			TestrayLayout.assertTabPageTitle(pageTabTitle = "Tests");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Build Edited");
+		}
+
+		task ("Delete the build edited") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "builds",
+				objectName = "Build Edited");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit cases in the kebab menu"
+	@priority = 3
+	test AdminCanEditCases {
+		task ("Given that the user go to case") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			PRMNavigator.goToNavItem(navItem = "Cases");
+
+			Testray.goToProjectPage(projectName = ${caseName});
+		}
+
+		task ("When the user edit the case through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Case");
+
+			TestrayCases.editCases(
+				caseName = "Case Edited",
+				caseTypeId = "Case Type 1",
+				componentId = "Component 1",
+				description = "Case Description",
+				duration = 30,
+				priority = 3,
+				steps = "http://test.edit.com");
+		}
+
+		task ("Then the user is redirected to the case page and can see the edited case title") {
+			TestrayLayout.assertTabPageTitle(pageTabTitle = "Test History");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Case Edited");
+		}
+
+		task ("Delete the case edited") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "cases",
+				objectName = "Case Edited");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit project in the kebab menu"
+	@priority = 3
+	test AdminCanEditProject {
+		task ("Given that the user go to project") {
+			Testray.goToProjectPage(projectName = ${projectName});
+		}
+
+		task ("When the user edit the project through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Project");
+
+			Testray.editProjectTestray(
+				description = "Project Description Edited",
+				name = "Project Edited");
+		}
+
+		task ("Then the user is redirected to the project page and can see the edited project title") {
+			TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Project Edited");
+		}
+
+		task ("Delete the project edited") {
+			JSONTestrayAPI.deleteProject(projectName = "Project Edited");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Requirements in the kebab menu"
+	@priority = 3
+	test AdminCanEditRequirements {
+		task ("Given that the user go to requirement") {
+			JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "The front page of the internet",
+				projectName = ${projectName},
+				requirementName = "Requirement Summary");
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			PRMNavigator.goToNavItem(navItem = "Requirements");
+
+			Testray.goToProjectPage(projectName = "Requirement Summary");
+		}
+
+		task ("When the user edit the requirement through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Requirement");
+
+			TestrayRequirements.editRequirement(
+				componentId = "Component 1",
+				linkTitle = "The page edited",
+				linkURL = "https://reddit.com",
+				requirementName = "Requirement Edited");
+		}
+
+		task ("Then the user is redirected to the requirement page and can see the edited requirement title") {
+			TestrayLayout.assertTabPageTitle(pageTabTitle = "Cases");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Requirement Edited");
+		}
+
+		task ("Delete the requirement edited") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "requirements",
+				objectName = "Requirement Edited");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit routine in the kebab menu"
+	@priority = 3
+	test AdminCanEditRoutine {
+		task ("Given that the user go to routine") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
+
+		task ("When the user edit the routine through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Routine");
+
+			PortletEntry.inputName(name = "Routine Edited");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is redirected to the routine page and can see the edited routine title") {
+			TestrayLayout.assertTabPageTitle(pageTabTitle = "Build History");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Routine Edited");
+		}
+
+		task ("Delete the routine edited") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "routines",
+				objectName = "Routine Edited");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Suite in the kebab menu"
+	@priority = 3
+	test AdminCanEditSuite {
+		task ("Given that the user go to suite") {
+			JSONTestray.addSuite(suiteName = ${suiteName});
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			PRMNavigator.goToNavItem(navItem = "Suites");
+
+			Testray.goToProjectPage(projectName = ${suiteName});
+		}
+
+		task ("When the user edit the suite through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Suite");
+
+			PortletEntry.inputName(name = "Suite Edited");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is redirected to the suite page and can see the edited suite title") {
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Suite Edited");
+		}
+
+		task ("Delete the suite edited") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "suites",
+				objectName = "Suite Edited");
+		}
+	}
+
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can promoted build in the kebab menu"
+	@priority = 3
+	test AdminCanPromotedBuilds {
+		task ("Given that the user go to build") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+		}
+
+		task ("When the user promoted the build through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Promote");
+		}
+
+		task ("Then the promoted build should appear on the list") {
+			TR2Utils.clickBreadcrumb(text = ${routineName});
+
+			TestrayBuild.verifyPromoteBuild();
 		}
 	}
 

@@ -752,7 +752,6 @@ definition {
 	@description = "LPS-171625 - Verify that after updating a custom object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address and From Name and Subject fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnCustomObject {
-		property custom.properties = "feature.flag.LPS-171625=true";
 		property portal.acceptance = "true";
 
 		task ("Given a custom object a text field and an entry are created") {
@@ -855,7 +854,6 @@ definition {
 	@description = "LPS-171625 - Verify that after updating a system object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address, From Name and Template Body fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnSystemObject {
-		property custom.properties = "feature.flag.LPS-171625=true";
 		property portal.acceptance = "true";
 
 		task ("Given an email notification template with the applicable fields filled with the Author and Current User terms") {
@@ -931,7 +929,6 @@ definition {
 	@description = "LPS-171625 - Verify that after updating a custom object entry, triggered user notifications using Object Author and Current User terms are filled correctly for the To and Subject fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInUserNotificationOnCustomObject {
-		property custom.properties = "feature.flag.LPS-171625=true";
 		property portal.acceptance = "true";
 
 		task ("Given a custom object and a entry") {

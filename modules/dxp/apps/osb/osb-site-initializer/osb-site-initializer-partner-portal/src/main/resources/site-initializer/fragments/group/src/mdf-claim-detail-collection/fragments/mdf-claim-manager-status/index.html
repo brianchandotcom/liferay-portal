@@ -20,9 +20,9 @@
 			<script>
 				const updateStatus = async (status) => {
 					const responde = await fetch(
-						`/o/c/mdfclaims/${mdfRequestId}`,
+						`/o/c/mdfclaims/${mdfClaimId}`,
 						{
-							body: `{"mdfClaimsStatus": "` + status +`"}`,
+							body: `{"mdfClaimStatus": "` + status +`"}`,
 							headers: {
 								'content-type': 'application/json',
 								'x-csrf-token': Liferay.authToken,

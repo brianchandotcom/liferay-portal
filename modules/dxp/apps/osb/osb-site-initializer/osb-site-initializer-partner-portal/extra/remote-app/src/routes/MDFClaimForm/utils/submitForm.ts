@@ -41,48 +41,50 @@ export default async function submitForm(
 ) {
 	formikHelpers.setSubmitting(true);
 
+	const submitValues = {...values};
+
 	const updatedStatus = updateStatus(
-		values.mdfClaimStatus,
+		submitValues.mdfClaimStatus,
 		currentClaimStatus,
 		false,
-		values.id
+		submitValues.id
 	);
 
-	values.mdfClaimStatus = updatedStatus;
+	submitValues.mdfClaimStatus = updatedStatus;
 
-	values.partial = values.activities?.some((activity) =>
+	submitValues.partial = submitValues.activities?.some((activity) =>
 		Boolean(activity.budgets?.some((budget) => !budget.selected))
 	);
 
 	let dtoMDFClaim: mdfClaimDTO | undefined = undefined;
 
-	if (values.mdfClaimStatus.key !== Status.DRAFT.key) {
-		dtoMDFClaim = await createMDFClaimProxyAPI(values, mdfRequest);
+	if (submitValues.mdfClaimStatus.key !== Status.DRAFT.key) {
+		dtoMDFClaim = await createMDFClaimProxyAPI(submitValues, mdfRequest);
 	}
-	else if (values.id) {
+	else if (submitValues.id) {
 		dtoMDFClaim = await updateMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
-			values,
+			submitValues,
 			mdfRequest,
-			values.id
+			submitValues.id
 		);
 	}
 	else {
 		dtoMDFClaim = await createMDFClaim(
 			ResourceName.MDF_CLAIM_DXP,
-			values,
+			submitValues,
 			mdfRequest
 		);
 	}
 
 	if (
-		values.reimbursementInvoice &&
-		!values.reimbursementInvoice.id &&
+		submitValues.reimbursementInvoice &&
+		!submitValues.reimbursementInvoice.id &&
 		dtoMDFClaim?.id
 	) {
 		const reimbursementInvoiceRenamed = renameFileKeepingExtention(
-			values.reimbursementInvoice,
-			`${values.reimbursementInvoice.name}#${dtoMDFClaim.id}`
+			submitValues.reimbursementInvoice,
+			`${submitValues.reimbursementInvoice.name}#${dtoMDFClaim.id}`
 		);
 
 		if (reimbursementInvoiceRenamed) {
@@ -94,7 +96,7 @@ export default async function submitForm(
 			if (dtoReimbursementInvoice.id) {
 				await updateMDFClaim(
 					ResourceName.MDF_CLAIM_DXP,
-					values,
+					submitValues,
 					mdfRequest,
 					dtoMDFClaim.id,
 					dtoReimbursementInvoice.id as LiferayFile & number,
@@ -104,9 +106,9 @@ export default async function submitForm(
 		}
 	}
 
-	if (values.activities?.length && dtoMDFClaim?.id) {
+	if (submitValues.activities?.length && dtoMDFClaim?.id) {
 		await Promise.all(
-			values.activities.map(async (activity) => {
+			submitValues.activities.map(async (activity) => {
 				const dtoMDFClaimActivity = activity.id
 					? await updateMDFClaimActivity(
 							activity,

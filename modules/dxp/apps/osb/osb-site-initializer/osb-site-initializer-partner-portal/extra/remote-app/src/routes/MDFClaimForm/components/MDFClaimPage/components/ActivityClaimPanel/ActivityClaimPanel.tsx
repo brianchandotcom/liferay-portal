@@ -79,7 +79,7 @@ const ActivityClaimPanel = ({
 	const displayActivityClaimCheckbox =
 		(activity.activityStatus?.key !== Status.EXPIRED.key &&
 			!activity.claimed) ||
-		activity.id;
+		(activity.id && activity.selected);
 
 	return (
 		<>

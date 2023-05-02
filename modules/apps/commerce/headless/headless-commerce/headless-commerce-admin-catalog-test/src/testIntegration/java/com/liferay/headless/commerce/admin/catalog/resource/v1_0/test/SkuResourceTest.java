@@ -29,6 +29,7 @@ import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuVirtualSettings;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -41,11 +42,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
-import java.math.BigDecimal;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -63,12 +63,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			testGroup.getGroupId(), BigDecimal.TEN);
-
-		_cpDefinition = _cpInstance.getCPDefinition();
-
-		_cProduct = _cpDefinition.getCProduct();
+		_cpDefinition = CPTestUtil.addCPDefinition(
+			testGroup.getGroupId(), "virtual", true, false);
 
 		_user = UserTestUtil.addUser(testCompany);
 
@@ -96,7 +92,20 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		_cpDefinitionOptionValueRels =
 			_cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 
-		_deleteAllCPInstances();
+		_cProduct = _cpDefinition.getCProduct();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		List<CPInstance> cpInstances = _cpInstanceLocalService.getCPInstances(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CPInstance cpInstance : cpInstances) {
+			_cpInstanceLocalService.deleteCPInstance(cpInstance);
+		}
 	}
 
 	@Ignore
@@ -114,116 +123,15 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		_testPatchSkuExternalReferenceCode();
 	}
 
+	@Override
 	@Test
-	public void testPostProductIdSkuWithOptionId() throws Exception {
+	public void testPostProductIdSku() throws Exception {
 		super.testPostProductIdSku();
 
-		SkuResource skuResource = SkuResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			_cpDefinitionOptionValueRels.get(0);
-
-		Sku postSku = skuResource.postProductIdSku(
-			_cpDefinition.getCProductId(),
-			_randomSkuWithSkuOptions(
-				null, _cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
-				null));
-
-		SkuOption[] skuOptions = postSku.getSkuOptions();
-
-		Assert.assertTrue((skuOptions != null) && (skuOptions.length == 1));
-
-		SkuOption skuOption = skuOptions[0];
-
-		Assert.assertEquals(skuOption.getKey(), _cpOption.getKey());
-		Assert.assertEquals(
-			(long)skuOption.getOptionId(),
-			_cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-		Assert.assertEquals(
-			(long)skuOption.getOptionValueId(),
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
-		Assert.assertEquals(skuOption.getValue(), _cpOptionValue.getKey());
-	}
-
-	@Test
-	public void testPostProductIdSkuWithOptionIdKey() throws Exception {
-		super.testPostProductIdSku();
-
-		SkuResource skuResource = SkuResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			_cpDefinitionOptionValueRels.get(0);
-
-		Sku postSku = skuResource.postProductIdSku(
-			_cpDefinition.getCProductId(),
-			_randomSkuWithSkuOptions(
-				String.valueOf(
-					_cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
-				null, null,
-				String.valueOf(
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId())));
-
-		SkuOption[] skuOptions = postSku.getSkuOptions();
-
-		Assert.assertTrue((skuOptions != null) && (skuOptions.length == 1));
-
-		SkuOption skuOption = skuOptions[0];
-
-		Assert.assertEquals(skuOption.getKey(), _cpOption.getKey());
-		Assert.assertEquals(
-			(long)skuOption.getOptionId(),
-			_cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-		Assert.assertEquals(
-			(long)skuOption.getOptionValueId(),
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
-		Assert.assertEquals(skuOption.getValue(), _cpOptionValue.getKey());
-	}
-
-	@Test
-	public void testPostProductIdSkuWithOptionKey() throws Exception {
-		super.testPostProductIdSku();
-
-		SkuResource skuResource = SkuResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			_cpDefinitionOptionValueRels.get(0);
-
-		Sku postSku = skuResource.postProductIdSku(
-			_cpDefinition.getCProductId(),
-			_randomSkuWithSkuOptions(
-				_cpOption.getKey(), null, null, _cpOptionValue.getKey()));
-
-		SkuOption[] skuOptions = postSku.getSkuOptions();
-
-		Assert.assertTrue((skuOptions != null) && (skuOptions.length == 1));
-
-		SkuOption skuOption = skuOptions[0];
-
-		Assert.assertEquals(skuOption.getKey(), _cpOption.getKey());
-		Assert.assertEquals(
-			(long)skuOption.getOptionId(),
-			_cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-		Assert.assertEquals(
-			(long)skuOption.getOptionValueId(),
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
-		Assert.assertEquals(skuOption.getValue(), _cpOptionValue.getKey());
+		_testPostProductIdSkuWithOptionId();
+		_testPostProductIdSkuWithOptionIdKey();
+		_testPostProductIdSkuWithOptionKey();
+		_testPostProductIdSkuWithSkuVirtualSettings();
 	}
 
 	@Override
@@ -359,15 +267,6 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		return skuResource.postProductIdSku(_cProduct.getCProductId(), sku);
 	}
 
-	private void _deleteAllCPInstances() throws Exception {
-		List<CPInstance> cpInstances = _cpInstanceLocalService.getCPInstances(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CPInstance cpInstance : cpInstances) {
-			_cpInstanceLocalService.deleteCPInstance(cpInstance);
-		}
-	}
-
 	private Sku _randomSkuWithSkuOptions(
 			String optionKey, Long optionKeyId, Long optionValueKeyId,
 			String optionValue)
@@ -407,6 +306,170 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		assertValid(patchSku);
 	}
 
+	private void _testPostProductIdSkuWithOptionId() throws Exception {
+		SkuResource skuResource = SkuResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			_cpDefinitionOptionValueRels.get(0);
+
+		Sku postSku = skuResource.postProductIdSku(
+			_cpDefinition.getCProductId(),
+			_randomSkuWithSkuOptions(
+				null, _cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
+				null));
+
+		SkuOption[] skuOptions = postSku.getSkuOptions();
+
+		Assert.assertTrue((skuOptions != null) && (skuOptions.length == 1));
+
+		SkuOption skuOption = skuOptions[0];
+
+		Assert.assertEquals(skuOption.getKey(), _cpOption.getKey());
+		Assert.assertEquals(
+			(long)skuOption.getOptionId(),
+			_cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+		Assert.assertEquals(
+			(long)skuOption.getOptionValueId(),
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		Assert.assertEquals(skuOption.getValue(), _cpOptionValue.getKey());
+	}
+
+	private void _testPostProductIdSkuWithOptionIdKey() throws Exception {
+		SkuResource skuResource = SkuResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			_cpDefinitionOptionValueRels.get(0);
+
+		Sku postSku = skuResource.postProductIdSku(
+			_cpDefinition.getCProductId(),
+			_randomSkuWithSkuOptions(
+				String.valueOf(
+					_cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
+				null, null,
+				String.valueOf(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId())));
+
+		SkuOption[] skuOptions = postSku.getSkuOptions();
+
+		Assert.assertTrue((skuOptions != null) && (skuOptions.length == 1));
+
+		SkuOption skuOption = skuOptions[0];
+
+		Assert.assertEquals(skuOption.getKey(), _cpOption.getKey());
+		Assert.assertEquals(
+			(long)skuOption.getOptionId(),
+			_cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+		Assert.assertEquals(
+			(long)skuOption.getOptionValueId(),
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		Assert.assertEquals(skuOption.getValue(), _cpOptionValue.getKey());
+	}
+
+	private void _testPostProductIdSkuWithOptionKey() throws Exception {
+		SkuResource skuResource = SkuResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			_cpDefinitionOptionValueRels.get(0);
+
+		Sku postSku = skuResource.postProductIdSku(
+			_cpDefinition.getCProductId(),
+			_randomSkuWithSkuOptions(
+				_cpOption.getKey(), null, null, _cpOptionValue.getKey()));
+
+		SkuOption[] skuOptions = postSku.getSkuOptions();
+
+		Assert.assertTrue((skuOptions != null) && (skuOptions.length == 1));
+
+		SkuOption skuOption = skuOptions[0];
+
+		Assert.assertEquals(skuOption.getKey(), _cpOption.getKey());
+		Assert.assertEquals(
+			(long)skuOption.getOptionId(),
+			_cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+		Assert.assertEquals(
+			(long)skuOption.getOptionValueId(),
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		Assert.assertEquals(skuOption.getValue(), _cpOptionValue.getKey());
+	}
+
+	private void _testPostProductIdSkuWithSkuVirtualSettings()
+		throws Exception {
+
+		SkuResource skuResource = SkuResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "skuVirtualSettings"
+		).build();
+
+		SkuVirtualSettings randomSkuVirtualSettings = new SkuVirtualSettings() {
+			{
+				activationStatus = 0;
+				duration = RandomTestUtil.nextLong();
+				maxUsages = RandomTestUtil.nextInt();
+				override = true;
+				sampleUrl = "https://liferay.com";
+				termsOfUseRequired = false;
+				url = "https://liferay.com";
+				useSample = true;
+			}
+		};
+
+		Sku randomSku = randomSku();
+
+		randomSku.setSkuVirtualSettings(randomSkuVirtualSettings);
+
+		Sku postSku = skuResource.postProductIdSku(
+			_cpDefinition.getCProductId(), randomSku);
+
+		SkuVirtualSettings postSkuVirtualSettings =
+			postSku.getSkuVirtualSettings();
+
+		Assert.assertNotNull(postSkuVirtualSettings);
+		Assert.assertEquals(
+			postSkuVirtualSettings.getActivationStatus(),
+			randomSkuVirtualSettings.getActivationStatus());
+		Assert.assertEquals(
+			postSkuVirtualSettings.getDuration(),
+			randomSkuVirtualSettings.getDuration());
+		Assert.assertEquals(
+			postSkuVirtualSettings.getMaxUsages(),
+			randomSkuVirtualSettings.getMaxUsages());
+		Assert.assertEquals(
+			postSkuVirtualSettings.getOverride(),
+			randomSkuVirtualSettings.getOverride());
+		Assert.assertEquals(
+			postSkuVirtualSettings.getSampleUrl(),
+			randomSkuVirtualSettings.getSampleUrl());
+		Assert.assertEquals(
+			postSkuVirtualSettings.getTermsOfUseRequired(),
+			randomSkuVirtualSettings.getTermsOfUseRequired());
+		Assert.assertEquals(
+			postSkuVirtualSettings.getUrl(), randomSkuVirtualSettings.getUrl());
+		Assert.assertEquals(
+			postSkuVirtualSettings.getUseSample(),
+			randomSkuVirtualSettings.getUseSample());
+	}
+
 	@DeleteAfterTestRun
 	private CPDefinition _cpDefinition;
 
@@ -420,9 +483,6 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	@DeleteAfterTestRun
 	private List<CPDefinitionOptionValueRel> _cpDefinitionOptionValueRels =
 		new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private CPInstance _cpInstance;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;

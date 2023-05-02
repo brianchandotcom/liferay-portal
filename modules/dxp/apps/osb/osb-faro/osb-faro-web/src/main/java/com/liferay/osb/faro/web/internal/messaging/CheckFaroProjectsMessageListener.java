@@ -20,6 +20,7 @@ import com.liferay.osb.faro.constants.FaroProjectConstants;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -182,22 +182,23 @@ public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 
 		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
-		List<InternetAddress> bcc = new ArrayList<>();
+		List<InternetAddress> bcc = TransformUtil.transform(
+			users,
+			user -> {
+				if (!StringUtil.equals(
+						user.getEmailAddress(), "test@liferay.com")) {
 
-		for (User user : users) {
-			if (!StringUtil.equals(
-					user.getEmailAddress(), "test@liferay.com")) {
+					try {
+						return new InternetAddress(
+							user.getEmailAddress(), user.getFullName());
+					}
+					catch (Exception exception) {
+						_log.error(exception);
+					}
+				}
 
-				try {
-					bcc.add(
-						new InternetAddress(
-							user.getEmailAddress(), user.getFullName()));
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			}
-		}
+				return null;
+			});
 
 		MailMessage mailMessage = new MailMessage(from, subject, body, false);
 

@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -492,33 +491,32 @@ public class ProjectController extends BaseFaroController {
 
 	@GET
 	public List<ProjectDisplay> getProjects() {
-		List<ProjectDisplay> projectDisplays = new ArrayList<>();
+		return TransformUtil.transform(
+			_faroUserLocalService.getFaroUsersByLiveUserId(
+				getUserId(), FaroUserConstants.STATUS_APPROVED),
+			faroUser -> {
+				FaroProject faroProject =
+					_faroProjectLocalService.fetchFaroProjectByGroupId(
+						faroUser.getGroupId());
 
-		for (FaroUser faroUser :
-				_faroUserLocalService.getFaroUsersByLiveUserId(
-					getUserId(), FaroUserConstants.STATUS_APPROVED)) {
+				try {
+					return _getProjectDisplay(faroProject);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						String project = "";
 
-			FaroProject faroProject =
-				_faroProjectLocalService.fetchFaroProjectByGroupId(
-					faroUser.getGroupId());
+						if (faroProject != null) {
+							project = faroProject.getName();
+						}
 
-			try {
-				projectDisplays.add(_getProjectDisplay(faroProject));
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					String project = "";
-
-					if (faroProject != null) {
-						project = faroProject.getName();
+						_log.warn(
+							"Could not load project " + project, exception);
 					}
 
-					_log.warn("Could not load project " + project, exception);
+					return null;
 				}
-			}
-		}
-
-		return projectDisplays;
+			});
 	}
 
 	@GET

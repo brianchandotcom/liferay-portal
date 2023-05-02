@@ -22,11 +22,11 @@ import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.ActivityGroupDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -68,29 +68,28 @@ public class ActivityGroupController extends BaseFaroController {
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
-		List<ActivityGroupDisplay> activityGroupDisplays = new ArrayList<>();
-
 		Results<ActivityGroup> results = contactsEngineClient.getActivityGroups(
 			faroProjectLocalService.getFaroProjectByGroupId(groupId), channelId,
 			contactsEntityId, contactsHelper.getOwnerType(contactsEntityType),
 			query, startDateFaroParam.getValue(), endDateFaroParam.getValue(),
 			cur, delta, orderByFieldsFaroParam.getValue());
 
-		List<ActivityGroup> activityGroups = results.getItems();
-
-		for (ActivityGroup activityGroup : activityGroups) {
-			ActivityGroupDisplay activityGroupDisplay =
-				new ActivityGroupDisplay(activityGroup);
-
-			if (ListUtil.isNotEmpty(
-					activityGroupDisplay.getActivityDisplays())) {
-
-				activityGroupDisplays.add(activityGroupDisplay);
-			}
-		}
-
 		return new FaroResultsDisplay(
-			activityGroupDisplays, results.getTotal());
+			TransformUtil.transform(
+				results.getItems(),
+				activityGroup -> {
+					ActivityGroupDisplay activityGroupDisplay =
+						new ActivityGroupDisplay(activityGroup);
+
+					if (ListUtil.isEmpty(
+							activityGroupDisplay.getActivityDisplays())) {
+
+						return null;
+					}
+
+					return activityGroupDisplay;
+				}),
+			results.getTotal());
 	}
 
 }

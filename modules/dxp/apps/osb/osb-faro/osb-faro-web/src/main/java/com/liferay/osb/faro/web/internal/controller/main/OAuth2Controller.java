@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -240,21 +239,18 @@ public class OAuth2Controller extends BaseFaroController {
 			long groupId)
 		throws Exception {
 
-		List<OAuth2Authorization> userOAuth2AuthorizationsFiltered =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			_oAuth2AuthorizationService.getUserOAuth2Authorizations(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			oAuth2Authorization -> {
+				if (!_filterOAuth2AuthorizationByGroupId(
+						groupId, oAuth2Authorization)) {
 
-		for (OAuth2Authorization oAuth2Authorization :
-				_oAuth2AuthorizationService.getUserOAuth2Authorizations(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+					return null;
+				}
 
-			if (_filterOAuth2AuthorizationByGroupId(
-					groupId, oAuth2Authorization)) {
-
-				userOAuth2AuthorizationsFiltered.add(oAuth2Authorization);
-			}
-		}
-
-		return userOAuth2AuthorizationsFiltered;
+				return oAuth2Authorization;
+			});
 	}
 
 	private String _invokeOAuth2Endpoint(String clientId, String clientSecret)

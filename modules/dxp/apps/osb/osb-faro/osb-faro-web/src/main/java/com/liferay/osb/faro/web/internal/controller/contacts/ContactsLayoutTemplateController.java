@@ -29,6 +29,7 @@ import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.Co
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.util.ContactsLayoutHelper;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -122,23 +122,16 @@ public class ContactsLayoutTemplateController extends BaseFaroController {
 	public List<ContactsLayoutTemplateDisplay> getList(
 		@PathParam("groupId") long groupId, @QueryParam("type") int type) {
 
-		List<ContactsLayoutTemplate> contactsLayoutTemplates =
+		return TransformUtil.transform(
 			_contactsLayoutTemplateLocalService.getContactsLayoutTemplates(
-				groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			contactsLayoutTemplate -> {
+				if (getLayoutTemplateDisplay(contactsLayoutTemplate) == null) {
+					return null;
+				}
 
-		List<ContactsLayoutTemplateDisplay> contactsLayoutTemplateDisplays =
-			new ArrayList<>();
-
-		for (ContactsLayoutTemplate contactsLayoutTemplate :
-				contactsLayoutTemplates) {
-
-			if (getLayoutTemplateDisplay(contactsLayoutTemplate) != null) {
-				contactsLayoutTemplateDisplays.add(
-					getLayoutTemplateDisplay(contactsLayoutTemplate));
-			}
-		}
-
-		return contactsLayoutTemplateDisplays;
+				return getLayoutTemplateDisplay(contactsLayoutTemplate);
+			});
 	}
 
 	@Path("/{id}")

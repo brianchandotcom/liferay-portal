@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet;
 
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -27,7 +28,9 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -35,7 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"com.liferay.fragment.entry.processor.portlet.alias=nav",
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-navigation",
 		"com.liferay.portlet.display-category=category.cms",
@@ -62,6 +64,17 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteNavigationMenuPortlet extends MVCPortlet {
 
+	@Activate
+	protected void activate() {
+		_portletRegistry.registerAlias(
+			"nav", SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_portletRegistry.unregisterAlias("nav");
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -75,6 +88,9 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 
 	@Reference
 	private PortletDisplayTemplate _portletDisplayTemplate;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.site.navigation.menu.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

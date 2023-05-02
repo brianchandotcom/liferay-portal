@@ -15,18 +15,21 @@
 package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.fragment.entry.processor.editable.test.constants.FragmentEntryLinkPortletKeys;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
 @Component(
 	property = {
-		"com.liferay.fragment.entry.processor.portlet.alias=fragment-entry-link-instanceable",
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -38,4 +41,21 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class FragmentEntryLinkInstanceableTestPortlet extends MVCPortlet {
+
+	@Activate
+	protected void activate() {
+		_portletRegistry.registerAlias(
+			"fragment-entry-link-instanceable",
+			FragmentEntryLinkPortletKeys.
+				FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_portletRegistry.unregisterAlias("fragment-entry-link-instanceable");
+	}
+
+	@Reference
+	private PortletRegistry _portletRegistry;
+
 }

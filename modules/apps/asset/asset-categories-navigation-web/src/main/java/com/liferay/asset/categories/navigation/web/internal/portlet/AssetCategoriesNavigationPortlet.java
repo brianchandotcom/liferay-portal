@@ -15,12 +15,15 @@
 package com.liferay.asset.categories.navigation.web.internal.portlet;
 
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -28,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"com.liferay.fragment.entry.processor.portlet.alias=categories-nav",
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-categories-navigation",
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.icon=/icons/asset_categories_navigation.png",
@@ -52,6 +54,21 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AssetCategoriesNavigationPortlet extends MVCPortlet {
+
+	@Activate
+	protected void activate() {
+		_portletRegistry.registerAlias(
+			"categories-nav",
+			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_portletRegistry.unregisterAlias("categories-nav");
+	}
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.asset.categories.navigation.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

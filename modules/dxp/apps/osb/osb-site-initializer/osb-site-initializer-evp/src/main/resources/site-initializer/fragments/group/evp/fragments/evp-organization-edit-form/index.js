@@ -124,7 +124,7 @@ const organizationUpdate = async () => {
 			'content-type': 'application/json',
 			'x-csrf-token': Liferay.authToken,
 		},
-		method: 'PUT',
+		method: 'PATCH',
 	});
 	localStorage.setItem('sucess', 'Sucess');
 };

@@ -1,0 +1,115 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"defaultValue": "awaitingApprovalOnEvp",
+			"externalReferenceCode": "EVP-ORGANIZATION-STATUS-DEFAULT",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "EVP Organization Status"
+			},
+			"listTypeDefinitionExternalReferenceCode": "EVP-ORGANIZATION-STATUS-PICKLIST",
+			"name": "organizationStatus",
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow",
+					"value": {
+						"objectStates": [
+							{
+								"key": "rejected",
+								"objectStateTransitions": [
+									{
+										"key": "awaitingApprovalOnEvp"
+									},
+									{
+										"key": "awaitingFinanceReview"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
+									},
+									{
+										"key": "verified"
+									}
+								]
+							},
+							{
+								"key": "awaitingApprovalOnEvp",
+								"objectStateTransitions": [
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "awaitingFinanceReview"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
+									},
+									{
+										"key": "verified"
+									}
+								]
+							},
+							{
+								"key": "awaitingFinanceReview",
+								"objectStateTransitions": [
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "awaitingApprovalOnEvp"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
+									},
+									{
+										"key": "verified"
+									}
+								]
+							},
+							{
+								"key": "awaitingMoreInfoFromEmployee",
+								"objectStateTransitions": [
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "awaitingApprovalOnEvp"
+									},
+									{
+										"key": "awaitingFinanceReview"
+									},
+									{
+										"key": "verified"
+									}
+								]
+							},
+							{
+								"key": "verified",
+								"objectStateTransitions": [
+									{
+										"key": "rejected"
+									},
+									{
+										"key": "awaitingApprovalOnEvp"
+									},
+									{
+										"key": "awaitingFinanceReview"
+									},
+									{
+										"key": "awaitingMoreInfoFromEmployee"
+									}
+								]
+							}
+						]
+					}
+				}
+			],
+			"required": true,
+			"state": true
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPOrganization$]"
+}

@@ -24,34 +24,37 @@
 				<name>Pay</name>
 				<description></description>
 				<script>
-					<![CDATA[import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import org.json.JSONObject;
-import java.io.Serializable;
-import java.util.Map;
+					<![CDATA[
+						import com.liferay.object.model.ObjectDefinition;
+						import com.liferay.object.model.ObjectEntry;
+						import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+						import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+						import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+						import com.liferay.portal.kernel.util.GetterUtil;
+						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
-long classPK = GetterUtil.getLong((String) workflowContext.get(
-WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+						import java.io.Serializable;
 
-ObjectEntry currentObjectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
+						import java.util.Map;
 
-Map < String, Serializable > currentObjectEntryValues = currentObjectEntry.getValues();
+						long classPK = GetterUtil.getLong((String) workflowContext.get(
+						WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-long requestId = currentObjectEntryValues.get("r_requestId_c_evpRequestId");
+						ObjectEntry currentObjectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
 
-ObjectEntry evpRequestObjectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(requestId);
+						Map < String, Serializable > currentObjectEntryValues = currentObjectEntry.getValues();
 
-Map < String, Serializable > evpRequestObjectEntryValues = evpRequestObjectEntry.getValues();
+						long requestId = currentObjectEntryValues.get("r_requestId_c_evpRequestId");
 
-evpRequestObjectEntryValues.put("requestStatus", "closed");
+						ObjectEntry evpRequestObjectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(requestId);
 
-ObjectEntryLocalServiceUtil.updateObjectEntry(serviceContext.getUserId(), requestId, evpRequestObjectEntryValues, serviceContext);]]>
+						Map < String, Serializable > evpRequestObjectEntryValues = evpRequestObjectEntry.getValues();
+
+						evpRequestObjectEntryValues.put("requestStatus", "closed");
+
+						ObjectEntryLocalServiceUtil.updateObjectEntry(serviceContext.getUserId(), requestId, evpRequestObjectEntryValues, serviceContext);
+					]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -92,6 +95,13 @@ ObjectEntryLocalServiceUtil.updateObjectEntry(serviceContext.getUserId(), reques
 			]]>
 		</metadata>
 		<actions>
+			<action>
+				<name>Update Object Status</name>
+				<description></description>
+				<status>0</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
 			<notification>
 				<name>Payment Notification</name>
 				<description>

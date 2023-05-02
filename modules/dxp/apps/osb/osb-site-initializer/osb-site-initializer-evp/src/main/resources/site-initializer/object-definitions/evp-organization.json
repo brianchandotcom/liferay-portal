@@ -1,5 +1,4 @@
 {
-	"externalReferenceCode": "OBJECT-EVP-ORGANIZATION",
 	"label": {
 		"en_US": "EVP Organization"
 	},
@@ -343,19 +342,6 @@
 			"required": false,
 			"state": false,
 			"system": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "EVP Organization Status"
-			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:EVP Organization: Organization Status$]",
-			"name": "organizationStatus",
-			"required": false,
 			"type": "String"
 		},
 		{

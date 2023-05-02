@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BUTTON_MANAGE_USERS</td>
+	<td>//*[contains(@class, 'cp-manage-product-users')]/parent::div//*[contains(text(), 'Manage ${key_product} Users')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OBJECT_ENTRY_ELLIPSIS_BUTTON</td>
 	<td>//*[text()='${key_text}']/parent::*//following-sibling::*[contains(@class, 'item-actions')]//*[@type='button']</td>
 	<td></td>

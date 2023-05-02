@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Adaptive Media Image Service
 Bundle-SymbolicName: com.liferay.adaptive.media.image.service
 Bundle-Version: 5.0.31
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 2.2.0
 Liferay-Service: true
 -dsannotations-options: inherit

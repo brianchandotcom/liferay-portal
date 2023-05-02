@@ -45,6 +45,7 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
+import com.liferay.object.exception.RequiredEncryptedObjectFieldPropertyException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -108,7 +109,6 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
-import com.liferay.portal.kernel.exception.NoSuchPropertiesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -160,7 +160,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -176,6 +175,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1918,25 +1918,20 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Key _getKeyObj() throws PortalException {
-		if (Validator.isNull(
-				GetterUtil.getString(
-					PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET))) ||
-			Validator.isNull(
-				GetterUtil.getString(
-					PropsUtil.get(
-						PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM)))) {
-
-			throw new NoSuchPropertiesException("Required property is missing");
+		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
+			throw new RequiredEncryptedObjectFieldPropertyException(
+				"Missing property" +
+					PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 		}
 
-		byte[] bytes = Base64.decode(
-			GetterUtil.getString(
-				PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET)));
+		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_SECRET)) {
+			throw new RequiredEncryptedObjectFieldPropertyException(
+				"Missing property" + PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET);
+		}
 
 		return new SecretKeySpec(
-			bytes,
-			GetterUtil.getString(
-				PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM)));
+			Base64.decode(PropsValues.OBJECT_FIELD_ENCRYPTION_SECRET),
+			PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 	}
 
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(
@@ -2668,25 +2663,29 @@ public class ObjectEntryLocalServiceImpl
 			if (columnName.endsWith(StringPool.UNDERLINE)) {
 				columnName = columnName.substring(0, columnName.length() - 1);
 
-				if (!encryptedObjectFields.isEmpty()) {
-					ObjectField objectField =
-						_objectFieldLocalService.fetchObjectField(
-							objectDefinitionId, columnName);
+				if (encryptedObjectFields.isEmpty()) {
+					continue;
+				}
 
-					if ((objectField != null) &&
-						objectField.compareBusinessType(
-							ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+				ObjectField objectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinitionId, columnName);
 
-						encryptedObjectFields.remove(objectField);
+				if ((objectField == null) ||
+					!objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
 
-						try {
-							objects[i] = _encryptor.decrypt(
-								_getKeyObj(), (String)objects[i]);
-						}
-						catch (EncryptorException encryptorException) {
-							throw new RuntimeException(encryptorException);
-						}
-					}
+					continue;
+				}
+
+				encryptedObjectFields.remove(objectField);
+
+				try {
+					objects[i] = _encryptor.decrypt(
+						_getKeyObj(), (String)objects[i]);
+				}
+				catch (EncryptorException encryptorException) {
+					throw new RuntimeException(encryptorException);
 				}
 			}
 

@@ -302,6 +302,7 @@ public class ObjectDefinitionResourceTest
 						indexed = false;
 						indexedAsKeyword = false;
 						label = Collections.singletonMap("en_US", "Column");
+						localized = !objectDefinition.getSystem();
 						name = StringUtil.randomId();
 						required = false;
 						system = false;

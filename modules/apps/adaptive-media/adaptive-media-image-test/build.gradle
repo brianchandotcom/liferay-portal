@@ -3,6 +3,7 @@ dependencies {
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-api")
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-api")
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-item-selector-api")
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationCompile project(":apps:item-selector:item-selector-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -112,4 +112,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit project in the kebab menu"
+	@priority = 3
+	test AdminCanEditProject {
+		task ("Given that the user go to project") {
+			Testray.goToProjectPage(projectName = ${projectName});
+		}
+
+		task ("When the user edit the project through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Project");
+
+			Testray.editProjectTestray(
+				description = "Project Description Edited",
+				name = "Project Edited");
+		}
+
+		task ("Then the user is redirected to the project page and can see the edited project title") {
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Project Edited");
+		}
+
+        task ("Delete the project edited") {
+            JSONTestrayAPI.deleteProject(projectName = "Project Edited");
+		}
+	}
+
 }

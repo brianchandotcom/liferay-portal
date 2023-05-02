@@ -334,4 +334,24 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Components in the kebab menu"
+	@priority = 3
+	test AdminCanAddManageComponents {
+		task ("Given that the user go to components") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.kebabMenuOption(kebabOption = "Manage Components");
+		}
+
+		task ("When the user create the new component through kebab") {
+			Testray.addNewComponent(componentName = "Component 2");
+		}
+
+		task ("Then the user can see the new component in the table") {
+            AssertElementPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

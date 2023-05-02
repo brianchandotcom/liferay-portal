@@ -1924,13 +1924,13 @@ public class ObjectEntryLocalServiceImpl
 					PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 		}
 
-		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_SECRET)) {
+		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_KEY)) {
 			throw new RequiredEncryptedObjectFieldPropertyException(
-				"Missing property" + PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET);
+				"Missing property" + PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY);
 		}
 
 		return new SecretKeySpec(
-			Base64.decode(PropsValues.OBJECT_FIELD_ENCRYPTION_SECRET),
+			Base64.decode(PropsValues.OBJECT_FIELD_ENCRYPTION_KEY),
 			PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 	}
 

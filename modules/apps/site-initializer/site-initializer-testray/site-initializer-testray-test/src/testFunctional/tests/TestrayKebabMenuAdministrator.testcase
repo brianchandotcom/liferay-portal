@@ -203,4 +203,26 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can promoted build in the kebab menu"
+	@priority = 3
+	test AdminCanPromotedBuilds {
+		task ("Given that the user go to build") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+            TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+            TestrayBuild.goToBuild(buildName = ${buildName});
+		}
+
+		task ("When the user promoted the build through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Promote");
+		}
+
+        task ("Then the promoted build should appear on the list") {
+			TR2Utils.clickBreadcrumb(text = ${routineName});
+
+			TestrayBuild.verifyPromoteBuild();
+		}
+	}
+
 }

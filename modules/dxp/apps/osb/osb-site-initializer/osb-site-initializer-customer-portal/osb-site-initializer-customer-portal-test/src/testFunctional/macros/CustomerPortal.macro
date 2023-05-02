@@ -286,6 +286,14 @@ definition {
 	}
 
 	macro clearStatus {
+		if (!(isSet(status))) {
+			var status = "Active";
+		}
+
+		if (!(isSet(status))) {
+			var status = "In-Progress";
+		}
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",

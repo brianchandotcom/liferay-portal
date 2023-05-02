@@ -267,6 +267,19 @@ definition {
 		}
 	}
 
+	@summary = "This macro deletes a list of entries"
+	macro tearDownForCloudEntries {
+		CustomerPortal.clearStatus();
+
+		CP2Utils.deleteSpecificObjectEntry(
+			entry = "ERC-001",
+			portlet = "DXP Cloud Environments");
+
+		CP2Utils.deleteSpecificObjectEntry(
+			entry = "test@liferay.com",
+			portlet = "Admins DXP Cloud");
+	}
+
 	macro typeSetupInfoFields {
 		if (!(isSet(position))) {
 			var position = 1;

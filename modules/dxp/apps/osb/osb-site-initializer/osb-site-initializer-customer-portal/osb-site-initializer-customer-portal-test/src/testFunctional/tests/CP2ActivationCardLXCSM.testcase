@@ -107,7 +107,7 @@ definition {
 		}
 
 		task ("Delete the entries and objects created") {
-			CustomerPortal.clearStatus(status = "Active");
+			CustomerPortal.clearStatus();
 
 			CP2Utils.deleteSpecificObjectEntry(
 				entry = "ERC-001",

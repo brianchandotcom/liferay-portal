@@ -107,7 +107,7 @@ const MDFClaimPage = ({
 			);
 		}
 
-		if (claimsFiltered && claimsFiltered >= 2) {
+		if (claimsFiltered && claimsFiltered >= 2 && !values.id) {
 			return (
 				<PRMForm name="New" title="Reimbursement Claim">
 					<div className="d-flex justify-content-center mt-4">

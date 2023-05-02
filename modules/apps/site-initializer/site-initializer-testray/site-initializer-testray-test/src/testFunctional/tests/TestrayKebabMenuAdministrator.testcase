@@ -354,4 +354,24 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Teams in the kebab menu"
+	@priority = 3
+	test AdminCanAddManageTeams {
+		task ("Given that the user go to teams") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.kebabMenuOption(kebabOption = "Manage Teams");
+		}
+
+		task ("When the user create the new teams through kebab") {
+			TestrayManage.createTeam(teamName = "Team 2");
+		}
+
+		task ("Then the user can see the new teams in the table") {
+            AssertElementPresent(
+				key_projectName = "Team 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

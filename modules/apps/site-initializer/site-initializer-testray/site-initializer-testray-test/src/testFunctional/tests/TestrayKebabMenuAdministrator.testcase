@@ -168,4 +168,39 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit build in the kebab menu"
+	@priority = 3
+	test AdminCanEditBuild {
+		task ("Given that the user go to build") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+            TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+            TestrayBuild.goToBuild(buildName = ${buildName});
+		}
+
+		task ("When the user edit the build through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Build");
+
+            TestrayBuild.editBuild(
+				description = "Description Edited",
+				fieldName = "Build Edited",
+				gitHash = 12345,
+				productVersion = "1.2",
+				routine = "Routine 1");
+		}
+
+		task ("Then the user is redirected to the build page and can see the edited build title") {
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Tests");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Build Edited");
+		}
+
+        task ("Delete the build edited") {
+            JSONTestrayAPI.deleteObjectViaAPI(
+                object = "builds",
+                objectName = "Build Edited");
+		}
+	}
+
 }

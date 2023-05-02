@@ -198,6 +198,19 @@
 	<td>//label[normalize-space(text())='Favicon']//following-sibling::div//input</td>
 	<td></td>
 </tr>
+
+<!--CUSTOMIZATION-->
+
+<tr>
+	<td>NO_CSS_THEME_LOADED</td>
+	<td>//button[contains(@class,'nav-link active') and contains(text(),'CSS')]//ancestor::div//p[normalize-space(text())='No CSS Client extensions were loaded.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_JAVASCRIPT_EXTENSIONS_LOADED</td>
+	<td>//button[contains(@class,'nav-link active') and contains(text(),'JavaScript')]//ancestor::div//p[normalize-space(text())='No JavaScript client extensions were loaded.']</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

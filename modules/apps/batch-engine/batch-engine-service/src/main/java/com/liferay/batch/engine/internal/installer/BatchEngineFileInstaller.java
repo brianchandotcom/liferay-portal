@@ -274,11 +274,11 @@ public class BatchEngineFileInstaller implements FileInstaller {
 				batchEngineZipUnit)
 		throws IOException {
 
-		BatchEngineImportConfiguration batchEngineConfiguration =
+		BatchEngineImportConfiguration batchEngineImportConfiguration =
 			batchEngineZipUnit.getBatchEngineConfiguration(
 				BatchEngineImportConfiguration.class);
 
-		if (batchEngineConfiguration.companyId == 0) {
+		if (batchEngineImportConfiguration.companyId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default company ID for this batch process");
 			}
@@ -287,22 +287,23 @@ public class BatchEngineFileInstaller implements FileInstaller {
 				Company company = _companyLocalService.getCompanyByWebId(
 					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-				batchEngineConfiguration.companyId = company.getCompanyId();
+				batchEngineImportConfiguration.companyId =
+					company.getCompanyId();
 			}
 			catch (PortalException portalException) {
 				_log.error("Unable to get default company ID", portalException);
 			}
 		}
 
-		if (batchEngineConfiguration.userId == 0) {
+		if (batchEngineImportConfiguration.userId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Using default user ID for this batch process");
 			}
 
 			try {
-				batchEngineConfiguration.userId =
+				batchEngineImportConfiguration.userId =
 					_userLocalService.getUserIdByScreenName(
-						batchEngineConfiguration.companyId,
+						batchEngineImportConfiguration.companyId,
 						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME));
 			}
 			catch (PortalException portalException) {
@@ -310,7 +311,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 			}
 		}
 
-		return batchEngineConfiguration;
+		return batchEngineImportConfiguration;
 	}
 
 	private String _getBatchEngineZipEntryKey(ZipEntry zipEntry) {

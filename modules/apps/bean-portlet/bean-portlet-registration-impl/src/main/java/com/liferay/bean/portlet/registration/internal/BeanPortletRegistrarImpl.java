@@ -668,7 +668,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			configuredPortletName);
 
 		LiferayPortletConfiguration liferayPortletConfiguration =
-			_getAnnotatedLiferayConfiguration(
+			_getLiferayPortletConfiguration(
 				discoveredClasses, configuredPortletName);
 
 		String[] propertyNames = null;
@@ -1170,7 +1170,7 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 			portletName, defaultPreferencesValidator);
 	}
 
-	private LiferayPortletConfiguration _getAnnotatedLiferayConfiguration(
+	private LiferayPortletConfiguration _getLiferayPortletConfiguration(
 		Set<Class<?>> discoveredClasses, String portletName) {
 
 		for (Class<?> discoveredClass : discoveredClasses) {

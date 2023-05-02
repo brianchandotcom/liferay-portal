@@ -13,17 +13,25 @@
 <#-- <#assign modified_date = indexFormat.parse(reserved-article-modified-date.getData()) /> -->
 <#-- <#assign mod_date = dateTool.format("d MMMM yyyy H:m",modified_date) /> -->
 
-<html lang="${w3c_language_id}">
+<html dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
     <p>${Headings.getData(${Headings.getData()})}</p>
 
     <p>${Headings.getData(newTest)}</p>
 
-    <p>class="${root_css_class}"</p>
+    <p class="${root_css_class}"></p>
 
-    <p>class="${root_css_class} ${root_css_sub_class} ${ro_cs_css} ${ot_ss_cass}"</p>
+    <p class="${root_css_class} ${root_css_sub_class} ${ro_cs_css} ${ot_ss_cass}"></p>
 
     <a href="${site_default_url}">testLink</a>
+
+	<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
+		${site_name}
+	</span>
 </html>
+
+<head>
+	<@liferay_util["include"] page=top_head_include />
+</head>
 
 <#macro  navigationBar  nav_item >
     <#if nav_item.hasChildren()>
@@ -68,3 +76,19 @@
 </#if>
 
 <@navigationBar nav_item />
+
+<div id="content">
+	<nav id="breadcrumbs"><@liferay.breadcrumbs /></nav>
+
+	<#if selectable>
+		<@liferay_util["include"] page=content_include />
+	<#else>
+		${portletDisplay.recycle()}
+
+		${portletDisplay.setTitle(${the_title})}
+
+		<@liferay_theme["wrap-portlet"] page="portlet.ftl">
+			<@liferay_util["include"] page=content_include />
+		</@>
+	</#if>
+</div>

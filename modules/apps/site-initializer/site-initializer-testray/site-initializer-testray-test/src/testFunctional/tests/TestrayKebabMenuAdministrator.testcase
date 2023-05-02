@@ -225,4 +225,41 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit cases in the kebab menu"
+	@priority = 3
+	test AdminCanEditCases {
+		task ("Given that the user go to case") {
+			Testray.goToProjectPage(projectName = ${projectName});
+
+            PRMNavigator.goToNavItem(navItem = "Cases");
+
+            Testray.goToProjectPage(projectName = ${caseName});
+		}
+
+		task ("When the user edit the case through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Case");
+
+			TestrayCases.editCases(
+				caseName = "Case Edited",
+				caseTypeId = "Case Type 1",
+				componentId = "Component 1",
+				description = "Case Description",
+				duration = 30,
+				priority = 3,
+				steps = "http://test.edit.com");
+		}
+
+		task ("Then the user is redirected to the case page and can see the edited case title") {
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Test History");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Case Edited");
+		}
+
+        task ("Delete the case edited") {
+            JSONTestrayAPI.deleteObjectViaAPI(
+                object = "cases",
+                objectName = "Case Edited");
+		}
+	}
+
 }

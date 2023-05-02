@@ -21,7 +21,7 @@ exports[`VariantCard should render 1`] = `
         class="analytics-variant-card-charts"
       >
         <nav
-          class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
+          class="navbar navbar-collapse-relative navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
         >
           <div
             class="container-fluid container-fluid-max-xl"

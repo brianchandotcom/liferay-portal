@@ -258,6 +258,7 @@ definition {
 	macro userLoginInRaylife {
 		var passwordRaylife = "portal4all";
 		var email = "${email}@mailinator.com";
+
 		Navigator.openURL();
 
 		SignIn._signIn(

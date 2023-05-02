@@ -176,6 +176,8 @@
 		"format": "eslint --fix \"src/main/js/**/*.+(js|ts)?(x)\"",
 		"lint": "eslint \"src/main/js/**/*.+(js|ts)?(x)\"",
 		"start": "cross-env FARO_ENVIRONMENT_NAME=local webpack-dev-server --config webpack.dev.js",
+		"test": "cross-env TZ=Etc/GMT jest --runInBand",
+		"test:dev": "cross-env TZ=Etc/GMT jest --coverage=false",
 		"webpack": "webpack --config webpack.prod.js",
 		"webpack:dev": "webpack --config webpack.dev.js",
 		"test:dev": "cross-env TZ=Etc/GMT jest --coverage=false"

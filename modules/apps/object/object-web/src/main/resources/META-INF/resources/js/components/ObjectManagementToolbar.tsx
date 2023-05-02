@@ -26,6 +26,7 @@ interface ObjectManagementToolbarProps {
 	onSubmit: (draft: boolean) => void;
 	portletNamespace: string;
 	screenNavigationCategoryKey: string;
+	setValues: (values: Partial<ObjectDefinition>) => void;
 	system: boolean;
 }
 
@@ -40,6 +41,7 @@ export default function ObjectManagementToolbar({
 	onSubmit,
 	portletNamespace,
 	screenNavigationCategoryKey,
+	setValues,
 	system,
 }: ObjectManagementToolbarProps) {
 	return (
@@ -63,6 +65,11 @@ export default function ObjectManagementToolbar({
 			)}
 			isApproved={isApproved}
 			label={label}
+			onExternalReferenceCodeChange={(externalReferenceCode: string) => {
+				setValues({
+					externalReferenceCode,
+				});
+			}}
 			onGetEntity={() => API.getObjectDefinitionById(objectDefinitionId)}
 			onSubmit={onSubmit}
 			portletNamespace={portletNamespace}

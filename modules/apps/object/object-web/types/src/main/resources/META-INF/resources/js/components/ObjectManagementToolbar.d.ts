@@ -25,6 +25,7 @@ interface ObjectManagementToolbarProps {
 	onSubmit: (draft: boolean) => void;
 	portletNamespace: string;
 	screenNavigationCategoryKey: string;
+	setValues: (values: Partial<ObjectDefinition>) => void;
 	system: boolean;
 }
 export default function ObjectManagementToolbar({
@@ -38,6 +39,7 @@ export default function ObjectManagementToolbar({
 	onSubmit,
 	portletNamespace,
 	screenNavigationCategoryKey,
+	setValues,
 	system,
 }: ObjectManagementToolbarProps): JSX.Element;
 export {};

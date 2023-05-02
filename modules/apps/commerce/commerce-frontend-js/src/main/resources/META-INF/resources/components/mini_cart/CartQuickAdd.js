@@ -88,7 +88,7 @@ export default function CartQuickAdd() {
 							})
 						);
 					}
-					else {
+					else if (product.skus.length === 1) {
 						formattedProducts.push({
 							...product,
 							chipLabel: skus[0].sku,

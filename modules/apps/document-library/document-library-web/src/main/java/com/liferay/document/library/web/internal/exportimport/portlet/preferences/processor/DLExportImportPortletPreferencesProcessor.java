@@ -592,9 +592,10 @@ public class DLExportImportPortletPreferencesProcessor
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@Reference
-	private DLCommentsAndRatingsExporterImporterCapability
-		_dlCommentsAndRatingsExporterImporterCapability;
+	@Reference(
+		target = "(component.name=com.liferay.document.library.web.internal.exportimport.portlet.preferences.processor.DLCommentsAndRatingsExporterImporterCapability)"
+	)
+	private Capability _dlCommentsAndRatingsExporterImporterCapability;
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;

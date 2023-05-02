@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.search.options.portlet;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
+import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
 import java.util.Optional;
 
@@ -25,37 +25,34 @@ import javax.portlet.PortletPreferences;
  * @author Wade Cao
  */
 public class SearchOptionsPortletPreferencesImpl
-	implements SearchOptionsPortletPreferences {
+	extends BasePortletPreferences implements SearchOptionsPortletPreferences {
 
 	public SearchOptionsPortletPreferencesImpl(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
-		_portletPreferencesHelper = new PortletPreferencesHelper(
-			portletPreferencesOptional);
+		super(portletPreferencesOptional.orElse(null));
 	}
 
 	@Override
 	public String getFederatedSearchKey() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			SearchOptionsPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY,
 			StringPool.BLANK);
 	}
 
 	@Override
 	public boolean isAllowEmptySearches() {
-		return _portletPreferencesHelper.getBoolean(
+		return getBoolean(
 			SearchOptionsPortletPreferences.PREFERENCE_KEY_ALLOW_EMPTY_SEARCHES,
 			false);
 	}
 
 	@Override
 	public boolean isBasicFacetSelection() {
-		return _portletPreferencesHelper.getBoolean(
+		return getBoolean(
 			SearchOptionsPortletPreferences.
 				PREFERENCE_KEY_BASIC_FACET_SELECTION,
 			false);
 	}
-
-	private final PortletPreferencesHelper _portletPreferencesHelper;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.web.internal.helper.PortletPreferencesHelper;
+import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
 
 import java.util.Optional;
 
@@ -31,13 +31,13 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Wade Cao
  */
-public class SortPortletPreferencesImpl implements SortPortletPreferences {
+public class SortPortletPreferencesImpl
+	extends BasePortletPreferences implements SortPortletPreferences {
 
 	public SortPortletPreferencesImpl(
 		Optional<PortletPreferences> portletPreferencesOptional) {
 
-		_portletPreferencesHelper = new PortletPreferencesHelper(
-			portletPreferencesOptional);
+		super(portletPreferencesOptional.orElse(null));
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class SortPortletPreferencesImpl implements SortPortletPreferences {
 
 	@Override
 	public String getFieldsString() {
-		return _portletPreferencesHelper.getString(
+		return getString(
 			SortPortletPreferences.PREFERENCE_KEY_FIELDS, StringPool.BLANK);
 	}
 
@@ -97,8 +97,6 @@ public class SortPortletPreferencesImpl implements SortPortletPreferences {
 		new Preset("createDate+", "created-oldest-first"),
 		new Preset("userName", "user")
 	};
-
-	private final PortletPreferencesHelper _portletPreferencesHelper;
 
 	private static class Preset {
 

@@ -246,9 +246,10 @@ public class WikiExportImportPortletPreferencesProcessor
 	@Reference(target = "(name=ReferencedStagedModelImporter)")
 	private Capability _referencedStagedModelImporter;
 
-	@Reference
-	private WikiCommentsAndRatingsExporterImporterCapability
-		_wikiCommentsAndRatingsExporterImporterCapability;
+	@Reference(
+		target = "(component.name=com.liferay.wiki.internal.exportimport.portlet.preferences.processor.WikiCommentsAndRatingsExporterImporterCapability)"
+	)
+	private Capability _wikiCommentsAndRatingsExporterImporterCapability;
 
 	@Reference
 	private WikiNodeLocalService _wikiNodeLocalService;

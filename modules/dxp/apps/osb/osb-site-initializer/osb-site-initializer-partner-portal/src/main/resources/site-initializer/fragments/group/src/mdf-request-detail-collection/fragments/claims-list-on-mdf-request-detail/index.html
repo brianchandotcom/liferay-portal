@@ -52,44 +52,44 @@
 [/#macro]
 
 [#macro modal_script]
-<script>
-	const callDeleteMDFClaimList = (claimId) => Liferay.Util.openConfirmModal({
-		message: 'Are you sure?',
-		onConfirm: (isConfirmed) => {
-			if (isConfirmed) {
-				deleteClaim(claimId);
-			}
-		},
-	});
-
-	const deleteClaim = async (claimId) => {
-		const responde = await fetch(
-			'/o/c/mdfclaims/' + claimId,
-			{
-				headers: {
-					'x-csrf-token': Liferay.authToken,
-				},
-				method: 'DELETE',
-			}
-		);
-
-		if (responde.ok) {
-			Liferay.Util.openToast({
-				message: 'MDF Claim successfully deleted!',
-				type: 'success',
-			});
-
-			location.reload();
-
-			return;
-		}
-
-		Liferay.Util.openToast({
-			message: 'The MDF Claim cannot be deleted.',
-			type: 'danger',
+	<script>
+		const callDeleteMDFClaimList = (claimId) => Liferay.Util.openConfirmModal({
+			message: 'Are you sure?',
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					deleteClaim(claimId);
+				}
+			},
 		});
-	};
-</script>
+
+		const deleteClaim = async (claimId) => {
+			const responde = await fetch(
+				'/o/c/mdfclaims/' + claimId,
+				{
+					headers: {
+						'x-csrf-token': Liferay.authToken,
+					},
+					method: 'DELETE',
+				}
+			);
+
+			if (responde.ok) {
+				Liferay.Util.openToast({
+					message: 'MDF Claim successfully deleted!',
+					type: 'success',
+				});
+
+				location.reload();
+
+				return;
+			}
+
+			Liferay.Util.openToast({
+				message: 'The MDF Claim cannot be deleted.',
+				type: 'danger',
+			});
+		};
+	</script>
 [/#macro]
 
 [#if mdf_request_id?has_content]

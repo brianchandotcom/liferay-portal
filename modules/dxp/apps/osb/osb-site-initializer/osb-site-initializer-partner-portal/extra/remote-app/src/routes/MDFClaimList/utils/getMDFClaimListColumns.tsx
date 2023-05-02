@@ -24,7 +24,7 @@ import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
-import deleteMDFClaim from '../../../common/services/liferay/object/mdf-claim/deleteMDFRequest';
+import deleteMDFClaim from '../../../common/services/liferay/object/mdf-claim/deleteMDFClaim';
 import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFClaimListColumns(

@@ -28,6 +28,7 @@ import com.liferay.portal.search.admin.web.internal.display.context.builder.Inde
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchEngineDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.reindexer.IndexReindexerRegistry;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
 
@@ -138,7 +139,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 			IndexActionsDisplayContextBuilder
 				indexActionsDisplayContextBuilder =
 					new IndexActionsDisplayContextBuilder(
-						_language, _portal, renderRequest, renderResponse);
+						_language, _portal, renderRequest, renderResponse,
+						_searchCapabilities);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,
@@ -170,5 +172,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
 
 }

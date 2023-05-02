@@ -44,6 +44,7 @@ function ExecutionOptions({
 	initialCompanyIds = [],
 	initialExecutionMode,
 	initialScope,
+	isConcurrentModeSupported,
 	portletNamespace,
 	virtualInstances = [],
 }) {
@@ -85,7 +86,7 @@ function ExecutionOptions({
 
 	return (
 		<div className="execution-scope-sheet sheet sheet-lg">
-			{Liferay.FeatureFlags['LPS-177664'] && (
+			{Liferay.FeatureFlags['LPS-177664'] && isConcurrentModeSupported && (
 				<div className="sheet-section">
 					<h2 className="sheet-title">
 						{Liferay.Language.get('execution-mode')}

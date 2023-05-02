@@ -1016,4 +1016,20 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
+	@priority = "3"
+	test WarningGeneratedWhenUsingNonStandardTimezone {
+		property skip.start.app.server = "true";
+		property test.name.skip.portal.instance = "Locale#WarningGeneratedWhenUsingNonStandardTimezone";
+
+		var tomcatBinDir = PropsUtil.get("app.server.bin.dir");
+
+		var setenvFile = "${tomcatBinDir}/setenv.sh";
+
+		FileUtil.replaceStringInFile(${setenvFile}, "-Duser.timezone=GMT", "-Duser.timezone=Europe/Paris");
+
+		Portlet.startServer(keepOSGiState = "true");
+
+		AssertConsoleTextPresent(value1 = "is not UTC or GMT. Please review the JVM property \"user.timezone\".");
+	}
+
 }

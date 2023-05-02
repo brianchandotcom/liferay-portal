@@ -66,20 +66,19 @@ export default function RelationshipSection({
 			displayTitle={relationshipSection.sectionLabel}
 			displayType="unstyled"
 			key={relationshipSection.objectRelationshipId}
-			onClick={(event) => {
+			onClick={async (event) => {
 				const element = event.target as HTMLButtonElement;
 
 				const attribute = element.getAttribute('aria-expanded');
 
 				if (attribute === 'false') {
-					getObjectFieldRelatedTerms(
+					setShowFDS(false);
+					await getObjectFieldRelatedTerms(
 						relationshipSections,
 						currentRelationshipSectionIndex
 					);
 
-					setShowFDS(false);
-
-					setTimeout(() => setShowFDS(true), 1000);
+					setShowFDS(true);
 				}
 			}}
 			showCollapseIcon={true}

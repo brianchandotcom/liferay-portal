@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -22,14 +23,21 @@ import com.liferay.source.formatter.parser.JavaClassType;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import org.dom4j.Document;
+import org.dom4j.Element;
 
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+
+import java.nio.file.Path;
 
 /**
  * @author Igor Beslic
  */
-public class JavaServiceErcUsageCheck extends BaseJavaTermCheck {
+public class JavaServiceImplErcUsageCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
@@ -41,15 +49,56 @@ public class JavaServiceErcUsageCheck extends BaseJavaTermCheck {
 		String className = javaClass.getName();
 
 		if (className.endsWith("ServiceImpl")) {
+			List<String> entities = _getErcEnabledEntityNodeNames(_getServiceXmlDocument(absolutePath));
+
+			if (!entities.contains(javaTerm.getName())) {
+				return javaTerm.getContent();
+			}
+
 			return _formatServiceImpl(javaTerm);
 		}
 
 		return javaTerm.getContent();
 	}
 
+	private List<String> _getErcEnabledEntityNodeNames(Document document) {
+		if (document == null) {
+			return Collections.emptyList();
+		}
+
+		Element serviceXMLElement = document.getRootElement();
+
+		Iterator<Element> iterator = serviceXMLElement.elementIterator("entity");
+
+		List<String> entities = new ArrayList<>();
+
+		while (iterator.hasNext()) {
+			Element element = iterator.next();
+
+			if (element.attributeValue("external-reference-code") != null) {
+				entities.add(element.attributeValue("external-reference-code"));
+			}
+		}
+
+		return entities;
+	}
+
 	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_METHOD};
+	}
+
+	private Document _getServiceXmlDocument(String absolutePath)  {
+		Path serviceXmlPath = Paths.get(absolutePath, "service.xml");
+
+		try {
+			return SourceUtil.readXML(FileUtil.read(serviceXmlPath.toFile()));
+		}
+		catch (Exception exception) {
+			addMessage("service.xml", exception.getMessage());
+		}
+
+		return null;
 	}
 
 	private String _formatServiceImpl(JavaTerm javaTerm) {

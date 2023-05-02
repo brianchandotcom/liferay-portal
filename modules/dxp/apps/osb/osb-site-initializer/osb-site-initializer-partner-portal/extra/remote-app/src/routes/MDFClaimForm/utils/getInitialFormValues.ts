@@ -59,7 +59,8 @@ const getInitialFormValues = (
 					?.map((mdfClaimActivity) => {
 						return (
 							mdfClaimActivity?.r_mdfClmToMDFClmActs_c_mdfClaim
-								?.mdfClaimStatus.key !== 'draft'
+								?.mdfClaimStatus.key !== 'draft' &&
+							mdfClaimActivity.selected
 						);
 					})
 					.includes(true),
@@ -83,7 +84,8 @@ const getInitialFormValues = (
 				?.map((mdfClaimActivity) => {
 					return (
 						mdfClaimActivity?.r_mdfClmToMDFClmActs_c_mdfClaim
-							?.mdfClaimStatus.key !== 'draft'
+							?.mdfClaimStatus.key !== 'draft' &&
+						mdfClaimActivity.selected
 					);
 				})
 				.includes(true),

@@ -128,11 +128,17 @@ definition {
 			}
 		}
 
-		task ("And the user can check the upgrade result as failure") {
+		task ("And the user can check the upgrade result as failure and the expected status") {
 			if (!(contains(${upgradeReportContent}, "Result: failure"))) {
 				echo(${upgradeReportContent});
 
 				fail("Failed upgrade result not present in upgrade report");
+			}
+
+			if (!(contains(${upgradeReportContent}, "Status: Upgrade failed to complete"))) {
+				echo(${upgradeReportContent});
+
+				fail("Expected status not present in the upgrade report");
 			}
 		}
 	}
@@ -321,8 +327,14 @@ definition {
 			var upgradeReportNew = UpgradeReport.getAutoUpgradeReportFileContent();
 		}
 
-		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains(${upgradeReportNew}, "Status: Unable to determine. Release manager not available"))) {
+		task ("Read the new report. No upgrade processes and type defined as 'no upgrade' are expected ") {
+			if (!(contains(${upgradeReportNew}, "Type: no upgrade"))) {
+				echo(${upgradeReportNew});
+
+				fail("Expected upgrade type not present in upgrade report");
+			}
+
+			if (!(contains(${upgradeReportNew}, "Longest upgrade processes: Nothing registered"))) {
 				echo(${upgradeReportNew});
 
 				fail("New upgrade report contains unexpected upgrades.");
@@ -458,10 +470,16 @@ definition {
 			var upgradeReportOriginal = UpgradeReport.getUpgradeReportFileContent();
 		}
 
-		task ("Read the report. All upgrade processes are expected") {
-			if (!(contains(${upgradeReportOriginal}, "Longest upgrade processes"))) {
+		task ("Read the report. All upgrade processes and type defined as 'major' are expected") {
+			if (!(contains(${upgradeReportOriginal}, "Type: major"))) {
 				echo(${upgradeReportOriginal});
 
+				fail("Expected upgrade type not present in upgrade report");
+			}
+
+			if (contains(${upgradeReportOriginal}, "Longest upgrade processes: Nothing registered")) {
+				echo(${upgradeReportOriginal});
+				
 				fail("Upgrade report does not contains expected upgrades.");
 			}
 		}
@@ -478,8 +496,14 @@ definition {
 			var upgradeReportNew = UpgradeReport.getUpgradeReportFileContent();
 		}
 
-		task ("Read the new report. No upgrade processes are expected") {
-			if (!(contains(${upgradeReportNew}, "Status: Unable to determine. Release manager not available"))) {
+		task ("Read the new report. No upgrade processes and type defined as 'no upgrade' are expected ") {
+			if (!(contains(${upgradeReportNew}, "Type: no upgrade"))) {
+				echo(${upgradeReportNew});
+
+				fail("Expected upgrade type not present in upgrade report");
+			}
+
+			if (!(contains(${upgradeReportNew}, "Longest upgrade processes: Nothing registered"))) {
 				echo(${upgradeReportNew});
 
 				fail("New upgrade report contains unexpected upgrades.");
@@ -642,7 +666,7 @@ definition {
 		}
 
 		task ("Then the user can verify in the upgrade report the upgrade status message") {
-			if (!(contains(${upgradeReportContent}, "Status: There are no pending upgrade"))) {
+			if (!(contains(${upgradeReportContent}, "Status: There are no pending upgrades"))) {
 				echo(${upgradeReportContent});
 
 				fail("Expected status not present in the upgrade report");
@@ -650,7 +674,7 @@ definition {
 		}
 
 		task ("And then the user can verify in the upgrade logs that the upgrade type is defined as 'major'") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+			var upgradeLogContent = Log.getUpgradeLogFileContent();
 
 			if (!(contains(${upgradeLogContent}, "Major upgrade finished with result success"))) {
 				fail("Expected upgrade type not present in the upgrades logs");

@@ -7,7 +7,7 @@
 		<suppress checks="GradleTestDependencyVersionCheck" files=".*" />
 		<suppress checks="GradleVersionCheck" files=".*" />
 		<suppress checks="JavaModuleTestCheck" files=".*/src/testIntegration/java/com/liferay/osb/faro/functional/test/steps/FaroHooks.java" />
-		
+
 		<!-- Begin LRAC-12941 -->
 
 		<suppress checks="JSONPackageJSONCheck" files="osb-faro-theme/package\.json" />

@@ -38,6 +38,15 @@ public class SearchCapabilitiesImpl implements SearchCapabilities {
 	}
 
 	@Override
+	public boolean isConcurrentModeSupported() {
+		if (_isSearchEngineSolr()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isResultRankingsSupported() {
 		if (_isSearchEngineSolr()) {
 			return false;

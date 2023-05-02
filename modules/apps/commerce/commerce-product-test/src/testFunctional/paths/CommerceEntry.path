@@ -716,6 +716,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_LABEL_FIELD</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div[${key_index}]//span[text()='${key_label}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_FIELD_VALUE</td>
 	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div[${key_index}][text()='${key_value}']</td>
 	<td></td>

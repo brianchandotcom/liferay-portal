@@ -38,6 +38,7 @@ import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.ExtensionContainer;
 
@@ -143,12 +144,8 @@ public class WorkspacePlugin implements Plugin<Settings> {
 								"glob:" + glob);
 
 							if (pathMatcher.matches(relativeProjectPath)) {
-								Project rootProject = gradle.getRootProject();
-
-								Logger logger = rootProject.getLogger();
-
-								if (logger.isInfoEnabled()) {
-									logger.info(
+								if (_logger.isInfoEnabled()) {
+									_logger.info(
 										"Skipping project evaluation for {} " +
 											"because it matches the exclude " +
 												"pattern {}.",
@@ -199,6 +196,9 @@ public class WorkspacePlugin implements Plugin<Settings> {
 			GradleUtil.setProperty(project, "portal.version", "7.0.x");
 		}
 	}
+
+	private static final Logger _logger = Logging.getLogger(
+		WorkspacePlugin.class);
 
 	private static final Map<String, ProjectConfigurator>
 		_projectConfiguratorsMap = new HashMap<>();

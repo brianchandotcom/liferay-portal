@@ -455,6 +455,99 @@ definition {
 		}
 	}
 
+	@description = "Test for COMMERCE-11353. The price range facet should filter the products as per the approved SKU of the product and should display the corresponding price"
+	@priority = 5
+	test CanPriceRangeFacetFilterActiveSkuPrice {
+		property portal.acceptance = "true";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new Sku is created for the product ABS Sensor with a higher base price") {
+			CommerceJSONProductsAPI.addCommerceProductSku(
+				price = 750,
+				productName = "ABS Sensor",
+				skuName = "ABS-SKU");
+		}
+
+		task ("And assert the new sku is the only sku active for the product") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			AssertElementPresent(
+				key_entryTitle = "ABS-SKU",
+				key_index = 5,
+				key_label = "Approved",
+				locator1 = "CommerceEntry#TABLE_ENTRY_LABEL_FIELD");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 5,
+				key_label = "Expired",
+				locator1 = "CommerceEntry#TABLE_ENTRY_LABEL_FIELD");
+		}
+
+		task ("And the buyer navigates to the Minium Catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer selects the price range for the old sku's price") {
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 50.00 - $ 99.99",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		task ("Then the product will not be shown in the Catalog page") {
+			AssertElementNotPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		task ("When the buyer selects the price range for the new sku's price") {
+			SearchFacetPortlet.clearFacet();
+
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 500.00 - $ 999.99",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		task ("Then the product will be shown in the Catalog page") {
+			AssertElementPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+			AssertElementPresent(
+				key_productName = "ABS Sensor",
+				key_productSku = "ABS-SKU",
+				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+
+			AssertElementNotPresent(
+				key_productName = "ABS Sensor",
+				key_productSku = "MIN93015",
+				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+		}
+	}
+
 	@description = "COMMERCE-10879 | As a Buyer user, I want to be able to filter products on a page using only the Option Facet widget"
 	@priority = 3
 	test CanUseOptionFacetWidgetOnNewPage {

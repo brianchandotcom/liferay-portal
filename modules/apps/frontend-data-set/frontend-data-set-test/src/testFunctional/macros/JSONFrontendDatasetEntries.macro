@@ -56,22 +56,22 @@ definition {
 		var datasetEntryId = JSONFrontendDatasetEntries._getDatasetEntryIdByName(datasetName = ${datasetName});
 
 		if (${datasetEntryId} != "") {
-				var curl = '''
-					${portalURL}/o/c/fdsviews \
-						-u ${userEmailAddress}:${userPassword} \
-						-H accept: application/json \
-						-H Content-Type: application/json \
-						-d {
-							"symbol": "catalog",
-							"description": "${dataSetViewDescription}",
-							"defaultItemsPerPage": 0,
-							"listOfItemsPerPage": "string",
-							"label": "${dataSetViewName}",
-							"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${datasetEntryId}
-						}
-				''';
+			var curl = '''
+				${portalURL}/o/c/fdsviews \
+					-u ${userEmailAddress}:${userPassword} \
+					-H accept: application/json \
+					-H Content-Type: application/json \
+					-d {
+						"symbol": "catalog",
+						"description": "${dataSetViewDescription}",
+						"defaultItemsPerPage": 0,
+						"listOfItemsPerPage": "string",
+						"label": "${dataSetViewName}",
+						"r_fdsEntryFDSViewRelationship_c_fdsEntryId": ${datasetEntryId}
+					}
+			''';
 
-				JSONCurlUtil.post(${curl});
+			JSONCurlUtil.post(${curl});
 		}
 		else {
 			echo("FAIL. No datasets was found");
@@ -109,6 +109,34 @@ definition {
 		}
 	}
 
+	macro _getDatasetEntryIdByName {
+		Variables.assertDefined(parameterList = ${datasetName});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/fdsentries \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var datasetEntryId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetName}')].id");
+
+		if (${datasetEntryId} == "") {
+			fail("FAIL. No datasets was found");
+		}
+		else {
+			return ${datasetEntryId};
+		}
+	}
+
 	macro _getDatasetEntryIds {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -134,34 +162,6 @@ definition {
 		}
 		else {
 			return ${datasetEntryIds};
-		}
-	}
-
-	macro _getDatasetEntryIdByName {
-		Variables.assertDefined(parameterList = "${datasetName}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		var curl = '''
-			${portalURL}/o/c/fdsentries \
-				-u ${userEmailAddress}:${userPassword}
-		''';
-
-		var datasetEntryId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetName}')].id");
-
-		if (${datasetEntryId} == "") {
-			fail("FAIL. No datasets was found");
-		}
-		else {
-			return ${datasetEntryId};
 		}
 	}
 

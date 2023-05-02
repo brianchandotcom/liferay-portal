@@ -56,7 +56,7 @@ definition {
 	test CanCreateViewsThroughAPI {
 		task ("Given creating a Data Set via API") {
 			FrontendDataSetAdmin.goToDatasetAdminPage();
-			
+
 			FrontendDataSetAdmin.createDatasetEntryViaAPI(
 				datasetName = "Dataset Test",
 				restApplication = "/c/fdsentries");

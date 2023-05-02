@@ -219,7 +219,7 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 		paymentRequest.setTransactionReference(transactionId);
 
 		MercanetGroupServiceConfiguration mercanetGroupServiceConfiguration =
-			_getConfiguration(commerceOrder.getGroupId());
+			_getMercanetGroupServiceConfiguration(commerceOrder.getGroupId());
 
 		String environment = StringUtil.toUpperCase(
 			mercanetGroupServiceConfiguration.environment());
@@ -265,7 +265,8 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 			resultMessage, true);
 	}
 
-	private MercanetGroupServiceConfiguration _getConfiguration(long groupId)
+	private MercanetGroupServiceConfiguration
+			_getMercanetGroupServiceConfiguration(long groupId)
 		throws Exception {
 
 		return _configurationProvider.getConfiguration(

@@ -150,8 +150,9 @@ public class MercanetServlet extends HttpServlet {
 						uuid, groupId);
 
 				MercanetGroupServiceConfiguration
-					mercanetGroupServiceConfiguration = _getConfiguration(
-						commerceOrder.getGroupId());
+					mercanetGroupServiceConfiguration =
+						_getMercanetGroupServiceConfiguration(
+							commerceOrder.getGroupId());
 
 				String environment = StringUtil.toUpperCase(
 					mercanetGroupServiceConfiguration.environment());
@@ -201,7 +202,8 @@ public class MercanetServlet extends HttpServlet {
 		}
 	}
 
-	private MercanetGroupServiceConfiguration _getConfiguration(Long groupId)
+	private MercanetGroupServiceConfiguration
+			_getMercanetGroupServiceConfiguration(Long groupId)
 		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(

@@ -7,5 +7,6 @@ application:
 author: "Andrea Sbarra"
 clientDir: "../headless-commerce-delivery-catalog-client/src/main/java"
 compatibilityVersion: 2
+forcePredictableOperationId: true
 forcePredictableSchemaPropertyName: false
 testDir: "../headless-commerce-delivery-catalog-test/src/testIntegration/java"

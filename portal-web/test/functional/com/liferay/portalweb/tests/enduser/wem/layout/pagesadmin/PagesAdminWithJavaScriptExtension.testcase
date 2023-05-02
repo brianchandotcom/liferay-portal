@@ -144,8 +144,8 @@ definition {
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Client Extensions",
-				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				key_panel = "JavaScript Client Extensions",
+				locator1 = "PagesAdmin#PANEL",
 				value1 = "No JavaScript client extensions were loaded.");
 		}
 
@@ -200,8 +200,8 @@ definition {
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Client Extensions",
-				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				key_panel = "JavaScript Client Extensions",
+				locator1 = "PagesAdmin#PANEL",
 				value1 = "No JavaScript client extensions were loaded.");
 		}
 
@@ -237,8 +237,8 @@ definition {
 			Navigator.gotoNavTab(navTab = "JavaScript");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Client Extensions",
-				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				key_panel = "JavaScript Client Extensions",
+				locator1 = "PagesAdmin#PANEL",
 				value1 = "No JavaScript client extensions were loaded.");
 		}
 
@@ -463,8 +463,8 @@ definition {
 			}
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Client Extensions",
-				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				key_panel = "JavaScript Client Extensions",
+				locator1 = "PagesAdmin#PANEL",
 				value1 = "No JavaScript client extensions were loaded.");
 
 			PortletEntry.save();
@@ -536,8 +536,8 @@ definition {
 			DropdownMenuItem.click(menuItem = "Delete");
 
 			AssertTextEquals(
-				key_sectionTitle = "JavaScript Client Extensions",
-				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				key_panel = "JavaScript Client Extensions",
+				locator1 = "PagesAdmin#PANEL",
 				value1 = "No JavaScript client extensions were loaded.");
 
 			PortletEntry.save();

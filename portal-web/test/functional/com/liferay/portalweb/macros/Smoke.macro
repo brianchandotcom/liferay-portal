@@ -33,14 +33,18 @@ definition {
 		if (IsElementPresent(key_menuItem = "Configuration", locator1 = "MenuItem#DROPDOWN_MENU_ITEM")) {
 			PagesAdmin.addPage(pageName = "Test Page1");
 
-			PagesAdmin.addPage(pageName = "Test Page2");
+			PagesAdmin.addPage(
+				pageName = "Test Page2",
+				sitePageType = "Widget Page");
 
 			PagesAdmin.addPage(pageName = "Test Page3");
 		}
 		else {
 			PagesAdmin.addPublicPage(pageName = "Test Page1");
 
-			PagesAdmin.addPublicPage(pageName = "Test Page2");
+			PagesAdmin.addPublicPage(
+				pageName = "Test Page2",
+				sitePageType = "Widget Page");
 
 			PagesAdmin.addPublicPage(pageName = "Test Page3");
 		}

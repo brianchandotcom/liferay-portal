@@ -38,19 +38,19 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 	public static JSONObject get(
 		AnalyticsConfiguration analyticsConfiguration,
 		AsahSearchKeywordsConfiguration asahSearchKeywordsConfiguration,
-		long companyId, int count, String displayLanguageId, long groupId,
+		long companyId, int minCount, String displayLanguageId, long groupId,
 		int size, String sort) {
 
 		try {
 			return (JSONObject)WebCachePoolUtil.get(
 				StringBundler.concat(
 					AsahSearchKeywordsWebCacheItem.class.getName(),
-					StringPool.POUND, companyId, StringPool.POUND, count,
+					StringPool.POUND, companyId, StringPool.POUND, minCount,
 					StringPool.POUND, displayLanguageId, StringPool.POUND,
 					groupId, StringPool.POUND, sort),
 				new AsahSearchKeywordsWebCacheItem(
 					analyticsConfiguration, asahSearchKeywordsConfiguration,
-					count, displayLanguageId, groupId, size, sort));
+					minCount, displayLanguageId, groupId, size, sort));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -64,12 +64,12 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 	public AsahSearchKeywordsWebCacheItem(
 		AnalyticsConfiguration analyticsConfiguration,
 		AsahSearchKeywordsConfiguration asahSearchKeywordsConfiguration,
-		int count, String displayLanguageId, long groupId, int size,
+		int minCount, String displayLanguageId, long groupId, int size,
 		String sort) {
 
 		_analyticsConfiguration = analyticsConfiguration;
 		_asahSearchKeywordsConfiguration = asahSearchKeywordsConfiguration;
-		_count = count;
+		_minCount = minCount;
 		_displayLanguageId = displayLanguageId;
 		_groupId = groupId;
 		_size = size;
@@ -119,7 +119,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 
 		sb.append(_analyticsConfiguration.liferayAnalyticsFaroBackendURL());
 		sb.append("/api/1.0/pages/search-keywords?minCounts=");
-		sb.append(_count);
+		sb.append(_minCount);
 
 		if (!Validator.isBlank(_displayLanguageId)) {
 			sb.append("&displayLanguageId=");
@@ -160,9 +160,9 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 	private final AnalyticsConfiguration _analyticsConfiguration;
 	private final AsahSearchKeywordsConfiguration
 		_asahSearchKeywordsConfiguration;
-	private final int _count;
 	private final String _displayLanguageId;
 	private final long _groupId;
+	private final int _minCount;
 	private final int _size;
 	private final String _sort;
 

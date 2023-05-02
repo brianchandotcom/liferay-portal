@@ -92,7 +92,7 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 		JSONArray jsonArray = JSONUtil.getValueAsJSONArray(
 			AsahSearchKeywordsWebCacheItem.get(
 				analyticsConfiguration, asahSearchKeywordsConfiguration,
-				searchContext.getCompanyId(), _getCount(attributes),
+				searchContext.getCompanyId(), _getMinCount(attributes),
 				_getDisplayLanguageId(attributes, searchContext.getLocale()),
 				_getGroupId(searchContext),
 				GetterUtil.getInteger(
@@ -155,14 +155,6 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 			attributes, "characterThreshold", _CHARACTER_THRESHOLD);
 	}
 
-	private int _getCount(Map<String, Object> attributes) {
-		if (attributes == null) {
-			return _COUNT;
-		}
-
-		return MapUtil.getInteger(attributes, "count", _COUNT);
-	}
-
 	private String _getDisplayLanguageId(
 		Map<String, Object> attributes, Locale locale) {
 
@@ -183,6 +175,14 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 		}
 
 		return groupIds[0];
+	}
+
+	private int _getMinCount(Map<String, Object> attributes) {
+		if (attributes == null) {
+			return _MIN_COUNT;
+		}
+
+		return MapUtil.getInteger(attributes, "minCount", _MIN_COUNT);
 	}
 
 	private List<Suggestion> _getSuggestions(
@@ -241,7 +241,7 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 
 	private static final int _CHARACTER_THRESHOLD = 2;
 
-	private static final int _COUNT = 5;
+	private static final int _MIN_COUNT = 5;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAsahKeywordsSuggestionsContributor.class);

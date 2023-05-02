@@ -261,9 +261,10 @@ public class MBExportImportPortletPreferencesProcessor
 	)
 	private PortletDataHandler _mbPortletDataHandler;
 
-	@Reference
-	private MBRatingsExporterImporterCapability
-		_mbRatingsExporterImporterCapability;
+	@Reference(
+		target = "(component.name=com.liferay.message.boards.web.internal.exportimport.portlet.preferences.processor.MBRatingsExporterImporterCapability)"
+	)
+	private Capability _mbRatingsExporterImporterCapability;
 
 	@Reference
 	private MBThreadFlagLocalService _mbThreadFlagLocalService;

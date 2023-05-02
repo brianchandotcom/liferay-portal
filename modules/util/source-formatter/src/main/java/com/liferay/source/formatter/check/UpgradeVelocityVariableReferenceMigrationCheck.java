@@ -54,8 +54,9 @@ public class UpgradeVelocityVariableReferenceMigrationCheck
 
 				int beginCharIndex = newLine.indexOf(match) + match.length();
 
-				if (newLine.charAt(beginCharIndex) ==
-						CharPool.OPEN_PARENTHESIS) {
+				if ((newLine.length() > beginCharIndex) &&
+					(newLine.charAt(beginCharIndex) ==
+						CharPool.OPEN_PARENTHESIS)) {
 
 					newLine = _encapsulateMethodCall(
 						newLine, match, beginCharIndex);
@@ -98,7 +99,9 @@ public class UpgradeVelocityVariableReferenceMigrationCheck
 				parenthesisStack -= 1;
 				newMethodCall = false;
 
-				if (newLine.charAt(nextCharIndex + 1) == CharPool.PERIOD) {
+				if ((newLine.length() > (nextCharIndex + 1)) &&
+					(newLine.charAt(nextCharIndex + 1) == CharPool.PERIOD)) {
+
 					newMethodCall = true;
 				}
 			}
@@ -182,7 +185,9 @@ public class UpgradeVelocityVariableReferenceMigrationCheck
 		}
 
 		if ((line.charAt(0) != CharPool.LESS_THAN) &&
-			!_isAttribute(line, match)) {
+			!_isAttribute(line, match) &&
+			(StringUtil.count(line, CharPool.OPEN_PARENTHESIS) !=
+				StringUtil.count(line, CharPool.CLOSE_PARENTHESIS))) {
 
 			validReplacement = false;
 		}

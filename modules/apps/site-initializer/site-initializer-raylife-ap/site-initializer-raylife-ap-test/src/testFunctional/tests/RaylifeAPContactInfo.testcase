@@ -12,14 +12,31 @@ definition {
 	var testSiteURL = "raylife-ap";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		
+		}
 
-		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+		task ("Create a new Raylife AP Site") {
+			Site.openSitesAdmin();
 
-		Raylife.createRaylifeSite(siteName = "Raylife AP");
-	}
+			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+			Raylife.createRaylifeSite(siteName = "Raylife AP");
+
+			}
+
+		task ("Login as Scott Producer because of roles and permissions") {
+			User.logoutPG();
+
+			RaylifeAP.userLoginInRaylife(email = "scott.producer");
+
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+			
+			}
+		}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
@@ -53,11 +70,7 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Given that I go to Raylife AP") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-		}
-
-		task ("When I go to the Contact Info form") {
+		task ("Given the Contact Info form is open") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
 
 			RaylifeApplicationModal.openNewApplicationFlow(
@@ -86,8 +99,6 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given that I go to the Contact Info form") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Dashboard");
 
 			RaylifeApplicationModal.openNewApplicationFlow(

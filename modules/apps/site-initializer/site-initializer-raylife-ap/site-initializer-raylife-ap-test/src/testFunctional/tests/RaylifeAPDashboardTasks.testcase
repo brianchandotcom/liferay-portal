@@ -16,6 +16,7 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
+		
 		}
 
 		task ("Create a new Raylife AP Site") {
@@ -24,8 +25,18 @@ definition {
 			Raylife.createRaylifeSite(siteName = "Raylife D2C");
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
+
+			}
+
+		task ("Login as Scott Producer because of roles and permissions") {
+			User.logoutPG();
+
+			RaylifeAP.userLoginInRaylife(email = "scott.producer");
+
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+			
+			}
 		}
-	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
@@ -47,10 +58,6 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Go to Raylife AP Site") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-		}
-
 		task ("Go to section applications through in the subsection Tasks") {
 			RaylifeAP.clickOnSubsectionTasks(key_subsection = "Review Eligibility Reports");
 		}
@@ -66,10 +73,6 @@ definition {
 		property test.name.skip.portal.instance = "RaylifeAPDashboardTasks#ClickSubsectionPoliciesRedirectedToPolicies";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Go to Raylife AP Site") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-		}
 
 		task ("Go to section policies through in the subsection Tasks") {
 			RaylifeAP.clickOnSubsectionTasks(key_subsection = "Contact Expiring Policies");

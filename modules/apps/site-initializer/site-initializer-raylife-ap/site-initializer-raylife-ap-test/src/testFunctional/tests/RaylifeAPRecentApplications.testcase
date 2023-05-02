@@ -12,14 +12,31 @@ definition {
 	var testSiteURL = "raylife-ap";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		
+		}
 
-		Raylife.createRaylifeSite(siteName = "Raylife D2C");
+		task ("Create a new Raylife AP Site") {
+			Site.openSitesAdmin();
 
-		Raylife.createRaylifeSite(siteName = "Raylife AP");
-	}
+			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+
+			Raylife.createRaylifeSite(siteName = "Raylife AP");
+
+			}
+
+		task ("Login as Scott Producer because of roles and permissions") {
+			User.logoutPG();
+
+			RaylifeAP.userLoginInRaylife(email = "scott.producer");
+
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+			
+			}
+		}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
@@ -41,11 +58,7 @@ definition {
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
-		task ("Given Site RaylifeAP is open") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-		}
-
-		task ("When the user click in the All Applications button") {
+		task ("Given the user click in the All Applications button") {
 			RaylifeAP.clickOnAllAplications();
 		}
 
@@ -60,10 +73,6 @@ definition {
 		property test.name.skip.portal.instance = "RaylifeAPRecentApplications#CanDeleteRecentApplications";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given I go to Site RaylifeAP") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-		}
 
 		task ("Then I click on kebab menu and in the delete option and state that the entry has been deleted") {
 			RaylifeAP.clickInApplicationKebabOption(

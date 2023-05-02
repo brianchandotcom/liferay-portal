@@ -85,14 +85,14 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		throws ConfigurationException {
 
 		GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
-			openNLPDocumentAssetAutoTagProviderCompanyConfiguration =
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 						class,
 					assetEntry.getCompanyId());
 
 		return ArrayUtil.contains(
-			openNLPDocumentAssetAutoTagProviderCompanyConfiguration.
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 				enabledClassNames(),
 			assetEntry.getClassName());
 	}

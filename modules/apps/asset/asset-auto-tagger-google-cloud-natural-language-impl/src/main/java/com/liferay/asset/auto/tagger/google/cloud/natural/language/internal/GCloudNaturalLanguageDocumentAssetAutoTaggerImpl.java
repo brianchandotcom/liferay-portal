@@ -84,15 +84,15 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		}
 
 		GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration =
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 						class,
 					companyId);
 
-		if (!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+		if (!gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 				classificationEndpointEnabled() &&
-			!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
+			!gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.
 				entityEndpointEnabled()) {
 
 			return Collections.emptySet();
@@ -102,11 +102,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 			textSupplier.get(), mimeType);
 
 		Collection<String> classificationTagNames = _getClassificationTagNames(
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			documentPayload, locale);
 
 		Collection<String> entitiesTagNames = _getEntitiesTagNames(
-			gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration,
+			gCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration,
 			documentPayload, locale);
 
 		Set<String> tagNames = new HashSet<>();

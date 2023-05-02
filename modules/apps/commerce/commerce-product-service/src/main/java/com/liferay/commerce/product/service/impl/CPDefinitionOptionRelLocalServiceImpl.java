@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -329,6 +330,67 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		long cpDefinitionId, String key) {
 
 		return cpDefinitionOptionRelPersistence.fetchByC_K(cpDefinitionId, key);
+	}
+
+	@Override
+	public Map<Long, List<Long>>
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				long cpDefinitionId, boolean skuContributorsOnly,
+				JSONArray skuOptionJSONArray)
+		throws PortalException {
+
+		if (JSONUtil.isEmpty(skuOptionJSONArray)) {
+			return Collections.emptyMap();
+		}
+
+		Map<Long, List<Long>>
+			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds =
+				new HashMap<>();
+
+		for (int i = 0; i < skuOptionJSONArray.length(); i++) {
+			JSONObject skuOptionJSONObject = skuOptionJSONArray.getJSONObject(
+				i);
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				cpDefinitionOptionRelLocalService.
+					fetchCPDefinitionOptionRelByKey(
+						cpDefinitionId,
+						skuOptionJSONObject.getString("skuOptionKey"));
+
+			if ((cpDefinitionOptionRel == null) ||
+				(skuContributorsOnly &&
+				 !cpDefinitionOptionRel.isSkuContributor())) {
+
+				continue;
+			}
+
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				_cpDefinitionOptionValueRelLocalService.
+					fetchCPDefinitionOptionValueRel(
+						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						skuOptionJSONObject.getString("skuOptionValueKey"));
+
+			if (cpDefinitionOptionValueRel == null) {
+				continue;
+			}
+
+			List<Long> cpDefinitionOptionValueRelIds =
+				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.get(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+			if (cpDefinitionOptionValueRelIds == null) {
+				cpDefinitionOptionValueRelIds = new ArrayList<>();
+
+				cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.put(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					cpDefinitionOptionValueRelIds);
+			}
+
+			cpDefinitionOptionValueRelIds.add(
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		}
+
+		return cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds;
 	}
 
 	@Override

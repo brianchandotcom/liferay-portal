@@ -241,7 +241,7 @@ public class CPInstanceHelperTest {
 		CPInstance expectedCPInstance = cpDefinitionInstances.get(0);
 
 		CPInstance fetchCPInstance = _cpInstanceHelper.fetchCPInstance(
-			cpDefinition.getCPDefinitionId(), null);
+			cpDefinition.getCPDefinitionId(), StringPool.BLANK);
 
 		Assert.assertEquals(
 			"Default CP instance cpInstanceId",
@@ -260,7 +260,7 @@ public class CPInstanceHelperTest {
 			"Product instance count", 0, cpDefinitionInstances.size());
 
 		fetchCPInstance = _cpInstanceHelper.fetchCPInstance(
-			cpDefinition.getCPDefinitionId(), null);
+			cpDefinition.getCPDefinitionId(), StringPool.BLANK);
 
 		Assert.assertNull(
 			"Fetched CP instance does not exist", fetchCPInstance);

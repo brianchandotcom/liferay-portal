@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -76,6 +77,25 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public CPInstance fetchCPInstance(
+			long cpDefinitionId, JSONArray skuOptionJSONArray)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
+		if (cpDefinition.isIgnoreSKUCombinations()) {
+			return getDefaultCPInstance(cpDefinitionId);
+		}
+
+		if (JSONUtil.isEmpty(skuOptionJSONArray)) {
+			return null;
+		}
+
+		return _fetchCPInstance(cpDefinitionId, skuOptionJSONArray);
+	}
+
+	@Override
+	public CPInstance fetchCPInstance(
 			long cpDefinitionId, String serializedDDMFormValues)
 		throws PortalException {
 
@@ -90,8 +110,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return null;
 		}
 
-		return _fetchCPInstanceBySKUContributors(
-			cpDefinitionId, serializedDDMFormValues);
+		return _fetchCPInstance(cpDefinitionId, serializedDDMFormValues);
 	}
 
 	@Override
@@ -660,15 +679,15 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return new CPSkuImpl(cpInstance);
 	}
 
-	private CPInstance _fetchCPInstanceBySKUContributors(
-			long cpDefinitionId, String json)
+	private CPInstance _fetchCPInstance(
+			long cpDefinitionId, JSONArray skuOptionJSONArray)
 		throws PortalException {
 
-		int skuContributorCPDefinitionOptionRelsCount =
+		int cpDefinitionOptionRelsCount =
 			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
 				cpDefinitionId, true);
 
-		if (skuContributorCPDefinitionOptionRelsCount == 0) {
+		if (cpDefinitionOptionRelsCount == 0) {
 			return null;
 		}
 
@@ -676,10 +695,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			cpDefinitionOptionRelCPDefinitionOptionValueRelIds =
 				_cpDefinitionOptionRelLocalService.
 					getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
-						cpDefinitionId, true, json);
+						cpDefinitionId, true, skuOptionJSONArray);
 
 		if (cpDefinitionOptionRelCPDefinitionOptionValueRelIds.isEmpty() ||
-			(skuContributorCPDefinitionOptionRelsCount !=
+			(cpDefinitionOptionRelsCount !=
 				cpDefinitionOptionRelCPDefinitionOptionValueRelIds.size())) {
 
 			return null;
@@ -734,7 +753,89 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		long cpInstanceId = _getTopId(cpInstanceCPInstanceOptionValueHits);
 
-		if (skuContributorCPDefinitionOptionRelsCount !=
+		if (cpDefinitionOptionRelsCount !=
+				cpInstanceCPInstanceOptionValueHits.get(cpInstanceId)) {
+
+			return null;
+		}
+
+		return _cpInstanceLocalService.getCPInstance(cpInstanceId);
+	}
+
+	private CPInstance _fetchCPInstance(long cpDefinitionId, String json)
+		throws PortalException {
+
+		int cpDefinitionOptionRelsCount =
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+				cpDefinitionId, true);
+
+		if (cpDefinitionOptionRelsCount == 0) {
+			return null;
+		}
+
+		Map<Long, List<Long>>
+			cpDefinitionOptionRelCPDefinitionOptionValueRelIds =
+				_cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+						cpDefinitionId, true, json);
+
+		if (cpDefinitionOptionRelCPDefinitionOptionValueRelIds.isEmpty() ||
+			(cpDefinitionOptionRelsCount !=
+				cpDefinitionOptionRelCPDefinitionOptionValueRelIds.size())) {
+
+			return null;
+		}
+
+		List<CPInstanceOptionValueRel> cpDefinitionCPInstanceOptionValueRels =
+			_cpInstanceOptionValueRelLocalService.
+				getCPDefinitionCPInstanceOptionValueRels(cpDefinitionId);
+
+		Map<Long, Integer> cpInstanceCPInstanceOptionValueHits =
+			new HashMap<>();
+
+		for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
+				cpDefinitionCPInstanceOptionValueRels) {
+
+			if (!cpDefinitionOptionRelCPDefinitionOptionValueRelIds.containsKey(
+					cpInstanceOptionValueRel.getCPDefinitionOptionRelId())) {
+
+				continue;
+			}
+
+			List<Long> cpDefinitionOptionValueIds =
+				cpDefinitionOptionRelCPDefinitionOptionValueRelIds.get(
+					cpInstanceOptionValueRel.getCPDefinitionOptionRelId());
+
+			if (!cpDefinitionOptionValueIds.contains(
+					cpInstanceOptionValueRel.
+						getCPDefinitionOptionValueRelId())) {
+
+				continue;
+			}
+
+			if (cpInstanceCPInstanceOptionValueHits.containsKey(
+					cpInstanceOptionValueRel.getCPInstanceId())) {
+
+				int value = cpInstanceCPInstanceOptionValueHits.get(
+					cpInstanceOptionValueRel.getCPInstanceId());
+
+				cpInstanceCPInstanceOptionValueHits.put(
+					cpInstanceOptionValueRel.getCPInstanceId(), value + 1);
+
+				continue;
+			}
+
+			cpInstanceCPInstanceOptionValueHits.put(
+				cpInstanceOptionValueRel.getCPInstanceId(), 1);
+		}
+
+		if (cpInstanceCPInstanceOptionValueHits.isEmpty()) {
+			return null;
+		}
+
+		long cpInstanceId = _getTopId(cpInstanceCPInstanceOptionValueHits);
+
+		if (cpDefinitionOptionRelsCount !=
 				cpInstanceCPInstanceOptionValueHits.get(cpInstanceId)) {
 
 			return null;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.service.test.util;
+package com.liferay.object.internal.action.executor.test;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.portal.kernel.json.JSONObject;

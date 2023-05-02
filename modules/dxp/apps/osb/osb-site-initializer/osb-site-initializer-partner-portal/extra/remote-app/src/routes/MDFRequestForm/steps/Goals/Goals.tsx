@@ -87,7 +87,6 @@ const Goals = ({
 		return errors;
 	}, [errors]);
 
-	
 	useEffect(() => {
 		if (
 			!values.liferayBusinessSalesGoals?.includes(

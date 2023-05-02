@@ -86,10 +86,6 @@ definition {
 			object = "factorcategories",
 			objectName = "Category 1");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "productversions",
-			objectName = ${productVersion});
-
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();

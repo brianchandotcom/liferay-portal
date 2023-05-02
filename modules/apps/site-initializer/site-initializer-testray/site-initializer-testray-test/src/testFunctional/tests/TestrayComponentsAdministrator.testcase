@@ -36,10 +36,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "components",
-			objectName = ${componentName});
-
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
@@ -372,6 +368,12 @@ definition {
 			AssertElementNotPresent(
 				key_projectName = "Component 2",
 				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Delete the component") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "components",
+				objectName = "Component 2");
 		}
 	}
 

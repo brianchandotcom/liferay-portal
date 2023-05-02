@@ -140,8 +140,6 @@ definition {
 				projectName = ${projectName},
 				teamName = ${teamName});
 
-			JSONTestray.addCaseType(caseType = ${caseType});
-
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},

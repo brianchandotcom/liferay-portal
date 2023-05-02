@@ -49,8 +49,6 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			JSONTestray.addCaseType(caseType = ${caseType});
-
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -100,10 +98,6 @@ definition {
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "factorcategories",
 			objectName = "Category 1");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = ${routineName});
 
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 

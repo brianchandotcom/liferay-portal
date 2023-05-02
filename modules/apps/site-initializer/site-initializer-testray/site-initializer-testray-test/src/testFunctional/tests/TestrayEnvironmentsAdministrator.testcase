@@ -32,8 +32,6 @@ definition {
 			object = "factorcategories",
 			objectName = "Category 1");
 
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
-
 		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
@@ -82,16 +80,14 @@ definition {
 	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to add Factor Categories"
 	@priority = 5
 	test AdminCanAddCategory {
-		task ("Given I create a new 'Category' via API") {
-			JSONTestray.addFactorCategory(categoryName = ${categoryName});
-		}
-
-		task ("When I go to manage system Categories") {
+		task ("When I create a new Category") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
+
+			TestrayManage.addNewCategory(category = ${categoryName});
 		}
 
 		task ("Then I assert that the Category was created") {
@@ -163,6 +159,10 @@ definition {
 				label = ${categoryName},
 				listCategory = ${categoryName},
 				listOption = ${optionsName});
+		}
+
+		task ("Delete the project") {
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 		}
 	}
 

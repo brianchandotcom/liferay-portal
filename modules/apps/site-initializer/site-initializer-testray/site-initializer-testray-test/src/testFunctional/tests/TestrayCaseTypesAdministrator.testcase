@@ -38,22 +38,14 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify if the Administrator can Add Case Types"
 	@priority = 5
 	test AdminCanAddCaseTypes {
-		task ("Given that I create a 'Case Type' via API") {
-			JSONTestray.addCaseType(caseType = ${caseType});
-		}
-
-		task ("When I go to the manage menu") {
+		task ("When I create a Case Type") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			TestrayLayout.clickManageOnSidebar();
-		}
 
-		task ("And I select the system 'Case Types' option") {
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			TestrayManage.createNewCaseTypes(caseName = ${caseType});
 		}
 
 		task ("Then I assert that the newly created 'Case Type' is present in the list") {

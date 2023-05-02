@@ -86,10 +86,6 @@ definition {
 			objectName = ${routineName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = ${teamName});
-
-		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
 

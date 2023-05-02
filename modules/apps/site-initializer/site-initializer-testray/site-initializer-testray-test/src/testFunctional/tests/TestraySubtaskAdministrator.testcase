@@ -56,8 +56,6 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			JSONTestray.addCaseType(caseType = ${caseType});
-
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -143,10 +141,6 @@ definition {
 			objectName = ${routineName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = ${teamName});
-
-		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
 
@@ -155,6 +149,8 @@ definition {
 			objectName = "Category 1");
 
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
+
+		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 
 		Testray.testrayApisTearDown();
 

@@ -93,12 +93,10 @@ definition {
 	test AdminCanAddRoutine {
 		property test.name.skip.portal.instance = "TestrayRoutinesAdministrator#AdminCanAddRoutine";
 
-		task ("Given that the user add a new Routine") {
-			JSONTestray.addRoutine(
-				projectName = ${projectName},
-				routineName = ${routineName});
-
+		task ("When the user add a new Routine") {
 			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.createRoutine(key_name = ${routineName});
 		}
 
 		task ("Then the Routine should appear on the list") {
@@ -121,23 +119,13 @@ definition {
 
 		task ("Then the routine should appear on the list") {
 			Testray.assertItemName(text = ${routineName});
-
-			TestrayLayout.clickResultsOnSidebar();
 		}
 
 		task ("And when a routine is deleted") {
-			JSONTestrayAPI.deleteObjectViaAPI(
-				object = "routines",
-				objectName = ${routineName});
+			TestrayRoutines.deleteRoutine(itemName = ${routineName});
 		}
 
 		task ("Then the routine should not appear on the list") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
 			Testray.assertItemNotPresent(itemName = ${routineName});
 		}
 	}
@@ -160,8 +148,6 @@ definition {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
-
-			JSONTestray.addCaseType(caseType = "Case Type 1");
 
 			JSONTestray.addCases(
 				caseName = "Case 1",

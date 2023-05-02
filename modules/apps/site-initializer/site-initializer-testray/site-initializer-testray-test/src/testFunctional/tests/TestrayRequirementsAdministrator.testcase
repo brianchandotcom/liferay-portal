@@ -146,8 +146,6 @@ definition {
 	@priority = 3
 	test AdminCanLinkAndUnlinkCaseToRequirement {
 		task ("Given that a case, case type and requirement are created via API") {
-			JSONTestray.addCaseType(caseType = ${caseType});
-
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},

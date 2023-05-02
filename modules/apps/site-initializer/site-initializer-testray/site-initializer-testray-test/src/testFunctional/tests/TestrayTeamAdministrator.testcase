@@ -43,13 +43,7 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to add a Team"
 	@priority = 5
 	test AdminCanAddTeam {
-		task ("Given that a Testray team are created via API") {
-			JSONTestray.addTeam(
-				projectName = ${projectName},
-				teamName = ${teamName});
-		}
-
-		task ("When I go to the manage teams") {
+		task ("When the team are created") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -59,9 +53,11 @@ definition {
 			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(teamName = ${teamName});
 		}
 
-		task ("Then I should be able to assert that the Testray Team was created") {
+		task ("Then I should be able to assert that the Team was created") {
 			Testray.assertItemName(text = ${teamName});
 		}
 	}
@@ -69,7 +65,7 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to delete a Team"
 	@priority = 5
 	test AdminCanDeleteTeam {
-		task ("Given that a Testray team are created via API") {
+		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = ${teamName});
@@ -87,13 +83,13 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 		}
 
-		task ("When I delete the newly created Testray Team") {
+		task ("When I delete the newly created Team") {
 			TestrayManage.deleteProductVersion(
 				itemManage = "Delete",
 				versionName = ${teamName});
 		}
 
-		task ("Then I should be able to assert that the Testray Team has been deleted") {
+		task ("Then I should be able to assert that the Team has been deleted") {
 			Testray.assertItemNotPresent(text = ${teamName});
 		}
 	}
@@ -101,7 +97,7 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to edit a Team"
 	@priority = 5
 	test AdminCanEditTeam {
-		task ("Given that a Testray team are created via API") {
+		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = ${teamName});
@@ -119,13 +115,13 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 		}
 
-		task ("When I edit the Testray Team") {
+		task ("When I edit the Team") {
 			TestrayManage.editTeam(
 				currentTeamName = ${teamName},
 				newTeamName = "Team Edited");
 		}
 
-		task ("Then I should be able to assert that the Testray Team has been edited") {
+		task ("Then I should be able to assert that the Team has been edited") {
 			Testray.assertItemName(text = "Team Edited");
 		}
 	}
@@ -133,7 +129,7 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Teams"
 	@priority = 3
 	test AdminCanNotAddDuplicateTeams {
-		task ("Given that a Testray team are created via API") {
+		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = ${teamName});
@@ -151,7 +147,7 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 		}
 
-		task ("When I try to create an existing Testray Team") {
+		task ("When I try to create an existing Team") {
 			TestrayManage.createTeam(teamName = ${teamName});
 		}
 
@@ -267,7 +263,7 @@ definition {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
 		}
 
-		task ("When I try to create a Testray Team without filling in the name") {
+		task ("When I try to create a Team without filling in the name") {
 			TestrayManage.createTeam();
 		}
 

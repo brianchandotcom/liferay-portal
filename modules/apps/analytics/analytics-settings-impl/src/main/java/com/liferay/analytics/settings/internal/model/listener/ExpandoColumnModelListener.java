@@ -56,6 +56,10 @@ public class ExpandoColumnModelListener
 				String[] syncedUserFieldNames1 =
 					analyticsConfiguration.syncedUserFieldNames();
 
+				if (syncedUserFieldNames1.length == 0) {
+					return;
+				}
+
 				String[] syncedUserFieldNames2 =
 					new String[syncedUserFieldNames1.length - 1];
 

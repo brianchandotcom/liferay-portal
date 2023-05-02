@@ -1501,6 +1501,10 @@ public class PropsValues {
 	public static final String OBJECT_FIELD_ENCRYPTION_ALGORITHM =
 		PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 
+	public static boolean OBJECT_FIELD_ENCRYPTION_RESTRICTED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_RESTRICTED));
+
 	public static final String OBJECT_FIELD_ENCRYPTION_SECRET = PropsUtil.get(
 		PropsKeys.OBJECT_FIELD_ENCRYPTION_SECRET);
 

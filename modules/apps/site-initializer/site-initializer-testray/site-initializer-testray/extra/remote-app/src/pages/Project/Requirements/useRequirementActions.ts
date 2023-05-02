@@ -55,6 +55,7 @@ const useRequirementActions = ({
 				deleteResource(`/requirements/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(onSave)
+					.then(() => navigate(-1))
 					.catch(onError),
 			icon: 'trash',
 			name: i18n.translate(

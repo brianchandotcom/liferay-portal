@@ -104,6 +104,13 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		return _addCPInstance(randomSku());
 	}
 
+	@Override
+	protected Sku testPostChannelProductSkuBySkuOption_addSku(Sku sku)
+		throws Exception {
+
+		return _addCPInstance(sku);
+	}
+
 	private Sku _addCPInstance(Sku sku) throws Exception {
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 			_cpDefinitionOptionRel.getCPDefinitionOptionValueRels();

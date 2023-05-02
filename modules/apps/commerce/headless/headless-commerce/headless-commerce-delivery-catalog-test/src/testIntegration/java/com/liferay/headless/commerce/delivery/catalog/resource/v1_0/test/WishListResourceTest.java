@@ -61,12 +61,12 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 
 	@Override
 	@Test
-	public void testPatchChannelWishList() throws Exception {
+	public void testPatchWishList() throws Exception {
 		WishList postWishList = testPatchChannelWishList_addWishList();
 
 		WishList randomPatchWishList = randomPatchWishList();
 
-		wishListResource.patchChannelWishList(
+		wishListResource.patchWishList(
 			postWishList.getId(), randomPatchWishList);
 
 		WishList expectedPatchWishList = postWishList.clone();

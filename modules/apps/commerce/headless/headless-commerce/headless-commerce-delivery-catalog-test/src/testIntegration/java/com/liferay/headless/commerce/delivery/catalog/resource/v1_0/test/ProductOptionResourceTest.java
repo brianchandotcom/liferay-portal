@@ -88,22 +88,23 @@ public class ProductOptionResourceTest
 	}
 
 	@Override
-	protected ProductOption testGetChannelProductOptionsPage_addProductOption(
-			Long channelId, Long productId, ProductOption productOption)
+	protected ProductOption
+			testGetChannelProductProductOptionsPage_addProductOption(
+				Long channelId, Long productId, ProductOption productOption)
 		throws Exception {
 
 		return _addCPDefinitionOptionRel();
 	}
 
 	@Override
-	protected Long testGetChannelProductOptionsPage_getChannelId()
+	protected Long testGetChannelProductProductOptionsPage_getChannelId()
 		throws Exception {
 
 		return _commerceChannel.getCommerceChannelId();
 	}
 
 	@Override
-	protected Long testGetChannelProductOptionsPage_getProductId()
+	protected Long testGetChannelProductProductOptionsPage_getProductId()
 		throws Exception {
 
 		return _cpDefinition.getCProductId();

@@ -1,5 +1,22 @@
 # Poshi Runner Change Log
 
+## 1.0.426
+
+### Gradle
+
+* [POSHI-494](https://issues.liferay.com/browse/POSHI-494) - formatSource task is scaning all code from my project, not the poshi standalone code only.
+
+### Testing
+
+* [POSHI-523](https://issues.liferay.com/browse/POSHI-523) - Investigate reading of Poshi Files in unit tests
+
+### WebDriver
+
+* [POSHI-230](https://issues.liferay.com/browse/POSHI-230) - Update to WebDriver 4
+* [POSHI-521](https://issues.liferay.com/browse/POSHI-521) - Reimplement shadow root compatibility using WebDriver 4
+* [POSHI-524](https://issues.liferay.com/browse/POSHI-524) - Update axe core version
+* [POSHI-526](https://issues.liferay.com/browse/POSHI-526) - Fix our webdriver implemention to work with Chrome 111+ 
+
 ## 1.0.422
 
 ### Core

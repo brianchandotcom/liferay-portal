@@ -344,6 +344,24 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 
 	public static Map<Long, List<Long>>
 			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				long cpDefinitionId, boolean skuContributorsOnly,
+				com.liferay.portal.kernel.json.JSONArray skuOptionJSONArray)
+		throws PortalException {
+
+		return getService().
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+				cpDefinitionId, skuContributorsOnly, skuOptionJSONArray);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
+	 long cpDefinitionId, boolean skuContributorsOnly,
+	 JSONArray skuOptionJSONArray)}
+	 */
+	@Deprecated
+	public static Map<Long, List<Long>>
+			getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 				long cpDefinitionId, boolean skuContributorsOnly, String json)
 		throws PortalException {
 

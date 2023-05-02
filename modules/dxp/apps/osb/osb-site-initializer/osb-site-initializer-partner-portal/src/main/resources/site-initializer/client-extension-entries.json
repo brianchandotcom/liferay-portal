@@ -15,6 +15,9 @@
 	},
 	{
 		"clientExtensionEntryKey": "PARTNER-PORTAL-DEALS-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.js$]"
 		],
@@ -32,6 +35,9 @@
 	},
 	{
 		"clientExtensionEntryKey": "PARTNER-PORTAL-LEVEL-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.js$]"
 		],
@@ -49,6 +55,9 @@
 	},
 	{
 		"clientExtensionEntryKey": "PARTNER-PORTAL-MDF-REQUESTS-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.js$]"
 		],
@@ -66,6 +75,9 @@
 	},
 	{
 		"clientExtensionEntryKey": "PARTNER-PORTAL-RENEWALS-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.js$]"
 		],
@@ -83,6 +95,9 @@
 	},
 	{
 		"clientExtensionEntryKey": "PARTNER-PORTAL-REVENUE-CHART",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.css$]"
+		],
 		"elementURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-partner-portal/index.js$]"
 		],

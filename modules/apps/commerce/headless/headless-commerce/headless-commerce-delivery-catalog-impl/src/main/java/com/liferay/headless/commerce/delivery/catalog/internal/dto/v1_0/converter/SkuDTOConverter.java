@@ -42,7 +42,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
-import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuOptionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -138,7 +139,6 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				published = cpInstance.isPublished();
 				purchasable = cpInstance.isPurchasable();
 				sku = cpInstance.getSku();
-				skuOptions = _getSkuOptions(cpDefinitionOptionRelsMap);
 				weight = cpInstance.getWeight();
 				width = cpInstance.getWidth();
 
@@ -167,6 +167,18 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					() -> {
 						if (replacementCPInstance != null) {
 							return replacementCPInstance.getCPInstanceId();
+						}
+
+						return null;
+					});
+				setSkuOptions(
+					() -> {
+						if (MapUtil.isNotEmpty(cpDefinitionOptionRelsMap)) {
+							return SkuOptionUtil.getSkuOptions(
+								cpDefinitionOptionRelsMap,
+								_language.getLanguageId(
+									cpSkuDTOConverterConvertContext.
+										getLocale()));
 						}
 
 						return null;
@@ -341,41 +353,6 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		}
 
 		return price;
-	}
-
-	private SkuOption[] _getSkuOptions(
-			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionRelsMap)
-		throws Exception {
-
-		List<SkuOption> skuOptions = new ArrayList<>();
-
-		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				entry : cpDefinitionOptionRelsMap.entrySet()) {
-
-			CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
-
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				entry.getValue();
-
-			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-					cpDefinitionOptionValueRels) {
-
-				SkuOption skuOption = new SkuOption() {
-					{
-						key =
-							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-						value =
-							cpDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId();
-					}
-				};
-
-				skuOptions.add(skuOption);
-			}
-		}
-
-		return skuOptions.toArray(new SkuOption[0]);
 	}
 
 	@Reference

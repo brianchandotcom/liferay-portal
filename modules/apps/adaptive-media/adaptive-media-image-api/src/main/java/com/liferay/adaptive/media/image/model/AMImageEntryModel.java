@@ -16,7 +16,9 @@ package com.liferay.adaptive.media.image.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -35,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AMImageEntryModel
-	extends BaseModel<AMImageEntry>, ShardedModel {
+	extends BaseModel<AMImageEntry>, CTModel<AMImageEntry>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -48,6 +51,7 @@ public interface AMImageEntryModel
 	 *
 	 * @return the primary key of this am image entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -55,7 +59,40 @@ public interface AMImageEntryModel
 	 *
 	 * @param primaryKey the primary key of this am image entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this am image entry.
+	 *
+	 * @return the mvcc version of this am image entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this am image entry.
+	 *
+	 * @param mvccVersion the mvcc version of this am image entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this am image entry.
+	 *
+	 * @return the ct collection ID of this am image entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this am image entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this am image entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this am image entry.

@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.image.service.persistence;
 import com.liferay.adaptive.media.image.exception.NoSuchAMImageEntryException;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface AMImageEntryPersistence extends BasePersistence<AMImageEntry> {
+public interface AMImageEntryPersistence
+	extends BasePersistence<AMImageEntry>, CTPersistence<AMImageEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

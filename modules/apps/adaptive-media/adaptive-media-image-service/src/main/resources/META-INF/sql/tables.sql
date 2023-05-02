@@ -1,6 +1,8 @@
 create table AMImageEntry (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	amImageEntryId LONG not null primary key,
+	amImageEntryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,
@@ -9,5 +11,6 @@ create table AMImageEntry (
 	mimeType VARCHAR(75) null,
 	height INTEGER,
 	width INTEGER,
-	size_ LONG
+	size_ LONG,
+	primary key (amImageEntryId, ctCollectionId)
 );

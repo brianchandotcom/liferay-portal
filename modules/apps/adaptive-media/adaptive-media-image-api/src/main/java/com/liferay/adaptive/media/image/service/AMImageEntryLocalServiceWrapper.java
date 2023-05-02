@@ -14,7 +14,10 @@
 
 package com.liferay.adaptive.media.image.service;
 
+import com.liferay.adaptive.media.image.model.AMImageEntry;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link AMImageEntryLocalService}.
@@ -55,7 +58,7 @@ public class AMImageEntryLocalServiceWrapper
 	 file version and configuration
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry addAMImageEntry(
+	public AMImageEntry addAMImageEntry(
 			com.liferay.adaptive.media.image.configuration.
 				AMImageConfigurationEntry amImageConfigurationEntry,
 			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
@@ -78,9 +81,7 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the am image entry that was added
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry addAMImageEntry(
-		com.liferay.adaptive.media.image.model.AMImageEntry amImageEntry) {
-
+	public AMImageEntry addAMImageEntry(AMImageEntry amImageEntry) {
 		return _amImageEntryLocalService.addAMImageEntry(amImageEntry);
 	}
 
@@ -91,9 +92,7 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the new am image entry
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-		createAMImageEntry(long amImageEntryId) {
-
+	public AMImageEntry createAMImageEntry(long amImageEntryId) {
 		return _amImageEntryLocalService.createAMImageEntry(amImageEntryId);
 	}
 
@@ -138,10 +137,7 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the am image entry that was removed
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-		deleteAMImageEntry(
-			com.liferay.adaptive.media.image.model.AMImageEntry amImageEntry) {
-
+	public AMImageEntry deleteAMImageEntry(AMImageEntry amImageEntry) {
 		return _amImageEntryLocalService.deleteAMImageEntry(amImageEntry);
 	}
 
@@ -157,8 +153,7 @@ public class AMImageEntryLocalServiceWrapper
 	 * @throws PortalException if a am image entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-			deleteAMImageEntry(long amImageEntryId)
+	public AMImageEntry deleteAMImageEntry(long amImageEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _amImageEntryLocalService.deleteAMImageEntry(amImageEntryId);
@@ -312,9 +307,7 @@ public class AMImageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-		fetchAMImageEntry(long amImageEntryId) {
-
+	public AMImageEntry fetchAMImageEntry(long amImageEntryId) {
 		return _amImageEntryLocalService.fetchAMImageEntry(amImageEntryId);
 	}
 
@@ -329,8 +322,8 @@ public class AMImageEntryLocalServiceWrapper
 	 a matching adaptive media image entry could not be found
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-		fetchAMImageEntry(String configurationUuid, long fileVersionId) {
+	public AMImageEntry fetchAMImageEntry(
+		String configurationUuid, long fileVersionId) {
 
 		return _amImageEntryLocalService.fetchAMImageEntry(
 			configurationUuid, fileVersionId);
@@ -344,8 +337,8 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-		fetchAMImageEntryByUuidAndGroupId(String uuid, long groupId) {
+	public AMImageEntry fetchAMImageEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _amImageEntryLocalService.fetchAMImageEntryByUuidAndGroupId(
 			uuid, groupId);
@@ -370,9 +363,7 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the range of am image entries
 	 */
 	@Override
-	public java.util.List<com.liferay.adaptive.media.image.model.AMImageEntry>
-		getAMImageEntries(int start, int end) {
-
+	public java.util.List<AMImageEntry> getAMImageEntries(int start, int end) {
 		return _amImageEntryLocalService.getAMImageEntries(start, end);
 	}
 
@@ -384,9 +375,7 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the list of adaptive media image entries in the file version
 	 */
 	@Override
-	public java.util.List<com.liferay.adaptive.media.image.model.AMImageEntry>
-		getAMImageEntries(long fileVersionId) {
-
+	public java.util.List<AMImageEntry> getAMImageEntries(long fileVersionId) {
 		return _amImageEntryLocalService.getAMImageEntries(fileVersionId);
 	}
 
@@ -398,8 +387,8 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the matching am image entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.adaptive.media.image.model.AMImageEntry>
-		getAMImageEntriesByUuidAndCompanyId(String uuid, long companyId) {
+	public java.util.List<AMImageEntry> getAMImageEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _amImageEntryLocalService.getAMImageEntriesByUuidAndCompanyId(
 			uuid, companyId);
@@ -416,12 +405,10 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the range of matching am image entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.adaptive.media.image.model.AMImageEntry>
-		getAMImageEntriesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.adaptive.media.image.model.AMImageEntry>
-					orderByComparator) {
+	public java.util.List<AMImageEntry> getAMImageEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AMImageEntry>
+			orderByComparator) {
 
 		return _amImageEntryLocalService.getAMImageEntriesByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -463,8 +450,7 @@ public class AMImageEntryLocalServiceWrapper
 	 * @throws PortalException if a am image entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry getAMImageEntry(
-			long amImageEntryId)
+	public AMImageEntry getAMImageEntry(long amImageEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _amImageEntryLocalService.getAMImageEntry(amImageEntryId);
@@ -479,8 +465,8 @@ public class AMImageEntryLocalServiceWrapper
 	 * @throws PortalException if a matching am image entry could not be found
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-			getAMImageEntryByUuidAndGroupId(String uuid, long groupId)
+	public AMImageEntry getAMImageEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _amImageEntryLocalService.getAMImageEntryByUuidAndGroupId(
@@ -588,11 +574,28 @@ public class AMImageEntryLocalServiceWrapper
 	 * @return the am image entry that was updated
 	 */
 	@Override
-	public com.liferay.adaptive.media.image.model.AMImageEntry
-		updateAMImageEntry(
-			com.liferay.adaptive.media.image.model.AMImageEntry amImageEntry) {
-
+	public AMImageEntry updateAMImageEntry(AMImageEntry amImageEntry) {
 		return _amImageEntryLocalService.updateAMImageEntry(amImageEntry);
+	}
+
+	@Override
+	public CTPersistence<AMImageEntry> getCTPersistence() {
+		return _amImageEntryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<AMImageEntry> getModelClass() {
+		return _amImageEntryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AMImageEntry>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _amImageEntryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

@@ -32,6 +32,10 @@ public class AMImageEntryTable extends BaseTable<AMImageEntryTable> {
 
 	public static final AMImageEntryTable INSTANCE = new AMImageEntryTable();
 
+	public final Column<AMImageEntryTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<AMImageEntryTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AMImageEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AMImageEntryTable, Long> amImageEntryId = createColumn(

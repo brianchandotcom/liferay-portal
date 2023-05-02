@@ -379,6 +379,57 @@ definition {
 		return ${responseBody};
 	}
 
+	macro _addCommerceProductSku {
+		Variables.assertDefined(parameterList = "${productName},${skuName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(cost))) {
+			var cost = 0;
+		}
+
+		if (!(isSet(price))) {
+			var price = 0;
+		}
+
+		if (!(isSet(promoPrice))) {
+			var promoPrice = 0;
+		}
+
+		if (!(isSet(published))) {
+			var published = "true";
+		}
+
+		if (!(isSet(purchasable))) {
+			var purchasable = "true";
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/skus \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"cost": ${cost},
+					"price": ${price},
+					"promoPrice": ${promoPrice},
+					"published": ${published},
+					"purchasable": ${purchasable},
+					"sku": "${skuName}"
+				}'
+		''';
+
+		var responseBody = JSONCurlUtil.post(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _addDiagramPin {
 		Variables.assertDefined(parameterList = "${pinType},${position},${positionX},${positionY},${quantity},${diagram}");
 
@@ -1213,6 +1264,23 @@ definition {
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+	}
+
+	macro addCommerceProductSku {
+		Variables.assertDefined(parameterList = "${productName},${skuName}");
+
+		var responseBody = CommerceJSONProductsAPI._addCommerceProductSku(
+			cost = ${cost},
+			price = ${price},
+			productName = ${productName},
+			promoPrice = ${promoPrice},
+			published = ${published},
+			purchasable = ${purchasable},
+			skuName = ${skuName});
+
+		var skuId = JSONUtil.getWithJSONPath(${responseBody}, "$..['id']");
+
+		return ${skuId};
 	}
 
 	macro getProductIdsByName {

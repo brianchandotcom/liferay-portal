@@ -33,6 +33,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.SkuDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.SkuResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -166,6 +167,51 @@ public class SkuResourceImpl
 
 		CPInstance cpInstance = _cpInstanceHelper.fetchCPInstance(
 			cpDefinition.getCPDefinitionId(), JSONUtil.toString(jsonArray));
+
+		if (cpInstance == null) {
+			throw new NoSuchCPInstanceException();
+		}
+
+		return _skuDTOConverter.toDTO(
+			new SkuDTOConverterContext(
+				commerceContext, contextCompany.getCompanyId(), cpDefinition,
+				contextAcceptLanguage.getPreferredLocale(),
+				GetterUtil.getInteger(quantity, 1),
+				cpInstance.getCPInstanceId(), contextUriInfo, contextUser));
+	}
+
+	@Override
+	public Sku postChannelProductSkuBySkuOption(
+			Long channelId, Long productId, Long accountId, Integer quantity,
+			SkuOption[] skuOptions)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCProductException();
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
+
+		CommerceContext commerceContext = _getCommerceContext(
+			accountId, commerceChannel);
+
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+		_commerceProductViewPermission.check(
+			PermissionCheckerFactoryUtil.create(contextUser),
+			accountEntry.getAccountEntryId(), commerceChannel.getGroupId(),
+			cpDefinition.getCPDefinitionId());
+
+		JSONArray skuOptionJSONArray = JSONUtil.toJSONArray(
+			skuOptions,
+			skuOption -> _jsonFactory.createJSONObject(skuOption.toString()));
+
+		CPInstance cpInstance = _cpInstanceHelper.fetchCPInstance(
+			cpDefinition.getCPDefinitionId(), skuOptionJSONArray);
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException();

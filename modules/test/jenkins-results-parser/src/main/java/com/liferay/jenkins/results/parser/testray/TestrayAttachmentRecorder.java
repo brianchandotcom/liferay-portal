@@ -682,7 +682,7 @@ public class TestrayAttachmentRecorder {
 				portalGitWorkingDirectory.getWorkingDirectory(),
 				JenkinsResultsParserUtil.combine(
 					"workspaces/", System.getenv("TEST_WORKSPACE_NAME"),
-					"/test-results"));
+					"/poshi/test-results"));
 
 			if (workspaceTestResultsDir.exists()) {
 				testResultsDirs.add(workspaceTestResultsDir);

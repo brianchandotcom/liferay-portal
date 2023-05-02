@@ -258,10 +258,16 @@ definition {
 	macro userLoginInRaylife {
 		var passwordRaylife = "portal4all";
 		var email = "${email}@mailinator.com";
+		Navigator.openURL();
 
-		User.loginUserPG(
-			password = ${passwordRaylife},
-			userEmailAddress = ${email});
+		SignIn._signIn(
+			licenseExpired = "true",
+			userEmailAddress = ${email},
+			userPassword = ${passwordRaylife});
+
+		Button.click(button = "I Agree");
+
+		User.answerPasswordReminder();
 	}
 
 }

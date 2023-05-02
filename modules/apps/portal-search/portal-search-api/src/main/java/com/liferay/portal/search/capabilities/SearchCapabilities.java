@@ -24,6 +24,8 @@ public interface SearchCapabilities {
 
 	public boolean isCommerceSupported();
 
+	public boolean isConcurrentModeSupported();
+
 	public boolean isResultRankingsSupported();
 
 	public boolean isSearchExperiencesSupported();

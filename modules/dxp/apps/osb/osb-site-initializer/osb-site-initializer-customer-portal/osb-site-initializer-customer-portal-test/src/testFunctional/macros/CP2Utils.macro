@@ -309,7 +309,7 @@ definition {
 			category = "Object",
 			panel = "Control Panel",
 			portlet = "Account Subscription Groups");
-			
+
 		var key_status = ${status};
 
 		Search.searchCP(searchTerm = ${key_status});
@@ -319,16 +319,15 @@ definition {
 				key_accountName = ${key_status},
 				locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON");
 
-		MenuItem.click(menuItem = "View");
+			MenuItem.click(menuItem = "View");
 
-		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
-			label = "manageContactsURL",
-			value = "https://console.liferay.cloud");
+			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+				label = "manageContactsURL",
+				value = "https://console.liferay.cloud");
 
-		Click(locator1 = "Button#SAVE");
+			Click(locator1 = "Button#SAVE");
 
-		Alert.viewSuccessMessage();
-
+			Alert.viewSuccessMessage();
 		}
 	}
 

@@ -275,6 +275,78 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-140196 | Test Summary: Assert that clicking the Manage LXC - SM Users button redirects the user to another page"
+	@priority = 3
+	test CanANewPageOpenedByClickingOnManageLXCSMButton {
+		task ("Given that I add the administrator and provisioning roles to the user") {
+			Account.openAccountsAdmin();
+
+			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Provisioning",
+				accountUserName = "Test Test");
+		}
+
+		task ("And I activate the LXC - SM activation card") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			Button.click(button = "Start Project Setup");
+
+			Button.click(button = "Skip for now");
+
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+			CustomerPortal.clickAtButton(text = "Submit");
+
+			CustomerPortal.clickAtButton(text = "Done");
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
+
+			CustomerPortal.activeStatusViaDropdown(
+				dropdownItem = "Set to Active",
+				value = 001);
+
+			CP2Utils.typeLinkForTheConsoleLiferayCloud(status = "Active");
+		}
+
+		task ("And I go to the team members page") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2NavigationMenu.goToTeamMembers();
+		}
+
+		task ("When I click on the Manager LXC - SM Users button") {
+			CP2Utils.clickAtButtonManagerUsers(product = ${testproduct});
+
+			SelectWindow(locator1 = "title=Log in | DXP Cloud");
+		}
+
+		task ("Then I assert that the user was redirected to another page") {
+			AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
+
+			Navigator.closeWindow();
+		}
+
+		task ("Delete all entries") {
+			CP2Utils.tearDownForCloudEntries();
+		}
+	}
+
 	@description = "Automation ID: LPS-146292 | Test Summary: Check if there is a 'Cancel' button if the user wants to leave the process"
 	@ignore = "true"
 	@priority = 4
@@ -1045,78 +1117,6 @@ definition {
 
 		task ("Assert that the invitations were sent") {
 			Alert.viewSuccessMessage();
-		}
-	}
-
-	@description = "Story ID: LPS-140196 | Test Summary: Assert that clicking the Manage LXC - SM Users button redirects the user to another page"
-	@priority = 3
-	test CanANewPageOpenedByClickingOnManageLXCSMButton {
-		task ("Given that I add the administrator and provisioning roles to the user") {
-			Account.openAccountsAdmin();
-
-			CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Provisioning",
-				accountUserName = "Test Test");
-		}
-
-		task ("And I activate the LXC - SM activation card") {
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-			CustomerPortal.search(searchItem = ${testAccount});
-
-			CustomerPortal.enterOnProject(title = ${testAccount});
-
-			Button.click(button = "Start Project Setup");
-
-			Button.click(button = "Skip for now");
-
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
-
-			CustomerPortal.clickAtButton(text = "Submit");
-
-			CustomerPortal.clickAtButton(text = "Done");
-
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
-
-			CustomerPortal.activeStatusViaDropdown(
-				dropdownItem = "Set to Active",
-				value = 001);
-
-			CP2Utils.typeLinkForTheConsoleLiferayCloud(status = "Active");
-		}
-
-		task ("And I go to the team members page") {
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-			CustomerPortal.search(searchItem = ${testAccount});
-
-			CustomerPortal.enterOnProject(title = ${testAccount});
-
-			CP2NavigationMenu.goToTeamMembers();
-		}
-
-		task ("When I click on the Manager LXC - SM Users button") {
-			CP2Utils.clickAtButtonManagerUsers(product = ${testproduct});
-
-			SelectWindow(locator1 = "title=Log in | DXP Cloud");
-		}
-
-		task ("Then I assert that the user was redirected to another page") {
-			AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
-
-			Navigator.closeWindow();
-		}
-
-		task ("Delete all entries") {
-			CP2Utils.tearDownForCloudEntries();
 		}
 	}
 

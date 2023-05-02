@@ -112,7 +112,7 @@ public abstract class BaseProductOptionResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<ProductOption> getChannelProductOptionsPage(
+	public Page<ProductOption> getChannelProductProductOptionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("channelId")

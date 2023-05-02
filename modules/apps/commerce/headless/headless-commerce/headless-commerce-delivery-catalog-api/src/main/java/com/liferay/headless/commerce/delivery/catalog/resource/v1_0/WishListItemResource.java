@@ -65,11 +65,11 @@ public interface WishListItemResource {
 	public WishListItem getWishListItem(Long wishListItemId, Long accountId)
 		throws Exception;
 
-	public Page<WishListItem> getWishListItemsPage(
+	public Page<WishListItem> getWishlistWishListWishListItemsPage(
 			Long wishListId, Long accountId, Pagination pagination)
 		throws Exception;
 
-	public WishListItem postChannelWishListItem(
+	public WishListItem postWishlistWishListWishListItem(
 			Long wishListId, Long accountId, WishListItem wishListItem)
 		throws Exception;
 

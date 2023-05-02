@@ -137,6 +137,34 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema(example = "true")
+	public Boolean getPreselected() {
+		return preselected;
+	}
+
+	public void setPreselected(Boolean preselected) {
+		this.preselected = preselected;
+	}
+
+	@JsonIgnore
+	public void setPreselected(
+		UnsafeSupplier<Boolean, Exception> preselectedUnsafeSupplier) {
+
+		try {
+			preselected = preselectedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean preselected;
+
 	@Schema(example = "1.2")
 	public Double getPriority() {
 		return priority;
@@ -228,6 +256,16 @@ public class ProductOptionValue implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (preselected != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"preselected\": ");
+
+			sb.append(preselected);
 		}
 
 		if (priority != null) {

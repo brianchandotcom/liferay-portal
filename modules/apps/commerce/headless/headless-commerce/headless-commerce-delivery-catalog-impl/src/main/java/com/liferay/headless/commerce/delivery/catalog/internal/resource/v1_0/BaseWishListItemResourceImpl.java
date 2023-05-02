@@ -228,7 +228,7 @@ public abstract class BaseWishListItemResourceImpl
 	@javax.ws.rs.Path("/wishlists/{wishListId}/wishlist-items")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<WishListItem> getWishListItemsPage(
+	public Page<WishListItem> getWishlistWishListWishListItemsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("wishListId")
@@ -267,7 +267,7 @@ public abstract class BaseWishListItemResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public WishListItem postChannelWishListItem(
+	public WishListItem postWishlistWishListWishListItem(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("wishListId")

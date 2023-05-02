@@ -61,20 +61,22 @@ public interface WishListItemResource {
 			Long wishListItemId, Long accountId)
 		throws Exception;
 
-	public Page<WishListItem> getWishListItemsPage(
+	public Page<WishListItem> getWishlistWishListWishListItemsPage(
 			Long wishListId, Long accountId, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getWishListItemsPageHttpResponse(
-			Long wishListId, Long accountId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getWishlistWishListWishListItemsPageHttpResponse(
+				Long wishListId, Long accountId, Pagination pagination)
 		throws Exception;
 
-	public WishListItem postChannelWishListItem(
+	public WishListItem postWishlistWishListWishListItem(
 			Long wishListId, Long accountId, WishListItem wishListItem)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postChannelWishListItemHttpResponse(
-			Long wishListId, Long accountId, WishListItem wishListItem)
+	public HttpInvoker.HttpResponse
+			postWishlistWishListWishListItemHttpResponse(
+				Long wishListId, Long accountId, WishListItem wishListItem)
 		throws Exception;
 
 	public static class Builder {
@@ -487,12 +489,12 @@ public interface WishListItemResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<WishListItem> getWishListItemsPage(
+		public Page<WishListItem> getWishlistWishListWishListItemsPage(
 				Long wishListId, Long accountId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWishListItemsPageHttpResponse(
+				getWishlistWishListWishListItemsPageHttpResponse(
 					wishListId, accountId, pagination);
 
 			String content = httpResponse.getContent();
@@ -554,8 +556,9 @@ public interface WishListItemResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getWishListItemsPageHttpResponse(
-				Long wishListId, Long accountId, Pagination pagination)
+		public HttpInvoker.HttpResponse
+				getWishlistWishListWishListItemsPageHttpResponse(
+					Long wishListId, Long accountId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -603,12 +606,12 @@ public interface WishListItemResource {
 			return httpInvoker.invoke();
 		}
 
-		public WishListItem postChannelWishListItem(
+		public WishListItem postWishlistWishListWishListItem(
 				Long wishListId, Long accountId, WishListItem wishListItem)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postChannelWishListItemHttpResponse(
+				postWishlistWishListWishListItemHttpResponse(
 					wishListId, accountId, wishListItem);
 
 			String content = httpResponse.getContent();
@@ -670,8 +673,9 @@ public interface WishListItemResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postChannelWishListItemHttpResponse(
-				Long wishListId, Long accountId, WishListItem wishListItem)
+		public HttpInvoker.HttpResponse
+				postWishlistWishListWishListItemHttpResponse(
+					Long wishListId, Long accountId, WishListItem wishListItem)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

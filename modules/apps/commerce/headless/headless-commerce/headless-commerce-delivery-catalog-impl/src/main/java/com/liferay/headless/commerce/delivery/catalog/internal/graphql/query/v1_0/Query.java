@@ -392,10 +392,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductOptions(channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductProductOptions(channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public ProductOptionPage channelProductOptions(
+	public ProductOptionPage channelProductProductOptions(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("pageSize") int pageSize,
@@ -406,7 +406,7 @@ public class Query {
 			_productOptionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			productOptionResource -> new ProductOptionPage(
-				productOptionResource.getChannelProductOptionsPage(
+				productOptionResource.getChannelProductProductOptionsPage(
 					channelId, productId, Pagination.of(page, pageSize))));
 	}
 
@@ -536,12 +536,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wishListItems(accountId: ___, page: ___, pageSize: ___, wishListId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wishlistWishListWishListItems(accountId: ___, page: ___, pageSize: ___, wishListId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves wishlist items by wishListId for a specific channel and account"
 	)
-	public WishListItemPage wishListItems(
+	public WishListItemPage wishlistWishListWishListItems(
 			@GraphQLName("wishListId") Long wishListId,
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
@@ -552,21 +552,23 @@ public class Query {
 			_wishListItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			wishListItemResource -> new WishListItemPage(
-				wishListItemResource.getWishListItemsPage(
+				wishListItemResource.getWishlistWishListWishListItemsPage(
 					wishListId, accountId, Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLTypeExtension(WishList.class)
-	public class GetWishListItemsPageTypeExtension {
+	public class GetWishlistWishListWishListItemsPageTypeExtension {
 
-		public GetWishListItemsPageTypeExtension(WishList wishList) {
+		public GetWishlistWishListWishListItemsPageTypeExtension(
+			WishList wishList) {
+
 			_wishList = wishList;
 		}
 
 		@GraphQLField(
 			description = "Retrieves wishlist items by wishListId for a specific channel and account"
 		)
-		public WishListItemPage items(
+		public WishListItemPage wishlistWishListWishListItems(
 				@GraphQLName("accountId") Long accountId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -576,7 +578,7 @@ public class Query {
 				_wishListItemResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
 				wishListItemResource -> new WishListItemPage(
-					wishListItemResource.getWishListItemsPage(
+					wishListItemResource.getWishlistWishListWishListItemsPage(
 						_wishList.getId(), accountId,
 						Pagination.of(page, pageSize))));
 		}

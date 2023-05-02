@@ -85,6 +85,118 @@ public class SkuOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long key;
 
+	@Schema(example = "30130")
+	public Long getSkuOptionId() {
+		return skuOptionId;
+	}
+
+	public void setSkuOptionId(Long skuOptionId) {
+		this.skuOptionId = skuOptionId;
+	}
+
+	@JsonIgnore
+	public void setSkuOptionId(
+		UnsafeSupplier<Long, Exception> skuOptionIdUnsafeSupplier) {
+
+		try {
+			skuOptionId = skuOptionIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long skuOptionId;
+
+	@Schema(example = "Sku Option Key")
+	public String getSkuOptionKey() {
+		return skuOptionKey;
+	}
+
+	public void setSkuOptionKey(String skuOptionKey) {
+		this.skuOptionKey = skuOptionKey;
+	}
+
+	@JsonIgnore
+	public void setSkuOptionKey(
+		UnsafeSupplier<String, Exception> skuOptionKeyUnsafeSupplier) {
+
+		try {
+			skuOptionKey = skuOptionKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String skuOptionKey;
+
+	@Schema(example = "30130")
+	public Long getSkuOptionValueId() {
+		return skuOptionValueId;
+	}
+
+	public void setSkuOptionValueId(Long skuOptionValueId) {
+		this.skuOptionValueId = skuOptionValueId;
+	}
+
+	@JsonIgnore
+	public void setSkuOptionValueId(
+		UnsafeSupplier<Long, Exception> skuOptionValueIdUnsafeSupplier) {
+
+		try {
+			skuOptionValueId = skuOptionValueIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long skuOptionValueId;
+
+	@Schema(example = "Sku Option Value Key")
+	public String getSkuOptionValueKey() {
+		return skuOptionValueKey;
+	}
+
+	public void setSkuOptionValueKey(String skuOptionValueKey) {
+		this.skuOptionValueKey = skuOptionValueKey;
+	}
+
+	@JsonIgnore
+	public void setSkuOptionValueKey(
+		UnsafeSupplier<String, Exception> skuOptionValueKeyUnsafeSupplier) {
+
+		try {
+			skuOptionValueKey = skuOptionValueKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String skuOptionValueKey;
+
 	@DecimalMin("0")
 	@Schema(example = "31130")
 	public Long getValue() {
@@ -147,6 +259,54 @@ public class SkuOption implements Serializable {
 			sb.append("\"key\": ");
 
 			sb.append(key);
+		}
+
+		if (skuOptionId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuOptionId\": ");
+
+			sb.append(skuOptionId);
+		}
+
+		if (skuOptionKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuOptionKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(skuOptionKey));
+
+			sb.append("\"");
+		}
+
+		if (skuOptionValueId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuOptionValueId\": ");
+
+			sb.append(skuOptionValueId);
+		}
+
+		if (skuOptionValueKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuOptionValueKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(skuOptionValueKey));
+
+			sb.append("\"");
 		}
 
 		if (value != null) {

@@ -65,6 +65,12 @@ definition {
 		property osgi.module.configurations = "cacheEnabled=\"false\"";
 		property portal.smoke = "false";
 
+		SignIn.signInTestSetup();
+
+		Smoke.viewWelcomeContentPage();
+
+		Smoke.runSmoke();
+
 		var databaseType = PropsUtil.get("database.type");
 
 		if (${databaseType} == "hypersonic") {
@@ -74,12 +80,6 @@ definition {
 
 			AssertConsoleTextNotPresent(value1 = "No pending upgrades to run");
 		}
-
-		SignIn.signInTestSetup();
-
-		Smoke.viewWelcomeContentPage();
-
-		Smoke.runSmoke();
 	}
 
 	@priority = 4

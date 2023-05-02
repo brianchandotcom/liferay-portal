@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -94,8 +93,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			_baseSolrQueryAssemblerImpl, "_filterTranslator",
 			createSolrFilterTranslator());
-		ReflectionTestUtil.setFieldValue(
-			_baseSolrQueryAssemblerImpl, "_jsonFactory", new JSONFactoryImpl());
 
 		if (facetProcessor != null) {
 			ReflectionTestUtil.setFieldValue(

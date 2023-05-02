@@ -170,7 +170,7 @@ const yupSchema = {
 		projectId: yup.string(),
 	}),
 	project: yup.object({
-		description: yup.string().notRequired(),
+		description: yup.string().notRequired().max(280),
 		id: yup.string().notRequired(),
 		name: yup.string().required(),
 	}),

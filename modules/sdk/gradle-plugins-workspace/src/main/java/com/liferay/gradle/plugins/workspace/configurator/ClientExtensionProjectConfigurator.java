@@ -158,11 +158,9 @@ public class ClientExtensionProjectConfigurator
 					JsonNode fieldJsonNode = entry.getValue();
 
 					if (Objects.equals(fieldName, "assemble")) {
-						if (!fieldJsonNode.isNull()) {
-							_configureAssembleClientExtensionTask(
-								project, assembleClientExtensionTaskProvider,
-								(ArrayNode)fieldJsonNode, profileName);
-						}
+						_configureAssembleClientExtensionTask(
+							project, assembleClientExtensionTaskProvider,
+							fieldJsonNode, profileName);
 
 						return;
 					}
@@ -399,7 +397,13 @@ public class ClientExtensionProjectConfigurator
 
 	private void _configureAssembleClientExtensionTask(
 		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
-		ArrayNode assembleArrayNode, String profileName) {
+		JsonNode assembleJsonNode, String profileName) {
+
+		if (assembleJsonNode.isNull()) {
+			return;
+		}
+
+		ArrayNode assembleArrayNode = (ArrayNode)assembleJsonNode;
 
 		if (assembleArrayNode.isEmpty()) {
 			return;

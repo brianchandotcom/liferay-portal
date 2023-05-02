@@ -20,16 +20,19 @@ interface FDSViewSectionInterface {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
+	saveFDSFieldsURL: string;
 }
 interface FDSViewInterface {
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
+	saveFDSFieldsURL: string;
 }
 declare const FDSView: ({
 	fdsViewId,
 	fdsViewsURL,
 	namespace,
+	saveFDSFieldsURL,
 }: FDSViewInterface) => JSX.Element;
 export {FDSViewSectionInterface};
 export default FDSView;

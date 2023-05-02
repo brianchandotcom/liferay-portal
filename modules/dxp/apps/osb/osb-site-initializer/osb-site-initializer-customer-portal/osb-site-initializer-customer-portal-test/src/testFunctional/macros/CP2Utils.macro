@@ -100,6 +100,13 @@ definition {
 			value1 = ${role});
 	}
 
+	@summary = "This macro clicks on the Manager Users button for LXC - SM and AC products "
+	macro clickAtButtonManagerUsers {
+		var key_product = ${product};
+
+		Click(locator1 = "CP2Utils#BUTTON_MANAGE_USERS");
+	}
+
 	macro clickAtFilterMenu {
 		Click.pauseClickAt(
 			key_text = ${text},
@@ -280,6 +287,36 @@ definition {
 		Account.unassignUserRole(
 			accountRoleTitle = ${accountRoleTitle},
 			accountUserName = ${accountUserName});
+	}
+
+	// Workaround for LPS-149449
+
+	macro typeLinkForTheConsoleLiferayCloud {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+			
+		var key_status = ${status};
+
+		Search.searchCP(searchTerm = ${key_status});
+
+		if (IsElementPresent(key_accountName = ${key_status}, locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON")) {
+			Click(
+				key_accountName = ${key_status},
+				locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON");
+
+		MenuItem.click(menuItem = "View");
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "manageContactsURL",
+			value = "https://console.liferay.cloud");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+
+		}
 	}
 
 }

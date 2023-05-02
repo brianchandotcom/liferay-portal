@@ -187,6 +187,53 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-5918. As a buyer, I want to deselect a item in Product Compare page"
+	@priority = 3
+	test CanRemoveComparisonItemFromComparePage {
+		property portal.acceptance = "false";
+
+		task ("Given buyer user navigates to Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And multiple products are selected for comparison") {
+			FrontStore.compareProducts(products = "U-Joint,Transmission Fluid,Torque Converters");
+
+			for (var product : list "U-Joint,Transmission Fluid,Torque Converters") {
+				AssertElementPresent(
+					key_productName = ${product},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+				AssertChecked.assertCheckedNotVisible(
+					key_productName = ${product},
+					locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+			}
+		}
+
+		task ("When the buyer deselects one of the products") {
+			Click.clickAtNotVisible(
+				key_productName = "Torque Converters",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+		}
+
+		task ("Then the product is removed from the Compare page") {
+			for (var product : list "U-Joint,Transmission Fluid") {
+				AssertElementPresent(
+					key_productName = ${product},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertElementNotPresent(
+				key_productName = "Torque Converters",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+	}
+
 	@description = "COMMERCE-5915. Verify buyers can only see the max number of comparison items allowed in the Compare page."
 	@priority = 3
 	test EditMaxNumberOfComparisonItemsInComparePage {
@@ -275,15 +322,6 @@ definition {
 				key_value = 4,
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_N");
 		}
-	}
-
-	@description = "COMMERCE-5918. As a buyer, I want to deselect a item in Product Compare page"
-	@ignore = "true"
-	@priority = 3
-	test RemoveComparisonItemFromComparePage {
-
-		// TODO COMMERCE-5918 RemoveComparisonItemFromComparePage pending implementation
-
 	}
 
 	@description = "COMMERCE-5913. Verify buyers can deselect items that are being compared from the MiniCompare widget."

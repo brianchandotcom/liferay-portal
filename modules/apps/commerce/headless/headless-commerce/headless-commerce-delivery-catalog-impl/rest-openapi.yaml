@@ -508,6 +508,14 @@ components:
                     items:
                         $ref: "#/components/schemas/ProductOptionValue"
                     type: array
+                required:
+                    example: true
+                    readOnly: true
+                    type: boolean
+                skuContributor:
+                    example: true
+                    readOnly: true
+                    type: boolean
             type: object
         ProductOptionValue:
             properties:
@@ -522,6 +530,10 @@ components:
                     type: string
                 name:
                     type: string
+                preselected:
+                    example: true
+                    readOnly: true
+                    type: boolean
                 priority:
                     example: 1.2
                     format: double
@@ -697,6 +709,20 @@ components:
                     minimum: 0
                     readOnly: true
                     type: integer
+                skuOptionId:
+                    example: 30130
+                    format: int64
+                    type: integer
+                skuOptionKey:
+                    example: Sku Option Key
+                    type: string
+                skuOptionValueId:
+                    example: 30130
+                    format: int64
+                    type: integer
+                skuOptionValueKey:
+                    example: Sku Option Value Key
+                    type: string
                 value:
                     example: 31130
                     format: int64
@@ -748,7 +774,7 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    /channels:
+    "/channels":
         get:
             operationId: getChannelsPage
             parameters:
@@ -829,7 +855,7 @@ paths:
             summary: "Gets a list of channels."
             tags:
                 - Channel
-    /channels/{channelId}/products:
+    "/channels/{channelId}/products":
         get:
             description:
                 Retrieves products from selected channel.
@@ -925,7 +951,7 @@ paths:
                     description:
                         Unexpected error
             tags: ["Product"]
-    /channels/{channelId}/products/{productId}:
+    "/channels/{channelId}/products/{productId}":
         get:
             description:
                 Retrieves products from selected channel.
@@ -1005,7 +1031,7 @@ paths:
                     description:
                         Unexpected error
             tags: ["Product"]
-    /channels/{channelId}/products/{productId}/attachments:
+    "/channels/{channelId}/products/{productId}/attachments":
         get:
             operationId: getChannelProductAttachmentsPage
             parameters:
@@ -1100,7 +1126,7 @@ paths:
                         Unexpected error
             summary: Gets a list of Attachments related to a Product.
             tags: ["Attachment"]
-    /channels/{channelId}/products/{productId}/categories:
+    "/channels/{channelId}/products/{productId}/categories":
         get:
             description:
                 Gets a list of Category related to a Product.
@@ -1186,7 +1212,7 @@ paths:
                     description:
                         Unexpected error
             tags: ["Category"]
-    /channels/{channelId}/products/{productId}/images:
+    "/channels/{channelId}/products/{productId}/images":
         get:
             operationId: getChannelProductImagesPage
             parameters:
@@ -1281,7 +1307,7 @@ paths:
                         Unexpected error
             summary: Gets a list of Images related to a Product.
             tags: ["Attachment"]
-    /channels/{channelId}/products/{productId}/linked-products:
+    "/channels/{channelId}/products/{productId}/linked-products":
         get:
             operationId: getChannelProductLinkedProductsPage
             parameters:
@@ -1389,7 +1415,7 @@ paths:
             summary: Gets a list of grouped product.
             tags:
                 - LinkedProduct
-    /channels/{channelId}/products/{productId}/mapped-products:
+    "/channels/{channelId}/products/{productId}/mapped-products":
         get:
             operationId: getChannelProductMappedProductsPage
             parameters:
@@ -1501,7 +1527,7 @@ paths:
                         Unexpected error
             summary: Gets a list of mapped product.
             tags: ["MappedProduct"]
-    /channels/{channelId}/products/{productId}/pins:
+    "/channels/{channelId}/products/{productId}/pins":
         get:
             operationId: getChannelProductPinsPage
             parameters:
@@ -1613,9 +1639,9 @@ paths:
                         Unexpected error
             summary: Gets a list of pin.
             tags: ["Pin"]
-    /channels/{channelId}/products/{productId}/product-options:
+    "/channels/{channelId}/products/{productId}/product-options":
         get:
-            operationId: getChannelProductOptionsPage
+            operationId: getChannelProductProductOptionsPage
             parameters:
                 - in: path
                   explode: false
@@ -1698,7 +1724,7 @@ paths:
                         Unexpected error
             summary: Gets Product Options.
             tags: ["ProductOption"]
-    /channels/{channelId}/products/{productId}/product-specifications:
+    "/channels/{channelId}/products/{productId}/product-specifications":
         get:
             operationId: getChannelProductProductSpecificationsPage
             parameters:
@@ -1783,7 +1809,7 @@ paths:
                         Unexpected error
             summary: Gets a list of Values related to a Specification.
             tags: ["ProductSpecification"]
-    /channels/{channelId}/products/{productId}/related-products:
+    "/channels/{channelId}/products/{productId}/related-products":
         get:
             description:
                 Gets a list of Related Products of a Product.
@@ -1876,7 +1902,7 @@ paths:
                     description:
                         Unexpected error
             tags: ["RelatedProduct"]
-    /channels/{channelId}/products/{productId}/skus:
+    "/channels/{channelId}/products/{productId}/skus":
         get:
             description:
                 Retrieves products from selected channel.
@@ -2074,7 +2100,112 @@ paths:
                     description:
                         Unexpected error
             tags: ["Sku"]
-    /channels/{channelId}/wishlists:
+    "/channels/{channelId}/products/{productId}/skus/by-sku-option":
+        post:
+            description:
+                Retrieves a SKU from selected channel and product ID.
+            operationId: postChannelProductSkuBySkuOption
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  name: quantity
+                  required: false
+                  schema:
+                      description:
+                          Quantity
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/SkuOption"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/SkuOption"
+                            type: array
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                    description:
+                        Created
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Sku"]
+    "/channels/{channelId}/wishlists":
         get:
             description:
                 Retrieves wishlists for a given channel.
@@ -2234,7 +2365,7 @@ paths:
                         Unexpected error
             summary: Creates a WishList.
             tags: ["WishList"]
-    /wishlist-items/{wishListItemId}:
+    "/wishlist-items/{wishListItemId}":
         delete:
             description:
                 Deletes a wishlist item by wishListItemId.
@@ -2334,7 +2465,7 @@ paths:
                     description:
                         Unexpected error
             tags: ["WishListItem"]
-    /wishlists/{wishListId}:
+    "/wishlists/{wishListId}":
         delete:
             description:
                 Deletes a wishlist by wishListId.
@@ -2425,7 +2556,7 @@ paths:
                         Unexpected error
             tags: ["WishList"]
         patch:
-            operationId: patchChannelWishList
+            operationId: patchWishList
             parameters:
                 - in: path
                   explode: false
@@ -2492,11 +2623,11 @@ paths:
                         Unexpected error
             summary: Updates a WishList.
             tags: ["WishList"]
-    /wishlists/{wishListId}/wishlist-items:
+    "/wishlists/{wishListId}/wishlist-items":
         get:
             description:
                 Retrieves wishlist items by wishListId for a specific channel and account
-            operationId: getWishListItemsPage
+            operationId: getWishlistWishListWishListItemsPage
             parameters:
                 - in: path
                   explode: false
@@ -2575,7 +2706,7 @@ paths:
                         Unexpected error
             tags: ["WishListItem"]
         post:
-            operationId: postChannelWishListItem
+            operationId: postWishlistWishListWishListItem
             parameters:
                 - in: path
                   explode: false

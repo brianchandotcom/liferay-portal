@@ -23,6 +23,14 @@ definition {
 		}
 	}
 
+	macro assertTextNotInMySQLStatementResult {
+		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
+
+		if (contains(${sqlResults}, ${text})) {
+			fail("The MySql query result contains text: ${text}");
+		}
+	}
+
 	macro dropMySQLIndex {
 		Variables.assertDefined(parameterList = "${indexName},${tableName}");
 

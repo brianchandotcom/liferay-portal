@@ -262,4 +262,44 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Requirements in the kebab menu"
+	@priority = 3
+	test AdminCanEditRequirements {
+		task ("Given that the user go to requirement") {
+			JSONTestray.addRequirement(
+				componentName = ${componentName},
+				linkTitle = "The front page of the internet",
+				projectName = ${projectName},
+				requirementName = "Requirement Summary");
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+            PRMNavigator.goToNavItem(navItem = "Requirements");
+
+            Testray.goToProjectPage(projectName = "Requirement Summary");
+		}
+
+		task ("When the user edit the requirement through kebab") {
+			Testray.kebabMenuOption(kebabOption = "Edit Requirement");
+
+			TestrayRequirements.editRequirement(
+				componentId = "Component 1",
+				linkTitle = "The page edited",
+				linkURL = "https://reddit.com",
+				requirementName = "Requirement Edited");
+		}
+
+		task ("Then the user is redirected to the requirement page and can see the edited requirement title") {
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Cases");
+
+			TestrayHeader.assertBreadcrumbTitle(key_value = "Requirement Edited");
+		}
+
+        task ("Delete the requirement edited") {
+            JSONTestrayAPI.deleteObjectViaAPI(
+                object = "requirements",
+                objectName = "Requirement Edited");
+		}
+	}
+
 }

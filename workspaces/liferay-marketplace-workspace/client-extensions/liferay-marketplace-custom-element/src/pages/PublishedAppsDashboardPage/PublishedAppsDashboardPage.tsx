@@ -89,6 +89,7 @@ interface PublishedAppTable {
 
 export function PublishedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountsState);
+	const [catalogId, setCatalogId] = useState<number>();
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
@@ -246,6 +247,7 @@ export function PublishedAppsDashboardPage() {
 				);
 
 				if (accountCatalogId && accountCatalogId !== 0) {
+					setCatalogId(accountCatalogId);
 					const appList = await getProducts();
 
 					const appListProductIds: number[] =
@@ -258,34 +260,29 @@ export function PublishedAppsDashboardPage() {
 
 					const newAppList: AppProps[] = [];
 
-					appList.items.forEach(
-						(product, index: number) => {
-							if (product.catalogId === accountCatalogId) {
-								newAppList.push({
-									catalogId: product.catalogId,
-									externalReferenceCode:
-										product.externalReferenceCode,
-									name: product.name.en_US,
-									productId: product.productId,
-									status: product.workflowStatusInfo.label.replace(
-										/(^\w|\s\w)/g,
-										(m: string) => m.toUpperCase()
-									),
-									thumbnail: product.thumbnail,
-									type: getProductTypeFromSpecifications(
-										appListProductSpecifications[index]
-									),
-									updatedDate: formatDate(
-										product.modifiedDate
-									),
-									version:
-										getProductVersionFromSpecifications(
-											appListProductSpecifications[index]
-										),
-								});
-							}
+					appList.items.forEach((product, index: number) => {
+						if (product.catalogId === accountCatalogId) {
+							newAppList.push({
+								catalogId: product.catalogId,
+								externalReferenceCode:
+									product.externalReferenceCode,
+								name: product.name.en_US,
+								productId: product.productId,
+								status: product.workflowStatusInfo.label.replace(
+									/(^\w|\s\w)/g,
+									(m: string) => m.toUpperCase()
+								),
+								thumbnail: product.thumbnail,
+								type: getProductTypeFromSpecifications(
+									appListProductSpecifications[index]
+								),
+								updatedDate: formatDate(product.modifiedDate),
+								version: getProductVersionFromSpecifications(
+									appListProductSpecifications[index]
+								),
+							});
 						}
-					);
+					});
 
 					const commerceAccountResponse =
 						await getAccountInfoFromCommerce(selectedAccount.id);
@@ -456,7 +453,7 @@ export function PublishedAppsDashboardPage() {
 
 			{selectedNavigationItem === 'Apps' && (
 				<DashboardPage
-					buttonHref={buttonRedirectURL}
+					buttonHref={`${buttonRedirectURL}?catalogId=${catalogId}`}
 					buttonMessage="+ New App"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={appMessages}

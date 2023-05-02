@@ -4,7 +4,6 @@ import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {getCatalogId} from '../../utils/util';
 
 import './CreateNewAppPage.scss';
 
@@ -14,6 +13,11 @@ interface CreateNewAppPageProps {
 
 export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 	const [_, dispatch] = useAppContext();
+	const queryString = window.location.search;
+
+	const urlParams = new URLSearchParams(queryString);
+	
+	const catalogId = urlParams.get('catalogId');
 
 	return (
 		<div className="create-new-app-container">
@@ -91,18 +95,12 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 
 			<NewAppPageFooterButtons
 				onClickContinue={() => {
-					getCatalogId()
-						.then((catalogId: number) => {
-							dispatch({
-								payload: {
-									value: catalogId,
-								},
-								type: TYPES.UPDATE_CATALOG_ID,
-							});
-						})
-						.catch((error: string) => {
-							console.error(error);
-						});
+					dispatch({
+						payload: {
+							value: catalogId,
+						},
+						type: TYPES.UPDATE_CATALOG_ID,
+					});
 
 					onClickContinue();
 				}}

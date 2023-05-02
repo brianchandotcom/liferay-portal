@@ -1,59 +1,94 @@
-definition {
+definition {	
 
-	macro addNewNotificationTemplate {
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = ${notificationType});
-
-		Type(
-			key_text = "Name",
-			locator1 = "TextInput#ANY",
-			value1 = ${name});
-
-		Type(
-			key_text = "To",
-			locator1 = "TextInput#ANY",
-			value1 = ${entryTo});
-
-		Type(
-			key_text = "From Address",
-			locator1 = "TextInput#ANY",
-			value1 = ${fromAddress});
-
-		Type(
-			key_text = "From Name",
-			locator1 = "TextInput#ANY",
-			value1 = ${fromName});
-
-		Type(
-			key_text = "Subject",
-			locator1 = "TextInput#ANY",
-			value1 = ${subject});
-
-		if (isSet(description)) {
+	macro configureEmailNotificationTemplate {
 			Type(
-				key_text = "description",
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = ${name});
+
+			Type(
+				key_text = "To",
+				locator1 = "TextInput#ANY",
+				value1 = ${entryTo});
+
+			Type(
+				key_text = "From Address",
+				locator1 = "TextInput#ANY",
+				value1 = ${fromAddress});
+
+			Type(
+				key_text = "From Name",
+				locator1 = "TextInput#ANY",
+				value1 = ${fromName});
+
+			Type(
+				key_text = "Subject",
+				locator1 = "TextInput#ANY",
+				value1 = ${subject});
+
+			if (isSet(bcc)) {
+				Type(
+					key_text = "BCC",
+					locator1 = "TextInput#ANY",
+					value1 = ${bcc});
+			}
+
+			if (isSet(cc)) {
+				Type(
+					key_text = "CC",
+					locator1 = "TextInput#ANY",
+					value1 = ${cc});
+			}
+
+			if (isSet(description)) {
+				Type(
+					key_text = "description",
+					locator1 = "TextArea#ANY",
+					value1 = ${description});
+			}
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = ${emailBody});
+	}
+
+	macro configureUserNotificationTemplate {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = ${name});
+
+			Type(
+				key_text = "subject",
 				locator1 = "TextArea#ANY",
-				value1 = ${description});
-		}
+				value1 = ${subject});
 
-		if (isSet(cc)) {
-			Type(
-				key_text = "CC",
-				locator1 = "TextInput#ANY",
-				value1 = ${cc});
-		}
+			if (isSet(description)) {
+				Type(
+					key_text = "description",
+					locator1 = "TextArea#ANY",
+					value1 = ${description});
+			}
 
-		if (isSet(bcc)) {
-			Type(
-				key_text = "BCC",
-				locator1 = "TextInput#ANY",
-				value1 = ${bcc});
-		}
+			if (isSet(recipientType)) {
+				Click(locator1 = "ObjectAction#SELECT_OPTION_TYPE");
 
-		Type(
-			locator1 = "CKEditor#BODY_FIELD_IFRAME",
-			value1 = ${emailBody});
+				Click(
+					key_recipientType = ${recipientType},
+					locator1 = "ObjectNotifications#RECIPIENT_TYPE");
+
+				if (${recipientType} == "User") {
+					Type(
+						key_text = "Users",
+						locator1 = "TextInput#ANY",
+						value1 = ${userName});
+
+					KeyPress(
+						key_text = "Users",
+						locator1 = "TextInput#ANY",
+						value1 = "\ENTER");
+				}
+			}	
 	}
 
 	macro addNotificationTemplateAttachment {

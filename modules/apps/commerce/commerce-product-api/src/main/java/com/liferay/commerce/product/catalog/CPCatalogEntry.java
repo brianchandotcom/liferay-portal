@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.catalog;
 
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,8 @@ import java.util.List;
 public interface CPCatalogEntry {
 
 	public long getCPDefinitionId();
+
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels();
 
 	public long getCProductId();
 

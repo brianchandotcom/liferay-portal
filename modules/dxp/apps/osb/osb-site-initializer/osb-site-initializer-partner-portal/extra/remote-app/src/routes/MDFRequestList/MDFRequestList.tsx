@@ -82,7 +82,7 @@ const MDFRequestList = () => {
 			),
 		siteURL,
 		actions,
-		mutate?.listItems
+		mutate
 	);
 
 	const getTable = (

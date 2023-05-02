@@ -45,6 +45,9 @@ export default function getMDFListColumns(
 					row[MDFColumnKey.STATUS] === Status.DRAFT.name ||
 					row[MDFColumnKey.STATUS] === Status.REQUEST_MORE_INFO.name;
 
+				const currentMDFRequestHasValidStatusToDelete =
+					row[MDFColumnKey.STATUS] === Status.DRAFT.name;
+
 				if (currentValue === PermissionActionType.VIEW) {
 					previousValue.push({
 						icon: 'view',
@@ -74,6 +77,40 @@ export default function getMDFListColumns(
 									PRMPageRoute.EDIT_MDF_REQUEST
 								}/#/${row[MDFColumnKey.ID]}`
 							),
+					});
+				}
+
+				if (
+					currentValue === PermissionActionType.DELETE &&
+					currentMDFRequestHasValidStatusToDelete
+				) {
+					previousValue.push({
+						icon: 'trash',
+						key: 'delete',
+						label: ' Delete',
+						onClick: async () => {
+							try {
+								await deleteMDFRequest(
+									ResourceName.MDF_REQUEST_DXP,
+									Number(row[MDFColumnKey.ID]) as number
+								);
+
+								Liferay.Util.openToast({
+									message:
+										'MDF Request successfully deleted!',
+									title: 'Success',
+									type: 'success',
+								});
+
+								mutate(mutated);
+							} catch (error: unknown) {
+								Liferay.Util.openToast({
+									message: 'Fail to delete MDF Request',
+									title: 'Error',
+									type: 'danger',
+								});
+							}
+						},
 					});
 				}
 

@@ -92,7 +92,7 @@ export default function getMDFListColumns(
 							try {
 								await deleteMDFRequest(
 									ResourceName.MDF_REQUEST_DXP,
-									Number(row[MDFColumnKey.ID]) as number
+									Number(row[MDFColumnKey.ID])
 								);
 
 								Liferay.Util.openToast({

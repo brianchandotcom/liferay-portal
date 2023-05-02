@@ -40,6 +40,9 @@ export default function getMDFClaimListColumns(
 					row[MDFClaimColumnKey.STATUS] ===
 						Status.REQUEST_MORE_INFO.name;
 
+				const currentMDFClaimHasValidStatusToDelete =
+					row[MDFClaimColumnKey.STATUS] === Status.DRAFT.name;
+
 				if (currentValue === PermissionActionType.VIEW) {
 					previousValue.push({
 						icon: 'view',
@@ -70,6 +73,39 @@ export default function getMDFClaimListColumns(
 									row[MDFClaimColumnKey.REQUEST_ID]
 								}/mdf-claim/${row[MDFClaimColumnKey.CLAIM_ID]}`
 							),
+					});
+				}
+
+				if (
+					currentValue === PermissionActionType.DELETE &&
+					currentMDFClaimHasValidStatusToDelete
+				) {
+					previousValue.push({
+						icon: 'trash',
+						key: 'delete',
+						label: ' Delete',
+						onClick: async () => {
+							try {
+								await deleteMDFClaim(
+									ResourceName.MDF_CLAIM_DXP,
+									Number(row[MDFClaimColumnKey.CLAIM_ID])
+								);
+
+								Liferay.Util.openToast({
+									message: 'MDF Claim successfully deleted!',
+									title: 'Success',
+									type: 'success',
+								});
+
+								mutate(mutated);
+							} catch (error: unknown) {
+								Liferay.Util.openToast({
+									message: 'Fail to delete MDF Claim.',
+									title: 'Error',
+									type: 'danger',
+								});
+							}
+						},
 					});
 				}
 

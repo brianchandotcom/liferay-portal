@@ -828,9 +828,7 @@ definition {
 				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
 		}
 
-		SearchAdministration.openSearchAdmin();
-
-		Navigator.gotoNavItem(navItem = "Field Mappings");
+		SearchAdministration.openFieldMappings();
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -866,9 +864,7 @@ definition {
 			key_synonyms = "dxp, platform",
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 
-		SearchAdministration.openSearchAdmin();
-
-		Navigator.gotoNavItem(navItem = "Field Mappings");
+		SearchAdministration.openFieldMappings();
 
 		var companyId = JSONCompany.getCompanyId();
 

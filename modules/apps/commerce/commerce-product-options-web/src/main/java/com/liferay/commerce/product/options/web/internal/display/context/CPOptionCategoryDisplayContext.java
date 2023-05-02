@@ -20,7 +20,10 @@ import com.liferay.commerce.product.options.web.internal.util.CPOptionsPortletUt
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,6 +46,15 @@ public class CPOptionCategoryDisplayContext
 		_cpOptionCategoryService = cpOptionCategoryService;
 
 		setDefaultOrderByCol("priority");
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		return PortletURLBuilder.create(
+			super.getPortletURL()
+		).setMVCRenderCommandName(
+			"/cp_specification_options/view_cp_option_categories"
+		).buildPortletURL();
 	}
 
 	@Override

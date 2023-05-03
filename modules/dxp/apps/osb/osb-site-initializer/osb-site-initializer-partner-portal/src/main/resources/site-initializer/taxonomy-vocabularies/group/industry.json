@@ -1,0 +1,9 @@
+{
+	"description": "Industry vocabulary",
+	"externalReferenceCode": "PRMV003",
+	"name": "Industry",
+	"name_i18n": {
+		"en_US": "Industry"
+	},
+	"viewableBy": "Anyone"
+}

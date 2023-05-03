@@ -648,6 +648,34 @@ public class PriceEntry implements Serializable {
 	@NotNull
 	protected Long priceListId;
 
+	@Schema(example = "true")
+	public Boolean getPriceOnApplication() {
+		return priceOnApplication;
+	}
+
+	public void setPriceOnApplication(Boolean priceOnApplication) {
+		this.priceOnApplication = priceOnApplication;
+	}
+
+	@JsonIgnore
+	public void setPriceOnApplication(
+		UnsafeSupplier<Boolean, Exception> priceOnApplicationUnsafeSupplier) {
+
+		try {
+			priceOnApplication = priceOnApplicationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean priceOnApplication;
+
 	@Schema
 	@Valid
 	public Product getProduct() {
@@ -1043,6 +1071,16 @@ public class PriceEntry implements Serializable {
 			sb.append("\"priceListId\": ");
 
 			sb.append(priceListId);
+		}
+
+		if (priceOnApplication != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceOnApplication\": ");
+
+			sb.append(priceOnApplication);
 		}
 
 		if (product != null) {

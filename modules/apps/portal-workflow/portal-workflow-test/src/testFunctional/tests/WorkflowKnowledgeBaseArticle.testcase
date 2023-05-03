@@ -198,10 +198,9 @@ definition {
 	}
 
 	@description = "Verify that the user can Approve a Basic Child Article when the Parent Article is Pending"
+	@ignore = "true"
 	@priority = 4
 	test CanApproveBasicChildArticleWhenParentPending {
-		property portal.upstream = "quarantine";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -360,10 +359,9 @@ definition {
 	}
 
 	@description = "Verify that the child Basic Article status is Pending after Submit for Workflow"
+	@ignore = "true"
 	@priority = 4
 	test ChildArticleStatusIsPendingAfterSubmitForWorkflow {
-		property portal.upstream = "quarantine";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(

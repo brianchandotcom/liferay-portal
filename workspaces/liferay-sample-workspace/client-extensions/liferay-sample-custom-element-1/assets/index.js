@@ -28,15 +28,15 @@
 			this.value = 0;
 
 			this.counter = document.createElement('span');
-			this.counter.setAttribute("class", "counter");
+			this.counter.setAttribute('class', 'counter');
 			this.counter.innerText = this.value;
 
 			this.decrementButton = document.createElement('button');
-			this.decrementButton.setAttribute("class", "decrement");
+			this.decrementButton.setAttribute('class', 'decrement');
 			this.decrementButton.innerText = '-';
 
 			this.incrementButton = document.createElement('button');
-			this.incrementButton.setAttribute("class", "increment");
+			this.incrementButton.setAttribute('class', 'increment');
 			this.incrementButton.innerText = '+';
 
 			const style = document.createElement('style');
@@ -58,8 +58,8 @@
 			this.updateRoute();
 
 			const root = document.createElement('div');
-			
-			root.setAttribute("class", "portlet-container");
+
+			root.setAttribute('class', 'portlet-container');
 			root.appendChild(style);
 			root.appendChild(this.decrementButton);
 			root.appendChild(this.incrementButton);

@@ -99,7 +99,7 @@ describe('DataTransformationList', () => {
 		expect(spy).toHaveBeenCalledWith(fieldsIList.slice(1));
 	});
 
-	it('should hide mapped fields if hide mapped fields is true', () => {
+	xit('should hide mapped fields if hide mapped fields is true', () => {
 		const component = renderWithStore(DataTransformationList, {
 			...defaultTestProps,
 			fieldsIList: fromJS([

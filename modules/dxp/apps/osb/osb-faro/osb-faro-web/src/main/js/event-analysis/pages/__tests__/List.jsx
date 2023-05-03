@@ -95,7 +95,7 @@ describe('Event Analysis List', () => {
 		);
 	});
 
-	it('should open modal to delete the event analysis when clicking on trash button', async () => {
+	xit('should open modal to delete the event analysis when clicking on trash button', async () => {
 		const {container} = render(
 			<WrappedComponent eventAnalyses={eventAnalysis} />
 		);

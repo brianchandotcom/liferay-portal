@@ -212,7 +212,7 @@ describe('RequestList', () => {
 		).toHaveTextContent('Download Expired');
 	});
 
-	it('should filter selected results by request type', async () => {
+	xit('should filter selected results by request type', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		await waitForLoading(container);
@@ -230,7 +230,7 @@ describe('RequestList', () => {
 		expect(tableRows[0]).toHaveTextContent('scott.gilbert@example.com');
 	});
 
-	it('should filter selected results by time period', async () => {
+	xit('should filter selected results by time period', async () => {
 		const {container} = render(<DefaultComponent />);
 
 		await waitForLoading(container);

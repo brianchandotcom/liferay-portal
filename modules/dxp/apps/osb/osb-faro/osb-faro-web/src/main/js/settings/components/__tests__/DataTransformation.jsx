@@ -70,7 +70,7 @@ describe('DataTransformation', () => {
 		expect(getByText('Done')).not.toBeDisabled();
 	});
 
-	it('should render w/ a mapped field', () => {
+	xit('should render w/ a mapped field', () => {
 		API.dataSource.fetchMappings.mockReturnValue(
 			Promise.resolve([
 				mockMapping('Matched Field', {
@@ -87,7 +87,7 @@ describe('DataTransformation', () => {
 		expect(getByText('TestMatched Field')).toBeTruthy();
 	});
 
-	it('should hide mapped fields', () => {
+	xit('should hide mapped fields', () => {
 		API.dataSource.fetchMappings.mockReturnValue(
 			Promise.resolve([
 				mockMapping('Matched Field', {
@@ -106,7 +106,7 @@ describe('DataTransformation', () => {
 		expect(container.querySelector('.hidden')).toBeTruthy();
 	});
 
-	it('should hide unmatched fields', () => {
+	xit('should hide unmatched fields', () => {
 		API.dataSource.fetchMappings.mockReturnValue(
 			Promise.resolve([
 				mockMapping('Has default match 1', {

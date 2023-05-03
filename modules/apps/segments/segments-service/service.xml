@@ -175,8 +175,7 @@
 
 		<column name="segmentsEntryId" type="long" />
 		<column name="segmentsExperienceKey" type="String" />
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
+		<column name="plid" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column name="priority" type="int" />
 		<column name="active" type="boolean" />
@@ -197,52 +196,44 @@
 		<finder name="SegmentsEntryId" return-type="Collection">
 			<finder-column name="segmentsEntryId" />
 		</finder>
-		<finder name="G_C_C" return-type="Collection">
+		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 		</finder>
-		<finder name="G_S_C_C" return-type="Collection">
+		<finder name="G_S_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsEntryId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 		</finder>
-		<finder name="G_SEK_C_C" return-type="SegmentsExperience" unique="true">
+		<finder name="G_SEK_P" return-type="SegmentsExperience" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsExperienceKey" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 		</finder>
-		<finder name="G_C_C_P" return-type="SegmentsExperience" unique="true">
+		<finder name="G_P_P" return-type="SegmentsExperience" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 			<finder-column name="priority" />
 		</finder>
-		<finder name="G_C_C_GtP" return-type="Collection">
+		<finder name="G_P_GtP" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 			<finder-column comparator="&gt;" name="priority" />
 		</finder>
-		<finder name="G_C_C_LtP" return-type="Collection">
+		<finder name="G_P_LtP" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 			<finder-column comparator="&lt;" name="priority" />
 		</finder>
-		<finder name="G_C_C_A" return-type="Collection">
+		<finder name="G_P_A" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 			<finder-column name="active" />
 		</finder>
-		<finder name="G_S_C_C_A" return-type="Collection">
+		<finder name="G_S_P_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="segmentsEntryId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column name="plid" />
 			<finder-column name="active" />
 		</finder>
 	</entity>

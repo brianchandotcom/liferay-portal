@@ -512,13 +512,19 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 						priceEntry.getExpirationDate(),
 						serviceContext.getTimeZone());
 
+				boolean priceOnApplication = false;
+
+				if (priceList.getCatalogBasePriceList()) {
+					priceOnApplication = GetterUtil.getBoolean(
+						priceEntry.getPriceOnApplication());
+				}
+
 				CommercePriceEntry commercePriceEntry =
 					_commercePriceEntryService.addOrUpdateCommercePriceEntry(
 						priceEntry.getExternalReferenceCode(),
 						GetterUtil.getLong(priceEntry.getPriceEntryId()),
 						GetterUtil.getLong(priceEntry.getSkuId()), null,
 						commercePriceList.getCommercePriceListId(),
-						BigDecimal.valueOf(priceEntry.getPrice()),
 						priceEntry.getDiscountDiscovery(),
 						priceEntry.getDiscountLevel1(),
 						priceEntry.getDiscountLevel2(),
@@ -535,6 +541,8 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 						expirationDateConfig.getMinute(),
 						GetterUtil.getBoolean(
 							priceEntry.getNeverExpire(), true),
+						BigDecimal.valueOf(priceEntry.getPrice()),
+						priceOnApplication,
 						priceEntry.getSkuExternalReferenceCode(),
 						serviceContext);
 

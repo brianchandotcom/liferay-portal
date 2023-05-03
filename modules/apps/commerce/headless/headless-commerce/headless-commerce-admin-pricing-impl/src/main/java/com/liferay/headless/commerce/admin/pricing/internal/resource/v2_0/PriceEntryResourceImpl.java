@@ -272,12 +272,18 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			priceEntry.getExpirationDate(), serviceContext.getTimeZone());
 
+		boolean priceOnApplication = false;
+
+		if (commercePriceList.isCatalogBasePriceList()) {
+			priceOnApplication = GetterUtil.getBoolean(
+				priceEntry.getPriceOnApplication());
+		}
+
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.addOrUpdateCommercePriceEntry(
 				priceEntry.getExternalReferenceCode(),
 				GetterUtil.getLong(priceEntry.getPriceEntryId()), cProductId,
 				cpInstanceUuid, commercePriceList.getCommercePriceListId(),
-				BigDecimal.valueOf(priceEntry.getPrice()),
 				GetterUtil.getBoolean(priceEntry.getDiscountDiscovery(), true),
 				priceEntry.getDiscountLevel1(), priceEntry.getDiscountLevel2(),
 				priceEntry.getDiscountLevel3(), priceEntry.getDiscountLevel4(),
@@ -288,6 +294,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
 				GetterUtil.getBoolean(priceEntry.getNeverExpire(), true),
+				BigDecimal.valueOf(priceEntry.getPrice()), priceOnApplication,
 				priceEntry.getSkuExternalReferenceCode(), serviceContext);
 
 		// Update nested resources
@@ -370,14 +377,38 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			priceEntry.getExpirationDate(), serviceContext.getTimeZone());
 
+		boolean priceOnApplication = false;
+
+		CommercePriceList commercePriceList =
+			commercePriceEntry.getCommercePriceList();
+
+		if (commercePriceList.isCatalogBasePriceList()) {
+			priceOnApplication = GetterUtil.getBoolean(
+				priceEntry.getPriceOnApplication(),
+				commercePriceEntry.isPriceOnApplication());
+		}
+
 		commercePriceEntry =
 			_commercePriceEntryService.updateCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(),
-				BigDecimal.valueOf(priceEntry.getPrice()),
-				priceEntry.getDiscountDiscovery(),
-				priceEntry.getDiscountLevel1(), priceEntry.getDiscountLevel2(),
-				priceEntry.getDiscountLevel3(), priceEntry.getDiscountLevel4(),
-				GetterUtil.getBoolean(priceEntry.getBulkPricing(), true),
+				GetterUtil.getBoolean(
+					priceEntry.getBulkPricing(),
+					commercePriceEntry.isBulkPricing()),
+				GetterUtil.getBoolean(
+					priceEntry.getDiscountDiscovery(),
+					commercePriceEntry.isDiscountDiscovery()),
+				(BigDecimal)GetterUtil.get(
+					priceEntry.getDiscountLevel1(),
+					commercePriceEntry.getDiscountLevel1()),
+				(BigDecimal)GetterUtil.get(
+					priceEntry.getDiscountLevel2(),
+					commercePriceEntry.getDiscountLevel2()),
+				(BigDecimal)GetterUtil.get(
+					priceEntry.getDiscountLevel3(),
+					commercePriceEntry.getDiscountLevel3()),
+				(BigDecimal)GetterUtil.get(
+					priceEntry.getDiscountLevel4(),
+					commercePriceEntry.getDiscountLevel4()),
 				displayDateConfig.getMonth(), displayDateConfig.getDay(),
 				displayDateConfig.getYear(), displayDateConfig.getHour(),
 				displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
@@ -385,7 +416,9 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
 				GetterUtil.getBoolean(priceEntry.getNeverExpire(), true),
-				serviceContext);
+				(BigDecimal)GetterUtil.get(
+					priceEntry.getPrice(), commercePriceEntry.getPrice()),
+				priceOnApplication, serviceContext);
 
 		// Update nested resources
 

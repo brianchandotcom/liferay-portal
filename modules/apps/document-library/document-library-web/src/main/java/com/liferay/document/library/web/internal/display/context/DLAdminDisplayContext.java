@@ -535,8 +535,24 @@ public class DLAdminDisplayContext {
 		}
 	}
 
+	private Filter _getAssetTagNamesFilter(String[] assetTagNames) {
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return null;
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (String assetTagName : assetTagNames) {
+			booleanFilter.addTerm(
+				Field.ASSET_TAG_NAMES, assetTagName, BooleanClauseOccur.MUST);
+		}
+
+		return booleanFilter;
+	}
+
 	private BooleanClause<Query>[] _getBooleanClauses(
-		String[] extensions, long fileEntryTypeId, long userId) {
+		String[] assetTagNames, String[] extensions, long fileEntryTypeId,
+		long userId) {
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -549,6 +565,12 @@ public class DLAdminDisplayContext {
 		if (ArrayUtil.isNotEmpty(extensions)) {
 			booleanFilter.add(
 				_getExtensionsFilter(extensions), BooleanClauseOccur.MUST);
+		}
+
+		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+			booleanFilter.add(
+				_getAssetTagNamesFilter(assetTagNames),
+				BooleanClauseOccur.MUST);
 		}
 
 		if (userId > 0) {
@@ -652,7 +674,8 @@ public class DLAdminDisplayContext {
 
 			searchContext.setAttribute("status", status);
 			searchContext.setBooleanClauses(
-				_getBooleanClauses(extensions, fileEntryTypeId, userId));
+				_getBooleanClauses(
+					assetTagIds, extensions, fileEntryTypeId, userId));
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				searchContext.setFolderIds(new long[] {folderId});

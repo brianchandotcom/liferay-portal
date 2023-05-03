@@ -34,11 +34,12 @@ public class CPFriendlyURLImpl implements CPFriendlyURL {
 
 	@Override
 	public String getAssetCategoryURLSeparator(long companyId) {
-		CPFriendlyURLConfiguration cpURLConfiguration =
+		CPFriendlyURLConfiguration cpFriendlyURLConfiguration =
 			_getCPFriendlyURLConfiguration(companyId);
 
 		return StringPool.SLASH +
-			cpURLConfiguration.assetCategoryURLSeparator() + StringPool.SLASH;
+			cpFriendlyURLConfiguration.assetCategoryURLSeparator() +
+				StringPool.SLASH;
 	}
 
 	@Override

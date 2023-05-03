@@ -51,16 +51,14 @@ public class SkuSubscriptionConfigurationResourceTest
 			_addSkuSubscriptionConfiguration(
 				randomSkuSubscriptionConfiguration());
 
-		SkuSubscriptionConfiguration
-			getSkuByExternalReferenceCodeSubscriptionConfiguration =
-				skuSubscriptionConfigurationResource.
-					getIdSkuSubscriptionConfiguration(
-						_cpInstance.getCPInstanceId());
+		SkuSubscriptionConfiguration idSkuSubscriptionConfiguration =
+			skuSubscriptionConfigurationResource.
+				getIdSkuSubscriptionConfiguration(
+					_cpInstance.getCPInstanceId());
 
-		assertValid(getSkuByExternalReferenceCodeSubscriptionConfiguration);
+		assertValid(idSkuSubscriptionConfiguration);
 		assertEquals(
-			addSkuSubscriptionConfiguration,
-			getSkuByExternalReferenceCodeSubscriptionConfiguration);
+			addSkuSubscriptionConfiguration, idSkuSubscriptionConfiguration);
 	}
 
 	@Override
@@ -73,15 +71,15 @@ public class SkuSubscriptionConfigurationResourceTest
 				randomSkuSubscriptionConfiguration());
 
 		SkuSubscriptionConfiguration
-			getSkuByExternalReferenceCodeSubscriptionConfiguration =
+			skuByExternalReferenceCodeSkuSubscriptionConfiguration =
 				skuSubscriptionConfigurationResource.
 					getSkuByExternalReferenceCodeSkuSubscriptionConfiguration(
 						_cpInstance.getExternalReferenceCode());
 
-		assertValid(getSkuByExternalReferenceCodeSubscriptionConfiguration);
+		assertValid(skuByExternalReferenceCodeSkuSubscriptionConfiguration);
 		assertEquals(
 			addSkuSubscriptionConfiguration,
-			getSkuByExternalReferenceCodeSubscriptionConfiguration);
+			skuByExternalReferenceCodeSkuSubscriptionConfiguration);
 	}
 
 	@Override

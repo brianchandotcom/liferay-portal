@@ -480,12 +480,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			product.getExpirationDate(), serviceContext.getTimeZone());
 
-		ProductShippingConfiguration shippingConfiguration =
+		ProductShippingConfiguration productShippingConfiguration =
 			_getProductShippingConfiguration(product);
-		ProductSubscriptionConfiguration subscriptionConfiguration =
+		ProductSubscriptionConfiguration productSubscriptionConfiguration =
 			_getProductSubscriptionConfiguration(product);
-		ProductTaxConfiguration taxConfiguration = _getProductTaxConfiguration(
-			product);
+		ProductTaxConfiguration productTaxConfiguration =
+			_getProductTaxConfiguration(product);
 
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
@@ -578,31 +578,35 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			LanguageUtils.getLocalizedMap(metaDescriptionMap),
 			LanguageUtils.getLocalizedMap(metaKeywordsMap),
 			product.getProductType(), ignoreSKUCombinations,
-			GetterUtil.getBoolean(shippingConfiguration.getShippable(), true),
 			GetterUtil.getBoolean(
-				shippingConfiguration.getFreeShipping(), true),
+				productShippingConfiguration.getShippable(), true),
 			GetterUtil.getBoolean(
-				shippingConfiguration.getShippingSeparately(), true),
-			GetterUtil.getDouble(shippingConfiguration.getShippingExtraPrice()),
-			GetterUtil.getDouble(shippingConfiguration.getWidth()),
-			GetterUtil.getDouble(shippingConfiguration.getHeight()),
-			GetterUtil.getDouble(shippingConfiguration.getDepth()),
-			GetterUtil.getDouble(shippingConfiguration.getWeight()),
-			GetterUtil.getLong(taxConfiguration.getId()),
-			ProductUtil.isTaxExempt(null, taxConfiguration), false, null, true,
-			displayDateConfig.getMonth(), displayDateConfig.getDay(),
+				productShippingConfiguration.getFreeShipping(), true),
+			GetterUtil.getBoolean(
+				productShippingConfiguration.getShippingSeparately(), true),
+			GetterUtil.getDouble(
+				productShippingConfiguration.getShippingExtraPrice()),
+			GetterUtil.getDouble(productShippingConfiguration.getWidth()),
+			GetterUtil.getDouble(productShippingConfiguration.getHeight()),
+			GetterUtil.getDouble(productShippingConfiguration.getDepth()),
+			GetterUtil.getDouble(productShippingConfiguration.getWeight()),
+			GetterUtil.getLong(productTaxConfiguration.getId()),
+			ProductUtil.isTaxExempt(null, productTaxConfiguration), false, null,
+			true, displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
 			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.getBoolean(product.getNeverExpire(), true),
 			product.getDefaultSku(),
-			GetterUtil.getBoolean(subscriptionConfiguration.getEnable()),
-			GetterUtil.getInteger(subscriptionConfiguration.getLength(), 1),
+			GetterUtil.getBoolean(productSubscriptionConfiguration.getEnable()),
+			GetterUtil.getInteger(
+				productSubscriptionConfiguration.getLength(), 1),
 			GetterUtil.getString(
-				subscriptionConfiguration.getSubscriptionTypeAsString()),
+				productSubscriptionConfiguration.getSubscriptionTypeAsString()),
 			null,
-			GetterUtil.getLong(subscriptionConfiguration.getNumberOfLength()),
+			GetterUtil.getLong(
+				productSubscriptionConfiguration.getNumberOfLength()),
 			productStatus, serviceContext);
 
 		if ((product.getActive() != null) && !product.getActive()) {
@@ -711,11 +715,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	private ProductShippingConfiguration _getProductShippingConfiguration(
 		Product product) {
 
-		ProductShippingConfiguration shippingConfiguration =
+		ProductShippingConfiguration productShippingConfiguration =
 			product.getShippingConfiguration();
 
-		if (shippingConfiguration != null) {
-			return shippingConfiguration;
+		if (productShippingConfiguration != null) {
+			return productShippingConfiguration;
 		}
 
 		return new ProductShippingConfiguration();
@@ -724,11 +728,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	private ProductSubscriptionConfiguration
 		_getProductSubscriptionConfiguration(Product product) {
 
-		ProductSubscriptionConfiguration subscriptionConfiguration =
+		ProductSubscriptionConfiguration productSubscriptionConfiguration =
 			product.getSubscriptionConfiguration();
 
-		if (subscriptionConfiguration != null) {
-			return subscriptionConfiguration;
+		if (productSubscriptionConfiguration != null) {
+			return productSubscriptionConfiguration;
 		}
 
 		return new ProductSubscriptionConfiguration();
@@ -737,11 +741,11 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 	private ProductTaxConfiguration _getProductTaxConfiguration(
 		Product product) {
 
-		ProductTaxConfiguration taxConfiguration =
+		ProductTaxConfiguration productTaxConfiguration =
 			product.getTaxConfiguration();
 
-		if (taxConfiguration != null) {
-			return taxConfiguration;
+		if (productTaxConfiguration != null) {
+			return productTaxConfiguration;
 		}
 
 		return new ProductTaxConfiguration();

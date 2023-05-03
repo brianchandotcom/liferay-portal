@@ -1,0 +1,17 @@
+{
+	"friendlyURL": "/marketing/industries",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Industries"
+	},
+	"permissions": [
+		{
+			"actionIds": [],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

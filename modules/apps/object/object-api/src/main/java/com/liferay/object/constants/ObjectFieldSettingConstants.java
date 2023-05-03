@@ -50,13 +50,19 @@ public class ObjectFieldSettingConstants {
 	public static final String NAME_STORAGE_DL_FOLDER_PATH =
 		"storageDLFolderPath";
 
+	public static final String NAME_TIME_STORAGE = "timeStorage";
+
 	public static final String NAME_UNIQUE_VALUES = "uniqueValues";
+
+	public static final String VALUE_CONVERT_TO_UTC = "convertToUTC";
 
 	public static final String VALUE_DOCS_AND_MEDIA = "documentsAndMedia";
 
 	public static final String VALUE_EXPRESSION_BUILDER = "expressionBuilder";
 
 	public static final String VALUE_INPUT_AS_VALUE = "inputAsValue";
+
+	public static final String VALUE_USE_INPUT_AS_ENTERED = "useInputAsEntered";
 
 	public static final String VALUE_USER_COMPUTER = "userComputer";
 

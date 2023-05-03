@@ -1,0 +1,74 @@
+@component-name = "liferay-sample-workspace"
+definition {
+
+	property custom.properties = "feature.flag.LPS-166479=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
+	property testray.main.component.name = "Liferay Sample Workspace";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Custom Element 1"
+	@priority = 4
+	test LiferaySampleCustomElement1Smoke {
+		property workspaces.client.extension.names = "liferay-sample-custom-element-1";
+
+		task ("Create a new widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Add the Liferay Sample Custom Element 1 widget to the page") {
+			Portlet.addPG(portletName = "Liferay Sample Custom Element 1");
+		}
+
+		task ("Assert the widget's increment button works") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_COUNTER",
+				value1 = 0);
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_INCREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_INCREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_INCREMENT_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_COUNTER",
+				value1 = 3);
+		}
+
+		task ("Assert the widget's increment button works") {
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_COUNTER",
+				value1 = "-1");
+		}
+	}
+
+}

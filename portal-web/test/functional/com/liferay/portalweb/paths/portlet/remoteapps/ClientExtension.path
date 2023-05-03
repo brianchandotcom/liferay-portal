@@ -116,6 +116,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAMPLE_CUSTOM_ELEMENT_1_COUNTER</td>
+	<td>css=vanilla-counter>>>.counter</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON</td>
+	<td>css=vanilla-counter>>>.decrement</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAMPLE_CUSTOM_ELEMENT_1_INCREMENT_BUTTON</td>
+	<td>css=vanilla-counter>>>.increment</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_THEME_SPRITEMAP_CLIENT_EXTENSION</td>
 	<td>//dl[contains(@class, "list-group")]//dd[@data-qa-id="row"][contains(@data-value,'${key_text}')]//div[@data-qa-id="rowItemContent"]</td>
 	<td></td>

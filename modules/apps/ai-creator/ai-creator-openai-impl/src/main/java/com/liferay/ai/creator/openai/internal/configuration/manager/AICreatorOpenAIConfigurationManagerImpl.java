@@ -19,6 +19,7 @@ import com.liferay.ai.creator.openai.configuration.AICreatorOpenAIGroupConfigura
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -96,6 +97,20 @@ public class AICreatorOpenAIConfigurationManagerImpl
 		}
 
 		return false;
+	}
+
+	@Override
+	public void saveAICreatorOpenAICompanyConfiguration(
+			long companyId, String apiKey, boolean enabled)
+		throws ConfigurationException {
+
+		_configurationProvider.saveCompanyConfiguration(
+			AICreatorOpenAICompanyConfiguration.class, companyId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"apiKey", apiKey
+			).put(
+				"enableOpenAIToCreateContent", enabled
+			).build());
 	}
 
 	@Reference

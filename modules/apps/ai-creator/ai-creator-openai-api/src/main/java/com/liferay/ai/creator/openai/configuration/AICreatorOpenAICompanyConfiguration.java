@@ -22,7 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Lourdes Fernández Besada
  */
 @ExtendedObjectClassDefinition(
-	category = "ai-creator", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "ai-creator", generateUI = false,
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration",

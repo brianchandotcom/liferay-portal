@@ -288,6 +288,16 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			];
 
 			if (fdsView.fdsFiltersOrder) {
+				const order = fdsView.fdsFiltersOrder.split(',');
+
+				let notOrdered: Filter[] = [];
+
+				if (filtersOrdered.length > order.length) {
+					notOrdered = filtersOrdered.filter(
+						(filter) => !order.includes(String(filter.id))
+					);
+				}
+
 				filtersOrdered = fdsView.fdsFiltersOrder
 					.split(',')
 					.map((fdsFilterId) =>
@@ -296,6 +306,8 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 						)
 					)
 					.filter(Boolean) as Filter[];
+
+				filtersOrdered = [...filtersOrdered, ...notOrdered];
 			}
 
 			setFilters(filtersOrdered);
@@ -303,9 +315,6 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 		getFields(fdsView).then((newFields) => {
 			if (newFields) {
-
-				// This is temporary since we are only adding date filters for now
-
 				setFields(newFields);
 			}
 		});

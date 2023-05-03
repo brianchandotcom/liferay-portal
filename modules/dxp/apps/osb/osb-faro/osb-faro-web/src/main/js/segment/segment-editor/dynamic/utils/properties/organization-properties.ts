@@ -24,7 +24,7 @@ const ORGANIZATION_PROPERTIES = List(
 		{
 			label: Liferay.Language.get('date-modified'),
 			name: 'modifiedDate',
-			type: PropertyTypes.OrganizationDateTime
+			type: PropertyTypes.OrganizationDate
 		},
 		{
 			label: Liferay.Language.get('name'),

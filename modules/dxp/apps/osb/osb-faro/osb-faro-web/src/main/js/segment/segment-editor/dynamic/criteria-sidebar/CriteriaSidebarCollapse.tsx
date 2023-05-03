@@ -24,8 +24,21 @@ const getDefaultValue = (property: Property): any => {
 			return jsDatetoYYYYMMDD(new Date());
 		case PropertyTypes.DateTime:
 			return new Date().toISOString();
+		case PropertyTypes.OrganizationDate: {
+			return createCustomValueMap([
+				{
+					key: 'criterionGroup',
+					value: [
+						{
+							operatorName: RelationalOperators.EQ,
+							propertyName: name,
+							value: jsDatetoYYYYMMDD(new Date())
+						}
+					]
+				}
+			]);
+		}
 		case PropertyTypes.SessionDateTime:
-		case PropertyTypes.OrganizationDate:
 		case PropertyTypes.OrganizationDateTime:
 			return createCustomValueMap([
 				{

@@ -46,7 +46,7 @@ function refresh_liferay_sample_workspace {
 
 	pushd ${temp_dir}
 
-	${BLADE_PATH} init --liferay-version dxp-7.4-u72
+	${BLADE_PATH} init -v $(${BLADE_PATH} init --list --all | grep dxp-7.4 | head -1)
 
 	echo -en "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 

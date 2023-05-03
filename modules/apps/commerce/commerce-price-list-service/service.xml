@@ -23,17 +23,18 @@
 		<column name="commercePriceListId" type="long" />
 		<column name="CPInstanceUuid" type="String" />
 		<column name="CProductId" type="long" />
-		<column name="price" type="BigDecimal" />
-		<column name="promoPrice" type="BigDecimal" />
+		<column name="bulkPricing" type="boolean" />
 		<column name="discountDiscovery" type="boolean" />
 		<column name="discountLevel1" type="BigDecimal" />
 		<column name="discountLevel2" type="BigDecimal" />
 		<column name="discountLevel3" type="BigDecimal" />
 		<column name="discountLevel4" type="BigDecimal" />
-		<column name="hasTierPrice" type="boolean" />
-		<column name="bulkPricing" type="boolean" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
+		<column name="hasTierPrice" type="boolean" />
+		<column name="price" type="BigDecimal" />
+		<column name="priceOnApplication" type="boolean" />
+		<column name="promoPrice" type="BigDecimal" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

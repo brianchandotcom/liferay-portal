@@ -6,7 +6,8 @@
 	},
 	"permissions": [
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Guest",
 			"scope": 4
 		}

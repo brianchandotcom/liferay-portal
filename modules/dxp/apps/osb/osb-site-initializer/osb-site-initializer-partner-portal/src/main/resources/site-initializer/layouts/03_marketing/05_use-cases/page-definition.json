@@ -13,7 +13,8 @@
 						{
 							"id": "element-text",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"ar_SA": "Use Cases",

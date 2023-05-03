@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.access.token;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -24,7 +25,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.cxf.rs.security.oauth2.provider.AccessTokenGrantHandler;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,18 +58,47 @@ public class LiferayAccessTokenServiceRegistrator {
 			return;
 		}
 
-		LiferayAccessTokenService liferayAccessTokenService =
-			new LiferayAccessTokenService();
-
-		liferayAccessTokenService.setBlockUnsecureRequests(
-			MapUtil.getBoolean(properties, "block.unsecure.requests", true));
-		liferayAccessTokenService.setCanSupportPublicClients(
-			MapUtil.getBoolean(properties, "allow.public.clients", true));
-		liferayAccessTokenService.setDataProvider(_liferayOAuthDataProvider);
-		liferayAccessTokenService.setGrantHandlers(_accessTokenGrantHandlers);
-
 		_serviceRegistration = bundleContext.registerService(
-			Object.class, liferayAccessTokenService,
+			Object.class,
+			(Object)new ServiceFactory<Object>() {
+
+				@Override
+				public Object getService(
+					Bundle bundle,
+					ServiceRegistration<Object> serviceRegistration) {
+
+					return _liferayAccessTokenServiceDCLSingleton.getSingleton(
+						() -> {
+							LiferayAccessTokenService
+								liferayAccessTokenService =
+									new LiferayAccessTokenService();
+
+							liferayAccessTokenService.setBlockUnsecureRequests(
+								MapUtil.getBoolean(
+									properties, "block.unsecure.requests",
+									true));
+							liferayAccessTokenService.
+								setCanSupportPublicClients(
+									MapUtil.getBoolean(
+										properties, "allow.public.clients",
+										true));
+							liferayAccessTokenService.setDataProvider(
+								_liferayOAuthDataProvider);
+							liferayAccessTokenService.setGrantHandlers(
+								_accessTokenGrantHandlers);
+
+							return liferayAccessTokenService;
+						});
+				}
+
+				@Override
+				public void ungetService(
+					Bundle bundle,
+					ServiceRegistration<Object> serviceRegistration,
+					Object service) {
+				}
+
+			},
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=Liferay.OAuth2.Application)"
@@ -93,6 +125,9 @@ public class LiferayAccessTokenServiceRegistrator {
 	)
 	private volatile List<AccessTokenGrantHandler> _accessTokenGrantHandlers =
 		new CopyOnWriteArrayList<>();
+
+	private final DCLSingleton<LiferayAccessTokenService>
+		_liferayAccessTokenServiceDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;

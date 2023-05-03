@@ -30,7 +30,15 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = "setVisible('requiredErrorMessage', getValue('required'))",
+			actions = "setValue('required', isRequiredObjectField(getValue('objectFieldName')))",
+			condition = "hasObjectField(getValue('objectFieldName'))"
+		),
+		@DDMFormRule(
+			actions = {
+				"setEnabled('required', not(hasObjectField(getValue('objectFieldName'))))",
+				"setVisible('dataType', false)",
+				"setVisible('requiredErrorMessage', getValue('required'))"
+			},
 			condition = "TRUE"
 		)
 	}
@@ -63,8 +71,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"dataType", "name", "fieldReference",
-								"predefinedValue", "indexType", "showLabel",
-								"repeatable", "readOnly", "rulesActionDisabled",
+								"predefinedValue", "objectFieldName",
+								"indexType", "showLabel", "repeatable",
+								"readOnly", "rulesActionDisabled",
 								"rulesConditionDisabled", "type"
 							}
 						)
@@ -76,6 +85,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 )
 public interface DateTimeDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(predefinedValue = "datetime", required = true)
+	@Override
+	public String dataType();
 
 	@DDMFormField(
 		label = "%predefined-value",

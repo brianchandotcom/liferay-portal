@@ -169,20 +169,6 @@ definition {
 		AssertElementPresent(locator1 = "DDLRecord#INFO_SIDEBAR_EXPANDED");
 	}
 
-	macro gotoLinkToPageChildPages {
-		var key_pageName = ${parentPage};
-
-		Click(locator1 = "DDLEditRecord#LINK_TO_PAGE_PAGE_CARET");
-	}
-
-	macro gotoLinkToPageNavItem {
-		var key_navItem = "${pagePrivacy} Pages";
-
-		AssertClick(
-			locator1 = "DDLEditRecord#LINK_TO_PAGE_NAV_ITEM",
-			value1 = "${pagePrivacy} Pages");
-	}
-
 	macro gotoLinkToPageSelect {
 		var key_fieldName = ${fieldName};
 
@@ -468,18 +454,6 @@ definition {
 			value1 = "Save as Draft");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro selectLinkToPageRadio {
-		if (isSet(parentPage)) {
-			DDLRecord.gotoLinkToPageChildPages(parentPage = ${parentPage});
-		}
-
-		var key_pageName = ${ddlRecordFieldData};
-
-		RunScript(locator1 = "document.querySelector('.top-ended').scrollTop = 1000");
-
-		Click(locator1 = "DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO");
 	}
 
 	macro submitForWorkflow {
@@ -797,18 +771,6 @@ definition {
 
 	macro viewInvalidHTMLfield {
 		AssertElementPresent(locator1 = "DDL#RECORD_TABLE_PREVIEW_INVALID_IMG");
-	}
-
-	macro viewLinkToPageBreadcrumbCount {
-		var key_number = ${count};
-
-		AssertElementPresent(locator1 = "DDLEditRecord#LINK_TO_PAGE_BREADCRUMB");
-
-		var count = ${count} + 1;
-
-		var key_number = ${count};
-
-		AssertElementNotPresent(locator1 = "DDLEditRecord#LINK_TO_PAGE_BREADCRUMB");
 	}
 
 	macro viewLinkToPageLink {

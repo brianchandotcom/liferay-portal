@@ -970,7 +970,7 @@ public class AssetPublisherExportImportTest
 					ExportImportHelperUtil.getLayoutIds(layouts),
 					getExportParameterMap());
 
-		ExportImportConfiguration exportImportConfiguration1 =
+		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					user.getUserId(),
@@ -978,7 +978,7 @@ public class AssetPublisherExportImportTest
 					exportLayoutSettingsMap);
 
 		larFile = _exportImportLocalService.exportLayoutsAsFile(
-			exportImportConfiguration1);
+			exportImportConfiguration);
 
 		// Import site LAR
 
@@ -988,7 +988,7 @@ public class AssetPublisherExportImportTest
 					user, importedGroup.getGroupId(), layout.isPrivateLayout(),
 					null, getImportParameterMap());
 
-		ExportImportConfiguration exportImportConfiguration2 =
+		exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					user.getUserId(),
@@ -996,7 +996,7 @@ public class AssetPublisherExportImportTest
 					importLayoutSettingsMap);
 
 		_exportImportLocalService.importLayouts(
-			exportImportConfiguration2, larFile);
+			exportImportConfiguration, larFile);
 
 		importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout.getUuid(), importedGroup.getGroupId(),

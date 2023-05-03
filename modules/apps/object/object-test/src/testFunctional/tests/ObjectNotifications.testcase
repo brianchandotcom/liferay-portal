@@ -945,6 +945,97 @@ definition {
 		}
 	}
 
+	@description = "LPS-165849 - Verify terms from a 1:M related system object (parent) are replaced with the correct values in an email notification"
+	@priority = 5
+	test CanSendEmailWithTermsFromRelatedSystemObject {
+		property custom.properties = "feature.flag.LPS-165849=true";
+		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given a custom object with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 182606",
+				objectName = "CustomObject182606",
+				pluralLabelName = "Custom Objects 182606");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Text Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject182606");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject182606");
+		}
+
+		task ("And given a 1:M relationship between User and the custom object") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "CustomObject182606",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("And given an email notification template using terms from both object definitions") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "[%CUSTOMOBJECT182606_CUSTOMFIELD%]",
+				entryTo = "[%CUSTOMOBJECT182606_AUTHOR_EMAIL_ADDRESS%]",
+				fromAddress = "[%CUSTOMOBJECT182606_AUTHOR_EMAIL_ADDRESS%]",
+				fromName = "[%RELATIONSHIP_USER_AUTHOR_FIRST_NAME%]",
+				name = "Notification Template",
+				notificationType = "Email",
+				subject = "[%RELATIONSHIP_USER_AUTHOR_FIRST_NAME%] [%RELATIONSHIP_USER_AUTHOR_LAST_NAME%]");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an action in the custom object to send an email notification after an entry is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 182606");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Send email after entry is created",
+				active = "true",
+				notificationName = "Notification Template",
+				objectLabel = "Custom Object 182606",
+				thenAction = "Notification",
+				whenAction = "On After Add");
+		}
+
+		task ("When an entry is created") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject182606");
+
+			LexiconEntry.gotoAdd();
+
+			ObjectPortlet.typeCustomField(
+				customField = "Text Field",
+				entry = "Entry Test");
+
+			ObjectPortlet.selectRelationshipFieldEntry(
+				entry = "",
+				newEntry = "Test");
+		}
+
+		task ("Then the action is triggered and an email is sent with the terms replaced with the correct values") {
+			MockMock.viewMail(
+				asset = "Test Test",
+				content = "Entry Test",
+				recipient = "test@liferay",
+				sender = "Test",
+				subject = "Test Test");
+		}
+	}
+
 	@description = "LPS-171625 - Verify that after updating a custom object entry, triggered email notifications using Object Author and Current User terms are filled correctly for the To, From Address and From Name and Subject fields"
 	@priority = 5
 	test CanUseObjectAuthorAndCurrentUserTermsInEmailNotificationOnCustomObject {

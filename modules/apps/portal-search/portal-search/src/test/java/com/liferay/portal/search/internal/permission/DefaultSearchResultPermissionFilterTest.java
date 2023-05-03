@@ -153,7 +153,7 @@ public class DefaultSearchResultPermissionFilterTest {
 			Mockito.mock(Props.class),
 			Mockito.mock(RelatedEntryIndexerRegistry.class), _searchFunction,
 			searchRequestBuilderFactory,
-			_searchResultPermissionFilterConfiguration);
+			_defaultSearchResultPermissionFilterConfiguration);
 	}
 
 	private Document _getDocument(String companyId, int index) {
@@ -269,14 +269,14 @@ public class DefaultSearchResultPermissionFilterTest {
 
 	private void _mockSearchResultPermissionFilterConfiguration() {
 		Mockito.when(
-			_searchResultPermissionFilterConfiguration.
+			_defaultSearchResultPermissionFilterConfiguration.
 				permissionFilteredSearchResultAccurateCountThreshold()
 		).thenReturn(
 			_permissionFilteredSearchResultAccurateCountThreshold
 		);
 
 		Mockito.when(
-			_searchResultPermissionFilterConfiguration.
+			_defaultSearchResultPermissionFilterConfiguration.
 				searchQueryResultWindowLimit()
 		).thenReturn(
 			100
@@ -308,6 +308,9 @@ public class DefaultSearchResultPermissionFilterTest {
 	private static final SearchRequest _searchRequest = Mockito.mock(
 		SearchRequest.class);
 
+	private final DefaultSearchResultPermissionFilterConfiguration
+		_defaultSearchResultPermissionFilterConfiguration = Mockito.mock(
+			DefaultSearchResultPermissionFilterConfiguration.class);
 	private Document[] _documents;
 	private boolean _groupAdmin;
 	private final PermissionChecker _permissionChecker = Mockito.mock(
@@ -315,8 +318,5 @@ public class DefaultSearchResultPermissionFilterTest {
 	private int _permissionFilteredSearchResultAccurateCountThreshold;
 	private final Function<SearchContext, Hits> _searchFunction = Mockito.mock(
 		Function.class);
-	private final DefaultSearchResultPermissionFilterConfiguration
-		_searchResultPermissionFilterConfiguration = Mockito.mock(
-			DefaultSearchResultPermissionFilterConfiguration.class);
 
 }

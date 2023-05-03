@@ -127,11 +127,11 @@ public class RESTExtender {
 	}
 
 	private void _addJaxRsProviderServiceDependencies() {
-		RestExtenderConfiguration soapExtenderConfiguration =
+		RestExtenderConfiguration restExtenderConfiguration =
 			getRestExtenderConfiguration();
 
 		String[] jaxRsProviderFilterStrings =
-			soapExtenderConfiguration.jaxRsProviderFilterStrings();
+			restExtenderConfiguration.jaxRsProviderFilterStrings();
 
 		if (jaxRsProviderFilterStrings == null) {
 			return;
@@ -149,11 +149,11 @@ public class RESTExtender {
 	}
 
 	private void _addJaxRsServiceDependencies() {
-		RestExtenderConfiguration soapExtenderConfiguration =
+		RestExtenderConfiguration restExtenderConfiguration =
 			getRestExtenderConfiguration();
 
 		String[] jaxRsServiceFilterStrings =
-			soapExtenderConfiguration.jaxRsServiceFilterStrings();
+			restExtenderConfiguration.jaxRsServiceFilterStrings();
 
 		if (jaxRsServiceFilterStrings == null) {
 			return;

@@ -53,13 +53,15 @@ public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		TitleFieldQueryBuilderConfiguration titleFieldQueryConfiguration =
-			ConfigurableUtil.createConfigurable(
-				TitleFieldQueryBuilderConfiguration.class, properties);
+		TitleFieldQueryBuilderConfiguration
+			titleFieldQueryBuilderConfiguration =
+				ConfigurableUtil.createConfigurable(
+					TitleFieldQueryBuilderConfiguration.class, properties);
 
-		_exactMatchBoost = titleFieldQueryConfiguration.exactMatchBoost();
+		_exactMatchBoost =
+			titleFieldQueryBuilderConfiguration.exactMatchBoost();
 
-		_maxExpansions = titleFieldQueryConfiguration.maxExpansions();
+		_maxExpansions = titleFieldQueryBuilderConfiguration.maxExpansions();
 	}
 
 	@Reference

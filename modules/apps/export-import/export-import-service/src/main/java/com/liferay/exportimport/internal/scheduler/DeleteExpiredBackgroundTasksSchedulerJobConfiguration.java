@@ -79,11 +79,11 @@ public class DeleteExpiredBackgroundTasksSchedulerJobConfiguration
 			companyExportImportServiceConfiguration =
 				_getExportImportServiceConfiguration(companyId);
 
-		int exportImportEntryExpiryDays =
+		int exportImportExpirationDays =
 			companyExportImportServiceConfiguration.
-				exportImportEntryExpiryDays();
+				exportImportExpirationDays();
 
-		if (exportImportEntryExpiryDays <= 0) {
+		if (exportImportExpirationDays <= 0) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Export/Import cleanup job on instance " + companyId +
@@ -112,7 +112,7 @@ public class DeleteExpiredBackgroundTasksSchedulerJobConfiguration
 				dynamicQuery.add(status.in(_STATUSES));
 
 				long exportImportExpiryTime =
-					exportImportEntryExpiryDays * Time.DAY;
+					exportImportExpirationDays * Time.DAY;
 
 				Date expirationDate = new Date(
 					System.currentTimeMillis() - exportImportExpiryTime);

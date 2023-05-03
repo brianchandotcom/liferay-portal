@@ -121,7 +121,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 	@Override
 	public boolean isVisible() {
-		return _layoutConverterConfiguration.enabled();
+		return _layoutWorkflowHandlerConfiguration.enabled();
 	}
 
 	@Override
@@ -197,8 +197,9 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutConverterConfiguration = ConfigurableUtil.createConfigurable(
-			LayoutWorkflowHandlerConfiguration.class, properties);
+		_layoutWorkflowHandlerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				LayoutWorkflowHandlerConfiguration.class, properties);
 	}
 
 	private void _updateLayoutContent(
@@ -226,9 +227,6 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 	@Reference
 	private LayoutContentProvider _layoutContentProvider;
 
-	private volatile LayoutWorkflowHandlerConfiguration
-		_layoutConverterConfiguration;
-
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
 
@@ -237,6 +235,9 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	private volatile LayoutWorkflowHandlerConfiguration
+		_layoutWorkflowHandlerConfiguration;
 
 	@Reference
 	private Portal _portal;

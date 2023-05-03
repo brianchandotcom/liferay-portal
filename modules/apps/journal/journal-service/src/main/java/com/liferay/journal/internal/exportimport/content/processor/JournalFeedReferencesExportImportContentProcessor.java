@@ -167,12 +167,13 @@ public class JournalFeedReferencesExportImportContentProcessor
 
 	private boolean _isValidateJournalFeedReferences() {
 		try {
-			ExportImportServiceConfiguration configuration =
+			ExportImportServiceConfiguration exportImportServiceConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					ExportImportServiceConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-			return configuration.validateJournalFeedReferences();
+			return exportImportServiceConfiguration.
+				validateJournalFeedReferences();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

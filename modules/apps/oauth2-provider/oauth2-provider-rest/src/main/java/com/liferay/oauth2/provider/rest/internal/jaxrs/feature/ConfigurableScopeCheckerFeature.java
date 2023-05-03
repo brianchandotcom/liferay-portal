@@ -115,16 +115,16 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 		_bundleContext = bundleContext;
 
 		ConfigurableScopeCheckerFeatureConfiguration
-			configurableCheckerFeatureConfiguration =
+			configurableScopeCheckerFeatureConfiguration =
 				ConfigurableUtil.createConfigurable(
 					ConfigurableScopeCheckerFeatureConfiguration.class,
 					properties);
 
 		_allowUnmatched =
-			configurableCheckerFeatureConfiguration.allowUnmatched();
+			configurableScopeCheckerFeatureConfiguration.allowUnmatched();
 
 		for (String pattern :
-				configurableCheckerFeatureConfiguration.patterns()) {
+				configurableScopeCheckerFeatureConfiguration.patterns()) {
 
 			String[] split = pattern.split("::");
 

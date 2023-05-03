@@ -16,11 +16,14 @@ package com.liferay.data.engine.taglib.servlet.taglib;
 
 import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -77,7 +81,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 					getSearchableFieldsDisabled()));
 			setNamespacedAttribute(
 				httpServletRequest, "fieldTypesModules",
-				DataLayoutTaglibUtil.resolveFieldTypesModules());
+				_resolveFieldTypesModules());
 			setNamespacedAttribute(
 				httpServletRequest, "sidebarPanels", _getSidebarPanels());
 		}
@@ -232,15 +236,65 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return sidebarPanels;
 	}
 
+	private boolean _hasJavascriptModule(String name) {
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			_ddmFormFieldTypeServicesRegistrySnapshot.get();
+
+		DDMFormFieldType ddmFormFieldType =
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(name);
+
+		return Validator.isNotNull(ddmFormFieldType.getModuleName());
+	}
+
+	private String _resolveFieldTypeModule(String name) {
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			_ddmFormFieldTypeServicesRegistrySnapshot.get();
+
+		return _resolveModuleName(
+			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(name));
+	}
+
+	private String _resolveFieldTypesModules() {
+		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
+			_ddmFormFieldTypeServicesRegistrySnapshot.get();
+
+		return StringUtil.merge(
+			TransformUtil.transform(
+				ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames(),
+				name -> {
+					if (!_hasJavascriptModule(name)) {
+						return null;
+					}
+
+					return _resolveFieldTypeModule(name);
+				}),
+			StringPool.COMMA);
+	}
+
 	private String _resolveModule(String moduleName) {
 		NPMResolver npmResolver = _npmResolverSnapshot.get();
 
 		return npmResolver.resolveModuleName(moduleName);
 	}
 
+	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
+		if (Validator.isNull(ddmFormFieldType.getModuleName())) {
+			return StringPool.BLANK;
+		}
+
+		if (ddmFormFieldType.isCustomDDMFormFieldType()) {
+			return ddmFormFieldType.getModuleName();
+		}
+
+		return _resolveModule(ddmFormFieldType.getModuleName());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutBuilderTag.class);
 
+	private static final Snapshot<DDMFormFieldTypeServicesRegistry>
+		_ddmFormFieldTypeServicesRegistrySnapshot = new Snapshot<>(
+			DataLayoutBuilderTag.class, DDMFormFieldTypeServicesRegistry.class);
 	private static final Snapshot<NPMResolver> _npmResolverSnapshot =
 		new Snapshot<>(DataLayoutBuilderTag.class, NPMResolver.class);
 

@@ -53,9 +53,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -233,10 +231,6 @@ public class DataLayoutTaglibUtil {
 
 		return _dataLayoutTaglibUtil._getFieldTypesJSONArray(
 			httpServletRequest, scopes, searchableFieldsDisabled);
-	}
-
-	public static String resolveFieldTypesModules() {
-		return _dataLayoutTaglibUtil._resolveFieldTypesModules();
 	}
 
 	@Activate
@@ -566,44 +560,6 @@ public class DataLayoutTaglibUtil {
 		return _ddmFormBuilderSettingsRetrieverHelper.getDDMFunctionsURL();
 	}
 
-	private boolean _hasJavascriptModule(String name) {
-		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(name);
-
-		return Validator.isNotNull(ddmFormFieldType.getModuleName());
-	}
-
-	private String _resolveFieldTypeModule(String name) {
-		return _resolveModuleName(
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(name));
-	}
-
-	private String _resolveFieldTypesModules() {
-		return StringUtil.merge(
-			TransformUtil.transform(
-				_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames(),
-				name -> {
-					if (!_dataLayoutTaglibUtil._hasJavascriptModule(name)) {
-						return null;
-					}
-
-					return _dataLayoutTaglibUtil._resolveFieldTypeModule(name);
-				}),
-			StringPool.COMMA);
-	}
-
-	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
-		if (Validator.isNull(ddmFormFieldType.getModuleName())) {
-			return StringPool.BLANK;
-		}
-
-		if (ddmFormFieldType.isCustomDDMFormFieldType()) {
-			return ddmFormFieldType.getModuleName();
-		}
-
-		return _npmResolver.resolveModuleName(ddmFormFieldType.getModuleName());
-	}
-
 	private void _setFieldIndexTypeNone(JSONObject jsonObject) {
 		for (JSONObject pageJSONObject :
 				(Iterable<JSONObject>)jsonObject.getJSONArray("pages")) {
@@ -675,9 +631,6 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

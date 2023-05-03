@@ -20,6 +20,7 @@ import com.liferay.fragment.processor.FragmentEntryAutocompleteContributor;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.processor.FragmentEntryValidator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
@@ -169,10 +170,10 @@ public class FragmentEntryProcessorRegistryImpl
 			return;
 		}
 
-		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
+		for (FragmentEntryValidator fragmentEntryValidator :
+				_fragmentEntryValidators) {
 
-			fragmentEntryProcessor.validateFragmentEntryHTML(
+			fragmentEntryValidator.validateFragmentEntryHTML(
 				html, configuration);
 		}
 
@@ -196,6 +197,11 @@ public class FragmentEntryProcessorRegistryImpl
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"fragment.entry.processor.priority")));
+		_fragmentEntryValidators = ServiceTrackerListFactory.open(
+			bundleContext, FragmentEntryValidator.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"fragment.entry.processor.priority")));
 	}
 
 	@Deactivate
@@ -203,6 +209,7 @@ public class FragmentEntryProcessorRegistryImpl
 		_cssFragmentEntryProcessors.close();
 		_fragmentEntryAutocompleteContributors.close();
 		_fragmentEntryProcessors.close();
+		_fragmentEntryValidators.close();
 	}
 
 	private static final ThreadLocal<Set<String>> _validHTMLsThreadLocal =
@@ -216,6 +223,7 @@ public class FragmentEntryProcessorRegistryImpl
 	private ServiceTrackerList<FragmentEntryAutocompleteContributor>
 		_fragmentEntryAutocompleteContributors;
 	private ServiceTrackerList<FragmentEntryProcessor> _fragmentEntryProcessors;
+	private ServiceTrackerList<FragmentEntryValidator> _fragmentEntryValidators;
 
 	@Reference
 	private JSONFactory _jsonFactory;

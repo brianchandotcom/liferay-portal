@@ -1233,14 +1233,6 @@
     "@clayui/icon" "^3.0.4"
     classnames "^2.2.6"
 
-"@clayui/button@^3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.6.0.tgz#ee9b53984abe0eb72ec9889db7aa644fc41212ad"
-  integrity sha512-ihijKf+Tqz750fJg5A56j1y1ibePjqFLotWOFK2r9xfagsAPb0TUxGuwJhg7RjMnvhgBmoNUZ06XO1BUThX3tA==
-  dependencies:
-    "@clayui/icon" "^3.1.0"
-    classnames "^2.2.6"
-
 "@clayui/button@^3.92.0":
   version "3.92.0"
   resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.92.0.tgz#3506c0fc4cf085a84e17d1be37069ddcbb9ea1f7"
@@ -1250,25 +1242,30 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
+"@clayui/core@^3.93.0":
+  version "3.93.0"
+  resolved "https://registry.yarnpkg.com/@clayui/core/-/core-3.93.0.tgz#b3922179c52dc3b9bb539fa87f385cd005fbe629"
+  integrity sha512-p0Y5cOw/wDIjOgO3VsXCvzUwT4iaF7Wad8Ie1OhMQ6Zij5GyBAmvvK2Uctshs1SjHzNP4tgvQWCqaEKRlEgMxg==
+  dependencies:
+    "@clayui/button" "^3.92.0"
+    "@clayui/icon" "^3.56.0"
+    "@clayui/layout" "^3.93.0"
+    "@clayui/loading-indicator" "^3.60.0"
+    "@clayui/modal" "^3.93.0"
+    "@clayui/provider" "^3.93.0"
+    "@clayui/shared" "^3.93.0"
+    "@tanstack/react-virtual" "3.0.0-beta.18"
+    aria-hidden "^1.2.2"
+    classnames "^2.2.6"
+    fuzzy "^0.1.3"
+    react-dnd "^11.1.1"
+    react-dnd-html5-backend "^11.1.1"
+    react-transition-group "^4.4.1"
+
 "@clayui/css@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.5.0.tgz#4cbc018bd5b5f24a29996cb6719719ca1f7981e4"
   integrity sha512-v5iaSpBQWbP3Zq2kUpRkWWByb9ajzXeHHYqp/w8rWZO8wN0lgw9nIa9g3WO8/eArhZN422kbU43688wql3uycw==
-
-"@clayui/drop-down@3.9.0":
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.9.0.tgz#5b73f75106cc420daaa1207676c696a85039cfd5"
-  integrity sha512-g0ndjM64N5qcPVAPEu2A2rVth8HBXcQDsPjIj3DJDonFBShmkbw/fblzSycW3WWd5SzpXmitHSy4aaegDwQYYg==
-  dependencies:
-    "@clayui/button" "^3.6.0"
-    "@clayui/form" "^3.14.3"
-    "@clayui/icon" "^3.1.0"
-    "@clayui/link" "^3.2.0"
-    "@clayui/shared" "^3.5.0"
-    classnames "^2.2.6"
-    dom-align "^1.10.2"
-    react-transition-group "^4.4.1"
-    warning "^4.0.3"
 
 "@clayui/drop-down@^3.0.0":
   version "3.0.0"
@@ -1296,6 +1293,21 @@
     dom-align "^1.10.2"
     warning "^4.0.3"
 
+"@clayui/drop-down@^3.93.0":
+  version "3.93.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.93.0.tgz#d9fac64e47f3d364f2b721bf4fd39cfaeb103a63"
+  integrity sha512-5z765+ZumTTAIw03KSD8OzhwBP2RMBOcjgVbc8qJddErNpJBATZAHkMDrJu0vYKtANpkQI9m3obw4WcxJuHT/A==
+  dependencies:
+    "@clayui/button" "^3.92.0"
+    "@clayui/core" "^3.93.0"
+    "@clayui/form" "^3.93.0"
+    "@clayui/icon" "^3.56.0"
+    "@clayui/link" "^3.88.0"
+    "@clayui/shared" "^3.93.0"
+    classnames "^2.2.6"
+    react-transition-group "^4.4.1"
+    warning "^4.0.3"
+
 "@clayui/form@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.0.0.tgz#1382403329c0ca52676204ce03887accd1e7b241"
@@ -1316,22 +1328,22 @@
     "@clayui/shared" "^3.0.0-alpha.1"
     classnames "^2.2.6"
 
-"@clayui/form@^3.14.3":
-  version "3.14.3"
-  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.14.3.tgz#c5f62566a3a506591a37919f6eba662affbe5640"
-  integrity sha512-dSxLfDJhUqyw9lMrZhZ9/iDvqpyGwRXGdam+k8u9bavh4Psv+ANCGCJGZ5gwwIZRuVsArlhrvdPTiFcwi2d6yg==
-  dependencies:
-    "@clayui/button" "^3.6.0"
-    "@clayui/icon" "^3.1.0"
-    "@clayui/shared" "^3.5.0"
-    classnames "^2.2.6"
-
 "@clayui/form@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.6.0.tgz#f1e9f0b47d3ee66a903c3465cbcc3faed6b375a8"
   integrity sha512-iggltXhxjjXjIrcwMZD9bcF8FwcX3ggaRD20GM5iEnRsR4RwWDyMScyI0J1z9f/x7CVaN7qStbjJdfKgVqDyCA==
   dependencies:
     "@clayui/icon" "^3.0.4"
+    classnames "^2.2.6"
+
+"@clayui/form@^3.93.0":
+  version "3.93.0"
+  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.93.0.tgz#ed5dfbe6ac72535406dc2c70acf535a222a85624"
+  integrity sha512-dni+GuTe8gJGbVwZrttMYEcQYBKq4c2hB404BIaP4CKCFl8gYIhbpvO/alxYIo/EAu5IorStMcewa9wttEKVAg==
+  dependencies:
+    "@clayui/button" "^3.92.0"
+    "@clayui/icon" "^3.56.0"
+    "@clayui/shared" "^3.93.0"
     classnames "^2.2.6"
 
 "@clayui/icon@^3.0.0":
@@ -1354,14 +1366,6 @@
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.0.4.tgz#f4b04e23c97163021b5665208f7d7c711f44918c"
   integrity sha512-X5N1DqiPMwi5soYxbNgqC/asn/FDigRxHLjc785i7WfE6xdUpcTjvdJhGFx+Xgoign8NpNbVo5NZATHZLCLiFw==
-  dependencies:
-    classnames "^2.2.6"
-    warning "^4.0.3"
-
-"@clayui/icon@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.1.0.tgz#9e600f87194f8dacfb49ace121fbab25a2e82f03"
-  integrity sha512-rxFih7ktNoYx7jJMYWA5GiEh6bJ5W3mB5fWRlSAw8sVyDvSH8rIdaqR77SmvAJDTygfKuKJlyeHnhTmWZgJbCg==
   dependencies:
     classnames "^2.2.6"
     warning "^4.0.3"
@@ -1409,13 +1413,6 @@
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.1.0.tgz#b0213d9a5df7bf6d2bb6f15bd73fa69d2b3e0eb4"
   integrity sha512-FEvQFF5hKCdckASHjbMtPw6zI6NacoFTiIZNN00tMN47j/cPfooizbCFx8fqj16F9lpx2Tz78rhW9SH6EFdu1A==
-  dependencies:
-    classnames "^2.2.6"
-
-"@clayui/link@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.2.0.tgz#1d5fc80f574f18d3880bc3584cd2d83761b6ec78"
-  integrity sha512-UjuEGGwE3X/XnB3Ul+JPPAveHj3d76OyRu8rwhKuw5VwyfQVadb7p8owqpohOPaD29ytljOfce8a6X0vGoXJig==
   dependencies:
     classnames "^2.2.6"
 
@@ -1516,13 +1513,18 @@
     "@clayui/button" "^3.3.0"
     "@clayui/link" "^3.1.0"
 
-"@clayui/shared@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.5.0.tgz#3eccd192839ec9e79f14da97a07fcadc2c065d58"
-  integrity sha512-0dfP9dvO7WTdZ6Wy6OPir3LrjZ1EoWHYfJ0jPWhpYpcdFTI0NDd3VV2KTSsN1Rp5Gmv2vJg6xWnkODFBdz2XBA==
+"@clayui/shared@^3.93.0":
+  version "3.93.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.93.0.tgz#464e0c255c0674dfc2335b8eaac1c041af63bf3b"
+  integrity sha512-4PN0gnFOrHgCVrDOwlH+oQ2Dl0UJmKCP005wK8lNUFt2VmOrDE52kmwnxn3QLUTQ1MtmSaZsQdtQDzWH6PFcQA==
   dependencies:
-    "@clayui/button" "^3.6.0"
-    "@clayui/link" "^3.2.0"
+    "@clayui/button" "^3.92.0"
+    "@clayui/link" "^3.88.0"
+    "@clayui/provider" "^3.93.0"
+    aria-hidden "^1.2.2"
+    classnames "^2.2.6"
+    dom-align "^1.12.2"
+    warning "^4.0.3"
 
 "@clayui/shared@^3.93.0":
   version "3.93.0"
@@ -1979,6 +1981,21 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@react-dnd/asap@^4.0.0":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@react-dnd/asap/-/asap-4.0.1.tgz#5291850a6b58ce6f2da25352a64f1b0674871aab"
+  integrity sha512-kLy0PJDDwvwwTXxqTFNAAllPHD73AycE9ypWeln/IguoGBEbvFcPDbCV03G52bEcC5E+YgupBE0VzHGdC8SIXg==
+
+"@react-dnd/invariant@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@react-dnd/invariant/-/invariant-2.0.0.tgz#09d2e81cd39e0e767d7da62df9325860f24e517e"
+  integrity sha512-xL4RCQBCBDJ+GRwKTFhGUW8GXa4yoDfJrPbLblc3U09ciS+9ZJXJ3Qrcs/x2IODOdIE5kQxvMmE2UKyqUictUw==
+
+"@react-dnd/shallowequal@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@react-dnd/shallowequal/-/shallowequal-2.0.0.tgz#a3031eb54129f2c66b2753f8404266ec7bf67f0a"
+  integrity sha512-Pc/AFTdwZwEKJxFJvlxrSmGe/di+aAOBn60sremrpLo6VI/6cmiUYNNwlI5KNYttg7uypzA3ILPMPgxB2GYZEg==
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"
@@ -1992,6 +2009,18 @@
   integrity sha512-MZPUxrmFubI36XS1DI3qmI0YdN1gks62JtFZvxR67ljjSNCeK6U08Zx4msEWOXuofgqUt6zPHSi1H9fbjR/NRA==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@tanstack/react-virtual@3.0.0-beta.18":
+  version "3.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-virtual/-/react-virtual-3.0.0-beta.18.tgz#b97b2019f7d6a5770fb88ee1f7591da55b9059b4"
+  integrity sha512-mnyCZT6htcRNw1jVb+WyfMUMbd1UmXX/JWPuMf6Bmj92DB/V7Ogk5n5rby5Y5aste7c7mlsBeMF8HtpwERRvEQ==
+  dependencies:
+    "@tanstack/virtual-core" "3.0.0-beta.18"
+
+"@tanstack/virtual-core@3.0.0-beta.18":
+  version "3.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.0.0-beta.18.tgz#d4b0738c1d0aada922063c899675ff4df9f696b2"
+  integrity sha512-tcXutY05NpN9lp3+AXI9Sn85RxSPV0EJC0XMim9oeQj/E7bjXoL0qZ4Er4wwnvIbv/hZjC91EmbIQGjgdr6nZg==
 
 "@testing-library/dom@^7.24.2":
   version "7.24.2"
@@ -5545,6 +5574,15 @@ discontinuous-range@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/discontinuous-range/-/discontinuous-range-1.0.0.tgz#e38331f0844bba49b9a9cb71c771585aab1bc65a"
   integrity sha1-44Mx8IRLukm5qctxx3FYWqsbxlo=
+
+dnd-core@^11.1.3:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-11.1.3.tgz#f92099ba7245e49729d2433157031a6267afcc98"
+  integrity sha512-QugF55dNW+h+vzxVJ/LSJeTeUw9MCJ2cllhmVThVPEtF16ooBkxj0WBE5RB+AceFxMFo1rO6bJKXtqKl+JNnyA==
+  dependencies:
+    "@react-dnd/asap" "^4.0.0"
+    "@react-dnd/invariant" "^2.0.0"
+    redux "^4.0.4"
 
 dnd-core@^9.4.0:
   version "9.4.0"
@@ -12140,6 +12178,13 @@ react-billboardjs@^1.5.2:
     prop-types "^15.7.2"
     react-parm "^2.3.0"
 
+react-dnd-html5-backend@^11.1.1:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-11.1.3.tgz#2749f04f416ec230ea193f5c1fbea2de7dffb8f7"
+  integrity sha512-/1FjNlJbW/ivkUxlxQd7o3trA5DE33QiRZgxent3zKme8DwF4Nbw3OFVhTRFGaYhHFNL1rZt6Rdj1D78BjnNLw==
+  dependencies:
+    dnd-core "^11.1.3"
+
 react-dnd-html5-backend@^9.4.0:
   version "9.4.0"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-9.4.0.tgz#5b1d192f57d103298657cde1fe0eabdbf2726311"
@@ -12169,6 +12214,16 @@ react-dnd@*, react-dnd@^9.4.0:
     dnd-core "^9.4.0"
     hoist-non-react-statics "^3.3.0"
     shallowequal "^1.1.0"
+
+react-dnd@^11.1.1:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-11.1.3.tgz#f9844f5699ccc55dfc81462c2c19f726e670c1af"
+  integrity sha512-8rtzzT8iwHgdSC89VktwhqdKKtfXaAyC4wiqp0SywpHG12TTLvfOoL6xNEIUWXwIEWu+CFfDn4GZJyynCEuHIQ==
+  dependencies:
+    "@react-dnd/shallowequal" "^2.0.0"
+    "@types/hoist-non-react-statics" "^3.3.1"
+    dnd-core "^11.1.3"
+    hoist-non-react-statics "^3.3.0"
 
 react-dom@^16.8.2:
   version "16.8.2"

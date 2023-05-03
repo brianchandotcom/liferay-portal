@@ -11,7 +11,7 @@
 		"@clayui/badge": "^3.92.0",
 		"@clayui/button": "^3.92.0",
 		"@clayui/css": "^3.5.0",
-		"@clayui/drop-down": "3.9.0",
+		"@clayui/drop-down": "^3.93.0",
 		"@clayui/form": "^3.0.0-alpha.1",
 		"@clayui/icon": "^3.56.0",
 		"@clayui/link": "^3.88.0",
@@ -177,7 +177,8 @@
 		"lint": "eslint \"src/main/js/**/*.+(js|ts)?(x)\"",
 		"start": "cross-env FARO_ENVIRONMENT_NAME=local webpack-dev-server --config webpack.dev.js",
 		"webpack": "webpack --config webpack.prod.js",
-		"webpack:dev": "webpack --config webpack.dev.js"
+		"webpack:dev": "webpack --config webpack.dev.js",
+		"test:dev": "cross-env TZ=Etc/GMT jest --coverage=false"
 	},
 	"version": "1.0.13"
 }

@@ -62,16 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public JSONArray getAvailableTagsJSONArray() {
-		return JSONUtil.put(
-			JSONUtil.put(
-				"content", "<lfr-drop-zone></lfr-drop-zone>"
-			).put(
-				"name", "lfr-drop-zone"
-			));
-	}
-
-	@Override
 	public JSONArray getDataAttributesJSONArray() {
 		return JSONUtil.put("lfr-priority");
 	}

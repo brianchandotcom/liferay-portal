@@ -26,7 +26,6 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,44 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = FragmentEntryProcessor.class
 )
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
-
-	@Override
-	public JSONArray getAvailableTagsJSONArray() {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (String key : _editableElementParserServiceTrackerMap.keySet()) {
-			StringBundler sb = new StringBundler(
-				2 + (5 * _REQUIRED_ATTRIBUTE_NAMES.length));
-
-			sb.append("<lfr-editable");
-
-			for (String attributeName : _REQUIRED_ATTRIBUTE_NAMES) {
-				sb.append(StringPool.SPACE);
-				sb.append(attributeName);
-				sb.append("=\"");
-
-				String value = StringPool.BLANK;
-
-				if (attributeName.equals("type")) {
-					value = key;
-				}
-
-				sb.append(value);
-				sb.append("\"");
-			}
-
-			sb.append("></lfr-editable>");
-
-			jsonArray.put(
-				JSONUtil.put(
-					"content", sb.toString()
-				).put(
-					"name", "lfr-editable:" + key
-				));
-		}
-
-		return jsonArray;
-	}
 
 	@Override
 	public JSONArray getDataAttributesJSONArray() {

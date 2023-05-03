@@ -31,10 +31,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
@@ -81,24 +79,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = FragmentEntryProcessor.class
 )
 public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
-
-	@Override
-	public JSONArray getAvailableTagsJSONArray() {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (String alias : _portletRegistry.getPortletAliases()) {
-			jsonArray.put(
-				JSONUtil.put(
-					"content",
-					StringBundler.concat(
-						"<lfr-widget-", alias, "></lfr-widget-", alias, ">")
-				).put(
-					"name", "lfr-widget-" + alias
-				));
-		}
-
-		return jsonArray;
-	}
 
 	@Override
 	public String processFragmentEntryLinkHTML(

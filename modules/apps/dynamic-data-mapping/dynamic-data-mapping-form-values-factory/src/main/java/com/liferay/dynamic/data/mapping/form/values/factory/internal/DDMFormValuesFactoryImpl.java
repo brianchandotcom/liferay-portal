@@ -203,6 +203,10 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
 
+		if (ddmFormField == null) {
+			return ddmFormFieldValue;
+		}
+
 		ddmFormFieldValue.setFieldReference(ddmFormField.getFieldReference());
 
 		if (ddmFormField.isTransient()) {

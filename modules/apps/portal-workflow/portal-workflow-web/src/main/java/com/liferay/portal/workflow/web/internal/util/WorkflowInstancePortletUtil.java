@@ -42,13 +42,13 @@ public class WorkflowInstancePortletUtil {
 			portletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
-			WorkflowInstanceWebConfiguration workflowTaskWebConfiguration =
+			WorkflowInstanceWebConfiguration workflowInstanceWebConfiguration =
 				(WorkflowInstanceWebConfiguration)portletRequest.getAttribute(
 					WorkflowInstanceWebConfiguration.class.getName());
 
 			displayStyle = portalPreferences.getValue(
 				WorkflowPortletKeys.USER_WORKFLOW, "instance-display-style",
-				workflowTaskWebConfiguration.defaultDisplayView());
+				workflowInstanceWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(

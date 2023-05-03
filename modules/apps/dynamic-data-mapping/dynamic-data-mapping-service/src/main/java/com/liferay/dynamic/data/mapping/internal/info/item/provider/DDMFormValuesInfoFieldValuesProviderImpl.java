@@ -42,9 +42,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -82,11 +84,8 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
 
-			for (InfoFieldValue<InfoLocalizedValue<Object>> infoFieldValue :
-					_getInfoFieldValues(groupedModel, ddmFormFieldValue)) {
-
-				infoFieldValues.add(infoFieldValue);
-			}
+			infoFieldValues.addAll(
+				_getInfoFieldValues(groupedModel, ddmFormFieldValue));
 		}
 
 		return infoFieldValues;
@@ -343,6 +342,30 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 			if (Objects.equals(
 					ddmFormFieldValue.getType(),
+					DDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
+
+				if (Validator.isNull(valueString)) {
+					return StringPool.BLANK;
+				}
+
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					valueString);
+
+				long layoutId = jsonObject.getLong("layoutId");
+
+				Layout layout = _layoutLocalService.fetchLayout(
+					jsonObject.getLong("groupId"),
+					jsonObject.getBoolean("privateLayout"), layoutId);
+
+				if (layout == null) {
+					return StringPool.BLANK;
+				}
+
+				return layout.getFriendlyURL(locale);
+			}
+
+			if (Objects.equals(
+					ddmFormFieldValue.getType(),
 					DDMFormFieldTypeConstants.RADIO)) {
 
 				if (Validator.isNull(valueString)) {
@@ -404,5 +427,8 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

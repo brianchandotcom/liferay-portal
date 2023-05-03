@@ -205,7 +205,7 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 	private String _getWorkspacePortalVersion() {
 		String batchName = getBatchName();
 
-		if (!batchName.startsWith("functional-workspace-")) {
+		if (!batchName.startsWith("functional-workspaces-")) {
 			return null;
 		}
 

@@ -47,7 +47,8 @@ public class BaseCookiesBannerDisplayContext {
 
 		cookiesBannerConfiguration = _getCookiesBannerConfiguration(
 			renderRequest);
-		cookiesConsentConfiguration = _getCookiesConfiguration(renderRequest);
+		cookiesConsentConfiguration = _getCookiesConsentConfiguration(
+			renderRequest);
 	}
 
 	public List<ConsentCookieType> getOptionalConsentCookieTypes() {
@@ -126,7 +127,7 @@ public class BaseCookiesBannerDisplayContext {
 		return null;
 	}
 
-	private CookiesConsentConfiguration _getCookiesConfiguration(
+	private CookiesConsentConfiguration _getCookiesConsentConfiguration(
 		RenderRequest renderRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

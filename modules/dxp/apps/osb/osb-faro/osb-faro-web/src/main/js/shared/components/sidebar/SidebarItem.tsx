@@ -1,3 +1,4 @@
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import getCN from 'classnames';
@@ -20,29 +21,45 @@ const SidebarItem: React.FC<ISidebarItemProps> = ({
 	label = '',
 	onClick,
 	...otherProps
-}) => (
-	<li
-		{...otherProps}
-		className={getCN('sidebar-item-root', className, {
-			active
-		})}
-	>
-		<ClayLink
-			button
-			className='link'
-			displayType='unstyled'
-			href={href}
-			onClick={onClick}
-		>
-			<span className='link-content-wrapper'>
-				<span className='icon-wrapper'>
-					<ClayIcon className='icon-root' symbol={icon} />
-				</span>
-
-				<span className='item-label'>{label}</span>
+}) => {
+	const sidebatItemContent = (
+		<span className='link-content-wrapper'>
+			<span className='icon-wrapper'>
+				<ClayIcon className='icon-root' symbol={icon} />
 			</span>
-		</ClayLink>
-	</li>
-);
+
+			<span className='item-label'>{label}</span>
+		</span>
+	);
+
+	return (
+		<li
+			{...otherProps}
+			className={getCN('sidebar-item-root', className, {
+				active
+			})}
+		>
+			{href ? (
+				<ClayLink
+					button
+					className='link'
+					displayType='unstyled'
+					href={href}
+					onClick={onClick}
+				>
+					{sidebatItemContent}
+				</ClayLink>
+			) : (
+				<ClayButton
+					className='link'
+					displayType='unstyled'
+					onClick={onClick}
+				>
+					{sidebatItemContent}
+				</ClayButton>
+			)}
+		</li>
+	);
+};
 
 export default SidebarItem;

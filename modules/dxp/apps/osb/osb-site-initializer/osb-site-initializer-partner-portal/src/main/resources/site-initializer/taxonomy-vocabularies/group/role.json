@@ -1,0 +1,9 @@
+{
+	"description": "Role vocabulary",
+	"externalReferenceCode": "PRMV005",
+	"name": "Role",
+	"name_i18n": {
+		"en_US": "Role"
+	},
+	"viewableBy": "Anyone"
+}

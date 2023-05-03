@@ -1,0 +1,9 @@
+{
+	"description": "Product vocabulary",
+	"externalReferenceCode": "PRMV004",
+	"name": "Product",
+	"name_i18n": {
+		"en_US": "Product"
+	},
+	"viewableBy": "Anyone"
+}

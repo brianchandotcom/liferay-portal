@@ -27,6 +27,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
@@ -865,13 +866,20 @@ public class KBDropdownItemsProvider {
 	private String _getParentNodeURL(KBArticle kbArticle)
 		throws PortalException {
 
-		KBArticle parentKBArticle = kbArticle.getParentKBArticle();
+		long parentResourcePrimKey = kbArticle.getParentResourcePrimKey();
 
-		if (parentKBArticle != null) {
-			return _createKBArticleRenderURL(parentKBArticle);
+		if ((parentResourcePrimKey <= 0) ||
+			(kbArticle.getParentResourceClassNameId() !=
+				kbArticle.getClassNameId())) {
+
+			return _createKBFolderRenderURL(kbArticle.getKbFolderId());
 		}
 
-		return _createKBFolderRenderURL(kbArticle.getKbFolderId());
+		KBArticle parentKBArticle =
+			KBArticleLocalServiceUtil.getLatestKBArticle(
+				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		return _createKBArticleRenderURL(parentKBArticle);
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

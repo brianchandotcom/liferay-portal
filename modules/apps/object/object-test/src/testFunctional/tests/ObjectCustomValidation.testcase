@@ -23,7 +23,7 @@ definition {
 
 	@description = "LPS-144474 - Verify that, when adding a new entry in the Object, the user only is able to submit the entry successfully if it passes for all validations from that Object"
 	@priority = 4
-	test CanAddEntryWhenPassesForAllValidations {
+	test CanAddEntry {
 		property test.name.skip.portal.instance = "ObjectCustomValidation#CanAddEntryWhenPassesForAllValidations";
 
 		ObjectAdmin.addObjectViaAPI(
@@ -2014,6 +2014,61 @@ definition {
 			validationType = "Groovy");
 	}
 
+	@description = "LPS-144474 - Verify that the user, when modeling an Object, is able to add validations using Groovy"
+	@priority = 4
+	test CanPreventEntryCreationViaGroovy {
+		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserAddValidationsGroovy";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153550",
+			objectName = "CustomObject153550",
+			pluralLabelName = "Custom Objects 153550");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153550");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153550");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153550");
+
+		ObjectAdmin.goToValidationsTab();
+
+		ObjectCustomValidation.addObjectValidation(
+			validationName = "Custom Validation",
+			validationType = "Groovy");
+
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+		ObjectCustomValidation.activeValidation();
+
+		ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
+
+		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+		PortletEntry.save();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153550");
+
+		ObjectPortlet.addSingleFieldEntryViaUI(
+			entry = "Decline Entry",
+			invalidEntry = "true");
+
+		Alert.viewErrorMessage(errorMessage = "This entry is not possible.");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject153550");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Decline Entry");
+	}
+
 	@description = "LPS-144474 - Verify that, when editing an entry in an Object, the user only is able to update the entry successfully if it passes for all validations from that Object"
 	@priority = 4
 	test CanUpdateWhenPassesForAllValidations {
@@ -2078,62 +2133,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153558");
 
 		ObjectPortlet.viewEntry(entry = "Update Entry");
-	}
-
-	@description = "LPS-144474 - Verify that the user, when modeling an Object, is able to add validations using Groovy"
-	@priority = 4
-	test CanUserAddValidationsGroovy {
-		property test.name.skip.portal.instance = "ObjectCustomValidation#CanUserAddValidationsGroovy";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153550",
-			objectName = "CustomObject153550",
-			pluralLabelName = "Custom Objects 153550");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject153550");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153550");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153550");
-
-		ObjectAdmin.goToValidationsTab();
-
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
-
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-		ObjectCustomValidation.activeValidation();
-
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
-
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-		PortletEntry.save();
-
-		for (var entryTitle : list "Entry Test,Decline Entry") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customField",
-				objectName = "CustomObject153550",
-				value = ${entryTitle});
-		}
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject153550");
-
-		ObjectPortlet.viewEntry(entry = "Entry Test");
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Decline Entry");
 	}
 
 	@description = "LPS-144474 - Verify that, when managing an Object validation, the user is able to define if that validation is active or not"

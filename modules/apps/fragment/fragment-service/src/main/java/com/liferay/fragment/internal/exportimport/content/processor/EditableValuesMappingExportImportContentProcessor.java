@@ -67,6 +67,12 @@ public class EditableValuesMappingExportImportContentProcessor
 		_replaceAllEditableExportContentReferences(
 			editableValuesJSONObject.getJSONObject(
 				FragmentEntryProcessorConstants.
+					KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR),
+			exportReferencedContent, portletDataContext, stagedModel);
+
+		_replaceAllEditableExportContentReferences(
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR),
 			exportReferencedContent, portletDataContext, stagedModel);
 
@@ -84,6 +90,12 @@ public class EditableValuesMappingExportImportContentProcessor
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			JSONObject editableValuesJSONObject)
 		throws Exception {
+
+		_replaceAllEditableImportContentReferences(
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR),
+			portletDataContext);
 
 		_replaceAllEditableImportContentReferences(
 			editableValuesJSONObject.getJSONObject(

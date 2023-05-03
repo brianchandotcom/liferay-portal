@@ -1,0 +1,9 @@
+{
+	"description": "Document Type vocabulary",
+	"externalReferenceCode": "PRMV010",
+	"name": "Document Type",
+	"name_i18n": {
+		"en_US": "Document Type"
+	},
+	"viewableBy": "Anyone"
+}

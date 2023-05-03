@@ -15728,7 +15728,6 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-
 		<get-testcase-property property.name="workspaces.names" />
 
 		<if>

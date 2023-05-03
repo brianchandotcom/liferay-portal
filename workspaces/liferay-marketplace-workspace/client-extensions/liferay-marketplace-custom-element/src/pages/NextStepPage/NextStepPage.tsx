@@ -139,7 +139,7 @@ export function NextStepPage({
 							onClickContinue ??
 							(() =>
 								(window.location.href =
-									'https://console.liferay.cloud/'))
+									'https://console.marketplacedemo.liferay.sh/projects'))
 						}
 						showBackButton={showBackButton}
 					/>

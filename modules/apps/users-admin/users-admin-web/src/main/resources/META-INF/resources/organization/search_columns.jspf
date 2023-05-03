@@ -47,14 +47,14 @@
 			<clay:dropdown-actions
 				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
-				propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+				propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 		<liferay-ui:search-container-column-text>
 			<clay:vertical-card
-				propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+				propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
 				verticalCard="<%= new OrganizationVerticalCard(organizationActionDropdownItems.getActionDropdownItems(), organization, renderRequest, organizationSearchContainer.getRowChecker(), rowURL) %>"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -109,7 +109,7 @@
 			<clay:dropdown-actions
 				aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 				dropdownItems="<%= organizationActionDropdownItems.getActionDropdownItems() %>"
-				propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
+				propsTransformer="js/OrganizationAndUserDropdownDefaultPropsTransformer"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>

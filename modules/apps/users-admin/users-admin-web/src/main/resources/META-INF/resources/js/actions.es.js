@@ -66,7 +66,7 @@ export const ACTIONS = {
 	},
 
 	deleteOrganization(itemData, portletNamespace) {
-		doDeleteOrganization(
+		confirmDeleteOrganizations(
 			itemData,
 			portletNamespace,
 			itemData?.organizationId
@@ -74,7 +74,7 @@ export const ACTIONS = {
 	},
 
 	deleteOrganizations(itemData, portletNamespace) {
-		doDeleteOrganization(
+		confirmDeleteOrganizations(
 			itemData,
 			portletNamespace,
 			getOrganizationIds(portletNamespace)
@@ -217,7 +217,11 @@ const addSearchParams = (url, portletNamespace, searchParams) => {
 	return newURL.toString();
 };
 
-const doDeleteOrganization = (itemData, portletNamespace, organizationIds) => {
+const confirmDeleteOrganizations = (
+	itemData,
+	portletNamespace,
+	organizationIds
+) => {
 	const getInactiveUsersURL = addSearchParams(
 		itemData?.getInactiveUsersURL,
 		portletNamespace,

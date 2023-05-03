@@ -92,6 +92,7 @@ public class PriceEntryDTOConverter
 				priceFormatted = _formatPrice(
 					priceEntryPrice, commerceCurrency, locale);
 				priceListId = commercePriceEntry.getCommercePriceListId();
+				priceOnApplication = commercePriceEntry.isPriceOnApplication();
 				skuExternalReferenceCode =
 					cpInstance.getExternalReferenceCode();
 				skuId = cpInstance.getCPInstanceId();

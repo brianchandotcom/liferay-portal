@@ -37,7 +37,7 @@
 
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
-	<condition property="workspace.name" value="${env.TEST_WORKSPACE_NAME}">
+	<condition property="test.workspace.name" value="${env.TEST_WORKSPACE_NAME}">
 		<and>
 			<isset property="env.TEST_WORKSPACE_NAME" />
 			<not>
@@ -46,8 +46,8 @@
 		</and>
 	</condition>
 
-	<condition property="workspace.dir" value="${project.dir}/workspaces/${workspace.name}">
-		<isset property="workspace.name" />
+	<condition property="test.workspace.dir" value="${project.dir}/workspaces/${test.workspace.name}">
+		<isset property="test.workspace.name" />
 	</condition>
 
 	<macrodef name="apply-portal-ext-properties">
@@ -10711,7 +10711,7 @@ send_user $expect_out(buffer)]]></echo>
 				<basedir file="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" />
 				<basedir file="${liferay.faces.bridge.impl.dir}/test/integration" />
 				<basedir file="${liferay.faces.portal.dir}/test/integration" />
-				<basedir file="${workspace.dir}" />
+				<basedir file="${test.workspace.dir}" />
 				<exclude name="**/node_modules/**/TEST-*.xml" />
 				<include name="**/TEST-*.xml" />
 			</multirootfileset>
@@ -12834,11 +12834,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="workspace.dir" />
+			<isset property="test.workspace.dir" />
 			<then>
 				<copy
 					file="${test.ext.properties.file}"
-					todir="${workspace.dir}/poshi"
+					todir="${test.workspace.dir}/poshi"
 				/>
 			</then>
 		</if>
@@ -14367,16 +14367,16 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<isset property="workspace.dir" />
+			<isset property="test.workspace.dir" />
 			<then>
 				<poshi-execute
-					build.gradle.dir="${workspace.dir}"
-					build.gradle.file="${workspace.dir}/poshi/build.gradle"
+					build.gradle.dir="${test.workspace.dir}"
+					build.gradle.file="${test.workspace.dir}/poshi/build.gradle"
 					task="writePoshiProperties"
 				/>
 
 				<move
-					file="${workspace.dir}/poshi/test.case.method.names.properties"
+					file="${test.workspace.dir}/poshi/test.case.method.names.properties"
 					tofile="test.case.method.names.properties"
 				/>
 			</then>
@@ -14471,16 +14471,16 @@ if (ppstate.equals("normal")) {
 				</if>
 
 				<if>
-					<isset property="workspace.dir" />
+					<isset property="test.workspace.dir" />
 					<then>
 						<poshi-execute
-							build.gradle.dir="${workspace.dir}"
-							build.gradle.file="${workspace.dir}/poshi/build.gradle"
+							build.gradle.dir="${test.workspace.dir}"
+							build.gradle.file="${test.workspace.dir}/poshi/build.gradle"
 							task="writePoshiProperties"
 						/>
 
 						<move
-							file="${workspace.dir}/poshi/test.generated.properties"
+							file="${test.workspace.dir}/poshi/test.generated.properties"
 							tofile="test.generated.properties"
 						/>
 					</then>
@@ -14810,11 +14810,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 
 		<if>
-			<isset property="workspace.dir" />
+			<isset property="test.workspace.dir" />
 			<then>
 				<poshi-execute
-					build.gradle.dir="${workspace.dir}"
-					build.gradle.file="${workspace.dir}/poshi/build.gradle"
+					build.gradle.dir="${test.workspace.dir}"
+					build.gradle.file="${test.workspace.dir}/poshi/build.gradle"
 					task="runPoshi"
 				/>
 			</then>
@@ -15663,9 +15663,20 @@ mail.send.blacklist=</echo>
 		</if>
 
 		<if>
+			<isset property="test.workspace.name" />
+			<then>
+				<ant antfile="build-test-${test.workspace.name}.xml" inheritAll="false" target="start-workspace">
+					<property name="workspace.name" value="${test.workspace.name}" />
+				</ant>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="workspace.name" />
+
+		<if>
 			<isset property="workspace.name" />
 			<then>
-				<ant antfile="build-test-${workspace.name}.xml" target="start-workspace">
+				<ant antfile="build-test-${workspace.name}.xml" inheritAll="false" target="start-workspace">
 					<property name="workspace.name" value="${workspace.name}" />
 				</ant>
 			</then>
@@ -15690,9 +15701,20 @@ mail.send.blacklist=</echo>
 		</if>
 
 		<if>
+			<isset property="test.workspace.name" />
+			<then>
+				<ant antfile="build-test-${test.workspace.name}.xml" inheritAll="false" target="stop-workspace">
+					<property name="workspace.name" value="${test.workspace.name}" />
+				</ant>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="workspace.name" />
+
+		<if>
 			<isset property="workspace.name" />
 			<then>
-				<ant antfile="build-test-${workspace.name}.xml" target="stop-workspace">
+				<ant antfile="build-test-${workspace.name}.xml" inheritAll="false" target="stop-workspace">
 					<property name="workspace.name" value="${workspace.name}" />
 				</ant>
 			</then>

@@ -5,7 +5,7 @@
 
 	<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
 
-	<propertycopy from="workspaces.client.extension.names[${workspace.name}]" name="workspaces.client.extension.names" />
+	<propertycopy from="workspaces.client.extension.names[${workspace.name}]" name="workspaces.client.extension.names" override="true" />
 
 	<macrodef name="deploy-workspace-client-extension">
 		<attribute name="workspace.client.extension.name" />
@@ -13,7 +13,7 @@
 		<sequential>
 			<local name="workspace.client.extension.dir" />
 
-			<property name="workspace.client.extension.dir" value="${workspace.dir}/client-extensions/@{workspace.client.extension.name}" />
+			<property name="workspace.client.extension.dir" value="${project.dir}/workspaces/${workspace.name}/client-extensions/@{workspace.client.extension.name}" />
 
 			<if>
 				<available file="${workspace.client.extension.dir}" />

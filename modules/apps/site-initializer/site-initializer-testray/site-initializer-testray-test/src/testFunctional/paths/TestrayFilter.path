@@ -60,6 +60,16 @@
 	<td>//label[normalize-space()='${key_label}']//following::span[contains(text(),'${key_status}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>UNPIN_ICON</td>
+	<td>//button[@title='unpin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PIN_ICON</td>
+	<td>//button[@title='pin']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

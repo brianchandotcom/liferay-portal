@@ -151,7 +151,7 @@ components:
         ObjectField:
             properties:
                 DBType:
-                    enum: [BigDecimal, Boolean, Clob, Date, Double, Integer, Long, String]
+                    enum: [BigDecimal, Boolean, Clob, Date, DateTime, Double, Integer, Long, String]
                     type: string
                 actions:
                     additionalProperties:
@@ -161,7 +161,7 @@ components:
                     readOnly: true
                     type: object
                 businessType:
-                    enum: [Aggregation, Attachment, Boolean, Date, Decimal, Encrypted, Formula, Integer, LongInteger, LongText, MultiselectPicklist, Picklist, PrecisionDecimal, Relationship, RichText, Text]
+                    enum: [Aggregation, Attachment, Boolean, Date, DateTime, Decimal, Encrypted, Formula, Integer, LongInteger, LongText, MultiselectPicklist, Picklist, PrecisionDecimal, Relationship, RichText, Text]
                     type: string
                 defaultValue:
                     deprecated: true
@@ -207,7 +207,7 @@ components:
                     type: boolean
                 type:
                     deprecated: true
-                    enum: [BigDecimal, Boolean, Clob, Date, Double, Integer, Long, String]
+                    enum: [BigDecimal, Boolean, Clob, Date, DateTime, Double, Integer, Long, String]
                     type: string
         ObjectFieldSetting:
             properties:

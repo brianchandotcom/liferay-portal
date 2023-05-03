@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public class BaseDateFDSTableSchemaField extends FDSTableSchemaField {
 
-	public String getFormat() {
-		return _format;
+	public JSONObject getFormat() {
+		return _formatJSONObject;
 	}
 
-	public void setFormat(String format) {
-		_format = format;
+	public void setFormat(JSONObject formatJSONObject) {
+		_formatJSONObject = formatJSONObject;
 	}
 
 	@Override
@@ -36,6 +36,6 @@ public class BaseDateFDSTableSchemaField extends FDSTableSchemaField {
 		return jsonObject.put("format", getFormat());
 	}
 
-	private String _format;
+	private JSONObject _formatJSONObject;
 
 }

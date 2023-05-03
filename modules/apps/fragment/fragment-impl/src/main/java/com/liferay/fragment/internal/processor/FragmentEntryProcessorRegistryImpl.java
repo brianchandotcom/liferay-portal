@@ -15,6 +15,7 @@
 package com.liferay.fragment.internal.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.CSSFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -72,7 +73,7 @@ public class FragmentEntryProcessorRegistryImpl
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
+				_fragmentEntryProcessors) {
 
 			JSONArray dataAttributesJSONArray =
 				fragmentEntryProcessor.getDataAttributesJSONArray();
@@ -96,7 +97,7 @@ public class FragmentEntryProcessorRegistryImpl
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
+				_fragmentEntryProcessors) {
 
 			JSONObject defaultEditableValuesJSONObject =
 				fragmentEntryProcessor.getDefaultEditableValuesJSONObject(
@@ -123,10 +124,10 @@ public class FragmentEntryProcessorRegistryImpl
 
 		String css = fragmentEntryLink.getCss();
 
-		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
+		for (CSSFragmentEntryProcessor cssFragmentEntryProcessor :
+				_cssFragmentEntryProcessors) {
 
-			css = fragmentEntryProcessor.processFragmentEntryLinkCSS(
+			css = cssFragmentEntryProcessor.processFragmentEntryLinkCSS(
 				fragmentEntryLink, css, fragmentEntryProcessorContext);
 		}
 
@@ -142,7 +143,7 @@ public class FragmentEntryProcessorRegistryImpl
 		String html = fragmentEntryLink.getHtml();
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
+				_fragmentEntryProcessors) {
 
 			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
 				fragmentEntryLink, html, fragmentEntryProcessorContext);
@@ -177,7 +178,12 @@ public class FragmentEntryProcessorRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerList = ServiceTrackerListFactory.open(
+		_cssFragmentEntryProcessors = ServiceTrackerListFactory.open(
+			bundleContext, CSSFragmentEntryProcessor.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"fragment.entry.processor.priority")));
+		_fragmentEntryProcessors = ServiceTrackerListFactory.open(
 			bundleContext, FragmentEntryProcessor.class,
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
@@ -186,7 +192,8 @@ public class FragmentEntryProcessorRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		_cssFragmentEntryProcessors.close();
+		_fragmentEntryProcessors.close();
 	}
 
 	private static final ThreadLocal<Set<String>> _validHTMLsThreadLocal =
@@ -195,9 +202,11 @@ public class FragmentEntryProcessorRegistryImpl
 				"._validHTMLsThreadLocal",
 			HashSet::new);
 
+	private ServiceTrackerList<CSSFragmentEntryProcessor>
+		_cssFragmentEntryProcessors;
+	private ServiceTrackerList<FragmentEntryProcessor> _fragmentEntryProcessors;
+
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	private ServiceTrackerList<FragmentEntryProcessor> _serviceTrackerList;
 
 }

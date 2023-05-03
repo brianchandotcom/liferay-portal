@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.module.util.BundleUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

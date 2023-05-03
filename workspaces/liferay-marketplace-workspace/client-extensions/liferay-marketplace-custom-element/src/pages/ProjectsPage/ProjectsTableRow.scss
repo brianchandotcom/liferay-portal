@@ -84,10 +84,19 @@
 		}
 
 		&-icon {
-			filter: invert(55%) sepia(12%) saturate(2767%) hue-rotate(66deg)
-				brightness(102%) contrast(76%);
-			height: 8px;
-			width: 8px;
+			&-complete {
+				filter: invert(55%) sepia(12%) saturate(2767%) hue-rotate(66deg)
+					brightness(102%) contrast(76%);
+				height: 8px;
+				width: 8px;
+			}
+
+			&-pending {
+				filter: invert(26%) sepia(24%) saturate(7268%) hue-rotate(26deg)
+					brightness(106%) contrast(101%);
+				height: 8px;
+				width: 8px;
+			}
 		}
 
 		&-text {

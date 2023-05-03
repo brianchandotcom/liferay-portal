@@ -406,16 +406,21 @@ export async function getOrderbyERC(erc: string) {
 	return await orderResponse.json();
 }
 
-export async function getOrders(
+export async function getPlacedOrders(
 	accountId: number,
 	channelId: number,
-	page: number,
-	pageSize: number
+	page?: number,
+	pageSize?: number
 ) {
-	const response = await fetch(
-		`/o/headless-commerce-delivery-order/v1.0/channels/${channelId}/accounts/${accountId}/placed-orders?nestedFields=placedOrderItems&page=${page}&pageSize=${pageSize}`,
-		{headers, method: 'GET'}
-	);
+	let url = `/o/headless-commerce-delivery-order/v1.0/channels/${channelId}/accounts/${accountId}/placed-orders`;
+
+	if (page && pageSize) {
+		url =
+			url +
+			`?nestedFields=placedOrderItems&page=${page}&pageSize=${pageSize}`;
+	}
+
+	const response = await fetch(url, {headers, method: 'GET'});
 
 	return (await response.json()) as {
 		items: PlacedOrder[];

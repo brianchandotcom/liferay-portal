@@ -36,9 +36,9 @@ import {
 } from './PublishedDashboardPageUtil';
 
 import './PublishedAppsDashboardPage.scss';
-import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 import {Liferay} from '../../liferay/liferay';
 import {getProductVersionFromSpecifications} from '../../utils/util';
+import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 
 const appTableHeaders = [
 	{

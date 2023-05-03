@@ -13,7 +13,7 @@ import {
 	getChannels,
 	getMyUserAccount,
 	getAccountInfoFromCommerce,
-	getOrders,
+	getPlacedOrders,
 	getSKUCustomFieldExpandoValue,
 	getUserAccounts,
 } from '../../utils/api';
@@ -155,7 +155,7 @@ export function PurchasedAppsDashboardPage() {
 					(channel) => channel.name === 'Marketplace Channel'
 				) || channels[0];
 
-			const placedOrders = await getOrders(
+			const placedOrders = await getPlacedOrders(
 				selectedAccount?.id || 50307,
 				channel.id,
 				page,

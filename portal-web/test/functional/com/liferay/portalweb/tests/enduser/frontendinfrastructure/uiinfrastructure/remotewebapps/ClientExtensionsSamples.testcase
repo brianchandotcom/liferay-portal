@@ -71,4 +71,46 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample Custom Element 2"
+	@priority = 4
+	test LiferaySampleCustomElement2Smoke {
+		property workspaces.client.extension.names = "liferay-sample-custom-element-2";
+
+		task ("Given: The Liferay Sample Custom Element 2 is added to a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			Portlet.addPG(portletName = "Liferay Sample Custom Element 2");
+		}
+
+		task ("Then: Sample element greets the user by name") {
+			AssertTextEquals.assertPartialText(
+				key_portletName = "Liferay Sample Custom Element 2",
+				locator1 = "Portlet#SPECIFIC_PORTLET_SECTION",
+				value1 = "Hello Test");
+		}
+
+		task ("When: User logs out") {
+			User.logoutViaURL();
+		}
+
+		task ("And: User navigates to test page") {
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Then: Sample element says 'Hello World'") {
+			AssertTextEquals.assertPartialText(
+				key_portletName = "Liferay Sample Custom Element 2",
+				locator1 = "Portlet#BODY",
+				value1 = "Hello World");
+		}
+	}
+
 }

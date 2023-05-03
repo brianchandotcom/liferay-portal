@@ -154,12 +154,6 @@ public class SalesforceObjectEntryManagerImpl
 
 	@Override
 	public void deleteObjectEntry(
-			ObjectDefinition objectDefinition, long objectEntryId)
-		throws Exception {
-	}
-
-	@Override
-	public void deleteObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, long companyId,
 			ObjectDefinition objectDefinition, String scopeKey)
@@ -174,6 +168,12 @@ public class SalesforceObjectEntryManagerImpl
 			StringBundler.concat(
 				"sobjects/", objectDefinition.getExternalReferenceCode(), "/",
 				externalReferenceCode));
+	}
+
+	@Override
+	public void deleteObjectEntry(
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws Exception {
 	}
 
 	@Override

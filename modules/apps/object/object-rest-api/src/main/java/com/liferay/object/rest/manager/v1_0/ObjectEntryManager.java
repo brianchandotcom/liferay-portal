@@ -58,13 +58,13 @@ public interface ObjectEntryManager {
 		throws Exception;
 
 	public void deleteObjectEntry(
-			ObjectDefinition objectDefinition, long objectEntryId)
-		throws Exception;
-
-	public void deleteObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, long companyId,
 			ObjectDefinition objectDefinition, String scopeKey)
+		throws Exception;
+
+	public void deleteObjectEntry(
+			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception;
 
 	public void executeObjectAction(

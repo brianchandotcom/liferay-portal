@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -44,7 +45,6 @@ import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -226,25 +226,25 @@ public class OrganizationActionDropdownItems {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getDeleteActionUnsafeConsumer() {
 
-		ResourceURL getInactiveUsersURL = _renderResponse.createResourceURL();
+		String getActiveUsersURL = ResourceURLBuilder.createResourceURL(
+			_renderResponse
+		).setParameter(
+			"className", Organization.class.getName()
+		).setParameter(
+			"status", String.valueOf(WorkflowConstants.STATUS_APPROVED)
+		).setResourceID(
+			"/users_admin/get_users_count"
+		).buildString();
 
-		getInactiveUsersURL.setResourceID("/users_admin/get_users_count");
-		getInactiveUsersURL.setParameter(
-			"className", Organization.class.getName());
-		getInactiveUsersURL.setParameter(
-			"ids", String.valueOf(_organization.getOrganizationId()));
-		getInactiveUsersURL.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_INACTIVE));
-
-		ResourceURL getActiveUsersURL = _renderResponse.createResourceURL();
-
-		getActiveUsersURL.setResourceID("/users_admin/get_users_count");
-		getActiveUsersURL.setParameter(
-			"className", Organization.class.getName());
-		getActiveUsersURL.setParameter(
-			"ids", String.valueOf(_organization.getOrganizationId()));
-		getActiveUsersURL.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_APPROVED));
+		String getInactiveUsersURL = ResourceURLBuilder.createResourceURL(
+			_renderResponse
+		).setParameter(
+			"className", Organization.class.getName()
+		).setParameter(
+			"status", String.valueOf(WorkflowConstants.STATUS_INACTIVE)
+		).setResourceID(
+			"/users_admin/get_users_count"
+		).buildString();
 
 		return dropdownItem -> {
 			dropdownItem.putData(Constants.CMD, Constants.DELETE);
@@ -258,10 +258,8 @@ public class OrganizationActionDropdownItems {
 				).setCMD(
 					Constants.DELETE
 				).buildString());
-			dropdownItem.putData(
-				"getActiveUsersURL", getActiveUsersURL.toString());
-			dropdownItem.putData(
-				"getInactiveUsersURL", getInactiveUsersURL.toString());
+			dropdownItem.putData("getActiveUsersURL", getActiveUsersURL);
+			dropdownItem.putData("getInactiveUsersURL", getInactiveUsersURL);
 			dropdownItem.putData(
 				"organizationId",
 				String.valueOf(_organization.getOrganizationId()));

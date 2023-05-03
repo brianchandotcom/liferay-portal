@@ -468,7 +468,7 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
-		Button.clickSave();
+		PortletEntry.save();
 
 		Navigator.openURL();
 

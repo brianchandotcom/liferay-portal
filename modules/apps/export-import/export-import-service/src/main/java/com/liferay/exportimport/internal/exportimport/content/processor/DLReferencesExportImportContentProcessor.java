@@ -365,12 +365,13 @@ public class DLReferencesExportImportContentProcessor
 
 	private boolean _isValidateDLReferences() {
 		try {
-			ExportImportServiceConfiguration configuration =
+			ExportImportServiceConfiguration exportImportServiceConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					ExportImportServiceConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-			return configuration.validateFileEntryReferences();
+			return exportImportServiceConfiguration.
+				validateFileEntryReferences();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

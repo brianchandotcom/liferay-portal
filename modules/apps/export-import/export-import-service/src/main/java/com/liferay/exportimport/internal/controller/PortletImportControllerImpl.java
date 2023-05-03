@@ -1003,12 +1003,12 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 	protected boolean isValidateMissingReferences() {
 		try {
-			ExportImportServiceConfiguration configuration =
+			ExportImportServiceConfiguration exportImportServiceConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					ExportImportServiceConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-			return configuration.validateMissingReferences();
+			return exportImportServiceConfiguration.validateMissingReferences();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -188,19 +188,19 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 						layoutSet.isPrivateLayout(), null, parameterMap,
 						user.getLocale(), user.getTimeZone());
 
-			ExportImportConfiguration importConfiguration =
-				_exportImportConfigurationLocalService.
-					addExportImportConfiguration(
-						user.getUserId(), layoutSet.getGroupId(),
-						StringPool.BLANK, StringPool.BLANK,
-						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-						new ServiceContext());
-
 			TransactionInvokerUtil.invoke(
 				transactionConfig,
 				new LayoutImportCallable(
-					importConfiguration, cacheFile, layoutSet));
+					_exportImportConfigurationLocalService.
+						addExportImportConfiguration(
+							user.getUserId(), layoutSet.getGroupId(),
+							StringPool.BLANK, StringPool.BLANK,
+							ExportImportConfigurationConstants.
+								TYPE_IMPORT_LAYOUT,
+							importLayoutSettingsMap,
+							WorkflowConstants.STATUS_DRAFT,
+							new ServiceContext()),
+					cacheFile, layoutSet));
 
 			return BackgroundTaskResult.SUCCESS;
 		}

@@ -87,12 +87,12 @@ public class LinksToLayoutsExportImportContentProcessor
 
 	private boolean _isValidateLinksToLayoutsReferences() {
 		try {
-			ExportImportServiceConfiguration configuration =
+			ExportImportServiceConfiguration exportImportServiceConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					ExportImportServiceConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-			return configuration.validateLayoutReferences();
+			return exportImportServiceConfiguration.validateLayoutReferences();
 		}
 		catch (Exception exception) {
 			_log.error(exception);

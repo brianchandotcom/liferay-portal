@@ -283,10 +283,10 @@ export default function DatePicker({
 						firstDayOfWeek={firstDayOfWeek}
 						months={months}
 						onBlur={onBlur}
+						onChange={handleValueChange}
 						onExpandedChange={handleExpandedChange}
 						onFocus={onFocus}
 						onInput={onInputMask}
-						onValueChange={handleValueChange}
 						placeholder={placeholder}
 						ref={inputRef}
 						time={isDateTime}

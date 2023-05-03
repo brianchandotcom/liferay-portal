@@ -3,14 +3,19 @@
 <project basedir="." name="portal-test-workspace" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
-
-	<propertycopy from="workspaces.client.extension.names[${workspace.name}]" name="workspaces.client.extension.names" override="true" />
-
 	<macrodef name="deploy-workspace-client-extension">
 		<attribute name="workspace.client.extension.name" />
 
 		<sequential>
+			<local name="workspace.name" />
+
+			<propertyregex
+				input="@{workspace.client.extension.name}"
+				property="workspace.name"
+				regexp="(liferay-[^-]+)-.*"
+				replace="\1-workspace"
+			/>
+
 			<local name="workspace.client.extension.dir" />
 
 			<property name="workspace.client.extension.dir" value="${project.dir}/workspaces/${workspace.name}/client-extensions/@{workspace.client.extension.name}" />
@@ -33,6 +38,8 @@
 
 	<macrodef name="deploy-workspace-client-extensions">
 		<sequential>
+			<propertycopy from="workspaces.client.extension.names[${workspace.name}]" name="workspaces.client.extension.names" override="true" />
+
 			<for list="${workspaces.client.extension.names}" param="workspace.client.extension.name">
 				<sequential>
 					<deploy-workspace-client-extension workspace.client.extension.name="@{workspace.client.extension.name}" />
@@ -52,13 +59,23 @@
 		</sequential>
 	</macrodef>
 
+	<target name="deploy-workspace-client-extension">
+		<fail message="Please set the property ${workspace.client.extension.name}." unless="workspace.client.extension.name" />
+
+		<deploy-workspace-client-extension workspace.client.extension.name="${workspace.client.extension.name}" />
+	</target>
+
 	<target name="start-workspace">
+		<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
+
 		<stop-workspace />
 
 		<start-workspace />
 	</target>
 
 	<target name="stop-workspace">
+		<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
+
 		<stop-workspace />
 	</target>
 </project>

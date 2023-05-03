@@ -15671,14 +15671,33 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="workspace.name" />
+		<get-testcase-property property.name="workspaces.client.extension.names" />
 
 		<if>
-			<isset property="workspace.name" />
+			<isset property="workspaces.client.extension.names" />
 			<then>
-				<ant antfile="build-test-${workspace.name}.xml" inheritAll="false" target="start-workspace">
-					<property name="workspace.name" value="${workspace.name}" />
-				</ant>
+				<for list="${workspaces.client.extension.names}" param="workspace.client.extension.name">
+					<sequential>
+						<ant antfile="build-test-workspace.xml" inheritAll="false" target="deploy-workspace-client-extension">
+							<property name="workspace.client.extension.name" value="@{workspace.client.extension.name}" />
+						</ant>
+					</sequential>
+				</for>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="workspaces.names" />
+
+		<if>
+			<isset property="workspaces.names" />
+			<then>
+				<for list="${workspaces.names}" param="workspace.name">
+					<sequential>
+						<ant antfile="build-test-@{workspace.name}.xml" inheritAll="false" target="start-workspace">
+							<property name="workspace.name" value="@{workspace.name}" />
+						</ant>
+					</sequential>
+				</for>
 			</then>
 		</if>
 
@@ -15709,14 +15728,19 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="workspace.name" />
+
+		<get-testcase-property property.name="workspaces.names" />
 
 		<if>
-			<isset property="workspace.name" />
+			<isset property="workspaces.names" />
 			<then>
-				<ant antfile="build-test-${workspace.name}.xml" inheritAll="false" target="stop-workspace">
-					<property name="workspace.name" value="${workspace.name}" />
-				</ant>
+				<for list="${workspaces.names}" param="workspace.name">
+					<sequential>
+						<ant antfile="build-test-@{workspace.name}.xml" inheritAll="false" target="stop-workspace">
+							<property name="workspace.name" value="@{workspace.name}" />
+						</ant>
+					</sequential>
+				</for>
 			</then>
 		</if>
 

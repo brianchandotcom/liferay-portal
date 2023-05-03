@@ -67,7 +67,7 @@ public abstract class BaseMatchAllQueryTestCase extends BaseIndexingTestCase {
 						DocumentsAssert.assertValues(
 							searchResponse.getRequestString(),
 							searchResponse.getDocuments(), Field.PRIORITY,
-							String.valueOf(Arrays.asList(sequence)));
+							Arrays.toString(sequence));
 					});
 			});
 	}

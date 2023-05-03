@@ -95,6 +95,20 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+		if (isSet(modifier)) {
+			Select(
+				key_fieldLabel = "Modifier",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${modifier});
+		}
+
+		if (isSet(modifierTarget)) {
+			Select(
+				key_fieldLabel = "Target",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${modifierTarget});
+		}
+
 		if (isSet(amountValue)) {
 			Type(
 				key_fieldLabel = "Amount",
@@ -112,11 +126,21 @@ definition {
 
 		CommerceRelations.assignSingleRelationToProductsEntry(
 			entryName = ${entryName},
-			title = "Add ${relation}");
+			title = "${relation}");
 
 		Click(locator1 = "Icon#CLOSE");
 
 		SelectFrameTop();
+	}
+
+	macro deletePriceModifier {
+		Click(
+			key_value = ${priceModifierName},
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(key_menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro openPriceListsAdmin {

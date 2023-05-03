@@ -233,6 +233,10 @@ export function PurchasedAppsDashboardPage() {
 			) || dashboardNavigationItems[0];
 
 		setSelectedNavigationItem(clickedNavigationItem?.itemTitle as string);
+
+		if (clickedNavigationItem.itemTitle !== 'Members') {
+			setSelectedMember(undefined);
+		}
 	}, [dashboardNavigationItems]);
 
 	useEffect(() => {
@@ -246,16 +250,10 @@ export function PurchasedAppsDashboardPage() {
 					isPublisherAccount: false,
 				};
 
-				const currentUserAccountRoleBriefs =
-					currentUserAccount.accountBriefs.find(
-						(accountBrief: {name: string}) =>
-							accountBrief.name === selectedAccount.name
-					).roleBriefs;
-
 				const currentUserAccountBriefs =
 					currentUserAccount.accountBriefs.find(
-						(accountBrief: {name: string}) =>
-							accountBrief.name === selectedAccount.name
+						(accountBrief: {id: number}) =>
+							accountBrief.id === selectedAccount.id
 					);
 
 				if (currentUserAccountBriefs) {

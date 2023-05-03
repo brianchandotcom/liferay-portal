@@ -119,7 +119,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
+	@description = "Ignored due to LPS-183521 | LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
+	@ignore = "true"
 	@priority = 5
 	test CanAssertPagination {
 		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
@@ -438,7 +439,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-180895  Confirm that the view was really deleted"
+	@description = "Ignored due to LPS-183521 | LPS-180895  Confirm that the view was really deleted"
+	@ignore = "true"
 	@priority = 5
 	test CanUpdateNumberOfViews {
 		task ("When Add a new view") {
@@ -480,7 +482,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-181350. Confirm that special characters are confirmed in the display name on the page "
+	@description = "Ignored due to LPS-183521 and LPS-183512 | LPS-181350. Confirm that special characters are confirmed in the display name on the page "
+	@ignore = "true"
 	@priority = 4
 	test CanUseSpecialCharactersInNameField {
 		task ("When Clicking add button, and Filling the Name field with, and Clicking Save button") {

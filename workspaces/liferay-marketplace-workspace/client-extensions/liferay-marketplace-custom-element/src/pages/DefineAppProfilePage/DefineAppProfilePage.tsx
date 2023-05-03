@@ -87,11 +87,11 @@ export function DefineAppProfilePage({
 
 			vocabulariesResponse.items.forEach(
 				(vocab: {id: number; name: string}) => {
-					if (vocab.name === 'Marketplace Solution Category') {
+					if (vocab.name === 'Marketplace App Category') {
 						categoryVocabId = vocab.id;
 					}
 
-					if (vocab.name === 'Marketplace Solution Tags') {
+					if (vocab.name === 'Marketplace App Tags') {
 						tagVocabId = vocab.id;
 					}
 				}

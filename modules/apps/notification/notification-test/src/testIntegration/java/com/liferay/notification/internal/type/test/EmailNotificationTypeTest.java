@@ -30,6 +30,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -112,11 +113,25 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationTemplate.getNotificationTemplateId()
 			).build());
 
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			dtoConverterContext, parentObjectDefinition,
+			new ObjectEntry() {
+				{
+					setProperties(parentObjectEntryValues);
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
 		objectEntryManager.addObjectEntry(
 			dtoConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(randomObjectEntryValues);
+					setProperties(
+						HashMapBuilder.putAll(
+							randomObjectEntryValues
+						).put(
+							getObjectField2Name(), objectEntry.getId()
+						).build());
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);

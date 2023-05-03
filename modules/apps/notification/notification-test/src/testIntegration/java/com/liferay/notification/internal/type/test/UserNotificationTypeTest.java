@@ -34,20 +34,20 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Feliphe Marinho
@@ -172,11 +172,25 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				notificationTemplate.getNotificationTemplateId()
 			).build());
 
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			dtoConverterContext, parentObjectDefinition,
+			new ObjectEntry() {
+				{
+					setProperties(parentObjectEntryValues);
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
 		objectEntryManager.addObjectEntry(
 			dtoConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(randomObjectEntryValues);
+					setProperties(
+						HashMapBuilder.putAll(
+							randomObjectEntryValues
+						).put(
+							getObjectField2Name(), objectEntry.getId()
+						).build());
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);

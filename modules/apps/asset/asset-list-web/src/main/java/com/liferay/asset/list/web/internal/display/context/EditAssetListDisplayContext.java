@@ -701,7 +701,7 @@ public class EditAssetListDisplayContext {
 			}
 		).put(
 			"isSegmentationEnabled",
-			_isSegmentationEnabled(_themeDisplay.getCompanyId())
+			isSegmentationEnabled(_themeDisplay.getCompanyId())
 		).put(
 			"openSelectSegmentsEntryDialogMethod",
 			() -> {
@@ -1120,6 +1120,20 @@ public class EditAssetListDisplayContext {
 		return false;
 	}
 
+	public boolean isSegmentationEnabled(long companyId) {
+		try {
+			return _segmentsConfigurationProvider.isSegmentationEnabled(
+				companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+
+			return false;
+		}
+	}
+
 	public boolean isSubtypeFieldsFilterEnabled() {
 		if (_subtypeFieldsFilterEnabled != null) {
 			return _subtypeFieldsFilterEnabled;
@@ -1360,20 +1374,6 @@ public class EditAssetListDisplayContext {
 		}
 
 		return typeSettings;
-	}
-
-	private boolean _isSegmentationEnabled(long companyId) {
-		try {
-			return _segmentsConfigurationProvider.isSegmentationEnabled(
-				companyId);
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(configurationException);
-			}
-
-			return false;
-		}
 	}
 
 	private void _setDDMStructure() throws Exception {

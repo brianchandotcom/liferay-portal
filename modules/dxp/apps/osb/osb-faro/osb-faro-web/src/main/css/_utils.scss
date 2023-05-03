@@ -88,3 +88,12 @@
 .font-weight-semibold {
 	font-weight: $fontWeightSemiBold;
 }
+
+/**
+ * TEMP - Remove z-index trick below after
+ * upgrade @clayui/css version to 3.93
+ */
+
+.modal-open .dropdown-menu {
+	z-index: 9999;
+}

@@ -238,7 +238,7 @@ export default class DatePicker extends React.Component {
 					</ClayButton>
 
 					<ClayButton
-						className='current-day-btn'
+						className='button-root current-day-btn'
 						disabled={this.isCurrentDisabled()}
 						displayType='secondary'
 						monospaced

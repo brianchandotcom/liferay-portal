@@ -1,6 +1,7 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
-import Dropdown from './Dropdown';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import NoResultsDisplay, {
 	getFormattedTitle
@@ -31,13 +32,13 @@ class Item extends React.Component {
 		const {item, ...otherProps} = this.props;
 
 		return (
-			<Dropdown.Item
+			<ClayDropDown.Item
 				{...omitDefinedProps(otherProps, Item.propTypes)}
-				hideOnClick
+				closeOnClick
 				onClick={this.handleClick}
 			>
 				{item.name}
-			</Dropdown.Item>
+			</ClayDropDown.Item>
 		);
 	}
 }
@@ -99,9 +100,9 @@ class SearchableSelect extends React.Component {
 			return items.map((item, i) => {
 				if (item.subheader) {
 					return (
-						<Dropdown.Subheader key={i}>
+						<ClayDropDown.Section key={i}>
 							{item.name}
-						</Dropdown.Subheader>
+						</ClayDropDown.Section>
 					);
 				} else {
 					return (
@@ -124,40 +125,52 @@ class SearchableSelect extends React.Component {
 		const {
 			buttonPlaceholder,
 			className,
+			disabled,
 			footerButtonMessage,
 			footerOnClick,
 			inputPlaceholder,
 			inputValue,
 			onSearchChange,
-			readOnly,
 			selectedItem,
-			showSearch,
-			...otherProps
+			showSearch
 		} = this.props;
 
 		return (
-			<Dropdown
-				{...omitDefinedProps(otherProps, SearchableSelect.propTypes)}
+			<ClayDropDown
 				className={getCN('searchable-select-root', className)}
-				label={(selectedItem && selectedItem.name) || buttonPlaceholder}
-				readOnly={readOnly}
+				closeOnClick
+				trigger={
+					<ClayButton
+						className='button-root d-flex align-items-center justify-content-between w-100'
+						disabled={disabled}
+						displayType='unstyled'
+					>
+						{(selectedItem && selectedItem.name) ||
+							buttonPlaceholder}
+
+						<ClayIcon
+							className='icon-root ml-2'
+							symbol='caret-bottom'
+						/>
+					</ClayButton>
+				}
 			>
 				{showSearch && (
-					<Dropdown.Section>
+					<ClayDropDown.Section>
 						<SearchInput
 							onChange={onSearchChange}
 							placeholder={inputPlaceholder}
 							value={inputValue}
 						/>
-					</Dropdown.Section>
+					</ClayDropDown.Section>
 				)}
 
-				<Dropdown.Section className='items-wrapper'>
+				<ClayDropDown.Section className='items-wrapper'>
 					{this.renderDropdownItems()}
-				</Dropdown.Section>
+				</ClayDropDown.Section>
 
 				{footerOnClick && (
-					<Dropdown.Footer className='footer-action' hideOnClick>
+					<ClayDropDown.Section className='footer-action'>
 						<ClayButton
 							block
 							className='button-root'
@@ -166,9 +179,9 @@ class SearchableSelect extends React.Component {
 						>
 							{footerButtonMessage}
 						</ClayButton>
-					</Dropdown.Footer>
+					</ClayDropDown.Section>
 				)}
-			</Dropdown>
+			</ClayDropDown>
 		);
 	}
 }

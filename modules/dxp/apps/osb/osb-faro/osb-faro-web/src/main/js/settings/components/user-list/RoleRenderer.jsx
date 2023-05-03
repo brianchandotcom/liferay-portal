@@ -1,5 +1,8 @@
 import autobind from 'autobind-decorator';
-import Dropdown from 'shared/components/Dropdown';
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import getCN from 'classnames';
 import React from 'react';
 import {get, noop} from 'lodash';
 import {getDisplayRole} from 'shared/util/lang';
@@ -74,16 +77,14 @@ export default class RoleRenderer extends React.Component {
 	}
 
 	@autobind
-	handleOptionClick(event) {
-		const {value} = event.target;
-
+	handleOptionClick(selectedKey) {
 		const {onUpdateEdits} = this.props;
 
 		this.setState({
-			selectedKey: value
+			selectedKey
 		});
 
-		onUpdateEdits('roleName', value);
+		onUpdateEdits('roleName', selectedKey);
 	}
 
 	render() {
@@ -96,24 +97,40 @@ export default class RoleRenderer extends React.Component {
 			<td className={className}>
 				<StopClickPropagation>
 					{editing && options.length > 0 ? (
-						<Dropdown
-							buttonProps={{
-								displayType: 'secondary',
-								size: 'sm'
-							}}
-							label={getDisplayRole(selectedKey)}
+						<ClayDropDown
+							closeOnClick
+							trigger={
+								<ClayButton
+									className={getCN(
+										'd-flex',
+										'justify-content-between',
+										' align-items-center'
+									)}
+									displayType='secondary'
+									small
+								>
+									<span className='text-truncate mr-2'>
+										{getDisplayRole(selectedKey)}
+									</span>
+
+									<ClayIcon
+										className='mt-0'
+										symbol='caret-bottom'
+									/>
+								</ClayButton>
+							}
 						>
 							{options.map(option => (
-								<Dropdown.Item
-									hideOnClick
+								<ClayDropDown.Item
 									key={option.value}
-									onClick={this.handleOptionClick}
-									value={option.value}
+									onClick={() =>
+										this.handleOptionClick(option.value)
+									}
 								>
 									{option.label}
-								</Dropdown.Item>
+								</ClayDropDown.Item>
 							))}
-						</Dropdown>
+						</ClayDropDown>
 					) : (
 						getDisplayRole(data.roleName)
 					)}

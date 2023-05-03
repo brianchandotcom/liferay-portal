@@ -1,7 +1,8 @@
 import autobind from 'autobind-decorator';
+import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import Dropdown from './Dropdown';
 import FaroConstants from 'shared/util/constants';
 import getCN from 'classnames';
 import React from 'react';
@@ -30,9 +31,9 @@ class PaginationEllipsisItem extends React.Component {
 
 	render() {
 		return (
-			<Dropdown.Item {...this.props} onClick={this.handleChange}>
+			<ClayDropDown.Item {...this.props} onClick={this.handleChange}>
 				{this.props.children}
-			</Dropdown.Item>
+			</ClayDropDown.Item>
 		);
 	}
 }
@@ -48,19 +49,18 @@ class PaginationEllipsis extends React.Component {
 		const {className, href, items, onChange} = this.props;
 
 		return (
-			<Dropdown
-				align='topCenter'
-				buttonProps={{
-					displayType: 'link'
-				}}
-				className={className}
-				label='...'
-				showCaret={false}
-				toggleClasses='page-link'
+			<ClayDropDown
+				alignmentPosition={Align.TopCenter}
+				className={getCN('dropdown-root', className)}
+				closeOnClick
+				trigger={
+					<ClayButton className='page-link' displayType='unstyled'>
+						{'...'}
+					</ClayButton>
+				}
 			>
 				{items.map(item => (
 					<PaginationEllipsisItem
-						hideOnClick
 						href={
 							onChange
 								? null
@@ -73,7 +73,7 @@ class PaginationEllipsis extends React.Component {
 						{item}
 					</PaginationEllipsisItem>
 				))}
-			</Dropdown>
+			</ClayDropDown>
 		);
 	}
 }

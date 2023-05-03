@@ -1,9 +1,10 @@
 import autobind from 'autobind-decorator';
-import Checkbox from './Checkbox';
-import Dropdown from './Dropdown';
+import ClayButton from '@clayui/button/lib/Button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import Radio from './Radio';
 import React from 'react';
+import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import {FilterByType, FilterInputType, FilterOptionType} from 'shared/types';
 import {get, noop, uniqueId} from 'lodash';
 import {Map, Set} from 'immutable';
@@ -33,18 +34,19 @@ const Item: React.FC<IItemProps> = ({
 }) => {
 	const handleChange = () => onChange(value, field);
 
-	const ComponentFn = type === 'radio' ? Radio : Checkbox;
+	const Component = type === 'radio' ? ClayRadio : ClayCheckbox;
 
 	return (
-		<Dropdown.Item active={active} className={className}>
-			<ComponentFn
+		<ClayDropDown.Item active={active} className={className}>
+			<Component
 				{...otherProps}
 				checked={active}
 				label={label}
 				name={name}
 				onChange={handleChange}
+				value={value}
 			/>
-		</Dropdown.Item>
+		</ClayDropDown.Item>
 	);
 };
 
@@ -56,11 +58,12 @@ const FlatList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 }) => (
 	<>
 		{filterByOptions.map(({key, label, type = 'checkbox', values}, i) => (
-			<React.Fragment key={key}>
-				<Dropdown.Subheader>
-					{sub(Liferay.Language.get('filter-by-x'), [label])}
-				</Dropdown.Subheader>
-
+			<ClayDropDown.Group
+				header={
+					sub(Liferay.Language.get('filter-by-x'), [label]) as string
+				}
+				key={key}
+			>
 				{values.map(({label: itemLabel, value}) => (
 					<Item
 						active={filterBy.hasIn([key, value])}
@@ -75,7 +78,7 @@ const FlatList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 				))}
 
 				{i < filterByOptions.length - 1 && <hr />}
-			</React.Fragment>
+			</ClayDropDown.Group>
 		))}
 	</>
 );
@@ -86,14 +89,22 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 	filterByOptions,
 	onChange
 }) => (
-	<>
-		<Dropdown.Subheader>
-			{Liferay.Language.get('filter-by')}
-		</Dropdown.Subheader>
-
+	<ClayDropDown.Group header={Liferay.Language.get('filter-by')}>
 		{filterByOptions.map(({key, label, values}) =>
 			values.length > 1 ? (
-				<Dropdown key={key} label={label}>
+				<ClayDropDown
+					alignmentPosition={Align.RightCenter}
+					key={key}
+					trigger={
+						<ClayDropDown.Item className='d-flex justify-content-between align-items-center w-100'>
+							<span className='text-truncate'>{label}</span>
+
+							<span className='caret-root'>
+								<ClayIcon symbol='caret-right' />
+							</span>
+						</ClayDropDown.Item>
+					}
+				>
 					{values.map(({label: itemLabel, value}) => (
 						<Item
 							active={filterBy.hasIn([key, value])}
@@ -106,7 +117,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 							value={value}
 						/>
 					))}
-				</Dropdown>
+				</ClayDropDown>
 			) : (
 				<Item
 					active={filterBy.hasIn([key, get(values, ['0', 'value'])])}
@@ -119,7 +130,7 @@ const NestedList: React.FC<Omit<FilterOptionsListPropsType, 'flat'>> = ({
 				/>
 			)
 		)}
-	</>
+	</ClayDropDown.Group>
 );
 
 type FilterOptionsListPropsType = Pick<
@@ -134,6 +145,16 @@ const FilterOptionsList: React.FC<FilterOptionsListPropsType> = ({
 	...otherProps
 }) => (flat ? <FlatList {...otherProps} /> : <NestedList {...otherProps} />);
 
+export const getFilterAndOrderLabel = ({filterByOptions, orderByOptions}) => {
+	if (filterByOptions.length && orderByOptions.length) {
+		return Liferay.Language.get('filter-and-order');
+	} else if (filterByOptions.length) {
+		return Liferay.Language.get('filter');
+	}
+
+	return Liferay.Language.get('order');
+};
+
 interface IFilterAndOrderProps extends React.HTMLAttributes<HTMLElement> {
 	disabled?: boolean;
 	filterBy?: FilterByType;
@@ -143,6 +164,7 @@ interface IFilterAndOrderProps extends React.HTMLAttributes<HTMLElement> {
 	onOrderFieldChange?: (field: string) => void;
 	orderField: string;
 	orderByOptions?: {label: string; value: string}[];
+	trigger?: React.ReactElement<any, string>;
 }
 
 class FilterAndOrder extends React.Component<IFilterAndOrderProps> {
@@ -154,7 +176,8 @@ class FilterAndOrder extends React.Component<IFilterAndOrderProps> {
 		onFilterByChange: noop,
 		onOrderFieldChange: noop,
 		orderByOptions: [],
-		orderField: ''
+		orderField: '',
+		trigger: null
 	};
 
 	_name = uniqueId('filterAndOrder');
@@ -178,21 +201,6 @@ class FilterAndOrder extends React.Component<IFilterAndOrderProps> {
 		);
 	}
 
-	getFilterAndOrderLabel() {
-		const {filterByOptions, orderByOptions} = this.props;
-
-		const hasFilterBy = !!filterByOptions.length;
-		const hasOrderBy = !!orderByOptions.length;
-
-		if (hasFilterBy && hasOrderBy) {
-			return Liferay.Language.get('filter-and-order');
-		} else if (hasFilterBy) {
-			return Liferay.Language.get('filter');
-		}
-
-		return Liferay.Language.get('order');
-	}
-
 	render() {
 		const {
 			className,
@@ -202,21 +210,44 @@ class FilterAndOrder extends React.Component<IFilterAndOrderProps> {
 			flat,
 			onOrderFieldChange,
 			orderByOptions,
-			orderField
+			orderField,
+			trigger
 		} = this.props;
 
 		const hasFilterBy = !!filterByOptions.length;
 		const hasOrderBy = !!orderByOptions.length;
 
 		return (
-			<Dropdown
-				buttonProps={{
-					['data-testid']: 'filter-and-order-button',
-					displayType: 'unstyled'
-				}}
-				className={getCN('filter-and-order-root', className)}
-				disabled={disabled}
-				label={this.getFilterAndOrderLabel()}
+			<ClayDropDown
+				className={getCN(
+					'dropdown-root',
+					'filter-and-order-root',
+					className
+				)}
+				trigger={
+					trigger ? (
+						trigger
+					) : (
+						<ClayButton
+							block
+							className='filter-and-order-button'
+							data-testid='filter-and-order-button'
+							disabled={disabled}
+							displayType='unstyled'
+						>
+							<span className='text-truncate'>
+								{getFilterAndOrderLabel({
+									filterByOptions,
+									orderByOptions
+								})}
+							</span>
+
+							<span className='caret-root'>
+								<ClayIcon symbol='caret-bottom' />
+							</span>
+						</ClayButton>
+					)
+				}
 			>
 				{hasFilterBy && (
 					<FilterOptionsList
@@ -228,23 +259,23 @@ class FilterAndOrder extends React.Component<IFilterAndOrderProps> {
 				)}
 
 				{hasOrderBy && (
-					<Dropdown.Subheader>
-						{Liferay.Language.get('order-by')}
-					</Dropdown.Subheader>
+					<ClayDropDown.Group
+						header={Liferay.Language.get('order-by')}
+					>
+						{orderByOptions.map(({label, value}) => (
+							<Item
+								active={value === orderField}
+								key={value}
+								label={label}
+								name={this._name}
+								onChange={onOrderFieldChange}
+								type='radio'
+								value={value}
+							/>
+						))}
+					</ClayDropDown.Group>
 				)}
-
-				{orderByOptions.map(({label, value}) => (
-					<Item
-						active={value === orderField}
-						key={value}
-						label={label}
-						name={this._name}
-						onChange={onOrderFieldChange}
-						type='radio'
-						value={value}
-					/>
-				))}
-			</Dropdown>
+			</ClayDropDown>
 		);
 	}
 }

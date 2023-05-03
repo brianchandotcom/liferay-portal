@@ -9,7 +9,7 @@ type IBasicSidebarRouteArgs = IBasicRouteArgs & {
 	channelId: string;
 };
 
-type IBreadcrumbArgs = {
+export type IBreadcrumbArgs = {
 	active?: boolean;
 	href?: string;
 	groupId?: string;

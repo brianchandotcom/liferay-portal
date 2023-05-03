@@ -1,11 +1,13 @@
 import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import Dropdown from 'shared/components/Dropdown';
 import React from 'react';
 
 interface IRowActionsProps {
-	actions?: (React.ComponentProps<typeof Dropdown> & {label: string})[];
+	actions?: (React.HTMLAttributes<HTMLElement> & {
+		label: string;
+	})[];
 	quickActions?: {
 		iconSymbol: string;
 		label: string;
@@ -21,7 +23,7 @@ const RowActions: React.FC<IRowActionsProps> = ({
 	<>
 		{!!quickActions?.length && (
 			<div className='quick-action-menu'>
-				{quickActions.map(({href, iconSymbol, label, ...props}) =>
+				{quickActions.map(({href, iconSymbol, label}) =>
 					href ? (
 						<ClayLink
 							aria-label={label}
@@ -32,7 +34,6 @@ const RowActions: React.FC<IRowActionsProps> = ({
 							href={href}
 							key={label}
 							title={label}
-							{...props}
 						>
 							<ClayIcon
 								className='icon-root'
@@ -47,7 +48,6 @@ const RowActions: React.FC<IRowActionsProps> = ({
 							displayType='unstyled'
 							key={label}
 							title={label}
-							{...props}
 						>
 							<ClayIcon
 								className='icon-root'
@@ -60,22 +60,25 @@ const RowActions: React.FC<IRowActionsProps> = ({
 		)}
 
 		{!!actions?.length && (
-			<Dropdown
-				align='bottomRight'
-				buttonProps={{
-					className: 'component-action',
-					displayType: 'unstyled'
-				}}
+			<ClayDropDown
+				alignmentPosition={Align.BottomRight}
 				className='dropdown-action'
-				icon='ellipsis-v'
-				showCaret={false}
+				closeOnClick
+				trigger={
+					<ClayButton
+						className='component-action'
+						displayType='unstyled'
+					>
+						<ClayIcon symbol='ellipsis-v' />
+					</ClayButton>
+				}
 			>
 				{actions.map(({label, ...props}) => (
-					<Dropdown.Item hideOnClick key={label} {...props}>
+					<ClayDropDown.Item key={label} {...props}>
 						{label}
-					</Dropdown.Item>
+					</ClayDropDown.Item>
 				))}
-			</Dropdown>
+			</ClayDropDown>
 		)}
 	</>
 );

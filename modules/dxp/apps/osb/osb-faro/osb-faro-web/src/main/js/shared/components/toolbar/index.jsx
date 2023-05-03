@@ -4,7 +4,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import Constants, {OrderByDirections} from 'shared/util/constants';
-import FilterAndOrder from 'shared/components/FilterAndOrder';
+import FilterAndOrder, {
+	getFilterAndOrderLabel
+} from 'shared/components/FilterAndOrder';
 import FilterTags from './FilterTags';
 import getCN from 'classnames';
 import Nav from 'shared/components/Nav';
@@ -269,16 +271,36 @@ export default class Toolbar extends React.Component {
 			return (
 				<>
 					{!!(filterByOptions.length || orderByOptions.length) && (
-						<FilterAndOrder
-							disabled={disabled}
-							filterBy={filterBy}
-							filterByOptions={filterByOptions}
-							flat={flatFilter}
-							onFilterByChange={this.handleFilterByChange}
-							onOrderFieldChange={this.handleOrderFieldChange}
-							orderByOptions={orderByOptions}
-							orderField={field}
-						/>
+						<Nav.Item>
+							<FilterAndOrder
+								disabled={disabled}
+								filterBy={filterBy}
+								filterByOptions={filterByOptions}
+								flat={flatFilter}
+								onFilterByChange={this.handleFilterByChange}
+								onOrderFieldChange={this.handleOrderFieldChange}
+								orderByOptions={orderByOptions}
+								orderField={field}
+								trigger={
+									<ClayButton
+										borderless
+										className='d-flex align-items-center'
+										displayType='secondary'
+										size='sm'
+									>
+										{getFilterAndOrderLabel({
+											filterByOptions,
+											orderByOptions
+										})}
+
+										<ClayIcon
+											className='ml-2 mt-0'
+											symbol='caret-bottom'
+										/>
+									</ClayButton>
+								}
+							/>
+						</Nav.Item>
 					)}
 
 					<Nav.Item>

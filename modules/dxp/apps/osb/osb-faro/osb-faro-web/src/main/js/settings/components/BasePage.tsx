@@ -8,6 +8,7 @@ import NotificationAlertList, {
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
 import {connect, ConnectedProps} from 'react-redux';
+import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
 import {PageActions} from 'shared/components/base-page/Header';
 
 const connector = connect((_, {children}: {children: React.ReactNode}) => ({
@@ -17,7 +18,7 @@ const connector = connect((_, {children}: {children: React.ReactNode}) => ({
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface ISettingsBasePageProps extends PropsFromRedux {
-	breadcrumbItems?: Array<any>;
+	breadcrumbItems?: Array<IBreadcrumbArgs>;
 	className?: string;
 	documentTitle?: string;
 	groupId: string;

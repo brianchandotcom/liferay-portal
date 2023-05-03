@@ -1,5 +1,6 @@
 import ClayButton from '@clayui/button';
-import Dropdown from 'shared/components/Dropdown';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import Modal from 'shared/components/modal';
 import Promise from 'metal-promise';
@@ -55,9 +56,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 			selectionDispatch({payload: {items}, type: ACTION_TYPES.add});
 	}, []);
 
-	const handleEdits = event => {
-		const newVal = event.target.value;
-
+	const handleEdits = newVal => {
 		setItemsIList(
 			itemsIList.map(itemIMap =>
 				selectedItemsIOMap.has(itemIMap.get('id'))
@@ -95,18 +94,34 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 
 			<Modal.Body>
 				<div>
-					<Dropdown label={selectedKey}>
+					<ClayDropDown
+						closeOnClick
+						trigger={
+							<ClayButton
+								className='button-root'
+								displayType='unstyled'
+							>
+								<span className='text-truncate'>
+									{selectedKey}
+								</span>
+
+								<ClayIcon
+									className='icon-root ml-2'
+									symbol='caret-bottom'
+								/>
+							</ClayButton>
+						}
+					>
 						{options.map(option => (
-							<Dropdown.Item
-								hideOnClick
+							<ClayDropDown.Item
+								className='set-max-zindex'
 								key={option.value}
-								onClick={handleEdits}
-								value={option.value}
+								onClick={() => handleEdits(option.value)}
 							>
 								{option.label}
-							</Dropdown.Item>
+							</ClayDropDown.Item>
 						))}
-					</Dropdown>
+					</ClayDropDown>
 
 					<p className='text-secondary'>
 						{sub(

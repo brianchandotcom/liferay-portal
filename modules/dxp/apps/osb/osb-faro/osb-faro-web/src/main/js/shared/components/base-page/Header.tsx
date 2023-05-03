@@ -1,7 +1,8 @@
 import Breadcrumbs from 'shared/components/Breadcrumbs';
 import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import Dropdown from 'shared/components/Dropdown';
 import getCN from 'classnames';
 import Nav from 'shared/components/Nav';
 import NotificationAlertList, {
@@ -11,6 +12,7 @@ import React from 'react';
 import Row from './Row';
 import TextTruncate from 'shared/components/TextTruncate';
 import {getMatchedRoute, setUriQueryValues, toRoute} from 'shared/util/router';
+import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
 import {noop, pickBy} from 'lodash';
 
 type NavBarItem = {
@@ -69,52 +71,60 @@ const PageActions: React.FC<IPageActionsProps> = ({
 	actionsDisplayLimit = 1,
 	disabled = false,
 	label = ''
-}) => {
-	const triggerDisplayProps = label.length
-		? {
-				label
-		  }
-		: {icon: 'ellipsis-v'};
+}) => (
+	<>
+		{actions.length <= actionsDisplayLimit &&
+			actions.map(({label, ...props}) => {
+				const Button = props.href ? ClayLink : ClayButton;
 
-	return (
-		<>
-			{actions.length <= actionsDisplayLimit &&
-				actions.map(({label, ...props}) => {
-					const Button = props.href ? ClayLink : ClayButton;
+				return (
+					<Button
+						button
+						className='button-root'
+						displayType='secondary'
+						key={label}
+						{...props}
+					>
+						{label}
+					</Button>
+				);
+			})}
 
-					return (
-						<Button
-							button
-							className='button-root'
-							displayType='secondary'
-							key={label}
-							{...props}
-						>
-							{label}
-						</Button>
-					);
-				})}
+		{actions.length > actionsDisplayLimit && (
+			<ClayDropDown
+				alignmentPosition={Align.BottomRight}
+				trigger={
+					<ClayButton
+						disabled={disabled}
+						displayType={label.length ? 'primary' : 'unstyled'}
+					>
+						{label ? (
+							<>
+								<span>{label}</span>
 
-			{actions.length > actionsDisplayLimit && (
-				<Dropdown
-					{...triggerDisplayProps}
-					align='bottomRight'
-					buttonProps={{
-						displayType: label.length ? 'primary' : 'unstyled'
-					}}
-					disabled={disabled}
-					showCaret={false}
-				>
-					{actions.map(({label, ...props}) => (
-						<Dropdown.Item key={label} {...props}>
-							{label}
-						</Dropdown.Item>
-					))}
-				</Dropdown>
-			)}
-		</>
-	);
-};
+								<ClayIcon
+									className='icon-root ml-2'
+									symbol='caret-bottom'
+								/>
+							</>
+						) : (
+							<ClayIcon
+								className='icon-root'
+								symbol='ellipsis-v'
+							/>
+						)}
+					</ClayButton>
+				}
+			>
+				{actions.map(({label, ...props}) => (
+					<ClayDropDown.Item key={label} {...props}>
+						{label}
+					</ClayDropDown.Item>
+				))}
+			</ClayDropDown>
+		)}
+	</>
+);
 
 const Section: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 	children,
@@ -145,15 +155,8 @@ const TitleSection: React.FC<ITitleSectionProps> = ({
 	</Section>
 );
 
-type Breadcrumb = {
-	active?: boolean;
-	href?: string;
-	label: string;
-	id?: string;
-};
-
 interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-	breadcrumbs: Breadcrumb[];
+	breadcrumbs: IBreadcrumbArgs[];
 	groupId: string;
 }
 

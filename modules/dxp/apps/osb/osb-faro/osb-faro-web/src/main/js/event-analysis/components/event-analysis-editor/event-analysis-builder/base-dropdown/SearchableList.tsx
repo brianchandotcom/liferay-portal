@@ -47,9 +47,7 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 		<>
 			<ClayDropdown.Search
 				formProps={{onSubmit: e => e.preventDefault()}}
-				onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-					onQueryChange(event.target.value)
-				}
+				onChange={onQueryChange}
 				placeholder={Liferay.Language.get('search')}
 				spritemap={spritemap}
 				value={query}

@@ -1,5 +1,7 @@
 import autobind from 'autobind-decorator';
-import Dropdown from './Dropdown';
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import faroConstants from 'shared/util/constants';
 import getCN from 'classnames';
 import NavBar from './NavBar';
@@ -34,9 +36,9 @@ class DeltaItem extends React.Component {
 
 	render() {
 		return (
-			<Dropdown.Item {...this.props} onClick={this.handleChange}>
+			<ClayDropDown.Item {...this.props} onClick={this.handleChange}>
 				{this.props.children}
-			</Dropdown.Item>
+			</ClayDropDown.Item>
 		);
 	}
 }
@@ -109,22 +111,31 @@ class PaginationBar extends React.Component {
 		return (
 			<NavBar className={classes}>
 				{showDeltaDropdown && (
-					<Dropdown
-						buttonProps={{
-							displayType: 'unstyled',
-							size: 'sm'
-						}}
-						className='pagination-items-per-page'
-						label={getPluralMessage(
-							Liferay.Language.get('x-item'),
-							Liferay.Language.get('x-items'),
-							selectedDelta
-						)}
+					<ClayDropDown
+						className='dropdown-root pagination-items-per-page'
+						closeOnClick
+						trigger={
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								size='sm'
+							>
+								{getPluralMessage(
+									Liferay.Language.get('x-item'),
+									Liferay.Language.get('x-items'),
+									selectedDelta
+								)}
+
+								<ClayIcon
+									className='ml-2'
+									symbol='caret-bottom'
+								/>
+							</ClayButton>
+						}
 					>
 						{deltas.map(item => (
 							<DeltaItem
 								delta={item}
-								hideOnClick
 								href={
 									onDeltaChange
 										? null
@@ -139,7 +150,7 @@ class PaginationBar extends React.Component {
 								{item}
 							</DeltaItem>
 						))}
-					</Dropdown>
+					</ClayDropDown>
 				)}
 
 				{showResultsMessage && (

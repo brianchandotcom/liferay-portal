@@ -1,7 +1,10 @@
 import autobind from 'autobind-decorator';
+import ClayButton from '@clayui/button/lib/Button';
+import ClayDropdown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
-import Dropdown from 'shared/components/Dropdown';
+import getCN from 'classnames';
 import React from 'react';
 import {List} from 'immutable';
 import {Property, PropertyGroup} from 'shared/util/records';
@@ -36,9 +39,9 @@ export default class CriteriaSidebar extends React.Component<
 	}
 
 	@autobind
-	handlePropertyGroupSelect(event) {
+	handlePropertyGroupSelect(selectedPropertyKey) {
 		this.setState({
-			selectedPropertyKey: event.target.value
+			selectedPropertyKey
 		});
 	}
 
@@ -61,26 +64,42 @@ export default class CriteriaSidebar extends React.Component<
 			<div className='criteria-sidebar-root'>
 				<div className='sidebar-header'>
 					{activePropertyGroup ? (
-						<Dropdown
-							buttonProps={{
-								borderless: true,
-								displayType: 'secondary',
-								outline: true
-							}}
-							label={activePropertyGroup.label}
+						<ClayDropdown
+							closeOnClick
+							trigger={
+								<ClayButton
+									block
+									borderless
+									className={getCN(
+										'd-flex',
+										'justify-content-between',
+										' align-items-center'
+									)}
+									displayType='secondary'
+									outline
+								>
+									<span className='text-truncate'>
+										{activePropertyGroup.label}
+									</span>
+
+									<ClayIcon symbol='caret-bottom' />
+								</ClayButton>
+							}
 						>
 							{propertyGroupsIList.map(({label, propertyKey}) => (
-								<Dropdown.Item
+								<ClayDropdown.Item
 									active={propertyKey === selectedPropertyKey}
-									hideOnClick
 									key={propertyKey}
-									onClick={this.handlePropertyGroupSelect}
-									value={propertyKey}
+									onClick={() =>
+										this.handlePropertyGroupSelect(
+											propertyKey
+										)
+									}
 								>
 									{label}
-								</Dropdown.Item>
+								</ClayDropdown.Item>
 							))}
-						</Dropdown>
+						</ClayDropdown>
 					) : (
 						Liferay.Language.get('properties')
 					)}

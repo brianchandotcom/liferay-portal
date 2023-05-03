@@ -15,10 +15,10 @@
 package com.liferay.analytics.reports.web.internal.events;
 
 import com.liferay.analytics.reports.web.internal.constants.ProductNavigationControlMenuEntryConstants;
-import com.liferay.analytics.reports.web.internal.product.navigation.control.menu.AnalyticsReportsProductNavigationControlMenuEntry;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,8 +44,10 @@ public class LogoutPreAction extends Action {
 			"closed");
 	}
 
-	@Reference
-	private AnalyticsReportsProductNavigationControlMenuEntry
+	@Reference(
+		target = "(component.name=com.liferay.analytics.reports.web.internal.product.navigation.control.menu.AnalyticsReportsProductNavigationControlMenuEntry)"
+	)
+	private ProductNavigationControlMenuEntry
 		_analyticsReportsProductNavigationControlMenuEntry;
 
 }

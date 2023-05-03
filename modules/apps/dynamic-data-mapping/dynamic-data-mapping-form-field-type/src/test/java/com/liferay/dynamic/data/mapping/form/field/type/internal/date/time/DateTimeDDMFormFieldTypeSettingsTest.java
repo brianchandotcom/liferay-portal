@@ -58,18 +58,37 @@ public class DateTimeDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());
 
-		DDMFormRule ddmFormRule = ddmFormRules.get(0);
+		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
-		List<String> actions = ddmFormRule.getActions();
+		Assert.assertEquals(
+			"hasObjectField(getValue('objectFieldName'))",
+			ddmFormRule0.getCondition());
+
+		List<String> actions = ddmFormRule0.getActions();
 
 		Assert.assertEquals(actions.toString(), 1, actions.size());
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', getValue('required'))",
+			"setValue('required', isRequiredObjectField(getValue(" +
+				"'objectFieldName')))",
 			actions.get(0));
 
-		Assert.assertEquals("TRUE", ddmFormRule.getCondition());
+		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
+
+		actions = ddmFormRule1.getActions();
+
+		Assert.assertEquals(actions.toString(), 3, actions.size());
+		Assert.assertEquals(
+			"setEnabled('required', not(hasObjectField(" +
+				"getValue('objectFieldName'))))",
+			actions.get(0));
+		Assert.assertEquals("setVisible('dataType', false)", actions.get(1));
+		Assert.assertEquals(
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(2));
+
+		Assert.assertEquals("TRUE", ddmFormRule1.getCondition());
 	}
 
 	@Test
@@ -82,8 +101,9 @@ public class DateTimeDDMFormFieldTypeSettingsTest
 					"label", "tip", "required", "requiredErrorMessage"),
 				DDMFormLayoutTestUtil.createDDMFormLayoutPage(
 					"dataType", "name", "fieldReference", "predefinedValue",
-					"indexType", "showLabel", "repeatable", "readOnly",
-					"rulesActionDisabled", "rulesConditionDisabled", "type")));
+					"objectFieldName", "indexType", "showLabel", "repeatable",
+					"readOnly", "rulesActionDisabled", "rulesConditionDisabled",
+					"type")));
 	}
 
 }

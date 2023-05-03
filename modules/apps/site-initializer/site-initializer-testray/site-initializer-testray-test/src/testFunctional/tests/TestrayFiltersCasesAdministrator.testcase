@@ -21,6 +21,7 @@ definition {
 			User.firstLoginPG();
 
 			Testray.addTestraySite(siteName = ${testSiteName});
+
 		}
 
 		task ("create all objects: projects, teams, components, cases") {
@@ -424,6 +425,49 @@ definition {
 			Click(locator1 = "Button#CLEAR");
 
 			AssertElementNotPresent(locator1 = "TestrayFilter#MESSAGE_NO_RESULTS");
+		}
+	}
+
+	@description = "Story ID: LPS-177202 | Test Summary: Verify that the user can pin filters"
+	@priority = 3
+	test CanPinFilterResults {
+		task ("Given that can see two different cases in the table") {
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And that the user filter a case") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("When the user pin a result in the filter") {
+			TestrayFilter.pinResult();
+
+			Refresh();
+		}
+
+		task ("Then the user see only case 1 pinned in the table") {
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And not see the case 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 

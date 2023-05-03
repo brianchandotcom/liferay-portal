@@ -78,12 +78,12 @@ public class ObjectEntryPerformanceTest {
 	public void setUp() throws Exception {
 		Class<?> clazz = ObjectEntryPerformanceTest.class;
 
-		_properties = PropertiesUtil.load(
+		Properties properties = PropertiesUtil.load(
 			clazz.getResourceAsStream(
 				"dependencies/object-entry-performance.properties"),
 			"UTF-8");
 
-		_logFilePath = Paths.get(_properties.getProperty("log.file"));
+		_logFilePath = Paths.get(properties.getProperty("log.file"));
 
 		Files.deleteIfExists(_logFilePath);
 
@@ -100,7 +100,9 @@ public class ObjectEntryPerformanceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
 
-		_addObjectEntries();
+		_addObjectEntries(
+			GetterUtil.getInteger(
+				properties.getProperty("number.of.object.entries")));
 	}
 
 	@Test
@@ -112,7 +114,7 @@ public class ObjectEntryPerformanceTest {
 		}
 	}
 
-	private void _addObjectEntries() throws Exception {
+	private void _addObjectEntries(Integer numberOfEntries) throws Exception {
 		try (Closeable closeable = _timeSpent()) {
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
@@ -123,11 +125,7 @@ public class ObjectEntryPerformanceTest {
 					false, Collections.emptyMap(), _dtoConverterRegistry, null,
 					LocaleUtil.getDefault(), null, TestPropsValues.getUser());
 
-			for (int counter = 0;
-				 counter < GetterUtil.getInteger(
-					 _properties.getProperty("number.of.object.entries"));
-				 counter++) {
-
+			for (int counter = 0; counter < numberOfEntries; counter++) {
 				objectEntryManager.addObjectEntry(
 					dtoConverterContext, _objectDefinition,
 					new ObjectEntry() {
@@ -179,7 +177,5 @@ public class ObjectEntryPerformanceTest {
 
 	@Inject
 	private static ObjectEntryManagerRegistry _objectEntryManagerRegistry;
-
-	private static Properties _properties;
 
 }

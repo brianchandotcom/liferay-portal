@@ -401,17 +401,8 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
 		if (ddmFormInstance != null) {
-			Group group = null;
-
-			try {
-				group = GroupLocalServiceUtil.getGroup(
-					ddmFormInstance.getGroupId());
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				ddmFormInstance.getGroupId());
 
 			if (((group != null) && group.isStagingGroup()) ||
 				!hasViewFormInstancePermission()) {

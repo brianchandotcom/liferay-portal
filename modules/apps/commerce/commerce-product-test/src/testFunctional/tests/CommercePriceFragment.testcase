@@ -202,7 +202,7 @@ definition {
 				amountValue = "-50",
 				entryName = "Hoses",
 				priceModifierName = "Price Modifier",
-				relation = "Product",
+				relation = "Add Product",
 				target = "Products");
 		}
 
@@ -338,7 +338,7 @@ definition {
 				amountValue = "-50",
 				entryName = "Hoses",
 				priceModifierName = "Price Modifier",
-				relation = "Product",
+				relation = "Add Product",
 				target = "Products");
 		}
 

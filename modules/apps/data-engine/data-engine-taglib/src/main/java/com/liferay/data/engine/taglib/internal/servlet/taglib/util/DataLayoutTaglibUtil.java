@@ -17,12 +17,10 @@ package com.liferay.data.engine.taglib.internal.servlet.taglib.util;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
-import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v2_0.DataRule;
 import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
-import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
@@ -76,7 +74,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -185,14 +182,6 @@ public class DataLayoutTaglibUtil {
 		return _dataLayoutTaglibUtil._getDataLayoutJSONObject(
 			availableLocales, contentType, dataDefinitionId, dataLayoutId,
 			httpServletRequest, httpServletResponse);
-	}
-
-	public static Map<String, Object> getDataRecordValues(
-			Long dataRecordId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		return _dataLayoutTaglibUtil._getDataRecordValues(
-			dataRecordId, httpServletRequest);
 	}
 
 	public static Long getDefaultDataLayoutId(
@@ -392,26 +381,6 @@ public class DataLayoutTaglibUtil {
 		}
 	}
 
-	private Map<String, Object> _getDataRecordValues(
-			Long dataRecordId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		if (Validator.isNull(dataRecordId)) {
-			return Collections.emptyMap();
-		}
-
-		DataRecordResource.Builder dataRecordResourceBuilder =
-			_dataRecordResourceFactory.create();
-
-		DataRecordResource dataRecordResource = dataRecordResourceBuilder.user(
-			_portal.getUser(httpServletRequest)
-		).build();
-
-		DataRecord dataRecord = dataRecordResource.getDataRecord(dataRecordId);
-
-		return dataRecord.getDataRecordValues();
-	}
-
 	private String _getDDMDataProviderInstanceParameterSettingsURL() {
 		return _ddmFormBuilderSettingsRetrieverHelper.
 			getDDMDataProviderInstanceParameterSettingsURL();
@@ -547,9 +516,6 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private DataLayoutResource.Factory _dataLayoutResourceFactory;
-
-	@Reference
-	private DataRecordResource.Factory _dataRecordResourceFactory;
 
 	@Reference
 	private DDMFormBuilderSettingsRetrieverHelper

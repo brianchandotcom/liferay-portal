@@ -18,6 +18,8 @@ import com.liferay.data.engine.renderer.DataLayoutRenderer;
 import com.liferay.data.engine.renderer.DataLayoutRendererContext;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
+import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutRendererTag;
 import com.liferay.osgi.util.service.Snapshot;
@@ -28,6 +30,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Collections;
+import java.util.Map;
 
 import javax.portlet.PortletResponse;
 
@@ -65,7 +70,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 
 			if (Validator.isNotNull(getDataRecordId())) {
 				dataLayoutRendererContext.setDataRecordValues(
-					DataLayoutTaglibUtil.getDataRecordValues(
+					_getDataRecordValues(
 						getDataRecordId(), httpServletRequest));
 			}
 			else {
@@ -126,6 +131,29 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 		return content;
 	}
 
+	private Map<String, Object> _getDataRecordValues(
+			Long dataRecordId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		if (Validator.isNull(dataRecordId)) {
+			return Collections.emptyMap();
+		}
+
+		DataRecordResource.Factory dataRecordResourceFactory =
+			_dataRecordResourceFactorySnapshot.get();
+
+		DataRecordResource.Builder dataRecordResourceBuilder =
+			dataRecordResourceFactory.create();
+
+		DataRecordResource dataRecordResource = dataRecordResourceBuilder.user(
+			PortalUtil.getUser(httpServletRequest)
+		).build();
+
+		DataRecord dataRecord = dataRecordResource.getDataRecord(dataRecordId);
+
+		return dataRecord.getDataRecordValues();
+	}
+
 	private String _renderDataLayout(
 			Long dataLayoutId,
 			DataLayoutRendererContext dataLayoutRendererContext)
@@ -144,5 +172,8 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 	private static final Snapshot<DataLayoutRenderer>
 		_dataLayoutRendererSnapshot = new Snapshot<>(
 			DataLayoutRendererTag.class, DataLayoutRenderer.class);
+	private static final Snapshot<DataRecordResource.Factory>
+		_dataRecordResourceFactorySnapshot = new Snapshot<>(
+			DataLayoutRendererTag.class, DataRecordResource.Factory.class);
 
 }

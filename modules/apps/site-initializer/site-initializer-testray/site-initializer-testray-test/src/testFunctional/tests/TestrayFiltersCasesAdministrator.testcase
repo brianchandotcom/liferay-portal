@@ -21,7 +21,6 @@ definition {
 			User.firstLoginPG();
 
 			Testray.addTestraySite(siteName = ${testSiteName});
-
 		}
 
 		task ("create all objects: projects, teams, components, cases") {
@@ -511,6 +510,18 @@ definition {
 			AssertElementPresent(
 				key_projectName = "Case 2",
 				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
+	@description = "Story ID: LPS-177202 | Test Summary: Verify that the error message appears when pining without selected filters"
+	@priority = 2
+	test CanViewMessageError {
+		task ("When the user pin a result without filtering") {
+			Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");
+		}
+
+		task ("Then the user see the error message") {
+			Alert.viewErrorMessage(errorMessage = "You must select one or more filters before pinning.");
 		}
 	}
 

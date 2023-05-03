@@ -65,6 +65,8 @@ module.exports = {
 						'/': '*',
 						'axe-core': '*',
 						'clipboard': '*',
+						'cropperjs': '*',
+						'cropperjs/dist/cropper.css': '*',
 						'dagre': '*',
 						'date-fns': '*',
 						'dom-align': '*',
@@ -463,6 +465,8 @@ module.exports = {
 				'@liferay/js-api/data-set',
 				'clipboard',
 				'axe-core',
+				'cropperjs',
+				'cropperjs/dist/cropper.css',
 				'dagre',
 				'date-fns',
 				'dom-align',
@@ -903,7 +907,6 @@ module.exports = {
 			// Needs to be removed
 
 			'axios',
-			'cropperjs',
 
 			// Causes bugs
 

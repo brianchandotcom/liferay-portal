@@ -161,6 +161,15 @@ public class AssetListManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		if (_isLiveGroup()) {
+			return false;
+		}
+
+		return super.isSelectable();
+	}
+
+	@Override
 	public Boolean isShowCreationMenu() {
 		if (_isLiveGroup()) {
 			return false;

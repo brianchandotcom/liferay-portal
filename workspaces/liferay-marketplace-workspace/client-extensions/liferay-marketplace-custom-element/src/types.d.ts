@@ -194,8 +194,14 @@ interface PlacedOrder {
 	accountId: number;
 	author: string;
 	createDate: string;
+	customFields: {[key: string]: string};
 	id: number;
-	orderStatusInfo: {code: number; label: string; label_i18n: string};
+	orderStatusInfo: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+	orderTypeExternalReferenceCode: string;
 	placedOrderItems: PlacedOrderItems[];
 }
 

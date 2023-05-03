@@ -1,5 +1,6 @@
 import DropDown from '@clayui/drop-down';
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 
 import arrowDownIcon from '../../assets/icons/arrow-down.svg';
 import circleFillIcon from '../../assets/icons/circle_fill.svg';
@@ -8,7 +9,21 @@ import {Tag} from '../../components/Tag/Tag';
 
 import './ProjectsTableRow.scss';
 
-export function ProjectsTableRow() {
+interface ProjectsTableRowProps {
+	author: string;
+	createdAt: string;
+	endDate: string;
+	projectName: string;
+	status: string;
+}
+
+export function ProjectsTableRow({
+	author,
+	createdAt,
+	endDate,
+	projectName,
+	status,
+}: ProjectsTableRowProps) {
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell>
@@ -19,7 +34,7 @@ export function ProjectsTableRow() {
 					/>
 
 					<span className="projects-table-row-name-text">
-						newportal123
+						{projectName}
 					</span>
 				</div>
 			</ClayTable.Cell>
@@ -27,11 +42,11 @@ export function ProjectsTableRow() {
 			<ClayTable.Cell>
 				<div className="projects-table-row-created-by-container">
 					<span className="projects-table-row-created-by-name">
-						Don Matsumae
+						{author}
 					</span>
 
 					<span className="projects-table-row-created-by-date">
-						Sep 18, 2023
+						{createdAt}
 					</span>
 				</div>
 			</ClayTable.Cell>
@@ -41,20 +56,24 @@ export function ProjectsTableRow() {
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				<span className="projects-table-row-end-date">
-					Mar 16, 2024
-				</span>
+				<span className="projects-table-row-end-date">{endDate}</span>
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>
 				<div className="projects-table-row-provisioning-container">
 					<img
-						className="projects-table-row-provisioning-icon"
+						className={classNames(
+							'projects-table-row-provisioning-icon-pending',
+							{
+								'projects-table-row-provisioning-icon-complete':
+									status === 'Complete',
+							}
+						)}
 						src={circleFillIcon}
 					/>
 
 					<span className="projects-table-row-provisioning-text">
-						Complete
+						{status}
 					</span>
 				</div>
 			</ClayTable.Cell>

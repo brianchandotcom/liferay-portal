@@ -28,10 +28,6 @@ import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -42,6 +38,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -73,7 +70,9 @@ public class ObjectEntryPerformanceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -101,13 +100,6 @@ public class ObjectEntryPerformanceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
 
-		_adminUser = TestPropsValues.getUser();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_adminUser));
-
-		PrincipalThreadLocal.setName(_adminUser.getUserId());
-
 		_addObjectEntries();
 	}
 
@@ -129,7 +121,7 @@ public class ObjectEntryPerformanceTest {
 			DTOConverterContext dtoConverterContext =
 				new DefaultDTOConverterContext(
 					false, Collections.emptyMap(), _dtoConverterRegistry, null,
-					LocaleUtil.getDefault(), null, _adminUser);
+					LocaleUtil.getDefault(), null, TestPropsValues.getUser());
 
 			for (int counter = 0;
 				 counter < GetterUtil.getInteger(
@@ -170,8 +162,6 @@ public class ObjectEntryPerformanceTest {
 			StandardOpenOption.APPEND, StandardOpenOption.CREATE,
 			StandardOpenOption.WRITE);
 	}
-
-	private static User _adminUser;
 
 	@Inject
 	private static DTOConverterRegistry _dtoConverterRegistry;

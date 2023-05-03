@@ -1,0 +1,10 @@
+assemble:
+    - fromTask: bootJar
+liferay-partner-etc-cron:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Partner Etc Cron
+    scopes:
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Delivery.everything
+    type: oAuthApplicationHeadlessServer

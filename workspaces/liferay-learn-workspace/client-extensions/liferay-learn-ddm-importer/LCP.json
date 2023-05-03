@@ -1,0 +1,18 @@
+{
+	"cpu": 1,
+	"env": {
+		"LIFERAY_LEARN_DDM_IMPORTER_LIFERAY_OAUTH_CLIENT_ID": "@liferay-oauth-client-id",
+		"LIFERAY_LEARN_DDM_IMPORTER_LIFERAY_OAUTH_CLIENT_SECRET": "@liferay-oauth-client-secret",
+		"LIFERAY_LEARN_DDM_IMPORTER_LIFERAY_SITE_FRIENDLY_URL_PATH": "guest",
+		"LIFERAY_LEARN_DDM_IMPORTER_LIFERAY_URL": "@liferay-url"
+	},
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferaylearnddmimporter",
+	"kind": "Deployment",
+	"memory": 512,
+	"scale": 1
+}

@@ -19,6 +19,7 @@ const withinMasterLayout = fragmentElement.parentElement.classList.contains(
 	'page-editor__fragment-content--master'
 );
 const editMode = layoutMode === 'edit';
+const regularMenuWidth = 240;
 
 let alignMenuInterval;
 
@@ -43,6 +44,12 @@ function alignMenu() {
 		document.body;
 	const parentRect = parent.getBoundingClientRect();
 
+	const wrapperRect = document
+		.querySelector('#wrapper')
+		?.getBoundingClientRect();
+	const isRTL =
+		Liferay.Language.direction?.[themeDisplay?.getLanguageId()] === 'rtl';
+
 	menu.style.top = `${toggleRect.bottom}px`;
 
 	if (configuration.panelType === 'mega-menu') {
@@ -50,7 +57,23 @@ function alignMenu() {
 		menu.style.width = `${parentRect.width}px`;
 	}
 	else if (configuration.panelType === 'regular') {
-		menu.style.width = '240px';
+		menu.style.width = `${regularMenuWidth}px`;
+
+		// If the menu overflows to the right it should be align to the right of the toggle button
+
+		if (
+			toggleRect.left + regularMenuWidth >= window.innerWidth ||
+			(wrapperRect &&
+				toggleRect.left + regularMenuWidth >= wrapperRect.width)
+		) {
+			menu.style.right = `${window.innerWidth - toggleRect.right}px`;
+		}
+
+		// If rtl check the overflow to the left
+
+		if (isRTL && toggleRect.right - regularMenuWidth < 0) {
+			menu.style.left = `${toggleRect.left}px`;
+		}
 	}
 	else if (configuration.panelType === 'full-width') {
 		menu.style.width = `${fragmentElement.getBoundingClientRect().width}px`;

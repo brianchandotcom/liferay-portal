@@ -30,6 +30,7 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -188,6 +189,12 @@ public class DDMFormFieldInfoFieldConverterImpl
 					ddmFormFieldType, DDMFormFieldTypeConstants.IMAGE)) {
 
 			return ImageInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
+					ddmFormFieldType,
+					DDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
+
+			return URLInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
 					ddmFormFieldType, DDMFormFieldTypeConstants.NUMERIC)) {

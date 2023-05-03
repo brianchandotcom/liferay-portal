@@ -46,12 +46,17 @@ public interface FragmentEntryProcessor {
 		return css;
 	}
 
-	public String processFragmentEntryLinkHTML(
+	public default String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
+		throws PortalException {
 
-	public void validateFragmentEntryHTML(String html, String configuration)
-		throws PortalException;
+		return html;
+	}
+
+	public default void validateFragmentEntryHTML(
+			String html, String configuration)
+		throws PortalException {
+	}
 
 }

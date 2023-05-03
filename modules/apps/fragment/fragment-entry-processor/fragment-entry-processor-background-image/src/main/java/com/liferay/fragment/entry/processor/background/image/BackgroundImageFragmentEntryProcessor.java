@@ -14,10 +14,7 @@
 
 package com.liferay.fragment.entry.processor.background.image;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -57,15 +54,6 @@ public class BackgroundImageFragmentEntryProcessor
 		}
 
 		return defaultEditableValuesJSONObject;
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		return html;
 	}
 
 	private Document _getDocument(String html) {

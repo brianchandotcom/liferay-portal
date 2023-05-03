@@ -14,10 +14,7 @@
 
 package com.liferay.fragment.entry.processor.drop.zone;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 
@@ -35,15 +32,6 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public JSONArray getDataAttributesJSONArray() {
 		return JSONUtil.put("lfr-priority");
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
-
-		return html;
 	}
 
 }

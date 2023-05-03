@@ -14,9 +14,7 @@
 
 package com.liferay.fragment.entry.processor.styles;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -54,14 +52,6 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return JSONUtil.put("hasCommonStyles", true);
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-		FragmentEntryLink fragmentEntryLink, String html,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
-
-		return html;
 	}
 
 	private Document _getDocument(String html) {

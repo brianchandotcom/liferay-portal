@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.CharPool;
@@ -271,6 +272,8 @@ public class Main {
 						_structuredContentResource.putStructuredContent(
 							siteStructuredContent.getId(), structuredContent);
 
+					_setVisibility(fileName, siteStructuredContent.getId());
+
 					updatedStructuredContentCount++;
 				}
 				else {
@@ -302,6 +305,8 @@ public class Main {
 								structuredContent.
 									getStructuredContentFolderId(),
 								structuredContent);
+
+					_setVisibility(fileName, structuredContent.getId());
 
 					addedStructuredContentCount++;
 				}
@@ -1329,6 +1334,66 @@ public class Main {
 		return line;
 	}
 
+	private void _setVisibility(String fileName, Long structuredContentId)
+		throws Exception {
+
+		File englishFile = new File(fileName);
+
+		String englishText = _processMarkdown(
+			FileUtils.readFileToString(englishFile, StandardCharsets.UTF_8),
+			englishFile);
+
+		Document document = _parser.parse(englishText);
+
+		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
+			new SnakeYamlFrontMatterVisitor();
+
+		snakeYamlFrontMatterVisitor.visit(document);
+
+		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
+
+		if ((data == null) || !data.containsKey("visibility")) {
+			return;
+		}
+
+		Object roleNames = data.get("visibility");
+
+		if (!(roleNames instanceof ArrayList)) {
+			return;
+		}
+
+		ArrayList<Permission> permissionsList = new ArrayList<>();
+
+		for (Object roleNameObject : (ArrayList)roleNames) {
+			if (!(roleNameObject instanceof String)) {
+				continue;
+			}
+
+			String roleName = (String)roleNameObject;
+
+			Permission permission = new Permission();
+
+			permission.setRoleName(roleName);
+			permission.setActionIds(new String[] {"VIEW", "ADD_DISCUSSION"});
+
+			permissionsList.add(permission);
+		}
+
+		if (permissionsList.isEmpty()) {
+			return;
+		}
+
+		Permission guestPermission = new Permission();
+
+		guestPermission.setRoleName("Guest");
+		guestPermission.setActionIds(new String[0]);
+
+		permissionsList.add(guestPermission);
+
+		_structuredContentResource.putStructuredContentPermissionsPage(
+			structuredContentId, permissionsList.toArray(new Permission[0]));
+	}
+
 	private String _toFriendlyURLPath(File file) {
 		String filePathString = file.getPath();
 
@@ -1578,7 +1643,6 @@ public class Main {
 		}
 
 		structuredContent.setTitle(englishTitle);
-		structuredContent.setViewableBy(StructuredContent.ViewableBy.ANYONE);
 
 		return structuredContent;
 	}

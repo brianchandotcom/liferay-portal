@@ -82,19 +82,19 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
-		TokenConfiguration tokenCompanyServiceSettings =
+		TokenConfiguration tokenConfiguration =
 			_configurationProvider.getConfiguration(
 				TokenConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, TokenConstants.SERVICE_NAME));
 
-		if (!tokenCompanyServiceSettings.enabled()) {
+		if (!tokenConfiguration.enabled()) {
 			return null;
 		}
 
-		String userTokenName = tokenCompanyServiceSettings.userTokenName();
+		String userTokenName = tokenConfiguration.userTokenName();
 
-		String tokenLocation = tokenCompanyServiceSettings.tokenLocation();
+		String tokenLocation = tokenConfiguration.tokenLocation();
 
 		TokenRetriever tokenRetriever = _serviceTrackerMap.getService(
 			tokenLocation);
@@ -118,7 +118,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		User user = _getUser(companyId, login, tokenCompanyServiceSettings);
+		User user = _getUser(companyId, login, tokenConfiguration);
 
 		addRedirect(httpServletRequest);
 
@@ -132,8 +132,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	}
 
 	private User _getUser(
-			long companyId, String login,
-			TokenConfiguration tokenCompanyServiceSettings)
+			long companyId, String login, TokenConfiguration tokenConfiguration)
 		throws Exception {
 
 		User user = null;
@@ -142,7 +141,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 			companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
 			PropsValues.COMPANY_SECURITY_AUTH_TYPE);
 
-		if (tokenCompanyServiceSettings.importFromLDAP()) {
+		if (tokenConfiguration.importFromLDAP()) {
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
 					user = _userImporter.importUser(

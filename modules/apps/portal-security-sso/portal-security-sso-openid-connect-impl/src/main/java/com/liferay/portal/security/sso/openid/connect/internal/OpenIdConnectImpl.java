@@ -36,13 +36,13 @@ public class OpenIdConnectImpl implements OpenIdConnect {
 	@Override
 	public boolean isEnabled(long companyId) {
 		try {
-			OpenIdConnectConfiguration openIdConfiguration =
+			OpenIdConnectConfiguration openIdConnectConfiguration =
 				_configurationProvider.getConfiguration(
 					OpenIdConnectConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, OpenIdConnectConstants.SERVICE_NAME));
 
-			return openIdConfiguration.enabled();
+			return openIdConnectConfiguration.enabled();
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(

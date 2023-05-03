@@ -74,19 +74,19 @@ public class TokenLogoutAction extends Action {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			TokenConfiguration tokenCompanyServiceSettings =
+			TokenConfiguration tokenConfiguration =
 				_configurationProvider.getConfiguration(
 					TokenConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						_portal.getCompanyId(httpServletRequest),
 						TokenConstants.SERVICE_NAME));
 
-			if (!tokenCompanyServiceSettings.enabled()) {
+			if (!tokenConfiguration.enabled()) {
 				return;
 			}
 
 			String[] authenticationCookies =
-				tokenCompanyServiceSettings.authenticationCookies();
+				tokenConfiguration.authenticationCookies();
 
 			if (ArrayUtil.isNotEmpty(authenticationCookies)) {
 				LogoutProcessor cookieLogoutProcessor =
@@ -99,8 +99,7 @@ public class TokenLogoutAction extends Action {
 				}
 			}
 
-			String logoutRedirectURL =
-				tokenCompanyServiceSettings.logoutRedirectURL();
+			String logoutRedirectURL = tokenConfiguration.logoutRedirectURL();
 
 			if (Validator.isNotNull(logoutRedirectURL)) {
 				LogoutProcessor redirectLogoutProcessor =

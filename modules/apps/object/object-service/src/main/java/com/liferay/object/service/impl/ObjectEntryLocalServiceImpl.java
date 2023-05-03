@@ -194,6 +194,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Timestamp;
 import java.sql.Types;
 
+import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -2960,6 +2962,9 @@ public class ObjectEntryLocalServiceImpl
 		else if (javaTypeClass == String.class) {
 			values.put(name, (String)object);
 		}
+		else if (javaTypeClass == Timestamp.class) {
+			values.put(name, (Timestamp)object);
+		}
 		else {
 			throw new IllegalArgumentException(
 				"Unable to put value with class " + javaTypeClass.getName());
@@ -3054,7 +3059,7 @@ public class ObjectEntryLocalServiceImpl
 					index, new StringReader(String.valueOf(value)));
 			}
 		}
-		else if (sqlType == Types.DATE) {
+		else if ((sqlType == Types.DATE) || (sqlType == Types.TIMESTAMP)) {
 			String valueString = GetterUtil.getString(value);
 
 			if (value instanceof Date) {
@@ -3062,6 +3067,12 @@ public class ObjectEntryLocalServiceImpl
 
 				preparedStatement.setTimestamp(
 					index, new Timestamp(date.getTime()));
+			}
+			else if (value instanceof LocalDateTime) {
+				LocalDateTime localDateTime = (LocalDateTime)value;
+
+				preparedStatement.setTimestamp(
+					index, Timestamp.valueOf(localDateTime));
 			}
 			else if (valueString.isEmpty()) {
 				preparedStatement.setTimestamp(index, null);

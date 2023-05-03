@@ -93,31 +93,24 @@ exports[`DataTransformation should render 1`] = `
           >
             <div>
               <div
-                aria-haspopup="true"
-                class="dropdown dropdown-root searchable-select-root"
+                class="dropdown searchable-select-root"
               >
                 <button
-                  class="button-root dropdown-toggle show-caret btn btn-unstyled"
+                  aria-controls="clay-dropdown-menu-1"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="dropdown-toggle button-root d-flex align-items-center justify-content-between w-100 btn btn-unstyled"
                   type="button"
                 >
-                  <span
-                    class="text-truncate"
+                  Test0
+                  <svg
+                    class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                    role="presentation"
                   >
-                    Test0
-                  </span>
-                  
-                  <span
-                    class="caret-root"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-caret-double icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#caret-double"
-                      />
-                    </svg>
-                  </span>
+                    <use
+                      xlink:href="#caret-bottom"
+                    />
+                  </svg>
                 </button>
               </div>
               <div
@@ -144,32 +137,24 @@ exports[`DataTransformation should render 1`] = `
               class="suggestion"
             >
               <div
-                aria-haspopup="true"
-                class="dropdown dropdown-root searchable-select-root"
-                name="undefined.0"
+                class="dropdown searchable-select-root"
               >
                 <button
-                  class="button-root dropdown-toggle show-caret btn btn-unstyled"
+                  aria-controls="clay-dropdown-menu-2"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="dropdown-toggle button-root d-flex align-items-center justify-content-between w-100 btn btn-unstyled"
                   type="button"
                 >
-                  <span
-                    class="text-truncate"
+                  Select Analytics Cloud Field
+                  <svg
+                    class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                    role="presentation"
                   >
-                    Select Analytics Cloud Field
-                  </span>
-                  
-                  <span
-                    class="caret-root"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-caret-double icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#caret-double"
-                      />
-                    </svg>
-                  </span>
+                    <use
+                      xlink:href="#caret-bottom"
+                    />
+                  </svg>
                 </button>
               </div>
               <div

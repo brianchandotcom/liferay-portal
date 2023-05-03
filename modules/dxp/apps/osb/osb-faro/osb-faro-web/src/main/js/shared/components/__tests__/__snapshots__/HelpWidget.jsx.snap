@@ -9,6 +9,9 @@ exports[`HelpWidget should render 1`] = `
       class="dropdown"
     >
       <button
+        aria-controls="clay-dropdown-menu-1"
+        aria-expanded="false"
+        aria-haspopup="true"
         aria-label="Help"
         class="dropdown-toggle button-root help-button btn btn-outline-borderless btn-sm btn-outline-info"
         type="button"

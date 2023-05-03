@@ -1,11 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AttributeBreakdownDropdown render 1`] = `
-<div>
+<div
+  aria-hidden="true"
+  data-aria-hidden="true"
+>
   <div
     class="dropdown"
   >
     <button
+      aria-controls="clay-dropdown-menu-1"
+      aria-expanded="true"
+      aria-haspopup="true"
       class="dropdown-toggle"
       data-testid="target"
       style=""
@@ -19,6 +25,8 @@ exports[`AttributeBreakdownDropdown render 1`] = `
 exports[`AttributeBreakdownDropdown render 2`] = `
 <div
   class="dropdown-menu base-dropdown-menu-root event-analysis-editor-attribute-dropdown-root show"
+  id="clay-dropdown-menu-1"
+  role="presentation"
   style="left: -995px; top: -999px;"
 >
   <div
@@ -71,6 +79,7 @@ exports[`AttributeBreakdownDropdown render 2`] = `
               <input
                 class="form-control input-group-inset input-group-inset-after"
                 placeholder="Search"
+                tabindex="-1"
                 type="text"
                 value=""
               />
@@ -78,7 +87,9 @@ exports[`AttributeBreakdownDropdown render 2`] = `
                 class="input-group-inset-item input-group-inset-item-after"
               >
                 <button
+                  aria-label="Search"
                   class="btn btn-unstyled"
+                  tabindex="-1"
                   type="button"
                 >
                   <svg
@@ -97,11 +108,16 @@ exports[`AttributeBreakdownDropdown render 2`] = `
       </form>
       <ul
         class="list-unstyled base-dropdown-list"
+        role="menu"
       >
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -123,10 +139,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -148,10 +168,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -173,10 +197,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -198,10 +226,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -223,10 +255,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -248,10 +284,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -273,10 +313,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -298,10 +342,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -323,10 +371,14 @@ exports[`AttributeBreakdownDropdown render 2`] = `
             </button>
           </span>
         </li>
-        <li>
+        <li
+          role="presentation"
+        >
           <span
             aria-haspopup="true"
             class="dropdown-item d-flex justify-content-between"
+            role="menuitem"
+            tabindex="-1"
           >
             <button
               class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"

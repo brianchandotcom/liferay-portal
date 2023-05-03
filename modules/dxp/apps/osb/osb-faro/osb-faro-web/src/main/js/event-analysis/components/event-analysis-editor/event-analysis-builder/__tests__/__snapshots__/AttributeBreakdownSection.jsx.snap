@@ -165,6 +165,9 @@ exports[`AttributeBreakdownSection renders w/ breakdowns 1`] = `
         class="dropdown"
       >
         <button
+          aria-controls="clay-dropdown-menu-7"
+          aria-expanded="false"
+          aria-haspopup="true"
           class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
           type="button"
         >

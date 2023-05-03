@@ -2,10 +2,13 @@
 
 exports[`BaseDropdownListItem should render 1`] = `
 <div>
-  <li>
+  <li
+    role="presentation"
+  >
     <span
       aria-haspopup="true"
       class="dropdown-item d-flex justify-content-between"
+      role="menuitem"
     >
       <button
         class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"

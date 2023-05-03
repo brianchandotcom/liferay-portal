@@ -268,31 +268,24 @@ exports[`CustomEventList should render 1`] = `
       class="container-fluid"
     >
       <div
-        aria-haspopup="true"
-        class="dropdown dropdown-root pagination-items-per-page"
+        class="dropdown"
       >
         <button
-          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
+          aria-controls="clay-dropdown-menu-1"
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle btn btn-sm btn-secondary"
           type="button"
         >
-          <span
-            class="text-truncate"
+          1 Item
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+            role="presentation"
           >
-            1 Item
-          </span>
-          
-          <span
-            class="caret-root"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-              role="presentation"
-            >
-              <use
-                xlink:href="#caret-bottom"
-              />
-            </svg>
-          </span>
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
         </button>
       </div>
       <div
@@ -671,31 +664,24 @@ exports[`CustomEventList should render alert notification 1`] = `
       class="container-fluid"
     >
       <div
-        aria-haspopup="true"
-        class="dropdown dropdown-root pagination-items-per-page"
+        class="dropdown"
       >
         <button
-          class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
+          aria-controls="clay-dropdown-menu-3"
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle btn btn-sm btn-secondary"
           type="button"
         >
-          <span
-            class="text-truncate"
+          1 Item
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+            role="presentation"
           >
-            1 Item
-          </span>
-          
-          <span
-            class="caret-root"
-          >
-            <svg
-              class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-              role="presentation"
-            >
-              <use
-                xlink:href="#caret-bottom"
-              />
-            </svg>
-          </span>
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
         </button>
       </div>
       <div

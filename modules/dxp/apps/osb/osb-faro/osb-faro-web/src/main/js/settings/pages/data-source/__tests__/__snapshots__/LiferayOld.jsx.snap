@@ -15,7 +15,7 @@ exports[`LiferayDataSourceOld should render 1`] = `
         class="breadcrumb-item"
       >
         <a
-          class="breadcrumb-link breadcrumb-text-truncate"
+          class="breadcrumb-text-truncate breadcrumb-link"
           href="/workspace/foo/settings/data-source"
         >
           Data Sources
@@ -25,8 +25,7 @@ exports[`LiferayDataSourceOld should render 1`] = `
         class="breadcrumb-item active"
       >
         <span
-          class="breadcrumb-link breadcrumb-text-truncate"
-          to="/workspace/foo/settings/data-source/test"
+          class="breadcrumb-text-truncate breadcrumb-link"
         >
           Liferay1
         </span>

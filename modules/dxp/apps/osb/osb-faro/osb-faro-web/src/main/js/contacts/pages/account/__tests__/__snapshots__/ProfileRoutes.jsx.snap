@@ -24,7 +24,7 @@ exports[`AccountProfileRoutes should render 1`] = `
               class="breadcrumb-item"
             >
               <a
-                class="breadcrumb-link breadcrumb-text-truncate"
+                class="breadcrumb-text-truncate breadcrumb-link"
                 href="/workspace/23/123/sites"
               >
                 Channel 1
@@ -34,7 +34,7 @@ exports[`AccountProfileRoutes should render 1`] = `
               class="breadcrumb-item"
             >
               <a
-                class="breadcrumb-link breadcrumb-text-truncate"
+                class="breadcrumb-text-truncate breadcrumb-link"
                 href="/workspace/23/123/contacts/accounts"
               >
                 Accounts

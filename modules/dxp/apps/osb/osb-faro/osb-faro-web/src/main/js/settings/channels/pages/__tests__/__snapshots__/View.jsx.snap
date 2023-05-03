@@ -18,7 +18,7 @@ exports[`View Channel should render 1`] = `
         class="breadcrumb-item"
       >
         <a
-          class="breadcrumb-link breadcrumb-text-truncate"
+          class="breadcrumb-text-truncate breadcrumb-link"
           href="/workspace/23/settings/properties"
         >
           Properties

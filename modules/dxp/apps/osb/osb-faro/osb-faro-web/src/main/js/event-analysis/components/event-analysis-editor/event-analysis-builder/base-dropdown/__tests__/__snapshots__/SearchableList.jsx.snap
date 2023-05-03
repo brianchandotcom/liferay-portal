@@ -24,6 +24,7 @@ exports[`BaseDropdownSearchableList should render 1`] = `
             class="input-group-inset-item input-group-inset-item-after"
           >
             <button
+              aria-label="Search"
               class="btn btn-unstyled"
               type="button"
             >
@@ -43,11 +44,15 @@ exports[`BaseDropdownSearchableList should render 1`] = `
   </form>
   <ul
     class="list-unstyled base-dropdown-list"
+    role="menu"
   >
-    <li>
+    <li
+      role="presentation"
+    >
       <span
         aria-haspopup="true"
         class="dropdown-item d-flex justify-content-between"
+        role="menuitem"
       >
         <button
           class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"
@@ -57,10 +62,13 @@ exports[`BaseDropdownSearchableList should render 1`] = `
         </button>
       </span>
     </li>
-    <li>
+    <li
+      role="presentation"
+    >
       <span
         aria-haspopup="true"
         class="dropdown-item d-flex justify-content-between"
+        role="menuitem"
       >
         <button
           class="button-root dropdown-item-primary-button btn btn-block btn-unstyled"

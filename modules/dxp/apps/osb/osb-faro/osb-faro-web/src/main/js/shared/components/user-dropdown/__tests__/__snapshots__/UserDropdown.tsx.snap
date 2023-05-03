@@ -30,7 +30,10 @@ exports[`UserDropdown should render dropdown menu when clicked 1`] = `
 <body
   class="dxp"
 >
-  <div>
+  <div
+    aria-hidden="true"
+    data-aria-hidden="true"
+  >
     <div>
       <button
         class="user-menu button-root btn btn-unstyled trigger"
@@ -58,6 +61,7 @@ exports[`UserDropdown should render dropdown menu when clicked 1`] = `
     <div>
       <div
         class="dropdown-menu user-menu-dropdown show"
+        role="presentation"
         style="left: -995px; top: -999px;"
       >
         <div
@@ -68,48 +72,70 @@ exports[`UserDropdown should render dropdown menu when clicked 1`] = `
           >
             <ul
               class="list-unstyled"
+              role="menu"
             >
               <li
+                aria-hidden="true"
                 class="dropdown-subheader"
+                id="clay-dropdown-menu-group-2"
                 role="presentation"
               >
                 test@test.com
               </li>
-              <li>
-                <span
-                  class="dropdown-item"
+              <li
+                role="presentation"
+              >
+                <ul
+                  aria-labelledby="clay-dropdown-menu-group-2"
+                  class="list-unstyled"
+                  role="group"
                 >
-                  <button
-                    class="button-root btn btn-block btn-unstyled"
-                    type="button"
+                  <li
+                    role="presentation"
                   >
-                    Language
-                  </button>
-                </span>
-              </li>
-              <li>
-                <span
-                  class="dropdown-item"
-                >
-                  <a
-                    class="button-root link-unstyled"
-                    href="/link-1"
+                    <span
+                      class="dropdown-item"
+                      role="menuitem"
+                    >
+                      <button
+                        class="button-root btn btn-block btn-unstyled"
+                        type="button"
+                      >
+                        Language
+                      </button>
+                    </span>
+                  </li>
+                  <li
+                    role="presentation"
                   >
-                    Link 1
-                  </a>
-                </span>
-              </li>
-              <li>
-                <span
-                  class="dropdown-item"
-                >
-                  <a
-                    class="button-root link-unstyled"
-                    href="/link-externo-2"
+                    <span
+                      class="dropdown-item"
+                      role="menuitem"
+                    >
+                      <a
+                        class="button-root link-unstyled"
+                        href="/link-1"
+                      >
+                        Link 1
+                      </a>
+                    </span>
+                  </li>
+                  <li
+                    role="presentation"
                   >
-                    Link 2
-                  </a>
-                </span>
+                    <span
+                      class="dropdown-item"
+                      role="menuitem"
+                    >
+                      <a
+                        class="button-root link-unstyled"
+                        href="/link-externo-2"
+                      >
+                        Link 2
+                      </a>
+                    </span>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>

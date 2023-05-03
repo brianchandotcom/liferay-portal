@@ -65,32 +65,24 @@ exports[`CreateMappingModal should render 1`] = `
               Field Type
             </label>
             <div
-              aria-haspopup="true"
-              class="dropdown dropdown-root searchable-select-root"
-              name="type"
+              class="dropdown searchable-select-root"
             >
               <button
-                class="button-root dropdown-toggle show-caret btn btn-unstyled"
+                aria-controls="clay-dropdown-menu-1"
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle button-root d-flex align-items-center justify-content-between w-100 btn btn-unstyled"
                 type="button"
               >
-                <span
-                  class="text-truncate"
+                Select
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                  role="presentation"
                 >
-                  Select
-                </span>
-                
-                <span
-                  class="caret-root"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-caret-double icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#caret-double"
-                    />
-                  </svg>
-                </span>
+                  <use
+                    xlink:href="#caret-bottom"
+                  />
+                </svg>
               </button>
             </div>
           </div>

@@ -91,19 +91,16 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <div
-        aria-haspopup="true"
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root dropdown-toggle page-link btn btn-unstyled"
+          aria-controls="clay-dropdown-menu-2"
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
-          <span
-            class="text-truncate"
-          >
-            ...
-          </span>
-          
+          ...
         </button>
       </div>
     </li>
@@ -161,19 +158,16 @@ exports[`Pagination should render a lot of pages with a middle page active 1`] =
       class="page-item"
     >
       <div
-        aria-haspopup="true"
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root dropdown-toggle page-link btn btn-unstyled"
+          aria-controls="clay-dropdown-menu-3"
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
-          <span
-            class="text-truncate"
-          >
-            ...
-          </span>
-          
+          ...
         </button>
       </div>
     </li>
@@ -244,19 +238,16 @@ exports[`Pagination should render a lot of pages with the end page active 1`] = 
       class="page-item"
     >
       <div
-        aria-haspopup="true"
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root dropdown-toggle page-link btn btn-unstyled"
+          aria-controls="clay-dropdown-menu-4"
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
-          <span
-            class="text-truncate"
-          >
-            ...
-          </span>
-          
+          ...
         </button>
       </div>
     </li>
@@ -369,19 +360,16 @@ exports[`Pagination should render with a lot of pages 1`] = `
       class="page-item"
     >
       <div
-        aria-haspopup="true"
         class="dropdown dropdown-root"
       >
         <button
-          class="button-root dropdown-toggle page-link btn btn-unstyled"
+          aria-controls="clay-dropdown-menu-1"
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="dropdown-toggle page-link btn btn-unstyled"
           type="button"
         >
-          <span
-            class="text-truncate"
-          >
-            ...
-          </span>
-          
+          ...
         </button>
       </div>
     </li>

@@ -24,7 +24,7 @@ exports[`List should render 1`] = `
               class="breadcrumb-item"
             >
               <a
-                class="breadcrumb-link breadcrumb-text-truncate"
+                class="breadcrumb-text-truncate breadcrumb-link"
                 href="/workspace/23/123/sites"
               >
                 Channel 1
@@ -58,19 +58,26 @@ exports[`List should render 1`] = `
             class="header-section"
           >
             <div
-              aria-haspopup="true"
-              class="dropdown dropdown-root"
+              class="dropdown"
             >
               <button
-                class="button-root dropdown-toggle btn btn-unstyled"
+                aria-controls="clay-dropdown-menu-1"
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle btn btn-primary"
                 type="button"
               >
-                <span
-                  class="text-truncate"
-                >
+                <span>
                   Create Segment
                 </span>
-                
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#caret-bottom"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -150,33 +157,30 @@ exports[`List should render 1`] = `
                       role="tablist"
                     >
                       <li
-                        aria-haspopup="true"
-                        class="dropdown dropdown-root filter-and-order-root nav-item"
+                        class="nav-item"
+                        role="presentation"
                       >
-                        <button
-                          class="button-root dropdown-toggle nav-btn show-caret btn btn-unstyled"
-                          data-testid="filter-and-order-button"
-                          type="button"
+                        <div
+                          class="dropdown dropdown-root filter-and-order-root"
                         >
-                          <span
-                            class="text-truncate"
+                          <button
+                            aria-controls="clay-dropdown-menu-2"
+                            aria-expanded="false"
+                            aria-haspopup="true"
+                            class="dropdown-toggle d-flex align-items-center btn btn-outline-borderless btn-sm btn-outline-secondary"
+                            type="button"
                           >
                             Order
-                          </span>
-                          
-                          <span
-                            class="caret-root"
-                          >
                             <svg
-                              class="lexicon-icon lexicon-icon-caret-bottom icon-root"
+                              class="lexicon-icon lexicon-icon-caret-bottom ml-2 mt-0"
                               role="presentation"
                             >
                               <use
                                 xlink:href="#caret-bottom"
                               />
                             </svg>
-                          </span>
-                        </button>
+                          </button>
+                        </div>
                       </li>
                       <li
                         class="nav-item"
@@ -379,23 +383,23 @@ exports[`List should render 1`] = `
                             </button>
                           </div>
                           <div
-                            aria-haspopup="true"
-                            class="dropdown dropdown-root dropdown-action"
+                            class="dropdown dropdown-action"
                           >
                             <button
-                              class="button-root dropdown-toggle component-action btn btn-unstyled"
+                              aria-controls="clay-dropdown-menu-3"
+                              aria-expanded="false"
+                              aria-haspopup="true"
+                              class="dropdown-toggle component-action btn btn-unstyled"
                               type="button"
                             >
-                              <span>
-                                <svg
-                                  class="lexicon-icon lexicon-icon-ellipsis-v icon-root"
-                                  role="presentation"
-                                >
-                                  <use
-                                    xlink:href="#ellipsis-v"
-                                  />
-                                </svg>
-                              </span>
+                              <svg
+                                class="lexicon-icon lexicon-icon-ellipsis-v"
+                                role="presentation"
+                              >
+                                <use
+                                  xlink:href="#ellipsis-v"
+                                />
+                              </svg>
                             </button>
                           </div>
                         </span>
@@ -411,31 +415,24 @@ exports[`List should render 1`] = `
                   class="container-fluid"
                 >
                   <div
-                    aria-haspopup="true"
-                    class="dropdown dropdown-root pagination-items-per-page"
+                    class="dropdown"
                   >
                     <button
-                      class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
+                      aria-controls="clay-dropdown-menu-4"
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      class="dropdown-toggle btn btn-sm btn-secondary"
                       type="button"
                     >
-                      <span
-                        class="text-truncate"
+                      2 Items
+                      <svg
+                        class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                        role="presentation"
                       >
-                        2 Items
-                      </span>
-                      
-                      <span
-                        class="caret-root"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-                          role="presentation"
-                        >
-                          <use
-                            xlink:href="#caret-bottom"
-                          />
-                        </svg>
-                      </span>
+                        <use
+                          xlink:href="#caret-bottom"
+                        />
+                      </svg>
                     </button>
                   </div>
                   <div

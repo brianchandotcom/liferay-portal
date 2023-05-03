@@ -87,6 +87,9 @@ exports[`IndividualOverview should render 1`] = `
               class="dropdown dropdown-range-key-root"
             >
               <button
+                aria-controls="clay-dropdown-menu-3"
+                aria-expanded="false"
+                aria-haspopup="true"
                 class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
                 type="button"
               >
@@ -357,31 +360,24 @@ Chrome"
             class="container-fluid"
           >
             <div
-              aria-haspopup="true"
-              class="dropdown dropdown-root pagination-items-per-page"
+              class="dropdown"
             >
               <button
-                class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
+                aria-controls="clay-dropdown-menu-1"
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle btn btn-sm btn-secondary"
                 type="button"
               >
-                <span
-                  class="text-truncate"
+                50 Items
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                  role="presentation"
                 >
-                  50 Items
-                </span>
-                
-                <span
-                  class="caret-root"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      xlink:href="#caret-bottom"
-                    />
-                  </svg>
-                </span>
+                  <use
+                    xlink:href="#caret-bottom"
+                  />
+                </svg>
               </button>
             </div>
             <div
@@ -444,19 +440,16 @@ Chrome"
                 class="page-item"
               >
                 <div
-                  aria-haspopup="true"
                   class="dropdown dropdown-root"
                 >
                   <button
-                    class="button-root dropdown-toggle page-link btn btn-unstyled"
+                    aria-controls="clay-dropdown-menu-2"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="dropdown-toggle page-link btn btn-unstyled"
                     type="button"
                   >
-                    <span
-                      class="text-truncate"
-                    >
-                      ...
-                    </span>
-                    
+                    ...
                   </button>
                 </div>
               </li>

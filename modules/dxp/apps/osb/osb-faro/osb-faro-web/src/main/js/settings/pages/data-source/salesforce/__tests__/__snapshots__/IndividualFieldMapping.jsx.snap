@@ -15,7 +15,7 @@ exports[`IndividualFieldMapping should render 1`] = `
         class="breadcrumb-item"
       >
         <a
-          class="breadcrumb-link breadcrumb-text-truncate"
+          class="breadcrumb-text-truncate breadcrumb-link"
           href="/workspace/23/settings/data-source"
         >
           Data Sources
@@ -25,7 +25,7 @@ exports[`IndividualFieldMapping should render 1`] = `
         class="breadcrumb-item"
       >
         <a
-          class="breadcrumb-link breadcrumb-text-truncate"
+          class="breadcrumb-text-truncate breadcrumb-link"
           href="/workspace/23/settings/data-source/27"
         >
           Liferay1
@@ -123,19 +123,24 @@ exports[`IndividualFieldMapping should render 1`] = `
                 >
                   <div>
                     <div
-                      aria-haspopup="true"
-                      class="dropdown dropdown-root searchable-select-root read-only"
+                      class="dropdown searchable-select-root"
                     >
                       <button
-                        class="button-root dropdown-toggle show-caret btn btn-unstyled"
+                        aria-controls="clay-dropdown-menu-1"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="dropdown-toggle button-root d-flex align-items-center justify-content-between w-100 btn btn-unstyled"
                         type="button"
                       >
-                        <span
-                          class="text-truncate"
+                        Test0
+                        <svg
+                          class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                          role="presentation"
                         >
-                          Test0
-                        </span>
-                        
+                          <use
+                            xlink:href="#caret-bottom"
+                          />
+                        </svg>
                       </button>
                     </div>
                     <div
@@ -164,20 +169,24 @@ exports[`IndividualFieldMapping should render 1`] = `
                     class="suggestion"
                   >
                     <div
-                      aria-haspopup="true"
-                      class="dropdown dropdown-root searchable-select-root read-only"
-                      name="undefined.0"
+                      class="dropdown searchable-select-root"
                     >
                       <button
-                        class="button-root dropdown-toggle show-caret btn btn-unstyled"
+                        aria-controls="clay-dropdown-menu-2"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="dropdown-toggle button-root d-flex align-items-center justify-content-between w-100 btn btn-unstyled"
                         type="button"
                       >
-                        <span
-                          class="text-truncate"
+                        MappingName
+                        <svg
+                          class="lexicon-icon lexicon-icon-caret-bottom icon-root ml-2"
+                          role="presentation"
                         >
-                          MappingName
-                        </span>
-                        
+                          <use
+                            xlink:href="#caret-bottom"
+                          />
+                        </svg>
                       </button>
                     </div>
                     <div

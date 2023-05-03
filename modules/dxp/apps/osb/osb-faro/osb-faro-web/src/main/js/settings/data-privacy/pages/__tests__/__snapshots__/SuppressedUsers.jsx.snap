@@ -15,7 +15,7 @@ exports[`SuppressedUsers should render 1`] = `
         class="breadcrumb-item"
       >
         <a
-          class="breadcrumb-link breadcrumb-text-truncate"
+          class="breadcrumb-text-truncate breadcrumb-link"
           href="/workspace/23/settings/data-privacy"
         >
           Data Control & Privacy
@@ -206,31 +206,24 @@ exports[`SuppressedUsers should render 1`] = `
               class="container-fluid"
             >
               <div
-                aria-haspopup="true"
-                class="dropdown dropdown-root pagination-items-per-page"
+                class="dropdown"
               >
                 <button
-                  class="button-root dropdown-toggle show-caret btn btn-sm btn-unstyled"
+                  aria-controls="clay-dropdown-menu-1"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="dropdown-toggle btn btn-sm btn-secondary"
                   type="button"
                 >
-                  <span
-                    class="text-truncate"
+                  5 Items
+                  <svg
+                    class="lexicon-icon lexicon-icon-caret-bottom ml-2"
+                    role="presentation"
                   >
-                    5 Items
-                  </span>
-                  
-                  <span
-                    class="caret-root"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#caret-bottom"
-                      />
-                    </svg>
-                  </span>
+                    <use
+                      xlink:href="#caret-bottom"
+                    />
+                  </svg>
                 </button>
               </div>
               <div

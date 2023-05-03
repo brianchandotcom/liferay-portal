@@ -15,7 +15,7 @@ exports[`AttributeView should render 1`] = `
         class="breadcrumb-item"
       >
         <a
-          class="breadcrumb-link breadcrumb-text-truncate"
+          class="breadcrumb-text-truncate breadcrumb-link"
           href="/workspace/23/settings/definitions"
         >
           Definitions
@@ -25,7 +25,7 @@ exports[`AttributeView should render 1`] = `
         class="breadcrumb-item"
       >
         <a
-          class="breadcrumb-link breadcrumb-text-truncate"
+          class="breadcrumb-text-truncate breadcrumb-link"
           href="/workspace/23/settings/definitions/event-attributes/global"
         >
           Event Attributes

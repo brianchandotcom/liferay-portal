@@ -24,7 +24,7 @@ exports[`Individuals Dashboard renders 1`] = `
               class="breadcrumb-item"
             >
               <a
-                class="breadcrumb-link breadcrumb-text-truncate"
+                class="breadcrumb-text-truncate breadcrumb-link"
                 href="/workspace/123/sites"
               >
                 Channel 1

@@ -216,7 +216,7 @@
 
 <tr>
 	<td>REPEATED_FIELD</td>
-	<td>//div[contains(@class,'repeatable')]//div[contains(., '${key_fieldName}') or (contains(@class,'ddm') and contains(@data-field-name, '${key_fieldName}'))][not(contains(@class,'container'))][${key_index}] | //div[contains(@data-field-name, '${key_fieldName}')]//div[contains(@class,'repeatable')][not(contains(@class,'toolbar'))][${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'ddm')]//label[contains(text(),'${key_fieldName}')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

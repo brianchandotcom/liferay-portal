@@ -115,7 +115,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		}
 
 		WikiFileUploadConfiguration wikiFileUploadConfiguration =
-			_getWikiFileUploadsConfiguration();
+			_getWikiFileUploadConfiguration();
 
 		return wikiFileUploadConfiguration.attachmentMimeTypes();
 	}
@@ -167,7 +167,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public long getWikiAttachmentMaxSize() throws ConfigurationException {
 		WikiFileUploadConfiguration wikiFileUploadConfiguration =
-			_getWikiFileUploadsConfiguration();
+			_getWikiFileUploadConfiguration();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -188,7 +188,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		return _search;
 	}
 
-	private WikiFileUploadConfiguration _getWikiFileUploadsConfiguration()
+	private WikiFileUploadConfiguration _getWikiFileUploadConfiguration()
 		throws ConfigurationException {
 
 		if (_wikiFileUploadConfiguration == null) {

@@ -417,11 +417,6 @@ public class FragmentCollectionContributorPropagationTest {
 			return html;
 		}
 
-		@Override
-		public void validateFragmentEntryHTML(String html, String configuration)
-			throws PortalException {
-		}
-
 		private final Map<Long, String> _companyIdsMap = new HashMap<>();
 		private final String _fragmentEntryKey;
 

@@ -183,13 +183,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		return bodyElement.html();
 	}
 
-	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
-		throws PortalException {
-
-		_validateFragmentEntryHTMLDocument(_getDocument(html));
-	}
-
 	private boolean _checkNoninstanceablePortletUsed(
 			FragmentEntryLink currentFragmentEntryLink,
 			String currentPortletName, HttpServletRequest httpServletRequest)

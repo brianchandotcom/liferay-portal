@@ -15,7 +15,6 @@
 package com.liferay.fragment.entry.processor.background.image;
 
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -28,20 +27,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -201,32 +194,6 @@ public class BackgroundImageFragmentEntryProcessor
 		return bodyElement.html();
 	}
 
-	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
-		throws PortalException {
-
-		Document document = _getDocument(html);
-
-		Elements elements = document.select("[data-lfr-background-image-id]");
-
-		Set<String> ids = new HashSet<>();
-
-		for (Element element : elements) {
-			if (ids.add(element.attr("data-lfr-background-image-id"))) {
-				continue;
-			}
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
-			throw new FragmentEntryContentException(
-				_language.get(
-					resourceBundle,
-					"you-must-define-a-unique-id-for-each-background-image-" +
-						"element"));
-		}
-	}
-
 	private Document _getDocument(String html) {
 		Document document = Jsoup.parseBodyFragment(html);
 
@@ -260,8 +227,5 @@ public class BackgroundImageFragmentEntryProcessor
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
 
 }

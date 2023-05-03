@@ -41,8 +41,4 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 			fragmentEntryLink, html);
 	}
 
-	@Override
-	public void validateFragmentEntryHTML(String html, String configuration) {
-	}
-
 }

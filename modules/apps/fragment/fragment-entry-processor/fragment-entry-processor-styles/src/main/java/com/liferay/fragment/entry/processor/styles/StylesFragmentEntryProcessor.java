@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.styles;
 
-import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -23,15 +22,11 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -113,23 +108,6 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 		return bodyElement.html();
 	}
 
-	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
-		throws PortalException {
-
-		Document document = _getDocument(html);
-
-		Elements elements = document.select("[data-lfr-styles]");
-
-		if (!elements.isEmpty() && (elements.size() > 1)) {
-			throw new FragmentEntryContentException(
-				_language.get(
-					_portal.getResourceBundle(LocaleUtil.getDefault()),
-					"the-data-lfr-styles-attribute-can-be-used-only-once-on-" +
-						"the-same-fragment"));
-		}
-	}
-
 	private Document _getDocument(String html) {
 		Document document = Jsoup.parseBodyFragment(html);
 
@@ -183,13 +161,7 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 		StylesFragmentEntryProcessor.class);
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

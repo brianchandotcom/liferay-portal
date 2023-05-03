@@ -18,11 +18,9 @@ import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMappe
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
-import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -32,24 +30,16 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Set;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -256,22 +246,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return bodyElement.outerHtml();
 	}
 
-	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
-		throws PortalException {
-
-		Document document = _getDocument(html);
-
-		_validateAttributes(document);
-
-		Elements elements = document.select(
-			"lfr-editable,*[data-lfr-editable-id]");
-
-		_validateDuplicatedIds(elements);
-
-		_validateEditableElements(elements);
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_editableElementMapperServiceTrackerMap =
@@ -337,145 +311,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return _editableElementParserServiceTrackerMap.getService(type);
 	}
 
-	private boolean _hasNestedWidget(Element element) {
-		List<String> portletAliases = _portletRegistry.getPortletAliases();
-
-		for (String portletAlias : portletAliases) {
-			Elements tagElements = element.select(
-				"> lfr-widget-" + portletAlias);
-
-			if (tagElements.size() > 0) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private void _validateAttribute(Element element, String attributeName)
-		throws FragmentEntryContentException {
-
-		if (Validator.isNotNull(element.attr(attributeName))) {
-			return;
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
-		throw new FragmentEntryContentException(
-			_language.format(
-				resourceBundle,
-				"you-must-define-all-required-attributes-x-for-each-editable-" +
-					"element",
-				StringUtil.merge(_REQUIRED_ATTRIBUTE_NAMES)));
-	}
-
-	private void _validateAttributes(Document document)
-		throws FragmentEntryContentException {
-
-		for (Element element : document.getElementsByTag("lfr-editable")) {
-			for (String attributeName : _REQUIRED_ATTRIBUTE_NAMES) {
-				_validateAttribute(element, attributeName);
-			}
-
-			_validateType(element);
-		}
-
-		for (Element element :
-				document.select(
-					"*[data-lfr-editable-id],*[data-lfr-editable-type]")) {
-
-			_validateAttribute(element, "data-lfr-editable-id");
-			_validateAttribute(element, "data-lfr-editable-type");
-
-			_validateType(element);
-		}
-	}
-
-	private void _validateDuplicatedIds(Elements elements)
-		throws FragmentEntryContentException {
-
-		Set<String> ids = new HashSet<>();
-
-		for (Element element : elements) {
-			if (ids.add(
-					EditableFragmentEntryProcessorUtil.getElementId(element))) {
-
-				continue;
-			}
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
-			throw new FragmentEntryContentException(
-				_language.get(
-					resourceBundle,
-					"you-must-define-a-unique-id-for-each-editable-element"));
-		}
-	}
-
-	private void _validateEditableElements(Elements elements)
-		throws FragmentEntryContentException {
-
-		for (Element element : elements) {
-			EditableElementParser editableElementParser =
-				_getEditableElementParser(element);
-
-			if (editableElementParser == null) {
-				continue;
-			}
-
-			_validateNestedEditableElements(element);
-
-			editableElementParser.validate(element);
-		}
-	}
-
-	private void _validateNestedEditableElements(Element element)
-		throws FragmentEntryContentException {
-
-		Elements attributeElements = element.getElementsByAttribute(
-			"[data-lfr-editable-id]");
-
-		Elements dropZoneElements = element.select("> lfr-drop-zone");
-
-		Elements tagElements = element.select("> lfr-editable");
-
-		if ((attributeElements.size() > 0) || (dropZoneElements.size() > 0) ||
-			_hasNestedWidget(element) || (tagElements.size() > 0)) {
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
-			throw new FragmentEntryContentException(
-				_language.get(
-					resourceBundle,
-					"editable-fields-cannot-include-nested-editables-drop-" +
-						"zones-or-widgets-in-it"));
-		}
-	}
-
-	private void _validateType(Element element)
-		throws FragmentEntryContentException {
-
-		EditableElementParser editableElementParser = _getEditableElementParser(
-			element);
-
-		if (editableElementParser != null) {
-			return;
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
-		throw new FragmentEntryContentException(
-			_language.get(
-				resourceBundle,
-				"you-must-define-a-valid-type-for-each-editable-element"));
-	}
-
-	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
-
 	private ServiceTrackerMap<String, EditableElementMapper>
 		_editableElementMapperServiceTrackerMap;
 	private ServiceTrackerMap<String, EditableElementParser>
@@ -486,11 +321,5 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
 
 }

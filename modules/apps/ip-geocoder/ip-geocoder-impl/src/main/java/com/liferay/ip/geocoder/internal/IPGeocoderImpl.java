@@ -121,16 +121,16 @@ public class IPGeocoderImpl implements IPGeocoder {
 	}
 
 	private File _getFile() throws IOException {
-		IPGeocoderConfiguration igGeocoderConfiguration =
+		IPGeocoderConfiguration ipGeocoderConfiguration =
 			ConfigurableUtil.createConfigurable(
 				IPGeocoderConfiguration.class, _properties);
 
-		if (Validator.isNotNull(igGeocoderConfiguration.filePath())) {
-			File file = new File(igGeocoderConfiguration.filePath());
+		if (Validator.isNotNull(ipGeocoderConfiguration.filePath())) {
+			File file = new File(ipGeocoderConfiguration.filePath());
 
 			if (file.exists()) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Use file " + igGeocoderConfiguration.filePath());
+					_log.info("Use file " + ipGeocoderConfiguration.filePath());
 				}
 
 				return file;

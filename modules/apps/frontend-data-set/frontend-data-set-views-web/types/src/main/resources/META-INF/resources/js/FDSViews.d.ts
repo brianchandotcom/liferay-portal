@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSEntryType} from './FDSEntries';
 declare type FDSViewType = {

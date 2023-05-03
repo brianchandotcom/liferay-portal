@@ -57,15 +57,14 @@ public class AssetListManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			assetListDisplayContext.getAssetListEntriesSearchContainer());
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_isLiveGroup(themeDisplay)) {
+		if (_isLiveGroup()) {
 			return null;
 		}
 
@@ -84,13 +83,9 @@ public class AssetListManagementToolbarDisplayContext
 	public String getAvailableActions(AssetListEntry assetListEntry)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!_isLiveGroup(themeDisplay) &&
+		if (!_isLiveGroup() &&
 			AssetListEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), assetListEntry,
+				_themeDisplay.getPermissionChecker(), assetListEntry,
 				ActionKeys.DELETE)) {
 
 			return "deleteSelectedAssetListEntries";
@@ -167,17 +162,13 @@ public class AssetListManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_isLiveGroup(themeDisplay)) {
+		if (_isLiveGroup()) {
 			return false;
 		}
 
 		if (AssetListPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
 				AssetListActionKeys.ADD_ASSET_LIST_ENTRY)) {
 
 			return true;
@@ -196,8 +187,8 @@ public class AssetListManagementToolbarDisplayContext
 		return new String[] {"title", "create-date"};
 	}
 
-	private boolean _isLiveGroup(ThemeDisplay themeDisplay) {
-		Group group = themeDisplay.getScopeGroup();
+	private boolean _isLiveGroup() {
+		Group group = _themeDisplay.getScopeGroup();
 
 		if (group.isLayout()) {
 			group = group.getParentGroup();
@@ -215,5 +206,7 @@ public class AssetListManagementToolbarDisplayContext
 
 		return false;
 	}
+
+	private final ThemeDisplay _themeDisplay;
 
 }

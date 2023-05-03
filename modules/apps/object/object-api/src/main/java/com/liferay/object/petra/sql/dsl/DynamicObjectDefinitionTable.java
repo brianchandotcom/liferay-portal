@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.math.BigDecimal;
 
 import java.sql.Blob;
+import java.sql.Timestamp;
 import java.sql.Types;
 
 import java.util.Date;
@@ -194,7 +195,7 @@ public class DynamicObjectDefinitionTable
 		else if (type.equals("Boolean")) {
 			return " default FALSE";
 		}
-		else if (type.equals("Date")) {
+		else if (type.equals("Date") || type.equals("DateTime")) {
 			return " null";
 		}
 
@@ -214,6 +215,8 @@ public class DynamicObjectDefinitionTable
 		"Clob", "TEXT"
 	).put(
 		"Date", "DATE"
+	).put(
+		"DateTime", "DATE"
 	).put(
 		"Double", "DOUBLE"
 	).put(
@@ -235,6 +238,8 @@ public class DynamicObjectDefinitionTable
 		).put(
 			"Date", Date.class
 		).put(
+			"DateTime", Timestamp.class
+		).put(
 			"Double", Double.class
 		).put(
 			"Integer", Integer.class
@@ -253,6 +258,8 @@ public class DynamicObjectDefinitionTable
 		"Clob", Types.CLOB
 	).put(
 		"Date", Types.DATE
+	).put(
+		"DateTime", Types.TIMESTAMP
 	).put(
 		"Double", Types.DOUBLE
 	).put(

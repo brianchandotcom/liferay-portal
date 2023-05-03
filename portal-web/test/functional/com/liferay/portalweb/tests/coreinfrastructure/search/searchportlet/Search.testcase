@@ -18,25 +18,6 @@ definition {
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			BlogsEntry.tearDownCP();
-
-			MessageboardsThread.tearDownCP();
-
-			JSONUser.tearDownNonAdminUsers();
-
-			WebContent.tearDownCP();
-
-			DMDocument.tearDownCP();
-
-			WikiPage.tearDownCP();
-
-			Vocabulary.tearDownCP();
-
-			Tag.tearDownCP(site = "Guest");
-
-			PagesAdmin.tearDownCP();
-		}
 	}
 
 	@description = "This is a use case for LPS-130227."

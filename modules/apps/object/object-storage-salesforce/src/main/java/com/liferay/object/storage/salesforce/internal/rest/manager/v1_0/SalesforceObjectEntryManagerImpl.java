@@ -145,6 +145,7 @@ public class SalesforceObjectEntryManagerImpl
 
 	@Override
 	public void deleteObjectEntry(
+			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, long companyId,
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {

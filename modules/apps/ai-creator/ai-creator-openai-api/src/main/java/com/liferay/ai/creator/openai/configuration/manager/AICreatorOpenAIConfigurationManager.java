@@ -33,4 +33,8 @@ public interface AICreatorOpenAIConfigurationManager {
 	public boolean isAICreatorGroupEnabled(long companyId, long groupId)
 		throws ConfigurationException;
 
+	public void saveAICreatorOpenAICompanyConfiguration(
+			long companyId, String apiKey, boolean enabled)
+		throws ConfigurationException;
+
 }

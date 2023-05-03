@@ -58,7 +58,8 @@ public class GCloudVisionImageAssetAutoTagProvider
 		try {
 			GCloudVisionAssetAutoTagProviderCompanyConfiguration
 				gCloudVisionAssetAutoTagProviderCompanyConfiguration =
-					_getConfiguration(fileEntry);
+					_getGCloudVisionAssetAutoTagProviderCompanyConfiguration(
+						fileEntry);
 
 			if (!gCloudVisionAssetAutoTagProviderCompanyConfiguration.
 					enabled() ||
@@ -98,7 +99,8 @@ public class GCloudVisionImageAssetAutoTagProvider
 	}
 
 	private GCloudVisionAssetAutoTagProviderCompanyConfiguration
-			_getConfiguration(FileEntry fileEntry)
+			_getGCloudVisionAssetAutoTagProviderCompanyConfiguration(
+				FileEntry fileEntry)
 		throws ConfigurationException {
 
 		return _configurationProvider.getCompanyConfiguration(

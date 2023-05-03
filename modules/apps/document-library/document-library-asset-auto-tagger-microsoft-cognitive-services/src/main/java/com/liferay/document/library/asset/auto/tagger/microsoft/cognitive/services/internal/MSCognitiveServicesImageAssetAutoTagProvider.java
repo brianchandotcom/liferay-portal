@@ -65,7 +65,8 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 		try {
 			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
 				msCognitiveServicesAssetAutoTagProviderCompanyConfiguration =
-					_getConfiguration(fileEntry);
+					_getMSCognitiveServicesAssetAutoTagProviderCompanyConfiguration(
+						fileEntry);
 
 			if (!msCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
 					enabled() ||
@@ -114,7 +115,8 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 	}
 
 	private MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
-			_getConfiguration(FileEntry fileEntry)
+			_getMSCognitiveServicesAssetAutoTagProviderCompanyConfiguration(
+				FileEntry fileEntry)
 		throws ConfigurationException {
 
 		return _configurationProvider.getCompanyConfiguration(

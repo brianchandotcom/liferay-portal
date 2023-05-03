@@ -38,8 +38,7 @@ public interface SegmentsExperienceRequestProcessor {
 	 * @param  httpServletRequest the servlet request
 	 * @param  httpServletResponse the servlet response
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the entity's class name ID
-	 * @param  classPK the primary key of the entity
+	 * @param  plid the primary key of the entity
 	 * @param  segmentsExperienceIds the primary keys of the user's active
 	 *         segment experiences
 	 * @return the processed IDs of segments experiences that will be actually
@@ -48,8 +47,8 @@ public interface SegmentsExperienceRequestProcessor {
 	 */
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK, long[] segmentsExperienceIds)
+			HttpServletResponse httpServletResponse, long groupId, long plid,
+			long[] segmentsExperienceIds)
 		throws PortalException;
 
 	/**
@@ -59,8 +58,7 @@ public interface SegmentsExperienceRequestProcessor {
 	 * @param  httpServletRequest the servlet request
 	 * @param  httpServletResponse the servlet response
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the entity's class name ID
-	 * @param  classPK the primary key of the entity
+	 * @param  plid the primary key of the entity
 	 * @param  segmentsEntryIds the primary keys of the user's active segment
 	 *         entries
 	 * @param  segmentsExperienceIds the primary keys of the user's active
@@ -71,9 +69,8 @@ public interface SegmentsExperienceRequestProcessor {
 	 */
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK, long[] segmentsEntryIds,
-			long[] segmentsExperienceIds)
+			HttpServletResponse httpServletResponse, long groupId, long plid,
+			long[] segmentsEntryIds, long[] segmentsExperienceIds)
 		throws PortalException;
 
 }

@@ -38,13 +38,13 @@ public class DefaultSegmentsExperienceRequestProcessor
 	@Override
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK, long[] segmentsExperienceIds)
+			HttpServletResponse httpServletResponse, long groupId, long plid,
+			long[] segmentsExperienceIds)
 		throws PortalException {
 
 		return TransformUtil.transformToLongArray(
 			_segmentsExperienceLocalService.getSegmentsExperiences(
-				groupId, classNameId, classPK, true),
+				groupId, plid, true),
 			segmentsExperience -> {
 				if (segmentsExperience.getPriority() < 0) {
 					return null;
@@ -57,14 +57,13 @@ public class DefaultSegmentsExperienceRequestProcessor
 	@Override
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK, long[] segmentsEntryIds,
-			long[] segmentsExperienceIds)
+			HttpServletResponse httpServletResponse, long groupId, long plid,
+			long[] segmentsEntryIds, long[] segmentsExperienceIds)
 		throws PortalException {
 
 		return TransformUtil.transformToLongArray(
 			_segmentsExperienceLocalService.getSegmentsExperiences(
-				groupId, segmentsEntryIds, classNameId, classPK, true),
+				groupId, segmentsEntryIds, plid, true),
 			segmentsExperience -> {
 				if (segmentsExperience.getPriority() < 0) {
 					return null;

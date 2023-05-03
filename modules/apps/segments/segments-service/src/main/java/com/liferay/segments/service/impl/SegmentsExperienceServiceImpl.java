@@ -52,52 +52,52 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long plid,
 			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_hasUpdateLayoutPermission(_getPublishedLayoutClassPK(classPK))) {
+		if (!_hasUpdateLayoutPermission(_getPublishedLayoutPlid(plid))) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 		}
 
 		return segmentsExperienceLocalService.addSegmentsExperience(
-			getUserId(), groupId, segmentsEntryId, classNameId, classPK,
-			nameMap, active, typeSettingsUnicodeProperties, serviceContext);
+			getUserId(), groupId, segmentsEntryId, plid, nameMap, active,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long plid,
 			Map<Locale, String> nameMap, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return appendSegmentsExperience(
-			groupId, segmentsEntryId, classNameId, classPK, nameMap, active,
+			groupId, segmentsEntryId, plid, nameMap, active,
 			new UnicodeProperties(true), serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long plid,
 			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_hasUpdateLayoutPermission(_getPublishedLayoutClassPK(classPK))) {
+		if (!_hasUpdateLayoutPermission(_getPublishedLayoutPlid(plid))) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 		}
 
 		return segmentsExperienceLocalService.appendSegmentsExperience(
-			getUserId(), groupId, segmentsEntryId, classNameId, classPK,
-			nameMap, active, typeSettingsUnicodeProperties, serviceContext);
+			getUserId(), groupId, segmentsEntryId, plid, nameMap, active,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
@@ -117,13 +117,12 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public SegmentsExperience fetchSegmentsExperience(
-			long groupId, String segmentsExperienceKey, long classNameId,
-			long classPK)
+			long groupId, String segmentsExperienceKey, long plid)
 		throws PortalException {
 
 		SegmentsExperience segmentsExperience =
 			segmentsExperienceLocalService.getSegmentsExperience(
-				groupId, segmentsExperienceKey, classNameId, classPK);
+				groupId, segmentsExperienceKey, plid);
 
 		_segmentsExperienceResourcePermission.check(
 			getPermissionChecker(), segmentsExperience, ActionKeys.VIEW);
@@ -147,54 +146,53 @@ public class SegmentsExperienceServiceImpl
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active)
+			long groupId, long plid, boolean active)
 		throws PortalException {
 
-		long publishedLayoutClassPK = _getPublishedLayoutClassPK(classPK);
+		long publishedLayoutPlid = _getPublishedLayoutPlid(plid);
 
-		if (_hasUpdateLayoutPermission(publishedLayoutClassPK)) {
-			return segmentsExperiencePersistence.findByG_C_C_A(
-				groupId, classNameId, publishedLayoutClassPK, active);
+		if (_hasUpdateLayoutPermission(publishedLayoutPlid)) {
+			return segmentsExperiencePersistence.findByG_P_A(
+				groupId, publishedLayoutPlid, active);
 		}
 
-		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, publishedLayoutClassPK, active);
+		return segmentsExperiencePersistence.filterFindByG_P_A(
+			groupId, publishedLayoutPlid, active);
 	}
 
 	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
+			long groupId, long plid, boolean active, int start, int end,
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws PortalException {
 
-		long publishedLayoutClassPK = _getPublishedLayoutClassPK(classPK);
+		long publishedLayoutPlid = _getPublishedLayoutPlid(plid);
 
-		if (_hasUpdateLayoutPermission(publishedLayoutClassPK)) {
-			return segmentsExperiencePersistence.findByG_C_C_A(
-				groupId, classNameId, publishedLayoutClassPK, active, start,
-				end, orderByComparator);
+		if (_hasUpdateLayoutPermission(publishedLayoutPlid)) {
+			return segmentsExperiencePersistence.findByG_P_A(
+				groupId, publishedLayoutPlid, active, start, end,
+				orderByComparator);
 		}
 
-		return segmentsExperiencePersistence.filterFindByG_C_C_A(
-			groupId, classNameId, publishedLayoutClassPK, active, start, end,
+		return segmentsExperiencePersistence.filterFindByG_P_A(
+			groupId, publishedLayoutPlid, active, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active)
+			long groupId, long plid, boolean active)
 		throws PortalException {
 
-		long publishedLayoutClassPK = _getPublishedLayoutClassPK(classPK);
+		long publishedLayoutPlid = _getPublishedLayoutPlid(plid);
 
-		if (_hasUpdateLayoutPermission(publishedLayoutClassPK)) {
-			return segmentsExperiencePersistence.countByG_C_C_A(
-				groupId, classNameId, publishedLayoutClassPK, active);
+		if (_hasUpdateLayoutPermission(publishedLayoutPlid)) {
+			return segmentsExperiencePersistence.countByG_P_A(
+				groupId, publishedLayoutPlid, active);
 		}
 
-		return segmentsExperiencePersistence.filterCountByG_C_C_A(
-			groupId, classNameId, publishedLayoutClassPK, active);
+		return segmentsExperiencePersistence.filterCountByG_P_A(
+			groupId, publishedLayoutPlid, active);
 	}
 
 	@Override
@@ -242,10 +240,9 @@ public class SegmentsExperienceServiceImpl
 			getPermissionChecker(), segmentsExperience, ActionKeys.UPDATE);
 
 		SegmentsExperience swapSegmentsExperience =
-			segmentsExperiencePersistence.fetchByG_C_C_P(
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK(), newPriority);
+			segmentsExperiencePersistence.fetchByG_P_P(
+				segmentsExperience.getGroupId(), segmentsExperience.getPlid(),
+				newPriority);
 
 		if (swapSegmentsExperience != null) {
 			_segmentsExperienceResourcePermission.check(
@@ -257,14 +254,14 @@ public class SegmentsExperienceServiceImpl
 			segmentsExperienceId, newPriority);
 	}
 
-	private long _getPublishedLayoutClassPK(long classPK) {
-		Layout layout = _layoutLocalService.fetchLayout(classPK);
+	private long _getPublishedLayoutPlid(long plid) {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if ((layout != null) && layout.isDraftLayout()) {
 			return layout.getClassPK();
 		}
 
-		return classPK;
+		return plid;
 	}
 
 	private boolean _hasUpdateLayoutPermission(long plid)

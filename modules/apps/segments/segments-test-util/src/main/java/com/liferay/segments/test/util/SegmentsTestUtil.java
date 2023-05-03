@@ -117,46 +117,43 @@ public class SegmentsTestUtil {
 	}
 
 	public static SegmentsExperience addSegmentsExperience(
-			long groupId, long classNameId, long classPK)
+			long groupId, long plid)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry = addSegmentsEntry(groupId);
 
 		return addSegmentsExperience(
-			groupId, segmentsEntry.getSegmentsEntryId(), classNameId, classPK);
+			groupId, segmentsEntry.getSegmentsEntryId(), plid);
 	}
 
 	public static SegmentsExperience addSegmentsExperience(
-			long groupId, long segmentsEntryId, long classNameId, long classPK)
+			long groupId, long segmentsEntryId, long plid)
 		throws PortalException {
 
 		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK,
+			segmentsEntryId, plid,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			ServiceContext serviceContext)
+			long segmentsEntryId, long plid, ServiceContext serviceContext)
 		throws PortalException {
 
 		return SegmentsExperienceLocalServiceUtil.addSegmentsExperience(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			segmentsEntryId, classNameId, classPK,
-			RandomTestUtil.randomLocaleStringMap(), true,
+			segmentsEntryId, plid, RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true), serviceContext);
 	}
 
 	public static SegmentsExperience addSegmentsExperience(
-			long classNameId, long classPK, ServiceContext serviceContext)
+			long plid, ServiceContext serviceContext)
 		throws PortalException {
 
 		SegmentsEntry segmentsEntry = addSegmentsEntry(
 			serviceContext.getScopeGroupId());
 
 		return addSegmentsExperience(
-			segmentsEntry.getSegmentsEntryId(), classNameId, classPK,
-			serviceContext);
+			segmentsEntry.getSegmentsEntryId(), plid, serviceContext);
 	}
 
 	public static SegmentsExperiment addSegmentsExperiment(

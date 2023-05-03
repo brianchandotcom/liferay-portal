@@ -42,8 +42,7 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 	@Override
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK)
+			HttpServletResponse httpServletResponse, long groupId, long plid)
 		throws PortalException {
 
 		long[] segmentsExperienceIds = new long[0];
@@ -54,8 +53,8 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 
 			segmentsExperienceIds =
 				segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
-					httpServletRequest, httpServletResponse, groupId,
-					classNameId, classPK, segmentsExperienceIds);
+					httpServletRequest, httpServletResponse, groupId, plid,
+					segmentsExperienceIds);
 		}
 
 		return segmentsExperienceIds;
@@ -64,8 +63,8 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 	@Override
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK, long[] segmentsEntryIds)
+			HttpServletResponse httpServletResponse, long groupId, long plid,
+			long[] segmentsEntryIds)
 		throws PortalException {
 
 		long[] segmentsExperienceIds = new long[0];
@@ -76,9 +75,8 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 
 			segmentsExperienceIds =
 				segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
-					httpServletRequest, httpServletResponse, groupId,
-					classNameId, classPK, segmentsEntryIds,
-					segmentsExperienceIds);
+					httpServletRequest, httpServletResponse, groupId, plid,
+					segmentsEntryIds, segmentsExperienceIds);
 		}
 
 		return segmentsExperienceIds;

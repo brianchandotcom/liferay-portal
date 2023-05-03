@@ -32,6 +32,7 @@ import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -385,6 +386,12 @@ public class LiferayOAuthDataProvider
 		}
 
 		return null;
+	}
+
+	@Override
+	public OAuthJoseJwtProducer getJwtAccessTokenProducer() {
+		return _oAuthJoseJwtProducerDCLSingleton.getSingleton(
+			this::_createJwtAccessTokenProducer);
 	}
 
 	public OAuth2Authorization getOAuth2Authorization(
@@ -957,6 +964,18 @@ public class LiferayOAuthDataProvider
 		}
 	}
 
+	private OAuthJoseJwtProducer _createJwtAccessTokenProducer() {
+		OAuthJoseJwtProducer oAuthJoseJwtProducer = new OAuthJoseJwtProducer();
+
+		oAuthJoseJwtProducer.setSignatureProvider(
+			JwsUtils.getSignatureProvider(
+				JwkUtils.readJwkKey(
+					_oAuth2AuthorizationServerConfiguration.
+						jwtAccessTokenSigningJSONWebKey())));
+
+		return oAuthJoseJwtProducer;
+	}
+
 	private ServerAccessToken _createOpaqueServerAccessToken(
 		List<String> audiences, Client client, String clientCodeVerifier,
 		String grantCode, String grantType, String nonce,
@@ -1115,8 +1134,6 @@ public class LiferayOAuthDataProvider
 	private void _init() {
 		setGrantLifetime(
 			_oAuth2AuthorizationFlowConfiguration.authorizationCodeGrantTTL());
-
-		_setJwtAccessTokenProducer();
 
 		setUseJwtFormatForAccessTokens(
 			_oAuth2AuthorizationServerConfiguration.issueJWTAccessToken());
@@ -1324,18 +1341,6 @@ public class LiferayOAuthDataProvider
 		return userSubject;
 	}
 
-	private void _setJwtAccessTokenProducer() {
-		OAuthJoseJwtProducer oAuthJoseJwtProducer = new OAuthJoseJwtProducer();
-
-		oAuthJoseJwtProducer.setSignatureProvider(
-			JwsUtils.getSignatureProvider(
-				JwkUtils.readJwkKey(
-					_oAuth2AuthorizationServerConfiguration.
-						jwtAccessTokenSigningJSONWebKey())));
-
-		super.setJwtAccessTokenProducer(oAuthJoseJwtProducer);
-	}
-
 	private long _toCXFTime(Date dateCreated) {
 		return dateCreated.getTime() / 1000;
 	}
@@ -1461,6 +1466,9 @@ public class LiferayOAuthDataProvider
 
 	@Reference
 	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
+
+	private final DCLSingleton<OAuthJoseJwtProducer>
+		_oAuthJoseJwtProducerDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private Portal _portal;

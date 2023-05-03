@@ -34,46 +34,36 @@ public class LiferayOAuth2Util {
 		String externalReferenceCode, String lxcMainDomain,
 		String lxcServerProtocol) {
 
-		while (true) {
-			try {
-				String baseURL =
-					lxcServerProtocol + "://" + lxcMainDomain +
-						"/o/oauth2/application";
+		try {
+			String baseURL =
+				lxcServerProtocol + "://" + lxcMainDomain +
+					"/o/oauth2/application";
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Get client ID from " + baseURL + " using " +
-							externalReferenceCode);
-				}
-
-				return WebClient.create(
-					baseURL
-				).get(
-				).uri(
-					uriBuilder -> uriBuilder.queryParam(
-						"externalReferenceCode", externalReferenceCode
-					).build()
-				).retrieve(
-				).bodyToMono(
-					ApplicationInfo.class
-				).block(
-				).client_id;
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Get client ID from " + baseURL + " using " +
+						externalReferenceCode);
 			}
-			catch (Throwable throwable) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to get client ID: " + throwable.getMessage());
-				}
 
-				try {
-					Thread.sleep(1000);
-				}
-				catch (InterruptedException interruptedException) {
-					_log.error(
-						"Thread.sleep interupted: " +
-							interruptedException.getMessage());
-				}
+			return WebClient.create(
+				baseURL
+			).get(
+			).uri(
+				uriBuilder -> uriBuilder.queryParam(
+					"externalReferenceCode", externalReferenceCode
+				).build()
+			).retrieve(
+			).bodyToMono(
+				ApplicationInfo.class
+			).block(
+			).client_id;
+		}
+		catch (Throwable throwable) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get client ID: " + throwable.getMessage());
 			}
+
+			return null;
 		}
 	}
 

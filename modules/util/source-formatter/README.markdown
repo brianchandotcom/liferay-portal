@@ -92,6 +92,7 @@ Checks are configured in the following files:
    - [Miscellaneous](src/main/resources/documentation/miscellaneous_checks.markdown#miscellaneous-checks)
    - [Naming Conventions](src/main/resources/documentation/naming_conventions_checks.markdown#naming-conventions-checks)
    - [Performance](src/main/resources/documentation/performance_checks.markdown#performance-checks)
+   - [Productivity](src/main/resources/documentation/productivity_checks.markdown#productivity-checks)
    - [Security](src/main/resources/documentation/security_checks.markdown#security-checks)
    - [Styling](src/main/resources/documentation/styling_checks.markdown#styling-checks)
    - [Upgrade](src/main/resources/documentation/upgrade_checks.markdown#upgrade-checks)

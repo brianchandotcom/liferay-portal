@@ -288,7 +288,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-179056. Confirm that the user can create a data set entry with special chatacters"
+	@description = "Ignored due to LPS-183512 | LPS-179056. Confirm that the user can create a data set entry with special chatacters"
+	@ignore = "true"
 	@priority = 5
 	test WithSpecialCharacters {
 		task ("When Create a DataSet") {

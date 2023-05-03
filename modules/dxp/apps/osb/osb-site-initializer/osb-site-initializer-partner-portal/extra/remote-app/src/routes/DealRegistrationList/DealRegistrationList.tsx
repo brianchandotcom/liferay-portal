@@ -22,9 +22,12 @@ import Table from '../../common/components/Table';
 import TableHeader from '../../common/components/TableHeader';
 import Search from '../../common/components/TableHeader/Search';
 import {DealRegistrationColumnKey} from '../../common/enums/dealRegistrationColumnKey';
+import {ObjectActionName} from '../../common/enums/objectActionName';
+import {PermissionActionType} from '../../common/enums/permissionActionType';
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
+import usePermissionActions from '../../common/hooks/usePermissionActions';
 import {DealRegistrationListItem} from '../../common/interfaces/dealRegistrationListItem';
 import {Liferay} from '../../common/services/liferay';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
@@ -40,20 +43,29 @@ interface IProps {
 }
 const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
+
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<DealRegistrationItem>({});
+
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisibleModal(false),
 	});
+
 	const pagination = usePagination();
+
 	const siteURL = useLiferayNavigate();
+
 	const {data, isValidating} = useGetListItemsFromDealRegistration(
 		pagination.activePage,
 		pagination.activeDelta,
 		filtersTerm,
 		sort
 	);
+
+	const actions = usePermissionActions(ObjectActionName.DEAL_REGISTRATION);
+
 	const filteredData = data.items && getFilteredItems(data.items);
+
 	const columns = [
 		{
 			columnKey: DealRegistrationColumnKey.ACCOUNT_NAME,
@@ -80,10 +92,12 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 			label: 'Status',
 		},
 	];
+
 	const handleCustomClickOnRow = (item: DealRegistrationItem) => {
 		setIsVisibleModal(true);
 		setModalContent(item);
 	};
+
 	const getModal = () => {
 		return (
 			<Modal observer={observer} size="lg">
@@ -91,6 +105,7 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 			</Modal>
 		);
 	};
+
 	const getTable = (totalCount: number, items?: DealRegistrationItem[]) => {
 		if (items) {
 			if (!totalCount) {
@@ -157,26 +172,29 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 				</div>
 
 				<div>
-					{!!filteredData?.length && (
-						<CSVLink
-							className="btn btn-secondary mb-2 mb-lg-0 mr-2"
-							data={filteredData}
-							filename="Partner Deal Registration.csv"
-						>
-							Export Deal Registrations
-						</CSVLink>
-					)}
+					{!!filteredData?.length &&
+						actions?.includes(PermissionActionType.EXPORT) && (
+							<CSVLink
+								className="btn btn-secondary mb-2 mb-lg-0 mr-2"
+								data={filteredData}
+								filename="Partner Deal Registration.csv"
+							>
+								Export Deal Registrations
+							</CSVLink>
+						)}
 
-					<ClayButton
-						className="mb-2 mb-lg-0 mr-2"
-						onClick={() =>
-							Liferay.Util.navigate(
-								`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`
-							)
-						}
-					>
-						Register New Deal
-					</ClayButton>
+					{actions?.includes(PermissionActionType.CREATE) && (
+						<ClayButton
+							className="mb-2 mb-lg-0 mr-2"
+							onClick={() =>
+								Liferay.Util.navigate(
+									`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`
+								)
+							}
+						>
+							Register New Deal
+						</ClayButton>
+					)}
 				</div>
 			</TableHeader>
 

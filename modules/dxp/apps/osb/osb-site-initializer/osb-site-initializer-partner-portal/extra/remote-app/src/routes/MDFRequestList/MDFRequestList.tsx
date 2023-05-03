@@ -252,9 +252,7 @@ const MDFRequestList = () => {
 
 				<div className="mb-2 mb-lg-0">
 					{!!mdfRequestItems?.length &&
-						actions?.some(
-							(action) => action === PermissionActionType.EXPORT
-						) && (
+						actions?.includes(PermissionActionType.EXPORT) && (
 							<CSVLink
 								className="btn btn-secondary mr-2"
 								data={mdfRequestItems}
@@ -264,9 +262,7 @@ const MDFRequestList = () => {
 							</CSVLink>
 						)}
 
-					{actions?.some(
-						(action) => action === PermissionActionType.CREATE
-					) && (
+					{actions?.includes(PermissionActionType.CREATE) && (
 						<ClayButton
 							className="mr-2 mr-md-2"
 							onClick={() =>

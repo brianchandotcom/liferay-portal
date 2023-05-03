@@ -155,6 +155,8 @@ public class Main {
 
 		_initFlexmark();
 
+		_initCategories(_markdownImportDirName);
+
 		if (_offline) {
 			_liferayContentStructureId = 0;
 			_liferaySiteId = 0;
@@ -456,6 +458,52 @@ public class Main {
 		}
 
 		return breadcrumbLinksJSONArray;
+	}
+
+	private Long[] _getCategoryIds(String text) {
+		Document document = _parser.parse(text);
+
+		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
+			new SnakeYamlFrontMatterVisitor();
+
+		snakeYamlFrontMatterVisitor.visit(document);
+
+		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
+
+		if ((data == null) || !data.containsKey("categories")) {
+			return new Long[0];
+		}
+
+		Object categories = data.get("categories");
+
+		if (!(categories instanceof String)) {
+			return new Long[0];
+		}
+
+		String categoriesString = categories.toString();
+
+		String[] categoryStrings = categoriesString.split(",");
+
+		ArrayList<Long> categoryIdsList = new ArrayList<>();
+
+		for (String categoryString : categoryStrings) {
+			if (!_structureContentCategoryIdsJSONObject.has(categoryString)) {
+				_warn(
+					"No matching category exists for category name: " +
+						categoryString);
+
+				continue;
+			}
+
+			categoryIdsList.add(
+				_structureContentCategoryIdsJSONObject.getLong(categoryString));
+		}
+
+		if (categoryIdsList.isEmpty()) {
+			return new Long[0];
+		}
+
+		return categoryIdsList.toArray(new Long[0]);
 	}
 
 	private String _getDescription(String text) {
@@ -815,6 +863,19 @@ public class Main {
 		}
 
 		return uuid.toString();
+	}
+
+	private void _initCategories(String markdownImportDirName)
+		throws Exception {
+
+		File categoriesJSONFile = new File(
+			markdownImportDirName + "/categories.json");
+
+		String categoryIdsJSONString = FileUtils.readFileToString(
+			categoriesJSONFile, StandardCharsets.UTF_8);
+
+		_structureContentCategoryIdsJSONObject = new JSONObject(
+			categoryIdsJSONString);
 	}
 
 	private void _initFlexmark() {
@@ -1569,6 +1630,7 @@ public class Main {
 		structuredContent.setContentStructureId(_liferayContentStructureId);
 		structuredContent.setExternalReferenceCode(_getUuid(englishText));
 		structuredContent.setFriendlyUrlPath(_toFriendlyURLPath(englishFile));
+		structuredContent.setTaxonomyCategoryIds(_getCategoryIds(englishText));
 
 		if (!_offline) {
 			structuredContent.setStructuredContentFolderId(
@@ -1772,6 +1834,7 @@ public class Main {
 	private Parser _parser;
 	private HtmlRenderer _renderer;
 	private SiteResource _siteResource;
+	private JSONObject _structureContentCategoryIdsJSONObject;
 	private final Map<String, Long> _structuredContentFolderIds =
 		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;

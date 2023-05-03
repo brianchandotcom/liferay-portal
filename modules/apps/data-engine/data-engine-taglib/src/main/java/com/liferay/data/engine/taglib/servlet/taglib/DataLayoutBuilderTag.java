@@ -236,24 +236,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return sidebarPanels;
 	}
 
-	private boolean _hasJavascriptModule(String name) {
-		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
-			_ddmFormFieldTypeServicesRegistrySnapshot.get();
-
-		DDMFormFieldType ddmFormFieldType =
-			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(name);
-
-		return Validator.isNotNull(ddmFormFieldType.getModuleName());
-	}
-
-	private String _resolveFieldTypeModule(String name) {
-		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
-			_ddmFormFieldTypeServicesRegistrySnapshot.get();
-
-		return _resolveModuleName(
-			ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(name));
-	}
-
 	private String _resolveFieldTypesModules() {
 		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry =
 			_ddmFormFieldTypeServicesRegistrySnapshot.get();
@@ -262,11 +244,19 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			TransformUtil.transform(
 				ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames(),
 				name -> {
-					if (!_hasJavascriptModule(name)) {
+					DDMFormFieldType ddmFormFieldType =
+						ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
+							name);
+
+					if (Validator.isNull(ddmFormFieldType.getModuleName())) {
 						return null;
 					}
 
-					return _resolveFieldTypeModule(name);
+					if (ddmFormFieldType.isCustomDDMFormFieldType()) {
+						return ddmFormFieldType.getModuleName();
+					}
+
+					return _resolveModule(ddmFormFieldType.getModuleName());
 				}),
 			StringPool.COMMA);
 	}
@@ -275,18 +265,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		NPMResolver npmResolver = _npmResolverSnapshot.get();
 
 		return npmResolver.resolveModuleName(moduleName);
-	}
-
-	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
-		if (Validator.isNull(ddmFormFieldType.getModuleName())) {
-			return StringPool.BLANK;
-		}
-
-		if (ddmFormFieldType.isCustomDDMFormFieldType()) {
-			return ddmFormFieldType.getModuleName();
-		}
-
-		return _resolveModule(ddmFormFieldType.getModuleName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

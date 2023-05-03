@@ -1128,7 +1128,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		try {
 			_objectEntryManager.deleteObjectEntry(
-				"externalReferenceCode1", _companyId, objectDefinition1, null);
+				_simpleDTOConverterContext, "externalReferenceCode1",
+				_companyId, objectDefinition1, null);
 
 			Assert.fail();
 		}
@@ -1153,7 +1154,8 @@ public class DefaultObjectEntryManagerImplTest {
 				objectRelationship.getLabelMap());
 
 		_objectEntryManager.deleteObjectEntry(
-			"externalReferenceCode1", _companyId, objectDefinition1, null);
+			_simpleDTOConverterContext, "externalReferenceCode1", _companyId,
+			objectDefinition1, null);
 
 		try {
 			_objectEntryManager.getObjectEntry(
@@ -1193,7 +1195,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 		try {
 			_objectEntryManager.deleteObjectEntry(
-				"externalReferenceCode3", _companyId, objectDefinition1, null);
+				_simpleDTOConverterContext, "externalReferenceCode3",
+				_companyId, objectDefinition1, null);
 
 			Assert.fail();
 		}

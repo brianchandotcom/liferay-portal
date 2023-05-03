@@ -145,8 +145,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				_objectDefinition.getStorageType());
 
 		objectEntryManager.deleteObjectEntry(
-			externalReferenceCode, contextCompany.getCompanyId(),
-			_objectDefinition, null);
+			_getDTOConverterContext(null), externalReferenceCode,
+			contextCompany.getCompanyId(), _objectDefinition, null);
 	}
 
 	@Override
@@ -168,8 +168,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				_objectDefinition.getStorageType());
 
 		objectEntryManager.deleteObjectEntry(
-			externalReferenceCode, contextCompany.getCompanyId(),
-			_objectDefinition, scopeKey);
+			_getDTOConverterContext(null), externalReferenceCode,
+			contextCompany.getCompanyId(), _objectDefinition, scopeKey);
 	}
 
 	@Override

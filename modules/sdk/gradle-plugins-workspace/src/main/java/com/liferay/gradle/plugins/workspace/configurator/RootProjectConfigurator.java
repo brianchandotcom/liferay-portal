@@ -1151,8 +1151,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Project project, VerifyProductTask verifyProductTask,
 		Download downloadBundleTask, VerifyBundleTask verifyBundleTask,
 		final WorkspaceExtension workspaceExtension,
-		Configuration configurationBundleSupport,
-		Configuration configurationOsgiModules) {
+		Configuration bundleSupportConfiguration,
+		Configuration osgiModulesConfiguration) {
 
 		InitBundleTask initBundleTask = GradleUtil.addTask(
 			project, INIT_BUNDLE_TASK_NAME, InitBundleTask.class);
@@ -1187,7 +1187,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 		initBundleTask.mustRunAfter(verifyProductTask);
-		initBundleTask.setClasspath(configurationBundleSupport);
+		initBundleTask.setClasspath(bundleSupportConfiguration);
 		initBundleTask.setConfigEnvironment(
 			new Callable<String>() {
 
@@ -1230,7 +1230,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 
 		initBundleTask.setGroup(BUNDLE_GROUP);
-		initBundleTask.setProvidedModules(configurationOsgiModules);
+		initBundleTask.setProvidedModules(osgiModulesConfiguration);
 
 		return initBundleTask;
 	}

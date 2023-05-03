@@ -111,490 +111,6 @@ definition {
 			value1 = "24.00");
 	}
 
-	@description = "This is a test for COMMERCE-6225. Price Modifier lifecycle"
-	@priority = 3
-	test AddEditAndDeletePriceModifier {
-		property portal.acceptance = "false";
-
-		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceEntry.addNewPriceListsEntry(
-			priceListCatalog = "Minium",
-			priceListCurrency = "USD",
-			priceListName = "Price List Test");
-
-		AssertClickNoError(
-			locator1 = "Button#SUBMIT",
-			value1 = "Submit");
-
-		SelectFrameTop();
-
-		CommerceNavigator.gotoEntry(entryName = "Price List Test");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
-
-		CommercePriceLists.addNewPriceModifier(
-			modifier = "Percentage",
-			name = "CASE A",
-			target = "Products");
-
-		Click(
-			key_value = "CASE A",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Type(
-			key_fieldLabel = "Amount",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = 10);
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		CommerceEntry.gotoMenuTab(menuTab = "Products");
-
-		CommerceRelations.assignSingleRelationToProductsEntry(
-			entryName = "ABS Sensor",
-			title = "Add Product");
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-		Type(
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "ABS Sensor");
-
-		Click(locator1 = "Button#SUBMIT");
-
-		Click(
-			key_productName = "ABS Sensor",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-		AssertTextEquals(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
-			value1 = "$ 55.00");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
-
-		CommerceNavigator.gotoEntry(entryName = "Price List Test");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
-
-		Click(
-			key_value = "CASE A",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Refresh();
-
-		CommercePriceLists.addNewPriceModifier(
-			modifier = "Replace",
-			name = "CASE B",
-			target = "Products");
-
-		Click(
-			key_value = "CASE B",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Type(
-			key_fieldLabel = "Amount",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = 10);
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		CommerceEntry.gotoMenuTab(menuTab = "Products");
-
-		CommerceRelations.assignSingleRelationToProductsEntry(
-			entryName = "ABS Sensor",
-			title = "Add Product");
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-		Type(
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "ABS Sensor");
-
-		Click(locator1 = "Button#SUBMIT");
-
-		Click(
-			key_productName = "ABS Sensor",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-		AssertTextEquals(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
-			value1 = "$ 10.00");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
-
-		CommerceNavigator.gotoEntry(entryName = "Price List Test");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
-
-		Click(
-			key_value = "CASE B",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Refresh();
-
-		CommercePriceLists.addNewPriceModifier(
-			modifier = "Fixed Amount",
-			name = "CASE C",
-			target = "Products");
-
-		Click(
-			key_value = "CASE C",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Type(
-			key_fieldLabel = "Amount",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = 10);
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		CommerceEntry.gotoMenuTab(menuTab = "Products");
-
-		CommerceRelations.assignSingleRelationToProductsEntry(
-			entryName = "ABS Sensor",
-			title = "Add Product");
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-		Type(
-			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
-			value1 = "ABS Sensor");
-
-		Click(locator1 = "Button#SUBMIT");
-
-		Click(
-			key_productName = "ABS Sensor",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-		AssertTextEquals(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
-			value1 = "$ 60.00");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		CommerceProducts.searchProduct(search = "U-Joint");
-
-		CommerceNavigator.gotoEntry(entryName = "U-Joint");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Product Groups");
-
-		Type(
-			key_title = "Select Product Group",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "PG1");
-
-		WaitForElementPresent(locator1 = "Button#CREATE_NEW");
-
-		ClickNoError(locator1 = "Button#CREATE_NEW");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
-
-		CommerceNavigator.gotoEntry(entryName = "Price List Test");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
-
-		Click(
-			key_value = "CASE C",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Refresh();
-
-		CommercePriceLists.addNewPriceModifier(
-			modifier = "Percentage",
-			name = "CASE D",
-			target = "Product Groups");
-
-		Click(
-			key_value = "CASE D",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Type(
-			key_fieldLabel = "Amount",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = 10);
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		CommerceEntry.gotoMenuTab(menuTab = "Product Groups");
-
-		CommerceRelations.assignSingleRelationToProductsEntry(
-			entryName = "PG1",
-			title = "Select Product Group");
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-		Click(
-			key_productName = "U-Joint",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-		AssertTextEquals(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
-			value1 = "$ 26.40");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
-
-		CommerceNavigator.gotoEntry(entryName = "Price List Test");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
-
-		Click(
-			key_value = "CASE D",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-		var curr_productName = "";
-		var curr_price = "";
-		var decreasedPrice = "";
-		var productAndPriceArray = "";
-		var isLessThan21 = "";
-		var isLessThan41 = "";
-		var aux_iterator = 1;
-
-		for (var iterator : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49") {
-			var isLessThan41 = MathUtil.isLessThan(${iterator}, 41);
-
-			if (${aux_iterator} == 21) {
-				var aux_iterator = 1;
-			}
-
-			if (${isLessThan41} == "false") {
-				var isLessThan21 = "true";
-			}
-			else {
-				var isLessThan21 = MathUtil.isLessThan(${iterator}, 21);
-			}
-
-			if (${isLessThan21} == "false") {
-				Click(
-					key_pageNumber = 2,
-					locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
-
-				WaitForElementPresent(
-					key_index = ${aux_iterator},
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
-			}
-			else if (${isLessThan41} == "false") {
-				Click(
-					key_pageNumber = 3,
-					locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
-
-				WaitForElementPresent(
-					key_index = ${aux_iterator},
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
-			}
-
-			ClickNoError(
-				key_index = ${aux_iterator},
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
-
-			WaitForElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
-
-			var curr_productName = selenium.getText("CommerceFrontStore#FS_PRODUCT_NAME");
-
-			if (IsElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE")) {
-				var curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE");
-			}
-			else {
-				var curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
-			}
-
-			var curr_price = StringUtil.replace(${curr_price}, "$ ", "");
-
-			var curr_price = StringUtil.replace(${curr_price}, ".00", "");
-
-			var length = StringUtil.length(${curr_price});
-
-			var index = ${length} - 1;
-
-			var intPart = StringUtil.substring(${curr_price}, 0, ${index});
-
-			if (${intPart} == "") {
-				var intPart = 0;
-			}
-
-			var decPart = StringUtil.substring(${curr_price}, ${index}, ${length});
-
-			if (${decPart} != 0) {
-				var intPart = ${intPart} + 1;
-				var aux = 10 - ${decPart};
-			}
-			else {
-				var aux = 0;
-			}
-
-			var decreasedPrice = ${curr_price} - ${intPart};
-
-			var decreasedPrice = "$ ${decreasedPrice}.${aux}0";
-
-			if (${iterator} == 1) {
-				var productAndPriceArray = "${curr_productName};${decreasedPrice}";
-			}
-			else {
-				var productAndPriceArray = "${productAndPriceArray},${curr_productName};${decreasedPrice}";
-			}
-
-			var aux_iterator = ${aux_iterator} + 1;
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
-		}
-
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Price Lists");
-
-		CommerceNavigator.gotoEntry(entryName = "Price List Test");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
-
-		CommercePriceLists.addNewPriceModifier(
-			modifier = "Percentage",
-			name = "CASE E",
-			target = "Catalog");
-
-		Click(
-			key_value = "CASE E",
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Edit");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Type(
-			key_fieldLabel = "Amount",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "-10");
-
-		Click(locator1 = "ToggleSwitch#ACTIVE");
-
-		Button.clickSave();
-
-		Click(locator1 = "Icon#CLOSE");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = 60);
-
-		var aux = 37;
-
-		for (var curr_productAndPrice : list ${productAndPriceArray}) {
-			var curr_productName = StringUtil.extractFirst(${curr_productAndPrice}, ";");
-			var curr_price = StringUtil.extractLast(${curr_productAndPrice}, ";");
-
-			if ((${curr_productName} == "Hoses") || (${curr_productName} == "Brake Fluid")) {
-				AssertTextEquals(
-					key_productName = ${curr_productName},
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-					value1 = "From ${curr_price}");
-			}
-			else if (${curr_productName} == "Master Cylinder") {
-				AssertTextEquals(
-					key_index = ${aux},
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_BY_INDEX",
-					value1 = ${curr_price});
-
-				var aux = ${aux} + 1;
-			}
-			else {
-				AssertTextEquals(
-					key_productName = ${curr_productName},
-					locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-					value1 = ${curr_price});
-			}
-		}
-	}
-
 	@description = "This is a test for COMMERCE-6227. Tier Price Entry lifecycle"
 	@ignore = "true"
 	@priority = 3
@@ -1589,6 +1105,449 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
 			value1 = "50.00");
+	}
+
+	@description = "This is a test for COMMERCE-6225. As admin, I can add, edit and delete Price Modifier."
+	@priority = 5
+	test CanAddEditAndDeletePriceModifier {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Test Price List is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a new Price Modifier is added") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
+
+			CommercePriceLists.addNewPriceModifier(
+				modifier = "Fixed Amount",
+				name = "Test Price Modifier",
+				target = "Products");
+
+			CommercePriceLists.editPriceModifier(
+				active = "true",
+				amountValue = 10,
+				entryName = "ABS Sensor",
+				priceModifierName = "Test Price Modifier",
+				relation = "Add Product",
+				target = "Products");
+		}
+
+		task ("When admin navigates to ABS Sensor's product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then can verify the price modifier is applied to ABS Sensor") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 60.00");
+		}
+
+		task ("Given U-Joint is added in a product group") {
+			CommmerceJSONProductGroupsAPI._postProductGroups(
+				productGroupName = "PG1",
+				productNames = "U-Joint");
+		}
+
+		task ("When the price modifier is edited") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
+
+			CommercePriceLists.editPriceModifier(
+				active = "false",
+				amountValue = 30,
+				entryName = "PG1",
+				modifier = "Replace",
+				modifierTarget = "Product Groups",
+				priceModifierName = "Test Price Modifier",
+				relation = "Select Product Group",
+				target = "Product Groups");
+		}
+
+		task ("Then can verify the price modifier is applied to U-Joint") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 30.00");
+		}
+
+		task ("When the price modifier is deleted") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
+
+			CommercePriceLists.deletePriceModifier(priceModifierName = "Test Price Modifier");
+		}
+
+		task ("Then can verify the price list price is applied to U-Joint") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 24.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6225. As admin, I can verify Fixed Amount type Price Modifier is applied to a specific product."
+	@priority = 3
+	test CanAssertFixedAmountTypePriceModifierIsAppliedOnProduct {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Test Price List is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a new Price Modifier is added") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifier(
+				modifierAmount = 10,
+				modifierType = "fixed-amount",
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE C",
+				target = "products");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifierProduct(
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE C",
+				productName = "ABS Sensor");
+		}
+
+		task ("When admin navigates to ABS Sensor's product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then can verify the price modifier CASE C is applied to ABS Sensor") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 60.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6225. As admin, I can verify Percentage type Price Modifier is applied to a specific product."
+	@priority = 3
+	test CanAssertPercentageTypePriceModifierIsAppliedOnProduct {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Test Price List is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a new Price Modifier is added via API") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifier(
+				modifierAmount = 10,
+				modifierType = "percentage",
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE A",
+				target = "products");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifierProduct(
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE A",
+				productName = "ABS Sensor");
+		}
+
+		task ("When admin navigates to ABS Sensor's product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then can verify the price modifier CASE A is applied to ABS Sensor") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 55.00");
+		}
+
+		task ("When the price modifier CASE A is deactivated") {
+			CommerceJSONPriceListsAndPromotionsAPI._patchPriceModifier(
+				active = "false",
+				modifierAmount = 10,
+				modifierType = "percentage",
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE A",
+				priority = 1,
+				target = "products");
+		}
+
+		task ("And admin navigates to ABS Sensor's product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then can verify the Minium Base Price List price is applied to ABS Sensor") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 50.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6225. As admin, I can verify Price Modifier is applied to a specific Product Group and to the products on the Catalog."
+	@priority = 3
+	test CanAssertPriceModifierIsAppliedOnProductGroupAndCatalog {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Test Price List is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And U-Joint is added in a product group") {
+			CommmerceJSONProductGroupsAPI._postProductGroups(
+				productGroupName = "PG1",
+				productNames = "U-Joint");
+		}
+
+		task ("And a new Price Modifier is added") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifier(
+				modifierAmount = 10,
+				modifierType = "percentage",
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE D",
+				target = "product-groups");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifierProductGroup(
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE D",
+				productGroupNames = "PG1");
+		}
+
+		task ("When admin navigates to U-Joint's product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+		}
+
+		task ("Then can verify the price modifier CASE D is applied to U-Joint") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 26.40");
+		}
+
+		task ("When the price modifier CASE D is deactivated") {
+			CommerceJSONPriceListsAndPromotionsAPI._patchPriceModifier(
+				active = "false",
+				modifierAmount = 10,
+				modifierType = "percentage",
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE D",
+				priority = 1,
+				target = "product-groups");
+		}
+
+		task ("Then the Minium Base Price List price is shown for all the products on the Catalog Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			var curr_productName = "";
+			var curr_price = "";
+			var decreasedPrice = "";
+			var productAndPriceArray = "";
+			var isLessThan21 = "";
+			var isLessThan41 = "";
+			var aux_iterator = 1;
+
+			for (var iterator : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49") {
+				var isLessThan41 = MathUtil.isLessThan(${iterator}, 41);
+
+				if (${aux_iterator} == 21) {
+					var aux_iterator = 1;
+				}
+
+				if (${isLessThan41} == "false") {
+					var isLessThan21 = "true";
+				}
+				else {
+					var isLessThan21 = MathUtil.isLessThan(${iterator}, 21);
+				}
+
+				if (${isLessThan21} == "false") {
+					Click(
+						key_pageNumber = 2,
+						locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
+
+					WaitForElementPresent(
+						key_index = ${aux_iterator},
+						locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
+				}
+				else if (${isLessThan41} == "false") {
+					Click(
+						key_pageNumber = 3,
+						locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
+
+					WaitForElementPresent(
+						key_index = ${aux_iterator},
+						locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
+				}
+
+				ClickNoError(
+					key_index = ${aux_iterator},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
+
+				WaitForElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
+
+				var curr_productName = selenium.getText("CommerceFrontStore#FS_PRODUCT_NAME");
+
+				if (IsElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE")) {
+					var curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE");
+				}
+				else {
+					var curr_price = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
+				}
+
+				var curr_price = StringUtil.replace(${curr_price}, "$ ", "");
+
+				var curr_price = StringUtil.replace(${curr_price}, ".00", "");
+
+				var length = StringUtil.length(${curr_price});
+
+				var index = ${length} - 1;
+
+				var intPart = StringUtil.substring(${curr_price}, 0, ${index});
+
+				if (${intPart} == "") {
+					var intPart = 0;
+				}
+
+				var decPart = StringUtil.substring(${curr_price}, ${index}, ${length});
+
+				if (${decPart} != 0) {
+					var intPart = ${intPart} + 1;
+					var aux = 10 - ${decPart};
+				}
+				else {
+					var aux = 0;
+				}
+
+				var decreasedPrice = ${curr_price} - ${intPart};
+
+				var decreasedPrice = "$ ${decreasedPrice}.${aux}0";
+
+				if (${iterator} == 1) {
+					var productAndPriceArray = "${curr_productName};${decreasedPrice}";
+				}
+				else {
+					var productAndPriceArray = "${productAndPriceArray},${curr_productName};${decreasedPrice}";
+				}
+
+				var aux_iterator = ${aux_iterator} + 1;
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+			}
+		}
+
+		task ("When a new Price Modifier is added") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifier(
+				modifierAmount = "-10",
+				modifierType = "percentage",
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE E",
+				target = "catalog");
+		}
+
+		task ("Then the price modifier CASE E is applied to the products on the Catalog Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			AnnouncementsPortlet.configurePaginationCP(itemsPerPage = 60);
+
+			var aux = 37;
+
+			for (var curr_productAndPrice : list ${productAndPriceArray}) {
+				var curr_productName = StringUtil.extractFirst(${curr_productAndPrice}, ";");
+				var curr_price = StringUtil.extractLast(${curr_productAndPrice}, ";");
+
+				if ((${curr_productName} == "Hoses") || (${curr_productName} == "Brake Fluid")) {
+					AssertTextEquals(
+						key_productName = ${curr_productName},
+						locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+						value1 = "From ${curr_price}");
+				}
+				else if (${curr_productName} == "Master Cylinder") {
+					AssertTextEquals(
+						key_index = ${aux},
+						locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_BY_INDEX",
+						value1 = ${curr_price});
+
+					var aux = ${aux} + 1;
+				}
+				else {
+					AssertTextEquals(
+						key_productName = ${curr_productName},
+						locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+						value1 = ${curr_price});
+				}
+			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6225. As admin, I can verify Replace type Price Modifier is applied to a specific product."
+	@priority = 3
+	test CanAssertReplaceTypePriceModifierIsAppliedOnProduct {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Test Price List is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a new Price Modifier is added") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifier(
+				modifierAmount = 10,
+				modifierType = "replace",
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE B",
+				target = "products");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifierProduct(
+				priceListName = "Test Price List",
+				priceModifierTitle = "CASE B",
+				productName = "ABS Sensor");
+		}
+
+		task ("When admin navigates to ABS Sensor's product details page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then can verify the price modifier CASE B is applied to ABS Sensor") {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "$ 10.00");
+		}
 	}
 
 	@description = "Test for COMMERCE-9405. User with Discount Manager role can add price list entries"

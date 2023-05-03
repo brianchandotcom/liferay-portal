@@ -166,7 +166,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntriesTableFDSView(
 					_fdsTableSchemaBuilderFactory, objectDefinition,
 					_objectDefinitionLocalService, _objectFieldLocalService,
-					_objectRelationshipLocalService, _objectViewLocalService),
+					_objectRelationshipLocalService, _objectViewLocalService,
+					_userLocalService),
 				HashMapDictionaryBuilder.put(
 					"frontend.data.set.name", objectDefinition.getPortletId()
 				).build()),

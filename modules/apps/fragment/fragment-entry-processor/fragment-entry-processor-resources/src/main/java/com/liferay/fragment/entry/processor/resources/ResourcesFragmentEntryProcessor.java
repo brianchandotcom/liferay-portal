@@ -14,24 +14,13 @@
 
 package com.liferay.fragment.entry.processor.resources;
 
-import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.entry.processor.resources.util.ResourcesFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -48,7 +37,8 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		return _processResources(fragmentEntryLink, css);
+		return ResourcesFragmentEntryProcessorUtil.processResources(
+			fragmentEntryLink, css);
 	}
 
 	@Override
@@ -57,62 +47,12 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		return _processResources(fragmentEntryLink, html);
+		return ResourcesFragmentEntryProcessorUtil.processResources(
+			fragmentEntryLink, html);
 	}
 
 	@Override
 	public void validateFragmentEntryHTML(String html, String configuration) {
 	}
-
-	private String _processResources(
-			FragmentEntryLink fragmentEntryLink, String code)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.fetchFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId());
-
-		if (fragmentEntry == null) {
-			return code;
-		}
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionService.fetchFragmentCollection(
-				fragmentEntry.getFragmentCollectionId());
-
-		Matcher matcher = _pattern.matcher(code);
-
-		while (matcher.find()) {
-			if (fragmentEntry.getGroupId() <= 0) {
-				continue;
-			}
-
-			FileEntry fileEntry = fragmentCollection.getResource(
-				matcher.group(1));
-
-			String fileEntryURL = StringPool.BLANK;
-
-			if (fileEntry != null) {
-				fileEntryURL = _dlURLHelper.getDownloadURL(
-					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK, false, false);
-			}
-
-			code = StringUtil.replace(code, matcher.group(), fileEntryURL);
-		}
-
-		return code;
-	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"\\[resources:(.+?)\\]");
-
-	@Reference
-	private DLURLHelper _dlURLHelper;
-
-	@Reference
-	private FragmentCollectionService _fragmentCollectionService;
-
-	@Reference
-	private FragmentEntryService _fragmentEntryService;
 
 }

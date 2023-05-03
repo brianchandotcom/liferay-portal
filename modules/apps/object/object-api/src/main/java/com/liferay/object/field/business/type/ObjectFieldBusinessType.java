@@ -20,7 +20,6 @@ import com.liferay.object.exception.ObjectFieldDefaultValueException;
 import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.petra.string.StringBundler;
@@ -87,7 +86,14 @@ public interface ObjectFieldBusinessType {
 		return values.get(objectField.getName());
 	}
 
-	public default boolean isVisible(ObjectDefinition objectDefinition) {
+	public default Object getValueToDisplayContext(
+			ObjectField objectField, long userId, Map<String, Object> values)
+		throws PortalException {
+
+		return getValue(objectField, userId, values);
+	}
+
+	public default boolean isVisible() {
 		return true;
 	}
 

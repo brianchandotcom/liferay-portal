@@ -208,25 +208,13 @@ public class PullRequestPortalTopLevelBuild
 			getJobVariantsDownstreamBuildCount(
 				stableJobBatchNames, "SUCCESS", null);
 
-		if (((result != null) && result.matches("(APPROVED|SUCCESS)")) ||
+		if (((result != null) && result.equals("SUCCESS")) ||
 			(stableJobDownstreamBuildsSuccessCount ==
 				stableJobDownstreamBuildsSize)) {
 
 			_stableJobResult = "SUCCESS";
 		}
 		else {
-			int uniqueBuilds = 0;
-
-			for (Build build : stableJobDownstreamBuilds) {
-				if (build.isUniqueFailure()) {
-					uniqueBuilds += 1;
-				}
-			}
-
-			if (uniqueBuilds == 0) {
-				return "SUCCESS";
-			}
-
 			_stableJobResult = "FAILURE";
 		}
 

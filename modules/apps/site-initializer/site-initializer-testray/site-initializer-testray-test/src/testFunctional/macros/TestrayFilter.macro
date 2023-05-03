@@ -39,6 +39,12 @@ definition {
 		}
 	}
 
+	macro pinResult {
+		Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");
+
+		Alert.viewSuccessMessageText(successMessage = "Filters pinned successfully.");
+	}
+
 	macro searchFilter {
 		Type(
 			locator1 = "TestrayFilter#SEARCH_FILTERS",
@@ -62,6 +68,12 @@ definition {
 			value1 = ${value});
 
 		Button.click(button = "Apply");
+	}
+
+	macro unpinResult {
+		Click.javaScriptClick(locator1 = "TestrayFilter#UNPIN_ICON");
+
+		Alert.viewSuccessMessageText(successMessage = "Filters unpinned successfully.");
 	}
 
 }

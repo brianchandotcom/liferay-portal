@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>LOGIN_PASSWORD_FIELD</td>
-	<td>//input[@name='password']</td>
+	<td>//input[@type='password']</td>
 	<td></td>
 </tr>
 <tr>

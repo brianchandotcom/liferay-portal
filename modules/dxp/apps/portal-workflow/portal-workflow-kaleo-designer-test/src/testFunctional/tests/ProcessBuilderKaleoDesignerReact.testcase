@@ -270,15 +270,26 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			actionName = "Liferay Timer",
-			actionsTemplateValue = "Timer Template",
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer 1",
+			durationScale = "Minute",
 			durationValue = 1,
-			newSection = "New Timer",
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			sectionOptionList = "1,2,3",
-			selectType = "Java");
+			script = "Liferay Timer Template 1",
+			scriptType = "Java");
+
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer 2",
+			durationScale = "Minute",
+			durationValue = 2,
+			script = "Liferay Timer Template 2",
+			scriptType = "Java");
+
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer 3",
+			durationScale = "Minute",
+			durationValue = 3,
+			script = "Liferay Timer Template 3",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -438,14 +449,12 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-20,-40");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer",
-			actionsTemplateValue = "Timer Template",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Timer Template",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -771,14 +780,12 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-20,-40");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer 1",
-			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "${userName} sent you a ${entryType} for review in the workflow.",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -801,18 +808,12 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer 1",
-			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "${userName} sent you a ${entryType} for review in the workflow.",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -820,11 +821,15 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
 
-		ProcessBuilderKaleoDesignerReact.addMultiplesActionsOnTimers(
-			actionName = "Liferay Timer",
-			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
-			newSection = "New Action",
-			sectionOptionList = "4,5");
+		ProcessBuilderKaleoDesignerReact.addActionToTimer(
+			actionName = "Liferay Timer 2",
+			script = "${userName} sent you a ${entryType} for review in the workflow.",
+			scriptType = "Java");
+
+		ProcessBuilderKaleoDesignerReact.addActionToTimer(
+			actionName = "Liferay Timer 3",
+			script = "${userName} sent you a ${entryType} for review in the workflow.",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -853,13 +858,11 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-20,-40");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			actionTypeOption = "Reassignment",
-			durationValue = 2,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer",
+			actionType = "Reassignment",
+			durationScale = "Minute",
+			durationValue = 2);
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1052,18 +1055,12 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer 1",
-			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "${userName} sent you a ${entryType} for review in the workflow.",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1071,11 +1068,15 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
 
-		ProcessBuilderKaleoDesignerReact.addMultiplesActionsOnTimers(
-			actionName = "Liferay Timer",
-			actionsTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
-			newSection = "New Action",
-			sectionOptionList = "4,5");
+		ProcessBuilderKaleoDesignerReact.addActionToTimer(
+			actionName = "Liferay Timer 2",
+			script = "${userName} sent you a ${entryType} for review in the workflow.",
+			scriptType = "Java");
+
+		ProcessBuilderKaleoDesignerReact.addActionToTimer(
+			actionName = "Liferay Timer 3",
+			script = "${userName} sent you a ${entryType} for review in the workflow.",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1083,7 +1084,9 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 4");
+		ProcessBuilderKaleoDesignerReact.deleteTimerAction(actionName = "Liferay Timer 2");
+
+		AssertVisible(
 
 		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 5");
 
@@ -1137,20 +1140,31 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			actionName = "Liferay Timer",
-			actionsTemplateValue = "Timer Template",
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer 1",
+			durationScale = "Minute",
 			durationValue = 1,
-			newSection = "New Timer",
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			sectionOptionList = "1,2,3",
-			selectType = "Java");
+			script = "Timer Template 1",
+			scriptType = "Java");
+
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer 2",
+			durationScale = "Minute",
+			durationValue = 2,
+			script = "Timer Template 2",
+			scriptType = "Java");
+
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer 3",
+			durationScale = "Minute",
+			durationValue = 3,
+			script = "Timer Template 3",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.deleteBySidebarCard(
-			propertyValue = "Duration: 11 minute",
+			propertyValue = "Duration: 1 minute",
 			sidebarCardName = "Timers");
 
 		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 11 minute");
@@ -1505,14 +1519,12 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			actionName = "Liferay Timer",
-			actionsTemplateValue = "Liferay Timer Template",
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer 1",
+			durationScale = "Minute",
 			durationValue = 1,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Liferay Timer Template",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1535,14 +1547,12 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer",
-			actionsTemplateValue = "Timer Template",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Liferay Timer Template",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1934,15 +1944,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer Action",
-			actionsTemplateValue = "Timer Template",
-			description = "Description of Workflow Timer",
+			durationScale = "Minute",
 			durationValue = 1,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Liferay Timer Template",
+			scriptType = "Java",
+			timerDescription = "Description of Workflow Timer");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1950,11 +1958,7 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewTimersInfo(description = "Description of Workflow Timer");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			description = "Description of Definition Timer",
-			singleTimer = "true");
+		ProcessBuilderKaleoDesignerReact.fillTimerInformation(timerDescription = "Description of Definition Timer");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1979,14 +1983,12 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-20,-40");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer Action",
-			actionsTemplateValue = "Timer Template",
+			durationScale = "Minute",
 			durationValue = 1,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Liferay Timer Template",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1994,20 +1996,9 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewTimersInfo(
-			durationValue = 1,
-			scaleTypeOption = "Minute");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-
-		ProcessBuilderKaleoDesignerReact.gotoSideBarProperty(
-			propertyName = "Timer",
-			propertyValue = "Duration: 1 minute");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			durationValue = 2,
-			scaleTypeOption = "Minute",
-			singleTimer = "true");
+		ProcessBuilderKaleoDesignerReact.fillTimerDuration(
+			durationScale = "Minute",
+			durationValue = 2);
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2032,16 +2023,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer Action",
-			actionsTemplateValue = "Timer Template",
-			description = "Description of Workflow Timer",
+			durationScale = "Minute",
 			durationValue = 1,
-			name = "Name of Workflow Timer",
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Liferay Timer Template",
+			scriptType = "Java",
+			timerName = "Name of Workflow Timer");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2049,11 +2037,7 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewTimersInfo(name = "Name of Workflow Timer");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			name = "Name of Definition Timer edited",
-			singleTimer = "true");
+		ProcessBuilderKaleoDesignerReact.fillTimerInformation(timerName = "Name of Workflow Timer Edit");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2076,17 +2060,15 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer",
-			actionsTemplateValue = "Timer Template",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
+			recurrence = "true",
+			recurrenceDurationScale = "Hour",
 			recurrenceDurationValue = 1,
-			recurrenceOption = "True",
-			recurrenceScaleTypeOption = "Hour",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Timer Template",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2094,9 +2076,9 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Recurrence: 1 hour");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			recurrenceDurationValue = 5,
-			recurrenceScaleTypeOption = "Minute");
+		ProcessBuilderKaleoDesignerReact.fillTimerDuration(
+			recurrenceDurationScale = "Minute",
+			recurrenceDurationValue = 5);
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -2767,14 +2749,12 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-200,-250");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
 			actionName = "Liferay Timer",
-			actionsTemplateValue = "Timer Template",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
-			scaleTypeOption = "Minute",
-			selectType = "Groovy",
-			singleTimer = "true");
+			script = "Liferay Timer Template",
+			scriptType = "Groovy");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -3384,17 +3364,15 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			actionName = "Liferay Timer",
-			actionsTemplateValue = "Timer Template",
+		ProcessBuilderKaleoDesignerReact.addTimerWithSingleAction(
+			actionName = "Liferay Timer Action",
+			durationScale = "Minute",
 			durationValue = 2,
-			newTimer = "true",
+			recurrence = "true",
+			recurrenceDurationScale = "Hour",
 			recurrenceDurationValue = 1,
-			recurrenceOption = "True",
-			recurrenceScaleTypeOption = "Hour",
-			scaleTypeOption = "Minute",
-			selectType = "Java",
-			singleTimer = "true");
+			script = "Liferay Timer Template",
+			scriptType = "Java");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -3768,9 +3746,9 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-			newTimer = "true",
-			selectType = "Java");
+		Click(
+			key_propertyName = "Timer",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
 
 		ProcessBuilderKaleoDesignerReact.viewToolTip(tooltipMessage = "Repeat the action at a given duration until the workflow task is completed.");
 	}
@@ -3787,7 +3765,10 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(newTimer = "true");
+		Click(
+			key_propertyName = "Timer",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
+
 
 		ProcessBuilderKaleoDesignerReact.viewTimersRequiredFields();
 	}

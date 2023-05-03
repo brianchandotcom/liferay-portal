@@ -19,8 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.constants.VelocityMigrationConstants;
-
-import org.apache.commons.lang.StringUtils;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 /**
  * @author Nícolas Moura
@@ -128,11 +127,7 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 				int newStartIndex = newLine.indexOf(
 					_FREEMARKER_LIFERAY_THEME_WRAP);
 
-				int tabCount = StringUtil.count(
-					newLine.substring(0, newStartIndex), StringPool.TAB);
-
-				String tabulation = StringUtils.repeat(
-					StringPool.TAB, tabCount);
+				String indent = SourceUtil.getIndent(newLine);
 
 				newLine = StringUtil.replace(newLine, ".vm", ".ftl");
 				newLine = StringUtil.replaceFirst(
@@ -140,14 +135,13 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 					StringBundler.concat(
 						StringPool.SPACE,
 						VelocityMigrationConstants.FREEMARKER_TAG_END,
-						StringPool.NEW_LINE, tabulation, "</@>"),
+						StringPool.NEW_LINE, indent, "</@>"),
 					newStartIndex);
 				newLine = StringUtil.replaceFirst(
 					newLine, StringPool.COMMA,
 					StringBundler.concat(
-						StringPool.GREATER_THAN + StringPool.NEW_LINE,
-						tabulation, StringPool.TAB,
-						_FREEMARKER_LIFERAY_THEME_INCLUDE),
+						StringPool.GREATER_THAN + StringPool.NEW_LINE, indent,
+						StringPool.TAB, _FREEMARKER_LIFERAY_THEME_INCLUDE),
 					newStartIndex);
 
 				newLine = StringUtil.replace(

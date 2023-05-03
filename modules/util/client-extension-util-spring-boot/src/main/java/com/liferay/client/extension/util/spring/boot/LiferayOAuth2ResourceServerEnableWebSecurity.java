@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -122,14 +123,19 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 			String clientId = _environment.getProperty(
 				externalReferenceCode + ".oauth2.user.agent.client.id");
 
-			if (clientId == null) {
+			long timeoutRemaining = TimeUnit.MINUTES.toMillis(5);
+
+			while ((clientId == null) && (timeoutRemaining > 0)) {
 				clientId = LiferayOAuth2Util.getClientId(
 					externalReferenceCode, _lxcDXPMainDomain,
 					_lxcDXPServerProtocol);
-			}
 
-			if (clientId == null) {
-				continue;
+				if (clientId == null) {
+					long sleepTime = TimeUnit.SECONDS.toMillis(1);
+
+					Thread.sleep(sleepTime);
+					timeoutRemaining -= sleepTime;
+				}
 			}
 
 			clientIds.add(clientId);

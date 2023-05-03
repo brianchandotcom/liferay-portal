@@ -17,9 +17,9 @@ package com.liferay.segments.experiment.web.internal.events;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.segments.experiment.web.internal.constants.ProductNavigationControlMenuEntryConstants;
 import com.liferay.segments.experiment.web.internal.processor.SegmentsExperimentSegmentsExperienceRequestProcessor;
-import com.liferay.segments.experiment.web.internal.product.navigation.control.menu.SegmentsExperimentProductNavigationControlMenuEntry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,8 +48,10 @@ public class LogoutPreAction extends Action {
 			cleanCookieLogoutAction(httpServletRequest, httpServletResponse);
 	}
 
-	@Reference
-	private SegmentsExperimentProductNavigationControlMenuEntry
+	@Reference(
+		target = "(component.name=com.liferay.segments.experiment.web.internal.product.navigation.control.menu.SegmentsExperimentProductNavigationControlMenuEntry)"
+	)
+	private ProductNavigationControlMenuEntry
 		_segmentsExperimentProductNavigationControlMenuEntry;
 
 	@Reference

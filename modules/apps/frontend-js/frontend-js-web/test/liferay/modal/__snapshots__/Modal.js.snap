@@ -67,6 +67,10 @@ exports[`Modal renders markup based on given configuration 1`] = `
               aria-hidden="true"
               class="loading-animation"
             />
+            <span
+              class="sr-only"
+              role="status"
+            />
             <iframe
               id="efgh"
               src="https://www.sample.url/?p_p_id=com_liferay_MyPortlet&_com_liferay_MyPortlet_bodyCssClass=cadmin+dialog-iframe-popup"

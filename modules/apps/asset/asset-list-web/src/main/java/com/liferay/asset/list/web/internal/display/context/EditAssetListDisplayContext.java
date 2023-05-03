@@ -89,6 +89,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
@@ -518,10 +519,23 @@ public class EditAssetListDisplayContext {
 			return _availableSegmentsEntries;
 		}
 
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (!stagingGroupHelper.isStagedPortlet(
+				_themeDisplay.getScopeGroupId(),
+				SegmentsPortletKeys.SEGMENTS)) {
+
+			group = stagingGroupHelper.getStagedPortletGroup(
+				_themeDisplay.getScopeGroup(), SegmentsPortletKeys.SEGMENTS);
+		}
+
 		_availableSegmentsEntries = ListUtil.filter(
 			SegmentsEntryServiceUtil.getSegmentsEntries(
-				_themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null),
+				group.getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null),
 			segmentsEntry -> !ArrayUtil.contains(
 				getSelectedSegmentsEntryIds(),
 				segmentsEntry.getSegmentsEntryId()));
@@ -968,7 +982,24 @@ public class EditAssetListDisplayContext {
 		).setParameter(
 			"eventName", _portletResponse.getNamespace() + "selectEntity"
 		).setParameter(
-			"groupId", _themeDisplay.getScopeGroupId()
+			"groupId",
+			() -> {
+				StagingGroupHelper stagingGroupHelper =
+					StagingGroupHelperUtil.getStagingGroupHelper();
+
+				Group group = _themeDisplay.getScopeGroup();
+
+				if (!stagingGroupHelper.isStagedPortlet(
+						_themeDisplay.getScopeGroupId(),
+						SegmentsPortletKeys.SEGMENTS)) {
+
+					group = stagingGroupHelper.getStagedPortletGroup(
+						_themeDisplay.getScopeGroup(),
+						SegmentsPortletKeys.SEGMENTS);
+				}
+
+				return group.getGroupId();
+			}
 		).setParameter(
 			"selectedSegmentsEntryIds",
 			StringUtil.merge(getSelectedSegmentsEntryIds())

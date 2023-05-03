@@ -14,11 +14,13 @@
 
 package com.liferay.data.engine.taglib.servlet.taglib;
 
+import com.liferay.data.engine.renderer.DataLayoutRenderer;
 import com.liferay.data.engine.renderer.DataLayoutRendererContext;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutRendererTag;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -99,7 +101,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 			dataLayoutRendererContext.setSubmittable(getSubmittable());
 
 			if (Validator.isNotNull(getDataLayoutId())) {
-				content = DataLayoutTaglibUtil.renderDataLayout(
+				content = _renderDataLayout(
 					getDataLayoutId(), dataLayoutRendererContext);
 			}
 			else if (Validator.isNotNull(getDataDefinitionId())) {
@@ -110,7 +112,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 				DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
 				if (dataLayout != null) {
-					content = DataLayoutTaglibUtil.renderDataLayout(
+					content = _renderDataLayout(
 						dataLayout.getId(), dataLayoutRendererContext);
 				}
 			}
@@ -124,7 +126,23 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 		return content;
 	}
 
+	private String _renderDataLayout(
+			Long dataLayoutId,
+			DataLayoutRendererContext dataLayoutRendererContext)
+		throws Exception {
+
+		DataLayoutRenderer dataLayoutRenderer =
+			_dataLayoutRendererSnapshot.get();
+
+		return dataLayoutRenderer.render(
+			dataLayoutId, dataLayoutRendererContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutRendererTag.class);
+
+	private static final Snapshot<DataLayoutRenderer>
+		_dataLayoutRendererSnapshot = new Snapshot<>(
+			DataLayoutRendererTag.class, DataLayoutRenderer.class);
 
 }

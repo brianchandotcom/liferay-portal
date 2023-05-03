@@ -16,8 +16,6 @@ package com.liferay.data.engine.taglib.internal.servlet.taglib.util;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
-import com.liferay.data.engine.renderer.DataLayoutRenderer;
-import com.liferay.data.engine.renderer.DataLayoutRendererContext;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
@@ -235,15 +233,6 @@ public class DataLayoutTaglibUtil {
 
 		return _dataLayoutTaglibUtil._getFieldTypesJSONArray(
 			httpServletRequest, scopes, searchableFieldsDisabled);
-	}
-
-	public static String renderDataLayout(
-			Long dataLayoutId,
-			DataLayoutRendererContext dataLayoutRendererContext)
-		throws Exception {
-
-		return _dataLayoutTaglibUtil._dataLayoutRenderer.render(
-			dataLayoutId, dataLayoutRendererContext);
 	}
 
 	public static String resolveFieldTypesModules() {
@@ -659,9 +648,6 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
-
-	@Reference
-	private DataLayoutRenderer _dataLayoutRenderer;
 
 	@Reference
 	private DataLayoutResource.Factory _dataLayoutResourceFactory;

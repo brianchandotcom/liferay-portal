@@ -736,6 +736,9 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                priceOnApplication:
+                    example: true
+                    type: boolean
                 product:
                     $ref: "#/components/schemas/Product"
                     readOnly: true

@@ -67,7 +67,7 @@ public class CommercePriceEntryServiceImpl
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addCommercePriceEntry(String, long, String, long,
 	 *             BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
-	 *             int, int, int, int, int, int, int, int, int, int, boolean,
+	 *             BigDecimal, int, int, int, int, int, int, int, int, int, int, boolean,
 	 *             ServiceContext)}
 	 */
 	@Deprecated
@@ -158,14 +158,14 @@ public class CommercePriceEntryServiceImpl
 	public CommercePriceEntry addOrUpdateCommercePriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			BigDecimal price, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
+			boolean discountDiscovery, BigDecimal discountLevel1,
+			BigDecimal discountLevel2, BigDecimal discountLevel3,
+			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, BigDecimal price,
+			boolean priceOnApplication, String skuExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -174,12 +174,13 @@ public class CommercePriceEntryServiceImpl
 
 		return commercePriceEntryLocalService.addOrUpdateCommercePriceEntry(
 			externalReferenceCode, commercePriceEntryId, cProductId,
-			cpInstanceUuid, commercePriceListId, price, discountDiscovery,
+			cpInstanceUuid, commercePriceListId, discountDiscovery,
 			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, skuExternalReferenceCode, serviceContext);
+			neverExpire, price, priceOnApplication, null,
+			skuExternalReferenceCode, serviceContext);
 	}
 
 	@Override
@@ -437,25 +438,25 @@ public class CommercePriceEntryServiceImpl
 			ActionKeys.UPDATE);
 
 		return commercePriceEntryLocalService.updateCommercePriceEntry(
-			commercePriceEntryId, price, null, discountDiscovery,
+			commercePriceEntryId, bulkPricing, discountDiscovery,
 			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
-			bulkPricing, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, price, false, null, serviceContext);
 	}
 
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price,
+			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
 			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			int expirationDateMinute, boolean neverExpire, BigDecimal price,
+			boolean priceOnApplication, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
@@ -467,17 +468,17 @@ public class CommercePriceEntryServiceImpl
 			ActionKeys.UPDATE);
 
 		return commercePriceEntryLocalService.updateCommercePriceEntry(
-			commercePriceEntryId, price, discountDiscovery, discountLevel1,
-			discountLevel2, discountLevel3, discountLevel4, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			commercePriceEntryId, bulkPricing, discountDiscovery,
+			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, price, priceOnApplication, null, serviceContext);
 	}
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #updateExternalReferenceCode(String, long)}
+	 *             #updateExternalReferenceCode(String, CommercePriceEntry)}
 	 */
 	@Deprecated
 	@Override
@@ -546,9 +547,9 @@ public class CommercePriceEntryServiceImpl
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addOrUpdateCommercePriceEntry(String, long, long, String, long,
-	 *             BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
+	 *             boolean, BigDecimal, BigDecimal, BigDecimal,
 	 *             BigDecimal, int, int, int, int, int, int, int, int, int,
-	 *             int, boolean, String, ServiceContext)}
+	 *             int, boolean, BigDecimal, boolean, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -568,12 +569,13 @@ public class CommercePriceEntryServiceImpl
 
 		return addOrUpdateCommercePriceEntry(
 			externalReferenceCode, commercePriceEntryId, cProductId,
-			cpInstanceUuid, commercePriceListId, price, discountDiscovery,
+			cpInstanceUuid, commercePriceListId, discountDiscovery,
 			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, skuExternalReferenceCode, serviceContext);
+			neverExpire, price, false, skuExternalReferenceCode,
+			serviceContext);
 	}
 
 	@Reference

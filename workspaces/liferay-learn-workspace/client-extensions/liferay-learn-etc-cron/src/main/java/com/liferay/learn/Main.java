@@ -476,34 +476,36 @@ public class Main {
 
 		Object categories = data.get("categories");
 
-		if (!(categories instanceof String)) {
+		if (!(categories instanceof ArrayList)) {
 			return new Long[0];
 		}
 
-		String categoriesString = categories.toString();
+		ArrayList<Long> categoryIdList = new ArrayList<>();
 
-		String[] categoryStrings = categoriesString.split(",");
+		for (Object categoryEntry : (ArrayList)categories) {
+			if (!(categoryEntry instanceof String)) {
+				continue;
+			}
 
-		ArrayList<Long> categoryIdsList = new ArrayList<>();
+			String category = (String)categoryEntry;
 
-		for (String categoryString : categoryStrings) {
-			if (!_structureContentCategoryIdsJSONObject.has(categoryString)) {
+			if (!_structureContentCategoryIdsJSONObject.has(category)) {
 				_warn(
 					"No matching category exists for category name: " +
-						categoryString);
+						category);
 
 				continue;
 			}
 
-			categoryIdsList.add(
-				_structureContentCategoryIdsJSONObject.getLong(categoryString));
+			categoryIdList.add(
+				_structureContentCategoryIdsJSONObject.getLong(category));
 		}
 
-		if (categoryIdsList.isEmpty()) {
+		if (categoryIdList.isEmpty()) {
 			return new Long[0];
 		}
 
-		return categoryIdsList.toArray(new Long[0]);
+		return categoryIdList.toArray(new Long[0]);
 	}
 
 	private String _getDescription(String text) {

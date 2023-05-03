@@ -176,11 +176,18 @@ definition {
 			field = "millitary-affiliation",
 			text = ${millitaryAffiliation});
 
-		DoubleClick(
-			key_option = "No",
-			locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
+		if (isSet(addAccidentCitation)) {
+			DoubleClick(
+				key_option = "Yes",
+				locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
+		}
+		else {
+			DoubleClick(
+				key_option = "No",
+				locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
 
-		Button.click(button = "Next");
+			Button.click(button = "Next");
+		}
 	}
 
 	macro typeAllNewApplicationVehicleInfoFields {

@@ -605,7 +605,7 @@ definition {
 		if (${viewTitle} != "Control Panel - Liferay DXP") {
 			Navigator.closeSpecificWindow(
 				closeWindowTitle = "Review: ${viewTitle}",
-				selectWindowTitle = "${viewTitle}");
+				selectWindowTitle = ${viewTitle});
 		}
 		else {
 			Close.closeAndSelectWindow(locator1 = "Control Panel - Liferay DXP");

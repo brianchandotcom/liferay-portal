@@ -395,7 +395,7 @@ public class SitesImpl implements Sites {
 					sourceLayout.isPrivateLayout(),
 					new long[] {sourceLayout.getLayoutId()}, parameterMap);
 
-		ExportImportConfiguration exportConfiguration =
+		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addDraftExportImportConfiguration(
 					user.getUserId(),
@@ -403,7 +403,7 @@ public class SitesImpl implements Sites {
 					exportLayoutSettingsMap);
 
 		File file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
-			exportConfiguration);
+			exportImportConfiguration);
 
 		try {
 			Map<String, Serializable> importLayoutSettingsMap =
@@ -413,7 +413,7 @@ public class SitesImpl implements Sites {
 						targetLayout.isPrivateLayout(), null, parameterMap,
 						user.getLocale(), user.getTimeZone());
 
-			ExportImportConfiguration importConfiguration =
+			exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
 					addDraftExportImportConfiguration(
 						userId,
@@ -421,7 +421,7 @@ public class SitesImpl implements Sites {
 						importLayoutSettingsMap);
 
 			ExportImportLocalServiceUtil.importLayouts(
-				importConfiguration, file);
+				exportImportConfiguration, file);
 		}
 		finally {
 			file.delete();

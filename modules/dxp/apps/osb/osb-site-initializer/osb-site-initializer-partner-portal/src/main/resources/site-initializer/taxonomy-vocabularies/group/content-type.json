@@ -1,0 +1,9 @@
+{
+	"description": "Content Type vocabulary",
+	"externalReferenceCode": "PRMV006",
+	"name": "Content Type",
+	"name_i18n": {
+		"en_US": "Content Type"
+	},
+	"viewableBy": "Anyone"
+}

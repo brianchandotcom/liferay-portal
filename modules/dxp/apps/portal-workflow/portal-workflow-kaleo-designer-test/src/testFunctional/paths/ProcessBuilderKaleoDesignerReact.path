@@ -244,6 +244,59 @@
 	<td></td>
 </tr>
 
+<!-- TIMER -->
+
+<tr>
+	<td>ACTION_DELETE_ICON</td>
+	<td>//*[@role='tabpanel'][descendant::input[@value='${actionName}']] //button[contains(@class,'delete-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_ACTION_DESCRIPTION_INDEX</td>
+	<td>xpath=(//div[div[@class='sheet-subtitle'][contains(.,'Action')]] //input[@id='description'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_ACTION_NAME_INDEX</td>
+	<td>xpath=(//div[div[@class='sheet-subtitle'][contains(.,'Action')]] //input[@id='name'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_ACTION_SCRIPT_INDEX</td>
+	<td>xpath=(//textarea[@id='script'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_ACTION_SCRIPT_TYPE_INDEX</td>
+	<td>xpath=(//*[contains(@class,'form-group')][label[text()='Type'][span]] //select[@aria-label='Select'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_ACTION_TYPE_INDEX</td>
+	<td>xpath=(//select[@id='action-type'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_DESCRIPTION</td>
+	<td>xpath=(//textarea[@id='timerDescription'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_DURATION_SCALE</td>
+	<td>xpath=(//div[label[text()="Scale"]]//select)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_DURATION_SCALE_RECURRENCE</td>
+	<td>xpath=(//div[label[text()="Scale"]][div[contains(.,'Recurrence')]] //select)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMER_DURATION_VALUE_RECURRENCE</td>
+	<td>xpath=(//div[contains(.,'Recurrence') and contains(@class,'timer-inputs')] //div[label[text()="Duration"]] //input)[${key_index}]</td>
+	<td></td>
+</tr>
+
 <!-- NODES_PROPERTIES_PATHS -->
 
 <tr>

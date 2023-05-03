@@ -386,6 +386,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INPUT_ID_N</td>
+	<td>xpath=(//input[contains(@id,'${inputFieldId}')])[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEY</td>
 	<td>//div[label[normalize-space(text())='Key']]//input[@type='text']</td>
 	<td></td>

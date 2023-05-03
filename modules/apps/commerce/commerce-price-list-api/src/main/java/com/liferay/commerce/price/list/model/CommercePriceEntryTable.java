@@ -75,12 +75,9 @@ public class CommercePriceEntryTable
 	public final Column<CommercePriceEntryTable, Long> CProductId =
 		createColumn(
 			"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceEntryTable, BigDecimal> price =
+	public final Column<CommercePriceEntryTable, Boolean> bulkPricing =
 		createColumn(
-			"price", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceEntryTable, BigDecimal> promoPrice =
-		createColumn(
-			"promoPrice", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+			"bulkPricing", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceEntryTable, Boolean> discountDiscovery =
 		createColumn(
 			"discountDiscovery", Boolean.class, Types.BOOLEAN,
@@ -101,18 +98,25 @@ public class CommercePriceEntryTable
 		createColumn(
 			"discountLevel4", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
-	public final Column<CommercePriceEntryTable, Boolean> hasTierPrice =
-		createColumn(
-			"hasTierPrice", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<CommercePriceEntryTable, Boolean> bulkPricing =
-		createColumn(
-			"bulkPricing", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceEntryTable, Date> displayDate =
 		createColumn(
 			"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceEntryTable, Date> expirationDate =
 		createColumn(
 			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceEntryTable, Boolean> hasTierPrice =
+		createColumn(
+			"hasTierPrice", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceEntryTable, BigDecimal> price =
+		createColumn(
+			"price", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceEntryTable, Boolean> priceOnApplication =
+		createColumn(
+			"priceOnApplication", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
+	public final Column<CommercePriceEntryTable, BigDecimal> promoPrice =
+		createColumn(
+			"promoPrice", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
 	public final Column<CommercePriceEntryTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

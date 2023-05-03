@@ -94,180 +94,40 @@ public interface CommercePriceEntryLocalService
 	public CommercePriceEntry addCommercePriceEntry(
 		CommercePriceEntry commercePriceEntry);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
+	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry addCommercePriceEntry(
-			long cpInstanceId, long commercePriceListId, BigDecimal price,
+			String externalReferenceCode, long cProductId,
+			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
 			BigDecimal promoPrice, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CommercePriceEntry addCommercePriceEntry(
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			BigDecimal price, BigDecimal promoPrice,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommercePriceEntry(String, long, String, long,
-	 BigDecimal, BigDecimal, boolean, BigDecimal, BigDecimal,
-	 BigDecimal, BigDecimal, int, int, int, int, int, int, int,
-	 int, int, int, boolean, ServiceContext)}
-	 */
-	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry addCommercePriceEntry(
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommercePriceEntry(String, long, String, long,
-	 BigDecimal, BigDecimal, ServiceContext)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry addCommercePriceEntry(
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommercePriceEntry(String, long, String, long,
-	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
-	 BigDecimal, int, int, int, int, int, int, int, int, int,
-	 int, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	public CommercePriceEntry addCommercePriceEntry(
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			String externalReferenceCode, BigDecimal price,
+			String externalReferenceCode, long cProductId,
+			String cpInstanceUuid, long commercePriceListId,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
 			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
+			int expirationDateMinute, boolean neverExpire, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public CommercePriceEntry addCommercePriceEntry(
-			String externalReferenceCode, long cpInstanceId,
-			long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry addCommercePriceEntry(
-			String externalReferenceCode, long cProductId,
-			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
-			BigDecimal promoPrice, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry addCommercePriceEntry(
-			String externalReferenceCode, long cProductId,
-			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceEntry addCommercePriceEntry(
-			String externalReferenceCode, long cProductId,
-			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
+	public CommercePriceEntry addOrUpdateCommercePriceEntry(
+			String externalReferenceCode, long commercePriceEntryId,
+			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
 			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceEntry addOrUpdateCommercePriceEntry(
-			String externalReferenceCode, long commercePriceEntryId,
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			BigDecimal price, BigDecimal promoPrice, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * This method is used to insert a new CommercePriceEntry or update an
-	 * existing one
-	 *
-	 * @param externalReferenceCode - The external identifier code from a 3rd
-	 party system to be able to locate the same entity in the portal
-	 <b>Only</b> used when updating an entity; the first entity with a
-	 matching reference code one will be updated
-	 * @param commercePriceEntryId - <b>Only</b> used when updating an entity
-	 the matching one will be updated
-	 * @param cProductId - <b>Only</b> used when adding a new entity
-	 * @param commercePriceListId - <b>Only</b> used when adding a new entity
-	 to a price list
-	 * @param price
-	 * @param promoPrice
-	 * @param skuExternalReferenceCode - <b>Only</b> used when adding a new
-	 entity, similar as <code>cpInstanceId</code> but the external
-	 identifier code from a 3rd party system. If cpInstanceId is used,
-	 it doesn't have any effect, otherwise it tries to fetch the
-	 CPInstance against the external code reference
-	 * @param serviceContext
-	 * @return CommercePriceEntry
-	 * @throws PortalException
-	 * @review
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry addOrUpdateCommercePriceEntry(
-			String externalReferenceCode, long commercePriceEntryId,
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			BigDecimal price, BigDecimal promoPrice,
+			int expirationDateMinute, boolean neverExpire, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			String skuExternalReferenceCode, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceEntry addOrUpdateCommercePriceEntry(
-			String externalReferenceCode, long commercePriceEntryId,
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			BigDecimal price, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkCommercePriceEntries() throws PortalException;
@@ -292,13 +152,6 @@ public interface CommercePriceEntryLocalService
 		throws PortalException;
 
 	public void deleteCommercePriceEntries(String cpInstanceUuid)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public void deleteCommercePriceEntriesByCPInstanceId(long cpInstanceId)
 		throws PortalException;
 
 	/**
@@ -413,15 +266,6 @@ public interface CommercePriceEntryLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #fetchByExternalReferenceCode(String, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceEntry fetchByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry fetchByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
@@ -429,22 +273,6 @@ public interface CommercePriceEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceEntryId);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceEntry fetchCommercePriceEntry(
-		long cpInstanceId, long commercePriceListId);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceEntry fetchCommercePriceEntry(
-		long cpInstanceId, long commercePriceListId, boolean useAncestor);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry fetchCommercePriceEntry(
@@ -557,39 +385,6 @@ public interface CommercePriceEntryLocalService
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
 		String cpInstanceUuid, String priceListType);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
-		long cpInstanceId, int start, int end);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
-		long cpInstanceId, int start, int end,
-		OrderByComparator<CommercePriceEntry> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
-		String cpInstanceUuid, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
-		String cpInstanceUuid, int start, int end,
-		OrderByComparator<CommercePriceEntry> orderByComparator);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getInstanceCommercePriceEntriesCount(long cpInstanceId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid);
 
@@ -649,54 +444,21 @@ public interface CommercePriceEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			boolean discountDiscovery, BigDecimal discountLevel1,
-			BigDecimal discountLevel2, BigDecimal discountLevel3,
-			BigDecimal discountLevel4, boolean bulkPricing,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
 			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
+			int expirationDateMinute, boolean neverExpire, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price,
-			boolean discountDiscovery, BigDecimal discountLevel1,
-			BigDecimal discountLevel2, BigDecimal discountLevel3,
-			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateExternalReferenceCode(String, CommercePriceEntry)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry updateExternalReferenceCode(
-			CommercePriceEntry commercePriceEntry, String externalReferenceCode)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -709,75 +471,6 @@ public interface CommercePriceEntryLocalService
 			long userId, long commercePriceEntryId, int status,
 			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public CommercePriceEntry upsertCommercePriceEntry(
-			long commercePriceEntryId, long cpInstanceId,
-			long commercePriceListId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice,
-			String skuExternalReferenceCode, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommercePriceEntry(String, long, long, String, long,
-	 BigDecimal, BigDecimal, boolean, BigDecimal, BigDecimal,
-	 BigDecimal, BigDecimal, int, int, int, int, int, int, int,
-	 int, int, int, boolean, String, ServiceContext)}
-	 */
-	@Deprecated
-	public CommercePriceEntry upsertCommercePriceEntry(
-			long commercePriceEntryId, long cProductId, String cpInstanceUuid,
-			long commercePriceListId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommercePriceEntry(String, long, long, String, long,
-	 BigDecimal, BigDecimal, String, ServiceContext)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry upsertCommercePriceEntry(
-			long commercePriceEntryId, long cProductId, String cpInstanceUuid,
-			long commercePriceListId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice,
-			String skuExternalReferenceCode, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommercePriceEntry(String, long, long, String, long,
-	 BigDecimal, BigDecimal, BigDecimal, BigDecimal, int, int,
-	 int, int, int, int, int, int, int, int, boolean, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public CommercePriceEntry upsertCommercePriceEntry(
-			long commercePriceEntryId, long cProductId, String cpInstanceUuid,
-			long commercePriceListId, String externalReferenceCode,
-			BigDecimal price, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Override

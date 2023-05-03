@@ -52,112 +52,6 @@ public class CommercePriceEntryServiceHttp {
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			addCommercePriceEntry(
-				HttpPrincipal httpPrincipal, long cpInstanceId,
-				long commercePriceListId, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class, "addCommercePriceEntry",
-				_addCommercePriceEntryParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpInstanceId, commercePriceListId, price, promoPrice,
-				serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			addCommercePriceEntry(
-				HttpPrincipal httpPrincipal, long cProductId,
-				String cpInstanceUuid, long commercePriceListId,
-				String externalReferenceCode, java.math.BigDecimal price,
-				boolean discountDiscovery, java.math.BigDecimal discountLevel1,
-				java.math.BigDecimal discountLevel2,
-				java.math.BigDecimal discountLevel3,
-				java.math.BigDecimal discountLevel4, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class, "addCommercePriceEntry",
-				_addCommercePriceEntryParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cProductId, cpInstanceUuid, commercePriceListId,
-				externalReferenceCode, price, discountDiscovery, discountLevel1,
-				discountLevel2, discountLevel3, discountLevel4,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			addCommercePriceEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long cpInstanceId, long commercePriceListId,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
@@ -167,7 +61,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "addCommercePriceEntry",
-				_addCommercePriceEntryParameterTypes2);
+				_addCommercePriceEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cpInstanceId,
@@ -222,7 +116,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "addCommercePriceEntry",
-				_addCommercePriceEntryParameterTypes3);
+				_addCommercePriceEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cProductId, cpInstanceUuid,
@@ -276,7 +170,7 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"addOrUpdateCommercePriceEntry",
-				_addOrUpdateCommercePriceEntryParameterTypes4);
+				_addOrUpdateCommercePriceEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commercePriceEntryId,
@@ -317,8 +211,7 @@ public class CommercePriceEntryServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long commercePriceEntryId, long cProductId,
 				String cpInstanceUuid, long commercePriceListId,
-				java.math.BigDecimal price, boolean discountDiscovery,
-				java.math.BigDecimal discountLevel1,
+				boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 				java.math.BigDecimal discountLevel2,
 				java.math.BigDecimal discountLevel3,
 				java.math.BigDecimal discountLevel4, int displayDateMonth,
@@ -326,7 +219,8 @@ public class CommercePriceEntryServiceHttp {
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
 				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire, String skuExternalReferenceCode,
+				boolean neverExpire, java.math.BigDecimal price,
+				boolean priceOnApplication, String skuExternalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -334,17 +228,18 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"addOrUpdateCommercePriceEntry",
-				_addOrUpdateCommercePriceEntryParameterTypes5);
+				_addOrUpdateCommercePriceEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commercePriceEntryId,
-				cProductId, cpInstanceUuid, commercePriceListId, price,
+				cProductId, cpInstanceUuid, commercePriceListId,
 				discountDiscovery, discountLevel1, discountLevel2,
 				discountLevel3, discountLevel4, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, skuExternalReferenceCode, serviceContext);
+				neverExpire, price, priceOnApplication,
+				skuExternalReferenceCode, serviceContext);
 
 			Object returnObj = null;
 
@@ -382,7 +277,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "deleteCommercePriceEntry",
-				_deleteCommercePriceEntryParameterTypes6);
+				_deleteCommercePriceEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceEntryId);
@@ -413,50 +308,6 @@ public class CommercePriceEntryServiceHttp {
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			fetchByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class,
-				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			fetchByExternalReferenceCode(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -465,7 +316,7 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"fetchByExternalReferenceCode",
-				_fetchByExternalReferenceCodeParameterTypes8);
+				_fetchByExternalReferenceCodeParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, companyId);
@@ -507,7 +358,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "fetchCommercePriceEntry",
-				_fetchCommercePriceEntryParameterTypes9);
+				_fetchCommercePriceEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceEntryId);
@@ -551,7 +402,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "getCommercePriceEntries",
-				_getCommercePriceEntriesParameterTypes10);
+				_getCommercePriceEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId, start, end);
@@ -599,56 +450,10 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "getCommercePriceEntries",
-				_getCommercePriceEntriesParameterTypes11);
+				_getCommercePriceEntriesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List
-				<com.liferay.commerce.price.list.model.CommercePriceEntry>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceEntry>
-				getCommercePriceEntriesByCompanyId(
-					HttpPrincipal httpPrincipal, long companyId, int start,
-					int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class,
-				"getCommercePriceEntriesByCompanyId",
-				_getCommercePriceEntriesByCompanyIdParameterTypes12);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, start, end);
 
 			Object returnObj = null;
 
@@ -688,51 +493,10 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"getCommercePriceEntriesCount",
-				_getCommercePriceEntriesCountParameterTypes13);
+				_getCommercePriceEntriesCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static int getCommercePriceEntriesCountByCompanyId(
-			HttpPrincipal httpPrincipal, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class,
-				"getCommercePriceEntriesCountByCompanyId",
-				_getCommercePriceEntriesCountByCompanyIdParameterTypes14);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId);
 
 			Object returnObj = null;
 
@@ -770,7 +534,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "getCommercePriceEntry",
-				_getCommercePriceEntryParameterTypes15);
+				_getCommercePriceEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceEntryId);
@@ -813,7 +577,7 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"getInstanceBaseCommercePriceEntry",
-				_getInstanceBaseCommercePriceEntryParameterTypes16);
+				_getInstanceBaseCommercePriceEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceUuid, priceListType);
@@ -851,59 +615,10 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"getInstanceCommercePriceEntries",
-				_getInstanceCommercePriceEntriesParameterTypes17);
+				_getInstanceCommercePriceEntriesParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List
-				<com.liferay.commerce.price.list.model.CommercePriceEntry>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.commerce.price.list.model.CommercePriceEntry>
-				getInstanceCommercePriceEntries(
-					HttpPrincipal httpPrincipal, long cpInstanceId, int start,
-					int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.commerce.price.list.model.
-							CommercePriceEntry> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class,
-				"getInstanceCommercePriceEntries",
-				_getInstanceCommercePriceEntriesParameterTypes18);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpInstanceId, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -943,7 +658,7 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"getInstanceCommercePriceEntriesCount",
-				_getInstanceCommercePriceEntriesCountParameterTypes19);
+				_getInstanceCommercePriceEntriesCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId);
@@ -988,7 +703,7 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"searchCommercePriceEntries",
-				_searchCommercePriceEntriesParameterTypes20);
+				_searchCommercePriceEntriesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, commercePriceListId, keywords, start, end,
@@ -1033,7 +748,7 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"searchCommercePriceEntriesCount",
-				_searchCommercePriceEntriesCountParameterTypes21);
+				_searchCommercePriceEntriesCountParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, commercePriceListId, keywords);
@@ -1076,7 +791,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "updateCommercePriceEntry",
-				_updateCommercePriceEntryParameterTypes22);
+				_updateCommercePriceEntryParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceEntryId, price, promoPrice,
@@ -1114,65 +829,7 @@ public class CommercePriceEntryServiceHttp {
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			updateCommercePriceEntry(
 				HttpPrincipal httpPrincipal, long commercePriceEntryId,
-				java.math.BigDecimal price, boolean discountDiscovery,
-				java.math.BigDecimal discountLevel1,
-				java.math.BigDecimal discountLevel2,
-				java.math.BigDecimal discountLevel3,
-				java.math.BigDecimal discountLevel4, boolean bulkPricing,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
-				int expirationDateMonth, int expirationDateDay,
-				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class, "updateCommercePriceEntry",
-				_updateCommercePriceEntryParameterTypes23);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntryId, price, discountDiscovery,
-				discountLevel1, discountLevel2, discountLevel3, discountLevel4,
-				bulkPricing, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			updateCommercePriceEntry(
-				HttpPrincipal httpPrincipal, long commercePriceEntryId,
-				java.math.BigDecimal price, boolean discountDiscovery,
+				boolean bulkPricing, boolean discountDiscovery,
 				java.math.BigDecimal discountLevel1,
 				java.math.BigDecimal discountLevel2,
 				java.math.BigDecimal discountLevel3,
@@ -1181,68 +838,24 @@ public class CommercePriceEntryServiceHttp {
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
 				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				boolean neverExpire, java.math.BigDecimal price,
+				boolean priceOnApplication,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class, "updateCommercePriceEntry",
-				_updateCommercePriceEntryParameterTypes24);
+				_updateCommercePriceEntryParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntryId, price, discountDiscovery,
+				methodKey, commercePriceEntryId, bulkPricing, discountDiscovery,
 				discountLevel1, discountLevel2, discountLevel3, discountLevel4,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			updateExternalReferenceCode(
-				HttpPrincipal httpPrincipal,
-				com.liferay.commerce.price.list.model.CommercePriceEntry
-					commercePriceEntry,
-				String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class,
-				"updateExternalReferenceCode",
-				_updateExternalReferenceCodeParameterTypes25);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntry, externalReferenceCode);
+				expirationDateMinute, neverExpire, price, priceOnApplication,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1284,170 +897,10 @@ public class CommercePriceEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceEntryServiceUtil.class,
 				"updateExternalReferenceCode",
-				_updateExternalReferenceCodeParameterTypes26);
+				_updateExternalReferenceCodeParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commercePriceEntry);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			upsertCommercePriceEntry(
-				HttpPrincipal httpPrincipal, long commercePriceEntryId,
-				long cpInstanceId, long commercePriceListId,
-				String externalReferenceCode, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice,
-				String skuExternalReferenceCode,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class, "upsertCommercePriceEntry",
-				_upsertCommercePriceEntryParameterTypes27);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntryId, cpInstanceId,
-				commercePriceListId, externalReferenceCode, price, promoPrice,
-				skuExternalReferenceCode, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			upsertCommercePriceEntry(
-				HttpPrincipal httpPrincipal, long commercePriceEntryId,
-				long cProductId, String cpInstanceUuid,
-				long commercePriceListId, String externalReferenceCode,
-				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-				String skuExternalReferenceCode,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class, "upsertCommercePriceEntry",
-				_upsertCommercePriceEntryParameterTypes28);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntryId, cProductId, cpInstanceUuid,
-				commercePriceListId, externalReferenceCode, price, promoPrice,
-				skuExternalReferenceCode, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.commerce.price.list.model.CommercePriceEntry)
-				returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry
-			upsertCommercePriceEntry(
-				HttpPrincipal httpPrincipal, long commercePriceEntryId,
-				long cProductId, String cpInstanceUuid,
-				long commercePriceListId, String externalReferenceCode,
-				java.math.BigDecimal price, boolean discountDiscovery,
-				java.math.BigDecimal discountLevel1,
-				java.math.BigDecimal discountLevel2,
-				java.math.BigDecimal discountLevel3,
-				java.math.BigDecimal discountLevel4, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire, String skuExternalReferenceCode,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CommercePriceEntryServiceUtil.class, "upsertCommercePriceEntry",
-				_upsertCommercePriceEntryParameterTypes29);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntryId, cProductId, cpInstanceUuid,
-				commercePriceListId, externalReferenceCode, price,
-				discountDiscovery, discountLevel1, discountLevel2,
-				discountLevel3, discountLevel4, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, skuExternalReferenceCode, serviceContext);
 
 			Object returnObj = null;
 
@@ -1483,27 +936,11 @@ public class CommercePriceEntryServiceHttp {
 
 	private static final Class<?>[] _addCommercePriceEntryParameterTypes0 =
 		new Class[] {
-			long.class, long.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _addCommercePriceEntryParameterTypes1 =
-		new Class[] {
-			long.class, String.class, long.class, String.class,
-			java.math.BigDecimal.class, boolean.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _addCommercePriceEntryParameterTypes2 =
-		new Class[] {
 			String.class, long.class, long.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _addCommercePriceEntryParameterTypes3 =
+	private static final Class<?>[] _addCommercePriceEntryParameterTypes1 =
 		new Class[] {
 			String.class, long.class, String.class, long.class,
 			java.math.BigDecimal.class, boolean.class,
@@ -1514,135 +951,80 @@ public class CommercePriceEntryServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_addOrUpdateCommercePriceEntryParameterTypes4 = new Class[] {
+		_addOrUpdateCommercePriceEntryParameterTypes2 = new Class[] {
 			String.class, long.class, long.class, String.class, long.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_addOrUpdateCommercePriceEntryParameterTypes5 = new Class[] {
+		_addOrUpdateCommercePriceEntryParameterTypes3 = new Class[] {
 			String.class, long.class, long.class, String.class, long.class,
-			java.math.BigDecimal.class, boolean.class,
+			boolean.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
+			java.math.BigDecimal.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, boolean.class, java.math.BigDecimal.class, boolean.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteCommercePriceEntryParameterTypes6 =
+	private static final Class<?>[] _deleteCommercePriceEntryParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes7 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[]
-		_fetchByExternalReferenceCodeParameterTypes8 = new Class[] {
+		_fetchByExternalReferenceCodeParameterTypes5 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _fetchCommercePriceEntryParameterTypes9 =
+	private static final Class<?>[] _fetchCommercePriceEntryParameterTypes6 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCommercePriceEntriesParameterTypes10 =
+	private static final Class<?>[] _getCommercePriceEntriesParameterTypes7 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCommercePriceEntriesParameterTypes11 =
+	private static final Class<?>[] _getCommercePriceEntriesParameterTypes8 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCommercePriceEntriesByCompanyIdParameterTypes12 = new Class[] {
-			long.class, int.class, int.class
-		};
-	private static final Class<?>[]
-		_getCommercePriceEntriesCountParameterTypes13 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[]
-		_getCommercePriceEntriesCountByCompanyIdParameterTypes14 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getCommercePriceEntryParameterTypes15 =
+		_getCommercePriceEntriesCountParameterTypes9 = new Class[] {long.class};
+	private static final Class<?>[] _getCommercePriceEntryParameterTypes10 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getInstanceBaseCommercePriceEntryParameterTypes16 = new Class[] {
+		_getInstanceBaseCommercePriceEntryParameterTypes11 = new Class[] {
 			String.class, String.class
 		};
 	private static final Class<?>[]
-		_getInstanceCommercePriceEntriesParameterTypes17 = new Class[] {
+		_getInstanceCommercePriceEntriesParameterTypes12 = new Class[] {
 			long.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getInstanceCommercePriceEntriesParameterTypes18 = new Class[] {
-			long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[]
-		_getInstanceCommercePriceEntriesCountParameterTypes19 = new Class[] {
+		_getInstanceCommercePriceEntriesCountParameterTypes13 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_searchCommercePriceEntriesParameterTypes20 = new Class[] {
+		_searchCommercePriceEntriesParameterTypes14 = new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[]
-		_searchCommercePriceEntriesCountParameterTypes21 = new Class[] {
+		_searchCommercePriceEntriesCountParameterTypes15 = new Class[] {
 			long.class, long.class, String.class
 		};
-	private static final Class<?>[] _updateCommercePriceEntryParameterTypes22 =
+	private static final Class<?>[] _updateCommercePriceEntryParameterTypes16 =
 		new Class[] {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCommercePriceEntryParameterTypes23 =
+	private static final Class<?>[] _updateCommercePriceEntryParameterTypes17 =
 		new Class[] {
-			long.class, java.math.BigDecimal.class, boolean.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			boolean.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _updateCommercePriceEntryParameterTypes24 =
-		new Class[] {
-			long.class, java.math.BigDecimal.class, boolean.class,
+			long.class, boolean.class, boolean.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class,
+			java.math.BigDecimal.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateExternalReferenceCodeParameterTypes25 = new Class[] {
-			com.liferay.commerce.price.list.model.CommercePriceEntry.class,
-			String.class
-		};
-	private static final Class<?>[]
-		_updateExternalReferenceCodeParameterTypes26 = new Class[] {
+		_updateExternalReferenceCodeParameterTypes18 = new Class[] {
 			String.class,
 			com.liferay.commerce.price.list.model.CommercePriceEntry.class
-		};
-	private static final Class<?>[] _upsertCommercePriceEntryParameterTypes27 =
-		new Class[] {
-			long.class, long.class, long.class, String.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _upsertCommercePriceEntryParameterTypes28 =
-		new Class[] {
-			long.class, long.class, String.class, long.class, String.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _upsertCommercePriceEntryParameterTypes29 =
-		new Class[] {
-			long.class, long.class, String.class, long.class, String.class,
-			java.math.BigDecimal.class, boolean.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

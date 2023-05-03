@@ -17,7 +17,6 @@ module.exports = {
 		exports: [
 			'@liferay/js-api',
 			'@liferay/js-api/data-set',
-			'cropperjs',
 			'cropperjs/dist/cropper.css',
 			'date-fns',
 			'graphql-hooks-memcache',
@@ -35,6 +34,7 @@ module.exports = {
 			'graphiql/graphiql.css',
 			{name: 'axe-core', symbols: 'auto'},
 			{name: 'clipboard', symbols: 'auto'},
+			{name: 'cropperjs', symbols: 'auto'},
 			{name: 'dagre', symbols: 'auto'},
 			{
 				format: 'esm',

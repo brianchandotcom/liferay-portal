@@ -16,7 +16,7 @@ package com.liferay.fragment.entry.processor.resources;
 
 import com.liferay.fragment.entry.processor.resources.util.ResourcesFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.CSSFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -25,24 +25,18 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = "fragment.entry.processor.priority:Integer=4",
-	service = FragmentEntryProcessor.class
-)
-public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
+@Component(service = CSSFragmentEntryProcessor.class)
+public class ResourcesCSSFragmentEntryProcessor
+	implements CSSFragmentEntryProcessor {
 
 	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
+	public String processFragmentEntryLinkCSS(
+			FragmentEntryLink fragmentEntryLink, String css,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
 		return ResourcesFragmentEntryProcessorUtil.processResources(
-			fragmentEntryLink, html);
-	}
-
-	@Override
-	public void validateFragmentEntryHTML(String html, String configuration) {
+			fragmentEntryLink, css);
 	}
 
 }

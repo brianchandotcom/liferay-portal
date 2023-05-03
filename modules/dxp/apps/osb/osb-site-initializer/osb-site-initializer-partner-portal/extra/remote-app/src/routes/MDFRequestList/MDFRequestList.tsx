@@ -117,7 +117,7 @@ const MDFRequestList = () => {
 			);
 		}
 	};
-	const buildFilterFields = () => {
+	const getFilters = () => {
 		const filterFields = [
 			{
 				component: (
@@ -238,7 +238,7 @@ const MDFRequestList = () => {
 					<DropDownWithDrillDown
 						className=""
 						initialActiveMenu="x0a0"
-						menus={getDropDownFilterMenus(buildFilterFields())}
+						menus={getDropDownFilterMenus(getFilters())}
 						trigger={
 							<ClayButton borderless className="btn-secondary">
 								<span className="inline-item inline-item-before">

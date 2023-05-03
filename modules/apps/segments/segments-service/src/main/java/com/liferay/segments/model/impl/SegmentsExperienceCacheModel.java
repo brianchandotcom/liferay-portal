@@ -78,7 +78,7 @@ public class SegmentsExperienceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,10 +104,8 @@ public class SegmentsExperienceCacheModel
 		sb.append(segmentsEntryId);
 		sb.append(", segmentsExperienceKey=");
 		sb.append(segmentsExperienceKey);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", classPK=");
-		sb.append(classPK);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", priority=");
@@ -174,8 +172,7 @@ public class SegmentsExperienceCacheModel
 				segmentsExperienceKey);
 		}
 
-		segmentsExperienceImpl.setClassNameId(classNameId);
-		segmentsExperienceImpl.setClassPK(classPK);
+		segmentsExperienceImpl.setPlid(plid);
 
 		if (name == null) {
 			segmentsExperienceImpl.setName("");
@@ -228,9 +225,7 @@ public class SegmentsExperienceCacheModel
 		segmentsEntryId = objectInput.readLong();
 		segmentsExperienceKey = objectInput.readUTF();
 
-		classNameId = objectInput.readLong();
-
-		classPK = objectInput.readLong();
+		plid = objectInput.readLong();
 		name = objectInput.readUTF();
 
 		priority = objectInput.readInt();
@@ -280,9 +275,7 @@ public class SegmentsExperienceCacheModel
 			objectOutput.writeUTF(segmentsExperienceKey);
 		}
 
-		objectOutput.writeLong(classNameId);
-
-		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(plid);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -317,8 +310,7 @@ public class SegmentsExperienceCacheModel
 	public long modifiedDate;
 	public long segmentsEntryId;
 	public String segmentsExperienceKey;
-	public long classNameId;
-	public long classPK;
+	public long plid;
 	public String name;
 	public int priority;
 	public boolean active;

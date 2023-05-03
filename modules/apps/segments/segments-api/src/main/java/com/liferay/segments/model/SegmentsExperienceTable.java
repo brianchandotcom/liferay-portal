@@ -68,11 +68,8 @@ public class SegmentsExperienceTable
 		createColumn(
 			"segmentsExperienceKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<SegmentsExperienceTable, Long> classNameId =
-		createColumn(
-			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<SegmentsExperienceTable, Long> classPK = createColumn(
-		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<SegmentsExperienceTable, Long> plid = createColumn(
+		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SegmentsExperienceTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SegmentsExperienceTable, Integer> priority =

@@ -64,8 +64,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="segmentsEntryId" type="long" />
 		<field name="segmentsExperienceKey" type="String" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
+		<field name="plid" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field name="priority" type="int" />
 		<field name="active" type="boolean" />

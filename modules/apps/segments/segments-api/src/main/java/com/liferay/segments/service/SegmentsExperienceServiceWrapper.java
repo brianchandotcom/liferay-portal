@@ -40,7 +40,7 @@ public class SegmentsExperienceServiceWrapper
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long plid,
 			java.util.Map<java.util.Locale, String> nameMap, boolean active,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
@@ -48,25 +48,24 @@ public class SegmentsExperienceServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.addSegmentsExperience(
-			groupId, segmentsEntryId, classNameId, classPK, nameMap, active,
+			groupId, segmentsEntryId, plid, nameMap, active,
 			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long plid,
 			java.util.Map<java.util.Locale, String> nameMap, boolean active,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.appendSegmentsExperience(
-			groupId, segmentsEntryId, classNameId, classPK, nameMap, active,
-			serviceContext);
+			groupId, segmentsEntryId, plid, nameMap, active, serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long groupId, long segmentsEntryId, long classNameId, long classPK,
+			long groupId, long segmentsEntryId, long plid,
 			java.util.Map<java.util.Locale, String> nameMap, boolean active,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
@@ -74,7 +73,7 @@ public class SegmentsExperienceServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.appendSegmentsExperience(
-			groupId, segmentsEntryId, classNameId, classPK, nameMap, active,
+			groupId, segmentsEntryId, plid, nameMap, active,
 			typeSettingsUnicodeProperties, serviceContext);
 	}
 
@@ -89,12 +88,11 @@ public class SegmentsExperienceServiceWrapper
 
 	@Override
 	public SegmentsExperience fetchSegmentsExperience(
-			long groupId, String segmentsExperienceKey, long classNameId,
-			long classPK)
+			long groupId, String segmentsExperienceKey, long plid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.fetchSegmentsExperience(
-			groupId, segmentsExperienceKey, classNameId, classPK);
+			groupId, segmentsExperienceKey, plid);
 	}
 
 	/**
@@ -117,33 +115,31 @@ public class SegmentsExperienceServiceWrapper
 
 	@Override
 	public java.util.List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active)
+			long groupId, long plid, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.getSegmentsExperiences(
-			groupId, classNameId, classPK, active);
+			groupId, plid, active);
 	}
 
 	@Override
 	public java.util.List<SegmentsExperience> getSegmentsExperiences(
-			long groupId, long classNameId, long classPK, boolean active,
-			int start, int end,
+			long groupId, long plid, boolean active, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperience>
 				orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.getSegmentsExperiences(
-			groupId, classNameId, classPK, active, start, end,
-			orderByComparator);
+			groupId, plid, active, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getSegmentsExperiencesCount(
-			long groupId, long classNameId, long classPK, boolean active)
+			long groupId, long plid, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperienceService.getSegmentsExperiencesCount(
-			groupId, classNameId, classPK, active);
+			groupId, plid, active);
 	}
 
 	@Override

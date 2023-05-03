@@ -79,6 +79,8 @@ definition {
 			key_text = "All Steps",
 			locator1 = "Button#ANY");
 
+		SetWindowSize.maximizeWindow();
+
 		AssertCssValue(
 			key_workflowStep = "reviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreviewreview",
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION",

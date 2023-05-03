@@ -49,6 +49,8 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -248,6 +250,19 @@ public class ObjectRelationshipLocalServiceImpl
 				pkObjectFieldDBColumnName2, " LONG not null, primary key (",
 				pkObjectFieldDBColumnName1, ", ", pkObjectFieldDBColumnName2,
 				"))"));
+
+		IndexMetadata indexMetadata =
+			IndexMetadataFactoryUtil.createIndexMetadata(
+				false, objectRelationship.getDBTableName(),
+				pkObjectFieldDBColumnName1);
+
+		runSQL(indexMetadata.getCreateSQL(null));
+
+		indexMetadata = IndexMetadataFactoryUtil.createIndexMetadata(
+			false, objectRelationship.getDBTableName(),
+			pkObjectFieldDBColumnName2);
+
+		runSQL(indexMetadata.getCreateSQL(null));
 
 		return objectRelationship;
 	}

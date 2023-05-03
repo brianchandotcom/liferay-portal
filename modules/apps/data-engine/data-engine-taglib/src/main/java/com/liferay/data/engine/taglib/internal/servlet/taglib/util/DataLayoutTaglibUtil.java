@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.taglib.internal.servlet.taglib.util;
 
-import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
@@ -110,26 +109,6 @@ public class DataLayoutTaglibUtil {
 
 		return _dataLayoutTaglibUtil._getAvailableLocales(
 			dataDefinitionId, dataLayoutId, httpServletRequest);
-	}
-
-	public static JSONObject getContentTypeConfigJSONObject(
-		String contentType) {
-
-		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypes.get(contentType);
-
-		if (dataDefinitionContentType == null) {
-			dataDefinitionContentType = _dataDefinitionContentTypes.get(
-				"default");
-		}
-
-		return JSONUtil.put(
-			"allowInvalidAvailableLocalesForProperty",
-			dataDefinitionContentType.allowInvalidAvailableLocalesForProperty()
-		).put(
-			"allowReferencedDataDefinitionDeletion",
-			dataDefinitionContentType.allowReferencedDataDefinitionDeletion()
-		);
 	}
 
 	public static DataDefinition getDataDefinition(
@@ -243,25 +222,6 @@ public class DataLayoutTaglibUtil {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void addDataDefinitionContentType(
-		DataDefinitionContentType dataDefinitionContentType,
-		Map<String, Object> properties) {
-
-		String contentType = GetterUtil.getString(
-			properties.get("content.type"));
-
-		if (Validator.isNull(contentType)) {
-			return;
-		}
-
-		_dataDefinitionContentTypes.put(contentType, dataDefinitionContentType);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
 	protected void addDataLayoutBuilderDefinition(
 		DataLayoutBuilderDefinition dataLayoutBuilderDefinition,
 		Map<String, Object> properties) {
@@ -280,20 +240,6 @@ public class DataLayoutTaglibUtil {
 	@Deactivate
 	protected void deactivate() {
 		_dataLayoutTaglibUtil = null;
-	}
-
-	protected void removeDataDefinitionContentType(
-		DataDefinitionContentType dataDefinitionContentType,
-		Map<String, Object> properties) {
-
-		String contentType = GetterUtil.getString(
-			properties.get("content.type"));
-
-		if (Validator.isNull(contentType)) {
-			return;
-		}
-
-		_dataDefinitionContentTypes.remove(contentType);
 	}
 
 	protected void removeDataLayoutBuilderDefinition(
@@ -592,8 +538,6 @@ public class DataLayoutTaglibUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutTaglibUtil.class);
 
-	private static final Map<String, DataDefinitionContentType>
-		_dataDefinitionContentTypes = new ConcurrentHashMap<>();
 	private static final Map<String, DataLayoutBuilderDefinition>
 		_dataLayoutBuilderDefinitions = new ConcurrentHashMap<>();
 	private static DataLayoutTaglibUtil _dataLayoutTaglibUtil;

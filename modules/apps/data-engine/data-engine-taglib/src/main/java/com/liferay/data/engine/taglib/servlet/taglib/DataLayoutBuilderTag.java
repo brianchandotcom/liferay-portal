@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.taglib.servlet.taglib;
 
+import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
@@ -21,10 +22,13 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +50,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Jeyvison Nascimento
@@ -118,8 +125,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		setNamespacedAttribute(
 			httpServletRequest, "contentTypeConfig",
-			DataLayoutTaglibUtil.getContentTypeConfigJSONObject(
-				getContentType()));
+			_getContentTypeConfigJSONObject(getContentType()));
 		setNamespacedAttribute(
 			httpServletRequest, "dataLayout",
 			DataLayoutTaglibUtil.getDataLayoutJSONObject(
@@ -132,6 +138,24 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		setNamespacedAttribute(
 			httpServletRequest, "moduleServletContext",
 			_getModuleServletContext());
+	}
+
+	private JSONObject _getContentTypeConfigJSONObject(String contentType) {
+		DataDefinitionContentType dataDefinitionContentType =
+			_serviceTrackerMap.getService(contentType);
+
+		if (dataDefinitionContentType == null) {
+			dataDefinitionContentType = _serviceTrackerMap.getService(
+				"default");
+		}
+
+		return JSONUtil.put(
+			"allowInvalidAvailableLocalesForProperty",
+			dataDefinitionContentType.allowInvalidAvailableLocalesForProperty()
+		).put(
+			"allowReferencedDataDefinitionDeletion",
+			dataDefinitionContentType.allowReferencedDataDefinitionDeletion()
+		);
 	}
 
 	private String _getDefaultLanguageId() {
@@ -275,5 +299,15 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			DataLayoutBuilderTag.class, DDMFormFieldTypeServicesRegistry.class);
 	private static final Snapshot<NPMResolver> _npmResolverSnapshot =
 		new Snapshot<>(DataLayoutBuilderTag.class, NPMResolver.class);
+	private static final ServiceTrackerMap<String, DataDefinitionContentType>
+		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DataLayoutBuilderTag.class);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundle.getBundleContext(), DataDefinitionContentType.class,
+			"content.type");
+	}
 
 }

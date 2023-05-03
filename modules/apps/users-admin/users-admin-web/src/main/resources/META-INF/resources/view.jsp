@@ -131,51 +131,6 @@ else {
 		);
 	}
 
-	function <portlet:namespace />doDeleteUsers(cmd) {
-		var form = document.<portlet:namespace />fm;
-
-		Liferay.Util.postForm(form, {
-			data: {
-				deleteUserIds: Liferay.Util.getCheckedCheckboxes(
-					form,
-					'<portlet:namespace />allRowIds',
-					'<portlet:namespace />rowIdsUser'
-				),
-				redirect: '<%= currentURL %>',
-				<%= Constants.CMD %>: cmd,
-			},
-			url: '<portlet:actionURL name="/users_admin/edit_user" />',
-		});
-	}
-
-	function <portlet:namespace />deleteUsers(cmd) {
-		if (cmd === '<%= Constants.DEACTIVATE %>') {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						<portlet:namespace />doDeleteUsers(cmd);
-					}
-				},
-			});
-		}
-		else if (cmd === '<%= Constants.DELETE %>') {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						<portlet:namespace />doDeleteUsers(cmd);
-					}
-				},
-			});
-		}
-		else if (cmd === '<%= Constants.RESTORE %>') {
-			<portlet:namespace />doDeleteUsers(cmd);
-		}
-	}
-
 	function <portlet:namespace />doDeleteOrganization(
 		className,
 		ids,

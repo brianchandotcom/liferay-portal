@@ -23,30 +23,26 @@ describe('InterestPagesList', () => {
 	});
 
 	it('should render an activePages component', () => {
-		const {getByText} = render(
+		const {container} = render(
 			<StaticRouter>
 				<InterestPagesList dataSourceParams={{active: true}} />
 			</StaticRouter>
 		);
 
 		expect(
-			getByText('Views').parentElement.querySelector(
-				'.lexicon-icon-order-arrow-down'
-			)
+			container.querySelector('.lexicon-icon-order-arrow-down')
 		).toBeTruthy();
 	});
 
 	it('should render an InactivePages component', () => {
-		const {getByText} = render(
+		const {container} = render(
 			<StaticRouter>
 				<InterestPagesList dataSourceParams={{active: false}} />
 			</StaticRouter>
 		);
 
 		expect(
-			getByText('Views').parentElement.querySelector(
-				'.lexicon-icon-order-arrow-down'
-			)
+			container.querySelector('.lexicon-icon-order-arrow-down')
 		).toBeFalsy();
 	});
 });

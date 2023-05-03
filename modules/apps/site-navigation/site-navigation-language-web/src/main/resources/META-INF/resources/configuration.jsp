@@ -38,13 +38,13 @@
 			<div class="display-template">
 				<liferay-template:template-selector
 					className="<%= LanguageEntry.class.getName() %>"
-					displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
+					displayStyle="<%= siteNavigationLanguagePortletInstanceConfiguration.displayStyle() %>"
 					displayStyleGroupId="<%= siteNavigationLanguageDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 				/>
 			</div>
 
-			<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
+			<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="preferences--displayCurrentLocale--" type="toggle-switch" value="<%= siteNavigationLanguagePortletInstanceConfiguration.displayCurrentLocale() %>" />
 		</liferay-frontend:fieldset>
 
 		<liferay-frontend:fieldset

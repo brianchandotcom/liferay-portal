@@ -191,7 +191,7 @@ const Goals = ({
 					<div className="d-flex justify-content-end mr-auto">
 						<Button
 							className="inline-item inline-item-after"
-							disabled={isSubmitting}
+							disabled={isSubmitting || !values.company?.id}
 							displayType={null}
 							onClick={() =>
 								onSaveAsDraft?.(values, formikHelpers)

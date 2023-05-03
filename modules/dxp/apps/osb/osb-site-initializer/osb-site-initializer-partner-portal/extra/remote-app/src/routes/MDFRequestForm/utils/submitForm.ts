@@ -107,7 +107,7 @@ export default async function submitForm(
 						);
 					}
 					else {
-						await createMDFRequestActivitiesSF(
+						return await createMDFRequestActivitiesSF(
 							ResourceName.ACTIVITY_DXP,
 							activity,
 							values.company,

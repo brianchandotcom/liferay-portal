@@ -68,7 +68,7 @@ public interface CommercePriceEntryService extends BaseService {
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addCommercePriceEntry(String, long, String, long,
 	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
-	 int, int, int, int, int, int, int, int, int, int, boolean,
+	 BigDecimal, int, int, int, int, int, int, int, int, int, int, boolean,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -114,14 +114,14 @@ public interface CommercePriceEntryService extends BaseService {
 	public CommercePriceEntry addOrUpdateCommercePriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			BigDecimal price, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
+			boolean discountDiscovery, BigDecimal discountLevel1,
+			BigDecimal discountLevel2, BigDecimal discountLevel3,
+			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, BigDecimal price,
+			boolean priceOnApplication, String skuExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -242,20 +242,20 @@ public interface CommercePriceEntryService extends BaseService {
 		throws PortalException;
 
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price,
+			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
 			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			int expirationDateMinute, boolean neverExpire, BigDecimal price,
+			boolean priceOnApplication, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateExternalReferenceCode(String, long)}
+	 #updateExternalReferenceCode(String, CommercePriceEntry)}
 	 */
 	@Deprecated
 	public CommercePriceEntry updateExternalReferenceCode(
@@ -293,9 +293,9 @@ public interface CommercePriceEntryService extends BaseService {
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addOrUpdateCommercePriceEntry(String, long, long, String, long,
-	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
+	 boolean, BigDecimal, BigDecimal, BigDecimal,
 	 BigDecimal, int, int, int, int, int, int, int, int, int,
-	 int, boolean, String, ServiceContext)}
+	 int, boolean, BigDecimal, boolean, String, ServiceContext)}
 	 */
 	@Deprecated
 	public CommercePriceEntry upsertCommercePriceEntry(

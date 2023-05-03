@@ -106,7 +106,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	@Test
-	public void testPerformanceGetObjectEntries() throws Exception {
+	public void testGetObjectEntries() throws Exception {
 		try (Closeable closeable = _timeSpent()) {
 			_objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
@@ -161,21 +161,21 @@ public class ObjectEntryPerformanceTest {
 			StandardOpenOption.WRITE);
 	}
 
-	@Inject
-	private static DTOConverterRegistry _dtoConverterRegistry;
-
 	private static Path _logFilePath;
 
+	@Inject
+	private DTOConverterRegistry _dtoConverterRegistry;
+
 	@DeleteAfterTestRun
-	private static ObjectDefinition _objectDefinition;
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
-	private static ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
-	private static ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 }

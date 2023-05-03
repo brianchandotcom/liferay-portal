@@ -16,6 +16,7 @@ package com.liferay.fragment.internal.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.CSSFragmentEntryProcessor;
+import com.liferay.fragment.processor.FragmentEntryAutocompleteContributor;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -50,11 +51,13 @@ public class FragmentEntryProcessorRegistryImpl
 	public JSONArray getAvailableTagsJSONArray() {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
+		for (FragmentEntryAutocompleteContributor
+				fragmentEntryAutocompleteContributor :
+					_fragmentEntryAutocompleteContributors) {
 
 			JSONArray availableTagsJSONArray =
-				fragmentEntryProcessor.getAvailableTagsJSONArray();
+				fragmentEntryAutocompleteContributor.
+					getAvailableTagsJSONArray();
 
 			if (availableTagsJSONArray == null) {
 				continue;
@@ -183,6 +186,11 @@ public class FragmentEntryProcessorRegistryImpl
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"fragment.entry.processor.priority")));
+		_fragmentEntryAutocompleteContributors = ServiceTrackerListFactory.open(
+			bundleContext, FragmentEntryAutocompleteContributor.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"fragment.entry.processor.priority")));
 		_fragmentEntryProcessors = ServiceTrackerListFactory.open(
 			bundleContext, FragmentEntryProcessor.class,
 			Collections.reverseOrder(
@@ -193,6 +201,7 @@ public class FragmentEntryProcessorRegistryImpl
 	@Deactivate
 	protected void deactivate() {
 		_cssFragmentEntryProcessors.close();
+		_fragmentEntryAutocompleteContributors.close();
 		_fragmentEntryProcessors.close();
 	}
 
@@ -204,6 +213,8 @@ public class FragmentEntryProcessorRegistryImpl
 
 	private ServiceTrackerList<CSSFragmentEntryProcessor>
 		_cssFragmentEntryProcessors;
+	private ServiceTrackerList<FragmentEntryAutocompleteContributor>
+		_fragmentEntryAutocompleteContributors;
 	private ServiceTrackerList<FragmentEntryProcessor> _fragmentEntryProcessors;
 
 	@Reference

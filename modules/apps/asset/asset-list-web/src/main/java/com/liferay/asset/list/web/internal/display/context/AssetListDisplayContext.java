@@ -192,8 +192,10 @@ public class AssetListDisplayContext {
 				getAssetListEntriesCount());
 		}
 
-		assetListEntriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+		if (!isLiveGroup()) {
+			assetListEntriesSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+		}
 
 		_assetListEntriesSearchContainer = assetListEntriesSearchContainer;
 
@@ -453,6 +455,26 @@ public class AssetListDisplayContext {
 			SegmentsEntryConstants.ID_DEFAULT);
 
 		return _segmentsEntryId;
+	}
+
+	public boolean isLiveGroup() {
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (stagingGroupHelper.isLiveGroup(group) &&
+			stagingGroupHelper.isStagedPortlet(
+				group, AssetListPortletKeys.ASSET_LIST)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowAddAssetListEntryAction() {

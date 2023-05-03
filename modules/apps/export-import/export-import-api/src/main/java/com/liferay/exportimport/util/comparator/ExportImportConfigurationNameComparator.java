@@ -41,17 +41,20 @@ public class ExportImportConfigurationNameComparator
 
 	@Override
 	public int compare(
-		ExportImportConfiguration configuration1,
-		ExportImportConfiguration configuration2) {
+		ExportImportConfiguration exportImportConfiguration1,
+		ExportImportConfiguration exportImportConfiguration2) {
 
-		String name1 = StringUtil.toLowerCase(configuration1.getName());
-		String name2 = StringUtil.toLowerCase(configuration2.getName());
+		String name1 = StringUtil.toLowerCase(
+			exportImportConfiguration1.getName());
+		String name2 = StringUtil.toLowerCase(
+			exportImportConfiguration2.getName());
 
 		int value = name1.compareTo(name2);
 
 		if (value == 0) {
 			value = DateUtil.compareTo(
-				configuration1.getCreateDate(), configuration2.getCreateDate());
+				exportImportConfiguration1.getCreateDate(),
+				exportImportConfiguration2.getCreateDate());
 		}
 
 		if (_ascending) {

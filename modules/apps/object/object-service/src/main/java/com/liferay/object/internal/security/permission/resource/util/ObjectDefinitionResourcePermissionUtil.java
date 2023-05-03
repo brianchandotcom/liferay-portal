@@ -16,6 +16,7 @@ package com.liferay.object.internal.security.permission.resource.util;
 
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -54,10 +55,20 @@ public class ObjectDefinitionResourcePermissionUtil {
 				objectAction.getName(), "</action-key>");
 		}
 
+		String resourceActionsFile =
+			"resource-actions/resource-actions.xml.tpl";
+
+		if (StringUtil.equals(
+				objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			resourceActionsFile =
+				"resource-actions/resource-actions-salesforce.xml.tpl";
+		}
+
 		Document document = SAXReaderUtil.read(
 			StringUtil.replace(
-				StringUtil.read(
-					classLoader, "resource-actions/resource-actions.xml.tpl"),
+				StringUtil.read(classLoader, resourceActionsFile),
 				new String[] {
 					"[$MODEL_NAME$]", "[$PERMISSIONS_GUEST_UNSUPPORTED$]",
 					"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]",

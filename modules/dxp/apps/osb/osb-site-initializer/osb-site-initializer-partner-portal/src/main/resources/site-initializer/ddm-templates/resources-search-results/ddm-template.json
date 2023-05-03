@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext",
+	"ddmTemplateKey": "RESOURCES-SEARCH-RESULT",
+	"name": "Resources Search Result",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

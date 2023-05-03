@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/library",
+	"friendlyURL": "/resources",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Library"
+		"en_US": "Resources"
 	},
 	"permissions": [
 		{

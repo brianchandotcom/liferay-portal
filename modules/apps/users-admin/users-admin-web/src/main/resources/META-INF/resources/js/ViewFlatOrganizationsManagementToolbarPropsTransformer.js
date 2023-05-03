@@ -14,11 +14,7 @@
 
 import {ACTIONS} from './actions.es';
 
-export default function propsTransformer({
-	additionalProps: {basePortletURL},
-	portletNamespace,
-	...otherProps
-}) {
+export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
@@ -30,19 +26,6 @@ export default function propsTransformer({
 				event.preventDefault();
 
 				ACTIONS[action](data, portletNamespace);
-			}
-		},
-		onCreationMenuItemClick(event, {item}) {
-			const data = item?.data;
-
-			const action = data?.action;
-
-			if (action === 'selectUsers') {
-				ACTIONS.selectUsers({
-					basePortletURL,
-					organizationId: data?.organizationId,
-					portletNamespace,
-				});
 			}
 		},
 	};

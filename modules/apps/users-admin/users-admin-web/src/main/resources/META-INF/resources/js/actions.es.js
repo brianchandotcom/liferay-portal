@@ -15,10 +15,12 @@
 import {
 	createActionURL,
 	createRenderURL,
+	fetch,
 	getCheckedCheckboxes,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
+	openToast,
 	postForm,
 } from 'frontend-js-web';
 
@@ -63,31 +65,32 @@ export const ACTIONS = {
 		updateUsers(portletNamespace, itemData?.editUsersURL);
 	},
 
-	<portlet:namespace />deleteOrganization(
-		organizationId,
-		organizationsRedirect
-	) {
-		<portlet:namespace />doDeleteOrganization(
-			'<%= Organization.class.getName() %>',
-			organizationId,
-			organizationsRedirect
+	deleteOrganization(itemData, portletNamespace) {
+		doDeleteOrganization(
+			itemData,
+			portletNamespace,
+			itemData?.organizationId
 		);
 	},
 
-	<portlet:namespace />deleteOrganizations(organizationsRedirect) {
-		<portlet:namespace />doDeleteOrganization(
-			'<%= Organization.class.getName() %>',
-			Liferay.Util.getCheckedCheckboxes(
-				document.<portlet:namespace />fm,
-				'<portlet:namespace />allRowIds',
-				'<portlet:namespace />rowIdsOrganization'
-			),
-			organizationsRedirect
+	deleteOrganizations(itemData, portletNamespace) {
+		doDeleteOrganization(
+			itemData,
+			portletNamespace,
+			getOrganizationIds(portletNamespace)
 		);
 	},
 
-	<portlet:namespace />delete(organizationsRedirect) {
-		<portlet:namespace />deleteOrganizations(organizationsRedirect);
+	deleteOrganizationsAndUsers(itemData, portletNamespace) {
+		const form = document.getElementById(`${portletNamespace}fm`);
+
+		postForm(form, {
+			data: {
+				deleteOrganizationIds: getOrganizationIds(portletNamespace),
+				deleteUserIds: getUserIds(portletNamespace),
+			},
+			url: itemData?.deleteOrganizationsAndUsersURL,
+		});
 	},
 
 	deleteUser(itemData) {
@@ -132,23 +135,15 @@ export const ACTIONS = {
 		submitForm(document.hrefFm, itemData.removeOrganizationURL);
 	},
 
-	<portlet:namespace />removeOrganizationsAndUsers() {
-		var form = document.<portlet:namespace />fm;
+	removeOrganizationsAndUsers(itemData, portletNamespace) {
+		const form = document.getElementById(`${portletNamespace}fm`);
 
-		Liferay.Util.postForm(form, {
+		postForm(form, {
 			data: {
-				removeOrganizationIds: Liferay.Util.getCheckedCheckboxes(
-					form,
-					'<portlet:namespace />allRowIds',
-					'<portlet:namespace />rowIdsOrganization'
-				),
-				removeUserIds: Liferay.Util.getCheckedCheckboxes(
-					form,
-					'<portlet:namespace />allRowIds',
-					'<portlet:namespace />rowIdsUser'
-				),
+				removeOrganizationIds: getOrganizationIds(portletNamespace),
+				removeUserIds: getUserIds(portletNamespace),
 			},
-			url: '<%= removeOrganizationsAndUsersURL.toString() %>',
+			url: itemData?.removeOrganizationsAndUsersURL,
 		});
 	},
 
@@ -209,135 +204,127 @@ export const ACTIONS = {
 	},
 };
 
-function <portlet:namespace />doDeleteOrganization(
-	className,
-	ids,
-	organizationsRedirect
-) {
-	var status = <%= WorkflowConstants.STATUS_INACTIVE %>;
+const addSearchParams = (url, portletNamespace, searchParams) => {
+	const newURL = new URL(url);
 
-	<portlet:namespace />getUsersCount(
-		className,
-		ids,
-		status,
-		(responseData) => {
-			var count = parseInt(responseData, 10);
+	Object.keys(searchParams).forEach((paramName) => {
+		newURL.searchParams.append(
+			portletNamespace + paramName,
+			searchParams[paramName]
+		);
+	});
 
-			if (count > 0) {
-				status = <%= WorkflowConstants.STATUS_APPROVED %>;
+	return newURL.toString();
+};
 
-				<portlet:namespace />getUsersCount(
-					className,
-					ids,
-					status,
-					(responseData) => {
-						count = parseInt(responseData, 10);
-
-						if (count > 0) {
-							Liferay.Util.openConfirmModal({
-								message:
-									'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>',
-								onConfirm: (isConfirmed) => {
-									if (isConfirmed) {
-										<portlet:namespace />doDeleteOrganizations(
-											ids,
-											organizationsRedirect
-										);
-									}
-								},
-							});
-						}
-						else {
-							var message;
-
-							if (ids && ids.toString().split(',').length > 1) {
-								message =
-									'<%= UnicodeLanguageUtil.get(request, "one-or-more-organizations-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organizations-by-automatically-unassociating-the-deactivated-users") %>';
-							}
-							else {
-								message =
-									'<%= UnicodeLanguageUtil.get(request, "the-selected-organization-is-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organization-by-automatically-unassociating-the-deactivated-users") %>';
-							}
-
-							Liferay.Util.openConfirmModal({
-								message: message,
-								onConfirm: (isConfirmed) => {
-									if (isConfirmed) {
-										<portlet:namespace />doDeleteOrganizations(
-											ids,
-											organizationsRedirect
-										);
-									}
-								},
-							});
-						}
-					}
-				);
-			}
-			else {
-				Liferay.Util.openConfirmModal({
-					message:
-						'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>',
-					onConfirm: (isConfirmed) => {
-						if (isConfirmed) {
-							<portlet:namespace />doDeleteOrganizations(
-								ids,
-								organizationsRedirect
-							);
-						}
-					},
-				});
-			}
-		}
+const doDeleteOrganization = (itemData, portletNamespace, organizationIds) => {
+	const getInactiveUsersURL = addSearchParams(
+		itemData?.getInactiveUsersURL,
+		portletNamespace,
+		{ids: organizationIds}
 	);
-}
 
-function <portlet:namespace />doDeleteOrganizations(
-	organizationIds,
-	organizationsRedirect
-) {
-	var form = document.<portlet:namespace />fm;
+	getUsersCount(getInactiveUsersURL).then((responseData) => {
+		let count = parseInt(responseData, 10);
 
-	if (organizationsRedirect) {
-		Liferay.Util.setFormValues(form, {
-			redirect: organizationsRedirect,
-		});
-	}
+		if (count > 0) {
+			const getActiveUsersURL = addSearchParams(
+				itemData?.getActiveUsersURL,
+				portletNamespace,
+				{ids: organizationIds}
+			);
 
-	Liferay.Util.postForm(form, {
-		data: {
-			deleteOrganizationIds: organizationIds,
-			<%= Constants.CMD %>: '<%= Constants.DELETE %>',
-		},
-		url: '<portlet:actionURL name="/users_admin/edit_organization" />',
+			getUsersCount(getActiveUsersURL).then((responseData) => {
+				count = parseInt(responseData, 10);
+
+				if (count > 0) {
+					openConfirmModal({
+						message: Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this'
+						),
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								doDeleteOrganizations(
+									itemData,
+									portletNamespace,
+									organizationIds
+								);
+							}
+						},
+					});
+				}
+				else {
+					let message;
+
+					if (
+						organizationIds &&
+						organizationIds.toString().split(',').length > 1
+					) {
+						message = Liferay.Language.get(
+							'one-or-more-organizations-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organizations-by-automatically-unassociating-the-deactivated-users'
+						);
+					}
+					else {
+						message = Liferay.Language.get(
+							'the-selected-organization-is-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organization-by-automatically-unassociating-the-deactivated-users'
+						);
+					}
+
+					openConfirmModal({
+						message,
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								doDeleteOrganizations(
+									itemData,
+									portletNamespace,
+									organizationIds
+								);
+							}
+						},
+					});
+				}
+			});
+		}
+		else {
+			openConfirmModal({
+				message: Liferay.Language.get(
+					'are-you-sure-you-want-to-delete-this'
+				),
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						doDeleteOrganizations(
+							itemData,
+							portletNamespace,
+							organizationIds
+						);
+					}
+				},
+			});
+		}
 	});
-}
+};
 
-function <portlet:namespace />doDeleteOrganizations(
-	organizationIds,
-	organizationsRedirect
-) {
-	var form = document.<portlet:namespace />fm;
+const doDeleteOrganizations = (itemData, portletNamespace, organizationIds) => {
+	const form = document.getElementById(`${portletNamespace}fm`);
 
-	if (organizationsRedirect) {
-		Liferay.Util.setFormValues(form, {
-			redirect: organizationsRedirect,
-		});
-	}
-
-	Liferay.Util.postForm(form, {
+	postForm(form, {
 		data: {
+			cmd: itemData?.cmd,
 			deleteOrganizationIds: organizationIds,
-			deleteUserIds: Liferay.Util.getCheckedCheckboxes(
-				form,
-				'<portlet:namespace />allRowIds',
-				'<portlet:namespace />rowIdsUser'
-			),
 		},
-		url:
-			'<portlet:actionURL name="/users_admin/delete_organizations_and_users" />',
+		url: itemData?.deleteOrganizationURL,
 	});
-}
+};
+
+const getOrganizationIds = (portletNamespace) => {
+	const form = document.getElementById(`${portletNamespace}fm`);
+
+	return getCheckedCheckboxes(
+		form,
+		`${portletNamespace}allRowIds`,
+		`${portletNamespace}rowIdsOrganization`
+	);
+};
 
 const getUserIds = (portletNamespace) => {
 	const form = document.getElementById(`${portletNamespace}fm`);
@@ -349,35 +336,20 @@ const getUserIds = (portletNamespace) => {
 	);
 };
 
-function <portlet:namespace />getUsersCount(className, ids, status, callback) {
-	var formData = new FormData();
-
-	formData.append('className', className);
-	formData.append('ids', ids);
-	formData.append('status', status);
-
-	Liferay.Util.fetch(
-		'<liferay-portlet:resourceURL id="/users_admin/get_users_count" />',
-		{
-			body: formData,
-			method: 'POST',
-		}
-	)
+const getUsersCount = (url) => {
+	return fetch(url)
 		.then((response) => {
 			return response.text();
 		})
-		.then((response) => {
-			callback(response);
-		})
-		.catch((error) => {
-			Liferay.Util.openToast({
+		.catch(() => {
+			openToast({
 				message: Liferay.Language.get(
 					'an-unexpected-system-error-occurred'
 				),
 				type: 'danger',
 			});
 		});
-}
+};
 
 const updateUsers = (portletNamespace, url) => {
 	const form = document.getElementById(`${portletNamespace}fm`);

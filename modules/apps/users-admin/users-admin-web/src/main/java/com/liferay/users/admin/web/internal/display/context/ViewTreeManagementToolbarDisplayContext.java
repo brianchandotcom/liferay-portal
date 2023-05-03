@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -88,15 +87,24 @@ public class ViewTreeManagementToolbarDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemList.of(
 			() -> DropdownItemBuilder.putData(
-				"action", Constants.DELETE
-			).setHref(
-				StringBundler.concat(
-					"javascript:", _renderResponse.getNamespace(), "delete();")
+				"action", "deleteOrganizationsAndUsers"
+			).putData(
+				"deleteOrganizationsAndUsersURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/users_admin/delete_organizations_and_users"
+				).setCMD(
+					Constants.DELETE
+				).buildString()
 			).setIcon(
 				"times-circle"
 			).setLabel(
@@ -153,11 +161,18 @@ public class ViewTreeManagementToolbarDisplayContext {
 				).build();
 			},
 			() -> DropdownItemBuilder.putData(
-				"action", Constants.REMOVE
-			).setHref(
-				StringBundler.concat(
-					"javascript:", _renderResponse.getNamespace(),
-					"removeOrganizationsAndUsers();")
+				"action", "removeOrganizationsAndUsers"
+			).putData(
+				"removeOrganizationsAndUsersURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/users_admin/edit_organization_assignments"
+				).setParameter(
+					"assignmentsRedirect", _themeDisplay.getURLCurrent()
+				).setParameter(
+					"organizationId", _organization.getOrganizationId()
+				).buildString()
 			).setIcon(
 				"minus-circle"
 			).setLabel(
@@ -168,7 +183,8 @@ public class ViewTreeManagementToolbarDisplayContext {
 	}
 
 	public List<String> getAvailableActions(Organization organization) {
-		return Arrays.asList(Constants.DELETE, Constants.REMOVE);
+		return Arrays.asList(
+			"deleteOrganizationsAndUsers", "removeOrganizationsAndUsers");
 	}
 
 	public List<String> getAvailableActions(User user) {
@@ -178,11 +194,11 @@ public class ViewTreeManagementToolbarDisplayContext {
 			availableActions.add("deactivateUsers");
 		}
 		else {
-			availableActions.add(Constants.DELETE);
 			availableActions.add("activateUsers");
+			availableActions.add("deleteOrganizationsAndUsers");
 		}
 
-		availableActions.add(Constants.REMOVE);
+		availableActions.add("removeOrganizationsAndUsers");
 
 		return availableActions;
 	}
@@ -428,10 +444,6 @@ public class ViewTreeManagementToolbarDisplayContext {
 			status = WorkflowConstants.STATUS_INACTIVE;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		int navigationStatus = status;
 
 		if (Validator.isNotNull(getKeywords())) {
@@ -440,7 +452,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 					Hits hits =
 						OrganizationLocalServiceUtil.
 							searchOrganizationsAndUsers(
-								themeDisplay.getCompanyId(),
+								_themeDisplay.getCompanyId(),
 								_organization.getOrganizationId(),
 								getKeywords(), navigationStatus, null,
 								searchContainer.getStart(),
@@ -462,7 +474,7 @@ public class ViewTreeManagementToolbarDisplayContext {
 
 					List<SearchResult> searchResults =
 						SearchResultUtil.getSearchResults(
-							hits, themeDisplay.getLocale());
+							hits, _themeDisplay.getLocale());
 
 					for (SearchResult searchResult : searchResults) {
 						String className = searchResult.getClassName();
@@ -482,19 +494,19 @@ public class ViewTreeManagementToolbarDisplayContext {
 					return results;
 				},
 				OrganizationLocalServiceUtil.searchOrganizationsAndUsersCount(
-					themeDisplay.getCompanyId(),
+					_themeDisplay.getCompanyId(),
 					_organization.getOrganizationId(), getKeywords(),
 					navigationStatus, null));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> OrganizationLocalServiceUtil.getOrganizationsAndUsers(
-					themeDisplay.getCompanyId(),
+					_themeDisplay.getCompanyId(),
 					_organization.getOrganizationId(), navigationStatus,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
-					themeDisplay.getCompanyId(),
+					_themeDisplay.getCompanyId(),
 					_organization.getOrganizationId(), navigationStatus));
 		}
 
@@ -583,5 +595,6 @@ public class ViewTreeManagementToolbarDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<Object> _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 
 }

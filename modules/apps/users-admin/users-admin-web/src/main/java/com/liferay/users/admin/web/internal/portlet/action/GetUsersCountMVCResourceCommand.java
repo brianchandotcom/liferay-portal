@@ -30,8 +30,6 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -84,16 +82,12 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 	}
 
 	private String _getText(ResourceRequest resourceRequest) throws Exception {
-		HttpServletRequest httpServletRequest =
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(resourceRequest));
+		long companyId = _portal.getCompanyId(resourceRequest);
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
-		String className = ParamUtil.getString(httpServletRequest, "className");
+		String className = ParamUtil.getString(resourceRequest, "className");
 		long[] ids = StringUtil.split(
-			ParamUtil.getString(httpServletRequest, "ids"), 0L);
-		int status = ParamUtil.getInteger(httpServletRequest, "status");
+			ParamUtil.getString(resourceRequest, "ids"), 0L);
+		int status = ParamUtil.getInteger(resourceRequest, "status");
 
 		int count = 0;
 

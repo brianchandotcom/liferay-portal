@@ -129,6 +129,31 @@
 			"action": "CLAIM-PAID-STATUS",
 			"externalReferenceCode": "MDF-CLAIM-CLAIM-PAID-STATUS",
 			"object": "MDF Claim"
+		},
+		{
+			"action": "VIEW",
+			"externalReferenceCode": "DEAL-REGISTRATION-VIEW",
+			"object": "Deal Registration"
+		},
+		{
+			"action": "UPDATE",
+			"externalReferenceCode": "DEAL-REGISTRATION-UPDATE",
+			"object": "Deal Registration"
+		},
+		{
+			"action": "DELETE",
+			"externalReferenceCode": "DEAL-REGISTRATION-DELETE",
+			"object": "Deal Registration"
+		},
+		{
+			"action": "CREATE",
+			"externalReferenceCode": "DEAL-REGISTRATION-CREATE",
+			"object": "Deal Registration"
+		},
+		{
+			"action": "EXPORT",
+			"externalReferenceCode": "DEAL-REGISTRATION-EXPORT",
+			"object": "Deal Registration"
 		}
 	],
 	"objectDefinitionName": "PermissionAction"

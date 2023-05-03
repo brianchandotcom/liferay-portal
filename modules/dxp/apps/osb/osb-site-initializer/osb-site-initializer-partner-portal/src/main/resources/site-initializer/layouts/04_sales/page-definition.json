@@ -424,7 +424,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Register New Deal"
+																"ar_SA": "Register a New Deal",
+																"ca_ES": "Register a New Deal",
+																"de_DE": "Register a New Deal",
+																"en_US": "Register a New Deal",
+																"es_ES": "Register a New Deal",
+																"fi_FI": "Register a New Deal",
+																"fr_FR": "Register a New Deal",
+																"hu_HU": "Register a New Deal",
+																"ja_JP": "Register a New Deal",
+																"nl_NL": "Register a New Deal",
+																"pt_BR": "Register a New Deal",
+																"sv_SE": "Register a New Deal",
+																"zh_CN": "Register a New Deal"
 															}
 														}
 													}

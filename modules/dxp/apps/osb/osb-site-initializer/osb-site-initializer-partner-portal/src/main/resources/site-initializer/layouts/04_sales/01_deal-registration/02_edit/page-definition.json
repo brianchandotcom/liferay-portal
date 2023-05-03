@@ -1,0 +1,355 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral1",
+						"borderWidth": "0",
+						"minHeight": "93vh",
+						"paddingBottom": "6",
+						"paddingTop": "4",
+						"textAlign": ""
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 6,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 2,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "4",
+								"paddingBottom": "2",
+								"textAlign": ""
+							},
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 3
+								},
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 9
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "heading-with-icon"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "heading-image",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/deal-registration-heading-icon.svg#]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "heading-title",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Deal Registration",
+																"ca_ES": "Deal Registration",
+																"de_DE": "Deal Registration",
+																"en_US": "Deal Registration",
+																"es_ES": "Deal Registration",
+																"fi_FI": "Deal Registration",
+																"fr_FR": "Deal Registration",
+																"hu_HU": "Deal Registration",
+																"ja_JP": "Deal Registration",
+																"nl_NL": "Deal Registration",
+																"pt_BR": "Deal Registration",
+																"sv_SE": "Deal Registration",
+																"zh_CN": "Deal Registration"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"textAlign": ""
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "Center",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"width": "680px"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "route=deal-registration-form"
+												},
+												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:PARTNER-PORTAL-REACT-APP$]"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundColor": "colorNeutral0",
+												"marginTop": "5",
+												"paddingBottom": "5",
+												"paddingLeft": "5",
+												"paddingRight": "5",
+												"paddingTop": "5"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 4,
+												"opacity": 100,
+												"paddingBottom": 4,
+												"paddingLeft": 4,
+												"paddingRight": 4,
+												"paddingTop": 4,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "DIALECT-dialect-text"
+													},
+													"fragmentConfig": {
+														"textType": "h4"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Deal Registration Resources",
+																		"ca_ES": "Deal Registration Resources",
+																		"de_DE": "Deal Registration Resources",
+																		"en_US": "Deal Registration Resources",
+																		"es_ES": "Deal Registration Resources",
+																		"fi_FI": "Deal Registration Resources",
+																		"fr_FR": "Deal Registration Resources",
+																		"hu_HU": "Deal Registration Resources",
+																		"ja_JP": "Deal Registration Resources",
+																		"nl_NL": "Deal Registration Resources",
+																		"pt_BR": "Deal Registration Resources",
+																		"sv_SE": "Deal Registration Resources",
+																		"zh_CN": "Deal Registration Resources"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold",
+														"paddingBottom": "4",
+														"paddingLeft": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"ca_ES": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"de_DE": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"en_US": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"es_ES": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"fi_FI": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"fr_FR": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"hu_HU": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"ja_JP": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"nl_NL": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"pt_BR": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"sv_SE": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n",
+																		"zh_CN": "<ol>\n\t<li><strong>Need help on using the Partner Opportunity Registration form?</strong>\n\t<ul>\n\t\t<li>Watch the <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help video</a> about the new changes (4 minutes)</li>\n\t\t<li>Read the instructional guide on <a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">how to complete the new form</a></li>\n\t</ul>\n\t</li>\n\t<li><strong>Need information on understanding the Opportunity Registration process?</strong>\n\t<ul>\n\t\t<li><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\">See the </span><a href=\"https://www.liferay.com/\" rel=\"noopener noreferrer\">help page</a><span style=\"color: var(--body-color, var(--body-color, #272833)); font-size: var(--font-size-base, 1rem); font-family: var(--font-family-base, system-ui, -apple-system, blinkmacsystemfont, &quot;Segoe UI&quot;, roboto, oxygen-sans, ubuntu, cantarell, &quot;Helvetica Neue&quot;, arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;); font-weight: var(--font-weight-normal, 400); text-align: inherit; background-color: var(--color-neutral-0) ;\"> for more answers</span></li>\n\t</ul>\n\t</li>\n</ol>\n"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "content-template"
+		}
+	},
+	"version": 1.1
+}

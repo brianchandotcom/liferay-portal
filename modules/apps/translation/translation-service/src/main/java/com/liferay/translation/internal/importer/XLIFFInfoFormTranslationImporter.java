@@ -614,10 +614,7 @@ public class XLIFFInfoFormTranslationImporter
 
 		if ((segmentsExperience == null) ||
 			!Objects.equals(
-				segmentsExperience.getClassName(),
-				infoItemReference.getClassName()) ||
-			!Objects.equals(
-				segmentsExperience.getClassPK(),
+				segmentsExperience.getPlid(),
 				_getSegmentsExperienceClassPK(infoItemReference))) {
 
 			throw new XLIFFFileException.MustHaveValidId("File ID is invalid");

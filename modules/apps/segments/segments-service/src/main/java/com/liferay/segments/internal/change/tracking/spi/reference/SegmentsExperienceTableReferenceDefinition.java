@@ -17,8 +17,6 @@ package com.liferay.segments.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.ClassNameTable;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.segments.model.SegmentsExperience;
@@ -49,10 +47,7 @@ public class SegmentsExperienceTableReferenceDefinition
 				SegmentsExperienceTable.INSTANCE.segmentsExperienceId.eq(
 					SegmentsExperimentTable.INSTANCE.segmentsExperienceId
 				).and(
-					SegmentsExperienceTable.INSTANCE.classNameId.eq(
-						SegmentsExperimentTable.INSTANCE.classNameId)
-				).and(
-					SegmentsExperienceTable.INSTANCE.classPK.eq(
+					SegmentsExperienceTable.INSTANCE.plid.eq(
 						SegmentsExperimentTable.INSTANCE.classPK)
 				)
 			)
@@ -77,15 +72,8 @@ public class SegmentsExperienceTableReferenceDefinition
 				SegmentsExperienceTable.INSTANCE.groupId.eq(
 					LayoutTable.INSTANCE.groupId
 				).and(
-					SegmentsExperienceTable.INSTANCE.classPK.eq(
+					SegmentsExperienceTable.INSTANCE.plid.eq(
 						LayoutTable.INSTANCE.plid)
-				)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					SegmentsExperienceTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(Layout.class.getName())
 				)
 			)
 		).referenceInnerJoin(
@@ -96,18 +84,8 @@ public class SegmentsExperienceTableReferenceDefinition
 				SegmentsExperienceTable.INSTANCE.groupId.eq(
 					LayoutTable.INSTANCE.groupId
 				).and(
-					SegmentsExperienceTable.INSTANCE.classPK.eq(
+					SegmentsExperienceTable.INSTANCE.plid.eq(
 						LayoutTable.INSTANCE.classPK)
-				).and(
-					SegmentsExperienceTable.INSTANCE.classNameId.eq(
-						LayoutTable.INSTANCE.classNameId)
-				)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					SegmentsExperienceTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(Layout.class.getName())
 				)
 			)
 		);

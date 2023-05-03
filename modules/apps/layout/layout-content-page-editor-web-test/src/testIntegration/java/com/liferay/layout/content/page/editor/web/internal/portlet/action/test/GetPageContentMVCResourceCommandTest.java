@@ -340,7 +340,7 @@ public class GetPageContentMVCResourceCommandTest {
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				_portal.getClassNameId(Layout.class), _layout.getPlid());
+				_layout.getPlid());
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			JSONUtil.put(

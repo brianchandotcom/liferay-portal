@@ -156,9 +156,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 		long segmentsExperiencesCount =
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				themeDisplay.getPlid(), true);
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(), true);
 
 		if (segmentsExperiencesCount <= 1) {
 			return false;

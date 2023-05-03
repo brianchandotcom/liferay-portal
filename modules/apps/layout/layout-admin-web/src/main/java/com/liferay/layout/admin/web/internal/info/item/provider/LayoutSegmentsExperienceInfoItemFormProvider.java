@@ -58,7 +58,7 @@ public class LayoutSegmentsExperienceInfoItemFormProvider
 	private Layout _getLayout(SegmentsExperience segmentsExperience) {
 		try {
 			Layout layout = _layoutLocalService.getLayout(
-				segmentsExperience.getClassPK());
+				segmentsExperience.getPlid());
 
 			if (layout.isDraftLayout()) {
 				return layout;

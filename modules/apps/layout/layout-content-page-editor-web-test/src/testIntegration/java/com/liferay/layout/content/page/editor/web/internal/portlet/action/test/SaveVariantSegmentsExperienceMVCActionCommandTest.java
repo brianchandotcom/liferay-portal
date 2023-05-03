@@ -124,8 +124,7 @@ public class SaveVariantSegmentsExperienceMVCActionCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
-				_group.getGroupId(), 0, _portal.getClassNameId(Layout.class),
-				_layout.getPlid(),
+				_group.getGroupId(), 0, _layout.getPlid(),
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), "Variant 1"),
 				false, new UnicodeProperties(true), _serviceContext);

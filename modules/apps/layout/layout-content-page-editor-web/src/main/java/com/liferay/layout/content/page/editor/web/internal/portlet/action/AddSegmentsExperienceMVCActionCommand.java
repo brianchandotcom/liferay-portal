@@ -84,8 +84,7 @@ public class AddSegmentsExperienceMVCActionCommand
 			actionRequest);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience(
-			actionRequest, _portal.getClassNameId(Layout.class), plid,
-			segmentsExperiment, serviceContext);
+			actionRequest, plid, segmentsExperiment, serviceContext);
 
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
 			plid, segmentsExperiment);
@@ -139,7 +138,7 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	private SegmentsExperience _addSegmentsExperience(
-			ActionRequest actionRequest, long classNameId, long classPK,
+			ActionRequest actionRequest, long classPK,
 			SegmentsExperiment segmentsExperiment,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -151,7 +150,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 			return _segmentsExperienceService.appendSegmentsExperience(
 				serviceContext.getScopeGroupId(),
-				segmentsExperience.getSegmentsEntryId(), classNameId, classPK,
+				segmentsExperience.getSegmentsEntryId(), classPK,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),
 					ParamUtil.getString(actionRequest, "name")),
@@ -160,8 +159,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		return _segmentsExperienceService.addSegmentsExperience(
 			serviceContext.getScopeGroupId(),
-			ParamUtil.getLong(actionRequest, "segmentsEntryId"), classNameId,
-			classPK,
+			ParamUtil.getLong(actionRequest, "segmentsEntryId"), classPK,
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
 				ParamUtil.getString(actionRequest, "name")),

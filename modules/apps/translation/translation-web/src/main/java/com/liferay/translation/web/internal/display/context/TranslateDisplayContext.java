@@ -466,8 +466,7 @@ public class TranslateDisplayContext {
 
 		List<SegmentsExperience> segmentsExperiences =
 			SegmentsExperienceServiceUtil.getSegmentsExperiences(
-				_groupId, PortalUtil.getClassNameId(_className), _classPK,
-				true);
+				_groupId, _classPK, true);
 
 		List<Map<String, String>> options = new ArrayList<>();
 

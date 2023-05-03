@@ -225,7 +225,7 @@ public class LayoutWorkflowHandlerTest {
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				_portal.getClassNameId(Layout.class), layout.getPlid());
+				layout.getPlid());
 
 		String experience1HeadingText = RandomTestUtil.randomString();
 
@@ -237,7 +237,7 @@ public class LayoutWorkflowHandlerTest {
 		SegmentsExperience segmentsExperience2 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				_portal.getClassNameId(Layout.class), layout.getPlid());
+				layout.getPlid());
 
 		String experience2HeadingText = RandomTestUtil.randomString();
 
@@ -304,7 +304,7 @@ public class LayoutWorkflowHandlerTest {
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				_portal.getClassNameId(Layout.class), layout.getPlid());
+				layout.getPlid());
 
 		String experience1HeadingText = RandomTestUtil.randomString();
 
@@ -316,7 +316,7 @@ public class LayoutWorkflowHandlerTest {
 		SegmentsExperience segmentsExperience2 =
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
-				_portal.getClassNameId(Layout.class), layout.getPlid());
+				layout.getPlid());
 
 		String experience2HeadingText = RandomTestUtil.randomString();
 

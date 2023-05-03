@@ -626,8 +626,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return _segmentsExperienceService.fetchSegmentsExperience(
-			layout.getGroupId(), segmentsExperienceKey,
-			_portal.getClassNameId(Layout.class), layout.getPlid());
+			layout.getGroupId(), segmentsExperienceKey, layout.getPlid());
 	}
 
 	private List<SegmentsExperience> _getSegmentsExperiences(Layout layout)
@@ -638,8 +637,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return _segmentsExperienceLocalService.getSegmentsExperiences(
-			layout.getGroupId(), _portal.getClassNameId(Layout.class.getName()),
-			layout.getPlid(), true);
+			layout.getGroupId(), layout.getPlid(), true);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
@@ -696,13 +694,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			_segmentsExperienceRequestProcessorRegistry.
 				getSegmentsExperienceIds(
 					contextHttpServletRequest, null, layout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
 					layout.getPlid(), segmentsEntryIds);
 
 		if (ArrayUtil.isEmpty(segmentsExperienceIds)) {
 			return _segmentsExperienceLocalService.fetchSegmentsExperience(
 				layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid());
 		}
 

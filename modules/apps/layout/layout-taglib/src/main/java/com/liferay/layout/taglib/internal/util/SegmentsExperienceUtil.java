@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
@@ -85,10 +84,8 @@ public class SegmentsExperienceUtil {
 				segmentsExperienceId);
 
 		if ((segmentsExperience != null) &&
-			(PortalUtil.getClassNameId(Layout.class.getName()) ==
-				segmentsExperience.getClassNameId()) &&
-			((layout.getPlid() == segmentsExperience.getClassPK()) ||
-			 (layout.getClassPK() == segmentsExperience.getClassPK()))) {
+			((layout.getPlid() == segmentsExperience.getPlid()) ||
+			 (layout.getClassPK() == segmentsExperience.getPlid()))) {
 
 			return true;
 		}

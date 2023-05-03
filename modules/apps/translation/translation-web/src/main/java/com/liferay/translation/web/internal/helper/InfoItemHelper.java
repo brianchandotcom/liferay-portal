@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
@@ -93,8 +94,7 @@ public class InfoItemHelper {
 
 		return new ObjectValuePair<>(
 			new InfoItemReference(
-				segmentsExperience.getClassName(),
-				segmentsExperience.getClassPK()),
+				Layout.class.getName(), segmentsExperience.getPlid()),
 			StringBundler.concat(
 				StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
 				segmentsExperience.getName(locale),

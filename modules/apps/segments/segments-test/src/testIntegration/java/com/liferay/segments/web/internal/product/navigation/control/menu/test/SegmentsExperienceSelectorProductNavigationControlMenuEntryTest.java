@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -74,8 +73,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid());
+			_group.getGroupId(), layout.getPlid());
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
@@ -103,8 +101,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
 
 		SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid());
+			_group.getGroupId(), layout.getPlid());
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
@@ -131,8 +128,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid());
+			_group.getGroupId(), layout.getPlid());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
@@ -196,9 +192,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject(
 		filter = "component.name=com.liferay.segments.web.internal.product.navigation.control.menu.SegmentsExperienceSelectorProductNavigationControlMenuEntry"

@@ -3656,8 +3656,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-			long classNameId = _portal.getClassNameId(Layout.class);
-
 			Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
 				serviceContext.getScopeGroupId(), false,
 				jsonObject.getString("friendlyURL"));
@@ -3680,7 +3678,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_segmentsExperienceLocalService.appendSegmentsExperience(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
-					jsonObject.getLong("segmentsEntryId"), classNameId,
+					jsonObject.getLong("segmentsEntryId"),
 					draftLayout.getClassPK(),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),

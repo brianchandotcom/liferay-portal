@@ -434,10 +434,9 @@ public class SegmentsExperimentLocalServiceImpl
 		SegmentsExperience variantSegmentsExperience) {
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperiencePersistence.fetchByG_C_C_Last(
+			_segmentsExperiencePersistence.fetchByG_P_Last(
 				controlSegmentsExperience.getGroupId(),
-				controlSegmentsExperience.getClassNameId(),
-				controlSegmentsExperience.getClassPK(), null);
+				controlSegmentsExperience.getPlid(), null);
 
 		int controlSegmentsExperiencePriority =
 			controlSegmentsExperience.getPriority();

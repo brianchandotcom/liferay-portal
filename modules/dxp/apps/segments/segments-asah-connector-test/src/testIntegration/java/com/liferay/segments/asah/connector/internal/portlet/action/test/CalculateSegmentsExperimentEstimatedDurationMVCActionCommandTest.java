@@ -112,8 +112,7 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				_portal.getClassNameId(Layout.class), layout.getPlid(),
-				serviceContext);
+				layout.getPlid(), serviceContext);
 
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelLocalService.addSegmentsExperimentRel(

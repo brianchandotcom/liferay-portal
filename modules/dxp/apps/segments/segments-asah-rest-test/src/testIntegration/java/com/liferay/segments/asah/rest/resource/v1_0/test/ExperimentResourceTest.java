@@ -42,17 +42,15 @@ public class ExperimentResourceTest extends BaseExperimentResourceTestCase {
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				testGroup.getGroupId(),
-				ClassNameLocalServiceUtil.getClassNameId(
-					Layout.class.getName()),
-				layout.getPlid());
+				testGroup.getGroupId(), layout.getPlid());
 
 		return _toExperiment(
 			SegmentsTestUtil.addSegmentsExperiment(
 				testGroup.getGroupId(),
 				segmentsExperience.getSegmentsExperienceId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK()));
+				ClassNameLocalServiceUtil.getClassNameId(
+					Layout.class.getName()),
+				segmentsExperience.getPlid()));
 	}
 
 	@Override

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -138,9 +137,7 @@ public class GetDataMVCResourceCommandTest {
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				segmentsEntry.getSegmentsEntryId(),
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				layout.getPlid(),
+				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		mockLiferayResourceRequest.setParameter(
@@ -177,9 +174,6 @@ public class GetDataMVCResourceCommandTest {
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

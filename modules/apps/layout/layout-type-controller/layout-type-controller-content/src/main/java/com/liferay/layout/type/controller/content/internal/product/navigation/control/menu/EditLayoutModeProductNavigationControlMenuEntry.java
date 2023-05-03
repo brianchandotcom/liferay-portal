@@ -236,10 +236,8 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					segmentsExperienceId);
 
 			if ((segmentsExperience != null) &&
-				(_portal.getClassNameId(Layout.class.getName()) ==
-					segmentsExperience.getClassNameId()) &&
-				((layout.getPlid() == segmentsExperience.getClassPK()) ||
-				 (layout.getClassPK() == segmentsExperience.getClassPK()))) {
+				((layout.getPlid() == segmentsExperience.getPlid()) ||
+				 (layout.getClassPK() == segmentsExperience.getPlid()))) {
 
 				redirect = HttpComponentsUtil.setParameter(
 					redirect, "segmentsExperienceId", segmentsExperienceId);

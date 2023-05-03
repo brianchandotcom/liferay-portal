@@ -325,8 +325,7 @@ public class ExportTranslationDisplayContext {
 			_intersect(
 				segmentsExperiences,
 				SegmentsExperienceServiceUtil.getSegmentsExperiences(
-					_groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-					classPK, true));
+					_groupId, classPK, true));
 		}
 
 		return segmentsExperiences;
@@ -349,7 +348,7 @@ public class ExportTranslationDisplayContext {
 		for (long classPK : _classPKs) {
 			int segmentsExperiencesCount =
 				SegmentsExperienceLocalServiceUtil.getSegmentsExperiencesCount(
-					_groupId, _classNameId, classPK);
+					_groupId, classPK);
 
 			if (segmentsExperiencesCount > 1) {
 				return true;

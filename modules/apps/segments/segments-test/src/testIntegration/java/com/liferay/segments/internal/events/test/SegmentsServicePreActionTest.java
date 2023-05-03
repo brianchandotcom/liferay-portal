@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -345,9 +344,7 @@ public class SegmentsServicePreActionTest {
 
 				List<SegmentsExperience> segmentsExperiences =
 					_segmentsExperienceLocalService.getSegmentsExperiences(
-						_group.getGroupId(),
-						_portal.getClassNameId(Layout.class.getName()),
-						layout.getPlid());
+						_group.getGroupId(), layout.getPlid());
 
 				long[] expectedSegmentsExperienceIds =
 					new long[segmentsExperiences.size()];
@@ -415,9 +412,6 @@ public class SegmentsServicePreActionTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

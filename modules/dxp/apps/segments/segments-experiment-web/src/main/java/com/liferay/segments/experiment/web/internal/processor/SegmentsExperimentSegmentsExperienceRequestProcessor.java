@@ -72,8 +72,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	@Override
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK, long[] segmentsExperienceIds)
+			HttpServletResponse httpServletResponse, long groupId, long plid,
+			long[] segmentsExperienceIds)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -118,12 +118,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		segmentsExperienceId = _getCurrentSegmentsExperienceId(
-			groupId, classNameId, classPK, httpServletRequest);
+			groupId, plid, httpServletRequest);
 
 		if (segmentsExperienceId != -1) {
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
-					segmentsExperienceId, classNameId, classPK,
+					segmentsExperienceId, _portal.getClassNameId(Layout.class),
+					plid,
 					SegmentsExperimentConstants.Status.getSplitStatusValues());
 
 			if (segmentsExperiment != null) {
@@ -149,7 +150,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		if (ArrayUtil.isEmpty(segmentsExperienceIds)) {
 			segmentsExperienceId =
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(classPK);
+					fetchDefaultSegmentsExperienceId(plid);
 		}
 		else {
 			segmentsExperienceId = segmentsExperienceIds[0];
@@ -158,7 +159,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentLocalService.
 				getSegmentsExperienceSegmentsExperiments(
-					new long[] {segmentsExperienceId}, classNameId, classPK,
+					new long[] {segmentsExperienceId},
+					_portal.getClassNameId(Layout.class), plid,
 					SegmentsExperimentConstants.Status.getSplitStatusValues(),
 					0, 1);
 
@@ -207,14 +209,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	@Override
 	public long[] getSegmentsExperienceIds(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId,
-			long classNameId, long classPK, long[] segmentsEntryIds,
-			long[] segmentsExperienceIds)
+			HttpServletResponse httpServletResponse, long groupId, long plid,
+			long[] segmentsEntryIds, long[] segmentsExperienceIds)
 		throws PortalException {
 
 		return getSegmentsExperienceIds(
-			httpServletRequest, httpServletResponse, groupId, classNameId,
-			classPK, segmentsExperienceIds);
+			httpServletRequest, httpServletResponse, groupId, plid,
+			segmentsExperienceIds);
 	}
 
 	private Cookie _getCookie(HttpServletRequest httpServletRequest) {
@@ -236,8 +237,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	}
 
 	private long _getCurrentSegmentsExperienceId(
-		long groupId, long classNameId, long classPK,
-		HttpServletRequest httpServletRequest) {
+		long groupId, long plid, HttpServletRequest httpServletRequest) {
 
 		Cookie cookie = _getCookie(httpServletRequest);
 
@@ -245,18 +245,16 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			return -1;
 		}
 
-		return _getSegmentsExperienceId(
-			groupId, cookie.getValue(), classNameId, classPK);
+		return _getSegmentsExperienceId(groupId, cookie.getValue(), plid);
 	}
 
 	private long _getSegmentsExperienceId(
-		long groupId, String segmentsExperienceKey, long classNameId,
-		long classPK) {
+		long groupId, String segmentsExperienceKey, long plid) {
 
 		if (Validator.isNotNull(segmentsExperienceKey)) {
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					groupId, segmentsExperienceKey, classNameId, classPK);
+					groupId, segmentsExperienceKey, plid);
 
 			if (segmentsExperience != null) {
 				return segmentsExperience.getSegmentsExperienceId();
@@ -318,7 +316,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		return _getSegmentsExperienceId(
 			themeDisplay.getScopeGroupId(), selectedSegmentsExperienceKey,
-			_portal.getClassNameId(Layout.class), themeDisplay.getPlid());
+			themeDisplay.getPlid());
 	}
 
 	private String _getSelectedSegmentsExperimentKey(

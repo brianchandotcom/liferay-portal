@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -304,9 +303,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				TestPropsValues.getUserId(), layout.getGroupId(),
-				segmentsEntry.getSegmentsEntryId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid(),
+				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
@@ -360,9 +357,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private LayoutsImporter _layoutsImporter;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

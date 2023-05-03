@@ -125,8 +125,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getClassNameId(),
-					segmentsExperience.getClassPK(),
+					_classNameLocalService.getClassNameId(
+						Layout.class.getName()),
+					segmentsExperience.getPlid(),
 					new int[] {
 						SegmentsExperimentConstants.Status.DRAFT.getValue()
 					});
@@ -182,9 +183,7 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		return SegmentsTestUtil.addSegmentsExperience(
-			segmentsEntry.getSegmentsEntryId(),
-			_classNameLocalService.getClassNameId(Layout.class.getName()),
-			layout.getPlid(),
+			segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
@@ -200,9 +199,11 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		mockLiferayPortletActionRequest.setParameter(
-			"classNameId", String.valueOf(segmentsExperience.getClassNameId()));
+			"classNameId",
+			String.valueOf(
+				_classNameLocalService.getClassNameId(Layout.class.getName())));
 		mockLiferayPortletActionRequest.setParameter(
-			"classPK", String.valueOf(segmentsExperience.getClassPK()));
+			"classPK", String.valueOf(segmentsExperience.getPlid()));
 		mockLiferayPortletActionRequest.setParameter(
 			"description", description);
 		mockLiferayPortletActionRequest.setParameter("goal", goal);

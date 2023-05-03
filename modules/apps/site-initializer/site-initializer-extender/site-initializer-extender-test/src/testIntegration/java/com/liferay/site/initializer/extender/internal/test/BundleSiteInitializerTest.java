@@ -2228,8 +2228,7 @@ public class BundleSiteInitializerTest {
 					segmentsEntry1.getSegmentsEntryId(),
 					segmentsEntry2.getSegmentsEntryId()
 				},
-				_portal.getClassNameId(Layout.class), draftLayout.getClassPK(),
-				true);
+				draftLayout.getClassPK(), true);
 
 		Assert.assertEquals(
 			segmentsExperiences.toString(), 2, segmentsExperiences.size());

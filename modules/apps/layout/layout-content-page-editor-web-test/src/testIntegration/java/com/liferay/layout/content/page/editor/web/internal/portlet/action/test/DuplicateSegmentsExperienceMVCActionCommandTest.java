@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -93,7 +92,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
 				_group.getGroupId(), segmentsEntry.getSegmentsEntryId(),
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
 				_layout.getPlid(),
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), "Experience"),
@@ -160,9 +158,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 
 		return themeDisplay;
 	}
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

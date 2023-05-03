@@ -79,7 +79,7 @@ public class SegmentsExperienceModelResourcePermissionWrapper
 			throws PortalException {
 
 			if (_layoutPermission.containsLayoutRestrictedUpdatePermission(
-					permissionChecker, segmentsExperience.getClassPK())) {
+					permissionChecker, segmentsExperience.getPlid())) {
 
 				return true;
 			}

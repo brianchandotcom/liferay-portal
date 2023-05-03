@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -107,8 +106,7 @@ public class LayoutTypeContentTest {
 		Assert.assertEquals(
 			0,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				_group.getGroupId(), PortalUtil.getClassNameId(Layout.class),
-				layout.getPlid()));
+				_group.getGroupId(), layout.getPlid()));
 
 		LayoutPageTemplateStructureRel deletedLayoutPageTemplateStructureRel =
 			_layoutPageTemplateStructureRelLocalService.

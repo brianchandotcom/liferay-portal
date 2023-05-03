@@ -102,9 +102,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		return copyLayoutContent(
 			TransformUtil.transformToLongArray(
 				_segmentsExperienceLocalService.getSegmentsExperiences(
-					sourceLayout.getGroupId(),
-					_portal.getClassNameId(Layout.class),
-					sourceLayout.getPlid()),
+					sourceLayout.getGroupId(), sourceLayout.getPlid()),
 				SegmentsExperienceModel::getSegmentsExperienceId),
 			sourceLayout, targetLayout);
 	}
@@ -706,9 +704,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				serviceContext.getModifiedDate(new Date()));
 			newSegmentsExperience.setSegmentsExperienceKey(
 				String.valueOf(_counterLocalService.increment()));
-			newSegmentsExperience.setClassNameId(
-				_portal.getClassNameId(Layout.class));
-			newSegmentsExperience.setClassPK(targetLayout.getPlid());
+			newSegmentsExperience.setPlid(targetLayout.getPlid());
 
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				newSegmentsExperience);

@@ -74,14 +74,13 @@ public class SegmentsServicePreAction extends Action {
 	private long[] _getSegmentsExperienceIds(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, long groupId, long userId,
-		long classNameId, long classPK) {
+		long plid) {
 
 		try {
 			long[] segmentsExperienceIds =
 				_segmentsExperienceRequestProcessorRegistry.
 					getSegmentsExperienceIds(
-						httpServletRequest, httpServletResponse, groupId,
-						classNameId, classPK);
+						httpServletRequest, httpServletResponse, groupId, plid);
 
 			Set<Long> segmentsExperienceIdsSegmentsEntryIds = new HashSet<>();
 
@@ -117,8 +116,8 @@ public class SegmentsServicePreAction extends Action {
 
 			return _segmentsExperienceRequestProcessorRegistry.
 				getSegmentsExperienceIds(
-					httpServletRequest, httpServletResponse, groupId,
-					classNameId, classPK, segmentsEntryIds);
+					httpServletRequest, httpServletResponse, groupId, plid,
+					segmentsEntryIds);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -128,7 +127,7 @@ public class SegmentsServicePreAction extends Action {
 
 		return new long[] {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				classPK)
+				plid)
 		};
 	}
 
@@ -156,9 +155,7 @@ public class SegmentsServicePreAction extends Action {
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
 			_getSegmentsExperienceIds(
 				httpServletRequest, httpServletResponse, layout.getGroupId(),
-				themeDisplay.getUserId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid()));
+				themeDisplay.getUserId(), layout.getPlid()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

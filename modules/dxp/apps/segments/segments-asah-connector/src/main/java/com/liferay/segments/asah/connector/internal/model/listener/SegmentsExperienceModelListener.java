@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -68,8 +69,8 @@ public class SegmentsExperienceModelListener
 			List<SegmentsExperiment> segmentsExperiments =
 				_segmentsExperimentLocalService.getSegmentsExperiments(
 					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getClassNameId(),
-					segmentsExperience.getClassPK(), new int[0], null);
+					_portal.getClassNameId(Layout.class),
+					segmentsExperience.getPlid(), new int[0], null);
 
 			for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
 				_processUpdateSegmentsExperience(

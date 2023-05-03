@@ -128,8 +128,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		try {
 			_segmentsExperienceLocalService.deleteSegmentsExperiences(
-				layout.getGroupId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid());
+				layout.getGroupId(), layout.getPlid());
 
 			if (!layout.isTypeContent()) {
 				return;
@@ -156,7 +155,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				_portal.getClassNameId(Layout.class), layout.getPlid());
+				layout.getPlid());
 
 		if (segmentsExperience != null) {
 			return segmentsExperience;

@@ -20,7 +20,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.model.SegmentsEntry;
@@ -60,7 +59,7 @@ public class SegmentsExperienceTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return SegmentsTestUtil.addSegmentsExperience(
 			_layout.getGroupId(), _segmentsEntry.getSegmentsEntryId(),
-			PortalUtil.getClassNameId(Layout.class), _layout.getPlid());
+			_layout.getPlid());
 	}
 
 	private Layout _layout;

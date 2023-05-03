@@ -357,8 +357,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			"segmentsExperiences",
 			JSONUtil.toJSONArray(
 				_segmentsExperienceService.getSegmentsExperiences(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid(), true),
+					layout.getGroupId(), layout.getPlid(), true),
 				segmentsExperience -> JSONUtil.put(
 					"name", segmentsExperience.getName(locale)
 				).put(

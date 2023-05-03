@@ -85,12 +85,12 @@ public class LayoutPageTemplateStructureDataHandlerHelper {
 					existingLayoutPageTemplateStructureRels) {
 
 			_updateSegmentsExperiences(
-				classNameId, classPK, existingLayoutPageTemplateStructureRel);
+				classPK, existingLayoutPageTemplateStructureRel);
 		}
 	}
 
 	private void _updateSegmentsExperiences(
-		long classNameId, long classPK,
+		long classPK,
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
 
 		SegmentsExperience existingSegmentsExperience =
@@ -102,8 +102,7 @@ public class LayoutPageTemplateStructureDataHandlerHelper {
 			return;
 		}
 
-		existingSegmentsExperience.setClassNameId(classNameId);
-		existingSegmentsExperience.setClassPK(classPK);
+		existingSegmentsExperience.setPlid(classPK);
 
 		_segmentsExperienceLocalService.updateSegmentsExperience(
 			existingSegmentsExperience);

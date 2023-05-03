@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -230,9 +229,7 @@ public class SegmentsExperienceSelectorDisplayContext {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
-				_themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				_themeDisplay.getPlid(), true);
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getPlid(), true);
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			segmentsExperiencesJSONArray.put(

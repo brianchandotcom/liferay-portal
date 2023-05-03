@@ -300,14 +300,12 @@ public class SegmentsExperimentServiceTest {
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(),
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				layout.getPlid());
+				_group.getGroupId(), layout.getPlid());
 
 		return _segmentsExperimentService.addSegmentsExperiment(
 			segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperience.getClassNameId(),
-			segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+			_classNameLocalService.getClassNameId(Layout.class.getName()),
+			segmentsExperience.getPlid(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK, serviceContext);

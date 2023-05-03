@@ -2147,9 +2147,7 @@ public class LayoutStagedModelDataHandler
 		}
 
 		_segmentsExperienceLocalService.deleteSegmentsExperiences(
-			portletDataContext.getScopeGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
-			importedLayout.getPlid());
+			portletDataContext.getScopeGroupId(), importedLayout.getPlid());
 
 		List<Element> layoutPageTemplateStructureElements =
 			portletDataContext.getReferenceDataElements(

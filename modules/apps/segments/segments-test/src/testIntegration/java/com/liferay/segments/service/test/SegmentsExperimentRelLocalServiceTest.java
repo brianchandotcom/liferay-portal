@@ -300,9 +300,7 @@ public class SegmentsExperimentRelLocalServiceTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		return SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(),
-			_classNameLocalService.getClassNameId(Layout.class.getName()),
-			layout.getPlid());
+			_group.getGroupId(), layout.getPlid());
 	}
 
 	private SegmentsExperiment _addSegmentsExperiment() throws Exception {
@@ -317,8 +315,8 @@ public class SegmentsExperimentRelLocalServiceTest {
 
 		return SegmentsTestUtil.addSegmentsExperiment(
 			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperience.getClassNameId(),
-			segmentsExperience.getClassPK());
+			_classNameLocalService.getClassNameId(Layout.class.getName()),
+			segmentsExperience.getPlid());
 	}
 
 	@Inject

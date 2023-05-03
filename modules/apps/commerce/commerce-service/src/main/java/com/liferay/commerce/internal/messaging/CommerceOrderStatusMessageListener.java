@@ -15,6 +15,7 @@
 package com.liferay.commerce.internal.messaging;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeConstants;
 import com.liferay.commerce.model.CommerceOrder;
@@ -59,22 +60,34 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			if (CommerceOrderConstants.ORDER_STATUS_CANCELLED == orderStatus) {
-				User currentUser = _userService.getCurrentUser();
+			if ((CommerceOrderConstants.ORDER_STATUS_CANCELLED ==
+					orderStatus) &&
+				(commerceOrderItem.getBookedQuantityId() > 0)) {
 
-				_commerceInventoryBookedQuantityLocalService.
-					restockCommerceInventoryBookedQuantity(
-						currentUser.getUserId(),
-						commerceOrderItem.getBookedQuantityId(),
-						HashMapBuilder.put(
-							CommerceInventoryAuditTypeConstants.ORDER_ID,
-							String.valueOf(
-								commerceOrderItem.getCommerceOrderId())
-						).put(
-							CommerceInventoryAuditTypeConstants.ORDER_ITEM_ID,
-							String.valueOf(
-								commerceOrderItem.getCommerceOrderItemId())
-						).build());
+				CommerceInventoryBookedQuantity
+					commerceInventoryBookedQuantity =
+						_commerceInventoryBookedQuantityLocalService.
+							fetchCommerceInventoryBookedQuantity(
+								commerceOrderItem.getBookedQuantityId());
+
+				if (commerceInventoryBookedQuantity != null) {
+					User currentUser = _userService.getCurrentUser();
+
+					_commerceInventoryBookedQuantityLocalService.
+						restockCommerceInventoryBookedQuantity(
+							currentUser.getUserId(),
+							commerceOrderItem.getBookedQuantityId(),
+							HashMapBuilder.put(
+								CommerceInventoryAuditTypeConstants.ORDER_ID,
+								String.valueOf(
+									commerceOrderItem.getCommerceOrderId())
+							).put(
+								CommerceInventoryAuditTypeConstants.
+									ORDER_ITEM_ID,
+								String.valueOf(
+									commerceOrderItem.getCommerceOrderItemId())
+							).build());
+				}
 			}
 		}
 	}

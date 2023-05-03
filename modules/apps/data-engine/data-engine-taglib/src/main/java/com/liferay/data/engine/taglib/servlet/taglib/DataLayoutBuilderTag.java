@@ -18,6 +18,8 @@ import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTag
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,7 +58,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 			setNamespacedAttribute(
 				httpServletRequest, "dataLayoutBuilderModule",
-				DataLayoutTaglibUtil.resolveModule(
+				_resolveModule(
 					"data-engine-taglib/data_layout_builder/js" +
 						"/DataLayoutBuilder.es"));
 
@@ -165,7 +167,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	}
 
 	private String _getPluginEntryPoint(String value) {
-		return DataLayoutTaglibUtil.resolveModule(
+		return _resolveModule(
 			"data-engine-taglib/data_layout_builder/js/plugins/" + value +
 				"/index");
 	}
@@ -230,7 +232,16 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return sidebarPanels;
 	}
 
+	private String _resolveModule(String moduleName) {
+		NPMResolver npmResolver = _npmResolverSnapshot.get();
+
+		return npmResolver.resolveModuleName(moduleName);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutBuilderTag.class);
+
+	private static final Snapshot<NPMResolver> _npmResolverSnapshot =
+		new Snapshot<>(DataLayoutBuilderTag.class, NPMResolver.class);
 
 }

@@ -239,10 +239,6 @@ public class DataLayoutTaglibUtil {
 		return _dataLayoutTaglibUtil._resolveFieldTypesModules();
 	}
 
-	public static String resolveModule(String moduleName) {
-		return _dataLayoutTaglibUtil._npmResolver.resolveModuleName(moduleName);
-	}
-
 	@Activate
 	protected void activate() {
 		_dataLayoutTaglibUtil = this;

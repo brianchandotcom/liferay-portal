@@ -141,7 +141,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 											<div class="card-row">
 												<div class="autofit-col autofit-col-expand">
 													<aui:a cssClass="card-title text-truncate" href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>" title="<%= HtmlUtil.escapeAttribute(latestFileVersion.getTitle()) %>">
-														<%= HtmlUtil.escape(latestFileVersion.getTitle()) %>
+														<%= latestFileVersion.getTitle() %>
 													</aui:a>
 
 													<div class="card-subtitle text-truncate">

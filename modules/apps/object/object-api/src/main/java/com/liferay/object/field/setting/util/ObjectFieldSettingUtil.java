@@ -25,8 +25,11 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -85,16 +88,36 @@ public class ObjectFieldSettingUtil {
 		}
 	}
 
-	public static String getValue(String name, ObjectField objectField) {
-		for (ObjectFieldSetting objectFieldSetting :
-				objectField.getObjectFieldSettings()) {
+	public static String getTimeZoneId(
+		List<ObjectFieldSetting> objectFieldSettings, User user) {
 
+		if ((user == null) || ListUtil.isNull(objectFieldSettings) ||
+			!StringUtil.equals(
+				getValue(
+					ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+					objectFieldSettings),
+				ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
+
+			return null;
+		}
+
+		return user.getTimeZoneId();
+	}
+
+	public static String getValue(
+		String name, List<ObjectFieldSetting> objectFieldSettings) {
+
+		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
 			if (Objects.equals(objectFieldSetting.getName(), name)) {
 				return objectFieldSetting.getValue();
 			}
 		}
 
 		return null;
+	}
+
+	public static String getValue(String name, ObjectField objectField) {
+		return getValue(name, objectField.getObjectFieldSettings());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

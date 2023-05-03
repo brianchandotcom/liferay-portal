@@ -14,7 +14,7 @@
 
 package com.liferay.redirect.model;
 
-import java.util.regex.Pattern;
+import com.google.re2j.Pattern;
 
 /**
  * @author Alicia García

@@ -14,6 +14,8 @@
 
 package com.liferay.redirect.internal.configuration.persistence.listener;
 
+import com.google.re2j.PatternSyntaxException;
+
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +26,6 @@ import com.liferay.redirect.internal.util.PatternUtil;
 
 import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.regex.PatternSyntaxException;
 
 import org.osgi.service.component.annotations.Component;
 

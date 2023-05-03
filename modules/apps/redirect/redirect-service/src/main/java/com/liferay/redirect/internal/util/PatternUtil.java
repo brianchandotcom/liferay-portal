@@ -14,6 +14,8 @@
 
 package com.liferay.redirect.internal.util;
 
+import com.google.re2j.Pattern;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.redirect.constants.RedirectConstants;
@@ -21,7 +23,6 @@ import com.liferay.redirect.model.RedirectPatternEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author Adolfo Pérez

@@ -14,6 +14,8 @@
 
 package com.liferay.redirect.internal.provider;
 
+import com.google.re2j.Pattern;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -30,7 +32,6 @@ import com.liferay.redirect.service.RedirectEntryLocalService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;

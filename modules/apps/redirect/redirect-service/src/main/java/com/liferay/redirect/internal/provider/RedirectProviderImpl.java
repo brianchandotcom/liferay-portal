@@ -14,6 +14,9 @@
 
 package com.liferay.redirect.internal.provider;
 
+import com.google.re2j.Matcher;
+import com.google.re2j.Pattern;
+
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -35,8 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.ConfigurationException;

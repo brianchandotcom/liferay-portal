@@ -14,6 +14,9 @@
 
 package com.liferay.redirect.internal.util;
 
+import com.google.re2j.Pattern;
+import com.google.re2j.PatternSyntaxException;
+
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -21,8 +24,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.redirect.model.RedirectPatternEntry;
 
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import org.junit.Assert;
 import org.junit.Before;

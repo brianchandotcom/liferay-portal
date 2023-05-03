@@ -14,6 +14,8 @@
 
 package com.liferay.redirect.web.internal.portlet.action;
 
+import com.google.re2j.Pattern;
+
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +35,6 @@ import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import javax.portlet.ActionRequest;

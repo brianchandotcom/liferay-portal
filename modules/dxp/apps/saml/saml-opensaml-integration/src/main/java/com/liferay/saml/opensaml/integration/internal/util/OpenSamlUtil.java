@@ -913,11 +913,12 @@ public class OpenSamlUtil {
 		if (globalSignatureSigningConfiguration instanceof
 				BasicSignatureSigningConfiguration) {
 
-			BasicSignatureSigningConfiguration signatureSigningConfiguration =
-				(BasicSignatureSigningConfiguration)
-					globalSignatureSigningConfiguration;
+			BasicSignatureSigningConfiguration
+				basicSignatureSigningConfiguration =
+					(BasicSignatureSigningConfiguration)
+						globalSignatureSigningConfiguration;
 
-			signatureSigningConfiguration.setSigningCredentials(
+			basicSignatureSigningConfiguration.setSigningCredentials(
 				Collections.singletonList(credential));
 		}
 

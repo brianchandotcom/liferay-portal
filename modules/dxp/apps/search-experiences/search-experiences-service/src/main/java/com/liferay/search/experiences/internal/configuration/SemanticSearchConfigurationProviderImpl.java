@@ -33,15 +33,17 @@ public class SemanticSearchConfigurationProviderImpl
 
 	@Override
 	public SemanticSearchConfiguration getCompanyConfiguration(long companyId) {
-		return _getConfiguration(companyId);
+		return _getSemanticSearchConfiguration(companyId);
 	}
 
 	@Override
 	public SemanticSearchConfiguration getSystemConfiguration() {
-		return _getConfiguration(CompanyConstants.SYSTEM);
+		return _getSemanticSearchConfiguration(CompanyConstants.SYSTEM);
 	}
 
-	private SemanticSearchConfiguration _getConfiguration(long companyId) {
+	private SemanticSearchConfiguration _getSemanticSearchConfiguration(
+		long companyId) {
+
 		try {
 			if (companyId > CompanyConstants.SYSTEM) {
 				return _configurationProvider.getCompanyConfiguration(

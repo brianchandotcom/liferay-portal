@@ -1000,7 +1000,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntryByExternalReferenceCode(externalReferenceCode: ___){actions, active, bulkPricing, customFields, discountDiscovery, discountLevel1, discountLevel2, discountLevel3, discountLevel4, discountLevelsFormatted, displayDate, expirationDate, externalReferenceCode, hasTierPrice, neverExpire, price, priceEntryId, priceFormatted, priceListExternalReferenceCode, priceListId, product, sku, skuExternalReferenceCode, skuId, tierPrices}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntryByExternalReferenceCode(externalReferenceCode: ___){actions, active, bulkPricing, customFields, discountDiscovery, discountLevel1, discountLevel2, discountLevel3, discountLevel4, discountLevelsFormatted, displayDate, expirationDate, externalReferenceCode, hasTierPrice, neverExpire, price, priceEntryId, priceFormatted, priceListExternalReferenceCode, priceListId, priceOnApplication, product, sku, skuExternalReferenceCode, skuId, tierPrices}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public PriceEntry priceEntryByExternalReferenceCode(
@@ -1018,7 +1018,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntry(priceEntryId: ___){actions, active, bulkPricing, customFields, discountDiscovery, discountLevel1, discountLevel2, discountLevel3, discountLevel4, discountLevelsFormatted, displayDate, expirationDate, externalReferenceCode, hasTierPrice, neverExpire, price, priceEntryId, priceFormatted, priceListExternalReferenceCode, priceListId, product, sku, skuExternalReferenceCode, skuId, tierPrices}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntry(priceEntryId: ___){actions, active, bulkPricing, customFields, discountDiscovery, discountLevel1, discountLevel2, discountLevel3, discountLevel4, discountLevelsFormatted, displayDate, expirationDate, externalReferenceCode, hasTierPrice, neverExpire, price, priceEntryId, priceFormatted, priceListExternalReferenceCode, priceListId, priceOnApplication, product, sku, skuExternalReferenceCode, skuId, tierPrices}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public PriceEntry priceEntry(@GraphQLName("priceEntryId") Long priceEntryId)

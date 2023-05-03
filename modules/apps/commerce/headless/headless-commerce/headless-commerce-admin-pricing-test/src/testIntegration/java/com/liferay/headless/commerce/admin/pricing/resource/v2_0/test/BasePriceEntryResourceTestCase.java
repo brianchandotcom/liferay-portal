@@ -1318,6 +1318,16 @@ public abstract class BasePriceEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"priceOnApplication", additionalAssertFieldName)) {
+
+				if (priceEntry.getPriceOnApplication() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("product", additionalAssertFieldName)) {
 				if (priceEntry.getProduct() == null) {
 					valid = false;
@@ -1699,6 +1709,19 @@ public abstract class BasePriceEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"priceOnApplication", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						priceEntry1.getPriceOnApplication(),
+						priceEntry2.getPriceOnApplication())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("product", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						priceEntry1.getProduct(), priceEntry2.getProduct())) {
@@ -2024,6 +2047,11 @@ public abstract class BasePriceEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("priceOnApplication")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("product")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2114,6 +2142,7 @@ public abstract class BasePriceEntryResourceTestCase {
 				priceListExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				priceListId = RandomTestUtil.randomLong();
+				priceOnApplication = RandomTestUtil.randomBoolean();
 				skuExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				skuId = RandomTestUtil.randomLong();

@@ -167,6 +167,8 @@ public class QuestionsConfigurationModelListener
 					"getMessageBoardSection\n", headlessDeliveryPackage,
 					"MessageBoardSectionResourceImpl#",
 					"getSiteMessageBoardSectionsPage\n",
+					headlessDeliveryPackage, "MessageBoardSectionResourceImpl#",
+					"getMessageBoardSectionMessageBoardSectionsPage\n",
 					headlessDeliveryPackage, "MessageBoardThreadResourceImpl#",
 					"getMessageBoardSectionMessageBoardThreadsPage\n",
 					headlessDeliveryPackage, "MessageBoardThreadResourceImpl#",

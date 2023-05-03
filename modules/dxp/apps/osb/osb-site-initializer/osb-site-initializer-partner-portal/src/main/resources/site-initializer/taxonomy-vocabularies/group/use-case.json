@@ -1,0 +1,9 @@
+{
+	"description": "Use Case vocabulary",
+	"externalReferenceCode": "PRMV007",
+	"name": "Use Case",
+	"name_i18n": {
+		"en_US": "Use Case"
+	},
+	"viewableBy": "Anyone"
+}

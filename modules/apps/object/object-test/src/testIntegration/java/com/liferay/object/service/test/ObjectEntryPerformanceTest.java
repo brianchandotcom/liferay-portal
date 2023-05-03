@@ -51,8 +51,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -105,10 +107,15 @@ public class ObjectEntryPerformanceTest {
 				properties.getProperty("number.of.object.entries")));
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		_deleteObjectEntries();
+	}
+
 	@Test
 	public void testGetObjectEntries() throws Exception {
 		try (Closeable closeable = _timeSpent()) {
-			_objectEntryLocalService.getObjectEntries(
+			_objectEntries = _objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
@@ -136,6 +143,16 @@ public class ObjectEntryPerformanceTest {
 						}
 					},
 					ObjectDefinitionConstants.SCOPE_COMPANY);
+			}
+		}
+	}
+
+	private void _deleteObjectEntries() throws Exception {
+		try (Closeable closeable = _timeSpent()) {
+			for (com.liferay.object.model.ObjectEntry objectEntry :
+					_objectEntries) {
+
+				_objectEntryLocalService.deleteObjectEntry(objectEntry);
 			}
 		}
 	}
@@ -171,6 +188,8 @@ public class ObjectEntryPerformanceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private List<com.liferay.object.model.ObjectEntry> _objectEntries;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

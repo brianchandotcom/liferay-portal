@@ -15,14 +15,20 @@
 import {
 	createActionURL,
 	createRenderURL,
+	getCheckedCheckboxes,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
+	postForm,
 } from 'frontend-js-web';
 
 export const ACTIONS = {
 	activateUser(itemData) {
 		submitForm(document.hrefFm, itemData.activateUserURL);
+	},
+
+	activateUsers(itemData, portletNamespace) {
+		updateUsers(portletNamespace, itemData?.activateUsersURL);
 	},
 
 	assignOrganizationRoles(itemData) {
@@ -53,6 +59,10 @@ export const ACTIONS = {
 		});
 	},
 
+	deactivateUsers(itemData, portletNamespace) {
+		updateUsers(portletNamespace, itemData?.editUsersURL);
+	},
+
 	deleteUser(itemData) {
 		openConfirmModal({
 			message: Liferay.Language.get(
@@ -64,34 +74,6 @@ export const ACTIONS = {
 				}
 			},
 		});
-	},
-
-	<portlet:namespace />deleteUsers(cmd) {
-		if (cmd === '<%= Constants.DEACTIVATE %>') {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						<portlet:namespace />doDeleteUsers(cmd);
-					}
-				},
-			});
-		}
-		else if (cmd === '<%= Constants.DELETE %>') {
-			Liferay.Util.openConfirmModal({
-				message:
-					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						<portlet:namespace />doDeleteUsers(cmd);
-					}
-				},
-			});
-		}
-		else if (cmd === '<%= Constants.RESTORE %>') {
-			<portlet:namespace />doDeleteUsers(cmd);
-		}
 	},
 
 	deleteUserActionContributor(itemData) {
@@ -106,6 +88,10 @@ export const ACTIONS = {
 				}
 			},
 		});
+	},
+
+	deleteUsers(itemData, portletNamespace) {
+		updateUsers(portletNamespace, itemData?.editUsersURL);
 	},
 
 	permissions(itemData) {
@@ -176,19 +162,25 @@ export const ACTIONS = {
 	},
 };
 
-function <portlet:namespace />doDeleteUsers(cmd) {
-	var form = document.<portlet:namespace />fm;
+const getUserIds = (portletNamespace) => {
+	const form = document.getElementById(`${portletNamespace}fm`);
 
-	Liferay.Util.postForm(form, {
-		data: {
-			deleteUserIds: Liferay.Util.getCheckedCheckboxes(
-				form,
-				'<portlet:namespace />allRowIds',
-				'<portlet:namespace />rowIdsUser'
-			),
-			redirect: '<%= currentURL %>',
-			<%= Constants.CMD %>: cmd,
-		},
-		url: '<portlet:actionURL name="/users_admin/edit_user" />',
-	});
-}
+	return getCheckedCheckboxes(
+		form,
+		`${portletNamespace}allRowIds`,
+		`${portletNamespace}rowIdsUser`
+	);
+};
+
+const updateUsers = (portletNamespace, url) => {
+	const form = document.getElementById(`${portletNamespace}fm`);
+
+	if (form) {
+		postForm(form, {
+			data: {
+				deleteUserIds: getUserIds(portletNamespace),
+			},
+			url,
+		});
+	}
+};

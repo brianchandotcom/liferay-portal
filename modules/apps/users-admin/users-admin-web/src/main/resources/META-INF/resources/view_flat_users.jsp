@@ -29,11 +29,6 @@ String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 %>
 
 <clay:management-toolbar
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"basePortletURL", String.valueOf(renderResponse.createRenderURL())
-		).build()
-	%>'
 	itemsType="users"
 	managementToolbarDisplayContext="<%= viewFlatUsersDisplayContext.getManagementToolbarDisplayContext() %>"
 	propsTransformer="js/ViewFlatUsersManagementToolbarPropsTransformer"
@@ -41,7 +36,6 @@ String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 
 <aui:form action="<%= currentURLObj.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= viewFlatUsersDisplayContext.getToolbarItem() %>" />
 	<aui:input name="usersListView" type="hidden" value="<%= viewFlatUsersDisplayContext.getUsersListView() %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURLObj.toString() %>" />

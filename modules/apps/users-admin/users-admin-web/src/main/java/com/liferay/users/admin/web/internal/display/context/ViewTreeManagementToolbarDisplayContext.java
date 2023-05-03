@@ -110,11 +110,16 @@ public class ViewTreeManagementToolbarDisplayContext {
 				}
 
 				return DropdownItemBuilder.putData(
-					"action", Constants.RESTORE
-				).setHref(
-					StringBundler.concat(
-						"javascript:", _renderResponse.getNamespace(),
-						"deleteUsers('", Constants.RESTORE, "');")
+					"action", "activateUsers"
+				).putData(
+					"activateUsersURL",
+					PortletURLBuilder.createActionURL(
+						_renderResponse
+					).setActionName(
+						"/users_admin/edit_user"
+					).setCMD(
+						Constants.RESTORE
+					).buildString()
 				).setIcon(
 					"undo"
 				).setLabel(
@@ -129,11 +134,16 @@ public class ViewTreeManagementToolbarDisplayContext {
 				}
 
 				return DropdownItemBuilder.putData(
-					"action", Constants.DEACTIVATE
-				).setHref(
-					StringBundler.concat(
-						"javascript:", _renderResponse.getNamespace(),
-						"deleteUsers('", Constants.DEACTIVATE, "');")
+					"action", "deactivateUsers"
+				).putData(
+					"editUsersURL",
+					PortletURLBuilder.createActionURL(
+						_renderResponse
+					).setActionName(
+						"/users_admin/edit_user"
+					).setCMD(
+						Constants.DEACTIVATE
+					).buildString()
 				).setIcon(
 					"hidden"
 				).setLabel(
@@ -165,11 +175,11 @@ public class ViewTreeManagementToolbarDisplayContext {
 		List<String> availableActions = new ArrayList<>();
 
 		if (user.isActive()) {
-			availableActions.add(Constants.DEACTIVATE);
+			availableActions.add("deactivateUsers");
 		}
 		else {
 			availableActions.add(Constants.DELETE);
-			availableActions.add(Constants.RESTORE);
+			availableActions.add("activateUsers");
 		}
 
 		availableActions.add(Constants.REMOVE);

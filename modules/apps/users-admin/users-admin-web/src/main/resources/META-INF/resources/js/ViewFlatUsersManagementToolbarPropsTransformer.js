@@ -12,49 +12,20 @@
  * details.
  */
 
-import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
+import {ACTIONS} from './actions.es';
 
-const updateUserEntries = (portletNamespace, url) => {
-	const form = document.getElementById(`${portletNamespace}fm`);
-
-	if (form) {
-		postForm(form, {
-			data: {
-				UserEntryIds: getCheckedCheckboxes(
-					form,
-					`${portletNamespace}allRowIds`
-				),
-			},
-			url,
-		});
-	}
-};
-
-export default function propsTransformer({
-	additionalProps: {basePortletURL},
-	portletNamespace,
-	...otherProps
-}) {
-	const deactivateUsersEntries = (itemData) => {
-		updateUserEntries(portletNamespace, itemData?.deactivateUserEntriesURL);
-	};
-
+export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
-		onActionButtonClick: (_, {item}) => {
+		onActionButtonClick: (event, {item}) => {
 			const data = item?.data;
 
 			const action = data?.action;
 
-			if (action === 'selectUsers') {
-				action.selectUsers({
-					basePortletURL,
-					organizationId: data?.organizationId,
-					portletNamespace,
-				});
-			}
-			else if (action === 'deactivateUserEntries') {
-				deactivateUsersEntries(data);
+			if (action) {
+				event.preventDefault();
+
+				ACTIONS[action](data, portletNamespace);
 			}
 		},
 	};

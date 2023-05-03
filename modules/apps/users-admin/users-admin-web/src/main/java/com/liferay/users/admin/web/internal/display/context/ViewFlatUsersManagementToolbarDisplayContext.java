@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -71,10 +70,18 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			() -> _showRestoreButton,
 			dropdownItem -> {
-				dropdownItem.setHref(
-					StringBundler.concat(
-						"javascript:", liferayPortletResponse.getNamespace(),
-						"deleteUsers('", Constants.RESTORE, "');"));
+				dropdownItem.putData("action", "activateUsers");
+				dropdownItem.putData(
+					"activateUsersURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/users_admin/edit_user"
+					).setCMD(
+						Constants.RESTORE
+					).setNavigation(
+						getNavigation()
+					).buildString());
 				dropdownItem.setIcon("undo");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "activate"));
@@ -86,18 +93,26 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 				UserSearchTerms userSearchTerms =
 					(UserSearchTerms)searchContainer.getSearchTerms();
 
-				String action = Constants.DELETE;
+				String action = "deleteUsers";
+				String cmd = Constants.DELETE;
 
 				if (userSearchTerms.isActive()) {
-					action = Constants.DEACTIVATE;
+					action = "deactivateUsers";
+					cmd = Constants.DEACTIVATE;
 				}
 
-				dropdownItem.putData("action", "deactivateUserEntries");
+				dropdownItem.putData("action", action);
 				dropdownItem.putData(
-					"deactivateUserEntriesURL",
-					StringBundler.concat(
-						"javascript:", liferayPortletResponse.getNamespace(),
-						"deleteUsers('", action, "');"));
+					"editUsersURL",
+					PortletURLBuilder.createActionURL(
+						liferayPortletResponse
+					).setActionName(
+						"/users_admin/edit_user"
+					).setCMD(
+						cmd
+					).setNavigation(
+						getNavigation()
+					).buildString());
 
 				String icon = "times-circle";
 
@@ -108,7 +123,7 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 				dropdownItem.setIcon(icon);
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, action));
+					LanguageUtil.get(httpServletRequest, cmd));
 				dropdownItem.setQuickAction(true);
 			}
 		).build();

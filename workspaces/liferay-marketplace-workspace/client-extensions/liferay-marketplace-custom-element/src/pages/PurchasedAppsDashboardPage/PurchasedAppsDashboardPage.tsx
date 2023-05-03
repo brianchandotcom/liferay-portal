@@ -4,10 +4,7 @@ import {useEffect, useState} from 'react';
 import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
-import {
-	AppProps,
-	DashboardTable,
-} from '../../components/DashboardTable/DashboardTable';
+import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {getCompanyId} from '../../liferay/constants';
@@ -35,7 +32,6 @@ import {
 } from './PurchasedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
-import {Liferay} from '../../liferay/liferay';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -195,7 +191,8 @@ export function PurchasedAppsDashboardPage() {
 						type: placeOrderItem.subscription
 							? 'Subscription'
 							: 'Perpetual',
-						version: version ?? '',
+						version:
+							Object.keys(version).length === 0 ? '' : version,
 					};
 				})
 			);

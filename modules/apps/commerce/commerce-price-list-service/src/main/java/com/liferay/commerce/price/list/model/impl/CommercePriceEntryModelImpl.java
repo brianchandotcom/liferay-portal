@@ -85,12 +85,12 @@ public class CommercePriceEntryModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"commercePriceListId", Types.BIGINT},
 		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
-		{"price", Types.DECIMAL}, {"promoPrice", Types.DECIMAL},
-		{"discountDiscovery", Types.BOOLEAN}, {"discountLevel1", Types.DECIMAL},
-		{"discountLevel2", Types.DECIMAL}, {"discountLevel3", Types.DECIMAL},
-		{"discountLevel4", Types.DECIMAL}, {"hasTierPrice", Types.BOOLEAN},
-		{"bulkPricing", Types.BOOLEAN}, {"displayDate", Types.TIMESTAMP},
-		{"expirationDate", Types.TIMESTAMP},
+		{"bulkPricing", Types.BOOLEAN}, {"discountDiscovery", Types.BOOLEAN},
+		{"discountLevel1", Types.DECIMAL}, {"discountLevel2", Types.DECIMAL},
+		{"discountLevel3", Types.DECIMAL}, {"discountLevel4", Types.DECIMAL},
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"hasTierPrice", Types.BOOLEAN}, {"price", Types.DECIMAL},
+		{"priceOnApplication", Types.BOOLEAN}, {"promoPrice", Types.DECIMAL},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -113,17 +113,18 @@ public class CommercePriceEntryModelImpl
 		TABLE_COLUMNS_MAP.put("commercePriceListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("bulkPricing", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("discountDiscovery", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("discountLevel1", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountLevel2", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountLevel3", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("discountLevel4", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("hasTierPrice", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("bulkPricing", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("hasTierPrice", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("priceOnApplication", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -132,7 +133,7 @@ public class CommercePriceEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,discountDiscovery BOOLEAN,discountLevel1 DECIMAL(30, 16) null,discountLevel2 DECIMAL(30, 16) null,discountLevel3 DECIMAL(30, 16) null,discountLevel4 DECIMAL(30, 16) null,hasTierPrice BOOLEAN,bulkPricing BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceEntryId, ctCollectionId))";
+		"create table CommercePriceEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,bulkPricing BOOLEAN,discountDiscovery BOOLEAN,discountLevel1 DECIMAL(30, 16) null,discountLevel2 DECIMAL(30, 16) null,discountLevel3 DECIMAL(30, 16) null,discountLevel4 DECIMAL(30, 16) null,displayDate DATE null,expirationDate DATE null,hasTierPrice BOOLEAN,price DECIMAL(30, 16) null,priceOnApplication BOOLEAN,promoPrice DECIMAL(30, 16) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 
@@ -341,9 +342,8 @@ public class CommercePriceEntryModelImpl
 				"CPInstanceUuid", CommercePriceEntry::getCPInstanceUuid);
 			attributeGetterFunctions.put(
 				"CProductId", CommercePriceEntry::getCProductId);
-			attributeGetterFunctions.put("price", CommercePriceEntry::getPrice);
 			attributeGetterFunctions.put(
-				"promoPrice", CommercePriceEntry::getPromoPrice);
+				"bulkPricing", CommercePriceEntry::getBulkPricing);
 			attributeGetterFunctions.put(
 				"discountDiscovery", CommercePriceEntry::getDiscountDiscovery);
 			attributeGetterFunctions.put(
@@ -355,13 +355,17 @@ public class CommercePriceEntryModelImpl
 			attributeGetterFunctions.put(
 				"discountLevel4", CommercePriceEntry::getDiscountLevel4);
 			attributeGetterFunctions.put(
-				"hasTierPrice", CommercePriceEntry::getHasTierPrice);
-			attributeGetterFunctions.put(
-				"bulkPricing", CommercePriceEntry::getBulkPricing);
-			attributeGetterFunctions.put(
 				"displayDate", CommercePriceEntry::getDisplayDate);
 			attributeGetterFunctions.put(
 				"expirationDate", CommercePriceEntry::getExpirationDate);
+			attributeGetterFunctions.put(
+				"hasTierPrice", CommercePriceEntry::getHasTierPrice);
+			attributeGetterFunctions.put("price", CommercePriceEntry::getPrice);
+			attributeGetterFunctions.put(
+				"priceOnApplication",
+				CommercePriceEntry::getPriceOnApplication);
+			attributeGetterFunctions.put(
+				"promoPrice", CommercePriceEntry::getPromoPrice);
 			attributeGetterFunctions.put(
 				"lastPublishDate", CommercePriceEntry::getLastPublishDate);
 			attributeGetterFunctions.put(
@@ -443,13 +447,9 @@ public class CommercePriceEntryModelImpl
 				(BiConsumer<CommercePriceEntry, Long>)
 					CommercePriceEntry::setCProductId);
 			attributeSetterBiConsumers.put(
-				"price",
-				(BiConsumer<CommercePriceEntry, BigDecimal>)
-					CommercePriceEntry::setPrice);
-			attributeSetterBiConsumers.put(
-				"promoPrice",
-				(BiConsumer<CommercePriceEntry, BigDecimal>)
-					CommercePriceEntry::setPromoPrice);
+				"bulkPricing",
+				(BiConsumer<CommercePriceEntry, Boolean>)
+					CommercePriceEntry::setBulkPricing);
 			attributeSetterBiConsumers.put(
 				"discountDiscovery",
 				(BiConsumer<CommercePriceEntry, Boolean>)
@@ -471,14 +471,6 @@ public class CommercePriceEntryModelImpl
 				(BiConsumer<CommercePriceEntry, BigDecimal>)
 					CommercePriceEntry::setDiscountLevel4);
 			attributeSetterBiConsumers.put(
-				"hasTierPrice",
-				(BiConsumer<CommercePriceEntry, Boolean>)
-					CommercePriceEntry::setHasTierPrice);
-			attributeSetterBiConsumers.put(
-				"bulkPricing",
-				(BiConsumer<CommercePriceEntry, Boolean>)
-					CommercePriceEntry::setBulkPricing);
-			attributeSetterBiConsumers.put(
 				"displayDate",
 				(BiConsumer<CommercePriceEntry, Date>)
 					CommercePriceEntry::setDisplayDate);
@@ -486,6 +478,22 @@ public class CommercePriceEntryModelImpl
 				"expirationDate",
 				(BiConsumer<CommercePriceEntry, Date>)
 					CommercePriceEntry::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"hasTierPrice",
+				(BiConsumer<CommercePriceEntry, Boolean>)
+					CommercePriceEntry::setHasTierPrice);
+			attributeSetterBiConsumers.put(
+				"price",
+				(BiConsumer<CommercePriceEntry, BigDecimal>)
+					CommercePriceEntry::setPrice);
+			attributeSetterBiConsumers.put(
+				"priceOnApplication",
+				(BiConsumer<CommercePriceEntry, Boolean>)
+					CommercePriceEntry::setPriceOnApplication);
+			attributeSetterBiConsumers.put(
+				"promoPrice",
+				(BiConsumer<CommercePriceEntry, BigDecimal>)
+					CommercePriceEntry::setPromoPrice);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<CommercePriceEntry, Date>)
@@ -799,32 +807,23 @@ public class CommercePriceEntryModelImpl
 
 	@JSON
 	@Override
-	public BigDecimal getPrice() {
-		return _price;
-	}
-
-	@Override
-	public void setPrice(BigDecimal price) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_price = price;
+	public boolean getBulkPricing() {
+		return _bulkPricing;
 	}
 
 	@JSON
 	@Override
-	public BigDecimal getPromoPrice() {
-		return _promoPrice;
+	public boolean isBulkPricing() {
+		return _bulkPricing;
 	}
 
 	@Override
-	public void setPromoPrice(BigDecimal promoPrice) {
+	public void setBulkPricing(boolean bulkPricing) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_promoPrice = promoPrice;
+		_bulkPricing = bulkPricing;
 	}
 
 	@JSON
@@ -910,48 +909,6 @@ public class CommercePriceEntryModelImpl
 
 	@JSON
 	@Override
-	public boolean getHasTierPrice() {
-		return _hasTierPrice;
-	}
-
-	@JSON
-	@Override
-	public boolean isHasTierPrice() {
-		return _hasTierPrice;
-	}
-
-	@Override
-	public void setHasTierPrice(boolean hasTierPrice) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_hasTierPrice = hasTierPrice;
-	}
-
-	@JSON
-	@Override
-	public boolean getBulkPricing() {
-		return _bulkPricing;
-	}
-
-	@JSON
-	@Override
-	public boolean isBulkPricing() {
-		return _bulkPricing;
-	}
-
-	@Override
-	public void setBulkPricing(boolean bulkPricing) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_bulkPricing = bulkPricing;
-	}
-
-	@JSON
-	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -996,6 +953,78 @@ public class CommercePriceEntryModelImpl
 	@Deprecated
 	public Date getOriginalExpirationDate() {
 		return getColumnOriginalValue("expirationDate");
+	}
+
+	@JSON
+	@Override
+	public boolean getHasTierPrice() {
+		return _hasTierPrice;
+	}
+
+	@JSON
+	@Override
+	public boolean isHasTierPrice() {
+		return _hasTierPrice;
+	}
+
+	@Override
+	public void setHasTierPrice(boolean hasTierPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_hasTierPrice = hasTierPrice;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getPrice() {
+		return _price;
+	}
+
+	@Override
+	public void setPrice(BigDecimal price) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_price = price;
+	}
+
+	@JSON
+	@Override
+	public boolean getPriceOnApplication() {
+		return _priceOnApplication;
+	}
+
+	@JSON
+	@Override
+	public boolean isPriceOnApplication() {
+		return _priceOnApplication;
+	}
+
+	@Override
+	public void setPriceOnApplication(boolean priceOnApplication) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_priceOnApplication = priceOnApplication;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getPromoPrice() {
+		return _promoPrice;
+	}
+
+	@Override
+	public void setPromoPrice(BigDecimal promoPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_promoPrice = promoPrice;
 	}
 
 	@JSON
@@ -1263,17 +1292,18 @@ public class CommercePriceEntryModelImpl
 		commercePriceEntryImpl.setCommercePriceListId(getCommercePriceListId());
 		commercePriceEntryImpl.setCPInstanceUuid(getCPInstanceUuid());
 		commercePriceEntryImpl.setCProductId(getCProductId());
-		commercePriceEntryImpl.setPrice(getPrice());
-		commercePriceEntryImpl.setPromoPrice(getPromoPrice());
+		commercePriceEntryImpl.setBulkPricing(isBulkPricing());
 		commercePriceEntryImpl.setDiscountDiscovery(isDiscountDiscovery());
 		commercePriceEntryImpl.setDiscountLevel1(getDiscountLevel1());
 		commercePriceEntryImpl.setDiscountLevel2(getDiscountLevel2());
 		commercePriceEntryImpl.setDiscountLevel3(getDiscountLevel3());
 		commercePriceEntryImpl.setDiscountLevel4(getDiscountLevel4());
-		commercePriceEntryImpl.setHasTierPrice(isHasTierPrice());
-		commercePriceEntryImpl.setBulkPricing(isBulkPricing());
 		commercePriceEntryImpl.setDisplayDate(getDisplayDate());
 		commercePriceEntryImpl.setExpirationDate(getExpirationDate());
+		commercePriceEntryImpl.setHasTierPrice(isHasTierPrice());
+		commercePriceEntryImpl.setPrice(getPrice());
+		commercePriceEntryImpl.setPriceOnApplication(isPriceOnApplication());
+		commercePriceEntryImpl.setPromoPrice(getPromoPrice());
 		commercePriceEntryImpl.setLastPublishDate(getLastPublishDate());
 		commercePriceEntryImpl.setStatus(getStatus());
 		commercePriceEntryImpl.setStatusByUserId(getStatusByUserId());
@@ -1316,10 +1346,8 @@ public class CommercePriceEntryModelImpl
 			this.<String>getColumnOriginalValue("CPInstanceUuid"));
 		commercePriceEntryImpl.setCProductId(
 			this.<Long>getColumnOriginalValue("CProductId"));
-		commercePriceEntryImpl.setPrice(
-			this.<BigDecimal>getColumnOriginalValue("price"));
-		commercePriceEntryImpl.setPromoPrice(
-			this.<BigDecimal>getColumnOriginalValue("promoPrice"));
+		commercePriceEntryImpl.setBulkPricing(
+			this.<Boolean>getColumnOriginalValue("bulkPricing"));
 		commercePriceEntryImpl.setDiscountDiscovery(
 			this.<Boolean>getColumnOriginalValue("discountDiscovery"));
 		commercePriceEntryImpl.setDiscountLevel1(
@@ -1330,14 +1358,18 @@ public class CommercePriceEntryModelImpl
 			this.<BigDecimal>getColumnOriginalValue("discountLevel3"));
 		commercePriceEntryImpl.setDiscountLevel4(
 			this.<BigDecimal>getColumnOriginalValue("discountLevel4"));
-		commercePriceEntryImpl.setHasTierPrice(
-			this.<Boolean>getColumnOriginalValue("hasTierPrice"));
-		commercePriceEntryImpl.setBulkPricing(
-			this.<Boolean>getColumnOriginalValue("bulkPricing"));
 		commercePriceEntryImpl.setDisplayDate(
 			this.<Date>getColumnOriginalValue("displayDate"));
 		commercePriceEntryImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
+		commercePriceEntryImpl.setHasTierPrice(
+			this.<Boolean>getColumnOriginalValue("hasTierPrice"));
+		commercePriceEntryImpl.setPrice(
+			this.<BigDecimal>getColumnOriginalValue("price"));
+		commercePriceEntryImpl.setPriceOnApplication(
+			this.<Boolean>getColumnOriginalValue("priceOnApplication"));
+		commercePriceEntryImpl.setPromoPrice(
+			this.<BigDecimal>getColumnOriginalValue("promoPrice"));
 		commercePriceEntryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		commercePriceEntryImpl.setStatus(
@@ -1497,9 +1529,7 @@ public class CommercePriceEntryModelImpl
 
 		commercePriceEntryCacheModel.CProductId = getCProductId();
 
-		commercePriceEntryCacheModel.price = getPrice();
-
-		commercePriceEntryCacheModel.promoPrice = getPromoPrice();
+		commercePriceEntryCacheModel.bulkPricing = isBulkPricing();
 
 		commercePriceEntryCacheModel.discountDiscovery = isDiscountDiscovery();
 
@@ -1510,10 +1540,6 @@ public class CommercePriceEntryModelImpl
 		commercePriceEntryCacheModel.discountLevel3 = getDiscountLevel3();
 
 		commercePriceEntryCacheModel.discountLevel4 = getDiscountLevel4();
-
-		commercePriceEntryCacheModel.hasTierPrice = isHasTierPrice();
-
-		commercePriceEntryCacheModel.bulkPricing = isBulkPricing();
 
 		Date displayDate = getDisplayDate();
 
@@ -1533,6 +1559,15 @@ public class CommercePriceEntryModelImpl
 		else {
 			commercePriceEntryCacheModel.expirationDate = Long.MIN_VALUE;
 		}
+
+		commercePriceEntryCacheModel.hasTierPrice = isHasTierPrice();
+
+		commercePriceEntryCacheModel.price = getPrice();
+
+		commercePriceEntryCacheModel.priceOnApplication =
+			isPriceOnApplication();
+
+		commercePriceEntryCacheModel.promoPrice = getPromoPrice();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1641,17 +1676,18 @@ public class CommercePriceEntryModelImpl
 	private long _commercePriceListId;
 	private String _CPInstanceUuid;
 	private long _CProductId;
-	private BigDecimal _price;
-	private BigDecimal _promoPrice;
+	private boolean _bulkPricing;
 	private boolean _discountDiscovery;
 	private BigDecimal _discountLevel1;
 	private BigDecimal _discountLevel2;
 	private BigDecimal _discountLevel3;
 	private BigDecimal _discountLevel4;
-	private boolean _hasTierPrice;
-	private boolean _bulkPricing;
 	private Date _displayDate;
 	private Date _expirationDate;
+	private boolean _hasTierPrice;
+	private BigDecimal _price;
+	private boolean _priceOnApplication;
+	private BigDecimal _promoPrice;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1703,17 +1739,18 @@ public class CommercePriceEntryModelImpl
 		_columnOriginalValues.put("commercePriceListId", _commercePriceListId);
 		_columnOriginalValues.put("CPInstanceUuid", _CPInstanceUuid);
 		_columnOriginalValues.put("CProductId", _CProductId);
-		_columnOriginalValues.put("price", _price);
-		_columnOriginalValues.put("promoPrice", _promoPrice);
+		_columnOriginalValues.put("bulkPricing", _bulkPricing);
 		_columnOriginalValues.put("discountDiscovery", _discountDiscovery);
 		_columnOriginalValues.put("discountLevel1", _discountLevel1);
 		_columnOriginalValues.put("discountLevel2", _discountLevel2);
 		_columnOriginalValues.put("discountLevel3", _discountLevel3);
 		_columnOriginalValues.put("discountLevel4", _discountLevel4);
-		_columnOriginalValues.put("hasTierPrice", _hasTierPrice);
-		_columnOriginalValues.put("bulkPricing", _bulkPricing);
 		_columnOriginalValues.put("displayDate", _displayDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("hasTierPrice", _hasTierPrice);
+		_columnOriginalValues.put("price", _price);
+		_columnOriginalValues.put("priceOnApplication", _priceOnApplication);
+		_columnOriginalValues.put("promoPrice", _promoPrice);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1768,37 +1805,39 @@ public class CommercePriceEntryModelImpl
 
 		columnBitmasks.put("CProductId", 4096L);
 
-		columnBitmasks.put("price", 8192L);
+		columnBitmasks.put("bulkPricing", 8192L);
 
-		columnBitmasks.put("promoPrice", 16384L);
+		columnBitmasks.put("discountDiscovery", 16384L);
 
-		columnBitmasks.put("discountDiscovery", 32768L);
+		columnBitmasks.put("discountLevel1", 32768L);
 
-		columnBitmasks.put("discountLevel1", 65536L);
+		columnBitmasks.put("discountLevel2", 65536L);
 
-		columnBitmasks.put("discountLevel2", 131072L);
+		columnBitmasks.put("discountLevel3", 131072L);
 
-		columnBitmasks.put("discountLevel3", 262144L);
+		columnBitmasks.put("discountLevel4", 262144L);
 
-		columnBitmasks.put("discountLevel4", 524288L);
+		columnBitmasks.put("displayDate", 524288L);
 
-		columnBitmasks.put("hasTierPrice", 1048576L);
+		columnBitmasks.put("expirationDate", 1048576L);
 
-		columnBitmasks.put("bulkPricing", 2097152L);
+		columnBitmasks.put("hasTierPrice", 2097152L);
 
-		columnBitmasks.put("displayDate", 4194304L);
+		columnBitmasks.put("price", 4194304L);
 
-		columnBitmasks.put("expirationDate", 8388608L);
+		columnBitmasks.put("priceOnApplication", 8388608L);
 
-		columnBitmasks.put("lastPublishDate", 16777216L);
+		columnBitmasks.put("promoPrice", 16777216L);
 
-		columnBitmasks.put("status", 33554432L);
+		columnBitmasks.put("lastPublishDate", 33554432L);
 
-		columnBitmasks.put("statusByUserId", 67108864L);
+		columnBitmasks.put("status", 67108864L);
 
-		columnBitmasks.put("statusByUserName", 134217728L);
+		columnBitmasks.put("statusByUserId", 134217728L);
 
-		columnBitmasks.put("statusDate", 268435456L);
+		columnBitmasks.put("statusByUserName", 268435456L);
+
+		columnBitmasks.put("statusDate", 536870912L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

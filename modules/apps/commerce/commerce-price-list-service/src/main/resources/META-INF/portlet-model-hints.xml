@@ -15,17 +15,18 @@
 		<field name="commercePriceListId" type="long" />
 		<field name="CPInstanceUuid" type="String" />
 		<field name="CProductId" type="long" />
-		<field name="price" type="BigDecimal" />
-		<field name="promoPrice" type="BigDecimal" />
+		<field name="bulkPricing" type="boolean" />
 		<field name="discountDiscovery" type="boolean" />
 		<field name="discountLevel1" type="BigDecimal" />
 		<field name="discountLevel2" type="BigDecimal" />
 		<field name="discountLevel3" type="BigDecimal" />
 		<field name="discountLevel4" type="BigDecimal" />
-		<field name="hasTierPrice" type="boolean" />
-		<field name="bulkPricing" type="boolean" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
+		<field name="hasTierPrice" type="boolean" />
+		<field name="price" type="BigDecimal" />
+		<field name="priceOnApplication" type="boolean" />
+		<field name="promoPrice" type="BigDecimal" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

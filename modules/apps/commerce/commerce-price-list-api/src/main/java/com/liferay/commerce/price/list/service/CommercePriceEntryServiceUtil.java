@@ -54,7 +54,7 @@ public class CommercePriceEntryServiceUtil {
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addCommercePriceEntry(String, long, String, long,
 	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
-	 int, int, int, int, int, int, int, int, int, int, boolean,
+	 BigDecimal, int, int, int, int, int, int, int, int, int, int, boolean,
 	 ServiceContext)}
 	 */
 	@Deprecated
@@ -138,8 +138,7 @@ public class CommercePriceEntryServiceUtil {
 	public static CommercePriceEntry addOrUpdateCommercePriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			java.math.BigDecimal price, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
+			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,
@@ -147,18 +146,20 @@ public class CommercePriceEntryServiceUtil {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
+			boolean neverExpire, java.math.BigDecimal price,
+			boolean priceOnApplication, String skuExternalReferenceCode,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommercePriceEntry(
 			externalReferenceCode, commercePriceEntryId, cProductId,
-			cpInstanceUuid, commercePriceListId, price, discountDiscovery,
+			cpInstanceUuid, commercePriceListId, discountDiscovery,
 			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, skuExternalReferenceCode, serviceContext);
+			neverExpire, price, priceOnApplication, skuExternalReferenceCode,
+			serviceContext);
 	}
 
 	public static void deleteCommercePriceEntry(long commercePriceEntryId)
@@ -342,7 +343,7 @@ public class CommercePriceEntryServiceUtil {
 	}
 
 	public static CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, java.math.BigDecimal price,
+			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
@@ -351,22 +352,23 @@ public class CommercePriceEntryServiceUtil {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean neverExpire, java.math.BigDecimal price,
+			boolean priceOnApplication,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommercePriceEntry(
-			commercePriceEntryId, price, discountDiscovery, discountLevel1,
-			discountLevel2, discountLevel3, discountLevel4, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			commercePriceEntryId, bulkPricing, discountDiscovery,
+			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, price, priceOnApplication, serviceContext);
 	}
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateExternalReferenceCode(String, long)}
+	 #updateExternalReferenceCode(String, CommercePriceEntry)}
 	 */
 	@Deprecated
 	public static CommercePriceEntry updateExternalReferenceCode(
@@ -426,9 +428,9 @@ public class CommercePriceEntryServiceUtil {
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addOrUpdateCommercePriceEntry(String, long, long, String, long,
-	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
+	 boolean, BigDecimal, BigDecimal, BigDecimal,
 	 BigDecimal, int, int, int, int, int, int, int, int, int,
-	 int, boolean, String, ServiceContext)}
+	 int, boolean, BigDecimal, boolean, String, ServiceContext)}
 	 */
 	@Deprecated
 	public static CommercePriceEntry upsertCommercePriceEntry(

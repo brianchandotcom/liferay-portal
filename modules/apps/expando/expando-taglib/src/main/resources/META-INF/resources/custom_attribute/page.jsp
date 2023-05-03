@@ -75,10 +75,6 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							<%
 							Boolean curValue = (Boolean)value;
 
-							if (curValue == null) {
-								curValue = (Boolean)defaultValue;
-							}
-
 							curValue = ParamUtil.getBoolean(request, "ExpandoAttribute--" + name + "--", curValue);
 							%>
 
@@ -97,12 +93,6 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 								if (value != null) {
 									valueDate.setTime((Date)value);
-								}
-								else if (defaultValue != null) {
-									valueDate.setTime((Date)defaultValue);
-								}
-								else {
-									valueDate.setTime(new Date());
 								}
 
 								String fieldParam = "ExpandoAttribute--" + name + "--";
@@ -657,10 +647,6 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 
 							<%
 							value = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--", String.valueOf(value));
-
-							if (Validator.isNull(String.valueOf(value))) {
-								value = defaultValue;
-							}
 							%>
 
 							<c:choose>

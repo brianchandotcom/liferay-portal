@@ -32,134 +32,142 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 		String[] lines = StringUtil.splitLines(content);
 
 		for (int i = 0; i < lines.length; i++) {
-			String newLine = lines[i];
+			String line = lines[i];
 
-			if (newLine.contains(_VELOCITY_LIFERAY_LANGUAGE_FORMAT)) {
-				lines[i] = StringUtil.replace(
-					newLine,
-					new String[] {
-						_VELOCITY_LIFERAY_LANGUAGE_FORMAT +
-							_VELOCITY_LIFERAY_LANGUAGE_FORMAT_ARGUMENTS,
-						_VELOCITY_LIFERAY_LANGUAGE_FORMAT + CharPool.SPACE +
-							_VELOCITY_LIFERAY_LANGUAGE_FORMAT_ARGUMENTS
-					},
-					new String[] {
-						_FREEMARKER_LIFERAY_LANGUAGE_FORMAT,
-						_FREEMARKER_LIFERAY_LANGUAGE_FORMAT
-					});
+			if (line.contains(_VELOCITY_LIFERAY_LANGUAGE_FORMAT)) {
+				lines[i] = _migrateVelocityLanguageFormat(line);
 			}
-			else if (newLine.contains(_VELOCITY_LIFERAY_LANGUAGE)) {
-				newLine = StringUtil.replace(
-					newLine,
-					new String[] {
-						_VELOCITY_LIFERAY_LANGUAGE + CharPool.OPEN_PARENTHESIS,
-						_VELOCITY_LIFERAY_LANGUAGE + CharPool.SPACE +
-							CharPool.OPEN_PARENTHESIS
-					},
-					new String[] {
-						_FREEMARKER_LIFERAY_LANGUAGE_KEY,
-						_FREEMARKER_LIFERAY_LANGUAGE_KEY
-					});
-
-				int languageKeyIndex = newLine.indexOf(
-					_FREEMARKER_LIFERAY_LANGUAGE_KEY);
-
-				String endLine = newLine.substring(languageKeyIndex);
-
-				String newEndLine = StringUtil.replaceFirst(
-					endLine, CharPool.CLOSE_PARENTHESIS,
-					CharPool.SPACE +
-						VelocityMigrationConstants.FREEMARKER_TAG_END);
-
-				lines[i] = StringUtil.replace(newLine, endLine, newEndLine);
+			else if (line.contains(_VELOCITY_LIFERAY_LANGUAGE)) {
+				lines[i] = _migrateVelocityLanguage(line);
 			}
-			else if (newLine.contains(_VELOCITY_LIFERAY_BREADCRUMBS)) {
-				lines[i] = StringUtil.replace(
-					newLine,
-					new String[] {
-						_VELOCITY_LIFERAY_BREADCRUMBS +
-							CharPool.OPEN_PARENTHESIS +
-								CharPool.CLOSE_PARENTHESIS,
-						StringBundler.concat(
-							_VELOCITY_LIFERAY_BREADCRUMBS, StringPool.SPACE,
-							StringPool.OPEN_PARENTHESIS,
-							StringPool.CLOSE_PARENTHESIS)
-					},
-					new String[] {
-						_FREEMARKER_LIFERAY_BREADCRUMBS,
-						_FREEMARKER_LIFERAY_BREADCRUMBS
-					});
+			else if (line.contains(_VELOCITY_LIFERAY_BREADCRUMBS)) {
+				lines[i] = _migrateVelocityLiferayBreadCrumbs(line);
 			}
-			else if (newLine.contains(_VELOCITY_LIFERAY_THEME_INCLUDE)) {
-				newLine = StringUtil.replace(
-					newLine,
-					new String[] {
-						_VELOCITY_LIFERAY_THEME_INCLUDE +
-							CharPool.OPEN_PARENTHESIS + CharPool.DOLLAR,
-						StringBundler.concat(
-							_VELOCITY_LIFERAY_THEME_INCLUDE, StringPool.SPACE,
-							StringPool.OPEN_PARENTHESIS, StringPool.DOLLAR)
-					},
-					new String[] {
-						_FREEMARKER_LIFERAY_THEME_INCLUDE,
-						_FREEMARKER_LIFERAY_THEME_INCLUDE
-					});
-
-				lines[i] = StringUtil.replaceLast(
-					newLine, CharPool.CLOSE_PARENTHESIS,
-					CharPool.SPACE +
-						VelocityMigrationConstants.FREEMARKER_TAG_END);
+			else if (line.contains(_VELOCITY_LIFERAY_THEME_INCLUDE)) {
+				lines[i] = _migrateVelocityLiferayThemeInclude(line);
 			}
-			else if (newLine.contains(_VELOCITY_LIFERAY_THEME_WRAP)) {
-				newLine = StringUtil.replace(
-					newLine,
-					new String[] {
-						_VELOCITY_LIFERAY_THEME_WRAP +
-							CharPool.OPEN_PARENTHESIS,
-						_VELOCITY_LIFERAY_THEME_WRAP + CharPool.SPACE +
-							CharPool.OPEN_PARENTHESIS
-					},
-					new String[] {
-						_FREEMARKER_LIFERAY_THEME_WRAP,
-						_FREEMARKER_LIFERAY_THEME_WRAP
-					});
-
-				int newStartIndex = newLine.indexOf(
-					_FREEMARKER_LIFERAY_THEME_WRAP);
-
-				String indent = SourceUtil.getIndent(newLine);
-
-				newLine = StringUtil.replace(newLine, ".vm", ".ftl");
-				newLine = StringUtil.replaceFirst(
-					newLine, StringPool.CLOSE_PARENTHESIS,
-					StringBundler.concat(
-						StringPool.SPACE,
-						VelocityMigrationConstants.FREEMARKER_TAG_END,
-						StringPool.NEW_LINE, indent, "</@>"),
-					newStartIndex);
-				newLine = StringUtil.replaceFirst(
-					newLine, StringPool.COMMA,
-					StringBundler.concat(
-						StringPool.GREATER_THAN + StringPool.NEW_LINE, indent,
-						StringPool.TAB, _FREEMARKER_LIFERAY_THEME_INCLUDE),
-					newStartIndex);
-
-				newLine = StringUtil.replace(
-					newLine,
-					new String[] {
-						StringPool.EQUAL + StringPool.DOLLAR,
-						StringBundler.concat(
-							StringPool.EQUAL, StringPool.SPACE,
-							StringPool.DOLLAR)
-					},
-					new String[] {StringPool.EQUAL, StringPool.EQUAL});
-
-				lines[i] = newLine;
+			else if (line.contains(_VELOCITY_LIFERAY_THEME_WRAP)) {
+				lines[i] = _migrateVelocityLiferayThemeWrap(line);
 			}
 		}
 
 		return com.liferay.petra.string.StringUtil.merge(
 			lines, StringPool.NEW_LINE);
+	}
+
+	private String _migrateVelocityLanguage(String line) {
+		String newLine = StringUtil.replace(
+			line,
+			new String[] {
+				_VELOCITY_LIFERAY_LANGUAGE + CharPool.OPEN_PARENTHESIS,
+				_VELOCITY_LIFERAY_LANGUAGE + CharPool.SPACE +
+					CharPool.OPEN_PARENTHESIS
+			},
+			new String[] {
+				_FREEMARKER_LIFERAY_LANGUAGE_KEY,
+				_FREEMARKER_LIFERAY_LANGUAGE_KEY
+			});
+
+		int languageKeyIndex = newLine.indexOf(
+			_FREEMARKER_LIFERAY_LANGUAGE_KEY);
+
+		String endLine = newLine.substring(languageKeyIndex);
+
+		String newEndLine = StringUtil.replaceFirst(
+			endLine, CharPool.CLOSE_PARENTHESIS,
+			CharPool.SPACE + VelocityMigrationConstants.FREEMARKER_TAG_END);
+
+		return StringUtil.replace(newLine, endLine, newEndLine);
+	}
+
+	private String _migrateVelocityLanguageFormat(String line) {
+		return StringUtil.replace(
+			line,
+			new String[] {
+				_VELOCITY_LIFERAY_LANGUAGE_FORMAT +
+					_VELOCITY_LIFERAY_LANGUAGE_FORMAT_ARGUMENTS,
+				_VELOCITY_LIFERAY_LANGUAGE_FORMAT + CharPool.SPACE +
+					_VELOCITY_LIFERAY_LANGUAGE_FORMAT_ARGUMENTS
+			},
+			new String[] {
+				_FREEMARKER_LIFERAY_LANGUAGE_FORMAT,
+				_FREEMARKER_LIFERAY_LANGUAGE_FORMAT
+			});
+	}
+
+	private String _migrateVelocityLiferayBreadCrumbs(String line) {
+		return StringUtil.replace(
+			line,
+			new String[] {
+				_VELOCITY_LIFERAY_BREADCRUMBS + CharPool.OPEN_PARENTHESIS +
+					CharPool.CLOSE_PARENTHESIS,
+				StringBundler.concat(
+					_VELOCITY_LIFERAY_BREADCRUMBS, StringPool.SPACE,
+					StringPool.OPEN_PARENTHESIS, StringPool.CLOSE_PARENTHESIS)
+			},
+			new String[] {
+				_FREEMARKER_LIFERAY_BREADCRUMBS, _FREEMARKER_LIFERAY_BREADCRUMBS
+			});
+	}
+
+	private String _migrateVelocityLiferayThemeInclude(String line) {
+		String newLine = StringUtil.replace(
+			line,
+			new String[] {
+				_VELOCITY_LIFERAY_THEME_INCLUDE + CharPool.OPEN_PARENTHESIS +
+					CharPool.DOLLAR,
+				StringBundler.concat(
+					_VELOCITY_LIFERAY_THEME_INCLUDE, StringPool.SPACE,
+					StringPool.OPEN_PARENTHESIS, StringPool.DOLLAR)
+			},
+			new String[] {
+				_FREEMARKER_LIFERAY_THEME_INCLUDE,
+				_FREEMARKER_LIFERAY_THEME_INCLUDE
+			});
+
+		return StringUtil.replaceLast(
+			newLine, CharPool.CLOSE_PARENTHESIS,
+			CharPool.SPACE + VelocityMigrationConstants.FREEMARKER_TAG_END);
+	}
+
+	private String _migrateVelocityLiferayThemeWrap(String line) {
+		String newLine = StringUtil.replace(
+			line,
+			new String[] {
+				_VELOCITY_LIFERAY_THEME_WRAP + CharPool.OPEN_PARENTHESIS,
+				_VELOCITY_LIFERAY_THEME_WRAP + CharPool.SPACE +
+					CharPool.OPEN_PARENTHESIS
+			},
+			new String[] {
+				_FREEMARKER_LIFERAY_THEME_WRAP, _FREEMARKER_LIFERAY_THEME_WRAP
+			});
+
+		int newStartIndex = newLine.indexOf(_FREEMARKER_LIFERAY_THEME_WRAP);
+
+		String indent = SourceUtil.getIndent(newLine);
+
+		newLine = StringUtil.replace(newLine, ".vm", ".ftl");
+		newLine = StringUtil.replaceFirst(
+			newLine, StringPool.CLOSE_PARENTHESIS,
+			StringBundler.concat(
+				StringPool.SPACE, VelocityMigrationConstants.FREEMARKER_TAG_END,
+				StringPool.NEW_LINE, indent, "</@>"),
+			newStartIndex);
+		newLine = StringUtil.replaceFirst(
+			newLine, StringPool.COMMA,
+			StringBundler.concat(
+				StringPool.GREATER_THAN + StringPool.NEW_LINE, indent,
+				StringPool.TAB, _FREEMARKER_LIFERAY_THEME_INCLUDE),
+			newStartIndex);
+
+		return StringUtil.replace(
+			newLine,
+			new String[] {
+				StringPool.EQUAL + StringPool.DOLLAR,
+				StringBundler.concat(
+					StringPool.EQUAL, StringPool.SPACE, StringPool.DOLLAR)
+			},
+			new String[] {StringPool.EQUAL, StringPool.EQUAL});
 	}
 
 	private static final String _FREEMARKER_LIFERAY_BREADCRUMBS =

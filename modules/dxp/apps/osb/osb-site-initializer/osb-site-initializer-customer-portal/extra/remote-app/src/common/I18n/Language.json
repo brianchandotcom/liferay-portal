@@ -395,7 +395,7 @@
 	"this-field-is-required": "This field is required.",
 	"this-key-does-not-expire": "This key does not expire",
 	"this-user-will-be-the-recepient-of-any-high-priority-communications": "This user will be the recepient of any high priority communications.",
-	"this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-vis-support-ticket-if-needed": "This user will create and manage the Analytics Cloud workspace and must have a liferay.com account. The owner email can be updated via a Support ticket if needed.",
+	"this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-via-a-support-ticket-if-needed": "This user will create and manage the Analytics Cloud workspace and must have a liferay.com account. The owner email can be updated via a Support ticket if needed.",
 	"time-zone": "Time Zone",
 	"to": "to",
 	"to-activate-a-local-instance-of-liferay-dxp-download-a-developer-key-for-your-liferay-dxp-version": "To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version.",

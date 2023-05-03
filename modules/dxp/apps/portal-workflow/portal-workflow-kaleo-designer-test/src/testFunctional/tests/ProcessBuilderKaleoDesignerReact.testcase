@@ -295,15 +295,15 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Timer",
-			propertyValue = "Duration: 11 minute");
+			propertyValue = "Duration: 1 minute");
 
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Timer",
-			propertyValue = "Duration: 12 minute");
+			propertyValue = "Duration: 2 minute");
 
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Timer",
-			propertyValue = "Duration: 13 minute");
+			propertyValue = "Duration: 3 minute");
 	}
 
 	@description = "Verify that is possible to add new languages"
@@ -793,7 +793,9 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 1");
+		AssertVisible(
+			key_actionName = "Liferay Timer 1",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 	}
 
 	@description = "Verify that the user can add multiple Actions to Timers at task node"
@@ -837,9 +839,13 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 4");
+		AssertVisible(
+			key_actionName = "Liferay Timer 2",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 5");
+		AssertVisible(
+			key_actionName = "Liferay Timer 3",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 	}
 
 	@description = "Verify that the user can select and define an Reassignment to be conducted once the timer expires"
@@ -870,7 +876,10 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionTypeOption = "Reassignment");
+		AssertVisible(
+			key_selectorField = "Type",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
+			value1 = "Reassignment");
 	}
 
 	@description = "Verify that the user can create a Template for Notification"
@@ -1087,12 +1096,16 @@ definition {
 		ProcessBuilderKaleoDesignerReact.deleteTimerAction(actionName = "Liferay Timer 2");
 
 		AssertVisible(
+			key_actionName = "Liferay Timer 1",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 
-		ProcessBuilderKaleoDesignerReact.viewActionsInsideTimersPresent(actionName = "Liferay Timer 5");
+		AssertVisible(
+			key_actionName = "Liferay Timer 3",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 
-		ProcessBuilderKaleoDesignerReact.deleteByTrashTopSidebar(
-			modalMessage = "Are you sure you want to delete all timers and their settings?",
-			sidebarPropertyName = "Timers");
+		AssertElementNotPresent(
+			key_actionName = "Liferay Timer 2",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ACTIONS_NAME_ON_TIMERS_FIELD");
 	}
 
 	@description = "Verify that the user can delete all actions with the trash icon at the top right corner"
@@ -1167,11 +1180,11 @@ definition {
 			propertyValue = "Duration: 1 minute",
 			sidebarCardName = "Timers");
 
-		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 11 minute");
+		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 1 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 12 minute");
+		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 2 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 13 minute");
+		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 3 minute");
 	}
 
 	@description = "Verify that the user can delete Nodes of Condition"
@@ -1532,7 +1545,10 @@ definition {
 			propertyValue = "Duration: 1 minute",
 			sidebarPropertyName = "Timers");
 
-		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 1 minute");
+		AssertElementNotPresent(
+			key_propertyName = "Timers",
+			key_propertyValue = "Duration: 1 minute",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
 	@description = "Verify that the user can delete A Timer clicking on trash icon in sidebar Timer Card"
@@ -1560,7 +1576,10 @@ definition {
 			propertyValue = "Duration: 2 minute",
 			sidebarCardName = "Timers");
 
-		ProcessBuilderKaleoDesignerReact.viewTimerNotPresent(propertyValue = "Duration: 2 minute");
+		AssertElementNotPresent(
+			key_propertyName = "Timers",
+			key_propertyValue = "Duration: 2 minute",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
 	@description = "Verify that is possible to delete translations"
@@ -2045,7 +2064,7 @@ definition {
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
 
-		ProcessBuilderKaleoDesignerReact.viewTimersInfo(name = "Name of Definition Timer edited");
+		ProcessBuilderKaleoDesignerReact.viewTimersInfo(name = "Name of Workflow Timer Edit");
 	}
 
 	@description = "Verify that the user can edit the Timers recurrence field"
@@ -2082,9 +2101,11 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
-			propertyName = "Timer",
-			propertyValue = "Recurrence: 5 minute");
+		AssertTextEquals(
+			key_propertyName = "Timer",
+			key_propertyValue = "Recurrence: 5 minute",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY",
+			value1 = "Recurrence: 5 minute");
 	}
 
 	@description = "LPS-140056 - Verify that the user is able to edit the transition Name"
@@ -3769,8 +3790,26 @@ definition {
 			key_propertyName = "Timer",
 			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
 
+		Select(
+			key_index = 1,
+			locator1 = "ProcessBuilderKaleoDesignerReact#TIMER_ACTION_SCRIPT_TYPE_INDEX",
+			value1 = "Java");
 
-		ProcessBuilderKaleoDesignerReact.viewTimersRequiredFields();
+		AssertVisible(
+			key_requiredField = "name",
+			locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
+
+		AssertVisible(
+			key_requiredField = "script",
+			locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
+
+		AssertVisible(
+			key_requiredField = "timerScale",
+			locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
+
+		AssertVisible(
+			key_requiredField = "timerValue",
+			locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
 	}
 
 	@description = "Verify that on the Details tab, the Total Modifications field follows the number of times the definition was updated"

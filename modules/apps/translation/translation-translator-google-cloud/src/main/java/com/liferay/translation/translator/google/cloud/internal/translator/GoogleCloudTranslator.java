@@ -59,14 +59,13 @@ public class GoogleCloudTranslator implements Translator {
 
 	@Override
 	public boolean isEnabled(long companyId) throws ConfigurationException {
-		GoogleCloudTranslatorConfiguration
-			googleCloudTranslatorCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					GoogleCloudTranslatorConfiguration.class, companyId);
+		GoogleCloudTranslatorConfiguration googleCloudTranslatorConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				GoogleCloudTranslatorConfiguration.class, companyId);
 
-		if (googleCloudTranslatorCompanyConfiguration.enabled() &&
+		if (googleCloudTranslatorConfiguration.enabled() &&
 			!Validator.isBlank(
-				googleCloudTranslatorCompanyConfiguration.
+				googleCloudTranslatorConfiguration.
 					serviceAccountPrivateKey())) {
 
 			return true;
@@ -152,14 +151,12 @@ public class GoogleCloudTranslator implements Translator {
 	private Translate _getTranslate(long companyId)
 		throws ConfigurationException {
 
-		GoogleCloudTranslatorConfiguration
-			googleCloudTranslatorCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					GoogleCloudTranslatorConfiguration.class, companyId);
+		GoogleCloudTranslatorConfiguration googleCloudTranslatorConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				GoogleCloudTranslatorConfiguration.class, companyId);
 
 		String serviceAccountPrivateKey =
-			googleCloudTranslatorCompanyConfiguration.
-				serviceAccountPrivateKey();
+			googleCloudTranslatorConfiguration.serviceAccountPrivateKey();
 
 		ServiceAccountCredentials serviceAccountCredentials = null;
 

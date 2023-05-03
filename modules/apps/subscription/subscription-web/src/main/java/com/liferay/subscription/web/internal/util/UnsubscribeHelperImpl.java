@@ -40,7 +40,7 @@ public class UnsubscribeHelperImpl implements UnsubscribeHelper {
 	@Override
 	public void registerHooks(SubscriptionSender subscriptionSender) {
 		UnsubscribeHooks unsubscribeHooks = new UnsubscribeHooks(
-			_configuration, _ticketLocalService, _userLocalService,
+			_subscriptionConfiguration, _ticketLocalService, _userLocalService,
 			subscriptionSender);
 
 		subscriptionSender.addHook(
@@ -55,11 +55,11 @@ public class UnsubscribeHelperImpl implements UnsubscribeHelper {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_configuration = ConfigurableUtil.createConfigurable(
+		_subscriptionConfiguration = ConfigurableUtil.createConfigurable(
 			SubscriptionConfiguration.class, properties);
 	}
 
-	private volatile SubscriptionConfiguration _configuration;
+	private volatile SubscriptionConfiguration _subscriptionConfiguration;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;

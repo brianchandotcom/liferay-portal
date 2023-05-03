@@ -100,7 +100,15 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		if (Objects.equals(
 				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+				ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+			return new DateTimeEntityField(
+				objectField.getName(), locale -> objectField.getName(),
+				locale -> objectField.getName());
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			return new CollectionEntityField(
 				new StringEntityField(

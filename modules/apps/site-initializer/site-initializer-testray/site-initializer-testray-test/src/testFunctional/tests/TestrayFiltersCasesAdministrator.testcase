@@ -471,4 +471,47 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-177202 | Test Summary: Verify that the user can unpin filters"
+	@priority = 3
+	test CanUnpinFilterResults {
+		task ("Given that can see two different cases in the table") {
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And that the user filter a case") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_fieldLabel = "Case Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Case 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("When the user pin and unpin a result in the filter") {
+			TestrayFilter.pinResult();
+
+			TestrayFilter.unpinResult();
+
+			Refresh();
+		}
+
+		task ("Then the user see the two cases unpinned in the table") {
+			AssertElementPresent(
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

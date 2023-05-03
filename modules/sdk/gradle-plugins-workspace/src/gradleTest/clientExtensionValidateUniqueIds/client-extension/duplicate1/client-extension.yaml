@@ -1,0 +1,4 @@
+duplicate-key:
+    name: Duplicate Key 1
+    type: globalCSS
+    url: global.css

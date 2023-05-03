@@ -1,0 +1,56 @@
+task runGradleTest
+
+runGradleTest {
+	doLast {
+		String validateTaskName = "validateUniqueClientExtensionIds"
+
+		["duplicate1", "duplicate2", "unique"].forEach {
+			projectName ->
+			Project curProject = project(":client-extension:${projectName}")
+
+			Task validateTask = curProject.tasks[validateTaskName]
+
+			["check", "createClientExtensionConfig"].each {
+				taskName ->
+				Provider<Task> curTaskProvider = curProject.tasks.named taskName
+
+				Task curTask = curTaskProvider.get()
+
+				assert curTask.dependsOn.contains(validateTaskName) : "${curTask.path} should depend on ${validateTask.path}"
+			}
+		}
+
+		["duplicate1", "duplicate2"].forEach {
+			projectName ->
+			Project curProject = project(":client-extension:${projectName}")
+
+			Task validateTask = curProject.tasks[validateTaskName]
+
+			try {
+				validateTask.actions.forEach {
+					it.execute(validateTask)
+				}
+
+				assert false : "${validateTask.path} should have failed"
+			}
+			catch (Exception e) {
+				assert e.message.contains("Duplicate client extension ID \"duplicate-key\" found in these projects:")
+				assert e.message.contains("client-extension/duplicate1")
+				assert e.message.contains("client-extension/duplicate2")
+			}
+		}
+
+		Project curProject = project(":client-extension:unique")
+
+		Task validateTask = curProject.tasks[validateTaskName]
+
+		try {
+			validateTask.actions.forEach {
+				it.execute(validateTask)
+			}
+		}
+		catch (Exception e) {
+			assert false : "${validateTask.path} should not have failed"
+		}
+	}
+}

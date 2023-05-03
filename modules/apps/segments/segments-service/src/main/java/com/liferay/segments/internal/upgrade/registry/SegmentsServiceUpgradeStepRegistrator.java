@@ -81,6 +81,13 @@ public class SegmentsServiceUpgradeStepRegistrator
 				SegmentsExperienceUpgradeProcess());
 
 		registry.register("2.6.0", "2.6.1", new DummyUpgradeStep());
+
+		registry.register(
+			"2.6.1", "2.7.0",
+			UpgradeProcessFactory.alterColumnName(
+				"SegmentsExperience", "classPK", "plid LONG"),
+			UpgradeProcessFactory.dropColumns(
+				"SegmentsExperience", "classNameId"));
 	}
 
 	@Reference

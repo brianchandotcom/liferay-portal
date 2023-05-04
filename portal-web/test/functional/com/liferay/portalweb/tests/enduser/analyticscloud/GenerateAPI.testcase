@@ -157,6 +157,46 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12705 | Automation ID: LRAC-13592 | Test Summary: An internal problem occurred during the export process"
+	@priority = 2
+	test InternalProblemOccurredInExportProcess {
+		var startDate = "1987-05-13";
+		var startTime = "11:45:00.000";
+		var endDate = "2008-05-13";
+		var endTime = "09:20:00.000";
+		var type = "page";
+		var message = "An internal problem happened when trying to reach our services";
+		var containerName = "osbasahbackend";
+
+		task ("Get the token value") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Stop the osbasahbackend container") {
+			var containerID = ExecUtil.executeCommand("docker ps -aqf name=${containerName}");
+
+			ExecUtil.executeCommand("docker stop ${containerID}");
+		}
+
+		task ("Create a data export using analytics cloud API with invalid type") {
+			ACApi.createNewExportSchedule(
+				endDate = ${endDate},
+				endTime = ${endTime},
+				startDate = ${startDate},
+				startTime = ${startTime},
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Check if the API response is correct for the error case") {
+			ACApi.viewApiResponseForError(message = ${message});
+		}
+
+		task ("Start the osbasahbackend container") {
+			ExecUtil.executeCommand("docker start ${containerID}");
+		}
+	}
+
 	@description = "Feature ID: LRAC-10833 | Automation ID: LRAC-11107 | Test Summary: The request command has 'fromDate' after 'toDate'"
 	@priority = 3
 	test RequestCommandHasFromDateAfterToDate {
@@ -183,6 +223,37 @@ definition {
 
 		task ("Check if the API response is correct for the error case") {
 			ACApi.viewApiResponseForError(message = ${message});
+		}
+	}
+
+	@description = "Feature ID: LRAC-12705 | Automation ID: LRAC-12949 | Test Summary: The request command has an invalid type"
+	@priority = 2
+	test RequestCommandHasInvalidType {
+		var startDate = "1987-05-13";
+		var startTime = "11:45:00.000";
+		var endDate = "2008-05-13";
+		var endTime = "09:20:00.000";
+		var typeList = "accounts,acqa";
+		var message = "The \"type\" query parameter must be either \"individual\", \"page\", or \"segment\"";
+
+		task ("Get the token value") {
+			var token = ACApi.getTokenValue();
+		}
+
+		for (var type : list ${typeList}) {
+			task ("Create a data export using analytics cloud API with invalid type") {
+				ACApi.createNewExportSchedule(
+					endDate = ${endDate},
+					endTime = ${endTime},
+					startDate = ${startDate},
+					startTime = ${startTime},
+					token = ${token},
+					type = ${type});
+			}
+
+			task ("Check if the API response is correct for the error case") {
+				ACApi.viewApiResponseForError(message = ${message});
+			}
 		}
 	}
 
@@ -279,81 +350,6 @@ definition {
 			ACApi.viewApiResponseForError(
 				apiResponse = ${apiResponse},
 				message = ${message});
-		}
-	}
-
-	@description = "Feature ID: LRAC-12705 | Automation ID: LRAC-12949 | Test Summary: The request command has an invalid type"
-	@priority = 2
-	test RequestCommandHasInvalidType {
-		var startDate = "1987-05-13";
-		var startTime = "11:45:00.000";
-		var endDate = "2008-05-13";
-		var endTime = "09:20:00.000";
-		var typeList = "accounts,acqa";
-		var message = "The \"type\" query parameter must be either \"individual\", \"page\", or \"segment\"";
-
-		task ("Get the token value") {
-			var token = ACApi.getTokenValue();
-		}
-
-		for (var type : list ${typeList}) {
-			task ("Create a data export using analytics cloud API with invalid type") {
-				ACApi.createNewExportSchedule(
-					endDate = ${endDate},
-					endTime = ${endTime},
-					startDate = ${startDate},
-					startTime = ${startTime},
-					token = ${token},
-					type = ${type});
-			}
-
-			task ("Check if the API response is correct for the error case") {
-				ACApi.viewApiResponseForError(message = ${message});
-			}
-		}
-	}
-
-	@description = "Feature ID: LRAC-12705 | Automation ID: LRAC-13592 | Test Summary: An internal problem occurred during the export process"
-	@priority = 2
-	test InternalProblemOccurredInExportProcess {
-		var startDate = "1987-05-13";
-		var startTime = "11:45:00.000";
-		var endDate = "2008-05-13";
-		var endTime = "09:20:00.000";
-		var type = "page";
-		var message = "An internal problem happened when trying to reach our services";
-		var containerName = "osbasahbackend";
-
-		task ("Get the token value") {
-			var token = ACApi.getTokenValue();
-		}
-
-		task ("Stop the osbasahbackend container") {
-			var containerID = ExecUtil.executeCommand("docker ps -aqf name=${containerName}");
-
-			ExecUtil.executeCommand("docker stop ${containerID}");
-		}
-
-		task ("Create a data export using analytics cloud API with invalid type") {
-			ACApi.createNewExportSchedule(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				token = ${token},
-				type = ${type});
-		}
-
-		task ("Check if the API response is correct for the error case") {
-			ACApi.viewApiResponseForError(message = ${message});
-		}
-
-		task ("Start the osbasahbackend container") {
-			ExecUtil.executeCommand("docker start ${containerID}");
-		}
-
-		task ("Check that the container is working normally after restarting") {
-			ACWorkspace.waitUntilWorkspaceUnavaibleMessageIsNotPresent();
 		}
 	}
 

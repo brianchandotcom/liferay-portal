@@ -25,7 +25,7 @@ export const spritemap =
 	'//' +
 	window.location.host +
 	contextPath +
-	'/o/icons/pack/clay.svg';
+	'/o/classic-theme/images/clay/icons.svg';
 
 const Icon = (props) => {
 	const {symbol, ...otherProps} = props;

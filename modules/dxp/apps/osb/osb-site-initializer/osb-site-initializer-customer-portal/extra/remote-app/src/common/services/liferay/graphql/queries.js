@@ -319,8 +319,8 @@ export const addTeamMembersInvitation = gql`
 	}
 `;
 
-export const associateUserAccountWithAccountAndAccountRole = gql`
-	mutation associateUserAccountWithAccountAndAccountRole(
+export const createAndAssociateUserAccountWithAccountAndAccountRole = gql`
+	mutation createAndAssociateUserAccountWithAccountAndAccountRole(
 		$emailAddress: String!
 		$userAccount: InputUserAccount!
 		$accountKey: String!
@@ -337,6 +337,37 @@ export const associateUserAccountWithAccountAndAccountRole = gql`
 			emailAddress: $emailAddress
 			externalReferenceCode: $accountKey
 		)
+	}
+`;
+
+export const associateUserAccountWithAccountAndAccountRole = gql`
+	mutation associateUserAccountWithAccountAndAccountRole(
+		$emailAddress: String!
+		$accountKey: String!
+		$accountRoleId: Long!
+	) {
+		createAccountUserAccountByExternalReferenceCodeByEmailAddress(
+			externalReferenceCode: $accountKey
+			emailAddress: $emailAddress
+		)
+
+		createAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+			accountRoleId: $accountRoleId
+			emailAddress: $emailAddress
+			externalReferenceCode: $accountKey
+		)
+	}
+`;
+
+export const getUserAccountByEmail = gql`
+	query GetUserAccounts($filter: String) {
+		userAccounts(filter: $filter) {
+			items {
+				name
+				emailAddress
+				id
+			}
+		}
 	}
 `;
 

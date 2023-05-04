@@ -208,4 +208,19 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro uploadSingleFileWithoutFrameTop {
+		Variables.assertDefined(parameterList = ${uploadFileName});
+
+		if (isSet(selectButtonName)) {
+			CommerceEntry.clickButtonWithName(
+				buttonName = ${selectButtonName},
+				text = "Select");
+		}
+		else {
+			Button.clickSelect();
+		}
+
+		CommerceItemSelector.uploadSingleFile(uploadFileName = ${uploadFileName});
+	}
+
 }

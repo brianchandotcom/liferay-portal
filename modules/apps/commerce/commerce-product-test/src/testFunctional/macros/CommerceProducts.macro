@@ -815,6 +815,88 @@ definition {
 		Button.clickSave();
 	}
 
+	macro updateVirtualSkuActivationStatus {
+		if (IsElementPresent(key_contentType = ${key_contentType}, locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
+			Click(
+				key_contentType = ${key_contentType},
+				locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED");
+		}
+
+		Select(
+			key_fieldLabel = ${key_fieldLabel},
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${activationStatus});
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro updateVirtualSkuConfiguration {
+		if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
+			Click(
+				key_accordionTitle = "details",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS");
+		}
+
+		if (isSet(virtualProductFile)) {
+			CommerceUtilities.uploadSingleFileWithoutFrameTop(uploadFileName = ${virtualProductFile});
+		}
+
+		WaitForElementPresent(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if ((${activationStatus} != "") || (${duration} != "") || (${maxDownload} != "")) {
+			if (IsElementPresent(key_accordionTitle = "base-information", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
+				Click(
+					key_accordionTitle = "base-information",
+					locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS");
+			}
+		}
+
+		if (isSet(activationStatus)) {
+			CommerceProducts.updateVirtualSkuActivationStatus(
+				activationStatus = ${activationStatus},
+				key_contentType = ${key_contentType},
+				key_fieldLabel = ${key_fieldLabel});
+		}
+
+		if (isSet(duration)) {
+			Type(
+				key_text = "Duration",
+				locator1 = "TextInput#ANY",
+				value1 = ${duration});
+		}
+
+		if (isSet(maxDownloads)) {
+			Type(
+				key_fieldLabel = "Max Number of Downloads",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${maxDownloads});
+		}
+
+		if (isSet(enableSample) && isSet(sampleFileName)) {
+			if (IsElementPresent(key_accordionTitle = "sample", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
+				Click(
+					key_accordionTitle = "sample",
+					locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS");
+			}
+
+			CommerceProducts.uploadVirtualSkuSample(
+				enableSample = ${enableSample},
+				sampleFileName = ${sampleFileName});
+		}
+
+		SelectFrameTop();
+
+		WaitForElementPresent(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+	}
+
 	macro uploadVirtualProductSample {
 		Variables.assertDefined(parameterList = "${enableSample},${sampleFileName}");
 
@@ -840,6 +922,39 @@ definition {
 		}
 
 		if (isSet(publish) && (${publish} == "true")) {
+			Button.clickSave();
+		}
+	}
+
+	macro uploadVirtualSkuSample {
+		Variables.assertDefined(parameterList = "${enableSample},${sampleFileName}");
+
+		if (!(isSet(publish))) {
+			var publish = "false";
+		}
+
+		if (IsElementPresent(key_accordionTitle = "sample", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
+			Click(
+				key_accordionTitle = "sample",
+				locator1 = "CommerceEntry#ACCORDION_COLLAPSED");
+		}
+
+		if (${enableSample} == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enable Sample",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			CommerceUtilities.uploadSingleFileWithoutFrameTop(
+				selectButtonName = "selectSampleFile",
+				uploadFileName = ${sampleFileName});
+		}
+		else {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Enable Sample",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (${publish} == "true") {
 			Button.clickSave();
 		}
 	}

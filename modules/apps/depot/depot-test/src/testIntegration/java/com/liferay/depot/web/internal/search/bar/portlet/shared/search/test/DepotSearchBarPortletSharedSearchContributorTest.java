@@ -319,11 +319,6 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 			}
 
 			@Override
-			public Optional<PortletPreferences> getPortletPreferences71() {
-				return Optional.empty();
-			}
-
-			@Override
 			public Optional<PortletPreferences>
 				getPortletPreferencesOptional() {
 

@@ -36,8 +36,6 @@ public interface PortletSharedSearchSettings extends SearchSettings {
 
 	public String getPortletId();
 
-	public Optional<PortletPreferences> getPortletPreferences71();
-
 	public Optional<PortletPreferences> getPortletPreferencesOptional();
 
 	public RenderRequest getRenderRequest();

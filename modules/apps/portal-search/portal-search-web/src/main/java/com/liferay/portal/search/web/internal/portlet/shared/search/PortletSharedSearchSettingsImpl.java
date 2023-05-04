@@ -117,11 +117,6 @@ public class PortletSharedSearchSettingsImpl
 	}
 
 	@Override
-	public Optional<PortletPreferences> getPortletPreferences71() {
-		return _portletPreferencesOptional;
-	}
-
-	@Override
 	public Optional<PortletPreferences> getPortletPreferencesOptional() {
 		return _portletPreferencesOptional;
 	}

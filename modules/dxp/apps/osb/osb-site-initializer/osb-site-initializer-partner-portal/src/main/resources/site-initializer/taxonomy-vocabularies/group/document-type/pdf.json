@@ -2,10 +2,10 @@
 	"externalReferenceCode": "PRMC023",
 	"name": "PDF",
 	"name_i18n": {
-		"en_US": "PDF",
 		"ar_SA": "PDF",
 		"ca_ES": "PDF",
 		"de_DE": "PDF",
+		"en_US": "PDF",
 		"es_ES": "PDF",
 		"fi_FI": "PDF",
 		"fr_FR": "PDF",

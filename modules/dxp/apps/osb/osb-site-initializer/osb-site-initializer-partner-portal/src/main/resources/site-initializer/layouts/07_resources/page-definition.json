@@ -76,7 +76,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Partner Resources",
@@ -116,7 +117,8 @@
 										"width": "100%"
 									},
 									"widgetInstance": {
-										"widgetConfig": {},
+										"widgetConfig": {
+										},
 										"widgetName": "com_liferay_portal_search_web_portlet_SearchPortlet"
 									}
 								},
@@ -141,11 +143,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -161,11 +165,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -210,7 +216,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"ar_SA": "filters",
@@ -608,11 +615,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],

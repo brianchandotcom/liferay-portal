@@ -2,10 +2,10 @@
 	"externalReferenceCode": "PRMC025",
 	"name": "Sales",
 	"name_i18n": {
-		"en_US": "Sales",
 		"ar_SA": "Sales",
 		"ca_ES": "Sales",
 		"de_DE": "Sales",
+		"en_US": "Sales",
 		"es_ES": "Sales",
 		"fi_FI": "Sales",
 		"fr_FR": "Sales",

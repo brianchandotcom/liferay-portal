@@ -2,10 +2,10 @@
 	"externalReferenceCode": "PRMC006",
 	"name": "LXC",
 	"name_i18n": {
-		"en_US": "LXC",
 		"ar_SA": "LXC",
 		"ca_ES": "LXC",
 		"de_DE": "LXC",
+		"en_US": "LXC",
 		"es_ES": "LXC",
 		"fi_FI": "LXC",
 		"fr_FR": "LXC",

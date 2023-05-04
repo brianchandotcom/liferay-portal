@@ -3,10 +3,10 @@
 	"externalReferenceCode": "PRMV005",
 	"name": "Role",
 	"name_i18n": {
-		"en_US": "Role",
 		"ar_SA": "Role",
 		"ca_ES": "Role",
 		"de_DE": "Role",
+		"en_US": "Role",
 		"es_ES": "Role",
 		"fi_FI": "Role",
 		"fr_FR": "Role",

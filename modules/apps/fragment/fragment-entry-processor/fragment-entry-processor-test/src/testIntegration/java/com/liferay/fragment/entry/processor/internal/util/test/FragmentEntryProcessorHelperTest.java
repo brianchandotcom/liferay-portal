@@ -42,6 +42,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -285,6 +287,53 @@ public class FragmentEntryProcessorHelperTest {
 					"fieldId", "DDMStructure_" + ddmFormField.getName()
 				),
 				LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetFieldValueFromStringValueLinkToLayoutDDMFormFieldType()
+		throws Exception {
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			DDMFormFieldTypeConstants.LINK_TO_LAYOUT);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+			_dataDefinitionResourceFactory, ddmFormField,
+			_ddmFormValuesToFieldsConverter,
+			JSONUtil.put(
+				"groupId", layout.getGroupId()
+			).put(
+				"id", layout.getUuid()
+			).put(
+				"layoutId", layout.getLayoutId()
+			).put(
+				"name", layout.getName()
+			).put(
+				"privateLayout", layout.isPrivateLayout()
+			).put(
+				"returnType",
+				"com.liferay.item.selector.criteria.UUIDItemSelectorReturnType"
+			).put(
+				"title", layout.getTitle()
+			).toString(),
+			_group.getGroupId(), _journalConverter);
+
+		Assert.assertEquals(
+			layout.getFriendlyURL(),
+			_getFieldValue(
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"fieldId", "DDMStructure_" + ddmFormField.getName()
+				),
+				LocaleUtil.SPAIN));
 	}
 
 	@Test

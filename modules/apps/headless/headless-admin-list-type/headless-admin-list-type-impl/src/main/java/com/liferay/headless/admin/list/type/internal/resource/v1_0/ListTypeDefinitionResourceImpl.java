@@ -104,6 +104,13 @@ public class ListTypeDefinitionResourceImpl
 					"postListTypeDefinition", ListTypeConstants.RESOURCE_NAME,
 					contextCompany.getCompanyId())
 			).put(
+				"createBatch",
+				addAction(
+					ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION,
+					"postListTypeDefinitionBatch",
+					ListTypeConstants.RESOURCE_NAME,
+					contextCompany.getCompanyId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getListTypeDefinitionsPage",

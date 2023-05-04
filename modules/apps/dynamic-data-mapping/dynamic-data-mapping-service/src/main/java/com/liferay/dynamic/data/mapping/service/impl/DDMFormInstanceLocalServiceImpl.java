@@ -208,25 +208,27 @@ public class DDMFormInstanceLocalServiceImpl
 	@Override
 	public DDMFormInstance copyFormInstance(
 			long userId, long groupId, Map<Locale, String> nameMap,
-			DDMFormInstance ddmFormInstance,
+			DDMFormInstance sourceDDMFormInstance,
 			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructure ddmStructure = ddmFormInstance.getStructure();
+		DDMStructure sourceDDMStructure = sourceDDMFormInstance.getStructure();
 
 		serviceContext.setAttribute("addResources", Boolean.FALSE);
 
-		DDMFormInstance newDDMFormInstance = addFormInstance(
-			userId, groupId, nameMap, ddmFormInstance.getDescriptionMap(),
-			ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),
-			settingsDDMFormValues, serviceContext);
+		DDMFormInstance targetDDMFormInstance = addFormInstance(
+			userId, groupId, nameMap, sourceDDMFormInstance.getDescriptionMap(),
+			sourceDDMStructure.getDDMForm(),
+			sourceDDMStructure.getDDMFormLayout(), settingsDDMFormValues,
+			serviceContext);
 
 		_resourceLocalService.copyModelResources(
-			ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
-			ddmFormInstance.getFormInstanceId(),
-			newDDMFormInstance.getFormInstanceId());
+			sourceDDMFormInstance.getCompanyId(),
+			DDMFormInstance.class.getName(),
+			sourceDDMFormInstance.getFormInstanceId(),
+			targetDDMFormInstance.getFormInstanceId());
 
-		return newDDMFormInstance;
+		return targetDDMFormInstance;
 	}
 
 	@Override

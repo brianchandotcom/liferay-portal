@@ -390,7 +390,7 @@ public class DDMStructureLocalServiceImpl
 	 * and description.
 	 *
 	 * @param  userId the primary key of the structure's creator/owner
-	 * @param  structureId the primary key of the structure to be copied
+	 * @param  sourceStructureId the primary key of the structure to be copied
 	 * @param  nameMap the new structure's locales and localized names
 	 * @param  descriptionMap the new structure's locales and localized
 	 *         descriptions
@@ -402,7 +402,7 @@ public class DDMStructureLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMStructure copyStructure(
-			long userId, long structureId, Map<Locale, String> nameMap,
+			long userId, long sourceStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -410,66 +410,70 @@ public class DDMStructureLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
-			structureId);
+		DDMStructure sourceStructure = ddmStructurePersistence.findByPrimaryKey(
+			sourceStructureId);
 		String structureKey = String.valueOf(counterLocalService.increment());
 
 		_validate(
-			structure.getGroupId(), structure.getParentStructureId(),
-			structure.getClassNameId(), structureKey, nameMap,
-			structure.getDDMForm());
+			sourceStructure.getGroupId(),
+			sourceStructure.getParentStructureId(),
+			sourceStructure.getClassNameId(), structureKey, nameMap,
+			sourceStructure.getDDMForm());
 
-		DDMStructure newStructure = _addStructure(
-			user, structure.getGroupId(), structure.getParentStructureId(),
-			structure.getClassNameId(), structureKey, nameMap, descriptionMap,
-			structure.getDDMForm(), structure.getStorageType(),
-			structure.getType(), serviceContext);
+		DDMStructure targetStructure = _addStructure(
+			user, sourceStructure.getGroupId(),
+			sourceStructure.getParentStructureId(),
+			sourceStructure.getClassNameId(), structureKey, nameMap,
+			descriptionMap, sourceStructure.getDDMForm(),
+			sourceStructure.getStorageType(), sourceStructure.getType(),
+			serviceContext);
 
 		// Resources
 
 		_resourceLocalService.copyModelResources(
-			structure.getCompanyId(),
+			sourceStructure.getCompanyId(),
 			_ddmPermissionSupport.getStructureModelResourceName(
-				structure.getClassName()),
-			structure.getPrimaryKey(), newStructure.getPrimaryKey());
+				sourceStructure.getClassName()),
+			sourceStructure.getPrimaryKey(), targetStructure.getPrimaryKey());
 
 		// Structure version
 
 		DDMStructureVersion structureVersion = _addStructureVersion(
-			user, newStructure, DDMStructureConstants.VERSION_DEFAULT,
+			user, targetStructure, DDMStructureConstants.VERSION_DEFAULT,
 			serviceContext);
 
 		// Structure layout
 
-		if (structure.getDDMFormLayout() != null) {
+		if (sourceStructure.getDDMFormLayout() != null) {
 			_ddmStructureLayoutLocalService.addStructureLayout(
-				userId, structure.getGroupId(), newStructure.getClassNameId(),
-				newStructure.getStructureKey(),
+				userId, sourceStructure.getGroupId(),
+				targetStructure.getClassNameId(),
+				targetStructure.getStructureKey(),
 				structureVersion.getStructureVersionId(),
-				structure.getDDMFormLayout(), serviceContext);
+				sourceStructure.getDDMFormLayout(), serviceContext);
 		}
 
 		// Data provider instance links
 
 		_addDataProviderInstanceLinks(
-			structure.getGroupId(), newStructure.getStructureId(),
-			structure.getDDMForm());
+			sourceStructure.getGroupId(), targetStructure.getStructureId(),
+			sourceStructure.getDDMForm());
 
-		return newStructure;
+		return targetStructure;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMStructure copyStructure(
-			long userId, long structureId, ServiceContext serviceContext)
+			long userId, long sourceStructureId, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
-			structureId);
+		DDMStructure sourceStructure = ddmStructurePersistence.findByPrimaryKey(
+			sourceStructureId);
 
 		return copyStructure(
-			userId, structureId, structure.getNameMap(),
-			structure.getDescriptionMap(), serviceContext);
+			userId, sourceStructureId, sourceStructure.getNameMap(),
+			sourceStructure.getDescriptionMap(), serviceContext);
 	}
 
 	/**

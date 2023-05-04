@@ -161,7 +161,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * extracted from the original one. This method supports defining a new name
 	 * and description.
 	 *
-	 * @param  templateId the primary key of the template to be copied
+	 * @param  sourceTemplateId the primary key of the template to be copied
 	 * @param  nameMap the new template's locales and localized names
 	 * @param  descriptionMap the new template's locales and localized
 	 *         descriptions
@@ -173,35 +173,38 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public DDMTemplate copyTemplate(
-			long templateId, Map<Locale, String> nameMap,
+			long sourceTemplateId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
-			templateId);
+		DDMTemplate sourceTemplate = ddmTemplatePersistence.findByPrimaryKey(
+			sourceTemplateId);
 
 		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			template.getClassNameId(), template.getResourceClassName());
+			sourceTemplate.getClassNameId(),
+			sourceTemplate.getResourceClassName());
 
 		return ddmTemplateLocalService.copyTemplate(
-			getUserId(), templateId, nameMap, descriptionMap, serviceContext);
+			getUserId(), sourceTemplateId, nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	@Override
 	public DDMTemplate copyTemplate(
-			long templateId, ServiceContext serviceContext)
+			long sourceTemplateId, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
-			templateId);
+		DDMTemplate sourceTemplate = ddmTemplatePersistence.findByPrimaryKey(
+			sourceTemplateId);
 
 		_ddmPermissionSupport.checkAddTemplatePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			template.getClassNameId(), template.getResourceClassName());
+			sourceTemplate.getClassNameId(),
+			sourceTemplate.getResourceClassName());
 
 		return ddmTemplateLocalService.copyTemplate(
-			getUserId(), templateId, serviceContext);
+			getUserId(), sourceTemplateId, serviceContext);
 	}
 
 	/**
@@ -211,10 +214,10 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *
 	 * @param  classNameId the primary key of the class name for template's
 	 *         related model
-	 * @param  oldClassPK the primary key of the old template's related entity
+	 * @param  sourceClassPK the primary key of the old template's related entity
 	 * @param  resourceClassNameId the primary key of the class name for
 	 *         template's resource model
-	 * @param  newClassPK the primary key of the new template's related entity
+	 * @param  targetClassPK the primary key of the new template's related entity
 	 * @param  type the template's type. For more information, see
 	 *         DDMTemplateConstants in the dynamic-data-mapping-api module.
 	 * @param  serviceContext the service context to be applied. Must have the
@@ -225,8 +228,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> copyTemplates(
-			long classNameId, long oldClassPK, long resourceClassNameId,
-			long newClassPK, String type, ServiceContext serviceContext)
+			long classNameId, long sourceClassPK, long resourceClassNameId,
+			long targetClassPK, String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_ddmPermissionSupport.checkAddTemplatePermission(
@@ -234,7 +237,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			classNameId, resourceClassNameId);
 
 		return ddmTemplateLocalService.copyTemplates(
-			getUserId(), classNameId, oldClassPK, newClassPK, type,
+			getUserId(), classNameId, sourceClassPK, targetClassPK, type,
 			serviceContext);
 	}
 

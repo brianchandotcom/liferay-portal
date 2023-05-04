@@ -117,7 +117,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * extracted from the original one. The new structure supports a new name
 	 * and description.
 	 *
-	 * @param  structureId the primary key of the structure to be copied
+	 * @param  sourceStructureId the primary key of the structure to be copied
 	 * @param  nameMap the new structure's locales and localized names
 	 * @param  descriptionMap the new structure's locales and localized
 	 *         descriptions
@@ -128,41 +128,42 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 */
 	@Override
 	public DDMStructure copyStructure(
-			long structureId, Map<Locale, String> nameMap,
+			long sourceStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
-			structureId);
+		DDMStructure sourceStructure = ddmStructurePersistence.findByPrimaryKey(
+			sourceStructureId);
 
 		_ddmStructureModelResourcePermission.check(
-			getPermissionChecker(), structure, ActionKeys.VIEW);
+			getPermissionChecker(), sourceStructure, ActionKeys.VIEW);
 
 		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			structure.getClassNameId());
+			sourceStructure.getClassNameId());
 
 		return ddmStructureLocalService.copyStructure(
-			getUserId(), structureId, nameMap, descriptionMap, serviceContext);
+			getUserId(), sourceStructureId, nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	@Override
 	public DDMStructure copyStructure(
-			long structureId, ServiceContext serviceContext)
+			long sourceStructureId, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
-			structureId);
+		DDMStructure sourceStructure = ddmStructurePersistence.findByPrimaryKey(
+			sourceStructureId);
 
 		_ddmStructureModelResourcePermission.check(
-			getPermissionChecker(), structure, ActionKeys.VIEW);
+			getPermissionChecker(), sourceStructure, ActionKeys.VIEW);
 
 		_ddmPermissionSupport.checkAddStructurePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			structure.getClassNameId());
+			sourceStructure.getClassNameId());
 
 		return ddmStructureLocalService.copyStructure(
-			getUserId(), structureId, serviceContext);
+			getUserId(), sourceStructureId, serviceContext);
 	}
 
 	/**

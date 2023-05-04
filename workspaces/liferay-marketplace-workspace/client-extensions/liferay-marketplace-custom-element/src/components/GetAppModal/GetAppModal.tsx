@@ -221,7 +221,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			}
 			setSku(newSku as SKU);
 
-			if (newSku?.price === 0 && newSku.skuOptions[0].value === 'no') {
+			if (newSku?.price === 0) {
 				setFreeApp(true);
 				setSelectedPaymentMethod(null);
 			}

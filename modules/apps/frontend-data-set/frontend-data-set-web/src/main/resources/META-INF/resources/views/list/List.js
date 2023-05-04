@@ -17,8 +17,9 @@ import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
@@ -58,10 +59,17 @@ const ListItem = ({item, schema}) => {
 		selectionType,
 	} = useContext(FrontendDataSetContext);
 
+	const [menuActive, setMenuActive] = useState(false);
+
 	const {description, image, sticker, symbol, title} = schema;
 
 	return (
-		<ClayList.Item flex>
+		<ClayList.Item
+			className={classNames({
+				'menu-active': menuActive,
+			})}
+			flex
+		>
 			{selectable && (
 				<ClayList.ItemField className="justify-content-center">
 					{selectionType === 'single' ? (
@@ -116,6 +124,8 @@ const ListItem = ({item, schema}) => {
 						actions={itemsActions || item.actionDropdownItems}
 						itemData={item}
 						itemId={item[selectedItemsKey]}
+						menuActive={menuActive}
+						onMenuActiveChange={setMenuActive}
 					/>
 				)}
 			</ClayList.ItemField>

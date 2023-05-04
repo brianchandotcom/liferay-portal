@@ -54,12 +54,13 @@ public class FragmentEntryServiceWrapper
 
 	@Override
 	public FragmentEntry copyFragmentEntry(
-			long groupId, long fragmentEntryId, long fragmentCollectionId,
+			long groupId, long sourceFragmentEntryId, long fragmentCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryService.copyFragmentEntry(
-			groupId, fragmentEntryId, fragmentCollectionId, serviceContext);
+			groupId, sourceFragmentEntryId, fragmentCollectionId,
+			serviceContext);
 	}
 
 	@Override

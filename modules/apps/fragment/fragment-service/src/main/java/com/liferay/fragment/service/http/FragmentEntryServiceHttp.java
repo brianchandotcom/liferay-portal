@@ -98,8 +98,8 @@ public class FragmentEntryServiceHttp {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry copyFragmentEntry(
-			HttpPrincipal httpPrincipal, long groupId, long fragmentEntryId,
-			long fragmentCollectionId,
+			HttpPrincipal httpPrincipal, long groupId,
+			long sourceFragmentEntryId, long fragmentCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -109,7 +109,7 @@ public class FragmentEntryServiceHttp {
 				_copyFragmentEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, fragmentEntryId, fragmentCollectionId,
+				methodKey, groupId, sourceFragmentEntryId, fragmentCollectionId,
 				serviceContext);
 
 			Object returnObj = null;

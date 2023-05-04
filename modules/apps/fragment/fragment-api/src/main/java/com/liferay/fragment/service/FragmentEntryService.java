@@ -64,7 +64,7 @@ public interface FragmentEntryService extends BaseService {
 		throws PortalException;
 
 	public FragmentEntry copyFragmentEntry(
-			long groupId, long fragmentEntryId, long fragmentCollectionId,
+			long groupId, long sourceFragmentEntryId, long fragmentCollectionId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

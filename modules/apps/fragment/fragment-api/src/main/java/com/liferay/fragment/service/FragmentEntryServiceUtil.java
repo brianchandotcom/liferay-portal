@@ -54,12 +54,13 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static FragmentEntry copyFragmentEntry(
-			long groupId, long fragmentEntryId, long fragmentCollectionId,
+			long groupId, long sourceFragmentEntryId, long fragmentCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyFragmentEntry(
-			groupId, fragmentEntryId, fragmentCollectionId, serviceContext);
+			groupId, sourceFragmentEntryId, fragmentCollectionId,
+			serviceContext);
 	}
 
 	public static void deleteFragmentEntries(long[] fragmentEntriesIds)

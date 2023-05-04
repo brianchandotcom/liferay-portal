@@ -81,13 +81,13 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static FragmentEntry copyFragmentEntry(
-			long userId, long groupId, long fragmentEntryId,
+			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyFragmentEntry(
-			userId, groupId, fragmentEntryId, fragmentCollectionId,
+			userId, groupId, sourceFragmentEntryId, fragmentCollectionId,
 			serviceContext);
 	}
 

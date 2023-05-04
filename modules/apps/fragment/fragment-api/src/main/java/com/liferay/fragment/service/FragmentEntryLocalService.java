@@ -105,7 +105,7 @@ public interface FragmentEntryLocalService
 		throws PortalException;
 
 	public FragmentEntry copyFragmentEntry(
-			long userId, long groupId, long fragmentEntryId,
+			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId, ServiceContext serviceContext)
 		throws PortalException;
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -176,12 +174,7 @@ public class PortletPreferencesFactoryImpl
 			layout, portletId);
 
 		if (portletSetup instanceof StrictPortletPreferencesImpl) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				getLayoutPortletSetup(layout, portletId);
-			}
+			getLayoutPortletSetup(layout, portletId);
 		}
 
 		if (portlet.isInstanceable()) {

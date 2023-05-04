@@ -31,8 +31,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 
 import java.io.IOException;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 import javax.portlet.Portlet;
@@ -142,11 +140,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 		).setParameterName(
 			parameterName
 		).setParameterValues(
-			optional.map(
-				Arrays::asList
-			).orElse(
-				Collections.emptyList()
-			)
+			optional.orElse(null)
 		).build();
 	}
 

@@ -22,7 +22,7 @@ import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.helper.CommerceAccountItemSelectorRequestHelper;
 import com.liferay.commerce.account.item.selector.web.internal.search.CommerceAccountGroupAccountItemSelectorChecker;
-import com.liferay.commerce.constants.CommerceAccountConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -104,13 +104,13 @@ public class CommerceAccountGroupAccountItemSelectorViewDisplayContext {
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, getKeywords(),
 				_commerceAccountHelper.toAccountEntryTypes(
-					CommerceAccountConstants.SITE_TYPE_B2X),
+					CommerceChannelConstants.SITE_TYPE_B2X),
 				_searchContainer.getStart(), _searchContainer.getEnd()),
 			_accountEntryLocalService.getUserAccountEntriesCount(
 				_commerceAccountItemSelectorRequestHelper.getUserId(),
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, getKeywords(),
 				_commerceAccountHelper.toAccountEntryTypes(
-					CommerceAccountConstants.SITE_TYPE_B2X),
+					CommerceChannelConstants.SITE_TYPE_B2X),
 				null));
 		_searchContainer.setRowChecker(
 			new CommerceAccountGroupAccountItemSelectorChecker(

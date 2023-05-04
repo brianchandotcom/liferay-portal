@@ -15,7 +15,6 @@
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -29,6 +28,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.util.CommerceUtil;
@@ -147,8 +147,8 @@ public class AddToCartTag extends IncludeTag {
 					_disabled =
 						_disabled ||
 						(accountEntry.isGuestAccount() &&
-						 (CommerceAccountConstants.SITE_TYPE_B2B ==
-							 commerceContext.getCommerceSiteType()));
+						 (CommerceChannelConstants.SITE_TYPE_B2B ==
+						  commerceContext.getCommerceSiteType()));
 				}
 			}
 		}

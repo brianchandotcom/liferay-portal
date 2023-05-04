@@ -16,11 +16,11 @@ package com.liferay.commerce.machine.learning.forecast.alert.service.impl;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertActionKeys;
 import com.liferay.commerce.machine.learning.forecast.alert.constants.CommerceMLForecastAlertConstants;
 import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLForecastAlertEntry;
 import com.liferay.commerce.machine.learning.forecast.alert.service.base.CommerceMLForecastAlertEntryServiceBaseImpl;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -165,7 +165,7 @@ public class CommerceMLForecastAlertEntryServiceImpl
 			_accountEntryLocalService.getUserAccountEntries(
 				userId, null, null,
 				_commerceAccountHelper.toAccountEntryTypes(
-					CommerceAccountConstants.SITE_TYPE_B2X),
+					CommerceChannelConstants.SITE_TYPE_B2X),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return ListUtil.toLongArray(

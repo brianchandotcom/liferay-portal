@@ -67,10 +67,10 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				<aui:select label="commerce-site-type" name="settings--commerceSiteType--">
 
 					<%
-					for (int commerceSiteType : CommerceAccountConstants.SITE_TYPES) {
+					for (int commerceSiteType : CommerceChannelConstants.SITE_TYPES) {
 					%>
 
-						<aui:option label="<%= CommerceAccountConstants.getSiteTypeLabel(commerceSiteType) %>" selected="<%= commerceSiteType == commerceChannelDisplayContext.getCommerceSiteType() %>" value="<%= commerceSiteType %>" />
+						<aui:option label="<%= CommerceChannelConstants.getSiteTypeLabel(commerceSiteType) %>" selected="<%= commerceSiteType == commerceChannelDisplayContext.getCommerceSiteType() %>" value="<%= commerceSiteType %>" />
 
 					<%
 					}

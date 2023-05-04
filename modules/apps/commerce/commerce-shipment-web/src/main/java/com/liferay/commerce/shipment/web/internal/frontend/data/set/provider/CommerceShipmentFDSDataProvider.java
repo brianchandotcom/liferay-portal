@@ -19,7 +19,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.constants.CommerceShipmentFDSNames;
@@ -28,6 +27,7 @@ import com.liferay.commerce.frontend.model.Shipment;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -191,7 +191,7 @@ public class CommerceShipmentFDSDataProvider
 					userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 					StringPool.BLANK,
 					_commerceAccountHelper.toAccountEntryTypes(
-						CommerceAccountConstants.SITE_TYPE_B2X),
+						CommerceChannelConstants.SITE_TYPE_B2X),
 					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 

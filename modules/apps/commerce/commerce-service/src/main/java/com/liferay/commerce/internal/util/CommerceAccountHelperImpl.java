@@ -25,8 +25,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.configuration.CommerceAccountServiceConfiguration;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
@@ -303,8 +303,8 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 			int commerceSiteType = getCommerceSiteType(commerceChannelGroupId);
 
-			if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) ||
-				(commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X)) {
+			if ((commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) ||
+				(commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X)) {
 
 				accountEntry =
 					_accountEntryLocalService.fetchPersonAccountEntry(userId);
@@ -418,13 +418,13 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 	@Override
 	public String[] toAccountEntryTypes(int commerceSiteType) {
-		if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2B) {
+		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
 			return new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS};
 		}
-		else if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) {
+		else if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) {
 			return new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON};
 		}
-		else if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X) {
+		else if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X) {
 			return new String[] {
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
@@ -443,14 +443,14 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
 			commerceAccountId);
 
-		if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) &&
+		if ((commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) &&
 			accountEntry.isBusinessAccount()) {
 
 			throw new PortalException(
 				"Only personal accounts are allowed in a b2c site");
 		}
 
-		if ((commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2B) &&
+		if ((commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) &&
 			accountEntry.isPersonalAccount()) {
 
 			throw new PortalException(

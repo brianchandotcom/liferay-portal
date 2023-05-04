@@ -15,7 +15,7 @@
 package com.liferay.commerce.util;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.commerce.constants.CommerceAccountConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 
 /**
  * @author Luca Pellizzon
@@ -23,15 +23,15 @@ import com.liferay.commerce.constants.CommerceAccountConstants;
 public class AccountEntryAllowedTypesUtil {
 
 	public static String[] getAllowedTypes(int commerceSiteType) {
-		if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2B) {
+		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2B) {
 			return new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS};
 		}
 
-		if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2C) {
+		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2C) {
 			return new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON};
 		}
 
-		if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2X) {
+		if (commerceSiteType == CommerceChannelConstants.SITE_TYPE_B2X) {
 			return new String[] {
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON

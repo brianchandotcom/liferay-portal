@@ -18,7 +18,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -26,6 +25,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -208,7 +208,7 @@ public class BaseCommerceContext implements CommerceContext {
 	@Override
 	public int getCommerceSiteType() {
 		if (_commerceAccountGroupServiceConfiguration == null) {
-			return CommerceAccountConstants.SITE_TYPE_B2C;
+			return CommerceChannelConstants.SITE_TYPE_B2C;
 		}
 
 		return _commerceAccountGroupServiceConfiguration.commerceSiteType();

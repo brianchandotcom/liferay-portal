@@ -16,7 +16,7 @@ package com.liferay.commerce.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.commerce.constants.CommerceAccountConstants;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -33,7 +33,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CommerceAccountGroupServiceConfiguration {
 
 	@Meta.AD(
-		deflt = "" + CommerceAccountConstants.SITE_TYPE_B2C,
+		deflt = "" + CommerceChannelConstants.SITE_TYPE_B2C,
 		name = "commerce-site-type", optionLabels = {"B2C", "B2B", "B2X"},
 		optionValues = {"0", "1", "2"}, required = false
 	)

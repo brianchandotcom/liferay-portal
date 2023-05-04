@@ -16,7 +16,6 @@ package com.liferay.commerce.theme.minium.site.initializer.internal;
 
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
@@ -333,7 +332,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 		modifiableSettings.setValue(
 			"commerceSiteType",
-			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2B));
+			String.valueOf(CommerceChannelConstants.SITE_TYPE_B2B));
 
 		modifiableSettings.store();
 

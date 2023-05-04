@@ -33,6 +33,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CP2Utils.tearDownForCloudEntries();
+
 		CustomerPortal.customerPortalTearDown();
 
 		if (${testPortalInstance} == "true") {
@@ -111,18 +113,6 @@ definition {
 
 			Navigator.closeWindow();
 		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.clearStatus();
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "ERC-001",
-				portlet = "DXP Cloud Environments");
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "test@liferay.com",
-				portlet = "Admins DXP Cloud");
-		}
 	}
 
 	@description = "Automation ID: LPS-146843 | Test Summary: Verify that the Activation Form Card - DXP Cloud displays (Product logo - Subscription - Start Date - End Date - Page Subtitleis/Not Activated)"
@@ -200,18 +190,6 @@ definition {
 		//		locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
 		//		key_text = "Your LXC - SM environments are being set up and will be available soon");
 		//}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.clearStatus(status = "In-Progress");
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "ERC-001",
-				portlet = "DXP Cloud Environments");
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "test@liferay.com",
-				portlet = "Admins DXP Cloud");
-		}
 	}
 
 	@description = "Automation ID: LPS-146849 | Test Summary: Verify if Link 'Finish Activation' hidden to requestor and user roles"

@@ -269,15 +269,31 @@ definition {
 
 	@summary = "This macro deletes a list of entries"
 	macro tearDownForCloudEntries {
-		CustomerPortal.clearStatus();
+		if (!(isSet(entry))) {
+			var entry = "ERC-001";
+		}
+
+		if (!(isSet(entry1))) {
+			var entry1 = "test@liferay.com";
+		}
+
+		if (!(isSet(portlet))) {
+			var portlet = "DXP Cloud Environments";
+		}
+
+		if (!(isSet(portlet1))) {
+			var portlet1 = "Admins DXP Cloud";
+		}
+
+		CustomerPortal.clearStatus(status = ${status});
 
 		CP2Utils.deleteSpecificObjectEntry(
-			entry = "ERC-001",
-			portlet = "DXP Cloud Environments");
+			entry = ${entry},
+			portlet = ${portlet});
 
 		CP2Utils.deleteSpecificObjectEntry(
-			entry = "test@liferay.com",
-			portlet = "Admins DXP Cloud");
+			entry = ${entry1},
+			portlet = ${portlet1});
 	}
 
 	macro typeSetupInfoFields {

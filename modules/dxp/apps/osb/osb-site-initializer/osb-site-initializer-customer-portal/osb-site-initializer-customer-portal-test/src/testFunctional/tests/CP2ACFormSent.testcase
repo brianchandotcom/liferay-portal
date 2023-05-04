@@ -43,6 +43,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CP2Utils.tearDownForCloudEntries(
+			entry = "test@liferay.com",
+			portlet = "Analytics Cloud Workspaces",
+			entry1 = "test@liferay.com",
+			portlet1 = "Incident Report Contacts Analytics Cloud",
+			status = "In-Progress");
+
 		CustomerPortal.customerPortalTearDown();
 
 		if (${testPortalInstance} == "true") {
@@ -100,18 +107,6 @@ definition {
 			CustomerPortal.viewConfirmationModal(modalText = "Another user already submitted the Analytics Cloud activation request.");
 
 			Button.click(button = "Done");
-		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.clearStatus(status = "In-Progress");
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "test@liferay.com",
-				portlet = "Analytics Cloud Workspaces");
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "test@liferay.com",
-				portlet = "Incident Report Contacts Analytics Cloud");
 		}
 	}
 

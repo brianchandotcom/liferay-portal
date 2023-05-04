@@ -44,13 +44,11 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "6856761c-aa27-9b6a-0efc-09e388a38d1c",
-					"id": 44833,
 					"label": {
-						"en_US": "Sample Update 1"
+						"en_US": "Sample Node Update 1"
 					},
-					"name": "SampleUpdate1",
-					"objectActionExecutorKey": "function#liferay-sample-object-action-1",
+					"name": "SampleNodeUpdate1",
+					"objectActionExecutorKey": "function#liferay-sample-node-object-action-1",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
 					},
@@ -68,13 +66,55 @@
 					"description": "",
 					"errorMessage": {
 					},
-					"externalReferenceCode": "a8cac2d3-0358-9f6d-f414-5a7cf0e3acab",
-					"id": 44834,
 					"label": {
-						"en_US": "Sample Update 2"
+						"en_US": "Sample Node Update 2"
 					},
-					"name": "SampleUpdate2",
-					"objectActionExecutorKey": "function#liferay-sample-object-action-2",
+					"name": "SampleNodeUpdate2",
+					"objectActionExecutorKey": "function#liferay-sample-node-object-action-2",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"conditionExpression": "",
+					"dateCreated": "2023-03-03T15:10:15.037+00:00",
+					"dateModified": "2023-03-03T15:10:15.037+00:00",
+					"description": "",
+					"errorMessage": {
+					},
+					"label": {
+						"en_US": "Sample Spring Boot Update 1"
+					},
+					"name": "SampleSpringBootUpdate1",
+					"objectActionExecutorKey": "function#liferay-sample-spring-boot-object-action-1",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				},
+				{
+					"active": true,
+					"conditionExpression": "",
+					"dateCreated": "2023-03-03T15:10:15.046+00:00",
+					"dateModified": "2023-03-03T15:10:15.046+00:00",
+					"description": "",
+					"errorMessage": {
+					},
+					"label": {
+						"en_US": "Sample Spring Boot Update 2"
+					},
+					"name": "SampleSpringBootUpdate2",
+					"objectActionExecutorKey": "function#liferay-sample-spring-boot-object-action-2",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
 					},

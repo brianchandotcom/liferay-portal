@@ -390,8 +390,7 @@ public class ClientExtensionProjectConfigurator
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
 			createClientExtensionConfigTaskProvider);
-		_configureTaskValidateClientExtensionIds(
-			project, createClientExtensionConfigTaskProvider);
+		_configureTaskValidateClientExtensionIds(project);
 
 		addTaskDockerDeploy(
 			project, buildClientExtensionZipTaskProvider,
@@ -561,6 +560,8 @@ public class ClientExtensionProjectConfigurator
 			createClientExtensionConfigTask -> {
 				createClientExtensionConfigTask.dependsOn(
 					ASSEMBLE_CLIENT_EXTENSION_TASK_NAME);
+				createClientExtensionConfigTask.dependsOn(
+					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME);
 
 				TaskInputs taskInputs =
 					createClientExtensionConfigTask.getInputs();
@@ -724,11 +725,7 @@ public class ClientExtensionProjectConfigurator
 		copy.from(_getZipFile(project));
 	}
 
-	private void _configureTaskValidateClientExtensionIds(
-		Project project,
-		TaskProvider<CreateClientExtensionConfigTask>
-			createClientExtensionConfigTaskProvider) {
-
+	private void _configureTaskValidateClientExtensionIds(Project project) {
 		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider =
 			GradleUtil.addTaskProvider(
 				project, VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
@@ -745,11 +742,6 @@ public class ClientExtensionProjectConfigurator
 				validateClientExtensionIdsTask.setGroup(
 					LifecycleBasePlugin.VERIFICATION_GROUP);
 			});
-
-		createClientExtensionConfigTaskProvider.configure(
-			createClientExtensionConfigTask ->
-				createClientExtensionConfigTask.dependsOn(
-					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME));
 	}
 
 	private String _getClassification(String id, String type) {

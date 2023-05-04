@@ -316,10 +316,6 @@
 			<contains></contains>
 			<matches>.*Exception executing batch.*update Group_.*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-178826">
-			<contains>Unknown column 'userimpl0_.type_' in 'field list'</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-180463">
 			<contains></contains>
 			<matches>.*Ignored unknown user group: .*</matches>

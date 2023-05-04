@@ -3,7 +3,18 @@
 	"externalReferenceCode": "PRMV010",
 	"name": "Document Type",
 	"name_i18n": {
-		"en_US": "Document Type"
+		"ar_SA": "Document Type",
+		"ca_ES": "Document Type",
+		"de_DE": "Document Type",
+		"es_ES": "Document Type",
+		"fi_FI": "Document Type",
+		"fr_FR": "Document Type",
+		"hu_HU": "Document Type",
+		"ja_JP": "Document Type",
+		"nl_NL": "Document Type",
+		"pt_BR": "Document Type",
+		"sv_SE": "Document Type",
+		"zh_CN": "Document Type"
 	},
 	"viewableBy": "Anyone"
 }

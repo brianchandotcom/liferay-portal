@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC024",
 	"name": "Video",
 	"name_i18n": {
-		"en_US": "Video"
+		"en_US": "video",
+		"ar_SA": "video",
+		"ca_ES": "video",
+		"de_DE": "video",
+		"es_ES": "video",
+		"fi_FI": "video",
+		"fr_FR": "video",
+		"hu_HU": "video",
+		"ja_JP": "video",
+		"nl_NL": "video",
+		"pt_BR": "video",
+		"sv_SE": "video",
+		"zh_CN": "video"
 	},
 	"viewableBy": "Anyone"
 }

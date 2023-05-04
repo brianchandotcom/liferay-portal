@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -78,15 +79,15 @@ public class CPOptionFacetsPortletSharedSearchContributor
 			SerializableFacet serializableFacet = new SerializableFacet(
 				CPField.OPTION_NAMES, searchContext);
 
-			Optional<String[]> parameterValuesOptional =
-				portletSharedSearchSettings.getParameterValues71(
+			String[] parameterValues =
+				portletSharedSearchSettings.getParameterValues(
 					CPField.OPTION_NAMES);
 
-			if (parameterValuesOptional.isPresent()) {
-				serializableFacet.select(parameterValuesOptional.get());
+			if (ArrayUtil.isNotEmpty(parameterValues)) {
+				serializableFacet.select(parameterValues);
 
 				searchContext.setAttribute(
-					CPField.OPTION_NAMES, parameterValuesOptional.get());
+					CPField.OPTION_NAMES, parameterValues);
 			}
 
 			RenderRequest renderRequest =
@@ -123,9 +124,8 @@ public class CPOptionFacetsPortletSharedSearchContributor
 					CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(
 						facet.getFieldName());
 
-				parameterValuesOptional =
-					portletSharedSearchSettings.getParameterValues71(
-						cpOptionKey);
+				parameterValues =
+					portletSharedSearchSettings.getParameterValues(cpOptionKey);
 
 				serializableFacet = new SerializableFacet(
 					facet.getFieldName(), searchContext);
@@ -134,11 +134,11 @@ public class CPOptionFacetsPortletSharedSearchContributor
 					buildFacetConfiguration(
 						frequencyThreshold, maxTerms, serializableFacet));
 
-				if (parameterValuesOptional.isPresent()) {
-					serializableFacet.select(parameterValuesOptional.get());
+				if (ArrayUtil.isNotEmpty(parameterValues)) {
+					serializableFacet.select(parameterValues);
 
 					searchContext.setAttribute(
-						facet.getFieldName(), parameterValuesOptional.get());
+						facet.getFieldName(), parameterValues);
 				}
 
 				portletSharedSearchSettings.addFacet(serializableFacet);

@@ -396,9 +396,8 @@ public class ClientExtensionProjectConfigurator
 		_configureClientExtensionTasks(
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
-			createClientExtensionConfigTaskProvider);
-		_configureTaskValidateClientExtensionIds(
-			project, validateClientExtensionIdsTaskProvider);
+			createClientExtensionConfigTaskProvider,
+			validateClientExtensionIdsTaskProvider);
 
 		addTaskDockerDeploy(
 			project, buildClientExtensionZipTaskProvider,
@@ -562,7 +561,8 @@ public class ClientExtensionProjectConfigurator
 		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
 		TaskProvider<Zip> buildClientExtensionZipTaskProvider,
 		TaskProvider<CreateClientExtensionConfigTask>
-			createClientExtensionConfigTaskProvider) {
+			createClientExtensionConfigTaskProvider,
+		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider) {
 
 		createClientExtensionConfigTaskProvider.configure(
 			createClientExtensionConfigTask -> {
@@ -612,6 +612,54 @@ public class ClientExtensionProjectConfigurator
 
 				zip.from(clientExtensionBuildDir);
 				zip.include("**/*");
+			});
+
+		validateClientExtensionIdsTaskProvider.configure(
+			validateClientExtensionIdsTask -> {
+				validateClientExtensionIdsTask.doFirst(
+					validateClientExtensionIdsTask1 -> {
+						StringBundler sb = new StringBundler();
+
+						File rootDir = project.getRootDir();
+
+						Path rootDirPath = rootDir.toPath();
+
+						for (Map.Entry<String, Set<Project>> entry :
+								_clientExtensionIds.entrySet()) {
+
+							Set<Project> projects = entry.getValue();
+
+							if ((projects.size() > 1) &&
+								projects.contains(project)) {
+
+								sb.append("Duplicate client extension ID \"");
+								sb.append(entry.getKey());
+								sb.append("\" found in these projects:\n");
+
+								for (Project curProject : projects) {
+									File projectDir =
+										curProject.getProjectDir();
+
+									sb.append(
+										rootDirPath.relativize(
+											projectDir.toPath()));
+
+									sb.append(StringPool.NEW_LINE);
+								}
+
+								sb.append(StringPool.NEW_LINE);
+							}
+						}
+
+						if (sb.length() > 0) {
+							throw new GradleException(sb.toString());
+						}
+					});
+				validateClientExtensionIdsTask.setDescription(
+					"Validates that this project's client extension IDs are " +
+						"unique among all projects.");
+				validateClientExtensionIdsTask.setGroup(
+					LifecycleBasePlugin.VERIFICATION_GROUP);
 			});
 	}
 
@@ -731,59 +779,6 @@ public class ClientExtensionProjectConfigurator
 		copy.dependsOn(BasePlugin.ASSEMBLE_TASK_NAME);
 
 		copy.from(_getZipFile(project));
-	}
-
-	private void _configureTaskValidateClientExtensionIds(
-		Project project,
-		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider) {
-
-		validateClientExtensionIdsTaskProvider.configure(
-			validateClientExtensionIdsTask -> {
-				validateClientExtensionIdsTask.doFirst(
-					validateClientExtensionIdsTask1 -> {
-						StringBundler sb = new StringBundler();
-
-						File rootDir = project.getRootDir();
-
-						Path rootDirPath = rootDir.toPath();
-
-						for (Map.Entry<String, Set<Project>> entry :
-								_clientExtensionIds.entrySet()) {
-
-							Set<Project> projects = entry.getValue();
-
-							if ((projects.size() > 1) &&
-								projects.contains(project)) {
-
-								sb.append("Duplicate client extension ID \"");
-								sb.append(entry.getKey());
-								sb.append("\" found in these projects:\n");
-
-								for (Project curProject : projects) {
-									File projectDir =
-										curProject.getProjectDir();
-
-									sb.append(
-										rootDirPath.relativize(
-											projectDir.toPath()));
-
-									sb.append(StringPool.NEW_LINE);
-								}
-
-								sb.append(StringPool.NEW_LINE);
-							}
-						}
-
-						if (sb.length() > 0) {
-							throw new GradleException(sb.toString());
-						}
-					});
-				validateClientExtensionIdsTask.setDescription(
-					"Validates that this project's client extension IDs are " +
-						"unique among all projects.");
-				validateClientExtensionIdsTask.setGroup(
-					LifecycleBasePlugin.VERIFICATION_GROUP);
-			});
 	}
 
 	private String _getClassification(String id, String type) {

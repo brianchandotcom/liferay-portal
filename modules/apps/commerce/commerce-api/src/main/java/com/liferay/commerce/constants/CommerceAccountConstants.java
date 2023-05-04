@@ -32,16 +32,6 @@ public class CommerceAccountConstants {
 	public static final String ROLE_NAME_ACCOUNT_ORDER_MANAGER =
 		"Order Manager";
 
-	public static final int SITE_TYPE_B2B = 1;
-
-	public static final int SITE_TYPE_B2C = 0;
-
-	public static final int SITE_TYPE_B2X = 2;
-
-	public static final int[] SITE_TYPES = {
-		SITE_TYPE_B2C, SITE_TYPE_B2B, SITE_TYPE_B2X
-	};
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
@@ -67,20 +57,6 @@ public class CommerceAccountConstants {
 		}
 
 		return 0;
-	}
-
-	public static String getSiteTypeLabel(int siteType) {
-		if (siteType == SITE_TYPE_B2C) {
-			return "b2c";
-		}
-		else if (siteType == SITE_TYPE_B2B) {
-			return "b2b";
-		}
-		else if (siteType == SITE_TYPE_B2X) {
-			return "b2x";
-		}
-
-		return null;
 	}
 
 }

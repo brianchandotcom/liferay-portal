@@ -566,6 +566,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCORDION_COLLAPSED_CONTAINS</td>
+	<td>//fieldset[contains(@id,'${key_accordionTitle}')]/a[contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLE_SELECT_BUTTON</td>
 	<td>//div/h3[contains(.,'${key_roleType}')]//..//button</td>
 	<td></td>

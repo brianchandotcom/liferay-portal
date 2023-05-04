@@ -1071,6 +1071,15 @@ public class ServletDataImpl implements ServletData {
 						"query#UserAccount.userUserGroups",
 						new ObjectValuePair<>(
 							UserGroupResourceImpl.class, "getUserUserGroups"));
+
+					put(
+						"query#Account.parentAccount",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class, "getAccount"));
+					put(
+						"query#Site.parentSite",
+						new ObjectValuePair<>(
+							SiteResourceImpl.class, "getSite"));
 				}
 			};
 

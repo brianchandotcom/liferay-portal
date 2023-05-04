@@ -2678,6 +2678,45 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							MessageBoardMessageResourceImpl.class,
 							"getMessageBoardThreadMessageBoardMessagesPage"));
+
+					put(
+						"query#Comment.parentComment",
+						new ObjectValuePair<>(
+							CommentResourceImpl.class, "getComment"));
+					put(
+						"query#DocumentFolder.parentDocumentFolder",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"getDocumentFolder"));
+					put(
+						"query#KnowledgeBaseArticle.parentKnowledgeBaseArticle",
+						new ObjectValuePair<>(
+							KnowledgeBaseArticleResourceImpl.class,
+							"getKnowledgeBaseArticle"));
+					put(
+						"query#MessageBoardMessage.parentMessageBoardMessage",
+						new ObjectValuePair<>(
+							MessageBoardMessageResourceImpl.class,
+							"getMessageBoardMessage"));
+					put(
+						"query#MessageBoardSection.parentMessageBoardSection",
+						new ObjectValuePair<>(
+							MessageBoardSectionResourceImpl.class,
+							"getMessageBoardSection"));
+					put(
+						"query#NavigationMenuItem.parentNavigationMenuItem",
+						new ObjectValuePair<>(
+							NavigationMenuResourceImpl.class,
+							"getNavigationMenu"));
+					put(
+						"query#StructuredContentFolder.parentStructuredContentFolder",
+						new ObjectValuePair<>(
+							StructuredContentFolderResourceImpl.class,
+							"getStructuredContentFolder"));
+					put(
+						"query#WikiPage.parentWikiPage",
+						new ObjectValuePair<>(
+							WikiPageResourceImpl.class, "getWikiPage"));
 				}
 			};
 

@@ -8,6 +8,7 @@ runGradleTest {
 
 		["duplicate1", "duplicate2", "unique"].forEach {
 			projectName ->
+
 			Project curProject = project(":client-extension:${projectName}")
 
 			Task validateTask = curProject.tasks[validateTaskName]
@@ -17,6 +18,7 @@ runGradleTest {
 				ClientExtensionProjectConfigurator.CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME
 			].each {
 				taskName ->
+
 				Provider<Task> curTaskProvider = curProject.tasks.named taskName
 
 				Task curTask = curTaskProvider.get()
@@ -27,6 +29,7 @@ runGradleTest {
 
 		["duplicate1", "duplicate2"].forEach {
 			projectName ->
+
 			Project curProject = project(":client-extension:${projectName}")
 
 			Task validateTask = curProject.tasks[validateTaskName]
@@ -38,10 +41,10 @@ runGradleTest {
 
 				assert false : "${validateTask.path} should have failed"
 			}
-			catch (Exception e) {
-				assert e.message.contains("Duplicate client extension ID \"duplicate-key\" found in these projects:")
-				assert e.message.contains("client-extension/duplicate1")
-				assert e.message.contains("client-extension/duplicate2")
+			catch (Exception exception) {
+				assert exception.message.contains("Duplicate client extension ID \"duplicate-key\" found in these projects:")
+				assert exception.message.contains("client-extension/duplicate1")
+				assert exception.message.contains("client-extension/duplicate2")
 			}
 		}
 
@@ -54,7 +57,7 @@ runGradleTest {
 				it.execute(validateTask)
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			assert false : "${validateTask.path} should not have failed"
 		}
 	}

@@ -17,7 +17,6 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import ResumeCard from '../../../../common/components/ResumeCard';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
 import MDFRequestActivity from '../../../../common/interfaces/mdfRequestActivity';
-import {Status} from '../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import ActivityPanel from '../../components/ActivityPanel';
 import {StepType} from '../../enums/stepType';
@@ -94,6 +93,7 @@ const Review = ({
 						<div className="d-flex justify-content-between mr-auto">
 							<Button
 								className="mr-4"
+								disabled={isSubmitting}
 								displayType={null}
 								onClick={() =>
 									onPrevious?.(StepType.ACTIVITIES)
@@ -111,17 +111,16 @@ const Review = ({
 								}
 							>
 								Save as Draft
-								{isSubmitting &&
-									values.mdfRequestStatus ===
-										Status.DRAFT && (
-										<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
-									)}
+								{isSubmitting && (
+									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+								)}
 							</Button>
 						</div>
 
 						<div className="d-flex justify-content-between px-2 px-md-0">
 							<Button
 								className="mr-4"
+								disabled={isSubmitting}
 								displayType="secondary"
 								onClick={onCancel}
 							>
@@ -134,11 +133,9 @@ const Review = ({
 								type="submit"
 							>
 								Submit
-								{isSubmitting &&
-									values.mdfRequestStatus ===
-										Status.PENDING && (
-										<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
-									)}
+								{isSubmitting && (
+									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+								)}
 							</Button>
 						</div>
 					</div>

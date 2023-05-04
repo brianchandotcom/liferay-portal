@@ -20,7 +20,6 @@ import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfac
 import {LiferayPicklistName} from '../../../../common/enums/liferayPicklistName';
 import useCompanyOptions from '../../../../common/hooks/useCompanyOptions';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
-import {Status} from '../../../../common/utils/constants/status';
 import getPicklistOptions from '../../../../common/utils/getPicklistOptions';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
@@ -190,7 +189,7 @@ const Goals = ({
 				<PRMForm.Footer>
 					<div className="d-flex justify-content-end mr-auto">
 						<Button
-							className="inline-item inline-item-after"
+							className="inline-item inline-item-after pl-0"
 							disabled={isSubmitting || !values.company?.id}
 							displayType={null}
 							onClick={() =>
@@ -198,17 +197,16 @@ const Goals = ({
 							}
 						>
 							Save as Draft
-							{isSubmitting &&
-								values.mdfRequestStatus.key ===
-									Status.DRAFT.key && (
-									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
-								)}
+							{isSubmitting && (
+								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+							)}
 						</Button>
 					</div>
 
 					<div className="d-flex justify-content-between px-2 px-md-0">
 						<Button
 							className="mr-4"
+							disabled={isSubmitting}
 							displayType="secondary"
 							onClick={onCancel}
 						>
@@ -216,6 +214,7 @@ const Goals = ({
 						</Button>
 
 						<Button
+							className="inline-item inline-item-after"
 							disabled={
 								(!isValid && !isObjectEmpty(goalsErrors)) ||
 								isSubmitting
@@ -225,6 +224,9 @@ const Goals = ({
 							}
 						>
 							Continue
+							{isSubmitting && (
+								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+							)}
 						</Button>
 					</div>
 				</PRMForm.Footer>

@@ -18,7 +18,6 @@ import {useCallback, useEffect, useState} from 'react';
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import MDFRequest from '../../../../common/interfaces/mdfRequest';
-import {Status} from '../../../../common/utils/constants/status';
 import isObjectEmpty from '../../../../common/utils/isObjectEmpty';
 import {StepType} from '../../enums/stepType';
 import MDFRequestStepProps from '../../interfaces/mdfRequestStepProps';
@@ -178,6 +177,7 @@ const Activities = ({
 			<PRMForm.Footer>
 				<div className="d-flex justify-content-between mr-auto">
 					<Button
+						disabled={isSubmitting}
 						displayType={null}
 						onClick={() =>
 							currentActivityIndex !== undefined
@@ -195,17 +195,16 @@ const Activities = ({
 						onClick={onSaveAsDraftForm}
 					>
 						Save as Draft
-						{isSubmitting &&
-							values.mdfRequestStatus.key ===
-								Status.DRAFT.key && (
-								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
-							)}
+						{isSubmitting && (
+							<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+						)}
 					</Button>
 				</div>
 
 				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
 						className="mr-4"
+						disabled={isSubmitting}
 						displayType="secondary"
 						onClick={onCancel}
 					>
@@ -213,6 +212,7 @@ const Activities = ({
 					</Button>
 
 					<Button
+						className="inline-item inline-item-after"
 						disabled={
 							currentActivityIndex !== undefined
 								? !isObjectEmpty(activityErrors as Object)
@@ -221,6 +221,9 @@ const Activities = ({
 						onClick={onContinueForm}
 					>
 						Continue
+						{isSubmitting && (
+							<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+						)}
 					</Button>
 				</div>
 			</PRMForm.Footer>

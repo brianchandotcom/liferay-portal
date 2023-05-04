@@ -228,16 +228,21 @@ const MDFClaimPage = ({
 					<div className="d-flex mr-auto">
 						<ClayButton
 							className="inline-item inline-item-after pl-0"
+							disabled={isSubmitting}
 							displayType={null}
 							onClick={() => onSaveAsDraft(values, formikHelpers)}
 						>
 							Save as Draft
+							{isSubmitting && (
+								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+							)}
 						</ClayButton>
 					</div>
 
 					<div>
 						<ClayButton
 							className="mr-4"
+							disabled={isSubmitting}
 							displayType="secondary"
 							onClick={() => onCancel()}
 						>
@@ -250,11 +255,9 @@ const MDFClaimPage = ({
 							type="submit"
 						>
 							Submit
-							{isSubmitting &&
-								values.mdfClaimStatus.key ===
-									Status.PENDING.key && (
-									<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
-								)}
+							{isSubmitting && (
+								<ClayLoadingIndicator className="inline-item inline-item-after ml-2" />
+							)}
 						</ClayButton>
 					</div>
 				</PRMForm.Footer>

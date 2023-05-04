@@ -238,6 +238,7 @@ const Review = ({
 					<div className="d-flex justify-content-between mr-auto">
 						<Button
 							className="mr-4"
+							disabled={isSubmitting}
 							displayType={null}
 							onClick={() => onPrevious?.(StepType.GENERAL)}
 						>
@@ -248,6 +249,7 @@ const Review = ({
 					<div className="d-flex justify-content-between px-2 px-md-0">
 						<Button
 							className="mr-4"
+							disabled={isSubmitting}
 							displayType="secondary"
 							onClick={onCancel}
 						>

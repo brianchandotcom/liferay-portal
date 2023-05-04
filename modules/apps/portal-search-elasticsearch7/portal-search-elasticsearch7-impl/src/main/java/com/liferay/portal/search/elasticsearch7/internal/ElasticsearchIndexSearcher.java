@@ -582,9 +582,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				searchRequest, searchContext, query);
 
 			searchSearchRequest.setSize(end - start);
-			searchSearchRequest.setStart(start);
 			searchSearchRequest.setSorts(searchContext.getSorts());
 			searchSearchRequest.setSorts(searchRequest.getSorts());
+			searchSearchRequest.setStart(start);
 
 			SearchSearchResponse searchSearchResponse =
 				_searchEngineAdapter.execute(searchSearchRequest);
@@ -631,7 +631,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		SearchSearchResponse searchSearchResponse = null;
 
-		int maxResultWindow = 10000;
+		int maxResultWindow =
+			_elasticsearchConfigurationWrapper.indexMaxResultWindow();
 
 		try {
 			if (end > maxResultWindow) {

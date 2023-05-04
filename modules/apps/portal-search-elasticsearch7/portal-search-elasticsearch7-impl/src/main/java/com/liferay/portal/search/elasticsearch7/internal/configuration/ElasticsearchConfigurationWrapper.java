@@ -114,6 +114,10 @@ public class ElasticsearchConfigurationWrapper
 		return _elasticsearchConfiguration.httpSSLEnabled();
 	}
 
+	public int indexMaxResultWindow() {
+		return _elasticsearchConfiguration.indexMaxResultWindow();
+	}
+
 	public String indexNamePrefix() {
 		return _elasticsearchConfiguration.indexNamePrefix();
 	}

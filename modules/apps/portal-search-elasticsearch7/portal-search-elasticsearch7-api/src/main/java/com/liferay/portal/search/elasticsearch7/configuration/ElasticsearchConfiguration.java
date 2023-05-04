@@ -123,6 +123,12 @@ public interface ElasticsearchConfiguration {
 	public String indexNumberOfShards();
 
 	@Meta.AD(
+		deflt = "10000", description = "index-max-result-window-help",
+		name = "index-max-result-window", required = false
+	)
+	public int indexMaxResultWindow();
+
+	@Meta.AD(
 		description = "additional-index-configurations-help",
 		name = "additional-index-configurations", required = false
 	)

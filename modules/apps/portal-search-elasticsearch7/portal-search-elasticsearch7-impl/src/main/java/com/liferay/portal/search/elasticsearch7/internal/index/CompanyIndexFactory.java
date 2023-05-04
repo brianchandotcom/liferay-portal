@@ -35,6 +35,8 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
@@ -178,6 +180,8 @@ public class CompanyIndexFactory
 	@Override
 	public void onElasticsearchConfigurationUpdate() {
 		_createCompanyIndexes();
+
+		_updateMaxResultWindow();
 	}
 
 	@Override
@@ -502,6 +506,10 @@ public class CompanyIndexFactory
 		settingsBuilder.put(
 			"index.number_of_shards",
 			_elasticsearchConfigurationWrapper.indexNumberOfShards());
+		settingsBuilder.put(
+			"index.max_result_window",
+			String.valueOf(
+				_elasticsearchConfigurationWrapper.indexMaxResultWindow()));
 	}
 
 	private void _loadIndexSettingsContributors(Settings.Builder builder) {
@@ -614,6 +622,30 @@ public class CompanyIndexFactory
 		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings(indexName);
 	}
 
+	private void _updateMaxResultWindow() {
+		int maxResultWindow =
+			_elasticsearchConfigurationWrapper.indexMaxResultWindow();
+
+		for (Long companyId : _companyIds) {
+			String indexName = _indexNameBuilder.getIndexName(companyId);
+
+			UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest =
+				new UpdateIndexSettingsIndexRequest(indexName);
+
+			updateIndexSettingsIndexRequest.setSettings(
+				"{\"index.max_result_window\": " + maxResultWindow + "}");
+
+			_searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Updated index.max_result_window to ", maxResultWindow,
+						" for index ", indexName));
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);
 
@@ -648,5 +680,8 @@ public class CompanyIndexFactory
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 }

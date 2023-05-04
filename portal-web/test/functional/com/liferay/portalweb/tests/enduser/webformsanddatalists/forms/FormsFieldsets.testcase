@@ -1385,11 +1385,9 @@ definition {
 
 		FormFields.disableSwitch(fieldName = "Show Label");
 
-		Form.closeSidebar();
+		Form.saveElementSet();
 
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Text");
-
-		Form.saveElementSet();
 
 		FormsAdmin.addForm();
 

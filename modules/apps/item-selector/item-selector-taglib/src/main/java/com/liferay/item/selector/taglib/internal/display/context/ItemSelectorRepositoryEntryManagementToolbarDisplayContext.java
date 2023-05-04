@@ -14,10 +14,10 @@
 
 package com.liferay.item.selector.taglib.internal.display.context;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -25,9 +25,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.item.selector.taglib.internal.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorRegistryUtil;
 import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag;
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -95,9 +96,8 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		DLPortletToolbarContributor dlPortletToolbarContributor =
-			DLPortletToolbarContributorRegistryUtil.
-				getDLPortletToolbarContributor();
+		PortletToolbarContributor defaultDLPortletToolbarContributor =
+			_defaultDLPortletToolbarContributorSnapshot.get();
 
 		Folder folder = _getFolder();
 
@@ -106,8 +106,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 		}
 
-		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
-			_liferayPortletRequest, _liferayPortletResponse);
+		List<Menu> menus =
+			defaultDLPortletToolbarContributor.getPortletTitleMenus(
+				_liferayPortletRequest, _liferayPortletResponse);
 
 		if (menus.isEmpty()) {
 			return null;
@@ -447,6 +448,12 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ItemSelectorRepositoryEntryManagementToolbarDisplayContext.class);
+
+	private static final Snapshot<PortletToolbarContributor>
+		_defaultDLPortletToolbarContributorSnapshot = new Snapshot<>(
+			ItemSelectorRepositoryEntryManagementToolbarDisplayContext.class,
+			PortletToolbarContributor.class,
+			"(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")");
 
 	private final PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;

@@ -2,7 +2,7 @@ task runGradleTest
 
 runGradleTest {
 	doLast {
-		String validateTaskName = "validateUniqueClientExtensionIds"
+		String validateTaskName = "validateClientExtensionIds"
 
 		["duplicate1", "duplicate2", "unique"].forEach {
 			projectName ->

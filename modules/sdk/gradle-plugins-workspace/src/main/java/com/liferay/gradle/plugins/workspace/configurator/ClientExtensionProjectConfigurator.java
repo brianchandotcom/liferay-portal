@@ -105,8 +105,8 @@ public class ClientExtensionProjectConfigurator
 	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
 		"createClientExtensionConfig";
 
-	public static final String VALIDATE_UNIQUE_CLIENT_EXTENSION_IDS_TASK_NAME =
-		"validateUniqueClientExtensionIds";
+	public static final String VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME =
+		"validateClientExtensionIds";
 
 	public ClientExtensionProjectConfigurator(Settings settings) {
 		super(settings);
@@ -389,7 +389,7 @@ public class ClientExtensionProjectConfigurator
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
 			createClientExtensionConfigTaskProvider);
-		_configureTaskValidateUniqueClientExtensionIds(
+		_configureTaskvalidateClientExtensionIds(
 			project, createClientExtensionConfigTaskProvider);
 
 		addTaskDockerDeploy(
@@ -716,39 +716,39 @@ public class ClientExtensionProjectConfigurator
 		copy.from(_getZipFile(project));
 	}
 
-	private void _configureTaskValidateUniqueClientExtensionIds(
+	private void _configureTaskvalidateClientExtensionIds(
 		Project project,
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider) {
 
-		TaskProvider<DefaultTask> validateUniqueClientExtensionIdsTaskProvider =
+		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider =
 			GradleUtil.addTaskProvider(
-				project, VALIDATE_UNIQUE_CLIENT_EXTENSION_IDS_TASK_NAME,
+				project, VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
 				DefaultTask.class);
 
-		validateUniqueClientExtensionIdsTaskProvider.configure(
-			validateUniqueClientExtensionIdsTask -> {
-				validateUniqueClientExtensionIdsTask.doFirst(
-					validateUniqueClientExtensionIdsTask1 ->
-						_validateUniqueClientExtensionIds(project));
-				validateUniqueClientExtensionIdsTask.setDescription(
+		validateClientExtensionIdsTaskProvider.configure(
+			validateClientExtensionIdsTask -> {
+				validateClientExtensionIdsTask.doFirst(
+					validateClientExtensionIdsTask1 ->
+						_validateClientExtensionIds(project));
+				validateClientExtensionIdsTask.setDescription(
 					"Validates that this project's client extension IDs are " +
 						"unique among all projects.");
-				validateUniqueClientExtensionIdsTask.setGroup(
+				validateClientExtensionIdsTask.setGroup(
 					LifecycleBasePlugin.VERIFICATION_GROUP);
 			});
 
 		createClientExtensionConfigTaskProvider.configure(
 			createClientExtensionConfigTask ->
 				createClientExtensionConfigTask.dependsOn(
-					VALIDATE_UNIQUE_CLIENT_EXTENSION_IDS_TASK_NAME));
+					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME));
 
 		TaskProvider<Task> checkTaskProvider = GradleUtil.getTaskProvider(
 			project, LifecycleBasePlugin.CHECK_TASK_NAME);
 
 		checkTaskProvider.configure(
 			checkTask -> checkTask.dependsOn(
-				VALIDATE_UNIQUE_CLIENT_EXTENSION_IDS_TASK_NAME));
+				VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME));
 	}
 
 	private String _getClassification(String id, String type) {
@@ -894,7 +894,7 @@ public class ClientExtensionProjectConfigurator
 		}
 	}
 
-	private void _validateUniqueClientExtensionIds(Project curProject)
+	private void _validateClientExtensionIds(Project curProject)
 		throws GradleException {
 
 		StringBundler sb = new StringBundler();

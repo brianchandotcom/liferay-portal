@@ -15,9 +15,9 @@
 package com.liferay.bulk.selection.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionAction;
-import com.liferay.bulk.selection.test.util.TestBulkSelectionFactory;
 import com.liferay.bulk.selection.test.util.TestBusyBulkSelectionAction;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -85,8 +85,8 @@ public class BulkSelectionRunnerTest {
 	@Inject
 	private TestBulkSelectionAction _testBulkSelectionAction;
 
-	@Inject
-	private TestBulkSelectionFactory _testBulkSelectionFactory;
+	@Inject(filter = "component.name=*.TestBulkSelectionFactory")
+	private BulkSelectionFactory<Integer> _testBulkSelectionFactory;
 
 	@Inject
 	private TestBusyBulkSelectionAction _testBusyBulkSelectionAction;

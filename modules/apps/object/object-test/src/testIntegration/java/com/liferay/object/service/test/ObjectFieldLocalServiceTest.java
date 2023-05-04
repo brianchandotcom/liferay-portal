@@ -92,6 +92,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -1316,6 +1317,21 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("charlie"));
 		Assert.assertEquals("baker", objectField.getName());
 		Assert.assertTrue(objectField.isRequired());
+
+		// Object field label needs to be replicated when there is an update
+		// with another default language
+
+		LocaleUtil.setDefault(
+			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
+			LocaleUtil.GERMANY.getVariant());
+
+		objectField = _updateCustomObjectField(
+			objectField, objectField.getObjectFieldSettings());
+
+		Map<Locale, String> labelMap = objectField.getLabelMap();
+
+		Assert.assertEquals(
+			labelMap.get(LocaleUtil.GERMANY), labelMap.get(LocaleUtil.US));
 
 		// Object field relationship name and DB type cannot be changed
 

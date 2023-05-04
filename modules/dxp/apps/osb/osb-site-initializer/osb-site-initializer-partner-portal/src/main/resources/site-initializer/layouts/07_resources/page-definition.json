@@ -28,7 +28,13 @@
 										"value": "banner-background-partner-portal.svg"
 									},
 									"url": {
-										"value": "/documents/d/[$GROUP_KEY$]/banner-background-partner-portal-svg"
+										"mapping": {
+											"fieldKey": "FileEntry_previewImage",
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/banner-background-partner-portal.svg#]"
+											}
+										}
 									}
 								},
 								"marginBottom": "5",

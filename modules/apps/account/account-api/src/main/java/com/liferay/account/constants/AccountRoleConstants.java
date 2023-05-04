@@ -40,6 +40,14 @@ public class AccountRoleConstants {
 		REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, REQUIRED_ROLE_NAME_ACCOUNT_MEMBER
 	};
 
+	public static final String ROLE_NAME_ACCOUNT_BUYER = "Buyer";
+
+	public static final String ROLE_NAME_ACCOUNT_DISCOUNT_MANAGER =
+		"Discount Manager";
+
+	public static final String ROLE_NAME_ACCOUNT_ORDER_MANAGER =
+		"Order Manager";
+
 	public static boolean isImpliedRole(Role role) {
 		if (Objects.equals(REQUIRED_ROLE_NAME_ACCOUNT_MEMBER, role.getName())) {
 			return true;

@@ -25,6 +25,9 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -56,6 +59,7 @@ import com.liferay.journal.web.internal.util.JournalArticleTranslation;
 import com.liferay.journal.web.internal.util.JournalArticleTranslationRowChecker;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
+import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -414,6 +418,60 @@ public class JournalDisplayContext {
 		return Collections.singletonMap(
 			"trashEnabled",
 			_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
+	}
+
+	public List<TabsItem> getConfigurationTabsItems() {
+		TabsItemList tabsItemList = TabsItemListBuilder.add(
+			tabsItem -> {
+				tabsItem.setActive(true);
+				tabsItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "email-from"));
+			}
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "web-content-added-email"))
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "web-content-expired-email"))
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "web-content-moved-from-folder-email"))
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "web-content-moved-to-folder-email"))
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "web-content-review-email"))
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "web-content-updated-email"))
+		).build();
+
+		if (JournalUtil.hasWorkflowDefinitionsLinks(_themeDisplay)) {
+			tabsItemList.add(
+				tabsItem -> tabsItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest,
+						"web-content-approval-denied-email")));
+			tabsItemList.add(
+				tabsItem -> tabsItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest,
+						"web-content-approval-granted-email")));
+			tabsItemList.add(
+				tabsItem -> tabsItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest,
+						"web-content-approval-requested-email")));
+		}
+
+		return tabsItemList;
 	}
 
 	public long getDDMStructureId() {

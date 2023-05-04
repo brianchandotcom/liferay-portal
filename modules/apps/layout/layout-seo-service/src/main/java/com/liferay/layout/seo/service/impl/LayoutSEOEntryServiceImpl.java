@@ -43,9 +43,10 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
 	@Override
 	public LayoutSEOEntry copyLayoutSEOEntry(
-			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
-			long copyDDMStorageId, boolean openGraphDescriptionEnabled,
+			long userId, long groupId, boolean privateLayout,
+			long sourceLayoutId, boolean canonicalURLEnabled,
+			Map<Locale, String> canonicalURLMap, long copyDDMStorageId,
+			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
 			Map<Locale, String> openGraphImageAltMap,
 			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
@@ -55,11 +56,12 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(),
-			_layoutLocalService.getLayout(groupId, privateLayout, layoutId),
+			_layoutLocalService.getLayout(
+				groupId, privateLayout, sourceLayoutId),
 			ActionKeys.UPDATE);
 
 		return layoutSEOEntryLocalService.copyLayoutSEOEntry(
-			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
+			userId, groupId, privateLayout, sourceLayoutId, canonicalURLEnabled,
 			canonicalURLMap, copyDDMStorageId, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
 			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,

@@ -1037,6 +1037,12 @@ public class ObjectFieldLocalServiceImpl
 			throw new NoSuchPropertiesException("Required property is missing");
 		}
 
+		if (PropsValues.OBJECT_FIELD_ENCRYPTION_RESTRICTED) {
+			throw new ObjectFieldBusinessTypeException(
+				"Encrypted business type object field can not be created in " +
+					"LXC environments");
+		}
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 

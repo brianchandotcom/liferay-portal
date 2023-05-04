@@ -15,6 +15,7 @@
 package com.liferay.trash.web.internal.portlet.configuration.icon;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -94,6 +95,10 @@ public class DeleteTrashPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		if (!CTCollectionThreadLocal.isProductionMode()) {
+			return false;
+		}
+
 		TrashDisplayContext trashDisplayContext = new TrashDisplayContext(
 			_portal.getHttpServletRequest(portletRequest), null, null);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.trash.web.internal.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -82,6 +83,10 @@ public class EmptyTrashPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		if (!CTCollectionThreadLocal.isProductionMode()) {
+			return false;
+		}
+
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {

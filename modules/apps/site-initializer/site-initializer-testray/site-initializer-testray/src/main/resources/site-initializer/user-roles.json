@@ -1,0 +1,26 @@
+[
+	{
+		"emailAddress": "administrator@testray.com",
+		"roles": [
+			"Testray Administrator"
+		]
+	},
+	{
+		"emailAddress": "analyst@testray.com",
+		"roles": [
+			"Testray Analyst"
+		]
+	},
+	{
+		"emailAddress": "lead@testray.com",
+		"roles": [
+			"Testray Lead"
+		]
+	},
+	{
+		"emailAddress": "user@testray.com",
+		"roles": [
+			"Testray User"
+		]
+	}
+]

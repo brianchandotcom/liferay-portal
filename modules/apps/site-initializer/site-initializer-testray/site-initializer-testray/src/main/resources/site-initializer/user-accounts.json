@@ -1,0 +1,62 @@
+[
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "TESTRAY-001"
+			}
+		],
+		"alternateName": "administrator.user",
+		"birthDate": "",
+		"emailAddress": "administrator@testray.com",
+		"externalReferenceCode": "TESTRAYUSER-001",
+		"familyName": "User",
+		"givenName": "Administrator",
+		"name": "Administrator User",
+		"password": "test"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "TESTRAY-002"
+			}
+		],
+		"alternateName": "analyst.user",
+		"birthDate": "",
+		"emailAddress": "analyst@testray.com",
+		"externalReferenceCode": "TESTRAYUSER-002",
+		"familyName": "User",
+		"givenName": "Analyst",
+		"name": "Analyst User",
+		"password": "test"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "TESTRAY-003"
+			}
+		],
+		"alternateName": "lead.user",
+		"birthDate": "",
+		"emailAddress": "lead@testray.com",
+		"externalReferenceCode": "TESTRAYUSER-003",
+		"familyName": "User",
+		"givenName": "Lead",
+		"name": "Lead User",
+		"password": "test"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "TESTRAY-004"
+			}
+		],
+		"alternateName": "user.user",
+		"birthDate": "",
+		"emailAddress": "user@testray.com",
+		"externalReferenceCode": "TESTRAYUSER-004",
+		"familyName": "User",
+		"givenName": "User",
+		"name": "User User",
+		"password": "test"
+	}
+]

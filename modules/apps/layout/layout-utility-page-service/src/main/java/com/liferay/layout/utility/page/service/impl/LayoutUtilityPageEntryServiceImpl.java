@@ -63,7 +63,7 @@ public class LayoutUtilityPageEntryServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
-			long groupId, long layoutUtilityPageEntryId,
+			long groupId, long sourceLayoutUtilityPageEntryId,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -72,7 +72,8 @@ public class LayoutUtilityPageEntryServiceImpl
 			LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY);
 
 		return layoutUtilityPageEntryLocalService.copyLayoutUtilityPageEntry(
-			getUserId(), groupId, layoutUtilityPageEntryId, serviceContext);
+			getUserId(), groupId, sourceLayoutUtilityPageEntryId,
+			serviceContext);
 	}
 
 	@Override

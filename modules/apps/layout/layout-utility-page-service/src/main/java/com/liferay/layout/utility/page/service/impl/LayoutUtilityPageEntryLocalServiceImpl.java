@@ -139,13 +139,13 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Override
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
-			long userId, long groupId, long layoutUtilityPageEntryId,
+			long userId, long groupId, long sourceLayoutUtilityPageEntryId,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutUtilityPageEntry sourceLayoutUtilityPageEntry =
 			layoutUtilityPageEntryPersistence.findByPrimaryKey(
-				layoutUtilityPageEntryId);
+				sourceLayoutUtilityPageEntryId);
 
 		String name = _getUniqueCopyName(
 			groupId, sourceLayoutUtilityPageEntry.getName(),
@@ -160,25 +160,25 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			masterLayoutPlid = layout.getMasterLayoutPlid();
 		}
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
+		LayoutUtilityPageEntry targetLayoutUtilityPageEntry =
 			addLayoutUtilityPageEntry(
 				null, userId, serviceContext.getScopeGroupId(), 0, 0, false,
 				name, sourceLayoutUtilityPageEntry.getType(), masterLayoutPlid,
 				serviceContext);
 
 		long previewFileEntryId = _copyPreviewFileEntryId(
-			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+			targetLayoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
 			sourceLayoutUtilityPageEntry.getPreviewFileEntryId(),
 			serviceContext);
 
 		if (previewFileEntryId > 0) {
 			return layoutUtilityPageEntryLocalService.
 				updateLayoutUtilityPageEntry(
-					layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+					targetLayoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
 					previewFileEntryId);
 		}
 
-		return layoutUtilityPageEntry;
+		return targetLayoutUtilityPageEntry;
 	}
 
 	@Override

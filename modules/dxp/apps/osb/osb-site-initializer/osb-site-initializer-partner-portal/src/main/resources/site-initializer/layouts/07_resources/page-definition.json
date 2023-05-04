@@ -70,11 +70,22 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
-														"en_US": "Partner Resources"
+														"ar_SA": "Partner Resources",
+														"ca_ES": "Partner Resources",
+														"de_DE": "Partner Resources",
+														"en_US": "Partner Resources",
+														"es_ES": "Partner Resources",
+														"fi_FI": "Partner Resources",
+														"fr_FR": "Partner Resources",
+														"hu_HU": "Partner Resources",
+														"ja_JP": "Partner Resources",
+														"nl_NL": "Partner Resources",
+														"pt_BR": "Partner Resources",
+														"sv_SE": "Partner Resources",
+														"zh_CN": "Partner Resources"
 													}
 												}
 											}
@@ -99,8 +110,7 @@
 										"width": "100%"
 									},
 									"widgetInstance": {
-										"widgetConfig": {
-										},
+										"widgetConfig": {},
 										"widgetName": "com_liferay_portal_search_web_portlet_SearchPortlet"
 									}
 								},
@@ -125,13 +135,11 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								}
 							],
 							"verticalAlignment": "top"
@@ -147,13 +155,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
@@ -198,11 +204,22 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Filters"
+																		"ar_SA": "filters",
+																		"ca_ES": "filters",
+																		"de_DE": "filters",
+																		"en_US": "filters",
+																		"es_ES": "filters",
+																		"fi_FI": "filters",
+																		"fr_FR": "filters",
+																		"hu_HU": "filters",
+																		"ja_JP": "filters",
+																		"nl_NL": "filters",
+																		"pt_BR": "filters",
+																		"sv_SE": "filters",
+																		"zh_CN": "filters"
 																	}
 																}
 															}
@@ -585,13 +602,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],

@@ -15,12 +15,14 @@
 package com.liferay.commerce.internal.order.status;
 
 import com.liferay.commerce.internal.order.comparator.CommerceOrderStatusPriorityComparator;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -60,6 +62,13 @@ public class CommerceOrderStatusRegistryImpl
 
 	@Override
 	public List<CommerceOrderStatus> getCommerceOrderStatuses() {
+		return getCommerceOrderStatuses(null);
+	}
+
+	@Override
+	public List<CommerceOrderStatus> getCommerceOrderStatuses(
+		CommerceOrder commerceOrder) {
+
 		List<CommerceOrderStatus> commerceOrderStatuses = new ArrayList<>();
 
 		List<ServiceWrapper<CommerceOrderStatus>>
@@ -74,8 +83,22 @@ public class CommerceOrderStatusRegistryImpl
 				commerceOrderStatusServiceWrapper :
 					commerceOrderStatusServiceWrappers) {
 
-			commerceOrderStatuses.add(
-				commerceOrderStatusServiceWrapper.getService());
+			CommerceOrderStatus commerceOrderStatus =
+				commerceOrderStatusServiceWrapper.getService();
+
+			try {
+				if ((commerceOrder == null) ||
+					commerceOrderStatus.isEnabled(commerceOrder)) {
+
+					commerceOrderStatuses.add(
+						commerceOrderStatusServiceWrapper.getService());
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
 		}
 
 		return Collections.unmodifiableList(commerceOrderStatuses);

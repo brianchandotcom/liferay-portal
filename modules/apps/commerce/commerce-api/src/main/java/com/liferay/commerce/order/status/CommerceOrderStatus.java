@@ -39,6 +39,12 @@ public interface CommerceOrderStatus {
 		return true;
 	}
 
+	public default boolean isEnabled(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return true;
+	}
+
 	public default boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
 		throws PortalException {
 

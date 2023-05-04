@@ -390,7 +390,7 @@ public class ClientExtensionProjectConfigurator
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
 			createClientExtensionConfigTaskProvider);
-		_configureTaskvalidateClientExtensionIds(
+		_configureTaskValidateClientExtensionIds(
 			project, createClientExtensionConfigTaskProvider);
 
 		addTaskDockerDeploy(
@@ -724,7 +724,7 @@ public class ClientExtensionProjectConfigurator
 		copy.from(_getZipFile(project));
 	}
 
-	private void _configureTaskvalidateClientExtensionIds(
+	private void _configureTaskValidateClientExtensionIds(
 		Project project,
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider) {

@@ -134,10 +134,16 @@ public class ClientExtensionProjectConfigurator
 			GradleUtil.addTaskProvider(
 				project, BUILD_CLIENT_EXTENSION_ZIP_TASK_NAME, Zip.class);
 
+		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
+				DefaultTask.class);
+
 		_baseConfigureClientExtensionProject(
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
-			createClientExtensionConfigTaskProvider);
+			createClientExtensionConfigTaskProvider,
+			validateClientExtensionIdsTaskProvider);
 
 		Map<String, JsonNode> profileJsonNodes =
 			_configureClientExtensionJsonNodes(
@@ -361,7 +367,8 @@ public class ClientExtensionProjectConfigurator
 		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
 		TaskProvider<Zip> buildClientExtensionZipTaskProvider,
 		TaskProvider<CreateClientExtensionConfigTask>
-			createClientExtensionConfigTaskProvider) {
+			createClientExtensionConfigTaskProvider,
+		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider) {
 
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
@@ -390,7 +397,8 @@ public class ClientExtensionProjectConfigurator
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
 			createClientExtensionConfigTaskProvider);
-		_configureTaskValidateClientExtensionIds(project);
+		_configureTaskValidateClientExtensionIds(
+			project, validateClientExtensionIdsTaskProvider);
 
 		addTaskDockerDeploy(
 			project, buildClientExtensionZipTaskProvider,
@@ -725,11 +733,9 @@ public class ClientExtensionProjectConfigurator
 		copy.from(_getZipFile(project));
 	}
 
-	private void _configureTaskValidateClientExtensionIds(Project project) {
-		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider =
-			GradleUtil.addTaskProvider(
-				project, VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
-				DefaultTask.class);
+	private void _configureTaskValidateClientExtensionIds(
+		Project project,
+		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider) {
 
 		validateClientExtensionIdsTaskProvider.configure(
 			validateClientExtensionIdsTask -> {

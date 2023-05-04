@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
 <project basedir="." default="test" name="portal-test-tomcat-postgresql" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test-local.xml" />
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-postgresql">

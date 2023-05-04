@@ -22,6 +22,7 @@ import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -111,7 +112,14 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType());
 
-			objectEntryManager.updateObjectEntry(
+			if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
+				throw new UnsupportedOperationException();
+			}
+
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				(DefaultObjectEntryManager)objectEntryManager;
+
+			defaultObjectEntryManager.updateObjectEntry(
 				new DefaultDTOConverterContext(
 					false, Collections.emptyMap(), _dtoConverterRegistry, null,
 					user.getLocale(), null, user),

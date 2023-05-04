@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryRelatedObjectsManager;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParserRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -101,15 +102,28 @@ public class ObjectRelationshipExtensionProvider
 				ObjectEntryManager objectEntryManager =
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType());
+
+				if (!(objectEntryManager instanceof
+						ObjectEntryRelatedObjectsManager)) {
+
+					throw new UnsupportedOperationException();
+				}
+
+				ObjectEntryRelatedObjectsManager
+					objectEntryRelatedObjectsManager =
+						(ObjectEntryRelatedObjectsManager)objectEntryManager;
+
 				long primaryKey = getPrimaryKey(entity);
 
 				Page<ObjectEntry> relatedObjectEntriesPage =
-					objectEntryManager.getObjectEntryRelatedObjectEntries(
-						_getDefaultDTOConverterContext(
-							objectDefinition, primaryKey, null),
-						objectDefinition, primaryKey,
-						objectRelationship.getName(),
-						Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+					objectEntryRelatedObjectsManager.
+						getObjectEntryRelatedObjectEntries(
+							_getDefaultDTOConverterContext(
+								objectDefinition, primaryKey, null),
+							objectDefinition, primaryKey,
+							objectRelationship.getName(),
+							Pagination.of(
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 				return (Serializable)relatedObjectEntriesPage.getItems();
 			});

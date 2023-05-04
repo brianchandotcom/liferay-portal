@@ -170,7 +170,10 @@ public class UpgradeRecorder {
 	}
 
 	private String _calculateResult() {
-		if (!_errorMessages.isEmpty()) {
+		Map<String, Map<String, Integer>> errorMessages = _filter(
+			_errorMessages);
+
+		if (!errorMessages.isEmpty()) {
 			return "failure";
 		}
 
@@ -188,7 +191,10 @@ public class UpgradeRecorder {
 			return "unresolved";
 		}
 
-		if (!_warningMessages.isEmpty()) {
+		Map<String, Map<String, Integer>> warningMessages = _filter(
+			_warningMessages);
+
+		if (!warningMessages.isEmpty()) {
 			return "warning";
 		}
 

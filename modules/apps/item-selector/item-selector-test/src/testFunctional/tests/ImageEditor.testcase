@@ -62,6 +62,7 @@ definition {
 	@description = "This makes sure that a resized image can be saved."
 	@priority = 5
 	test CanSaveResizedImage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImage";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -95,6 +96,7 @@ definition {
 	@description = "This makes sure that a resized image preview can be saved and that a copy is made."
 	@priority = 5
 	test CanSaveResizedImagePreview {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImagePreview";
 
 		JSONDocument.addFileWithUploadedFile(

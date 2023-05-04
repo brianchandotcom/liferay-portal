@@ -131,8 +131,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 				expectedWorkbookValues,
 				String.valueOf(fileEntry.getFileEntryId()), "fileName.pdf",
 				"Test Test", "Document", "Basic Document (Vectorial)",
-				"Test Site", "Approved", "", "", "2021-10-22T11:37:32", "-", "",
-				"pdf", "fileName.pdf", "0 B", "", "2021-09-01T15:16:15", "");
+				"Test Site", "Approved", "", "", "2021-10-22T11:37:32",
+				"1970-01-01T00:02:30", "", "pdf", "fileName.pdf", "0 B", "",
+				"2021-09-01T15:16:15", "");
 
 			_assertWorkbook(
 				expectedWorkbookHeaders, expectedWorkbookValues,

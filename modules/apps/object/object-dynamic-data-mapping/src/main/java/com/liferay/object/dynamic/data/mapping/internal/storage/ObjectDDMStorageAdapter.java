@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -99,13 +100,21 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType());
 
-			ObjectEntry objectEntry = objectEntryManager.fetchObjectEntry(
-				_getDTOConverterContext(
-					null, null, LocaleUtil.getSiteDefault()),
-				objectDefinition, objectEntryId);
+			if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
+				throw new UnsupportedOperationException();
+			}
+
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				(DefaultObjectEntryManager)objectEntryManager;
+
+			ObjectEntry objectEntry =
+				defaultObjectEntryManager.fetchObjectEntry(
+					_getDTOConverterContext(
+						null, null, LocaleUtil.getSiteDefault()),
+					objectDefinition, objectEntryId);
 
 			if (objectEntry != null) {
-				objectEntryManager.deleteObjectEntry(
+				defaultObjectEntryManager.deleteObjectEntry(
 					objectDefinition, objectEntry.getId());
 			}
 
@@ -123,8 +132,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
-			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
-
 			long objectEntryId = ddmStorageAdapterGetRequest.getPrimaryKey();
 
 			ObjectDefinition objectDefinition = _fetchObjectDefinition(
@@ -134,10 +141,19 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType());
 
+			if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
+				throw new UnsupportedOperationException();
+			}
+
+			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
+
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				(DefaultObjectEntryManager)objectEntryManager;
+
 			return DDMStorageAdapterGetResponse.Builder.newBuilder(
 				_getDDMFormValues(
 					ddmForm,
-					objectEntryManager.getObjectEntry(
+					defaultObjectEntryManager.getObjectEntry(
 						_getDTOConverterContext(
 							objectEntryId, null, ddmForm.getDefaultLocale()),
 						objectDefinition, objectEntryId))
@@ -154,14 +170,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
-			User user = _userLocalService.getUser(
-				ddmStorageAdapterSaveRequest.getUserId());
-
-			DDMFormValues ddmFormValues =
-				ddmStorageAdapterSaveRequest.getDDMFormValues();
-
-			DDMForm ddmForm = ddmFormValues.getDDMForm();
-
 			long objectDefinitionId = _getObjectDefinitionId(
 				ddmStorageAdapterSaveRequest);
 
@@ -173,11 +181,28 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType());
 
+			if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
+				throw new UnsupportedOperationException();
+			}
+
+			User user = _userLocalService.getUser(
+				ddmStorageAdapterSaveRequest.getUserId());
+
+			DDMFormValues ddmFormValues =
+				ddmStorageAdapterSaveRequest.getDDMFormValues();
+
+			DDMForm ddmForm = ddmFormValues.getDDMForm();
+
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				(DefaultObjectEntryManager)objectEntryManager;
+
 			long objectEntryId = ddmStorageAdapterSaveRequest.getPrimaryKey();
 
-			ObjectEntry objectEntry = objectEntryManager.fetchObjectEntry(
-				_getDTOConverterContext(null, user, ddmForm.getDefaultLocale()),
-				objectDefinition, objectEntryId);
+			ObjectEntry objectEntry =
+				defaultObjectEntryManager.fetchObjectEntry(
+					_getDTOConverterContext(
+						null, user, ddmForm.getDefaultLocale()),
+					objectDefinition, objectEntryId);
 
 			if (objectEntry == null) {
 				objectEntry = objectEntryManager.addObjectEntry(
@@ -203,7 +228,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 						_objectFieldLocalService.getObjectFields(
 							objectDefinitionId)));
 
-				objectEntry = objectEntryManager.updateObjectEntry(
+				objectEntry = defaultObjectEntryManager.updateObjectEntry(
 					_getDTOConverterContext(
 						null, user, ddmForm.getDefaultLocale()),
 					objectDefinition, objectEntryId, objectEntry);

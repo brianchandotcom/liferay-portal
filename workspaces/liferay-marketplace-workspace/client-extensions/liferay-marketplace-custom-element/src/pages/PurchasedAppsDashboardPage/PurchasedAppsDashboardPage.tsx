@@ -167,9 +167,15 @@ export function PurchasedAppsDashboardPage() {
 			);
 
 			setCommerceAccount(commerceAccountResponse);
+			
+			const filteredPlacedOrders = placedOrders.items.filter(
+				({orderTypeExternalReferenceCode}) =>
+					orderTypeExternalReferenceCode === 'CLOUDAPP' ||
+					orderTypeExternalReferenceCode === 'DXPAPP'
+			);
 
 			const newOrderItems = await Promise.all(
-				placedOrders.items.map(async (order) => {
+				filteredPlacedOrders.map(async (order) => {
 					const [placeOrderItem] = order.placedOrderItems;
 
 					const date = new Date(order.createDate);

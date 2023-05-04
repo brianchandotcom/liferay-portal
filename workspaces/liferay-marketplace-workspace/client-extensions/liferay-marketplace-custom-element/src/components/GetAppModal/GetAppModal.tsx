@@ -13,9 +13,11 @@ import {
 	getAccounts,
 	getChannels,
 	getDeliveryProduct,
+	getOrderTypes,
 	getPaymentMethodURL,
 	getProduct,
 	getProductSKU,
+	getProductSpecifications,
 	getSKUCustomFieldExpandoValue,
 	getUserAccount,
 	getUserAccountsById,
@@ -266,6 +268,24 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	}, []);
 
 	async function handleGetApp() {
+		const productSpecifications = await getProductSpecifications({
+			appProductId: app.productId,
+		});
+
+		const {value: specificationValue} = productSpecifications.find(
+			({value}) => value['en_US'] === 'cloud' || value['en_US'] === 'dxp'
+		) as ProductSpecification;
+
+		const orderTypes = await getOrderTypes();
+
+		const orderType = orderTypes.find(({externalReferenceCode}) => {
+			if (specificationValue['en_US'] === 'cloud') {
+				return externalReferenceCode === 'CLOUDAPP';
+			}
+
+			return externalReferenceCode === 'DXPAPP';
+		}) as OrderType;
+
 		const cart: Partial<Cart> = {
 			accountId: selectedAccount?.id as number,
 			cartItems: [
@@ -285,9 +305,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				},
 			],
 			currencyCode: channel.currencyCode,
+			orderTypeExternalReferenceCode: orderType.externalReferenceCode,
+			orderTypeId: orderType.id as number,
 		};
-
-		const origin = window.location.origin;
 
 		let newCart: Partial<Cart> = {};
 
@@ -307,13 +327,13 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				cartId: cartResponse.id,
 			});
 
-			const newOrderStatus = {
+			const newOrderValues = {
 				orderStatus: 1,
 			};
 
 			await patchOrderByERC(
 				cartCheckoutResponse.orderUUID,
-				newOrderStatus
+				newOrderValues
 			);
 		}
 		else {

@@ -417,7 +417,7 @@ export async function getPlacedOrders(
 	if (page && pageSize) {
 		url =
 			url +
-			`?nestedFields=placedOrderItems&page=${page}&pageSize=${pageSize}`;
+			`?nestedFields=placedOrderItems?page=${page}?pageSize=${pageSize}`;
 	}
 
 	const response = await fetch(url, {headers, method: 'GET'});
@@ -504,7 +504,9 @@ export async function getProductSpecifications({
 		}
 	);
 
-	return await response.json();
+	const {items} = (await response.json()) as {items: ProductSpecification[]};
+
+	return items;
 }
 
 export async function getProductSubscriptionConfiguration({

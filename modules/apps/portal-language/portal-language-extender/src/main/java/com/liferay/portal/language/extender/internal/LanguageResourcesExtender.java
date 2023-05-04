@@ -131,7 +131,7 @@ public class LanguageResourcesExtender
 		}
 
 		Enumeration<URL> enumeration = bundle.findEntries(
-			path, name.concat("_*.properties"), false);
+			path, name.concat("*.properties"), false);
 
 		if (enumeration == null) {
 			return;
@@ -142,9 +142,14 @@ public class LanguageResourcesExtender
 
 			String urlPath = url.getPath();
 
-			String languageId = urlPath.substring(
-				path.length() + name.length() + 2,
-				urlPath.length() - ".properties".length());
+			String languageId = "";
+
+			int start = path.length() + name.length() + 2;
+			int end = urlPath.length() - ".properties".length();
+
+			if (start < end) {
+				languageId = urlPath.substring(start, end);
+			}
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 

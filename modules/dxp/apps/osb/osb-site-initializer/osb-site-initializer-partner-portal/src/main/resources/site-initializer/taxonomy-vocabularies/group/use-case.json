@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMV007",
 	"name": "Use Case",
 	"name_i18n": {
-		"en_US": "Use Case"
+		"en_US": "Use Case",
+		"ar_SA": "Use Case",
+		"ca_ES": "Use Case",
+		"de_DE": "Use Case",
+		"es_ES": "Use Case",
+		"fi_FI": "Use Case",
+		"fr_FR": "Use Case",
+		"hu_HU": "Use Case",
+		"ja_JP": "Use Case",
+		"nl_NL": "Use Case",
+		"pt_BR": "Use Case",
+		"sv_SE": "Use Case",
+		"zh_CN": "Use Case"
 	},
 	"viewableBy": "Anyone"
 }

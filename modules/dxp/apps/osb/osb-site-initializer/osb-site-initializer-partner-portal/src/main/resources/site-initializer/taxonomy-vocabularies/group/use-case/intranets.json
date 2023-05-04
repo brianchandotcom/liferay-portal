@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC009",
 	"name": "Intranets",
 	"name_i18n": {
-		"en_US": "Intranets"
+		"en_US": "Intranets",
+		"ar_SA": "Intranets",
+		"ca_ES": "Intranets",
+		"de_DE": "Intranets",
+		"es_ES": "Intranets",
+		"fi_FI": "Intranets",
+		"fr_FR": "Intranets",
+		"hu_HU": "Intranets",
+		"ja_JP": "Intranets",
+		"nl_NL": "Intranets",
+		"pt_BR": "Intranets",
+		"sv_SE": "Intranets",
+		"zh_CN": "Intranets"
 	},
 	"viewableBy": "Anyone"
 }

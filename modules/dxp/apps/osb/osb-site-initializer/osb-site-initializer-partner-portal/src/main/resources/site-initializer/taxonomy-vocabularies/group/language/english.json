@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC002",
 	"name": "English",
 	"name_i18n": {
-		"en_US": "English"
+		"en_US": "English",
+		"ar_SA": "English",
+		"ca_ES": "English",
+		"de_DE": "English",
+		"es_ES": "English",
+		"fi_FI": "English",
+		"fr_FR": "English",
+		"hu_HU": "English",
+		"ja_JP": "English",
+		"nl_NL": "English",
+		"pt_BR": "English",
+		"sv_SE": "English",
+		"zh_CN": "English"
 	},
 	"viewableBy": "Anyone"
 }

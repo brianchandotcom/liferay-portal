@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC003",
 	"name": "Portuguese",
 	"name_i18n": {
-		"en_US": "Portuguese"
+		"en_US": "Portuguese",
+		"ar_SA": "Portuguese",
+		"ca_ES": "Portuguese",
+		"de_DE": "Portuguese",
+		"es_ES": "Portuguese",
+		"fi_FI": "Portuguese",
+		"fr_FR": "Portuguese",
+		"hu_HU": "Portuguese",
+		"ja_JP": "Portuguese",
+		"nl_NL": "Portuguese",
+		"pt_BR": "Portuguese",
+		"sv_SE": "Portuguese",
+		"zh_CN": "Portuguese"
 	},
 	"viewableBy": "Anyone"
 }

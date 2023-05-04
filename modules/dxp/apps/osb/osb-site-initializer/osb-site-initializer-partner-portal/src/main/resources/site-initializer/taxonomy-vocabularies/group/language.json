@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMV002",
 	"name": "Language",
 	"name_i18n": {
-		"en_US": "Language"
+		"en_US": "Language",
+		"ar_SA": "Language",
+		"ca_ES": "Language",
+		"de_DE": "Language",
+		"es_ES": "Language",
+		"fi_FI": "Language",
+		"fr_FR": "Language",
+		"hu_HU": "Language",
+		"ja_JP": "Language",
+		"nl_NL": "Language",
+		"pt_BR": "Language",
+		"sv_SE": "Language",
+		"zh_CN": "Language"
 	},
 	"viewableBy": "Anyone"
 }

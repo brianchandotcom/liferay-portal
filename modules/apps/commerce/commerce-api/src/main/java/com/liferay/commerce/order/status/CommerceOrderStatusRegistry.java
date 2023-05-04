@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.order.status;
 
+import com.liferay.commerce.model.CommerceOrder;
+
 import java.util.List;
 
 /**
@@ -24,5 +26,8 @@ public interface CommerceOrderStatusRegistry {
 	public CommerceOrderStatus getCommerceOrderStatus(int key);
 
 	public List<CommerceOrderStatus> getCommerceOrderStatuses();
+
+	public List<CommerceOrderStatus> getCommerceOrderStatuses(
+		CommerceOrder commerceOrder);
 
 }

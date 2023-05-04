@@ -34,8 +34,6 @@ public interface PortletSharedSearchSettings extends SearchSettings {
 
 	public String[] getParameterValues(String name);
 
-	public Optional<String[]> getParameterValues71(String name);
-
 	public String getPortletId();
 
 	public Optional<PortletPreferences> getPortletPreferences71();

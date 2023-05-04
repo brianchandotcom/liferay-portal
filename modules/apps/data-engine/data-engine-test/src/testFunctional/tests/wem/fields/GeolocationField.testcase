@@ -180,7 +180,9 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		AssertElementPresent(locator1 = "Icon#ASTERISK");
+		AssertElementPresent(
+			key_fieldFieldLabel = "Geolocation",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = ${key_fieldName},
@@ -195,7 +197,9 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "Geolocation",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
 	}
 
 }

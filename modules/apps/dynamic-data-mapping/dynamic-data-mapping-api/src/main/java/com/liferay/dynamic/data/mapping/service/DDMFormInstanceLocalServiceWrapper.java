@@ -126,15 +126,15 @@ public class DDMFormInstanceLocalServiceWrapper
 	public DDMFormInstance copyFormInstance(
 			long userId, long groupId,
 			java.util.Map<java.util.Locale, String> nameMap,
-			DDMFormInstance ddmFormInstance,
+			DDMFormInstance sourceDDMFormInstance,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues
 				settingsDDMFormValues,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceLocalService.copyFormInstance(
-			userId, groupId, nameMap, ddmFormInstance, settingsDDMFormValues,
-			serviceContext);
+			userId, groupId, nameMap, sourceDDMFormInstance,
+			settingsDDMFormValues, serviceContext);
 	}
 
 	/**

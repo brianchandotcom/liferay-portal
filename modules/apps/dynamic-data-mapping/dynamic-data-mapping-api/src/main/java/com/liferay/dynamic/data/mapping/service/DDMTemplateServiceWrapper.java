@@ -129,7 +129,7 @@ public class DDMTemplateServiceWrapper
 	 * extracted from the original one. This method supports defining a new name
 	 * and description.
 	 *
-	 * @param templateId the primary key of the template to be copied
+	 * @param sourceTemplateId the primary key of the template to be copied
 	 * @param nameMap the new template's locales and localized names
 	 * @param descriptionMap the new template's locales and localized
 	 descriptions
@@ -141,22 +141,24 @@ public class DDMTemplateServiceWrapper
 	 */
 	@Override
 	public DDMTemplate copyTemplate(
-			long templateId, java.util.Map<java.util.Locale, String> nameMap,
+			long sourceTemplateId,
+			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateService.copyTemplate(
-			templateId, nameMap, descriptionMap, serviceContext);
+			sourceTemplateId, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Override
 	public DDMTemplate copyTemplate(
-			long templateId,
+			long sourceTemplateId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _ddmTemplateService.copyTemplate(templateId, serviceContext);
+		return _ddmTemplateService.copyTemplate(
+			sourceTemplateId, serviceContext);
 	}
 
 	/**
@@ -166,10 +168,10 @@ public class DDMTemplateServiceWrapper
 	 *
 	 * @param classNameId the primary key of the class name for template's
 	 related model
-	 * @param oldClassPK the primary key of the old template's related entity
+	 * @param sourceClassPK the primary key of the old template's related entity
 	 * @param resourceClassNameId the primary key of the class name for
 	 template's resource model
-	 * @param newClassPK the primary key of the new template's related entity
+	 * @param targetClassPK the primary key of the new template's related entity
 	 * @param type the template's type. For more information, see
 	 DDMTemplateConstants in the dynamic-data-mapping-api module.
 	 * @param serviceContext the service context to be applied. Must have the
@@ -180,14 +182,14 @@ public class DDMTemplateServiceWrapper
 	 */
 	@Override
 	public java.util.List<DDMTemplate> copyTemplates(
-			long classNameId, long oldClassPK, long resourceClassNameId,
-			long newClassPK, String type,
+			long classNameId, long sourceClassPK, long resourceClassNameId,
+			long targetClassPK, String type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateService.copyTemplates(
-			classNameId, oldClassPK, resourceClassNameId, newClassPK, type,
-			serviceContext);
+			classNameId, sourceClassPK, resourceClassNameId, targetClassPK,
+			type, serviceContext);
 	}
 
 	/**

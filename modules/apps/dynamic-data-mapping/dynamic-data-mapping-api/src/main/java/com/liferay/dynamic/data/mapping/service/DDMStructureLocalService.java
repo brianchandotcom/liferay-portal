@@ -151,7 +151,7 @@ public interface DDMStructureLocalService
 	 * and description.
 	 *
 	 * @param userId the primary key of the structure's creator/owner
-	 * @param structureId the primary key of the structure to be copied
+	 * @param sourceStructureId the primary key of the structure to be copied
 	 * @param nameMap the new structure's locales and localized names
 	 * @param descriptionMap the new structure's locales and localized
 	 descriptions
@@ -162,13 +162,13 @@ public interface DDMStructureLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure copyStructure(
-			long userId, long structureId, Map<Locale, String> nameMap,
+			long userId, long sourceStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure copyStructure(
-			long userId, long structureId, ServiceContext serviceContext)
+			long userId, long sourceStructureId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

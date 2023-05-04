@@ -92,7 +92,7 @@ public class DDMStructureServiceUtil {
 	 * extracted from the original one. The new structure supports a new name
 	 * and description.
 	 *
-	 * @param structureId the primary key of the structure to be copied
+	 * @param sourceStructureId the primary key of the structure to be copied
 	 * @param nameMap the new structure's locales and localized names
 	 * @param descriptionMap the new structure's locales and localized
 	 descriptions
@@ -102,21 +102,21 @@ public class DDMStructureServiceUtil {
 	 * @return the new structure
 	 */
 	public static DDMStructure copyStructure(
-			long structureId, Map<java.util.Locale, String> nameMap,
+			long sourceStructureId, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyStructure(
-			structureId, nameMap, descriptionMap, serviceContext);
+			sourceStructureId, nameMap, descriptionMap, serviceContext);
 	}
 
 	public static DDMStructure copyStructure(
-			long structureId,
+			long sourceStructureId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().copyStructure(structureId, serviceContext);
+		return getService().copyStructure(sourceStructureId, serviceContext);
 	}
 
 	/**

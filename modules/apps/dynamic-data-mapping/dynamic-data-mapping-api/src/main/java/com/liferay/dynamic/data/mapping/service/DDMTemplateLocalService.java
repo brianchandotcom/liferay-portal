@@ -195,7 +195,7 @@ public interface DDMTemplateLocalService
 	 * and description.
 	 *
 	 * @param userId the primary key of the template's creator/owner
-	 * @param templateId the primary key of the template to be copied
+	 * @param sourceTemplateId the primary key of the template to be copied
 	 * @param nameMap the new template's locales and localized names
 	 * @param descriptionMap the new template's locales and localized
 	 descriptions
@@ -207,13 +207,13 @@ public interface DDMTemplateLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMTemplate copyTemplate(
-			long userId, long templateId, Map<Locale, String> nameMap,
+			long userId, long sourceTemplateId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMTemplate copyTemplate(
-			long userId, long templateId, ServiceContext serviceContext)
+			long userId, long sourceTemplateId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -224,8 +224,8 @@ public interface DDMTemplateLocalService
 	 * @param userId the primary key of the template's creator/owner
 	 * @param classNameId the primary key of the class name for the template's
 	 related model
-	 * @param oldClassPK the primary key of the old template's related entity
-	 * @param newClassPK the primary key of the new template's related entity
+	 * @param sourceClassPK the primary key of the old template's related entity
+	 * @param targetClassPK the primary key of the new template's related entity
 	 * @param type the template's type. For more information, see
 	 DDMTemplateConstants in the dynamic-data-mapping-api module.
 	 * @param serviceContext the service context to be applied. Can set the
@@ -236,8 +236,8 @@ public interface DDMTemplateLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public List<DDMTemplate> copyTemplates(
-			long userId, long classNameId, long oldClassPK, long newClassPK,
-			String type, ServiceContext serviceContext)
+			long userId, long classNameId, long sourceClassPK,
+			long targetClassPK, String type, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

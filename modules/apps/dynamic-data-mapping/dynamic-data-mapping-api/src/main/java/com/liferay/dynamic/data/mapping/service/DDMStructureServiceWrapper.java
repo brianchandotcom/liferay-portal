@@ -92,7 +92,7 @@ public class DDMStructureServiceWrapper
 	 * extracted from the original one. The new structure supports a new name
 	 * and description.
 	 *
-	 * @param structureId the primary key of the structure to be copied
+	 * @param sourceStructureId the primary key of the structure to be copied
 	 * @param nameMap the new structure's locales and localized names
 	 * @param descriptionMap the new structure's locales and localized
 	 descriptions
@@ -103,22 +103,24 @@ public class DDMStructureServiceWrapper
 	 */
 	@Override
 	public DDMStructure copyStructure(
-			long structureId, java.util.Map<java.util.Locale, String> nameMap,
+			long sourceStructureId,
+			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureService.copyStructure(
-			structureId, nameMap, descriptionMap, serviceContext);
+			sourceStructureId, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Override
 	public DDMStructure copyStructure(
-			long structureId,
+			long sourceStructureId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _ddmStructureService.copyStructure(structureId, serviceContext);
+		return _ddmStructureService.copyStructure(
+			sourceStructureId, serviceContext);
 	}
 
 	/**

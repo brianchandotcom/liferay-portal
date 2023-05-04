@@ -207,7 +207,7 @@ public class DDMStructureServiceHttp {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure
 			copyStructure(
-				HttpPrincipal httpPrincipal, long structureId,
+				HttpPrincipal httpPrincipal, long sourceStructureId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -219,7 +219,7 @@ public class DDMStructureServiceHttp {
 				_copyStructureParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, structureId, nameMap, descriptionMap,
+				methodKey, sourceStructureId, nameMap, descriptionMap,
 				serviceContext);
 
 			Object returnObj = null;
@@ -253,7 +253,7 @@ public class DDMStructureServiceHttp {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure
 			copyStructure(
-				HttpPrincipal httpPrincipal, long structureId,
+				HttpPrincipal httpPrincipal, long sourceStructureId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -263,7 +263,7 @@ public class DDMStructureServiceHttp {
 				_copyStructureParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, structureId, serviceContext);
+				methodKey, sourceStructureId, serviceContext);
 
 			Object returnObj = null;
 

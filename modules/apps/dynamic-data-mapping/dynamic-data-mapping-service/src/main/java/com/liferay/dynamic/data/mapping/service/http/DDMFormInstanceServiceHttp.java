@@ -154,7 +154,7 @@ public class DDMFormInstanceServiceHttp {
 				HttpPrincipal httpPrincipal, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				com.liferay.dynamic.data.mapping.model.DDMFormInstance
-					ddmFormInstance,
+					sourceDDMFormInstance,
 				com.liferay.dynamic.data.mapping.storage.DDMFormValues
 					settingsDDMFormValues,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -166,7 +166,7 @@ public class DDMFormInstanceServiceHttp {
 				_copyFormInstanceParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, nameMap, ddmFormInstance,
+				methodKey, groupId, nameMap, sourceDDMFormInstance,
 				settingsDDMFormValues, serviceContext);
 
 			Object returnObj = null;

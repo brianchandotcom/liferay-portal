@@ -162,7 +162,7 @@ public class DDMStructureLocalServiceWrapper
 	 * and description.
 	 *
 	 * @param userId the primary key of the structure's creator/owner
-	 * @param structureId the primary key of the structure to be copied
+	 * @param sourceStructureId the primary key of the structure to be copied
 	 * @param nameMap the new structure's locales and localized names
 	 * @param descriptionMap the new structure's locales and localized
 	 descriptions
@@ -173,24 +173,24 @@ public class DDMStructureLocalServiceWrapper
 	 */
 	@Override
 	public DDMStructure copyStructure(
-			long userId, long structureId,
+			long userId, long sourceStructureId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureLocalService.copyStructure(
-			userId, structureId, nameMap, descriptionMap, serviceContext);
+			userId, sourceStructureId, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Override
 	public DDMStructure copyStructure(
-			long userId, long structureId,
+			long userId, long sourceStructureId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureLocalService.copyStructure(
-			userId, structureId, serviceContext);
+			userId, sourceStructureId, serviceContext);
 	}
 
 	/**

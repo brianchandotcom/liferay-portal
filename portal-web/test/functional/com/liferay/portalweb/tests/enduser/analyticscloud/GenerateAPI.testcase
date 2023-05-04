@@ -223,7 +223,7 @@ definition {
 		var startTime = "15:36:00.000";
 		var endDate = "2017-06-15";
 		var endTime = "10:20:00.000";
-		var type = "account";
+		var type = "individual";
 		var message = "\"fromDate\" and \"toDate\" query parameters are mandatory and must be ISO 8601 compliant yyyy-MM-dd'T'HH:mm[:ss.SSS'Z']";
 
 		task ("Get the token value to create the schedule") {

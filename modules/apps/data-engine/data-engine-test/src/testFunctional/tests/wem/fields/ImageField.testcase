@@ -353,7 +353,13 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = ${structureTitle});
 
-		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
+		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		IsChecked(
+			key_fieldName = "repeatable",
+			locator1 = "Checkbox#SWITCH");
 	}
 
 	@description = "This test ensures that user can set the image field label."

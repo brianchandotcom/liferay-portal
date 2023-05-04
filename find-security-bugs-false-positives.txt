@@ -48,9 +48,6 @@ com/liferay/commerce/account/admin/web/internal/frontend/taglib/servlet/taglib/C
 com/liferay/commerce/account/admin/web/internal/frontend/taglib/servlet/taglib/CommerceAccountUserRelScreenNavigationEntry.getScreenNavigationKey()Ljava/lang/String;:SAFE
 com/liferay/commerce/account/admin/web/internal/portlet/CommerceAccountPortletProvider.getPortletName()Ljava/lang/String;:SAFE
 com/liferay/commerce/account/admin/web/internal/portlet/action/EditCommerceAccountMVCRenderCommand.render(Ljavax/portlet/RenderRequest;Ljavax/portlet/RenderResponse;)Ljava/lang/String;:SAFE
-com/liferay/commerce/account/constants/CommerceAccountConstants.getAccountGroupTypeLabel(I)Ljava/lang/String;:SAFE
-com/liferay/commerce/account/constants/CommerceAccountConstants.getAccountTypeLabel(I)Ljava/lang/String;:SAFE
-com/liferay/commerce/account/constants/CommerceAccountConstants.getSiteTypeLabel(I)Ljava/lang/String;:SAFE
 com/liferay/commerce/account/group/admin/web/internal/application/list/CommerceAccountGroupPanelApp.getPortletId()Ljava/lang/String;:SAFE
 com/liferay/commerce/account/group/admin/web/internal/display/context/CommerceAccountGroupAdminDisplayContext.getItemSelectorUrl()Ljava/lang/String;:SAFE
 com/liferay/commerce/account/group/admin/web/internal/display/context/CommerceAccountGroupAdminDisplayContext.getPortletURL()Ljavax/portlet/PortletURL;:SAFE
@@ -3528,6 +3525,7 @@ com/liferay/commerce/product/constants/CPConstants.SEPARATOR_PRODUCT_URL:SAFE
 com/liferay/commerce/product/constants/CPConstants.SERVICE_NAME:SAFE
 com/liferay/commerce/product/constants/CPConstants.WEEKLY_SUBSCRIPTION_TYPE:SAFE
 com/liferay/commerce/product/constants/CPConstants.YEARLY_SUBSCRIPTION_TYPE:SAFE
+com/liferay/commerce/product/constants/CommerceChannelConstants.getSiteTypeLabel(I)Ljava/lang/String;:SAFE
 com/liferay/commerce/product/content/category/web/internal/portlet/action/CPCategoryContentConfigurationAction.getJspPath(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE
 com/liferay/commerce/product/content/category/web/internal/portlet/template/CPCategoryContentPortletDisplayTemplateHandler.getClassName()Ljava/lang/String;:SAFE
 com/liferay/commerce/product/content/category/web/internal/portlet/template/CPCategoryContentPortletDisplayTemplateHandler.getResourceName()Ljava/lang/String;:SAFE

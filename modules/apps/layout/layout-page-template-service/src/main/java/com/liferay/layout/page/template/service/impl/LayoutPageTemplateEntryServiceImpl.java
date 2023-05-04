@@ -90,7 +90,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId,
-			long layoutPageTemplateEntryId, ServiceContext serviceContext)
+			long sourceLayoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws Exception {
 
 		_portletResourcePermission.check(
@@ -99,7 +99,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.copyLayoutPageTemplateEntry(
 			getUserId(), groupId, layoutPageTemplateCollectionId,
-			layoutPageTemplateEntryId, serviceContext);
+			sourceLayoutPageTemplateEntryId, serviceContext);
 	}
 
 	@Override

@@ -260,12 +260,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			long layoutPageTemplateEntryId, ServiceContext serviceContext)
+			long sourceLayoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
 			layoutPageTemplateEntryPersistence.findByPrimaryKey(
-				layoutPageTemplateEntryId);
+				sourceLayoutPageTemplateEntryId);
 
 		String name = _getUniqueCopyName(
 			groupId, sourceLayoutPageTemplateEntry.getName(),

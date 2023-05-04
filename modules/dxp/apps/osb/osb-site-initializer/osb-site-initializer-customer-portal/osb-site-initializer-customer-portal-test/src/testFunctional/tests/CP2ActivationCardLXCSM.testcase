@@ -87,7 +87,7 @@ definition {
 				firstName = "FirstName",
 				github = "GitHub User",
 				lastName = "LastName",
-				projectId = "001");
+				projectId = 001);
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}
@@ -112,6 +112,179 @@ definition {
 			AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
 
 			Navigator.closeWindow();
+		}
+	}
+
+	@description = "Story ID: LPS-144183 | Test Summary: Verify if the status of the activation card can be changed in this way from In Progress to Active"
+	@priority = 4
+	test AssertChangeOfCardStatusToActive {
+		task ("Given that I fill out and send the activation form for card LXC - SM") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Provisioning",
+				accountUserName = "Test Test");
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			Button.click(button = "Start Project Setup");
+
+			Button.click(button = "Skip for now");
+
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = 001);
+
+			Button.click(button = "Submit");
+
+			Button.click(button = "Done");
+		}
+
+		task ("And I go to the product page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("When I activate the card through the dropdown shown on the card") {
+			CustomerPortal.activeStatusViaDropdown(
+				dropdownItem = "Set to Active",
+				value = 001);
+		}
+
+		task ("Then I should be able to assert that the status has changed to active") {
+			CustomerPortal.viewActivationStatusCardChange(status = "Active");
+		}
+	}
+
+	@description = "Story ID: LPS-144183 | Test Summary: Verify if you enter a different value for the confirmation ID and send the entry is automatically updated"
+	@priority = 3
+	test AssertThatTheConfirmationIDHasBeenUpdated {
+		task ("Given that I fill out and send the activation form for card LXC - SM") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Provisioning",
+				accountUserName = "Test Test");
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			Button.click(button = "Start Project Setup");
+
+			Button.click(button = "Skip for now");
+
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = 001);
+
+			Button.click(button = "Submit");
+
+			Button.click(button = "Done");
+		}
+
+		task ("And I go to the product page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("And I activate the card through the dropdown shown on the card") {
+			CustomerPortal.activeStatusViaDropdown(
+				dropdownItem = "Set to Active",
+				value = 022);
+		}
+
+		task ("When I go to the DXP Cloud Environments object") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "DXP Cloud Environments");
+		}
+
+		task ("Then I should be able to tell that the Project ID has been updated") {
+			CustomerPortal.assertTextAtObjectTable(text = 022);
+		}
+	}
+
+	@description = "Story ID: LPS-144183 | Test Summary: Verify if you cancel the pop-up the card status remains the same"
+	@priority = 3
+	test AssertThatTheStatusIsTheSameWhenCancelingAnAction {
+		task ("Given that I fill out and send the activation form for card LXC - SM") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Provisioning",
+				accountUserName = "Test Test");
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			Button.click(button = "Start Project Setup");
+
+			Button.click(button = "Skip for now");
+
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = 001);
+
+			Button.click(button = "Submit");
+
+			Button.click(button = "Done");
+		}
+
+		task ("And I go to the product page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("When I cancel the card activation") {
+			CustomerPortal.activeStatusViaDropdown(dropdownItem = "Set to Active");
+		}
+
+		task ("Then I should be able to assert that the card status has not changed") {
+			CP2DXPCloudSetup.assertCardStatusChanged(status = "In Progress");
 		}
 	}
 
@@ -180,7 +353,7 @@ definition {
 				firstName = "FirstName",
 				github = "GitHub User",
 				lastName = "LastName",
-				projectId = "001");
+				projectId = 001);
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}
@@ -190,6 +363,7 @@ definition {
 		//		locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION",
 		//		key_text = "Your LXC - SM environments are being set up and will be available soon");
 		//}
+
 	}
 
 	@description = "Automation ID: LPS-146849 | Test Summary: Verify if Link 'Finish Activation' hidden to requestor and user roles"
@@ -265,179 +439,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "CustomerPortalSite#FINISH_ACTIVATION",
 				value1 = "Finish Activation");
-		}
-	}
-
-	@description = "Story ID: LPS-144183 | Test Summary: Verify if the status of the activation card can be changed in this way from In Progress to Active"
-	@priority = 4
-	test AssertChangeOfCardStatusToActive {
-		task ("Given that I fill out and send the activation form for card LXC - SM") {
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Provisioning",
-				accountUserName = "Test Test");
-
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-			CustomerPortal.search(searchItem = ${testAccount});
-
-			CustomerPortal.enterOnProject(title = ${testAccount});
-
-			Button.click(button = "Start Project Setup");
-
-			Button.click(button = "Skip for now");
-
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
-				dataCenterRegion = "Frankfurt, Germany",
-				email = "test@liferay.com",
-				firstName = "FirstName",
-				github = "GitHub User",
-				lastName = "LastName",
-				projectId = "001");
-
-			Button.click(button = "Submit");
-
-			Button.click(button = "Done");
-		}
-
-		task ("And I go to the product page") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
-		}
-
-		task ("When I activate the card through the dropdown shown on the card") {
-			CustomerPortal.activeStatusViaDropdown(
-				dropdownItem = "Set to Active",
-				value = 001);
-		}
-
-		task ("Then I should be able to assert that the status has changed to active") {
-			CustomerPortal.viewActivationStatusCardChange(status = "Active");
-		}
-	}
-
-	@description = "Story ID: LPS-144183 | Test Summary: Verify if you enter a different value for the confirmation ID and send the entry is automatically updated"
-	@priority = 3
-	test AssertThatTheConfirmationIDHasBeenUpdated {
-		task ("Given that I fill out and send the activation form for card LXC - SM") {
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Provisioning",
-				accountUserName = "Test Test");
-
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-			CustomerPortal.search(searchItem = ${testAccount});
-
-			CustomerPortal.enterOnProject(title = ${testAccount});
-
-			Button.click(button = "Start Project Setup");
-
-			Button.click(button = "Skip for now");
-
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
-				dataCenterRegion = "Frankfurt, Germany",
-				email = "test@liferay.com",
-				firstName = "FirstName",
-				github = "GitHub User",
-				lastName = "LastName",
-				projectId = "001");
-
-			Button.click(button = "Submit");
-
-			Button.click(button = "Done");
-		}
-
-		task ("And I go to the product page") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
-		}
-
-		task ("And I activate the card through the dropdown shown on the card") {
-			CustomerPortal.activeStatusViaDropdown(
-				dropdownItem = "Set to Active",
-				value = 022);
-		}
-
-		task ("When I go to the DXP Cloud Environments object") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "DXP Cloud Environments");
-		}
-
-		task ("Then I should be able to tell that the Project ID has been updated") {
-			CustomerPortal.assertTextAtObjectTable(text = "022");
-		}
-	}
-
-	@description = "Story ID: LPS-144183 | Test Summary: Verify if you cancel the pop-up the card status remains the same"
-	@priority = 3
-	test AssertThatTheStatusIsTheSameWhenCancelingAnAction {
-		task ("Given that I fill out and send the activation form for card LXC - SM") {
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Account Administrator",
-				accountUserName = "Test Test");
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = "Provisioning",
-				accountUserName = "Test Test");
-
-			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-
-			CustomerPortal.search(searchItem = ${testAccount});
-
-			CustomerPortal.enterOnProject(title = ${testAccount});
-
-			Button.click(button = "Start Project Setup");
-
-			Button.click(button = "Skip for now");
-
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
-				dataCenterRegion = "Frankfurt, Germany",
-				email = "test@liferay.com",
-				firstName = "FirstName",
-				github = "GitHub User",
-				lastName = "LastName",
-				projectId = "001");
-
-			Button.click(button = "Submit");
-
-			Button.click(button = "Done");
-		}
-
-		task ("And I go to the product page") {
-			CP2NavigationMenu.goToProductActivation();
-
-			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
-		}
-
-		task ("When I cancel the card activation") {
-			CustomerPortal.activeStatusViaDropdown(dropdownItem = "Set to Active");
-		}
-
-		task ("Then I should be able to assert that the card status has not changed") {
-			CP2DXPCloudSetup.assertCardStatusChanged(status = "In Progress");
 		}
 	}
 

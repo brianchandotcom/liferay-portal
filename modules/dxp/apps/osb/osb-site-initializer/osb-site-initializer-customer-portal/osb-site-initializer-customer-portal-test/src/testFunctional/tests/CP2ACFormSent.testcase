@@ -45,8 +45,8 @@ definition {
 
 		CP2Utils.tearDownForCloudEntries(
 			entry = "test@liferay.com",
-			portlet = "Analytics Cloud Workspaces",
 			entry1 = "test@liferay.com",
+			portlet = "Analytics Cloud Workspaces",
 			portlet1 = "Incident Report Contacts Analytics Cloud",
 			status = "In-Progress");
 

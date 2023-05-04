@@ -75,7 +75,7 @@ definition {
 				firstName = "FirstName",
 				github = "GitHub User",
 				lastName = "LastName",
-				projectId = "001");
+				projectId = 001);
 		}
 
 		task ("Assert the new form fields") {
@@ -253,7 +253,7 @@ definition {
 				firstName = "FirstName",
 				github = "GitHub User",
 				lastName = "LastName",
-				projectId = "001");
+				projectId = 001);
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}
@@ -708,7 +708,7 @@ definition {
 				firstName = "FirstName",
 				github = "GitHub User",
 				lastName = "LastName",
-				projectId = "001");
+				projectId = 001);
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}

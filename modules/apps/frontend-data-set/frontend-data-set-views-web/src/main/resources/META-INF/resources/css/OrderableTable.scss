@@ -8,6 +8,11 @@
 	.orderable-table.table-autofit td {
 		width: inherit;
 
+		&.actions-cell {
+			padding-right: 18px;
+			width: 0;
+		}
+
 		&.drag-handle-cell {
 			width: 0;
 		}

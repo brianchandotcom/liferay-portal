@@ -13,7 +13,9 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
@@ -23,16 +25,19 @@ import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider, useDrag, useDrop} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import {FUZZY_OPTIONS} from '../Constants';
 import Search from './Search';
 
 import '../../css/OrderableTable.scss';
 
-const FUZZY_OPTIONS = {
-	post: '</strong>',
-	pre: '<strong>',
-};
+interface Action {
+	icon: string;
+	label: string;
+	onClick: Function;
+}
 
-interface OrderableTableRowInterface {
+interface OrderableTableRowProps {
+	actions?: Array<Action>;
 	fields: Array<{
 		label: string;
 		name: string;
@@ -44,12 +49,13 @@ interface OrderableTableRowInterface {
 }
 
 const OrderableTableRow = ({
+	actions,
 	fields,
 	index,
 	item,
 	onOrderChange,
 	query,
-}: OrderableTableRowInterface) => {
+}: OrderableTableRowProps) => {
 	const tableRowRef = useRef<HTMLTableRowElement>(null);
 
 	const [{isDragging}, dragRef] = useDrag({
@@ -147,11 +153,52 @@ const OrderableTableRow = ({
 					</ClayTable.Cell>
 				);
 			})}
+
+			{actions && (
+				<ClayTable.Cell className="actions-cell">
+					<ClayDropDown
+						trigger={
+							<ClayButton
+								className="component-action"
+								displayType="unstyled"
+							>
+								<ClayIcon symbol="ellipsis-v" />
+
+								<span className="sr-only">
+									{Liferay.Language.get('actions')}
+								</span>
+							</ClayButton>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{actions.map(({icon, label, onClick}) => (
+								<ClayDropDown.Item
+									key={label}
+									onClick={() =>
+										onClick({
+											item,
+										})
+									}
+								>
+									{icon && (
+										<span className="pr-2">
+											<ClayIcon symbol={icon} />
+										</span>
+									)}
+
+									{label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</ClayTable.Cell>
+			)}
 		</ClayTable.Row>
 	);
 };
 
-interface OrderableTableInterface {
+interface OrderableTableProps {
+	actions?: Array<Action>;
 	disableSave?: boolean;
 	fields: Array<{
 		label: string;
@@ -169,6 +216,7 @@ interface OrderableTableInterface {
 }
 
 const OrderableTable = ({
+	actions,
 	disableSave,
 	fields,
 	items: initialItems,
@@ -180,7 +228,7 @@ const OrderableTable = ({
 	onOrderChange,
 	onSaveButtonClick,
 	title,
-}: OrderableTableInterface) => {
+}: OrderableTableProps) => {
 	const [items, setItems] = useState(initialItems);
 	const [query, setQuery] = useState('');
 
@@ -257,6 +305,10 @@ const OrderableTable = ({
 										{field.label}
 									</ClayTable.Cell>
 								))}
+
+								{actions && (
+									<ClayTable.Cell className="actions-cell" />
+								)}
 							</ClayTable.Row>
 						</ClayTable.Head>
 
@@ -264,6 +316,7 @@ const OrderableTable = ({
 							<DndProvider backend={HTML5Backend}>
 								{items.map((item, index) => (
 									<OrderableTableRow
+										actions={actions}
 										fields={fields}
 										index={index}
 										item={item}

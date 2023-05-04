@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC027",
 	"name": "Technical",
 	"name_i18n": {
-		"en_US": "Technical"
+		"en_US": "Technical",
+		"ar_SA": "Technical",
+		"ca_ES": "Technical",
+		"de_DE": "Technical",
+		"es_ES": "Technical",
+		"fi_FI": "Technical",
+		"fr_FR": "Technical",
+		"hu_HU": "Technical",
+		"ja_JP": "Technical",
+		"nl_NL": "Technical",
+		"pt_BR": "Technical",
+		"sv_SE": "Technical",
+		"zh_CN": "Technical"
 	},
 	"viewableBy": "Anyone"
 }

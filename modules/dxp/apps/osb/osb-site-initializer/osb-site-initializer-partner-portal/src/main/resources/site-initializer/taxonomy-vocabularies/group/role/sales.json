@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC025",
 	"name": "Sales",
 	"name_i18n": {
-		"en_US": "Sales"
+		"en_US": "Sales",
+		"ar_SA": "Sales",
+		"ca_ES": "Sales",
+		"de_DE": "Sales",
+		"es_ES": "Sales",
+		"fi_FI": "Sales",
+		"fr_FR": "Sales",
+		"hu_HU": "Sales",
+		"ja_JP": "Sales",
+		"nl_NL": "Sales",
+		"pt_BR": "Sales",
+		"sv_SE": "Sales",
+		"zh_CN": "Sales"
 	},
 	"viewableBy": "Anyone"
 }

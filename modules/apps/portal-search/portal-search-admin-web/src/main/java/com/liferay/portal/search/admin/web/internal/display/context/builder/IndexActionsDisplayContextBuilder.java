@@ -74,7 +74,8 @@ public class IndexActionsDisplayContextBuilder {
 		).put(
 			"initialScope", _getInitialScope()
 		).put(
-			"isConcurrentModeSupported", _isConcurrentModeSupported()
+			"isConcurrentModeSupported",
+			_searchCapabilities.isConcurrentModeSupported()
 		).put(
 			"virtualInstances", _getVirtualInstancesJSONArray()
 		).build();
@@ -128,10 +129,6 @@ public class IndexActionsDisplayContextBuilder {
 		}
 
 		return jsonArray;
-	}
-
-	private boolean _isConcurrentModeSupported() {
-		return _searchCapabilities.isConcurrentModeSupported();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

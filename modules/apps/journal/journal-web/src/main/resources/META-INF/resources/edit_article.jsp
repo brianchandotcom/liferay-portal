@@ -133,38 +133,29 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 	<div aria-label="<%= LanguageUtil.get(request, "configuration-panel") %>" class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer" role="tabpanel" tabindex="-1">
 		<div class="sidebar-body">
-
-			<%
-			String tabs1Names = "properties,usages";
-
-			if ((article == null) || (journalEditArticleDisplayContext.getClassNameId() != JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
-				tabs1Names = "properties";
-			}
-			%>
-
-			<liferay-ui:tabs
-				names="<%= tabs1Names %>"
-				param="tabs1"
-				refresh="<%= false %>"
-			>
-				<liferay-ui:section>
-					<liferay-frontend:form-navigator
-						fieldSetCssClass="panel-group-flush"
-						formModelBean="<%= article %>"
-						id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
-						showButtons="<%= false %>"
-					/>
-				</liferay-ui:section>
-
-				<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>">
-					<liferay-ui:section>
-						<liferay-layout:layout-classed-model-usages-view
-							className="<%= JournalArticle.class.getName() %>"
-							classPK="<%= article.getResourcePrimKey() %>"
+			<div class="sheet-row">
+				<clay:tabs
+					tabsItems="<%= journalEditArticleDisplayContext.getTabsItems() %>"
+				>
+					<div>
+						<liferay-frontend:form-navigator
+							fieldSetCssClass="panel-group-flush"
+							formModelBean="<%= article %>"
+							id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
+							showButtons="<%= false %>"
 						/>
-					</liferay-ui:section>
-				</c:if>
-			</liferay-ui:tabs>
+					</div>
+
+					<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>">
+						<div>
+							<liferay-layout:layout-classed-model-usages-view
+								className="<%= JournalArticle.class.getName() %>"
+								classPK="<%= article.getResourcePrimKey() %>"
+							/>
+						</div>
+					</c:if>
+				</clay:tabs>
+			</div>
 		</div>
 	</div>
 

@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.MenuItemProvider;
@@ -57,8 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletToolbarContributor.class
 )
 public class DefaultDLPortletToolbarContributor
-	extends BasePortletToolbarContributor
-	implements DLPortletToolbarContributor {
+	extends BasePortletToolbarContributor {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

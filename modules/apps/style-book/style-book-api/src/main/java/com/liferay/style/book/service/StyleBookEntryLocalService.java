@@ -104,7 +104,7 @@ public interface StyleBookEntryLocalService
 		throws PortalException;
 
 	public StyleBookEntry copyStyleBookEntry(
-			long userId, long groupId, long styleBookEntryId,
+			long userId, long groupId, long sourceStyleBookEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 

@@ -138,7 +138,7 @@ public class StyleBookEntryServiceHttp {
 	public static com.liferay.style.book.model.StyleBookEntry
 			copyStyleBookEntry(
 				HttpPrincipal httpPrincipal, long groupId,
-				long styleBookEntryId,
+				long sourceStyleBookEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -148,7 +148,7 @@ public class StyleBookEntryServiceHttp {
 				_copyStyleBookEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, styleBookEntryId, serviceContext);
+				methodKey, groupId, sourceStyleBookEntryId, serviceContext);
 
 			Object returnObj = null;
 

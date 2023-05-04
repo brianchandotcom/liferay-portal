@@ -1263,6 +1263,8 @@ public class ObjectFieldLocalServiceImpl
 	).put(
 		"Date", "Date"
 	).put(
+		"DateTime", "DateTime"
+	).put(
 		"Double", "Decimal"
 	).put(
 		"Integer", "Integer"

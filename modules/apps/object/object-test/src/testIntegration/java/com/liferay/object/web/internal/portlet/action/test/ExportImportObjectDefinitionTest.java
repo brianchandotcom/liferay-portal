@@ -20,6 +20,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -47,6 +48,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,6 +72,18 @@ public class ExportImportObjectDefinitionTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		_user = TestPropsValues.getUser();
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
 
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
@@ -115,7 +130,7 @@ public class ExportImportObjectDefinitionTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(_user);
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -154,17 +169,14 @@ public class ExportImportObjectDefinitionTest {
 			String fileName, String name, boolean system)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+			PermissionCheckerFactoryUtil.create(_user));
 
 		ObjectDefinitionResource.Builder builder =
 			_objectDefinitionResourceFactory.create();
 
 		_objectDefinitionResource = builder.user(
-			TestPropsValues.getUser()
+			_user
 		).build();
 
 		ObjectDefinition objectDefinition = _importObjectDefinition(
@@ -190,8 +202,6 @@ public class ExportImportObjectDefinitionTest {
 			_objectDefinitionResource.deleteObjectDefinition(
 				objectDefinition.getId());
 		}
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
 	private byte[] _getContent(String boundary, byte[] bytes, String fileName) {
@@ -229,7 +239,7 @@ public class ExportImportObjectDefinitionTest {
 
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(_user);
 
 		return themeDisplay;
 	}
@@ -278,5 +288,8 @@ public class ExportImportObjectDefinitionTest {
 
 	@Inject
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
+
+	private PermissionChecker _originalPermissionChecker;
+	private User _user;
 
 }

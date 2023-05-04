@@ -189,18 +189,19 @@ definition {
 
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = ${databaseType});
 
-		User.firstLoginUI(
-			localization = "ES",
-			localizedAgree = "Acepto",
-			localizedAnswer = "Respuesta",
+		Navigator.openURL();
+
+		User.acceptEndUserLicenseAgreementLocalized(localizedAgree = "Acepto");
+
+		User.resetPassword(
 			localizedSaveButton = "Guardar",
-			newPassword = "test1",
-			password = "test",
-			userEmailAddress = "user@liferay.com");
+			newPassword = "test1");
 
-		var testRunEnvironment = PropsUtil.get("test.run.environment");
+		User.answerPasswordReminderLocalized(
+			localizedAnswer = "Respuesta",
+			localizedSaveButton = "Guardar");
 
-		if (${testRunEnvironment} == "EE") {
+		if (IsElementPresent(key_text = "Finalizado", locator1 = "Button#ANY")) {
 			Button.click(button = "Finalizado");
 		}
 

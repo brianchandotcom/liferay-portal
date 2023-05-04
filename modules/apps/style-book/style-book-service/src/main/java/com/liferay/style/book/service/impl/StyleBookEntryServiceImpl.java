@@ -70,7 +70,8 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 	@Override
 	public StyleBookEntry copyStyleBookEntry(
-			long groupId, long styleBookEntryId, ServiceContext serviceContext)
+			long groupId, long sourceStyleBookEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -78,7 +79,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		return styleBookEntryLocalService.copyStyleBookEntry(
-			getUserId(), groupId, styleBookEntryId, serviceContext);
+			getUserId(), groupId, sourceStyleBookEntryId, serviceContext);
 	}
 
 	@Override

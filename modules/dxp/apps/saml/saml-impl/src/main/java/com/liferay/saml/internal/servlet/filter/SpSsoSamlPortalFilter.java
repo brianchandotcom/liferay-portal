@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
@@ -142,9 +143,20 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 			}
 		}
 		else if (requestPath.equals("/c/portal/logout")) {
+			boolean processSpLogout = false;
+
 			if (_singleLogoutProfile.isSingleLogoutSupported(
 					httpServletRequest)) {
 
+				SamlSpSession samlSpSession =
+					_singleLogoutProfile.getSamlSpSession(httpServletRequest);
+
+				if ((samlSpSession != null) && !samlSpSession.isTerminated()) {
+					processSpLogout = true;
+				}
+			}
+
+			if (processSpLogout) {
 				_singleLogoutProfile.processSpLogout(
 					httpServletRequest, httpServletResponse);
 			}

@@ -43,15 +43,18 @@ import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.test.util.DLTestUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMForm;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue;
-import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -89,7 +92,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -608,8 +610,12 @@ public class DLFileEntryLocalServiceTest {
 
 			DLFileVersion copyDLFileVersion = copyDLFileEntry.getFileVersion();
 
+			DLFileEntryType dlFileEntryType =
+				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+					copyDLFileVersion.getFileEntryTypeId());
+
 			List<DDMStructure> copyDDMStructures =
-				copyDLFileVersion.getDDMStructures();
+				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType);
 
 			DDMStructure copyDDMStructure = copyDDMStructures.get(0);
 
@@ -618,16 +624,18 @@ public class DLFileEntryLocalServiceTest {
 					copyDDMStructure.getStructureId(),
 					copyDLFileVersion.getFileVersionId());
 
-			DDMFormValues copyDDMFormValues =
-				StorageEngineManagerUtil.getDDMFormValues(
+			com.liferay.dynamic.data.mapping.kernel.DDMFormValues
+				copyDDMFormValues = StorageEngineManagerUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 
-			List<DDMFormFieldValue> ddmFormFieldValues =
-				copyDDMFormValues.getDDMFormFieldValues();
+			List<com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue>
+				ddmFormFieldValues = copyDDMFormValues.getDDMFormFieldValues();
 
-			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+			com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
+				ddmFormFieldValue = ddmFormFieldValues.get(0);
 
-			Value value = ddmFormFieldValue.getValue();
+			com.liferay.dynamic.data.mapping.kernel.Value value =
+				ddmFormFieldValue.getValue();
 
 			Assert.assertEquals("Text1", ddmFormFieldValue.getName());
 
@@ -708,7 +716,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testDuplicateFileEntryExternalReferenceCode() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 		String externalReferenceCode = StringUtil.randomString();
-		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
+		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+			ddmFormValuesMap = Collections.emptyMap();
 		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
 
 		ServiceContext serviceContext =
@@ -736,7 +745,8 @@ public class DLFileEntryLocalServiceTest {
 	@Test
 	public void testDuplicateFileIsIgnored() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
-		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
+		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+			ddmFormValuesMap = Collections.emptyMap();
 		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
 
 		ServiceContext serviceContext =
@@ -763,7 +773,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testDuplicateTitleFileEntry() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 		String title = StringUtil.randomString();
-		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
+		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+			ddmFormValuesMap = Collections.emptyMap();
 		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
 
 		ServiceContext serviceContext =
@@ -1265,7 +1276,9 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	protected DLFileEntry addAndApproveFileEntry(
-			DLFolder dlFolder, Map<String, DDMFormValues> ddmFormValuesMap,
+			DLFolder dlFolder,
+			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+				ddmFormValuesMap,
 			InputStream inputStream, ServiceContext serviceContext)
 		throws Exception {
 
@@ -1334,8 +1347,8 @@ public class DLFileEntryLocalServiceTest {
 		throws Exception {
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DLFileEntryMetadata.class.getName(), "0",
-			createDDMForm(), LocaleUtil.US, serviceContext);
+			_group.getGroupId(), DLFileEntryMetadata.class.getName(),
+			createDDMForm(), LocaleUtil.US);
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
@@ -1348,17 +1361,21 @@ public class DLFileEntryLocalServiceTest {
 
 		DDMFormValues ddmFormValues = createDDMFormValues();
 
+		String className =
+			com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
+				getName();
+
 		serviceContext.setAttribute(
-			DDMFormValues.class.getName() + StringPool.POUND +
-				ddmStructure.getStructureId(),
-			ddmFormValues);
+			className + StringPool.POUND + ddmStructure.getStructureId(),
+			DDMBeanTranslatorUtil.translate(ddmFormValues));
 
 		return dlFileEntryType.getFileEntryTypeId();
 	}
 
 	protected DLFileEntry updateAndApproveDLFileEntry(
 			DLFileEntry dlFileEntry, InputStream inputStream,
-			Map<String, DDMFormValues> ddmFormValuesMap,
+			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+				ddmFormValuesMap,
 			ServiceContext serviceContext)
 		throws Exception {
 

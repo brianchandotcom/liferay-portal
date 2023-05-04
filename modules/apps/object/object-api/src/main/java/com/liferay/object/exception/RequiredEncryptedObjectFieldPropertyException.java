@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class RequiredEncryptedObjectFieldPropertyException extends PortalException {
+public class RequiredEncryptedObjectFieldPropertyException
+	extends PortalException {
 
 	public RequiredEncryptedObjectFieldPropertyException() {
 	}
@@ -27,7 +29,9 @@ public class RequiredEncryptedObjectFieldPropertyException extends PortalExcepti
 		super(msg);
 	}
 
-	public RequiredEncryptedObjectFieldPropertyException(String msg, Throwable throwable) {
+	public RequiredEncryptedObjectFieldPropertyException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

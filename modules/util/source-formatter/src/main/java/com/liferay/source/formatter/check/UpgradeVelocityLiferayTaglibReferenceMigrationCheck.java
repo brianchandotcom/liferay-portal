@@ -56,17 +56,9 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 	}
 
 	private String _migrateVelocityLanguage(String line) {
-		String newLine = StringUtil.replace(
-			line,
-			new String[] {
-				_VELOCITY_LIFERAY_LANGUAGE + CharPool.OPEN_PARENTHESIS,
-				_VELOCITY_LIFERAY_LANGUAGE + CharPool.SPACE +
-					CharPool.OPEN_PARENTHESIS
-			},
-			new String[] {
-				_FREEMARKER_LIFERAY_LANGUAGE_KEY,
-				_FREEMARKER_LIFERAY_LANGUAGE_KEY
-			});
+		String newLine = _replaceLine(
+			line, _VELOCITY_LIFERAY_LANGUAGE, "(",
+			_FREEMARKER_LIFERAY_LANGUAGE_KEY);
 
 		int languageKeyIndex = newLine.indexOf(
 			_FREEMARKER_LIFERAY_LANGUAGE_KEY);
@@ -81,49 +73,22 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 	}
 
 	private String _migrateVelocityLanguageFormat(String line) {
-		return StringUtil.replace(
-			line,
-			new String[] {
-				_VELOCITY_LIFERAY_LANGUAGE_FORMAT +
-					_VELOCITY_LIFERAY_LANGUAGE_FORMAT_ARGUMENTS,
-				_VELOCITY_LIFERAY_LANGUAGE_FORMAT + CharPool.SPACE +
-					_VELOCITY_LIFERAY_LANGUAGE_FORMAT_ARGUMENTS
-			},
-			new String[] {
-				_FREEMARKER_LIFERAY_LANGUAGE_FORMAT,
-				_FREEMARKER_LIFERAY_LANGUAGE_FORMAT
-			});
+		return _replaceLine(
+			line, _VELOCITY_LIFERAY_LANGUAGE_FORMAT,
+			_VELOCITY_LIFERAY_LANGUAGE_FORMAT_ARGUMENTS,
+			_FREEMARKER_LIFERAY_LANGUAGE_FORMAT);
 	}
 
 	private String _migrateVelocityLiferayBreadCrumbs(String line) {
-		return StringUtil.replace(
-			line,
-			new String[] {
-				_VELOCITY_LIFERAY_BREADCRUMBS + CharPool.OPEN_PARENTHESIS +
-					CharPool.CLOSE_PARENTHESIS,
-				StringBundler.concat(
-					_VELOCITY_LIFERAY_BREADCRUMBS, StringPool.SPACE,
-					StringPool.OPEN_PARENTHESIS, StringPool.CLOSE_PARENTHESIS)
-			},
-			new String[] {
-				_FREEMARKER_LIFERAY_BREADCRUMBS, _FREEMARKER_LIFERAY_BREADCRUMBS
-			});
+		return _replaceLine(
+			line, _VELOCITY_LIFERAY_BREADCRUMBS, "()",
+			_FREEMARKER_LIFERAY_BREADCRUMBS);
 	}
 
 	private String _migrateVelocityLiferayThemeInclude(String line) {
-		String newLine = StringUtil.replace(
-			line,
-			new String[] {
-				_VELOCITY_LIFERAY_THEME_INCLUDE + CharPool.OPEN_PARENTHESIS +
-					CharPool.DOLLAR,
-				StringBundler.concat(
-					_VELOCITY_LIFERAY_THEME_INCLUDE, StringPool.SPACE,
-					StringPool.OPEN_PARENTHESIS, StringPool.DOLLAR)
-			},
-			new String[] {
-				_FREEMARKER_LIFERAY_THEME_INCLUDE,
-				_FREEMARKER_LIFERAY_THEME_INCLUDE
-			});
+		String newLine = _replaceLine(
+			line, _VELOCITY_LIFERAY_THEME_INCLUDE, "($",
+			_FREEMARKER_LIFERAY_THEME_INCLUDE);
 
 		return StringUtil.replaceLast(
 			newLine, CharPool.CLOSE_PARENTHESIS,
@@ -131,16 +96,9 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 	}
 
 	private String _migrateVelocityLiferayThemeWrap(String line) {
-		String newLine = StringUtil.replace(
-			line,
-			new String[] {
-				_VELOCITY_LIFERAY_THEME_WRAP + CharPool.OPEN_PARENTHESIS,
-				_VELOCITY_LIFERAY_THEME_WRAP + CharPool.SPACE +
-					CharPool.OPEN_PARENTHESIS
-			},
-			new String[] {
-				_FREEMARKER_LIFERAY_THEME_WRAP, _FREEMARKER_LIFERAY_THEME_WRAP
-			});
+		String newLine = _replaceLine(
+			line, _VELOCITY_LIFERAY_THEME_WRAP, "(",
+			_FREEMARKER_LIFERAY_THEME_WRAP);
 
 		int newStartIndex = newLine.indexOf(_FREEMARKER_LIFERAY_THEME_WRAP);
 
@@ -160,14 +118,18 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 				StringPool.TAB, _FREEMARKER_LIFERAY_THEME_INCLUDE),
 			newStartIndex);
 
+		return _replaceLine(newLine, "=", "$", "=");
+	}
+
+	private String _replaceLine(
+		String line, String oldSub1, String oldSub2, String newSub) {
+
 		return StringUtil.replace(
-			newLine,
+			line,
 			new String[] {
-				StringPool.EQUAL + StringPool.DOLLAR,
-				StringBundler.concat(
-					StringPool.EQUAL, StringPool.SPACE, StringPool.DOLLAR)
+				oldSub1 + oldSub2, oldSub1 + CharPool.SPACE + oldSub2
 			},
-			new String[] {StringPool.EQUAL, StringPool.EQUAL});
+			new String[] {newSub, newSub});
 	}
 
 	private static final String _FREEMARKER_LIFERAY_BREADCRUMBS =

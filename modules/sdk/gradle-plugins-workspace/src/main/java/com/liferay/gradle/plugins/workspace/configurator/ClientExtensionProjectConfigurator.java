@@ -382,6 +382,7 @@ public class ClientExtensionProjectConfigurator
 		_configureLiferayExtension(project, liferayExtension);
 
 		_configureConfigurationDefault(project);
+		_configureTaskCheck(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
 
@@ -700,6 +701,13 @@ public class ClientExtensionProjectConfigurator
 			});
 	}
 
+	private void _configureTaskCheck(Project project) {
+		Task checkTask = GradleUtil.getTask(
+			project, LifecycleBasePlugin.CHECK_TASK_NAME);
+
+		checkTask.dependsOn(VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME);
+	}
+
 	private void _configureTaskClean(Project project) {
 		Delete delete = (Delete)GradleUtil.getTask(
 			project, BasePlugin.CLEAN_TASK_NAME);
@@ -742,13 +750,6 @@ public class ClientExtensionProjectConfigurator
 			createClientExtensionConfigTask ->
 				createClientExtensionConfigTask.dependsOn(
 					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME));
-
-		TaskProvider<Task> checkTaskProvider = GradleUtil.getTaskProvider(
-			project, LifecycleBasePlugin.CHECK_TASK_NAME);
-
-		checkTaskProvider.configure(
-			checkTask -> checkTask.dependsOn(
-				VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME));
 	}
 
 	private String _getClassification(String id, String type) {

@@ -20,11 +20,14 @@ import {useAppPropertiesContext} from '../../../contexts/AppPropertiesContext';
 import {
 	addTeamMembersInvitation,
 	associateUserAccountWithAccountAndAccountRole,
+	createAndAssociateUserAccountWithAccountAndAccountRole,
+	getUserAccountByEmail,
 } from '../../../services/liferay/graphql/queries';
 import {associateContactRoleNameByEmailByProject} from '../../../services/liferay/rest/raysource/LicenseKeys';
 import {ROLE_TYPES, SLA_TYPES} from '../../../utils/constants';
 import getInitialInvite from '../../../utils/getInitialInvite';
 import getProjectRoles from '../../../utils/getProjectRoles';
+import {getRandomUUID} from '../../../utils/getRandomUUID';
 import Layout from '../Layout';
 import TeamMemberInputs from './TeamMemberInputs';
 
@@ -69,6 +72,14 @@ const InviteTeamMembersPage = ({
 		associateUserAccount,
 		{error: associateUserAccountError},
 	] = useMutation(associateUserAccountWithAccountAndAccountRole, {
+		awaitRefetchQueries: true,
+		refetchQueries: ['getUserAccountsByAccountExternalReferenceCode'],
+	});
+
+	const [
+		createAndAssociateUserAccount,
+		{error: createAndAssociateUserAccountError},
+	] = useMutation(createAndAssociateUserAccountWithAccountAndAccountRole, {
 		awaitRefetchQueries: true,
 		refetchQueries: ['getUserAccountsByAccountExternalReferenceCode'],
 	});
@@ -167,14 +178,12 @@ const InviteTeamMembersPage = ({
 				isSelectdAdministratorOrRequestorRole
 			) {
 				setBaseButtonDisabled(true);
-			}
-			else {
+			} else {
 				setInitialError(false);
 				setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 				setshowEmptyEmailError(false);
 			}
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -195,16 +204,22 @@ const InviteTeamMembersPage = ({
 
 			const filledEmailsPromises = filledEmails.map(
 				async (filledEmail) => {
-					const associateContactRoleData = await associateContactRoleNameByEmailByProject(
-						project.accountKey,
-						provisioningServerAPI,
-						sessionId,
-						encodeURI(filledEmail.email),
-						filledEmail.role.raysourceName
-					);
+					const {getUserAccount} = await client.query({
+						query: getUserAccountByEmail,
+						variables: {
+							filter: `emailAddress eq '${filledEmail.email}'`,
+						},
+					});
 
-					if (associateContactRoleData.ok) {
-						await associateUserAccount({
+					const userInvitedAlreadyExists = !!getUserAccount
+						?.userAccounts?.items.length;
+
+					const inviteNewMember = userInvitedAlreadyExists
+						? associateUserAccount
+						: createAndAssociateUserAccount;
+
+					try {
+						await inviteNewMember({
 							context: {
 								displaySuccess: false,
 							},
@@ -212,20 +227,30 @@ const InviteTeamMembersPage = ({
 								accountKey: project.accountKey,
 								accountRoleId: filledEmail.role.id,
 								emailAddress: filledEmail.email,
-								userAccount: {
-									alternateName: filledEmail.givenName,
-									emailAddress: filledEmail.email,
-									familyName: filledEmail.familyName,
-									givenName: filledEmail.givenName,
-								},
+								...(!userInvitedAlreadyExists && {
+									userAccount: {
+										alternateName: getRandomUUID(),
+										emailAddress: filledEmail.email,
+										familyName: filledEmail.familyName,
+										givenName: filledEmail.givenName,
+									},
+								}),
 							},
 						});
 
-						return filledEmail;
-					}
+						await associateContactRoleNameByEmailByProject(
+							project.accountKey,
+							provisioningServerAPI,
+							sessionId,
+							encodeURI(filledEmail.email),
+							filledEmail.role.raysourceName
+						);
 
-					displaySuccess = false;
-					Liferay.Util.openToast(DEFAULT_WARNING);
+						return filledEmail;
+					} catch (error) {
+						displaySuccess = false;
+						Liferay.Util.openToast(DEFAULT_WARNING);
+					}
 				}
 			);
 
@@ -258,6 +283,7 @@ const InviteTeamMembersPage = ({
 				if (
 					!addTeamMemberError &&
 					!associateUserAccountError &&
+					!createAndAssociateUserAccountError &&
 					newMembersData
 				) {
 					if (mutateUserData) {
@@ -268,8 +294,7 @@ const InviteTeamMembersPage = ({
 			}
 
 			setIsLoadingUserInvitation(false);
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

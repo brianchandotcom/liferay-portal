@@ -79,7 +79,13 @@ definition {
 
 			CustomerPortal.clickOnFinishActivationButton();
 
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = "001");
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}
@@ -178,7 +184,13 @@ definition {
 
 			CustomerPortal.clickOnFinishActivationButton();
 
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = "001");
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}

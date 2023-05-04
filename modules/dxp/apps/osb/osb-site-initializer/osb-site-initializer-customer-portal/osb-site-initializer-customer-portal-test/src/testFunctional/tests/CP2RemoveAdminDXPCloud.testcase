@@ -68,7 +68,13 @@ definition {
 		}
 
 		task ("Fill out all the fields in the form") {
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = "001");
 		}
 
 		task ("Add new administrators and before submitting remove them") {

@@ -69,7 +69,13 @@ definition {
 		}
 
 		task ("Fill out all the fields in the form") {
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = "001");
 		}
 
 		task ("Assert the new form fields") {
@@ -241,7 +247,13 @@ definition {
 		}
 
 		task ("Fill out the form and submit it") {
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = "001");
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}
@@ -690,7 +702,13 @@ definition {
 		}
 
 		task ("Fill out the form and submit it") {
-			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = "001");
 
 			CustomerPortal.clickAtButton(text = "Submit");
 		}

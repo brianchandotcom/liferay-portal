@@ -1,8 +1,10 @@
+import com.liferay.gradle.plugins.workspace.configurator.ClientExtensionProjectConfigurator
+
 task runGradleTest
 
 runGradleTest {
 	doLast {
-		String validateTaskName = "validateClientExtensionIds"
+		String validateTaskName = ClientExtensionProjectConfigurator.VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME
 
 		["duplicate1", "duplicate2", "unique"].forEach {
 			projectName ->
@@ -10,7 +12,10 @@ runGradleTest {
 
 			Task validateTask = curProject.tasks[validateTaskName]
 
-			["check", "createClientExtensionConfig"].each {
+			[
+				LifecycleBasePlugin.CHECK_TASK_NAME,
+				ClientExtensionProjectConfigurator.CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME
+			].each {
 				taskName ->
 				Provider<Task> curTaskProvider = curProject.tasks.named taskName
 

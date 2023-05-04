@@ -907,14 +907,14 @@ public class ClientExtensionProjectConfigurator
 		for (Map.Entry<String, Set<Project>> stringSetEntry :
 				_clientExtensionIds.entrySet()) {
 
-			Set<Project> value = stringSetEntry.getValue();
+			Set<Project> projects = stringSetEntry.getValue();
 
-			if ((value.size() > 1) && value.contains(project)) {
+			if ((projects.size() > 1) && projects.contains(project)) {
 				sb.append("Duplicate client extension ID \"");
 				sb.append(stringSetEntry.getKey());
 				sb.append("\" found in these projects:\n");
 
-				for (Project curProject : value) {
+				for (Project curProject : projects) {
 					File projectDir = curProject.getProjectDir();
 
 					sb.append(rootDirPath.relativize(projectDir.toPath()));

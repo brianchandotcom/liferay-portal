@@ -48,7 +48,7 @@ public class CommerceOrderShipmentTableFDSView extends BaseTableFDSView {
 		).add(
 			"address", "address"
 		).add(
-			"createDate", "create-date"
+			"createDateString", "create-date"
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

@@ -47,7 +47,7 @@ public class CommercePaymentTableFDSView extends BaseTableFDSView {
 		).add(
 			"amount", "amount"
 		).add(
-			"createDate", "timestamp"
+			"createDateString", "timestamp"
 		).add(
 			"content", "details"
 		).build();

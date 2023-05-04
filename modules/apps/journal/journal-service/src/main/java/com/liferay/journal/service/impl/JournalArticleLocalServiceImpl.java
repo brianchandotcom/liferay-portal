@@ -908,8 +908,8 @@ public class JournalArticleLocalServiceImpl
 	 *
 	 * @param  userId the primary key of the web content article's creator/owner
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  oldArticleId the primary key of the old web content article
-	 * @param  newArticleId the primary key of the new web content article
+	 * @param  sourceArticleId the primary key of the old web content article
+	 * @param  targetArticleId the primary key of the new web content article
 	 * @param  autoArticleId whether to auto-generate the web content article ID
 	 * @param  version the web content article's version
 	 * @return the new web content article
@@ -918,30 +918,32 @@ public class JournalArticleLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle copyArticle(
-			long userId, long groupId, String oldArticleId, String newArticleId,
-			boolean autoArticleId, double version)
+			long userId, long groupId, String sourceArticleId,
+			String targetArticleId, boolean autoArticleId, double version)
 		throws PortalException {
 
 		// Article
 
-		oldArticleId = StringUtil.toUpperCase(StringUtil.trim(oldArticleId));
-		newArticleId = StringUtil.toUpperCase(StringUtil.trim(newArticleId));
+		sourceArticleId = StringUtil.toUpperCase(
+			StringUtil.trim(sourceArticleId));
+		targetArticleId = StringUtil.toUpperCase(
+			StringUtil.trim(targetArticleId));
 
-		JournalArticle oldArticle = journalArticlePersistence.findByG_A_V(
-			groupId, oldArticleId, version);
+		JournalArticle sourceArticle = journalArticlePersistence.findByG_A_V(
+			groupId, sourceArticleId, version);
 
 		if (autoArticleId) {
-			newArticleId = String.valueOf(counterLocalService.increment());
+			targetArticleId = String.valueOf(counterLocalService.increment());
 		}
 		else {
-			validate(newArticleId);
+			validate(targetArticleId);
 
-			if (journalArticlePersistence.countByG_A(groupId, newArticleId) >
+			if (journalArticlePersistence.countByG_A(groupId, targetArticleId) >
 					0) {
 
 				throw new DuplicateArticleIdException(
 					StringBundler.concat(
-						"{groupId=", groupId, ", articleId=", newArticleId,
+						"{groupId=", groupId, ", articleId=", targetArticleId,
 						"}"));
 			}
 		}
@@ -952,15 +954,15 @@ public class JournalArticleLocalServiceImpl
 
 		long resourcePrimKey =
 			_journalArticleResourceLocalService.getArticleResourcePrimKey(
-				groupId, newArticleId);
+				groupId, targetArticleId);
 
-		JournalArticle newArticle = journalArticlePersistence.create(id);
+		JournalArticle targetArticle = journalArticlePersistence.create(id);
 
-		newArticle.setResourcePrimKey(resourcePrimKey);
-		newArticle.setGroupId(groupId);
-		newArticle.setCompanyId(user.getCompanyId());
-		newArticle.setUserId(user.getUserId());
-		newArticle.setUserName(user.getFullName());
+		targetArticle.setResourcePrimKey(resourcePrimKey);
+		targetArticle.setGroupId(groupId);
+		targetArticle.setCompanyId(user.getCompanyId());
+		targetArticle.setUserId(user.getUserId());
+		targetArticle.setUserName(user.getFullName());
 
 		Date modifiedDate = new Date();
 
@@ -973,24 +975,25 @@ public class JournalArticleLocalServiceImpl
 
 		modifiedDate = serviceContext.getModifiedDate(modifiedDate);
 
-		newArticle.setModifiedDate(modifiedDate);
+		targetArticle.setModifiedDate(modifiedDate);
 
-		newArticle.setExternalReferenceCode(newArticleId);
-		newArticle.setFolderId(oldArticle.getFolderId());
-		newArticle.setTreePath(oldArticle.getTreePath());
-		newArticle.setArticleId(newArticleId);
-		newArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
-		newArticle.setDDMStructureId(oldArticle.getDDMStructureId());
-		newArticle.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
-		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
-		newArticle.setLayoutUuid(oldArticle.getLayoutUuid());
-		newArticle.setDisplayDate(oldArticle.getDisplayDate());
-		newArticle.setExpirationDate(oldArticle.getExpirationDate());
-		newArticle.setReviewDate(oldArticle.getReviewDate());
-		newArticle.setIndexable(oldArticle.isIndexable());
-		newArticle.setSmallImage(oldArticle.isSmallImage());
-		newArticle.setSmallImageId(counterLocalService.increment());
-		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
+		targetArticle.setExternalReferenceCode(targetArticleId);
+		targetArticle.setFolderId(sourceArticle.getFolderId());
+		targetArticle.setTreePath(sourceArticle.getTreePath());
+		targetArticle.setArticleId(targetArticleId);
+		targetArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
+		targetArticle.setDDMStructureId(sourceArticle.getDDMStructureId());
+		targetArticle.setDDMTemplateKey(sourceArticle.getDDMTemplateKey());
+		targetArticle.setDefaultLanguageId(
+			sourceArticle.getDefaultLanguageId());
+		targetArticle.setLayoutUuid(sourceArticle.getLayoutUuid());
+		targetArticle.setDisplayDate(sourceArticle.getDisplayDate());
+		targetArticle.setExpirationDate(sourceArticle.getExpirationDate());
+		targetArticle.setReviewDate(sourceArticle.getReviewDate());
+		targetArticle.setIndexable(sourceArticle.isIndexable());
+		targetArticle.setSmallImage(sourceArticle.isSmallImage());
+		targetArticle.setSmallImageId(counterLocalService.increment());
+		targetArticle.setSmallImageURL(sourceArticle.getSmallImageURL());
 
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
@@ -998,25 +1001,25 @@ public class JournalArticleLocalServiceImpl
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowHandler.getWorkflowDefinitionLink(
-				oldArticle.getCompanyId(), oldArticle.getGroupId(),
-				oldArticle.getId());
+				sourceArticle.getCompanyId(), sourceArticle.getGroupId(),
+				sourceArticle.getId());
 
-		if (oldArticle.isPending() || (workflowDefinitionLink != null)) {
-			newArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
+		if (sourceArticle.isPending() || (workflowDefinitionLink != null)) {
+			targetArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 		else {
-			newArticle.setStatus(oldArticle.getStatus());
+			targetArticle.setStatus(sourceArticle.getStatus());
 		}
 
-		newArticle.setStatusByUserId(user.getUserId());
-		newArticle.setStatusByUserName(user.getFullName());
-		newArticle.setStatusDate(modifiedDate);
+		targetArticle.setStatusByUserId(user.getUserId());
+		targetArticle.setStatusByUserName(user.getFullName());
+		targetArticle.setStatusDate(modifiedDate);
 
 		int uniqueUrlTitleCount = _getUniqueUrlTitleCount(
-			groupId, newArticleId,
-			JournalUtil.getUrlTitle(id, oldArticle.getUrlTitle()));
+			groupId, targetArticleId,
+			JournalUtil.getUrlTitle(id, sourceArticle.getUrlTitle()));
 
-		Map<Locale, String> newTitleMap = oldArticle.getTitleMap();
+		Map<Locale, String> newTitleMap = sourceArticle.getTitleMap();
 		Map<Locale, String> newUniqueURLTitleMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : newTitleMap.entrySet()) {
@@ -1029,10 +1032,11 @@ public class JournalArticleLocalServiceImpl
 
 			newTitleMap.put(locale, urlTitle);
 			newUniqueURLTitleMap.put(
-				locale, getUniqueUrlTitle(id, groupId, newArticleId, urlTitle));
+				locale,
+				getUniqueUrlTitle(id, groupId, targetArticleId, urlTitle));
 		}
 
-		DDMFormValues ddmFormValues = oldArticle.getDDMFormValues();
+		DDMFormValues ddmFormValues = sourceArticle.getDDMFormValues();
 
 		Locale locale = ddmFormValues.getDefaultLocale();
 
@@ -1040,15 +1044,15 @@ public class JournalArticleLocalServiceImpl
 
 		while (fetchArticleByUrlTitle(groupId, newURLTitle) != null) {
 			newURLTitle = getUniqueUrlTitle(
-				id, groupId, newArticleId, newURLTitle);
+				id, groupId, targetArticleId, newURLTitle);
 		}
 
-		newArticle.setUrlTitle(newURLTitle);
+		targetArticle.setUrlTitle(newURLTitle);
 
 		ExpandoBridgeUtil.copyExpandoBridgeAttributes(
-			oldArticle.getExpandoBridge(), newArticle.getExpandoBridge());
+			sourceArticle.getExpandoBridge(), targetArticle.getExpandoBridge());
 
-		newArticle = journalArticlePersistence.update(newArticle);
+		targetArticle = journalArticlePersistence.update(targetArticle);
 
 		// Article localization
 
@@ -1058,42 +1062,42 @@ public class JournalArticleLocalServiceImpl
 		Map<String, String> newUrlTitleMap = _getURLTitleMap(
 			groupId, resourcePrimKey, friendlyURLMap, newUniqueURLTitleMap);
 
-		updateFriendlyURLs(newArticle, newUrlTitleMap, serviceContext);
+		updateFriendlyURLs(targetArticle, newUrlTitleMap, serviceContext);
 
 		_addArticleLocalizedFields(
-			newArticle.getCompanyId(), newArticle.getId(), newTitleMap,
-			oldArticle.getDescriptionMap());
+			targetArticle.getCompanyId(), targetArticle.getId(), newTitleMap,
+			sourceArticle.getDescriptionMap());
 
 		// Resources
 
 		_resourceLocalService.copyModelResources(
-			oldArticle.getCompanyId(), JournalArticle.class.getName(),
-			oldArticle.getResourcePrimKey(), resourcePrimKey);
+			sourceArticle.getCompanyId(), JournalArticle.class.getName(),
+			sourceArticle.getResourcePrimKey(), resourcePrimKey);
 
 		// Small image
 
-		if (oldArticle.isSmallImage()) {
+		if (sourceArticle.isSmallImage()) {
 			Image image = _imageLocalService.fetchImage(
-				oldArticle.getSmallImageId());
+				sourceArticle.getSmallImageId());
 
 			if (image != null) {
 				byte[] smallImageBytes = image.getTextObj();
 
 				_imageLocalService.updateImage(
-					newArticle.getCompanyId(), newArticle.getSmallImageId(),
-					smallImageBytes);
+					targetArticle.getCompanyId(),
+					targetArticle.getSmallImageId(), smallImageBytes);
 			}
 		}
 
 		// Asset
 
 		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
+			JournalArticle.class.getName(), sourceArticle.getResourcePrimKey());
 		String[] assetTagNames = _assetTagLocalService.getTagNames(
-			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
+			JournalArticle.class.getName(), sourceArticle.getResourcePrimKey());
 
 		AssetEntry oldAssetEntry = _assetEntryLocalService.getEntry(
-			JournalArticle.class.getName(), oldArticle.getResourcePrimKey());
+			JournalArticle.class.getName(), sourceArticle.getResourcePrimKey());
 
 		List<AssetLink> assetLinks = _assetLinkLocalService.getDirectLinks(
 			oldAssetEntry.getEntryId(), false);
@@ -1102,32 +1106,33 @@ public class JournalArticleLocalServiceImpl
 			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
 		updateAsset(
-			userId, newArticle, assetCategoryIds, assetTagNames,
+			userId, targetArticle, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds, oldAssetEntry.getPriority());
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				groupId, _portal.getClassNameId(JournalArticle.class.getName()),
-				oldArticle.getResourcePrimKey());
+				sourceArticle.getResourcePrimKey());
 
 		if (assetDisplayPageEntry != null) {
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 				userId, groupId,
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				newArticle.getResourcePrimKey(),
+				targetArticle.getResourcePrimKey(),
 				assetDisplayPageEntry.getLayoutPageTemplateEntryId(),
 				assetDisplayPageEntry.getType(), serviceContext);
 		}
 
 		// Dynamic data mapping
 
-		updateDDMFields(newArticle, copyArticleImages(oldArticle, newArticle));
+		updateDDMFields(
+			targetArticle, copyArticleImages(sourceArticle, targetArticle));
 
 		updateDDMLinks(
-			id, groupId, oldArticle.getDDMStructureId(),
-			oldArticle.getDDMTemplateKey(), true);
+			id, groupId, sourceArticle.getDDMStructureId(),
+			sourceArticle.getDDMTemplateKey(), true);
 
-		return newArticle;
+		return targetArticle;
 	}
 
 	/**
@@ -6185,16 +6190,16 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected DDMFormValues copyArticleImages(
-		JournalArticle oldArticle, JournalArticle newArticle) {
+		JournalArticle sourceArticle, JournalArticle targetArticle) {
 
-		DDMFormValues ddmFormValues = oldArticle.getDDMFormValues();
+		DDMFormValues ddmFormValues = sourceArticle.getDDMFormValues();
 
 		try {
-			Folder folder = newArticle.addImagesFolder();
+			Folder folder = targetArticle.addImagesFolder();
 
 			_copyArticleImages(
-				newArticle, ddmFormValues.getDDMFormFieldValues(),
-				oldArticle.getGroupId(), folder.getFolderId());
+				targetArticle, ddmFormValues.getDDMFormFieldValues(),
+				sourceArticle.getGroupId(), folder.getFolderId());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

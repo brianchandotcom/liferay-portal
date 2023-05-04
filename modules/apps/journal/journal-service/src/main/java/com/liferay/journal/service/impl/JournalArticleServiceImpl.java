@@ -275,8 +275,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * from the old one and updating its article ID.
 	 *
 	 * @param  groupId the primary key of the web content article's group
-	 * @param  oldArticleId the primary key of the old web content article
-	 * @param  newArticleId the primary key of the new web content article
+	 * @param  sourceArticleId the primary key of the old web content article
+	 * @param  targetArticleId the primary key of the new web content article
 	 * @param  autoArticleId whether to auto-generate the web content article ID
 	 * @param  version the web content article's version
 	 * @return the new web content article
@@ -284,19 +284,19 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 */
 	@Override
 	public JournalArticle copyArticle(
-			long groupId, String oldArticleId, String newArticleId,
+			long groupId, String sourceArticleId, String targetArticleId,
 			boolean autoArticleId, double version)
 		throws PortalException {
 
-		JournalArticle article = getArticle(groupId, oldArticleId);
+		JournalArticle sourceArticle = getArticle(groupId, sourceArticleId);
 
 		ModelResourcePermissionUtil.check(
 			_journalFolderModelResourcePermission, getPermissionChecker(),
-			groupId, article.getFolderId(), ActionKeys.ADD_ARTICLE);
+			groupId, sourceArticle.getFolderId(), ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.copyArticle(
-			getUserId(), groupId, oldArticleId, newArticleId, autoArticleId,
-			version);
+			getUserId(), groupId, sourceArticleId, targetArticleId,
+			autoArticleId, version);
 	}
 
 	/**

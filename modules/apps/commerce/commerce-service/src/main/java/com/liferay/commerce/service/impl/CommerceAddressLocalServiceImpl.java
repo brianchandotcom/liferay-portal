@@ -139,24 +139,29 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public CommerceAddress copyCommerceAddress(
-			long commerceAddressId, String className, long classPK,
+			long sourceCommerceAddressId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceAddress commerceAddress = getCommerceAddress(commerceAddressId);
+		CommerceAddress sourceCommerceAddress = getCommerceAddress(
+			sourceCommerceAddressId);
 
-		CommerceAddress copiedCommerceAddress =
+		CommerceAddress targetCommerceAddress =
 			commerceAddressLocalService.addCommerceAddress(
-				className, classPK, commerceAddress.getName(),
-				commerceAddress.getDescription(), commerceAddress.getStreet1(),
-				commerceAddress.getStreet2(), commerceAddress.getStreet3(),
-				commerceAddress.getCity(), commerceAddress.getZip(),
-				commerceAddress.getRegionId(), commerceAddress.getCountryId(),
-				commerceAddress.getPhoneNumber(), false, false, serviceContext);
+				className, classPK, sourceCommerceAddress.getName(),
+				sourceCommerceAddress.getDescription(),
+				sourceCommerceAddress.getStreet1(),
+				sourceCommerceAddress.getStreet2(),
+				sourceCommerceAddress.getStreet3(),
+				sourceCommerceAddress.getCity(), sourceCommerceAddress.getZip(),
+				sourceCommerceAddress.getRegionId(),
+				sourceCommerceAddress.getCountryId(),
+				sourceCommerceAddress.getPhoneNumber(), false, false,
+				serviceContext);
 
 		return CommerceAddressImpl.fromAddress(
 			_addressLocalService.getAddress(
-				copiedCommerceAddress.getCommerceAddressId()));
+				targetCommerceAddress.getCommerceAddressId()));
 	}
 
 	@Override

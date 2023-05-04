@@ -26,31 +26,46 @@
 	},
 	{
 		"dataType": 6,
-		"defaultValue": [2.0, 2.5],
+		"defaultValue": [
+			2.0,
+			2.5
+		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 4"
 	},
 	{
 		"dataType": 8,
-		"defaultValue": [0.2, 0.5],
+		"defaultValue": [
+			0.2,
+			0.5
+		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 5"
 	},
 	{
 		"dataType": 10,
-		"defaultValue": [100, 200],
+		"defaultValue": [
+			100,
+			200
+		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 6"
 	},
 	{
 		"dataType": 12,
-		"defaultValue": [300, 400],
+		"defaultValue": [
+			300,
+			400
+		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 7"
 	},
 	{
 		"dataType": 16,
-		"defaultValue": ["value1", "value2"],
+		"defaultValue": [
+			"value1",
+			"value2"
+		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 8"
 	}

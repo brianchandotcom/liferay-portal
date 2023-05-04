@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC022",
 	"name": "Whitepapers",
 	"name_i18n": {
-		"en_US": "Whitepapers"
+		"en_US": "Whitepapers",
+		"ar_SA": "Whitepapers",
+		"ca_ES": "Whitepapers",
+		"de_DE": "Whitepapers",
+		"es_ES": "Whitepapers",
+		"fi_FI": "Whitepapers",
+		"fr_FR": "Whitepapers",
+		"hu_HU": "Whitepapers",
+		"ja_JP": "Whitepapers",
+		"nl_NL": "Whitepapers",
+		"pt_BR": "Whitepapers",
+		"sv_SE": "Whitepapers",
+		"zh_CN": "Whitepapers"
 	},
 	"viewableBy": "Anyone"
 }

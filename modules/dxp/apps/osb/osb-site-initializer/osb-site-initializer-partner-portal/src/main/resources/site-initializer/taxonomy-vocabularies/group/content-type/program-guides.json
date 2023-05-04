@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC019",
 	"name": "Program Guides",
 	"name_i18n": {
-		"en_US": "Program Guides"
+		"en_US": "Program Guides",
+		"ar_SA": "Program Guides",
+		"ca_ES": "Program Guides",
+		"de_DE": "Program Guides",
+		"es_ES": "Program Guides",
+		"fi_FI": "Program Guides",
+		"fr_FR": "Program Guides",
+		"hu_HU": "Program Guides",
+		"ja_JP": "Program Guides",
+		"nl_NL": "Program Guides",
+		"pt_BR": "Program Guides",
+		"sv_SE": "Program Guides",
+		"zh_CN": "Program Guides"
 	},
 	"viewableBy": "Anyone"
 }

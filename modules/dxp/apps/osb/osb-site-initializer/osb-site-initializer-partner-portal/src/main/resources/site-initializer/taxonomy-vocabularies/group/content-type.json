@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMV006",
 	"name": "Content Type",
 	"name_i18n": {
-		"en_US": "Content Type"
+		"ar_SA": "Content Type",
+		"ca_ES": "Content Type",
+		"de_DE": "Content Type",
+		"en_US": "Content Type",
+		"es_ES": "Content Type",
+		"fi_FI": "Content Type",
+		"fr_FR": "Content Type",
+		"hu_HU": "Content Type",
+		"ja_JP": "Content Type",
+		"nl_NL": "Content Type",
+		"pt_BR": "Content Type",
+		"sv_SE": "Content Type",
+		"zh_CN": "Content Type"
 	},
 	"viewableBy": "Anyone"
 }

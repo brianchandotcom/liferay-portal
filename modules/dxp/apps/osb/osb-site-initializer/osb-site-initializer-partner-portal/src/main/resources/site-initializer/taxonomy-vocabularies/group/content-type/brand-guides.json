@@ -2,7 +2,20 @@
 	"externalReferenceCode": "PRMC030",
 	"name": "Brand Guides",
 	"name_i18n": {
-		"en_US": "Brand Guides"
+		"ar_SA": "Brand Guides",
+		"ca_ES": "Brand Guides",
+		"de_DE": "Brand Guides",
+		"en_US": "Brand Guides",
+		"es_ES": "Brand Guides",
+		"fi_FI": "Brand Guides",
+		"fr_FR": "Brand Guides",
+		"hu_HU": "Brand Guides",
+		"ja_JP": "Brand Guides",
+		"nl_NL": "Brand Guides",
+		"pt_BR": "Brand Guides",
+		"sv_SE": "Brand Guides",
+		"zh_CN": "Brand Guides"
 	},
+
 	"viewableBy": "Anyone"
 }

@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.portlet.toolbar.contributor.he
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
+import com.liferay.document.library.icon.provider.DLFileEntryTypeIconProvider;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -24,7 +25,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.visibility.controller.DLFileEntryTypeVisibilityController;
-import com.liferay.document.library.web.internal.icon.provider.DLFileEntryTypeIconProviderUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -320,13 +320,22 @@ public class MenuItemProvider {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, DLFileEntryTypeVisibilityController.class,
 			"dl.file.entry.type.key");
+
+		_dlFileEntryTypeIconProviderServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DLFileEntryTypeIconProvider.class,
+				"file.entry.type.key");
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 
+		_dlFileEntryTypeIconProviderServiceTrackerMap.close();
+
 		_serviceTrackerMap = null;
+
+		_dlFileEntryTypeLocalService = null;
 	}
 
 	private long _getDefaultFileEntryTypeId(long folderId) {
@@ -354,8 +363,7 @@ public class MenuItemProvider {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIcon(
-			DLFileEntryTypeIconProviderUtil.getIcon(fileEntryType));
+		urlMenuItem.setIcon(_getIcon(fileEntryType));
 		urlMenuItem.setKey(
 			DLFileEntryType.class.getSimpleName() +
 				fileEntryType.getFileEntryTypeKey());
@@ -437,6 +445,18 @@ public class MenuItemProvider {
 		}
 
 		return folder.getFolderId();
+	}
+
+	private String _getIcon(DLFileEntryType fileEntryType) {
+		DLFileEntryTypeIconProvider dlFileEntryTypeIconProvider =
+			_dlFileEntryTypeIconProviderServiceTrackerMap.getService(
+				fileEntryType.getFileEntryTypeKey());
+
+		if (dlFileEntryTypeIconProvider != null) {
+			return dlFileEntryTypeIconProvider.getIcon();
+		}
+
+		return "file-template";
 	}
 
 	private List<MenuItem> _getPortletTitleAddDocumentTypeMenuItems(
@@ -542,6 +562,9 @@ public class MenuItemProvider {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MenuItemProvider.class);
+
+	private static ServiceTrackerMap<String, DLFileEntryTypeIconProvider>
+		_dlFileEntryTypeIconProviderServiceTrackerMap;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

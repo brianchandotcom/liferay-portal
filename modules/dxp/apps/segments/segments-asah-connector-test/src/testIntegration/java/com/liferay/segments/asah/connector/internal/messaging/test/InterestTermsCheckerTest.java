@@ -16,6 +16,7 @@ package com.liferay.segments.asah.connector.internal.messaging.test;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -104,11 +105,15 @@ public class InterestTermsCheckerTest {
 						"interestTermsCacheExpirationTime", "60"
 					).build())) {
 
-			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
-				_interestTermsChecker, "_asahFaroBackendClient");
+			DCLSingleton<?> asahFaroBackendClientDCLSingleton =
+				ReflectionTestUtil.getFieldValue(
+					_interestTermsChecker,
+					"_asahFaroBackendClientDCLSingleton");
+
+			asahFaroBackendClientDCLSingleton.destroy(null);
 
 			ReflectionTestUtil.setFieldValue(
-				asahFaroBackendClient, "_http",
+				_interestTermsChecker, "_http",
 				new MockHttp(
 					Collections.singletonMap(
 						"/api/1.0/interests/terms/" + _user.getUserId(),

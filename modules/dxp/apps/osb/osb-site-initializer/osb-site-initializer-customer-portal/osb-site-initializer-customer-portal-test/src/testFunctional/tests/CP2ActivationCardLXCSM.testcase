@@ -323,4 +323,67 @@ definition {
 			CustomerPortal.viewActivationStatusCardChange(status = "Active");
 		}
 	}
+
+	@description = "Story ID: LPS-144183 | Test Summary: Verify if you enter a different value for the confirmation ID and send the entry is automatically updated"
+	@priority = 3
+	test AssertThatTheConfirmationIDHasBeenUpdated {
+		task ("Given that I fill out and send the activation form for card LXC - SM") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = ${testAccount});
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "Test Test");
+
+			Account.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Provisioning",
+				accountUserName = "Test Test");
+
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			Button.click(button = "Start Project Setup");
+
+			Button.click(button = "Skip for now");
+
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = "001");
+
+			Button.click(button = "Submit");
+
+			Button.click(button = "Done");
+		}
+
+		task ("And I go to the product page") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+		}
+
+		task ("And I activate the card through the dropdown shown on the card") {
+			CustomerPortal.activeStatusViaDropdown(
+				dropdownItem = "Set to Active",
+				value = 022);
+		}
+
+		task ("When I go to the DXP Cloud Environments object") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "DXP Cloud Environments");
+		}
+
+		task ("Then I should be able to tell that the Project ID has been updated") {
+			CustomerPortal.assertTextAtObjectTable(text = "022");
+		}
+	}
 }

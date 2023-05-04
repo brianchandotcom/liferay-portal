@@ -140,7 +140,7 @@ public class BulkSelectionBackgroundTaskExecutor
 		try {
 			Collection<ServiceReference<T>> serviceReferences =
 				_bundleContext.getServiceReferences(
-					clazz, "(objectClass=" + concreteClassName + ")");
+					clazz, "(component.name=" + concreteClassName + ")");
 
 			Iterator<ServiceReference<T>> iterator =
 				serviceReferences.iterator();

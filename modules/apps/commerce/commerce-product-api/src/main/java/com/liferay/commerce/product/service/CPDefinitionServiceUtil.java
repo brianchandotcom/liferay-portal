@@ -234,10 +234,11 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static CPDefinition copyCPDefinition(
-			long cpDefinitionId, long groupId, int status)
+			long sourceCPDefinitionId, long groupId, int status)
 		throws PortalException {
 
-		return getService().copyCPDefinition(cpDefinitionId, groupId, status);
+		return getService().copyCPDefinition(
+			sourceCPDefinitionId, groupId, status);
 	}
 
 	public static void deleteAssetCategoryCPDefinition(

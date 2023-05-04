@@ -416,8 +416,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			copyCPDefinition(
-				HttpPrincipal httpPrincipal, long cpDefinitionId, long groupId,
-				int status)
+				HttpPrincipal httpPrincipal, long sourceCPDefinitionId,
+				long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -426,7 +426,7 @@ public class CPDefinitionServiceHttp {
 				_copyCPDefinitionParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionId, groupId, status);
+				methodKey, sourceCPDefinitionId, groupId, status);
 
 			Object returnObj = null;
 

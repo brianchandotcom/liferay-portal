@@ -255,17 +255,18 @@ public class CPDefinitionLocalServiceUtil {
 			userId, cpDefinitionId, groupId, serviceContext);
 	}
 
-	public static CPDefinition copyCPDefinition(long cpDefinitionId)
+	public static CPDefinition copyCPDefinition(long sourceCPDefinitionId)
 		throws PortalException {
 
-		return getService().copyCPDefinition(cpDefinitionId);
+		return getService().copyCPDefinition(sourceCPDefinitionId);
 	}
 
 	public static CPDefinition copyCPDefinition(
-			long cpDefinitionId, long groupId, int status)
+			long sourceCPDefinitionId, long groupId, int status)
 		throws PortalException {
 
-		return getService().copyCPDefinition(cpDefinitionId, groupId, status);
+		return getService().copyCPDefinition(
+			sourceCPDefinitionId, groupId, status);
 	}
 
 	/**

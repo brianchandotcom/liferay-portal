@@ -425,6 +425,11 @@
 	<td>//*//h1[contains(text(), 'Deploying Activation Keys')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_ELEMENT_BY_TEXT</td>
+	<td>//*[contains(@class, 'table-style-fluid')]//*[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

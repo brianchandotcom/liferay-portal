@@ -131,6 +131,14 @@ definition {
 		}
 	}
 
+	macro assertTextAtObjectTable {
+		var key_text = ${text};
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_ELEMENT_BY_TEXT",
+			value1 = ${text});
+	}
+
 	macro addUserToAllAccounts {
 		var accountsList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0";
 
@@ -292,10 +300,6 @@ definition {
 	macro clearStatus {
 		if (!(isSet(status))) {
 			var status = "Active";
-		}
-
-		if (!(isSet(status))) {
-			var status = "In-Progress";
 		}
 
 		ApplicationsMenu.gotoPortlet(

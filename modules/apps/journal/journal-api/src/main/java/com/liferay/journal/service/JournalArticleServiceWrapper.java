@@ -229,8 +229,8 @@ public class JournalArticleServiceWrapper
 	 * from the old one and updating its article ID.
 	 *
 	 * @param groupId the primary key of the web content article's group
-	 * @param oldArticleId the primary key of the old web content article
-	 * @param newArticleId the primary key of the new web content article
+	 * @param sourceArticleId the primary key of the old web content article
+	 * @param targetArticleId the primary key of the new web content article
 	 * @param autoArticleId whether to auto-generate the web content article ID
 	 * @param version the web content article's version
 	 * @return the new web content article
@@ -238,12 +238,12 @@ public class JournalArticleServiceWrapper
 	 */
 	@Override
 	public JournalArticle copyArticle(
-			long groupId, String oldArticleId, String newArticleId,
+			long groupId, String sourceArticleId, String targetArticleId,
 			boolean autoArticleId, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalArticleService.copyArticle(
-			groupId, oldArticleId, newArticleId, autoArticleId, version);
+			groupId, sourceArticleId, targetArticleId, autoArticleId, version);
 	}
 
 	/**

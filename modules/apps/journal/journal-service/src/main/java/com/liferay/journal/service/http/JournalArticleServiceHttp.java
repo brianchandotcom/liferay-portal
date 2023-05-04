@@ -225,8 +225,8 @@ public class JournalArticleServiceHttp {
 	}
 
 	public static com.liferay.journal.model.JournalArticle copyArticle(
-			HttpPrincipal httpPrincipal, long groupId, String oldArticleId,
-			String newArticleId, boolean autoArticleId, double version)
+			HttpPrincipal httpPrincipal, long groupId, String sourceArticleId,
+			String targetArticleId, boolean autoArticleId, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -235,8 +235,8 @@ public class JournalArticleServiceHttp {
 				_copyArticleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, oldArticleId, newArticleId, autoArticleId,
-				version);
+				methodKey, groupId, sourceArticleId, targetArticleId,
+				autoArticleId, version);
 
 			Object returnObj = null;
 

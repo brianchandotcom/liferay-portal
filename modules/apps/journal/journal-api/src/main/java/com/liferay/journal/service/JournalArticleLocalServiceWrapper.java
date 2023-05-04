@@ -359,8 +359,8 @@ public class JournalArticleLocalServiceWrapper
 	 *
 	 * @param userId the primary key of the web content article's creator/owner
 	 * @param groupId the primary key of the web content article's group
-	 * @param oldArticleId the primary key of the old web content article
-	 * @param newArticleId the primary key of the new web content article
+	 * @param sourceArticleId the primary key of the old web content article
+	 * @param targetArticleId the primary key of the new web content article
 	 * @param autoArticleId whether to auto-generate the web content article ID
 	 * @param version the web content article's version
 	 * @return the new web content article
@@ -368,12 +368,12 @@ public class JournalArticleLocalServiceWrapper
 	 */
 	@Override
 	public JournalArticle copyArticle(
-			long userId, long groupId, String oldArticleId, String newArticleId,
-			boolean autoArticleId, double version)
+			long userId, long groupId, String sourceArticleId,
+			String targetArticleId, boolean autoArticleId, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalArticleLocalService.copyArticle(
-			userId, groupId, oldArticleId, newArticleId, autoArticleId,
+			userId, groupId, sourceArticleId, targetArticleId, autoArticleId,
 			version);
 	}
 

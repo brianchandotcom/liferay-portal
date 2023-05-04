@@ -149,7 +149,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 			copyLayoutPageTemplateEntry(
 				HttpPrincipal httpPrincipal, long groupId,
 				long layoutPageTemplateCollectionId,
-				long layoutPageTemplateEntryId,
+				long sourceLayoutPageTemplateEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
@@ -161,7 +161,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, layoutPageTemplateCollectionId,
-				layoutPageTemplateEntryId, serviceContext);
+				sourceLayoutPageTemplateEntryId, serviceContext);
 
 			Object returnObj = null;
 

@@ -118,7 +118,7 @@ public interface LayoutPageTemplateEntryLocalService
 
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			long layoutPageTemplateEntryId, ServiceContext serviceContext)
+			long sourceLayoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws Exception;
 
 	/**

@@ -70,7 +70,7 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId,
-			long layoutPageTemplateEntryId, ServiceContext serviceContext)
+			long sourceLayoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws Exception;
 
 	public LayoutPageTemplateEntry createLayoutPageTemplateEntryFromLayout(

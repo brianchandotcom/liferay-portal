@@ -1,0 +1,27 @@
+{
+	"cpu": 1,
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferaysampleetcnode",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 3001
+		}
+	},
+	"loadBalancer": {
+		"targetPort": 3001
+	},
+	"memory": 512,
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 3001
+		}
+	},
+	"scale": 1
+}

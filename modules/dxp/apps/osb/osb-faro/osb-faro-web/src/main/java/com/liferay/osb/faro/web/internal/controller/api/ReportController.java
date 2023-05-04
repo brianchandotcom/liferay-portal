@@ -86,8 +86,8 @@ public class ReportController extends BaseFaroController {
 
 		if (!_exportTypes.contains(type)) {
 			return _reportControllerResponseFactory.create(
-				"The \"type\" query parameter must be either \"individual\", " +
-					"\"page\", or \"segment\".",
+				"The \"type\" query parameter must be either \"event\", " +
+					"\"individual\", \"page\", or \"segment\".",
 				Response.Status.BAD_REQUEST);
 		}
 
@@ -211,6 +211,7 @@ public class ReportController extends BaseFaroController {
 		DateTimeFormatter.ofPattern(_ISO_8601_FORMAT);
 	private static final List<String> _exportTypes = new ArrayList<String>() {
 		{
+			add("event");
 			add("individual");
 			add("page");
 			add("segment");

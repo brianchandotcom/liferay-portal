@@ -904,14 +904,14 @@ public class ClientExtensionProjectConfigurator
 
 		Path rootDirPath = rootDir.toPath();
 
-		for (Map.Entry<String, Set<Project>> stringSetEntry :
+		for (Map.Entry<String, Set<Project>> entry :
 				_clientExtensionIds.entrySet()) {
 
-			Set<Project> projects = stringSetEntry.getValue();
+			Set<Project> projects = entry.getValue();
 
 			if ((projects.size() > 1) && projects.contains(project)) {
 				sb.append("Duplicate client extension ID \"");
-				sb.append(stringSetEntry.getKey());
+				sb.append(entry.getKey());
 				sb.append("\" found in these projects:\n");
 
 				for (Project curProject : projects) {

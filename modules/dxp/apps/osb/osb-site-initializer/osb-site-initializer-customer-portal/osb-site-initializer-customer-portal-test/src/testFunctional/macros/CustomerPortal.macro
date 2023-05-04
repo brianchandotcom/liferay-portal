@@ -53,11 +53,15 @@ definition {
 
 		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = ${dropdownItem});
 
-		Type(
-			locator1 = "CustomerPortalSite#ID_CONFIRMATION",
-			value1 = ${value});
+		if (isSet(value)) {
+			Type(
+				locator1 = "CustomerPortalSite#ID_CONFIRMATION",
+				value1 = ${value});
 
-		CustomerPortal.clickAtButton(text = "Confirm");
+			CustomerPortal.clickAtButton(text = "Confirm");
+		}
+
+		CustomerPortal.clickAtButton(text = "Cancel");
 	}
 
 	macro addCPObject {

@@ -1,4 +1,5 @@
 import com.liferay.gradle.plugins.workspace.configurator.ClientExtensionProjectConfigurator
+import com.liferay.gradle.util.OSDetector
 
 task runGradleTest
 
@@ -43,8 +44,15 @@ runGradleTest {
 			}
 			catch (Exception exception) {
 				assert exception.message.contains("Duplicate client extension ID \"duplicate-key\" found in these projects:")
-				assert exception.message.contains("client-extension/duplicate1")
-				assert exception.message.contains("client-extension/duplicate2")
+
+				if (OSDetector.windows) {
+					assert exception.message.contains("client-extension\\duplicate1")
+					assert exception.message.contains("client-extension\\duplicate2")
+				}
+				else {
+					assert exception.message.contains("client-extension/duplicate1")
+					assert exception.message.contains("client-extension/duplicate2")
+				}
 			}
 		}
 

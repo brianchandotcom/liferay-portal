@@ -130,6 +130,22 @@ public class ObjectFieldResourceImpl
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-143068") &&
+			Objects.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-178057") &&
+			StringUtil.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-164948") &&
 			Objects.equals(
 				objectField.getBusinessTypeAsString(),
@@ -196,6 +212,14 @@ public class ObjectFieldResourceImpl
 	public ObjectField putObjectField(
 			Long objectFieldId, ObjectField objectField)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-143068") &&
+			Objects.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-164948") &&
 			Objects.equals(

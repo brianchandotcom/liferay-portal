@@ -18,7 +18,6 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceSubscriptionNotificationConstants;
@@ -111,7 +110,7 @@ public class CommerceRecipientCommerceDefinitionTermContributor
 
 			Role orderManagerRole = _roleLocalService.getRole(
 				commerceOrder.getCompanyId(),
-				CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER);
+				AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER);
 
 			return _getUserIds(accountEntry, orderManagerRole);
 		}

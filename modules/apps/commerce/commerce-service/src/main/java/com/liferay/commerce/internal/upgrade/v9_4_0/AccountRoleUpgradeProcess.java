@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.internal.upgrade.v9_4_0;
 
-import com.liferay.commerce.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.discount.constants.CommerceDiscountActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,7 +56,7 @@ public class AccountRoleUpgradeProcess extends UpgradeProcess {
 					companyId, _ROLE_NAME_ACCOUNT_CATEGORY_MANAGER);
 				_updateCommerceDiscountManagerRolePermissions(
 					companyId,
-					CommerceAccountConstants.
+					AccountRoleConstants.
 						ROLE_NAME_ACCOUNT_DISCOUNT_MANAGER);
 			});
 	}

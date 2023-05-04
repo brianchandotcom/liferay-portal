@@ -20,7 +20,6 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.commerce.constants.CommerceAccountConstants;
 import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -56,9 +55,9 @@ public class CommerceAccountRoleHelperImpl
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
 			serviceContext);
 		_checkRole(
-			CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER, serviceContext);
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER, serviceContext);
 		_checkRole(
-			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER,
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER,
 			serviceContext);
 	}
 
@@ -142,7 +141,7 @@ public class CommerceAccountRoleHelperImpl
 				});
 		}
 		else if (name.equals(
-					CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER)) {
+					AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER)) {
 
 			companyResourceActionIds.put(
 				"com.liferay.commerce.model.CommerceOrderType",
@@ -167,7 +166,7 @@ public class CommerceAccountRoleHelperImpl
 				});
 		}
 		else if (name.equals(
-					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER)) {
+					AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER)) {
 
 			companyResourceActionIds.put(
 				"com.liferay.commerce.model.CommerceOrderType",

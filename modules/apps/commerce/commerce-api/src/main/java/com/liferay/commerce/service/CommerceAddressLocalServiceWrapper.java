@@ -87,12 +87,12 @@ public class CommerceAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress copyCommerceAddress(
-			long commerceAddressId, String className, long classPK,
+			long sourceCommerceAddressId, String className, long classPK,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceAddressLocalService.copyCommerceAddress(
-			commerceAddressId, className, classPK, serviceContext);
+			sourceCommerceAddressId, className, classPK, serviceContext);
 	}
 
 	@Override

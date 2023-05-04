@@ -85,7 +85,7 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public CommerceAddress copyCommerceAddress(
-			long commerceAddressId, String className, long classPK,
+			long sourceCommerceAddressId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException;
 

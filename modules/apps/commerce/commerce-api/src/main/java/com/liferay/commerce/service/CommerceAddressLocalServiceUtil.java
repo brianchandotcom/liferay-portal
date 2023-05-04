@@ -86,12 +86,12 @@ public class CommerceAddressLocalServiceUtil {
 	}
 
 	public static CommerceAddress copyCommerceAddress(
-			long commerceAddressId, String className, long classPK,
+			long sourceCommerceAddressId, String className, long classPK,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyCommerceAddress(
-			commerceAddressId, className, classPK, serviceContext);
+			sourceCommerceAddressId, className, classPK, serviceContext);
 	}
 
 	public static CommerceAddress createCommerceAddress(

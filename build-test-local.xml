@@ -242,6 +242,41 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<prepare-test-cluster-properties />
 	</target>
 
+	<target name="setup-ci-bundle">
+		<property location="${app.server.parent.dir}/../" name="liferay.home.parent.dir" />
+
+		<if>
+			<not>
+				<available file="${liferay.home.parent.dir}/liferay-portal-bundle-tomcat.tar.gz" />
+			</not>
+			<then>
+				<fail message="Please place liferay-portal-bundle-tomcat.tar.gz in ${liferay.home.parent.dir}." />
+			</then>
+		</if>
+
+		<delete dir="${app.server.parent.dir}" />
+
+		<exec dir="${liferay.home.parent.dir}" executable="tar" failonerror="true">
+			<arg value="-xf" />
+			<arg value="liferay-portal-bundle-tomcat.tar.gz" />
+		</exec>
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}" type="dir" />
+			</not>
+			<then>
+				<fail message="Backup restored to ${liferay.home.parent.dir} but app.server.parent.dir was not found. Please check that app.server.parent.dir matches the bundle location." />
+			</then>
+		</if>
+
+		<antcall inheritAll="false" target="clean-up-database-properties" />
+
+		<antcall inheritAll="false" target="start-docker-database-${database.type}">
+			<param name="skip.property.cleanup" value="true" />
+		</antcall>
+	</target>
+
 	<target name="setup-release-bundle">
 		<if>
 			<not>

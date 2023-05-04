@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -137,53 +136,24 @@ public class CompanyThreadLocal {
 			return guestUser;
 		}
 
-		try (Connection connection = DataAccess.getConnection()) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select userId, languageId, timeZoneId from User_ " +
-							"where companyId = ? and type_ = ?")) {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select userId, languageId, timeZoneId from User_ where " +
+					"companyId = ? and type_ = ?")) {
 
-				preparedStatement.setLong(1, companyId);
-				preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
+			preparedStatement.setLong(1, companyId);
+			preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
 
-				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					if (!resultSet.next()) {
-						return null;
-					}
-
-					guestUser = UserLocalServiceUtil.createUser(
-						resultSet.getLong("userId"));
-
-					guestUser.setLanguageId(resultSet.getString("languageId"));
-					guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					return null;
 				}
-			}
-			catch (SQLException sqlException) {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"select userId, languageId, timeZoneId from " +
-								"User_ where companyId = ? and defaultUser = " +
-									"?")) {
 
-					preparedStatement.setLong(1, companyId);
-					preparedStatement.setBoolean(2, true);
+				guestUser = UserLocalServiceUtil.createUser(
+					resultSet.getLong("userId"));
 
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						if (!resultSet.next()) {
-							return null;
-						}
-
-						guestUser = UserLocalServiceUtil.createUser(
-							resultSet.getLong("userId"));
-
-						guestUser.setLanguageId(
-							resultSet.getString("languageId"));
-						guestUser.setTimeZoneId(
-							resultSet.getString("timeZoneId"));
-					}
-				}
+				guestUser.setLanguageId(resultSet.getString("languageId"));
+				guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
 			}
 		}
 

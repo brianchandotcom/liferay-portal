@@ -39,8 +39,8 @@ public class LayoutSEOEntryServiceWrapper
 
 	@Override
 	public LayoutSEOEntry copyLayoutSEOEntry(
-			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean canonicalURLEnabled,
+			long userId, long groupId, boolean privateLayout,
+			long sourceLayoutId, boolean canonicalURLEnabled,
 			java.util.Map<java.util.Locale, String> canonicalURLMap,
 			long copyDDMStorageId, boolean openGraphDescriptionEnabled,
 			java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
@@ -51,7 +51,7 @@ public class LayoutSEOEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSEOEntryService.copyLayoutSEOEntry(
-			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
+			userId, groupId, privateLayout, sourceLayoutId, canonicalURLEnabled,
 			canonicalURLMap, copyDDMStorageId, openGraphDescriptionEnabled,
 			openGraphDescriptionMap, openGraphImageAltMap,
 			openGraphImageFileEntryId, openGraphTitleEnabled, openGraphTitleMap,

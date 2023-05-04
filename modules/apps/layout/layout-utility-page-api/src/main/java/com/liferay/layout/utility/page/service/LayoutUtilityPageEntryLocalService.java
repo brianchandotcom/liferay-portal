@@ -95,7 +95,7 @@ public interface LayoutUtilityPageEntryLocalService
 		throws PortalException;
 
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
-			long userId, long groupId, long layoutUtilityPageEntryId,
+			long userId, long groupId, long sourceLayoutUtilityPageEntryId,
 			ServiceContext serviceContext)
 		throws Exception;
 

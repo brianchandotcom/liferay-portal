@@ -53,12 +53,12 @@ public class LayoutUtilityPageEntryServiceUtil {
 	}
 
 	public static LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
-			long groupId, long layoutUtilityPageEntryId,
+			long groupId, long sourceLayoutUtilityPageEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return getService().copyLayoutUtilityPageEntry(
-			groupId, layoutUtilityPageEntryId, serviceContext);
+			groupId, sourceLayoutUtilityPageEntryId, serviceContext);
 	}
 
 	public static LayoutUtilityPageEntry deleteLayoutUtilityPageEntry(

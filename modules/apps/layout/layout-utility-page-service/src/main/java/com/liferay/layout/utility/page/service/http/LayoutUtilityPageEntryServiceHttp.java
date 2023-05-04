@@ -102,7 +102,7 @@ public class LayoutUtilityPageEntryServiceHttp {
 	public static com.liferay.layout.utility.page.model.LayoutUtilityPageEntry
 			copyLayoutUtilityPageEntry(
 				HttpPrincipal httpPrincipal, long groupId,
-				long layoutUtilityPageEntryId,
+				long sourceLayoutUtilityPageEntryId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
@@ -113,7 +113,8 @@ public class LayoutUtilityPageEntryServiceHttp {
 				_copyLayoutUtilityPageEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, layoutUtilityPageEntryId, serviceContext);
+				methodKey, groupId, sourceLayoutUtilityPageEntryId,
+				serviceContext);
 
 			Object returnObj = null;
 

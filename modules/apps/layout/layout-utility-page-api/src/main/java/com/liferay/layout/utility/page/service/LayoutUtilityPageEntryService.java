@@ -63,7 +63,7 @@ public interface LayoutUtilityPageEntryService extends BaseService {
 		throws PortalException;
 
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
-			long groupId, long layoutUtilityPageEntryId,
+			long groupId, long sourceLayoutUtilityPageEntryId,
 			ServiceContext serviceContext)
 		throws Exception;
 

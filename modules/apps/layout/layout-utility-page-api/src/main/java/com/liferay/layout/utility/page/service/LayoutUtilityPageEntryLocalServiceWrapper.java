@@ -75,12 +75,12 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 
 	@Override
 	public LayoutUtilityPageEntry copyLayoutUtilityPageEntry(
-			long userId, long groupId, long layoutUtilityPageEntryId,
+			long userId, long groupId, long sourceLayoutUtilityPageEntryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return _layoutUtilityPageEntryLocalService.copyLayoutUtilityPageEntry(
-			userId, groupId, layoutUtilityPageEntryId, serviceContext);
+			userId, groupId, sourceLayoutUtilityPageEntryId, serviceContext);
 	}
 
 	/**

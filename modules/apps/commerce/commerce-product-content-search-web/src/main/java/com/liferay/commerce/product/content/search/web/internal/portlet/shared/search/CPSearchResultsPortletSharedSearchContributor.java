@@ -103,7 +103,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 				themeDisplay.getScopeGroupId());
 
 		Optional<String> parameterValueOptional =
-			portletSharedSearchSettings.getParameter71("q");
+			portletSharedSearchSettings.getParameterOptional("q");
 
 		portletSharedSearchSettings.setKeywords(
 			parameterValueOptional.orElse(StringPool.BLANK));
@@ -179,7 +179,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 			paginationStartParameterName);
 
 		Optional<String> paginationStartParameterValueOptional =
-			portletSharedSearchSettings.getParameter71(
+			portletSharedSearchSettings.getParameterOptional(
 				paginationStartParameterName);
 
 		Optional<Integer> paginationStartOptional =
@@ -191,7 +191,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 		String paginationDeltaParameterName = "delta";
 
 		Optional<String> paginationDeltaParameterValueOptional =
-			portletSharedSearchSettings.getParameter71(
+			portletSharedSearchSettings.getParameterOptional(
 				paginationDeltaParameterName);
 
 		Optional<Integer> paginationDeltaOptional =

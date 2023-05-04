@@ -20,6 +20,11 @@ const API_URL = {
 	FDS_VIEWS: '/o/c/fdsviews',
 };
 
+const FUZZY_OPTIONS = {
+	post: '</strong>',
+	pre: '<strong>',
+};
+
 const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
@@ -40,4 +45,4 @@ const PAGINATION_PROPS = {
 	},
 };
 
-export {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS};
+export {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP, PAGINATION_PROPS};

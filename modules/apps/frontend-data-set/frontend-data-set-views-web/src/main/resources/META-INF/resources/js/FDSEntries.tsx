@@ -25,15 +25,15 @@ import fuzzy from 'fuzzy';
 import React, {useRef, useState} from 'react';
 
 import '../css/FDSEntries.scss';
-import {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS} from './Constants';
+import {
+	API_URL,
+	FUZZY_OPTIONS,
+	OBJECT_RELATIONSHIP,
+	PAGINATION_PROPS,
+} from './Constants';
 import {FDSViewType} from './FDSViews';
 import RequiredMark from './components/RequiredMark';
 import ValidationFeedback from './components/ValidationFeedback';
-
-const FUZZY_OPTIONS = {
-	post: '</strong>',
-	pre: '<strong>',
-};
 
 type FDSEntryType = {
 	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;

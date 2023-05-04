@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 interface SearchInterface {
 	onSearch: Function;
 	query: string;

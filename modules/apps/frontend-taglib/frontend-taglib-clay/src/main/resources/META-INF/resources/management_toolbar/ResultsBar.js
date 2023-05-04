@@ -113,7 +113,9 @@ const ResultsBar = ({
 								? Liferay.Language.get('clear-x-result-for-x')
 								: Liferay.Language.get('clear-x-results-for-x'),
 							itemsTotal,
-							searchValue
+							searchValue !== null
+								? searchValue
+								: filterLabelItems?.map((item) => item.label)
 						)}
 						className="component-link tbar-link"
 						onClick={(event) => {

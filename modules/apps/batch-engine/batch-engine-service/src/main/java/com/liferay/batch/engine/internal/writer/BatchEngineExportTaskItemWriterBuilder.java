@@ -78,6 +78,8 @@ public class BatchEngineExportTaskItemWriterBuilder {
 			}
 
 			_parameters.computeIfAbsent("createStrategy", key -> "INSERT");
+			_parameters.computeIfAbsent(
+				"importStrategy", key -> "ON_ERROR_FAIL");
 			_parameters.computeIfAbsent("updateStrategy", key -> "UPDATE");
 
 			batchEngineUnitConfiguration.setParameters(_parameters);

@@ -24,7 +24,16 @@ import java.util.Map;
  */
 public class BatchPlannerPolicyConstants {
 
-	public static final Map<String, String> nameTypes =
+	public static final Map<String, String> exportPlanPolicyNameTypes =
+		Collections.unmodifiableMap(
+			HashMapBuilder.put(
+				"containsHeaders", "checkbox"
+			).put(
+				"headlessEndpoint", "text"
+			).put(
+				"siteId", "text"
+			).build());
+	public static final Map<String, String> importPlanPolicyNameTypes =
 		Collections.unmodifiableMap(
 			HashMapBuilder.put(
 				"containsHeaders", "checkbox"

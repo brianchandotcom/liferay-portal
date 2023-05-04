@@ -12,24 +12,23 @@ definition {
 	var testSiteURL = "raylife-ap";
 
 	setUp {
-		task("Sign in to portal") {
+		task ("Sign in to portal") {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
 		}
-		
-		task("Create Raylife D2C and Raylife AP sites") {
+
+		task ("Create Raylife D2C and Raylife AP sites") {
 			Raylife.createRaylifeSite(siteName = "Raylife D2C");
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
 		}
-		
-		task("Login as Scott Producer because of Role and Permissions") {
+
+		task ("Login as Scott Producer because of Role and Permissions") {
 			User.logoutPG();
 
 			RaylifeAP.userLoginInRaylife(email = "scott.producer");
 		}
-		
 	}
 
 	tearDown {
@@ -105,6 +104,79 @@ definition {
 			AssertVisible(
 				field = "accident-citation",
 				locator1 = "RaylifeApplicationModal#OPEN_DROPDOWN");
+		}
+	}
+
+	@description = "Story ID: LPS-158168 | Test Summary: Verify, on the Application List, if the application created was flagged with an Underwriting status."
+	@priority = 4
+	test CanViewApplicationStatusAsUnderwriting {
+		property test.name.skip.portal.instance = "RaylifeAPUnderwritingTrigger#CanViewApplicationStatusAsUnderwriting";
+
+		task ("Given that the user go to Raylife AP and create a new application") {
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
+
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+		}
+
+		task ("When the user fulfill the creation forms and add an Accident Citation") {
+			RaylifeApplicationModal.typeAllNewApplicationContactInfoFields(
+				apt = 0000,
+				city = "New York",
+				emailAddress = "test@liferay.com",
+				firstName = "Testing",
+				lastName = "Model",
+				phoneNumber = 0123456789,
+				state = "NY",
+				streetAddress = "Address",
+				zipCode = 12345);
+
+			RaylifeApplicationModal.typeAllNewApplicationVehicleInfoFields(
+				annualMileage = 50000,
+				make = "Volvo",
+				model = "v90 cross country",
+				ownership = "Own",
+				primaryUse = "Business",
+				year = 2019);
+
+			RaylifeApplicationModal.typeAllNewApplicationDriverInfoFields(
+				addAccidentCitation = "true",
+				ageFirstLicenced = 18,
+				firstName = "Testing",
+				gender = "Female",
+				highestEducation = "Masters",
+				lastName = "Model",
+				maritalStatus = "Single",
+				millitaryAffiliation = "None",
+				occupation = "Engineer",
+				relationToContact = "Spouse");
+
+			RaylifeApplicationModal.selectOptionInDropdownByName(
+				field = "accident-citation",
+				text = "Accident - Not at fault");
+
+			Button.click(button = "Next");
+
+			RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields(
+				bodilyInjury = "$30,000 / $60,000",
+				collisionAmount = "$2,000",
+				comprehensiveAmount = "$750",
+				medicalAmount = "$1,000",
+				propertyDamage = "$25,000",
+				uninsuredOrUnderinsuredMBI = "$30,000 / $60,000",
+				uninsuredOrUnderinsuredMPD = "$150,000");
+
+			Button.click(button = "Generate Quote");
+		}
+
+		task ("Then, in application list, assert if the application created have status as Underwriting") {
+			RaylifeAP.search(searchTerm = "Testing");
+
+			RaylifeAP.assertTableElement(
+				column = 6,
+				line = 1,
+				text = "Underwriting");
 		}
 	}
 

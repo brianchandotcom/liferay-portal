@@ -18,7 +18,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -184,7 +185,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 		Element fileEntryTypeElement = portletDataContext.getExportDataElement(
 			fileEntryType);
 
-		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			fileEntryType);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Element referenceElement =
@@ -268,15 +270,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		List<Element> ddmStructureReferenceElements =
 			portletDataContext.getReferenceElements(
-				fileEntryType,
-				com.liferay.dynamic.data.mapping.model.DDMStructure.class);
+				fileEntryType, DDMStructure.class);
 
 		long[] ddmStructureIdsArray =
 			new long[ddmStructureReferenceElements.size()];
 
 		Map<Long, Long> ddmStructureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				com.liferay.dynamic.data.mapping.model.DDMStructure.class);
+				DDMStructure.class);
 
 		for (int i = 0; i < ddmStructureReferenceElements.size(); i++) {
 			Element ddmStructureReferenceElement =
@@ -351,7 +352,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 			importedDLFileEntryType);
 
 		List<DDMStructure> importedDDMStructures =
-			importedDLFileEntryType.getDDMStructures();
+			DLFileEntryTypeUtil.getDDMStructures(importedDLFileEntryType);
 
 		for (DDMStructure importedDDMStructure : importedDDMStructures) {
 			String ddmStructureKey = importedDDMStructure.getStructureKey();
@@ -363,7 +364,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 				continue;
 			}
 
-			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
+			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(
 					importedDDMStructure.getStructureId());
 

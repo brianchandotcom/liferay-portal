@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorReturnType;
 import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -47,10 +48,7 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-			getDDMStructures()
-		throws PortalException {
-
+	public List<DDMStructure> getDDMStructures() throws PortalException {
 		if (_ddmStructures != null) {
 			return _ddmStructures;
 		}
@@ -66,11 +64,12 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 		DDMStructure ddmStructure = _getDDMStructure();
 
 		if (ddmStructure == null) {
-			_ddmStructures = dlFileEntryType.getDDMStructures();
+			_ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+				dlFileEntryType);
 		}
 		else {
 			_ddmStructures = ListUtil.filter(
-				dlFileEntryType.getDDMStructures(),
+				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType),
 				currentDDMStructure ->
 					currentDDMStructure.getStructureId() !=
 						ddmStructure.getStructureId());
@@ -80,8 +79,7 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 	}
 
 	public int getDDMStructuresCount() throws PortalException {
-		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-			ddmStructures = getDDMStructures();
+		List<DDMStructure> ddmStructures = getDDMStructures();
 
 		return ddmStructures.size();
 	}
@@ -142,8 +140,7 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 	}
 
 	private DDMStructure _ddmStructure;
-	private List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-		_ddmStructures;
+	private List<DDMStructure> _ddmStructures;
 	private DLFileEntryType _dlFileEntryType;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;

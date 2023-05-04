@@ -25,9 +25,10 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -659,15 +660,15 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
 
 			List<DDMStructure> ddmStructures =
-				dlFileEntryType.getDDMStructures();
+				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType);
 
 			DocumentType documentType = document.getDocumentType();
 
 			ContentField[] contentFields = documentType.getContentFields();
 
 			for (DDMStructure ddmStructure : ddmStructures) {
-				com.liferay.dynamic.data.mapping.model.DDMStructure
-					modelDDMStructure = _ddmStructureService.getStructure(
+				DDMStructure modelDDMStructure =
+					_ddmStructureService.getStructure(
 						ddmStructure.getStructureId());
 
 				DDMForm ddmForm = modelDDMStructure.getDDMForm();
@@ -709,9 +710,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			return 0;
 		}
 
-		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
-			_ddmStructureService.getStructure(
-				dlFileEntryType.getDataDefinitionId());
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			dlFileEntryType.getDataDefinitionId());
 
 		return ddmStructure.getStructureId();
 	}

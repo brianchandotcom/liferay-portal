@@ -39,7 +39,7 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.dynamic.data.mapping.kernel.DDMStructure"
+		className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 		escapedModel="<%= true %>"
 		keyProperty="structureId"
 		modelVar="curDDMStructure"

@@ -39,7 +39,8 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -230,7 +231,7 @@ public class AssetListAssetEntryProviderImpl
 
 			if (dlFileEntryType != null) {
 				List<DDMStructure> ddmStructures =
-					dlFileEntryType.getDDMStructures();
+					DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType);
 
 				if (!ddmStructures.isEmpty()) {
 					DDMStructure ddmStructure = ddmStructures.get(0);
@@ -753,7 +754,7 @@ public class AssetListAssetEntryProviderImpl
 
 	private String _getFieldReference(long ddmStructureId, String fieldName) {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
+			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			return ddmStructure.getFieldProperty(fieldName, "fieldReference");

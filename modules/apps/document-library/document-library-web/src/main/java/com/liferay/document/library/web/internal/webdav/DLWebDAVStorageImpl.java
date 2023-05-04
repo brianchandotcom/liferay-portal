@@ -40,10 +40,11 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DL;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1199,7 +1200,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			dlFileEntryType);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			DLFileEntryMetadata dlFileEntryMetadata =

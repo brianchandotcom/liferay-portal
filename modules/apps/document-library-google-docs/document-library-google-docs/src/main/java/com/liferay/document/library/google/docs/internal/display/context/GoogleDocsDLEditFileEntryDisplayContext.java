@@ -20,7 +20,7 @@ import com.liferay.document.library.display.context.DLFilePicker;
 import com.liferay.document.library.google.docs.internal.helper.GoogleDocsMetadataHelper;
 import com.liferay.document.library.google.docs.internal.util.constants.GoogleDocsConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;

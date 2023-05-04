@@ -23,11 +23,12 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.info.item.FileEntryInfoItemFields;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
@@ -127,7 +128,7 @@ public class FileEntryInfoItemFieldValuesProvider
 						dlFileEntry.getFileEntryTypeId());
 
 				List<DDMStructure> ddmStructures =
-					dlFileEntryType.getDDMStructures();
+					DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType);
 
 				for (DDMStructure ddmStructure : ddmStructures) {
 					FileVersion fileVersion = fileEntry.getFileVersion();

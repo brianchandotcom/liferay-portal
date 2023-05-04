@@ -22,13 +22,14 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.kernel.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -103,7 +104,8 @@ public class DLFileEntryDDMFormValuesReaderTest {
 		serviceContext.setAttribute(
 			"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			dlFileEntryType);
 
 		Map<String, DDMFormValues> ddmFormValuesMap = createDDMFormValuesMap(
 			ddmStructures.get(0));

@@ -173,7 +173,7 @@ else {
 
 						<%
 						try {
-							for (DDMStructure ddmStructure : fileEntryType.getDDMStructures()) {
+							for (DDMStructure ddmStructure : DLFileEntryTypeUtil.getDDMStructures(fileEntryType)) {
 								DDMFormValues ddmFormValues = null;
 
 								try {

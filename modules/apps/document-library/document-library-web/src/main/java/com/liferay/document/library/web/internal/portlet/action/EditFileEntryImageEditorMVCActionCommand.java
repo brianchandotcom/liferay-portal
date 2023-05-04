@@ -36,9 +36,10 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.petra.string.StringPool;
@@ -315,7 +316,9 @@ public class EditFileEntryImageEditorMVCActionCommand
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
 
-		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+		for (DDMStructure ddmStructure :
+				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
+
 			String className =
 				com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
 					getName();
@@ -323,7 +326,7 @@ public class EditFileEntryImageEditorMVCActionCommand
 			DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 				_getDDMStructureHttpServletRequest(
 					serviceContext.getRequest(), ddmStructure.getStructureId()),
-				_ddmBeanTranslator.translate(ddmStructure.getDDMForm()));
+				ddmStructure.getDDMForm());
 
 			serviceContext.setAttribute(
 				className + StringPool.POUND + ddmStructure.getStructureId(),

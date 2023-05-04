@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -67,7 +66,7 @@ public class DLFileEntryTypeUADAnonymizerTest
 		throws Exception {
 
 		return DLFileEntryTypeUADTestUtil.addDLFileEntryType(
-			_dlFileEntryTypeLocalService, _portal, userId, _group.getGroupId());
+			_dlFileEntryTypeLocalService, userId, _group.getGroupId());
 	}
 
 	@Override
@@ -117,9 +116,6 @@ public class DLFileEntryTypeUADAnonymizerTest
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject(filter = "component.name=*.DLFileEntryTypeUADAnonymizer")
 	private UADAnonymizer<DLFileEntryType> _uadAnonymizer;

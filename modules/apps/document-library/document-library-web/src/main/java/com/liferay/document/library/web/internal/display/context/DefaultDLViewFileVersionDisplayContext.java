@@ -28,6 +28,7 @@ import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
@@ -38,7 +39,7 @@ import com.liferay.document.library.web.internal.display.context.logic.UIItemsBu
 import com.liferay.document.library.web.internal.display.context.util.JSPRenderer;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -440,7 +441,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return ListUtil.filter(
-			dlFileEntryType.getDDMStructures(),
+			DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType),
 			ddmStructure ->
 				(ddmStructure.getStructureId() !=
 					dlFileEntryType.getDataDefinitionId()) ||

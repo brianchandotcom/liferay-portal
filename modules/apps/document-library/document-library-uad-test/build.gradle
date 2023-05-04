@@ -1,6 +1,7 @@
 dependencies {
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:document-library:document-library-uad")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:message-boards:message-boards-test-util")
 	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")

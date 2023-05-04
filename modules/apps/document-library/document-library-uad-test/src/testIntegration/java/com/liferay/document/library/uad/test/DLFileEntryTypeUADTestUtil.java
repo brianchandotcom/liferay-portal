@@ -16,19 +16,16 @@ package com.liferay.document.library.uad.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.dynamic.data.mapping.kernel.DDMForm;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 
@@ -39,7 +36,7 @@ public class DLFileEntryTypeUADTestUtil {
 
 	public static DLFileEntryType addDLFileEntryType(
 			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-			Portal portal, long userId, long groupId)
+			long userId, long groupId)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -54,19 +51,9 @@ public class DLFileEntryTypeUADTestUtil {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMStructure ddmStructure = DDMStructureManagerUtil.addStructure(
-			TestPropsValues.getUserId(), groupId, null,
-			portal.getClassNameId(
-				"com.liferay.dynamic.data.lists.model.DDLRecordSet"),
-			RandomTestUtil.randomString(),
-			HashMapBuilder.put(
-				LocaleUtil.US, "Test Structure Name"
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.US, "Test Structure Description"
-			).build(),
-			ddmForm, StorageEngineManager.STORAGE_TYPE_DEFAULT,
-			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			groupId, "com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			ddmForm);
 
 		return dlFileEntryTypeLocalService.addFileEntryType(
 			userId, groupId, RandomTestUtil.randomString(),
@@ -83,9 +70,9 @@ public class DLFileEntryTypeUADTestUtil {
 			dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 
 			for (DDMStructure ddmStructure :
-					dlFileEntryType.getDDMStructures()) {
+					DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
 
-				DDMStructureManagerUtil.deleteStructure(
+				DDMStructureLocalServiceUtil.deleteStructure(
 					ddmStructure.getStructureId());
 			}
 		}

@@ -33,9 +33,10 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -233,7 +234,9 @@ public class DocumentDTOConverter
 
 		List<DDMFormValues> ddmFormValues = new ArrayList<>();
 
-		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+		for (DDMStructure ddmStructure :
+				DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
+
 			DLFileEntryMetadata dlFileEntryMetadata =
 				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
 					ddmStructure.getStructureId(),
@@ -269,9 +272,8 @@ public class DocumentDTOConverter
 			return 0;
 		}
 
-		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
-			_ddmStructureService.getStructure(
-				dlFileEntryType.getDataDefinitionId());
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			dlFileEntryType.getDataDefinitionId());
 
 		return ddmStructure.getStructureId();
 	}

@@ -30,6 +30,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -116,27 +117,22 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
 
-		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-			ddmStructures = dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			dlFileEntryType);
 
-		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
-			ddmStructures.get(0);
+		DDMStructure ddmStructure = ddmStructures.get(0);
 
-		DDMStructure modelDDMStructure =
-			DDMStructureLocalServiceUtil.getDDMStructure(
-				ddmStructure.getStructureId());
-
-		modelDDMStructure.setCompanyId(_company.getCompanyId());
+		ddmStructure.setCompanyId(_company.getCompanyId());
 
 		try {
-			modelDDMStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
-				modelDDMStructure);
+			ddmStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
+				ddmStructure);
 
 			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 			DLFileEntryMetadata dlFileEntryMetadata =
 				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
-					modelDDMStructure.getStructureId(),
+					ddmStructure.getStructureId(),
 					dlFileVersion.getFileVersionId());
 
 			Assert.assertNotNull(dlFileEntryMetadata);
@@ -145,15 +141,15 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 			dlFileEntryMetadata =
 				DLFileEntryMetadataLocalServiceUtil.fetchFileEntryMetadata(
-					modelDDMStructure.getStructureId(),
+					ddmStructure.getStructureId(),
 					dlFileVersion.getFileVersionId());
 
 			Assert.assertNull(dlFileEntryMetadata);
 		}
 		finally {
-			modelDDMStructure.setCompanyId(dlFileEntryType.getCompanyId());
+			ddmStructure.setCompanyId(dlFileEntryType.getCompanyId());
 
-			DDMStructureLocalServiceUtil.updateDDMStructure(modelDDMStructure);
+			DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure);
 		}
 	}
 
@@ -161,13 +157,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	public void testDeleteNoStructuresDLFileEntryMetadatas() throws Exception {
 		DLFileEntry dlFileEntry = addDLFileEntry();
 
-		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			dlFileEntry.getDLFileEntryType());
 
-		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-			ddmStructures = dlFileEntryType.getDDMStructures();
-
-		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
-			ddmStructures.get(0);
+		DDMStructure ddmStructure = ddmStructures.get(0);
 
 		DDMStructureLocalServiceUtil.deleteDDMStructure(
 			ddmStructure.getStructureId());
@@ -440,11 +433,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
 				serviceContext);
 
-		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-			ddmStructures = dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			dlFileEntryType);
 
-		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
-			ddmStructures.get(0);
+		DDMStructure ddmStructure = ddmStructures.get(0);
 
 		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
 			ddmStructure.getStructureKey(), user.getLocale());

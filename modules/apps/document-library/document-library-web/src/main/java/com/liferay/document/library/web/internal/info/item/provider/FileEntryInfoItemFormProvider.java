@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.web.internal.info.item.FileEntryInfoItemFields;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
@@ -288,18 +289,14 @@ public class FileEntryInfoItemFormProvider
 		long ddmStructureId, long fileEntryTypeId) {
 
 		try {
-			DLFileEntryType fileEntryType =
-				_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
-
-			List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-				ddmStructures = fileEntryType.getDDMStructures();
+			List<DDMStructure> ddmStructures =
+				DLFileEntryTypeUtil.getDDMStructures(
+					_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId));
 
 			List<InfoFieldSet> infoFieldSets = new ArrayList<>(
 				ddmStructures.size());
 
-			for (com.liferay.dynamic.data.mapping.kernel.DDMStructure
-					ddmStructure : ddmStructures) {
-
+			for (DDMStructure ddmStructure : ddmStructures) {
 				if (ddmStructure.getStructureId() == ddmStructureId) {
 					continue;
 				}

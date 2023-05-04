@@ -33,6 +33,7 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -40,8 +41,8 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
@@ -908,7 +909,8 @@ public class FileEntryStagedModelDataHandler
 			portletDataContext, fileEntry, dlFileEntryType,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			dlFileEntryType);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			_exportDDMFormValues(
@@ -928,9 +930,7 @@ public class FileEntryStagedModelDataHandler
 			ddmFormValuesPath);
 
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues =
-			_deserialize(
-				serializedDDMFormValues,
-				DDMBeanTranslatorUtil.translate(ddmStructure.getDDMForm()));
+			_deserialize(serializedDDMFormValues, ddmStructure.getDDMForm());
 
 		ddmFormValues =
 			_ddmFormValuesExportImportContentProcessor.
@@ -1087,8 +1087,8 @@ public class FileEntryStagedModelDataHandler
 
 		boolean updateFileEntry = false;
 
-		List<DDMStructure> ddmStructures =
-			existingDLFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			existingDLFileEntryType);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Element structureFieldsElement =

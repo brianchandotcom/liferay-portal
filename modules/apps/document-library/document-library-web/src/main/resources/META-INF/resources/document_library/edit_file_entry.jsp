@@ -424,7 +424,7 @@ renderResponse.setTitle(headerTitle);
 							<c:if test="<%= fileEntryTypeId > 0 %>">
 
 								<%
-								List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+								List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType);
 
 								boolean showLanguageSelector = false;
 
@@ -460,7 +460,7 @@ renderResponse.setTitle(headerTitle);
 								try {
 									boolean localizable = true;
 
-									for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+									for (DDMStructure ddmStructure : DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
 										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(ddmStructure, fileVersionId);
 								%>
 

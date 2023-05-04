@@ -19,10 +19,11 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.versioning.VersioningPolicy;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -75,7 +76,7 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 				previousDLFileVersion.getDLFileEntryType();
 
 			for (DDMStructure ddmStructure :
-					dlFileEntryType.getDDMStructures()) {
+					DLFileEntryTypeUtil.getDDMStructures(dlFileEntryType)) {
 
 				DLFileEntryMetadata previousFileEntryMetadata =
 					_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(

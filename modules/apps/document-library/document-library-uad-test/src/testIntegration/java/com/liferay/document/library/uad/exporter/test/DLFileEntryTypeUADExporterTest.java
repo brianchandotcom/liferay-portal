@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -56,7 +55,7 @@ public class DLFileEntryTypeUADExporterTest
 	@Override
 	protected DLFileEntryType addBaseModel(long userId) throws Exception {
 		return DLFileEntryTypeUADTestUtil.addDLFileEntryType(
-			_dlFileEntryTypeLocalService, _portal, userId, _group.getGroupId());
+			_dlFileEntryTypeLocalService, userId, _group.getGroupId());
 	}
 
 	@Override
@@ -74,9 +73,6 @@ public class DLFileEntryTypeUADExporterTest
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject(filter = "component.name=*.DLFileEntryTypeUADExporter")
 	private UADExporter<DLFileEntryType> _uadExporter;

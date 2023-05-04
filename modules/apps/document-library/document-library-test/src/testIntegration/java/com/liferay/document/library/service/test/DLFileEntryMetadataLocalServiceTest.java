@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -96,14 +97,10 @@ public class DLFileEntryMetadataLocalServiceTest {
 			RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
 			serviceContext);
 
-		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-			ddmStructures = _dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			_dlFileEntryType);
 
-		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
-			ddmStructures.get(0);
-
-		_ddmStructure = _ddmStructureLocalService.getStructure(
-			ddmStructure.getStructureId());
+		_ddmStructure = ddmStructures.get(0);
 
 		Map<String, DDMFormValues> ddmFormValuesMap = setUpDDMFormValuesMap(
 			_ddmStructure.getStructureKey(), user.getLocale());
@@ -133,14 +130,10 @@ public class DLFileEntryMetadataLocalServiceTest {
 				RandomTestUtil.randomString(), StringPool.BLANK, new long[0],
 				serviceContext);
 
-		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-			ddmStructures = dlFileEntryType.getDDMStructures();
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
+			dlFileEntryType);
 
-		com.liferay.dynamic.data.mapping.kernel.DDMStructure
-			kernelDDMStructure = ddmStructures.get(0);
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			kernelDDMStructure.getStructureId());
+		DDMStructure ddmStructure = ddmStructures.get(0);
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),

@@ -31,7 +31,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererC
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
@@ -111,8 +111,7 @@ public class DefaultDLEditFileEntryDisplayContext
 					_httpServletRequest, ddmStructure.getStructureId());
 
 			return _ddmFormValuesFactory.create(
-				httpServletRequest,
-				_ddmBeanTranslator.translate(ddmStructure.getDDMForm()));
+				httpServletRequest, ddmStructure.getDDMForm());
 		}
 
 		DLFileEntryMetadata fileEntryMetadata =
@@ -257,9 +256,11 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isDDMStructureVisible(DDMStructure ddmStructure) {
-		DDMForm ddmForm = ddmStructure.getDDMForm();
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			ddmStructure.getDDMForm();
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+		List<com.liferay.dynamic.data.mapping.model.DDMFormField>
+			ddmFormFields = ddmForm.getDDMFormFields();
 
 		return !ddmFormFields.isEmpty();
 	}

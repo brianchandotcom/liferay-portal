@@ -26,6 +26,7 @@ page import="com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundEx
 page import="com.liferay.document.library.kernel.model.DLFileShortcut" %><%@
 page import="com.liferay.document.library.kernel.model.DLVersionNumberIncrease" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
+page import="com.liferay.document.library.util.DLFileEntryTypeUtil" %><%@
 page import="com.liferay.document.library.web.internal.bulk.selection.BulkSelectionRunnerUtil" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAccessFromDesktopDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider" %><%@

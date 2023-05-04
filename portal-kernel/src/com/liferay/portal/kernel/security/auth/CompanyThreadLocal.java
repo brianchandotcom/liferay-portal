@@ -192,6 +192,16 @@ public class CompanyThreadLocal {
 
 	private static boolean _setCompanyId(Long companyId) {
 		if (companyId.equals(_companyId.get())) {
+			if (!isLocked()) {
+				return false;
+			}
+
+			if ((LocaleThreadLocal.getDefaultLocale() == null) ||
+				(TimeZoneThreadLocal.getDefaultTimeZone() == null)) {
+
+				_setUserThreadLocals(companyId);
+			}
+
 			return false;
 		}
 
@@ -207,33 +217,42 @@ public class CompanyThreadLocal {
 		if (companyId > 0) {
 			_companyId.set(companyId);
 
-			try {
-				User guestUser = _fetchGuestUser(companyId);
-
-				if (guestUser == null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"No guest user was found for company " + companyId);
-					}
-				}
-				else {
-					LocaleThreadLocal.setDefaultLocale(guestUser.getLocale());
-					TimeZoneThreadLocal.setDefaultTimeZone(
-						guestUser.getTimeZone());
-				}
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
+			_setUserThreadLocals(companyId);
 		}
 		else {
 			_companyId.set(CompanyConstants.SYSTEM);
 
-			LocaleThreadLocal.setDefaultLocale(null);
-			TimeZoneThreadLocal.setDefaultTimeZone(null);
+			_setUserThreadLocals(null);
 		}
 
 		return true;
+	}
+
+	private static void _setUserThreadLocals(Long companyId) {
+		if (companyId == null) {
+			LocaleThreadLocal.setDefaultLocale(null);
+			TimeZoneThreadLocal.setDefaultTimeZone(null);
+
+			return;
+		}
+
+		try {
+			User guestUser = _fetchGuestUser(companyId);
+
+			if (guestUser == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"No guest user was found for company " + companyId);
+				}
+			}
+			else {
+				LocaleThreadLocal.setDefaultLocale(guestUser.getLocale());
+				TimeZoneThreadLocal.setDefaultTimeZone(guestUser.getTimeZone());
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

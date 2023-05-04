@@ -19,7 +19,6 @@
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-item-selector-web/src/main/java/com/liferay/document/library/item/selector/web/internal/criterion/DLItemSelectorCriterionCreationMenuRestrictionUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-taglib/src/main/java/com/liferay/document/library/taglib/internal/display/context/DLViewFileVersionDisplayContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-taglib/src/main/java/com/liferay/document/library/taglib/internal/servlet/ServletContextUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/icon/provider/DLFileEntryTypeIconProviderUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/util/DLWebComponentProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="dynamic-data-mapping/dynamic-data-mapping-form-taglib/src/main/java/com/liferay/dynamic/data/mapping/form/taglib/internal/servlet/taglib/util/DDMFormTaglibUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="dynamic-data-mapping/dynamic-data-mapping-form-web/src/main/java/com/liferay/dynamic/data/mapping/form/web/internal/display/context/util/DDMFormGuestUploadFieldUtil\.java" />

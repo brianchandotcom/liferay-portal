@@ -12,7 +12,8 @@
 export function getRandomUUID() {
 	try {
 		return crypto.randomUUID();
-	} catch (error) {
+	}
+	catch (error) {
 		return new Date().getTime().toString();
 	}
 }

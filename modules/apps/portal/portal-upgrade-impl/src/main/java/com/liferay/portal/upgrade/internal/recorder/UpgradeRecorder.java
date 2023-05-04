@@ -188,7 +188,7 @@ public class UpgradeRecorder {
 					"Unable to check the upgrade result due to ",
 					exception.getMessage(), ". Please check manually."));
 
-			return "unresolved";
+			return "failure";
 		}
 
 		Map<String, Map<String, Integer>> warningMessages = _filter(

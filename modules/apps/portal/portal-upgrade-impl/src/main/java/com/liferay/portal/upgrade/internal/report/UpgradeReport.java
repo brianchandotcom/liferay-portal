@@ -238,7 +238,7 @@ public class UpgradeReport {
 				ReleaseManager releaseManager = _releaseManagerSnapshot.get();
 
 				if (releaseManager == null) {
-					return "Unable to determine. Release manager not available";
+					return "Upgrade failed to complete";
 				}
 
 				String statusMessage = releaseManager.getStatusMessage(false);

@@ -637,7 +637,13 @@ public class ObjectFieldLocalServiceImpl
 		_setBusinessTypeAndDBType(businessType, dbType, newObjectField);
 
 		newObjectField.setListTypeDefinitionId(listTypeDefinitionId);
-		newObjectField.setDBColumnName(name + StringPool.UNDERLINE);
+
+		if (!businessType.equals(
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			newObjectField.setDBColumnName(name + StringPool.UNDERLINE);
+		}
+
 		newObjectField.setLocalized(localized);
 		newObjectField.setName(name);
 		newObjectField.setRequired(required);

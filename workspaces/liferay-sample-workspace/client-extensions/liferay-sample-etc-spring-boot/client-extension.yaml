@@ -1,29 +1,29 @@
 assemble:
     - fromTask: bootJar
-liferay-sample-notification-type-1:
+liferay-sample-spring-boot-notification-type-1:
     name: Liferay Sample Notification Type 1
-    oAuth2ApplicationExternalReferenceCode: liferay-sample-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-spring-boot-oauth-application-user-agent
     resourcePath: /sample/notification/type/1
     type: notificationType
-liferay-sample-oauth-application-user-agent:
+liferay-sample-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay Sample OAuth Application User Agent
+    name: Liferay Sample Spring Boot OAuth Application User Agent
     scopes:
         - Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent
-liferay-sample-object-action-1:
+liferay-sample-spring-boot-object-action-1:
     name: Liferay Sample Object Action 1
-    oAuth2ApplicationExternalReferenceCode: liferay-sample-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-spring-boot-oauth-application-user-agent
     resourcePath: /sample/object/action/1
     type: objectAction
-liferay-sample-object-action-2:
+liferay-sample-spring-boot-object-action-2:
     name: Liferay Sample Object Action 2
-    oAuth2ApplicationExternalReferenceCode: liferay-sample-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-spring-boot-oauth-application-user-agent
     resourcePath: /sample/object/action/2
     type: objectAction
-liferay-sample-workflow-action-1:
+liferay-sample-spring-boot-workflow-action-1:
     name: Liferay Sample Workflow Action 1
-    oAuth2ApplicationExternalReferenceCode: liferay-sample-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-spring-boot-oauth-application-user-agent
     resourcePath: /sample/workflow/action/1
     type: workflowAction

@@ -71,6 +71,16 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro deletePriceModifier {
+		Click(
+			key_value = ${priceModifierName},
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(key_menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editPriceListEntryPrice {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -126,21 +136,11 @@ definition {
 
 		CommerceRelations.assignSingleRelationToProductsEntry(
 			entryName = ${entryName},
-			title = "${relation}");
+			title = ${relation});
 
 		Click(locator1 = "Icon#CLOSE");
 
 		SelectFrameTop();
-	}
-
-	macro deletePriceModifier {
-		Click(
-			key_value = ${priceModifierName},
-			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(key_menuItem = "Delete");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro openPriceListsAdmin {

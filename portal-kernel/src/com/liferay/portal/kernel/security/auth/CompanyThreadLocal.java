@@ -59,7 +59,8 @@ public class CompanyThreadLocal {
 	}
 
 	public static SafeCloseable lock(long companyId) {
-		SafeCloseable safeCloseable = setWithSafeCloseable(companyId);
+		SafeCloseable safeCloseable = _companyId.setWithSafeCloseable(
+			companyId);
 
 		_locked.set(true);
 

@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMV003",
 	"name": "Industry",
 	"name_i18n": {
-		"en_US": "Industry"
+		"en_US": "Industry",
+		"ar_SA": "Industry",
+		"ca_ES": "Industry",
+		"de_DE": "Industry",
+		"es_ES": "Industry",
+		"fi_FI": "Industry",
+		"fr_FR": "Industry",
+		"hu_HU": "Industry",
+		"ja_JP": "Industry",
+		"nl_NL": "Industry",
+		"pt_BR": "Industry",
+		"sv_SE": "Industry",
+		"zh_CN": "Industry"
 	},
 	"viewableBy": "Anyone"
 }

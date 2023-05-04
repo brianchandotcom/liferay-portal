@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC015",
 	"name": "Manufacturing",
 	"name_i18n": {
-		"en_US": "Manufacturing"
+		"en_US": "Manufacturing",
+		"ar_SA": "Manufacturing",
+		"ca_ES": "Manufacturing",
+		"de_DE": "Manufacturing",
+		"es_ES": "Manufacturing",
+		"fi_FI": "Manufacturing",
+		"fr_FR": "Manufacturing",
+		"hu_HU": "Manufacturing",
+		"ja_JP": "Manufacturing",
+		"nl_NL": "Manufacturing",
+		"pt_BR": "Manufacturing",
+		"sv_SE": "Manufacturing",
+		"zh_CN": "Manufacturing"
 	},
 	"viewableBy": "Anyone"
 }

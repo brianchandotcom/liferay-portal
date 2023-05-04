@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC012",
 	"name": "Government",
 	"name_i18n": {
-		"en_US": "Government"
+		"en_US": "Government",
+		"ar_SA": "Government",
+		"ca_ES": "Government",
+		"de_DE": "Government",
+		"es_ES": "Government",
+		"fi_FI": "Government",
+		"fr_FR": "Government",
+		"hu_HU": "Government",
+		"ja_JP": "Government",
+		"nl_NL": "Government",
+		"pt_BR": "Government",
+		"sv_SE": "Government",
+		"zh_CN": "Government"
 	},
 	"viewableBy": "Anyone"
 }

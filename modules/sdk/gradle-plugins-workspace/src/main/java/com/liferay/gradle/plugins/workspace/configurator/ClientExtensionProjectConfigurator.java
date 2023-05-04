@@ -616,6 +616,12 @@ public class ClientExtensionProjectConfigurator
 
 		validateClientExtensionIdsTaskProvider.configure(
 			validateClientExtensionIdsTask -> {
+				validateClientExtensionIdsTask.setDescription(
+					"Validates that this project's client extension IDs are " +
+						"unique among all projects.");
+				validateClientExtensionIdsTask.setGroup(
+					LifecycleBasePlugin.VERIFICATION_GROUP);
+
 				validateClientExtensionIdsTask.doFirst(
 					validateClientExtensionIdsTask1 -> {
 						StringBundler sb = new StringBundler();
@@ -655,11 +661,6 @@ public class ClientExtensionProjectConfigurator
 							throw new GradleException(sb.toString());
 						}
 					});
-				validateClientExtensionIdsTask.setDescription(
-					"Validates that this project's client extension IDs are " +
-						"unique among all projects.");
-				validateClientExtensionIdsTask.setGroup(
-					LifecycleBasePlugin.VERIFICATION_GROUP);
 			});
 	}
 

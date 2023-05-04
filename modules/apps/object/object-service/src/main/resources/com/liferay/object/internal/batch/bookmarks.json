@@ -12,7 +12,7 @@
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
 			"featureFlag": "LPS-167253",
-			"onErrorFail": "false",
+			"importStrategy": "ON_ERROR_FAIL",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
 		},

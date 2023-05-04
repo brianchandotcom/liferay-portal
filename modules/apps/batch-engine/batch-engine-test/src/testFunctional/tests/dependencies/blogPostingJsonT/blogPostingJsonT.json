@@ -12,7 +12,7 @@
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "INSERT",
-			"onErrorFail": "false",
+			"importStrategy": "ON_ERROR_FAIL",
 			"siteId": "20119",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"

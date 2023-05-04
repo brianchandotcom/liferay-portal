@@ -220,7 +220,7 @@ public class ObjectRelationshipExtensionProvider
 					objectRelationship, entry.getValue());
 
 			for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
-				nestedObjectEntry = objectEntryManager.addOrUpdateObjectEntry(
+				nestedObjectEntry = objectEntryManager.updateObjectEntry(
 					objectDefinition.getCompanyId(),
 					_getDefaultDTOConverterContext(
 						objectDefinition, getPrimaryKey(entity), null),

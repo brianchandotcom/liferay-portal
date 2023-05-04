@@ -120,29 +120,6 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	@Override
-	public ObjectEntry addOrUpdateObjectEntry(
-			long companyId, DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry, String scopeKey)
-		throws Exception {
-
-		_checkPortletResourcePermission(
-			objectDefinition, scopeKey, dtoConverterContext.getUser(),
-			ActionKeys.UPDATE);
-
-		_salesforceHttp.patch(
-			companyId, getGroupId(objectDefinition, scopeKey),
-			StringBundler.concat(
-				"sobjects/", objectDefinition.getExternalReferenceCode(), "/",
-				externalReferenceCode),
-			_toJSONObject(objectDefinition, objectEntry));
-
-		return getObjectEntry(
-			companyId, dtoConverterContext, externalReferenceCode,
-			objectDefinition, scopeKey);
-	}
-
-	@Override
 	public Object addSystemObjectRelationshipMappingTableValues(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship, long primaryKey1,
@@ -311,6 +288,29 @@ public class SalesforceObjectEntryManagerImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public ObjectEntry updateObjectEntry(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String scopeKey)
+		throws Exception {
+
+		_checkPortletResourcePermission(
+			objectDefinition, scopeKey, dtoConverterContext.getUser(),
+			ActionKeys.UPDATE);
+
+		_salesforceHttp.patch(
+			companyId, getGroupId(objectDefinition, scopeKey),
+			StringBundler.concat(
+				"sobjects/", objectDefinition.getExternalReferenceCode(), "/",
+				externalReferenceCode),
+			_toJSONObject(objectDefinition, objectEntry));
+
+		return getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, scopeKey);
 	}
 
 	private void _checkPortletResourcePermission(

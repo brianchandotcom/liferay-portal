@@ -185,31 +185,6 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
-	public ObjectEntry addOrUpdateObjectEntry(
-			long companyId, DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry, String scopeKey)
-		throws Exception {
-
-		long groupId = getGroupId(objectDefinition, scopeKey);
-
-		ServiceContext serviceContext = _createServiceContext(
-			objectEntry, dtoConverterContext.getUserId());
-
-		serviceContext.setCompanyId(companyId);
-
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition,
-			_objectEntryService.addOrUpdateObjectEntry(
-				externalReferenceCode, groupId,
-				objectDefinition.getObjectDefinitionId(),
-				_toObjectValues(
-					groupId, dtoConverterContext.getUserId(), objectDefinition,
-					objectEntry, 0L, dtoConverterContext.getLocale()),
-				serviceContext));
-	}
-
-	@Override
 	public Object addSystemObjectRelationshipMappingTableValues(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship, long primaryKey1,
@@ -681,6 +656,31 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
+	@Override
+	public ObjectEntry updateObjectEntry(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String scopeKey)
+		throws Exception {
+
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
+		ServiceContext serviceContext = _createServiceContext(
+			objectEntry, dtoConverterContext.getUserId());
+
+		serviceContext.setCompanyId(companyId);
+
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_objectEntryService.addOrUpdateObjectEntry(
+				externalReferenceCode, groupId,
+				objectDefinition.getObjectDefinitionId(),
+				_toObjectValues(
+					groupId, dtoConverterContext.getUserId(), objectDefinition,
+					objectEntry, 0L, dtoConverterContext.getLocale()),
+				serviceContext));
+	}
+
 	private Map<String, String> _addAction(
 			String actionName, String methodName,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
@@ -766,13 +766,11 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship, properties.get(entry.getKey()));
 
 				for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
-					nestedObjectEntry =
-						objectEntryManager.addOrUpdateObjectEntry(
-							objectDefinition.getCompanyId(),
-							dtoConverterContext,
-							nestedObjectEntry.getExternalReferenceCode(),
-							relatedObjectDefinition, nestedObjectEntry,
-							relatedObjectDefinition.getScope());
+					nestedObjectEntry = objectEntryManager.updateObjectEntry(
+						objectDefinition.getCompanyId(), dtoConverterContext,
+						nestedObjectEntry.getExternalReferenceCode(),
+						relatedObjectDefinition, nestedObjectEntry,
+						relatedObjectDefinition.getScope());
 
 					_relateNestedObjectEntry(
 						objectDefinition, objectRelationship, primaryKey,

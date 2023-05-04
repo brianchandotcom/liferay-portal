@@ -199,7 +199,7 @@ public class SalesforceObjectEntryManagerImplTest {
 
 		properties.put("title", title);
 
-		objectEntry = _objectEntryManager.addOrUpdateObjectEntry(
+		objectEntry = _objectEntryManager.updateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
 			objectEntry.getExternalReferenceCode(), _objectDefinition,
 			objectEntry, ObjectDefinitionConstants.SCOPE_COMPANY);

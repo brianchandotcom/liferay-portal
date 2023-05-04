@@ -566,7 +566,7 @@ public class PoshiRunnerExecutor {
 
 					locator = PoshiContext.getPathLocator(
 						pathClassName + "#" + locatorKey,
-						PoshiGetterUtil.
+						_poshiStackTrace.
 							getNamespaceFromNamespacedClassCommandName(
 								locator));
 

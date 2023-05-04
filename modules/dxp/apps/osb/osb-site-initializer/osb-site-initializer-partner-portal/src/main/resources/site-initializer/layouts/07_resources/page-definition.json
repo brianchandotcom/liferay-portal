@@ -76,8 +76,7 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"ar_SA": "Partner Resources",
@@ -117,8 +116,7 @@
 										"width": "100%"
 									},
 									"widgetInstance": {
-										"widgetConfig": {
-										},
+										"widgetConfig": {},
 										"widgetName": "com_liferay_portal_search_web_portlet_SearchPortlet"
 									}
 								},
@@ -143,13 +141,11 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								}
 							],
 							"verticalAlignment": "top"
@@ -165,13 +161,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
@@ -182,6 +176,7 @@
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "#F7F7F8",
+												"borderWidth": "0",
 												"paddingBottom": "4",
 												"paddingLeft": "4",
 												"paddingRight": "4",
@@ -216,23 +211,22 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "filters",
+																		"sv_SE": "filters",
+																		"pt_BR": "filters",
+																		"fr_FR": "filters",
+																		"ja_JP": "filters",
 																		"ca_ES": "filters",
 																		"de_DE": "filters",
+																		"hu_HU": "filters",
+																		"ar_SA": "filters",
+																		"fi_FI": "filters",
 																		"en_US": "filters",
 																		"es_ES": "filters",
-																		"fi_FI": "filters",
-																		"fr_FR": "filters",
-																		"hu_HU": "filters",
-																		"ja_JP": "filters",
-																		"nl_NL": "filters",
-																		"pt_BR": "filters",
-																		"sv_SE": "filters",
-																		"zh_CN": "filters"
+																		"zh_CN": "filters",
+																		"nl_NL": "filters"
 																	}
 																}
 															}
@@ -253,9 +247,9 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
+															"federatedSearchKey": "",
 															"allowEmptySearches": "true",
-															"basicFacetSelection": "false",
-															"federatedSearchKey": ""
+															"basicFacetSelection": "false"
 														},
 														"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 													}
@@ -269,13 +263,13 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"assetTypes": "com.liferay.document.library.kernel.model.DLFileEntry",
 															"displayStyle": "default",
-															"displayStyleGroupId": "[$GROUP_ID$]",
-															"frequenciesVisible": "true",
+															"assetTypes": "com.liferay.document.library.kernel.model.DLFileEntry",
 															"frequencyThreshold": "1",
-															"order": "count:desc",
-															"parameterName": "type"
+															"frequenciesVisible": "true",
+															"parameterName": "type",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"order": "count:desc"
 														},
 														"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
 													}
@@ -287,6 +281,7 @@
 													"fragmentStyle": {
 														"backgroundColor": "#ffffff",
 														"borderRadius": "borderRadiusSm",
+														"borderWidth": "0",
 														"marginBottom": "3"
 													},
 													"indexed": true,
@@ -309,287 +304,14 @@
 														"definition": {
 															"widgetInstance": {
 																"widgetConfig": {
+																	"vocabularyIds": "",
 																	"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"frequenciesVisible": "true",
-																	"frequencyThreshold": "1",
 																	"maxTerms": "10",
-																	"order": "count:desc",
-																	"parameterName": "Document Type",
-																	"vocabularyIds": "[$TAXONOMY_CATEGORY_ID:document-type$]"
-																},
-																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-															}
-														},
-														"type": "Widget"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#ffffff",
-														"borderRadius": "borderRadiusSm",
-														"marginBottom": "3"
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 1,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"widgetInstance": {
-																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"frequenciesVisible": "true",
 																	"frequencyThreshold": "1",
-																	"maxTerms": "10",
-																	"order": "count:desc",
-																	"parameterName": "Content Type",
-																	"vocabularyIds": "[$TAXONOMY_CATEGORY_ID:Content Type$]"
-																},
-																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-															}
-														},
-														"type": "Widget"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#ffffff"
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderRadius": "borderRadiusSm",
-																"marginBottom": "3"
-															},
-															"widgetInstance": {
-																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"frequenciesVisible": "true",
-																	"frequencyThreshold": "1",
-																	"maxTerms": "10",
-																	"order": "count:desc",
-																	"parameterName": "Industry",
-																	"vocabularyIds": "[$TAXONOMY_CATEGORY_ID:Industry$]"
-																},
-																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-															}
-														},
-														"type": "Widget"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#ffffff"
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderRadius": "borderRadiusSm",
-																"marginBottom": "3"
-															},
-															"widgetInstance": {
-																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
+																	"parameterName": "filters",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"frequenciesVisible": "true",
-																	"frequencyThreshold": "1",
-																	"maxTerms": "10",
-																	"order": "count:desc",
-																	"parameterName": "Use Case",
-																	"vocabularyIds": "[$TAXONOMY_CATEGORY_ID:Use Case$]"
-																},
-																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-															}
-														},
-														"type": "Widget"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#ffffff"
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderRadius": "borderRadiusSm",
-																"marginBottom": "3"
-															},
-															"widgetInstance": {
-																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"frequenciesVisible": "true",
-																	"frequencyThreshold": "1",
-																	"maxTerms": "10",
-																	"order": "count:desc",
-																	"parameterName": "Product",
-																	"vocabularyIds": "[$TAXONOMY_CATEGORY_ID:Product$]"
-																},
-																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-															}
-														},
-														"type": "Widget"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#ffffff"
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderRadius": "borderRadiusSm",
-																"marginBottom": "3"
-															},
-															"widgetInstance": {
-																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"frequenciesVisible": "true",
-																	"frequencyThreshold": "1",
-																	"maxTerms": "10",
-																	"order": "count:desc",
-																	"parameterName": "Language",
-																	"vocabularyIds": "[$TAXONOMY_CATEGORY_ID:Language$]"
-																},
-																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-															}
-														},
-														"type": "Widget"
-													}
-												],
-												"type": "Section"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#ffffff"
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderRadius": "borderRadiusSm"
-															},
-															"widgetInstance": {
-																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_CATEGORY-FACET-VOCABULARY-FTL",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"frequenciesVisible": "true",
-																	"frequencyThreshold": "1",
-																	"maxTerms": "10",
-																	"order": "count:desc",
-																	"parameterName": "Role",
-																	"vocabularyIds": "[$TAXONOMY_CATEGORY_ID:Role$]"
+																	"order": "count:desc"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
@@ -615,13 +337,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],

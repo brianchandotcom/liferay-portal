@@ -22,6 +22,8 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -106,7 +108,9 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onBeforeRemove(T baseModel) throws ModelListenerException {
-		try {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 					_getCompanyId(baseModel), _modelClass.getName());
@@ -146,7 +150,9 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 			String objectActionTriggerKey, T originalBaseModel, T baseModel)
 		throws ModelListenerException {
 
-		try {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 					_getCompanyId(baseModel), _modelClass.getName());

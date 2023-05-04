@@ -895,12 +895,12 @@ public class ClientExtensionProjectConfigurator
 		}
 	}
 
-	private void _validateClientExtensionIds(Project curProject)
+	private void _validateClientExtensionIds(Project project)
 		throws GradleException {
 
 		StringBundler sb = new StringBundler();
 
-		File rootDir = curProject.getRootDir();
+		File rootDir = project.getRootDir();
 
 		Path rootDirPath = rootDir.toPath();
 
@@ -909,13 +909,13 @@ public class ClientExtensionProjectConfigurator
 
 			Set<Project> value = stringSetEntry.getValue();
 
-			if ((value.size() > 1) && value.contains(curProject)) {
+			if ((value.size() > 1) && value.contains(project)) {
 				sb.append("Duplicate client extension ID \"");
 				sb.append(stringSetEntry.getKey());
 				sb.append("\" found in these projects:\n");
 
-				for (Project project : value) {
-					File projectDir = project.getProjectDir();
+				for (Project curProject : value) {
+					File projectDir = curProject.getProjectDir();
 
 					sb.append(rootDirPath.relativize(projectDir.toPath()));
 

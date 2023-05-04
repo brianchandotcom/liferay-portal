@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMV004",
 	"name": "Product",
 	"name_i18n": {
-		"en_US": "Product"
+		"en_US": "Product",
+		"ar_SA": "Product",
+		"ca_ES": "Product",
+		"de_DE": "Product",
+		"es_ES": "Product",
+		"fi_FI": "Product",
+		"fr_FR": "Product",
+		"hu_HU": "Product",
+		"ja_JP": "Product",
+		"nl_NL": "Product",
+		"pt_BR": "Product",
+		"sv_SE": "Product",
+		"zh_CN": "Product"
 	},
 	"viewableBy": "Anyone"
 }

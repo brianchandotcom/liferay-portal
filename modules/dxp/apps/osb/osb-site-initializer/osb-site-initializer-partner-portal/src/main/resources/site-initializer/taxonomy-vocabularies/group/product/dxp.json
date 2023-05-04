@@ -2,7 +2,19 @@
 	"externalReferenceCode": "PRMC007",
 	"name": "DXP",
 	"name_i18n": {
-		"en_US": "DXP"
+		"en_US": "DXP",
+		"ar_SA": "DXP",
+		"ca_ES": "DXP",
+		"de_DE": "DXP",
+		"es_ES": "DXP",
+		"fi_FI": "DXP",
+		"fr_FR": "DXP",
+		"hu_HU": "DXP",
+		"ja_JP": "DXP",
+		"nl_NL": "DXP",
+		"pt_BR": "DXP",
+		"sv_SE": "DXP",
+		"zh_CN": "DXP"
 	},
 	"viewableBy": "Anyone"
 }

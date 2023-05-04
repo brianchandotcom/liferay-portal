@@ -80,6 +80,8 @@ type Cart = {
 	paymentMethod: string;
 	purchaseOrderNumber?: string;
 	shippingAddress: BillingAddress;
+	orderTypeExternalReferenceCode: string;
+	orderTypeId: number;
 };
 
 type CartItem = {
@@ -306,7 +308,12 @@ type SKU = {
 	skuOptions: {key: string; value: string}[];
 };
 
-type Specification = {
+type ProductSpecification = {
+	id: number;
+	optionCategoryId: number;
+	priority: number;
+	productId: number;
+	specificationId: number;
 	specificationKey: string;
 	value: {[key: string]: string};
 };

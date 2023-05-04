@@ -27,8 +27,6 @@ import {
 import {
 	AccountBriefProps,
 	MemberProps,
-	ProductResponseProps,
-	ProductSpecificationProps,
 	UserAccountProps,
 	customerRoles,
 	initialDashboardNavigationItems,
@@ -155,12 +153,11 @@ export function PublishedAppsDashboardPage() {
 	};
 
 	function getAppListProductSpecifications(productIds: number[]) {
-		const appListProductSpecifications: Promise<ProductSpecificationProps>[] =
-			[];
+		const appListProductSpecifications: ProductSpecification[][] = [];
 
-		productIds.forEach((productId) => {
+		productIds.forEach(async (productId) => {
 			appListProductSpecifications.push(
-				getProductSpecifications({appProductId: productId})
+				await getProductSpecifications({appProductId: productId})
 			);
 		});
 
@@ -178,19 +175,19 @@ export function PublishedAppsDashboardPage() {
 	}
 
 	function getProductTypeFromSpecifications(
-		specifications: ProductSpecificationProps
+		specifications: ProductSpecification[]
 	) {
 		let productType = 'no type';
 
-		specifications.items.forEach((specification: Specification) => {
+		specifications.forEach((specification: ProductSpecification) => {
 			if (specification.specificationKey === 'type') {
 				productType = specification.value.en_US;
 
 				if (productType === 'cloud') {
 					productType = 'Cloud';
 				}
-				else if (productType === 'osgi') {
-					productType = 'OSGI';
+				else if (productType === 'dxp') {
+					productType = 'DXP';
 				}
 			}
 		});

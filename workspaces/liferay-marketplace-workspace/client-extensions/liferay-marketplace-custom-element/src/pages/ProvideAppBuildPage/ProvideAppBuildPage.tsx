@@ -116,11 +116,11 @@ export function ProvideAppBuildPage({
 						icon={cancelIcon}
 						onChange={() => {
 							dispatch({
-								payload: {id: appType.id, value: 'osgi'},
+								payload: {id: appType.id, value: 'dxp'},
 								type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
 							});
 						}}
-						selected={appType.value === 'osgi'}
+						selected={appType.value === 'dxp'}
 						title="No"
 						tooltip="More Info"
 					/>

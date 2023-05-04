@@ -78,14 +78,6 @@ export type ProductResponseProps = {
 	workflowStatusInfo: {label: string};
 };
 
-export type ProductSpecificationProps = {
-	id: number;
-	items: [];
-	productId: number;
-	specificationKey: string;
-	value: {};
-};
-
 export const publisherRoles = ['Account Administrator', 'App Editor'];
 
 export type RoleBriefProps = {

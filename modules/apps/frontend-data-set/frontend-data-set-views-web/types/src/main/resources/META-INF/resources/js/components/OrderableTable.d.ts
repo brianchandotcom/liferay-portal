@@ -12,6 +12,8 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import '../../css/OrderableTable.scss';
 interface OrderableTableInterface {
 	disableSave?: boolean;

@@ -1372,10 +1372,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-164948=true";
 
 		task ("Given: A notification template related to Custom Object that contains a Notification action") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				entryTo = "test@liferay.com",
@@ -1442,10 +1439,7 @@ definition {
 		}
 
 		task ("Then: The action is triggered and the notification is sent") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
+			Notifications.goToNotificationQueueAdmin();
 
 			AssertElementPresent(
 				key_objectName = "CustomObject176849",

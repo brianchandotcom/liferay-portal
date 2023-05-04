@@ -41,10 +41,7 @@ definition {
 		}
 
 		task ("And given a notification template is created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				fromAddress = "test@liferay",
@@ -134,10 +131,7 @@ definition {
 		}
 
 		task ("And given a notification template is created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				fromAddress = "test@liferay",
@@ -171,10 +165,7 @@ definition {
 	@priority = 3
 	test CanDeleteEmailTemplate {
 		task ("Go to Templates and add a new Notification Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -205,10 +196,7 @@ definition {
 	@priority = 4
 	test CanDeleteNotification {
 		task ("Given a notification template is created") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -268,10 +256,7 @@ definition {
 		}
 
 		task ("When the notification is generated and then deleted") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
+			Notifications.goToNotificationQueueAdmin();
 
 			ObjectNotifications.deleteQueue(
 				status = "Unsent",
@@ -289,10 +274,7 @@ definition {
 	@priority = 3
 	test CanEditEmailTemplate {
 		task ("Given a user creates an email notification template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -336,10 +318,7 @@ definition {
 	@priority = 3
 	test CanSearchForNotifications {
 		task ("Go to Templates and add Notification Templates") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			for (var templateName : list "Test,Liferay,Site") {
 				ObjectNotifications.addNewNotificationTemplate(
@@ -388,10 +367,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to Templates and add a new Notification Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -467,10 +443,7 @@ definition {
 		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionDelete";
 
 		task ("Given an Email Notification Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -548,10 +521,7 @@ definition {
 		}
 
 		task ("Then the Action is triggered and a sent email is seen in the Notification Queue") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
+			Notifications.goToNotificationQueueAdmin();
 
 			AssertElementPresent(
 				key_entryLabel = "CustomObject178781",
@@ -655,10 +625,7 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -742,10 +709,7 @@ definition {
 		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionUpdate";
 
 		task ("Given an Email Notification Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -825,10 +789,7 @@ definition {
 		}
 
 		task ("Then the Action is triggered and a sent email is seen in the Notification Queue") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
+			Notifications.goToNotificationQueueAdmin();
 
 			AssertElementPresent(
 				key_entryLabel = "CustomObject178782",
@@ -865,10 +826,7 @@ definition {
 		}
 
 		task ("And given an email notification template with the applicable fields filled with the Author and Current User terms") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -926,10 +884,7 @@ definition {
 		}
 
 		task ("Then the email is received with the terms replaced with the correct values") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
+			Notifications.goToNotificationQueueAdmin();
 
 			AssertTextPresent(value1 = "userfn");
 
@@ -945,10 +900,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given an email notification template with the applicable fields filled with the Author and Current User terms") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
+			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
 				emailBody = "Email Body",
@@ -1003,10 +955,7 @@ definition {
 		}
 
 		task ("Then the email is received with the terms replaced with the correct values") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
+			Notifications.goToNotificationQueueAdmin();
 
 			AssertTextPresent(value1 = "edituserln");
 
@@ -1092,10 +1041,7 @@ definition {
 		}
 
 		task ("Then a user notification is sent with the terms replaced with the correct values") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Queue");
+			Notifications.goToNotificationQueueAdmin();
 
 			AssertTextPresent(value1 = "userea@liferay.com userfn userln Entry Test Edited");
 		}

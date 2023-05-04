@@ -16,10 +16,9 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewSectionInterface} from '../FDSView';
@@ -35,22 +34,17 @@ interface Field {
 	type: string;
 }
 
-interface FDSSortType {
+interface FDSSort {
+	fieldName: string;
 	id: number;
-	name: string;
-	value: string;
+	sorting: string;
 }
 
-interface SortingType {
-	label: string;
-	value: string;
-}
-
-interface AddFDSSortingModalContentInterface {
+interface AddFDSSortModalContentInterface {
 	closeModal: Function;
 	fdsView: FDSViewType;
 	fields: Field[];
-	onSave: Function;
+	onSave: (newSort: FDSSort) => void;
 }
 
 const SORTING = {
@@ -66,16 +60,67 @@ const SORTING = {
 
 const SORTING_OPTIONS = [SORTING.ASCENDING, SORTING.DESCENDING];
 
-const AddFDSSortingModalContent = ({
+function alertFailed() {
+	openToast({
+		message: Liferay.Language.get('your-request-failed-to-complete'),
+		type: 'danger',
+	});
+}
+
+function alertSuccess() {
+	openToast({
+		message: Liferay.Language.get('your-request-completed-successfully'),
+		type: 'success',
+	});
+}
+
+const AddFDSSortModalContent = ({
 	closeModal,
 	fdsView,
 	fields,
 	onSave,
-}: AddFDSSortingModalContentInterface) => {
+}: AddFDSSortModalContentInterface) => {
 	const [selectedField, setSelectedField] = useState<string>();
 	const [selectedSorting, setSelectedSorting] = useState<string>(
 		SORTING.ASCENDING.value
 	);
+
+	const handleSave = async () => {
+		const field = fields.find((item: Field) => item.name === selectedField);
+
+		if (!field) {
+			alertFailed();
+
+			return null;
+		}
+
+		const response = await fetch(API_URL.FDS_SORTS, {
+			body: JSON.stringify({
+				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT_ID]: fdsView.id,
+				fieldName: selectedField,
+				sorting: selectedSorting,
+			}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			method: 'POST',
+		});
+
+		if (!response.ok) {
+			alertFailed();
+
+			return null;
+		}
+
+		const responseJSON = await response.json();
+
+		alertSuccess();
+
+		onSave(responseJSON);
+
+		closeModal();
+	};
 
 	return (
 		<div className="fds-view-fields-modal">
@@ -144,11 +189,7 @@ const AddFDSSortingModalContent = ({
 
 						<ClayButton
 							disabled={!selectedField}
-							onClick={() => {
-								closeModal();
-
-								onSave();
-							}}
+							onClick={handleSave}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
@@ -161,54 +202,62 @@ const AddFDSSortingModalContent = ({
 
 const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 	const [fields, setFields] = React.useState<Field[]>([]);
-	const [fdsSorting, setFDSSorting] = useState<Array<FDSSortType> | null>(
-		null
-	);
+	const [fdsSorts, setFDSSorts] = useState<Array<FDSSort>>([]);
+	const [newFDSSortsOrder, setNewFDSSortsOrder] = React.useState<string>('');
 
-	const fdsSortingRef = useRef('');
+	useEffect(() => {
+		const getFDSSort = async () => {
+			const response = await fetch(
+				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT}`
+			);
 
-	const getFDSSorting = async () => {
-		const response = await fetch(
-			`${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}`
-		);
+			const responseJSON = await response.json();
 
-		if (!response.ok) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			let fdsSortsOrdered = responseJSON[
+				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT
+			] as FDSSort[];
 
-			return null;
-		}
+			if (fdsView.fdsSortsOrder) {
+				const order = fdsView.fdsSortsOrder.split(',');
 
-		const responseJSON = await response.json();
+				let notOrdered: FDSSort[] = [];
 
-		const storedFDSSorting = responseJSON?.items;
+				if (fdsSortsOrdered.length > order.length) {
+					notOrdered = fdsSortsOrdered.filter(
+						(filter) => !order.includes(String(filter.id))
+					);
+				}
 
-		if (!storedFDSSorting) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+				fdsSortsOrdered = fdsView.fdsSortsOrder
+					.split(',')
+					.map((fdsSortId) =>
+						fdsSortsOrdered.find(
+							(fdsSort) => fdsSort.id === Number(fdsSortId)
+						)
+					)
+					.filter(Boolean) as FDSSort[];
 
-			return null;
-		}
+				fdsSortsOrdered = [...fdsSortsOrdered, ...notOrdered];
+			}
 
-		// @TODO: Get persisted sorting values.
+			setFDSSorts(fdsSortsOrdered);
+		};
 
-		setFDSSorting([]);
-	};
+		getFDSSort();
+
+		getFields(fdsView).then((newFields) => {
+			if (newFields) {
+				setFields(newFields);
+			}
+		});
+	}, [fdsView]);
 
 	const updateFDSFieldsOrder = async () => {
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsFieldsOrder: fdsSortingRef.current,
+					fdsSortsOrder: newFDSSortsOrder,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -219,57 +268,33 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 		);
 
 		if (!response.ok) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			alertFailed();
 
 			return null;
 		}
 
 		const responseJSON = await response.json();
 
-		const fdsFieldsOrder = responseJSON?.fdsFieldsOrder;
+		const fdsSortsOrder = responseJSON?.fdsSortsOrder;
 
-		if (fdsFieldsOrder && fdsFieldsOrder === fdsSortingRef.current) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-completed-successfully'
-				),
-				type: 'success',
-			});
-		} else {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+		if (fdsSortsOrder && fdsSortsOrder === newFDSSortsOrder) {
+			alertSuccess();
+
+			setNewFDSSortsOrder('');
+		}
+		else {
+			alertFailed();
 		}
 	};
-
-	useEffect(() => {
-		getFDSSorting();
-
-		getFields(fdsView).then((newFields) => {
-			if (newFields) {
-				setFields(newFields);
-			}
-		});
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	const onCreationButtonClick = () =>
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFDSSortingModalContent
+				<AddFDSSortModalContent
 					closeModal={closeModal}
 					fdsView={fdsView}
 					fields={fields}
-					onSave={() => getFDSSorting()}
+					onSave={(newSort) => setFDSSorts([...fdsSorts, newSort])}
 				/>
 			),
 		});
@@ -282,45 +307,36 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 				)}
 			</ClayAlert>
 
-			{fdsSorting ? (
-				<OrderableTable
-					fields={[
-						{
-							label: Liferay.Language.get('name'),
-							name: 'name',
-						},
-						{
-							label: Liferay.Language.get('value'),
-							name: 'value',
-						},
-					]}
-					items={fdsSorting}
-					noItemsButtonLabel={Liferay.Language.get(
-						'new-default-sort'
-					)}
-					noItemsDescription={Liferay.Language.get(
-						'start-creating-a-sort-to-display-specific-data'
-					)}
-					noItemsTitle={Liferay.Language.get(
-						'no-default-sort-created-yet'
-					)}
-					onCancelButtonClick={() => navigate(fdsViewsURL)}
-					onCreationButtonClick={onCreationButtonClick}
-					onOrderChange={({
-						orderedItems,
-					}: {
-						orderedItems: Array<FDSSortType>;
-					}) => {
-						fdsSortingRef.current = orderedItems
-							.map((item) => item.id)
-							.join(',');
-					}}
-					onSaveButtonClick={() => updateFDSFieldsOrder}
-					title={Liferay.Language.get('sorting')}
-				/>
-			) : (
-				<ClayLoadingIndicator />
-			)}
+			<OrderableTable
+				disableSave={!newFDSSortsOrder.length}
+				fields={[
+					{
+						label: Liferay.Language.get('name'),
+						name: 'fieldName',
+					},
+					{
+						label: Liferay.Language.get('value'),
+						name: 'sorting',
+					},
+				]}
+				items={fdsSorts}
+				noItemsButtonLabel={Liferay.Language.get('new-default-sort')}
+				noItemsDescription={Liferay.Language.get(
+					'start-creating-a-sort-to-display-specific-data'
+				)}
+				noItemsTitle={Liferay.Language.get(
+					'no-default-sort-created-yet'
+				)}
+				onCancelButtonClick={() => navigate(fdsViewsURL)}
+				onCreationButtonClick={onCreationButtonClick}
+				onOrderChange={({orderedItems}: {orderedItems: FDSSort[]}) => {
+					setNewFDSSortsOrder(
+						orderedItems.map((fdsSort) => fdsSort.id).join(',')
+					);
+				}}
+				onSaveButtonClick={updateFDSFieldsOrder}
+				title={Liferay.Language.get('sorting')}
+			/>
 		</ClayLayout.ContainerFluid>
 	);
 };

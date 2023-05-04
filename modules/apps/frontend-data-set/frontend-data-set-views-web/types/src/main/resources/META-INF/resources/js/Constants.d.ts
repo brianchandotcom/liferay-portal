@@ -17,6 +17,7 @@ declare const API_URL: {
 	FDS_DYNAMIC_FILTERS: string;
 	FDS_ENTRIES: string;
 	FDS_FIELDS: string;
+	FDS_SORTS: string;
 	FDS_VIEWS: string;
 };
 declare const FUZZY_OPTIONS: {
@@ -32,6 +33,8 @@ declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_VIEW_FDS_DYNAMIC_FILTER_ID: 'r_fdsViewFDSDynamicFilterRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship';
 	readonly FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship';
+	readonly FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId';
 };
 declare const PAGINATION_PROPS: {
 	pagination: {

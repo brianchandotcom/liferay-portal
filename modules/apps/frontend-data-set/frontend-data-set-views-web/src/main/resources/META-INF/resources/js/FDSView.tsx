@@ -84,7 +84,8 @@ const FDSView = ({fdsViewId, fdsViewsURL, namespace}: FDSViewInterface) => {
 				setFDSView(responseJSON);
 
 				setLoading(false);
-			} else {
+			}
+			else {
 				openToast({
 					message: Liferay.Language.get(
 						'your-request-failed-to-complete'

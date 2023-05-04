@@ -33,6 +33,7 @@ type FDSViewType = {
 	description: string;
 	externalReferenceCode: string;
 	fdsFiltersOrder: string;
+	fdsSortsOrder: string;
 	id: string;
 	label: string;
 	listOfItemsPerPage: string;

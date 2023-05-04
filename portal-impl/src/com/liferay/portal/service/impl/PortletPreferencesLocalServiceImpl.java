@@ -152,9 +152,7 @@ public class PortletPreferencesLocalServiceImpl
 					"}"));
 		}
 
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
-
+		try {
 			portletPreferences = portletPreferencesPersistence.update(
 				portletPreferences);
 		}
@@ -543,10 +541,33 @@ public class PortletPreferencesLocalServiceImpl
 			Portlet portlet = _portletLocalService.fetchPortletById(
 				companyId, portletId);
 
-			portletPreferences =
-				portletPreferencesLocalService.addPortletPreferences(
-					companyId, ownerId, ownerType, plid, portletId, portlet,
-					defaultPreferences);
+			long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
+			if (ctCollectionId !=
+					CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION) {
+
+				if (plid == PortletKeys.PREFS_PLID_SHARED) {
+					ctCollectionId =
+						CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION;
+				}
+				else {
+					Layout layout = _layoutPersistence.fetchByPrimaryKey(plid);
+
+					if (layout != null) {
+						ctCollectionId = layout.getCtCollectionId();
+					}
+				}
+			}
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollectionId)) {
+
+				portletPreferences =
+					portletPreferencesLocalService.addPortletPreferences(
+						companyId, ownerId, ownerType, plid, portletId, portlet,
+						defaultPreferences);
+			}
 		}
 
 		return _portletPreferenceValueLocalService.getPreferences(

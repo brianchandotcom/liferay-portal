@@ -182,7 +182,7 @@
 </tr>
 <tr>
 	<td>MODAL_INFO</td>
-	<td>//div[contains(@class, 'portlet-content')]/parent::div//*[contains(text(), '${key_text}')]</td>
+	<td>//div[contains(@class, 'modal-content')]/parent::div//*[contains(text(), '${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

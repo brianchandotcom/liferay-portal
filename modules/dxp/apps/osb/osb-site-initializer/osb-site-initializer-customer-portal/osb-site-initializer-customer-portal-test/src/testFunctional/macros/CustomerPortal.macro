@@ -759,6 +759,10 @@ definition {
 	}
 
 	macro viewActivationStatusCardChange {
+		if (!(isSet(subtitle))) {
+			var subtitle = "";
+		}
+
 		AssertElementPresent(
 			key_text = ${subtitle},
 			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");

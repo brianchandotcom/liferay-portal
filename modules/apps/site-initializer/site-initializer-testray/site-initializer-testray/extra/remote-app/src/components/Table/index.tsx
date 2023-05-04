@@ -149,7 +149,11 @@ const Table: React.FC<TableProps> = ({
 										className={classNames({
 											'cursor-pointer': column.sorteable,
 										})}
-										onClick={() => changeSort(column.key)}
+										onClick={() => {
+											if (column.sorteable) {
+												changeSort(column.key);
+											}
+										}}
 									>
 										{column.value}
 									</span>

@@ -586,7 +586,7 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
-		_validateEncryptedEncryptedObjectFieldProperties(
+		_validateEncryptedObjectFieldProperties(
 			businessType, newObjectField.getObjectDefinitionId());
 		_validateExternalReferenceCode(
 			externalReferenceCode, newObjectField.getObjectFieldId(),
@@ -721,7 +721,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		_validateEncryptedEncryptedObjectFieldProperties(
+		_validateEncryptedObjectFieldProperties(
 			businessType, objectDefinitionId);
 		_validateExternalReferenceCode(
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
@@ -1017,7 +1017,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
-	private void _validateEncryptedEncryptedObjectFieldProperties(
+	private void _validateEncryptedObjectFieldProperties(
 			String businessType, long objectDefinitionId)
 		throws PortalException {
 
@@ -1029,13 +1029,13 @@ public class ObjectFieldLocalServiceImpl
 
 		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
 			throw new RequiredEncryptedObjectFieldPropertyException(
-				"Missing property" +
+				"Missing property, " +
 					PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 		}
 
 		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_KEY)) {
 			throw new RequiredEncryptedObjectFieldPropertyException(
-				"Missing property" + PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY);
+				"Missing property, " + PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY);
 		}
 
 		if (PropsValues.OBJECT_FIELD_ENCRYPTION_RESTRICTED) {

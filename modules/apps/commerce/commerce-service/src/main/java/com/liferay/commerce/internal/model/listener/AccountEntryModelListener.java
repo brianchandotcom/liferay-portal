@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.account.exception.CommerceAccountOrdersException;
+import com.liferay.commerce.exception.CommerceAccountOrdersException;
 import com.liferay.commerce.internal.search.CommerceOrderBatchReindexer;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalService;

@@ -21,14 +21,14 @@ exports[`Modal renders markup based on given configuration 1`] = `
       id="abcd"
     >
       <div
-        aria-labelledby="clay-modal-label-1"
-        aria-modal="true"
         class="modal-dialog modal-lg"
-        role="dialog"
-        tabindex="-1"
       >
         <div
+          aria-labelledby="clay-modal-label-1"
+          aria-modal="true"
           class="modal-content"
+          role="dialog"
+          tabindex="-1"
         >
           <div
             class="modal-header"

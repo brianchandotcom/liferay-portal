@@ -2440,7 +2440,87 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-11289. Quick add-to-cart works properly when one product is without an SKU"
+	@description = "This is a test for COMMERCE-11289. Quick add-to-cart works properly when a product has only expired SKUs"
+	@priority = 5
+	test CanUseQuickAddToCartWhenOneProductHasExpiredSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a product has only expired SKUs") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Calipers");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.addSKU(
+				noOption = "true",
+				optionValuesList = "BLACK:10.0");
+
+			Click(
+				key_value = "BLACKSKU",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Delete");
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "Expired");
+
+			AssertElementNotPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "Approved");
+		}
+
+		task ("And an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer user opens the minicart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			Button.click(button = "Yes");
+		}
+
+		task ("When the user searches for a SKU on the quick add-to-cart") {
+			Type(
+				locator1 = "Publications#KEYWORD_TEXTFIELD",
+				value1 = "MIN93015");
+		}
+
+		task ("Then results are shown") {
+			AssertElementPresent(
+				key_productSku = "MIN93015",
+				locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11289. Quick add-to-cart works properly when one product is without SKUs"
 	@priority = 5
 	test CanUseQuickAddToCartWhenOneProductHasNoSKU {
 		property portal.acceptance = "true";
@@ -2495,7 +2575,7 @@ definition {
 			Button.click(button = "Yes");
 		}
 
-		task ("When the user searches for an SKU on the quick add-to-cart") {
+		task ("When the user searches for a SKU on the quick add-to-cart") {
 			Type(
 				locator1 = "Publications#KEYWORD_TEXTFIELD",
 				value1 = "MIN93015");

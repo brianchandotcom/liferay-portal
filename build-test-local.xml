@@ -199,6 +199,49 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		</gradle-execute>
 	</target>
 
+	<target name="setup-portal-cluster">
+		<if>
+			<isset property="node.count" />
+			<then>
+				<condition property="non.numeric">
+					<matches pattern="[^0-9]" string="${node.count}" />
+				</condition>
+
+				<fail if="non.numeric" message="node.count property must be a number" />
+
+				<math
+					datatype="int"
+					operand1="${node.count}"
+					operand2="1"
+					operation="-"
+					result="app.server.bundles.size"
+				/>
+
+				<property name="app.server.bundles.size" value="${app.server.bundles.size}" />
+			</then>
+			<else>
+				<property name="app.server.bundles.size" value="1" />
+			</else>
+		</if>
+
+		<property name="cluster.enabled" value="true" />
+
+		<antcall target="prepare-portal-ext-properties" />
+
+		<if>
+			<not>
+				<equals arg1="${app.server.bundles.size}" arg2="0" />
+			</not>
+			<then>
+				<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+
+				<prepare-additional-bundles />
+			</then>
+		</if>
+
+		<prepare-test-cluster-properties />
+	</target>
+
 	<target name="setup-release-bundle">
 		<if>
 			<not>

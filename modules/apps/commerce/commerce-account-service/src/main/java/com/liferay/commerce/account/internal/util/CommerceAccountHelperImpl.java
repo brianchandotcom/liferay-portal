@@ -328,21 +328,31 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 				if (accountEntry == null) {
 					User user = _userLocalService.getUser(userId);
 
-					ServiceContext serviceContext = new ServiceContext();
+					if (user.isGuestUser()) {
+						accountEntry =
+							_accountEntryLocalService.getGuestAccountEntry(
+								commerceChannel.getCompanyId());
+					}
+					else {
+						ServiceContext serviceContext = new ServiceContext();
 
-					serviceContext.setCompanyId(user.getCompanyId());
-					serviceContext.setUserId(userId);
+						serviceContext.setCompanyId(user.getCompanyId());
+						serviceContext.setUserId(userId);
 
-					accountEntry = _accountEntryLocalService.addAccountEntry(
-						userId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-						user.getFullName(), null, null, user.getEmailAddress(),
-						null, StringPool.BLANK,
-						AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
-						WorkflowConstants.STATUS_APPROVED, serviceContext);
+						accountEntry =
+							_accountEntryLocalService.addAccountEntry(
+								userId,
+								AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+								user.getFullName(), null, null,
+								user.getEmailAddress(), null, StringPool.BLANK,
+								AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
+								WorkflowConstants.STATUS_APPROVED,
+								serviceContext);
 
-					addAccountEntryUserRel(
-						accountEntry.getAccountEntryId(), userId,
-						serviceContext);
+						addAccountEntryUserRel(
+							accountEntry.getAccountEntryId(), userId,
+							serviceContext);
+					}
 				}
 			}
 

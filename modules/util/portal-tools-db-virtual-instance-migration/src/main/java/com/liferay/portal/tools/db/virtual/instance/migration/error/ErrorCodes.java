@@ -27,6 +27,8 @@ public class ErrorCodes {
 
 	public static final int DESTINATION_NOT_DEFAULT = 13;
 
+	public static final int SOURCE_MULTI_INSTANCES = 14;
+
 	public static final int SUCCESS = 0;
 
 	public static final int UNEXPECTED_ERROR = 255;

@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>PAGE_TITLE</td>
-	<td>//h1[text()='${key_title}']</td>
+	<td>//*[text()='${key_title}']</td>
 	<td></td>
 </tr>
 <tr>

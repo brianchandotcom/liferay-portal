@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>CP2HomePage</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CP2HomePage</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>COOKIE_LINK</td>
+	<td>//h6[contains(@class, 'component-text')]//a[contains(@href, 'cookie-policy') and contains(text(), 'Cookie policy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_OPTIONS</td>
+	<td>//*[contains(@class, 'dropdown-item')]//*[contains(text(), '${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-toggle')]/descendant::span//*[contains(@class, 'lexicon-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_PAGE</td>
+	<td>//*[contains(@class,'customer-portal')]//*[contains(text(), '${key_title}')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

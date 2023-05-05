@@ -95,6 +95,13 @@ definition {
 			locator1 = "RaylifeAP#KEBAB_OPTION");
 	}
 
+	macro clickInApplicationNumber {
+		Click(
+			key_product = ${product},
+			key_status = ${status},
+			locator1 = "RaylifeAP#APPLICATIONS_NUMBER_WITH_STATUS");
+	}
+
 	macro clickOnAllAplications {
 		Button.click(button = "All Applications");
 	}
@@ -280,9 +287,10 @@ definition {
 			userEmailAddress = ${email},
 			userPassword = ${passwordRaylife});
 
-		Button.click(button = "I Agree");
+		if (IsElementPresent(locator1 = "Button#ANY", key_text = "I Agree")) {
+			Button.click(button = "I Agree");
 
-		User.answerPasswordReminder();
+			User.answerPasswordReminder();
+		}
 	}
-
 }

@@ -35,10 +35,8 @@ const getMDFClaimSummary = async () => {
 			Liferay.Util.escape(data.totalClaimAmount),
 			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
 		);
-		const check = formatCurrency(
-			Liferay.Util.escape(data.check),
-			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'
-		);
+		const check = Liferay.Util.escape(data.checkNumber)
+
 		const paymentReceived = formatCurrency(
 			Liferay.Util.escape(data.paymentReceived),
 			data.currency ? Liferay.Util.escape(data.currency.key) : 'USD'

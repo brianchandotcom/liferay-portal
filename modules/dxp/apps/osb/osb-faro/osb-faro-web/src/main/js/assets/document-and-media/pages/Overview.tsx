@@ -23,7 +23,6 @@ const Overview = () => (
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-downloads'
 					)}
-					metricAction={Liferay.Language.get('download')}
 					query={{
 						metricName: MetricName.Downloads,
 						name: Name.Document

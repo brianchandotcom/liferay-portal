@@ -26,7 +26,6 @@ const Overview = () => (
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-submissions'
 					)}
-					metricAction={Liferay.Language.get('submission')}
 					query={{
 						metricName: MetricName.Submissions,
 						name: Name.Form

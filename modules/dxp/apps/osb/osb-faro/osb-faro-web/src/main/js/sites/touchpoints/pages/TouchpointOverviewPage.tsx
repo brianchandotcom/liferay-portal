@@ -24,7 +24,6 @@ const TouchpointOverviewPage = () => (
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-viewers'
 					)}
-					metricAction={Liferay.Language.get('view')}
 					query={{
 						metricName: MetricName.Views,
 						name: Name.Page

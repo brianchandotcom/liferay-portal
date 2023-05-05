@@ -8,9 +8,8 @@ import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatData} from './util';
 import {getFilters, RawFilters} from 'shared/util/filter';
 import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
-import {IAudienceReportBaseCardProps, TData} from './types';
+import {IAudienceReportBaseCardProps, Name, TData} from './types';
 import {RangeSelectors} from 'shared/types';
-import {sub} from 'shared/util/lang';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
 
@@ -32,7 +31,6 @@ function AudienceReportWithData<TRawData>({
 	data,
 	knownIndividualsTitle,
 	mapper,
-	metricAction = Liferay.Language.get('view'),
 	segmentsTitle = Liferay.Language.get('viewer-segments'),
 	uniqueVisitorsTitle = Liferay.Language.get('visitors')
 }: IAudienceReportWithDataProps<TRawData>) {
@@ -53,12 +51,13 @@ function AudienceReportWithData<TRawData>({
 					<div className='col-sm-6 text-center'>
 						<AudienceReportTitle
 							content={
-								sub(
-									Liferay.Language.get(
-										'a-snapshot-of-the-audience-captured-at-the-time-of-x.-this-does-not-reflect-the-current-state-of-the-visitors-segments'
-									),
-									[metricAction]
-								) as string
+								Name.Page
+									? Liferay.Language.get(
+											'only-known-individuals-that-interacted-with-the-current-page-are-accounted-for-in-this-chart'
+									  )
+									: Liferay.Language.get(
+											'only-known-individuals-that-interacted-with-the-current-asset-are-accounted-for-in-this-chart'
+									  )
 							}
 							title={knownIndividualsTitle}
 						/>
@@ -71,12 +70,13 @@ function AudienceReportWithData<TRawData>({
 			<div className='col-sm-6 pl-5'>
 				<AudienceReportTitle
 					content={
-						sub(
-							Liferay.Language.get(
-								'a-snapshot-of-segments-captured-at-the-time-of-x.-this-does-not-relect-the-current-state-of-the-visitors-segments'
-							),
-							[metricAction]
-						) as string
+						Name.Page
+							? Liferay.Language.get(
+									'only-segmented-known-individuals-that-interacted-with-the-current-page-are-accounted-for-in-this-chart'
+							  )
+							: Liferay.Language.get(
+									'only-segmented-known-individuals-that-interacted-with-the-current-asset-are-accounted-for-in-this-chart'
+							  )
 					}
 					title={segmentsTitle}
 				/>

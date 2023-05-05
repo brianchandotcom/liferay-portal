@@ -23,7 +23,6 @@ const Overview = () => (
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-views'
 					)}
-					metricAction={Liferay.Language.get('view')}
 					query={{
 						metricName: MetricName.Views,
 						name: Name.Blog

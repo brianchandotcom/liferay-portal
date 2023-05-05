@@ -44,7 +44,6 @@ export interface IAudienceReportBaseCardProps {
 	knownIndividualsTitle: string;
 	segmentsTitle?: string;
 	uniqueVisitorsTitle?: string;
-	metricAction?: string;
 	query: {
 		metricName: string;
 		name: Name;

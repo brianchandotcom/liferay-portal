@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/enablement",
+	"friendlyURL": "/sales/renewals",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Enablement"
+		"en_US": "Renewals"
 	},
 	"permissions": [
 		{
@@ -78,13 +78,6 @@
 				"VIEW"
 			],
 			"roleName": "Channel Finance Manager (CFM)",
-			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW"
-			],
-			"roleName": "Channel Enablement Manager (CEM)",
 			"scope": 4
 		}
 	],

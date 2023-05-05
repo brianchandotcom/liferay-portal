@@ -336,13 +336,13 @@ public class DBTest {
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (1, '1', ",
-				"'testValue1'), (2, '2', 'testValue2')"));
+				"'testTable1Value1'), (2, '2', 'testTable1Value2')"));
 
 		_db.runSQL(
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id, notNilColumn, typeString) values (1, '1', ",
-				"'testValue1')"));
+				"'testTable2Value1')"));
 
 		_db.copyTableRows(_connection, _TABLE_NAME_1, _TABLE_NAME_2);
 
@@ -354,13 +354,13 @@ public class DBTest {
 			Assert.assertEquals(1, resultSet.getLong("id"));
 			Assert.assertEquals("1", resultSet.getString("notNilColumn"));
 			Assert.assertEquals(
-				"testValue1", resultSet.getString("typeString"));
+				"testTable2Value1", resultSet.getString("typeString"));
 
 			Assert.assertTrue(resultSet.next());
 			Assert.assertEquals(2, resultSet.getLong("id"));
 			Assert.assertEquals("2", resultSet.getString("notNilColumn"));
 			Assert.assertEquals(
-				"testValue2", resultSet.getString("typeString"));
+				"testTable1Value2", resultSet.getString("typeString"));
 
 			Assert.assertFalse(resultSet.next());
 		}

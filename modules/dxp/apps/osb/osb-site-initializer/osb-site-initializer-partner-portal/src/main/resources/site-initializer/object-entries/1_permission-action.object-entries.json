@@ -66,6 +66,11 @@
 			"object": "MDF Request"
 		},
 		{
+			"action": "CANCEL",
+			"externalReferenceCode": "MDF-REQUEST-CANCEL",
+			"object": "MDF Request"
+		},
+		{
 			"action": "VIEW",
 			"externalReferenceCode": "MDF-CLAIM-VIEW",
 			"object": "MDF Claim"
@@ -128,6 +133,11 @@
 		{
 			"action": "CLAIM-PAID-STATUS",
 			"externalReferenceCode": "MDF-CLAIM-CLAIM-PAID-STATUS",
+			"object": "MDF Claim"
+		},
+		{
+			"action": "CANCEL",
+			"externalReferenceCode": "MDF-CLAIM-CANCEL",
 			"object": "MDF Claim"
 		},
 		{

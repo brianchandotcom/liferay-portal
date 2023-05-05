@@ -1,6 +1,7 @@
 import {DashboardListItems} from 'liferay-marketplace-custom-element/src/components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from 'liferay-marketplace-custom-element/src/components/DashboardTable/DashboardTable';
 
+import solutionsIcon from '../../assets/icons/analytics-icon.svg';
 import appsIcon from '../../assets/icons/apps-fill.svg';
 import businessIcon from '../../assets/icons/business-center.svg';
 import membersIcon from '../../assets/icons/person-fill.svg';
@@ -33,6 +34,12 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemSelected: true,
 		itemTitle: 'Apps',
 		items: appList,
+	},
+	{
+		itemIcon: solutionsIcon,
+		itemName: 'solutions',
+		itemSelected: false,
+		itemTitle: 'Solutions',
 	},
 	{
 		itemIcon: projectsIcon,

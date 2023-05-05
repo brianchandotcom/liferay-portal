@@ -87,6 +87,36 @@ interface PublishedAppTable {
 	totalCount: number;
 }
 
+const appMessages = {
+	description: 'Manage and publish apps on the Marketplace',
+	emptyStateMessage: {
+		description1: 'Publish apps and they will show up here.',
+		description2: 'Click on “New App” to start.',
+		title: 'No apps yet',
+	},
+	title: 'Apps',
+};
+
+const memberMessages = {
+	description: 'Manage users in your development team and invite new ones',
+	emptyStateMessage: {
+		description1: 'Create new members and they will show up here.',
+		description2: 'Click on “New Member” to start.',
+		title: 'No members yet',
+	},
+	title: 'Members',
+};
+
+const solutionMessages = {
+	description: 'Manage solution trial and purchases from the Marketplace',
+	emptyStateMessage: {
+		description1: 'Solution empty message 1',
+		description2: 'Solution empty message 2',
+		title: 'Solutions Empty message title',
+	},
+	title: 'My Solutions',
+};
+
 export function PublishedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountsState);
 	const [catalogId, setCatalogId] = useState<number>();
@@ -109,31 +139,10 @@ export function PublishedAppsDashboardPage() {
 		initialAccountsState[0]
 	);
 
-	const appMessages = {
-		description: 'Manage and publish apps on the Marketplace',
-		emptyStateMessage: {
-			description1: 'Publish apps and they will show up here.',
-			description2: 'Click on “New App” to start.',
-			title: 'No apps yet',
-		},
-		title: 'Apps',
-	};
-
 	const buttonRedirectURL = Liferay.ThemeDisplay.getCanonicalURL().replaceAll(
 		'/publisher-dashboard',
 		'/create-new-app'
 	);
-
-	const memberMessages = {
-		description:
-			'Manage users in your development team and invite new ones',
-		emptyStateMessage: {
-			description1: 'Create new members and they will show up here.',
-			description2: 'Click on “New Member” to start.',
-			title: 'No members yet',
-		},
-		title: 'Members',
-	};
 
 	const formatDate = (date: string) => {
 		const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
@@ -479,6 +488,23 @@ export function PublishedAppsDashboardPage() {
 					) : (
 						<></>
 					)}
+				</DashboardPage>
+			)}
+
+			{selectedNavigationItem === 'Solutions' && (
+				<DashboardPage
+					dashboardNavigationItems={dashboardNavigationItems}
+					messages={solutionMessages}
+					selectedApp={selectedApp}
+					setSelectedApp={setSelectedApp}
+				>
+					<DashboardTable
+						emptyStateMessage={solutionMessages.emptyStateMessage}
+						items={[]}
+						tableHeaders={[]}
+					>
+						{(item) => <></>}
+					</DashboardTable>
 				</DashboardPage>
 			)}
 

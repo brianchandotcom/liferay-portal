@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.List;
@@ -82,7 +83,13 @@ public class EncryptedObjectFieldBusinessType
 
 	@Override
 	public boolean isVisible() {
-		return FeatureFlagManagerUtil.isEnabled("LPS-178057");
+		if (FeatureFlagManagerUtil.isEnabled("LPS-178057") &&
+			!PropsValues.ENCRYPTED_OBJECT_FIELD_RESTRICTED) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

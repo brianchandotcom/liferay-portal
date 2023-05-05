@@ -19,10 +19,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
@@ -46,6 +48,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +63,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 	public ObjectDefinitionsFieldsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ListTypeDefinitionService listTypeDefinitionService,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
@@ -69,6 +73,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_listTypeDefinitionService = listTypeDefinitionService;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 		_objectFieldSettingLocalService = objectFieldSettingLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -149,7 +154,9 @@ public class ObjectDefinitionsFieldsDisplayContext
 					(!StringUtil.equals(
 						objectFieldBusinessType.getName(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) ||
-					 includeRelationshipObjectFieldBusinessType)));
+					 includeRelationshipObjectFieldBusinessType) &&
+					_showEncryptedObjectFieldBusinessType(
+						objectFieldBusinessType)));
 	}
 
 	public List<Map<String, Object>> getObjectFieldCodeEditorElements(
@@ -200,6 +207,28 @@ public class ObjectDefinitionsFieldsDisplayContext
 		return "/object-fields";
 	}
 
+	private boolean _showEncryptedObjectFieldBusinessType(
+		ObjectFieldBusinessType objectFieldBusinessType) {
+
+		if (!Objects.equals(
+				objectFieldBusinessType.getName(),
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			return true;
+		}
+
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					getObjectDefinitionId());
+
+			return objectDefinition.isDefaultStorageType();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
 	private static final Set<ObjectCodeEditorUtil.DDMExpressionOperator>
 		_filterableDDMExpressionOperators = Collections.unmodifiableSet(
 			SetUtil.fromArray(
@@ -216,6 +245,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL));
 
 	private final ListTypeDefinitionService _listTypeDefinitionService;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldBusinessTypeRegistry
 		_objectFieldBusinessTypeRegistry;
 	private final ObjectFieldSettingLocalService

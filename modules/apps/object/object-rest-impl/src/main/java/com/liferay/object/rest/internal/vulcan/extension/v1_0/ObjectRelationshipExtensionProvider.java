@@ -18,9 +18,9 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryRelatedObjectsManager;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParserRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -104,19 +104,18 @@ public class ObjectRelationshipExtensionProvider
 						objectDefinition.getStorageType());
 
 				if (!(objectEntryManager instanceof
-						ObjectEntryRelatedObjectsManager)) {
+						DefaultObjectEntryManager)) {
 
 					throw new UnsupportedOperationException();
 				}
 
-				ObjectEntryRelatedObjectsManager
-					objectEntryRelatedObjectsManager =
-						(ObjectEntryRelatedObjectsManager)objectEntryManager;
+				DefaultObjectEntryManager defaultObjectEntryManager =
+					(DefaultObjectEntryManager)objectEntryManager;
 
 				long primaryKey = getPrimaryKey(entity);
 
 				Page<ObjectEntry> relatedObjectEntriesPage =
-					objectEntryRelatedObjectsManager.
+					defaultObjectEntryManager.
 						getObjectEntryRelatedObjectEntries(
 							_getDefaultDTOConverterContext(
 								objectDefinition, primaryKey, null),

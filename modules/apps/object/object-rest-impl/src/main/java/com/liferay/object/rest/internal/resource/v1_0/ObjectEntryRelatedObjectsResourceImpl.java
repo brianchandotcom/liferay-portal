@@ -22,7 +22,6 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryRelatedObjectsManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -111,12 +110,12 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (!(objectEntryManager instanceof ObjectEntryRelatedObjectsManager)) {
+		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntryRelatedObjectsManager objectEntryRelatedObjectsManager =
-			(ObjectEntryRelatedObjectsManager)objectEntryManager;
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipService.getObjectRelationship(
@@ -128,14 +127,13 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
-			return objectEntryRelatedObjectsManager.
-				getRelatedSystemObjectEntries(
-					_objectDefinition, currentObjectEntryId,
-					objectRelationshipName, pagination);
+			return defaultObjectEntryManager.getRelatedSystemObjectEntries(
+				_objectDefinition, currentObjectEntryId, objectRelationshipName,
+				pagination);
 		}
 
 		Page<ObjectEntry> page =
-			objectEntryRelatedObjectsManager.getObjectEntryRelatedObjectEntries(
+			defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
 				_getDTOConverterContext(currentObjectEntryId),
 				_objectDefinition, currentObjectEntryId, objectRelationshipName,
 				pagination);
@@ -159,12 +157,12 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (!(objectEntryManager instanceof ObjectEntryRelatedObjectsManager)) {
+		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntryRelatedObjectsManager objectEntryRelatedObjectsManager =
-			(ObjectEntryRelatedObjectsManager)objectEntryManager;
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipService.getObjectRelationship(
@@ -176,7 +174,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
-			return objectEntryRelatedObjectsManager.
+			return defaultObjectEntryManager.
 				addSystemObjectRelationshipMappingTableValues(
 					relatedObjectDefinition, objectRelationship,
 					currentObjectEntryId, relatedObjectEntryId);
@@ -184,11 +182,10 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 		return _getRelatedObjectEntry(
 			relatedObjectDefinition,
-			objectEntryRelatedObjectsManager.
-				addObjectRelationshipMappingTableValues(
-					_getDTOConverterContext(currentObjectEntryId),
-					objectRelationship, currentObjectEntryId,
-					relatedObjectEntryId));
+			defaultObjectEntryManager.addObjectRelationshipMappingTableValues(
+				_getDTOConverterContext(currentObjectEntryId),
+				objectRelationship, currentObjectEntryId,
+				relatedObjectEntryId));
 	}
 
 	private void _checkCurrentObjectEntry(

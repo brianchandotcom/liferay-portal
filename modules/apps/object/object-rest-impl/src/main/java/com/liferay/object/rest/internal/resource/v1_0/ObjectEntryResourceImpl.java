@@ -21,8 +21,6 @@ import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryRelatedObjectsManager;
-import com.liferay.object.rest.manager.v1_0.StandaloneObjectActionManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -326,7 +324,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (!(objectEntryManager instanceof ObjectEntryRelatedObjectsManager)) {
+		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -335,8 +333,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
 
-		ObjectEntryRelatedObjectsManager objectEntryRelatedObjectsManager =
-			(ObjectEntryRelatedObjectsManager)objectEntryManager;
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
 
 		long primaryKey1 = _getPrimaryKey(
 			currentExternalReferenceCode,
@@ -348,10 +346,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		return _getRelatedObjectEntry(
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
-			objectEntryRelatedObjectsManager.
-				addObjectRelationshipMappingTableValues(
-					_getDTOConverterContext(primaryKey1), objectRelationship,
-					primaryKey1, primaryKey2));
+			defaultObjectEntryManager.addObjectRelationshipMappingTableValues(
+				_getDTOConverterContext(primaryKey1), objectRelationship,
+				primaryKey1, primaryKey2));
 	}
 
 	@Override
@@ -364,14 +361,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (!(objectEntryManager instanceof StandaloneObjectActionManager)) {
+		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
 			throw new UnsupportedOperationException();
 		}
 
-		StandaloneObjectActionManager standaloneObjectActionManager =
-			(StandaloneObjectActionManager)objectEntryManager;
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
 
-		standaloneObjectActionManager.executeObjectAction(
+		defaultObjectEntryManager.executeObjectAction(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, objectActionName, _objectDefinition, null);
 	}
@@ -406,14 +403,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (!(objectEntryManager instanceof StandaloneObjectActionManager)) {
+		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
 			throw new UnsupportedOperationException();
 		}
 
-		StandaloneObjectActionManager standaloneObjectActionManager =
-			(StandaloneObjectActionManager)objectEntryManager;
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
 
-		standaloneObjectActionManager.executeObjectAction(
+		defaultObjectEntryManager.executeObjectAction(
 			_getDTOConverterContext(objectEntryId), objectActionName,
 			_objectDefinition, objectEntryId);
 	}
@@ -444,14 +441,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (!(objectEntryManager instanceof StandaloneObjectActionManager)) {
+		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
 			throw new UnsupportedOperationException();
 		}
 
-		StandaloneObjectActionManager standaloneObjectActionManager =
-			(StandaloneObjectActionManager)objectEntryManager;
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
 
-		standaloneObjectActionManager.executeObjectAction(
+		defaultObjectEntryManager.executeObjectAction(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, objectActionName, _objectDefinition,
 			scopeKey);

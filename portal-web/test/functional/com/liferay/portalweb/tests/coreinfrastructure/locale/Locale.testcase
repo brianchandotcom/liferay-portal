@@ -132,9 +132,6 @@ definition {
 	test CanRemoveAvailableLanguageFromSite {
 		property test.name.skip.portal.instance = "Locale#CanRemoveAvailableLanguageFromSite";
 
-		var frenchURL = "fr/web/test-site-name/navigation-menu-page";
-		var englishURL = "en/web/test-site-name/navigation-menu-page";
-
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
@@ -152,11 +149,15 @@ definition {
 			currentSiteLanguages = "English (United States),French (France)",
 			defaultSiteLanguage = "French (France)");
 
+		var frenchURL = "fr/web/test-site-name/navigation-menu-page";
+
 		Navigator.openWithAppendToBaseURL(urlAppend = ${frenchURL});
 
 		AssertElementPresent(
 			key_portletName = "Menu Affichage",
 			locator1 = "Portlet#TITLE");
+
+		var englishURL = "en/web/test-site-name/navigation-menu-page";
 
 		Navigator.openWithAppendToBaseURL(urlAppend = ${englishURL});
 

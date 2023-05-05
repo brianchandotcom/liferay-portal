@@ -64,9 +64,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
@@ -279,27 +279,25 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return url;
 	}
 
-	private List<KeyValuePair> _getAdditionalParameters(
+	private Map<String, String> _getAdditionalParameters(
 		Map<String, String> pathInputParametersMap,
 		Map<String, Object> requestInputParametersMap) {
 
-		Set<Map.Entry<String, Object>> set =
-			requestInputParametersMap.entrySet();
+		Map<String, String> additionalParametersMap = new HashMap<>();
 
-		Stream<Map.Entry<String, Object>> stream = set.stream();
+		for (Map.Entry<String, Object> entry :
+				requestInputParametersMap.entrySet()) {
 
-		return stream.collect(
-			ArrayList::new,
-			(keyValuePairs, entry) -> {
-				String key = entry.getKey();
+			String key = entry.getKey();
 
-				if (!pathInputParametersMap.containsKey(key)) {
-					keyValuePairs.add(
-						new KeyValuePair(
-							key, String.valueOf(entry.getValue())));
-				}
-			},
-			ArrayList::addAll);
+			if (pathInputParametersMap.containsKey(key)) {
+				continue;
+			}
+
+			additionalParametersMap.put(key, String.valueOf(entry.getValue()));
+		}
+
+		return additionalParametersMap;
 	}
 
 	private DDMDataProviderResponse _getData(
@@ -314,25 +312,25 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, String> pathInputParametersMap = _getPathInputParametersMap(
 			requestInputParametersMap, ddmRESTDataProviderSettings.url());
 
-		List<KeyValuePair> allParameters = ListUtil.toList(
+		Map<String, String> allParametersMap = HashMapBuilder.putAll(
 			_getAdditionalParameters(
-				pathInputParametersMap, requestInputParametersMap));
-
-		allParameters.addAll(
+				pathInputParametersMap, requestInputParametersMap)
+		).putAll(
 			_getFilterAndPaginationParameters(
-				ddmDataProviderRequest, ddmRESTDataProviderSettings));
+				ddmDataProviderRequest, ddmRESTDataProviderSettings)
+		).build();
 
 		String url = _buildURL(
 			pathInputParametersMap, ddmRESTDataProviderSettings.url());
 
 		URI uri = new URI(url);
 
-		allParameters.addAll(_getQueryParameters(uri.getQuery()));
+		allParametersMap.putAll(_getQueryParameters(uri.getQuery()));
 
 		String absoluteURL = _getAbsoluteURL(uri.getQuery(), url);
 
 		String portalCacheKey = _getPortalCacheKey(
-			ddmDataProviderRequest.getDDMDataProviderId(), allParameters,
+			ddmDataProviderRequest.getDDMDataProviderId(), allParametersMap,
 			absoluteURL);
 
 		DDMDataProviderResponse ddmDataProviderResponse = _portalCache.get(
@@ -370,7 +368,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		try {
 			response = jsonWebServiceClient.doGet(
-				absoluteURL, _getParametersArray(allParameters));
+				absoluteURL, _getParametersArray(allParametersMap));
 		}
 		finally {
 			jsonWebServiceClient.destroy();
@@ -410,21 +408,20 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return ddmDataProviderInstance;
 	}
 
-	private List<KeyValuePair> _getFilterAndPaginationParameters(
+	private Map<String, String> _getFilterAndPaginationParameters(
 		DDMDataProviderRequest ddmDataProviderRequest,
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+		Map<String, String> filterAndPaginationParametersMap = new HashMap<>();
 
 		if (ddmRESTDataProviderSettings.filterable()) {
 			String filterParameterValue = ddmDataProviderRequest.getParameter(
 				"filterParameterValue", String.class);
 
 			if (filterParameterValue != null) {
-				keyValuePairs.add(
-					new KeyValuePair(
-						ddmRESTDataProviderSettings.filterParameterName(),
-						filterParameterValue));
+				filterAndPaginationParametersMap.put(
+					ddmRESTDataProviderSettings.filterParameterName(),
+					filterParameterValue);
 			}
 		}
 
@@ -433,26 +430,22 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				"paginationEnd", String.class);
 
 			if (paginationEnd != null) {
-				keyValuePairs.add(
-					new KeyValuePair(
-						ddmRESTDataProviderSettings.
-							paginationEndParameterName(),
-						paginationEnd));
+				filterAndPaginationParametersMap.put(
+					ddmRESTDataProviderSettings.paginationEndParameterName(),
+					paginationEnd);
 			}
 
 			String paginationStart = ddmDataProviderRequest.getParameter(
 				"paginationStart", String.class);
 
 			if (paginationStart != null) {
-				keyValuePairs.add(
-					new KeyValuePair(
-						ddmRESTDataProviderSettings.
-							paginationStartParameterName(),
-						paginationStart));
+				filterAndPaginationParametersMap.put(
+					ddmRESTDataProviderSettings.paginationStartParameterName(),
+					paginationStart);
 			}
 		}
 
-		return keyValuePairs;
+		return filterAndPaginationParametersMap;
 	}
 
 	private String _getHostName(String host) {
@@ -483,19 +476,15 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return keyStore;
 	}
 
-	private String[] _getParametersArray(List<KeyValuePair> keyValuePairs) {
-		Stream<KeyValuePair> stream = keyValuePairs.stream();
+	private String[] _getParametersArray(Map<String, String> allParametersMap) {
+		List<String> parameters = new ArrayList<>();
 
-		return stream.collect(
-			ArrayList<String>::new,
-			(parameters, keyValuePair) -> {
-				parameters.add(keyValuePair.getKey());
-				parameters.add(keyValuePair.getValue());
-			},
-			ArrayList::addAll
-		).toArray(
-			new String[0]
-		);
+		for (Map.Entry<String, String> entry : allParametersMap.entrySet()) {
+			parameters.add(entry.getKey());
+			parameters.add(entry.getValue());
+		}
+
+		return ArrayUtil.toStringArray(parameters);
 	}
 
 	private Map<String, String> _getPathInputParametersMap(
@@ -520,21 +509,33 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	}
 
 	private String _getPortalCacheKey(
-		String ddmDataProviderId, List<KeyValuePair> keyValuePairs,
+		String ddmDataProviderId, Map<String, String> allParametersMap,
 		String url) {
 
-		Stream<KeyValuePair> stream = keyValuePairs.stream();
+		Set<Map.Entry<String, String>> entries = new TreeSet<>(
+			Map.Entry.comparingByKey());
 
-		return StringBundler.concat(
-			ddmDataProviderId, StringPool.AT, url, StringPool.QUESTION,
-			stream.sorted(
-			).map(
-				keyValuePair -> StringBundler.concat(
-					keyValuePair.getKey(), StringPool.EQUAL,
-					keyValuePair.getValue())
-			).collect(
-				Collectors.joining(StringPool.AMPERSAND)
-			));
+		entries.addAll(allParametersMap.entrySet());
+
+		StringBundler sb = new StringBundler((4 * allParametersMap.size()) + 4);
+
+		sb.append(ddmDataProviderId);
+		sb.append(StringPool.AT);
+		sb.append(url);
+		sb.append(StringPool.QUESTION);
+
+		for (Map.Entry<String, String> entry : entries) {
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(entry.getValue());
+			sb.append(StringPool.AMPERSAND);
+		}
+
+		if (!entries.isEmpty()) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private Map<String, Object> _getProxySettingsMap() {
@@ -565,29 +566,26 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return proxySettingsMap;
 	}
 
-	private List<KeyValuePair> _getQueryParameters(String query) {
-		return Stream.of(
-			StringUtil.split(query, StringPool.AMPERSAND)
-		).collect(
-			ArrayList::new,
-			(keyValuePairs, queryParameter) -> {
-				String[] queryParameterPartsMap = StringUtil.split(
-					queryParameter, StringPool.EQUAL);
+	private Map<String, String> _getQueryParameters(String query) {
+		Map<String, String> queryParametersMap = new HashMap<>();
 
-				if (queryParameterPartsMap.length > 1) {
-					keyValuePairs.add(
-						new KeyValuePair(
-							queryParameterPartsMap[0],
-							queryParameterPartsMap[1]));
-				}
-				else {
-					keyValuePairs.add(
-						new KeyValuePair(
-							queryParameterPartsMap[0], StringPool.BLANK));
-				}
-			},
-			ArrayList::addAll
-		);
+		for (String queryParameter :
+				StringUtil.split(query, StringPool.AMPERSAND)) {
+
+			String[] queryParameterPartsMap = StringUtil.split(
+				queryParameter, StringPool.EQUAL);
+
+			if (queryParameterPartsMap.length > 1) {
+				queryParametersMap.put(
+					queryParameterPartsMap[0], queryParameterPartsMap[1]);
+			}
+			else {
+				queryParametersMap.put(
+					queryParameterPartsMap[0], StringPool.BLANK);
+			}
+		}
+
+		return queryParametersMap;
 	}
 
 	private Map<String, Object> _getRequestInputParametersMap(

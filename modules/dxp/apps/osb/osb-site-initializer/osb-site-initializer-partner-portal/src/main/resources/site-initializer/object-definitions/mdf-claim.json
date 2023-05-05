@@ -111,6 +111,19 @@
 		},
 		{
 			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "d0b70d9b-1ebc-495e-96b6-bba23c479cd3",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Check Number"
+			},
+			"name": "checkNumber",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
 			"businessType": "Picklist",
 			"defaultValue": "pendingMarketingReview",
 			"externalReferenceCode": "9f8bc3c6-b270-0377-c65d-1df3eacbb112",
@@ -160,8 +173,7 @@
 							},
 							{
 								"key": "claimPaid",
-								"objectStateTransitions": [
-								]
+								"objectStateTransitions": []
 							},
 							{
 								"key": "inFinanceReview",

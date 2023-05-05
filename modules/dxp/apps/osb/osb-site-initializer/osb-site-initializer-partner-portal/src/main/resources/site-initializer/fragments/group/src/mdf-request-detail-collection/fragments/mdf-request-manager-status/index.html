@@ -15,6 +15,12 @@
 
 	[#if mdfRequestStatusKey != 'approved' && (hasMarketingReviewAction || hasMarketingDirectorReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction)]
 		<script>
+			const modalStatusTypes = {
+				marketingDirectorReview: "Marketing Director Review",
+				moreInfoRequested: "Request More Info",
+				rejected: "Rejected",
+			}
+
 			const approveActivities = async () => {
 				[#list mdfRequest.mdfReqToActs as activity]
 					[#if activity.activityStatus.key == 'submitted']
@@ -59,14 +65,47 @@
 				});
 			};
 
-			const callModal = (status) => Liferay.Util.openConfirmModal({
-				message: 'Are you sure?',
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						updateRequestStatus(status);
-					}
-				},
-			});
+			const callModal = (status) => {
+				const listDisplayModal = ["moreInfoRequested", "marketingDirectorReview", "rejected"]
+
+				if(listDisplayModal.includes(status)){
+					return Liferay.Util.openModal({
+							bodyHTML: `<div class="form-group">
+										<label for="descriptionTextArea">Status change motivation:</label>
+
+										<textarea class="form-control" id="descriptionTextArea" placeholder="Describe here..." type="text"></textarea>
+									</div>`,
+							buttons: [
+								{
+									displayType: 'secondary',
+									label: Liferay.Language.get('Cancel'),
+									type: 'cancel',
+								},
+								{
+									displayType: 'primary',
+									label: modalStatusTypes[status],
+									onClick() {
+										const textarea = document.getElementById("descriptionTextArea");
+
+										if(textarea.value){
+											return updateStatus(status);
+										}
+
+										Liferay.Util.openToast({
+											message: 'The MDF Request Status cannot be changed without a motivation.',
+											type: 'danger',
+										});
+									},
+									type: 'submit',
+								},
+							],
+							headerHTML: `<h1 class="m-0">Status Change</h1>`,
+							size: 'md',
+						});
+				}
+
+				return updateStatus(status);
+			};
 		</script>
 
 	<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="liferay-dropdown" id="dropdownMDFRequestStatus" type="button">

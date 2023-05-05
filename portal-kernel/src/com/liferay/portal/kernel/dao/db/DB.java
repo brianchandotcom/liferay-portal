@@ -71,8 +71,7 @@ public interface DB {
 		throws Exception;
 
 	public void copyTableStructure(
-			Connection connection, String tableName, String newTableName,
-			String indexNamePrefix)
+			Connection connection, String tableName, String newTableName)
 		throws Exception;
 
 	public List<IndexMetadata> dropIndexes(

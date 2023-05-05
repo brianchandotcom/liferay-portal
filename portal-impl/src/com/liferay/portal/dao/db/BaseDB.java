@@ -246,8 +246,7 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public void copyTableStructure(
-			Connection connection, String tableName, String newTableName,
-			String indexNamePrefix)
+			Connection connection, String tableName, String newTableName)
 		throws Exception {
 
 		runSQL(connection, getCopyTableStructureSQL(tableName, newTableName));
@@ -257,6 +256,12 @@ public abstract class BaseDB implements DB {
 			getPrimaryKeyColumnNames(connection, tableName));
 
 		List<IndexMetadata> indexMetadatas = new ArrayList<>();
+
+		String indexNamePrefix = StringPool.BLANK;
+
+		if (!isSupportsDuplicatedIndexName()) {
+			indexNamePrefix = "TMP_";
+		}
 
 		for (IndexMetadata indexMetadata :
 				getIndexes(connection, tableName, null, false)) {

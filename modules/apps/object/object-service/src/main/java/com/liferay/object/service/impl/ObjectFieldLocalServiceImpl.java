@@ -1029,13 +1029,17 @@ public class ObjectFieldLocalServiceImpl
 
 		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
 			throw new RequiredEncryptedObjectFieldPropertyException(
-				"Missing property, " +
-					PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+				StringBundler.concat(
+					"The property ",
+					PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM,
+					" is required for encrypted object fields"));
 		}
 
 		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_KEY)) {
 			throw new RequiredEncryptedObjectFieldPropertyException(
-				"Missing property, " + PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY);
+				StringBundler.concat(
+					"The property ", PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY,
+					" is required for encrypted object fields"));
 		}
 
 		if (PropsValues.OBJECT_FIELD_ENCRYPTION_RESTRICTED) {

@@ -371,10 +371,21 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public String getCommerceOrderStatus(CommerceOrder commerceOrder) {
-		return LanguageUtil.get(
+		String commerceStatusLabel = LanguageUtil.get(
 			_httpServletRequest,
 			CommerceOrderConstants.getOrderStatusLabel(
 				commerceOrder.getOrderStatus()));
+
+		if (commerceStatusLabel == null) {
+			CommerceOrderStatus commerceOrderStatus =
+				_commerceOrderStatusRegistry.getCommerceOrderStatus(
+					commerceOrder.getOrderStatus());
+
+			commerceStatusLabel = commerceOrderStatus.getLabel(
+				_cpRequestHelper.getLocale());
+		}
+
+		return commerceStatusLabel;
 	}
 
 	public String getCommerceOrderTime(CommerceOrder commerceOrder) {

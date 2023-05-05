@@ -20,6 +20,7 @@ import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFD
 import com.liferay.commerce.order.content.web.internal.frontend.data.set.util.CommerceOrderFDSUtil;
 import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
+import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -97,8 +98,8 @@ public class PlacedCommerceOrderFDSDataProvider
 
 		return CommerceOrderFDSUtil.getOrders(
 			commerceChannel.getGroupId(), commerceOrders,
-			_commerceOrderTypeService, _groupLocalService,
-			commerceChannel.getPriceDisplayType(),
+			_commerceOrderStatusRegistry, _commerceOrderTypeService,
+			_groupLocalService, commerceChannel.getPriceDisplayType(),
 			commerceOrderContentPortletInstanceConfiguration.
 				showCommerceOrderCreateTime(),
 			themeDisplay);
@@ -131,6 +132,9 @@ public class PlacedCommerceOrderFDSDataProvider
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;

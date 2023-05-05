@@ -25,6 +25,8 @@ import com.liferay.commerce.order.content.web.internal.importer.type.CommerceOrd
 import com.liferay.commerce.order.content.web.internal.importer.type.CommerceWishListsCommerceOrderImporterTypeImpl;
 import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.commerce.order.content.web.internal.model.WishList;
+import com.liferay.commerce.order.status.CommerceOrderStatus;
+import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.petra.string.StringPool;
@@ -153,6 +155,7 @@ public class CommerceOrderFDSUtil {
 
 	public static List<Order> getOrders(
 			long commerceChannelGroupId, List<CommerceOrder> commerceOrders,
+			CommerceOrderStatusRegistry commerceOrderStatusRegistry,
 			CommerceOrderTypeService commerceOrderTypeService,
 			GroupLocalService groupLocalService, String priceDisplayType,
 			boolean showCommerceOrderCreateTime, ThemeDisplay themeDisplay)
@@ -186,6 +189,15 @@ public class CommerceOrderFDSUtil {
 				resourceBundle,
 				CommerceOrderConstants.getOrderStatusLabel(
 					commerceOrder.getOrderStatus()));
+
+			if (commerceOrderStatusLabel == null) {
+				CommerceOrderStatus commerceOrderStatus =
+					commerceOrderStatusRegistry.getCommerceOrderStatus(
+						commerceOrder.getOrderStatus());
+
+				commerceOrderStatusLabel = commerceOrderStatus.getLabel(
+					themeDisplay.getLocale());
+			}
 
 			String workflowStatusLabel = LanguageUtil.get(
 				resourceBundle,

@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.content.web.internal.frontend.data.set.util.CommerceOrderFDSUtil;
 import com.liferay.commerce.order.content.web.internal.model.Order;
+import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -86,8 +87,9 @@ public class ImportCommerceOrderFDSDataProvider
 
 		return CommerceOrderFDSUtil.getOrders(
 			commerceChannel.getGroupId(), commerceOrders,
-			_commerceOrderTypeService, _groupLocalService,
-			commerceChannel.getPriceDisplayType(), true, themeDisplay);
+			_commerceOrderStatusRegistry, _commerceOrderTypeService,
+			_groupLocalService, commerceChannel.getPriceDisplayType(), true,
+			themeDisplay);
 	}
 
 	@Override
@@ -130,6 +132,9 @@ public class ImportCommerceOrderFDSDataProvider
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;

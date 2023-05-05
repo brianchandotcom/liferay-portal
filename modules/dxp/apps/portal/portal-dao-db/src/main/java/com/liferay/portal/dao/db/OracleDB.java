@@ -244,6 +244,10 @@ public class OracleDB extends BaseDB {
 		}
 	}
 
+	protected boolean isSupportsDuplicatedIndexName() {
+		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+	}
+
 	@Override
 	protected String limitColumnLength(String column, int length) {
 		return StringBundler.concat("substr(", column, ", 1, ", length, ")");
@@ -359,6 +363,8 @@ public class OracleDB extends BaseDB {
 	private static final int[] _SQL_VARCHAR_SIZES = {
 		_SQL_STRING_SIZE, SQL_SIZE_NONE
 	};
+
+	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

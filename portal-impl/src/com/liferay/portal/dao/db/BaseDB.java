@@ -968,6 +968,10 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String[] getTemplate();
 
+	protected boolean isSupportsDuplicatedIndexName() {
+		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+	}
+
 	protected String limitColumnLength(String column, int length) {
 		return StringBundler.concat(column, "\\(", length, "\\)");
 	}
@@ -1159,6 +1163,8 @@ public abstract class BaseDB implements DB {
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = true;
+
+	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = true;
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = true;
 

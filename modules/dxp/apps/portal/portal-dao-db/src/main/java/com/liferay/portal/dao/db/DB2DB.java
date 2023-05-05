@@ -315,6 +315,10 @@ public class DB2DB extends BaseDB {
 		return reorgTableRequired;
 	}
 
+	protected boolean isSupportsDuplicatedIndexName() {
+		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+	}
+
 	protected void reorgTable(Connection connection, String tableName)
 		throws SQLException {
 
@@ -456,6 +460,8 @@ public class DB2DB extends BaseDB {
 	private static final int[] _SQL_VARCHAR_SIZES = {
 		_SQL_STRING_SIZE, SQL_SIZE_NONE
 	};
+
+	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

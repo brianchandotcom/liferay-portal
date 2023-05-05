@@ -198,8 +198,14 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			_log.error(exception);
 		}
 
+		document.addDate(
+			"lastAnniversaryDate",
+			faroSubscriptionDisplay.geLastAnniversaryDate());
 		document.addNumber(
 			"individualsCount", faroSubscriptionDisplay.getIndividualsCount());
+		document.addNumber(
+			"individualsCountSinceLastAnniversary",
+			faroSubscriptionDisplay.getIndividualsCountSinceLastAnniversary());
 		document.addNumber(
 			"individualsLimit", faroSubscriptionDisplay.getIndividualsLimit());
 		document.addNumber(
@@ -211,6 +217,9 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			"lastAccessDate", new Date(faroProject.getLastAccessTime()));
 		document.addNumber(
 			"pageViewsCount", faroSubscriptionDisplay.getPageViewsCount());
+		document.addNumber(
+			"pageViewsCountSinceLastAnniversary",
+			faroSubscriptionDisplay.getPageViewsCountSinceLastAnniversary());
 		document.addNumber(
 			"pageViewsLimit", faroSubscriptionDisplay.getPageViewsLimit());
 		document.addNumber(

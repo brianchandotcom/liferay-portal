@@ -102,6 +102,126 @@
 					"type": "String"
 				}
 			],
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS_ENTRY",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Bookmarks"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "My Link"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "name",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "url",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "description",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Categorization"
+									},
+									"objectLayoutRows": [
+									],
+									"priority": 0,
+									"type": "categorization"
+								}
+							],
+							"priority": 0
+						}
+					]
+				}
+			],
+			"objectValidationRules": [
+				{
+					"active": true,
+					"engine": "ddm",
+					"engineLabel": "Expression Builder",
+					"errorLabel": {
+						"en_US": "Please enter a valid URL."
+					},
+					"name": {
+						"en_US": "Valid URL"
+					},
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS_ENTRY",
+					"script": "isURL(url)"
+				}
+			],
+			"objectViews": [
+				{
+					"defaultObjectView": true,
+					"name": {
+						"en_US": "Main"
+					},
+					"objectDefinitionExternalReferenceCode": "MSOD_BOOKMARKS_ENTRY",
+					"objectViewColumns": [
+						{
+							"label": {
+								"en_US": "Name"
+							},
+							"objectFieldName": "name",
+							"priority": 0
+						},
+						{
+							"label": {
+								"en_US": "URL"
+							},
+							"objectFieldName": "uRL",
+							"priority": 1
+						},
+						{
+							"label": {
+								"en_US": "Description"
+							},
+							"objectFieldName": "description",
+							"priority": 2
+						}
+					],
+					"objectViewFilterColumns": [
+					],
+					"objectViewSortColumns": [
+					]
+				}
+			],
 			"panelCategoryKey": "site_administration.content",
 			"pluralLabel": {
 				"en_US": "Bookmarks Entries"

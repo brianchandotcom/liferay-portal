@@ -14,7 +14,6 @@
 
 package com.liferay.site.initializer.extender.internal;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
@@ -70,6 +69,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -160,6 +160,39 @@ public class CommerceSiteInitializer {
 
 	public String getCommerceOrderClassName() {
 		return CommerceOrder.class.getName();
+	}
+
+	private void _addCommerceChannelConfiguration(
+			Group group, String resourcePath, ServletContext servletContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+		Map<String, Object> map1 = jsonObject.toMap();
+
+		for (Map.Entry<String, Object> entry1 : map1.entrySet()) {
+			Settings settings = _settingsFactory.getSettings(
+				new GroupServiceSettingsLocator(
+					group.getGroupId(), entry1.getKey()));
+
+			ModifiableSettings modifiableSettings =
+				settings.getModifiableSettings();
+
+			Map<String, Object> map2 = (Map<String, Object>)entry1.getValue();
+
+			for (Map.Entry<String, Object> entry2 : map2.entrySet()) {
+				modifiableSettings.setValue(
+					entry2.getKey(), (String)entry2.getValue());
+			}
+
+			modifiableSettings.store();
+		}
 	}
 
 	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
@@ -669,6 +702,15 @@ public class CommerceSiteInitializer {
 				existingChannel.getId(), channel);
 		}
 
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			serviceContext.getCompanyId(),
+			"/" + FriendlyURLNormalizerUtil.normalize(channel.getName()));
+
+		_addCommerceChannelConfiguration(
+			group,
+			StringUtil.replaceLast(resourcePath, ".json", ".config.json"),
+			servletContext);
+
 		_addDefaultCPDisplayLayout(
 			channel,
 			StringUtil.replaceLast(
@@ -679,20 +721,6 @@ public class CommerceSiteInitializer {
 			StringUtil.replaceLast(
 				resourcePath, ".json", ".model-resource-permissions.json"),
 			serviceContext, servletContext);
-
-		Settings settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				serviceContext.getScopeGroupId(),
-				CommerceAccountConstants.SERVICE_NAME));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		modifiableSettings.setValue(
-			"commerceSiteType",
-			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
-
-		modifiableSettings.store();
 
 		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
 

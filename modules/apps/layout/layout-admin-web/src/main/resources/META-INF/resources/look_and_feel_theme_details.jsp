@@ -118,20 +118,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 
 				<c:choose>
 					<c:when test='<%= type.equals("checkbox") %>'>
-						<div>
-							<react:component
-								module="js/layout/look_and_feel/SelectCustomThemeSettings"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"label", HtmlUtil.escape(name)
-									).put(
-										"propertyName", propertyName
-									).put(
-										"value", value
-									).build()
-								%>'
-							/>
-						</div>
+						<aui:input label="<%= HtmlUtil.escape(name) %>" labelCssClass="font-weight-normal" name="<%= propertyName %>" type="checkbox" value="<%= value %>" />
 					</c:when>
 					<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
 						<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />

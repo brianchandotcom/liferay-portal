@@ -69,12 +69,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 			%>
 
 				<div class="mb-3">
-					<clay:checkbox
-						checked='<%= value.equals("true") %>'
-						disabled="<%= true %>"
-						label="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>"
-						name="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>"
-					/>
+					<aui:input checked='<%= value.equals("true") %>' disabled="<%= true %>" label="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>" labelCssClass="font-weight-normal" name="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>" type="checkbox" />
 				</div>
 
 			<%

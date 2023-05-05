@@ -16,7 +16,6 @@ package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.servlet.taglib.util.LayoutClassedModelUsagesTaglibUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +29,6 @@ public class LayoutClassedModelUsagesAdminTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		LayoutClassedModelUsagesTaglibUtil.recordLayoutClassedModelUsage(
-			getClassName(), getClassPK());
-
 		HttpServletRequest httpServletRequest = getRequest();
 
 		httpServletRequest.setAttribute(

@@ -29,25 +29,15 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.internal.helper.LayoutClassedModelUsagesHelper;
-import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.osgi.util.service.Snapshot;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Chema Balsas
@@ -97,12 +87,6 @@ public class ServletContextUtil {
 		getLayoutAdaptiveMediaProcessor() {
 
 		return _layoutAdaptiveMediaProcessorSnapshot.get();
-	}
-
-	public static Map<String, LayoutClassedModelUsageRecorder>
-		getLayoutClassedModelUsageRecorders() {
-
-		return _layoutClassedModelUsageRecorders;
 	}
 
 	public static LayoutClassedModelUsagesHelper
@@ -159,40 +143,6 @@ public class ServletContextUtil {
 		return _servletContextSnapshot.get();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addLayoutClassedModelUsageRecorder(
-		LayoutClassedModelUsageRecorder layoutClassedModelUsageRecorder,
-		Map<String, Object> properties) {
-
-		String modelClassName = GetterUtil.getString(
-			properties.get("model.class.name"));
-
-		if (Validator.isNull(modelClassName)) {
-			return;
-		}
-
-		_layoutClassedModelUsageRecorders.put(
-			modelClassName, layoutClassedModelUsageRecorder);
-	}
-
-	protected void removeLayoutClassedModelUsageRecorder(
-		LayoutClassedModelUsageRecorder layoutClassedModelUsageRecorder,
-		Map<String, Object> properties) {
-
-		String modelClassName = GetterUtil.getString(
-			properties.get("model.class.name"));
-
-		if (Validator.isNull(modelClassName)) {
-			return;
-		}
-
-		_layoutClassedModelUsageRecorders.remove(modelClassName);
-	}
-
 	private static final Snapshot<CollectionPaginationHelper>
 		_collectionPaginationHelperSnapshot = new Snapshot<>(
 			ServletContextUtil.class, CollectionPaginationHelper.class);
@@ -220,8 +170,6 @@ public class ServletContextUtil {
 	private static final Snapshot<LayoutAdaptiveMediaProcessor>
 		_layoutAdaptiveMediaProcessorSnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutAdaptiveMediaProcessor.class);
-	private static final Map<String, LayoutClassedModelUsageRecorder>
-		_layoutClassedModelUsageRecorders = new ConcurrentHashMap<>();
 	private static final Snapshot<LayoutClassedModelUsagesHelper>
 		_layoutClassedModelUsagesHelperSnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutClassedModelUsagesHelper.class);

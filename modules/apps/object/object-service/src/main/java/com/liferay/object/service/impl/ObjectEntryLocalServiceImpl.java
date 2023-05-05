@@ -2669,19 +2669,17 @@ public class ObjectEntryLocalServiceImpl
 					_objectFieldLocalService.fetchObjectField(
 						objectDefinitionId, columnName);
 
-				if ((objectField == null) ||
-					!objectField.compareBusinessType(
+				if ((objectField != null) &&
+					objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
 
-					continue;
-				}
-
-				try {
-					objects[i] = _encryptor.decrypt(
-						_getKey(), (String)objects[i]);
-				}
-				catch (EncryptorException encryptorException) {
-					throw new RuntimeException(encryptorException);
+					try {
+						objects[i] = _encryptor.decrypt(
+							_getKey(), (String)objects[i]);
+					}
+					catch (EncryptorException encryptorException) {
+						throw new RuntimeException(encryptorException);
+					}
 				}
 			}
 

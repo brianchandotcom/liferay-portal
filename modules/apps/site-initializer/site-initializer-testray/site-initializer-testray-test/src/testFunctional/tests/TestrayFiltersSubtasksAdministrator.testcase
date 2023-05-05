@@ -123,6 +123,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
+
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "subtasks",
 			objectName = "Subtask_1");
@@ -261,7 +263,9 @@ definition {
 		task ("When the user select the subtask 2 in the filter by name") {
 			TestrayFilter.clickFilter();
 
-			ScrollBy(value1 = "0, 60");
+			ScrollWebElementIntoView(
+				key_projectName = "Subtask_2",
+				locator1 = "Testray#ITEM_NAME");
 
 			TestrayFilter.typeFilter(
 				label = "Subtask Name",

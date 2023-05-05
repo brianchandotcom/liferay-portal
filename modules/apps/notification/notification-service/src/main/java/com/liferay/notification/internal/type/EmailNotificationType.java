@@ -196,7 +196,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		String subject = formatLocalizedContent(
 			notificationTemplate.getSubjectMap(), notificationContext);
 
-		Map<String, String> notificationRecipientSettingsEvaluatedMap =
+		Map<String, String> evaluatedNotificationRecipientSettings =
 			HashMapBuilder.put(
 				"bcc",
 				formatContent(
@@ -253,7 +253,7 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		for (String emailAddress :
 				StringUtil.split(
-					notificationRecipientSettingsEvaluatedMap.get("to"))) {
+					evaluatedNotificationRecipientSettings.get("to"))) {
 
 			EmailAddressValidator emailAddressValidator =
 				EmailAddressValidatorFactory.getInstance();
@@ -286,7 +286,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			prepareNotificationContext(
 				creatorUser, body, notificationContext,
 				HashMapBuilder.putAll(
-					notificationRecipientSettingsEvaluatedMap
+					evaluatedNotificationRecipientSettings
 				).put(
 					"to", emailAddress
 				).build(),

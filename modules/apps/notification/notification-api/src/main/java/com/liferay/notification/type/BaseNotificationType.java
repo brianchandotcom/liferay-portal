@@ -312,7 +312,7 @@ public abstract class BaseNotificationType implements NotificationType {
 
 		List<String> termNames = new ArrayList<>();
 
-		Matcher matcher = _pattern.matcher(content);
+		Matcher matcher = _termNamePattern.matcher(content);
 
 		while (matcher.find()) {
 			termNames.add(matcher.group());
@@ -405,7 +405,7 @@ public abstract class BaseNotificationType implements NotificationType {
 	@Reference
 	protected UserLocalService userLocalService;
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _termNamePattern = Pattern.compile(
 		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 }

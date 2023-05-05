@@ -17,7 +17,9 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -37,11 +39,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -212,7 +216,14 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	private void _deleteSLAs() throws Exception {
 		for (SLA sla : _slas) {
-			slaResource.deleteSLA(sla.getId());
+			_workflowMetricsSLADefinitionLocalService.
+				deactivateWorkflowMetricsSLADefinition(
+					sla.getId(), new ServiceContext() {
+						{
+							setCompanyId(testGroup.getCompanyId());
+							setUserId(TestPropsValues.getUserId());
+						}
+					});
 		}
 	}
 
@@ -243,5 +254,9 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	@Inject
 	private WorkflowMetricsRESTTestHelper _workflowMetricsRESTTestHelper;
+
+	@Inject
+	private WorkflowMetricsSLADefinitionLocalService
+		_workflowMetricsSLADefinitionLocalService;
 
 }

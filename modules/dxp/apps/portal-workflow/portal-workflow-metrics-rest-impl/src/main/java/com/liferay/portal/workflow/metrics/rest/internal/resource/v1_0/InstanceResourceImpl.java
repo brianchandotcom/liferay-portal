@@ -109,8 +109,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	public void deleteProcessInstance(Long processId, Long instanceId)
 		throws Exception {
 
+		Instance instance = getProcessInstance(processId, instanceId);
+
 		_instanceWorkflowMetricsIndexer.deleteInstance(
-			contextCompany.getCompanyId(), instanceId);
+			contextCompany.getCompanyId(), instance.getId());
 	}
 
 	@Override

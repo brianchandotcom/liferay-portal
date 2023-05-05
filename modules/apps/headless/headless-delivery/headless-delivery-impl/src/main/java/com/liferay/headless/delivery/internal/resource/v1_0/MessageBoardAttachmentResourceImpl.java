@@ -57,7 +57,10 @@ public class MessageBoardAttachmentResourceImpl
 	public void deleteMessageBoardAttachment(Long messageBoardAttachmentId)
 		throws Exception {
 
-		_portletFileRepository.deletePortletFileEntry(messageBoardAttachmentId);
+		MessageBoardAttachment messageBoardAttachment =
+			getMessageBoardAttachment(messageBoardAttachmentId);
+
+		_portletFileRepository.deletePortletFileEntry(messageBoardAttachment.getId());
 	}
 
 	@Override

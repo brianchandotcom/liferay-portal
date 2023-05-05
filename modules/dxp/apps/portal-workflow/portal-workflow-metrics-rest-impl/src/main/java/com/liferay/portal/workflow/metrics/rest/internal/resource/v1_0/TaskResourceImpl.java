@@ -90,6 +90,8 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	public void deleteProcessTask(Long processId, Long taskId)
 		throws Exception {
 
+		Task task = getProcessTask(processId, taskId);
+
 		DeleteTaskRequest.Builder deleteTaskRequestBuilder =
 			new DeleteTaskRequest.Builder();
 
@@ -97,7 +99,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 			deleteTaskRequestBuilder.companyId(
 				contextCompany.getCompanyId()
 			).taskId(
-				taskId
+				task.getId()
 			).build());
 	}
 

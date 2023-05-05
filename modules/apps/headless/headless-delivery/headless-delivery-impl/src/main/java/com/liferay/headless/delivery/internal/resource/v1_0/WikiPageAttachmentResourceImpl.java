@@ -73,7 +73,10 @@ public class WikiPageAttachmentResourceImpl
 	public void deleteWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception {
 
-		_portletFileRepository.deletePortletFileEntry(wikiPageAttachmentId);
+		WikiPageAttachment wikiPageAttachment =
+			getWikiPageAttachment(wikiPageAttachmentId);
+
+		_portletFileRepository.deletePortletFileEntry(wikiPageAttachment.getId());
 	}
 
 	@Override

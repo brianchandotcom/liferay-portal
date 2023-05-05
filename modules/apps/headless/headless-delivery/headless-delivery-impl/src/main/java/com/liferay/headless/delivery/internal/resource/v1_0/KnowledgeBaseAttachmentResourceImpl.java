@@ -53,8 +53,11 @@ public class KnowledgeBaseAttachmentResourceImpl
 	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
 		throws Exception {
 
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			getKnowledgeBaseAttachment(knowledgeBaseAttachmentId);
+
 		_portletFileRepository.deletePortletFileEntry(
-			knowledgeBaseAttachmentId);
+			knowledgeBaseAttachment.getId());
 	}
 
 	@Override

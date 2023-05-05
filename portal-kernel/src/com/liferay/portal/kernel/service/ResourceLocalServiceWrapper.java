@@ -257,12 +257,12 @@ public class ResourceLocalServiceWrapper
 
 	@Override
 	public void copyModelResources(
-			long companyId, java.lang.String name, long oldPrimKey,
-			long newPrimKey)
+			long companyId, java.lang.String name, long sourcePrimKey,
+			long targetPrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.copyModelResources(
-			companyId, name, oldPrimKey, newPrimKey);
+			companyId, name, sourcePrimKey, targetPrimKey);
 	}
 
 	/**

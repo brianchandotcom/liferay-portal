@@ -107,13 +107,14 @@ public class DLFileEntryServiceUtil {
 	}
 
 	public static DLFileEntry copyFileEntry(
-			long groupId, long repositoryId, long fileEntryId,
-			long destFolderId,
+			long groupId, long repositoryId, long sourceFileEntryId,
+			long targetFolderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyFileEntry(
-			groupId, repositoryId, fileEntryId, destFolderId, serviceContext);
+			groupId, repositoryId, sourceFileEntryId, targetFolderId,
+			serviceContext);
 	}
 
 	public static void deleteFileEntry(long fileEntryId)

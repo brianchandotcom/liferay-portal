@@ -97,8 +97,8 @@ public interface DLFileEntryService extends BaseService {
 		throws PortalException;
 
 	public DLFileEntry copyFileEntry(
-			long groupId, long repositoryId, long fileEntryId,
-			long destFolderId, ServiceContext serviceContext)
+			long groupId, long repositoryId, long sourceFileEntryId,
+			long targetFolderId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteFileEntry(long fileEntryId) throws PortalException;

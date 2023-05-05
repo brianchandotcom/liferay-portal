@@ -216,7 +216,7 @@ public interface ResourceLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public void copyModelResources(
-			long companyId, String name, long oldPrimKey, long newPrimKey)
+			long companyId, String name, long sourcePrimKey, long targetPrimKey)
 		throws PortalException;
 
 	/**

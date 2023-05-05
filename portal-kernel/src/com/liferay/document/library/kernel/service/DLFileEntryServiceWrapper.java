@@ -109,13 +109,14 @@ public class DLFileEntryServiceWrapper
 
 	@Override
 	public DLFileEntry copyFileEntry(
-			long groupId, long repositoryId, long fileEntryId,
-			long destFolderId,
+			long groupId, long repositoryId, long sourceFileEntryId,
+			long targetFolderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlFileEntryService.copyFileEntry(
-			groupId, repositoryId, fileEntryId, destFolderId, serviceContext);
+			groupId, repositoryId, sourceFileEntryId, targetFolderId,
+			serviceContext);
 	}
 
 	@Override

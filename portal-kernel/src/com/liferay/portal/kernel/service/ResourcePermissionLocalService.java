@@ -213,7 +213,7 @@ public interface ResourcePermissionLocalService
 		long resourceActionBitwiseValue);
 
 	public void copyModelResourcePermissions(
-			long companyId, String name, long oldPrimKey, long newPrimKey)
+			long companyId, String name, long sourcePrimKey, long targetPrimKey)
 		throws PortalException;
 
 	/**

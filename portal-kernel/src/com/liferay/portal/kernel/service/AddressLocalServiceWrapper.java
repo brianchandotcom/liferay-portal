@@ -69,12 +69,12 @@ public class AddressLocalServiceWrapper
 
 	@Override
 	public Address copyAddress(
-			long addressId, String className, long classPK,
+			long sourceAddressId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressLocalService.copyAddress(
-			addressId, className, classPK, serviceContext);
+			sourceAddressId, className, classPK, serviceContext);
 	}
 
 	/**

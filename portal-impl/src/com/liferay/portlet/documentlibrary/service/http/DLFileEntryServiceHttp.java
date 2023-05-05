@@ -315,7 +315,7 @@ public class DLFileEntryServiceHttp {
 	public static com.liferay.document.library.kernel.model.DLFileEntry
 			copyFileEntry(
 				HttpPrincipal httpPrincipal, long groupId, long repositoryId,
-				long fileEntryId, long destFolderId,
+				long sourceFileEntryId, long targetFolderId,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -325,8 +325,8 @@ public class DLFileEntryServiceHttp {
 				_copyFileEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, repositoryId, fileEntryId, destFolderId,
-				serviceContext);
+				methodKey, groupId, repositoryId, sourceFileEntryId,
+				targetFolderId, serviceContext);
 
 			Object returnObj = null;
 

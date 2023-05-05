@@ -95,7 +95,7 @@ public interface AddressLocalService
 		throws PortalException;
 
 	public Address copyAddress(
-			long addressId, String className, long classPK,
+			long sourceAddressId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException;
 

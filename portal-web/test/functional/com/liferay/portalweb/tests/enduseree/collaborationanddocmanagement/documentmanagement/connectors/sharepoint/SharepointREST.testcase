@@ -130,6 +130,22 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182965. It checks that a file can be downloaded from Sharepoint."
+	@priority = 4
+	test CanDownloadFile {
+		property test.name.skip.portal.instance = "SharepointREST#CanDownloadFile";
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.downloadCP(
+			dmDocumentSize = "150 KB",
+			dmDocumentTitle = "DownloadPermissionsDONOTDELETE");
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "DownloadPermissionsDONOTDELETE.jpg");
+	}
+
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."
 	@priority = 3
 	test CanPublishRepository {

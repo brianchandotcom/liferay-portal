@@ -1417,6 +1417,19 @@ definition {
 			value1 = "Download");
 	}
 
+	macro downloadViaURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		if (isSet(siteURLKey)) {
+			var key_siteURLKey = ${siteURLKey};
+		}
+		else {
+			var key_siteURLKey = "guest";
+		}
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/d/${key_siteURLKey}/${dmDocumentTitle}?download=true");
+	}
+
 	macro downloadWithDirectoryIndexing {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -3758,7 +3771,18 @@ definition {
 
 		DMDocument.expandInfo();
 
-		DMDocument.viewDocumentInfoTitleCmdPG(dmDocumentTitle = ${dmDocumentTitle});
+		if (isSet(noDownloadPermissions)) {
+			AssertNotVisible(
+				locator1 = "Button#DOWNLOAD_SIDEBAR",
+				value1 = "Download");
+
+			AssertNotVisible(
+				locator1 = "MenuItem#DOWNLOAD",
+				value1 = "Download");
+		}
+		else {
+			DMDocument.viewDocumentInfoTitleCmdPG(dmDocumentTitle = ${dmDocumentTitle});
+		}
 
 		if (isSet(dmDocumentDescription)) {
 			var key_dmDocumentDescription = ${dmDocumentDescription};

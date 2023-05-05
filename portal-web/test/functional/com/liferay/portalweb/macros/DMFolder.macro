@@ -569,6 +569,10 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
+	macro viewEntryNotPresent {
+		LexiconCard.viewCardNotPresent(card = ${dmFolderName});
+	}
+
 	macro viewEntryPresent {
 		LexiconCard.viewCardPresent(card = ${dmFolderName});
 	}

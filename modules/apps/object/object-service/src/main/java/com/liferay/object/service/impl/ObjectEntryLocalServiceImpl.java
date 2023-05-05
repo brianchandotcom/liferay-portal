@@ -1917,24 +1917,29 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Key _getKey() throws PortalException {
-		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
+
 			throw new RequiredEncryptedObjectFieldPropertyException(
 				StringBundler.concat(
 					"The property ",
-					PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM,
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM,
 					" is required for encrypted object fields"));
 		}
 
-		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_KEY)) {
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY)) {
+
 			throw new RequiredEncryptedObjectFieldPropertyException(
 				StringBundler.concat(
-					"The property ", PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY,
+					"The property ",
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,
 					" is required for encrypted object fields"));
 		}
 
 		return new SecretKeySpec(
-			Base64.decode(PropsValues.OBJECT_FIELD_ENCRYPTION_KEY),
-			PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+			Base64.decode(PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY),
+			PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 	}
 
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(

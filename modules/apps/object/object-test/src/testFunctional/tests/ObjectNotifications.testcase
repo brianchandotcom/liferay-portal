@@ -466,6 +466,39 @@ definition {
 		}
 	}
 
+	@description = "LPS-162133 - Verify that it's possible to delete a user notification template"
+	@priority = 3
+	test CanDeleteUserTemplate {
+		task ("Given a user notification template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+
+			ObjectNotifications.addNewNotificationTemplate(
+				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+				name = "User Notification Template",
+				notificationType = "User Notification",
+				recipientType = "User",
+				subject = "Subject content",
+				userName = "Test");
+
+			PortletEntry.save();
+			}
+
+		task ("When the user deletes the user notification template") {
+			ObjectNotifications.deleteNotificationTemplate(templateName = "Notification Template");
+		}
+
+		task ("Then the user notification template is no longer present in the table") {
+			Refresh();
+
+			AssertElementNotPresent(
+				key_name = "Notification Template",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		}
+	}
+
 	@description = "LPS-161918 - Verify that it's possible to edit an e-mail notification template"
 	@priority = 3
 	test CanEditEmailTemplate {

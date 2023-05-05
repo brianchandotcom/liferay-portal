@@ -38,7 +38,7 @@ public interface SegmentsExperienceRequestProcessor {
 	 * @param  httpServletRequest the servlet request
 	 * @param  httpServletResponse the servlet response
 	 * @param  groupId the primary key of the group
-	 * @param  plid the primary key of the entity
+	 * @param  plid the primary key of the layout
 	 * @param  segmentsExperienceIds the primary keys of the user's active
 	 *         segment experiences
 	 * @return the processed IDs of segments experiences that will be actually
@@ -58,7 +58,7 @@ public interface SegmentsExperienceRequestProcessor {
 	 * @param  httpServletRequest the servlet request
 	 * @param  httpServletResponse the servlet response
 	 * @param  groupId the primary key of the group
-	 * @param  plid the primary key of the entity
+	 * @param  plid the primary key of the layout
 	 * @param  segmentsEntryIds the primary keys of the user's active segment
 	 *         entries
 	 * @param  segmentsExperienceIds the primary keys of the user's active

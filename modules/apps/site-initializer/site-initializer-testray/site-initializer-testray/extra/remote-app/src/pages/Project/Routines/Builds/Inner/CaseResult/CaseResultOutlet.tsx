@@ -50,6 +50,8 @@ const CaseResultOutlet = () => {
 		testrayRoutine,
 	}: OutletContext = useOutletContext();
 
+	const isEditCase = pathname.includes('edit');
+
 	const {
 		data: testrayCaseResult,
 		error,
@@ -74,7 +76,7 @@ const CaseResultOutlet = () => {
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
 
 	const {setHeaderActions, setHeading, setTabs} = useHeader({
-		timeout: 300,
+		timeout: 100,
 	});
 
 	useEffect(() => {
@@ -118,19 +120,23 @@ const CaseResultOutlet = () => {
 	]);
 
 	useEffect(() => {
-		setTabs([
-			{
-				active: pathname === basePath,
-				path: basePath,
-				title: i18n.translate('result'),
-			},
-			{
-				active: pathname !== basePath,
-				path: `${basePath}/history`,
-				title: i18n.translate('history'),
-			},
-		]);
-	}, [basePath, pathname, setTabs]);
+		setTabs(
+			isEditCase
+				? []
+				: [
+						{
+							active: pathname === basePath,
+							path: basePath,
+							title: i18n.translate('result'),
+						},
+						{
+							active: pathname !== basePath,
+							path: `${basePath}/history`,
+							title: i18n.translate('history'),
+						},
+				  ]
+		);
+	}, [basePath, isEditCase, pathname, setTabs]);
 
 	return (
 		<PageRenderer error={error} loading={loading}>

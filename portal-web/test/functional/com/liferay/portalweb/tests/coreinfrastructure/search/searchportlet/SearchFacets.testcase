@@ -1288,13 +1288,12 @@ definition {
 			folderName = "Provided by Liferay",
 			groupName = "Guest");
 
-		task ("Add some Wiki Page examples") {
-			for (var wikiNumber : list "1,2,3,4") {
-				JSONWiki.addWikiPage(
+		task ("Add web contents") {
+			for (var count : list "1,2,3,4") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content",
 					groupName = "Guest",
-					wikiNodeName = "Main",
-					wikiPageContent = "Wiki Page Content",
-					wikiPageName = "Wiki Page ${wikiNumber}");
+					title = "Web Content ${count}");
 			}
 		}
 
@@ -1313,7 +1312,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Type facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,Page,Document,User");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Web Content Article,Page,Document,User");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term frequency ascending") {
@@ -1323,7 +1322,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Document,Page,Wiki Page");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Document,Page,Web Content Article");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value ascending") {
@@ -1333,7 +1332,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Page,User,Wiki Page");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Page,User,Web Content Article");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value descending") {
@@ -1343,7 +1342,7 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Wiki Page,User,Page,Document");
+			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Web Content Article,User,Page,Document");
 		}
 	}
 

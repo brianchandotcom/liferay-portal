@@ -83,19 +83,32 @@ definition {
 	test CanSearchOnPermissionsPage {
 		CalendarPermissions.gotoPermissions();
 
-		CalendarPermissions.searchRoleName(searchTerm = "Guest");
+		Search.searchCP(searchTerm = "Guest");
 
-		CalendarPermissions.viewSearchResult(searchResults = "1 Result for \"Guest\"");
+		AssertTextEquals(
+			locator1 = "Search#SEARCH_INFO",
+			value1 = "1 Result for \"Guest\"");
 
-		CalendarPermissions.viewPermissionsRoleName(roleName = "Guest");
+		Click(locator1 = "TextInput#SEARCH");
 
-		CalendarPermissions.cleanSearchResult();
+		AssertTextEquals.assertPartialText(
+			key_roleTitle = "Guest",
+			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
+			value1 = "Guest");
 
-		CalendarPermissions.searchRoleName(searchTerm = "DXP Client");
+		Search.clearSearchResult();
 
-		CalendarPermissions.viewSearchResult(searchResults = "0 Results for \"DXP Client\"");
+		Search.searchCP(searchTerm = "DXP Client");
 
-		CalendarPermissions.viewTableDisplay(message = "No roles were found.");
+		AssertTextEquals(
+			locator1 = "Search#SEARCH_INFO",
+			value1 = "0 Results for \"DXP Client\"");
+
+		Click(locator1 = "TextInput#SEARCH");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No roles were found.");
 	}
 
 	@description = "LRQA-71890 - Verify that when the user search for a non existent role, the system displays a message"

@@ -287,15 +287,6 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
-	public String getCopyTableStructureSQL(
-		String tableName, String newTableName) {
-
-		return StringBundler.concat(
-			"create table ", newTableName, " as select * from ", tableName,
-			" where 1 = 0");
-	}
-
-	@Override
 	public DBType getDBType() {
 		return _dbType;
 	}
@@ -854,6 +845,14 @@ public abstract class BaseDB implements DB {
 		}
 
 		return validIndexNames;
+	}
+
+	protected String getCopyTableStructureSQL(
+		String tableName, String newTableName) {
+
+		return StringBundler.concat(
+			"create table ", newTableName, " as select * from ", tableName,
+			" where 1 = 0");
 	}
 
 	protected List<IndexMetadata> getIndexes(

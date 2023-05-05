@@ -211,15 +211,6 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
-	public String getCopyTableStructureSQL(
-		String tableName, String newTableName) {
-
-		return StringBundler.concat(
-			"create table ", newTableName, " as (select * from ", tableName,
-			") with no data");
-	}
-
-	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
 		return StringBundler.concat(
 			"connect to ", databaseName, ";\n", sqlContent);
@@ -273,6 +264,14 @@ public class DB2DB extends BaseDB {
 		else {
 			super.runSQL(template);
 		}
+	}
+
+	protected String getCopyTableStructureSQL(
+		String tableName, String newTableName) {
+
+		return StringBundler.concat(
+			"create table ", newTableName, " as (select * from ", tableName,
+			") with no data");
 	}
 
 	@Override

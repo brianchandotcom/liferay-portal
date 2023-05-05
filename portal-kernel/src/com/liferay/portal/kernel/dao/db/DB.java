@@ -79,9 +79,6 @@ public interface DB {
 			Connection connection, String tableName, String columnName)
 		throws IOException, SQLException;
 
-	public String getCopyTableStructureSQL(
-		String tableName, String newTableName);
-
 	public DBType getDBType();
 
 	public List<Index> getIndexes(Connection connection) throws SQLException;

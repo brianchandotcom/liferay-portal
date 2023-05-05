@@ -966,6 +966,15 @@ public interface PropsKeys {
 	public static final String EHCACHE_SINGLE_VM_CONFIG_LOCATION =
 		"ehcache.single.vm.config.location";
 
+	public static final String ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM =
+		"encrypted.object.field.encryption.algorithm";
+
+	public static final String ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY =
+		"encrypted.object.field.encryption.key";
+
+	public static final String ENCRYPTED_OBJECT_FIELD_RESTRICTED =
+		"encrypted.object.field.restricted";
+
 	public static final String ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED =
 		"enterprise.product.notification.enabled";
 
@@ -1769,15 +1778,6 @@ public interface PropsKeys {
 
 	public static final String NOTIFICATIONS_MAX_EVENTS =
 		"notifications.max.events";
-
-	public static final String OBJECT_FIELD_ENCRYPTION_ALGORITHM =
-		"object.field.encryption.algorithm";
-
-	public static final String OBJECT_FIELD_ENCRYPTION_KEY =
-		"object.field.encryption.key";
-
-	public static final String OBJECT_FIELD_ENCRYPTION_RESTRICTED =
-		"object.field.encryption.restricted";
 
 	public static final String OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH =
 		"object.nested.fields.max.query.depth";

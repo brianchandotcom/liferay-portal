@@ -789,6 +789,16 @@ public class PropsValues {
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
+	public static final String ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM =
+		PropsUtil.get(PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+
+	public static final String ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY =
+		PropsUtil.get(PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY);
+
+	public static boolean ENCRYPTED_OBJECT_FIELD_RESTRICTED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.ENCRYPTED_OBJECT_FIELD_RESTRICTED));
+
 	public static final boolean ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED));
@@ -1497,16 +1507,6 @@ public class PropsValues {
 
 	public static final int NOTIFICATIONS_MAX_EVENTS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.NOTIFICATIONS_MAX_EVENTS));
-
-	public static final String OBJECT_FIELD_ENCRYPTION_ALGORITHM =
-		PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM);
-
-	public static final String OBJECT_FIELD_ENCRYPTION_KEY = PropsUtil.get(
-		PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY);
-
-	public static boolean OBJECT_FIELD_ENCRYPTION_RESTRICTED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.OBJECT_FIELD_ENCRYPTION_RESTRICTED));
 
 	public static final int OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH =
 		GetterUtil.getInteger(

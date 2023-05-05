@@ -32,11 +32,11 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -218,8 +218,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
-			_getDTOConverterContext(null), pagination, _predicate, search,
-			sorts);
+			_getDTOConverterContext(null),
+			ParamUtil.getString(contextHttpServletRequest, "filter"),
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -267,8 +268,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, scopeKey,
-			aggregation, _getDTOConverterContext(null), pagination, _predicate,
-			search, sorts);
+			aggregation, _getDTOConverterContext(null),
+			ParamUtil.getString(contextHttpServletRequest, "filter"),
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -626,10 +628,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipService _objectRelationshipService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-
-	@Context
-	private Predicate _predicate;
-
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
 

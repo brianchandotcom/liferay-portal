@@ -232,10 +232,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 			(Long)dtoConverterContext.getAttribute("companyId"),
 			_objectDefinition,
 			(String)dtoConverterContext.getAttribute("scopeKey"), aggregation,
-			dtoConverterContext, pagination,
-			_filterPredicateFactory.create(
-				(String)dtoConverterContext.getAttribute("filter"),
-				_objectDefinition.getObjectDefinitionId()),
+			dtoConverterContext,
+			(String)dtoConverterContext.getAttribute("filter"), pagination,
 			search, sorts);
 
 		return Page.of(

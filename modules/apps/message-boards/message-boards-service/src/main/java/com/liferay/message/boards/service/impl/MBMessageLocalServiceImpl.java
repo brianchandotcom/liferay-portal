@@ -2045,6 +2045,32 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	private String _getMessageSiblings(
+		boolean htmlFormat, int maxNumberOfMessages, MBMessage message,
+		String quoteMark, ServiceContext serviceContext) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+			(maxNumberOfMessages == 0)) {
+
+			return StringPool.BLANK;
+		}
+
+		int childMessagesCount = mbMessageLocalService.getChildMessagesCount(
+			message.getParentMessageId(), WorkflowConstants.STATUS_APPROVED);
+
+		if (childMessagesCount == 1) {
+			return StringPool.BLANK;
+		}
+
+		return MBMessageUtil.renderSameLevelMessages(
+			htmlFormat,
+			mbMessageLocalService.getChildMessages(
+				message.getParentMessageId(), WorkflowConstants.STATUS_APPROVED,
+				childMessagesCount - maxNumberOfMessages - 1,
+				childMessagesCount - 1),
+			quoteMark, serviceContext);
+	}
+
 	private String _getMessageURL(
 			MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
@@ -2523,6 +2549,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String messageSubject = message.getSubject();
 		String messageSubjectPrefix = StringPool.BLANK;
 		String messageParent = StringPool.BLANK;
+		String messageSiblings = StringPool.BLANK;
 
 		if (message.getParentMessageId() !=
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
@@ -2554,9 +2581,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			messageParent = MBMessageUtil.renderDifferentLevelMessages(
 				htmlFormat, mbMessages, serviceContext);
-		}
 
-		String messageSiblings = StringPool.BLANK;
+			int maxNumberOfMessages = 3;
+
+			messageSiblings = _getMessageSiblings(
+				htmlFormat, maxNumberOfMessages - mbMessages.size(), message,
+				MBMessageUtil.getQuote(htmlFormat, mbMessages.size()),
+				serviceContext);
+		}
 
 		String rootMessageBody = _getRootMessageBody(
 			htmlFormat, message, serviceContext);

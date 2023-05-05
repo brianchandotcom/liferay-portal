@@ -196,6 +196,40 @@ public class MBMessageUtil {
 			_getMarkupElement(MarkupElement.END, htmlFormat));
 	}
 
+	public static String renderSameLevelMessages(
+		boolean htmlFormat, List<MBMessage> mbMessages, String quoteMark,
+		ServiceContext serviceContext) {
+
+		if (ListUtil.isEmpty(mbMessages)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(mbMessages.size() + 2);
+
+		sb.append(_getMarkupElement(MarkupElement.START_SIBLING, htmlFormat));
+
+		for (MBMessage mbMessage : mbMessages) {
+			sb.append(
+				StringBundler.concat(
+					_getMarkupElement(
+						MarkupElement.START_MESSAGE_SIBLING, htmlFormat),
+					_getMarkupElement(
+						MarkupElement.START_USER_SIBLING, htmlFormat),
+					_getUserName(htmlFormat, mbMessage, quoteMark),
+					_getMarkupElement(MarkupElement.END, htmlFormat),
+					_getMarkupElement(
+						MarkupElement.START_BODY_SIBLING, htmlFormat),
+					getMessageBody(
+						htmlFormat, mbMessage, quoteMark, serviceContext),
+					_getMarkupElement(MarkupElement.END, htmlFormat),
+					_getMarkupElement(MarkupElement.END, htmlFormat)));
+		}
+
+		sb.append(_getMarkupElement(MarkupElement.END, htmlFormat));
+
+		return sb.toString();
+	}
+
 	public static MBMessage updateAnswer(
 		MBMessagePersistence mbMessagePersistence, MBMessage message,
 		boolean answer, boolean cascade) {

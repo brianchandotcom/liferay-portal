@@ -1027,23 +1027,28 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
-		if (PropsValues.OBJECT_FIELD_ENCRYPTION_RESTRICTED) {
+		if (PropsValues.ENCRYPTED_OBJECT_FIELD_RESTRICTED) {
 			throw new ObjectFieldBusinessTypeException(
 				"Encrypted object field is not available");
 		}
 
-		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
+
 			throw new RequiredEncryptedObjectFieldPropertyException(
 				StringBundler.concat(
 					"The property ",
-					PropsKeys.OBJECT_FIELD_ENCRYPTION_ALGORITHM,
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM,
 					" is required for encrypted object fields"));
 		}
 
-		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_KEY)) {
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY)) {
+
 			throw new RequiredEncryptedObjectFieldPropertyException(
 				StringBundler.concat(
-					"The property ", PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY,
+					"The property ",
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,
 					" is required for encrypted object fields"));
 		}
 

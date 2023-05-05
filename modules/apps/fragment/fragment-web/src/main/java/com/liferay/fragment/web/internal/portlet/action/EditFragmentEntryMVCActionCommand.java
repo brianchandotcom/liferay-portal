@@ -119,10 +119,6 @@ public class EditFragmentEntryMVCActionCommand
 
 			draftFragmentEntry.setTypeOptions(typeOptionsJSONObject.toString());
 		}
-		else {
-			draftFragmentEntry.setCacheable(
-				ParamUtil.getBoolean(actionRequest, "cacheable"));
-		}
 
 		draftFragmentEntry.setStatus(status);
 

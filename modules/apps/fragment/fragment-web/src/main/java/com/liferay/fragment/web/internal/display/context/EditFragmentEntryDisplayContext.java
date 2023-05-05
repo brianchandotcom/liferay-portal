@@ -441,10 +441,6 @@ public class EditFragmentEntryDisplayContext {
 			"autocompleteTags",
 			_fragmentEntryProcessorRegistry.getAvailableTagsJSONArray()
 		).put(
-			"cacheable", _fragmentEntry.isCacheable()
-		).put(
-			"cacheableEnabled", _isCacheableEnabled()
-		).put(
 			"dataAttributes",
 			_fragmentEntryProcessorRegistry.getDataAttributesJSONArray()
 		).put(
@@ -586,16 +582,6 @@ public class EditFragmentEntryDisplayContext {
 			fragmentCollection.getResourcesMap();
 
 		return new ArrayList<>(resourcesMap.keySet());
-	}
-
-	private boolean _isCacheableEnabled() {
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
-		if (!fragmentEntry.isTypeInput()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isReadOnlyFragmentEntry() {

@@ -1897,11 +1897,14 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public long getIndividualsCount(
-		FaroProject faroProject, boolean includeAnonymousUsers) {
+		FaroProject faroProject, boolean includeAnonymousUsers,
+		Date startDate) {
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject);
 
 		uriVariables.put("includeAnonymousUsers", includeAnonymousUsers);
+
+		uriVariables.put("startDate", startDate);
 
 		RestTemplate restTemplate = getRestTemplate(faroProject);
 

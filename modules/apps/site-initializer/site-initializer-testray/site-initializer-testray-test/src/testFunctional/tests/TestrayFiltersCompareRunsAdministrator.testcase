@@ -52,8 +52,6 @@ definition {
 				projectName = ${projectName},
 				routineName = "Routine 1");
 
-			JSONTestray.addCaseType(caseType = "Case Type 2");
-
 			JSONTestray.addCases(
 				caseName = "Case 1",
 				caseType = "Case Type 1",
@@ -62,7 +60,7 @@ definition {
 
 			JSONTestray.addCases(
 				caseName = "Case 2",
-				caseType = "Case Type 2",
+				caseType = "Case Type 1",
 				componentName = ${componentName},
 				priority = 5,
 				projectName = ${projectName});
@@ -137,24 +135,12 @@ definition {
 			objectName = "Routine 1");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = "Routine 2");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "teams",
 			objectName = "Team 1");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = "Team 2");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = "Case Type 1");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = "Case Type 2");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "factorcategories",

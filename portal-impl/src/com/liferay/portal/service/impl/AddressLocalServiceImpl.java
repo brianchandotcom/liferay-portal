@@ -120,19 +120,22 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 	@Override
 	public Address copyAddress(
-			long addressId, String className, long classPK,
+			long sourceAddressId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Address address = addressPersistence.findByPrimaryKey(addressId);
+		Address sourceAddress = addressPersistence.findByPrimaryKey(
+			sourceAddressId);
 
 		return addressLocalService.addAddress(
 			null, serviceContext.getUserId(), className, classPK,
-			address.getName(), address.getDescription(), address.getStreet1(),
-			address.getStreet2(), address.getStreet3(), address.getCity(),
-			address.getZip(), address.getRegionId(), address.getCountryId(),
-			address.getListTypeId(), address.isMailing(), address.isPrimary(),
-			address.getPhoneNumber(), serviceContext);
+			sourceAddress.getName(), sourceAddress.getDescription(),
+			sourceAddress.getStreet1(), sourceAddress.getStreet2(),
+			sourceAddress.getStreet3(), sourceAddress.getCity(),
+			sourceAddress.getZip(), sourceAddress.getRegionId(),
+			sourceAddress.getCountryId(), sourceAddress.getListTypeId(),
+			sourceAddress.isMailing(), sourceAddress.isPrimary(),
+			sourceAddress.getPhoneNumber(), serviceContext);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

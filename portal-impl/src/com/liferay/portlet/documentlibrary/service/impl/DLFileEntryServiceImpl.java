@@ -171,20 +171,20 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 	@Override
 	public DLFileEntry copyFileEntry(
-			long groupId, long repositoryId, long fileEntryId,
-			long destFolderId, ServiceContext serviceContext)
+			long groupId, long repositoryId, long sourceFileEntryId,
+			long targetFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
 		_fileEntryModelResourcePermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+			getPermissionChecker(), sourceFileEntryId, ActionKeys.VIEW);
 
 		ModelResourcePermissionUtil.check(
 			_folderModelResourcePermission, getPermissionChecker(), groupId,
-			destFolderId, ActionKeys.ADD_DOCUMENT);
+			targetFolderId, ActionKeys.ADD_DOCUMENT);
 
 		return dlFileEntryLocalService.copyFileEntry(
-			getUserId(), groupId, repositoryId, fileEntryId, destFolderId, null,
-			serviceContext);
+			getUserId(), groupId, repositoryId, sourceFileEntryId,
+			targetFolderId, null, serviceContext);
 	}
 
 	@Override

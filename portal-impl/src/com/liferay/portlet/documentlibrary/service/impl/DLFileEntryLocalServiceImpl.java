@@ -574,11 +574,12 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public DLFileEntry copyFileEntry(
-			long userId, long groupId, long repositoryId, long fileEntryId,
-			long destFolderId, String fileName, ServiceContext serviceContext)
+			long userId, long groupId, long repositoryId,
+			long sourceFileEntryId, long targetFolderId, String fileName,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
+		DLFileEntry sourceDLFileEntry = getFileEntry(sourceFileEntryId);
 
 		String sourceFileName = "A";
 
@@ -586,49 +587,52 @@ public class DLFileEntryLocalServiceImpl
 			sourceFileName = fileName;
 		}
 
-		String extension = dlFileEntry.getExtension();
+		String sourceExtension = sourceDLFileEntry.getExtension();
 
-		if (Validator.isNotNull(extension)) {
+		if (Validator.isNotNull(sourceExtension)) {
 			sourceFileName = StringBundler.concat(
-				sourceFileName, StringPool.PERIOD, extension);
+				sourceFileName, StringPool.PERIOD, sourceExtension);
 		}
 
-		String title = dlFileEntry.getTitle();
+		String sourceTitle = sourceDLFileEntry.getTitle();
 
 		if (!Validator.isBlank(fileName)) {
-			title = fileName;
+			sourceTitle = fileName;
 		}
 
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+		DLFileVersion sourceDLFileVersion = sourceDLFileEntry.getFileVersion();
 
-		InputStream inputStream = _getInputStream(dlFileEntry, dlFileVersion);
+		InputStream sourceInputStream = _getInputStream(
+			sourceDLFileEntry, sourceDLFileVersion);
 
-		DLFileEntry newDLFileEntry = addFileEntry(
-			null, userId, groupId, repositoryId, destFolderId, sourceFileName,
-			dlFileEntry.getMimeType(), title, title,
-			dlFileEntry.getDescription(), null,
-			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
-			dlFileEntry.getSize(), dlFileEntry.getExpirationDate(),
-			dlFileEntry.getReviewDate(), serviceContext);
+		DLFileEntry targetDLFileEntry = addFileEntry(
+			null, userId, groupId, repositoryId, targetFolderId, sourceFileName,
+			sourceDLFileEntry.getMimeType(), sourceTitle, sourceTitle,
+			sourceDLFileEntry.getDescription(), null,
+			sourceDLFileEntry.getFileEntryTypeId(), null, null,
+			sourceInputStream, sourceDLFileEntry.getSize(),
+			sourceDLFileEntry.getExpirationDate(),
+			sourceDLFileEntry.getReviewDate(), serviceContext);
 
-		DLFileVersion newDLFileVersion = newDLFileEntry.getFileVersion();
+		DLFileVersion targetDLFileVersion = targetDLFileEntry.getFileVersion();
 
 		ExpandoBridgeUtil.copyExpandoBridgeAttributes(
-			dlFileVersion.getExpandoBridge(),
-			newDLFileVersion.getExpandoBridge());
+			sourceDLFileVersion.getExpandoBridge(),
+			targetDLFileVersion.getExpandoBridge());
 
 		copyFileEntryMetadata(
-			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
-			fileEntryId, dlFileVersion.getFileVersionId(),
-			newDLFileVersion.getFileVersionId(), serviceContext);
+			sourceDLFileVersion.getCompanyId(),
+			sourceDLFileVersion.getFileEntryTypeId(), sourceFileEntryId,
+			sourceDLFileVersion.getFileVersionId(),
+			targetDLFileVersion.getFileVersionId(), serviceContext);
 
-		return newDLFileEntry;
+		return targetDLFileEntry;
 	}
 
 	@Override
 	public void copyFileEntryMetadata(
 			long companyId, long fileEntryTypeId, long fileEntryId,
-			long fromFileVersionId, long toFileVersionId,
+			long sourceFileVersionId, long targetFileVersionId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -650,7 +654,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		_copyFileEntryMetadata(
-			companyId, fileEntryId, fromFileVersionId, toFileVersionId,
+			companyId, fileEntryId, sourceFileVersionId, targetFileVersionId,
 			serviceContext, ddmFormValuesMap, ddmStructures);
 	}
 
@@ -2434,8 +2438,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _copyExpandoRowModifiedDate(
-		long companyId, long sourceFileVersionId,
-		long destinationFileVersionId) {
+		long companyId, long sourceFileVersionId, long targetFileVersionId) {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchDefaultTable(
 			companyId, DLFileEntry.class.getName());
@@ -2451,22 +2454,21 @@ public class DLFileEntryLocalServiceImpl
 			return;
 		}
 
-		ExpandoRow destinationExpandoRow = _expandoRowLocalService.fetchRow(
-			expandoTable.getTableId(), destinationFileVersionId);
+		ExpandoRow targetExpandoRow = _expandoRowLocalService.fetchRow(
+			expandoTable.getTableId(), targetFileVersionId);
 
-		if (destinationExpandoRow == null) {
+		if (targetExpandoRow == null) {
 			return;
 		}
 
-		destinationExpandoRow.setModifiedDate(
-			sourceExpandoRow.getModifiedDate());
+		targetExpandoRow.setModifiedDate(sourceExpandoRow.getModifiedDate());
 
-		_expandoRowLocalService.updateExpandoRow(destinationExpandoRow);
+		_expandoRowLocalService.updateExpandoRow(targetExpandoRow);
 	}
 
 	private void _copyFileEntryMetadata(
-			long companyId, long fileEntryId, long fromFileVersionId,
-			long toFileVersionId, ServiceContext serviceContext,
+			long companyId, long fileEntryId, long sourceFileVersionId,
+			long targetFileVersionId, ServiceContext serviceContext,
 			Map<String, DDMFormValues> ddmFormValuesMap,
 			List<DDMStructure> ddmStructures)
 		throws PortalException {
@@ -2474,7 +2476,7 @@ public class DLFileEntryLocalServiceImpl
 		for (DDMStructure ddmStructure : ddmStructures) {
 			DLFileEntryMetadata dlFileEntryMetadata =
 				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(), fromFileVersionId);
+					ddmStructure.getStructureId(), sourceFileVersionId);
 
 			if (dlFileEntryMetadata == null) {
 				continue;
@@ -2488,7 +2490,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!ddmFormValuesMap.isEmpty()) {
 			_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
-				companyId, ddmStructures, fileEntryId, toFileVersionId,
+				companyId, ddmStructures, fileEntryId, targetFileVersionId,
 				ddmFormValuesMap, serviceContext);
 		}
 	}

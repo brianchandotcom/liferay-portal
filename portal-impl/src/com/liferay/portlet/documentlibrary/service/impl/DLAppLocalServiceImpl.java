@@ -1323,40 +1323,44 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	protected FileEntry copyFileEntry(
-			long userId, LocalRepository toLocalRepository, FileEntry fileEntry,
-			long newFolderId, ServiceContext serviceContext)
+			long userId, LocalRepository targetLocalRepository,
+			FileEntry sourceFileEntry, long targetFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<FileVersion> fileVersions = fileEntry.getFileVersions(
+		List<FileVersion> sourceFileVersions = sourceFileEntry.getFileVersions(
 			WorkflowConstants.STATUS_ANY);
 
-		FileVersion latestFileVersion = fileVersions.get(
-			fileVersions.size() - 1);
+		FileVersion sourceLatestFileVersion = sourceFileVersions.get(
+			sourceFileVersions.size() - 1);
 
-		String sourceFileName = DLAppUtil.getSourceFileName(latestFileVersion);
+		String sourceFileName = DLAppUtil.getSourceFileName(
+			sourceLatestFileVersion);
 
-		FileEntry destinationFileEntry = toLocalRepository.addFileEntry(
-			null, userId, newFolderId, sourceFileName,
-			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
-			latestFileVersion.getTitle(), latestFileVersion.getDescription(),
-			StringPool.BLANK, latestFileVersion.getContentStream(false),
-			latestFileVersion.getSize(), latestFileVersion.getExpirationDate(),
-			latestFileVersion.getReviewDate(), serviceContext);
+		FileEntry targetFileEntry = targetLocalRepository.addFileEntry(
+			null, userId, targetFolderId, sourceFileName,
+			sourceLatestFileVersion.getMimeType(),
+			sourceLatestFileVersion.getTitle(),
+			sourceLatestFileVersion.getTitle(),
+			sourceLatestFileVersion.getDescription(), StringPool.BLANK,
+			sourceLatestFileVersion.getContentStream(false),
+			sourceLatestFileVersion.getSize(),
+			sourceLatestFileVersion.getExpirationDate(),
+			sourceLatestFileVersion.getReviewDate(), serviceContext);
 
-		for (int i = fileVersions.size() - 2; i >= 0; i--) {
-			FileVersion fileVersion = fileVersions.get(i);
+		for (int i = sourceFileVersions.size() - 2; i >= 0; i--) {
+			FileVersion fileVersion = sourceFileVersions.get(i);
 
 			sourceFileName = DLAppUtil.getSourceFileName(fileVersion);
 
-			FileVersion previousFileVersion = fileVersions.get(i + 1);
+			FileVersion previousFileVersion = sourceFileVersions.get(i + 1);
 
 			try {
-				destinationFileEntry = toLocalRepository.updateFileEntry(
-					userId, destinationFileEntry.getFileEntryId(),
-					sourceFileName, destinationFileEntry.getMimeType(),
-					destinationFileEntry.getTitle(),
-					destinationFileEntry.getTitle(),
-					destinationFileEntry.getDescription(), StringPool.BLANK,
+				targetFileEntry = targetLocalRepository.updateFileEntry(
+					userId, targetFileEntry.getFileEntryId(), sourceFileName,
+					targetFileEntry.getMimeType(), targetFileEntry.getTitle(),
+					targetFileEntry.getTitle(),
+					targetFileEntry.getDescription(), StringPool.BLANK,
 					DLVersionNumberIncrease.fromMajorVersion(
 						DLAppUtil.isMajorVersion(
 							fileVersion, previousFileVersion)),
@@ -1365,43 +1369,44 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					fileVersion.getReviewDate(), serviceContext);
 			}
 			catch (PortalException portalException) {
-				toLocalRepository.deleteFileEntry(
-					destinationFileEntry.getFileEntryId());
+				targetLocalRepository.deleteFileEntry(
+					targetFileEntry.getFileEntryId());
 
 				throw portalException;
 			}
 		}
 
-		return destinationFileEntry;
+		return targetFileEntry;
 	}
 
 	protected Folder copyFolder(
 			long userId, long folderId, long parentFolderId,
-			LocalRepository fromLocalRepository,
-			LocalRepository toLocalRepository, ServiceContext serviceContext)
+			LocalRepository sourceLocalRepository,
+			LocalRepository targetLocalRepository,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		Folder newFolder = null;
+		Folder targetFolder = null;
 
 		try {
-			Folder folder = fromLocalRepository.getFolder(folderId);
+			Folder sourceFolder = sourceLocalRepository.getFolder(folderId);
 
-			newFolder = toLocalRepository.addFolder(
-				null, userId, parentFolderId, folder.getName(),
-				folder.getDescription(), serviceContext);
+			targetFolder = targetLocalRepository.addFolder(
+				null, userId, parentFolderId, sourceFolder.getName(),
+				sourceFolder.getDescription(), serviceContext);
 
 			_dlAppHelperLocalService.addFolder(
-				userId, newFolder, serviceContext);
+				userId, targetFolder, serviceContext);
 
 			copyFolderDependencies(
-				userId, folder, newFolder, fromLocalRepository,
-				toLocalRepository, serviceContext);
+				userId, sourceFolder, targetFolder, sourceLocalRepository,
+				targetLocalRepository, serviceContext);
 
-			return newFolder;
+			return targetFolder;
 		}
 		catch (PortalException portalException) {
-			if (newFolder != null) {
-				toLocalRepository.deleteFolder(newFolder.getFolderId());
+			if (targetFolder != null) {
+				targetLocalRepository.deleteFolder(targetFolder.getFolderId());
 			}
 
 			throw portalException;
@@ -1409,13 +1414,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	protected void copyFolderDependencies(
-			long userId, Folder sourceFolder, Folder destinationFolder,
-			LocalRepository fromLocalRepository,
-			LocalRepository toLocalRepository, ServiceContext serviceContext)
+			long userId, Folder sourceFolder, Folder targetFolder,
+			LocalRepository sourceLocalRepository,
+			LocalRepository targetLocalRepository,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		List<RepositoryEntry> repositoryEntries =
-			fromLocalRepository.getFoldersAndFileEntriesAndFileShortcuts(
+			sourceLocalRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				sourceFolder.getFolderId(), WorkflowConstants.STATUS_ANY, true,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -1424,23 +1430,23 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				FileEntry fileEntry = (FileEntry)repositoryEntry;
 
 				copyFileEntry(
-					userId, toLocalRepository, fileEntry,
-					destinationFolder.getFolderId(), serviceContext);
+					userId, targetLocalRepository, fileEntry,
+					targetFolder.getFolderId(), serviceContext);
 			}
 			else if (repositoryEntry instanceof FileShortcut) {
-				if (destinationFolder.isSupportsShortcuts()) {
+				if (targetFolder.isSupportsShortcuts()) {
 					FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
-					toLocalRepository.addFileShortcut(
-						userId, destinationFolder.getFolderId(),
+					targetLocalRepository.addFileShortcut(
+						userId, targetFolder.getFolderId(),
 						fileShortcut.getToFileEntryId(), serviceContext);
 				}
 			}
 			else if (repositoryEntry instanceof Folder) {
 				Folder currentFolder = (Folder)repositoryEntry;
 
-				Folder newFolder = toLocalRepository.addFolder(
-					null, userId, destinationFolder.getFolderId(),
+				Folder newFolder = targetLocalRepository.addFolder(
+					null, userId, targetFolder.getFolderId(),
 					currentFolder.getName(), currentFolder.getDescription(),
 					serviceContext);
 
@@ -1448,8 +1454,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					userId, newFolder, serviceContext);
 
 				copyFolderDependencies(
-					userId, currentFolder, newFolder, fromLocalRepository,
-					toLocalRepository, serviceContext);
+					userId, currentFolder, newFolder, sourceLocalRepository,
+					targetLocalRepository, serviceContext);
 			}
 		}
 	}

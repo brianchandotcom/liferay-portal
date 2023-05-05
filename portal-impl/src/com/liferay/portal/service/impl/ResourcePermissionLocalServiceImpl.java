@@ -598,42 +598,46 @@ public class ResourcePermissionLocalServiceImpl
 
 	@Override
 	public void copyModelResourcePermissions(
-			long companyId, String name, long oldPrimKey, long newPrimKey)
+			long companyId, String name, long sourcePrimKey, long targetPrimKey)
 		throws PortalException {
 
-		List<ResourcePermission> oldResourcePermissions =
+		List<ResourcePermission> sourceResourcePermissions =
 			resourcePermissionPersistence.findByC_N_S_P(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(oldPrimKey));
+				String.valueOf(sourcePrimKey));
 
-		if (oldResourcePermissions.isEmpty()) {
+		if (sourceResourcePermissions.isEmpty()) {
 			return;
 		}
 
 		long batchCounter = counterLocalService.increment(
-			ResourcePermission.class.getName(), oldResourcePermissions.size());
+			ResourcePermission.class.getName(),
+			sourceResourcePermissions.size());
 
-		batchCounter -= oldResourcePermissions.size();
+		batchCounter -= sourceResourcePermissions.size();
 
-		for (ResourcePermission oldResourcePermission :
-				oldResourcePermissions) {
+		for (ResourcePermission sourceResourcePermission :
+				sourceResourcePermissions) {
 
-			ResourcePermission resourcePermission =
+			ResourcePermission targetResourcePermission =
 				resourcePermissionPersistence.create(++batchCounter);
 
-			resourcePermission.setCompanyId(companyId);
-			resourcePermission.setName(name);
-			resourcePermission.setScope(oldResourcePermission.getScope());
-			resourcePermission.setPrimKey(String.valueOf(newPrimKey));
-			resourcePermission.setPrimKeyId(newPrimKey);
-			resourcePermission.setRoleId(oldResourcePermission.getRoleId());
-			resourcePermission.setOwnerId(oldResourcePermission.getOwnerId());
-			resourcePermission.setActionIds(
-				oldResourcePermission.getActionIds());
-			resourcePermission.setViewActionId(
-				oldResourcePermission.isViewActionId());
+			targetResourcePermission.setCompanyId(companyId);
+			targetResourcePermission.setName(name);
+			targetResourcePermission.setScope(
+				sourceResourcePermission.getScope());
+			targetResourcePermission.setPrimKey(String.valueOf(targetPrimKey));
+			targetResourcePermission.setPrimKeyId(targetPrimKey);
+			targetResourcePermission.setRoleId(
+				sourceResourcePermission.getRoleId());
+			targetResourcePermission.setOwnerId(
+				sourceResourcePermission.getOwnerId());
+			targetResourcePermission.setActionIds(
+				sourceResourcePermission.getActionIds());
+			targetResourcePermission.setViewActionId(
+				sourceResourcePermission.isViewActionId());
 
-			resourcePermissionPersistence.update(resourcePermission);
+			resourcePermissionPersistence.update(targetResourcePermission);
 		}
 	}
 

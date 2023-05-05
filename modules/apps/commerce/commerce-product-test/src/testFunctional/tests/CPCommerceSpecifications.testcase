@@ -14,6 +14,50 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-7335. Can view pagination on Specification Group"
+	@priority = 3
+	test CanViewSpecificationGroupPagination {
+		property portal.acceptance = "false";
+
+		task ("Given 5 specification groups entries are set") {
+			for (var specificationGroupNum : list "1,2,3,4,5") {
+				CommerceJSONSpecificationGroupsAPI._addCommerceSpecificationGroup(specificationGroupTitle = "Specification Group ${specificationGroupNum}");
+			}
+		}
+
+		task ("When pagination is changed to 4") {
+			CommerceNavigator.goToSpecificationsAdmin();
+
+			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("Then only 4 entries are displayed") {
+			Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
+
+			for (var specificationGroupNum : list "1,2,3,4") {
+				LexiconEntry.viewEntryName(rowEntry = "Specification Group ${specificationGroupNum}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "Specification Group 5");
+		}
+
+		task ("When pagination is changed to the next page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then only 1 entry is displayed") {
+			Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
+
+			LexiconEntry.viewEntryName(rowEntry = "Specification Group 5");
+
+			for (var specificationGroupNum : list "1,2,3,4") {
+				LexiconEntry.viewNoEntry(rowEntry = "Specification Group ${specificationGroupNum}");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6283. EditSpecificationGroup"
 	@priority = 5
 	test EditSpecificationGroup {

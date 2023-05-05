@@ -84,6 +84,20 @@ const ACTIONS = {
 		submitForm(document.hrefFm, deleteFragmentEntryPreviewURL);
 	},
 
+	markAsCacheableFragmentEntry({markAsCacheableFragmentEntryURL}) {
+		openConfirmModal({
+			message: Liferay.Language.get('cacheable-fragment-help'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(
+						document.hrefFm,
+						markAsCacheableFragmentEntryURL
+					);
+				}
+			},
+		});
+	},
+
 	moveFragmentEntry(
 		{fragmentEntryId, moveFragmentEntryURL, selectFragmentCollectionURL},
 		portletNamespace
@@ -126,6 +140,10 @@ const ACTIONS = {
 			mainFieldValue: fragmentEntryName,
 			namespace: portletNamespace,
 		});
+	},
+
+	unmarkAsCacheableFragmentEntry({unmarkAsCacheableFragmentEntryURL}) {
+		submitForm(document.hrefFm, unmarkAsCacheableFragmentEntryURL);
 	},
 
 	updateFragmentEntryPreview(

@@ -40,14 +40,15 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Feliphe Marinho
@@ -71,7 +72,40 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
-	public void testSendNotificationRecipientTypeTerm() throws Exception {
+	public void testSendNotificationRecipientTypeTerm1() throws Exception {
+		_testSendNotification(
+			Arrays.asList(
+				createNotificationRecipientSetting(
+					"term", "[%CURRENT_USER_ID%]"),
+				createNotificationRecipientSetting(
+					"term", user1.getScreenName())),
+			NotificationRecipientConstants.TYPE_TERM);
+	}
+
+	@Test
+	public void testSendNotificationRecipientTypeTerm2() throws Exception {
+		_testSendNotification(
+			Arrays.asList(
+				createNotificationRecipientSetting(
+					"term", getRelationshipTermName("AUTHOR_ID")),
+				createNotificationRecipientSetting(
+					"term", user1.getScreenName())),
+			NotificationRecipientConstants.TYPE_TERM);
+	}
+
+	@Test
+	public void testSendNotificationRecipientTypeTerm3() throws Exception {
+		_testSendNotification(
+			Arrays.asList(
+				createNotificationRecipientSetting(
+					"term", getTermName("AUTHOR_ID")),
+				createNotificationRecipientSetting(
+					"term", user1.getScreenName())),
+			NotificationRecipientConstants.TYPE_TERM);
+	}
+
+	@Test
+	public void testSendNotificationRecipientTypeTerm4() throws Exception {
 		_testSendNotification(
 			Arrays.asList(
 				createNotificationRecipientSetting(

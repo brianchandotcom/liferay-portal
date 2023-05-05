@@ -90,6 +90,25 @@ public class Database {
 		return true;
 	}
 
+	public static boolean isSingleVirtualInstance(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(1) from CompanyInfo");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				int count = resultSet.getInt(1);
+
+				if (count > 1) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	public static void setSchemaPrefix(String schemaPrefix) {
 		_schemaPrefix = schemaPrefix;
 	}

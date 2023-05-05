@@ -186,10 +186,6 @@ definition {
 				status = "In Analysis",
 				taskName = "Task_1");
 		}
-
-		task ("Delete the user") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
-		}
 	}
 
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task through the Context Menu"

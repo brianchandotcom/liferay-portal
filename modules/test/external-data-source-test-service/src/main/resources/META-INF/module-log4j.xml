@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.portal.spring.hibernate.DialectDetector" />
+	</Loggers>
+</Configuration>

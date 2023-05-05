@@ -84,7 +84,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -137,7 +136,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -2047,37 +2045,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	private String _getMessageBody(
-		boolean htmlFormat, MBMessage mbMessage, String messageBody,
-		ServiceContext serviceContext) {
-
-		if (htmlFormat && mbMessage.isFormatBBCode()) {
-			try {
-				messageBody = BBCodeTranslatorUtil.getHTML(messageBody);
-
-				HttpServletRequest httpServletRequest =
-					serviceContext.getRequest();
-
-				if (httpServletRequest != null) {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					messageBody = MBUtil.replaceMessageBodyPaths(
-						themeDisplay, messageBody);
-				}
-			}
-			catch (Exception exception) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to parse mbMessage ", mbMessage.getMessageId(),
-						": ", exception.getMessage()));
-			}
-		}
-
-		return messageBody;
-	}
-
 	private String _getMessageURL(
 			MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
@@ -2503,8 +2470,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		boolean htmlFormat = mbGroupServiceSettings.isEmailHtmlFormat();
 
-		String messageBody = _getMessageBody(
-			htmlFormat, message, message.getBody(), serviceContext);
+		String messageBody = MBMessageUtil.getMessageBody(
+			htmlFormat, message, StringPool.BLANK, serviceContext);
 
 		String inReplyTo = null;
 		String messageSubject = message.getSubject();

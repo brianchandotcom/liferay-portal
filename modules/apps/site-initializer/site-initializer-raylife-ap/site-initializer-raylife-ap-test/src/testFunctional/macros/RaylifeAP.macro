@@ -285,11 +285,10 @@ definition {
 			userEmailAddress = ${email},
 			userPassword = ${passwordRaylife});
 
-		if (IsElementPresent(button = "I Agree", locator1 = "Button#ANY")) {
+		if (IsElementPresent(locator1 = "Button#ANY", key_text = "I Agree")) {
 			Button.click(button = "I Agree");
 
 			User.answerPasswordReminder();
 		}
 	}
-
 }

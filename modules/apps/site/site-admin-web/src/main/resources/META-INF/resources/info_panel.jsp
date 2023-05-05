@@ -62,20 +62,20 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				</div>
 
 				<div class="sidebar-body">
-					<liferay-ui:tabs
-						cssClass="navbar-no-collapse"
-						names="details"
-						refresh="<%= false %>"
-					>
-						<dl class="sidebar-dl">
-							<dt class="sidebar-dt">
-								<liferay-ui:message key="num-of-sites" />
-							</dt>
-							<dd class="sidebar-dd">
-								<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), siteAdminDisplayContext.getGroupId(), true) %>
-							</dd>
-						</dl>
-					</liferay-ui:tabs>
+					<div class="sheet-row">
+						<clay:tabs
+							tabsItems="<%= siteAdminDisplayContext.getTabsItem() %>"
+						>
+							<dl class="sidebar-dl">
+								<dt class="sidebar-dt">
+									<liferay-ui:message key="num-of-sites" />
+								</dt>
+								<dd class="sidebar-dd">
+									<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), siteAdminDisplayContext.getGroupId(), true) %>
+								</dd>
+							</dl>
+						</clay:tabs>
+					</div>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -109,10 +109,9 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				String logoURL = group.getLogoURL(themeDisplay, false);
 				%>
 
-					<liferay-ui:tabs
-						cssClass="navbar-no-collapse"
-						names="details"
-						refresh="<%= false %>"
+				<div class="sheet-row">
+					<clay:tabs
+						tabsItems="<%= siteAdminDisplayContext.getTabsItem() %>"
 					>
 						<c:if test="<%= Validator.isNotNull(logoURL) %>">
 							<p class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel">
@@ -212,7 +211,8 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 								/>
 							</li>
 						</ul>
-					</liferay-ui:tabs>
+					</clay:tabs>
+				</div>
 				</div>
 			</c:otherwise>
 		</c:choose>
@@ -233,17 +233,17 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		</div>
 
 		<div class="sidebar-body">
-			<liferay-ui:tabs
-				cssClass="navbar-no-collapse"
-				names="details"
-				refresh="<%= false %>"
-			>
-				<dl class="sidebar-dl sidebar-section">
-					<dt class="sidebar-dt">
-						<liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" />
-					</dt>
-				</dl>
-			</liferay-ui:tabs>
+			<div class="sheet-row">
+				<clay:tabs
+					tabsItems="<%= siteAdminDisplayContext.getTabsItem() %>"
+				>
+					<dl class="sidebar-dl sidebar-section">
+						<dt class="sidebar-dt">
+							<liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" />
+						</dt>
+					</dl>
+				</clay:tabs>
+			</div>
 		</div>
 	</c:otherwise>
 </c:choose>

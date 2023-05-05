@@ -529,6 +529,8 @@ public class FragmentEntryLocalServiceImpl
 
 		if (publishedFragmentEntry != null) {
 			draftFragmentEntry.setName(publishedFragmentEntry.getName());
+			draftFragmentEntry.setCacheable(
+				publishedFragmentEntry.isCacheable());
 			draftFragmentEntry.setPreviewFileEntryId(
 				publishedFragmentEntry.getPreviewFileEntryId());
 		}

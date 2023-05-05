@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>DETAILS_PROFILE_IMAGE</td>
-	<td>//img[contains(@id,'avatar') and contains(@src,'${key_imageName}')]</td>
+	<td>//img[contains(@class,'logo-selector') and contains(@src,'${key_imageName}')]</td>
 	<td></td>
 </tr>
 <tr>

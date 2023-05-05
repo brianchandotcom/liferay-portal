@@ -88,7 +88,7 @@ definition {
 
 		PortletEntry.save();
 
-		var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
+		var userPortrait = selenium.getAttribute("//img[contains(@class,'logo-selector') and contains(@src,'image')]@src");
 
 		var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 

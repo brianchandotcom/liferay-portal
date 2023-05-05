@@ -90,7 +90,7 @@ definition {
 	}
 
 	@priority = 4
-	test JSONTConfigurationObjectContainsOnErrorFail {
+	test JSONTConfigurationObjectContainsImportStrategy {
 		property portal.acceptance = "true";
 
 		task ("When in Import/Export: exporting Role (Headless Admin) Entity type with JSONT format with all fields to include selected") {
@@ -101,10 +101,10 @@ definition {
 			ImportExport.unzipDownloadedExportFile();
 		}
 
-		task ("Then the jsont format file contains configuration node with parameters.onErrorFail parameter with 'false' value") {
+		task ("Then the jsont format file contains configuration node with parameters.importStrategy parameter with 'false' value") {
 			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
-				expectedValue = "false",
-				jsonObject = "parameters.onErrorFail");
+				expectedValue = "ON_ERROR_FAIL",
+				jsonObject = "parameters.importStrategy");
 		}
 	}
 

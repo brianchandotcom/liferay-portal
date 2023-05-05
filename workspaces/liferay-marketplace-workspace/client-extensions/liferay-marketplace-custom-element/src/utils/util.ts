@@ -8,6 +8,9 @@ import {
 	updateProductSpecification,
 } from './api';
 
+import accountPlaceholder from '../assets/images/account-placeholder.png';
+import appPlaceholder from '../assets/images/app-placeholder.png';
+
 export function createSkuName(
 	appProductId: number,
 	appVersion: string,
@@ -61,6 +64,14 @@ export function getProductVersionFromSpecifications(
 	});
 
 	return productVersion;
+}
+
+export function showAccountImage(url?: string) {
+	return url?.includes('img_id=0') || !url ? accountPlaceholder : url;
+}
+
+export function showAppImage(url?: string) {
+	return url?.includes('/default') || !url ? appPlaceholder : url;
 }
 
 async function submitSpecification(

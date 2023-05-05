@@ -5,7 +5,7 @@ import circleFill from '../../assets/icons/circle_fill.svg';
 import './DashboardNavigationListItem.scss';
 import {AppProps} from '../DashboardTable/DashboardTable';
 import {DashboardListItems} from './DashboardNavigation';
-
+import {showAppImage} from '../../utils/util';
 interface DashboardNavigationListItem {
 	dashboardNavigationItems: DashboardListItems[];
 	item: AppProps;
@@ -68,7 +68,7 @@ export function DashboardNavigationListItem({
 				<img
 					alt="App Image"
 					className="dashboard-navigation-body-list-item-app-logo"
-					src={thumbnail}
+					src={showAppImage(thumbnail)}
 				/>
 
 				<span className="dashboard-navigation-body-list-item-app-title">

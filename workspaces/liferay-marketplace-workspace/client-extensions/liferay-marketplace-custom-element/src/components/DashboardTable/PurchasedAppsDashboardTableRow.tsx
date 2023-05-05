@@ -5,6 +5,7 @@ import ClayTable from '@clayui/table';
 import './PurchasedAppsDashboardTableRow.scss';
 
 import DropDown from '@clayui/drop-down/lib/DropDown';
+import {showAppImage} from '../../utils/util';
 import classNames from 'classnames';
 
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
@@ -36,7 +37,7 @@ export function PurchasedAppsDashboardTableRow({
 						<img
 							alt="App Image"
 							className="dashboard-table-row-name-logo"
-							src={image}
+							src={showAppImage(image)}
 						/>
 					</div>
 

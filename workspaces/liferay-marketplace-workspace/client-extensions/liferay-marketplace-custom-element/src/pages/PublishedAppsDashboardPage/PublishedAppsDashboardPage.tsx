@@ -1,7 +1,8 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
-import accountLogo from '../../assets/icons/mainAppLogo.svg';
+import {showAccountImage} from '../../utils/util';
+
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
@@ -432,7 +433,7 @@ export function PublishedAppsDashboardPage() {
 			{showDashboardNavigation && (
 				<DashboardNavigation
 					accountAppsNumber={apps.length.toString()}
-					accountIcon={commerceAccount?.logoURL ?? accountLogo}
+					accountIcon={showAccountImage(commerceAccount?.logoURL)}
 					accounts={accounts}
 					currentAccount={selectedAccount}
 					dashboardNavigationItems={dashboardNavigationItems}

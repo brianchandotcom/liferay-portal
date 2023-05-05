@@ -1,4 +1,3 @@
-import accountLogo from '../../assets/icons/mainAppLogo.svg';
 import {AccountHeaderButton} from './AccountHeaderButton';
 
 import './AccountDetailsPage.scss';
@@ -12,6 +11,8 @@ import phoneIcon from '../../assets/icons/phone-icon.svg';
 import userIcon from '../../assets/icons/user-icon.svg';
 import {DetailedCard} from '../../components/DetailedCard/DetailedCard';
 import {getAccountPostalAddressesByAccountId} from '../../utils/api';
+import {showAccountImage} from '../../utils/util';
+
 import {getCustomFieldValue} from '../../utils/customFieldUtil';
 import {DashboardListItems} from '../DashBoardPage/DashboardPage';
 
@@ -83,7 +84,7 @@ export function AccountDetailsPage({
 						<img
 							alt="Account Image"
 							className="account-details-header-left-content-image"
-							src={commerceAccount?.logoURL ?? accountLogo}
+							src={showAccountImage(commerceAccount?.logoURL)}
 						/>
 
 						<div className="account-details-header-left-content-text-container">

@@ -3,6 +3,7 @@ import ClayIcon from '@clayui/icon';
 import {Dispatch} from 'react';
 
 import {DashboardNavigationList} from './DashboardNavigationList';
+import {showAccountImage} from '../../utils/util';
 
 import './DashboardNavigation.scss';
 import {AppProps} from '../DashboardTable/DashboardTable';
@@ -44,7 +45,7 @@ export function DashboardNavigation({
 							<img
 								alt="account logo"
 								className="dashboard-navigation-header-logo"
-								src={accountIcon}
+								src={showAccountImage(accountIcon)}
 							/>
 
 							<div className="dashboard-navigation-header-text-container">

@@ -2,6 +2,8 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {ReactNode, useState} from 'react';
 
+import {showAccountImage, showAppImage} from '../../utils/util';
+
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
@@ -88,7 +90,11 @@ export function NextStepPage({
 							<div className="next-step-page-cards">
 								<AccountAndAppCard
 									category="Application"
-									logo={appLogo ?? ''}
+									logo={
+										showAppImage(
+											appLogo as string
+										) as string
+									}
 									title={appName ?? ''}
 								></AccountAndAppCard>
 
@@ -99,7 +105,9 @@ export function NextStepPage({
 
 								<AccountAndAppCard
 									category="DXP Console"
-									logo={accountLogo ?? ''}
+									logo={showAccountImage(
+										accountLogo as string
+									)}
 									title={accountName ?? ''}
 								></AccountAndAppCard>
 							</div>

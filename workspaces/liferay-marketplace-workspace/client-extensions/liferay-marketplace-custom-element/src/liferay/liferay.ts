@@ -6,6 +6,7 @@ interface ILiferay {
 		getCompanyId: () => string;
 		getLanguageId: () => string;
 		getPathThemeImages: () => string;
+		getPortalURL: () => string;
 		isSignedIn: () => boolean;
 	};
 	detach: Function;
@@ -25,6 +26,7 @@ export const Liferay = window.Liferay || {
 		getCompanyId: () => '',
 		getPathThemeImages: () => '',
 		getLanguageId: () => '',
+		getPortalURL: () => '',
 		isSignedIn: () => {
 			return false;
 		},

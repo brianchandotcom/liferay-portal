@@ -1,7 +1,7 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
-import accountLogo from '../../assets/icons/mainAppLogo.svg';
+import {showAccountImage} from '../../utils/util';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
@@ -12,6 +12,7 @@ import {
 	getAccounts,
 	getChannels,
 	getMyUserAccount,
+	getAccountInfoFromCommerce,
 	getOrders,
 	getSKUCustomFieldExpandoValue,
 	getUserAccounts,
@@ -88,6 +89,7 @@ const memberTableHeaders = [
 
 export function PurchasedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountState);
+	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 	const [selectedAccount, setSelectedAccount] = useState<Account>(
 		accounts[0]
 	);
@@ -159,6 +161,12 @@ export function PurchasedAppsDashboardPage() {
 				page,
 				purchasedAppTable.pageSize
 			);
+
+			const commerceAccountResponse = await getAccountInfoFromCommerce(
+				selectedAccount.id
+			);
+
+			setCommerceAccount(commerceAccountResponse);
 
 			const newOrderItems = await Promise.all(
 				placedOrders.items.map(async (order) => {
@@ -340,7 +348,7 @@ export function PurchasedAppsDashboardPage() {
 		<div className="purchased-apps-dashboard-page-container">
 			<DashboardNavigation
 				accountAppsNumber={purchasedAppTable.items.length.toString()}
-				accountIcon={accountLogo}
+				accountIcon={showAccountImage(commerceAccount?.logoURL)}
 				accounts={accounts}
 				currentAccount={selectedAccount}
 				dashboardNavigationItems={dashboardNavigationItems}

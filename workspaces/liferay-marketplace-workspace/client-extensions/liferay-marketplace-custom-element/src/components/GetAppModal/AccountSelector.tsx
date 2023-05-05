@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 
 import {getAccountInfoFromCommerce} from '../../utils/api';
 import {RadioCard} from '../RadioCard/RadioCard';
+import {showAccountImage} from '../../utils/util';
 
 import './AccountSelector.scss';
 
@@ -56,7 +57,7 @@ export function AccountSelector({
 				{activeAccounts?.map((account) => {
 					return (
 						<RadioCard
-							icon={account.logoURL}
+							icon={showAccountImage(account.logoURL)}
 							onChange={() => {
 								setSelectedAccount(account);
 							}}

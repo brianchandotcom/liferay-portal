@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 
 import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
 import documentationIcon from '../../assets/icons/documentation-icon.svg';
-import emptyImage from '../../assets/icons/emptyImage.svg';
 import globeIcon from '../../assets/icons/globe-icon.svg';
 import guideIcon from '../../assets/icons/guide-icon.svg';
 import phoneIcon from '../../assets/icons/phone-icon.svg';
@@ -22,6 +21,7 @@ import {
 } from '../../utils/api';
 import {CardSection} from './CardSection';
 import {ReviewAndSubmitAppPageUtilProps} from './ReviewAndSubmitAppPageUtil';
+import {showAppImage} from '../../utils/util';
 
 import './ReviewAndSubmitAppPage.scss';
 
@@ -275,9 +275,9 @@ export function ReviewAndSubmitAppPage({
 									<div
 										className="upload-logo-icon"
 										style={{
-											backgroundImage: `url(${
-												appLogo?.preview || emptyImage
-											})`,
+											backgroundImage: `url(${showAppImage(
+												appLogo?.preview
+											)})`,
 											backgroundPosition: '50% 50%',
 											backgroundRepeat: 'no-repeat',
 											backgroundSize: 'cover',

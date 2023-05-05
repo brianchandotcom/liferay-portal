@@ -6,6 +6,8 @@ import {useCallback, useEffect, useState} from 'react';
 
 import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
+import {showAccountImage} from '../../utils/util';
+
 import {
 	getAccountAddressesFromCommerce,
 	getAccounts,
@@ -481,7 +483,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									<img
 										alt="Account icon"
 										className="get-app-modal-body-card-header-right-content-account-info-icon"
-										src={selectedAccount?.logoURL}
+										src={showAccountImage(
+											selectedAccount?.logoURL
+										)}
 									/>
 								</div>
 							)}
@@ -493,7 +497,13 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									<img
 										alt="App Image"
 										className="get-app-modal-body-content-image"
-										src={app.urlImage}
+										src={app.urlImage.replace(
+											Liferay.ThemeDisplay.getPortalURL().replace(
+												'http',
+												'https'
+											),
+											''
+										)}
 									/>
 
 									<div className="get-app-modal-body-content-app-info-container">

@@ -36,6 +36,8 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
 <portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/layout/edit_open_graph" var="editOpenGraphURL" />
 
+<h2 class="mb-4 text-7"><liferay-ui:message key="open-graph" /></h2>
+
 <liferay-frontend:edit-form
 	action="<%= editOpenGraphURL %>"
 	cssClass="pt-0"
@@ -50,11 +52,9 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsSEODisplayContext.getLayoutId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<clay:sheet>
-			<clay:sheet-header>
-				<h2 class="mb-4 text-7"><liferay-ui:message key="open-graph" /></h2>
-			</clay:sheet-header>
-
+		<clay:sheet
+			cssClass="ml-0"
+		>
 			<clay:sheet-section>
 				<liferay-ui:error-marker
 					key="<%= WebKeys.ERROR_SECTION %>"

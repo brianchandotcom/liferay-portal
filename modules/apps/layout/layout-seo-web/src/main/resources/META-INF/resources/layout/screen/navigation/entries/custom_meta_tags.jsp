@@ -28,6 +28,8 @@ if (Validator.isNull(backURL)) {
 }
 %>
 
+<h2 class="mb-4 text-7"><liferay-ui:message key="custom-meta-tags" /></h2>
+
 <liferay-frontend:edit-form
 	action="<%= layoutsSEODisplayContext.getEditCustomMetaTagsURL() %>"
 	cssClass="pt-0"
@@ -42,11 +44,9 @@ if (Validator.isNull(backURL)) {
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsSEODisplayContext.getLayoutId() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<clay:sheet>
-			<clay:sheet-header>
-				<h2 class="mb-4 text-7"><liferay-ui:message key="custom-meta-tags" /></h2>
-			</clay:sheet-header>
-
+		<clay:sheet
+			cssClass="ml-0"
+		>
 			<clay:sheet-section>
 				<h3 class="mb-4"><liferay-ui:message key="settings" /></h3>
 

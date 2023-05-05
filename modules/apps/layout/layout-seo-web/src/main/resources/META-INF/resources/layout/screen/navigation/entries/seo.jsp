@@ -45,6 +45,8 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 	<portlet:param name="layoutId" value="<%= String.valueOf(layoutsSEODisplayContext.getLayoutId()) %>" />
 </portlet:actionURL>
 
+<h2 class="mb-4 text-7"><liferay-ui:message key="seo" /></h2>
+
 <liferay-frontend:edit-form
 	action="<%= editSEOURL %>"
 	cssClass="pt-0"
@@ -53,11 +55,9 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 	wrappedFormContent="<%= false %>"
 >
 	<liferay-frontend:edit-form-body>
-		<clay:sheet>
-			<clay:sheet-header>
-				<h2 class="mb-4 text-7"><liferay-ui:message key="seo" /></h2>
-			</clay:sheet-header>
-
+		<clay:sheet
+			cssClass="ml-0"
+		>
 			<clay:sheet-section>
 				<liferay-ui:error-marker
 					key="<%= WebKeys.ERROR_SECTION %>"
@@ -202,10 +202,12 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 
 				<aui:input name="robots" placeholder="robots" />
 			</clay:sheet-section>
+		</clay:sheet>
 
-			<c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
-				<hr class="mb-5 separator" />
-
+		<c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
+			<clay:sheet
+				cssClass="ml-0"
+			>
 				<clay:sheet-section>
 					<h3 class="mb-4"><liferay-ui:message key="sitemap" /></h3>
 
@@ -241,8 +243,8 @@ UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSetting
 						<aui:option label="never" />
 					</aui:select>
 				</clay:sheet-section>
-			</c:if>
-		</clay:sheet>
+			</clay:sheet>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

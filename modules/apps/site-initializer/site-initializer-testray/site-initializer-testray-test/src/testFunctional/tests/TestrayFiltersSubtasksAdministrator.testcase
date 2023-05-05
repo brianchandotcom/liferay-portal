@@ -185,7 +185,7 @@ definition {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "userfn userln",
+				key_projectName = "Subtask_2",
 				locator1 = "Testray#ITEM_NAME");
 
 			Select(
@@ -321,7 +321,7 @@ definition {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "userfn userln",
+				key_projectName = "Subtask_2",
 				locator1 = "Testray#ITEM_NAME");
 
 			Select(

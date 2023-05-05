@@ -20,6 +20,95 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-172127 - The Custom Facet widget supports aggregating on a Web Content Structure DDM field either using the single field or nested field notations."
+	@priority = 4
+	test AggregateDDMFieldsViaCustomFacet {
+		task ("Add a Web Content Structure and create Web Content Articles using the structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			Button.clickSave();
+
+			NavItem.gotoWebContent();
+
+			for (var order : list "1,2") {
+				WebContentNavigator.gotoAddWithStructureCP(structureName = "content-structure");
+
+				WebContent.addWithStructureCP(
+					structureName = "content-structure",
+					webContentTitle = "WC Title ${order}");
+
+				Type(
+					key_fieldFieldLabel = "Text",
+					locator1 = "WCEditWebContent#TEXT_INPUT",
+					value1 = "Liferay ${order}");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("Add Custom Facet widget to the Search Page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Facet");
+		}
+
+		task ("Go to the Search page and execute a search for the web content articles") {
+			Search.openSearchPage(searchTerm = "WC Title");
+		}
+
+		task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
+			var port = Elasticsearch.getServerPort();
+			var portalHostname = PropsUtil.get("portal.hostname");
+
+			var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
+
+			var aggregationField = JSONCurlUtil.get(${curl}, "$.hits.hits[0]._source.ddmFieldArray[0].ddmFieldName");
+		}
+
+		task ("Configure the Custom Facet widget aggregation field with the DDM single field name") {
+			SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+
+			Refresh();
+		}
+
+		task ("Select one of the Custom Facet terms and assert the results") {
+			SearchFacetPortlet.checkFacet(facetValueName = "Liferay 1");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "WC Title 1",
+				searchAssetType = "Web Content Article");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "WC Title 2",
+				searchAssetType = "Web Content Article");
+		}
+
+		task ("Use dot notation within the Aggregation Field") {
+			SearchFacetPortlet.configureCustomFacet(aggregationField = "ddmFieldArray.${aggregationField}.ddmFieldValueKeyword_en_US");
+
+			Refresh();
+		}
+
+		task ("Select the other Custom Facet term and assert the results") {
+			SearchFacetPortlet.checkFacet(facetValueName = "Liferay 2");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "WC Title 2",
+				searchAssetType = "Web Content Article");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "WC Title 1",
+				searchAssetType = "Web Content Article");
+		}
+	}
+
 	@priority = 4
 	test AssertBasicFacetSelection {
 		var webContentserviceContext1 = '''{"assetTagNames": ["fruit"]}''';

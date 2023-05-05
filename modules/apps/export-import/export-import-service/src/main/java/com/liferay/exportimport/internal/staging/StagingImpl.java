@@ -570,7 +570,7 @@ public class StagingImpl implements Staging {
 			errorMessageJSONObject.put("name", missingReferenceEntry.getKey());
 
 			Group group = _groupLocalService.fetchGroup(
-				missingReference.getGroupId());
+				missingReference.getReferenceGroupId());
 
 			if (group != null) {
 				errorMessageJSONObject.put(

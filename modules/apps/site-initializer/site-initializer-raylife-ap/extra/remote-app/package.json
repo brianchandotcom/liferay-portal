@@ -29,6 +29,7 @@
 		"@clayui/tooltip": "^3.65.0",
 		"@googlemaps/js-api-loader": "^1.12.2",
 		"@types/google.maps": "^3.49.2",
+		"browserslist-config-clay": "^3.37.0",
 		"classnames": "2.3.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",

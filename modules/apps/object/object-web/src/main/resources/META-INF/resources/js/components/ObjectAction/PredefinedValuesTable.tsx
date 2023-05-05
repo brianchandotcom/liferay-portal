@@ -246,18 +246,21 @@ export default function PredefinedValuesTable({
 						predefinedValuesMap.set(field.name, field);
 					});
 
-					const newPredefinedValues = items.map(({label, name}) => {
-						const value = predefinedValuesMap.get(name);
+					const newPredefinedValues = items.map(
+						({businessType, label, name}) => {
+							const value = predefinedValuesMap.get(name);
 
-						return value
-							? value
-							: {
-									inputAsValue: false,
-									label,
-									name,
-									value: '',
-							  };
-					});
+							return value
+								? value
+								: {
+										businessType,
+										inputAsValue: false,
+										label,
+										name,
+										value: '',
+								  };
+						}
+					);
 					setValues({
 						parameters: {
 							...values.parameters,

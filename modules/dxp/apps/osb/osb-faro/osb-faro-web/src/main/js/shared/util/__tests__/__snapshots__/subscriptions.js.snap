@@ -4,6 +4,7 @@ exports[`subscriptions formatPlanData should format the plan data when faroSusbc
 Immutable.Record {
   "addOns": Immutable.Map {},
   "endDate": undefined,
+  "lastAnniversaryDate": undefined,
   "metrics": Immutable.Map {
     "individuals": Immutable.Record {
       "count": 0,

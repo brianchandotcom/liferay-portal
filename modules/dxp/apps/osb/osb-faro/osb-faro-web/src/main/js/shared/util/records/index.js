@@ -58,6 +58,7 @@ export const Plan = new Record({
 		[PAGEVIEWS]: new Map()
 	}),
 	endDate: Date.now(),
+	lastAnniversaryDate: Date.now(),
 	metrics: new Map({
 		[INDIVIDUALS]: new Metric(),
 		[PAGEVIEWS]: new Metric()

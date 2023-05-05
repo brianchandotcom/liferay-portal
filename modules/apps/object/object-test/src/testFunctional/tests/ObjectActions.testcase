@@ -2951,6 +2951,7 @@ definition {
 	@description = "Verify an action with an oldValue function sends an email when the order payment status is updated"
 	@priority = 4
 	test CanSendEmailWhenPaymentStatusIsUpdated {
+		property portal.upstream = "quarantine";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an email notification template") {

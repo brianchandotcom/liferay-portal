@@ -4559,9 +4559,9 @@ components:
                     description:
                         The page's CSS.
                     type: string
-                cssClientExtensions:
+                globalCSSClientExtensions:
                     description:
-                        The client extensions for css associated to the page.
+                        The client extensions for global css associated to the page.
                     items:
                         $ref: "#/components/schemas/ClientExtension"
                     type: array
@@ -4577,9 +4577,9 @@ components:
                     description:
                         The page's JavaScript.
                     type: string
-                javascriptClientExtensions:
+                globalJSClientExtensions:
                     description:
-                        The client extensions for js associated to the page.
+                        The client extensions for global js associated to the page.
                     items:
                         $ref: "#/components/schemas/ClientExtension"
                     type: array
@@ -4605,12 +4605,12 @@ components:
                                 The stylebook's name.
                             type: string
                     type: object
-                themeCssClientExtension:
+                themeCSSClientExtension:
                     allOf:
                         - $ref: "#/components/schemas/ClientExtension"
                     # @review
                     description:
-                        The Client Extension for the theme of a page
+                        The Client Extension for the theme css of a page
                 themeName:
                     # @review
                     description:

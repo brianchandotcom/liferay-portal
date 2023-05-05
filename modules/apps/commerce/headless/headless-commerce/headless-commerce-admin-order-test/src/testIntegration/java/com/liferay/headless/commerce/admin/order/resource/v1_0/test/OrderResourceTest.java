@@ -19,6 +19,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -50,8 +51,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
-
-import java.math.BigDecimal;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -89,12 +88,8 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, _serviceContext);
 
-		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
-			user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), BigDecimal.ONE,
-			RandomTestUtil.randomLocaleStringMap(), 2, 2, "HALF_EVEN", false,
-			RandomTestUtil.nextDouble(), true);
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			testGroup.getCompanyId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			RandomTestUtil.randomString(), testGroup.getGroupId(),

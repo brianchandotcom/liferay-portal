@@ -16,6 +16,20 @@
  * This code is from https://github.com/text-mask/text-mask
  * https://github.com/text-mask/text-mask/blob/master/addons/src/createAutoCorrectedDatePipe.js
  */
+type MaxOrMinValue = {
+	HH: number;
+	MM: number;
+	SS: number;
+	dd: number;
+	hh: number;
+	mm: number;
+	yy: number;
+	yyyy: number;
+};
+
+type conformedValue = string | number;
+
+type indexOfPipedChars = string | number;
 
 const maxValueMonth = [31, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const formatOrder = ['yyyy', 'yy', 'mm', 'dd', 'HH', 'MM', 'SS', 'hh'];
@@ -27,9 +41,9 @@ export function createAutoCorrectedDatePipe(
 		.split(/[^dhmyHMS]+/)
 		.sort((a, b) => formatOrder.indexOf(a) - formatOrder.indexOf(b));
 
-	return function (conformedValue) {
-		const indexesOfPipedChars = [];
-		const maxValue = {
+	return function (conformedValue: string) {
+		const indexesOfPipedChars: indexOfPipedChars[] = [];
+		const maxValue: MaxOrMinValue = {
 			HH: 23,
 			MM: 59,
 			SS: 59,
@@ -39,7 +53,7 @@ export function createAutoCorrectedDatePipe(
 			yy: 99,
 			yyyy: maxYear,
 		};
-		const minValue = {
+		const minValue: MaxOrMinValue = {
 			HH: 0,
 			MM: 0,
 			SS: 0,
@@ -49,18 +63,27 @@ export function createAutoCorrectedDatePipe(
 			yy: 0,
 			yyyy: minYear,
 		};
-		const conformedValueArr = conformedValue.split('');
+		const conformedValueArr: conformedValue[] = conformedValue.split('');
 
 		// Check first digit
 
 		dateFormatArray.forEach((format) => {
 			const position = dateFormat.indexOf(format);
 			const maxFirstDigit = parseInt(
-				maxValue[format].toString().substr(0, 1),
+				maxValue[format as keyof MaxOrMinValue]
+					.toString()
+					.substring(0, 1),
 				10
 			);
 
-			if (parseInt(conformedValueArr[position], 10) > maxFirstDigit) {
+			// Verify if its a string and convert if necessary
+
+			const conformedValue =
+				typeof conformedValueArr[position] === 'string'
+					? parseInt(conformedValueArr[position] as string, 10)
+					: conformedValueArr[position];
+
+			if (conformedValue > maxFirstDigit) {
 				conformedValueArr[position + 1] = conformedValueArr[position];
 				conformedValueArr[position] = 0;
 				indexesOfPipedChars.push(position);
@@ -73,15 +96,18 @@ export function createAutoCorrectedDatePipe(
 		const isInvalid = dateFormatArray.some((format) => {
 			const position = dateFormat.indexOf(format);
 			const length = format.length;
+			const offset = position + length;
 			const textValue = conformedValue
-				.substr(position, length)
+				.substring(position, offset)
 				.replace(/\D/g, '');
 			const value = parseInt(textValue, 10);
 			if (format === 'mm') {
 				month = value || 0;
 			}
 			const maxValueForFormat =
-				format === 'dd' ? maxValueMonth[month] : maxValue[format];
+				format === 'dd'
+					? maxValueMonth[month]
+					: maxValue[format as keyof MaxOrMinValue];
 			if (format === 'yyyy' && (minYear !== 1 || maxYear !== 9999)) {
 				const scopedMaxValue = parseInt(
 					maxValue[format].toString().substring(0, textValue.length),
@@ -97,7 +123,8 @@ export function createAutoCorrectedDatePipe(
 
 			return (
 				value > maxValueForFormat ||
-				(textValue.length === length && value < minValue[format])
+				(textValue.length === length &&
+					value < minValue[format as keyof MaxOrMinValue])
 			);
 		});
 

@@ -3772,11 +3772,11 @@ definition {
 		DMDocument.expandInfo();
 
 		if (isSet(noDownloadPermissions)) {
-			AssertNotVisible(
+			AssertElementNotPresent(
 				locator1 = "Button#DOWNLOAD_SIDEBAR",
 				value1 = "Download");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				locator1 = "MenuItem#DOWNLOAD",
 				value1 = "Download");
 		}

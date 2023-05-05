@@ -154,35 +154,31 @@ definition {
 	@description = "Story ID: LPS-149551 | Test Summary: Verify if as an User can edit account information"
 	@priority = 4
 	test CanEditAccountInformation {
-		task ("Given that the user change the account informations") {
-			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+		task ("When the user change the account informations") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			Testray.goToProjectPage(projectName = "user@liferay.com");
 
 			TestrayManageUser.editUserInformation(
-				userEmailAddressEdit = "test@liferay.com",
+				userEmailAddressEdit = "user@liferay.com",
 				userFirstNameEdit = "changedfirstname",
 				userLastNameEdit = "Updateln",
 				userScreenNameEdit = "testscreen");
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
+		}
 
+		task ("Then the account information is displayed in Manage Users") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
 
 			Testray.goToProjectPage(projectName = "changedfirstname Updateln");
-		}
-
-		task ("Then the account information is displayed in Manage Users and Manage Account") {
-			TestrayManageUser.viewUserInfomation(
-				emailAddress = "test@liferay.com",
-				firstName = "changedfirstname",
-				lastName = "Updateln",
-				screenName = "testscreen");
-
-			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
 
 			TestrayManageUser.viewUserInfomation(
-				emailAddress = "test@liferay.com",
+				emailAddress = "user@liferay.com",
 				firstName = "changedfirstname",
 				lastName = "Updateln",
 				screenName = "testscreen");
@@ -192,7 +188,7 @@ definition {
 	@description = "Story ID: LPS-164964 | Test Summary: Verify if as an administrator I cannot save roles without the select options"
 	@priority = 3
 	test CanNotSaveRolesWithoutOptions {
-		task ("Given that the user tries to save roles without options selected") {
+		task ("When the user tries to save roles without options selected") {
 			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
 
 			TestrayManageUser.changeRole(roleName = "Administrator");
@@ -212,8 +208,12 @@ definition {
 	@description = "Story ID: LPS-149551 | Test Summary: Verify that the user can not edit informations of user if all the required fields are not filled in"
 	@priority = 2
 	test CanViewFieldRequired {
-		task ("Given that the user tries to created account without informations") {
-			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+		task ("When the user tries to created account without informations") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			Testray.goToProjectPage(projectName = "user@liferay.com");
 
 			TestrayManageUser.editUserInformation(
 				userEmailAddressEdit = "",

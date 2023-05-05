@@ -59,7 +59,6 @@ definition {
 	}
 
 	@description = "LRQA-72024 - Verify that the calendar has Agenda view"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CalendarHasAgendaView {
 		CalendarNavigator.gotoView(viewType = "Agenda");

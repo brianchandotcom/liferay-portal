@@ -1107,7 +1107,6 @@ definition {
 	}
 
 	@description = "LRQA-71887 - Verify that the user can select Start / End dates from the datepicker component"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CanSelectStartEndFromDatepicker {
 		CalendarNavigator.gotoAddEvent();

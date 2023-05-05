@@ -135,7 +135,6 @@ definition {
 	@priority = 4
 	test CanBreakManyToManyRelationshipWithCustomObjectAsParent {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenCustomAndSystemObjects#CanBreakManyToManyRelationshipWithCustomObjectAsParent";
 
 		task ("Given I relate the userAccount entry with the foundation entry through the foundation PUT endpoint") {
 			ObjectDefinitionAPI.relateObjectEntries(
@@ -167,7 +166,6 @@ definition {
 	@priority = 4
 	test CanBreakManyToManyRelationshipWithSystemObjectAsParentInVirtualInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenCustomAndSystemObjects#CanBreakManyToManyRelationshipWithSystemObjectAsParentInVirtualInstance";
 
 		task ("Given I relate the userAccount entry with the foundation entry through the foundation PUT endpoint") {
 			ObjectDefinitionAPI.relateObjectEntries(
@@ -202,7 +200,6 @@ definition {
 	@priority = 4
 	test CanBreakOneToManyRelationshipKeepingOtherEntriesRelated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenCustomAndSystemObjects#CanBreakOneToManyRelationshipKeepingOtherEntriesRelated";
 
 		task ("Given all userAccounts are related to the secondFoundation through the secondFoundation PUT endpoint") {
 			ObjectDefinitionAPI.relateObjectEntries(
@@ -243,7 +240,6 @@ definition {
 	@priority = 4
 	test CanBreakOneToManyRelationshipWithCustomObjectAsParent {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenCustomAndSystemObjects#CanBreakOneToManyRelationshipWithCustomObjectAsParent";
 
 		task ("Given I relate the userAccount entry with the secondFoundation entry through the secondFoundation PUT endpoint") {
 			ObjectDefinitionAPI.relateObjectEntries(
@@ -275,7 +271,6 @@ definition {
 	@priority = 4
 	test CanBreakOneToManyRelationshipWithCustomObjectAsParentInVirtualInstance {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenCustomAndSystemObjects#CanBreakOneToManyRelationshipWithCustomObjectAsParentInVirtualInstance";
 
 		task ("Given all userAccounts are related to the secondFoundation through the secondFoundation PUT endpoint") {
 			ObjectDefinitionAPI.relateObjectEntries(

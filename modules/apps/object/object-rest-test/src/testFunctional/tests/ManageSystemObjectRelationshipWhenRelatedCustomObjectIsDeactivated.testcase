@@ -88,7 +88,6 @@ definition {
 	@priority = 4
 	test CannotGetManyToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetManyToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated";
 
 		task ("And Given foundation entries related with userAccount through putUserAccountUsersFoundations") {
 			UserAccountAPI.relateObjectEntries(
@@ -134,7 +133,6 @@ definition {
 	@priority = 3
 	test CannotGetManyToManyRelationshipDetailsWhenCustomObjectIsDeactivated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetManyToManyRelationshipDetailsWhenCustomObjectIsDeactivated";
 
 		task ("When I deactivate the custom object") {
 			ObjectAdmin.openObjectAdmin();
@@ -168,7 +166,6 @@ definition {
 	@priority = 4
 	test CannotGetOneToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetOneToManyRelatedEntryDetailsWhenCustomObjectIsDeactivated";
 
 		task ("And Given secondFoundation entries related with userAccount through putUserAccountUserSecondFoundations") {
 			UserAccountAPI.relateObjectEntries(
@@ -214,7 +211,6 @@ definition {
 	@priority = 3
 	test CannotGetOneToManyRelationshipDetailsWhenCustomObjectIsDeactivated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ManageSystemObjectRelationshipWhenRelatedCustomObjectIsDeactivated#CannotGetOneToManyRelationshipDetailsWhenCustomObjectIsDeactivated";
 
 		task ("When I deactivate the custom object") {
 			ObjectAdmin.openObjectAdmin();

@@ -323,5 +323,4 @@ definition {
 			User.answerPasswordReminder();
 		}
 	}
-
 }

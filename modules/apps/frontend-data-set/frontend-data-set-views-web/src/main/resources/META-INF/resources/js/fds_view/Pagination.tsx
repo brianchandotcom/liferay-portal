@@ -20,14 +20,14 @@ import {fetch, navigate, openToast} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {API_URL} from '../Constants';
-import {FDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionInterface} from '../FDSView';
 import RequiredMark from '../components/RequiredMark';
 
 function Pagination({
 	fdsView,
 	fdsViewsURL,
 	namespace,
-}: FDSViewSectionInterface) {
+}: IFDSViewSectionInterface) {
 	const [listOfItemsPerPage, setListOfItemsPerPage] = useState(
 		fdsView.listOfItemsPerPage
 	);

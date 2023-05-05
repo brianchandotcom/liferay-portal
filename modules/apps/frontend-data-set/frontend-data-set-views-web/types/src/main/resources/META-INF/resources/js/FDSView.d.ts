@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 import '../css/FDSView.scss';
 import {FDSViewType} from './FDSViews';
 interface IFDSViewSectionInterface {
@@ -34,5 +32,5 @@ declare const FDSView: ({
 	namespace,
 	saveFDSFieldsURL,
 }: IFDSViewInterface) => JSX.Element;
-export {IFDSViewSectionInterface as FDSViewSectionInterface};
+export {IFDSViewSectionInterface};
 export default FDSView;

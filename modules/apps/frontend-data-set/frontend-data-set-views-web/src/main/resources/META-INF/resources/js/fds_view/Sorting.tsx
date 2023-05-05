@@ -23,7 +23,7 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../Constants';
-import {FDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
@@ -241,7 +241,7 @@ const AddFDSSortModalContent = ({
 	);
 };
 
-const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
+const Sorting = ({fdsView, fdsViewsURL}: IFDSViewSectionInterface) => {
 	const [fields, setFields] = React.useState<IField[]>([]);
 	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
 	const [loading, setLoading] = useState(true);

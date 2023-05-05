@@ -27,7 +27,7 @@ import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
-import {FDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
@@ -487,7 +487,7 @@ const Fields = ({
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
-}: FDSViewSectionInterface) => {
+}: IFDSViewSectionInterface) => {
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
 
 	const fdsFieldsOrderRef = useRef('');

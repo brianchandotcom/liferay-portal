@@ -140,5 +140,5 @@ const FDSView = ({
 	);
 };
 
-export {IFDSViewSectionInterface as FDSViewSectionInterface};
+export {IFDSViewSectionInterface};
 export default FDSView;

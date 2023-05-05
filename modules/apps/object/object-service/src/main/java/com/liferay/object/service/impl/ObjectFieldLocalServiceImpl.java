@@ -1032,6 +1032,15 @@ public class ObjectFieldLocalServiceImpl
 				"Encrypted object field is not available");
 		}
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (!objectDefinition.isDefaultStorageType()) {
+			throw new ObjectFieldBusinessTypeException(
+				"Encrypted business type object field can only be created in " +
+					"object definitions with default storage type");
+		}
+
 		if (Validator.isNull(
 				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
 
@@ -1050,15 +1059,6 @@ public class ObjectFieldLocalServiceImpl
 					"The property ",
 					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,
 					" is required for encrypted object fields"));
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		if (!objectDefinition.isDefaultStorageType()) {
-			throw new ObjectFieldBusinessTypeException(
-				"Encrypted business type object field can only be created in " +
-					"object definitions with default storage type");
 		}
 	}
 

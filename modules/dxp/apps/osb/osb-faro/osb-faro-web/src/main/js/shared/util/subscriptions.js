@@ -247,6 +247,7 @@ export function formatPlanData(subscriptionIMap) {
 					}, {})
 			},
 			endDate: subscriptionIMap.get('endDate'),
+			lastAnniversaryDate: subscriptionIMap.get('lastAnniversaryDate'),
 			metrics: {
 				individuals: new Metric({
 					count: subscriptionIMap.get('individualsCount', 0),

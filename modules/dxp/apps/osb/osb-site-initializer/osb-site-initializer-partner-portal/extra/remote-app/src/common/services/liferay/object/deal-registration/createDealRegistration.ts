@@ -19,16 +19,11 @@ import {ResourceName} from '../enum/resourceName';
 export default async function createDealRegistration(
 	apiOption: ResourceName,
 	dealRegistration: DealRegistration,
-	leadExternalReferenceCode?: string,
-	leadQualificationExternalReferenceCode?: string
+	leadExternalReferenceCode?: string
 ) {
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
 		Liferay.authToken,
-		getDTOFromDealRegistration(
-			dealRegistration,
-			leadExternalReferenceCode,
-			leadQualificationExternalReferenceCode
-		)
+		getDTOFromDealRegistration(dealRegistration, leadExternalReferenceCode)
 	);
 }

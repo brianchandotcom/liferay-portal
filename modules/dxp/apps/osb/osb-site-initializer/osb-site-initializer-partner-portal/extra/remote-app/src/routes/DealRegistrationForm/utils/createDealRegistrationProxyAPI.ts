@@ -25,7 +25,7 @@ export default async function createDealRegistrationProxyAPI(
 		const dtoLeadProjectSFResponse = await createDealRegistration(
 			ResourceName.PROJECT_SALESFORCE,
 			values,
-			dtoLeadSFResponse.mdfActivityName
+			dtoLeadSFResponse.externalReferenceCode
 		);
 
 		if (dtoLeadProjectSFResponse) {

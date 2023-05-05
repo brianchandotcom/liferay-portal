@@ -525,9 +525,9 @@ public class ObjectField implements Cloneable, Serializable {
 	public static enum BusinessType {
 
 		AGGREGATION("Aggregation"), ATTACHMENT("Attachment"),
-		BOOLEAN("Boolean"), DATE("Date"), DECIMAL("Decimal"),
-		ENCRYPTED("Encrypted"), FORMULA("Formula"), INTEGER("Integer"),
-		LONG_INTEGER("LongInteger"), LONG_TEXT("LongText"),
+		BOOLEAN("Boolean"), DATE("Date"), DATE_TIME("DateTime"),
+		DECIMAL("Decimal"), ENCRYPTED("Encrypted"), FORMULA("Formula"),
+		INTEGER("Integer"), LONG_INTEGER("LongInteger"), LONG_TEXT("LongText"),
 		MULTISELECT_PICKLIST("MultiselectPicklist"), PICKLIST("Picklist"),
 		PRECISION_DECIMAL("PrecisionDecimal"), RELATIONSHIP("Relationship"),
 		RICH_TEXT("RichText"), TEXT("Text");
@@ -564,8 +564,8 @@ public class ObjectField implements Cloneable, Serializable {
 	public static enum DBType {
 
 		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), CLOB("Clob"),
-		DATE("Date"), DOUBLE("Double"), INTEGER("Integer"), LONG("Long"),
-		STRING("String");
+		DATE("Date"), DATE_TIME("DateTime"), DOUBLE("Double"),
+		INTEGER("Integer"), LONG("Long"), STRING("String");
 
 		public static DBType create(String value) {
 			for (DBType dbType : values()) {
@@ -632,8 +632,8 @@ public class ObjectField implements Cloneable, Serializable {
 	public static enum Type {
 
 		BIG_DECIMAL("BigDecimal"), BOOLEAN("Boolean"), CLOB("Clob"),
-		DATE("Date"), DOUBLE("Double"), INTEGER("Integer"), LONG("Long"),
-		STRING("String");
+		DATE("Date"), DATE_TIME("DateTime"), DOUBLE("Double"),
+		INTEGER("Integer"), LONG("Long"), STRING("String");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

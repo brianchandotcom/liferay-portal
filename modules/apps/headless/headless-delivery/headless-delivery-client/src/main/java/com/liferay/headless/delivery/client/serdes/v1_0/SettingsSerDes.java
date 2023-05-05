@@ -82,26 +82,6 @@ public class SettingsSerDes {
 			sb.append("\"");
 		}
 
-		if (settings.getCssClientExtensions() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"cssClientExtensions\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < settings.getCssClientExtensions().length; i++) {
-				sb.append(String.valueOf(settings.getCssClientExtensions()[i]));
-
-				if ((i + 1) < settings.getCssClientExtensions().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (settings.getFavIcon() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -119,6 +99,52 @@ public class SettingsSerDes {
 			}
 		}
 
+		if (settings.getGlobalCSSClientExtensions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"globalCSSClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < settings.getGlobalCSSClientExtensions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(settings.getGlobalCSSClientExtensions()[i]));
+
+				if ((i + 1) < settings.getGlobalCSSClientExtensions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (settings.getGlobalJSClientExtensions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"globalJSClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < settings.getGlobalJSClientExtensions().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(settings.getGlobalJSClientExtensions()[i]));
+
+				if ((i + 1) < settings.getGlobalJSClientExtensions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (settings.getJavascript() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -131,30 +157,6 @@ public class SettingsSerDes {
 			sb.append(_escape(settings.getJavascript()));
 
 			sb.append("\"");
-		}
-
-		if (settings.getJavascriptClientExtensions() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"javascriptClientExtensions\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < settings.getJavascriptClientExtensions().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(
-						settings.getJavascriptClientExtensions()[i]));
-
-				if ((i + 1) < settings.getJavascriptClientExtensions().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (settings.getMasterPage() != null) {
@@ -177,14 +179,14 @@ public class SettingsSerDes {
 			sb.append(String.valueOf(settings.getStyleBook()));
 		}
 
-		if (settings.getThemeCssClientExtension() != null) {
+		if (settings.getThemeCSSClientExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"themeCssClientExtension\": ");
+			sb.append("\"themeCSSClientExtension\": ");
 
-			sb.append(String.valueOf(settings.getThemeCssClientExtension()));
+			sb.append(String.valueOf(settings.getThemeCSSClientExtension()));
 		}
 
 		if (settings.getThemeName() != null) {
@@ -252,15 +254,6 @@ public class SettingsSerDes {
 			map.put("css", String.valueOf(settings.getCss()));
 		}
 
-		if (settings.getCssClientExtensions() == null) {
-			map.put("cssClientExtensions", null);
-		}
-		else {
-			map.put(
-				"cssClientExtensions",
-				String.valueOf(settings.getCssClientExtensions()));
-		}
-
 		if (settings.getFavIcon() == null) {
 			map.put("favIcon", null);
 		}
@@ -268,20 +261,29 @@ public class SettingsSerDes {
 			map.put("favIcon", String.valueOf(settings.getFavIcon()));
 		}
 
+		if (settings.getGlobalCSSClientExtensions() == null) {
+			map.put("globalCSSClientExtensions", null);
+		}
+		else {
+			map.put(
+				"globalCSSClientExtensions",
+				String.valueOf(settings.getGlobalCSSClientExtensions()));
+		}
+
+		if (settings.getGlobalJSClientExtensions() == null) {
+			map.put("globalJSClientExtensions", null);
+		}
+		else {
+			map.put(
+				"globalJSClientExtensions",
+				String.valueOf(settings.getGlobalJSClientExtensions()));
+		}
+
 		if (settings.getJavascript() == null) {
 			map.put("javascript", null);
 		}
 		else {
 			map.put("javascript", String.valueOf(settings.getJavascript()));
-		}
-
-		if (settings.getJavascriptClientExtensions() == null) {
-			map.put("javascriptClientExtensions", null);
-		}
-		else {
-			map.put(
-				"javascriptClientExtensions",
-				String.valueOf(settings.getJavascriptClientExtensions()));
 		}
 
 		if (settings.getMasterPage() == null) {
@@ -298,13 +300,13 @@ public class SettingsSerDes {
 			map.put("styleBook", String.valueOf(settings.getStyleBook()));
 		}
 
-		if (settings.getThemeCssClientExtension() == null) {
-			map.put("themeCssClientExtension", null);
+		if (settings.getThemeCSSClientExtension() == null) {
+			map.put("themeCSSClientExtension", null);
 		}
 		else {
 			map.put(
-				"themeCssClientExtension",
-				String.valueOf(settings.getThemeCssClientExtension()));
+				"themeCSSClientExtension",
+				String.valueOf(settings.getThemeCSSClientExtension()));
 		}
 
 		if (settings.getThemeName() == null) {
@@ -352,55 +354,58 @@ public class SettingsSerDes {
 					settings.setCss((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "cssClientExtensions")) {
-
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					ClientExtension[] cssClientExtensionsArray =
-						new ClientExtension[jsonParserFieldValues.length];
-
-					for (int i = 0; i < cssClientExtensionsArray.length; i++) {
-						cssClientExtensionsArray[i] =
-							ClientExtensionSerDes.toDTO(
-								(String)jsonParserFieldValues[i]);
-					}
-
-					settings.setCssClientExtensions(cssClientExtensionsArray);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "favIcon")) {
 				if (jsonParserFieldValue != null) {
 					settings.setFavIcon((Object)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "javascript")) {
-				if (jsonParserFieldValue != null) {
-					settings.setJavascript((String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(
-						jsonParserFieldName, "javascriptClientExtensions")) {
+						jsonParserFieldName, "globalCSSClientExtensions")) {
 
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					ClientExtension[] javascriptClientExtensionsArray =
+					ClientExtension[] globalCSSClientExtensionsArray =
 						new ClientExtension[jsonParserFieldValues.length];
 
-					for (int i = 0; i < javascriptClientExtensionsArray.length;
+					for (int i = 0; i < globalCSSClientExtensionsArray.length;
 						 i++) {
 
-						javascriptClientExtensionsArray[i] =
+						globalCSSClientExtensionsArray[i] =
 							ClientExtensionSerDes.toDTO(
 								(String)jsonParserFieldValues[i]);
 					}
 
-					settings.setJavascriptClientExtensions(
-						javascriptClientExtensionsArray);
+					settings.setGlobalCSSClientExtensions(
+						globalCSSClientExtensionsArray);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "globalJSClientExtensions")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ClientExtension[] globalJSClientExtensionsArray =
+						new ClientExtension[jsonParserFieldValues.length];
+
+					for (int i = 0; i < globalJSClientExtensionsArray.length;
+						 i++) {
+
+						globalJSClientExtensionsArray[i] =
+							ClientExtensionSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					settings.setGlobalJSClientExtensions(
+						globalJSClientExtensionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "javascript")) {
+				if (jsonParserFieldValue != null) {
+					settings.setJavascript((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "masterPage")) {
@@ -416,10 +421,10 @@ public class SettingsSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "themeCssClientExtension")) {
+						jsonParserFieldName, "themeCSSClientExtension")) {
 
 				if (jsonParserFieldValue != null) {
-					settings.setThemeCssClientExtension(
+					settings.setThemeCSSClientExtension(
 						ClientExtensionSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

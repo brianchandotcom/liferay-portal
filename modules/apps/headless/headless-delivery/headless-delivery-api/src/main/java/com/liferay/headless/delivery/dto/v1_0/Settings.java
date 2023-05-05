@@ -115,40 +115,6 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String css;
 
-	@Schema(
-		description = "The client extensions for css associated to the page."
-	)
-	@Valid
-	public ClientExtension[] getCssClientExtensions() {
-		return cssClientExtensions;
-	}
-
-	public void setCssClientExtensions(ClientExtension[] cssClientExtensions) {
-		this.cssClientExtensions = cssClientExtensions;
-	}
-
-	@JsonIgnore
-	public void setCssClientExtensions(
-		UnsafeSupplier<ClientExtension[], Exception>
-			cssClientExtensionsUnsafeSupplier) {
-
-		try {
-			cssClientExtensions = cssClientExtensionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The client extensions for css associated to the page."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ClientExtension[] cssClientExtensions;
-
 	@Schema(description = "The FavIcon of the page")
 	@Valid
 	public Object getFavIcon() {
@@ -178,6 +144,80 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object favIcon;
 
+	@Schema(
+		description = "The client extensions for global css associated to the page."
+	)
+	@Valid
+	public ClientExtension[] getGlobalCSSClientExtensions() {
+		return globalCSSClientExtensions;
+	}
+
+	public void setGlobalCSSClientExtensions(
+		ClientExtension[] globalCSSClientExtensions) {
+
+		this.globalCSSClientExtensions = globalCSSClientExtensions;
+	}
+
+	@JsonIgnore
+	public void setGlobalCSSClientExtensions(
+		UnsafeSupplier<ClientExtension[], Exception>
+			globalCSSClientExtensionsUnsafeSupplier) {
+
+		try {
+			globalCSSClientExtensions =
+				globalCSSClientExtensionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The client extensions for global css associated to the page."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ClientExtension[] globalCSSClientExtensions;
+
+	@Schema(
+		description = "The client extensions for global js associated to the page."
+	)
+	@Valid
+	public ClientExtension[] getGlobalJSClientExtensions() {
+		return globalJSClientExtensions;
+	}
+
+	public void setGlobalJSClientExtensions(
+		ClientExtension[] globalJSClientExtensions) {
+
+		this.globalJSClientExtensions = globalJSClientExtensions;
+	}
+
+	@JsonIgnore
+	public void setGlobalJSClientExtensions(
+		UnsafeSupplier<ClientExtension[], Exception>
+			globalJSClientExtensionsUnsafeSupplier) {
+
+		try {
+			globalJSClientExtensions =
+				globalJSClientExtensionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The client extensions for global js associated to the page."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ClientExtension[] globalJSClientExtensions;
+
 	@Schema(description = "The page's JavaScript.")
 	public String getJavascript() {
 		return javascript;
@@ -205,43 +245,6 @@ public class Settings implements Serializable {
 	@GraphQLField(description = "The page's JavaScript.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String javascript;
-
-	@Schema(
-		description = "The client extensions for js associated to the page."
-	)
-	@Valid
-	public ClientExtension[] getJavascriptClientExtensions() {
-		return javascriptClientExtensions;
-	}
-
-	public void setJavascriptClientExtensions(
-		ClientExtension[] javascriptClientExtensions) {
-
-		this.javascriptClientExtensions = javascriptClientExtensions;
-	}
-
-	@JsonIgnore
-	public void setJavascriptClientExtensions(
-		UnsafeSupplier<ClientExtension[], Exception>
-			javascriptClientExtensionsUnsafeSupplier) {
-
-		try {
-			javascriptClientExtensions =
-				javascriptClientExtensionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The client extensions for js associated to the page."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ClientExtension[] javascriptClientExtensions;
 
 	@Schema(description = "The page's master page.")
 	@Valid
@@ -301,26 +304,26 @@ public class Settings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StyleBook styleBook;
 
-	@Schema(description = "The Client Extension for the theme of a page")
+	@Schema(description = "The Client Extension for the theme css of a page")
 	@Valid
-	public ClientExtension getThemeCssClientExtension() {
-		return themeCssClientExtension;
+	public ClientExtension getThemeCSSClientExtension() {
+		return themeCSSClientExtension;
 	}
 
-	public void setThemeCssClientExtension(
-		ClientExtension themeCssClientExtension) {
+	public void setThemeCSSClientExtension(
+		ClientExtension themeCSSClientExtension) {
 
-		this.themeCssClientExtension = themeCssClientExtension;
+		this.themeCSSClientExtension = themeCSSClientExtension;
 	}
 
 	@JsonIgnore
-	public void setThemeCssClientExtension(
+	public void setThemeCSSClientExtension(
 		UnsafeSupplier<ClientExtension, Exception>
-			themeCssClientExtensionUnsafeSupplier) {
+			themeCSSClientExtensionUnsafeSupplier) {
 
 		try {
-			themeCssClientExtension =
-				themeCssClientExtensionUnsafeSupplier.get();
+			themeCSSClientExtension =
+				themeCSSClientExtensionUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -330,9 +333,11 @@ public class Settings implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The Client Extension for the theme of a page")
+	@GraphQLField(
+		description = "The Client Extension for the theme css of a page"
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ClientExtension themeCssClientExtension;
+	protected ClientExtension themeCSSClientExtension;
 
 	@Schema(description = "The page's theme name.")
 	public String getThemeName() {
@@ -446,26 +451,6 @@ public class Settings implements Serializable {
 			sb.append("\"");
 		}
 
-		if (cssClientExtensions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"cssClientExtensions\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < cssClientExtensions.length; i++) {
-				sb.append(String.valueOf(cssClientExtensions[i]));
-
-				if ((i + 1) < cssClientExtensions.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		if (favIcon != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -486,6 +471,46 @@ public class Settings implements Serializable {
 			}
 		}
 
+		if (globalCSSClientExtensions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"globalCSSClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < globalCSSClientExtensions.length; i++) {
+				sb.append(String.valueOf(globalCSSClientExtensions[i]));
+
+				if ((i + 1) < globalCSSClientExtensions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (globalJSClientExtensions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"globalJSClientExtensions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < globalJSClientExtensions.length; i++) {
+				sb.append(String.valueOf(globalJSClientExtensions[i]));
+
+				if ((i + 1) < globalJSClientExtensions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (javascript != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -498,26 +523,6 @@ public class Settings implements Serializable {
 			sb.append(_escape(javascript));
 
 			sb.append("\"");
-		}
-
-		if (javascriptClientExtensions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"javascriptClientExtensions\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < javascriptClientExtensions.length; i++) {
-				sb.append(String.valueOf(javascriptClientExtensions[i]));
-
-				if ((i + 1) < javascriptClientExtensions.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (masterPage != null) {
@@ -540,14 +545,14 @@ public class Settings implements Serializable {
 			sb.append(String.valueOf(styleBook));
 		}
 
-		if (themeCssClientExtension != null) {
+		if (themeCSSClientExtension != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"themeCssClientExtension\": ");
+			sb.append("\"themeCSSClientExtension\": ");
 
-			sb.append(String.valueOf(themeCssClientExtension));
+			sb.append(String.valueOf(themeCSSClientExtension));
 		}
 
 		if (themeName != null) {

@@ -80,7 +80,6 @@ definition {
 	@priority = 3
 	test CanGetRelationshipDetailsThroughRelationshipEndpointWithoutRelatedEntries {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanGetRelationshipDetailsThroughRelationshipEndpointWithoutRelatedEntries";
 
 		task ("When I call userAccount object GET endpoint with {userAccountId}/usersFoundations") {
 			UserAccountAPI.getRelationshipByUserAccountId(
@@ -101,7 +100,6 @@ definition {
 	@priority = 3
 	test CanNotGetDetailsAfterRelationshipIsDeleted {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanNotGetDetailsAfterRelationshipIsDeleted";
 
 		task ("And Given I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -131,7 +129,6 @@ definition {
 	@priority = 4
 	test CanReturnDetailsInManyToManyRelationship {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanReturnDetailsInManyToManyRelationship";
 
 		task ("When I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -153,7 +150,6 @@ definition {
 	@priority = 4
 	test CanReturnDetailsInManyToManyRelationshipAfterObjectEntryDeletion {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanReturnDetailsInManyToManyRelationshipAfterObjectEntryDeletion";
 
 		task ("And Given I relate the foundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -191,7 +187,6 @@ definition {
 	@priority = 4
 	test CanReturnDetailsInOneToManyRelationship {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanReturnDetailsInOneToManyRelationship";
 
 		task ("When I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -213,7 +208,6 @@ definition {
 	@priority = 4
 	test CanReturnDetailsInOneToManyRelationshipAfterObjectEntryDeletion {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "RetrieveTheRelatedElementsOfSystemObject#CanReturnDetailsInOneToManyRelationshipAfterObjectEntryDeletion";
 
 		task ("And Given I relate the secondFoundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(

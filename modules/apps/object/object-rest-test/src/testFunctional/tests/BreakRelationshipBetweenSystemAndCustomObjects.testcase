@@ -77,7 +77,6 @@ definition {
 	@priority = 4
 	test CanBreakManyToManyRelationship {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenSystemAndCustomObjects#CanBreakManyToManyRelationship";
 
 		task ("Given I relate the custom object entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -105,7 +104,6 @@ definition {
 	@priority = 4
 	test CanBreakOneToManyRelationship {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenSystemAndCustomObjects#CanBreakOneToManyRelationship";
 
 		task ("Given I relate foundation entry with the userAccount entry through the userAccount PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(
@@ -133,7 +131,6 @@ definition {
 	@priority = 4
 	test CanBreakOneToManyRelationshipKeepingOtherEntriesRelated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "BreakRelationshipBetweenSystemAndCustomObjects#CanBreakOneToManyRelationshipKeepingOtherEntriesRelated";
 
 		task ("Given all foundation is related to userAccount through userAccounts PUT endpoint") {
 			UserAccountAPI.relateObjectEntries(

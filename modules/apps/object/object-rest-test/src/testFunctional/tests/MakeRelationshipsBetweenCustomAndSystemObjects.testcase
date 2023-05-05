@@ -94,7 +94,6 @@ definition {
 	@priority = 5
 	test CanCreateMultipleOneToManyRelationshipsBetweenTwoObjects {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MakeRelationshipsBetweenCustomAndSystemObjects#CanCreateMultipleOneToManyRelationshipsBetweenTwoObjects";
 
 		task ("And Given oneToMany subjectAccounts relationship created") {
 			ObjectDefinitionAPI.createRelationship(
@@ -133,7 +132,6 @@ definition {
 	@priority = 4
 	test CanGetEmptyPageWithNoEntriesRelated {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "MakeRelationshipsBetweenCustomAndSystemObjects#CanGetEmptyPageWithNoEntriesRelated";
 
 		task ("And Given I request PUT to relate University entry to the Account entry with /o/c/universities/{universityId}/universitiesAccounts/{accountId}") {
 			ObjectDefinitionAPI.relateObjectEntries(

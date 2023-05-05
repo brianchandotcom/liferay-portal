@@ -23,6 +23,16 @@ hasMarketingReviewAction || hasFinanceReviewAction || hasRequestMoreInfoAction
 || hasExpireAction || hasRejectAction || hasApproveAction ||
 hasDirectorReviewAction]
 <script>
+	const modalStatusTypes = {
+		canceled: 'Canceled',
+		inFinanceReview: 'In Finance Review',
+		inDirectorReview: 'In Director Review',
+		marketingDirectorReview: 'Marketing Director Review',
+		moreInfoRequested: 'More Info Requested',
+		pendingMarketingReview: 'Pending Marketing Review',
+		rejected: 'Rejected',
+	};
+
 	const updateClaimStatus = async (status) => {
 		const responde = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
 			body: `{"mdfClaimStatus": "` + status + `"}`,
@@ -113,11 +123,20 @@ hasDirectorReviewAction]
 						const paymentReceived = document.getElementById(
 							'paymentReceivedInput'
 						).value;
-						updatePaidClaimStatus(
-							status,
-							paymentReceived,
-							checkNumber
-						);
+
+						if (checkNumber && paymentReceived) {
+							updatePaidClaimStatus(
+								status,
+								paymentReceived,
+								checkNumber
+							);
+						}
+
+						Liferay.Util.openToast({
+							message:
+								'The MDF Claim Status cannot be changed without the fields being filled.',
+							type: 'danger',
+						});
 					},
 					type: 'submit',
 				},
@@ -127,15 +146,52 @@ hasDirectorReviewAction]
 		});
 	};
 
-	const callModal = (status) =>
-		Liferay.Util.openConfirmModal({
-			message: 'Are you sure?',
-			onConfirm: (isConfirmed) => {
-				if (isConfirmed) {
-					updateClaimStatus(status);
-				}
-			},
-		});
+	const callModal = (status) => {
+		if (status !== 'approved') {
+			return Liferay.Util.openModal({
+				bodyHTML: `<div class="form-group">
+								<label for="descriptionTextArea">Status change motivation:</label>
+								<textarea
+									class="form-control"
+									id="descriptionTextArea"
+									placeholder="Describe here..."
+									type="text"
+								></textarea>	
+							</div>`,
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('Cancel'),
+						type: 'cancel',
+					},
+					{
+						displayType: 'primary',
+						label: modalStatusTypes[status],
+						onClick() {
+							const textarea = document.getElementById(
+								'descriptionTextArea'
+							);
+
+							if (textarea.value) {
+								return updateClaimStatus(status);
+							}
+
+							Liferay.Util.openToast({
+								message:
+									'The MDF Claim Status cannot be changed without a motivation.',
+								type: 'danger',
+							});
+						},
+						type: 'submit',
+					},
+				],
+				headerHTML: `<h1 class="m-0">Status Change</h1>`,
+				size: 'md',
+			});
+		}
+
+		return updateClaimStatus(status);
+	};
 </script>
 
 <button

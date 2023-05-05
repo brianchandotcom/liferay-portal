@@ -413,15 +413,11 @@ public class CPDefinitionLocalServiceTest {
 		frutillaRule.scenario(
 			"Change Price of a duplicate product sku"
 		).given(
-			"A product definition"
+			"A product definition and its duplicate"
 		).when(
-			"ignoreSKUCombinations set to true"
-		).and(
-			"hasDefaultInstance set true"
-		).and(
-			"delete default product instance"
+			"changing the price of the duplicate"
 		).then(
-			"product definition should be APPROVED"
+			"first product price is different from duplicated product price"
 		);
 
 		BigDecimal basePrice = new BigDecimal(5);
@@ -457,13 +453,9 @@ public class CPDefinitionLocalServiceTest {
 				commercePriceEntry.getCommercePriceEntryId(), newPrice,
 				promoPrice, _serviceContext);
 
-		CommercePriceList parentPriceList =
-			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
-				cpInstance.getGroupId());
-
 		CommercePriceEntry parentPriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				parentPriceList.getCommercePriceListId(),
+				commercePriceList.getCommercePriceListId(),
 				cpInstance.getCPInstanceUuid());
 
 		BigDecimal priceEntry = commercePriceEntry.getPrice();

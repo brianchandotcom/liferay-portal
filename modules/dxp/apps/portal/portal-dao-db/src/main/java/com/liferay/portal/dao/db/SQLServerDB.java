@@ -216,7 +216,8 @@ public class SQLServerDB extends BaseDB {
 		String tableName, String newTableName) {
 
 		return StringBundler.concat(
-			"select into ", newTableName, " from ", tableName, " where 1 = 0");
+			"select * into ", newTableName, " from ", tableName,
+			" where 1 = 0");
 	}
 
 	@Override

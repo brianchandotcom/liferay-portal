@@ -692,12 +692,12 @@ public class FragmentEntryLinkLocalServiceImpl
 			modified = true;
 		}
 
+		fragmentEntryLink.setLastPropagationDate(new Date());
+
+		fragmentEntryLink = fragmentEntryLinkPersistence.update(
+			fragmentEntryLink);
+
 		if (modified) {
-			fragmentEntryLink.setLastPropagationDate(new Date());
-
-			fragmentEntryLink = fragmentEntryLinkPersistence.update(
-				fragmentEntryLink);
-
 			_updateFragmentEntryLinkLayout(fragmentEntryLink);
 
 			for (FragmentEntryLinkListener fragmentEntryLinkListener :

@@ -2849,6 +2849,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11392. Can see timestamps from payment transaction history"
+	@priority = 3
+	test CanViewTimestampsInOrderTransactionHistory {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with an Account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And the admin checks out an order ") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("When the admin opens the Payments tab") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+		}
+
+		task ("Then the admin can view the Transaction History") {
+			var timestamp = TestUtils.getElementTextContent(element = "//div[@class='dnd-tr']//div[@class='dnd-td'][3]");
+
+			TestUtils.assertNotEquals(
+				actual = ${timestamp},
+				expected = "");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
 	@priority = 3
 	test DeactivateCurrency {

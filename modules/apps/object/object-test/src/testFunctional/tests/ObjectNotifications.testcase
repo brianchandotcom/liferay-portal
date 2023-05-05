@@ -256,6 +256,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-162133 - Verify that it's possible to create a user notification template"
+	@priority = 5
+	test CanCreateUserNotificationTemplate {
+		property portal.acceptance = "true";
+
+		task ("Given the user navigates to Notifications Templates in the Control Panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Notifications",
+				panel = "Control Panel",
+				portlet = "Templates");
+		}
+
+		task ("When the user adds a new user notification template") {
+			ObjectNotifications.addNewNotificationTemplate(
+				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+				name = "Notification Template",
+				notificationType = "User Notification",
+				recipientType = "User",
+				subject = "Subject content",
+				userName = "Test");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user notification template is created") {
+			AssertElementPresent(
+				key_name = "Notification Template",
+				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+
+			ObjectNotifications.viewNotificationTemplateDetails(
+				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+				name = "Notification Template",
+				notificationType = "User Notification",
+				recipientType = "User",
+				subject = "Subject content");
+
+			ObjectNotifications.selectEntity(entityName = "User");
+			var listOfTerms = "Middle Name,Screen Name,Create Date,First Name,Last Login Date,UUID";
+			for (var entityTerms : list ${listOfTerms}) {
+				AssertElementPresent(
+					key_termName = ${entityTerms},
+					locator1 = "ObjectNotifications#ENTITY_TERMS");
+			}
+		}
+	}
+
 	@description = "LPS-161928 - Verify that it's possible to delete attachments to the notification template"
 	@priority = 3
 	test CanDeleteAttachment {

@@ -149,6 +149,12 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 
 		registry.register("2.6.0", "2.6.1", new DummyUpgradeStep());
 
+		registry.register(
+			"2.6.1", "2.7.0",
+			UpgradeProcessFactory.addColumns(
+				CommercePriceEntryModelImpl.TABLE_NAME,
+				"priceOnApplication BOOLEAN"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price list upgrade step registrator finished");
 		}

@@ -117,7 +117,20 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						%>
 
 						<div class="form-group mb-2">
-							<label class="control-label"><liferay-ui:message key="image" /> <liferay-ui:icon-help message="open-graph-image-help" /></label>
+							<label>
+								<div class="align-items-center d-flex">
+									<liferay-ui:message key="image" />
+
+									<span>
+										<clay:icon
+											aria-label='<%= LanguageUtil.get(request, "open-graph-image-help") %>'
+											cssClass="lfr-portal-tooltip ml-1"
+											symbol="question-circle-full"
+											title='<%= LanguageUtil.get(request, "open-graph-image-help") %>'
+										/>
+									</span>
+								</div>
+							</label>
 
 							<div class="align-items-center d-flex">
 								<aui:input id="openGraphImageInput" label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="no-image-is-loaded" readonly="<%= true %>" title="image" type="text" value="<%= layoutsSEODisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="flex-grow-1 mb-0 mr-2" />
@@ -161,7 +174,20 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						</div>
 
 						<div class="form-group">
-							<label><liferay-ui:message key="preview" /> <liferay-ui:icon-help message="preview-help" /></label>
+							<label>
+								<div class="align-items-center d-flex">
+									<liferay-ui:message key="preview" />
+
+									<span>
+										<clay:icon
+											aria-label='<%= LanguageUtil.get(request, "preview-help") %>'
+											cssClass="lfr-portal-tooltip ml-1"
+											symbol="question-circle-full"
+											title='<%= LanguageUtil.get(request, "preview-help") %>'
+										/>
+									</span>
+								</div>
+							</label>
 
 							<div>
 								<react:component

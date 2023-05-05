@@ -286,6 +286,13 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, boolean cacheable)
+		throws PortalException {
+
+		return getService().updateFragmentEntry(fragmentEntryId, cacheable);
+	}
+
+	public static FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
 		throws PortalException {
 

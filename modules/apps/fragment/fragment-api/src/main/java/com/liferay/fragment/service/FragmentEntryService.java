@@ -195,6 +195,10 @@ public interface FragmentEntryService extends BaseService {
 		throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, boolean cacheable)
+		throws PortalException;
+
+	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
 		throws PortalException;
 

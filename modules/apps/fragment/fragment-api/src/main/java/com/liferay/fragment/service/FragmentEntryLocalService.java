@@ -444,6 +444,10 @@ public interface FragmentEntryLocalService
 		throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, boolean cacheable)
+		throws PortalException;
+
+	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
 		throws PortalException;
 

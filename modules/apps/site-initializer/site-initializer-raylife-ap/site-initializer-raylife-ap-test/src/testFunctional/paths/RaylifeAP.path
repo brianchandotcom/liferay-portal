@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPLICATIONS_NUMBER_WITH_STATUS</td>
+	<td>xpath=(//div[contains(@class,'px-3')]/table//button[contains(.,'')]//ancestor::table//td[contains(.,'${key_product}')]//ancestor::tr//div[contains(.,'${key_status}')]//ancestor::tr//span[contains(@class,'cursor-pointer') and contains(text(),'AP-')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLICATIONS_TABLE</td>
 	<td>//div[contains(@class,'recent-applications')]/table//button[contains(.,'')]//ancestor::table//td[contains(.,'${key_product}')]//ancestor::tr//div[contains(.,'${key_status}')]</td>
 	<td></td>
@@ -146,6 +151,11 @@
 <tr>
 	<td>USER_AVATAR_OPTION</td>
 	<td>//div[contains(@class, 'applications-menu-header')]//span[contains(@class,'inline')]//ancestor::div//a[contains(.,'${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB_TITLE</td>
+	<td>//head//title[contains(.,'${key_tabTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

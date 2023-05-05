@@ -1,18 +1,75 @@
-    @description = "Story ID: LPS-152144 | Test Summary: Verify that clicking the Cookie Policy link opens a new page"
-    @priority = 3
-    test AssertThatTheCookiePolicyPageOpens {
-        task ("Given that I go to the Customer Portal") {
-            ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+@component-name = "portal-solutions"
+definition {
 
-            CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
-        }
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-        task ("When I click on the Cookie police link at the bottom of the page") {
-            CP2HomePage.clickAtCookiePoliceLink();
-        }
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testUserFirstName = "Test";
 
-        task ("Then I should be able to assert that the Cookie police page is loaded") {
-            CustomerPortal.assertPageTitle(title = "Cookie List");
-        }
-    }
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CustomerPortal.customerPortalTearDown();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Story ID: LPS-152144 | Test Summary: Verify that clicking the Cookie Policy link opens a new page"
+	@priority = 3
+	test AssertThatTheCookiePolicyPageOpens {
+		task ("Given that I go to the Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
+		}
+
+		task ("When I click on the Cookie police link at the bottom of the page") {
+			CP2HomePage.clickAtCookiePoliceLink();
+		}
+
+		task ("Then I should be able to assert that the Cookie police page is loaded") {
+			CustomerPortal.assertPageTitle(title = "Cookie List");
+		}
+	}
+
+	@description = "Story ID: LPS-152144 | Test Summary: Verify if the user selects another language, the page is translated into the selected language"
+	@priority = 4
+	test AssertThatTheLanguageLinksWork {
+		task ("Given that I go to the Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
+		}
+
+		task ("When I change the site language") {
+			CP2HomePage.clickAtLanguageButton(language = "português-Brasil");
+		}
+
+		task ("Then I should be able to assert the selected language") {
+			CP2HomePage.assertLanguageChange(siteTitle = "Bem vindo");
+		}
+	}
+
+}

@@ -16,6 +16,7 @@ package com.liferay.site.initializer.testray.dispatch.task.executor.internal.dis
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -86,7 +87,10 @@ public class ObjectEntryUtil {
 			ObjectEntryManager objectEntryManager)
 		throws Exception {
 
-		return objectEntryManager.getObjectEntry(
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
+
+		return defaultObjectEntryManager.getObjectEntry(
 			defaultDTOConverterContext,
 			_getObjectDefinition(objectDefinitionShortName), objectEntryId);
 	}
@@ -153,7 +157,10 @@ public class ObjectEntryUtil {
 			long objectEntryId, ObjectEntryManager objectEntryManager)
 		throws Exception {
 
-		objectEntryManager.updateObjectEntry(
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
+
+		defaultObjectEntryManager.updateObjectEntry(
 			defaultDTOConverterContext,
 			_getObjectDefinition(objectDefinitionShortName), objectEntryId,
 			objectEntry);

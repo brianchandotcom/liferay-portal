@@ -29,120 +29,121 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names="feeds,display-settings"
-			refresh="<%= false %>"
-		>
-			<liferay-ui:section>
-				<liferay-ui:error exception="<%= ValidatorException.class %>">
-					<liferay-ui:message key="the-following-are-invalid-urls" />
-
-					<%
-					ValidatorException ve = (ValidatorException)errorException;
-
-					Enumeration<String> enumeration = ve.getFailedKeys();
-
-					while (enumeration.hasMoreElements()) {
-						String url = enumeration.nextElement();
-					%>
-
-						<strong><%= HtmlUtil.escape(url) %></strong><%= enumeration.hasMoreElements() ? ", " : "." %>
-
-					<%
-					}
-					%>
-
-				</liferay-ui:error>
-
-				<div id="<portlet:namespace />subscriptions">
-
-					<%
-					String[] urls = rssPortletInstanceConfiguration.urls();
-
-					if (urls.length == 0) {
-						urls = new String[1];
-
-						urls[0] = StringPool.BLANK;
-					}
-
-					String[] titles = rssPortletInstanceConfiguration.titles();
-
-					for (int i = 0; i < urls.length; i++) {
-						String title = StringPool.BLANK;
-
-						if (i < titles.length) {
-							title = titles[i];
-						}
-					%>
-
-						<div class="field-row lfr-form-row lfr-form-row-inline">
-							<div class="row-fields">
-								<aui:input cssClass="lfr-input-text-container" label="title" name='<%= "title" + i %>' value="<%= title %>" />
-
-								<aui:input cssClass="lfr-input-text-container" label="url" name='<%= "url" + i %>' value="<%= urls[i] %>" />
-							</div>
-						</div>
-
-					<%
-					}
-					%>
-
-				</div>
-			</liferay-ui:section>
-
-			<liferay-ui:section>
-				<div class="display-template">
-					<liferay-template:template-selector
-						className="<%= RSSFeed.class.getName() %>"
-						displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>"
-						displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"
-						label="display-template"
-						refreshURL="<%= configurationRenderURL.toString() %>"
-						showEmptyOption="<%= true %>"
-					/>
-				</div>
-
-				<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
-					<aui:validator errorMessage='<%= LanguageUtil.get(request, "only-integers-are-allowed") %>' name="digits" />
-					<aui:validator errorMessage='<%= LanguageUtil.format(request, "only-integers-greater-than-or-equal-to-x-are-allowed", 1) %>' name="min">1</aui:validator>
-				</aui:input>
-
-				<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
-					<aui:validator errorMessage='<%= LanguageUtil.get(request, "only-integers-are-allowed") %>' name="digits" />
-					<aui:validator errorMessage='<%= LanguageUtil.format(request, "only-integers-greater-than-or-equal-to-x-are-allowed", 0) %>' name="min">0</aui:validator>
-				</aui:input>
-
-				<aui:select disabled="<%= !rssPortletInstanceConfiguration.showFeedImage() %>" name="preferences--feedImageAlignment--">
-					<aui:option label="left" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("left") %>' />
-					<aui:option label="right" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("right") %>' />
-				</aui:select>
-
-				<clay:row>
-					<clay:col
-						md="6"
-					>
-						<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
-
-						<aui:input name="preferences--showFeedPublishedDate--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>" />
-
-						<aui:input name="preferences--showFeedDescription--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>" />
-					</clay:col>
-
-					<clay:col
-						md="6"
-					>
+		<div class="sheet-row">
+			<clay:tabs
+				tabsItems="<%= rssDisplayContext.getTabsItem() %>"
+			>
+				<div>
+					<liferay-ui:error exception="<%= ValidatorException.class %>">
+						<liferay-ui:message key="the-following-are-invalid-urls" />
 
 						<%
-						String taglibShowFeedImageOnClick = "if (this.checked) {document." + liferayPortletResponse.getNamespace() + "fm." + liferayPortletResponse.getNamespace() + "feedImageAlignment.disabled = '';} else {document." + liferayPortletResponse.getNamespace() + "fm." + liferayPortletResponse.getNamespace() + "feedImageAlignment.disabled = 'disabled';}";
+						ValidatorException ve = (ValidatorException)errorException;
+
+						Enumeration<String> enumeration = ve.getFailedKeys();
+
+						while (enumeration.hasMoreElements()) {
+							String url = enumeration.nextElement();
 						%>
 
-						<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedImage() %>" />
+							<strong><%= HtmlUtil.escape(url) %></strong><%= enumeration.hasMoreElements() ? ", " : "." %>
 
-						<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
-					</clay:col>
-				</clay:row>
-			</liferay-ui:section>
-		</liferay-ui:tabs>
+						<%
+						}
+						%>
+
+					</liferay-ui:error>
+
+					<div id="<portlet:namespace />subscriptions">
+
+						<%
+						String[] urls = rssPortletInstanceConfiguration.urls();
+
+						if (urls.length == 0) {
+							urls = new String[1];
+
+							urls[0] = StringPool.BLANK;
+						}
+
+						String[] titles = rssPortletInstanceConfiguration.titles();
+
+						for (int i = 0; i < urls.length; i++) {
+							String title = StringPool.BLANK;
+
+							if (i < titles.length) {
+								title = titles[i];
+							}
+						%>
+
+							<div class="field-row lfr-form-row lfr-form-row-inline">
+								<div class="row-fields">
+									<aui:input cssClass="lfr-input-text-container" label="title" name='<%= "title" + i %>' value="<%= title %>" />
+
+									<aui:input cssClass="lfr-input-text-container" label="url" name='<%= "url" + i %>' value="<%= urls[i] %>" />
+								</div>
+							</div>
+
+						<%
+						}
+						%>
+
+					</div>
+				</div>
+
+				<div>
+					<div class="display-template">
+						<liferay-template:template-selector
+							className="<%= RSSFeed.class.getName() %>"
+							displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>"
+							displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>"
+							label="display-template"
+							refreshURL="<%= configurationRenderURL.toString() %>"
+							showEmptyOption="<%= true %>"
+						/>
+					</div>
+
+					<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
+						<aui:validator errorMessage='<%= LanguageUtil.get(request, "only-integers-are-allowed") %>' name="digits" />
+						<aui:validator errorMessage='<%= LanguageUtil.format(request, "only-integers-greater-than-or-equal-to-x-are-allowed", 1) %>' name="min">1</aui:validator>
+					</aui:input>
+
+					<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
+						<aui:validator errorMessage='<%= LanguageUtil.get(request, "only-integers-are-allowed") %>' name="digits" />
+						<aui:validator errorMessage='<%= LanguageUtil.format(request, "only-integers-greater-than-or-equal-to-x-are-allowed", 0) %>' name="min">0</aui:validator>
+					</aui:input>
+
+					<aui:select disabled="<%= !rssPortletInstanceConfiguration.showFeedImage() %>" name="preferences--feedImageAlignment--">
+						<aui:option label="left" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("left") %>' />
+						<aui:option label="right" selected='<%= rssPortletInstanceConfiguration.feedImageAlignment().equals("right") %>' />
+					</aui:select>
+
+					<clay:row>
+						<clay:col
+							md="6"
+						>
+							<aui:input name="preferences--showFeedTitle--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedTitle() %>" />
+
+							<aui:input name="preferences--showFeedPublishedDate--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedPublishedDate() %>" />
+
+							<aui:input name="preferences--showFeedDescription--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedDescription() %>" />
+						</clay:col>
+
+						<clay:col
+							md="6"
+						>
+
+							<%
+							String taglibShowFeedImageOnClick = "if (this.checked) {document." + liferayPortletResponse.getNamespace() + "fm." + liferayPortletResponse.getNamespace() + "feedImageAlignment.disabled = '';} else {document." + liferayPortletResponse.getNamespace() + "fm." + liferayPortletResponse.getNamespace() + "feedImageAlignment.disabled = 'disabled';}";
+							%>
+
+							<aui:input name="preferences--showFeedImage--" onClick="<%= taglibShowFeedImageOnClick %>" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedImage() %>" />
+
+							<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
+						</clay:col>
+					</clay:row>
+				</div>
+			</clay:tabs>
+		</div>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

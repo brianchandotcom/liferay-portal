@@ -105,6 +105,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		ThemeDisplay themeDisplay = getThemeDisplay(
+			ddmFormFieldRenderingContext.getHttpServletRequest());
+
+		ddmFormFieldRenderingContext.setProperty(
+			"groupId", themeDisplay.getScopeGroupId());
+
 		return HashMapBuilder.<String, Object>put(
 			"allowGuestUsers",
 			GetterUtil.getBoolean(ddmFormField.getProperty("allowGuestUsers"))

@@ -72,7 +72,7 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsFieldsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
-					_listTypeDefinitionService,
+					_listTypeDefinitionService, _objectDefinitionLocalService,
 					_objectDefinitionModelResourcePermission,
 					_objectFieldBusinessTypeRegistry,
 					_objectFieldSettingLocalService,

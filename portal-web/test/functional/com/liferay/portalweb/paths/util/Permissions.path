@@ -175,6 +175,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_DOWNLOAD']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_SUBSCRIBE']</td>
 	<td></td>

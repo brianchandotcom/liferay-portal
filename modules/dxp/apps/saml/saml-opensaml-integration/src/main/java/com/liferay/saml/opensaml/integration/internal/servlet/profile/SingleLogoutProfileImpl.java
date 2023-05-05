@@ -124,7 +124,7 @@ public class SingleLogoutProfileImpl
 		try {
 			SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);
 
-			if (samlSpSession == null) {
+			if ((samlSpSession == null) || samlSpSession.isTerminated()) {
 				return false;
 			}
 

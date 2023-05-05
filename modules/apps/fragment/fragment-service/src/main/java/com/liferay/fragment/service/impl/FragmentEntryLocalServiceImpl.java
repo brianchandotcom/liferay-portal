@@ -594,6 +594,19 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, boolean cacheable)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
+		fragmentEntry.setCacheable(cacheable);
+
+		return fragmentEntryPersistence.update(fragmentEntry);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, long previewFileEntryId)
 		throws PortalException {
 

@@ -132,7 +132,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	</nav>
 
 	<div aria-label="<%= LanguageUtil.get(request, "configuration-panel") %>" class="contextual-sidebar edit-article-sidebar sidebar-light sidebar-sm" id="<portlet:namespace />contextualSidebarContainer" role="tabpanel" tabindex="-1">
-		<div class="sidebar-body">
+		<div class="overflow-hidden sidebar-body">
 			<div class="sheet-row">
 				<clay:tabs
 					tabsItems="<%= journalEditArticleDisplayContext.getTabsItems() %>"

@@ -58,6 +58,18 @@ public class CompanyThreadLocal {
 	}
 
 	public static SafeCloseable lock(long companyId) {
+		if (isLocked()) {
+			Long currentCompanyId = _companyId.get();
+
+			if (companyId == currentCompanyId.longValue()) {
+				return () -> {
+				};
+			}
+
+			throw new UnsupportedOperationException(
+				"CompanyThreadLocal modification is not allowed");
+		}
+
 		SafeCloseable safeCloseable = _companyId.setWithSafeCloseable(
 			companyId);
 

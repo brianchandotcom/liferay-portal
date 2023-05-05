@@ -17,80 +17,18 @@ package com.liferay.message.boards.internal.util;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Preston Crary
  */
 public class MBMessageUtil {
-
-	public static String getMessageBody(
-		boolean htmlFormat, MBMessage mbMessage, String quoteMark,
-		ServiceContext serviceContext) {
-
-		if (!htmlFormat) {
-			return _getQuotedMessage(true, mbMessage.getBody(), quoteMark);
-		}
-
-		if (!mbMessage.isFormatBBCode()) {
-			return mbMessage.getBody();
-		}
-
-		try {
-			String messageBody = BBCodeTranslatorUtil.getHTML(
-				mbMessage.getBody());
-
-			HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-			if (httpServletRequest == null) {
-				return messageBody;
-			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			return MBUtil.replaceMessageBodyPaths(themeDisplay, messageBody);
-		}
-		catch (Exception exception) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to parse mbMessage ", mbMessage.getMessageId(),
-					": ", exception.getMessage()));
-		}
-
-		return mbMessage.getBody();
-	}
-
-	public static String getQuote(boolean htmlFormat, int level) {
-		if (Validator.isBlank(_getQuoteMark(htmlFormat))) {
-			return StringPool.BLANK;
-		}
-
-		return StringUtils.repeat(_QUOTE_MARK, level) +
-			_getQuoteMark(htmlFormat);
-	}
 
 	public static List<MBMessage> getThreadMessages(
 		MBMessagePersistence mbMessagePersistence,
@@ -133,103 +71,6 @@ public class MBMessageUtil {
 		return messages;
 	}
 
-	public static String renderDifferentLevelMessages(
-		boolean htmlFormat, List<MBMessage> mbMessages,
-		ServiceContext serviceContext) {
-
-		if (ListUtil.isEmpty(mbMessages)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(mbMessages.size());
-
-		sb.append(
-			_getMarkupElement(MarkupElement.START_MESSAGE_THREAD, htmlFormat));
-
-		int endElementCount = 0;
-
-		for (int i = 0; i < mbMessages.size(); i++) {
-			MBMessage mbMessage = mbMessages.get(i);
-
-			sb.append(
-				StringBundler.concat(
-					_getMarkupElement(MarkupElement.START_MESSAGE, htmlFormat),
-					_getMarkupElement(
-						MarkupElement.START_USER_MESSAGE, htmlFormat),
-					_getUserName(
-						htmlFormat, mbMessage, getQuote(htmlFormat, i)),
-					_getMarkupElement(MarkupElement.END, htmlFormat),
-					_getMarkupElement(
-						MarkupElement.START_MESSAGE_BODY, htmlFormat),
-					getMessageBody(
-						htmlFormat, mbMessage, getQuote(htmlFormat, i),
-						serviceContext),
-					_getMarkupElement(MarkupElement.END, htmlFormat),
-					_getMarkupElement(MarkupElement.END_MESSAGE, htmlFormat)));
-
-			endElementCount++;
-		}
-
-		for (int i = 0; i < endElementCount; i++) {
-			sb.append(_getMarkupElement(MarkupElement.END_ELEMENT, htmlFormat));
-		}
-
-		sb.append(_getMarkupElement(MarkupElement.END, htmlFormat));
-
-		return sb.toString();
-	}
-
-	public static String renderRootMessage(
-		boolean htmlFormat, MBMessage mbMessage,
-		ServiceContext serviceContext) {
-
-		return StringBundler.concat(
-			_getMarkupElement(MarkupElement.START_ROOT, htmlFormat),
-			_getMarkupElement(MarkupElement.START_USER_ROOT, htmlFormat),
-			_getUserName(htmlFormat, mbMessage, _getQuoteMark(htmlFormat)),
-			_getMarkupElement(MarkupElement.END, htmlFormat),
-			_getMarkupElement(MarkupElement.START_BODY_ROOT, htmlFormat),
-			getMessageBody(
-				htmlFormat, mbMessage, _getQuoteMark(htmlFormat),
-				serviceContext),
-			_getMarkupElement(MarkupElement.END, htmlFormat),
-			_getMarkupElement(MarkupElement.END, htmlFormat));
-	}
-
-	public static String renderSameLevelMessages(
-		boolean htmlFormat, List<MBMessage> mbMessages, String quoteMark,
-		ServiceContext serviceContext) {
-
-		if (ListUtil.isEmpty(mbMessages)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(mbMessages.size() + 2);
-
-		sb.append(_getMarkupElement(MarkupElement.START_SIBLING, htmlFormat));
-
-		for (MBMessage mbMessage : mbMessages) {
-			sb.append(
-				StringBundler.concat(
-					_getMarkupElement(
-						MarkupElement.START_MESSAGE_SIBLING, htmlFormat),
-					_getMarkupElement(
-						MarkupElement.START_USER_SIBLING, htmlFormat),
-					_getUserName(htmlFormat, mbMessage, quoteMark),
-					_getMarkupElement(MarkupElement.END, htmlFormat),
-					_getMarkupElement(
-						MarkupElement.START_BODY_SIBLING, htmlFormat),
-					getMessageBody(
-						htmlFormat, mbMessage, quoteMark, serviceContext),
-					_getMarkupElement(MarkupElement.END, htmlFormat),
-					_getMarkupElement(MarkupElement.END, htmlFormat)));
-		}
-
-		sb.append(_getMarkupElement(MarkupElement.END, htmlFormat));
-
-		return sb.toString();
-	}
-
 	public static MBMessage updateAnswer(
 		MBMessagePersistence mbMessagePersistence, MBMessage message,
 		boolean answer, boolean cascade) {
@@ -252,112 +93,7 @@ public class MBMessageUtil {
 		return message;
 	}
 
-	private static String _getMarkupElement(
-		MarkupElement element, boolean htmlFormat) {
-
-		if (!htmlFormat) {
-			return StringPool.BLANK;
-		}
-
-		return _markupElements.getOrDefault(element, StringPool.BLANK);
-	}
-
-	private static String _getQuotedMessage(
-		boolean lastPosition, String message, String quoteMark) {
-
-		if (Validator.isBlank(quoteMark)) {
-			return message;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		for (String line : message.split(StringPool.NEW_LINE)) {
-			sb.append(StringPool.NEW_LINE);
-			sb.append(quoteMark);
-			sb.append(line);
-		}
-
-		sb.append(StringPool.NEW_LINE);
-
-		if (!lastPosition) {
-			sb.append(quoteMark);
-		}
-
-		return sb.toString();
-	}
-
-	private static String _getQuoteMark(boolean htmlFormat) {
-		if (htmlFormat) {
-			return StringPool.BLANK;
-		}
-
-		return _QUOTE_MARK + StringPool.SPACE;
-	}
-
-	private static String _getUserName(
-		boolean htmlFormat, MBMessage mbMessage, String quoteMark) {
-
-		if (!htmlFormat) {
-			return _getQuotedMessage(false, mbMessage.getUserName(), quoteMark);
-		}
-
-		return mbMessage.getUserName() + "<br />";
-	}
-
 	private MBMessageUtil() {
-	}
-
-	private static final String _QUOTE_MARK = StringPool.GREATER_THAN;
-
-	private static final Log _log = LogFactoryUtil.getLog(MBMessageUtil.class);
-
-	private static final Map<MarkupElement, String> _markupElements =
-		HashMapBuilder.put(
-			MarkupElement.END, "</div>"
-		).put(
-			MarkupElement.END_ELEMENT, "</ul>"
-		).put(
-			MarkupElement.END_MESSAGE, "</li>"
-		).put(
-			MarkupElement.START_BODY_ROOT,
-			"<div class=\"mb-root-message-body\">"
-		).put(
-			MarkupElement.START_BODY_SIBLING,
-			"<div class=\"mb-sibling-message-body\">"
-		).put(
-			MarkupElement.START_MESSAGE, "<ul><li class=\"mb-parent-message\">"
-		).put(
-			MarkupElement.START_MESSAGE_BODY,
-			"<div class=\"mb-parent-message-body\">"
-		).put(
-			MarkupElement.START_MESSAGE_SIBLING,
-			"<div class=\"mb-sibling-message\">"
-		).put(
-			MarkupElement.START_MESSAGE_THREAD,
-			"<div class=\"mb-parent-message-thread\">"
-		).put(
-			MarkupElement.START_ROOT, "<div class=\"mb-root-message\">"
-		).put(
-			MarkupElement.START_SIBLING,
-			"<div class=\"mb-sibling-message-thread\">"
-		).put(
-			MarkupElement.START_USER_MESSAGE,
-			"<div class=\"mb-parent-message-user\">"
-		).put(
-			MarkupElement.START_USER_ROOT,
-			"<div class=\"mb-root-message-user\">"
-		).put(
-			MarkupElement.START_USER_SIBLING,
-			"<div class=\"mb-sibling-message-user\">"
-		).build();
-
-	private static enum MarkupElement {
-
-		END, END_ELEMENT, END_MESSAGE, START_BODY_ROOT, START_BODY_SIBLING,
-		START_MESSAGE, START_MESSAGE_BODY, START_MESSAGE_SIBLING,
-		START_MESSAGE_THREAD, START_ROOT, START_SIBLING, START_USER_MESSAGE,
-		START_USER_ROOT, START_USER_SIBLING,
-
 	}
 
 }

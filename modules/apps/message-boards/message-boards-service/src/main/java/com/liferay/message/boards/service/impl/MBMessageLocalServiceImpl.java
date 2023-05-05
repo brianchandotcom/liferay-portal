@@ -37,6 +37,7 @@ import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.internal.util.MBDiscussionSubscriptionSender;
 import com.liferay.message.boards.internal.util.MBMailUtil;
+import com.liferay.message.boards.internal.util.MBMessageNotificationTemplateHelper;
 import com.liferay.message.boards.internal.util.MBMessageUtil;
 import com.liferay.message.boards.internal.util.MBSubscriptionSender;
 import com.liferay.message.boards.internal.util.MBUtil;
@@ -2045,32 +2046,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	private String _getMessageSiblings(
-		boolean htmlFormat, int maxNumberOfMessages, MBMessage message,
-		String quoteMark, ServiceContext serviceContext) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
-			(maxNumberOfMessages == 0)) {
-
-			return StringPool.BLANK;
-		}
-
-		int childMessagesCount = mbMessageLocalService.getChildMessagesCount(
-			message.getParentMessageId(), WorkflowConstants.STATUS_APPROVED);
-
-		if (childMessagesCount == 1) {
-			return StringPool.BLANK;
-		}
-
-		return MBMessageUtil.renderSameLevelMessages(
-			htmlFormat,
-			mbMessageLocalService.getChildMessages(
-				message.getParentMessageId(), WorkflowConstants.STATUS_APPROVED,
-				childMessagesCount - maxNumberOfMessages - 1,
-				childMessagesCount - 1),
-			quoteMark, serviceContext);
-	}
-
 	private String _getMessageURL(
 			MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
@@ -2128,33 +2103,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		).buildString();
 	}
 
-	private List<MBMessage> _getParentMBMessages(
-		int maxNumberOfMessages, MBMessage parentMessage) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
-			(maxNumberOfMessages == 0) ||
-			(parentMessage.getParentMessageId() ==
-				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
-
-			return new ArrayList<>();
-		}
-
-		List<MBMessage> parents = new ArrayList<>();
-
-		while ((maxNumberOfMessages > 0) && (parentMessage != null) &&
-			   (parentMessage.getParentMessageId() !=
-				   MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
-
-			parents.add(0, parentMessage);
-
-			parentMessage = mbMessageLocalService.fetchMBMessage(
-				parentMessage.getParentMessageId());
-			maxNumberOfMessages--;
-		}
-
-		return parents;
-	}
-
 	private long _getRootDiscussionMessageId(String className, long classPK)
 		throws PortalException {
 
@@ -2163,25 +2111,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			new MessageCreateDateComparator(true));
 
 		return message.getMessageId();
-	}
-
-	private String _getRootMessageBody(
-			boolean htmlFormat, MBMessage message,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
-			(message.getParentMessageId() ==
-				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
-
-			return StringPool.BLANK;
-		}
-
-		MBMessage rootMessage = mbMessageLocalService.getMessage(
-			message.getRootMessageId());
-
-		return MBMessageUtil.renderRootMessage(
-			htmlFormat, rootMessage, serviceContext);
 	}
 
 	private String _getSubject(String subject, String body) {
@@ -2542,8 +2471,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		boolean htmlFormat = mbGroupServiceSettings.isEmailHtmlFormat();
 
-		String messageBody = MBMessageUtil.getMessageBody(
-			htmlFormat, message, StringPool.BLANK, serviceContext);
+		int maxNumberOfMessages = 3;
+
+		int maxNumberOfParentMessages = 1;
+
+		MBMessageNotificationTemplateHelper
+			mbMessageNotificationTemplateHelper =
+				new MBMessageNotificationTemplateHelper(
+					htmlFormat, maxNumberOfMessages, maxNumberOfParentMessages,
+					mbMessageLocalService, serviceContext);
+
+		String messageBody = mbMessageNotificationTemplateHelper.getMessageBody(
+			message, StringPool.BLANK);
 
 		String inReplyTo = null;
 		String messageSubject = message.getSubject();
@@ -2574,24 +2513,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					messageSubjectPrefix.length());
 			}
 
-			int maxNumberOfThreadMessages = 1;
+			messageParent =
+				mbMessageNotificationTemplateHelper.renderMessageParent(
+					parentMessage);
 
-			List<MBMessage> mbMessages = _getParentMBMessages(
-				maxNumberOfThreadMessages, parentMessage);
-
-			messageParent = MBMessageUtil.renderDifferentLevelMessages(
-				htmlFormat, mbMessages, serviceContext);
-
-			int maxNumberOfMessages = 3;
-
-			messageSiblings = _getMessageSiblings(
-				htmlFormat, maxNumberOfMessages - mbMessages.size(), message,
-				MBMessageUtil.getQuote(htmlFormat, mbMessages.size()),
-				serviceContext);
+			messageSiblings =
+				mbMessageNotificationTemplateHelper.renderMessageSiblings(
+					message);
 		}
 
-		String rootMessageBody = _getRootMessageBody(
-			htmlFormat, message, serviceContext);
+		String rootMessageBody =
+			mbMessageNotificationTemplateHelper.renderRootMessage(message);
 
 		SubscriptionSender subscriptionSender = _getSubscriptionSender(
 			userId, category, message, messageURL, entryTitle, htmlFormat,

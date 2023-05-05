@@ -37,7 +37,7 @@ interface Field {
 interface FDSSort {
 	fieldName: string;
 	id: number;
-	sorting: string;
+	sortingDirection: string;
 }
 
 interface AddFDSSortModalContentInterface {
@@ -47,7 +47,7 @@ interface AddFDSSortModalContentInterface {
 	onSave: (newSort: FDSSort) => void;
 }
 
-const SORTING = {
+const SORTING_DIRECTION = {
 	ASCENDING: {
 		label: Liferay.Language.get('ascending'),
 		value: 'asc',
@@ -58,7 +58,10 @@ const SORTING = {
 	},
 };
 
-const SORTING_OPTIONS = [SORTING.ASCENDING, SORTING.DESCENDING];
+const SORTING_OPTIONS = [
+	SORTING_DIRECTION.ASCENDING,
+	SORTING_DIRECTION.DESCENDING,
+];
 
 function alertFailed() {
 	openToast({
@@ -81,9 +84,9 @@ const AddFDSSortModalContent = ({
 	onSave,
 }: AddFDSSortModalContentInterface) => {
 	const [selectedField, setSelectedField] = useState<string>();
-	const [selectedSorting, setSelectedSorting] = useState<string>(
-		SORTING.ASCENDING.value
-	);
+	const [selectedSortingDirection, setSelectedSortingDirection] = useState<
+		string
+	>(SORTING_DIRECTION.ASCENDING.value);
 
 	const handleSave = async () => {
 		const field = fields.find((item: Field) => item.name === selectedField);
@@ -98,7 +101,7 @@ const AddFDSSortModalContent = ({
 			body: JSON.stringify({
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT_ID]: fdsView.id,
 				fieldName: selectedField,
-				sorting: selectedSorting,
+				sortingDirection: selectedSortingDirection,
 			}),
 			headers: {
 				'Accept': 'application/json',
@@ -170,7 +173,7 @@ const AddFDSSortModalContent = ({
 						aria-label={Liferay.Language.get('sorting')}
 						id="sorting"
 						onChange={(event) =>
-							setSelectedSorting(event.target.value)
+							setSelectedSortingDirection(event.target.value)
 						}
 						options={SORTING_OPTIONS}
 					/>
@@ -281,8 +284,7 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 			alertSuccess();
 
 			setNewFDSSortsOrder('');
-		}
-		else {
+		} else {
 			alertFailed();
 		}
 	};
@@ -316,7 +318,7 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 					},
 					{
 						label: Liferay.Language.get('value'),
-						name: 'sorting',
+						name: 'sortingDirection',
 					},
 				]}
 				items={fdsSorts}

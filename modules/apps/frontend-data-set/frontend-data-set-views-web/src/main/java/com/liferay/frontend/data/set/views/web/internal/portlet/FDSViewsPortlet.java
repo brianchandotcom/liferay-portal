@@ -335,7 +335,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "sorting"), "sorting", true)));
+						_language.get(locale, "sorting"), "sortingDirection", true)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsSortObjectDefinition.getObjectDefinitionId());

@@ -600,7 +600,6 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		fragmentEntry.setModifiedDate(new Date());
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 
 		return fragmentEntryPersistence.update(fragmentEntry);

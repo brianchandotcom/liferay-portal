@@ -19,6 +19,7 @@ import com.jayway.jsonpath.JsonPath;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInstanceSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderOutputParametersSettings;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
@@ -67,7 +68,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.BOMInputStream;
@@ -592,20 +592,25 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		DDMDataProviderRequest ddmDataProviderRequest,
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
+		Map<String, Object> requestInputParametersMap = new HashMap<>();
+
 		Map<String, Object> parameters = ddmDataProviderRequest.getParameters();
 
-		return Stream.of(
-			ddmRESTDataProviderSettings.inputParameters()
-		).filter(
-			inputParameter -> parameters.containsKey(
-				inputParameter.inputParameterName())
-		).collect(
-			HashMap::new,
-			(parametersMap, inputParameter) -> parametersMap.put(
-				inputParameter.inputParameterName(),
-				parameters.get(inputParameter.inputParameterName())),
-			HashMap::putAll
-		);
+		for (DDMDataProviderInputParametersSettings
+				ddmDataProviderInputParametersSettings :
+					ddmRESTDataProviderSettings.inputParameters()) {
+
+			String inputParameterName =
+				ddmDataProviderInputParametersSettings.inputParameterName();
+
+			Object value = parameters.get(inputParameterName);
+
+			if (value != null) {
+				requestInputParametersMap.put(inputParameterName, value);
+			}
+		}
+
+		return requestInputParametersMap;
 	}
 
 	private String _normalizePath(String path) {

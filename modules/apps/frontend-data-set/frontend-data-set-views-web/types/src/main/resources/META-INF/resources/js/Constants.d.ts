@@ -19,6 +19,10 @@ declare const API_URL: {
 	FDS_FIELDS: string;
 	FDS_VIEWS: string;
 };
+declare const FUZZY_OPTIONS: {
+	post: string;
+	pre: string;
+};
 declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
@@ -37,4 +41,4 @@ declare const PAGINATION_PROPS: {
 		initialDelta: number;
 	};
 };
-export {API_URL, OBJECT_RELATIONSHIP, PAGINATION_PROPS};
+export {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP, PAGINATION_PROPS};

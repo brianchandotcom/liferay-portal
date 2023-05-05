@@ -15,7 +15,13 @@
 /// <reference types="react" />
 
 import '../../css/OrderableTable.scss';
-interface OrderableTableInterface {
+interface Action {
+	icon: string;
+	label: string;
+	onClick: Function;
+}
+interface OrderableTableProps {
+	actions?: Array<Action>;
 	disableSave?: boolean;
 	fields: Array<{
 		label: string;
@@ -32,6 +38,7 @@ interface OrderableTableInterface {
 	title: string;
 }
 declare const OrderableTable: ({
+	actions,
 	disableSave,
 	fields,
 	items: initialItems,
@@ -43,5 +50,5 @@ declare const OrderableTable: ({
 	onOrderChange,
 	onSaveButtonClick,
 	title,
-}: OrderableTableInterface) => JSX.Element;
+}: OrderableTableProps) => JSX.Element;
 export default OrderableTable;

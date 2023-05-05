@@ -107,6 +107,14 @@ public class VirtualInstanceMigration {
 							"destination-schema-prefix"));
 				}
 
+				if (!Database.isSingleVirtualInstance(_sourceConnection)) {
+					System.err.println(
+						"ERROR: Source database has several instances, that " +
+							"is not supported by the tool");
+
+					_exitWithCode(ErrorCodes.SOURCE_MULTI_INSTANCES);
+				}
+
 				if (!Database.isDefaultPartition(_destinationConnection)) {
 					System.err.println(
 						"ERROR: Destination database is not the default " +

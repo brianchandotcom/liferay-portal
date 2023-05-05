@@ -223,25 +223,89 @@ definition {
 			locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
 	}
 
-	macro viewNotificationTemplateDetails {
+	macro viewEmailNotificationTemplateDetails {
 		Click(
 			key_name = ${name},
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
+		if (${notificationType} == "Email") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = ${name});
+
+			AssertTextEquals(
+				key_text = "From Address",
+				locator1 = "TextInput#ANY",
+				value1 = ${fromAddress});
+
+			AssertTextEquals(
+				key_text = "From Name",
+				locator1 = "TextInput#ANY",
+				value1 = ${fromName});
+
+			if (isSet(bcc)) {
+				AssertTextEquals(
+					key_text = "BCC",
+					locator1 = "TextInput#ANY",
+					value1 = ${bcc});
+			}
+
+			if (isSet(cc)) {
+				AssertTextEquals(
+					key_text = "CC",
+					locator1 = "TextInput#ANY",
+					value1 = ${cc});
+			}
+
+			if (isSet(description)) {
+				AssertTextEquals(
+					key_text = "description",
+					locator1 = "TextArea#ANY",
+					value1 = ${description});
+			}
+
+			if (isSet(emailBody)) {
+				SelectFrame(locator1 = "IFrame#IFRAME");
+
+				AssertElementPresent(
+					key_text = ${emailBody},
+					locator1 = "CKEditor#BODY_TEXT");
+
+				SelectFrameTop();
+			}
+
+			if (isSet(entryTo)) {
+				AssertTextEquals(
+					key_text = "To",
+					locator1 = "TextInput#ANY",
+					value1 = ${entryTo});
+			}
+
+			if (isSet(externalReferenceCode)) {
+				AssertElementPresent(
+					key_externalReferenceCode = ${externalReferenceCode},
+					locator1 = "ObjectAdmin#EXTERNAL_REFERENCE_CODE_HEADER");
+			}
+
+			if (isSet(subject)) {
+				AssertTextEquals(
+					key_text = "Subject",
+					locator1 = "TextInput#ANY",
+					value1 = ${subject});
+			}
+		}
+	}
+
+	macro viewUserNotificationTemplateDetails {
+		Click(
+			key_name = ${name},
+			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+		
 		AssertTextEquals(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
 			value1 = ${name});
-
-		AssertTextEquals(
-			key_text = "From Address",
-			locator1 = "TextInput#ANY",
-			value1 = ${fromAddress});
-
-		AssertTextEquals(
-			key_text = "From Name",
-			locator1 = "TextInput#ANY",
-			value1 = ${fromName});
 
 		if (isSet(description)) {
 			AssertTextEquals(
@@ -250,48 +314,19 @@ definition {
 				value1 = ${description});
 		}
 
-		if (isSet(entryTo)) {
-			AssertTextEquals(
-				key_text = "To",
-				locator1 = "TextInput#ANY",
-				value1 = ${entryTo});
-		}
+		AssertTextEquals(
+			key_text = "subject",
+			locator1 = "TextArea#ANY",
+			value1 = ${subject});
 
-		if (isSet(cc)) {
-			AssertTextEquals(
-				key_text = "CC",
-				locator1 = "TextInput#ANY",
-				value1 = ${cc});
-		}
-
-		if (isSet(bcc)) {
-			AssertTextEquals(
-				key_text = "BCC",
-				locator1 = "TextInput#ANY",
-				value1 = ${bcc});
-		}
-
-		if (isSet(subject)) {
-			AssertTextEquals(
-				key_text = "Subject",
-				locator1 = "TextInput#ANY",
-				value1 = ${subject});
-		}
+		AssertElementPresent(
+			key_recipientType = ${recipientType},
+			locator1 = "ObjectNotifications#RECIPIENT_TYPE");
 
 		if (isSet(externalReferenceCode)) {
 			AssertElementPresent(
 				key_externalReferenceCode = ${externalReferenceCode},
 				locator1 = "ObjectAdmin#EXTERNAL_REFERENCE_CODE_HEADER");
-		}
-
-		if (isSet(emailBody)) {
-			SelectFrame(locator1 = "IFrame#IFRAME");
-
-			AssertElementPresent(
-				key_text = ${emailBody},
-				locator1 = "CKEditor#BODY_TEXT");
-
-			SelectFrameTop();
 		}
 	}
 

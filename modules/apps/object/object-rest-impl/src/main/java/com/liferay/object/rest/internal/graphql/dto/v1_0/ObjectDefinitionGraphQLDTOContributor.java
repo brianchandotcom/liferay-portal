@@ -161,8 +161,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		return new ObjectDefinitionGraphQLDTOContributor(
 			objectDefinition.getCompanyId(),
-			new ObjectEntryEntityModel(objectFields), filterPredicateFactory,
-			graphQLDTOProperties,
+			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
 			StringUtil.removeSubstring(
 				objectDefinition.getPKObjectFieldName(), "c_"),
 			objectDefinition, objectEntryManager, objectScopeProvider,
@@ -371,7 +370,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private ObjectDefinitionGraphQLDTOContributor(
 		long companyId, EntityModel entityModel,
-		FilterPredicateFactory filterPredicateFactory,
 		List<GraphQLDTOProperty> graphQLDTOProperties, String idName,
 		ObjectDefinition objectDefinition,
 		ObjectEntryManager objectEntryManager,
@@ -381,7 +379,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		_companyId = companyId;
 		_entityModel = entityModel;
-		_filterPredicateFactory = filterPredicateFactory;
 		_graphQLDTOProperties = graphQLDTOProperties;
 		_idName = idName;
 		_objectDefinition = objectDefinition;
@@ -507,7 +504,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private final long _companyId;
 	private final EntityModel _entityModel;
-	private final FilterPredicateFactory _filterPredicateFactory;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;
 	private final ObjectDefinition _objectDefinition;

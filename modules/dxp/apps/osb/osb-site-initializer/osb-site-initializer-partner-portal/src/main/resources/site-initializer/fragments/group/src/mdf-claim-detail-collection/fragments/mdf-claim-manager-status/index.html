@@ -89,21 +89,12 @@ hasDirectorReviewAction]
 			bodyHTML: `<form>
 									<div class="form-group">
 										<label for="paymentReceivedInput">Amount Received</label>
-										<input
-											class="form-control"
-											id="paymentReceivedInput"
-											placeholder="Amount Received"
-											type="number"
-										/>
+									<input class="form-control" id="paymentReceivedInput" placeholder="Amount Received" type="number" />
 									</div>
+
 									<div class="form-group">
 										<label for="checkNumberInput">Check Number</label>
-										<input
-											class="form-control"
-											id="checkNumberInput"
-											placeholder="Check Number"
-											type="text"
-										/>
+									<input class="form-control" id="checkNumberInput" placeholder="Check Number" type="text" />
 									</div>
 								</form>`,
 			buttons: [
@@ -151,12 +142,7 @@ hasDirectorReviewAction]
 			return Liferay.Util.openModal({
 				bodyHTML: `<div class="form-group">
 								<label for="descriptionTextArea">Status change motivation:</label>
-								<textarea
-									class="form-control"
-									id="descriptionTextArea"
-									placeholder="Describe here..."
-									type="text"
-								></textarea>	
+							<textarea class="form-control" id="descriptionTextArea" placeholder="Describe here..." type="text"></textarea>
 							</div>`,
 				buttons: [
 					{
@@ -296,6 +282,7 @@ hasDirectorReviewAction]
 		which attributes are available from
 		<em>request.getAttribute("INFO_ITEM")</em>.
 	</p>
+
 	<p class="mb-0">
 		It's important to note that this will only display the attributes of a
 		display page when you view the published display page not when you are

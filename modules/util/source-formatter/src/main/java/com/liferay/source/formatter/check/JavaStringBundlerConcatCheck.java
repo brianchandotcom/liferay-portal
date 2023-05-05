@@ -48,15 +48,15 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 
 		String content = javaTerm.getContent();
 
-		Matcher matcher1 = _stringBundlerConcatPattern.matcher(content);
+		Matcher matcher = _stringBundlerConcatPattern.matcher(content);
 
-		while (matcher1.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher1.start() + 1)) {
+		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start() + 1)) {
 				continue;
 			}
 
 			String stringBundlerConcatMethodCall = JavaSourceUtil.getMethodCall(
-				content, matcher1.start());
+				content, matcher.start());
 
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				stringBundlerConcatMethodCall);
@@ -66,43 +66,27 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 					fileName,
 					"Do not use 'StringBundler.concat' when concatenating " +
 						"less than 3 elements",
-					javaTerm.getLineNumber(matcher1.start()));
+					javaTerm.getLineNumber(matcher.start()));
 			}
 
 			if (!hasPetraStringStringBundler) {
 				continue;
 			}
 
-			Matcher matcher2 = _stringValueOfPattern.matcher(
-				stringBundlerConcatMethodCall);
+			for (String parameter : parameterList) {
+				String newParameter = _simplyStringBundlerParameter(parameter);
 
-			while (matcher2.find()) {
-				int level = getLevel(
-					stringBundlerConcatMethodCall.substring(
-						0, matcher2.start()));
-
-				if (level != 1) {
-					continue;
-				}
-
-				String stringValueOfMethodCall = JavaSourceUtil.getMethodCall(
-					stringBundlerConcatMethodCall, matcher2.start());
-
-				parameterList = JavaSourceUtil.getParameterList(
-					stringValueOfMethodCall);
-
-				if (parameterList.size() != 1) {
+				if (StringUtil.equals(parameter, newParameter)) {
 					continue;
 				}
 
 				String newStringBundlerConcatMethodCall =
 					StringUtil.replaceFirst(
-						stringBundlerConcatMethodCall, stringValueOfMethodCall,
-						parameterList.get(0));
+						stringBundlerConcatMethodCall, parameter, newParameter);
 
 				return StringUtil.replace(
 					content, stringBundlerConcatMethodCall,
-					newStringBundlerConcatMethodCall);
+					newStringBundlerConcatMethodCall, matcher.start());
 			}
 		}
 
@@ -114,9 +98,30 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
+	private String _simplyStringBundlerParameter(String parameter) {
+		if (parameter.startsWith("String.valueOf(")) {
+			String stringValueOfMethodCall = JavaSourceUtil.getMethodCall(
+				parameter, 0);
+
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				stringValueOfMethodCall);
+
+			if (parameterList.size() != 1) {
+				return parameter;
+			}
+
+			return parameterList.get(0);
+		}
+		else if (parameter.endsWith(".toString()") &&
+				 !StringUtil.equals(parameter, "super.toString()")) {
+
+			return parameter.substring(0, parameter.lastIndexOf(".toString()"));
+		}
+
+		return parameter;
+	}
+
 	private static final Pattern _stringBundlerConcatPattern = Pattern.compile(
 		"StringBundler\\.concat\\(");
-	private static final Pattern _stringValueOfPattern = Pattern.compile(
-		"String\\.valueOf\\(");
 
 }

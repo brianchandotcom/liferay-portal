@@ -1,0 +1,18 @@
+    @description = "Story ID: LPS-152144 | Test Summary: Verify that clicking the Cookie Policy link opens a new page"
+    @priority = 3
+    test AssertThatTheCookiePolicyPageOpens {
+        task ("Given that I go to the Customer Portal") {
+            ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+            CustomerPortal.waitCP20PageToLoad(userFirstName = ${testUserFirstName});
+        }
+
+        task ("When I click on the Cookie police link at the bottom of the page") {
+            CP2HomePage.clickAtCookiePoliceLink();
+        }
+
+        task ("Then I should be able to assert that the Cookie police page is loaded") {
+            CustomerPortal.assertPageTitle(title = "Cookie List");
+        }
+    }
+

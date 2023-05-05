@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -1103,7 +1104,7 @@ public class ViewChangesDisplayContext {
 					_ctDisplayRendererRegistry.getCTSQLMode(
 						ctCollectionId, ctEntry);
 
-				T model = null;
+				T model;
 
 				try {
 					if ((ctCollectionId == _ctCollection.getCtCollectionId()) &&
@@ -1119,6 +1120,9 @@ public class ViewChangesDisplayContext {
 
 						if (ctModelMap != null) {
 							model = ctModelMap.get(classPK);
+						}
+						else {
+							model = null;
 						}
 					}
 					else {
@@ -1177,7 +1181,21 @@ public class ViewChangesDisplayContext {
 				modelInfo._ctEntry = true;
 
 				modelInfo._jsonObject = JSONUtil.put(
-					"changeType", ctEntry.getChangeType()
+					"changeType",
+					() -> {
+						if (model instanceof WorkflowedModel) {
+							WorkflowedModel workflowedModel =
+								(WorkflowedModel)model;
+
+							if (workflowedModel.getStatus() ==
+									WorkflowConstants.STATUS_IN_TRASH) {
+
+								return CTConstants.CT_CHANGE_TYPE_DELETION;
+							}
+						}
+
+						return ctEntry.getChangeType();
+					}
 				).put(
 					"ctEntryId", ctEntry.getCtEntryId()
 				).put(

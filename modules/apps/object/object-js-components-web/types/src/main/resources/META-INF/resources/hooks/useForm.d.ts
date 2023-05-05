@@ -13,6 +13,9 @@
  */
 
 import {ChangeEventHandler, FormEventHandler} from 'react';
+export declare function invalidateLocalizableLabelRequired(
+	labels: LocalizedValue<string> | undefined
+): boolean;
 export declare function invalidateRequired(text: string | void): boolean;
 interface IProps<T, P = {}, K extends Partial<T> = Partial<T>> {
 	initialValues: K;

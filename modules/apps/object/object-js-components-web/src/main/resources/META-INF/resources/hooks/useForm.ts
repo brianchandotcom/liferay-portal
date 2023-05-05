@@ -14,10 +14,21 @@
 
 import {ChangeEventHandler, FormEvent, FormEventHandler, useState} from 'react';
 
+export function invalidateLocalizableLabelRequired(
+	labels: LocalizedValue<string> | undefined
+) {
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+	if (!labels) {
+		return true;
+	}
+
+	return !labels[defaultLanguageId];
+}
+
 export function invalidateRequired(text: string | void) {
 	return !text?.trim();
 }
-
 interface IProps<T, P = {}, K extends Partial<T> = Partial<T>> {
 	initialValues: K;
 	onSubmit: (values: T) => void;

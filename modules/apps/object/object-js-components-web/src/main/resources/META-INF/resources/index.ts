@@ -48,7 +48,12 @@ export {
 	SidePanelForm,
 } from './components/SidePanelContent';
 export {Toggle} from './components/Toggle';
-export {invalidateRequired, useForm, FormError} from './hooks/useForm';
+export {
+	invalidateLocalizableLabelRequired,
+	invalidateRequired,
+	useForm,
+	FormError,
+} from './hooks/useForm';
 export {onActionDropdownItemClick} from './utils/fdsUtil';
 export {Panel} from './components/Panel/Panel';
 export {PanelBody, PanelSimpleBody} from './components/Panel/PanelBody';

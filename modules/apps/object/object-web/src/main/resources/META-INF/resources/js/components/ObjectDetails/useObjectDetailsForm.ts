@@ -14,7 +14,7 @@
 
 import {
 	FormError,
-	getLocalizableLabel,
+	invalidateLocalizableLabelRequired,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -73,25 +73,11 @@ export function useObjectDetailsForm({
 	const validate = (objectDefinition: Partial<ObjectDefinition>) => {
 		const errors: ObjectDetailsErrors = {};
 
-		if (
-			invalidateRequired(
-				getLocalizableLabel(
-					objectDefinition.defaultLanguageId as Liferay.Language.Locale,
-					objectDefinition.label
-				)
-			)
-		) {
+		if (invalidateLocalizableLabelRequired(objectDefinition.label)) {
 			errors.label = REQUIRED_MSG;
 		}
 
-		if (
-			invalidateRequired(
-				getLocalizableLabel(
-					objectDefinition.defaultLanguageId as Liferay.Language.Locale,
-					objectDefinition.pluralLabel
-				)
-			)
-		) {
+		if (invalidateLocalizableLabelRequired(objectDefinition.pluralLabel)) {
 			errors.pluralLabel = REQUIRED_MSG;
 		}
 

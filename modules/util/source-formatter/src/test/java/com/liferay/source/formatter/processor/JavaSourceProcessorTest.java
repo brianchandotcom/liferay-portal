@@ -771,11 +771,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testStringBundlerParameter() throws Exception {
-		test(
-			"StringBundlerParameter.testjava",
-			"Use 'com.liferay.petra.string.StringBundler' and not need use " +
-				"'toString' or 'String.valueOf'",
-			27);
+		test("StringBundlerParameter.testjava");
 	}
 
 	@Test

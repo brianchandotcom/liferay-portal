@@ -4559,12 +4559,6 @@ components:
                     description:
                         The page's CSS.
                     type: string
-                globalCSSClientExtensions:
-                    description:
-                        The client extensions for global css associated to the page.
-                    items:
-                        $ref: "#/components/schemas/ClientExtension"
-                    type: array
                 favIcon:
                     # @review
                     description:
@@ -4572,17 +4566,23 @@ components:
                     oneOf:
                         - $ref: "#/components/schemas/ClientExtension"
                         - $ref: "#/components/schemas/ContentDocument"
-                javascript:
-                    # @review
+                globalCSSClientExtensions:
                     description:
-                        The page's JavaScript.
-                    type: string
+                        The client extensions for global css associated to the page.
+                    items:
+                        $ref: "#/components/schemas/ClientExtension"
+                    type: array
                 globalJSClientExtensions:
                     description:
                         The client extensions for global js associated to the page.
                     items:
                         $ref: "#/components/schemas/ClientExtension"
                     type: array
+                javascript:
+                    # @review
+                    description:
+                        The page's JavaScript.
+                    type: string
                 masterPage:
                     allOf:
                         - $ref: "#/components/schemas/MasterPage"

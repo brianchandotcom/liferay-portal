@@ -83,15 +83,6 @@ public class MBMessageUtil {
 		return mbMessage.getBody();
 	}
 
-	public static String getQuote(boolean htmlFormat, int level) {
-		if (Validator.isBlank(_getQuoteMark(htmlFormat))) {
-			return StringPool.BLANK;
-		}
-
-		return StringUtils.repeat(_QUOTE_MARK, level) +
-			_getQuoteMark(htmlFormat);
-	}
-
 	public static List<MBMessage> getThreadMessages(
 		MBMessagePersistence mbMessagePersistence,
 		MBMessageFinder mbMessageFinder, long userId, long threadId, int status,
@@ -133,6 +124,23 @@ public class MBMessageUtil {
 		return messages;
 	}
 
+	public static String renderRootMessage(
+		boolean htmlFormat, MBMessage mbMessage,
+		ServiceContext serviceContext) {
+
+		return StringBundler.concat(
+			_getMarkupElement(MarkupElement.START_ROOT, htmlFormat),
+			_getMarkupElement(MarkupElement.START_USER_ROOT, htmlFormat),
+			_getUserName(htmlFormat, mbMessage, _getQuoteMark(htmlFormat)),
+			_getMarkupElement(MarkupElement.END, htmlFormat),
+			_getMarkupElement(MarkupElement.START_BODY_ROOT, htmlFormat),
+			getMessageBody(
+				htmlFormat, mbMessage, _getQuoteMark(htmlFormat),
+				serviceContext),
+			_getMarkupElement(MarkupElement.END, htmlFormat),
+			_getMarkupElement(MarkupElement.END, htmlFormat));
+	}
+
 	public static MBMessage updateAnswer(
 		MBMessagePersistence mbMessagePersistence, MBMessage message,
 		boolean answer, boolean cascade) {
@@ -153,6 +161,16 @@ public class MBMessageUtil {
 		}
 
 		return message;
+	}
+
+	private static String _getMarkupElement(
+		MarkupElement element, boolean htmlFormat) {
+
+		if (!htmlFormat) {
+			return StringPool.BLANK;
+		}
+
+		return _markupElements.getOrDefault(element, StringPool.BLANK);
 	}
 
 	private static String _getQuotedMessage(
@@ -185,6 +203,16 @@ public class MBMessageUtil {
 		}
 
 		return _QUOTE_MARK + StringPool.SPACE;
+	}
+
+	private static String _getUserName(
+		boolean htmlFormat, MBMessage mbMessage, String quoteMark) {
+
+		if (!htmlFormat) {
+			return _getQuotedMessage(false, mbMessage.getUserName(), quoteMark);
+		}
+
+		return mbMessage.getUserName() + "<br />";
 	}
 
 	private MBMessageUtil() {

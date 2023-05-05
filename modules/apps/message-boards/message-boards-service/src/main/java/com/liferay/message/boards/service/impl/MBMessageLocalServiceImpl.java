@@ -2112,6 +2112,25 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return message.getMessageId();
 	}
 
+	private String _getRootMessageBody(
+			boolean htmlFormat, MBMessage message,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+			(message.getParentMessageId() ==
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+
+			return StringPool.BLANK;
+		}
+
+		MBMessage rootMessage = mbMessageLocalService.getMessage(
+			message.getRootMessageId());
+
+		return MBMessageUtil.renderRootMessage(
+			htmlFormat, rootMessage, serviceContext);
+	}
+
 	private String _getSubject(String subject, String body) {
 		if (Validator.isNull(subject)) {
 			return StringUtil.shorten(body);
@@ -2503,7 +2522,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String messageParent = StringPool.BLANK;
 		String messageSiblings = StringPool.BLANK;
-		String rootMessageBody = StringPool.BLANK;
+
+		String rootMessageBody = _getRootMessageBody(
+			htmlFormat, message, serviceContext);
 
 		SubscriptionSender subscriptionSender = _getSubscriptionSender(
 			userId, category, message, messageURL, entryTitle, htmlFormat,

@@ -1027,6 +1027,11 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
+		if (PropsValues.OBJECT_FIELD_ENCRYPTION_RESTRICTED) {
+			throw new ObjectFieldBusinessTypeException(
+				"Encrypted object field is not available");
+		}
+
 		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
 			throw new RequiredEncryptedObjectFieldPropertyException(
 				StringBundler.concat(
@@ -1040,12 +1045,6 @@ public class ObjectFieldLocalServiceImpl
 				StringBundler.concat(
 					"The property ", PropsKeys.OBJECT_FIELD_ENCRYPTION_KEY,
 					" is required for encrypted object fields"));
-		}
-
-		if (PropsValues.OBJECT_FIELD_ENCRYPTION_RESTRICTED) {
-			throw new ObjectFieldBusinessTypeException(
-				"Encrypted business type object field can not be created in " +
-					"LXC environments");
 		}
 
 		ObjectDefinition objectDefinition =

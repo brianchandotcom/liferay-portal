@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -191,5 +193,54 @@ public class MBMessageUtil {
 	private static final String _QUOTE_MARK = StringPool.GREATER_THAN;
 
 	private static final Log _log = LogFactoryUtil.getLog(MBMessageUtil.class);
+
+	private static final Map<MarkupElement, String> _markupElements =
+		HashMapBuilder.put(
+			MarkupElement.END, "</div>"
+		).put(
+			MarkupElement.END_ELEMENT, "</ul>"
+		).put(
+			MarkupElement.END_MESSAGE, "</li>"
+		).put(
+			MarkupElement.START_BODY_ROOT,
+			"<div class=\"mb-root-message-body\">"
+		).put(
+			MarkupElement.START_BODY_SIBLING,
+			"<div class=\"mb-sibling-message-body\">"
+		).put(
+			MarkupElement.START_MESSAGE, "<ul><li class=\"mb-parent-message\">"
+		).put(
+			MarkupElement.START_MESSAGE_BODY,
+			"<div class=\"mb-parent-message-body\">"
+		).put(
+			MarkupElement.START_MESSAGE_SIBLING,
+			"<div class=\"mb-sibling-message\">"
+		).put(
+			MarkupElement.START_MESSAGE_THREAD,
+			"<div class=\"mb-parent-message-thread\">"
+		).put(
+			MarkupElement.START_ROOT, "<div class=\"mb-root-message\">"
+		).put(
+			MarkupElement.START_SIBLING,
+			"<div class=\"mb-sibling-message-thread\">"
+		).put(
+			MarkupElement.START_USER_MESSAGE,
+			"<div class=\"mb-parent-message-user\">"
+		).put(
+			MarkupElement.START_USER_ROOT,
+			"<div class=\"mb-root-message-user\">"
+		).put(
+			MarkupElement.START_USER_SIBLING,
+			"<div class=\"mb-sibling-message-user\">"
+		).build();
+
+	private static enum MarkupElement {
+
+		END, END_ELEMENT, END_MESSAGE, START_BODY_ROOT, START_BODY_SIBLING,
+		START_MESSAGE, START_MESSAGE_BODY, START_MESSAGE_SIBLING,
+		START_MESSAGE_THREAD, START_ROOT, START_SIBLING, START_USER_MESSAGE,
+		START_USER_ROOT, START_USER_SIBLING,
+
+	}
 
 }

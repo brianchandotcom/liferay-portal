@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Redirect API
 Bundle-SymbolicName: com.liferay.redirect.api
-Bundle-Version: 10.1.2
+Bundle-Version: 11.0.0
 Export-Package:\
 	com.google.re2j,\
 	\

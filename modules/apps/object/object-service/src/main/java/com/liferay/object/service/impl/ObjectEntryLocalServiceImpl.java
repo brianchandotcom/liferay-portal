@@ -1917,7 +1917,7 @@ public class ObjectEntryLocalServiceImpl
 		throw new IllegalArgumentException("Invalid function " + function);
 	}
 
-	private Key _getKeyObj() throws PortalException {
+	private Key _getKey() throws PortalException {
 		if (Validator.isNull(PropsValues.OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
 			throw new RequiredEncryptedObjectFieldPropertyException(
 				StringBundler.concat(
@@ -2686,7 +2686,7 @@ public class ObjectEntryLocalServiceImpl
 
 				try {
 					objects[i] = _encryptor.decrypt(
-						_getKeyObj(), (String)objects[i]);
+						_getKey(), (String)objects[i]);
 				}
 				catch (EncryptorException encryptorException) {
 					throw new RuntimeException(encryptorException);
@@ -3011,7 +3011,7 @@ public class ObjectEntryLocalServiceImpl
 
 			_setColumn(
 				preparedStatement, index, column.getSQLType(),
-				_encryptor.encrypt(_getKeyObj(), (String)value));
+				_encryptor.encrypt(_getKey(), (String)value));
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {

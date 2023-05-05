@@ -1186,7 +1186,9 @@ definition {
 	}
 
 	macro changeProfileImage {
-		Button.click(button = "Change");
+		Click(
+			ariaLabel = "Change Image",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		IFrame.selectModalFrame();
 

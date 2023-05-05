@@ -48,10 +48,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.sql.Connection;
@@ -77,6 +76,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Brian Wing Shun Chan
  */
+@FeatureFlags("LPS-167253")
 @RunWith(Arquillian.class)
 public class ObjectRelationshipLocalServiceTest {
 
@@ -99,11 +99,6 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-167253", "true"
-			).build());
-
 		_objectDefinition1 = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
 			Arrays.asList(
@@ -157,11 +152,6 @@ public class ObjectRelationshipLocalServiceTest {
 	public void tearDown() throws Exception {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_modifiableSystemObjectDefinition.getObjectDefinitionId());
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-167253", "false"
-			).build());
 	}
 
 	@Test
@@ -282,7 +272,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			_objectDefinition1, _systemObjectDefinition2);
+			_modifiableSystemObjectDefinition, _objectDefinition1);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
@@ -290,44 +280,50 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectDefinition1, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipManyToMany(
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectDefinition1, _systemObjectDefinition2);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_modifiableSystemObjectDefinition, _objectDefinition1);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectDefinition1, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
-		_testAddObjectRelationshipManyToMany(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectDefinition1, _systemObjectDefinition2);
-		_testAddObjectRelationshipManyToMany(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
-		_testAddObjectRelationshipManyToMany(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			_objectDefinition1, _modifiableSystemObjectDefinition);
-		_testAddObjectRelationshipManyToMany(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			_systemObjectDefinition2, _objectDefinition1);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_modifiableSystemObjectDefinition, _objectDefinition1);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			_systemObjectDefinition2, _modifiableSystemObjectDefinition);
-		_testAddObjectRelationshipOneToMany(
+			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			_objectDefinition1, _modifiableSystemObjectDefinition);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectDefinition1, _systemObjectDefinition2);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			_systemObjectDefinition2, _modifiableSystemObjectDefinition);
+		_testAddObjectRelationshipManyToMany(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			_systemObjectDefinition2, _objectDefinition1);
+		_testAddObjectRelationshipOneToMany(
+			_modifiableSystemObjectDefinition, _objectDefinition1);
 		_testAddObjectRelationshipOneToMany(
 			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
 		_testAddObjectRelationshipOneToMany(
 			_objectDefinition1, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipOneToMany(
-			_systemObjectDefinition2, _objectDefinition1);
-		_testAddObjectRelationshipOneToMany(
-			_modifiableSystemObjectDefinition, _objectDefinition1);
+			_objectDefinition1, _systemObjectDefinition2);
 		_testAddObjectRelationshipOneToMany(
 			_systemObjectDefinition2, _modifiableSystemObjectDefinition);
+		_testAddObjectRelationshipOneToMany(
+			_systemObjectDefinition2, _objectDefinition1);
 
 		_testCreateManyToManyObjectRelationshipTable(_systemObjectDefinition2);
 

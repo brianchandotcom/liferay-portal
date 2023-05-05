@@ -967,38 +967,40 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			}
 		}
 
-		ClientExtension[] cssClientExtensions =
-			settings.getCssClientExtensions();
+		ClientExtension[] globalCSSClientExtensions =
+			settings.getGlobalCSSClientExtensions();
 
-		if (ArrayUtil.isNotEmpty(cssClientExtensions)) {
-			for (ClientExtension cssClientExtension : cssClientExtensions) {
+		if (ArrayUtil.isNotEmpty(globalCSSClientExtensions)) {
+			for (ClientExtension globalCSSClientExtension :
+					globalCSSClientExtensions) {
+
 				_addClientExtensionRel(
-					cssClientExtension.getExternalReferenceCode(), layout,
+					globalCSSClientExtension.getExternalReferenceCode(), layout,
 					serviceContext,
 					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 			}
 		}
 
-		ClientExtension[] javascriptClientExtensions =
-			settings.getJavascriptClientExtensions();
+		ClientExtension[] globalJSClientExtensions =
+			settings.getGlobalJSClientExtensions();
 
-		if (ArrayUtil.isNotEmpty(javascriptClientExtensions)) {
-			for (ClientExtension javascriptClientExtension :
-					javascriptClientExtensions) {
+		if (ArrayUtil.isNotEmpty(globalJSClientExtensions)) {
+			for (ClientExtension globalJSClientExtension :
+					globalJSClientExtensions) {
 
 				_addClientExtensionRel(
-					javascriptClientExtension.getExternalReferenceCode(),
-					layout, serviceContext,
+					globalJSClientExtension.getExternalReferenceCode(), layout,
+					serviceContext,
 					ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 			}
 		}
 
-		ClientExtension themeCssClientExtension =
-			settings.getThemeCssClientExtension();
+		ClientExtension themeCSSClientExtension =
+			settings.getThemeCSSClientExtension();
 
-		if (themeCssClientExtension != null) {
+		if (themeCSSClientExtension != null) {
 			_addClientExtensionRel(
-				themeCssClientExtension.getExternalReferenceCode(), layout,
+				themeCSSClientExtension.getExternalReferenceCode(), layout,
 				serviceContext, ClientExtensionEntryConstants.TYPE_THEME_CSS);
 		}
 

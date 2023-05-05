@@ -189,13 +189,13 @@ public class PageDefinitionDTOConverter
 
 		return new Settings() {
 			{
-				cssClientExtensions = _getClientExtensions(
+				globalCSSClientExtensions = _getClientExtensions(
 					classNameId, dtoConverterContext, layout,
 					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
-				javascriptClientExtensions = _getClientExtensions(
+				globalJSClientExtensions = _getClientExtensions(
 					classNameId, dtoConverterContext, layout,
 					ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-				themeCssClientExtension = _getThemeCSSClientExtension(
+				themeCSSClientExtension = _getThemeCSSClientExtension(
 					classNameId, layout, dtoConverterContext);
 
 				setColorSchemeName(

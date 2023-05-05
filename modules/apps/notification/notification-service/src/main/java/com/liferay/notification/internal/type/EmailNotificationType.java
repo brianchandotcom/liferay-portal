@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -252,55 +251,44 @@ public class EmailNotificationType extends BaseNotificationType {
 				}
 			).build();
 
-		for (String emailAddressOrUserId :
+		for (String emailAddress :
 				StringUtil.split(
 					notificationRecipientSettingsEvaluatedMap.get("to"))) {
-
-			User toUser = userLocalService.fetchUser(
-				GetterUtil.getLong(emailAddressOrUserId));
 
 			EmailAddressValidator emailAddressValidator =
 				EmailAddressValidatorFactory.getInstance();
 
-			if ((toUser == null) &&
-				emailAddressValidator.validate(
-					user.getCompanyId(), emailAddressOrUserId)) {
+			if (!emailAddressValidator.validate(
+					user.getCompanyId(), emailAddress)) {
 
-				toUser = userLocalService.fetchUserByEmailAddress(
-					user.getCompanyId(), emailAddressOrUserId);
-
-				if (toUser == null) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"No user exists with email address " +
-								emailAddressOrUserId);
-					}
-
-					prepareNotificationContext(
-						userLocalService.getGuestUser(
-							CompanyThreadLocal.getCompanyId()),
-						body, notificationContext,
-						HashMapBuilder.putAll(
-							notificationRecipientSettingsEvaluatedMap
-						).put(
-							"to", emailAddressOrUserId
-						).build(),
-						subject);
-
-					_sendEmail(
-						notificationQueueEntryLocalService.
-							addNotificationQueueEntry(notificationContext));
-
-					continue;
+				if (_log.isInfoEnabled()) {
+					_log.info("Invalid email address " + emailAddress);
 				}
+
+				continue;
+			}
+
+			User toUser = userLocalService.fetchUserByEmailAddress(
+				user.getCompanyId(), emailAddress);
+
+			User creatorUser = user;
+
+			if (toUser == null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"No user exists with email address " + emailAddress);
+				}
+
+				creatorUser = userLocalService.getGuestUser(
+					CompanyThreadLocal.getCompanyId());
 			}
 
 			prepareNotificationContext(
-				user, body, notificationContext,
+				creatorUser, body, notificationContext,
 				HashMapBuilder.putAll(
 					notificationRecipientSettingsEvaluatedMap
 				).put(
-					"to", emailAddressOrUserId
+					"to", emailAddress
 				).build(),
 				subject);
 

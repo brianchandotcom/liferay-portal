@@ -88,7 +88,7 @@ public class AccountDTOConverter
 		};
 	}
 
-	private static Integer _getCommerceAccountType(String accountEntryType) {
+	private Integer _getCommerceAccountType(String accountEntryType) {
 		if (Objects.equals(
 				accountEntryType,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS)) {

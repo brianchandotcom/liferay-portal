@@ -148,7 +148,7 @@ public class AddToCartTag extends IncludeTag {
 						_disabled ||
 						(accountEntry.isGuestAccount() &&
 						 (CommerceChannelConstants.SITE_TYPE_B2B ==
-						  commerceContext.getCommerceSiteType()));
+							 commerceContext.getCommerceSiteType()));
 				}
 			}
 		}

@@ -140,9 +140,7 @@ public class CommerceAccountRoleHelperImpl
 					"VIEW_COMMERCE_ORDERS", "VIEW_OPEN_COMMERCE_ORDERS"
 				});
 		}
-		else if (name.equals(
-					AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER)) {
-
+		else if (name.equals(AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER)) {
 			companyResourceActionIds.put(
 				"com.liferay.commerce.model.CommerceOrderType",
 				new String[] {ActionKeys.VIEW});

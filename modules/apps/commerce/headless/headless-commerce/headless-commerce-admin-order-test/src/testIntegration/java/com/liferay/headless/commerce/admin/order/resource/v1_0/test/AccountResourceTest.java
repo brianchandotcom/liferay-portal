@@ -14,7 +14,6 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;

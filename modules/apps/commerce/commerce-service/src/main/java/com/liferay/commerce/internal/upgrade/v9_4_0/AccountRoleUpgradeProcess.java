@@ -56,8 +56,7 @@ public class AccountRoleUpgradeProcess extends UpgradeProcess {
 					companyId, _ROLE_NAME_ACCOUNT_CATEGORY_MANAGER);
 				_updateCommerceDiscountManagerRolePermissions(
 					companyId,
-					AccountRoleConstants.
-						ROLE_NAME_ACCOUNT_DISCOUNT_MANAGER);
+					AccountRoleConstants.ROLE_NAME_ACCOUNT_DISCOUNT_MANAGER);
 			});
 	}
 

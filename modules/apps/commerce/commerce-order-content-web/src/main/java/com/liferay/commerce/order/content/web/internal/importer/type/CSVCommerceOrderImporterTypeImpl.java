@@ -197,7 +197,7 @@ public class CSVCommerceOrderImporterTypeImpl
 						CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
 
 		if (commerceAccountGroupServiceConfiguration.commerceSiteType() ==
-			CommerceChannelConstants.SITE_TYPE_B2C) {
+				CommerceChannelConstants.SITE_TYPE_B2C) {
 
 			return false;
 		}

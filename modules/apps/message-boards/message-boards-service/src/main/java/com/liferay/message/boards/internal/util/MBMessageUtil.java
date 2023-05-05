@@ -83,6 +83,15 @@ public class MBMessageUtil {
 		return mbMessage.getBody();
 	}
 
+	public static String getQuote(boolean htmlFormat, int level) {
+		if (Validator.isBlank(_getQuoteMark(htmlFormat))) {
+			return StringPool.BLANK;
+		}
+
+		return StringUtils.repeat(_QUOTE_MARK, level) +
+			_getQuoteMark(htmlFormat);
+	}
+
 	public static List<MBMessage> getThreadMessages(
 		MBMessagePersistence mbMessagePersistence,
 		MBMessageFinder mbMessageFinder, long userId, long threadId, int status,
@@ -122,6 +131,52 @@ public class MBMessageUtil {
 		}
 
 		return messages;
+	}
+
+	public static String renderDifferentLevelMessages(
+		boolean htmlFormat, List<MBMessage> mbMessages,
+		ServiceContext serviceContext) {
+
+		if (ListUtil.isEmpty(mbMessages)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(mbMessages.size());
+
+		sb.append(
+			_getMarkupElement(MarkupElement.START_MESSAGE_THREAD, htmlFormat));
+
+		int endElementCount = 0;
+
+		for (int i = 0; i < mbMessages.size(); i++) {
+			MBMessage mbMessage = mbMessages.get(i);
+
+			sb.append(
+				StringBundler.concat(
+					_getMarkupElement(MarkupElement.START_MESSAGE, htmlFormat),
+					_getMarkupElement(
+						MarkupElement.START_USER_MESSAGE, htmlFormat),
+					_getUserName(
+						htmlFormat, mbMessage, getQuote(htmlFormat, i)),
+					_getMarkupElement(MarkupElement.END, htmlFormat),
+					_getMarkupElement(
+						MarkupElement.START_MESSAGE_BODY, htmlFormat),
+					getMessageBody(
+						htmlFormat, mbMessage, getQuote(htmlFormat, i),
+						serviceContext),
+					_getMarkupElement(MarkupElement.END, htmlFormat),
+					_getMarkupElement(MarkupElement.END_MESSAGE, htmlFormat)));
+
+			endElementCount++;
+		}
+
+		for (int i = 0; i < endElementCount; i++) {
+			sb.append(_getMarkupElement(MarkupElement.END_ELEMENT, htmlFormat));
+		}
+
+		sb.append(_getMarkupElement(MarkupElement.END, htmlFormat));
+
+		return sb.toString();
 	}
 
 	public static String renderRootMessage(

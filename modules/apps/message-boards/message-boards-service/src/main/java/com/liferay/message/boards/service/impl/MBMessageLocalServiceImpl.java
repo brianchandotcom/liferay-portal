@@ -2102,6 +2102,33 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		).buildString();
 	}
 
+	private List<MBMessage> _getParentMBMessages(
+		int maxNumberOfMessages, MBMessage parentMessage) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+			(maxNumberOfMessages == 0) ||
+			(parentMessage.getParentMessageId() ==
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+
+			return new ArrayList<>();
+		}
+
+		List<MBMessage> parents = new ArrayList<>();
+
+		while ((maxNumberOfMessages > 0) && (parentMessage != null) &&
+			   (parentMessage.getParentMessageId() !=
+				   MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+
+			parents.add(0, parentMessage);
+
+			parentMessage = mbMessageLocalService.fetchMBMessage(
+				parentMessage.getParentMessageId());
+			maxNumberOfMessages--;
+		}
+
+		return parents;
+	}
+
 	private long _getRootDiscussionMessageId(String className, long classPK)
 		throws PortalException {
 
@@ -2495,6 +2522,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String inReplyTo = null;
 		String messageSubject = message.getSubject();
 		String messageSubjectPrefix = StringPool.BLANK;
+		String messageParent = StringPool.BLANK;
 
 		if (message.getParentMessageId() !=
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
@@ -2518,9 +2546,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				messageSubject = messageSubject.substring(
 					messageSubjectPrefix.length());
 			}
+
+			int maxNumberOfThreadMessages = 1;
+
+			List<MBMessage> mbMessages = _getParentMBMessages(
+				maxNumberOfThreadMessages, parentMessage);
+
+			messageParent = MBMessageUtil.renderDifferentLevelMessages(
+				htmlFormat, mbMessages, serviceContext);
 		}
 
-		String messageParent = StringPool.BLANK;
 		String messageSiblings = StringPool.BLANK;
 
 		String rootMessageBody = _getRootMessageBody(

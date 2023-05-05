@@ -54,14 +54,6 @@ public class NotificationQueueEntryModelDocumentContributor
 
 		document.addKeyword("subject", notificationQueueEntry.getSubject());
 		document.addText("subject", notificationQueueEntry.getSubject());
-
-		String toName = String.valueOf(
-			notificationRecipientSettingsMap.get("fromName"));
-
-		document.addKeyword("toName", toName);
-		document.addText("toName", toName);
-		document.addKeyword("triggerBy", toName);
-		document.addText("triggerBy", toName);
 	}
 
 }

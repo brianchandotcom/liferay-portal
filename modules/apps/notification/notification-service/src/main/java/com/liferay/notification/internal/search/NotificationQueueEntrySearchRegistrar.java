@@ -39,8 +39,7 @@ public class NotificationQueueEntrySearchRegistrar {
 			modelSearchDefinition -> {
 				modelSearchDefinition.setDefaultSelectedFieldNames(
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-					Field.ENTRY_CLASS_PK, Field.UID, "fromName", "subject",
-					"toName", "triggerBy");
+					Field.ENTRY_CLASS_PK, Field.UID, "fromName", "subject");
 				modelSearchDefinition.setModelIndexWriteContributor(
 					_modelIndexWriterContributor);
 			});

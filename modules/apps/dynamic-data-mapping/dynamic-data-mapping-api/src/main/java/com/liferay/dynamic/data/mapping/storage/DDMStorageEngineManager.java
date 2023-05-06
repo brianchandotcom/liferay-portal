@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 

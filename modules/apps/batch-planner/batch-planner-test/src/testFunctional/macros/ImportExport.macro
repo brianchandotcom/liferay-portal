@@ -1,6 +1,6 @@
 definition {
 
-	macro assertAvailabelEntityTypes {
+	macro assertAvailableEntityTypes {
 		Click(locator1 = "ImportExport#ENTITY_TYPE");
 
 		for (var entityType : list ${entityTypes}) {
@@ -178,6 +178,31 @@ definition {
 			AssertElementPresent(
 				key_destinationField = ${requiredField},
 				locator1 = "ImportExport#REQUIRED_IMPORT_FIELD");
+		}
+	}
+
+	macro assertStrategiesForEntityTypes {
+		Variables.assertDefined(parameterList = ${entityTypes});
+
+		for (var entityType : list ${entityTypes}) {
+			ImportExport.selectEntity(entityType = ${entityType});
+
+			if (isSet(importStrategy)) {
+				AssertTextEquals(
+					locator1 = "ImportExport#IMPORT_STRATEGY",
+					value1 = ${importStrategy});
+
+				//ImportExport.assertAvailableUpdateStrategies(updateStrategies = ${updateStrategies});
+
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "ImportExport#UPDATE_STRATEGY",
+					value1 = ${updateStrategy});
+
+				//ImportExport.assertAvailableImportStrategies(importStrategies = ${importStrategies});
+
+			}
 		}
 	}
 

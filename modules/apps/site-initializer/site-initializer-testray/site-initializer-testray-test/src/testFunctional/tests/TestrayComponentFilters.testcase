@@ -242,4 +242,50 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an Administrator I should be able to filter component using multiple filtering options"
+	@priority = 4
+	test AdminCanFilterComponentWithMultipleOptions {
+		task ("Given that the user has two component different in the table") {
+			AssertElementPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter component using multiple filtering options") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Run",
+				value1 = 00);
+
+			TestrayFilter.multiSelect(
+				header = "Team",
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only component 1 in the table") {
+			AssertElementPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the component 2 in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

@@ -288,4 +288,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an User I should be able to search by a filter"
+	@priority = 2
+	test CanSearchByFilter {
+		task ("When the user searches for a field called priority") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.searchFilter(value = "Priority");
+		}
+
+		task ("Then the user can see the field label called priority") {
+			AssertElementPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Priority");
+		}
+
+		task ("And the user no more see the field called Run in the filter") {
+			AssertElementNotPresent(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Run");
+		}
+	}
+
 }
